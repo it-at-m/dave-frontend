@@ -1,64 +1,36 @@
-## Customize this file after creating the new REPO and remove this lines.
-What to adjust:  
-* Add the your project or repo name direct under the logo.
-* Add a short and long desciption.
-* Add links for your final repo to report a bug or request a feature.
-* Add list of used technologies.
-* If you have, add a roadmap or remove this section.
-* Fill up the section for set up and documentation.
- * Start in this file only with documentation and link to the docs folder.
-* Add project shields. Use [shields.io](https://shields.io/)
+# Frontend (Datenportal):
 
-## ------- end to remove -------
-<!-- add Project Logo, if existing -->
+## About the project
+Dieses Repository ist eine der 5 Komponenten der Anwendung "DAVe" (Datenbank und Auswertung für Verkehrszählungen).
 
-# repo or project name
+Bitte beachten Sie, dass diese Komponente nicht ohne das [dave-backend](https://github.com/it-at-m/dave-backend) betrieben werden kann!
 
-*Add a description from your project here.*
+Um einen genaueren Überblick über die verschiedenen Komponenten der Anwendung und deren Zusammenhänge zu bekommen, bitte die Dokumentation des [dave-backend](https://github.com/it-at-m/dave-backend) zu Hilfe nehmen.
+
+Das Frontend (Datenportal) bietet einen lesenden Zugriff auf die Zählungen und ermöglicht mit Hilfe verschiedener Diagramme eine umfangreich Datenanalyse.
+
+Das Datenportal bietet einen lesenden Zugriff auf die Zählungen. Es kann nach Zählungen gesucht werden (auch auf einer Karte). Hat ein Nutzer eine Zählung, bzw. eine Zählstelle gefunden, so kann in dieser eine umfangreiche Datenanalyse betrieben werden. Es werden verschieden Diagramme angeboten, die bei bedarf auch als PDF-Report heruntergeladen werden können. Neue Zählungen oder Änderungen können über diese Portal nicht vorgenommen werden, dazu steht das Adminportal zur Verfügung.
 
 
-### Built With
-
-The documentation project is built with technologies we use in our projects:
-
-* *write here the list of used technologies*
-
-## Roadmap
-
-*if you have a ROADMAP for your project add this here*
-
-
-See the [open issues](#) for a full list of proposed features (and known issues).
-
-
-## Set up
-*how can i start and fly this project*
-
-## Documentation
-*what insights do you have to tell*
+## Built with
+    Java 11
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-If you have a suggestion that would make this better, please open an issue with the tag "enhancement", fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+If you have a suggestion that would make this better, please open an issue with the tag "enhancement", fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
 
-1. Open an issue with the tag "enhancement"
-2. Fork the Project
-3. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-4. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-5. Push to the Branch (`git push origin feature/AmazingFeature`)
-6. Open a Pull Request
-
-More about this in the [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) file.
-
+    Open an issue with the tag "enhancement"
+    Fork the Project
+    Create your Feature Branch (git checkout -b feature/AmazingFeature)
+    Commit your Changes (git commit -m 'Add some AmazingFeature')
+    Push to the Branch (git push origin feature/AmazingFeature)
+    Open a Pull Request
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](LICENSE) file for more information.
-
-
+Distributed under the MIT License. See LICENSE for more information.
 ## Contact
 
-it@M - opensource@muenchen.de
+it@m - opensource@muenchen.de

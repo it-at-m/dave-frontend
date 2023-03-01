@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1304"
+   sodipodi:docname="dave_icon_datenportal.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1306"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="5.9295174"
+     inkscape:cx="383.16778"
+     inkscape:cy="638.41621"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1301">
+    <rect
+       x="183.48879"
+       y="399.35796"
+       width="115.30738"
+       height="124.75171"
+       id="rect5109" />
+    <rect
+       x="183.48878"
+       y="399.35797"
+       width="115.30738"
+       height="124.75171"
+       id="rect5109-6" />
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#1565C0;fill-rule:evenodd;stroke-width:0.264583"
+       id="rect1387-7"
+       width="12.7"
+       height="12.7"
+       x="104.57879"
+       y="165.48698" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:13.698px;line-height:1.25;font-family:sans-serif;fill:#FFFFFF;fill-opacity:1;stroke:none;stroke-width:0.34245"
+       x="115.59964"
+       y="165.83817"
+       id="text20468"
+       transform="scale(0.93264312,1.0722215)"><tspan
+         sodipodi:role="line"
+         id="tspan20466"
+         x="115.59964"
+         y="165.83817"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.34245">D</tspan></text>
+  </g>
+</svg>
