@@ -16,7 +16,7 @@ jobs:
           policy: GeekMasher/security-queries
           policy-path: policies/default.yml
 
-          token: ${{ secrets.ACCESS_TOKEN_TEST }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
 
