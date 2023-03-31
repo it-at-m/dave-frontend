@@ -1,0 +1,74 @@
+wiremock:
+  server:
+    port: 0
+    https-port: -1
+  reset-mappings-after-each-test: true
+
+
+spring:
+
+  # Define the keycloak productive realm here
+  realm: stadt.de # Anpassung durch eigenen Keycloak realm name
+
+  # spring cloud gateway config
+  cloud:
+    gateway:
+      actuator:
+        verbose:
+          enabled: false
+      globalcors:
+        corsConfigurations:
+          # The cors configuration to allow frontend developers cross origin request via this api gateway
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:8081"
+              - "http://127.0.0.1:8081"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        - id: sso
+          uri: <SSO Server-URL> # URL zum SSO-Server ggf. Pfad in Zeile 27 anpassen
+          predicates:
+            - Path=/api/sso/userinfo
+          filters:
+            - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
+         - id: backend
+          uri: http://localhost:${wiremock.server.port}/
+          predicates:
+            - Path=/api/dave-backend-service/**
+          filters:
+            - RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
+            - RemoveResponseHeader=WWW-Authenticate
+        - id: eai
+          uri: http://localhost:${wiremock.server.port}/
+          predicates:
+            - Path=/api/dave-eai-service/**
+          metadata:
+            response-timeout: 1800000
+          filters:
+            - RewritePath=/api/dave-eai-service/(?<urlsegments>.*), /$\{urlsegments}
+            - RemoveResponseHeader=WWW-Authenticate
+      default-filters:
+        - RemoveResponseHeader=Expires
+        - RemoveRequestHeader=cookie
+        - RemoveRequestHeader=x-xsrf-token
+        - TokenRelay=
+
+  # security config
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: https://<host>/auth/realms/${spring.realm} # Host zu Keycloak-Server eintragen
+        registration:
+          keycloak:
+            client-id: dave
+            client-secret: TBD
+            scope:
+              - <Hier Scope definieren>
+
+  mvc:
+    log-request-details: on
