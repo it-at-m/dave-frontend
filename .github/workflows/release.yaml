@@ -19,7 +19,11 @@ jobs:
         with:
           java-version: 11
           distribution: "temurin"
-
+          cache: "maven"
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Remove SNAPSHOT
         if: github.event.inputs.snapshot-build == 'n'
         run: |
