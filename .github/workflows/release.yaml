@@ -24,10 +24,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Remove SNAPSHOT
-        if: github.event.inputs.snapshot-build == 'n'
+      - name: Set Maven Project Version
+        id: set-version
         run: |
-          mvn versions:set --batch-mode -DnewVersion=${{ github.event.inputs.release-tag }} -DprocessAllModules
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Current version: $current_version"
+          new_version=$(echo $current_version | awk -F. -v OFS=. '{++$NF; print}')
+          echo "New version: $new_version"
+          mvn versions:set -DnewVersion=$new_version -DprocessAllModules
+          echo "::set-output name=new_version::$new_version"
       - name: Build with Maven
         run: mvn -B verify "-Dspring-boot.run.jvmArguments=-Dfile.encoding=UTF-8" -DskipTests=true
 
@@ -48,40 +53,40 @@ jobs:
         with:
           context: .
           push: true
-          tags: itatm/dave-frontend:${{ github.event.inputs.release-tag }},itatm/dave-frontend:latest
+          tags: itatm/dave-frontend:${{ steps.set-version.outputs.new_version }},itatm/dave-frontend:latest
 
-  github-release:
-    needs: if_merged
-    name: Create Release
-#    if: github.event.inputs.snapshot-build == 'n'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#   github-release:
+#     needs: if_merged
+#     name: Create Release
+# #    if: github.event.inputs.snapshot-build == 'n'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Create tag
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{ github.event.inputs.release-tag }}',
-              sha: context.sha
-            })
-      - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.event.inputs.release-tag }}
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-      - name: Update Docker Hub Description
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_KEY }}
-          repository: itatm/dave-frontend
-          readme-filepath: ./IMAGE_README.md
-          short-description: ${{ github.event.repository.description }}
+#       - name: Create tag
+#         uses: actions/github-script@v6
+#         with:
+#           script: |
+#             github.rest.git.createRef({
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               ref: 'refs/tags/${{ github.event.inputs.release-tag }}',
+#               sha: context.sha
+#             })
+#       - name: Create GitHub Release
+#         id: create_release
+#         uses: softprops/action-gh-release@v1
+#         with:
+#           tag_name: ${{ github.event.inputs.release-tag }}
+#           draft: false
+#           prerelease: false
+#           generate_release_notes: true
+#       - name: Update Docker Hub Description
+#         uses: peter-evans/dockerhub-description@v3
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_KEY }}
+#           repository: itatm/dave-frontend
+#           readme-filepath: ./IMAGE_README.md
+#           short-description: ${{ github.event.repository.description }}
