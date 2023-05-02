@@ -2,18 +2,13 @@ name: release
 
 # Run workflow on commits to the `main` branch
 on:
-  workflow_dispatch:
-    inputs:
-      snapshot-build:
-        description: "Snapshot build (y/n)?"
-        required: true
-        default: "y"
-      release-tag:
-        description: "Release Tag (only if not snapshot)"
-        required: false
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  release:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
@@ -52,9 +47,9 @@ jobs:
           tags: itatm/dave-frontend:${{ github.event.inputs.release-tag }},itatm/dave-frontend:latest
 
   github-release:
-    needs: release
+    needs: if_merged
     name: Create Release
-    if: github.event.inputs.snapshot-build == 'n'
+#    if: github.event.inputs.snapshot-build == 'n'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -86,4 +81,3 @@ jobs:
           repository: itatm/dave-frontend
           readme-filepath: ./IMAGE_README.md
           short-description: ${{ github.event.repository.description }}
-
