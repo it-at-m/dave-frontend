@@ -30,11 +30,12 @@ jobs:
           new_version=$(echo $current_version | awk -F. -v OFS=. '{$3=$3+1; print $0"-SNAPSHOT"}')
         fi
         echo "New version: $new_version"
-        mvn versions:set -DnewVersion=$new_version -DprocessAllModules
+        mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
         git add **/pom.xml
         git commit -m "Bump version to $new_version"
+        git push
         echo "::set-output name=new_version::$new_version"
 
     - name: Set up JDK 11
