@@ -20,8 +20,6 @@ jobs:
 
     - name: Set Maven Project Version
       id: set-version
-      with:
-        ssh-key: ${{ secrets.SECRET_KEY }}
       run: |
         current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
         echo "Current version: $current_version"
