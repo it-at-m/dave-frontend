@@ -31,13 +31,13 @@ jobs:
         fi
         echo "New version: $new_version"
         mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git add **/pom.xml
-        git commit -m "Bump version to $new_version"
-        git push
         echo "::set-output name=new_version::$new_version"
+
+    - name: Commit & Push new version
+      uses: Andro999b/push@v1.3
       with:
+        message: Update version ${{ steps.set-version.outputs.new_version }}
+        branch: ${{ github.ref_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up JDK 11
