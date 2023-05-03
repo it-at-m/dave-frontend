@@ -13,7 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+       ssh-key: ${{ secrets.SECRET_KEY }}
 
     - name: Set Maven Project Version
       id: set-version
@@ -37,8 +40,6 @@ jobs:
       uses: Andro999b/push@v1.3
       with:
         message: Update version ${{ steps.set-version.outputs.new_version }}
-        author_email: andreas@nerdy-by-nature.biz
-        author_name: Andreas Zill
         branch: ${{ github.ref_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
