@@ -37,6 +37,8 @@ jobs:
       uses: Andro999b/push@v1.3
       with:
         message: Update version ${{ steps.set-version.outputs.new_version }}
+        author_email: andreas@nerdy-by-nature.biz
+        author_name: Andreas Zill
         branch: ${{ github.ref_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
