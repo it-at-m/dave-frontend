@@ -33,6 +33,7 @@ jobs:
           new_version=$(echo $current_version | awk -F. -v OFS=. '{$3=$3+1; print $0"-SNAPSHOT"}')
         fi
         echo "New version: $new_version"
+        mvn -B versions:set -DnewVersion=$new_version
         mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"

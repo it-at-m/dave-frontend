@@ -35,6 +35,7 @@ jobs:
           echo "Current version: $current_version"
           new_version=$(echo $current_version | sed 's/-SNAPSHOT//')
           echo "New version: $new_version"
+          mvn -B versions:set -DnewVersion=$new_version
           mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
@@ -70,7 +71,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_KEY }}
           repository: itatm/dave-frontend
-          short-description: Das Frontend (Datenportal) bietet einen lesenden Zugriff auf die Zählungen und ermöglicht mit Hilfe verschiedener Diagramme eine umfangreich Datenanalyse.
+          short-description: Das DAVe-Datenportal bietet einen Zugriff auf die Zählungen und ermöglicht Datenanalyse.
 
 #   github-release:
 #     needs: if_merged
