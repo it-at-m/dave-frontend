@@ -75,3 +75,11 @@ jobs:
         context: .
         push: true
         tags: itatm/dave-frontend:${{ steps.set-version.outputs.new_version }}
+
+    - name: Docker Hub Description
+      uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_KEY }}
+        repository: itatm/dave-frontend
+        short-description: Das DAVe-Datenportal bietet einen Zugriff auf die Zählungen und ermöglicht Datenanalyse.
