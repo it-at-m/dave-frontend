@@ -224,25 +224,6 @@ export default class App extends Vue {
       this.backendVersion = version;
     });
 
-    window.addEventListener("keypress", this.shortCuts)
-  }
-
-  private static easterEgg: Array<string> = [];
-
-  /**
-   * ShortCut für das EasterEgg
-   */
-  shortCuts(event: KeyboardEvent) {
-    if (event.key === "A") {
-      App.easterEgg.push(event.key);
-      if (App.easterEgg.length === 3) {
-        const audioUrl = require('@/../public/easteregg/a-team.mp3')
-        new Audio(audioUrl).play();
-        App.easterEgg = [];
-      }
-    } else {
-      App.easterEgg = [];
-    }
   }
 
   private async getFrontendVersion(): Promise<string> {

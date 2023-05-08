@@ -5,6 +5,8 @@ on:
   pull_request:
     types:
       - closed
+    branches:
+      - 'main'
 
 jobs:
   if_merged:
@@ -13,6 +15,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.SECRET_KEY }}
 
       - name: Install Java and Maven
         uses: actions/setup-java@v3
@@ -24,14 +28,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Set Maven Project Version
+      - name: Clean Maven Project Version
         id: set-version
         run: |
           current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "Current version: $current_version"
-          new_version=$(echo $current_version | awk -F. -v OFS=. '{++$NF; print}')
+          new_version=$(echo $current_version | sed 's/-SNAPSHOT//')
           echo "New version: $new_version"
-          mvn versions:set -DnewVersion=$new_version -DprocessAllModules
+          mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add **/pom.xml
+          git commit -m "Bump main version to $new_version"
+          git push
           echo "::set-output name=new_version::$new_version"
       - name: Build with Maven
         run: mvn -B verify "-Dspring-boot.run.jvmArguments=-Dfile.encoding=UTF-8" -DskipTests=true
@@ -54,6 +63,14 @@ jobs:
           context: .
           push: true
           tags: itatm/dave-frontend:${{ steps.set-version.outputs.new_version }},itatm/dave-frontend:latest
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_KEY }}
+          repository: itatm/dave-frontend
+          short-description: Das Frontend (Datenportal) bietet einen lesenden Zugriff auf die Zählungen und ermöglicht mit Hilfe verschiedener Diagramme eine umfangreich Datenanalyse.
 
 #   github-release:
 #     needs: if_merged
