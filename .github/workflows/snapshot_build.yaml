@@ -24,7 +24,7 @@ jobs:
         current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
         echo "Current version: $current_version"
         if [ "${{ github.event.inputs.version }}" == "none" ]; then
-          new_version="$current_version-SNAPSHOT"
+          new_version="$current_version"
         elif [ "${{ github.event.inputs.version }}" == "major" ]; then
           new_version=$(echo $current_version | awk -F. -v OFS=. '{$1=$1+1; $2=0; $3=0; print $0"-SNAPSHOT"}')
         elif [ "${{ github.event.inputs.version }}" == "minor" ]; then
