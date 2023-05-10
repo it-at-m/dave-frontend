@@ -35,12 +35,14 @@ jobs:
         echo "New version: $new_version"
         mvn -B versions:set -DnewVersion=$new_version
         mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git add pom.xml
-        git add **/pom.xml
-        git commit -m "Bump version to $new_version"
-        git push
+        if [ "${{ github.event.inputs.version }}" != "none" ]; then
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add pom.xml
+          git add **/pom.xml
+          git commit -m "Bump version to $new_version"
+          git push
+        fi
         echo "::set-output name=new_version::$new_version"
 
     - name: Set up JDK 11
