@@ -44,6 +44,7 @@ public class GatewayUtils {
      * If the {@link HttpStatus} given in the parameter is the same as in {@link ServerHttpResponse}
      * the body within the parameter will be added otherwise the body received from upstream stays the
      * same.
+     *
      * @param exchange Contains the response.
      * @param chain The filter chain for delegation to the next filter.
      * @param httpStatus Status of the http {@link ServerHttpResponse}.
