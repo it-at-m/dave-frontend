@@ -26,7 +26,6 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-
 /**
  * Utility methods and constants which are used in multiple
  * locations throughout the service.
@@ -42,20 +41,20 @@ public class GatewayUtils {
     /**
      * The method is used in {@link GlobalFilter}s to add the response body given in the
      * parameter when the {@link HttpStatus} given in the parameter is met.
-     *
      * If the {@link HttpStatus} given in the parameter is the same as in {@link ServerHttpResponse}
-     * the body within the parameter will be added otherwise the body received from upstream stays the same.
-     *
+     * the body within the parameter will be added otherwise the body received from upstream stays the
+     * same.
      * @param exchange Contains the response.
      * @param chain The filter chain for delegation to the next filter.
      * @param httpStatus Status of the http {@link ServerHttpResponse}.
-     * @param newResponseBody The UTF8 conform message to add into the body of the {@link ServerHttpResponse}.
+     * @param newResponseBody The UTF8 conform message to add into the body of the
+     *            {@link ServerHttpResponse}.
      * @return An empty mono. The results are processed within the {@link GatewayFilterChain}.
      */
     public static Mono<Void> responseBodyManipulatorForServerWebExchange(final ServerWebExchange exchange,
-                                                                         final GatewayFilterChain chain,
-                                                                         final HttpStatus httpStatus,
-                                                                         final String newResponseBody) {
+            final GatewayFilterChain chain,
+            final HttpStatus httpStatus,
+            final String newResponseBody) {
         final ServerHttpResponse response = exchange.getResponse();
 
         final ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(response) {
@@ -67,7 +66,7 @@ public class GatewayUtils {
              *
              * @param body The body received by the upstream response.
              * @return Either the body received by the upstream response or
-             * the body given by the parameter.
+             *         the body given by the parameter.
              */
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
@@ -76,8 +75,7 @@ public class GatewayUtils {
                     final var dataBufferFactory = response.bufferFactory();
                     final DataBuffer newDataBuffer = dataBufferFactory.wrap(
                             ObjectUtils.defaultIfNull(newResponseBody, EMPTY_JSON_OBJECT)
-                                    .getBytes(StandardCharsets.UTF_8)
-                    );
+                                    .getBytes(StandardCharsets.UTF_8));
 
                     log.debug("Response from upstream {} get new response body: {}", httpStatus, newResponseBody);
                     getDelegate().getHeaders().setContentLength(newDataBuffer.readableByteCount());
@@ -86,8 +84,7 @@ public class GatewayUtils {
 
                     return super.writeWith(flux.buffer().map(
                             // replace old body represented by dataBuffer by the new one
-                            dataBuffer -> newDataBuffer
-                    ));
+                            dataBuffer -> newDataBuffer));
                 }
                 return super.writeWith(body);
             }

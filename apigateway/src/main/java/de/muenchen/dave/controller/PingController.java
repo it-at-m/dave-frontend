@@ -19,7 +19,6 @@ import java.util.List;
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
-
 /**
  * Endpoint for pinging with an authorized request
  * to check for available or expired security sessions.
