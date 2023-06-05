@@ -5,6 +5,7 @@
 package de.muenchen.dave.configuration;
 
 import de.muenchen.dave.util.GatewayUtils;
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +19,6 @@ import org.springframework.security.web.server.authentication.RedirectServerAuth
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 @Configuration
 @Profile("!no-security")
