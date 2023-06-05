@@ -10,7 +10,6 @@ import org.springframework.http.CacheControl;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-
 /**
  * VueCacheConfigurer setzt Cache Header für die von Vue gebauten Resourcen. Sie enthalten im Namen
  * ein Hash,
