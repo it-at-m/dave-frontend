@@ -3,11 +3,9 @@ import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldate
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 
 export default interface LadeProcessedZaehldatenDTO {
+    zaehldatenTable: LadeZaehldatenTableDTO;
 
-  zaehldatenTable: LadeZaehldatenTableDTO;
+    zaehldatenStepline: LadeZaehldatenSteplineDTO;
 
-  zaehldatenStepline: LadeZaehldatenSteplineDTO;
-
-  zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
-
+    zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
 }

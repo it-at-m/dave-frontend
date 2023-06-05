@@ -1,1 +1,1 @@
-declare module 'dave-vue-component-library';
+declare module "dave-vue-component-library";

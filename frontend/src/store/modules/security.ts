@@ -1,13 +1,13 @@
 export default {
-  namespaced: true,
-  state: {
-    noSecurity: false
-  },
-  getters: {
-    isNoSecurityActive: (state: { noSecurity: boolean }) => {
-      return state.noSecurity;
+    namespaced: true,
+    state: {
+        noSecurity: false,
     },
-  },
-  mutations: {},
-  actions: {}
-}
+    getters: {
+        isNoSecurityActive: (state: { noSecurity: boolean }) => {
+            return state.noSecurity;
+        },
+    },
+    mutations: {},
+    actions: {},
+};

@@ -1,31 +1,31 @@
 export default {
-  namespaced: true,
-  state: {
-    result: [],
-    lastSearchQuery: ""
-  },
-  getters: {
-    result: (state: any) => {
-      return state.result;
+    namespaced: true,
+    state: {
+        result: [],
+        lastSearchQuery: "",
     },
-    lastSearchQuery: (state: any) => {
-      return state.lastSearchQuery;
+    getters: {
+        result: (state: any) => {
+            return state.result;
+        },
+        lastSearchQuery: (state: any) => {
+            return state.lastSearchQuery;
+        },
     },
-  },
-  mutations: {
-    result(state: any, payload: number[]) {
-      state.result = payload;
+    mutations: {
+        result(state: any, payload: number[]) {
+            state.result = payload;
+        },
+        lastSearchQuery(state: any, payload: string) {
+            state.lastSearchQuery = payload;
+        },
     },
-    lastSearchQuery(state: any, payload: string) {
-      state.lastSearchQuery = payload;
-    }
-  },
-  actions: {
-    result(context: any, payload: number[]) {
-      context.commit('result', payload);
+    actions: {
+        result(context: any, payload: number[]) {
+            context.commit("result", payload);
+        },
+        lastSearchQuery(context: any, payload: string) {
+            context.commit("lastSearchQuery", payload);
+        },
     },
-    lastSearchQuery(context: any, payload: string) {
-      context.commit('lastSearchQuery', payload);
-    }
-  }
-}
+};

@@ -1,4 +1,4 @@
 export default interface LadeKnotenarmDTO {
-  nummer: number;
-  strassenname: string;
+    nummer: number;
+    strassenname: string;
 }
