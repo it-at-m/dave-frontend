@@ -1,3 +1,0 @@
-# Allow load-script and slash (false positive check)
-pkg:npm/load-script@1.0.0
-pkg:npm/slash@1.0.0
