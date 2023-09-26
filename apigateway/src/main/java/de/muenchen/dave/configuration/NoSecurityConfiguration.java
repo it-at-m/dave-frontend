@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-
 @Configuration
 @Profile("no-security")
 public class NoSecurityConfiguration {

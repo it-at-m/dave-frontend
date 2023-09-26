@@ -6,6 +6,8 @@ package de.muenchen.dave.filter;
 
 import de.muenchen.dave.exception.ParameterPollutionException;
 import de.muenchen.dave.util.GatewayUtils;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -19,15 +21,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.Map;
-
-
 /**
  * This {@link GlobalFilter} is used to detect and to fend off a parameter pollution attack.
- *
  * Within a {@link HttpRequest} each request parameter should only exist once.
- * This check is necessary to avoid e.g. SQL injection split over multiple request parameters with the same name.
+ * This check is necessary to avoid e.g. SQL injection split over multiple request parameters with
+ * the same name.
  */
 @Component
 @Slf4j
@@ -42,7 +40,7 @@ public class GlobalRequestParameterPollutionFilter implements GlobalFilter, Orde
      * See {@link GlobalFilter#filter(ServerWebExchange, GatewayFilterChain)}
      *
      * @throws ParameterPollutionException is throw when a request parameter exists multiple times.
-     * The exception represents a http response with status {@link HttpStatus#BAD_REQUEST}.
+     *             The exception represents a http response with status {@link HttpStatus#BAD_REQUEST}.
      */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) throws ParameterPollutionException {
@@ -50,7 +48,7 @@ public class GlobalRequestParameterPollutionFilter implements GlobalFilter, Orde
         ServerHttpRequest request = exchange.getRequest();
         if (!CollectionUtils.isEmpty(request.getQueryParams())) {
             MultiValueMap<String, String> parameterMap = request.getQueryParams();
-            for(Map.Entry<String, List<String>> entry : parameterMap.entrySet()) {
+            for (Map.Entry<String, List<String>> entry : parameterMap.entrySet()) {
                 String key = entry.getKey();
                 List<String> value = entry.getValue();
                 if (!CollectionUtils.isEmpty(value) && value.size() > 1) {

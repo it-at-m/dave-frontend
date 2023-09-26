@@ -16,12 +16,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
 
-
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(
-        classes = { ApiGatewayApplication.class },
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-)
+@SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)
 
 class CsrfTokenAppendingHelperFilterTest {

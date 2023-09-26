@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-
 /**
  * This {@link GlobalFilter} replaces the body by a generic authentication error body,
  * when a server responses with a {@link HttpStatus#UNAUTHORIZED}.
@@ -41,8 +40,7 @@ public class GlobalAuthenticationErrorFilter implements GlobalFilter, Ordered {
                 exchange,
                 chain,
                 HttpStatus.UNAUTHORIZED,
-                GENERIC_AUTHENTICATION_ERROR
-        );
+                GENERIC_AUTHENTICATION_ERROR);
     }
 
 }

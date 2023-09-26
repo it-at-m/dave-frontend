@@ -1,3 +1,3 @@
 export default interface SucheWordSuggestDTO {
-  text: string;
+    text: string;
 }

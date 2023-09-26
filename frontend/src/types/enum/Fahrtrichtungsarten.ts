@@ -7,16 +7,14 @@
  * ACHTUNG: Wer hier die Reihenfolge ändert sollte wissen warum :)
  */
 export enum Fahrtrichtungsarten {
-
-  RECHTS45,
-  RECHTS90 = 1,
-  RECHTS135,
-  GERADE,
-  LINKS135,
-  LINKS90,
-  LINKS45,
-  UTURN
-
+    RECHTS45,
+    RECHTS90 = 1,
+    RECHTS135,
+    GERADE,
+    LINKS135,
+    LINKS90,
+    LINKS45,
+    UTURN,
 }
 
-export default Fahrtrichtungsarten
+export default Fahrtrichtungsarten;

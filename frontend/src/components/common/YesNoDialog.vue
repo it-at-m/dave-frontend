@@ -1,63 +1,62 @@
 <template>
-  <v-dialog
-      :key="value"
-      :value="value"
-      persistent
-      width="800"
-      @input="changed"
-  >
-    <template #activator="{on}">
-      <template v-if="buttontext">
-        <v-btn
-            color="primary"
-            v-on="on"
-        >
-          {{ buttontext }}
-        </v-btn>
-      </template>
-      <template v-else-if="icontext">
-        <v-btn
-            text
-            color="primary"
-            v-on="on"
-        >
-          <v-icon large>
-            {{ icontext }}
-          </v-icon>
-        </v-btn>
-      </template>
-    </template>
-    <v-card>
-      <v-card-title>
-        {{ dialogtitle }}
-      </v-card-title>
-      <v-card-text>
-        {{ dialogtext }}
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer/>
-        <v-btn
-            id="yesnodialog-btn-no"
-            text
-            @click="no"
-        >
-          Nein
-        </v-btn>
-        <v-btn
-            id="yesnodialog-btn-yes"
-            color="primary"
-            @click="yes"
-        >
-          Ja
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+    <v-dialog
+        :key="value"
+        :value="value"
+        persistent
+        width="800"
+        @input="changed"
+    >
+        <template #activator="{ on }">
+            <template v-if="buttontext">
+                <v-btn
+                    color="primary"
+                    v-on="on"
+                >
+                    {{ buttontext }}
+                </v-btn>
+            </template>
+            <template v-else-if="icontext">
+                <v-btn
+                    text
+                    color="primary"
+                    v-on="on"
+                >
+                    <v-icon large>
+                        {{ icontext }}
+                    </v-icon>
+                </v-btn>
+            </template>
+        </template>
+        <v-card>
+            <v-card-title>
+                {{ dialogtitle }}
+            </v-card-title>
+            <v-card-text>
+                {{ dialogtext }}
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer />
+                <v-btn
+                    id="yesnodialog-btn-no"
+                    text
+                    @click="no"
+                >
+                    Nein
+                </v-btn>
+                <v-btn
+                    id="yesnodialog-btn-yes"
+                    color="primary"
+                    @click="yes"
+                >
+                    Ja
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script lang="ts">
-
-import {Component, Prop, Vue} from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 /**
  * Der YesNo-Dialog ist ein generischer Dialog zur binären Abfrage beim Nutzer.
@@ -84,32 +83,30 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 
 @Component
 export default class YesNoDialog extends Vue {
-  @Prop()
-  buttontext = "";
-  @Prop()
-  icontext = "";
-  @Prop()
-  dialogtitle!: string;
-  @Prop()
-  dialogtext!: string;
-  /**
-   * Steuerflag für den Dialog
-   */
-  @Prop()
-  value!: boolean;
+    @Prop()
+    buttontext = "";
+    @Prop()
+    icontext = "";
+    @Prop()
+    dialogtitle!: string;
+    @Prop()
+    dialogtext!: string;
+    /**
+     * Steuerflag für den Dialog
+     */
+    @Prop()
+    value!: boolean;
 
+    no(): void {
+        this.$emit("no");
+    }
 
-  no(): void {
-    this.$emit('no');
-  }
+    yes(): void {
+        this.$emit("yes");
+    }
 
-  yes(): void {
-    this.$emit('yes');
-  }
-
-  changed(val: boolean): void {
-    this.$emit("input", val);
-  }
-
+    changed(val: boolean): void {
+        this.$emit("input", val);
+    }
 }
 </script>

@@ -1,1 +1,1 @@
-declare module 'save-svg-as-png/lib/saveSvgAsPng.js';
+declare module "save-svg-as-png/lib/saveSvgAsPng.js";
