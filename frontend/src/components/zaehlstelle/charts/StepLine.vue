@@ -1,8 +1,8 @@
 <template>
-    <v-chart
+    <chart
         ref="chart"
         :style="steplineHeightAndWitdh"
-        :options="optionsStepline"
+        :option="optionsStepline"
         autoresize
         @magictypechanged="switchChartType"
     />
@@ -10,82 +10,52 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop, Ref, Watch } from "vue-property-decorator";
+import { Component, Prop, Provide, Ref, Watch } from "vue-property-decorator";
 // chart
-import "echarts/lib/chart/line";
-import "echarts/lib/chart/bar";
-import "echarts/lib/component/tooltip";
-import "echarts/lib/component/grid";
-import "echarts/lib/component/legend";
-import "echarts/lib/component/toolbox";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { LineChart, BarChart } from "echarts/charts";
+import {
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    ToolboxComponent,
+    GridComponent,
+} from "echarts/components";
+import Chart, { THEME_KEY } from "vue-echarts";
+// import "echarts/lib/chart/line";
+// import "echarts/lib/chart/bar";
+// import "echarts/lib/component/tooltip";
+// import "echarts/lib/component/grid";
+// import "echarts/lib/component/legend";
+// import "echarts/lib/component/toolbox";
 
 /* eslint-disable no-unused-vars */
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import StepLineSeriesEntryDTO from "@/types/zaehlung/zaehldaten/StepLineSeriesEntryDTO";
+import ChartUtils from "@/util/ChartUtils";
 /* eslint-enable no-unused-vars */
 
-@Component
+use([
+    CanvasRenderer,
+    LineChart,
+    BarChart,
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    ToolboxComponent,
+    GridComponent,
+]);
+
+@Component({
+    components: { Chart },
+})
 export default class StepLine extends Vue {
     private static readonly CHART_STEP_X_AXIS: string = "middle";
     private static readonly CHART_TYPE_X_AXIS: string = "line";
-
-    public static readonly LEGEND_ENTRY_KFZ: string = "Kfz";
-    public static readonly LEGEND_ENTRY_SV: string = "SV";
-    public static readonly LEGEND_ENTRY_GV: string = "GV";
-    public static readonly LEGEND_ENTRY_SV_ANTEIL_PROZENT: string = "SV %";
-    public static readonly LEGEND_ENTRY_GV_ANTEIL_PROZENT: string = "GV %";
-    public static readonly LEGEND_ENTRY_RAD: string = "Rad";
-    public static readonly LEGEND_ENTRY_FUSS: string = "Fuß";
-    public static readonly LEGEND_ENTRY_PKW: string = "Pkw";
-    public static readonly LEGEND_ENTRY_LKW: string = "Lkw";
-    public static readonly LEGEND_ENTRY_LZ: string = "Lz";
-    public static readonly LEGEND_ENTRY_BUSSE: string = "Busse";
-    public static readonly LEGEND_ENTRY_KRAD: string = "Krad";
-    public static readonly LEGEND_ENTRY_PKW_EINHEITEN: string = "Pkw-Einheiten";
-
-    public static readonly CHART_SYMBOLS: Map<string, string> = new Map([
-        [StepLine.LEGEND_ENTRY_KFZ, "circle"],
-        [StepLine.LEGEND_ENTRY_SV, "circle"],
-        [StepLine.LEGEND_ENTRY_GV, "circle"],
-
-        [StepLine.LEGEND_ENTRY_SV_ANTEIL_PROZENT, "triangle"],
-        [StepLine.LEGEND_ENTRY_GV_ANTEIL_PROZENT, "triangle"],
-
-        [StepLine.LEGEND_ENTRY_RAD, "diamond"],
-
-        [StepLine.LEGEND_ENTRY_FUSS, "roundRect"],
-
-        [StepLine.LEGEND_ENTRY_PKW, "rect"],
-        [StepLine.LEGEND_ENTRY_LKW, "rect"],
-        [StepLine.LEGEND_ENTRY_LZ, "rect"],
-        [StepLine.LEGEND_ENTRY_BUSSE, "rect"],
-        [StepLine.LEGEND_ENTRY_KRAD, "rect"],
-
-        [StepLine.LEGEND_ENTRY_PKW_EINHEITEN, "arrow"],
-    ]);
-
-    public static readonly CHART_COLOR: Map<string, string> = new Map([
-        [StepLine.LEGEND_ENTRY_KFZ, "#B71C1C"], // red darken-4
-        [StepLine.LEGEND_ENTRY_SV, "#0D47A1"], // blue darken-4
-        [StepLine.LEGEND_ENTRY_GV, "#40C4FF"], // light-blue accent-2
-
-        [StepLine.LEGEND_ENTRY_SV_ANTEIL_PROZENT, "#263238"], // blue-grey darken-4
-        [StepLine.LEGEND_ENTRY_GV_ANTEIL_PROZENT, "#90A4AE"], // blue-grey lighten-2
-
-        [StepLine.LEGEND_ENTRY_RAD, "#1B5E20"], // green darken-4
-
-        [StepLine.LEGEND_ENTRY_FUSS, "#CDDC39"], // lime
-
-        [StepLine.LEGEND_ENTRY_PKW, "#00E5FF"], // cyan accent-3
-        [StepLine.LEGEND_ENTRY_LKW, "#BF360C"], // deep-orange darken-4
-        [StepLine.LEGEND_ENTRY_LZ, "#FF9E80"], // deep-orange accent-1
-        [StepLine.LEGEND_ENTRY_BUSSE, "#FFC107"], // amber
-        [StepLine.LEGEND_ENTRY_KRAD, "#0097A7"], // cyan darken-2
-
-        [StepLine.LEGEND_ENTRY_PKW_EINHEITEN, "#000000"], // black
-    ]);
-
     private static readonly SYMBOL_SIZE: number = 5;
+
+    @Provide() [THEME_KEY] = "dark";
 
     @Ref("container")
     private readonly container!: HTMLDivElement;
@@ -379,9 +349,9 @@ export default class StepLine extends Vue {
         seriesEntriesChart.forEach((seriesEntryChart) => {
             if (
                 seriesEntryChart.name ===
-                    StepLine.LEGEND_ENTRY_GV_ANTEIL_PROZENT ||
+                    ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT ||
                 seriesEntryChart.name ===
-                    StepLine.LEGEND_ENTRY_SV_ANTEIL_PROZENT
+                    ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT
             ) {
                 seriesEntries.push({
                     name: seriesEntryChart.name,
@@ -389,9 +359,9 @@ export default class StepLine extends Vue {
                     data: seriesEntryChart.yaxisData,
                     xAxisIndex: seriesEntryChart.xaxisIndex,
                     yAxisIndex: seriesEntryChart.yaxisIndex,
-                    symbol: StepLine.CHART_SYMBOLS.get(seriesEntryChart.name),
+                    symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
                     symbolSize: StepLine.SYMBOL_SIZE,
-                    color: StepLine.CHART_COLOR.get(seriesEntryChart.name),
+                    color: ChartUtils.CHART_COLOR.get(seriesEntryChart.name),
                 });
             } else {
                 seriesEntries.push({
@@ -401,9 +371,9 @@ export default class StepLine extends Vue {
                     data: seriesEntryChart.yaxisData,
                     xAxisIndex: seriesEntryChart.xaxisIndex,
                     yAxisIndex: seriesEntryChart.yaxisIndex,
-                    symbol: StepLine.CHART_SYMBOLS.get(seriesEntryChart.name),
+                    symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
                     symbolSize: StepLine.SYMBOL_SIZE,
-                    color: StepLine.CHART_COLOR.get(seriesEntryChart.name),
+                    color: ChartUtils.CHART_COLOR.get(seriesEntryChart.name),
                 });
             }
         });
@@ -439,7 +409,7 @@ export default class StepLine extends Vue {
         return text;
     }
 
-    private switchChartType(event: any) {
+    switchChartType(event: any) {
         this.$emit("charttypeChanged", event.currentType);
     }
 }

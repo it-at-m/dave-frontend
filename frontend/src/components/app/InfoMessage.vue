@@ -74,9 +74,9 @@ import InfoMessageService from "@/api/service/InfoMessageService";
 
 @Component
 export default class InfoMessage extends Vue {
-    private infomessage: InfoMessageDTO = {} as InfoMessageDTO;
+    infomessage: InfoMessageDTO = {} as InfoMessageDTO;
 
-    private showDialog = false;
+    showDialog = false;
 
     mounted() {
         this.loadInfoMessage();
@@ -97,11 +97,11 @@ export default class InfoMessage extends Vue {
         return this.infomessage.gueltig;
     }
 
-    private closeDialog() {
+    closeDialog() {
         this.showDialog = false;
     }
 
-    private openDialogAndLoadData(): void {
+    openDialogAndLoadData(): void {
         this.loadInfoMessage();
         this.showDialog = true;
     }

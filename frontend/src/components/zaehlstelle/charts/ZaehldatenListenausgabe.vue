@@ -81,7 +81,7 @@ export default class ZaehldatenListenausgabe extends Vue {
     private static TYPE_SP_STD_TAG = "SpStdTag";
 
     @Prop()
-    private listenausgabeData!: Array<LadeZaehldatumDTO>;
+    listenausgabeData!: Array<LadeZaehldatumDTO>;
 
     @Prop({ default: "100%" }) height?: string;
 
@@ -376,7 +376,7 @@ export default class ZaehldatenListenausgabe extends Vue {
         return headers;
     }
 
-    private rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
+    rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
         if (ladeZaehldatum.type === ZaehldatenListenausgabe.TYPE_STUNDE) {
             return "blue-grey lighten-4 font-weight-bold";
         } else if (

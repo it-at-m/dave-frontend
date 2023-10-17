@@ -159,7 +159,7 @@ export default class TextAssetForm extends Vue {
     @Prop({ default: false }) open = false;
     @Prop() text?: TextAsset;
 
-    asset?: TextAsset = new TextAsset("");
+    asset: TextAsset = new TextAsset("");
 
     @Watch("text")
     copyAsset(asset: TextAsset): void {
@@ -188,19 +188,19 @@ export default class TextAssetForm extends Vue {
         this.$emit("cancel", Object.assign({}, this.asset));
     }
 
-    private addBoldText() {
+    addBoldText() {
         if (this.asset) {
             this.asset.text = `${this.asset.text?.trim()} <strong>Text einfügen</strong>`;
         }
     }
 
-    private addItalicText() {
+    addItalicText() {
         if (this.asset) {
             this.asset.text = `${this.asset.text?.trim()} <em>Text einfügen</em>`;
         }
     }
 
-    private changeTextSize(size: string): void {
+    changeTextSize(size: string): void {
         if (this.asset) {
             this.asset.size = size;
         }

@@ -78,15 +78,15 @@ export default class NichtAusgeweahlteZaehlung extends Vue {
     @Prop() projektName?: string;
     @Prop() zaehlart?: string;
     @Prop() wetter?: string;
-    @Prop() zaehldauer?: number;
-    @Prop() quelle?: boolean;
+    @Prop() zaehldauer?: string;
+    @Prop() quelle?: string;
     @Prop({ default: false }) sonderzaehlung?: boolean;
     @Prop() color?: string;
     @Prop() hoverColor?: string;
     @Prop() id?: string;
     @Prop({ default: "black" }) iconColor?: string;
 
-    private hover = false;
+    hover = false;
 
     /**
      * es muss für i18n ein Datumsobjekt erzeugt werden.

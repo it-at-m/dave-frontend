@@ -89,7 +89,7 @@ export default class HeadingAssetForm extends Vue {
     @Prop({ default: false }) open = false;
     @Prop() heading?: HeadingAsset;
 
-    asset?: HeadingAsset = new HeadingAsset("", AssetTypesEnum.HEADING1);
+    asset: HeadingAsset = new HeadingAsset("", AssetTypesEnum.HEADING1);
     icon = "mdi-format-header-1";
     style = "h1";
 

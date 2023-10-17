@@ -1,22 +1,39 @@
 <template>
-    <v-chart
+    <chart
         ref="chart"
         :style="belastungsplanHeightAndWidth"
-        :options="optionsBelastunsplan"
+        :option="optionsBelastunsplan"
         autoresize
     />
 </template>
 
 <script lang="ts">
-import { Component, Prop, Ref, Vue, Watch } from "vue-property-decorator";
-import "echarts/lib/chart/graph";
-import "echarts/lib/component/toolbox";
-import "echarts/lib/component/tooltip";
+import {
+    Component,
+    Prop,
+    Provide,
+    Ref,
+    Vue,
+    Watch,
+} from "vue-property-decorator";
+// import "echarts/lib/chart/graph";
+// import "echarts/lib/component/toolbox";
+// import "echarts/lib/component/tooltip";
 // eslint-disable-next-line no-unused-vars
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 // eslint-disable-next-line no-unused-vars
 import LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import { Levels } from "@/api/error";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { GraphChart } from "echarts/charts";
+import {
+    LegendComponent,
+    TitleComponent,
+    ToolboxComponent,
+    TooltipComponent,
+} from "echarts/components";
+import Chart, { THEME_KEY } from "vue-echarts";
 
 /**
  * Die Berechnung der Koordinaten für die einzelnen Fahrbeziehungen erfolgt anhand einer Drehmatrix.
@@ -31,8 +48,21 @@ import { Levels } from "@/api/error";
  *
  */
 
-@Component
+use([
+    CanvasRenderer,
+    GraphChart,
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    ToolboxComponent,
+]);
+
+@Component({
+    components: { Chart },
+})
 export default class BelastungsplanKreisverkehr extends Vue {
+    @Provide() [THEME_KEY] = "dark";
+
     /** Aufbau der Datenstruktur:
      * Ebene 1: Index ist die Knotenarmnummer - 1
      * Ebene 2: Index = 0 => HINEIN

@@ -75,7 +75,7 @@ export default class DatatableAssetForm extends Vue {
     @Prop({ default: false }) open = false;
     @Prop() datatable?: DatatableAsset;
 
-    asset?: DatatableAsset = new DatatableAsset({} as OptionsDTO, "", "");
+    asset: DatatableAsset = new DatatableAsset({} as OptionsDTO, "", "");
 
     @Watch("datatable")
     copyAsset(asset: DatatableAsset): void {

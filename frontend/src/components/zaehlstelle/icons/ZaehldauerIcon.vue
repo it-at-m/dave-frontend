@@ -28,13 +28,14 @@ export default class ZaehldauerIcon extends Vue {
      * Lädt das richtige Zähldauer Icon aus der Liste.
      */
     get icon() {
-        if (!ZaehldauerIcon.zaehldauerIcons().has(this.zaehldauer)) {
-            return new IconTooltip(
+        let result = ZaehldauerIcon.zaehldauerIcons().get(this.zaehldauer);
+        if (result === undefined) {
+            result = new IconTooltip(
                 "mdi-help-box",
                 "Keine Information zur Zähldauer"
             );
         }
-        return ZaehldauerIcon.zaehldauerIcons().get(this.zaehldauer);
+        return result;
     }
 
     /**

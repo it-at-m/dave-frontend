@@ -139,6 +139,7 @@ import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 import TooltipDTO from "@/types/TooltipDTO";
 import SucheService from "@/api/service/SucheService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import markerIconRed from "@/assets/marker-icon-red.png";
 
 @Component({
     components: {
@@ -178,9 +179,9 @@ export default class ZaehlstelleMap extends Vue {
     @Prop()
     private latlng?: string[];
     @Prop({ default: "15vh" })
-    private readonly height!: string;
+    readonly height!: string;
     @Prop({ default: "100%" })
-    private readonly width!: string;
+    readonly width!: string;
     @Prop({ default: false })
     private readonly showMarker!: boolean;
     @Prop({ default: 12 })
@@ -193,7 +194,7 @@ export default class ZaehlstelleMap extends Vue {
     private selectedZaehlstelleKarte: ZaehlstelleKarteDTO =
         DefaultObjectCreator.createDefaultZaehlstelleKarte();
 
-    private mapOptions: object = {
+    mapOptions: object = {
         minZoom: 10,
         maxZoom: 18,
         preferCanvas: false,
@@ -320,9 +321,7 @@ export default class ZaehlstelleMap extends Vue {
         return latLng(parseFloat(lat), parseFloat(lng));
     }
 
-    private createLatLngAsArray(
-        zaehlartenKarte: ZaehlartenKarteDTO
-    ): Array<number> {
+    createLatLngAsArray(zaehlartenKarte: ZaehlartenKarteDTO): Array<number> {
         return [
             parseFloat(zaehlartenKarte.latitude),
             parseFloat(zaehlartenKarte.longitude),
@@ -399,7 +398,7 @@ export default class ZaehlstelleMap extends Vue {
         if (this.zId) {
             if (this.zId === zaehlstelleKarte.id) {
                 let defaultIcon = new Icon.Default();
-                defaultIcon.options.iconUrl = require("@/assets/marker-icon-red.png");
+                defaultIcon.options.iconUrl = markerIconRed;
                 return { opacity: 1.0, icon: defaultIcon };
             } else {
                 return { opacity: 0.5 };
@@ -419,9 +418,9 @@ export default class ZaehlstelleMap extends Vue {
      * Zaehlart Markers rechts unterhalb der Zaehlstellenkoordinate.
      * @return der Array mit der X- und Y-Pixelkoordinate.
      */
-    private calculateIconAnchorCoordinatesForZaehlartMarker(
+    calculateIconAnchorCoordinatesForZaehlartMarker(
         index: number
-    ): Array<number> {
+    ): L.Point {
         let xCoordinate: number =
             ZaehlstelleMap.ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER +
             (index % ZaehlstelleMap.NUMBER_OF_COLUMNS_ZAEHLART_MARKER) *
@@ -432,14 +431,14 @@ export default class ZaehlstelleMap extends Vue {
                 index / ZaehlstelleMap.NUMBER_OF_COLUMNS_ZAEHLART_MARKER
             ) *
                 ZaehlstelleMap.ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER;
-        return [xCoordinate, yCoordinate];
+        return new L.Point(xCoordinate, yCoordinate);
     }
 
-    private choosenZaehlartIconToZaehlstelleHeader(zaehlart: string) {
+    choosenZaehlartIconToZaehlstelleHeader(zaehlart: string) {
         this.$emit("zeahlart-ausgewaehlt", zaehlart);
     }
 
-    private mapReady() {
+    mapReady() {
         this.theMap.mapObject.addControl(
             control.attribution({
                 position: "bottomleft",

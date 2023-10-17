@@ -186,9 +186,9 @@ export default class App extends Vue {
     private static readonly URL_HANDBUCH_LINK: string =
         "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
 
-    private showtooltip = false;
+    showtooltip = false;
 
-    private loggedInUser = "no-security";
+    loggedInUser = "no-security";
 
     // Versionen
     private backendVersion = "";
@@ -196,13 +196,13 @@ export default class App extends Vue {
     private frontendVersion = "";
 
     // Suche
-    private searchQuery = "";
+    searchQuery = "";
 
     private lastSuggestQuery = "";
 
     private suggestions: Suggest[] = [];
 
-    private selectedSuggestion: Suggest | null =
+    selectedSuggestion: Suggest | null =
         DefaultObjectCreator.createDefaultSuggestion();
 
     get getSuggestions() {
@@ -271,7 +271,7 @@ export default class App extends Vue {
             });
     }
 
-    private suggest(query: string) {
+    suggest(query: string) {
         if (query !== "" && query != null) {
             this.lastSuggestQuery = query;
             SucheService.getSuggestions(query)
@@ -337,7 +337,7 @@ export default class App extends Vue {
         }
     }
 
-    private clear() {
+    clear() {
         this.searchQuery = "";
         this.selectedSuggestion =
             DefaultObjectCreator.createDefaultSuggestion();
@@ -345,7 +345,7 @@ export default class App extends Vue {
         this.search();
     }
 
-    private searchOrShowSelectedSuggestion() {
+    searchOrShowSelectedSuggestion() {
         if (this.selectedSuggestion == null) {
             this.search();
         } else if (
@@ -384,18 +384,18 @@ export default class App extends Vue {
             });
     }
 
-    private searchForSuggestion(query: string) {
+    searchForSuggestion(query: string) {
         this.searchQuery = query;
         this.search();
     }
 
-    private showZaehlstelle(item: Suggest) {
+    showZaehlstelle(item: Suggest) {
         this.selectedSuggestion =
             DefaultObjectCreator.createDefaultSuggestion();
         this.$router.push(`/zaehlstelle/${item.zaehlstelleId}`);
     }
 
-    private showZaehlung(item: Suggest) {
+    showZaehlung(item: Suggest) {
         this.selectedSuggestion =
             DefaultObjectCreator.createDefaultSuggestion();
         this.$router.push(
@@ -403,20 +403,20 @@ export default class App extends Vue {
         );
     }
 
-    private updateSearchQuery(itemIndex: number) {
+    updateSearchQuery(itemIndex: number) {
         if (itemIndex >= 0) {
             this.searchQuery = this.getSuggestions[itemIndex].text;
         }
     }
 
-    private deleteChar() {
+    deleteChar() {
         if (this.selectedSuggestion != null) {
             this.selectedSuggestion.type = "";
         }
         this.suggest(this.searchQuery);
     }
 
-    private navigateToHandbuch() {
+    navigateToHandbuch() {
         window.open(App.URL_HANDBUCH_LINK);
     }
 }

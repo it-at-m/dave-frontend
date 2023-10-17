@@ -94,7 +94,7 @@ export default class DeleteDialog extends Vue {
 
     @Prop() open = false;
 
-    private fab = false;
+    fab = false;
 
     get fabColor(): string {
         return this.fab ? "grey darken-1" : "secondary";

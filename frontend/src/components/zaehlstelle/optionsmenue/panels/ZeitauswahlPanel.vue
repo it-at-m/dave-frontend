@@ -189,23 +189,23 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 export default class ZeitauswahlPanel extends Vue {
     @Prop() zaehlung?: LadeZaehlungDTO;
 
-    private zeitauswahl: string = Zeitauswahl.TAGESWERT;
-    private zeitblock: string = Zeitblock.ZB_00_24;
-    private intervall: ZaehldatenIntervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+    zeitauswahl: string = Zeitauswahl.TAGESWERT;
+    zeitblock: string = Zeitblock.ZB_00_24;
+    intervall: ZaehldatenIntervall = ZaehldatenIntervall.STUNDE_VIERTEL;
 
     // Zeitauswahl
-    private hoverTageswert = false;
-    private hoverBlock = false;
-    private hoverStunde = false;
-    private hoverSpitzenstundeKfz = false;
-    private hoverSpitzenstundeRad = false;
-    private hoverSpitzenstundeFuss = false;
+    hoverTageswert = false;
+    hoverBlock = false;
+    hoverStunde = false;
+    hoverSpitzenstundeKfz = false;
+    hoverSpitzenstundeRad = false;
+    hoverSpitzenstundeFuss = false;
 
-    private hoverSelectBlockOrSpitzenstunde = false;
-    private hoverSelectStunde = false;
+    hoverSelectBlockOrSpitzenstunde = false;
+    hoverSelectStunde = false;
 
     // Zeitintervall
-    private hoverSelectZeitintervall = false;
+    hoverSelectZeitintervall = false;
 
     mounted() {
         const options = this.$store.getters.getFilteroptions as OptionsDTO;
@@ -419,7 +419,7 @@ export default class ZeitauswahlPanel extends Vue {
      * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
      * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
      */
-    private isTypeDisabled(type: string): boolean {
+    isTypeDisabled(type: string): boolean {
         return Optionsmenue.isTypeDisabled(type, this.activeZaehlung);
     }
 }

@@ -189,7 +189,6 @@
                                     v-model="
                                         selectOrDeselectAllVerkehrsartenVmodel
                                     "
-                                    value=""
                                     :label="
                                         labelSelectOrDeselectAllVerkehrsarten
                                     "
@@ -335,7 +334,6 @@
                     <v-hover v-model="hoverSelectOrDeselectAll">
                         <v-checkbox
                             v-model="selectOrDeselectAllVmodel"
-                            value=""
                             :label="labelSelectOrDeselectAll"
                             color="grey darken-1"
                             hide-details
@@ -380,16 +378,16 @@ export default class FahrzeugPanel extends Vue {
 
     // Bei Auswahl der Checkbox für einen Differenzdatenvergleich werden die Werte für SV- und GV-Anteil in Prozent gespeichert,
     // um diese bei Abwahl der Checkbox wieder anzeigen zu können.
-    private svAnteilForDifferenzdatenSaved = true;
-    private gvAnteilForDifferenzdatenSaved = true;
+    svAnteilForDifferenzdatenSaved = true;
+    gvAnteilForDifferenzdatenSaved = true;
 
     // Variablen für die Auswahloptionen
-    private fahrzeugOptions: OptionsDTO = {} as OptionsDTO;
+    fahrzeugOptions: OptionsDTO = {} as OptionsDTO;
 
-    private selectOrDeselectAllVmodel = false;
-    private selectOrDeselectAllVerkehrsartenVmodel = false;
-    private hoverSelectOrDeselectAll = false;
-    private hoverSelectOrDeselectAllVerkehrsarten = false;
+    selectOrDeselectAllVmodel = false;
+    selectOrDeselectAllVerkehrsartenVmodel = false;
+    hoverSelectOrDeselectAll = false;
+    hoverSelectOrDeselectAllVerkehrsarten = false;
 
     get labelSelectOrDeselectAll(): string {
         return this.selectOrDeselectAllVmodel
@@ -427,7 +425,7 @@ export default class FahrzeugPanel extends Vue {
      * aus- oder abzuwählen, wenn diese nicht disabled sind.
      * @private
      */
-    private selectOrDeselectAll() {
+    selectOrDeselectAll() {
         if (!this.isTypeDisabled(Fahrzeug.PKW)) {
             this.fahrzeugOptions.personenkraftwagen =
                 this.selectOrDeselectAllVmodel;
@@ -455,7 +453,7 @@ export default class FahrzeugPanel extends Vue {
      * aus- oder abzuwählen, wenn diese nicht disabled sind.
      * @private
      */
-    private selectOrDeselectAllVerkehrsarten() {
+    selectOrDeselectAllVerkehrsarten() {
         if (!this.isTypeDisabled(Fahrzeug.KFZ)) {
             this.fahrzeugOptions.kraftfahrzeugverkehr =
                 this.selectOrDeselectAllVerkehrsartenVmodel;
@@ -553,7 +551,7 @@ export default class FahrzeugPanel extends Vue {
      * im Belastungsplan dargestellt wird (max 3 Werte) oder im Falle des
      * Rad- und Fußverkehrs nicht bei aktivem Tageswert dargestellt werden kann
      */
-    private getHintToDisplay(type: string): string {
+    getHintToDisplay(type: string): string {
         // KFZ, SV und GV werden immer im Belastungsplan angezeigt, wenn aktiv
         let hint = "";
         if (this.isTypeDisabled(type)) {
@@ -604,7 +602,7 @@ export default class FahrzeugPanel extends Vue {
      * angezeigt wird, so wird zur Kennzeichnung die Checkbox blau dargestellt.
      * Ansonsten ist diese grau.
      */
-    private getCheckboxColor(type: string): string {
+    getCheckboxColor(type: string): string {
         // KFZ, SV udn GV sind immer primary, wenn aktiv
         let color = "primary";
         switch (type) {
@@ -647,7 +645,7 @@ export default class FahrzeugPanel extends Vue {
      * angezeigt wird, so wird zur Kennzeichnung das Icon des
      * Belastungsplan davor gestellt
      */
-    private getIcon(type: string): string {
+    getIcon(type: string): string {
         let icon = "";
         switch (type) {
             case Fahrzeug.KFZ: {
@@ -788,21 +786,21 @@ export default class FahrzeugPanel extends Vue {
     }
 
     // Verkehrsarten
-    private hoverKfz = false;
-    private hoverSv = false;
-    private hoverGv = false;
-    private hoverSv_p = false;
-    private hoverGv_p = false;
-    private hoverRad = false;
-    private hoverFuss = false;
+    hoverKfz = false;
+    hoverSv = false;
+    hoverGv = false;
+    hoverSv_p = false;
+    hoverGv_p = false;
+    hoverRad = false;
+    hoverFuss = false;
 
     // Fahrzeugkategorien
-    private hoverPkw = false;
-    private hoverLkw = false;
-    private hoverLz = false;
-    private hoverBus = false;
-    private hoverKrad = false;
-    private hoverPkweinheit = false;
+    hoverPkw = false;
+    hoverLkw = false;
+    hoverLz = false;
+    hoverBus = false;
+    hoverKrad = false;
+    hoverPkweinheit = false;
 
     /**
      * Liefert den Text für die einzelnen Verkehrsarten, welcher
@@ -987,7 +985,7 @@ export default class FahrzeugPanel extends Vue {
      * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
      * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
      */
-    private isTypeDisabled(type: string): boolean {
+    isTypeDisabled(type: string): boolean {
         return Optionsmenue.isTypeDisabled(type, this.activeZaehlung);
     }
 }
