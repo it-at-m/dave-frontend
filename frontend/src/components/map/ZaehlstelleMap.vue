@@ -418,9 +418,7 @@ export default class ZaehlstelleMap extends Vue {
      * Zaehlart Markers rechts unterhalb der Zaehlstellenkoordinate.
      * @return der Array mit der X- und Y-Pixelkoordinate.
      */
-    calculateIconAnchorCoordinatesForZaehlartMarker(
-        index: number
-    ): L.Point {
+    calculateIconAnchorCoordinatesForZaehlartMarker(index: number): L.Point {
         let xCoordinate: number =
             ZaehlstelleMap.ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER +
             (index % ZaehlstelleMap.NUMBER_OF_COLUMNS_ZAEHLART_MARKER) *
