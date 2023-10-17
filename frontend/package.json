@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.8",
-    "@svgdotjs/svg.js": "^3.2.0",
+    "@svgdotjs/svg.js": "3.0.16",
     "@types/leaflet": "^1.9.6",
     "@types/leaflet.fullscreen": "^3.0.0",
     "@types/leaflet.markercluster": "^1.5.2",
