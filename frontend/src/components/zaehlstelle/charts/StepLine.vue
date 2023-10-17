@@ -23,12 +23,6 @@ import {
     GridComponent,
 } from "echarts/components";
 import Chart, { THEME_KEY } from "vue-echarts";
-// import "echarts/lib/chart/line";
-// import "echarts/lib/chart/bar";
-// import "echarts/lib/component/tooltip";
-// import "echarts/lib/component/grid";
-// import "echarts/lib/component/legend";
-// import "echarts/lib/component/toolbox";
 
 /* eslint-disable no-unused-vars */
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -55,7 +49,7 @@ export default class StepLine extends Vue {
     private static readonly CHART_TYPE_X_AXIS: string = "line";
     private static readonly SYMBOL_SIZE: number = 5;
 
-    @Provide() [THEME_KEY] = "dark";
+    @Provide() [THEME_KEY] = "default";
 
     @Ref("container")
     private readonly container!: HTMLDivElement;
@@ -133,7 +127,7 @@ export default class StepLine extends Vue {
         const that = this;
         return {
             toolbox: {
-                showTitle: false,
+                showTitle: true,
                 orient: "vertical",
                 feature: {
                     magicType: {
@@ -144,10 +138,6 @@ export default class StepLine extends Vue {
                             bar: "Balken",
                         },
                     },
-                },
-                tooltip: {
-                    show: true,
-                    position: "left",
                 },
             },
             tooltip: {
@@ -201,7 +191,7 @@ export default class StepLine extends Vue {
         const that = this; /* eslint-disable @typescript-eslint/no-this-alias */
         return {
             toolbox: {
-                showTitle: false,
+                showTitle: true,
                 orient: "vertical",
                 feature: {
                     magicType: {
@@ -212,10 +202,6 @@ export default class StepLine extends Vue {
                             bar: "Balken",
                         },
                     },
-                },
-                tooltip: {
-                    show: true,
-                    position: "left",
                 },
             },
             tooltip: {

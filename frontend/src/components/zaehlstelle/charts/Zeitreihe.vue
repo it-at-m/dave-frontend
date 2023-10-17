@@ -29,11 +29,6 @@ import {
     TooltipComponent,
 } from "echarts/components";
 import Chart, { THEME_KEY } from "vue-echarts";
-// import "echarts/lib/chart/line";
-// import "echarts/lib/chart/bar";
-// import "echarts/lib/component/tooltip";
-// import "echarts/lib/component/legend";
-// import "echarts/lib/component/toolbox";
 
 /* eslint-disable no-unused-vars */
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
@@ -58,7 +53,7 @@ use([
 export default class Zeitreihe extends Vue {
     private static readonly CHART_TYPE_X_AXIS: string = "bar";
 
-    @Provide() [THEME_KEY] = "dark";
+    @Provide() [THEME_KEY] = "default";
 
     @Ref("chart") readonly chart!: any;
     @Ref("container") readonly container!: HTMLDivElement;
@@ -152,7 +147,6 @@ export default class Zeitreihe extends Vue {
     get options() {
         /* eslint-disable @typescript-eslint/no-this-alias */
         let that = this;
-
         let options = {
             tooltip: {
                 trigger: "axis",
@@ -184,7 +178,7 @@ export default class Zeitreihe extends Vue {
                 },
             },
             toolbox: {
-                showTitle: false,
+                showTitle: true,
                 orient: "vertical",
                 feature: {
                     myToolExportData: {
@@ -197,9 +191,9 @@ export default class Zeitreihe extends Vue {
                     },
                     // Die Datenansicht (also Tabellenansicht) des Graphen
                     dataView: {
+                        title: "Datenansicht",
                         show: true,
                         readOnly: true,
-                        title: "Datenansicht",
                         lang: ["Datenansicht", "zurück", "refresh"],
                         optionToContent: function (opt: any) {
                             let axisData = opt.xAxis[0].data;
@@ -235,10 +229,6 @@ export default class Zeitreihe extends Vue {
                             bar: "Balken",
                         },
                     },
-                },
-                tooltip: {
-                    show: true,
-                    position: "left",
                 },
             },
             legend: {

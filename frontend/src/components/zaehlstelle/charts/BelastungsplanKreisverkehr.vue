@@ -16,10 +16,6 @@ import {
     Vue,
     Watch,
 } from "vue-property-decorator";
-// import "echarts/lib/chart/graph";
-// import "echarts/lib/component/toolbox";
-// import "echarts/lib/component/tooltip";
-// eslint-disable-next-line no-unused-vars
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 // eslint-disable-next-line no-unused-vars
 import LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
@@ -61,7 +57,7 @@ use([
     components: { Chart },
 })
 export default class BelastungsplanKreisverkehr extends Vue {
-    @Provide() [THEME_KEY] = "dark";
+    @Provide() [THEME_KEY] = "default";
 
     /** Aufbau der Datenstruktur:
      * Ebene 1: Index ist die Knotenarmnummer - 1

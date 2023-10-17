@@ -24,12 +24,6 @@ import {
     GridComponent,
 } from "echarts/components";
 import Chart, { THEME_KEY } from "vue-echarts";
-// import "echarts/lib/chart/heatmap";
-// import "echarts/lib/component/tooltip";
-// import "echarts/lib/component/grid";
-// import "echarts/lib/component/visualMap";
-// import "echarts/lib/component/toolbox";
-// eslint-disable-next-line no-unused-vars
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 
 use([
@@ -54,7 +48,7 @@ export default class Heatmap extends Vue {
 
     @Ref("chart") readonly chart!: any;
 
-    @Provide() [THEME_KEY] = "dark";
+    @Provide() [THEME_KEY] = "default";
 
     private twoChartsNeeded = false;
 
