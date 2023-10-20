@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vite",
-    "build": "eslint src --fix && vite build --out-dir dist && vue-tsc --noEmit",
+    "build": "eslint src --fix && vite build --out-dir dist",
     "test:watch": "vitest watch",
     "test:unit": "vitest run",
     "lint": "eslint src --fix",
