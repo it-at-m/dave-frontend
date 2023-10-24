@@ -104,7 +104,7 @@ export default class ImageAssetForm extends Vue {
     @Prop({ default: false }) open = false;
     @Prop({ default: new ImageAsset("", "") }) image?: ImageAsset;
 
-    asset?: ImageAsset = new ImageAsset("", "");
+    asset: ImageAsset = new ImageAsset("", "");
 
     @Watch("image")
     copyAsset(asset: ImageAsset): void {

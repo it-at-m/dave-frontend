@@ -21,15 +21,13 @@ routerMethods.forEach((method: string) => {
         if (onResolve || onReject) {
             return originalCall.call(this, location, onResolve, onReject);
         }
-        return (originalCall.call(this, location) as any).catch(
-            (err: any) => err
-        );
+        return originalCall.call(this, location).catch((err: any) => err);
     };
 });
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 export default new Router({
-    base: process.env.BASE_URL,
+    base: import.meta.env.BASE_URL,
     routes: [
         {
             path: "/",

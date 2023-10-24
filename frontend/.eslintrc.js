@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    "vue/setup-compiler-macros": true,
   },
   plugins: [
     'vuetify'
@@ -86,11 +87,13 @@ module.exports = {
     },
   },
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'space-before-function-paren': 0,
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
-    'vue/require-default-prop': 'off'
+    'vue/require-default-prop': 'off',
+    'vue/script-setup-uses-vars': 'error',
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

@@ -31,7 +31,7 @@ import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldat
 })
 export default class ZeitreiheCard extends Vue {
     @Prop()
-    private zaehldatenZeitreihe!: LadeZaehldatenZeitreiheDTO;
+    zaehldatenZeitreihe!: LadeZaehldatenZeitreiheDTO;
 
     @Ref("zeitreiheForPdf") readonly zeitreiheForPdf!: Zeitreihe;
 
@@ -48,7 +48,7 @@ export default class ZeitreiheCard extends Vue {
         this.zeitreiheForPdf.chart.resize(chartOptions);
     }
 
-    private charttypeChanged(newChartType: string) {
+    charttypeChanged(newChartType: string) {
         this.zeitreiheForPdf.chart.options.series.forEach((series: any) => {
             series.type = newChartType;
         });

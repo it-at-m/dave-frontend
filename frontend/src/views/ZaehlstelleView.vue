@@ -84,9 +84,9 @@ import ZaehlstellenService from "@/api/service/ZaehlstellenService";
 })
 export default class ZaehlstelleView extends Vue {
     // Die Basisinformationen zur Zählstelle
-    private zaehlstelle: ZaehlstelleHeaderDTO = {} as ZaehlstelleHeaderDTO;
+    zaehlstelle: ZaehlstelleHeaderDTO = {} as ZaehlstelleHeaderDTO;
     // Prüfvariable, ob Zählungen vorhandern sind
-    private hasZaehlungen = true;
+    hasZaehlungen = true;
 
     externalQuery = "";
 
@@ -265,7 +265,7 @@ export default class ZaehlstelleView extends Vue {
     /**
      * Hier kommt das Event an, wenn jemand in der Karte eine bestimmte Zählart klickt
      */
-    private setZaehlart(zaehlart: string) {
+    setZaehlart(zaehlart: string) {
         this.externalQuery = zaehlart;
     }
 }

@@ -156,13 +156,13 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 })
 export default class Optionsmenue extends Vue {
     @Prop()
-    private readonly zaehlung!: LadeZaehlungDTO;
+    readonly zaehlung!: LadeZaehlungDTO;
 
     // Variablen für Dialog
-    private dialog = false;
+    dialog = false;
 
     // Variablen für die Auswahloptionen
-    private chosenOptions: OptionsDTO = {} as OptionsDTO;
+    chosenOptions: OptionsDTO = {} as OptionsDTO;
 
     /**
      * Lädt die Optionen aus dem Store
@@ -257,24 +257,24 @@ export default class Optionsmenue extends Vue {
     }
 
     // Event Methoden für die Zeitauswahl Komponente
-    private setZeitauswahl(event: string) {
+    setZeitauswahl(event: string) {
         this.chosenOptions.zeitauswahl = event;
         this.$store.commit("setZeitauswahl", event);
     }
 
-    private setZeitblock(event: string) {
+    setZeitblock(event: string) {
         this.chosenOptions.zeitblock = event;
         this.$store.commit("setZeitblock", event);
     }
 
-    private setIntervall(event: ZaehldatenIntervall) {
+    setIntervall(event: ZaehldatenIntervall) {
         if (event) {
             this.chosenOptions.intervall = event;
         }
     }
 
     // Event Methode für die Fahrzeug Komponente
-    private updateOptions(event: OptionsDTO) {
+    updateOptions(event: OptionsDTO) {
         if (event) {
             this.chosenOptions.kraftfahrzeugverkehr =
                 event.kraftfahrzeugverkehr;
@@ -297,7 +297,7 @@ export default class Optionsmenue extends Vue {
     }
 
     // Event-Methoden für die Geometrie Komponente
-    private setVon(event: Array<number>) {
+    setVon(event: Array<number>) {
         if (Array.isArray(event) && event.length > 1) {
             this.chosenOptions.vonKnotenarm = null;
         } else {
@@ -306,7 +306,7 @@ export default class Optionsmenue extends Vue {
         this.chosenOptions.vonIds = event;
     }
 
-    private setNach(event: Array<number>) {
+    setNach(event: Array<number>) {
         if (Array.isArray(event) && event.length > 1) {
             this.chosenOptions.nachKnotenarm = null;
         } else {
@@ -315,105 +315,105 @@ export default class Optionsmenue extends Vue {
         this.chosenOptions.nachIds = event;
     }
 
-    private setBeideRichtungen(event: boolean) {
+    setBeideRichtungen(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.beideRichtungen = event;
         }
     }
 
     // Event-Methoden für die Vergleichs Komponente
-    private setVergleichszaehlungsId(event: string) {
+    setVergleichszaehlungsId(event: string) {
         if (event) {
             this.chosenOptions.vergleichszaehlungsId = event;
         }
     }
 
-    private setIdVergleichszaehlungZeitreihe(event: string) {
+    setIdVergleichszaehlungZeitreihe(event: string) {
         if (event) {
             this.chosenOptions.idVergleichszaehlungZeitreihe = event;
         }
     }
 
-    private setDifferenzdatenDarstellen(event: boolean) {
+    setDifferenzdatenDarstellen(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.differenzdatenDarstellen = event;
         }
     }
 
     // Event-Methoden für die Darstellungsoptionen Komponente
-    private setWerteHundertRunden(event: boolean) {
+    setWerteHundertRunden(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.werteHundertRunden = event;
         }
     }
 
-    private setBlackPrintMode(event: boolean) {
+    setBlackPrintMode(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.blackPrintMode = event;
         }
     }
 
-    private setMittelwert(event: boolean) {
+    setMittelwert(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.mittelwert = event;
         }
     }
 
-    private setStundensumme(event: boolean) {
+    setStundensumme(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.stundensumme = event;
         }
     }
 
-    private setBlocksumme(event: boolean) {
+    setBlocksumme(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.blocksumme = event;
         }
     }
 
-    private setTagessumme(event: boolean) {
+    setTagessumme(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.tagessumme = event;
         }
     }
 
-    private setSpitzenstunde(event: boolean) {
+    setSpitzenstunde(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.spitzenstunde = event;
         }
     }
 
-    private setSpitzenstundeKfz(event: boolean) {
+    setSpitzenstundeKfz(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.spitzenstundeKfz = event;
         }
     }
 
-    private setSpitzenstundeRad(event: boolean) {
+    setSpitzenstundeRad(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.spitzenstundeRad = event;
         }
     }
 
-    private setSpitzenstundeFuss(event: boolean) {
+    setSpitzenstundeFuss(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.spitzenstundeFuss = event;
         }
     }
 
-    private setGanglinieYAchse1MaxValue(event: number) {
+    setGanglinieYAchse1MaxValue(event: number) {
         if (event !== undefined) {
             this.chosenOptions.ganglinieYAchse1MaxValue = event;
         }
     }
 
-    private setGanglinieYAchse2MaxValue(event: number) {
+    setGanglinieYAchse2MaxValue(event: number) {
         if (event !== undefined) {
             this.chosenOptions.ganglinieYAchse2MaxValue = event;
         }
     }
 
-    private setZeitreiheGesamt(event: boolean) {
+    setZeitreiheGesamt(event: boolean) {
         if (event !== undefined) {
             this.chosenOptions.zeitreiheGesamt = event;
         }
@@ -424,7 +424,7 @@ export default class Optionsmenue extends Vue {
      *
      * @private
      */
-    private setOptions() {
+    setOptions() {
         this.saveOptions();
         this.dialog = false;
     }
@@ -442,7 +442,7 @@ export default class Optionsmenue extends Vue {
     }
 
     // Funktionalität für den "Zurücksetzen" Button
-    private resetOptionsmenu() {
+    resetOptionsmenu() {
         this.resetSizeBelastungsplan();
         this.resetOptions();
     }
@@ -473,7 +473,7 @@ export default class Optionsmenue extends Vue {
 </script>
 
 <style lang="sass">
-@import './node_modules/vuetify/src/components/VExpansionPanel/_variables.scss'
+@import 'vuetify/src/components/VExpansionPanel/_variables.scss'
 .v-expansion-panel
   &::before
     +elevation(0)

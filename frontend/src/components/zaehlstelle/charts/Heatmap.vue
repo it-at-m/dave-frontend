@@ -1,26 +1,45 @@
 <template>
-    <v-chart
+    <chart
         ref="chart"
         :style="heatmapHeightAndWidth"
-        :options="optionsHeatmap"
+        :option="optionsHeatmap"
         autoresize
     />
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop, Ref, Watch } from "vue-property-decorator";
+import { Component, Prop, Provide, Ref, Watch } from "vue-property-decorator";
 
 // chart
-import "echarts/lib/chart/heatmap";
-import "echarts/lib/component/tooltip";
-import "echarts/lib/component/grid";
-import "echarts/lib/component/visualMap";
-import "echarts/lib/component/toolbox";
-// eslint-disable-next-line no-unused-vars
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { HeatmapChart } from "echarts/charts";
+import {
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    ToolboxComponent,
+    VisualMapComponent,
+    GridComponent,
+} from "echarts/components";
+import Chart, { THEME_KEY } from "vue-echarts";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 
-@Component
+use([
+    CanvasRenderer,
+    HeatmapChart,
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    ToolboxComponent,
+    VisualMapComponent,
+    GridComponent,
+]);
+
+@Component({
+    components: { Chart },
+})
 export default class Heatmap extends Vue {
     private static readonly HEIGHT_PERCENTAGE_SINGLE_ENTRY_Y_AXIS: number = 6;
 
@@ -28,6 +47,8 @@ export default class Heatmap extends Vue {
     private zaehldatenHeatmap!: LadeZaehldatenHeatmapDTO;
 
     @Ref("chart") readonly chart!: any;
+
+    @Provide() [THEME_KEY] = "default";
 
     private twoChartsNeeded = false;
 

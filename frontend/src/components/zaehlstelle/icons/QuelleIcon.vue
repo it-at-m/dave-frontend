@@ -28,13 +28,14 @@ export default class QuelleIcon extends Vue {
      * Lädt das richtige MDI Icon aus der Liste.
      */
     get icon() {
-        if (!QuelleIcon.quelleIcons().has(this.quelle)) {
-            return new IconTooltip(
+        let result = QuelleIcon.quelleIcons().get(this.quelle);
+        if (result === undefined) {
+            result = new IconTooltip(
                 "mdi-help-box",
                 "Keine Information zur Quelle"
             );
         }
-        return QuelleIcon.quelleIcons().get(this.quelle);
+        return result;
     }
 
     /**

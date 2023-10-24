@@ -118,11 +118,11 @@ export default class GeometriePanel extends Vue {
     vonIds = new Array<number>();
     alle = { nummer: 0, strassenname: "Alle Knotenarme" };
 
-    private beideRichtungen = false;
+    beideRichtungen = false;
 
-    private hoverSelectVon = false;
-    private hoverSelectNach = false;
-    private hoverBeideRichtungen = false;
+    hoverSelectVon = false;
+    hoverSelectNach = false;
+    hoverBeideRichtungen = false;
 
     // Lädt die "von" Knotenarme für den aktuell gewählten "nach" Knotenarm
     get vonKnotenarme(): LadeKnotenarmDTO[] | undefined {

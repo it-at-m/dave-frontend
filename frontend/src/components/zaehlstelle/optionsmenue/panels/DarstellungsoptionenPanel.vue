@@ -279,25 +279,25 @@ export default class DarstellungsoptionenPanel extends Vue {
     private static readonly MAX_VALUE_EXCLUDE: number = 101;
 
     // Belastungsplan
-    private werteHundertRunden = false;
-    private blackPrintMode = false;
-    private sizeBelastungsplan = 0;
+    werteHundertRunden = false;
+    blackPrintMode = false;
+    sizeBelastungsplan = 0;
 
     // Ganglinie
-    private ganglinieYAchse1MaxValue: number | null = null;
-    private ganglinieYAchse2MaxValue: number | null = null;
+    ganglinieYAchse1MaxValue: number | null = null;
+    ganglinieYAchse2MaxValue: number | null = null;
 
     // Listenausgabe
-    private stundensumme = false;
-    private blocksumme = false;
-    private tagessumme = false;
-    private spitzenstunde = false;
-    private spitzenstundeKfz = false;
-    private spitzenstundeRad = false;
-    private spitzenstundeFuss = false;
+    stundensumme = false;
+    blocksumme = false;
+    tagessumme = false;
+    spitzenstunde = false;
+    spitzenstundeKfz = false;
+    spitzenstundeRad = false;
+    spitzenstundeFuss = false;
 
     // Zeitreihe
-    private zeitreiheGesamt = false;
+    zeitreiheGesamt = false;
 
     mounted() {
         const options = this.$store.getters.getFilteroptions as OptionsDTO;
@@ -415,17 +415,17 @@ export default class DarstellungsoptionenPanel extends Vue {
         this.sizeBelastungsplan = newSize;
     }
 
-    private hoverWerteHundertRunden = false;
-    private hoverSizeBelastungsplan = false;
-    private hoverBlackPrintMode = false;
-    private hoverStundensumme = false;
-    private hoverBlocksumme = false;
-    private hoverTagessumme = false;
-    private hoverSpitzenstunde = false;
-    private hoverSpitzenstundeDetailauswahl = false;
-    private hoverYAchse1 = false;
-    private hoverYAchse2 = false;
-    private hoverZeitreiheGesamt = false;
+    hoverWerteHundertRunden = false;
+    hoverSizeBelastungsplan = false;
+    hoverBlackPrintMode = false;
+    hoverStundensumme = false;
+    hoverBlocksumme = false;
+    hoverTagessumme = false;
+    hoverSpitzenstunde = false;
+    hoverSpitzenstundeDetailauswahl = false;
+    hoverYAchse1 = false;
+    hoverYAchse2 = false;
+    hoverZeitreiheGesamt = false;
 
     get helpTextBelastungsplan(): string {
         if (this.hoverWerteHundertRunden) {
@@ -537,7 +537,7 @@ export default class DarstellungsoptionenPanel extends Vue {
             : (this.zeitreiheGesamt = newOptions.zeitreiheGesamt);
     }
 
-    private isTypeKfzDisabled(): boolean {
+    isTypeKfzDisabled(): boolean {
         const disabled: boolean = this.isTypeDisabled("KFZ");
         if (disabled) {
             this.spitzenstundeKfz = false;
@@ -545,7 +545,7 @@ export default class DarstellungsoptionenPanel extends Vue {
         return disabled;
     }
 
-    private isTypeRadDisabled(): boolean {
+    isTypeRadDisabled(): boolean {
         const disabled: boolean = this.isTypeDisabled("RAD");
         if (disabled) {
             this.spitzenstundeRad = false;
@@ -553,7 +553,7 @@ export default class DarstellungsoptionenPanel extends Vue {
         return disabled;
     }
 
-    private isTypeFussDisabled(): boolean {
+    isTypeFussDisabled(): boolean {
         const disabled: boolean = this.isTypeDisabled("FUSS");
         if (disabled) {
             this.spitzenstundeFuss = false;
@@ -565,11 +565,11 @@ export default class DarstellungsoptionenPanel extends Vue {
      * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
      * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
      */
-    private isTypeDisabled(type: string): boolean {
+    isTypeDisabled(type: string): boolean {
         return Optionsmenue.isTypeDisabled(type, this.activeZaehlung);
     }
 
-    private checkRangeYAchse2() {
+    checkRangeYAchse2() {
         if (this.ganglinieYAchse2MaxValue) {
             if (
                 !_.inRange(
@@ -583,7 +583,7 @@ export default class DarstellungsoptionenPanel extends Vue {
         }
     }
 
-    private checkRangeYAchse1() {
+    checkRangeYAchse1() {
         if (
             this.ganglinieYAchse1MaxValue &&
             this.ganglinieYAchse1MaxValue < DarstellungsoptionenPanel.MIN_VALUE

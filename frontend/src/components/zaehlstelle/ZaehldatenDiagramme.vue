@@ -409,11 +409,11 @@ export default class ZaehldatenDiagramme extends Vue {
     @Prop() contentHeight?: string;
     @Prop({ default: true }) hasZaehlungen!: boolean;
 
-    private belastungsplanLoading = false;
-    private chartDataLoading = false;
+    belastungsplanLoading = false;
+    chartDataLoading = false;
 
     // Dialog zum PDF Report
-    private pdfReportDialog = false;
+    pdfReportDialog = false;
 
     // Belastungsplan Kreuzung
     private belastungsplanDTO: LadeBelastungsplanDTO =
@@ -436,17 +436,17 @@ export default class ZaehldatenDiagramme extends Vue {
         {} as LadeZaehldatenHeatmapDTO;
 
     // Zeitreihe
-    private zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO =
+    zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO =
         {} as LadeZaehldatenZeitreiheDTO;
-    private zeitreiheLoading = false;
+    zeitreiheLoading = false;
 
     // Fab
-    private fab = false;
-    private isFabShown = true;
-    private isTabListenausgabe = false;
-    private isTabHeatmap = false;
+    fab = false;
+    isFabShown = true;
+    isTabListenausgabe = false;
+    isTabHeatmap = false;
 
-    private activeTab = 0;
+    activeTab = 0;
 
     private static readonly TAB_BELASTUNGSPLAN: number = 0;
     private static readonly TAB_GANGLINIE: number = 1;
@@ -460,7 +460,7 @@ export default class ZaehldatenDiagramme extends Vue {
     private static readonly REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG: string =
         "schematischeUebersichtAsBase64Png";
 
-    private loadingFile = false;
+    loadingFile = false;
 
     @Ref("belastungsplanCard") readonly belastungsplanCard!: BelastungsplanCard;
     @Ref("steplineCard") readonly steplineCard!: StepLineCard;
@@ -838,7 +838,7 @@ export default class ZaehldatenDiagramme extends Vue {
     }
 
     // PDF
-    private generatePdf() {
+    generatePdf() {
         let formData = new FormData();
         this.loadingFile = true;
 
@@ -934,7 +934,7 @@ export default class ZaehldatenDiagramme extends Vue {
             .finally(() => (this.loadingFile = false));
     }
 
-    private generateCsv() {
+    generateCsv() {
         this.loadingFile = true;
         const optionsDTO = Object.assign({}, this.options) as OptionsDTO;
         optionsDTO.zaehldauer = this.zaehlung.zaehldauer;
@@ -1057,7 +1057,8 @@ export default class ZaehldatenDiagramme extends Vue {
                 encodedUri = this.getKreisverkehrBase64();
             } else {
                 // Kreuzung
-                encodedUri = URL.createObjectURL(this.belastungsplanSvg);
+                if (this.belastungsplanSvg != null)
+                    encodedUri = URL.createObjectURL(this.belastungsplanSvg);
             }
             // Ganglinie
         } else if (this.activeTab === ZaehldatenDiagramme.TAB_GANGLINIE) {
