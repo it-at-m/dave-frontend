@@ -10,6 +10,7 @@
             :options="mapOptions"
             style="z-index: 1"
             @ready="mapReady"
+            @moveend="saveMapStateInUrl"
         >
             <l-control-layers />
             <!--      Kartenlayers. Bei layer-type="base" muss bei der Default-Karte :visible auf true gesetzt werden. -->
@@ -306,7 +307,21 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
+    private saveMapStateInUrl() {
+        // jedes mal wenn die Map bewegt wird (eine neuer Kartenausschnit entsteht), werden die Koordinaten in der URL gespeichert
+        //console.log("Map bewegt");
+        const lat = this.theMap.mapObject.getBounds().getCenter().lat;
+        const lng = this.theMap.mapObject.getBounds().getCenter().lng;
+        const zoom = this.theMap.mapObject.getZoom();
+
+        const stateObj = { lat: lat, lng: lng, zoom };
+        const newUrl = "?lat=" + lat + "&lng=" + lng + "&zoom=" + zoom;
+        history.pushState(stateObj, "", newUrl);
+    }
     private routeToZaehlstelle(id: string) {
+        // parameter wird in url gespeichert sobald die map bewegt wurde
+        // todo: wird der funktionsaufruf dann hier vor dem klicken auf den marker dann nochmal benötigt?
+        this.saveMapStateInUrl();
         this.$router.push("/zaehlstelle/" + id);
     }
 
