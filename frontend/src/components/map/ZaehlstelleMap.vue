@@ -229,6 +229,11 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
+    created() {
+        //todo: muss das in App.vue? --> https://stackoverflow.com/questions/47535334/listening-to-onpopstate-event-on-vuejs 1. Antwort
+        window.addEventListener("popstate", this.handlePopstate);
+    }
+
     mounted() {
         SucheService.searchZaehlstelle(
             this.$store.getters["search/lastSearchQuery"]
@@ -307,22 +312,42 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
+    handlePopstate() {
+        this.restoreMapStateFromURL();
+    }
+
     private saveMapStateInUrl() {
-        // jedes mal wenn die Map bewegt wird (eine neuer Kartenausschnit entsteht), werden die Koordinaten in der URL gespeichert
-        //console.log("Map bewegt");
-        const lat = this.theMap.mapObject.getBounds().getCenter().lat;
-        const lng = this.theMap.mapObject.getBounds().getCenter().lng;
-        const zoom = this.theMap.mapObject.getZoom();
+        //todo: die funktion darf nicht aufgerufen werden, wenn die map sich durch klicken auf den zurück button bewegt!!
+        const map = this.theMap.mapObject;
+        const mapCenter = map.getBounds().getCenter();
+
+        const lat = mapCenter.lat.toString();
+        const lng = mapCenter.lng.toString();
+        const zoom = map.getZoom().toString();
 
         const stateObj = { lat: lat, lng: lng, zoom };
         const newUrl = "?lat=" + lat + "&lng=" + lng + "&zoom=" + zoom;
         history.pushState(stateObj, "", newUrl);
     }
     private routeToZaehlstelle(id: string) {
-        // parameter wird in url gespeichert sobald die map bewegt wurde
-        // todo: wird der funktionsaufruf dann hier vor dem klicken auf den marker dann nochmal benötigt?
-        this.saveMapStateInUrl();
+        //todo: wird der funktionsaufruf hier vor dem klicken auf den marker dann nochmal extra benötigt?
+        //this.saveMapStateInUrl();
         this.$router.push("/zaehlstelle/" + id);
+    }
+
+    private restoreMapStateFromURL() {
+        const urlQueryParams = new URLSearchParams(window.location.search);
+        const latParam = urlQueryParams.get("lat");
+        const lngParam = urlQueryParams.get("lng");
+        const zoomParam = urlQueryParams.get("zoom");
+
+        if (latParam != null && lngParam != null && zoomParam != null) {
+            const lat = parseFloat(latParam);
+            const lng = parseFloat(lngParam);
+            const zoom = parseFloat(zoomParam);
+
+            this.theMap.mapObject.setView([lat, lng], zoom);
+        }
     }
 
     private createLatLng(zaehlstelleKarte: ZaehlstelleKarteDTO): LatLng {
