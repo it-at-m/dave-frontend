@@ -190,6 +190,7 @@ export default class ZaehlstelleMap extends Vue {
     @Ref("map")
     private readonly theMap!: LMap;
 
+    private popStateDetected = false;
     private mapMarkerClusterGroup = L.markerClusterGroup();
 
     private selectedZaehlstelleKarte: ZaehlstelleKarteDTO =
@@ -229,12 +230,8 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
-    created() {
-        //todo: muss das in App.vue? --> https://stackoverflow.com/questions/47535334/listening-to-onpopstate-event-on-vuejs 1. Antwort
-        window.addEventListener("popstate", this.handlePopstate);
-    }
-
     mounted() {
+        window.addEventListener("popstate", this.handlePopstate);
         SucheService.searchZaehlstelle(
             this.$store.getters["search/lastSearchQuery"]
         )
@@ -313,21 +310,29 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     handlePopstate() {
+        this.popStateDetected = true;
         this.restoreMapStateFromURL();
     }
 
     private saveMapStateInUrl() {
-        //todo: die funktion darf nicht aufgerufen werden, wenn die map sich durch klicken auf den zurück button bewegt!!
-        const map = this.theMap.mapObject;
-        const mapCenter = map.getBounds().getCenter();
+        /*
+         * durch popStateDetected wird die Funktion nur aufgerufen,
+         * wenn die Map aktiv vom Nutzer bewegt wurde, und nicht,
+         * wenn die Map durch Klicken des Zurück Buttons bewegt wurde
+         */
+        if (!this.popStateDetected) {
+            const map = this.theMap.mapObject;
+            const mapCenter = map.getBounds().getCenter();
 
-        const lat = mapCenter.lat.toString();
-        const lng = mapCenter.lng.toString();
-        const zoom = map.getZoom().toString();
+            const lat = mapCenter.lat.toString();
+            const lng = mapCenter.lng.toString();
+            const zoom = map.getZoom().toString();
 
-        const stateObj = { lat: lat, lng: lng, zoom };
-        const newUrl = "?lat=" + lat + "&lng=" + lng + "&zoom=" + zoom;
-        history.pushState(stateObj, "", newUrl);
+            const stateObj = { lat: lat, lng: lng, zoom };
+            const newUrl = "?lat=" + lat + "&lng=" + lng + "&zoom=" + zoom;
+            history.replaceState(stateObj, "", newUrl);
+        }
+        this.popStateDetected = false;
     }
     private routeToZaehlstelle(id: string) {
         //todo: wird der funktionsaufruf hier vor dem klicken auf den marker dann nochmal extra benötigt?
