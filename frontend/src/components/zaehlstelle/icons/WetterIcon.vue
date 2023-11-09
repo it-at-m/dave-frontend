@@ -28,13 +28,14 @@ export default class WetterIcon extends Vue {
      * Lädt das richtige MDI Icon aus der Liste.
      */
     get icon() {
-        if (!WetterIcon.wetterIcons().has(this.wetter)) {
-            return new IconTooltip(
+        let result = WetterIcon.wetterIcons().get(this.wetter);
+        if (result === undefined) {
+            result = new IconTooltip(
                 "mdi-cloud-question",
                 "Keine Information zum Wetter"
             );
         }
-        return WetterIcon.wetterIcons().get(this.wetter);
+        return result;
     }
 
     /**

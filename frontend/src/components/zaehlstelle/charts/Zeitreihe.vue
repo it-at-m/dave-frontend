@@ -1,8 +1,8 @@
 <template>
-    <v-chart
+    <chart
         ref="chart"
         :style="zeitreiheHeightAndWidth"
-        :options="options"
+        :option="options"
         autoresize
         @magictypechanged="switchChartType"
     />
@@ -10,24 +10,50 @@
 
 
 <script lang="ts">
-import { Component, Prop, Ref, Vue, Watch } from "vue-property-decorator";
+import {
+    Component,
+    Prop,
+    Provide,
+    Ref,
+    Vue,
+    Watch,
+} from "vue-property-decorator";
 // chart
-import "echarts/lib/chart/line";
-import "echarts/lib/chart/bar";
-import "echarts/lib/component/tooltip";
-import "echarts/lib/component/legend";
-import "echarts/lib/component/toolbox";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { BarChart, LineChart } from "echarts/charts";
+import {
+    LegendComponent,
+    TitleComponent,
+    ToolboxComponent,
+    TooltipComponent,
+} from "echarts/components";
+import Chart, { THEME_KEY } from "vue-echarts";
 
 /* eslint-disable no-unused-vars */
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import StepLine from "./StepLine.vue";
 /* eslint-enable no-unused-vars */
 import _ from "lodash";
+import ChartUtils from "@/util/ChartUtils";
 
-@Component
+use([
+    CanvasRenderer,
+    LineChart,
+    BarChart,
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    ToolboxComponent,
+]);
+
+@Component({
+    components: { Chart },
+})
 export default class Zeitreihe extends Vue {
     private static readonly CHART_TYPE_X_AXIS: string = "bar";
+
+    @Provide() [THEME_KEY] = "default";
 
     @Ref("chart") readonly chart!: any;
     @Ref("container") readonly container!: HTMLDivElement;
@@ -121,7 +147,6 @@ export default class Zeitreihe extends Vue {
     get options() {
         /* eslint-disable @typescript-eslint/no-this-alias */
         let that = this;
-
         let options = {
             tooltip: {
                 trigger: "axis",
@@ -153,7 +178,7 @@ export default class Zeitreihe extends Vue {
                 },
             },
             toolbox: {
-                showTitle: false,
+                showTitle: true,
                 orient: "vertical",
                 feature: {
                     myToolExportData: {
@@ -166,9 +191,9 @@ export default class Zeitreihe extends Vue {
                     },
                     // Die Datenansicht (also Tabellenansicht) des Graphen
                     dataView: {
+                        title: "Datenansicht",
                         show: true,
                         readOnly: true,
-                        title: "Datenansicht",
                         lang: ["Datenansicht", "zurück", "refresh"],
                         optionToContent: function (opt: any) {
                             let axisData = opt.xAxis[0].data;
@@ -204,10 +229,6 @@ export default class Zeitreihe extends Vue {
                             bar: "Balken",
                         },
                     },
-                },
-                tooltip: {
-                    show: true,
-                    position: "left",
                 },
             },
             legend: {
@@ -288,7 +309,7 @@ export default class Zeitreihe extends Vue {
                 name: Zeitreihe.KRAFTFAHRZEUGVERKEHR,
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 data: zeitreiheDaten.kfz,
-                color: StepLine.CHART_COLOR.get(StepLine.LEGEND_ENTRY_KFZ),
+                color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_KFZ),
             });
         }
         if (this.filterOptions.schwerverkehr) {
@@ -296,7 +317,7 @@ export default class Zeitreihe extends Vue {
                 name: Zeitreihe.SCHWERVERKEHR,
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 data: zeitreiheDaten.sv,
-                color: StepLine.CHART_COLOR.get(StepLine.LEGEND_ENTRY_SV),
+                color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_SV),
             });
         }
         if (this.filterOptions.gueterverkehr) {
@@ -304,7 +325,7 @@ export default class Zeitreihe extends Vue {
                 name: Zeitreihe.GUETERVERKEHR,
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 data: zeitreiheDaten.gv,
-                color: StepLine.CHART_COLOR.get(StepLine.LEGEND_ENTRY_GV),
+                color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_GV),
             });
         }
         if (this.filterOptions.radverkehr) {
@@ -312,7 +333,7 @@ export default class Zeitreihe extends Vue {
                 name: Zeitreihe.RADVERKEHR,
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 data: zeitreiheDaten.rad,
-                color: StepLine.CHART_COLOR.get(StepLine.LEGEND_ENTRY_RAD),
+                color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_RAD),
             });
         }
         if (this.filterOptions.fussverkehr) {
@@ -320,7 +341,7 @@ export default class Zeitreihe extends Vue {
                 name: Zeitreihe.FUSSVERKEHR,
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 data: zeitreiheDaten.fuss,
-                color: StepLine.CHART_COLOR.get(StepLine.LEGEND_ENTRY_FUSS),
+                color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_FUSS),
             });
         }
         if (this.filterOptions.zeitreiheGesamt) {
@@ -337,8 +358,8 @@ export default class Zeitreihe extends Vue {
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 yAxisIndex: 1,
                 data: zeitreiheDaten.svAnteilInProzent,
-                color: StepLine.CHART_COLOR.get(
-                    StepLine.LEGEND_ENTRY_SV_ANTEIL_PROZENT
+                color: ChartUtils.CHART_COLOR.get(
+                    ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT
                 ),
             });
         }
@@ -349,8 +370,8 @@ export default class Zeitreihe extends Vue {
                 type: Zeitreihe.CHART_TYPE_X_AXIS,
                 yAxisIndex: 1,
                 data: zeitreiheDaten.gvAnteilInProzent,
-                color: StepLine.CHART_COLOR.get(
-                    StepLine.LEGEND_ENTRY_GV_ANTEIL_PROZENT
+                color: ChartUtils.CHART_COLOR.get(
+                    ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT
                 ),
             });
         }
@@ -437,7 +458,7 @@ export default class Zeitreihe extends Vue {
         return row;
     }
 
-    private switchChartType(event: any) {
+    switchChartType(event: any) {
         this.$emit("charttypeChanged", event.currentType);
     }
 }

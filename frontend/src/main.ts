@@ -1,21 +1,16 @@
 import Vue, { VNode } from "vue";
-import "babel-polyfill";
 import Vuetify from "./plugins/vuetify";
-import store from "./store";
-import i18n from "./i18n";
 import App from "./App.vue";
 import router from "./router";
 import moment from "moment";
+import store from "./store";
 import "./directives/infinitescroll";
 import "./plugins/leafletmaps";
-import ECharts from "vue-echarts";
+import i18n from "./i18n";
 import "./registerServiceWorker";
-
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 
 Vue.config.productionTip = false;
-
-Vue.component("VChart", ECharts);
 
 moment.locale(window.navigator.language);
 

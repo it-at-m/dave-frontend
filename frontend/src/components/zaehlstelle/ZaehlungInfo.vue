@@ -273,11 +273,11 @@ import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIco
 export default class ZaehlungInfo extends Vue {
     filter = false;
 
-    private showSpitzenstundeInfo = false;
+    showSpitzenstundeInfo = false;
 
-    private startUhrzeitIntervalls = "";
+    startUhrzeitIntervalls = "";
 
-    private endeUhrzeitIntervalls = "";
+    endeUhrzeitIntervalls = "";
 
     @Prop({ default: "" }) kommentarZaehlstelle?: string;
 

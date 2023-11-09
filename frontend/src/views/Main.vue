@@ -83,9 +83,9 @@ import TooltipDTO from "@/types/TooltipDTO";
 export default class App extends Vue {
     @Ref("map") readonly map!: any;
 
-    private fab = false;
-    private creatingPicture = false;
-    private printingSearchResult = false;
+    fab = false;
+    creatingPicture = false;
+    printingSearchResult = false;
 
     mounted() {
         window.scrollTo(0, 0);

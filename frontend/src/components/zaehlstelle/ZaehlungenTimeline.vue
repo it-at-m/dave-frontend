@@ -57,8 +57,8 @@
         >
             <nicht-ausgewaehlte-zaehlung
                 v-for="(z, index) in filteredZaehlungen"
-                :key="z.id"
                 :id="z.id"
+                :key="z.id"
                 :datum="z.datum"
                 :projekt-name="z.projektName"
                 :zaehlart="z.zaehlart"
@@ -83,6 +83,7 @@ import NichtAusgewaehlteZaehlung from "@/components/zaehlstelle/NichtAusgewaehlt
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import _ from "lodash";
+import { DateTimeFormatOptions } from "vue-i18n";
 /* eslint-enable no-unused-vars */
 
 @Component({
@@ -96,7 +97,11 @@ export default class ZaehlungenTimeline extends Vue {
 
     // private attribute
     query = "";
-    dateOptions = { year: "numeric", month: "numeric", day: "numeric" };
+    dateOptions: DateTimeFormatOptions = {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+    };
 
     // hier kommt der Suchstring an, wenn auf eine Zählart
     // in der Karte geklickt wurde

@@ -28,13 +28,14 @@ export default class ZaehlartIcon extends Vue {
      * Lädt das richtige MDI Icon aus der Liste.
      */
     get icon() {
-        if (!ZaehlartIcon.zaehlartIcons().has(this.zaehlart)) {
-            return new IconTooltip(
+        let result = ZaehlartIcon.zaehlartIcons().get(this.zaehlart);
+        if (result === undefined) {
+            result = new IconTooltip(
                 "mdi-help-box",
                 "Keine Information zur Zählart"
             );
         }
-        return ZaehlartIcon.zaehlartIcons().get(this.zaehlart);
+        return result;
     }
 
     /**

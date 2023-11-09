@@ -67,7 +67,7 @@ export default class KommentarInfo extends Vue {
     @Prop({ default: "" }) private zaehlsituationErweitert?: string;
 
     // Variables
-    private showDialog = false;
+    showDialog = false;
 
     // Constants
     private static readonly KOMMENTARE_ANZEIGEN: string = "Kommentare anzeigen";

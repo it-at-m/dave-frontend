@@ -105,14 +105,14 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 export default class ZaehlungsvergleichPanel extends Vue {
     @Prop() zaehlung?: LadeZaehlungDTO;
 
-    private vergleichszaehlungsId = "";
-    private differenzdatenDarstellen = false;
+    vergleichszaehlungsId = "";
+    differenzdatenDarstellen = false;
     private vergleichsdatumDifferenzdarstellung: Array<KeyVal> =
         new Array<KeyVal>();
 
     // Zeitreihe
-    private vergleichsdatumZeitreihe: Array<KeyVal> = new Array<KeyVal>();
-    private idVergleichszaehlungZeitreihe = "";
+    vergleichsdatumZeitreihe: Array<KeyVal> = new Array<KeyVal>();
+    idVergleichszaehlungZeitreihe = "";
 
     private currentZeitblock = "";
     private currentZeitauswahl: string = Zeitauswahl.TAGESWERT;
@@ -198,10 +198,10 @@ export default class ZaehlungsvergleichPanel extends Vue {
         return this.vergleichsdatumDifferenzdarstellung;
     }
 
-    private hoverSelectBasisdatum = false;
-    private hoverSelectVergleichsdatum = false;
-    private hoverCheckbox = false;
-    private hoverSelectVergleichsdatumZeitreihe = false;
+    hoverSelectBasisdatum = false;
+    hoverSelectVergleichsdatum = false;
+    hoverCheckbox = false;
+    hoverSelectVergleichsdatumZeitreihe = false;
 
     get helpTextDifferenzdatenBelastungsplan(): string {
         if (this.hoverSelectBasisdatum) {

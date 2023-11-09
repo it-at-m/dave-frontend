@@ -62,27 +62,39 @@
                         :style="{ cursor: selectedCursor }"
                         @mouseover="draggable = true"
                     >
-                        <h1 v-if="isHeading1(asset)">{{ asset.text }}</h1>
-                        <h2 v-if="isHeading2(asset)">{{ asset.text }}</h2>
-                        <h3 v-if="isHeading3(asset)">{{ asset.text }}</h3>
-                        <h4 v-if="isHeading4(asset)">{{ asset.text }}</h4>
-                        <h5 v-if="isHeading5(asset)">{{ asset.text }}</h5>
+                        <h1 v-if="isHeading1(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </h1>
+                        <h2 v-if="isHeading2(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </h2>
+                        <h3 v-if="isHeading3(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </h3>
+                        <h4 v-if="isHeading4(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </h4>
+                        <h5 v-if="isHeading5(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </h5>
                         <p
                             v-if="isText(asset)"
-                            :style="{ fontSize: asset.size }"
-                            v-html="asset.text"
+                            :style="{ fontSize: getSizeOfAsset(asset) }"
+                            v-html="getTextOfAsset(asset)"
                         />
                         <v-divider v-if="isPageBreak(asset)"></v-divider>
                         <v-divider v-if="isNewline(asset)"></v-divider>
-                        <p v-if="isDatatable(asset)">{{ asset.text }}</p>
+                        <p v-if="isDatatable(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </p>
                         <p v-if="isZaehlungskenngroesse(asset)">
-                            {{ asset.text }}
+                            {{ getTextOfAsset(asset) }}
                         </p>
                         <DisplayImageAsset
                             v-if="isImage(asset)"
-                            :caption="asset.caption"
-                            :image="asset.image"
-                            :width="`${asset.width}%`"
+                            :caption="getCaptionOfAsset(asset)"
+                            :image="getImageOfAsset(asset)"
+                            :width="`${getWidthOfAsset(asset)}%`"
                         ></DisplayImageAsset>
                     </v-card-text>
                 </v-card>
@@ -345,6 +357,7 @@ import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import _ from "lodash";
 import PdfPreviewDialog from "@/components/pdfreport/assetforms/PdfPreviewDialog.vue";
 import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
+import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 
 @Component({
     components: {
@@ -400,7 +413,7 @@ export default class PdfReportView extends Vue {
         AssetTypesEnum.DATATABLE,
     ];
 
-    private fab = false;
+    fab = false;
     private pdfSourceAsBlob: any;
     private pdfSourceForPreview: Uint8Array = new Uint8Array();
 
@@ -602,6 +615,56 @@ export default class PdfReportView extends Vue {
         this.previewPdfDialog = false;
     }
 
+    getTextOfAsset(asset: BaseAsset): string | undefined {
+        let result = undefined;
+        if (
+            this.isHeading1(asset) ||
+            this.isHeading2(asset) ||
+            this.isHeading3(asset) ||
+            this.isHeading4(asset) ||
+            this.isHeading5(asset)
+        ) {
+            result = (asset as HeadingAsset).text;
+        } else if (this.isDatatable(asset)) {
+            result = (asset as DatatableAsset).text;
+        } else if (this.isZaehlungskenngroesse(asset)) {
+            result = (asset as ZaehlungskenngroessenAsset).text;
+        } else if (this.isText(asset)) {
+            result = (asset as TextAsset).text;
+        }
+        return result;
+    }
+
+    getSizeOfAsset(asset: BaseAsset): string | undefined {
+        let result = undefined;
+        if (this.isText(asset)) {
+            result = (asset as TextAsset).size;
+        }
+        return result;
+    }
+
+    getCaptionOfAsset(asset: BaseAsset): string | undefined {
+        let result = undefined;
+        if (this.isImage(asset)) {
+            result = (asset as ImageAsset).caption;
+        }
+        return result;
+    }
+    getWidthOfAsset(asset: BaseAsset): number | undefined {
+        let result = undefined;
+        if (this.isImage(asset)) {
+            result = (asset as ImageAsset).width;
+        }
+        return result;
+    }
+    getImageOfAsset(asset: BaseAsset): string | undefined {
+        let result = undefined;
+        if (this.isImage(asset)) {
+            result = (asset as ImageAsset).image;
+        }
+        return result;
+    }
+
     isHeading1(asset: BaseAsset): boolean {
         return asset.type === AssetTypesEnum.HEADING1;
     }
@@ -753,7 +816,7 @@ export default class PdfReportView extends Vue {
         return header;
     }
 
-    private generatePdf() {
+    generatePdf() {
         let formData = new FormData();
         this.loadingPdf = true;
 
@@ -783,7 +846,7 @@ export default class PdfReportView extends Vue {
             .finally(() => (this.loadingPdf = false));
     }
 
-    private previewPdf() {
+    previewPdf() {
         let formData = new FormData();
         this.loadingPdf = true;
 
@@ -812,7 +875,7 @@ export default class PdfReportView extends Vue {
             .finally(() => (this.loadingPdf = false));
     }
 
-    private downloadPdf() {
+    downloadPdf() {
         let filename = `report_${Date.now()}.pdf`;
         DaveUtils.downloadFile(this.pdfSourceAsBlob, filename);
     }

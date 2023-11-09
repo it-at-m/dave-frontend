@@ -33,11 +33,11 @@ import { Levels } from "@/api/error";
 export default class TheSnackbar extends Vue {
     private static defaultTimeout = 6000;
 
-    private show = false;
-    private timeout: number = TheSnackbar.defaultTimeout;
-    private snackbarTextPart1 = "";
-    private snackbarTextPart2 = "";
-    private color = "info";
+    show = false;
+    timeout: number = TheSnackbar.defaultTimeout;
+    snackbarTextPart1 = "";
+    snackbarTextPart2 = "";
+    color = "info";
 
     @Watch("$store.state.snackbar.switch")
     setToast(): void {
