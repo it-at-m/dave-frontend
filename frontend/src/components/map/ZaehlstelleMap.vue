@@ -8,6 +8,7 @@
             ref="map"
             :center="center"
             :options="mapOptions"
+            :zoom="zoomValue"
             style="z-index: 1"
             @ready="mapReady"
         >
@@ -184,8 +185,11 @@ export default class ZaehlstelleMap extends Vue {
     readonly width!: string;
     @Prop({ default: false })
     private readonly showMarker!: boolean;
+
+    // zoom wird nicht verwendet, aber darf auch nicht gelöscht werden!
     @Prop({ default: 12 })
     private zoom!: number;
+
     @Ref("map")
     private readonly theMap!: LMap;
 
@@ -204,6 +208,7 @@ export default class ZaehlstelleMap extends Vue {
             position: "topleft",
         },
     };
+    zoomValue = 12;
 
     get getSelectedZaehlstelleKarte(): ZaehlstelleKarteDTO {
         return this.selectedZaehlstelleKarte;
@@ -223,13 +228,7 @@ export default class ZaehlstelleMap extends Vue {
         const zoom = +urlQueryParams.zoom;
 
         if (lat != undefined && lng != undefined) {
-            // todo: this.zoom darf nicht direkt verändert werden
-            /* [Vue warn]:
-             * Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders.
-             * Instead, use a data or computed property based on the prop's value.
-             */
-            //this.zoom = zoom;
-            this.setZoom(zoom);
+            this.zoomValue = zoom;
             return this.createLatLngFromString(
                 urlQueryParams.lat.toString(),
                 urlQueryParams.lng.toString()
@@ -243,10 +242,6 @@ export default class ZaehlstelleMap extends Vue {
                 ZaehlstelleMap.MUNICH_CENTER_LONGITUDE
             );
         }
-    }
-
-    setZoom(newZoom: number) {
-        this.$emit("setZoom", newZoom);
     }
 
     mounted() {
@@ -333,7 +328,7 @@ export default class ZaehlstelleMap extends Vue {
                 18
             );
         } else if (!this.zId) {
-            this.theMap.mapObject.setView(this.center, this.zoom);
+            this.theMap.mapObject.setView(this.center, this.zoomValue);
         }
     }
 
@@ -490,7 +485,7 @@ export default class ZaehlstelleMap extends Vue {
                 prefix: "",
             })
         );
-        this.theMap.mapObject.setZoom(this.zoom);
+        this.theMap.mapObject.setZoom(this.zoomValue);
     }
 }
 </script>
