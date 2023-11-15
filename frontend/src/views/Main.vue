@@ -3,12 +3,15 @@
         height="100%"
         width="100%"
     >
+        <!-- todo: @set-zoom wird nicht ausgelöst? -->
+        <!-- weil seite vorher schon neu geladen wird und schneller ist -->
         <zaehlstelle-map
             ref="map"
             height="100%"
             width="100%"
             show-marker="true"
-            :zoom="12"
+            :zoom="zoomValue"
+            @set-zoom="changeZoomValue"
         />
 
         <v-speed-dial
@@ -86,6 +89,7 @@ export default class App extends Vue {
     fab = false;
     creatingPicture = false;
     printingSearchResult = false;
+    zoomValue = 12;
 
     mounted() {
         window.scrollTo(0, 0);
@@ -168,6 +172,12 @@ export default class App extends Vue {
 
     get fabColor(): string {
         return this.fab ? "grey darken-1" : "secondary";
+    }
+
+    changeZoomValue(updatedZoom: number) {
+        // wird nicht ausgegeben
+        console.log("Zoom changed: " + updatedZoom);
+        this.zoomValue = updatedZoom;
     }
 }
 </script>

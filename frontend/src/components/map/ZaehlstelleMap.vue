@@ -10,7 +10,6 @@
             :options="mapOptions"
             style="z-index: 1"
             @ready="mapReady"
-            @moveend="saveMapStateInUrl"
         >
             <l-control-layers />
             <!--      Kartenlayers. Bei layer-type="base" muss bei der Default-Karte :visible auf true gesetzt werden. -->
@@ -190,7 +189,6 @@ export default class ZaehlstelleMap extends Vue {
     @Ref("map")
     private readonly theMap!: LMap;
 
-    private popStateDetected = false;
     private mapMarkerClusterGroup = L.markerClusterGroup();
 
     private selectedZaehlstelleKarte: ZaehlstelleKarteDTO =
@@ -219,7 +217,24 @@ export default class ZaehlstelleMap extends Vue {
      * Die Methode setzt Koordinate auf welche Zentriert werden soll.
      */
     get center() {
-        if (this.latlng && this.latlng.length > 0) {
+        const urlQueryParams = this.$router.currentRoute.query;
+        const lat = urlQueryParams.lat;
+        const lng = urlQueryParams.lng;
+        const zoom = +urlQueryParams.zoom;
+
+        if (lat != undefined && lng != undefined) {
+            // todo: this.zoom darf nicht direkt verändert werden
+            /* [Vue warn]:
+             * Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders.
+             * Instead, use a data or computed property based on the prop's value.
+             */
+            //this.zoom = zoom;
+            this.setZoom(zoom);
+            return this.createLatLngFromString(
+                urlQueryParams.lat.toString(),
+                urlQueryParams.lng.toString()
+            );
+        } else if (this.latlng && this.latlng.length > 0) {
             return this.createLatLngFromString(this.latlng[0], this.latlng[1]);
         } else {
             // Mitte von München
@@ -230,8 +245,11 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
+    setZoom(newZoom: number) {
+        this.$emit("setZoom", newZoom);
+    }
+
     mounted() {
-        window.addEventListener("popstate", this.handlePopstate);
         SucheService.searchZaehlstelle(
             this.$store.getters["search/lastSearchQuery"]
         )
@@ -289,6 +307,16 @@ export default class ZaehlstelleMap extends Vue {
                 this.selectedZaehlstelleKarte = zaehlstelleKarte;
             }
         });
+
+        // marker zum testen
+        // -------------
+        let marker: Marker = new Marker([48.134, 11.58]);
+        marker.on("click", () => {
+            this.saveMapStateInUrl();
+            this.$router.push("/test");
+        });
+        markers.push(marker);
+        // -------------
         this.mapMarkerClusterGroup.addLayers(markers);
 
         this.theMap.mapObject.addLayer(this.mapMarkerClusterGroup);
@@ -309,50 +337,24 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
-    handlePopstate() {
-        this.popStateDetected = true;
-        this.restoreMapStateFromURL();
-    }
-
     private saveMapStateInUrl() {
-        /*
-         * durch popStateDetected wird die Funktion nur aufgerufen,
-         * wenn die Map aktiv vom Nutzer bewegt wurde, und nicht,
-         * wenn die Map durch Klicken des Zurück Buttons bewegt wurde
-         */
-        if (!this.popStateDetected) {
-            const map = this.theMap.mapObject;
-            const mapCenter = map.getBounds().getCenter();
+        const map = this.theMap.mapObject;
+        const mapCenter = map.getBounds().getCenter();
 
-            const lat = mapCenter.lat.toString();
-            const lng = mapCenter.lng.toString();
-            const zoom = map.getZoom().toString();
+        const lat = mapCenter.lat.toString();
+        const lng = mapCenter.lng.toString();
+        const zoom = map.getZoom().toString();
 
-            const stateObj = { lat: lat, lng: lng, zoom };
-            const newUrl = "?lat=" + lat + "&lng=" + lng + "&zoom=" + zoom;
-            history.replaceState(stateObj, "", newUrl);
-        }
-        this.popStateDetected = false;
+        this.$router.replace({
+            path: this.$router.currentRoute.path,
+            query: { lat: lat, lng: lng, zoom: zoom },
+        });
     }
+
     private routeToZaehlstelle(id: string) {
         //todo: wird der funktionsaufruf hier vor dem klicken auf den marker dann nochmal extra benötigt?
         //this.saveMapStateInUrl();
         this.$router.push("/zaehlstelle/" + id);
-    }
-
-    private restoreMapStateFromURL() {
-        const urlQueryParams = new URLSearchParams(window.location.search);
-        const latParam = urlQueryParams.get("lat");
-        const lngParam = urlQueryParams.get("lng");
-        const zoomParam = urlQueryParams.get("zoom");
-
-        if (latParam != null && lngParam != null && zoomParam != null) {
-            const lat = parseFloat(latParam);
-            const lng = parseFloat(lngParam);
-            const zoom = parseFloat(zoomParam);
-
-            this.theMap.mapObject.setView([lat, lng], zoom);
-        }
     }
 
     private createLatLng(zaehlstelleKarte: ZaehlstelleKarteDTO): LatLng {
