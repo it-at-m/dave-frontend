@@ -214,8 +214,7 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     get zoomValue() {
-        const urlQueryParams = this.$router.currentRoute.query;
-        const zoom = urlQueryParams.zoom;
+        const zoom = this.$router.currentRoute.query.zoom;
 
         if (zoom != undefined) {
             return parseFloat(zoom.toString());
@@ -227,9 +226,8 @@ export default class ZaehlstelleMap extends Vue {
      * Die Methode setzt Koordinate auf welche Zentriert werden soll.
      */
     get center() {
-        const urlQueryParams = this.$router.currentRoute.query;
-        const lat = urlQueryParams.lat;
-        const lng = urlQueryParams.lng;
+        const lat = this.$router.currentRoute.query.lat;
+        const lng = this.$router.currentRoute.query.lng;
 
         if (lat != undefined && lng != undefined) {
             return this.createLatLngFromString(lat.toString(), lng.toString());
@@ -303,8 +301,8 @@ export default class ZaehlstelleMap extends Vue {
             }
         });
 
-        // marker zum testen
         // -------------
+        // marker zum testen, wenn datenmigration erfolgreich wieder löschen (todo)
         let marker: Marker = new Marker([48.134, 11.58]);
         marker.on("click", () => {
             this.saveMapStateInUrl();
@@ -347,8 +345,7 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     private routeToZaehlstelle(id: string) {
-        //todo: wird der funktionsaufruf hier vor dem klicken auf den marker dann nochmal extra benötigt?
-        //this.saveMapStateInUrl();
+        this.saveMapStateInUrl();
         this.$router.push("/zaehlstelle/" + id);
     }
 
