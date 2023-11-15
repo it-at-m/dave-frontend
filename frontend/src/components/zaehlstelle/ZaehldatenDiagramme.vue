@@ -286,7 +286,7 @@
                         @click="generatePdf"
                         v-on="on"
                     >
-                        <v-icon>mdi-file-pdf</v-icon>
+                        <v-icon>mdi-file-pdf-box</v-icon>
                     </v-btn>
                 </template>
                 <span>Chart als PDF drucken</span>
