@@ -8,7 +8,6 @@
             ref="map"
             :center="center"
             :options="mapOptions"
-            :zoom="zoomValue"
             style="z-index: 1"
             @ready="mapReady"
         >
@@ -185,11 +184,8 @@ export default class ZaehlstelleMap extends Vue {
     readonly width!: string;
     @Prop({ default: false })
     private readonly showMarker!: boolean;
-
-    // zoom wird nicht verwendet, aber darf auch nicht gelöscht werden!
     @Prop({ default: 12 })
     private zoom!: number;
-
     @Ref("map")
     private readonly theMap!: LMap;
 
@@ -208,7 +204,6 @@ export default class ZaehlstelleMap extends Vue {
             position: "topleft",
         },
     };
-    zoomValue = 12;
 
     get getSelectedZaehlstelleKarte(): ZaehlstelleKarteDTO {
         return this.selectedZaehlstelleKarte;
@@ -218,6 +213,16 @@ export default class ZaehlstelleMap extends Vue {
         return this.$store.getters["search/result"];
     }
 
+    get zoomValue() {
+        const urlQueryParams = this.$router.currentRoute.query;
+        const zoom = urlQueryParams.zoom;
+
+        if (zoom != undefined) {
+            return parseFloat(zoom.toString());
+        } else {
+            return this.zoom;
+        }
+    }
     /**
      * Die Methode setzt Koordinate auf welche Zentriert werden soll.
      */
@@ -225,14 +230,9 @@ export default class ZaehlstelleMap extends Vue {
         const urlQueryParams = this.$router.currentRoute.query;
         const lat = urlQueryParams.lat;
         const lng = urlQueryParams.lng;
-        const zoom = +urlQueryParams.zoom;
 
         if (lat != undefined && lng != undefined) {
-            this.zoomValue = zoom;
-            return this.createLatLngFromString(
-                urlQueryParams.lat.toString(),
-                urlQueryParams.lng.toString()
-            );
+            return this.createLatLngFromString(lat.toString(), lng.toString());
         } else if (this.latlng && this.latlng.length > 0) {
             return this.createLatLngFromString(this.latlng[0], this.latlng[1]);
         } else {

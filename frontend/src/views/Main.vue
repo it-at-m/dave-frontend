@@ -8,6 +8,7 @@
             height="100%"
             width="100%"
             show-marker="true"
+            :zoom="12"
         />
 
         <v-speed-dial
