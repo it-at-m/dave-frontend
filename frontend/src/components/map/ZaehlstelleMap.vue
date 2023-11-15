@@ -301,15 +301,6 @@ export default class ZaehlstelleMap extends Vue {
             }
         });
 
-        // -------------
-        // marker zum testen, wenn datenmigration erfolgreich wieder löschen (todo)
-        let marker: Marker = new Marker([48.134, 11.58]);
-        marker.on("click", () => {
-            this.saveMapStateInUrl();
-            this.$router.push("/test");
-        });
-        markers.push(marker);
-        // -------------
         this.mapMarkerClusterGroup.addLayers(markers);
 
         this.theMap.mapObject.addLayer(this.mapMarkerClusterGroup);
