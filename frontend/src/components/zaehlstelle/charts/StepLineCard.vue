@@ -49,7 +49,7 @@ export default class StepLineCard extends Vue {
     }
 
     charttypeChanged(newChartType: string) {
-        this.steplineForPdf.chart.options.series.forEach((series: any) => {
+        this.steplineForPdf.chart.option.series.forEach((series: any) => {
             series.type = newChartType;
         });
     }

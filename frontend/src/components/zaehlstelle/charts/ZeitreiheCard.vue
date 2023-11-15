@@ -49,7 +49,7 @@ export default class ZeitreiheCard extends Vue {
     }
 
     charttypeChanged(newChartType: string) {
-        this.zeitreiheForPdf.chart.options.series.forEach((series: any) => {
+        this.zeitreiheForPdf.chart.option.series.forEach((series: any) => {
             series.type = newChartType;
         });
     }
