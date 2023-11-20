@@ -101,9 +101,6 @@ export default class App extends Vue {
                 image.width = 100;
                 this.$store.dispatch("addAsset", image);
             })
-            .catch((error: any) => {
-                console.warn(error);
-            })
             .finally(() => {
                 this.creatingPicture = false;
             });
