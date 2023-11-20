@@ -241,12 +241,10 @@ export default class App extends Vue {
                 });
         }
         this.getFrontendVersion().then((version: string) => {
-            console.info("Frontend Version: ", version);
             this.frontendVersion = version;
         });
 
         this.getBackendVersion().then((version: string) => {
-            console.info("Backend Version: ", version);
             this.backendVersion = version;
         });
     }
