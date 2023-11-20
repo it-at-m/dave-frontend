@@ -97,9 +97,7 @@ export default class ZaehlstelleView extends Vue {
     created() {
         // ID der Zählstelle aus der URL holen (oder Warnung ausgeben, falls keine vorhanden ist)
         const zaehlstelleId = this.$route.params.zaehlstelleId;
-        if (!zaehlstelleId) {
-            console.warn("Es muss eine Zählstellen ID übergeben werden!");
-        }
+
         // Die Informationen zur Zählstelle werden geladen
         ZaehlstellenService.getById(zaehlstelleId).then((zaehlstelle) => {
             const zaehlungen = new Array<LadeZaehlungDTO>();
