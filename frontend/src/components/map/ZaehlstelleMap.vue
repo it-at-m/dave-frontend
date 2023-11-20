@@ -219,7 +219,7 @@ export default class ZaehlstelleMap extends Vue {
         if (zoom != undefined) {
             return parseFloat(zoom.toString());
         } else {
-            return this.zoom;
+            return 12;
         }
     }
     /**
@@ -321,7 +321,7 @@ export default class ZaehlstelleMap extends Vue {
         }
     }
 
-    private saveMapStateInUrl() {
+    private saveMapPositionInUrl() {
         const map = this.theMap.mapObject;
         const mapCenter = map.getBounds().getCenter();
 
@@ -336,7 +336,7 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     private routeToZaehlstelle(id: string) {
-        this.saveMapStateInUrl();
+        this.saveMapPositionInUrl();
         this.$router.push("/zaehlstelle/" + id);
     }
 
