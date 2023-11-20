@@ -219,7 +219,7 @@ export default class ZaehlstelleMap extends Vue {
         if (zoom != undefined) {
             return parseFloat(zoom.toString());
         } else {
-            return 12;
+            return this.zoom;
         }
     }
     /**
