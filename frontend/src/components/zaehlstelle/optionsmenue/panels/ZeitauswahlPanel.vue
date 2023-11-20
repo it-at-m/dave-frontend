@@ -306,8 +306,6 @@ export default class ZeitauswahlPanel extends Vue {
                     );
                 }
             }
-        } else {
-            console.warn("Es wurden keine Zeitblöcke gefunden.");
         }
         return result;
     }
@@ -328,8 +326,6 @@ export default class ZeitauswahlPanel extends Vue {
                     result.push(kv);
                 }
             });
-        } else {
-            console.warn("Es wurden keine Zeitauswahl gefunden.");
         }
         return result;
     }

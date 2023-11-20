@@ -128,14 +128,6 @@ export default class ImageAssetForm extends Vue {
                     this.asset.image = base64;
                 }
             };
-            reader.onerror = (error) => {
-                console.error(
-                    "Die Datein konnte nicht verarbeitet werden: ",
-                    error
-                );
-            };
-        } else {
-            console.warn("Datei wurde nicht geladen.");
         }
     }
 

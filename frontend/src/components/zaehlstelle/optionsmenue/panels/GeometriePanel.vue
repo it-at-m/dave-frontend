@@ -199,12 +199,6 @@ export default class GeometriePanel extends Vue {
             if (nachK) {
                 // werden die möglichen Zielknoten übergeben
                 von = nachK.moeglicheVerbindungenIds;
-            } else {
-                console.warn(
-                    "Für Knotenarm '" +
-                        this.nach +
-                        "' konnten keine Fahrbeziehungen geladen werden."
-                );
             }
         }
         this.$emit("von", von);
@@ -223,12 +217,6 @@ export default class GeometriePanel extends Vue {
             if (vonK) {
                 // werden die möglichen Zielknoten übergeben
                 nach = vonK.moeglicheVerbindungenIds;
-            } else {
-                console.warn(
-                    "Für Knotenarm '" +
-                        this.von +
-                        "' konnten keine Fahrbeziehungen geladen werden."
-                );
             }
         }
         this.$emit("nach", nach);
