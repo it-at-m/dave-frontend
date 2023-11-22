@@ -213,11 +213,25 @@ export default class ZaehlstelleMap extends Vue {
         return this.$store.getters["search/result"];
     }
 
+    get zoomValue() {
+        const zoom = this.$router.currentRoute.query.zoom;
+
+        if (zoom != undefined) {
+            return parseFloat(zoom.toString());
+        } else {
+            return this.zoom;
+        }
+    }
     /**
      * Die Methode setzt Koordinate auf welche Zentriert werden soll.
      */
     get center() {
-        if (this.latlng && this.latlng.length > 0) {
+        const lat = this.$router.currentRoute.query.lat;
+        const lng = this.$router.currentRoute.query.lng;
+
+        if (lat != undefined && lng != undefined) {
+            return this.createLatLngFromString(lat.toString(), lng.toString());
+        } else if (this.latlng && this.latlng.length > 0) {
             return this.createLatLngFromString(this.latlng[0], this.latlng[1]);
         } else {
             // Mitte von München
@@ -286,6 +300,7 @@ export default class ZaehlstelleMap extends Vue {
                 this.selectedZaehlstelleKarte = zaehlstelleKarte;
             }
         });
+
         this.mapMarkerClusterGroup.addLayers(markers);
 
         this.theMap.mapObject.addLayer(this.mapMarkerClusterGroup);
@@ -302,11 +317,26 @@ export default class ZaehlstelleMap extends Vue {
                 18
             );
         } else if (!this.zId) {
-            this.theMap.mapObject.setView(this.center, this.zoom);
+            this.theMap.mapObject.setView(this.center, this.zoomValue);
         }
     }
 
+    private saveMapPositionInUrl() {
+        const map = this.theMap.mapObject;
+        const mapCenter = map.getBounds().getCenter();
+
+        const lat = mapCenter.lat.toString();
+        const lng = mapCenter.lng.toString();
+        const zoom = map.getZoom().toString();
+
+        this.$router.replace({
+            path: this.$router.currentRoute.path,
+            query: { lat: lat, lng: lng, zoom: zoom },
+        });
+    }
+
     private routeToZaehlstelle(id: string) {
+        this.saveMapPositionInUrl();
         this.$router.push("/zaehlstelle/" + id);
     }
 
@@ -443,7 +473,7 @@ export default class ZaehlstelleMap extends Vue {
                 prefix: "",
             })
         );
-        this.theMap.mapObject.setZoom(this.zoom);
+        this.theMap.mapObject.setZoom(this.zoomValue);
     }
 }
 </script>
