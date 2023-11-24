@@ -16,7 +16,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <spring.boot.version>2.7.8</spring.boot.version>
+        <spring.boot.version>2.7.18</spring.boot.version>
         <spring.cloud.version>2021.0.5</spring.cloud.version>
         <logstash.encoder.version>7.0.1</logstash.encoder.version>
         <apache.commons.lang.version>3.12.0</apache.commons.lang.version>
