@@ -14,10 +14,6 @@ const dateTimeFormats: DateTimeFormats = {
             month: "short",
             day: "numeric",
         },
-        time: {
-            hour: "numeric",
-            minute: "numeric",
-        },
     },
 };
 
