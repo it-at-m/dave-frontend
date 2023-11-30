@@ -18,7 +18,7 @@
             <!--      Standardkarte Geoportal -->
             <l-wms-tile-layer
                 :visible="true"
-                attribution='&copy; <a href="https://www.muenchen.de/rathaus/Stadtverwaltung/Kommunalreferat/geodatenservice/geobasisdaten.html">GeodatenService München</a>'
+                :attribution="mapAttribution"
                 base-url="https://geoportal.muenchen.de/geoserver/gsm/wms?"
                 layer-type="base"
                 layers="gsm:g_stadtkarte_gesamt"
@@ -27,7 +27,7 @@
             <!--      Luftbild Geoportal -->
             <l-wms-tile-layer
                 :visible="false"
-                attribution='&copy; <a href="https://www.muenchen.de/rathaus/Stadtverwaltung/Kommunalreferat/geodatenservice/geobasisdaten.html">GeodatenService München</a>'
+                :attribution="mapAttribution"
                 base-url="https://geoportal.muenchen.de/geoserver/gsm/wms?"
                 layer-type="base"
                 layers="gsm:g_luftbild"
@@ -46,7 +46,7 @@
             <l-wms-tile-layer
                 :transparent="true"
                 :visible="false"
-                attribution='&copy; <a href="https://www.muenchen.de/rathaus/Stadtverwaltung/Kommunalreferat/geodatenservice/geobasisdaten.html">GeodatenService München</a>'
+                :attribution="mapAttribution"
                 base-url="https://geoportal.muenchen.de/geoserver/gsm/wms?"
                 format="image/png"
                 layer-type="overlay"
@@ -56,7 +56,7 @@
             <l-wms-tile-layer
                 :transparent="true"
                 :visible="false"
-                attribution='&copy; <a href="https://www.muenchen.de/rathaus/Stadtverwaltung/Kommunalreferat/geodatenservice/geobasisdaten.html">GeodatenService München</a>'
+                :attribution="mapAttribution"
                 base-url="https://geoportal.muenchen.de/geoserver/gsm/wms?"
                 format="image/png"
                 layer-type="overlay"
@@ -66,7 +66,7 @@
             <l-wms-tile-layer
                 :transparent="true"
                 :visible="false"
-                attribution='&copy; <a href="https://www.muenchen.de/rathaus/Stadtverwaltung/Kommunalreferat/geodatenservice/geobasisdaten.html">GeodatenService München</a>'
+                :attribution="mapAttribution"
                 base-url="https://geoportal.muenchen.de/geoserver/kvr/wms"
                 format="image/png"
                 layer-type="overlay"
@@ -168,6 +168,9 @@ export default class ZaehlstelleMap extends Vue {
 
     private static readonly ICON_COLOR_SECONDARY: string = "secondary";
     private static readonly ICON_COLOR_RED: string = "red";
+
+    private readonly mapAttribution =
+        '&copy; <a href="https://stadt.muenchen.de/infos/geobasisdaten.html">GeodatenService München</a>';
 
     @Prop({ default: "160px" }) minheight!: string;
     /**
