@@ -120,8 +120,6 @@ export default class ZaehlungenTimeline extends Vue {
                     this.filteredZaehlungen[0].id
                 );
             }
-        } else {
-            console.warn("Folgende Zählart konnte nicht aufgelöst werden: ", n);
         }
     }
 

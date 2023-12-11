@@ -1050,20 +1050,6 @@ export default class BelastungsplanKreuzungSvg extends Vue {
             fahrbeziehungenLabelRotationGroup.rotate(
                 this.calcLabelRotation(knotenarmnummer)
             );
-        } else {
-            if (!this.fahrbeziehungsTypen.has(knotenarmnummer)) {
-                console.warn(
-                    `Für die Knotenarmnummer ${knotenarmnummer} wurden keine Fahrbeziehungen gefunden!`,
-                    this.fahrbeziehungsTypen
-                );
-            }
-
-            if (!knotenarm) {
-                console.warn(
-                    `Für die Knotenarmnummer ${knotenarmnummer} liegt kein Knotenarm vor!`,
-                    this.knotenarme
-                );
-            }
         }
         return knotenarmGroup;
     }
@@ -1975,12 +1961,6 @@ export default class BelastungsplanKreuzungSvg extends Vue {
             return Fahrtrichtungsarten.LINKS135;
         }
 
-        console.warn(
-            "Die Fahrtrichtungen konnten keine Abbiegeart zugeordnet werden: " +
-                von +
-                " -> " +
-                nach
-        );
         return -1;
     }
 
@@ -2131,9 +2111,6 @@ export default class BelastungsplanKreuzungSvg extends Vue {
             ) as LadeZaehlungDTO;
             return zaehlung;
         }
-        console.warn(
-            `Es wurde keine Differenzdatendarstellung ausgewählt. Entsprechend kann auch keine Vergleichszählung zurück geliefert werden.`
-        );
         return undefined;
     }
 

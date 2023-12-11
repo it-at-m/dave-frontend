@@ -354,10 +354,6 @@ export default class ZaehlungInfo extends Vue {
             return zeitblockInfo.get(this.options.zeitblock)?.text;
         }
 
-        // als Default wird der 24h Zeitblock zurück und eine Warnung aus gegeben
-        console.warn(
-            "Es wurde in den Optionen kein passender Zeitblock gefunden."
-        );
         return zeitblockInfo.get(Zeitblock.ZB_00_24)?.text;
     }
 

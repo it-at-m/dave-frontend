@@ -65,12 +65,8 @@ const getters = {
             if (selected.length === 1) {
                 return selected[0];
             } else if (selected.length > 1) {
-                console.warn(
-                    `Es wurden mehr als eine Zählung mit der ID '${id} gefunden!'`
-                );
                 return selected[0];
             }
-            console.warn(`Es wurde keine Zählung mit der ID '${id}' gefunden!`);
             return undefined;
         };
     },
@@ -128,17 +124,7 @@ const mutations = {
                 } else {
                     state.inaktiveZaehlungenVorhanden = false;
                 }
-            } else {
-                console.warn(
-                    "Es konnte keine Zählung für die ID '" +
-                        id +
-                        "' gefunden werden."
-                );
             }
-        } else {
-            console.warn(
-                "Es sind keine Zählungen zu dieser Zählstelle vorhanden."
-            );
         }
     },
     setStartEndeUhrzeitIntervalls(
