@@ -49,10 +49,6 @@ export default class BelastungsplanKnotenarm {
     findFahrbeziehungsNachPosition(fahrbeziehungsTyp: number): number {
         const typen = this._nachFahrbeziehungsTypen.sort() as number[];
         if (!typen.includes(fahrbeziehungsTyp)) {
-            console.warn(
-                `Für den Typ ${fahrbeziehungsTyp} konnte in den "Nach" Beziehungen im Knotenerm ${this._strasse} kein Eintrag gefunden werden: `,
-                typen
-            );
             return -1;
         }
         return typen.indexOf(fahrbeziehungsTyp) + this.ausgleich;
@@ -67,10 +63,6 @@ export default class BelastungsplanKnotenarm {
     findFahrbeziehungVonPosition(fahrbeziehungsTyp: number): number {
         const typen = this._vonFahrbeziehungsTypen.sort() as number[];
         if (!typen.includes(fahrbeziehungsTyp)) {
-            console.warn(
-                `Für den Typ ${fahrbeziehungsTyp} konnte in den "Von" Beziehungen im Knotenerm ${this._strasse} kein Eintrag gefunden werden: `,
-                typen
-            );
             return -1;
         }
         return typen.indexOf(fahrbeziehungsTyp);

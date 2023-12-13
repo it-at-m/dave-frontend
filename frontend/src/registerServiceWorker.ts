@@ -25,13 +25,5 @@ if (import.meta.env.NODE_ENV === "production") {
                 new CustomEvent("swUpdated", { detail: registration })
             );
         },
-        offline() {
-            console.error(
-                "No internet connection found. App is running in offline mode."
-            );
-        },
-        error(error: Error) {
-            console.error("Error during service worker registration:", error);
-        },
     });
 }

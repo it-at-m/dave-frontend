@@ -108,10 +108,6 @@ export default class History extends Vue {
                 zaehlstelle.nummer,
                 zaehlstelle.id
             );
-        } else {
-            console.warn(
-                "Die Zählung, bzw. die Zählstelle konnte nicht aus dem Store geladen werden."
-            );
         }
 
         // Schauen, ob die Zählstelle noch in der Historie ist
@@ -141,10 +137,6 @@ export default class History extends Vue {
                 {},
                 optionen
             );
-        } else {
-            console.warn(
-                "Die Optionseinstellungen für den History Eintrag konnten nicht gespeichert werden."
-            );
         }
 
         // Das ist ein absoluter HACK, weil "created()" in ZaehlstelleView immer zweimal aufgerufen wird. Dadurch
@@ -168,9 +160,6 @@ export default class History extends Vue {
      */
     convertDate(date: string): Date {
         if (!Date.parse(date)) {
-            console.warn(
-                `Datum der Zählung (${date}) konnte nicht gelesen werden.`
-            );
             return new Date();
         }
         return new Date(date);
