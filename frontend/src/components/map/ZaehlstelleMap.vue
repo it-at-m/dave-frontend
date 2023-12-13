@@ -140,6 +140,11 @@ import TooltipDTO from "@/types/TooltipDTO";
 import SucheService from "@/api/service/SucheService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import markerIconRed from "@/assets/marker-icon-red.png";
+import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
+import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
+import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
+import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
 
 @Component({
     components: {
@@ -212,7 +217,7 @@ export default class ZaehlstelleMap extends Vue {
         return this.selectedZaehlstelleKarte;
     }
 
-    get getZaehlstellenKarteFromStore(): ZaehlstelleKarteDTO[] {
+    get getZaehlstellenKarteFromStore(): AnzeigeKarteDTO[] {
         return this.$store.getters["search/result"];
     }
 
@@ -250,6 +255,8 @@ export default class ZaehlstelleMap extends Vue {
             this.$store.getters["search/lastSearchQuery"]
         )
             .then((result) => {
+                // fügt testdaten für Messstellen hinzu, muss später entfernt werden sobald der richtige Service verfügbar ist
+                result.push(...SucheService.getMockMessstelleKarte());
                 this.$store.commit("search/result", result);
             })
             .catch((error) => {
@@ -286,12 +293,23 @@ export default class ZaehlstelleMap extends Vue {
             chunkedLoading: true,
         });
 
-        const zaehlstellenKarte: ZaehlstelleKarteDTO[] =
+        const zaehlstellenKarte: AnzeigeKarteDTO[] =
             this.getZaehlstellenKarteFromStore;
         const markers: Array<Marker> = [];
         zaehlstellenKarte.forEach((zaehlstelleKarte) => {
-            markers.push(this.createMarkerForZaehlstelle(zaehlstelleKarte));
-
+            if (zaehlstelleKarte.type != "messstelle") {
+                markers.push(
+                    this.createMarkerForZaehlstelle(
+                        zaehlstelleKarte as ZaehlstelleKarteDTO
+                    )
+                );
+            } else {
+                markers.push(
+                    this.createMarkerForMessstelle(
+                        zaehlstelleKarte as MessstelleKarteDTO
+                    )
+                );
+            }
             /**
              * Steuerung ob die Marker für die Zaehlarten
              * in die Karte hinzugefügt werden soll.
@@ -343,11 +361,8 @@ export default class ZaehlstelleMap extends Vue {
         this.$router.push("/zaehlstelle/" + id);
     }
 
-    private createLatLng(zaehlstelleKarte: ZaehlstelleKarteDTO): LatLng {
-        return this.createLatLngFromString(
-            zaehlstelleKarte.latitude,
-            zaehlstelleKarte.longitude
-        );
+    private createLatLng(anzeigeKarte: AnzeigeKarteDTO): LatLng {
+        return latLng(anzeigeKarte.latitude, anzeigeKarte.longitude);
     }
 
     private createLatLngFromString(lat: string, lng: string): LatLng {
@@ -378,6 +393,23 @@ export default class ZaehlstelleMap extends Vue {
             this.choosenZaehlartIconToZaehlstelleHeader("");
             this.routeToZaehlstelle(zaehlstelleKarte.id);
         });
+        return marker;
+    }
+
+    private createMarkerForMessstelle(
+        messstelleKarteDto: MessstelleKarteDTO
+    ): Marker {
+        let marker: Marker = new Marker(
+            this.createLatLng(messstelleKarteDto),
+            this.markerOptionsMessstelle(messstelleKarteDto)
+        );
+        marker.bindTooltip(
+            this.createTooltipMessstelle(messstelleKarteDto.tooltip),
+            {
+                direction: "top",
+                offset: [-14, 0],
+            }
+        );
         return marker;
     }
 
@@ -424,6 +456,35 @@ export default class ZaehlstelleMap extends Vue {
         return tooltip;
     }
 
+    private createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
+        let tooltip = "<div><b>";
+        if (tooltipDto.mstId) {
+            tooltip = `${tooltip}Messstelle: ${tooltipDto.mstId}</b><br/>`;
+        }
+        if (tooltipDto.standortDatenportal) {
+            tooltip = `${tooltip}${tooltipDto.standortDatenportal}<br/>`;
+        }
+        tooltip = `${tooltip}<br/>`;
+        if (tooltipDto.stadtbezirk) {
+            tooltip = `${tooltip}Stadtbezirk: ${tooltipDto.stadtbezirk}<br/>`;
+        }
+        if (tooltipDto.realisierungsdatum) {
+            tooltip = `${tooltip} Aufbau: ${tooltipDto.realisierungsdatum}<br/>`;
+        }
+        if (tooltipDto.abbaudatum) {
+            tooltip = `${tooltip}Abbau: ${tooltipDto.abbaudatum}<br/>`;
+        }
+        if (tooltipDto.kfz) {
+            tooltip = `${tooltip}KFZ</b><br/>`;
+        }
+        if (tooltipDto.datumLetzteMessung) {
+            tooltip = `${tooltip}Letzter Messtag: ${tooltipDto.datumLetzteMessung}<br/>`;
+        }
+
+        tooltip = `${tooltip}</div>`;
+        return tooltip;
+    }
+
     /**
      * Setzt die Optionen bezüglich verwendetes Icon für den Zaehlstellenmarker.
      */
@@ -436,6 +497,24 @@ export default class ZaehlstelleMap extends Vue {
             } else {
                 return { opacity: 0.5 };
             }
+        }
+    }
+
+    /**
+     * Setzt die Optionen bezüglich verwendetes Icon für den Messstellenmarker.
+     */
+    private markerOptionsMessstelle(messstelleKarte: MessstelleKarteDTO) {
+        let defaultIcon = new Icon.Default();
+        defaultIcon.options.iconUrl = markerIconDiamondViolet;
+        if (this.zId) {
+            if (this.zId === messstelleKarte.id) {
+                defaultIcon.options.iconUrl = markerIconDiamondRed;
+                return { opacity: 1.0, icon: defaultIcon };
+            } else {
+                return { opacity: 0.5, icon: defaultIcon };
+            }
+        } else {
+            return { opacity: 1.0, icon: defaultIcon };
         }
     }
 
