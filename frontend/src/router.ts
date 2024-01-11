@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Main from "./views/Main.vue";
 import ZaehlstelleView from "@/views/ZaehlstelleView.vue";
-import MessstelleView from "@/views/testView.vue";
+import MessstelleView from "@/views/MessstelleView.vue";
 
 Vue.use(Router);
 
