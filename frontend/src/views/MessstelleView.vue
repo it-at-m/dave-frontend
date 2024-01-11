@@ -19,8 +19,7 @@
                         :name="messstelle.name"
                         :height="headerHeightVh"
                         :minheight="headerHeightVh"
-                    >
-                    </MessstelleInfo>
+                    />
                 </v-sheet>
             </v-col>
             <v-col cols="9">
@@ -51,7 +50,6 @@ const messstelle: Ref<null | MessstelleDTO> = ref(null);
 const vuetify = useVuetify();
 // eslint-disable-next-line no-undef
 onMounted(() => {
-
     loadMessstelle();
 });
 const headerHeight: ComputedRef<number> = computed(() => {
@@ -85,6 +83,8 @@ const latlng: ComputedRef<string[]> = computed(() => {
 function loadMessstelle() {
     const route = useRoute();
     const messstelleId = route.params.messstelleId;
-    let workaround = MessstelleService.getMessstelleById(messstelleId).then((messstelleDto) => messstelle.value = messstelleDto)
+    MessstelleService.getMessstelleById(messstelleId).then(
+        (messstelleDTO) => (messstelle.value = messstelleDTO)
+    );
 }
 </script>
