@@ -6,18 +6,22 @@
         :min-height="props.minheight"
         :height="props.height"
     >
-        <span class="text-caption">Messstelle</span><br />
-        <span class="text-h5">{{ props.id }}</span
-        ><br /><br />
+        <span class="text-caption">Messstelle</span>
+        <br />
+        <span class="text-h5">{{ props.id }}</span>
+        <br /><br />
+        <span class="text-caption">Standort: {{ props.standort }} </span>
+        <br />
         <span class="text-caption"
-            >Stadtbezirk {{ props.stadtbezirkNummer }}</span
-        >
+            >Stadtbezirk {{ props.stadtbezirkNummer }}
+        </span>
     </v-sheet>
 </template>
 <script setup lang="ts">
 interface Props {
     id: string;
     stadtbezirkNummer: number;
+    standort: string;
     height: string;
     minheight: string;
 }
