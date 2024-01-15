@@ -12,4 +12,7 @@ export default interface MessstelleDTO extends BaseEntity {
     kommentar: string;
     sichtbarDatenportal: boolean;
     messquerschnitte: MessquerschnittDto[];
+    datumLetztePlausibleMessung: string;
+    abbaudatum?: string;
+    realisierungsdatum: string;
 }
