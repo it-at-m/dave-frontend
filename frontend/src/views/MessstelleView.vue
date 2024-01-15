@@ -16,9 +16,14 @@
                         v-if="messstelle"
                         :id="messstelle.mstId"
                         :stadtbezirk-nummer="messstelle.stadtbezirkNummer"
+                        :standort="messstelle.standort"
                         :name="messstelle.name"
                         :height="headerHeightVh"
                         :minheight="headerHeightVh"
+                    />
+                    <MessungInfo
+                        v-if="messstelle"
+                        :messsstelle="messstelle"
                     />
                 </v-sheet>
             </v-col>
@@ -44,7 +49,9 @@ import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleDTO from "@/types/MessstelleDTO";
 import { useRoute } from "vue-router/composables";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
+import MessungInfo from "@/components/messstelle/MessungInfo.vue";
 import { useVuetify } from "@/util/useVuetify";
+
 const reloadMessstelle = false;
 const messstelle: Ref<null | MessstelleDTO> = ref(null);
 const vuetify = useVuetify();
@@ -58,6 +65,10 @@ const headerHeight: ComputedRef<number> = computed(() => {
 const headerHeightVh: ComputedRef<string> = computed(() => {
     return headerHeight.value + "vh";
 });
+
+const appBarheight = computed(() => {
+    return 65 / (vuetify.breakpoint.height / 100);
+});
 const messstelleId: ComputedRef<string> = computed(() => {
     const route = useRoute();
     const messstelleId = route.params.messstelleId;
@@ -66,6 +77,7 @@ const messstelleId: ComputedRef<string> = computed(() => {
     }
     return messstelleId;
 });
+
 const latlng: ComputedRef<string[]> = computed(() => {
     if (
         messstelle.value == null ||
