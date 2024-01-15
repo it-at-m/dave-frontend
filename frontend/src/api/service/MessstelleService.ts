@@ -6,7 +6,7 @@ export default class MessstelleService {
         "api/dave-backend-service/messstelle";
     static getMessstelleById(id: string): Promise<MessstelleDTO> {
         return FetchService.getData(
-            `${this.ENDPOINT}/byId?id=${id}`,
+            `${this.ENDPOINT}/info?id=${id}`,
             "Beim holen der Messstelle ist ein Fehler aufgetreten."
         );
     }
