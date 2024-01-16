@@ -4,64 +4,64 @@ import { DateTimeFormatOptions } from "vue-i18n";
 import MessstelleDTO from "@/types/MessstelleDTO";
 interface Props {
     messstelle: MessstelleDTO;
+    timelineHeight: string;
 }
 
 const props = defineProps<Props>();
 
-const doMesssquerschnitteExist = computed(() => {
-    return props.messstelle.messquerschnitte.length > 0;
-});
+function calcRowColor(index: number) {
+    const ungerade = index % 2 > 0;
+    if (ungerade) {
+        return "grey lighten-4";
+    }
+    return "grey lighten-2";
+}
 </script>
 
 <template>
     <v-sheet
+        class="overflow-y-auto"
         width="100%"
         color="transparent"
     >
         <v-sheet
-            v-if="!doMesssquerschnitteExist"
-            id="empty"
-            class="d-flex align-center justify-center pa-4 mx-auto"
-        >
-            <span class="text-caption font-weight-bold"
-                >Für diese Zählstelle sind keine weiteren Zählungen
-                vorhanden.</span
-            >
-        </v-sheet>
-        <v-sheet
-            class="px-4 py-2"
+            class="px-4 my-0"
             color="transparent"
         >
-            <span class="text-caption grey--text text--lighten-1"
-                >Informationen zu(m) Messquerschnitt(en)</span
-            >
-            <br />
             <v-row
-                v-for="messquerschnitt in messstelle.messquerschnitte"
+                v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
                 :key="messquerschnitt.mqId"
                 no-gutters
             >
-                <v-sheet color="transparent">
-                    <span> ID Messquerschnitt:{{ messquerschnitt.mqId }}</span>
+                <v-sheet
+                    :color="calcRowColor(index)"
+                    width="100%"
+                    min-height="130px"
+                    class="d-flex flex-column justify-space-between py-2"
+                >
+                    <span class="text-body-2">
+                        ID Messquerschnitt: {{ messquerschnitt.mqId }}</span
+                    >
                     <br />
 
-                    <span> Richtung:{{ messquerschnitt.fahrtrichtung }}</span>
-                    <br />
-                    <span>
-                        Anzahl Fahrstreifen:{{
-                            messquerschnitt.anzahlFahrspuren
-                        }}</span
+                    <span class="text-body-2">
+                        Richtung: {{ messquerschnitt.fahrtrichtung }}</span
                     >
                     <br />
-                    <span> Straßenname:{{ messquerschnitt.strassenname }}</span>
+                    <span class="text-body-2">
+                        Anzahl Fahrstreifen:
+                        {{ messquerschnitt.anzahlFahrspuren }}</span
+                    >
                     <br />
-                    <span>
-                        Lage Messquerschnitt:{{
-                            messquerschnitt.lageMessquerschnitt
-                        }}</span
+                    <span class="text-body-2">
+                        Straßenname: {{ messquerschnitt.strassenname }}</span
+                    >
+                    <br />
+                    <span class="text-body-2">
+                        Lage Messquerschnitt:
+                        {{ messquerschnitt.lageMessquerschnitt }}</span
                     >
                 </v-sheet>
-                <br />
             </v-row>
         </v-sheet>
     </v-sheet>
