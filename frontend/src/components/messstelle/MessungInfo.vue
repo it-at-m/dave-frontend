@@ -13,7 +13,9 @@
             class="ma-0"
         >
             <DetektierteFahrzeugartIcon
-                :detektierte-fahrzeugart="DetektierteFahrzeugart.FAHRRAD"
+                :detektierte-fahrzeugart="
+                    messstelle.messquerschnitte[0].detektierteVerkehrsarten
+                "
             />
             <MessstelleKommentar
                 v-if="messstelle.kommentar"
