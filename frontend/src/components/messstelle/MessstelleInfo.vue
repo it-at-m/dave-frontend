@@ -10,11 +10,9 @@
         <br />
         <span class="text-h5">{{ props.id }}</span>
         <br /><br />
-        <span class="text-caption">Standort: {{ props.standort }} </span>
+        <span class="text-caption">{{ props.standort }} </span>
         <br />
-        <span class="text-caption"
-            >Stadtbezirk {{ props.stadtbezirkNummer }}
-        </span>
+        <span class="text-caption">{{ props.stadtbezirkNummer }} </span>
     </v-sheet>
 </template>
 <script setup lang="ts">

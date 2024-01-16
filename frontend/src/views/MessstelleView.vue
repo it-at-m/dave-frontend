@@ -30,7 +30,6 @@
                     <MessungenTimeline
                         v-if="messstelle"
                         :messstelle="messstelle"
-                        :timeline-height="timelineHeightVh"
                     />
                 </v-sheet>
             </v-col>

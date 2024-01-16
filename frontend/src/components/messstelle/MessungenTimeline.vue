@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { DateTimeFormatOptions } from "vue-i18n";
 import MessstelleDTO from "@/types/MessstelleDTO";
+
 interface Props {
     messstelle: MessstelleDTO;
-    timelineHeight: string;
 }
 
 const props = defineProps<Props>();
@@ -29,7 +27,8 @@ function calcRowColor(index: number) {
             color="transparent"
         >
             <v-row
-                v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
+                v-for="(messquerschnitt, index) in props.messstelle
+                    .messquerschnitte"
                 :key="messquerschnitt.mqId"
                 no-gutters
             >

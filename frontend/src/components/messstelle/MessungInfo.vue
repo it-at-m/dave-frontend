@@ -7,7 +7,6 @@ import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue
 
 interface Props {
     messstelle: MessstelleDTO;
-    timelineHeight: string;
 }
 
 const datumLetztePlausibleMessung = computed(() => {
@@ -83,10 +82,17 @@ const props = defineProps<Props>();
                 v-else
                 color="transparent"
             >
-                <span class="font-weight-bold"
-                    >Informationen zu(m) Messquerschnitt(en)</span
-                ></v-sheet
-            >
+                <span
+                    v-if="props.messstelle.messquerschnitte.length > 1"
+                    class="font-weight-bold"
+                    >Informationen zu Messquerschnitten</span
+                >
+                <span
+                    v-else
+                    class="font-weight-bold"
+                    >Informationen zum Messquerschnitt</span
+                >
+            </v-sheet>
         </v-row>
     </v-container>
 </template>
