@@ -7,7 +7,7 @@ export default class MessstelleService {
     static getMessstelleById(id: string): Promise<MessstelleDTO> {
         return FetchService.getData(
             `${this.ENDPOINT}/info?id=${id}`,
-            "Beim holen der Messstelle ist ein Fehler aufgetreten."
+            "Beim Holen der Messstelle ist ein Fehler aufgetreten."
         );
     }
 }
