@@ -1,7 +1,7 @@
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 import Suggest from "@/types/Suggest";
 import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
-import TooltipDTO from "@/types/TooltipDTO";
+import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -9,7 +9,7 @@ export default class DefaultObjectCreator {
             id: "",
             nummer: "",
             letzteZaehlungId: "",
-            tooltip: {} as TooltipDTO,
+            tooltip: {} as TooltipZaehlstelleDTO,
             latitude: 0,
             longitude: 0,
             zaehlartenKarte: [],
@@ -23,6 +23,7 @@ export default class DefaultObjectCreator {
             type: "",
             zaehlstelleId: "",
             zaehlungId: "",
+            mstId: "",
         };
     }
 
