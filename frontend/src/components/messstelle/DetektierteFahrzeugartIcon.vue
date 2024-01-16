@@ -1,3 +1,10 @@
+<template>
+    <tooltip-with-icon
+        :icon="iconOptions.icon"
+        :tooltip="iconOptions.tooltip"
+    />
+</template>
+
 <script setup lang="ts">
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
@@ -23,10 +30,3 @@ const iconOptions = computed(() => {
     }
 });
 </script>
-
-<template>
-    <tooltip-with-icon
-        :icon="iconOptions.icon"
-        :tooltip="iconOptions.tooltip"
-    />
-</template>

@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import MessstelleDTO from "@/types/MessstelleDTO";
-
-interface Props {
-    messstelle: MessstelleDTO;
-}
-
-const props = defineProps<Props>();
-
-function calcRowColor(index: number) {
-    const ungerade = index % 2 > 0;
-    if (ungerade) {
-        return "grey lighten-4";
-    }
-    return "grey lighten-2";
-}
-</script>
-
 <template>
     <v-sheet
         class="overflow-y-auto"
@@ -66,6 +48,20 @@ function calcRowColor(index: number) {
     </v-sheet>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import MessstelleDTO from "@/types/MessstelleDTO";
 
-</style>
+interface Props {
+    messstelle: MessstelleDTO;
+}
+
+const props = defineProps<Props>();
+
+function calcRowColor(index: number) {
+    const ungerade = index % 2 > 0;
+    if (ungerade) {
+        return "grey lighten-4";
+    }
+    return "grey lighten-2";
+}
+</script>

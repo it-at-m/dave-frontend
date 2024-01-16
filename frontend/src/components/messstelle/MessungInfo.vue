@@ -1,33 +1,3 @@
-<script setup lang="ts">
-import MessstelleDTO from "@/types/MessstelleDTO";
-import { computed } from "vue";
-import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
-import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
-
-interface Props {
-    messstelle: MessstelleDTO;
-}
-
-const datumLetztePlausibleMessung = computed(() => {
-    return formatDate(props.messstelle.datumLetztePlausibleMessung);
-});
-
-function formatDate(date: string): string {
-    if (!date) {
-        return "";
-    }
-    const [year, month, day] = date.split("-");
-    return `${day}.${month}.${year}`;
-}
-
-const doMesssquerschnitteExist = computed(() => {
-    return props.messstelle.messquerschnitte.length > 0;
-});
-
-const props = defineProps<Props>();
-</script>
-
 <template>
     <v-container
         class="pa-0 px-4"
@@ -96,3 +66,33 @@ const props = defineProps<Props>();
         </v-row>
     </v-container>
 </template>
+
+<script setup lang="ts">
+import MessstelleDTO from "@/types/MessstelleDTO";
+import { computed } from "vue";
+import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
+
+interface Props {
+    messstelle: MessstelleDTO;
+}
+
+const datumLetztePlausibleMessung = computed(() => {
+    return formatDate(props.messstelle.datumLetztePlausibleMessung);
+});
+
+function formatDate(date: string): string {
+    if (!date) {
+        return "";
+    }
+    const [year, month, day] = date.split("-");
+    return `${day}.${month}.${year}`;
+}
+
+const doMesssquerschnitteExist = computed(() => {
+    return props.messstelle.messquerschnitte.length > 0;
+});
+
+const props = defineProps<Props>();
+</script>
