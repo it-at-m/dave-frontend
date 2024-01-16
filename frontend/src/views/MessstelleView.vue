@@ -24,7 +24,6 @@
                     <MessungInfo
                         v-if="messstelle"
                         :messstelle="messstelle"
-                        :timeline-height="timelineHeightVh"
                     />
                     <MessungenTimeline
                         v-if="messstelle"
@@ -80,22 +79,6 @@ const appBarHeight = computed(() => {
     return 65 / (vuetify.breakpoint.height / 100);
 });
 
-const messstelleInfoheight = computed(() => {
-    return (72 + 24 + 24) / (vuetify.breakpoint.height / 100);
-});
-
-const timelineHeight = computed(() => {
-    return (
-        100 -
-        appBarHeight.value -
-        headerHeight.value -
-        messstelleInfoheight.value
-    );
-});
-
-const timelineHeightVh: ComputedRef<string> = computed(() => {
-    return timelineHeight.value + "vh";
-});
 const messstelleId: ComputedRef<string> = computed(() => {
     const route = useRoute();
     const messstelleId = route.params.messstelleId;
