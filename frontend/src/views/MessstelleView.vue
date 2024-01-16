@@ -6,7 +6,8 @@
         <v-row no-gutters>
             <v-col cols="3">
                 <v-sheet
-                    :min-height="headerHeightVh"
+                    :min-height="leftHeightVh"
+                    :max-height="leftHeightVh"
                     width="100%"
                     color="grey lighten-3"
                     class="d-flex flex-column"
@@ -23,7 +24,13 @@
                     />
                     <MessungInfo
                         v-if="messstelle"
-                        :messsstelle="messstelle"
+                        :messstelle="messstelle"
+                        :timeline-height="timelineHeightVh"
+                    />
+                    <MessungenTimeline
+                        v-if="messstelle"
+                        :messstelle="messstelle"
+                        :timeline-height="timelineHeightVh"
                     />
                 </v-sheet>
             </v-col>
@@ -51,6 +58,7 @@ import { useRoute } from "vue-router/composables";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import MessungInfo from "@/components/messstelle/MessungInfo.vue";
 import { useVuetify } from "@/util/useVuetify";
+import MessungenTimeline from "@/components/messstelle/MessungenTimeline.vue";
 
 const reloadMessstelle = false;
 const messstelle: Ref<null | MessstelleDTO> = ref(null);
@@ -66,8 +74,29 @@ const headerHeightVh: ComputedRef<string> = computed(() => {
     return headerHeight.value + "vh";
 });
 
-const appBarheight = computed(() => {
+const leftHeightVh = computed(() => {
+    return 100 - appBarHeight.value + "vh";
+});
+
+const appBarHeight = computed(() => {
     return 65 / (vuetify.breakpoint.height / 100);
+});
+
+const messstelleInfoheight = computed(() => {
+    return (72 + 24 + 24) / (vuetify.breakpoint.height / 100);
+});
+
+const timelineHeight = computed(() => {
+    return (
+        100 -
+        appBarHeight.value -
+        headerHeight.value -
+        messstelleInfoheight.value
+    );
+});
+
+const timelineHeightVh: ComputedRef<string> = computed(() => {
+    return timelineHeight.value + "vh";
 });
 const messstelleId: ComputedRef<string> = computed(() => {
     const route = useRoute();
