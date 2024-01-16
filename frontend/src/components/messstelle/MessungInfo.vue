@@ -3,16 +3,15 @@ import MessstelleDTO from "@/types/MessstelleDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
-import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
-import MessungenTimeline from "@/components/messstelle/MessungenTimeline.vue";
 
 interface Props {
-    messsstelle: MessstelleDTO;
+    messstelle: MessstelleDTO;
+    timelineHeight: string;
 }
 
 const datumLetztePlausibleMessung = computed(() => {
-    return formatDate(props.messsstelle.datumLetztePlausibleMessung);
+    return formatDate(props.messstelle.datumLetztePlausibleMessung);
 });
 
 function formatDate(date: string): string {
@@ -23,19 +22,22 @@ function formatDate(date: string): string {
     return `${day}.${month}.${year}`;
 }
 
+const doMesssquerschnitteExist = computed(() => {
+    return props.messstelle.messquerschnitte.length > 0;
+});
+
 const props = defineProps<Props>();
 </script>
 
 <template>
     <v-container
-        class="pa-0"
+        class="pa-0 px-4"
         fluid
     >
-        <v-row
-            no-gutters
-            style="background-color: #ef9a9a"
-        >
-            {{ datumLetztePlausibleMessung }}
+        <v-row no-gutters>
+            <span class="primary--text"
+                >Letzter Messtag: {{ datumLetztePlausibleMessung }}
+            </span>
         </v-row>
         <v-row
             no-gutters
@@ -45,8 +47,8 @@ const props = defineProps<Props>();
                 :detektierte-fahrzeugart="DetektierteFahrzeugart.FAHRRAD"
             />
             <MessstelleKommentar
-                v-if="messsstelle.kommentar"
-                :kommentar="messsstelle.kommentar"
+                v-if="messstelle.kommentar"
+                :kommentar="messstelle.kommentar"
             />
         </v-row>
         <v-row
@@ -54,22 +56,37 @@ const props = defineProps<Props>();
             class="ma-0"
         >
             <v-sheet color="transparent">
-                <span>
-                    Aufbau: {{ formatDate(messsstelle.realisierungsdatum) }}
+                <span class="font-weight-regular">
+                    Aufbau: {{ formatDate(messstelle.realisierungsdatum) }}
                 </span>
                 <br />
-                <span v-if="messsstelle.abbaudatum">
-                    Abbau: {{ formatDate(messsstelle.abbaudatum) }}
+                <span v-if="messstelle.abbaudatum">
+                    Abbau: {{ formatDate(messstelle.abbaudatum) }}
                 </span>
                 <br />
                 <span>
                     Fahrzeugklassen:
-                    {{ messsstelle.messquerschnitte[0].fahrzeugKlassen }}
+                    {{ messstelle.messquerschnitte[0].fahrzeugKlassen }}
                 </span>
             </v-sheet>
-        </v-row>
-        <v-row>
-            <MessungenTimeline :messstelle="messsstelle" />
+            <v-sheet
+                v-if="!doMesssquerschnitteExist"
+                id="empty"
+                class="d-flex align-center justify-center"
+            >
+                <span class="text-caption font-weight-bold"
+                    >Für diese Zählstelle sind keine weiteren Zählungen
+                    vorhanden.</span
+                >
+            </v-sheet>
+            <v-sheet
+                v-else
+                color="transparent"
+            >
+                <span class="font-weight-bold"
+                    >Informationen zu(m) Messquerschnitt(en)</span
+                ></v-sheet
+            >
         </v-row>
     </v-container>
 </template>
