@@ -1,3 +1,5 @@
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+
 export default interface MessquerschnittDto {
     mqId: string;
     mstId: string;
@@ -6,7 +8,7 @@ export default interface MessquerschnittDto {
     fahrtrichtung: string;
     anzahlFahrspuren: number;
     fahrzeugKlassen: string;
-    detektierteVerkehrsarten: string;
+    detektierteVerkehrsarten: DetektierteFahrzeugart;
     hersteller: string;
     anzahlDetektoren: number;
     xcoordinate: number;
