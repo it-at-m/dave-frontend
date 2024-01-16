@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { ref } from "vue";
-interface Props {
-    kommentar: string;
-}
-
-const props = defineProps<Props>();
-
-const showDialog = ref(false);
-</script>
-
 <template>
     <div>
         <v-tooltip bottom>
@@ -35,7 +24,7 @@ const showDialog = ref(false);
                     Informationen
                 </v-card-title>
                 <br />
-                <v-card-text> testkommentar{{ kommentar }} </v-card-text>
+                <v-card-text> testkommentar{{ props.kommentar }} </v-card-text>
             </v-card>
 
             <v-footer>
@@ -51,3 +40,15 @@ const showDialog = ref(false);
         </v-dialog>
     </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+interface Props {
+    kommentar: string;
+}
+
+const props = defineProps<Props>();
+
+const showDialog = ref(false);
+</script>
+
