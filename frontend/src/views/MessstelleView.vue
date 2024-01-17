@@ -23,7 +23,7 @@
                         :height="headerHeightVh"
                         :minheight="headerHeightVh"
                     />
-                    <MessungInfo
+                    <MessquerschnittInfo
                         v-if="messstelle"
                         :messstelle="messstelle"
                     />
@@ -55,7 +55,7 @@ import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleDTO from "@/types/MessstelleDTO";
 import { useRoute } from "vue-router/composables";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
-import MessungInfo from "@/components/messstelle/MessungInfo.vue";
+import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import { useVuetify } from "@/util/useVuetify";
 import MessungenTimeline from "@/components/messstelle/MessungenTimeline.vue";
 
