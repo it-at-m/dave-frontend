@@ -8,22 +8,24 @@
     >
         <span class="text-caption">Messstelle</span>
         <br />
-        <span class="text-h5">{{ props.id }}</span>
+        <span class="text-h5">{{ mstId }}</span>
         <br /><br />
-        <span class="text-caption">{{ props.standort }} </span>
+        <span class="text-caption">{{ standort }} </span>
         <br />
-        <span class="text-caption">{{ props.stadtbezirkNummer }} </span>
+        <span class="text-caption"
+            >{{ stadtbezirk }} - {{ stadtbezirkNummer }}
+        </span>
     </v-sheet>
 </template>
 <script setup lang="ts">
 interface Props {
-    id: string;
+    mstId: string;
     stadtbezirkNummer: number;
+    stadtbezirk: string;
     standort: string;
     height: string;
     minheight: string;
 }
-
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
