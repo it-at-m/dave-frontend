@@ -1,5 +1,5 @@
 import BaseEntity from "@/types/BaseEntity";
-import MessquerschnittDto from "@/types/messung/MessquerschnittDto";
+import MessquerschnittInfoDTO from "@/types/messung/MessquerschnittInfoDTO";
 
 export default interface MessstelleInfoDTO extends BaseEntity {
     mstId: string;
@@ -11,7 +11,7 @@ export default interface MessstelleInfoDTO extends BaseEntity {
     lng: number;
     kommentar: string;
     sichtbarDatenportal: boolean;
-    messquerschnitte: MessquerschnittDto[];
+    messquerschnitte: MessquerschnittInfoDTO[];
     datumLetztePlausibleMessung: string;
     abbaudatum: string;
     realisierungsdatum: string;
