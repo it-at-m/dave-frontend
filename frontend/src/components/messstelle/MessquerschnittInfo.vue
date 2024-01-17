@@ -45,25 +45,19 @@
                 id="empty"
                 class="d-flex align-center justify-center"
             >
-                <span class="text-caption font-weight-bold"
-                    >Für diese Messstelle sind keine weiteren Messquerschnitte
-                    vorhanden.</span
-                >
+                <h4 class="text-caption font-weight-bold">
+                    Für diese Messstelle sind keine weiteren Messquerschnitte
+                    vorhanden.
+                </h4>
             </v-sheet>
             <v-sheet
                 v-else
                 color="transparent"
             >
-                <span
-                    v-if="props.messstelle.messquerschnitte.length > 1"
-                    class="font-weight-bold"
-                    >Informationen zu Messquerschnitten</span
-                >
-                <span
-                    v-else
-                    class="font-weight-bold"
-                    >Informationen zum Messquerschnitt</span
-                >
+                <h4 v-if="props.messstelle.messquerschnitte.length > 1">
+                    Informationen zu Messquerschnitten
+                </h4>
+                <span v-else>Informationen zum Messquerschnitt</span>
             </v-sheet>
         </v-row>
     </v-container>
