@@ -417,7 +417,16 @@ export default class ZaehlstelleMap extends Vue {
                 offset: [-14, 0],
             }
         );
+        marker.on("click", () => {
+            this.routeToMessstelle(messstelleKarteDto.id);
+        });
+
         return marker;
+    }
+
+    private routeToMessstelle(id: string) {
+        this.saveMapPositionInUrl();
+        this.$router.push(`/messstelle/${id}`);
     }
 
     /**
