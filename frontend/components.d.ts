@@ -40,6 +40,7 @@ declare module '@vue/runtime-core' {
     InfoMessage: typeof import('./src/components/app/InfoMessage.vue')['default']
     KommentarInfo: typeof import('./src/components/zaehlstelle/KommentarInfo.vue')['default']
     Loader: typeof import('./src/components/common/Loader.vue')['default']
+    MessquerschnittInfo: typeof import('./src/components/messstelle/MessquerschnittInfo.vue')['default']
     MessstelleInfo: typeof import('./src/components/messstelle/MessstelleInfo.vue')['default']
     MessstelleKommentar: typeof import('./src/components/messstelle/MessstelleKommentar.vue')['default']
     MessungenTimeline: typeof import('./src/components/messstelle/MessungenTimeline.vue')['default']
