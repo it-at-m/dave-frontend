@@ -59,10 +59,13 @@ import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue
 import { useVuetify } from "@/util/useVuetify";
 import MessungenTimeline from "@/components/messstelle/MessungenTimeline.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { ApiError } from "@/api/error";
+import { useStore } from "@/api/util/useStore";
 
 const reloadMessstelle = false;
 const messstelle: Ref<MessstelleInfoDTO> = ref(DefaultObjectCreator.create);
 const vuetify = useVuetify();
+const store = useStore();
 // eslint-disable-next-line no-undef
 onMounted(() => {
     loadMessstelle();
@@ -106,8 +109,10 @@ const latlng: ComputedRef<string[]> = computed(() => {
     }
 });
 function loadMessstelle() {
-    MessstelleService.getMessstelleById(messstelleId.value).then(
-        (messstelleDTO) => (messstelle.value = messstelleDTO)
-    );
+    MessstelleService.getMessstelleById(messstelleId.value)
+        .then((messstelleDTO) => (messstelle.value = messstelleDTO))
+        .catch((error: ApiError) => {
+            store.dispatch("snackbar/showError", error);
+        });
 }
 </script>
