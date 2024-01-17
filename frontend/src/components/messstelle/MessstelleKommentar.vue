@@ -24,7 +24,7 @@
                     Informationen
                 </v-card-title>
                 <br />
-                <v-card-text> testkommentar{{ kommentar }} </v-card-text>
+                <v-card-text> {{ kommentar }} </v-card-text>
             </v-card>
 
             <v-footer>
