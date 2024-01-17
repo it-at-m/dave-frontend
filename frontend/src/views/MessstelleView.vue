@@ -7,6 +7,7 @@
             <v-col cols="3">
                 <v-sheet
                     :min-height="leftHeightVh"
+                    :max-height="leftHeightVh"
                     width="100%"
                     color="grey lighten-3"
                     class="d-flex flex-column"
