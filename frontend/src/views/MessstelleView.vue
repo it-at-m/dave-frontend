@@ -15,8 +15,9 @@
                     <!-- Basisinformation zur Messstelle -->
                     <MessstelleInfo
                         v-if="messstelle"
-                        :id="messstelle.mstId"
+                        :mst-id="messstelle.mstId"
                         :stadtbezirk-nummer="messstelle.stadtbezirkNummer"
+                        :stadtbezirk="messstelle.stadtbezirk"
                         :standort="messstelle.standort"
                         :name="messstelle.name"
                         :height="headerHeightVh"
@@ -104,9 +105,7 @@ const latlng: ComputedRef<string[]> = computed(() => {
     }
 });
 function loadMessstelle() {
-    const route = useRoute();
-    const messstelleId = route.params.messstelleId;
-    MessstelleService.getMessstelleById(messstelleId).then(
+    MessstelleService.getMessstelleById(messstelleId.value).then(
         (messstelleDTO) => (messstelle.value = messstelleDTO)
     );
 }
