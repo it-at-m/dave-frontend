@@ -1,50 +1,42 @@
 <template>
     <v-sheet
-        class="overflow-y-auto"
+        class="overflow-y-auto px-4 my-0"
         width="100%"
         color="transparent"
     >
-        <v-sheet
-            class="px-4 my-0"
-            color="transparent"
+        <v-row
+            v-for="messquerschnitt in props.messstelle.messquerschnitte"
+            :key="messquerschnitt.mqId"
+            no-gutters
         >
-            <v-row
-                v-for="(messquerschnitt, index) in props.messstelle
-                    .messquerschnitte"
-                :key="messquerschnitt.mqId"
-                no-gutters
+            <v-card
+                class="mx-auto"
+                max-width="400"
+                tile
             >
-                <v-sheet
-                    :color="calcRowColor(index)"
-                    width="100%"
-                    min-height="130px"
-                    class="d-flex flex-column justify-space-between py-2"
-                >
-                    <span class="text-body-2">
-                        ID Messquerschnitt: {{ messquerschnitt.mqId }}</span
-                    >
-                    <br />
-
-                    <span class="text-body-2">
-                        Richtung: {{ messquerschnitt.fahrtrichtung }}</span
-                    >
-                    <br />
-                    <span class="text-body-2">
-                        Anzahl Fahrstreifen:
-                        {{ messquerschnitt.anzahlFahrspuren }}</span
-                    >
-                    <br />
-                    <span class="text-body-2">
-                        Straßenname: {{ messquerschnitt.strassenname }}</span
-                    >
-                    <br />
-                    <span class="text-body-2">
-                        Lage Messquerschnitt:
-                        {{ messquerschnitt.lageMessquerschnitt }}</span
-                    >
-                </v-sheet>
-            </v-row>
-        </v-sheet>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            ID Messquerschnitt: 15645</v-list-item-title
+                        >
+                        <v-list-item-subtitle
+                            >Richtung: West</v-list-item-subtitle
+                        >
+                        <v-list-item-subtitle
+                            >Anzahl Fahrstreifen: 2</v-list-item-subtitle
+                        >
+                        <v-list-item-subtitle
+                            >Straßenname:
+                            Agnes-Pockels-Bogen</v-list-item-subtitle
+                        >
+                        <v-list-item-subtitle
+                            >Lage: Keine Ahnung was da
+                            steht</v-list-item-subtitle
+                        >
+                    </v-list-item-content>
+                </v-list-item>
+            </v-card>
+        </v-row>
     </v-sheet>
 </template>
 
@@ -56,12 +48,4 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-function calcRowColor(index: number) {
-    const ungerade = index % 2 > 0;
-    if (ungerade) {
-        return "grey lighten-4";
-    }
-    return "grey lighten-2";
-}
 </script>
