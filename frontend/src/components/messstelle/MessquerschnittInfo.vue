@@ -70,14 +70,14 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleDTO from "@/types/MessstelleDTO";
+import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
 
 interface Props {
-    messstelle: MessstelleDTO;
+    messstelle: MessstelleInfoDTO;
 }
 
 const datumLetztePlausibleMessung = computed(() => {

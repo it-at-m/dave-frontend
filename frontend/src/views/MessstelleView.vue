@@ -52,15 +52,16 @@
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 import { computed, ComputedRef, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
-import MessstelleDTO from "@/types/MessstelleDTO";
+import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import { useVuetify } from "@/util/useVuetify";
 import MessungenTimeline from "@/components/messstelle/MessungenTimeline.vue";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const reloadMessstelle = false;
-const messstelle: Ref<null | MessstelleDTO> = ref(null);
+const messstelle: Ref<MessstelleInfoDTO> = ref(DefaultObjectCreator.create);
 const vuetify = useVuetify();
 // eslint-disable-next-line no-undef
 onMounted(() => {

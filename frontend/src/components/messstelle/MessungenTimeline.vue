@@ -41,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleDTO from "@/types/MessstelleDTO";
+import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 
 interface Props {
-    messstelle: MessstelleDTO;
+    messstelle: MessstelleInfoDTO;
 }
 
 const props = defineProps<Props>();
