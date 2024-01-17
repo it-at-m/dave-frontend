@@ -5,6 +5,7 @@ export default interface MessstelleDTO extends BaseEntity {
     mstId: string;
     name: string;
     stadtbezirkNummer: number;
+    stadtbezirk: string;
     standort: string;
     lat: number;
     lng: number;
@@ -13,6 +14,6 @@ export default interface MessstelleDTO extends BaseEntity {
     sichtbarDatenportal: boolean;
     messquerschnitte: MessquerschnittDto[];
     datumLetztePlausibleMessung: string;
-    abbaudatum?: string;
+    abbaudatum: string;
     realisierungsdatum: string;
 }
