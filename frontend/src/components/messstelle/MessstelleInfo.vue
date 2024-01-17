@@ -3,8 +3,8 @@
         width="100%"
         color="transparent"
         class="pa-4"
-        :min-height="props.minheight"
-        :height="props.height"
+        :min-height="minheight"
+        :height="height"
     >
         <span class="text-caption">Messstelle</span>
         <br />
