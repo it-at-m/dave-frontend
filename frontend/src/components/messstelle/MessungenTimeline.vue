@@ -6,7 +6,7 @@
     >
         <v-row
             v-for="messquerschnitt in props.messstelle.messquerschnitte"
-            :key="messquerschnitt.mqId"
+            :key="messquerschnitt.mstId"
             no-gutters
         >
             <v-card
@@ -17,21 +17,30 @@
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title>
-                            ID Messquerschnitt: 15645</v-list-item-title
+                            ID Messquerschnitt:
+                            {{ messquerschnitt.mqId }}</v-list-item-title
                         >
                         <v-list-item-subtitle
-                            >Richtung: West</v-list-item-subtitle
+                            >Richtung:
+                            {{
+                                messquerschnitt.fahrtrichtung
+                            }}</v-list-item-subtitle
                         >
                         <v-list-item-subtitle
-                            >Anzahl Fahrstreifen: 2</v-list-item-subtitle
+                            >Anzahl Fahrstreifen:
+                            {{
+                                messquerschnitt.anzahlFahrspuren
+                            }}</v-list-item-subtitle
                         >
                         <v-list-item-subtitle
                             >Straßenname:
-                            Agnes-Pockels-Bogen</v-list-item-subtitle
+                            {{
+                                messquerschnitt.strassenname
+                            }}</v-list-item-subtitle
                         >
                         <v-list-item-subtitle
-                            >Lage: Keine Ahnung was da
-                            steht</v-list-item-subtitle
+                            >Lage Messquerschnitt:
+                            {{ messstelle.standort }}</v-list-item-subtitle
                         >
                     </v-list-item-content>
                 </v-list-item>
