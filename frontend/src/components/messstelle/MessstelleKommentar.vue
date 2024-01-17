@@ -24,7 +24,7 @@
                     Informationen
                 </v-card-title>
                 <br />
-                <v-card-text> testkommentar{{ props.kommentar }} </v-card-text>
+                <v-card-text> testkommentar{{ kommentar }} </v-card-text>
             </v-card>
 
             <v-footer>
@@ -47,7 +47,7 @@ interface Props {
     kommentar: string;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const showDialog = ref(false);
 </script>
