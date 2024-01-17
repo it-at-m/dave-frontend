@@ -46,7 +46,7 @@
                 class="d-flex align-center justify-center"
             >
                 <span class="text-caption font-weight-bold"
-                    >Für diese Zählstelle sind keine weiteren Zählungen
+                    >Für diese Messstelle sind keine weiteren Messquerschnitte
                     vorhanden.</span
                 >
             </v-sheet>
