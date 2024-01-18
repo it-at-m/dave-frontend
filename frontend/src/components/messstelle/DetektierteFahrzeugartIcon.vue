@@ -12,7 +12,7 @@ import { computed } from "vue";
 import IconOptions from "@/types/util/IconOptions";
 
 interface Props {
-    detektierteFahrzeugart: DetektierteFahrzeugart;
+    detektierteFahrzeugart?: DetektierteFahrzeugart;
 }
 
 const props = defineProps<Props>();
