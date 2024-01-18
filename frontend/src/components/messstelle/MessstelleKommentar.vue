@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="kommentar">
         <v-tooltip bottom>
             <template #activator="{ on, attrs }">
                 <v-btn

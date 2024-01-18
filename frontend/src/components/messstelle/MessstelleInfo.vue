@@ -17,10 +17,7 @@
                     messstelle.messquerschnitte[0].detektierteVerkehrsarten
                 "
             />
-            <MessstelleKommentar
-                v-if="messstelle.kommentar"
-                :kommentar="messstelle.kommentar"
-            />
+            <MessstelleKommentar :kommentar="messstelle.kommentar" />
         </v-row>
         <v-row
             no-gutters
