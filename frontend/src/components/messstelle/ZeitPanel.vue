@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { ref } from "vue";
+import { Ref, ref, computed, watch } from "vue";
 
 interface Props {
     dates: string[];
 }
 
 const datePickerSettings = ref("one");
-const pickeDates = ref("");
-const dateRangeText = ref("");
+const pickeDates: Ref<string[]> = ref([]);
+const dateRangeText = ref([]);
+const dateSingleText = ref("");
 const props = defineProps<Props>();
+const singleDate = ref("");
 
 function getOldestPlausiblerMesstag(): string {
     let sortedArrayOfDates = props.dates;
@@ -17,6 +19,12 @@ function getOldestPlausiblerMesstag(): string {
         return new Date(b).valueOf() - new Date(a).valueOf();
     });
     return sortedArrayOfDates[sortedArrayOfDates.length - 1];
+}
+
+function getDatesDescAsStrings(arrayToSort: string[]): string[] {
+    return arrayToSort.sort(function (a, b) {
+        return new Date(b).valueOf() - new Date(a).valueOf();
+    });
 }
 
 function formatDate(date: string): string {
@@ -27,15 +35,40 @@ function formatDate(date: string): string {
     return `${day}.${month}.${year}`;
 }
 
-function allowedDates(val) {
+const dateRangeTextFormatted = computed(() => {
+    if (pickeDates.value.length == 2) {
+        const sortedDates = getDatesDescAsStrings(pickeDates.value);
+        return `${formatDate(sortedDates[1])} - ${formatDate(sortedDates[0])}`;
+    } else if (pickeDates.value.length == 1) {
+        return `${formatDate(pickeDates.value[0])} -`;
+    } else {
+        return "";
+    }
+});
+
+function allowedDatesSingleDatePicker(val: string) {
     const oldestMessung = getOldestPlausiblerMesstag();
     const today = new Date();
     return (
         props.dates.indexOf(val) != -1 &&
         new Date(val) > new Date(oldestMessung) &&
-        new Date(val) < new Date(today)
+        new Date(val) < new Date(today) &&
+        pickeDates.value.indexOf(val) != 0
     );
 }
+
+function allowedDatesRangeDatePicker(val: string) {
+    const today = new Date();
+    return new Date(val) < today;
+}
+
+watch(datePickerSettings, () => {
+    if (datePickerSettings.value == "one") {
+        pickeDates.value = [];
+    } else {
+        singleDate.value = "";
+    }
+});
 </script>
 
 <template>
@@ -63,28 +96,34 @@ function allowedDates(val) {
                     value="two"
                 />
             </v-radio-group>
-            <v-row>
+            <v-row v-if="datePickerSettings == 'one'">
+                <v-col
+                    cols="12"
+                    sm="6"
+                >
+                    <v-date-picker
+                        v-model="singleDate"
+                        :allowed-dates="allowedDatesSingleDatePicker"
+                    ></v-date-picker>
+                </v-col>
+            </v-row>
+            <v-row v-else>
                 <v-col
                     cols="12"
                     sm="6"
                 >
                     <v-date-picker
                         v-model="pickeDates"
-                        :allowed-dates="allowedDates"
+                        :allowed-dates="allowedDatesRangeDatePicker"
                         range
                     ></v-date-picker>
                 </v-col>
                 <v-col
-                    cols="12"
-                    sm="6"
-                >
-                    <v-text-field
-                        :value="formatDate(pickeDates)"
-                        label="Date range"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                    ></v-text-field>
-                </v-col>
+                    ><v-text-field
+                        :value="dateRangeTextFormatted"
+                        label="Ausgewähltes Zeitintervall"
+                    ></v-text-field
+                ></v-col>
             </v-row>
         </v-expansion-panel-content>
     </v-expansion-panel>
