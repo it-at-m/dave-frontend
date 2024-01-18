@@ -13,8 +13,7 @@
                     class="d-flex flex-column"
                 >
                     <!-- Basisinformation zur Messstelle -->
-                    <MessstelleInfo
-                        v-if="messstelle"
+                    <MessstelleHeaderInfo
                         :mst-id="messstelle.mstId"
                         :stadtbezirk-nummer="messstelle.stadtbezirkNummer"
                         :stadtbezirk="messstelle.stadtbezirk"
@@ -23,14 +22,9 @@
                         :height="headerHeightVh"
                         :minheight="headerHeightVh"
                     />
-                    <MessquerschnittInfo
-                        v-if="messstelle"
-                        :messstelle="messstelle"
-                    />
-                    <MessungenTimeline
-                        v-if="messstelle"
-                        :messstelle="messstelle"
-                    />
+                    <MessstelleInfo :messstelle="messstelle" />
+                    <MessquerschnittAnzahlInfo :messstelle="messstelle" />
+                    <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
             </v-col>
             <v-col cols="9">
@@ -54,16 +48,19 @@ import { computed, ComputedRef, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
-import MessstelleInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
-import MessquerschnittInfo from "@/components/messstelle/MessstelleInfo.vue";
+import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
+import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import { useVuetify } from "@/util/useVuetify";
-import MessungenTimeline from "@/components/messstelle/MessquerschnittInfo.vue";
+import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
+import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 
 const reloadMessstelle = false;
-const messstelle: Ref<MessstelleInfoDTO> = ref(DefaultObjectCreator.create);
+const messstelle: Ref<MessstelleInfoDTO> = ref(
+    DefaultObjectCreator.createDefaultMessstelleInfoDTO()
+);
 const vuetify = useVuetify();
 const store = useStore();
 // eslint-disable-next-line no-undef

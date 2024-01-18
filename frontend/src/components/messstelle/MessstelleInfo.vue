@@ -13,9 +13,7 @@
             class="ma-0"
         >
             <DetektierteFahrzeugartIcon
-                :detektierte-fahrzeugart="
-                    messstelle.messquerschnitte[0].detektierteVerkehrsarten
-                "
+                :detektierte-fahrzeugart="detektierteVerkehrsart"
             />
             <MessstelleKommentar :kommentar="messstelle.kommentar" />
         </v-row>
@@ -36,25 +34,6 @@
                     Fahrzeugklassen:
                     {{ fahrzeugKlasse }}
                 </span>
-            </v-sheet>
-            <v-sheet
-                v-if="!doMesssquerschnitteExist"
-                id="empty"
-                class="d-flex align-center justify-center"
-            >
-                <h4 class="text-caption font-weight-bold">
-                    Für diese Messstelle sind keine weiteren Messquerschnitte
-                    vorhanden.
-                </h4>
-            </v-sheet>
-            <v-sheet
-                v-else
-                color="transparent"
-            >
-                <h4 v-if="props.messstelle.messquerschnitte.length > 1">
-                    Informationen zu Messquerschnitten
-                </h4>
-                <h4 v-else>Informationen zum Messquerschnitt</h4>
             </v-sheet>
         </v-row>
     </v-container>
@@ -82,15 +61,19 @@ function formatDate(date: string): string {
     return `${day}.${month}.${year}`;
 }
 
-const doMesssquerschnitteExist = computed(() => {
-    return props.messstelle.messquerschnitte.length > 0;
-});
-
 const fahrzeugKlasse = computed(() => {
     if (props.messstelle.messquerschnitte.length > 0) {
         return props.messstelle.messquerschnitte[0].fahrzeugKlassen;
     } else {
         return "k.A.";
+    }
+});
+
+const detektierteVerkehrsart = computed(() => {
+    if (props.messstelle.messquerschnitte.length > 0) {
+        return props.messstelle.messquerschnitte[0].detektierteVerkehrsarten;
+    } else {
+        return undefined;
     }
 });
 
