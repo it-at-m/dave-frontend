@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 interface Props {
-    kommentar: string;
+    kommentar?: string;
 }
 
 defineProps<Props>();
