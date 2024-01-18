@@ -34,7 +34,7 @@
                 <br />
                 <span>
                     Fahrzeugklassen:
-                    {{ messstelle.messquerschnitte[0].fahrzeugKlassen }}
+                    {{ fahrzeugKlasse }}
                 </span>
             </v-sheet>
             <v-sheet
@@ -54,7 +54,7 @@
                 <h4 v-if="props.messstelle.messquerschnitte.length > 1">
                     Informationen zu Messquerschnitten
                 </h4>
-                <span v-else>Informationen zum Messquerschnitt</span>
+                <h4 v-else>Informationen zum Messquerschnitt</h4>
             </v-sheet>
         </v-row>
     </v-container>
@@ -84,6 +84,14 @@ function formatDate(date: string): string {
 
 const doMesssquerschnitteExist = computed(() => {
     return props.messstelle.messquerschnitte.length > 0;
+});
+
+const fahrzeugKlasse = computed(() => {
+    if (props.messstelle.messquerschnitte.length > 0) {
+        return props.messstelle.messquerschnitte[0].fahrzeugKlassen;
+    } else {
+        return "k.A.";
+    }
 });
 
 const props = defineProps<Props>();
