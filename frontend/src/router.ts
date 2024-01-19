@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Main from "./views/Main.vue";
 import ZaehlstelleView from "@/views/ZaehlstelleView.vue";
+import MessstelleView from "@/views/MessstelleView.vue";
 
 Vue.use(Router);
 
@@ -38,6 +39,11 @@ export default new Router({
             path: "/zaehlstelle/:zaehlstelleId/:zaehlungId?",
             name: "zaehlstelle",
             component: ZaehlstelleView,
+        },
+        {
+            path: "/messstelle/:messstelleId",
+            name: "messstelle",
+            component: MessstelleView,
         },
         {
             path: "/pdfreport",
