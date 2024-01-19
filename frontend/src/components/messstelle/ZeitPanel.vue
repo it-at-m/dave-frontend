@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { Ref, ref, computed, watch } from "vue";
+import { computed, onMounted, ref, Ref, watch } from "vue";
 
 interface Props {
     dates: string[];
 }
 
 const datePickerSettings = ref("one");
-const pickeDates: Ref<string[]> = ref([]);
-const dateRangeText = ref([]);
-const dateSingleText = ref("");
+const dateRange: Ref<string[]> = ref([]);
+const dateRangeFromDatePicker: Ref<string[]> = ref([]);
 const props = defineProps<Props>();
 const singleDate = ref("");
+const singleDateFromDatePicker = ref("");
 const menu = ref(false);
 
 const getOldestPlausiblerMesstag = computed(() => {
@@ -30,12 +30,30 @@ const getNewestPlausiblerMesstag = computed(() => {
     return sortedArrayOfDates[0];
 });
 
+onMounted(() => {
+    singleDate.value = getNewestPlausiblerMesstag.value;
+    singleDateFromDatePicker.value = getNewestPlausiblerMesstag.value;
+});
+
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
     return arrayToSort.sort(function (a, b) {
         return new Date(b).valueOf() - new Date(a).valueOf();
     });
 }
 
+const getFormattedSelectedZeit = computed(() => {
+    if (datePickerSettings.value == "one" && singleDate.value.length > 0) {
+        return formatDate(singleDate.value);
+    } else if (
+        datePickerSettings.value == "two" &&
+        dateRange.value.length == 2
+    ) {
+        const sortedDates = getDatesDescAsStrings(dateRange.value);
+        return `${formatDate(sortedDates[1])} - ${formatDate(sortedDates[0])}`;
+    } else {
+        return "";
+    }
+});
 function formatDate(date: string): string {
     if (!date) {
         return "";
@@ -44,16 +62,17 @@ function formatDate(date: string): string {
     return `${day}.${month}.${year}`;
 }
 
-const dateRangeTextFormatted = computed(() => {
-    if (pickeDates.value.length == 2) {
-        const sortedDates = getDatesDescAsStrings(pickeDates.value);
-        return `${formatDate(sortedDates[1])} - ${formatDate(sortedDates[0])}`;
-    } else if (pickeDates.value.length == 1) {
-        return `${formatDate(pickeDates.value[0])} -`;
-    } else {
-        return "";
+function saveDateRange() {
+    if (dateRangeFromDatePicker.value.length == 2) {
+        dateRange.value = dateRangeFromDatePicker.value;
     }
-});
+    menu.value = false;
+}
+
+function saveSingleDate() {
+    singleDate.value = singleDateFromDatePicker.value;
+    menu.value = false;
+}
 
 function allowedDatesSingleDatePicker(val: string) {
     const oldestMessung = getOldestPlausiblerMesstag.value;
@@ -62,7 +81,7 @@ function allowedDatesSingleDatePicker(val: string) {
         props.dates.indexOf(val) != -1 &&
         new Date(val) >= new Date(oldestMessung) &&
         new Date(val) <= new Date(today) &&
-        pickeDates.value.indexOf(val) != 0
+        dateRange.value.indexOf(val) != 0
     );
 }
 
@@ -73,15 +92,16 @@ function allowedDatesRangeDatePicker(val: string) {
 
 watch(datePickerSettings, () => {
     if (datePickerSettings.value == "one") {
-        pickeDates.value = [];
+        dateRange.value = [];
     } else {
-        singleDate.value = "";
+        singleDate.value = getNewestPlausiblerMesstag.value;
+        singleDateFromDatePicker.value = getNewestPlausiblerMesstag.value;
     }
 });
 
 function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
-    if (pickeDates.value.length == 2) {
-        const sortedPickedDates = getDatesDescAsStrings(pickeDates.value);
+    if (dateRange.value.length == 2) {
+        const sortedPickedDates = getDatesDescAsStrings(dateRange.value);
         for (let i = 0; i < props.dates.length; i++) {
             if (
                 new Date(props.dates[i]).valueOf() >
@@ -126,96 +146,27 @@ function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
                     value="two"
                 />
             </v-radio-group>
-            <!--<v-row v-if="datePickerSettings == 'one'">
-                <v-col
-                    cols="12"
-                    sm="8"
-                >
-                    <v-date-picker
-                        v-model="singleDate"
-                        width="100%"
-                        :allowed-dates="allowedDatesSingleDatePicker"
-                        locale="de-De"
-                    ></v-date-picker>
-                </v-col>
-                <v-col
-                    ><v-text-field
-                        :value="formatDate(singleDate)"
-                        label="Ausgewählter Messtag"
-                    ></v-text-field>
-                    <p>
-                        Neuerster Plausibler Messtag:
-                        <v-btn
-                            class="mx-0 px-0"
-                            text
-                            @click="singleDate = getNewestPlausiblerMesstag"
-                            >{{ formatDate(getNewestPlausiblerMesstag) }}</v-btn
-                        >
-                    </p>
-                    <p>
-                        Ältester Plausibler Messtag:
-                        <v-btn
-                            class="mx-0 px-0"
-                            text
-                            @click="singleDate = getOldestPlausiblerMesstag"
-                            >{{ formatDate(getOldestPlausiblerMesstag) }}</v-btn
-                        >
-                    </p>
-                </v-col>
-            </v-row>
-            <v-row v-else>
-                <v-col
-                    cols="12"
-                    sm="8"
-                >
-                    <v-date-picker
-                        v-model="pickeDates"
-                        :allowed-dates="allowedDatesRangeDatePicker"
-                        range
-                        :events="dates"
-                        width="100%"
-                        locale="de-De"
-                    ></v-date-picker>
-                </v-col>
-                <v-col
-                    ><v-text-field
-                        :value="dateRangeTextFormatted"
-                        label="Ausgewähltes Zeitintervall"
-                        :rules="[RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE]"
-                    ></v-text-field>
-                    <p>
-                        Neuerster Plausibler Messtag:
-                        {{ formatDate(getNewestPlausiblerMesstag) }}
-                    </p>
-                    <p>
-                        Ältester Plausibler Messtag:
-                        {{ formatDate(getOldestPlausiblerMesstag) }}
-                    </p>
-                    <p>Maximale Größe des Auswahlzeitraum: 5 Jahre</p>
-                </v-col>
-            </v-row>-->
             <v-row
                 ><v-menu
-                    ref="menu"
+                    ref="menuRef"
                     v-model="menu"
                     :close-on-content-click="false"
-                    :return-value.sync="singleDate"
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
                 >
-                    <template #activator="{ on, attrs }">
+                    <template #activator="{ on }">
                         <v-text-field
-                            :value="singleDate"
-                            label="Picker in menu"
+                            :value="getFormattedSelectedZeit"
+                            label="Zeitintervall auswählen"
                             prepend-icon="mdi-calendar"
                             readonly
-                            v-bind="attrs"
                             v-on="on"
                         ></v-text-field>
                     </template>
                     <v-date-picker
-                        v-model="singleDate"
+                        v-if="datePickerSettings == 'one'"
+                        v-model="singleDateFromDatePicker"
                         no-title
                         :allowed-dates="allowedDatesSingleDatePicker"
                     >
@@ -230,7 +181,31 @@ function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
                         <v-btn
                             text
                             color="primary"
-                            @click="$refs.menu.save(singleDate)"
+                            @click="saveSingleDate"
+                        >
+                            OK
+                        </v-btn>
+                    </v-date-picker>
+                    <v-date-picker
+                        v-else
+                        v-model="dateRangeFromDatePicker"
+                        :allowed-dates="allowedDatesRangeDatePicker"
+                        range
+                        :events="dates"
+                        no-title
+                    >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text
+                            color="primary"
+                            @click="menu = false"
+                        >
+                            Cancel
+                        </v-btn>
+                        <v-btn
+                            text
+                            color="primary"
+                            @click="saveDateRange"
                         >
                             OK
                         </v-btn>
