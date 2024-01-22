@@ -102,11 +102,11 @@ watch(datePickerSettings, () => {
 function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
     if (dateRange.value.length == 2) {
         const sortedPickedDates = getDatesDescAsStrings(dateRange.value);
-        for (let i = 0; i < props.dates.length; i++) {
+        for (const element of props.dates) {
             if (
-                new Date(props.dates[i]).valueOf() >
+                new Date(element).valueOf() >
                     new Date(sortedPickedDates[1]).valueOf() &&
-                new Date(props.dates[i]).valueOf() <
+                new Date(element).valueOf() <
                     new Date(sortedPickedDates[0]).valueOf()
             ) {
                 return true;
@@ -161,6 +161,7 @@ function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
                             label="Zeitintervall auswählen"
                             prepend-icon="mdi-calendar"
                             readonly
+                            :rules="[RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE]"
                             v-on="on"
                         ></v-text-field>
                     </template>
