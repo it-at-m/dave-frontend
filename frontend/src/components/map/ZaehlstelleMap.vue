@@ -196,6 +196,8 @@ export default class ZaehlstelleMap extends Vue {
     private zoom!: number;
     @Ref("map")
     private readonly theMap!: LMap;
+    @Prop()
+    private reload?: boolean;
 
     private mapMarkerClusterGroup = L.markerClusterGroup();
 
@@ -252,11 +254,15 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     mounted() {
+        this.searchErhebungsstelle();
+    }
+
+    @Watch("reload")
+    private searchErhebungsstelle() {
         SucheService.searchErhebungsstelle(
             this.$store.getters["search/lastSearchQuery"]
         )
             .then((result) => {
-                // fügt testdaten für Messstellen hinzu, muss später entfernt werden sobald der richtige Service verfügbar ist
                 this.$store.commit("search/result", result);
             })
             .catch((error) => {
