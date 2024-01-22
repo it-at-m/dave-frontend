@@ -365,6 +365,11 @@ export default class ZaehlstelleMap extends Vue {
         this.$router.push("/zaehlstelle/" + id);
     }
 
+    private routeToMessstelle(id: string) {
+        this.saveMapPositionInUrl();
+        this.$router.push(`/messstelle/${id}`);
+    }
+
     private createLatLng(anzeigeKarte: AnzeigeKarteDTO): LatLng {
         return latLng(anzeigeKarte.latitude, anzeigeKarte.longitude);
     }
@@ -420,13 +425,7 @@ export default class ZaehlstelleMap extends Vue {
         marker.on("click", () => {
             this.routeToMessstelle(messstelleKarteDto.id);
         });
-
         return marker;
-    }
-
-    private routeToMessstelle(id: string) {
-        this.saveMapPositionInUrl();
-        this.$router.push(`/messstelle/${id}`);
     }
 
     /**
