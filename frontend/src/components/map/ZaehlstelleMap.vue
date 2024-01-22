@@ -136,7 +136,7 @@ import ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 // eslint-disable-next-line no-unused-vars
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 // eslint-disable-next-line no-unused-vars
-import TooltipDTO from "@/types/TooltipDTO";
+import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 import SucheService from "@/api/service/SucheService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import markerIconRed from "@/assets/marker-icon-red.png";
@@ -196,6 +196,8 @@ export default class ZaehlstelleMap extends Vue {
     private zoom!: number;
     @Ref("map")
     private readonly theMap!: LMap;
+    @Prop()
+    private reload?: boolean;
 
     private mapMarkerClusterGroup = L.markerClusterGroup();
 
@@ -230,6 +232,7 @@ export default class ZaehlstelleMap extends Vue {
             return this.zoom;
         }
     }
+
     /**
      * Die Methode setzt Koordinate auf welche Zentriert werden soll.
      */
@@ -251,12 +254,15 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     mounted() {
-        SucheService.searchZaehlstelle(
+        this.searchErhebungsstelle();
+    }
+
+    @Watch("reload")
+    private searchErhebungsstelle() {
+        SucheService.searchErhebungsstelle(
             this.$store.getters["search/lastSearchQuery"]
         )
             .then((result) => {
-                // fügt testdaten für Messstellen hinzu, muss später entfernt werden sobald der richtige Service verfügbar ist
-                result.push(...SucheService.getMockMessstelleKarte());
                 this.$store.commit("search/result", result);
             })
             .catch((error) => {
@@ -317,8 +323,12 @@ export default class ZaehlstelleMap extends Vue {
              * Durch setzen der Zaehlstelle wird die Generierung der Marker
              * über die Computed Property "getSelectedZaehlstelleKarte" getriggert.
              */
-            if (zaehlstelleKarte.id === this.zId) {
-                this.selectedZaehlstelleKarte = zaehlstelleKarte;
+            if (
+                zaehlstelleKarte.id === this.zId &&
+                zaehlstelleKarte.type === "zaehlstelle"
+            ) {
+                this.selectedZaehlstelleKarte =
+                    zaehlstelleKarte as ZaehlstelleKarteDTO;
             }
         });
 
@@ -362,6 +372,7 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     private routeToMessstelle(id: string) {
+        this.saveMapPositionInUrl();
         this.$router.push(`/messstelle/${id}`);
     }
 
@@ -387,10 +398,13 @@ export default class ZaehlstelleMap extends Vue {
             this.createLatLng(zaehlstelleKarte),
             this.markerOptionsZaehlstelle(zaehlstelleKarte)
         );
-        marker.bindTooltip(this.createTooltip(zaehlstelleKarte.tooltip), {
-            direction: "top",
-            offset: [-14, 0],
-        });
+        marker.bindTooltip(
+            this.createTooltipZaehlstelle(zaehlstelleKarte.tooltip),
+            {
+                direction: "top",
+                offset: [-14, 0],
+            }
+        );
 
         marker.on("click", () => {
             // Zeige alle Zaehlungen zur Zaehlstelle an.
@@ -430,7 +444,12 @@ export default class ZaehlstelleMap extends Vue {
      *  - anzahlZaehlungen
      *  - datumLetzteZaehlung
      */
-    private createTooltip(tooltipDto: TooltipDTO): string {
+    private createTooltipZaehlstelle(
+        tooltipDto: TooltipZaehlstelleDTO
+    ): string {
+        if (!tooltipDto) {
+            return "<div></div>";
+        }
         let tooltip = "<div><b>";
         if (tooltipDto.zaehlstellennnummer) {
             tooltip = `${tooltip}Zählstelle: ${tooltipDto.zaehlstellennnummer}</b><br/>`;
@@ -464,16 +483,29 @@ export default class ZaehlstelleMap extends Vue {
     }
 
     private createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
+        if (!tooltipDto) {
+            return "<div></div>";
+        }
         let tooltip = "<div><b>";
         if (tooltipDto.mstId) {
-            tooltip = `${tooltip}Messstelle: ${tooltipDto.mstId}</b><br/>`;
+            tooltip = `${tooltip}Messstelle: ${tooltipDto.mstId}`;
+            if (tooltipDto.detektierteVerkehrsarten) {
+                tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsarten})`;
+            }
+            tooltip = `${tooltip}</b><br/>`;
         }
-        if (tooltipDto.standortDatenportal) {
-            tooltip = `${tooltip}${tooltipDto.standortDatenportal}<br/>`;
+        if (tooltipDto.standort) {
+            tooltip = `${tooltip}${tooltipDto.standort}<br/>`;
         }
         tooltip = `${tooltip}<br/>`;
-        if (tooltipDto.stadtbezirk) {
-            tooltip = `${tooltip}Stadtbezirk: ${tooltipDto.stadtbezirk}<br/>`;
+        if (!tooltipDto.stadtbezirk) {
+            tooltip = `${tooltip}Stadtbezirk: Keine Angabe<br/>`;
+        } else {
+            tooltip = `${tooltip}Stadtbezirk: `;
+            if (tooltipDto.stadtbezirknummer) {
+                tooltip = `${tooltip}${tooltipDto.stadtbezirknummer} - `;
+            }
+            tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
         }
         if (tooltipDto.realisierungsdatum) {
             tooltip = `${tooltip} Aufbau: ${tooltipDto.realisierungsdatum}<br/>`;
@@ -481,11 +513,8 @@ export default class ZaehlstelleMap extends Vue {
         if (tooltipDto.abbaudatum) {
             tooltip = `${tooltip}Abbau: ${tooltipDto.abbaudatum}<br/>`;
         }
-        if (tooltipDto.kfz) {
-            tooltip = `${tooltip}KFZ</b><br/>`;
-        }
-        if (tooltipDto.datumLetzteMessung) {
-            tooltip = `${tooltip}Letzter Messtag: ${tooltipDto.datumLetzteMessung}<br/>`;
+        if (tooltipDto.datumLetztePlausibleMessung) {
+            tooltip = `${tooltip}Letzte plausible Messung: ${tooltipDto.datumLetztePlausibleMessung}<br/>`;
         }
 
         tooltip = `${tooltip}</div>`;

@@ -44,7 +44,7 @@
 </template>
 <script setup lang="ts">
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
-import { computed, ComputedRef, ref, Ref } from "vue";
+import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
@@ -57,7 +57,7 @@ import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 
-const reloadMessstelle = false;
+const reloadMessstelle: Ref<boolean> = ref(false);
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
@@ -92,22 +92,17 @@ const messstelleId: ComputedRef<string> = computed(() => {
 });
 
 const latlng: ComputedRef<string[]> = computed(() => {
-    if (
-        messstelle.value == null ||
-        messstelle.value.lng == undefined ||
-        messstelle.value.lat == undefined
-    ) {
-        return [];
-    } else {
-        return [
-            messstelle.value.lat.toString(),
-            messstelle.value.lng.toString(),
-        ];
-    }
+    return [
+        messstelle.value.latitude.toString(),
+        messstelle.value.longitude.toString(),
+    ];
 });
 function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
-        .then((messstelleDTO) => (messstelle.value = messstelleDTO))
+        .then((messstelleDTO) => {
+            messstelle.value = messstelleDTO;
+            reloadMessstelle.value = !reloadMessstelle.value;
+        })
         .catch((error: ApiError) => {
             store.dispatch("snackbar/showError", error);
         });
