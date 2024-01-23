@@ -35,7 +35,6 @@
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
                     show-marker="true"
-                    :reload="reloadMessstelle"
                     width="100%"
                 />
             </v-col>
@@ -57,7 +56,6 @@ import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 
-const reloadMessstelle: Ref<boolean> = ref(false);
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
@@ -101,7 +99,6 @@ function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
         .then((messstelleDTO) => {
             messstelle.value = messstelleDTO;
-            reloadMessstelle.value = !reloadMessstelle.value;
         })
         .catch((error: ApiError) => {
             store.dispatch("snackbar/showError", error);
