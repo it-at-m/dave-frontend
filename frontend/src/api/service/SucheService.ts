@@ -17,7 +17,7 @@ export default class SucheService {
     ): Promise<Array<AnzeigeKarteDTO>> {
         return FetchService.getData(
             `${this.ENDPOINT}/search-datenportal?query=${query}`,
-            "Beim Suchen von Zählstellen ist ein Fehler aufgetreten."
+            "Beim Suchen von Zähl-/Messstellen ist ein Fehler aufgetreten."
         );
     }
 }

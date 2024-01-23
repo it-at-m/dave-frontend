@@ -257,7 +257,7 @@ export default class ZaehlstelleMap extends Vue {
         this.searchErhebungsstelle();
     }
 
-    @Watch("reload")
+    // @Watch("reload")
     private searchErhebungsstelle() {
         SucheService.searchErhebungsstelle(
             this.$store.getters["search/lastSearchQuery"]
@@ -486,9 +486,9 @@ export default class ZaehlstelleMap extends Vue {
         if (!tooltipDto) {
             return "<div></div>";
         }
-        let tooltip = "<div><b>";
+        let tooltip = "<div>";
         if (tooltipDto.mstId) {
-            tooltip = `${tooltip}Messstelle: ${tooltipDto.mstId}`;
+            tooltip = `<b>${tooltip}Messstelle: ${tooltipDto.mstId}`;
             if (tooltipDto.detektierteVerkehrsarten) {
                 tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsarten})`;
             }

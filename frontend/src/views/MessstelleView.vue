@@ -35,7 +35,6 @@
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
                     show-marker="true"
-                    :reload="reloadMessstelleMap"
                     width="100%"
                 />
                 <messstelle-diagramme
@@ -62,7 +61,6 @@ import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 
-const reloadMessstelleMap: Ref<boolean> = ref(false);
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
@@ -128,7 +126,6 @@ function loadMessstelle() {
                 "messstelleInfo/setMessstelleInfo",
                 messstelle.value
             );
-            reloadMessstelleMap.value = !reloadMessstelleMap.value;
         })
         .catch((error: ApiError) => {
             store.dispatch("snackbar/showError", error);
