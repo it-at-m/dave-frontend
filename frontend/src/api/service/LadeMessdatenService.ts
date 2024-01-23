@@ -4,7 +4,7 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 
-export default class LadeZaehldatenService {
+export default class LadeMessdatenService {
     private static readonly ENDPOINT_LADE_MESSDATEN_PROCESSED: string =
         "api/dave-backend-service/lade-ganglinie";
 
