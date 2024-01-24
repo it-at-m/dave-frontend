@@ -1,39 +1,24 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref, watch } from "vue";
+import TagesaggregatMessquerschnitt from "@/api/service/TagesaggregatMessquerschnitt";
+import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
+import { c } from "unimport/dist/types-43c63a16";
 
 interface Props {
     dates: string[];
 }
 
-const datePickerSettings = ref("one");
-const dateRange: Ref<string[]> = ref([]);
-const dateRangeFromDatePicker: Ref<string[]> = ref([]);
-const props = defineProps<Props>();
-const singleDate = ref("");
-const singleDateFromDatePicker = ref("");
-const menu = ref(false);
-
-const getOldestPlausiblerMesstag = computed(() => {
-    let sortedArrayOfDates = props.dates;
-    sortedArrayOfDates.sort(function (a, b) {
-        return new Date(b).valueOf() - new Date(a).valueOf();
-    });
-    return sortedArrayOfDates[sortedArrayOfDates.length - 1];
-});
-
-const getNewestPlausiblerMesstag = computed(() => {
-    let sortedArrayOfDates = props.dates;
-    sortedArrayOfDates.sort(function (a, b) {
-        return new Date(b).valueOf() - new Date(a).valueOf();
-    });
-    return sortedArrayOfDates[0];
-});
-
 onMounted(() => {
-    singleDate.value = getNewestPlausiblerMesstag.value;
-    singleDateFromDatePicker.value = getNewestPlausiblerMesstag.value;
+    TagesaggregatMessquerschnitt.getNichtPlausibleTage("test").then(
+        (t: NichtPlausibleTageDTO) =>
+            (nichtPlausibleTage.value = t.nichtPlausibleTage)
+    );
 });
+
+const dateRange: Ref<string[]> = ref([]);
+const props = defineProps<Props>();
+const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
     return arrayToSort.sort(function (a, b) {
@@ -42,12 +27,9 @@ function getDatesDescAsStrings(arrayToSort: string[]): string[] {
 }
 
 const getFormattedSelectedZeit = computed(() => {
-    if (datePickerSettings.value == "one" && singleDate.value.length > 0) {
-        return formatDate(singleDate.value);
-    } else if (
-        datePickerSettings.value == "two" &&
-        dateRange.value.length == 2
-    ) {
+    if (dateRange.value.length == 1) {
+        return formatDate(dateRange.value[0]);
+    } else if (dateRange.value.length == 2) {
         const sortedDates = getDatesDescAsStrings(dateRange.value);
         return `${formatDate(sortedDates[1])} - ${formatDate(sortedDates[0])}`;
     } else {
@@ -62,42 +44,10 @@ function formatDate(date: string): string {
     return `${day}.${month}.${year}`;
 }
 
-function saveDateRange() {
-    if (dateRangeFromDatePicker.value.length == 2) {
-        dateRange.value = dateRangeFromDatePicker.value;
-    }
-    menu.value = false;
-}
-
-function saveSingleDate() {
-    singleDate.value = singleDateFromDatePicker.value;
-    menu.value = false;
-}
-
-function allowedDatesSingleDatePicker(val: string) {
-    const oldestMessung = getOldestPlausiblerMesstag.value;
-    const today = new Date();
-    return (
-        props.dates.indexOf(val) != -1 &&
-        new Date(val) >= new Date(oldestMessung) &&
-        new Date(val) <= new Date(today) &&
-        dateRange.value.indexOf(val) != 0
-    );
-}
-
 function allowedDatesRangeDatePicker(val: string) {
     const today = new Date();
     return new Date(val) < today;
 }
-
-watch(datePickerSettings, () => {
-    if (datePickerSettings.value == "one") {
-        dateRange.value = [];
-    } else {
-        singleDate.value = getNewestPlausiblerMesstag.value;
-        singleDateFromDatePicker.value = getNewestPlausiblerMesstag.value;
-    }
-});
 
 function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
     if (dateRange.value.length == 2) {
@@ -116,6 +66,48 @@ function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
     }
     return true;
 }
+
+function RULE_TAG_HAT_MESSUNG() {
+    filterDates();
+    if (
+        dateRange.value.length == 1 &&
+        nichtPlausibleTage.value.indexOf(dateRange.value[0]) != -1
+    ) {
+        return "Tag hat keine Messung";
+    }
+    if (dateRange.value.length == 2) {
+        const filter = filterDates();
+
+        const tageAsDates: number[] = nichtPlausibleTage.value.map(
+            (str: string) => new Date(str).valueOf()
+        );
+        if (filter.every((day) => tageAsDates.includes(day.valueOf()))) {
+            return "Kein Plausibler Tag im Zeitraum";
+        }
+    }
+    return true;
+}
+
+function filterDates(): Date[] {
+    const sortedDates = getDatesDescAsStrings(dateRange.value);
+    const datesArray = [];
+    const startDate = new Date(sortedDates[1]);
+    const endDate = new Date(sortedDates[0]);
+    for (
+        let date = startDate;
+        date <= endDate;
+        date.setDate(date.getDate() + 1)
+    ) {
+        datesArray.push(new Date(date));
+    }
+    return datesArray;
+}
+
+function checkIfDateIsAlreadySelected(val: string[]) {
+    if (val.length == 2 && val[0] == val[1]) {
+        dateRange.value.splice(0, 1);
+    }
+}
 </script>
 
 <template>
@@ -133,86 +125,35 @@ function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
                 padding="10px 0 0 0"
                 header-text="Zeitauswahl"
             ></panel-header>
-            <v-radio-group
-                v-model="datePickerSettings"
-                row
-            >
-                <v-radio
-                    label="Einzeldatum"
-                    value="one"
-                />
-                <v-radio
-                    label="Zeitraum"
-                    value="two"
-                />
-            </v-radio-group>
             <v-row
-                ><v-menu
-                    ref="menuRef"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template #activator="{ on }">
-                        <v-text-field
-                            :value="getFormattedSelectedZeit"
-                            label="Zeitintervall auswählen"
-                            prepend-icon="mdi-calendar"
-                            readonly
-                            :rules="[RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE]"
-                            v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker
-                        v-if="datePickerSettings == 'one'"
-                        v-model="singleDateFromDatePicker"
-                        no-title
-                        :allowed-dates="allowedDatesSingleDatePicker"
-                    >
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            text
-                            color="primary"
-                            @click="menu = false"
-                        >
-                            Cancel
-                        </v-btn>
-                        <v-btn
-                            text
-                            color="primary"
-                            @click="saveSingleDate"
-                        >
-                            OK
-                        </v-btn>
-                    </v-date-picker>
-                    <v-date-picker
-                        v-else
-                        v-model="dateRangeFromDatePicker"
-                        :allowed-dates="allowedDatesRangeDatePicker"
-                        range
-                        :events="dates"
-                        no-title
-                    >
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            text
-                            color="primary"
-                            @click="menu = false"
-                        >
-                            Cancel
-                        </v-btn>
-                        <v-btn
-                            text
-                            color="primary"
-                            @click="saveDateRange"
-                        >
-                            OK
-                        </v-btn>
-                    </v-date-picker>
-                </v-menu></v-row
+                no-gutters
+                class="mt-3"
             >
+                <v-col
+                    cols="8"
+                    class="pr-2"
+                >
+                    <v-date-picker
+                        v-model="dateRange"
+                        range
+                        :allowed-dates="allowedDatesRangeDatePicker"
+                        width="100%"
+                        no-title
+                        :events="nichtPlausibleTage"
+                        event-color="red"
+                        locale="de-DE"
+                        @change="checkIfDateIsAlreadySelected"
+                    ></v-date-picker>
+                </v-col>
+                <v-col cols="4"
+                    ><v-text-field
+                        label="Ausgewähltes Datum"
+                        readonly
+                        :value="getFormattedSelectedZeit"
+                        :rules="[RULE_TAG_HAT_MESSUNG]"
+                    />
+                </v-col>
+            </v-row>
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
