@@ -1,9 +1,10 @@
 export default interface TooltipMessstelleDTO {
     mstId: string;
-    standortDatenportal: string;
-    stadtbezirk: number;
+    standort: string;
+    stadtbezirk: string;
+    stadtbezirknummer: number;
     realisierungsdatum: string;
     abbaudatum: string;
-    datumLetzteMessung: string;
-    kfz: boolean;
+    datumLetztePlausibleMessung: string;
+    detektierteVerkehrsarten: string;
 }

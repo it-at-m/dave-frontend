@@ -7,8 +7,8 @@ export default interface MessstelleInfoDTO extends BaseEntity {
     stadtbezirkNummer: number;
     stadtbezirk: string;
     standort: string;
-    lat: number;
-    lng: number;
+    latitude: number;
+    longitude: number;
     kommentar: string;
     sichtbarDatenportal: boolean;
     messquerschnitte: MessquerschnittInfoDTO[];
