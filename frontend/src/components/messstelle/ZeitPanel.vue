@@ -142,6 +142,7 @@ function checkIfDateIsAlreadySelected(val: string[]) {
                         :events="nichtPlausibleTage"
                         event-color="red"
                         locale="de-DE"
+                        first-day-of-week="1"
                         @change="checkIfDateIsAlreadySelected"
                     ></v-date-picker>
                 </v-col>
