@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { computed, onMounted, ref, Ref, watch } from "vue";
+import { computed, onMounted, ref, Ref } from "vue";
 import TagesaggregatMessquerschnitt from "@/api/service/TagesaggregatMessquerschnitt";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
@@ -68,7 +68,11 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
             new Date(sortedDates[1]).valueOf();
         const timeDifferenceInYears =
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
-        if (store.getters["user/isAnwender"] && timeDifferenceInYears > 5) {
+        if (
+            store.getters["user/getUserAuthoritiesExist"] &&
+            store.getters["user/isAnwender"] != undefined &&
+            timeDifferenceInYears > 5
+        ) {
             return "Der Ausgewählte Zeitraum ist zu groß";
         }
     }
