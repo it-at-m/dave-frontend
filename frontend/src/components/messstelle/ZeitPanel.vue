@@ -3,11 +3,9 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref, watch } from "vue";
 import TagesaggregatMessquerschnitt from "@/api/service/TagesaggregatMessquerschnitt";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
-import { c } from "unimport/dist/types-43c63a16";
+import { useStore } from "@/api/util/useStore";
 
-interface Props {
-    dates: string[];
-}
+const store = useStore();
 
 onMounted(() => {
     TagesaggregatMessquerschnitt.getNichtPlausibleTage("test").then(
@@ -17,7 +15,6 @@ onMounted(() => {
 });
 
 const dateRange: Ref<string[]> = ref([]);
-const props = defineProps<Props>();
 const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
@@ -49,46 +46,36 @@ function allowedDatesRangeDatePicker(val: string) {
     return new Date(val) < today;
 }
 
-function RULE_IS_PLAUSIBLER_MESSTAG_IN_RANGE() {
-    if (dateRange.value.length == 2) {
-        const sortedPickedDates = getDatesDescAsStrings(dateRange.value);
-        for (const element of props.dates) {
-            if (
-                new Date(element).valueOf() >
-                    new Date(sortedPickedDates[1]).valueOf() &&
-                new Date(element).valueOf() <
-                    new Date(sortedPickedDates[0]).valueOf()
-            ) {
-                return true;
-            }
-        }
-        return "Innerhalb des Intervals befindet sich kein Plausibler Messtag";
-    }
-    return true;
-}
-
-function RULE_TAG_HAT_MESSUNG() {
-    filterDates();
+function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     if (
         dateRange.value.length == 1 &&
         nichtPlausibleTage.value.indexOf(dateRange.value[0]) != -1
     ) {
-        return "Tag hat keine Messung";
+        return "Tag hat keine Plausible Messung";
     }
     if (dateRange.value.length == 2) {
-        const filter = filterDates();
+        const filter = getAllDatesBetweenTwoDates();
 
         const tageAsDates: number[] = nichtPlausibleTage.value.map(
-            (str: string) => new Date(str).valueOf()
+            (dateAsString: string) => new Date(dateAsString).valueOf()
         );
         if (filter.every((day) => tageAsDates.includes(day.valueOf()))) {
             return "Kein Plausibler Tag im Zeitraum";
+        }
+        const sortedDates = getDatesDescAsStrings(dateRange.value);
+        const timeDifferenceInMilliseconds =
+            new Date(sortedDates[0]).valueOf() -
+            new Date(sortedDates[1]).valueOf();
+        const timeDifferenceInYears =
+            timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
+        if (store.getters["user/isAnwender"] && timeDifferenceInYears > 5) {
+            return "Der Ausgewählte Zeitraum ist zu groß";
         }
     }
     return true;
 }
 
-function filterDates(): Date[] {
+function getAllDatesBetweenTwoDates(): Date[] {
     const sortedDates = getDatesDescAsStrings(dateRange.value);
     const datesArray = [];
     const startDate = new Date(sortedDates[1]);
@@ -137,7 +124,7 @@ function checkIfDateIsAlreadySelected(val: string[]) {
                         v-model="dateRange"
                         range
                         :allowed-dates="allowedDatesRangeDatePicker"
-                        width="100%"
+                        full-width
                         no-title
                         :events="nichtPlausibleTage"
                         event-color="red"
@@ -151,8 +138,19 @@ function checkIfDateIsAlreadySelected(val: string[]) {
                         label="Ausgewähltes Datum"
                         readonly
                         :value="getFormattedSelectedZeit"
-                        :rules="[RULE_TAG_HAT_MESSUNG]"
+                        :rules="[
+                            RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
+                        ]"
                     />
+                    <p class="text-caption">Hinweise:</p>
+                    <p class="text-caption">
+                        An den Im Kalender Markierten Tagen sind keine
+                        Plausiblen Messungen enthalten
+                    </p>
+                    <p class="text-caption">
+                        Als Anwender beträgt der Maximal mögliche
+                        Auswahlzeitraum 5 Jahre
+                    </p>
                 </v-col>
             </v-row>
         </v-expansion-panel-content>
