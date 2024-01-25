@@ -27,7 +27,7 @@
                             hover
                             focusable
                         >
-                            <zeit-panel :dates="dates" />
+                            <zeit-panel />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -38,8 +38,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
-import MessstelleService from "@/api/service/MessstelleService";
-const dialog = ref(false);
 
-const dates = MessstelleService.getPlausibleMesstage("testid");
+const dialog = ref(false);
 </script>
