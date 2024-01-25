@@ -70,7 +70,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
         if (
             store.getters["user/getUserAuthoritiesExist"] &&
-            store.getters["user/isAnwender"] != undefined &&
+            store.getters["user/isAnwender"] &&
             timeDifferenceInYears > 5
         ) {
             return "Der Ausgewählte Zeitraum ist zu groß";
@@ -148,11 +148,11 @@ function checkIfDateIsAlreadySelected(val: string[]) {
                     />
                     <p class="text-caption">Hinweise:</p>
                     <p class="text-caption">
-                        An den Im Kalender Markierten Tagen sind keine
-                        Plausiblen Messungen enthalten
+                        An den Im Kalender markierten Tagen sind keine
+                        plausiblen Messungen enthalten
                     </p>
                     <p class="text-caption">
-                        Als Anwender beträgt der Maximal mögliche
+                        Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
                     </p>
                 </v-col>
