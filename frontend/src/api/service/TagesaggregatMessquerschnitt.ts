@@ -10,7 +10,7 @@ export default class TagesaggregatMessquerschnitt {
     ): Promise<NichtPlausibleTageDTO> {
         return FetchService.getData(
             `${this.ENDPOINT}/tagesaggregat/nichtPlausibleTage?messquerschnittId=${messquerschnittId}`,
-            "Beim Lesen der Vorschläge ist ein Fehler aufgetreten."
+            "Beim Lesen der nicht plausiblen Tage ist ein Fehler aufgetreten."
         );
     }
 }
