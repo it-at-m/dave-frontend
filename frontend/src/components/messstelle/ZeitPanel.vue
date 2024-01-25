@@ -1,3 +1,63 @@
+<template>
+    <v-expansion-panel>
+        <v-expansion-panel-header>
+            <div>
+                <v-icon left>mdi-clock-time-four-outline</v-icon>
+                Zeitauswahl
+            </div>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class="mt-1">
+            <panel-header
+                font-size="0.875rem"
+                font-weight="bold"
+                padding="10px 0 0 0"
+                header-text="Zeitauswahl"
+            ></panel-header>
+            <v-row
+                no-gutters
+                class="mt-3"
+            >
+                <v-col
+                    cols="8"
+                    class="pr-2"
+                >
+                    <v-date-picker
+                        v-model="dateRange"
+                        range
+                        :allowed-dates="allowedDatesRangeDatePicker"
+                        full-width
+                        no-title
+                        :events="nichtPlausibleTage"
+                        event-color="red"
+                        locale="de-DE"
+                        first-day-of-week="1"
+                        @change="checkIfDateIsAlreadySelected"
+                    ></v-date-picker>
+                </v-col>
+                <v-col cols="4"
+                    ><v-text-field
+                        label="Ausgewähltes Datum"
+                        readonly
+                        :value="getFormattedSelectedZeit"
+                        :rules="[
+                            RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
+                        ]"
+                    />
+                    <p class="text-caption">Hinweise:</p>
+                    <p class="text-caption">
+                        An den Im Kalender markierten Tagen sind keine
+                        plausiblen Messungen enthalten
+                    </p>
+                    <p class="text-caption">
+                        Als Anwender beträgt der maximal mögliche
+                        Auswahlzeitraum 5 Jahre
+                    </p>
+                </v-col>
+            </v-row>
+        </v-expansion-panel-content>
+    </v-expansion-panel>
+</template>
+
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref } from "vue";
@@ -100,67 +160,3 @@ function checkIfDateIsAlreadySelected(val: string[]) {
     }
 }
 </script>
-
-<template>
-    <v-expansion-panel>
-        <v-expansion-panel-header>
-            <div>
-                <v-icon left>mdi-clock-time-four-outline</v-icon>
-                Zeitauswahl
-            </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-1">
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Zeitauswahl"
-            ></panel-header>
-            <v-row
-                no-gutters
-                class="mt-3"
-            >
-                <v-col
-                    cols="8"
-                    class="pr-2"
-                >
-                    <v-date-picker
-                        v-model="dateRange"
-                        range
-                        :allowed-dates="allowedDatesRangeDatePicker"
-                        full-width
-                        no-title
-                        :events="nichtPlausibleTage"
-                        event-color="red"
-                        locale="de-DE"
-                        first-day-of-week="1"
-                        @change="checkIfDateIsAlreadySelected"
-                    ></v-date-picker>
-                </v-col>
-                <v-col cols="4"
-                    ><v-text-field
-                        label="Ausgewähltes Datum"
-                        readonly
-                        :value="getFormattedSelectedZeit"
-                        :rules="[
-                            RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
-                        ]"
-                    />
-                    <p class="text-caption">Hinweise:</p>
-                    <p class="text-caption">
-                        An den Im Kalender markierten Tagen sind keine
-                        plausiblen Messungen enthalten
-                    </p>
-                    <p class="text-caption">
-                        Als Anwender beträgt der maximal mögliche
-                        Auswahlzeitraum 5 Jahre
-                    </p>
-                </v-col>
-            </v-row>
-        </v-expansion-panel-content>
-    </v-expansion-panel>
-</template>
-
-<style scoped>
-
-</style>
