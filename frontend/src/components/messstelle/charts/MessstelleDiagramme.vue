@@ -202,7 +202,6 @@ withDefaults(defineProps<Props>(), {
 });
 
 const chartDataLoading: Ref<boolean> = ref(false);
-const pdfReportDialog: Ref<boolean> = ref(false);
 
 // Stepline
 const zaehldatenSteplineDTO: Ref<LadeZaehldatenSteplineDTO> = ref(
@@ -272,14 +271,6 @@ watch(
     }
 );
 
-function openPdfReportDialog(): void {
-    pdfReportDialog.value = true;
-}
-
-function closePdfReportDialog(): void {
-    pdfReportDialog.value = false;
-}
-
 /**
  * Die Requests für alle Diagramme werden abgesetzt.
  */
@@ -340,6 +331,7 @@ function getGanglinieBase64(): string {
  *
  * @param base64
  * @param name
+ * @param heading
  */
 function addImageToReport(
     base64: string,
