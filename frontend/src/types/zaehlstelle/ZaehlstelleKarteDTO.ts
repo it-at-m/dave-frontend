@@ -1,5 +1,5 @@
 import ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
-import TooltipDTO from "@/types/TooltipDTO";
+import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
 
 export default interface ZaehlstelleKarteDTO extends AnzeigeKarteDTO {
@@ -7,7 +7,7 @@ export default interface ZaehlstelleKarteDTO extends AnzeigeKarteDTO {
 
     letzteZaehlungId: string;
 
-    tooltip: TooltipDTO;
+    tooltip: TooltipZaehlstelleDTO;
 
     zaehlartenKarte: Array<ZaehlartenKarteDTO>;
 
