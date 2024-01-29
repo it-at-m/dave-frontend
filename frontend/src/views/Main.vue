@@ -74,7 +74,7 @@ import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 /* eslint-disable no-unused-vars */
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
-import TooltipDTO from "@/types/TooltipDTO";
+import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 /* eslint-enable no-unused-vars */
 
 @Component({
@@ -129,7 +129,7 @@ export default class App extends Vue {
 
         // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
         searchResult.forEach((element: ZaehlstelleKarteDTO) => {
-            const tooltip: TooltipDTO = element.tooltip;
+            const tooltip: TooltipZaehlstelleDTO = element.tooltip;
             const elementAsCsvString: Array<string> = [];
             elementAsCsvString.push(tooltip.zaehlstellennnummer);
             elementAsCsvString.push(element.longitude);

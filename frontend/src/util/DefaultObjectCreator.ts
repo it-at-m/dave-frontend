@@ -1,7 +1,8 @@
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 import Suggest from "@/types/Suggest";
 import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
-import TooltipDTO from "@/types/TooltipDTO";
+import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
+import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -9,7 +10,7 @@ export default class DefaultObjectCreator {
             id: "",
             nummer: "",
             letzteZaehlungId: "",
-            tooltip: {} as TooltipDTO,
+            tooltip: {} as TooltipZaehlstelleDTO,
             latitude: 0,
             longitude: 0,
             zaehlartenKarte: [],
@@ -23,6 +24,7 @@ export default class DefaultObjectCreator {
             type: "",
             zaehlstelleId: "",
             zaehlungId: "",
+            mstId: "",
         };
     }
 
@@ -30,6 +32,27 @@ export default class DefaultObjectCreator {
         return {
             startUhrzeitIntervalls: "",
             endeUhrzeitIntervalls: "",
+        };
+    }
+
+    public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
+        return {
+            id: "",
+            entityVersion: 0,
+            createdTime: "",
+            mstId: "",
+            name: "",
+            stadtbezirkNummer: 0,
+            stadtbezirk: "",
+            standort: "",
+            latitude: 0,
+            longitude: 0,
+            kommentar: "",
+            sichtbarDatenportal: true,
+            messquerschnitte: [],
+            datumLetztePlausibleMessung: "",
+            abbaudatum: "",
+            realisierungsdatum: "",
         };
     }
 }

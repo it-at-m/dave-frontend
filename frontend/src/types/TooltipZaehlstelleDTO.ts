@@ -1,4 +1,4 @@
-export default interface TooltipDTO {
+export default interface TooltipZaehlstelleDTO {
     zaehlstellennnummer: string;
     stadtbezirk: string;
     stadtbezirknummer: number;
