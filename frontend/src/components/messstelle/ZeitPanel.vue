@@ -48,7 +48,10 @@
                         An den Im Kalender markierten Tagen sind keine
                         plausiblen Messungen enthalten
                     </p>
-                    <p class="text-caption">
+                    <p
+                        v-if="isAnwender"
+                        class="text-caption"
+                    >
                         Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
                     </p>
@@ -65,12 +68,18 @@ import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuSer
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 
+interface Props {
+    messstelleId: string;
+}
+
+const props = defineProps<Props>();
 const store = useStore();
 
 onMounted(() => {
-    MessstelleOptionsmenuService.getNichtPlausibleTage("test").then(
-        (t: NichtPlausibleTageDTO) =>
-            (nichtPlausibleTage.value = t.nichtPlausibleTage)
+    MessstelleOptionsmenuService.getNichtPlausibleTage(props.messstelleId).then(
+        (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
+            (nichtPlausibleTage.value =
+                nichtPlausibleTageDTO.nichtPlausibleTage)
     );
 });
 
@@ -85,6 +94,10 @@ const getChoosenDateAsText = computed(() => {
     } else {
         return "";
     }
+});
+
+const isAnwender = computed(() => {
+    return store.getters["user/isAnwender"];
 });
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {

@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+    <div>
         <v-btn
             color="secondary"
             @click="dialog = true"
@@ -27,17 +27,21 @@
                             hover
                             focusable
                         >
-                            <zeit-panel />
+                            <zeit-panel :messstelle-id="messstelleId" />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
             </v-card>
         </v-dialog>
-    </v-container>
+    </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
+interface Props {
+    messstelleId: string;
+}
 
+defineProps<Props>();
 const dialog = ref(false);
 </script>
