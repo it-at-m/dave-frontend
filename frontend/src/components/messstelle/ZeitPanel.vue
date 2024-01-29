@@ -3,7 +3,7 @@
         <v-expansion-panel-header>
             <div>
                 <v-icon left>mdi-clock-time-four-outline</v-icon>
-                Zeitauswahl
+                Zeit
             </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="mt-1">
@@ -36,7 +36,7 @@
                 </v-col>
                 <v-col cols="4"
                     ><v-text-field
-                        label="Ausgewähltes Datum"
+                        :label="getChoosenDateAsText"
                         readonly
                         :value="getFormattedSelectedZeit"
                         :rules="[
@@ -76,6 +76,16 @@ onMounted(() => {
 
 const dateRange: Ref<string[]> = ref([]);
 const nichtPlausibleTage: Ref<string[]> = ref([]);
+
+const getChoosenDateAsText() = computed(() => {
+   if(dateRange.value.length == 1) {
+     return "ausgewähltes Datum";
+   } else if(dateRange.value.length) {
+     return "ausgewählter Zeitraum"
+   } else {
+     return "";
+   }
+})
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
     return arrayToSort.sort(function (a, b) {
