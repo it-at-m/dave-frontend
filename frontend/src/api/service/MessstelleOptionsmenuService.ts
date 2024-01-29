@@ -1,7 +1,7 @@
 import FetchService from "@/api/service/FetchService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 
-export default class MessstelleOptionsmenu {
+export default class MessstelleOptionsmenuService {
     private static readonly ENDPOINT: string = "api/dave-backend-service";
 
     static getNichtPlausibleTage(

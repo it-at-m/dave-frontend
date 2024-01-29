@@ -61,14 +61,14 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref } from "vue";
-import MessstelleOptionsmenu from "@/api/service/MessstelleOptionsmenu";
+import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 
 const store = useStore();
 
 onMounted(() => {
-    MessstelleOptionsmenu.getNichtPlausibleTage("test").then(
+    MessstelleOptionsmenuService.getNichtPlausibleTage("test").then(
         (t: NichtPlausibleTageDTO) =>
             (nichtPlausibleTage.value = t.nichtPlausibleTage)
     );
