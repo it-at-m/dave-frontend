@@ -77,15 +77,15 @@ onMounted(() => {
 const dateRange: Ref<string[]> = ref([]);
 const nichtPlausibleTage: Ref<string[]> = ref([]);
 
-const getChoosenDateAsText() = computed(() => {
-   if(dateRange.value.length == 1) {
-     return "ausgewähltes Datum";
-   } else if(dateRange.value.length) {
-     return "ausgewählter Zeitraum"
-   } else {
-     return "";
-   }
-})
+const getChoosenDateAsText = computed(() => {
+    if (dateRange.value.length == 1) {
+        return "ausgewähltes Datum";
+    } else if (dateRange.value.length) {
+        return "ausgewählter Zeitraum";
+    } else {
+        return "";
+    }
+});
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
     return arrayToSort.sort(function (a, b) {
@@ -119,7 +119,7 @@ function allowedDatesRangeDatePicker(val: string) {
 function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     if (
         dateRange.value.length == 1 &&
-        nichtPlausibleTage.value.indexOf(dateRange.value[0]) != -1
+        nichtPlausibleTage.value.includes(dateRange.value[0])
     ) {
         return "Tag hat keine Plausible Messung";
     }
