@@ -22,7 +22,11 @@
                     Filtereinstellungen
                 </v-card-title>
                 <v-card-text>
-                    <v-sheet class="overflow-y-auto">
+                    <v-sheet
+                        class="overflow-y-auto"
+                        :max-height="getContentSheetHeight"
+                        width="100%"
+                    >
                         <v-expansion-panels
                             hover
                             focusable
@@ -36,12 +40,23 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
+import { useVuetify } from "@/util/useVuetify";
+
 interface Props {
     messstelleId: string;
 }
-
 defineProps<Props>();
+
+const vuetify = useVuetify();
+
+const getContentSheetHeight = computed(() => {
+    if (vuetify.breakpoint.xl) {
+        return "650px";
+    }
+    return "400px";
+});
+
 const dialog = ref(false);
 </script>
