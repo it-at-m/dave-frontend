@@ -61,14 +61,14 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref } from "vue";
-import TagesaggregatMessquerschnitt from "@/api/service/TagesaggregatMessquerschnitt";
+import MessstelleOptionsmenu from "@/api/service/MessstelleOptionsmenu";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 
 const store = useStore();
 
 onMounted(() => {
-    TagesaggregatMessquerschnitt.getNichtPlausibleTage("test").then(
+    MessstelleOptionsmenu.getNichtPlausibleTage("test").then(
         (t: NichtPlausibleTageDTO) =>
             (nichtPlausibleTage.value = t.nichtPlausibleTage)
     );
