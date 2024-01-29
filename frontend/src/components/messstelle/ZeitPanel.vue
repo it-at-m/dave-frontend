@@ -129,7 +129,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
         const timeDifferenceInYears =
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
         if (
-            store.getters["user/getUserAuthoritiesExist"] &&
+            !store.getters["security/isNoSecurityActive"] &&
             store.getters["user/isAnwender"] &&
             timeDifferenceInYears > 5
         ) {
