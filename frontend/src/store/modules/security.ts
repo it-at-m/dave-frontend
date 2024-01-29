@@ -1,3 +1,5 @@
+import SsoUserInfoResponse from "@/types/SsoUserInfoResponse";
+
 export default {
     namespaced: true,
     state: {
@@ -8,6 +10,10 @@ export default {
             return state.noSecurity;
         },
     },
-    mutations: {},
+    mutations: {
+        setNoSecurity(state: any, payload: boolean) {
+            state.noSecurity = payload;
+        },
+    },
     actions: {},
 };
