@@ -3,7 +3,7 @@
         <v-expansion-panel-header>
             <div>
                 <v-icon left>mdi-clock-time-four-outline</v-icon>
-                Zeitauswahl
+                Zeit
             </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="mt-1">
@@ -36,7 +36,7 @@
                 </v-col>
                 <v-col cols="4"
                     ><v-text-field
-                        label="Ausgewähltes Datum"
+                        :label="getChoosenDateAsText"
                         readonly
                         :value="getFormattedSelectedZeit"
                         :rules="[
@@ -48,7 +48,10 @@
                         An den Im Kalender markierten Tagen sind keine
                         plausiblen Messungen enthalten
                     </p>
-                    <p class="text-caption">
+                    <p
+                        v-if="isAnwender"
+                        class="text-caption"
+                    >
                         Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
                     </p>
@@ -61,21 +64,41 @@
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref } from "vue";
-import TagesaggregatMessquerschnitt from "@/api/service/TagesaggregatMessquerschnitt";
+import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 
+interface Props {
+    messstelleId: string;
+}
+
+const props = defineProps<Props>();
 const store = useStore();
 
 onMounted(() => {
-    TagesaggregatMessquerschnitt.getNichtPlausibleTage("test").then(
-        (t: NichtPlausibleTageDTO) =>
-            (nichtPlausibleTage.value = t.nichtPlausibleTage)
+    MessstelleOptionsmenuService.getNichtPlausibleTage(props.messstelleId).then(
+        (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
+            (nichtPlausibleTage.value =
+                nichtPlausibleTageDTO.nichtPlausibleTage)
     );
 });
 
 const dateRange: Ref<string[]> = ref([]);
 const nichtPlausibleTage: Ref<string[]> = ref([]);
+
+const getChoosenDateAsText = computed(() => {
+    if (dateRange.value.length == 1) {
+        return "ausgewähltes Datum";
+    } else if (dateRange.value.length) {
+        return "ausgewählter Zeitraum";
+    } else {
+        return "";
+    }
+});
+
+const isAnwender = computed(() => {
+    return store.getters["user/isAnwender"];
+});
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
     return arrayToSort.sort(function (a, b) {
@@ -109,7 +132,7 @@ function allowedDatesRangeDatePicker(val: string) {
 function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     if (
         dateRange.value.length == 1 &&
-        nichtPlausibleTage.value.indexOf(dateRange.value[0]) != -1
+        nichtPlausibleTage.value.includes(dateRange.value[0])
     ) {
         return "Tag hat keine Plausible Messung";
     }
@@ -129,7 +152,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
         const timeDifferenceInYears =
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
         if (
-            store.getters["user/getUserAuthoritiesExist"] &&
+            !store.getters["security/isNoSecurityActive"] &&
             store.getters["user/isAnwender"] &&
             timeDifferenceInYears > 5
         ) {

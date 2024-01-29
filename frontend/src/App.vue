@@ -242,19 +242,18 @@ export default class App extends Vue {
 
     // Lifecycle hook
     created() {
-        if (!this.$store.getters["security/isNoSecurityActive"]) {
-            SsoUserInfoService.getUserInfo()
-                .then((ssoUserInfoResponse: SsoUserInfoResponse) => {
-                    this.$store.dispatch(
-                        "user/setSsoUserInfoResponse",
-                        ssoUserInfoResponse
-                    );
-                    this.loggedInUser = this.$store.getters["user/getName"];
-                })
-                .catch(() => {
-                    return false;
-                });
-        }
+        SsoUserInfoService.getUserInfo()
+            .then((ssoUserInfoResponse: SsoUserInfoResponse) => {
+                this.$store.dispatch(
+                    "user/setSsoUserInfoResponse",
+                    ssoUserInfoResponse
+                );
+                this.loggedInUser = this.$store.getters["user/getName"];
+                this.$store.commit("security/setNoSecurity", false);
+            })
+            .catch(() => {
+                this.$store.commit("security/setNoSecurity", true);
+            });
         this.getFrontendVersion().then((version: string) => {
             this.frontendVersion = version;
         });

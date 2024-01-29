@@ -23,7 +23,7 @@
                         :minheight="headerHeightVh"
                     />
                     <MessstelleInfo :messstelle="messstelle" />
-                    <OptionsmenueMessstelle />
+                    <OptionsmenueMessstelle :messstelle-id="messstelleId" />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>

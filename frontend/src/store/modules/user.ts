@@ -15,9 +15,6 @@ export default {
         ssoUserInfoResponse: {} as SsoUserInfoResponse,
     },
     getters: {
-        getUserAuthoritiesExist(state: any): boolean {
-            return state.ssoUserInfoResponse.authorities != undefined;
-        },
         getName(state: any): string {
             return state.ssoUserInfoResponse.name;
         },

@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+    <div>
         <v-btn
             color="secondary"
             @click="dialog = true"
@@ -22,22 +22,41 @@
                     Filtereinstellungen
                 </v-card-title>
                 <v-card-text>
-                    <v-sheet class="overflow-y-auto">
+                    <v-sheet
+                        class="overflow-y-auto"
+                        :max-height="getContentSheetHeight"
+                        width="100%"
+                    >
                         <v-expansion-panels
                             hover
                             focusable
                         >
-                            <zeit-panel />
+                            <zeit-panel :messstelle-id="messstelleId" />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
             </v-card>
         </v-dialog>
-    </v-container>
+    </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
+import { useVuetify } from "@/util/useVuetify";
+
+interface Props {
+    messstelleId: string;
+}
+defineProps<Props>();
+
+const vuetify = useVuetify();
+
+const getContentSheetHeight = computed(() => {
+    if (vuetify.breakpoint.xl) {
+        return "650px";
+    }
+    return "400px";
+});
 
 const dialog = ref(false);
 </script>
