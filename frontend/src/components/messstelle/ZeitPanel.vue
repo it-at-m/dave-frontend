@@ -97,7 +97,9 @@ const getChoosenDateAsText = computed(() => {
 });
 
 const isAnwender = computed(() => {
-    return store.getters["user/isAnwender"];
+    return (
+        store.getters["user/hasAuthorities"] && store.getters["user/isAnwender"]
+    );
 });
 
 function getDatesDescAsStrings(arrayToSort: string[]): string[] {
@@ -152,7 +154,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
         const timeDifferenceInYears =
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
         if (
-            !store.getters["security/isNoSecurityActive"] &&
+            store.getters["user/hasAuthorities"] &&
             store.getters["user/isAnwender"] &&
             timeDifferenceInYears > 5
         ) {
