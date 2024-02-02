@@ -108,13 +108,13 @@ export default class ZaehlstelleView extends Vue {
                 this.$store.dispatch("setZaehlungen", {
                     zs: zaehlungen,
                     id: this.$route.params.zaehlungId,
-                    isAnwender: false,
+                    isAnwender: this.$store.getters["user/isAnwender"],
                 });
             } else {
                 this.$store.dispatch("setZaehlungen", {
                     zs: zaehlungen,
                     id: this.$route.params.zaehlungId,
-                    isAnwender: this.$store.getters["user/isAnwender"],
+                    isAnwender: false,
                 });
             }
             this.$store.commit("setZaehlstelle", zaehlstelle);
