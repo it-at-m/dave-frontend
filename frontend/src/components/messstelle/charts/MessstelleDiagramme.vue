@@ -90,11 +90,10 @@
                     class="overflow-y-auto"
                 >
                     <v-card ref="heatmapCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
+                        <heatmap-card
+                            ref="heatmapCard"
+                            :zaehldaten-heatmap="zaehldatenHeatmap"
+                        ></heatmap-card>
                     </v-card>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
@@ -116,9 +115,9 @@
             </v-tab-item>
         </v-tabs-items>
 
-        <!-- Speed Dial alles außer Listenausgabe-->
+        <!-- Wenn alle Grafiken da, dann analog ZaehldatenDiagramme machen -->
         <v-speed-dial
-            v-if="isTabStepLine"
+            v-if="isTabStepLine || isTabHeatmap"
             v-model="fab"
             absolute
             bottom
@@ -191,6 +190,7 @@ import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import { useRoute } from "vue-router/composables";
+import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 
 interface Props {
     height?: string;
@@ -208,10 +208,16 @@ const zaehldatenSteplineDTO: Ref<LadeZaehldatenSteplineDTO> = ref(
     {} as LadeZaehldatenSteplineDTO
 );
 
+// Stepline
+const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
+    {} as LadeZaehldatenHeatmapDTO
+);
+
 // Fab
 const fab: Ref<boolean> = ref(false);
 const isFabShown: Ref<boolean> = ref(true);
 const isTabStepLine: Ref<boolean> = ref(false);
+const isTabHeatmap: Ref<boolean> = ref(false);
 
 const activeTab: Ref<number> = ref(0);
 
@@ -245,6 +251,11 @@ const messstelleId: ComputedRef<string> = computed(() => {
 const zaehldatenStepline: ComputedRef<LadeZaehldatenSteplineDTO> = computed(
     () => {
         return zaehldatenSteplineDTO.value;
+    }
+);
+const zaehldatenHeatmap: ComputedRef<LadeZaehldatenHeatmapDTO> = computed(
+    () => {
+        return zaehldatenHeatmapDTO.value;
     }
 );
 
@@ -284,6 +295,7 @@ function loadProcessedChartData() {
         .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
+            zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
         })
         .finally(() => {
             chartDataLoading.value = false;
@@ -305,6 +317,12 @@ function addChartToPdfReport(): void {
             true
         );
     }
+    // Heatmap
+    if (activeTab.value === TAB_HEATMAP) {
+        type = "Die Heatmap";
+        addImageToReport(getHeatmapBase64(), createCaption("Heatmap"), true);
+    }
+
     store.dispatch("snackbar/showToast", {
         snackbarTextPart1: `${type} wurde dem PDF Report hinzugefügt.`,
         level: Levels.SUCCESS,
@@ -320,6 +338,16 @@ function createCaption(diagram: string): string {
  */
 function getGanglinieBase64(): string {
     return steplineCard?.value?.steplineForPdf.chart.getDataURL({
+        pixelRatio: 2,
+        backgroundColor: "#fff",
+        excludeComponents: ["toolbox"],
+    });
+}
+/**
+ * Base 64 String der Heatmap
+ */
+function getHeatmapBase64(): string {
+    return heatmapCard?.value?.heatmapChart.chart.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
@@ -381,6 +409,10 @@ function saveGraphAsImage(): void {
         filename += "_Ganglinie";
         encodedUri = getGanglinieBase64();
         // Listenausgabe
+    } else if (activeTab.value === TAB_HEATMAP) {
+        filename += "_Heatmap";
+        encodedUri = getHeatmapBase64();
+        // Zeitreihe
     }
 
     if (encodedUri !== "") {
