@@ -49,6 +49,7 @@ declare module '@vue/runtime-core' {
     MessstelleKommentar: typeof import('./src/components/messstelle/MessstelleKommentar.vue')['default']
     NichtAusgewaehlteZaehlung: typeof import('./src/components/zaehlstelle/NichtAusgewaehlteZaehlung.vue')['default']
     Optionsmenue: typeof import('./src/components/zaehlstelle/optionsmenue/Optionsmenue.vue')['default']
+    OptionsmenueMessstelle: typeof import('./src/components/messstelle/OptionsmenueMessstelle.vue')['default']
     PanelHeader: typeof import('./src/components/common/PanelHeader.vue')['default']
     PdfPreviewDialog: typeof import('./src/components/pdfreport/assetforms/PdfPreviewDialog.vue')['default']
     PdfReportMenue: typeof import('./src/components/zaehlstelle/PdfReportMenue.vue')['default']
@@ -75,6 +76,7 @@ declare module '@vue/runtime-core' {
     VCol: typeof import('vuetify/lib')['VCol']
     VContainer: typeof import('vuetify/lib')['VContainer']
     VDataTable: typeof import('vuetify/lib')['VDataTable']
+    VDatePicker: typeof import('vuetify/lib')['VDatePicker']
     VDialog: typeof import('vuetify/lib')['VDialog']
     VDivider: typeof import('vuetify/lib')['VDivider']
     VExpansionPanel: typeof import('vuetify/lib')['VExpansionPanel']
@@ -135,6 +137,7 @@ declare module '@vue/runtime-core' {
     ZaehlungInfo: typeof import('./src/components/zaehlstelle/ZaehlungInfo.vue')['default']
     ZaehlungsvergleichPanel: typeof import('./src/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue')['default']
     ZeitauswahlPanel: typeof import('./src/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue')['default']
+    ZeitPanel: typeof import('./src/components/messstelle/ZeitPanel.vue')['default']
     Zeitreihe: typeof import('./src/components/zaehlstelle/charts/Zeitreihe.vue')['default']
     ZeitreiheCard: typeof import('./src/components/zaehlstelle/charts/ZeitreiheCard.vue')['default']
   }
