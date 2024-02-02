@@ -16,31 +16,28 @@
             >
                 <v-list-item>
                     <v-list-item-content>
-                        <v-list-item-title>
-                            ID Messquerschnitt:
-                            {{ messquerschnitt.mqId }}</v-list-item-title
-                        >
+                        <!-- todo: items passen sich noch der größe vom titel an -->
+                        <v-list-item-title width="100%">
+                            ID: {{ messquerschnitt.mqId }} |
+                            {{ messquerschnitt.strassenname }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle>
+                            <fahrtrichtung-icon
+                                dense
+                                :fahrtrichtung="messquerschnitt.fahrtrichtung"
+                                :color="iconColor"
+                            ></fahrtrichtung-icon>
+                            <fahrstreifen-icon
+                                dense
+                                :fahrspuren="messquerschnitt.anzahlFahrspuren"
+                                :color="iconColor"
+                            ></fahrstreifen-icon>
+                        </v-list-item-subtitle>
                         <v-list-item-subtitle
-                            >Richtung:
+                            >Lage:
                             {{
-                                messquerschnitt.fahrtrichtung
+                                messquerschnitt.lageMessquerschnitt
                             }}</v-list-item-subtitle
-                        >
-                        <v-list-item-subtitle
-                            >Anzahl Fahrstreifen:
-                            {{
-                                messquerschnitt.anzahlFahrspuren
-                            }}</v-list-item-subtitle
-                        >
-                        <v-list-item-subtitle
-                            >Straßenname:
-                            {{
-                                messquerschnitt.strassenname
-                            }}</v-list-item-subtitle
-                        >
-                        <v-list-item-subtitle
-                            >Lage Messquerschnitt:
-                            {{ messstelle.standort }}</v-list-item-subtitle
                         >
                     </v-list-item-content>
                 </v-list-item>
@@ -51,10 +48,15 @@
 
 <script setup lang="ts">
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import FahrtrichtungIcon from "@/components/zaehlstelle/icons/FahrtrichtungIcon.vue";
+import FahrstreifenIcon from "@/components/zaehlstelle/icons/FahrstreifenIcon.vue";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
+    iconColor: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    iconColor: "black",
+});
 </script>
