@@ -34,13 +34,8 @@ export default {
         },
         hasAuthorities(state: any): boolean {
             return (
-                state.ssoUserInfoResponse.authorities != undefined &&
-                (state.ssoUserInfoResponse.authorities.includes(
-                    rolePoweruser
-                ) ||
-                    state.ssoUserInfoResponse.authorities.includes(
-                        roleAnwender
-                    ))
+                state.ssoUserInfoResponse.authorities &&
+                state.ssoUserInfoResponse.authorities.length > 0
             );
         },
     },
