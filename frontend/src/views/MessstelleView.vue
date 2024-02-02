@@ -23,6 +23,7 @@
                         :minheight="headerHeightVh"
                     />
                     <MessstelleInfo :messstelle="messstelle" />
+                    <OptionsmenueMessstelle :messstelle-id="messstelleId" />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
@@ -55,6 +56,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
+import OptionsmenueMessstelle from "@/components/messstelle/OptionsmenueMessstelle.vue";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()

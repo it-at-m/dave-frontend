@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import user from "./modules/user";
 import snackbar from "./modules/snackbar";
-import security from "./modules/security";
 import search from "./modules/search";
 import filteroptions from "./modules/filteroptions";
 import zaehlung from "./modules/zaehlung";
@@ -19,7 +18,6 @@ export default new Vuex.Store({
     modules: {
         user,
         snackbar,
-        security,
         search,
         filteroptions,
         zaehlung,
