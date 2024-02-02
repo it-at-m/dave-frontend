@@ -249,10 +249,9 @@ export default class App extends Vue {
                     ssoUserInfoResponse
                 );
                 this.loggedInUser = this.$store.getters["user/getName"];
-                this.$store.commit("security/setNoSecurity", false);
             })
             .catch(() => {
-                this.$store.commit("security/setNoSecurity", true);
+                return false;
             });
         this.getFrontendVersion().then((version: string) => {
             this.frontendVersion = version;

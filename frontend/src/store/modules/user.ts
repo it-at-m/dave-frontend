@@ -32,14 +32,11 @@ export default {
                 rolePoweruser
             );
         },
-        hasAnyRole(state: any): boolean {
+        hasAuthorities(state: any): boolean {
             return (
-                state.ssoUserInfoResponse.authorities.includes(rolePoweruser) ||
-                state.ssoUserInfoResponse.authorities.includes(roleAnwender)
+                state.ssoUserInfoResponse.authorities &&
+                state.ssoUserInfoResponse.authorities.length > 0
             );
-        },
-        possibleRoles(): Array<string> {
-            return [roleAnwender, rolePoweruser];
         },
     },
     mutations: {
