@@ -21,13 +21,23 @@
             no-gutters
             class="ma-0"
         >
-            <v-sheet color="transparent">
+            <v-sheet
+                color="white"
+                width="100%"
+            >
                 <span class="font-weight-regular">
-                    Aufbau: {{ formatDate(messstelle.realisierungsdatum) }}
-                </span>
-                <br />
-                <span v-if="messstelle.abbaudatum">
-                    Abbau: {{ formatDate(messstelle.abbaudatum) }}
+                    <base-icon
+                        :small="true"
+                        :icon="aufbauIcon.iconPath"
+                        :tooltip="aufbauIcon.tooltip"
+                    ></base-icon>
+                    {{ formatDate(messstelle.realisierungsdatum) }} |
+                    <base-icon
+                        :small="true"
+                        :icon="abbauIcon.iconPath"
+                        :tooltip="abbauIcon.tooltip"
+                    ></base-icon>
+                    {{ formatDate(messstelle.abbaudatum) }}
                 </span>
                 <br />
                 <span>
@@ -44,10 +54,15 @@ import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
+import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
+import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
 }
+
+const aufbauIcon = new IconTooltip("mdi-cctv", "Aufbaudatum");
+const abbauIcon = new IconTooltip("mdi-cctv-off", "Abbaudatum");
 
 const datumLetztePlausibleMessung = computed(() => {
     return formatDate(props.messstelle.datumLetztePlausibleMessung);

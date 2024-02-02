@@ -47,45 +47,57 @@ export default class FahrtrichtungIcon extends Vue {
         return new Map([
             [
                 Himmelsrichtungen.NORD,
-                new IconTooltip("mdi-arrow-up-thin", "Fahrtrichtung: Nord"),
+                new IconTooltip(
+                    "mdi-arrow-up-thin-circle-outline",
+                    "Fahrtrichtung: Nord"
+                ),
             ],
             [
                 Himmelsrichtungen.SUED,
-                new IconTooltip("mdi-arrow-down-thin", "Fahrtrichtung: Süd"),
+                new IconTooltip(
+                    "mdi-arrow-down-thin-circle-outline",
+                    "Fahrtrichtung: Süd"
+                ),
             ],
             [
                 Himmelsrichtungen.OST,
-                new IconTooltip("mdi-arrow-right-thin", "Fahrtrichtung: Ost"),
+                new IconTooltip(
+                    "mdi-arrow-right-thin-circle-outline",
+                    "Fahrtrichtung: Ost"
+                ),
             ],
             [
                 Himmelsrichtungen.WEST,
-                new IconTooltip("mdi-arrow-left-thin", "Fahrtrichtung: West"),
+                new IconTooltip(
+                    "mdi-arrow-left-thin-circle-outline",
+                    "Fahrtrichtung: West"
+                ),
             ],
             [
                 Himmelsrichtungen.NORDOST,
                 new IconTooltip(
-                    "mdi-arrow-top-right-thin",
+                    "mdi-arrow-top-right-thin-circle-outline",
                     "Fahrtrichtung: Nordost"
                 ),
             ],
             [
                 Himmelsrichtungen.NORDWEST,
                 new IconTooltip(
-                    "mdi-arrow-top-left-thin",
+                    "mdi-arrow-top-left-thin-circle-outline",
                     "Fahrtrichtung: Nordwest"
                 ),
             ],
             [
                 Himmelsrichtungen.SUEDOST,
                 new IconTooltip(
-                    "mdi-arrow-bottom-right-thin",
+                    "mdi-arrow-bottom-right-thin-circle-outline",
                     "Fahrtrichtung: Südost"
                 ),
             ],
             [
                 Himmelsrichtungen.SUEDWEST,
                 new IconTooltip(
-                    "mdi-arrow-bottom-left-thin",
+                    "mdi-arrow-bottom-left-thin-circle-outline",
                     "Fahrtrichtung: Südwest"
                 ),
             ],
