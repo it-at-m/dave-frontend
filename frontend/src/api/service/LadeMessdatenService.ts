@@ -6,7 +6,7 @@ import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldat
 
 export default class LadeMessdatenService {
     private static readonly ENDPOINT_LADE_MESSDATEN_PROCESSED: string =
-        "api/dave-backend-service/lade-ganglinie";
+        "api/dave-backend-service/lade-messwerte";
 
     private static readonly ENDPOINT_LADE_BELSTUNGSPLAN: string =
         "api/dave-backend-service/lade-belastungsplan";
