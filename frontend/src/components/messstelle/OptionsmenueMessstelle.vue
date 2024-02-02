@@ -40,9 +40,11 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, Ref } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
+import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
+import { useStore } from "@/api/util/useStore";
 
 interface Props {
     messstelleId: string;
@@ -50,6 +52,11 @@ interface Props {
 defineProps<Props>();
 
 const vuetify = useVuetify();
+const store = useStore();
+
+const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -57,6 +64,8 @@ const getContentSheetHeight = computed(() => {
     }
     return "400px";
 });
+
+function setZeitraum(): void {}
 
 const dialog = ref(false);
 </script>
