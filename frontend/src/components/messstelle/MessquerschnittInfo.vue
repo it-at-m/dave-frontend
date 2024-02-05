@@ -11,7 +11,6 @@
         >
             <v-sheet
                 class="mx-auto px-4 py-2"
-                max-width="400"
                 tile
                 :color="calcRowColor(index)"
                 width="100%"
@@ -20,16 +19,13 @@
                     ID: {{ messquerschnitt.mqId }} |
                     {{ messquerschnitt.strassenname }} </span
                 ><br />
-                <!-- todo: warum wird hier immer die iconColor übergeben und nicht in der Icon Komponente als schwarz festgelegt? -->
                 <fahrtrichtung-icon
                     dense
                     :fahrtrichtung="messquerschnitt.fahrtrichtung"
-                    :color="iconColor"
                 ></fahrtrichtung-icon>
                 <fahrstreifen-icon
                     dense
                     :fahrspuren="messquerschnitt.anzahlFahrspuren"
-                    :color="iconColor"
                 ></fahrstreifen-icon
                 ><br />
                 <span class="text-body-2">
@@ -44,21 +40,12 @@
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import FahrtrichtungIcon from "@/components/zaehlstelle/icons/FahrtrichtungIcon.vue";
 import FahrstreifenIcon from "@/components/zaehlstelle/icons/FahrspurenIcon.vue";
+import { useAlternateRowColor } from "@/composables/alternateRowColorComposable";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
 }
 
-const iconColor = "black";
-
 const props = defineProps<Props>();
-
-// todo: funktion auslagern oder importieren, so ist der code doppelt
-function calcRowColor(index: number): string {
-    const ungerade = index % 2 > 0;
-    if (ungerade) {
-        return "grey lighten-4";
-    }
-    return "grey lighten-2";
-}
+const { calcRowColor } = useAlternateRowColor();
 </script>

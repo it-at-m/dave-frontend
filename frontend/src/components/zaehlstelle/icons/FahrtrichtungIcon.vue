@@ -2,7 +2,7 @@
     <base-icon
         :small="small"
         :dense="dense"
-        :color="color"
+        color="black"
         :icon="icon.iconPath"
         :tooltip="icon.tooltip"
     ></base-icon>
@@ -21,7 +21,6 @@ import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 export default class FahrtrichtungIcon extends Vue {
     @Prop({ default: false }) small?: boolean;
     @Prop({ default: false }) dense?: boolean;
-    @Prop({ default: "black" }) color?: string;
     @Prop() fahrtrichtung!: string;
 
     /**
@@ -71,34 +70,6 @@ export default class FahrtrichtungIcon extends Vue {
                 new IconTooltip(
                     "mdi-arrow-left-thin-circle-outline",
                     "Fahrtrichtung: West"
-                ),
-            ],
-            [
-                Himmelsrichtungen.NORDOST,
-                new IconTooltip(
-                    "mdi-arrow-top-right-thin-circle-outline",
-                    "Fahrtrichtung: Nordost"
-                ),
-            ],
-            [
-                Himmelsrichtungen.NORDWEST,
-                new IconTooltip(
-                    "mdi-arrow-top-left-thin-circle-outline",
-                    "Fahrtrichtung: Nordwest"
-                ),
-            ],
-            [
-                Himmelsrichtungen.SUEDOST,
-                new IconTooltip(
-                    "mdi-arrow-bottom-right-thin-circle-outline",
-                    "Fahrtrichtung: Südost"
-                ),
-            ],
-            [
-                Himmelsrichtungen.SUEDWEST,
-                new IconTooltip(
-                    "mdi-arrow-bottom-left-thin-circle-outline",
-                    "Fahrtrichtung: Südwest"
                 ),
             ],
         ]);

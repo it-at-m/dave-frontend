@@ -1,16 +1,19 @@
 <template>
     <v-container
-        class="pa-0 px-4"
+        class="pa-0"
         fluid
     >
-        <v-row no-gutters>
+        <v-row
+            class="px-4"
+            no-gutters
+        >
             <span class="primary--text"
                 >Letzter Messtag: {{ datumLetztePlausibleMessung }}
             </span>
         </v-row>
         <v-row
             no-gutters
-            class="ma-0"
+            class="my-2 px-4"
         >
             <DetektierteFahrzeugartIcon
                 :detektierte-fahrzeugart="detektierteVerkehrsart"
@@ -19,11 +22,12 @@
         </v-row>
         <v-row
             no-gutters
-            class="ma-0"
+            class="my-1"
         >
             <v-sheet
                 color="white"
                 width="100%"
+                class="px-4 py-2"
             >
                 <span class="font-weight-regular">
                     <base-icon

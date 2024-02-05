@@ -2,7 +2,7 @@
     <base-icon
         :small="small"
         :dense="dense"
-        :color="color"
+        color="black"
         :icon="icon.iconPath"
         :tooltip="icon.tooltip"
     ></base-icon>
@@ -21,7 +21,6 @@ import IconTooltip from "@/types/util/IconTooltip";
 export default class FahrspurenIcon extends Vue {
     @Prop({ default: false }) small?: boolean;
     @Prop({ default: false }) dense?: boolean;
-    @Prop({ default: "black" }) color?: string;
     @Prop() fahrspuren!: number;
 
     /**
@@ -41,7 +40,6 @@ export default class FahrspurenIcon extends Vue {
     /**
      * Alle Zahlen-Icons zu den Schlüsseln.
      */
-    // todo: wie viele fahrspuren gibt es maximal?
     static fahrspurenIcons(): Map<number, IconTooltip> {
         return new Map([
             [0, new IconTooltip("mdi-numeric-0-box", "keine Fahrspur")],
