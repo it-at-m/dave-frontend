@@ -31,7 +31,7 @@
                             hover
                             focusable
                         >
-                            <zeit-panel :messstelle-id="messstelleId" />
+                            <zeit-panel :messstelle-id="messstelleId" :chosen-options="chosenOptions" />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -40,7 +40,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, Ref } from "vue";
+import { ref, computed, Ref, watch } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
 import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
@@ -53,9 +53,13 @@ defineProps<Props>();
 
 const vuetify = useVuetify();
 const store = useStore();
-
+let chosenOptions: Ref<MessungOptionsDTO> = ref({} as MessungOptionsDTO);
 const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+watch(filterOptionsMessstelle, () => {
+    chosenOptions = filterOptionsMessstelle;
 });
 
 const getContentSheetHeight = computed(() => {
@@ -64,8 +68,6 @@ const getContentSheetHeight = computed(() => {
     }
     return "400px";
 });
-
-function setZeitraum(): void {}
 
 const dialog = ref(false);
 </script>
