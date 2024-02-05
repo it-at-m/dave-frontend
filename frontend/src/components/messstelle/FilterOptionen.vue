@@ -34,6 +34,32 @@
                 </span>
             </v-col>
         </v-row>
+        <v-row
+            v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
+            :key="index"
+            no-gutters
+            class="ma-0"
+        >
+            <v-col cols="1">
+                <v-icon
+                    v-if="index === 0"
+                    small
+                    color="grey lighten-1"
+                    >mdi-arrow-decision</v-icon
+                >
+            </v-col>
+            <v-col cols="6">
+                <span class="text-caption grey--text text--lighten-1"
+                    >{{ messquerschnitt.mqId }}
+                    {{ messquerschnitt.lageMessquerschnitt }}</span
+                >
+            </v-col>
+            <v-col cols="4">
+                <span class="text-caption grey--text text--lighten-1"
+                    >[ {{ messquerschnitt.fahrtrichtung }} ]</span
+                >
+            </v-col>
+        </v-row>
         <OptionsmenueMessstelle messstelle-id="messstelleId" />
     </v-sheet>
 </template>
@@ -43,8 +69,15 @@ import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/OptionsmenueMessstelle.vue";
 import { formatDate, sortDatesDescAsStrings } from "@/util/DateUtils";
+import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
+import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 
 const store = useStore();
+interface Props {
+    messstelle: MessstelleInfoDTO;
+}
+
+const props = defineProps<Props>();
 
 const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
