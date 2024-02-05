@@ -35,7 +35,7 @@
                     {{ fahrzeugKlasse }}
                 </span>
             </v-sheet>
-            <FilterOptionen />
+            <FilterOptionen :messstelle="messstelle" />
         </v-row>
     </v-container>
 </template>
