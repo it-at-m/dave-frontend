@@ -94,14 +94,13 @@ const chosenOptionsCopy = computed({
 });
 
 const getChosenDateAsText = computed(() => {
-    if (chosenOptionsCopy.value.zeitraum) {
-        if (chosenOptionsCopy.value.zeitraum.length == 1) {
-            return "ausgewähltes Datum";
-        } else if (chosenOptionsCopy.value.zeitraum.length == 2) {
-            return "ausgewählter Zeitraum";
-        }
+    if (chosenOptionsCopy.value.zeitraum.length == 1) {
+        return "ausgewähltes Datum";
+    } else if (chosenOptionsCopy.value.zeitraum.length == 2) {
+        return "ausgewählter Zeitraum";
+    } else {
+        return "";
     }
-    return "";
 });
 
 const isAnwender = computed(() => {
@@ -117,18 +116,15 @@ function getDatesDescAsStrings(arrayToSort: string[]): string[] {
 }
 
 const getFormattedSelectedZeit = computed(() => {
-    if (chosenOptionsCopy.value.zeitraum) {
-        const zeitraum = chosenOptionsCopy.value.zeitraum.slice(0);
-        if (zeitraum.length == 1) {
-            return formatDate(chosenOptionsCopy.value.zeitraum[0]);
-        } else if (zeitraum.length == 2) {
-            const sortedDates = getDatesDescAsStrings(zeitraum);
-            return `${formatDate(sortedDates[1])} - ${formatDate(
-                sortedDates[0]
-            )}`;
-        }
+    const zeitraum = chosenOptionsCopy.value.zeitraum.slice(0);
+    if (zeitraum.length == 1) {
+        return formatDate(chosenOptionsCopy.value.zeitraum[0]);
+    } else if (zeitraum.length == 2) {
+        const sortedDates = getDatesDescAsStrings(zeitraum);
+        return `${formatDate(sortedDates[1])} - ${formatDate(sortedDates[0])}`;
+    } else {
+        return "";
     }
-    return "";
 });
 function formatDate(date: string): string {
     if (!date) {
