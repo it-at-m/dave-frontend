@@ -30,18 +30,20 @@
                 class="px-4 py-2"
             >
                 <span class="font-weight-regular">
-                    <base-icon
+                    <!--<base-icon
                         :small="true"
                         :icon="aufbauIcon.iconPath"
                         :tooltip="aufbauIcon.tooltip"
-                    ></base-icon>
-                    {{ formatDate(messstelle.realisierungsdatum) }} |
-                    <base-icon
+                    ></base-icon>-->
+                    Aufbau: {{ formatDate(messstelle.realisierungsdatum) }}
+                </span>
+                <span v-if="messstelle.abbaudatum">
+                    <!--<base-icon
                         :small="true"
                         :icon="abbauIcon.iconPath"
                         :tooltip="abbauIcon.tooltip"
-                    ></base-icon>
-                    {{ formatDate(messstelle.abbaudatum) }}
+                    ></base-icon>-->
+                    | Abbau: {{ formatDate(messstelle.abbaudatum) }}
                 </span>
                 <br />
                 <span>
