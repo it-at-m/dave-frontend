@@ -97,10 +97,8 @@ const getChosenDateAsText = computed(() => {
     if (chosenOptionsCopy.value.zeitraum != undefined) {
         if (chosenOptionsCopy.value.zeitraum.length == 1) {
             return "ausgewähltes Datum";
-        } else if (chosenOptionsCopy.value.zeitraum.length) {
+        } else if (chosenOptionsCopy.value.zeitraum.length == 2) {
             return "ausgewählter Zeitraum";
-        } else {
-            return "";
         }
     }
     return "";
@@ -128,8 +126,6 @@ const getFormattedSelectedZeit = computed(() => {
             return `${formatDate(sortedDates[1])} - ${formatDate(
                 sortedDates[0]
             )}`;
-        } else {
-            return "";
         }
     }
     return "";
