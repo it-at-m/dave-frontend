@@ -58,7 +58,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, Ref, watch, reactive } from "vue";
+import { computed, ref, Ref, watch } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
 import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
