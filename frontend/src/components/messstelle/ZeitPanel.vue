@@ -94,7 +94,7 @@ const chosenOptionsCopy = computed({
 });
 
 const getChosenDateAsText = computed(() => {
-    if (chosenOptionsCopy.value.zeitraum != undefined) {
+    if (chosenOptionsCopy.value.zeitraum) {
         if (chosenOptionsCopy.value.zeitraum.length == 1) {
             return "ausgewähltes Datum";
         } else if (chosenOptionsCopy.value.zeitraum.length == 2) {
