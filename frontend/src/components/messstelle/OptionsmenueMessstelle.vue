@@ -85,12 +85,6 @@ const getContentSheetHeight = computed(() => {
     return "400px";
 });
 
-watch(filterOptionsMessstelle, (changedFilterOptionsMessstelle) => {
-    const options = {} as MessungOptionsDTO;
-    Object.assign(options, changedFilterOptionsMessstelle);
-    chosenOptions.value = options;
-});
-
 function saveChosenOptions(): void {
     store.commit(
         "filteroptionsMessstelle/setFilteroptions",
