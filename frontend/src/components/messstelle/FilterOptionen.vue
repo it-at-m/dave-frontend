@@ -82,16 +82,14 @@ const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
 });
 
 const zeitraumText: Ref<string> = computed(() => {
-    if (filterOptionsMessstelle.value.zeitraum != undefined) {
-        const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
-        if (zeitraum.length == 1) {
-            return `am ${formatDate(zeitraum[0])}`;
-        } else if (zeitraum.length == 2) {
-            const sortedDates = sortDatesDescAsStrings(zeitraum);
-            return `im zeitraum ${formatDate(sortedDates[1])} - ${formatDate(
-                sortedDates[0]
-            )}`;
-        }
+    const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
+    if (zeitraum.length == 1) {
+        return `am ${formatDate(zeitraum[0])}`;
+    } else if (zeitraum.length == 2) {
+        const sortedDates = sortDatesDescAsStrings(zeitraum);
+        return `im Zeitraum ${formatDate(sortedDates[1])} - ${formatDate(
+            sortedDates[0]
+        )}`;
     }
     return "";
 });
@@ -100,7 +98,3 @@ const zeitText = computed(() => {
     return `Tageswert in 15 min ${zeitraumText.value}`;
 });
 </script>
-
-<style scoped>
-
-</style>
