@@ -22,7 +22,7 @@
                     class="pr-2"
                 >
                     <v-date-picker
-                        v-model="dateRange"
+                        v-model="chosenOptionsCopy.zeitraum"
                         range
                         :allowed-dates="allowedDatesRangeDatePicker"
                         full-width
@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { computed, onMounted, ref, Ref, watch } from "vue";
+import { computed, onMounted, ref, Ref, watch, onUpdated } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
@@ -86,7 +86,6 @@ onMounted(() => {
     );
 });
 
-const dateRange: Ref<string[]> = ref([]);
 const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 const chosenOptionsCopy = computed({
@@ -94,21 +93,17 @@ const chosenOptionsCopy = computed({
     set: (payload: MessungOptionsDTO) => emit("update:chosen-options", payload),
 });
 
-watch(dateRange, (newDateRange) => {
-    chosenOptionsCopy.value.zeitraum = newDateRange;
-});
-
-onMounted(() => {
-    dateRange.value = chosenOptionsCopy.value.zeitraum;
-});
 const getChosenDateAsText = computed(() => {
-    if (dateRange.value.length == 1) {
-        return "ausgewähltes Datum";
-    } else if (dateRange.value.length) {
-        return "ausgewählter Zeitraum";
-    } else {
-        return "";
+    if (chosenOptionsCopy.value.zeitraum != undefined) {
+        if (chosenOptionsCopy.value.zeitraum.length == 1) {
+            return "ausgewähltes Datum";
+        } else if (chosenOptionsCopy.value.zeitraum.length) {
+            return "ausgewählter Zeitraum";
+        } else {
+            return "";
+        }
     }
+    return "";
 });
 
 const isAnwender = computed(() => {
@@ -124,14 +119,20 @@ function getDatesDescAsStrings(arrayToSort: string[]): string[] {
 }
 
 const getFormattedSelectedZeit = computed(() => {
-    if (dateRange.value.length == 1) {
-        return formatDate(dateRange.value[0]);
-    } else if (dateRange.value.length == 2) {
-        const sortedDates = getDatesDescAsStrings(dateRange.value);
-        return `${formatDate(sortedDates[1])} - ${formatDate(sortedDates[0])}`;
-    } else {
-        return "";
+    if (chosenOptionsCopy.value.zeitraum) {
+        const zeitraum = chosenOptionsCopy.value.zeitraum.slice(0);
+        if (zeitraum.length == 1) {
+            return formatDate(chosenOptionsCopy.value.zeitraum[0]);
+        } else if (zeitraum.length == 2) {
+            const sortedDates = getDatesDescAsStrings(zeitraum);
+            return `${formatDate(sortedDates[1])} - ${formatDate(
+                sortedDates[0]
+            )}`;
+        } else {
+            return "";
+        }
     }
+    return "";
 });
 function formatDate(date: string): string {
     if (!date) {
@@ -148,12 +149,12 @@ function allowedDatesRangeDatePicker(val: string) {
 
 function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     if (
-        dateRange.value.length == 1 &&
-        nichtPlausibleTage.value.includes(dateRange.value[0])
+        chosenOptionsCopy.value.zeitraum.length == 1 &&
+        nichtPlausibleTage.value.includes(chosenOptionsCopy.value.zeitraum[0])
     ) {
         return "Tag hat keine Plausible Messung";
     }
-    if (dateRange.value.length == 2) {
+    if (chosenOptionsCopy.value.zeitraum.length == 2) {
         const filter = getAllDatesBetweenTwoDates();
 
         const tageAsDates: number[] = nichtPlausibleTage.value.map(
@@ -162,7 +163,8 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
         if (filter.every((day) => tageAsDates.includes(day.valueOf()))) {
             return "Kein Plausibler Tag im Zeitraum";
         }
-        const sortedDates = getDatesDescAsStrings(dateRange.value);
+        const zeitraum = chosenOptionsCopy.value.zeitraum.slice();
+        const sortedDates = getDatesDescAsStrings(zeitraum);
         const timeDifferenceInMilliseconds =
             new Date(sortedDates[0]).valueOf() -
             new Date(sortedDates[1]).valueOf();
@@ -180,7 +182,8 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
 }
 
 function getAllDatesBetweenTwoDates(): Date[] {
-    const sortedDates = getDatesDescAsStrings(dateRange.value);
+    const zeitraum = chosenOptionsCopy.value.zeitraum.slice();
+    const sortedDates = getDatesDescAsStrings(zeitraum);
     const datesArray = [];
     const startDate = new Date(sortedDates[1]);
     const endDate = new Date(sortedDates[0]);
@@ -196,7 +199,7 @@ function getAllDatesBetweenTwoDates(): Date[] {
 
 function checkIfDateIsAlreadySelected(val: string[]) {
     if (val.length == 2 && val[0] == val[1]) {
-        dateRange.value.splice(0, 1);
+        chosenOptionsCopy.value.zeitraum.splice(0, 1);
     }
 }
 </script>
