@@ -30,20 +30,21 @@
                 class="px-4 py-2"
             >
                 <span class="font-weight-regular">
-                    <!--<base-icon
+                    <base-icon
                         :small="true"
                         :icon="aufbauIcon.iconPath"
                         :tooltip="aufbauIcon.tooltip"
-                    ></base-icon>-->
-                    Aufbau: {{ formatDate(messstelle.realisierungsdatum) }}
+                    ></base-icon>
+                    {{ formatDate(messstelle.realisierungsdatum) }}
                 </span>
-                <span v-if="messstelle.abbaudatum">
-                    <!--<base-icon
+                <span v-if="abbauDatumExists">
+                    |
+                    <base-icon
                         :small="true"
                         :icon="abbauIcon.iconPath"
                         :tooltip="abbauIcon.tooltip"
-                    ></base-icon>-->
-                    | Abbau: {{ formatDate(messstelle.abbaudatum) }}
+                    ></base-icon>
+                    {{ formatDate(messstelle.abbaudatum) }}
                 </span>
                 <br />
                 <span>
@@ -91,8 +92,8 @@ interface Props {
     messstelle: MessstelleInfoDTO;
 }
 
-const aufbauIcon = new IconTooltip("mdi-cctv", "Aufbaudatum");
-const abbauIcon = new IconTooltip("mdi-cctv-off", "Abbaudatum");
+const aufbauIcon = new IconTooltip("mdi-elevator-up", "Aufbaudatum");
+const abbauIcon = new IconTooltip("mdi-elevator-down", "Abbaudatum");
 
 const datumLetztePlausibleMessung = computed(() => {
     return formatDate(props.messstelle.datumLetztePlausibleMessung);
@@ -122,9 +123,13 @@ const detektierteVerkehrsart = computed(() => {
     }
 });
 
-const props = defineProps<Props>();
+const abbauDatumExists = computed(() => {
+    return props.messstelle.abbaudatum;
+});
 
 const doMesssquerschnitteExist = computed(() => {
     return props.messstelle.messquerschnitte.length > 0;
 });
+
+const props = defineProps<Props>();
 </script>
