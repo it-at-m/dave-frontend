@@ -31,10 +31,16 @@
                             hover
                             focusable
                         >
-                            <zeit-panel :messstelle-id="messstelleId" :chosen-options="chosenOptions" />
+                            <zeit-panel
+                                :messstelle-id="messstelleId"
+                                :chosen-options.sync="chosenOptions"
+                            />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
+                <v-card-actions>
+                    <v-btn @click="saveChosenOptions">test</v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
@@ -54,13 +60,6 @@ defineProps<Props>();
 const vuetify = useVuetify();
 const store = useStore();
 let chosenOptions: Ref<MessungOptionsDTO> = ref({} as MessungOptionsDTO);
-const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
-});
-
-watch(filterOptionsMessstelle, () => {
-    chosenOptions = filterOptionsMessstelle;
-});
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -68,6 +67,15 @@ const getContentSheetHeight = computed(() => {
     }
     return "400px";
 });
+
+function saveChosenOptions(): void {
+    console.log(JSON.stringify(chosenOptions.value));
+    // eslint-disable-next-line no-undef
+    store.commit(
+        "filteroptionsMessstelle/setFilteroptions",
+        Object.assign({}, chosenOptions.value)
+    );
+}
 
 const dialog = ref(false);
 </script>
