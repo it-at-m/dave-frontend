@@ -4,7 +4,9 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 export default {
     namespaced: true,
     state: {
-        messstelleFilterOptions: {},
+        messstelleFilterOptions: {
+            zeitraum: [],
+        },
     },
     getters: {
         getFilteroptions(state: any): MessungOptionsDTO {
@@ -19,7 +21,7 @@ export default {
     actions: {
         resetFilteroptions(context: any) {
             context.commit("setFilteroptions", {
-                zeitraum: "",
+                zeitraum: [],
             });
         },
     },
