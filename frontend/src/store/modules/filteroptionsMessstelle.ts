@@ -1,6 +1,8 @@
 import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
-import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
+export interface FilteroptionsMessstelle {
+    messstelleFilterOptions: MessungOptionsDTO;
+}
 export default {
     namespaced: true,
     state: {
@@ -9,12 +11,15 @@ export default {
         },
     },
     getters: {
-        getFilteroptions(state: any): MessungOptionsDTO {
+        getFilteroptions(state: FilteroptionsMessstelle): MessungOptionsDTO {
             return state.messstelleFilterOptions;
         },
     },
     mutations: {
-        setFilteroptions(state: any, payload: MessungOptionsDTO) {
+        setFilteroptions(
+            state: FilteroptionsMessstelle,
+            payload: MessungOptionsDTO
+        ) {
             state.messstelleFilterOptions = payload;
         },
     },
