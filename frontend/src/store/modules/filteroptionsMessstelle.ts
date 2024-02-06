@@ -16,5 +16,11 @@ export default {
             state.messstelleFilterOptions = payload;
         },
     },
-    actions: {},
+    actions: {
+        resetFilteroptions(context: any) {
+            context.commit("setFilteroptions", {
+                zeitraum: "",
+            });
+        },
+    },
 };

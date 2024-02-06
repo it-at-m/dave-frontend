@@ -39,14 +39,26 @@
                     </v-sheet>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn @click="saveChosenOptions">test</v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="saveChosenOptions"
+                        >Aktualisiere Daten
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="grey lighten-1"
+                        @click="resetOptions"
+                        >Zurücksetzen
+                    </v-btn>
+                    <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, Ref, watch } from "vue";
+import { ref, computed, Ref, watch, reactive } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
 import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
@@ -59,7 +71,8 @@ defineProps<Props>();
 
 const vuetify = useVuetify();
 const store = useStore();
-let chosenOptions: Ref<MessungOptionsDTO> = ref({} as MessungOptionsDTO);
+const dialog = ref(false);
+const chosenOptions = ref({} as MessungOptionsDTO);
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -68,14 +81,25 @@ const getContentSheetHeight = computed(() => {
     return "400px";
 });
 
+const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+watch(filterOptionsMessstelle, (changedFilterOptionsMessstelle) => {
+    const options = {} as MessungOptionsDTO;
+    Object.assign(options, changedFilterOptionsMessstelle);
+    chosenOptions.value = options;
+});
+
 function saveChosenOptions(): void {
-    console.log(JSON.stringify(chosenOptions.value));
-    // eslint-disable-next-line no-undef
     store.commit(
         "filteroptionsMessstelle/setFilteroptions",
         Object.assign({}, chosenOptions.value)
     );
+    dialog.value = false;
 }
 
-const dialog = ref(false);
+function resetOptions(): void {
+    store.dispatch("filteroptionsMessstelle/resetFilteroptions");
+}
 </script>

@@ -35,7 +35,6 @@
                     {{ fahrzeugKlasse }}
                 </span>
             </v-sheet>
-            <FilterOptionen :messstelle="messstelle" />
         </v-row>
     </v-container>
 </template>
@@ -45,7 +44,6 @@ import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
-import FilterOptionen from "@/components/messstelle/FilterOptionen.vue";
 
 interface Props {
     messstelle: MessstelleInfoDTO;

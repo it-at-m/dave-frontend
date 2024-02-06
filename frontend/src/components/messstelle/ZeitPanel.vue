@@ -36,7 +36,7 @@
                 </v-col>
                 <v-col cols="4"
                     ><v-text-field
-                        :label="getChoosenDateAsText"
+                        :label="getChosenDateAsText"
                         readonly
                         :value="getFormattedSelectedZeit"
                         :rules="[
@@ -63,16 +63,19 @@
 
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { computed, onMounted, ref, Ref } from "vue";
+import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
+import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
 
 interface Props {
     messstelleId: string;
+    chosenOptions: MessungOptionsDTO;
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits(["update:chosen-options"]);
 const store = useStore();
 
 onMounted(() => {
@@ -86,7 +89,19 @@ onMounted(() => {
 const dateRange: Ref<string[]> = ref([]);
 const nichtPlausibleTage: Ref<string[]> = ref([]);
 
-const getChoosenDateAsText = computed(() => {
+const chosenOptionsCopy = computed({
+    get: () => props.chosenOptions,
+    set: (payload: MessungOptionsDTO) => emit("update:chosen-options", payload),
+});
+
+watch(dateRange, (newDateRange) => {
+    chosenOptionsCopy.value.zeitraum = newDateRange;
+});
+
+onMounted(() => {
+    dateRange.value = chosenOptionsCopy.value.zeitraum;
+});
+const getChosenDateAsText = computed(() => {
     if (dateRange.value.length == 1) {
         return "ausgewähltes Datum";
     } else if (dateRange.value.length) {

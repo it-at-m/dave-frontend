@@ -1,7 +1,6 @@
 <template>
     <v-sheet
         width="100%"
-        min-height="50"
         color="grey darken-1"
         class="px-4 py-3"
     >
@@ -69,7 +68,6 @@ import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/OptionsmenueMessstelle.vue";
 import { formatDate, sortDatesDescAsStrings } from "@/util/DateUtils";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 
 const store = useStore();
@@ -77,15 +75,15 @@ interface Props {
     messstelle: MessstelleInfoDTO;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
-const zeitraumText = computed(() => {
-    const zeitraum = filterOptionsMessstelle.value.zeitraum;
-    if (zeitraum != null) {
+const zeitraumText: Ref<string> = computed(() => {
+    if (filterOptionsMessstelle.value.zeitraum != undefined) {
+        const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
         if (zeitraum.length == 1) {
             return `am ${formatDate(zeitraum[0])}`;
         } else if (zeitraum.length == 2) {
