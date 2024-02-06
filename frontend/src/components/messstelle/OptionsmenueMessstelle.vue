@@ -68,21 +68,21 @@ interface Props {
     messstelleId: string;
 }
 defineProps<Props>();
-
+const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
 const vuetify = useVuetify();
 const store = useStore();
 const dialog = ref(false);
-const chosenOptions = ref({} as MessungOptionsDTO);
+const chosenOptions = ref({
+    zeitraum: filterOptionsMessstelle.value.zeitraum,
+} as MessungOptionsDTO);
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
         return "650px";
     }
     return "400px";
-});
-
-const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
 watch(filterOptionsMessstelle, (changedFilterOptionsMessstelle) => {
