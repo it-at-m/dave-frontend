@@ -117,61 +117,14 @@
         </v-tabs-items>
 
         <!-- Speed Dial alles außer Listenausgabe-->
-        <v-speed-dial
-            v-if="isTabStepLine"
-            v-model="fab"
-            absolute
-            bottom
-            right
-            open-on-hover
-        >
-            <template #activator>
-                <v-btn
-                    v-show="isFabShown"
-                    v-model="fab"
-                    dark
-                    fab
-                    :color="fabColor"
-                    :loading="loadingFile"
-                >
-                    <v-icon v-if="fab"> mdi-close-thick</v-icon>
-                    <v-icon v-else> mdi-file</v-icon>
-                </v-btn>
-            </template>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="addChartToPdfReport"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-chart-box-plus-outline</v-icon>
-                    </v-btn>
-                </template>
-                <span>Diagramm dem PDF Report hinzufügen</span>
-            </v-tooltip>
-
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="saveGraphAsImage"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-download</v-icon>
-                    </v-btn>
-                </template>
-                <span>Graph herunterladen</span>
-            </v-tooltip>
-        </v-speed-dial>
+        <speed-dial
+            v-show="isTabStepline"
+            :is-listenausgabe="isTabListenausgabe"
+            :is-not-heatmap="isNotTabHeatmap"
+            :loading-file="loadingFile"
+            @addChartToPdfReport="addChartToPdfReport"
+            @saveGraphAsImage="saveGraphAsImage"
+        />
     </v-sheet>
 </template>
 <script setup lang="ts">
@@ -183,14 +136,11 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
-import { Levels } from "@/api/error";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import Loader from "@/components/common/Loader.vue";
 import { useStore } from "@/api/util/useStore";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import { useRoute } from "vue-router/composables";
+import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
+import { useReportTools } from "@/util/reportTools";
 
 interface Props {
     height?: string;
@@ -208,10 +158,11 @@ const zaehldatenSteplineDTO: Ref<LadeZaehldatenSteplineDTO> = ref(
     {} as LadeZaehldatenSteplineDTO
 );
 
-// Fab
-const fab: Ref<boolean> = ref(false);
-const isFabShown: Ref<boolean> = ref(true);
-const isTabStepLine: Ref<boolean> = ref(false);
+// Wieder entfernen, wenn alle Tabs fertig sind
+const isTabStepline: Ref<boolean> = ref(false);
+
+const isTabListenausgabe: Ref<boolean> = ref(false);
+const isNotTabHeatmap: Ref<boolean> = ref(false);
 
 const activeTab: Ref<number> = ref(0);
 
@@ -230,14 +181,12 @@ const zeitreiheCard = ref<ZeitreiheCard>();
 
 const store = useStore();
 const route = useRoute();
+const reportTools = useReportTools();
 
 onMounted(() => {
     loadData();
 });
 
-const fabColor: ComputedRef<string> = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
-});
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
@@ -248,20 +197,15 @@ const zaehldatenStepline: ComputedRef<LadeZaehldatenSteplineDTO> = computed(
     }
 );
 
-const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
-});
+// const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
+//     return store.getters["messstelleInfo/getMessstelleInfo"];
+// });
 
 watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
-    isTabStepLine.value = [TAB_GANGLINIE].includes(activeTab.value);
-    isFabShown.value = [
-        TAB_BELASTUNGSPLAN,
-        TAB_GANGLINIE,
-        TAB_LISTENAUSGABE,
-        TAB_HEATMAP,
-        TAB_ZEITREIHE,
-    ].includes(activeTab.value);
+    isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
+    isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
+    isTabStepline.value = TAB_GANGLINIE === activeTab.value;
 });
 
 watch(
@@ -294,25 +238,25 @@ function loadProcessedChartData() {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
-    let type = "";
-    // Ganglinie
     if (activeTab.value === TAB_GANGLINIE) {
-        type = "Die Ganglinie";
-
-        addImageToReport(
+        reportTools.addChartToPdfReport(
             getGanglinieBase64(),
-            createCaption("Ganglinie"),
-            true
+            "Ganglinie",
+            "Die"
         );
     }
-    store.dispatch("snackbar/showToast", {
-        snackbarTextPart1: `${type} wurde dem PDF Report hinzugefügt.`,
-        level: Levels.SUCCESS,
-    });
 }
 
-function createCaption(diagram: string): string {
-    return `${diagram} zur Messstelle ${messstelle.value.mstId}`;
+/**
+ * Speichert das aktuell offene Diagramm als Png bzw SVG (Kreuzung-Belastungsplan)
+ */
+function saveGraphAsImage(): void {
+    loadingFile.value = true;
+    // Ganglinie
+    if (activeTab.value === TAB_GANGLINIE) {
+        reportTools.saveGraphAsImage(getGanglinieBase64(), "Ganglinie");
+    }
+    loadingFile.value = false;
 }
 
 /**
@@ -324,72 +268,5 @@ function getGanglinieBase64(): string {
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
     });
-}
-
-/**
- * Sendet die übergebenen Bildaten und Bildunterschrift als "ImageAsset" an den Vuex Store.
- *
- * @param base64
- * @param name
- * @param heading
- */
-function addImageToReport(
-    base64: string,
-    name: string,
-    heading: boolean
-): void {
-    if (heading) {
-        addHeadingToReport();
-    }
-    const imageAsset = new ImageAsset(name, base64);
-    imageAsset.width = 100;
-    store.dispatch("addAsset", imageAsset);
-}
-
-function addHeadingToReport(): void {
-    let chartTitle = "";
-    if (chartTitle !== "") {
-        const headingAsset = new HeadingAsset(
-            chartTitle,
-            AssetTypesEnum.HEADING5
-        );
-        store.dispatch("addAsset", headingAsset);
-    }
-}
-
-function getFileName(): string {
-    let dateForFilename: string = new Date(
-        messstelle.value.datumLetztePlausibleMessung
-    )
-        .toISOString()
-        .split("T")[0];
-
-    // Beispiel: 251101K_15-11-2020
-    return `${messstelle.value.mstId}_${dateForFilename}`;
-}
-
-/**
- * Speichert das aktuell offene Diagramm als Png bzw SVG (Kreuzung-Belastungsplan)
- */
-function saveGraphAsImage(): void {
-    loadingFile.value = true;
-
-    let filename: string = getFileName();
-    let encodedUri = "";
-    // Ganglinie
-    if (activeTab.value === TAB_GANGLINIE) {
-        filename += "_Ganglinie";
-        encodedUri = getGanglinieBase64();
-        // Listenausgabe
-    }
-
-    if (encodedUri !== "") {
-        let link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", filename);
-        document.body.appendChild(link); // Required for FF
-        link.click();
-    }
-    loadingFile.value = false;
 }
 </script>

@@ -807,7 +807,7 @@ export default class ZaehldatenDiagramme extends Vue {
     }
 
     addHeadingToReport(): void {
-        // Calculate Heading TODO
+        // Calculate Heading
         let chartTitle = "";
         if (this.options.vonKnotenarm !== null) {
             this.zaehlung.knotenarme.forEach((knotenarm) => {
