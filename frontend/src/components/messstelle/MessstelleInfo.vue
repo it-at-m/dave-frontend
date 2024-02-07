@@ -29,7 +29,7 @@
                 width="100%"
                 class="px-4 py-2"
             >
-                <span class="font-weight-regular">
+                <span class="d-inline-flex pr-1">
                     <base-icon
                         :small="true"
                         :icon="aufbauIcon.iconPath"
@@ -39,12 +39,14 @@
                 </span>
                 <span v-if="abbauDatumExists">
                     |
-                    <base-icon
-                        :small="true"
-                        :icon="abbauIcon.iconPath"
-                        :tooltip="abbauIcon.tooltip"
-                    ></base-icon>
-                    {{ formatDate(messstelle.abbaudatum) }}
+                    <span class="d-inline-flex pl-1">
+                        <base-icon
+                            :small="true"
+                            :icon="abbauIcon.iconPath"
+                            :tooltip="abbauIcon.tooltip"
+                        ></base-icon>
+                        {{ formatDate(messstelle.abbaudatum) }}
+                    </span>
                 </span>
                 <br />
                 <span>
