@@ -4,7 +4,7 @@ import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { Levels } from "@/api/error";
 import { computed, ComputedRef } from "vue";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 export function useReportTools() {
     const store = useStore();

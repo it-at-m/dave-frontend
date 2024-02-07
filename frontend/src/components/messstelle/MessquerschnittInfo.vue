@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 interface Props {
     messstelle: MessstelleInfoDTO;

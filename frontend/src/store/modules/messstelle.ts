@@ -1,4 +1,4 @@
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 export interface MessstelleState {
     messstelleInfo: MessstelleInfoDTO;

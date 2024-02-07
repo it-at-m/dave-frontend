@@ -50,7 +50,7 @@
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
