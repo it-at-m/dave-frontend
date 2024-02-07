@@ -40,9 +40,7 @@
                         >
                         <v-list-item-subtitle
                             >Lage Messquerschnitt:
-                            {{
-                                getMessquerschnittStandort
-                            }}</v-list-item-subtitle
+                            {{ messquerschnitt.standort }}</v-list-item-subtitle
                         >
                     </v-list-item-content>
                 </v-list-item>
@@ -53,21 +51,10 @@
 
 <script setup lang="ts">
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
-import { computed } from "vue";
+
 interface Props {
     messstelle: MessstelleInfoDTO;
 }
-
-const getMessquerschnittStandort = computed(() => {
-    if (
-        props.messstelle.messquerschnitte.length > 0 &&
-        props.messstelle.messquerschnitte[0].standort
-    ) {
-        return props.messstelle.messquerschnitte[0].standort;
-    } else {
-        return "Keine Angabe zum Standort";
-    }
-});
 
 const props = defineProps<Props>();
 </script>
