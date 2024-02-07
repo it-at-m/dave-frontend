@@ -43,9 +43,9 @@
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
                     />
-                    <p class="text-caption">Hinweise:</p>
+                    <p class="text-caption pt-5">Hinweise:</p>
                     <p class="text-caption">
-                        An den Im Kalender markierten Tagen sind keine
+                        An den im Kalender rot markierten Tagen sind keine
                         plausiblen Messungen enthalten
                     </p>
                     <p
@@ -136,7 +136,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
         dateRange.value.length == 1 &&
         nichtPlausibleTage.value.includes(dateRange.value[0])
     ) {
-        return "Tag hat keine Plausible Messung";
+        return "Tag hat keine plausible Messung";
     }
     if (dateRange.value.length == 2) {
         const filter = getAllDatesBetweenTwoDates();
@@ -145,7 +145,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
             (dateAsString: string) => new Date(dateAsString).valueOf()
         );
         if (filter.every((day) => tageAsDates.includes(day.valueOf()))) {
-            return "Kein Plausibler Tag im Zeitraum";
+            return "Kein plausibler Tag im Zeitraum";
         }
         const sortedDates = getDatesDescAsStrings(dateRange.value);
         const timeDifferenceInMilliseconds =
