@@ -142,6 +142,8 @@ import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
 
+// Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
+
 interface Props {
     height?: string;
     contentHeight?: string;
@@ -197,23 +199,12 @@ const zaehldatenStepline: ComputedRef<LadeZaehldatenSteplineDTO> = computed(
     }
 );
 
-// const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-//     return store.getters["messstelleInfo/getMessstelleInfo"];
-// });
-
 watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
     isTabStepline.value = TAB_GANGLINIE === activeTab.value;
 });
-
-watch(
-    () => messstelleId.value,
-    () => {
-        loadData();
-    }
-);
 
 /**
  * Die Requests für alle Diagramme werden abgesetzt.
