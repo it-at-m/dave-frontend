@@ -55,6 +55,13 @@
                         Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
                     </p>
+                    <p
+                        v-if="isZeitraum"
+                        class="text-caption"
+                    >
+                        Alle Auswertungen beziehen sich bei einem Zeitraum auf
+                        die Durchschnittswerte
+                    </p>
                 </v-col>
             </v-row>
         </v-expansion-panel-content>
@@ -94,6 +101,10 @@ const getChoosenDateAsText = computed(() => {
     } else {
         return "";
     }
+});
+
+const isZeitraum = computed(() => {
+    return dateRange.value.length == 2;
 });
 
 const isAnwender = computed(() => {
