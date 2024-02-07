@@ -18,7 +18,7 @@
             v-model="showDialog"
             max-width="600px"
         >
-            <v-card>
+            <v-card class="rounded-0">
                 <v-card-title class="text-h5 grey lighten-2">
                     <v-icon left>mdi-comment-multiple</v-icon>
                     Informationen
