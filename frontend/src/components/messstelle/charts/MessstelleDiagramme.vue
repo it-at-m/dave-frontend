@@ -89,12 +89,10 @@
                     width="100%"
                     class="overflow-y-auto"
                 >
-                    <v-card ref="heatmapCard">
-                        <heatmap-card
-                            ref="heatmapCard"
-                            :zaehldaten-heatmap="zaehldatenHeatmap"
-                        ></heatmap-card>
-                    </v-card>
+                    <heatmap-card
+                        ref="heatmapCard"
+                        :zaehldaten-heatmap="zaehldatenHeatmap"
+                    ></heatmap-card>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
@@ -117,7 +115,7 @@
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
-            v-show="isTabStepline"
+            v-show="showSpeedial"
             :is-listenausgabe="isTabListenausgabe"
             :is-not-heatmap="isNotTabHeatmap"
             :loading-file="loadingFile"
@@ -166,7 +164,7 @@ const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
 );
 
 // Wieder entfernen, wenn alle Tabs fertig sind
-const isTabStepline: Ref<boolean> = ref(false);
+const showSpeedial: Ref<boolean> = ref(false);
 
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
@@ -214,7 +212,7 @@ watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    isTabStepline.value = TAB_GANGLINIE === activeTab.value;
+    showSpeedial.value = [TAB_GANGLINIE, TAB_HEATMAP].includes(activeTab.value);
 });
 
 /**
@@ -250,11 +248,7 @@ function addChartToPdfReport(): void {
     }
     // Heatmap
     if (activeTab.value === TAB_HEATMAP) {
-        reportTools.addChartToPdfReport(
-            getHeatmapBase64(),
-            "Heatmap",
-            "Die"
-        );
+        reportTools.addChartToPdfReport(getHeatmapBase64(), "Heatmap", "Die");
     }
 }
 

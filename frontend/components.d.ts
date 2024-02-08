@@ -84,12 +84,9 @@ declare module "@vue/runtime-core" {
         VExpansionPanelHeader: typeof import("vuetify/lib")["VExpansionPanelHeader"];
         VExpansionPanels: typeof import("vuetify/lib")["VExpansionPanels"];
         VFadeTransition: typeof import("vuetify/lib")["VFadeTransition"];
-        VFileInput: typeof import("vuetify/lib")["VFileInput"];
         VFooter: typeof import("vuetify/lib")["VFooter"];
-        VForm: typeof import("vuetify/lib")["VForm"];
         VHover: typeof import("vuetify/lib")["VHover"];
         VIcon: typeof import("vuetify/lib")["VIcon"];
-        VImg: typeof import("vuetify/lib")["VImg"];
         VList: typeof import("vuetify/lib")["VList"];
         VListItem: typeof import("vuetify/lib")["VListItem"];
         VListItemAction: typeof import("vuetify/lib")["VListItemAction"];
@@ -114,9 +111,7 @@ declare module "@vue/runtime-core" {
         VTabItem: typeof import("vuetify/lib")["VTabItem"];
         VTabs: typeof import("vuetify/lib")["VTabs"];
         VTabsItems: typeof import("vuetify/lib")["VTabsItems"];
-        VTextarea: typeof import("vuetify/lib")["VTextarea"];
         VTextField: typeof import("vuetify/lib")["VTextField"];
-        VToolbar: typeof import("vuetify/lib")["VToolbar"];
         VToolbarTitle: typeof import("vuetify/lib")["VToolbarTitle"];
         VTooltip: typeof import("vuetify/lib")["VTooltip"];
         WetterIcon: typeof import("./src/components/zaehlstelle/icons/WetterIcon.vue")["default"];
