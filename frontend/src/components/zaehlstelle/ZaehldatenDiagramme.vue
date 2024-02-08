@@ -391,6 +391,7 @@ import { Levels } from "@/api/error";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 
+// Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 @Component({
     components: {
         BelastungsplanCard,
@@ -807,7 +808,7 @@ export default class ZaehldatenDiagramme extends Vue {
     }
 
     addHeadingToReport(): void {
-        // Calculate Heading TODO
+        // Calculate Heading
         let chartTitle = "";
         if (this.options.vonKnotenarm !== null) {
             this.zaehlung.knotenarme.forEach((knotenarm) => {

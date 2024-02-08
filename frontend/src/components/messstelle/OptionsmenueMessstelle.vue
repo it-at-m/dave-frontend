@@ -31,25 +31,52 @@
                             hover
                             focusable
                         >
-                            <zeit-panel :messstelle-id="messstelleId" />
+                            <zeit-panel
+                                :messstelle-id="messstelleId"
+                                :chosen-options.sync="chosenOptions"
+                            />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="saveChosenOptions"
+                        >Aktualisiere Daten
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="grey lighten-1"
+                        @click="resetOptions"
+                        >Zurücksetzen
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed, ref, Ref } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
+import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import { useStore } from "@/api/util/useStore";
 
 interface Props {
     messstelleId: string;
 }
 defineProps<Props>();
-
+const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
 const vuetify = useVuetify();
+const store = useStore();
+const dialog = ref(false);
+const chosenOptions = ref({
+    zeitraum: filterOptionsMessstelle.value.zeitraum,
+} as MessungOptionsDTO);
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -58,5 +85,16 @@ const getContentSheetHeight = computed(() => {
     return "400px";
 });
 
-const dialog = ref(false);
+function saveChosenOptions(): void {
+    store.commit(
+        "filteroptionsMessstelle/setFilteroptions",
+        Object.assign({}, chosenOptions.value)
+    );
+    dialog.value = false;
+}
+
+function resetOptions(): void {
+    store.dispatch("filteroptionsMessstelle/resetFilteroptions");
+    Object.assign(chosenOptions.value, filterOptionsMessstelle.value);
+}
 </script>
