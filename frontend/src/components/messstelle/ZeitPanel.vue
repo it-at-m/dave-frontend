@@ -45,8 +45,8 @@
                     />
                     <p class="text-caption pt-5">Hinweise:</p>
                     <p class="text-caption">
-                        An den im Kalender rot markierten Tagen sind keine
-                        plausiblen Messungen enthalten
+                        An den rot markierten Tagen sind keine plausiblen
+                        Messwerte vorhanden
                     </p>
                     <p
                         v-if="isAnwender"
@@ -59,8 +59,8 @@
                         v-if="isZeitraum"
                         class="text-caption"
                     >
-                        Alle Auswertungen beziehen sich bei einem Zeitraum auf
-                        die Durchschnittswerte
+                        Alle Auswertungen stellen Durchschnittswerte des
+                        ausgewählten Zeitraums dar
                     </p>
                 </v-col>
             </v-row>
@@ -117,7 +117,7 @@ const getChosenDateAsText = computed(() => {
 });
 
 const isZeitraum = computed(() => {
-    return dateRange.value.length == 2;
+    return chosenOptionsCopyZeitraum.value.length == 2;
 });
 
 const isAnwender = computed(() => {
