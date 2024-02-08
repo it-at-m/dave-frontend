@@ -544,8 +544,9 @@ export default class ZaehlstelleMap extends Vue {
         let defaultIcon = new Icon({
             iconUrl: markerIconDiamondViolet,
             shadowUrl: markerIconDiamondShadow,
-            shadowAnchor: [8, 25],
+            shadowAnchor: [8, 45],
             iconSize: [25, 41],
+            iconAnchor: [12, 41],
         });
 
         if (this.zId) {
