@@ -63,7 +63,7 @@
                 >
                     <step-line-card
                         ref="steplineCard"
-                        :zaehldaten-stepline="zaehldatenStepline"
+                        :zaehldaten-stepline="zaehldatenSteplineDTO"
                     ></step-line-card>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
@@ -89,13 +89,10 @@
                     width="100%"
                     class="overflow-y-auto"
                 >
-                    <v-card ref="heatmapCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                    </v-card>
+                    <heatmap-card
+                        ref="heatmapCard"
+                        :zaehldaten-heatmap="zaehldatenHeatmapDTO"
+                    ></heatmap-card>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
@@ -118,7 +115,7 @@
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
-            v-show="isTabStepline"
+            v-show="showSpeedial"
             :is-listenausgabe="isTabListenausgabe"
             :is-not-heatmap="isNotTabHeatmap"
             :loading-file="loadingFile"
@@ -141,6 +138,9 @@ import { useStore } from "@/api/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
+import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+
+// Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
 interface Props {
     height?: string;
@@ -158,8 +158,13 @@ const zaehldatenSteplineDTO: Ref<LadeZaehldatenSteplineDTO> = ref(
     {} as LadeZaehldatenSteplineDTO
 );
 
+// Heatmap
+const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
+    {} as LadeZaehldatenHeatmapDTO
+);
+
 // Wieder entfernen, wenn alle Tabs fertig sind
-const isTabStepline: Ref<boolean> = ref(false);
+const showSpeedial: Ref<boolean> = ref(false);
 
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
@@ -191,29 +196,12 @@ const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
 
-const zaehldatenStepline: ComputedRef<LadeZaehldatenSteplineDTO> = computed(
-    () => {
-        return zaehldatenSteplineDTO.value;
-    }
-);
-
-// const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-//     return store.getters["messstelleInfo/getMessstelleInfo"];
-// });
-
 watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    isTabStepline.value = TAB_GANGLINIE === activeTab.value;
+    showSpeedial.value = [TAB_GANGLINIE, TAB_HEATMAP].includes(activeTab.value);
 });
-
-watch(
-    () => messstelleId.value,
-    () => {
-        loadData();
-    }
-);
 
 /**
  * Die Requests für alle Diagramme werden abgesetzt.
@@ -228,6 +216,7 @@ function loadProcessedChartData() {
         .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
+            zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
         })
         .finally(() => {
             chartDataLoading.value = false;
@@ -245,6 +234,10 @@ function addChartToPdfReport(): void {
             "Die"
         );
     }
+    // Heatmap
+    if (activeTab.value === TAB_HEATMAP) {
+        reportTools.addChartToPdfReport(getHeatmapBase64(), "Heatmap", "Die");
+    }
 }
 
 /**
@@ -252,9 +245,10 @@ function addChartToPdfReport(): void {
  */
 function saveGraphAsImage(): void {
     loadingFile.value = true;
-    // Ganglinie
     if (activeTab.value === TAB_GANGLINIE) {
         reportTools.saveGraphAsImage(getGanglinieBase64(), "Ganglinie");
+    } else if (activeTab.value === TAB_HEATMAP) {
+        reportTools.saveGraphAsImage(getHeatmapBase64(), "Heatmap");
     }
     loadingFile.value = false;
 }
@@ -264,6 +258,17 @@ function saveGraphAsImage(): void {
  */
 function getGanglinieBase64(): string {
     return steplineCard?.value?.steplineForPdf.chart.getDataURL({
+        pixelRatio: 2,
+        backgroundColor: "#fff",
+        excludeComponents: ["toolbox"],
+    });
+}
+
+/**
+ * Base 64 String der Heatmap
+ */
+function getHeatmapBase64(): string {
+    return heatmapCard?.value?.heatmapChart.chart.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],

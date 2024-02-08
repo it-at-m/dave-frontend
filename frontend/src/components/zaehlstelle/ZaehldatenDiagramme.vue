@@ -391,6 +391,7 @@ import { Levels } from "@/api/error";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 
+// Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 @Component({
     components: {
         BelastungsplanCard,
