@@ -63,7 +63,7 @@
                 >
                     <step-line-card
                         ref="steplineCard"
-                        :zaehldaten-stepline="zaehldatenStepline"
+                        :zaehldaten-stepline="zaehldatenSteplineDTO"
                     ></step-line-card>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
@@ -91,7 +91,7 @@
                 >
                     <heatmap-card
                         ref="heatmapCard"
-                        :zaehldaten-heatmap="zaehldatenHeatmap"
+                        :zaehldaten-heatmap="zaehldatenHeatmapDTO"
                     ></heatmap-card>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
@@ -195,18 +195,6 @@ onMounted(() => {
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
-
-const zaehldatenStepline: ComputedRef<LadeZaehldatenSteplineDTO> = computed(
-    () => {
-        return zaehldatenSteplineDTO.value;
-    }
-);
-
-const zaehldatenHeatmap: ComputedRef<LadeZaehldatenHeatmapDTO> = computed(
-    () => {
-        return zaehldatenHeatmapDTO.value;
-    }
-);
 
 watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
