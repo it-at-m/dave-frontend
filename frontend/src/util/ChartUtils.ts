@@ -8,6 +8,7 @@ export default class ChartUtils {
     public static readonly LEGEND_ENTRY_FUSS: string = "Fuß";
     public static readonly LEGEND_ENTRY_PKW: string = "Pkw";
     public static readonly LEGEND_ENTRY_LKW: string = "Lkw";
+    public static readonly LEGEND_ENTRY_LFW: string = "Lfw";
     public static readonly LEGEND_ENTRY_LZ: string = "Lz";
     public static readonly LEGEND_ENTRY_BUSSE: string = "Busse";
     public static readonly LEGEND_ENTRY_KRAD: string = "Krad";
@@ -27,6 +28,7 @@ export default class ChartUtils {
 
         [ChartUtils.LEGEND_ENTRY_PKW, "rect"],
         [ChartUtils.LEGEND_ENTRY_LKW, "rect"],
+        [ChartUtils.LEGEND_ENTRY_LFW, "rect"],
         [ChartUtils.LEGEND_ENTRY_LZ, "rect"],
         [ChartUtils.LEGEND_ENTRY_BUSSE, "rect"],
         [ChartUtils.LEGEND_ENTRY_KRAD, "rect"],
@@ -48,6 +50,7 @@ export default class ChartUtils {
 
         [ChartUtils.LEGEND_ENTRY_PKW, "#00E5FF"], // cyan accent-3
         [ChartUtils.LEGEND_ENTRY_LKW, "#BF360C"], // deep-orange darken-4
+        [ChartUtils.LEGEND_ENTRY_LFW, "#CDDC39"], // lime
         [ChartUtils.LEGEND_ENTRY_LZ, "#FF9E80"], // deep-orange accent-1
         [ChartUtils.LEGEND_ENTRY_BUSSE, "#FFC107"], // amber
         [ChartUtils.LEGEND_ENTRY_KRAD, "#0097A7"], // cyan darken-2
