@@ -40,7 +40,7 @@ export default class HeatmapCard extends Vue {
             silent?: boolean;
         };
         chartOptions.width = 1350;
-        chartOptions.height = 430;
+        chartOptions.height = 500;
         chartOptions.silent = true;
         this.heatmapChart.chart.resize(chartOptions);
     }
