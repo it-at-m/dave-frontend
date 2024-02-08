@@ -10,6 +10,7 @@ import eventbus from "@/store/modules/eventbus";
 import history from "@/store/modules/history";
 import pdfreport from "@/store/modules/pdfreport";
 import belastungsplanSize from "@/store/modules/belastungsplanSize";
+import messstelleInfo from "@/store/modules/messstelle";
 
 Vue.use(Vuex);
 const debug = import.meta.env.NODE_ENV !== "production";
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         history,
         pdfreport,
         belastungsplanSize,
+        messstelleInfo,
     },
     strict: debug,
 });
