@@ -1,4 +1,4 @@
-import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
+import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 
 export interface FilteroptionsMessstelle {
     messstelleFilterOptions: MessungOptionsDTO;

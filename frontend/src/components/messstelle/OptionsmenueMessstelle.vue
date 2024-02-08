@@ -58,10 +58,10 @@
     </div>
 </template>
 <script setup lang="ts">
-import { computed, ref, Ref, watch } from "vue";
+import { computed, ref, Ref } from "vue";
 import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
-import MessungOptionsDTO from "@/types/messung/MessungOptionsDTO";
+import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useStore } from "@/api/util/useStore";
 
 interface Props {
