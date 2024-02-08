@@ -95,5 +95,6 @@ function saveChosenOptions(): void {
 
 function resetOptions(): void {
     store.dispatch("filteroptionsMessstelle/resetFilteroptions");
+    Object.assign(chosenOptions.value, filterOptionsMessstelle.value);
 }
 </script>
