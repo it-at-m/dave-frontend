@@ -57,18 +57,62 @@
                     </p>
                 </v-col>
             </v-row>
+            <v-divider></v-divider>
+            <panel-header
+                font-size="0.875rem"
+                font-weight="bold"
+                padding="10px 0 0 0"
+                header-text="Wochentag"
+            ></panel-header>
+            <v-row no-gutters>
+                <v-col cols="6">
+                    <v-radio-group v-model="chosenWochentag">
+                        <v-radio
+                            :value="Wochentag.WERKTAG_DI_MI_DO"
+                            :label="
+                                getWochentagText(Wochentag.WERKTAG_DI_MI_DO)
+                            "
+                        />
+                        <v-radio
+                            :value="Wochentag.WERKTAG_MO_FR"
+                            :label="getWochentagText(Wochentag.WERKTAG_MO_FR)"
+                        />
+                        <v-radio
+                            :value="Wochentag.SAMSTAG"
+                            :label="getWochentagText(Wochentag.SAMSTAG)"
+                        />
+                        <v-radio
+                            :value="Wochentag.SONNTAG_FEIERTAG"
+                            :label="
+                                getWochentagText(Wochentag.SONNTAG_FEIERTAG)
+                            "
+                        />
+                        <v-radio
+                            :value="Wochentag.WERKTAG_FERIEN"
+                            :label="getWochentagText(Wochentag.WERKTAG_FERIEN)"
+                        />
+                        <v-radio
+                            :value="Wochentag.DTV"
+                            :label="getWochentagText(Wochentag.DTV)"
+                        />
+                    </v-radio-group>
+                </v-col>
+                <v-col cols="6"> {{ helperText }} </v-col>
+            </v-row>
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
 
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { computed, onMounted, ref, Ref } from "vue";
+import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
+import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
+import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
 
 interface Props {
     messstelleId: string;
@@ -79,12 +123,25 @@ const props = defineProps<Props>();
 const emit = defineEmits(["update:chosen-options"]);
 const store = useStore();
 const dateUtils = useDateUtils();
+const chosenWochentag = ref("");
+const isChosenTagesTypValid = ref(false);
 
 onMounted(() => {
     MessstelleOptionsmenuService.getNichtPlausibleTage(props.messstelleId).then(
         (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
             (nichtPlausibleTage.value =
                 nichtPlausibleTageDTO.nichtPlausibleTage)
+    );
+    MessstelleOptionsmenuService.isTagesTypValid(
+        "test",
+        "test",
+        Wochentag.SAMSTAG
+    );
+});
+
+const getSortedDateRange = computed(() => {
+    return dateUtils.sortDatesDescAsStrings(
+        chosenOptionsCopyZeitraum.value.slice()
     );
 });
 
@@ -98,6 +155,10 @@ const chosenOptionsCopy = computed({
 const chosenOptionsCopyZeitraum = computed(() => {
     return chosenOptionsCopy.value.zeitraum;
 });
+
+function getWochentagText(key: string): string | undefined {
+    return wochentagText.get(key);
+}
 
 const getChosenDateAsText = computed(() => {
     if (chosenOptionsCopyZeitraum.value.length == 1) {
@@ -188,4 +249,40 @@ function checkIfDateIsAlreadySelected(val: string[]) {
         chosenOptionsCopyZeitraum.value.splice(0, 1);
     }
 }
+
+const helperText = computed(() => {
+    if (isChosenTagesTypValid) {
+        switch (chosenWochentag.value) {
+            case Wochentag.WERKTAG_DI_MI_DO:
+                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
+            case Wochentag.WERKTAG_MO_FR:
+                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 5 Tage (Mo,Di,Mi,Do,Fr) mit plausiblen Daten nötig.";
+            case Wochentag.SAMSTAG:
+                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Sa) mit plausiblen Daten nötig.";
+            case Wochentag.SONNTAG_FEIERTAG:
+                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (So/Feiertag) mit plausiblen Daten nötig.";
+            case Wochentag.WERKTAG_FERIEN:
+                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) mit plausiblen Daten nötig.";
+            case Wochentag.DTV:
+                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Beliebige Wochentage) mit plausiblen Daten nötig.";
+        }
+    }
+    return "";
+});
+
+watch([chosenWochentag, chosenOptionsCopyZeitraum], () => {
+    if (
+        getSortedDateRange.value[0] &&
+        getSortedDateRange.value[1] &&
+        chosenWochentag.value
+    ) {
+        MessstelleOptionsmenuService.isTagesTypValid(
+            getSortedDateRange.value[1],
+            getSortedDateRange.value[0],
+            chosenWochentag.value
+        ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
+            isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
+        });
+    }
+});
 </script>
