@@ -10,5 +10,4 @@ export default interface MessquerschnittInfoDTO {
     fahrzeugKlassen: string;
     detektierteVerkehrsarten: DetektierteFahrzeugart;
     anzahlDetektoren: number;
-    standort: string;
 }
