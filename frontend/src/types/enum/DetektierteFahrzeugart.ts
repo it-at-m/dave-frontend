@@ -1,6 +1,6 @@
 export enum DetektierteFahrzeugart {
     KFZ = "KFZ",
-    FAHRRAD = "FAHRRAD",
+    FAHRRAD = "RAD",
 }
 
 export default DetektierteFahrzeugart;
