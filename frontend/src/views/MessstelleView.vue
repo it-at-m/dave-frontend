@@ -23,7 +23,10 @@
                         :minheight="headerHeightVh"
                     />
                     <MessstelleInfo :messstelle="messstelle" />
-                    <OptionsmenueMessstelle :messstelle-id="messstelleId" />
+                    <FilterOptionen
+                        class="px-0"
+                        :messstelle="messstelle"
+                    />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
@@ -37,6 +40,10 @@
                     :minheight="headerHeightVh"
                     show-marker="true"
                     width="100%"
+                />
+                <messstelle-diagramme
+                    :height="rightHeightVh"
+                    :content-height="rightContentHeightVh"
                 />
             </v-col>
         </v-row>
@@ -56,7 +63,8 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
-import OptionsmenueMessstelle from "@/components/messstelle/OptionsmenueMessstelle.vue";
+import FilterOptionen from "@/components/messstelle/FilterOptionen.vue";
+import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
@@ -82,6 +90,24 @@ const appBarHeight = computed(() => {
     return 65 / (vuetify.breakpoint.height / 100);
 });
 
+/**
+ * Berechnet die Höhe der Inhaltsfläche "vh" - ohne Karte
+ */
+const rightHeightVh = computed(() => {
+    return 100 - headerHeight.value - appBarHeight.value + "vh";
+});
+/**
+ * Berechnet die Höhe der Fläche unter den Tabs (72px hoch) in "vh"
+ */
+const rightContentHeightVh = computed(() => {
+    const h =
+        100 -
+        headerHeight.value -
+        appBarHeight.value -
+        72 / (vuetify.breakpoint.height / 100);
+    return h + "vh";
+});
+
 const messstelleId: ComputedRef<string> = computed(() => {
     const route = useRoute();
     const messstelleId = route.params.messstelleId;
@@ -101,6 +127,10 @@ function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
         .then((messstelleDTO) => {
             messstelle.value = messstelleDTO;
+            store.dispatch(
+                "messstelleInfo/setMessstelleInfo",
+                messstelle.value
+            );
         })
         .catch((error: ApiError) => {
             store.dispatch("snackbar/showError", error);
