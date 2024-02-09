@@ -74,12 +74,12 @@ import { computed, onMounted, ref, Ref } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
-import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
     messstelleId: string;
-    chosenOptions: MessungOptionsDTO;
+    chosenOptions: MessstelleOptionsDTO;
 }
 
 const props = defineProps<Props>();
@@ -99,7 +99,8 @@ const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 const chosenOptionsCopy = computed({
     get: () => props.chosenOptions,
-    set: (payload: MessungOptionsDTO) => emit("update:chosen-options", payload),
+    set: (payload: MessstelleOptionsDTO) =>
+        emit("update:chosen-options", payload),
 });
 
 const chosenOptionsCopyZeitraum = computed(() => {

@@ -35,6 +35,9 @@
                                 :messstelle-id="messstelleId"
                                 :chosen-options.sync="chosenOptions"
                             />
+                            <fahrzeug-panel
+                                :chosen-options.sync="chosenOptions"
+                            />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -42,7 +45,7 @@
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
-                        @click="saveChosenOptions"
+                        @click="setChosenOptions"
                         >Aktualisiere Daten
                     </v-btn>
                     <v-spacer></v-spacer>
@@ -58,25 +61,33 @@
     </div>
 </template>
 <script setup lang="ts">
-import { computed, ref, Ref } from "vue";
-import ZeitPanel from "@/components/messstelle/ZeitPanel.vue";
+import { computed, ref, Ref, watch } from "vue";
+import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
-import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useStore } from "@/api/util/useStore";
+import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanel.vue";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import _ from "lodash";
 
 interface Props {
     messstelleId: string;
 }
 defineProps<Props>();
-const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
+const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
+
+const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
+    return store.getters["messstelleInfo/getMessstelleInfo"];
+});
+
 const vuetify = useVuetify();
 const store = useStore();
 const dialog = ref(false);
-const chosenOptions = ref({
-    zeitraum: filterOptionsMessstelle.value.zeitraum,
-} as MessungOptionsDTO);
+const chosenOptions = ref({} as MessstelleOptionsDTO);
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -85,16 +96,37 @@ const getContentSheetHeight = computed(() => {
     return "400px";
 });
 
+watch(messstelle, () => {
+    resetOptions();
+});
+
+function setChosenOptions(): void {
+    saveChosenOptions();
+    dialog.value = false;
+}
+
 function saveChosenOptions(): void {
     store.commit(
         "filteroptionsMessstelle/setFilteroptions",
-        Object.assign({}, chosenOptions.value)
+        _.cloneDeep(chosenOptions.value)
     );
-    dialog.value = false;
+}
+
+function setDefaultOptionsForMessstelle(): void {
+    chosenOptions.value = _.cloneDeep(filterOptionsMessstelle.value);
+    chosenOptions.value.fahrzeuge =
+        DefaultObjectCreator.createDefaultFahrzeugOptions(
+            messstelle.value.messquerschnitte[0].detektierteVerkehrsarten ===
+                DetektierteFahrzeugart.KFZ
+        );
+    chosenOptions.value.zeitraum = [
+        messstelle.value.datumLetztePlausibleMessung,
+    ];
+    saveChosenOptions();
 }
 
 function resetOptions(): void {
     store.dispatch("filteroptionsMessstelle/resetFilteroptions");
-    Object.assign(chosenOptions.value, filterOptionsMessstelle.value);
+    setDefaultOptionsForMessstelle();
 }
 </script>
