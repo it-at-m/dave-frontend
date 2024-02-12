@@ -66,7 +66,10 @@
             ></panel-header>
             <v-row no-gutters>
                 <v-col cols="6">
-                    <v-radio-group v-model="chosenWochentag">
+                    <v-radio-group
+                        v-model="chosenWochentag"
+                        class="full-width"
+                    >
                         <v-radio
                             :value="Wochentag.WERKTAG_DI_MI_DO"
                             :label="
@@ -99,6 +102,57 @@
                 </v-col>
                 <v-col cols="6"> {{ helperText }} </v-col>
             </v-row>
+            <v-divider></v-divider>
+            <panel-header
+                font-size="0.875rem"
+                font-weight="bold"
+                padding="10px 0 0 0"
+                header-text="Zeitauswahl"
+            ></panel-header>
+            <v-row no-gutters>
+                <v-radio-group>
+                    <v-row
+                        no-gutters
+                        style="width: 100%"
+                    >
+                        <v-col cols="6">
+                            <v-radio
+                                label="Tageswert (Durchschnitt)"
+                                value="Tageswert"
+                            />
+                            <v-radio
+                                label="Block (Durchschnitt)"
+                                value="Block"
+                            />
+                            <v-radio
+                                label="Stunde (Durchschnitt)"
+                                value="Stunde"
+                            />
+                        </v-col>
+                        <v-col cols="6">
+                            <v-radio
+                                label="Spitzenstunde Kfz (Durchschnitt)"
+                                value="Spitzenstunde Kfz"
+                            />
+                            <v-radio
+                                label="Spitzenstunde Rad (Durchschnitt)"
+                                value="Spitzenstunde Rad"
+                            />
+                            <v-radio
+                                label="Spitzenstunde Fuß (Durchschnitt)"
+                                value="Spitzenstunde Fuß"
+                            />
+                        </v-col>
+                    </v-row>
+                </v-radio-group>
+            </v-row>
+            <v-divider></v-divider>
+            <panel-header
+                font-size="0.875rem"
+                font-weight="bold"
+                padding="10px 0 0 0"
+                header-text="Zeitintervall"
+            ></panel-header>
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
@@ -286,3 +340,9 @@ watch([chosenWochentag, chosenOptionsCopyZeitraum], () => {
     }
 });
 </script>
+
+<style>
+.full-width {
+    width: 100%;
+}
+</style>
