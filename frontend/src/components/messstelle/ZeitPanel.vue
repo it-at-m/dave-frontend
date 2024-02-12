@@ -34,8 +34,8 @@
                         @change="checkIfDateIsAlreadySelected"
                     ></v-date-picker>
                 </v-col>
-                <v-col cols="4"
-                    ><v-text-field
+                <v-col cols="4">
+                    <v-text-field
                         :label="getChosenDateAsText"
                         readonly
                         :value="getFormattedSelectedZeit"
@@ -100,7 +100,7 @@
                         />
                     </v-radio-group>
                 </v-col>
-                <v-col cols="6"> {{ helperText }} </v-col>
+                <v-col cols="6"> {{ helperText }}</v-col>
             </v-row>
             <v-divider></v-divider>
             <panel-header
@@ -110,7 +110,10 @@
                 header-text="Zeitauswahl"
             ></panel-header>
             <v-row no-gutters>
-                <v-radio-group>
+                <v-radio-group
+                    v-model="zeitauswahl"
+                    style="width: 100%"
+                >
                     <v-row
                         no-gutters
                         style="width: 100%"
@@ -123,28 +126,57 @@
                             <v-radio
                                 label="Block (Durchschnitt)"
                                 value="Block"
+                                :disabled="isDateBiggerFiveYears"
                             />
                             <v-radio
                                 label="Stunde (Durchschnitt)"
                                 value="Stunde"
+                                :disabled="isDateBiggerFiveYears"
                             />
                         </v-col>
                         <v-col cols="6">
                             <v-radio
                                 label="Spitzenstunde Kfz (Durchschnitt)"
-                                value="Spitzenstunde Kfz"
+                                value="Spitzenstunde KFZ"
+                                :disabled="isTypeDisabled('KFZ')"
                             />
                             <v-radio
                                 label="Spitzenstunde Rad (Durchschnitt)"
                                 value="Spitzenstunde Rad"
+                                :disabled="isTypeDisabled('RAD')"
                             />
                             <v-radio
                                 label="Spitzenstunde Fuß (Durchschnitt)"
                                 value="Spitzenstunde Fuß"
+                                :disabled="isTypeDisabled('FUSS')"
                             />
                         </v-col>
                     </v-row>
                 </v-radio-group>
+            </v-row>
+            <v-row no-gutters>
+                <v-col cols="4">
+                    <v-select
+                        v-if="isZeitauswahlSpitzenstundeOrBlock"
+                        v-model="zeitblock"
+                        label="Zeitblock"
+                        :items="zeitblockValues"
+                        filled
+                        dense
+                    >
+                    </v-select>
+                    <!-- Auszuwählende Stunden -->
+                    <v-select
+                        v-if="isZeitauswahlStunde"
+                        v-model="zeitblock"
+                        label="Stunde"
+                        :items="stuendlichValues"
+                        filled
+                        dense
+                    >
+                    </v-select>
+                </v-col>
+                <v-spacer />
             </v-row>
             <v-divider></v-divider>
             <panel-header
@@ -153,6 +185,27 @@
                 padding="10px 0 0 0"
                 header-text="Zeitintervall"
             ></panel-header>
+            <panel-header
+                font-size="small"
+                font-weight="normal"
+                padding="0 0 10px 0"
+                header-text="(außer Belastungsplan und Zeitreihe)"
+            ></panel-header>
+
+            <v-row>
+                <v-col cols="4">
+                    <v-hover v-model="hoverSelectZeitintervall">
+                        <v-select
+                            v-model="intervall"
+                            :items="messdatenIntervalle"
+                            label="Zeitintervall"
+                            filled
+                            dense
+                            :disabled="isZeitauswahlSpitzenstundeKfz"
+                        ></v-select>
+                    </v-hover>
+                </v-col>
+            </v-row>
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
@@ -167,6 +220,16 @@ import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
+import ZaehldatenIntervall, {
+    ZaehldatenIntervallToSelect,
+} from "@/types/enum/ZaehldatenIntervall";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import KeyVal from "@/types/KeyVal";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import ZeitblockStuendlich, {
+    zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockStuendlich";
+const zeitblock = ref(Zeitblock.ZB_00_24);
 
 interface Props {
     messstelleId: string;
@@ -179,6 +242,9 @@ const store = useStore();
 const dateUtils = useDateUtils();
 const chosenWochentag = ref("");
 const isChosenTagesTypValid = ref(false);
+const zeitauswahl: Ref<string> = ref(Zeitauswahl.TAGESWERT);
+const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
+const hoverSelectZeitintervall = ref(false);
 
 onMounted(() => {
     MessstelleOptionsmenuService.getNichtPlausibleTage(props.messstelleId).then(
@@ -224,6 +290,46 @@ const getChosenDateAsText = computed(() => {
     }
 });
 
+const zeitblockValues = computed(() => {
+    let result = new Array<KeyVal>();
+    result.push(zeitblockInfo.get(Zeitblock.ZB_00_06)!);
+    result.push(zeitblockInfo.get(Zeitblock.ZB_06_10)!);
+    result.push(zeitblockInfo.get(Zeitblock.ZB_10_15)!);
+    result.push(zeitblockInfo.get(Zeitblock.ZB_15_19)!);
+    result.push(zeitblockInfo.get(Zeitblock.ZB_19_24)!);
+    result.push(zeitblockInfo.get(Zeitblock.ZB_00_24)!);
+    return result;
+});
+
+const stuendlichValues = computed(() => {
+    let result = new Array<KeyVal>();
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_00_01)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_01_02)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_02_03)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_03_04)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_03_04)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_04_05)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_05_06)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_06_07)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_07_08)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_08_09)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_09_10)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_10_11)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_11_12)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_12_13)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_13_14)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_14_15)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_15_16)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_16_17)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_17_18)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_18_19)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_19_20)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_21_22)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_22_23)!);
+    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_23_24)!);
+    return result;
+});
+
 const isAnwender = computed(() => {
     return (
         store.getters["user/hasAuthorities"] && store.getters["user/isAnwender"]
@@ -243,6 +349,7 @@ const getFormattedSelectedZeit = computed(() => {
         return "";
     }
 });
+
 function allowedDatesRangeDatePicker(val: string) {
     const today = new Date();
     return new Date(val) < today;
@@ -281,6 +388,20 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     }
     return true;
 }
+
+const isDateBiggerFiveYears = computed(() => {
+    if (chosenOptionsCopyZeitraum.value.length == 2) {
+        const zeitraum = chosenOptionsCopyZeitraum.value.slice();
+        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
+        const timeDifferenceInMilliseconds =
+            new Date(sortedDates[0]).valueOf() -
+            new Date(sortedDates[1]).valueOf();
+        const timeDifferenceInYears =
+            timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
+        return timeDifferenceInYears > 5;
+    }
+    return true;
+});
 
 function getAllDatesBetweenTwoDates(): Date[] {
     const zeitraum = chosenOptionsCopyZeitraum.value.slice();
@@ -339,7 +460,46 @@ watch([chosenWochentag, chosenOptionsCopyZeitraum], () => {
         });
     }
 });
+
+const messdatenIntervalle = computed(() => {
+    return ZaehldatenIntervallToSelect;
+});
+
+const isZeitauswahlSpitzenstundeKfz = computed(() => {
+    return zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ;
+});
+
+const isZeitauswahlStunde = computed(() => {
+    return zeitauswahl.value == Zeitauswahl.STUNDE;
+});
+
+watch(zeitauswahl, () => {
+    if (zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ) {
+        intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL;
+    }
+});
+
+// TODO abändern sobald Messquerschnitt ausgewählt werden kann
+function isTypeDisabled(type: string): boolean {
+    return false;
+}
+
+const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
+    return (
+        zeitauswahl.value == Zeitauswahl.BLOCK ||
+        isZeitauswahlSpitzenstunde.value
+    );
+});
+
+const isZeitauswahlSpitzenstunde = computed(() => {
+    return (
+        zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_RAD ||
+        zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_FUSS
+    );
+});
 </script>
+
 
 <style>
 .full-width {
