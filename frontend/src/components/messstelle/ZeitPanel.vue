@@ -193,18 +193,13 @@
             ></panel-header>
 
             <v-row>
-                <v-col cols="4">
-                    <v-hover v-model="hoverSelectZeitintervall">
-                        <v-select
-                            v-model="intervall"
-                            :items="messdatenIntervalle"
-                            label="Zeitintervall"
-                            filled
-                            dense
-                            :disabled="isZeitauswahlSpitzenstundeKfz"
-                        ></v-select>
-                    </v-hover>
-                </v-col>
+                <zeit-intervall
+                    :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
+                    :is-zeitauswahl-spitzenstunde-kfz="
+                        isZeitauswahlSpitzenstundeKfz
+                    "
+                    :intervall.sync="intervall"
+                />
             </v-row>
         </v-expansion-panel-content>
     </v-expansion-panel>
@@ -229,6 +224,8 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
+import ZeitIntervall from "@/components/messstelle/ZeitIntervall.vue";
+
 const zeitblock = ref(Zeitblock.ZB_00_24);
 
 interface Props {
@@ -243,7 +240,7 @@ const dateUtils = useDateUtils();
 const chosenWochentag = ref("");
 const isChosenTagesTypValid = ref(false);
 const zeitauswahl: Ref<string> = ref(Zeitauswahl.TAGESWERT);
-const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
+const intervall = ref();
 const hoverSelectZeitintervall = ref(false);
 
 onMounted(() => {
@@ -461,10 +458,6 @@ watch([chosenWochentag, chosenOptionsCopyZeitraum], () => {
     }
 });
 
-const messdatenIntervalle = computed(() => {
-    return ZaehldatenIntervallToSelect;
-});
-
 const isZeitauswahlSpitzenstundeKfz = computed(() => {
     return zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ;
 });
@@ -474,6 +467,7 @@ const isZeitauswahlStunde = computed(() => {
 });
 
 watch(zeitauswahl, () => {
+    console.log(zeitauswahl.value + "   " + Zeitauswahl.SPITZENSTUNDE_KFZ);
     if (zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ) {
         intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL;
     }
