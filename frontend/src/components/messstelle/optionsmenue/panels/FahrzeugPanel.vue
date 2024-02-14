@@ -777,7 +777,7 @@ const helpTextFahrzeugkategorien = computed(() => {
         return "Krafträder beinhalten Motorräder, Motorroller, Mopeds, Mofas usw.";
     }
     if (hoverLfw.value) {
-        return "Was soll hier stehen?";
+        return "Fahrzeuge mit einem zul. Gesamtgewicht von 2,8 - 3,5t";
     }
     if (hoverSelectOrDeselectAll.value) {
         let text = "Aktiviert alle Fahrzeugkategorien.";
