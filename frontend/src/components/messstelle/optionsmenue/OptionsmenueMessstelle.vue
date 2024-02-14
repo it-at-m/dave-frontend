@@ -35,9 +35,7 @@
                                 :messstelle-id="messstelleId"
                                 :chosen-options.sync="chosenOptions"
                             />
-                            <fahrzeug-panel
-                                :chosen-options.sync="chosenOptions"
-                            />
+                            <fahrzeug-panel v-model="chosenOptions" />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
