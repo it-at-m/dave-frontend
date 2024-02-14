@@ -1,14 +1,6 @@
 <template>
     <v-card elevation="0">
-        <belastungsplan-kreisverkehr
-            v-if="isKreisverkehr"
-            ref="belastungsplanKreisverkehr"
-            :name="nameZaehlung"
-            :data="allData"
-            :streets="streets"
-            :visible-nodes="visibleNodes"
-        >
-        </belastungsplan-kreisverkehr>
+        <belastungsplan-kreisverkehr-svg :plan="allData" />
     </v-card>
 </template>
 <script lang="ts">
@@ -17,9 +9,11 @@ import { Component, Prop, Ref } from "vue-property-decorator";
 import BelastungsplanKreisverkehr from "@/components/zaehlstelle/charts/BelastungsplanKreisverkehr.vue";
 // eslint-disable-next-line no-unused-vars
 import LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import BelastungsplanKreisverkehrSvg from "@/components/zaehlstelle/charts/BelastungsplanKreisverkehrSvg.vue";
 
 @Component({
     components: {
+        BelastungsplanKreisverkehrSvg,
         BelastungsplanKreisverkehr,
     },
 })
