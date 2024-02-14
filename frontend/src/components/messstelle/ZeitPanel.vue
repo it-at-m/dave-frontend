@@ -116,27 +116,7 @@
                 />
             </v-row>
             <v-row no-gutters>
-                <v-col cols="4">
-                    <v-select
-                        v-if="isZeitauswahlSpitzenstundeOrBlock"
-                        v-model="zeitblock"
-                        label="Zeitblock"
-                        :items="zeitblockValues"
-                        filled
-                        dense
-                    >
-                    </v-select>
-                    <!-- Auszuwählende Stunden -->
-                    <v-select
-                        v-if="isZeitauswahlStunde"
-                        v-model="zeitblock"
-                        label="Stunde"
-                        :items="stuendlichValues"
-                        filled
-                        dense
-                    >
-                    </v-select>
-                </v-col>
+                <zeitauswahl-stunde-or-block :zeitblock="zeitblock" />
                 <v-spacer />
             </v-row>
             <v-divider></v-divider>
@@ -178,13 +158,10 @@ import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import KeyVal from "@/types/KeyVal";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import ZeitblockStuendlich, {
-    zeitblockStuendlichInfo,
-} from "@/types/enum/ZeitblockStuendlich";
+import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitIntervall from "@/components/messstelle/ZeitIntervall.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/ZeitauswahlRadiogroup.vue";
+import ZeitauswahlStundeOrBlock from "@/components/messstelle/ZeitauswahlStundeOrBlock.vue";
 
 const zeitblock = ref(Zeitblock.ZB_00_24);
 
@@ -245,46 +222,6 @@ const getChosenDateAsText = computed(() => {
     } else {
         return "";
     }
-});
-
-const zeitblockValues = computed(() => {
-    let result = new Array<KeyVal>();
-    result.push(zeitblockInfo.get(Zeitblock.ZB_00_06)!);
-    result.push(zeitblockInfo.get(Zeitblock.ZB_06_10)!);
-    result.push(zeitblockInfo.get(Zeitblock.ZB_10_15)!);
-    result.push(zeitblockInfo.get(Zeitblock.ZB_15_19)!);
-    result.push(zeitblockInfo.get(Zeitblock.ZB_19_24)!);
-    result.push(zeitblockInfo.get(Zeitblock.ZB_00_24)!);
-    return result;
-});
-
-const stuendlichValues = computed(() => {
-    let result = new Array<KeyVal>();
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_00_01)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_01_02)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_02_03)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_03_04)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_03_04)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_04_05)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_05_06)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_06_07)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_07_08)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_08_09)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_09_10)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_10_11)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_11_12)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_12_13)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_13_14)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_14_15)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_15_16)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_16_17)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_17_18)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_18_19)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_19_20)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_21_22)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_22_23)!);
-    result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_23_24)!);
-    return result;
 });
 
 const isAnwender = computed(() => {
@@ -422,30 +359,11 @@ const isZeitauswahlSpitzenstundeKfz = computed(() => {
     return zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ;
 });
 
-const isZeitauswahlStunde = computed(() => {
-    return zeitauswahl.value == Zeitauswahl.STUNDE;
-});
-
 watch(zeitauswahl, () => {
     console.log(zeitauswahl.value + "   " + Zeitauswahl.SPITZENSTUNDE_KFZ);
     if (zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ) {
         intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL;
     }
-});
-
-const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
-    return (
-        zeitauswahl.value == Zeitauswahl.BLOCK ||
-        isZeitauswahlSpitzenstunde.value
-    );
-});
-
-const isZeitauswahlSpitzenstunde = computed(() => {
-    return (
-        zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ ||
-        zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_RAD ||
-        zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_FUSS
-    );
 });
 </script>
 
