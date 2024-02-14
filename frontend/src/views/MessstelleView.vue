@@ -63,7 +63,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
-import FilterOptionen from "@/components/messstelle/FilterOptionen.vue";
+import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(

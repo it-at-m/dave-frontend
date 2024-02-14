@@ -6,6 +6,7 @@ enum Fahrzeug {
     GV_P = "GV_P",
     PKW = "PKW",
     LKW = "LKW",
+    LFW = "LFW",
     LZ = "LZ",
     BUS = "BUS",
     KRAD = "KRAD",

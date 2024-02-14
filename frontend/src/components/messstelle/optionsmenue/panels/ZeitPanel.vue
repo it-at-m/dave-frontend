@@ -43,10 +43,10 @@
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
                     />
-                    <p class="text-caption">Hinweise:</p>
+                    <p class="text-caption pt-5">Hinweise:</p>
                     <p class="text-caption">
-                        An den Im Kalender markierten Tagen sind keine
-                        plausiblen Messungen enthalten
+                        An den rot markierten Tagen sind keine plausiblen
+                        Messwerte vorhanden
                     </p>
                     <p
                         v-if="isAnwender"
@@ -54,6 +54,13 @@
                     >
                         Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
+                    </p>
+                    <p
+                        v-if="isZeitraum"
+                        class="text-caption"
+                    >
+                        Alle Auswertungen stellen Durchschnittswerte des
+                        ausgewählten Zeitraums dar
                     </p>
                 </v-col>
             </v-row>
@@ -118,7 +125,7 @@ import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
-import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
@@ -134,7 +141,7 @@ const zeitblock = ref(Zeitblock.ZB_00_24);
 
 interface Props {
     messstelleId: string;
-    chosenOptions: MessungOptionsDTO;
+    chosenOptions: MessstelleOptionsDTO;
 }
 
 const props = defineProps<Props>();
@@ -170,7 +177,8 @@ const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 const chosenOptionsCopy = computed({
     get: () => props.chosenOptions,
-    set: (payload: MessungOptionsDTO) => emit("update:chosen-options", payload),
+    set: (payload: MessstelleOptionsDTO) =>
+        emit("update:chosen-options", payload),
 });
 
 const chosenOptionsCopyZeitraum = computed(() => {
@@ -185,6 +193,10 @@ const getChosenDateAsText = computed(() => {
     } else {
         return "";
     }
+});
+
+const isZeitraum = computed(() => {
+    return chosenOptionsCopyZeitraum.value.length == 2;
 });
 
 const isAnwender = computed(() => {
@@ -217,7 +229,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
         chosenOptionsCopyZeitraum.value.length == 1 &&
         nichtPlausibleTage.value.includes(chosenOptionsCopyZeitraum.value[0])
     ) {
-        return "Tag hat keine Plausible Messung";
+        return "Tag hat keine plausible Messung";
     }
     if (chosenOptionsCopyZeitraum.value.length == 2) {
         const filter = getAllDatesBetweenTwoDates();
@@ -226,7 +238,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
             (dateAsString: string) => new Date(dateAsString).valueOf()
         );
         if (filter.every((day) => tageAsDates.includes(day.valueOf()))) {
-            return "Kein Plausibler Tag im Zeitraum";
+            return "Kein plausibler Tag im Zeitraum";
         }
         const zeitraum = chosenOptionsCopyZeitraum.value.slice();
         const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
