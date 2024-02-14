@@ -376,10 +376,14 @@ const chosenOptionsCopyFahrzeuge = computed(() => {
     return chosenOptionsCopy.value.fahrzeuge;
 });
 
-watch(chosenOptionsCopy, () => {
-    calculateSelectOrDeselect();
-    calculateSelectOrDeselectVerkehrsarten();
-});
+watch(
+    chosenOptionsCopy,
+    () => {
+        calculateSelectOrDeselect();
+        calculateSelectOrDeselectVerkehrsarten();
+    },
+    { deep: true }
+);
 
 const selectOrDeselectAllVmodel = ref(false);
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
@@ -485,25 +489,25 @@ function getCheckboxColor(type: string): string {
     // KFZ, SV udn GV sind immer primary, wenn aktiv
     let color = "primary";
     switch (type) {
-        case "SV_P": {
-            if (!isSv_pInBelastungsPlan) {
+        case Fahrzeug.SV_P: {
+            if (!isSv_pInBelastungsPlan.value) {
                 color = "grey darken-1";
             }
             break;
         }
-        case "GV_P": {
-            if (!isGv_pInBelastungsPlan) {
+        case Fahrzeug.GV_P: {
+            if (!isGv_pInBelastungsPlan.value) {
                 color = "grey darken-1";
             }
             break;
         }
-        case "RAD": {
-            if (!isRadInBelastungsplan) {
+        case Fahrzeug.RAD: {
+            if (!isRadInBelastungsplan.value) {
                 color = "grey darken-1";
             }
             break;
         }
-        case "FUSS": {
+        case Fahrzeug.FUSS: {
             if (
                 chosenOptionsCopyFahrzeuge.value.fussverkehr &&
                 actualNumberOfSelectedVerkehrsarten.value > 1
@@ -542,28 +546,28 @@ function getIcon(type: string): string {
             }
             break;
         }
-        case "SV_P": {
+        case Fahrzeug.SV_P: {
             // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV < 3
-            if (isSv_pInBelastungsPlan) {
+            if (isSv_pInBelastungsPlan.value) {
                 icon = `mdi-arrow-decision`;
             }
             break;
         }
-        case "GV_P": {
+        case Fahrzeug.GV_P: {
             // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV + SV% < 3
-            if (isGv_pInBelastungsPlan) {
+            if (isGv_pInBelastungsPlan.value) {
                 icon = `mdi-arrow-decision`;
             }
             break;
         }
         case Fahrzeug.RAD: {
             // Angezeigt, wenn RAD oder RAD && FUSS
-            if (isRadInBelastungsplan) {
+            if (isRadInBelastungsplan.value) {
                 icon = `mdi-arrow-decision`;
             }
             break;
         }
-        case "FUSS": {
+        case Fahrzeug.FUSS: {
             // Angezeigt, wenn FUSS
             if (
                 chosenOptionsCopyFahrzeuge.value.fussverkehr &&
@@ -589,17 +593,27 @@ const isRadInBelastungsplan = computed(() => {
  */
 const actualNumberOfSelectedVerkehrsarten = computed(() => {
     let counter = 0;
-    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr ? counter++ : "";
-    chosenOptionsCopyFahrzeuge.value.schwerverkehr ? counter++ : "";
-    chosenOptionsCopyFahrzeuge.value.gueterverkehr ? counter++ : "";
-    chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent
-        ? counter++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent
-        ? counter++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.radverkehr ? counter++ : "";
-    chosenOptionsCopyFahrzeuge.value.fussverkehr ? counter++ : "";
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        counter++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        counter++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        counter++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
+        counter++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
+        counter++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        counter++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.fussverkehr) {
+        counter++;
+    }
     return counter;
 });
 
@@ -782,15 +796,15 @@ const helpTextFahrzeugkategorien = computed(() => {
  */
 const isSv_pInBelastungsPlan = computed(() => {
     let actualNumberOfSelectedKfzSvAndGv = 0;
-    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr
-        ? actualNumberOfSelectedKfzSvAndGv++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.schwerverkehr
-        ? actualNumberOfSelectedKfzSvAndGv++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.gueterverkehr
-        ? actualNumberOfSelectedKfzSvAndGv++
-        : "";
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        actualNumberOfSelectedKfzSvAndGv++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        actualNumberOfSelectedKfzSvAndGv++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        actualNumberOfSelectedKfzSvAndGv++;
+    }
     return (
         chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent &&
         (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr ||
@@ -807,18 +821,18 @@ const isSv_pInBelastungsPlan = computed(() => {
  */
 const isGv_pInBelastungsPlan = computed(() => {
     let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
-    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr
-        ? actualNumberOfSelectedKfzSvGvAndSV_P++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.schwerverkehr
-        ? actualNumberOfSelectedKfzSvGvAndSV_P++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.gueterverkehr
-        ? actualNumberOfSelectedKfzSvGvAndSV_P++
-        : "";
-    chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent
-        ? actualNumberOfSelectedKfzSvGvAndSV_P++
-        : "";
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        actualNumberOfSelectedKfzSvGvAndSV_P++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        actualNumberOfSelectedKfzSvGvAndSV_P++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        actualNumberOfSelectedKfzSvGvAndSV_P++;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
+        actualNumberOfSelectedKfzSvGvAndSV_P++;
+    }
     return (
         chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent &&
         (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr ||
