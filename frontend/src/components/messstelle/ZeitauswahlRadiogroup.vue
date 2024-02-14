@@ -58,9 +58,9 @@ const emit = defineEmits<{
 }>();
 
 const copyZeitauswahl = computed({
-  get: () => props.zeitauswahl,
-  set: (payload: string) => emit("update:zeitauswahl", payload);
-})
+    get: () => props.zeitauswahl,
+    set: (payload: string) => emit("update:zeitauswahl", payload),
+});
 function isTypeDisabled(type: string): boolean {
     return false;
 }
