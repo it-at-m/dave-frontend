@@ -64,44 +64,10 @@
                 padding="10px 0 0 0"
                 header-text="Wochentag"
             ></panel-header>
-            <v-row no-gutters>
-                <v-col cols="6">
-                    <v-radio-group
-                        v-model="chosenWochentag"
-                        class="full-width"
-                    >
-                        <v-radio
-                            :value="Wochentag.WERKTAG_DI_MI_DO"
-                            :label="
-                                getWochentagText(Wochentag.WERKTAG_DI_MI_DO)
-                            "
-                        />
-                        <v-radio
-                            :value="Wochentag.WERKTAG_MO_FR"
-                            :label="getWochentagText(Wochentag.WERKTAG_MO_FR)"
-                        />
-                        <v-radio
-                            :value="Wochentag.SAMSTAG"
-                            :label="getWochentagText(Wochentag.SAMSTAG)"
-                        />
-                        <v-radio
-                            :value="Wochentag.SONNTAG_FEIERTAG"
-                            :label="
-                                getWochentagText(Wochentag.SONNTAG_FEIERTAG)
-                            "
-                        />
-                        <v-radio
-                            :value="Wochentag.WERKTAG_FERIEN"
-                            :label="getWochentagText(Wochentag.WERKTAG_FERIEN)"
-                        />
-                        <v-radio
-                            :value="Wochentag.DTV"
-                            :label="getWochentagText(Wochentag.DTV)"
-                        />
-                    </v-radio-group>
-                </v-col>
-                <v-col cols="6"> {{ helperText }}</v-col>
-            </v-row>
+            <wochentag-radiogroup
+                v-model="chosenWochentag"
+                :is-chosen-tages-typ-valid="isChosenTagesTypValid"
+            />
             <v-divider></v-divider>
             <panel-header
                 font-size="0.875rem"
@@ -162,6 +128,7 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitIntervall from "@/components/messstelle/ZeitIntervall.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/ZeitauswahlStundeOrBlock.vue";
+import WochentagRadiogroup from "@/components/messstelle/WochentagRadiogroup.vue";
 
 const zeitblock = ref(Zeitblock.ZB_00_24);
 
@@ -209,10 +176,6 @@ const chosenOptionsCopy = computed({
 const chosenOptionsCopyZeitraum = computed(() => {
     return chosenOptionsCopy.value.zeitraum;
 });
-
-function getWochentagText(key: string): string | undefined {
-    return wochentagText.get(key);
-}
 
 const getChosenDateAsText = computed(() => {
     if (chosenOptionsCopyZeitraum.value.length == 1) {
@@ -319,26 +282,6 @@ function checkIfDateIsAlreadySelected(val: string[]) {
     }
 }
 
-const helperText = computed(() => {
-    if (isChosenTagesTypValid) {
-        switch (chosenWochentag.value) {
-            case Wochentag.WERKTAG_DI_MI_DO:
-                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
-            case Wochentag.WERKTAG_MO_FR:
-                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 5 Tage (Mo,Di,Mi,Do,Fr) mit plausiblen Daten nötig.";
-            case Wochentag.SAMSTAG:
-                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Sa) mit plausiblen Daten nötig.";
-            case Wochentag.SONNTAG_FEIERTAG:
-                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (So/Feiertag) mit plausiblen Daten nötig.";
-            case Wochentag.WERKTAG_FERIEN:
-                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) mit plausiblen Daten nötig.";
-            case Wochentag.DTV:
-                return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Beliebige Wochentage) mit plausiblen Daten nötig.";
-        }
-    }
-    return "";
-});
-
 watch([chosenWochentag, chosenOptionsCopyZeitraum], () => {
     if (
         getSortedDateRange.value[0] &&
@@ -366,10 +309,3 @@ watch(zeitauswahl, () => {
     }
 });
 </script>
-
-
-<style>
-.full-width {
-    width: 100%;
-}
-</style>
