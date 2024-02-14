@@ -110,49 +110,10 @@
                 header-text="Zeitauswahl"
             ></panel-header>
             <v-row no-gutters>
-                <v-radio-group
-                    v-model="zeitauswahl"
-                    style="width: 100%"
-                >
-                    <v-row
-                        no-gutters
-                        style="width: 100%"
-                    >
-                        <v-col cols="6">
-                            <v-radio
-                                label="Tageswert (Durchschnitt)"
-                                value="Tageswert"
-                            />
-                            <v-radio
-                                label="Block (Durchschnitt)"
-                                value="Block"
-                                :disabled="isDateBiggerFiveYears"
-                            />
-                            <v-radio
-                                label="Stunde (Durchschnitt)"
-                                value="Stunde"
-                                :disabled="isDateBiggerFiveYears"
-                            />
-                        </v-col>
-                        <v-col cols="6">
-                            <v-radio
-                                label="Spitzenstunde Kfz (Durchschnitt)"
-                                value="Spitzenstunde KFZ"
-                                :disabled="isTypeDisabled('KFZ')"
-                            />
-                            <v-radio
-                                label="Spitzenstunde Rad (Durchschnitt)"
-                                value="Spitzenstunde Rad"
-                                :disabled="isTypeDisabled('RAD')"
-                            />
-                            <v-radio
-                                label="Spitzenstunde Fuß (Durchschnitt)"
-                                value="Spitzenstunde Fuß"
-                                :disabled="isTypeDisabled('FUSS')"
-                            />
-                        </v-col>
-                    </v-row>
-                </v-radio-group>
+                <zeitauswahl-radiogroup
+                    :is-date-bigger-five-years="isDateBiggerFiveYears"
+                    :zeitauswahl="zeitauswahl"
+                />
             </v-row>
             <v-row no-gutters>
                 <v-col cols="4">
@@ -215,9 +176,7 @@ import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
-import ZaehldatenIntervall, {
-    ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import KeyVal from "@/types/KeyVal";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -225,6 +184,7 @@ import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import ZeitIntervall from "@/components/messstelle/ZeitIntervall.vue";
+import ZeitauswahlRadiogroup from "@/components/messstelle/ZeitauswahlRadiogroup.vue";
 
 const zeitblock = ref(Zeitblock.ZB_00_24);
 
@@ -472,11 +432,6 @@ watch(zeitauswahl, () => {
         intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL;
     }
 });
-
-// TODO abändern sobald Messquerschnitt ausgewählt werden kann
-function isTypeDisabled(type: string): boolean {
-    return false;
-}
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
     return (
