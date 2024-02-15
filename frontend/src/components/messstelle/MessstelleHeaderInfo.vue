@@ -9,7 +9,7 @@
         <span class="text-caption">Messstelle</span>
         <br />
         <span class="text-h5">{{ mstId }}</span>
-        <br /><br />
+        <br />
         <span class="text-caption">{{ standort }} </span>
         <br />
         <span class="text-caption"

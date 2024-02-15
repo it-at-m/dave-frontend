@@ -40,7 +40,9 @@
                         >
                         <v-list-item-subtitle
                             >Lage Messquerschnitt:
-                            {{ messstelle.standort }}</v-list-item-subtitle
+                            {{
+                                messquerschnitt.lageMessquerschnitt
+                            }}</v-list-item-subtitle
                         >
                     </v-list-item-content>
                 </v-list-item>
