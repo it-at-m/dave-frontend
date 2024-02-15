@@ -72,7 +72,7 @@
                 header-text="Wochentag"
             ></panel-header>
             <wochentag-radiogroup
-                v-model="chosenWochentag"
+                v-model="chosenOptionsCopy"
                 :is-chosen-tages-typ-valid="isChosenTagesTypValid"
             />
             <v-divider></v-divider>
@@ -182,7 +182,7 @@ const chosenOptionsCopy = computed({
 });
 
 const chosenOptionsCopyZeitraum = computed(() => {
-    return chosenOptionsCopy.value.zeitraum;
+    return chosenOptionsCopy.value.zeitraum ?? [];
 });
 
 const getChosenDateAsText = computed(() => {
@@ -294,16 +294,16 @@ function checkIfDateIsAlreadySelected(val: string[]) {
     }
 }
 
-watch([chosenWochentag, chosenOptionsCopyZeitraum], () => {
+watch([chosenOptionsCopy, chosenOptionsCopyZeitraum], () => {
     if (
         getSortedDateRange.value[0] &&
         getSortedDateRange.value[1] &&
-        chosenWochentag.value
+        chosenOptionsCopy.value.wochentag
     ) {
         MessstelleOptionsmenuService.isTagesTypValid(
             getSortedDateRange.value[1],
             getSortedDateRange.value[0],
-            chosenWochentag.value
+            chosenOptionsCopy.value.wochentag
         ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
             isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
         });

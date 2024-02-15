@@ -2,7 +2,7 @@
     <v-row no-gutters>
         <v-col cols="6">
             <v-radio-group
-                v-model="modelChosenWochentag"
+                v-model="modelChosenWochentag.wochentag"
                 class="full-width"
             >
                 <v-radio
@@ -38,20 +38,21 @@
 import { computed } from "vue";
 import { wochentagText } from "@/types/enum/Wochentag";
 import Wochentag from "@/types/enum/Wochentag";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 interface Props {
-    value: string;
+    value: MessstelleOptionsDTO;
     isChosenTagesTypValid: boolean;
 }
 
 const props = defineProps<Props>();
 
 const emits = defineEmits<{
-    (e: "input", v: string): void;
+    (e: "input", v: MessstelleOptionsDTO): void;
 }>();
 
 const modelChosenWochentag = computed({
     get: () => props.value,
-    set: (payload: string) => emits("input", payload),
+    set: (payload: MessstelleOptionsDTO) => emits("input", payload),
 });
 
 function getWochentagText(key: string): string | undefined {
@@ -60,7 +61,7 @@ function getWochentagText(key: string): string | undefined {
 
 const helperText = computed(() => {
     if (props.isChosenTagesTypValid) {
-        switch (modelChosenWochentag.value) {
+        switch (modelChosenWochentag.value.wochentag) {
             case Wochentag.WERKTAG_DI_MI_DO:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
             case Wochentag.WERKTAG_MO_FR:
