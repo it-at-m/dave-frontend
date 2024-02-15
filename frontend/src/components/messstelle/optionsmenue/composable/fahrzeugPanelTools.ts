@@ -21,7 +21,7 @@ export function useFahrzeugPanelTools() {
         if (Fahrzeug.FUSS.toUpperCase() === type.toUpperCase()) {
             return true;
         }
-        if (isKfzMessstelle) {
+        if (isKfzMessstelle.value) {
             if (
                 actualMessstelle.value.messquerschnitte[0].fahrzeugKlassen ===
                 "8+1"

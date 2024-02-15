@@ -544,7 +544,6 @@ function getIcon(type: string): string {
 }
 
 function isTypeDisabled(type: string): boolean {
-    // TODO Klappt bei RadZaehlung iwie nicht
     return fahrzeugPanelTools.isTypeDisabled(type);
 }
 </script>
