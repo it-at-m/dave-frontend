@@ -110,7 +110,7 @@
 <script setup lang="ts">
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
 
@@ -138,6 +138,10 @@ const chosenOptionsCopy = computed({
 
 const chosenOptionsCopyFahrzeuge = computed(() => {
     return chosenOptionsCopy.value.fahrzeuge;
+});
+
+onMounted(() => {
+    calculateSelectOrDeselect();
 });
 
 watch(

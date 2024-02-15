@@ -189,7 +189,7 @@
 <script setup lang="ts">
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
 
@@ -214,6 +214,10 @@ const hoverFuss = ref(false);
 const chosenOptionsCopy = computed({
     get: () => props.value,
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
+});
+
+onMounted(() => {
+    calculateSelectOrDeselectVerkehrsarten();
 });
 
 watch(
@@ -369,43 +373,43 @@ const isRadInBelastungsplan = computed(() => {
 function calculateSelectOrDeselectVerkehrsarten(): void {
     let counter = 0;
     let maxSelectable = 0;
-    if (!isTypeDisabled(Fahrzeug.KFZ)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KFZ)) {
         if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (!isTypeDisabled(Fahrzeug.SV)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV)) {
         if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (!isTypeDisabled(Fahrzeug.GV)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV)) {
         if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (!isTypeDisabled(Fahrzeug.SV_P)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV_P)) {
         if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
             counter++;
         }
         maxSelectable++;
     }
-    if (!isTypeDisabled(Fahrzeug.GV_P)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV_P)) {
         if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
             counter++;
         }
         maxSelectable++;
     }
-    if (!isTypeDisabled(Fahrzeug.RAD)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.RAD)) {
         if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (!isTypeDisabled(Fahrzeug.FUSS)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.FUSS)) {
         if (chosenOptionsCopyFahrzeuge.value.fussverkehr) {
             counter++;
         }
@@ -422,31 +426,31 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
  * @private
  */
 function selectOrDeselectAllVerkehrsarten(): void {
-    if (!isTypeDisabled(Fahrzeug.KFZ)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KFZ)) {
         chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (!isTypeDisabled(Fahrzeug.SV)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV)) {
         chosenOptionsCopyFahrzeuge.value.schwerverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (!isTypeDisabled(Fahrzeug.GV)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV)) {
         chosenOptionsCopyFahrzeuge.value.gueterverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (!isTypeDisabled(Fahrzeug.SV_P)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV_P)) {
         chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (!isTypeDisabled(Fahrzeug.GV_P)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV_P)) {
         chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (!isTypeDisabled(Fahrzeug.RAD)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.RAD)) {
         chosenOptionsCopyFahrzeuge.value.radverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (!isTypeDisabled(Fahrzeug.FUSS)) {
+    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.FUSS)) {
         chosenOptionsCopyFahrzeuge.value.fussverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
