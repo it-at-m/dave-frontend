@@ -22,7 +22,7 @@
                 <v-hover v-model="hoverPkw">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.personenkraftwagen"
-                        :label="'Personenkraftwagen (Pkw)'"
+                        label="Personenkraftwagen (Pkw)"
                         :persistent-hint="isTypeDisabled('PKW')"
                         :disabled="isTypeDisabled('PKW')"
                         color="grey darken-1"
@@ -33,7 +33,7 @@
                 <v-hover v-model="hoverLkw">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lastkraftwagen"
-                        :label="'Lastkraftwagen (Lkw)'"
+                        label="Lastkraftwagen (Lkw)"
                         :persistent-hint="isTypeDisabled('LKW')"
                         :disabled="isTypeDisabled('LKW')"
                         color="grey darken-1"
@@ -44,7 +44,7 @@
                 <v-hover v-model="hoverLz">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lastzuege"
-                        :label="'Lastzüge (Lz)'"
+                        label="Lastzüge (Lz)"
                         :persistent-hint="isTypeDisabled('LZ')"
                         :disabled="isTypeDisabled('LZ')"
                         color="grey darken-1"
@@ -55,7 +55,7 @@
                 <v-hover v-model="hoverBus">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.busse"
-                        :label="'Bus'"
+                        label="Bus"
                         :persistent-hint="isTypeDisabled('BUS')"
                         :disabled="isTypeDisabled('BUS')"
                         color="grey darken-1"
@@ -68,7 +68,7 @@
                 <v-hover v-model="hoverKrad">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.kraftraeder"
-                        :label="'Krafträder (Krad)'"
+                        label="Krafträder (Krad)"
                         :persistent-hint="isTypeDisabled('KRAD')"
                         :disabled="isTypeDisabled('KRAD')"
                         color="grey darken-1"
@@ -79,7 +79,7 @@
                 <v-hover v-model="hoverLfw">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
-                        :label="'Lieferwagen (LFW)'"
+                        label="Lieferwagen (LFW)"
                         :persistent-hint="isTypeDisabled('LFW')"
                         :disabled="isTypeDisabled('LFW')"
                         color="grey darken-1"

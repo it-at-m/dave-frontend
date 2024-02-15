@@ -29,7 +29,7 @@
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.kraftfahrzeugverkehr
                                 "
-                                :label="'Kraftfahrzeugverkehr (KFZ)'"
+                                label="Kraftfahrzeugverkehr (KFZ)"
                                 :prepend-icon="getIcon('KFZ')"
                                 :color="getCheckboxColor('KFZ')"
                                 :disabled="isTypeDisabled('KFZ')"
@@ -51,7 +51,7 @@
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.schwerverkehr
                                 "
-                                :label="'Schwerverkehr (SV)'"
+                                label="Schwerverkehr (SV)"
                                 :prepend-icon="getIcon('SV')"
                                 :color="getCheckboxColor('SV')"
                                 :disabled="isTypeDisabled('SV')"
@@ -66,7 +66,7 @@
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.schwerverkehrsanteilProzent
                                 "
-                                :label="'Schwerverkehrsanteil [%]'"
+                                label="Schwerverkehrsanteil [%]"
                                 :prepend-icon="getIcon('SV_P')"
                                 :color="getCheckboxColor('SV_P')"
                                 :disabled="isTypeDisabled('SV_P')"
@@ -87,7 +87,7 @@
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.gueterverkehr
                                 "
-                                :label="'Güterverkehr (GV)'"
+                                label="Güterverkehr (GV)"
                                 :prepend-icon="getIcon('GV')"
                                 :color="getCheckboxColor('GV')"
                                 :disabled="isTypeDisabled('GV')"
@@ -102,7 +102,7 @@
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent
                                 "
-                                :label="'Güterverkehrsanteil [%]'"
+                                label="Güterverkehrsanteil [%]"
                                 :prepend-icon="getIcon('GV_P')"
                                 :color="getCheckboxColor('GV_P')"
                                 :disabled="isTypeDisabled('GV_P')"
@@ -121,7 +121,7 @@
                         <v-hover v-model="hoverRad">
                             <v-checkbox
                                 v-model="chosenOptionsCopyFahrzeuge.radverkehr"
-                                :label="'Radverkehr (Rad)'"
+                                label="Radverkehr (Rad)"
                                 :prepend-icon="getIcon('RAD')"
                                 :color="getCheckboxColor('RAD')"
                                 :disabled="isTypeDisabled('RAD')"
@@ -155,7 +155,7 @@
                         <v-hover v-model="hoverFuss">
                             <v-checkbox
                                 v-model="chosenOptionsCopyFahrzeuge.fussverkehr"
-                                :label="'Fußgänger (Fuß)'"
+                                label="Fußgänger (Fuß)"
                                 :prepend-icon="getIcon('FUSS')"
                                 :color="getCheckboxColor('FUSS')"
                                 :persistent-hint="
@@ -544,6 +544,7 @@ function getIcon(type: string): string {
 }
 
 function isTypeDisabled(type: string): boolean {
+    // TODO Klappt bei RadZaehlung iwie nicht
     return fahrzeugPanelTools.isTypeDisabled(type);
 }
 </script>
