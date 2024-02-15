@@ -4,6 +4,7 @@ import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import FahrzeugOptions from "@/types/messung/FahrzeugOptions";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -58,5 +59,23 @@ export default class DefaultObjectCreator {
             abbaudatum: "",
             realisierungsdatum: "",
         };
+    }
+
+    public static createDefaultFahrzeugOptions(kfz: boolean): FahrzeugOptions {
+        return {
+            kraftfahrzeugverkehr: kfz,
+            schwerverkehr: false,
+            gueterverkehr: false,
+            schwerverkehrsanteilProzent: false,
+            gueterverkehrsanteilProzent: false,
+            radverkehr: !kfz,
+            fussverkehr: false,
+            lastkraftwagen: false,
+            lastzuege: false,
+            busse: false,
+            kraftraeder: false,
+            personenkraftwagen: false,
+            lieferwagen: false,
+        } as FahrzeugOptions;
     }
 }

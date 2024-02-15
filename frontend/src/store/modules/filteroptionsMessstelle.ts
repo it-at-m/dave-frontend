@@ -1,24 +1,26 @@
-import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import FahrzeugOptions from "@/types/messung/FahrzeugOptions";
 
 export interface FilteroptionsMessstelle {
-    messstelleFilterOptions: MessungOptionsDTO;
+    messstelleFilterOptions: MessstelleOptionsDTO;
 }
 export default {
     namespaced: true,
     state: {
         messstelleFilterOptions: {
             zeitraum: [],
-        },
+            fahrzeuge: {} as FahrzeugOptions,
+        } as MessstelleOptionsDTO,
     },
     getters: {
-        getFilteroptions(state: FilteroptionsMessstelle): MessungOptionsDTO {
+        getFilteroptions(state: FilteroptionsMessstelle): MessstelleOptionsDTO {
             return state.messstelleFilterOptions;
         },
     },
     mutations: {
         setFilteroptions(
             state: FilteroptionsMessstelle,
-            payload: MessungOptionsDTO
+            payload: MessstelleOptionsDTO
         ) {
             state.messstelleFilterOptions = payload;
         },
@@ -27,6 +29,7 @@ export default {
         resetFilteroptions(context: any) {
             context.commit("setFilteroptions", {
                 zeitraum: [],
+                fahrzeuge: {} as FahrzeugOptions,
             });
         },
     },
