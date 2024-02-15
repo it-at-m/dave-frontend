@@ -1,5 +1,5 @@
 import BaseEntity from "@/types/BaseEntity";
-import MessquerschnittInfoDTO from "@/types/messung/MessquerschnittInfoDTO";
+import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 
 export default interface MessstelleInfoDTO extends BaseEntity {

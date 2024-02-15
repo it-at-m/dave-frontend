@@ -1,5 +1,5 @@
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
-import FahrzeugOptions from "@/types/messung/FahrzeugOptions";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 export interface FilteroptionsMessstelle {
     messstelleFilterOptions: MessstelleOptionsDTO;

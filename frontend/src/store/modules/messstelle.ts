@@ -21,8 +21,8 @@ export default {
         },
         isKfzMessstelle: (state: MessstelleState) => {
             return (
-                state.messstelleInfo.messquerschnitte[0]
-                    .detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ
+                state.messstelleInfo.detektierteVerkehrsarten ===
+                DetektierteFahrzeugart.KFZ
             );
         },
     },

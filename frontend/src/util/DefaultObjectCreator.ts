@@ -4,7 +4,7 @@ import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
-import FahrzeugOptions from "@/types/messung/FahrzeugOptions";
+import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {

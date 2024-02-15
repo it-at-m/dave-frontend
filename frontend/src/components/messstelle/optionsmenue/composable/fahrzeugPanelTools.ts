@@ -22,10 +22,7 @@ export function useFahrzeugPanelTools() {
             return true;
         }
         if (isKfzMessstelle.value) {
-            if (
-                actualMessstelle.value.messquerschnitte[0].fahrzeugKlassen ===
-                "8+1"
-            ) {
+            if (actualMessstelle.value.fahrzeugKlassen === "8+1") {
                 return Fahrzeug.RAD.toUpperCase() === type.toUpperCase();
             } else {
                 return ![

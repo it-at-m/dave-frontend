@@ -30,7 +30,7 @@ declare module '@vue/runtime-core' {
     DeleteDialog: typeof import('./src/components/pdfreport/assetforms/DeleteDialog.vue')['default']
     DetektierteFahrzeugartIcon: typeof import('./src/components/messstelle/DetektierteFahrzeugartIcon.vue')['default']
     DisplayImageAsset: typeof import('./src/components/pdfreport/assets/DisplayImageAsset.vue')['default']
-    FahrzeugPanel: typeof import('./src/components/messstelle/optionsmenue/panels/FahrzeugPanel.vue')['default']
+    FahrzeugPanel: typeof import('./src/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue')['default']
     FahrzeugPanelFahrzeugkategorienContent: typeof import('./src/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue')['default']
     FahrzeugPanelVerkehrsartenContent: typeof import('./src/components/messstelle/optionsmenue/panels/content/FahrzeugPanelVerkehrsartenContent.vue')['default']
     FilterOptionen: typeof import('./src/components/messstelle/optionsmenue/FilterOptionen.vue')['default']
