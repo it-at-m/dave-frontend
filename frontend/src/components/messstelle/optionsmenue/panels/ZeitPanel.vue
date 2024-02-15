@@ -132,10 +132,10 @@ import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
-import ZeitIntervall from "@/components/messstelle/ZeitIntervall.vue";
-import ZeitauswahlRadiogroup from "@/components/messstelle/ZeitauswahlRadiogroup.vue";
-import ZeitauswahlStundeOrBlock from "@/components/messstelle/ZeitauswahlStundeOrBlock.vue";
-import WochentagRadiogroup from "@/components/messstelle/WochentagRadiogroup.vue";
+import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
+import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
+import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
+import WochentagRadiogroup from "@/components/messstelle/optionsmenue/panels/WochentagRadiogroup.vue";
 
 const zeitblock = ref(Zeitblock.ZB_00_24);
 
