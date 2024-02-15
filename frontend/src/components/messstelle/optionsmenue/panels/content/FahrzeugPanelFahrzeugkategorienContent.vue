@@ -230,27 +230,39 @@ function calculateSelectOrDeselect() {
     let counter = 0;
     let maxSelectable = 0;
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.PKW)) {
-        chosenOptionsCopyFahrzeuge.value.personenkraftwagen ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.personenkraftwagen) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LKW)) {
-        chosenOptionsCopyFahrzeuge.value.lastkraftwagen ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.lastkraftwagen) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LZ)) {
-        chosenOptionsCopyFahrzeuge.value.lastzuege ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.lastzuege) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.BUS)) {
-        chosenOptionsCopyFahrzeuge.value.busse ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.busse) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KRAD)) {
-        chosenOptionsCopyFahrzeuge.value.kraftraeder ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.kraftraeder) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LFW)) {
-        chosenOptionsCopyFahrzeuge.value.lieferwagen ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.lieferwagen) {
+            counter++;
+        }
         maxSelectable++;
     }
     // counter > maxSelectable/2 => abwählen

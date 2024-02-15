@@ -370,35 +370,45 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
     let counter = 0;
     let maxSelectable = 0;
     if (!isTypeDisabled(Fahrzeug.KFZ)) {
-        chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (!isTypeDisabled(Fahrzeug.SV)) {
-        chosenOptionsCopyFahrzeuge.value.schwerverkehr ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (!isTypeDisabled(Fahrzeug.GV)) {
-        chosenOptionsCopyFahrzeuge.value.gueterverkehr ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (!isTypeDisabled(Fahrzeug.SV_P)) {
-        chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent
-            ? counter++
-            : "";
+        if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (!isTypeDisabled(Fahrzeug.GV_P)) {
-        chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent
-            ? counter++
-            : "";
+        if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (!isTypeDisabled(Fahrzeug.RAD)) {
-        chosenOptionsCopyFahrzeuge.value.radverkehr ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+            counter++;
+        }
         maxSelectable++;
     }
     if (!isTypeDisabled(Fahrzeug.FUSS)) {
-        chosenOptionsCopyFahrzeuge.value.fussverkehr ? counter++ : "";
+        if (chosenOptionsCopyFahrzeuge.value.fussverkehr) {
+            counter++;
+        }
         maxSelectable++;
     }
     // counter > maxSelectable/2 => abwählen
