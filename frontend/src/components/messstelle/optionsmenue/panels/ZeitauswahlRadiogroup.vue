@@ -1,6 +1,6 @@
 <template>
     <v-radio-group
-        v-model="copyZeitauswahl"
+        v-model="chosenOptionsCopy.zeitauswahl"
         style="width: 100%"
     >
         <v-row
@@ -45,22 +45,23 @@
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 
-// TODO abändern sobald Messquerschnitt ausgewählt werden kann
 interface Props {
     isDateBiggerFiveYears: boolean;
-    zeitauswahl: string;
+    value: MessstelleOptionsDTO;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<{
-    (e: "update:zeitauswahl", i: string): void;
+    (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 
-const copyZeitauswahl = computed({
-    get: () => props.zeitauswahl,
-    set: (payload: string) => emit("update:zeitauswahl", payload),
+const chosenOptionsCopy = computed({
+    get: () => props.value,
+    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
+
 function isTypeDisabled(type: string): boolean {
     return false;
 }

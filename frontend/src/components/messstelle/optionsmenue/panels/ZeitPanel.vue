@@ -84,8 +84,8 @@
             ></panel-header>
             <v-row no-gutters>
                 <zeitauswahl-radiogroup
+                    v-model="chosenOptionsCopy"
                     :is-date-bigger-five-years="isDateBiggerFiveYears"
-                    :zeitauswahl="zeitauswahl"
                 />
             </v-row>
             <v-row no-gutters>
@@ -108,11 +108,11 @@
 
             <v-row>
                 <zeit-intervall
+                    v-model="chosenOptionsCopy"
                     :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
                     :is-zeitauswahl-spitzenstunde-kfz="
                         isZeitauswahlSpitzenstundeKfz
                     "
-                    :intervall.sync="intervall"
                 />
             </v-row>
         </v-expansion-panel-content>
@@ -127,7 +127,7 @@ import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
-import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
+import Wochentag from "@/types/enum/Wochentag";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -148,10 +148,8 @@ const props = defineProps<Props>();
 const emit = defineEmits(["update:chosen-options"]);
 const store = useStore();
 const dateUtils = useDateUtils();
-const chosenWochentag = ref("");
 const isChosenTagesTypValid = ref(false);
 const zeitauswahl: Ref<string> = ref(Zeitauswahl.TAGESWERT);
-const intervall = ref();
 const hoverSelectZeitintervall = ref(false);
 
 onMounted(() => {
@@ -159,11 +157,6 @@ onMounted(() => {
         (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
             (nichtPlausibleTage.value =
                 nichtPlausibleTageDTO.nichtPlausibleTage)
-    );
-    MessstelleOptionsmenuService.isTagesTypValid(
-        "test",
-        "test",
-        Wochentag.SAMSTAG
     );
 });
 
@@ -233,7 +226,6 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     }
     if (chosenOptionsCopyZeitraum.value.length == 2) {
         const filter = getAllDatesBetweenTwoDates();
-
         const tageAsDates: number[] = nichtPlausibleTage.value.map(
             (dateAsString: string) => new Date(dateAsString).valueOf()
         );
@@ -269,7 +261,7 @@ const isDateBiggerFiveYears = computed(() => {
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
         return timeDifferenceInYears > 5;
     }
-    return true;
+    return false;
 });
 
 function getAllDatesBetweenTwoDates(): Date[] {
@@ -311,13 +303,18 @@ watch([chosenOptionsCopy, chosenOptionsCopyZeitraum], () => {
 });
 
 const isZeitauswahlSpitzenstundeKfz = computed(() => {
-    return zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ;
+    return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ;
 });
 
-watch(zeitauswahl, () => {
-    console.log(zeitauswahl.value + "   " + Zeitauswahl.SPITZENSTUNDE_KFZ);
-    if (zeitauswahl.value == Zeitauswahl.SPITZENSTUNDE_KFZ) {
-        intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL;
+watch(
+    () => chosenOptionsCopy.value.zeitauswahl,
+    () => {
+        if (
+            chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ
+        ) {
+            chosenOptionsCopy.value.intervall =
+                ZaehldatenIntervall.STUNDE_VIERTEL;
+        }
     }
-});
+);
 </script>

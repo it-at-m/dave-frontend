@@ -2,7 +2,7 @@
     <v-col cols="4">
         <v-hover v-model="hoverSelectZeitintervallCopy">
             <v-select
-                v-model="intervallCopy"
+                v-model="chosenOptionsCopy.intervall"
                 :items="messdatenIntervalle"
                 label="Zeitintervall"
                 filled
@@ -13,24 +13,24 @@
     </v-col>
 </template>
 <script setup lang="ts">
-import ZaehldatenIntervall, {
-    ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import { computed } from "vue";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+
 const emit = defineEmits<{
-    (e: "update:intervall", i: ZaehldatenIntervall): void;
     (e: "update:hoverSelectZeitintervall", i: boolean): void;
+    (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 
 interface Props {
     hoverSelectZeitintervall: boolean;
-    intervall: ZaehldatenIntervall;
     isZeitauswahlSpitzenstundeKfz: boolean;
+    value: MessstelleOptionsDTO;
 }
 
-const intervallCopy = computed({
-    get: () => props.intervall,
-    set: (payload: ZaehldatenIntervall) => emit("update:intervall", payload),
+const chosenOptionsCopy = computed({
+    get: () => props.value,
+    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
 const hoverSelectZeitintervallCopy = computed({
