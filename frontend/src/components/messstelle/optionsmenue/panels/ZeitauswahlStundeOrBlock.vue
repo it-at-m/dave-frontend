@@ -2,7 +2,7 @@
     <v-col cols="4">
         <v-select
             v-if="isZeitauswahlSpitzenstundeOrBlock"
-            v-model="copyZeitblock"
+            v-model="chosenOptionsCopy.zeitblock"
             label="Zeitblock"
             :items="zeitblockValues"
             filled
@@ -11,7 +11,7 @@
         </v-select>
         <v-select
             v-if="isZeitauswahlStunde"
-            v-model="copyZeitblock"
+            v-model="chosenOptionsCopy.zeitblock"
             label="Stunde"
             :items="stuendlichValues"
             filled
@@ -28,20 +28,24 @@ import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 
 interface Props {
     zeitblock: string;
+    value: MessstelleOptionsDTO;
 }
 
 const emit = defineEmits<{
     (e: "update:zeitblock", i: string): void;
+    (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 const props = defineProps<Props>();
 
-const copyZeitblock = computed({
-    get: () => props.zeitblock,
-    set: (payload: string) => emit("update:zeitblock", payload),
+const chosenOptionsCopy = computed({
+    get: () => props.value,
+    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
+
 const zeitblockValues = computed(() => {
     let result = new Array<KeyVal>();
     result.push(zeitblockInfo.get(Zeitblock.ZB_00_06)!);
@@ -83,21 +87,21 @@ const stuendlichValues = computed(() => {
 });
 
 const isZeitauswahlStunde = computed(() => {
-    return copyZeitblock.value == Zeitauswahl.STUNDE;
+    return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE;
 });
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
     return (
-        copyZeitblock.value == Zeitauswahl.BLOCK ||
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK ||
         isZeitauswahlSpitzenstunde.value
     );
 });
 
 const isZeitauswahlSpitzenstunde = computed(() => {
     return (
-        copyZeitblock.value == Zeitauswahl.SPITZENSTUNDE_KFZ ||
-        copyZeitblock.value == Zeitauswahl.SPITZENSTUNDE_RAD ||
-        copyZeitblock.value == Zeitauswahl.SPITZENSTUNDE_FUSS
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_RAD ||
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_FUSS
     );
 });
 </script>

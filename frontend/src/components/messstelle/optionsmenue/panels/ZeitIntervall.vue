@@ -16,6 +16,7 @@
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import { computed } from "vue";
 import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 const emit = defineEmits<{
     (e: "update:hoverSelectZeitintervall", i: boolean): void;
@@ -24,7 +25,6 @@ const emit = defineEmits<{
 
 interface Props {
     hoverSelectZeitintervall: boolean;
-    isZeitauswahlSpitzenstundeKfz: boolean;
     value: MessstelleOptionsDTO;
 }
 
@@ -41,5 +41,9 @@ const props = defineProps<Props>();
 
 const messdatenIntervalle = computed(() => {
     return ZaehldatenIntervallToSelect;
+});
+
+const isZeitauswahlSpitzenstundeKfz = computed(() => {
+    return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ;
 });
 </script>

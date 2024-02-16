@@ -83,13 +83,13 @@
                 header-text="Zeitauswahl"
             ></panel-header>
             <v-row no-gutters>
-                <zeitauswahl-radiogroup
-                    v-model="chosenOptionsCopy"
-                    :is-date-bigger-five-years="isDateBiggerFiveYears"
-                />
+                <zeitauswahl-radiogroup v-model="chosenOptionsCopy" />
             </v-row>
             <v-row no-gutters>
-                <zeitauswahl-stunde-or-block :zeitblock="zeitblock" />
+                <zeitauswahl-stunde-or-block
+                    v-model="chosenOptionsCopy"
+                    :zeitblock="zeitblock"
+                />
                 <v-spacer />
             </v-row>
             <v-divider></v-divider>
@@ -110,9 +110,6 @@
                 <zeit-intervall
                     v-model="chosenOptionsCopy"
                     :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
-                    :is-zeitauswahl-spitzenstunde-kfz="
-                        isZeitauswahlSpitzenstundeKfz
-                    "
                 />
             </v-row>
         </v-expansion-panel-content>
@@ -127,7 +124,6 @@ import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
-import Wochentag from "@/types/enum/Wochentag";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -149,7 +145,6 @@ const emit = defineEmits(["update:chosen-options"]);
 const store = useStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(false);
-const zeitauswahl: Ref<string> = ref(Zeitauswahl.TAGESWERT);
 const hoverSelectZeitintervall = ref(false);
 
 onMounted(() => {
@@ -249,21 +244,6 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     }
     return true;
 }
-
-const isDateBiggerFiveYears = computed(() => {
-    if (chosenOptionsCopyZeitraum.value.length == 2) {
-        const zeitraum = chosenOptionsCopyZeitraum.value.slice();
-        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
-        const timeDifferenceInMilliseconds =
-            new Date(sortedDates[0]).valueOf() -
-            new Date(sortedDates[1]).valueOf();
-        const timeDifferenceInYears =
-            timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
-        return timeDifferenceInYears > 5;
-    }
-    return false;
-});
-
 function getAllDatesBetweenTwoDates(): Date[] {
     const zeitraum = chosenOptionsCopyZeitraum.value.slice();
     const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
@@ -300,10 +280,6 @@ watch([chosenOptionsCopy, chosenOptionsCopyZeitraum], () => {
             isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
         });
     }
-});
-
-const isZeitauswahlSpitzenstundeKfz = computed(() => {
-    return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ;
 });
 
 watch(

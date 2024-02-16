@@ -46,9 +46,9 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-    isDateBiggerFiveYears: boolean;
     value: MessstelleOptionsDTO;
 }
 
@@ -62,7 +62,23 @@ const chosenOptionsCopy = computed({
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
+const dateUtils = useDateUtils();
+
 function isTypeDisabled(type: string): boolean {
     return false;
 }
+
+const isDateBiggerFiveYears = computed(() => {
+    if (chosenOptionsCopy.value.zeitraum.length == 2) {
+        const zeitraum = chosenOptionsCopy.value.zeitraum.slice();
+        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
+        const timeDifferenceInMilliseconds =
+            new Date(sortedDates[0]).valueOf() -
+            new Date(sortedDates[1]).valueOf();
+        const timeDifferenceInYears =
+            timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
+        return timeDifferenceInYears > 5;
+    }
+    return false;
+});
 </script>
