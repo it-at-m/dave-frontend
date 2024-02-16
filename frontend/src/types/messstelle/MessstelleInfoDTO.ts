@@ -1,5 +1,6 @@
 import BaseEntity from "@/types/BaseEntity";
-import MessquerschnittInfoDTO from "@/types/messung/MessquerschnittInfoDTO";
+import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 
 export default interface MessstelleInfoDTO extends BaseEntity {
     mstId: string;
@@ -10,6 +11,9 @@ export default interface MessstelleInfoDTO extends BaseEntity {
     latitude: number;
     longitude: number;
     kommentar: string;
+    fahrzeugKlassen: string;
+    detektierteVerkehrsarten: DetektierteFahrzeugart;
+    hersteller: string;
     sichtbarDatenportal: boolean;
     messquerschnitte: MessquerschnittInfoDTO[];
     datumLetztePlausibleMessung: string;

@@ -1,4 +1,4 @@
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 
 export interface MessstelleState {
@@ -21,8 +21,8 @@ export default {
         },
         isKfzMessstelle: (state: MessstelleState) => {
             return (
-                state.messstelleInfo.messquerschnitte[0]
-                    .detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ
+                state.messstelleInfo.detektierteVerkehrsarten ===
+                DetektierteFahrzeugart.KFZ
             );
         },
     },

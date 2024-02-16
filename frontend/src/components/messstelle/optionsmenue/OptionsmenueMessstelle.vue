@@ -62,11 +62,11 @@
 import { computed, ref, Ref, watch } from "vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useStore } from "@/api/util/useStore";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanel.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import _ from "lodash";
 
@@ -114,7 +114,7 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value = _.cloneDeep(filterOptionsMessstelle.value);
     chosenOptions.value.fahrzeuge =
         DefaultObjectCreator.createDefaultFahrzeugOptions(
-            messstelle.value.messquerschnitte[0].detektierteVerkehrsarten ===
+            messstelle.value.detektierteVerkehrsarten ===
                 DetektierteFahrzeugart.KFZ
         );
     chosenOptions.value.zeitraum = [
