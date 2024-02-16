@@ -1,5 +1,5 @@
-import FahrzeugOptions from "@/types/messung/FahrzeugOptions";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import FahrzeugOptions from "../messstelle/FahrzeugOptions";
 
 export default interface MessstelleOptionsDTO {
     zeitraum: string[];
