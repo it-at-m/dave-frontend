@@ -122,7 +122,7 @@ import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
@@ -244,6 +244,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     }
     return true;
 }
+
 function getAllDatesBetweenTwoDates(): Date[] {
     const zeitraum = chosenOptionsCopyZeitraum.value.slice();
     const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);

@@ -71,7 +71,7 @@
 </template>
 <script setup lang="ts">
 import { useStore } from "@/api/util/useStore";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useDateUtils } from "@/util/DateUtils";

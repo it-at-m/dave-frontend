@@ -2,8 +2,9 @@ import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 import Suggest from "@/types/Suggest";
 import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
-import FahrzeugOptions from "@/types/messung/FahrzeugOptions";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -38,6 +39,9 @@ export default class DefaultObjectCreator {
 
     public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
         return {
+            detektierteVerkehrsarten: DetektierteFahrzeugart.KFZ,
+            fahrzeugKlassen: "",
+            hersteller: "",
             id: "",
             entityVersion: 0,
             createdTime: "",
