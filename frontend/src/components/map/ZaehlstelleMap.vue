@@ -426,7 +426,7 @@ export default class ZaehlstelleMap extends Vue {
             this.createTooltipMessstelle(messstelleKarteDto.tooltip),
             {
                 direction: "top",
-                offset: [-14, 0],
+                offset: [0, -25],
             }
         );
         marker.on("click", () => {
