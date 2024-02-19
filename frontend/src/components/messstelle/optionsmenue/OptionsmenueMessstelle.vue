@@ -34,6 +34,9 @@
                             <zeit-panel
                                 :messstelle-id="messstelleId"
                                 :chosen-options.sync="chosenOptions"
+                                :messstelle-detektierte-fahrzeugart="
+                                    messstelleDetektierteFahrzeugart
+                                "
                             />
                             <fahrzeug-panel v-model="chosenOptions" />
                         </v-expansion-panels>
