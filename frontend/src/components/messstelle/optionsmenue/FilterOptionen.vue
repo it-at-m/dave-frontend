@@ -26,13 +26,13 @@
             <v-col cols="10">
                 <span class="grey--text text--lighten-1"
                     >Zeit:
-                    <span class="font-weight-medium white--text">{{
-                        zeitblock
-                    }}</span>
+                    <span class="font-weight-medium white--text"
+                        >{{ zeitblock }} Uhr</span
+                    >
                     in
-                    <span class="font-weight-medium white--text">{{
-                        zeitintervall
-                    }}</span>
+                    <span class="font-weight-medium white--text"
+                        >{{ zeitintervall }} min
+                    </span>
                     Intervallen
                     <span class="font-weight-medium white--text">{{
                         zeitraum
@@ -71,9 +71,9 @@
 </template>
 <script setup lang="ts">
 import { useStore } from "@/api/util/useStore";
-import MessungOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
-import OptionsmenueMessstelle from "@/components/messstelle/OptionsmenueMessstelle.vue";
+import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useDateUtils } from "@/util/DateUtils";
 import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
 
@@ -85,7 +85,7 @@ interface Props {
 
 defineProps<Props>();
 
-const filterOptionsMessstelle: Ref<MessungOptionsDTO> = computed(() => {
+const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 

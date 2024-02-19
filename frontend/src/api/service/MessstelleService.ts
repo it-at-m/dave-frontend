@@ -1,4 +1,4 @@
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import FetchService from "@/api/service/FetchService";
 
 export default class MessstelleService {

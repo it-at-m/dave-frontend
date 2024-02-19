@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import FahrtrichtungIcon from "@/components/zaehlstelle/icons/FahrtrichtungIcon.vue";
 import FahrstreifenIcon from "@/components/zaehlstelle/icons/FahrspurenIcon.vue";
 import { useAlternateRowColor } from "@/composables/alternateRowColorComposable";

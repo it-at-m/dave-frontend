@@ -1,4 +1,5 @@
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 
 export interface MessstelleState {
     messstelleInfo: MessstelleInfoDTO;
@@ -17,6 +18,12 @@ export default {
         },
         getActiveTab: (state: MessstelleState) => {
             return state.activeTab;
+        },
+        isKfzMessstelle: (state: MessstelleState) => {
+            return (
+                state.messstelleInfo.detektierteVerkehrsarten ===
+                DetektierteFahrzeugart.KFZ
+            );
         },
     },
     mutations: {

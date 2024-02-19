@@ -53,7 +53,7 @@
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
@@ -63,7 +63,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
 import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
-import FilterOptionen from "@/components/messstelle/FilterOptionen.vue";
+import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
