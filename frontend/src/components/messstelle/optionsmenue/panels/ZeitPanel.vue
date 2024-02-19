@@ -172,6 +172,10 @@ const chosenOptionsCopyZeitraum = computed(() => {
     return chosenOptionsCopy.value.zeitraum ?? [];
 });
 
+const chosenOptionsCopyWochentag = computed(() => {
+    return chosenOptionsCopy.value.wochentag ?? "";
+});
+
 const getChosenDateAsText = computed(() => {
     if (chosenOptionsCopyZeitraum.value.length == 1) {
         return "ausgewähltes Datum";
@@ -266,7 +270,7 @@ function checkIfDateIsAlreadySelected(val: string[]) {
     }
 }
 
-watch([chosenOptionsCopy, chosenOptionsCopyZeitraum], () => {
+watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
     if (
         getSortedDateRange.value[0] &&
         getSortedDateRange.value[1] &&
