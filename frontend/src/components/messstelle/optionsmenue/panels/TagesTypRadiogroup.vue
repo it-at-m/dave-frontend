@@ -2,32 +2,32 @@
     <v-row no-gutters>
         <v-col cols="6">
             <v-radio-group
-                v-model="modelChosenWochentag.wochentag"
+                v-model="modelChosenWochentag.tagesTyp"
                 class="full-width"
             >
                 <v-radio
-                    :value="Wochentag.WERKTAG_DI_MI_DO"
-                    :label="getWochentagText(Wochentag.WERKTAG_DI_MI_DO)"
+                    :value="TagesTyp.WERKTAG_DI_MI_DO"
+                    :label="getWochentagText(TagesTyp.WERKTAG_DI_MI_DO)"
                 />
                 <v-radio
-                    :value="Wochentag.WERKTAG_MO_FR"
-                    :label="getWochentagText(Wochentag.WERKTAG_MO_FR)"
+                    :value="TagesTyp.WERKTAG_MO_FR"
+                    :label="getWochentagText(TagesTyp.WERKTAG_MO_FR)"
                 />
                 <v-radio
-                    :value="Wochentag.SAMSTAG"
-                    :label="getWochentagText(Wochentag.SAMSTAG)"
+                    :value="TagesTyp.SAMSTAG"
+                    :label="getWochentagText(TagesTyp.SAMSTAG)"
                 />
                 <v-radio
-                    :value="Wochentag.SONNTAG_FEIERTAG"
-                    :label="getWochentagText(Wochentag.SONNTAG_FEIERTAG)"
+                    :value="TagesTyp.SONNTAG_FEIERTAG"
+                    :label="getWochentagText(TagesTyp.SONNTAG_FEIERTAG)"
                 />
                 <v-radio
-                    :value="Wochentag.WERKTAG_FERIEN"
-                    :label="getWochentagText(Wochentag.WERKTAG_FERIEN)"
+                    :value="TagesTyp.WERKTAG_FERIEN"
+                    :label="getWochentagText(TagesTyp.WERKTAG_FERIEN)"
                 />
                 <v-radio
-                    :value="Wochentag.DTV"
-                    :label="getWochentagText(Wochentag.DTV)"
+                    :value="TagesTyp.DTV"
+                    :label="getWochentagText(TagesTyp.DTV)"
                 />
             </v-radio-group>
         </v-col>
@@ -36,7 +36,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
-import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 interface Props {
     value: MessstelleOptionsDTO;
@@ -55,23 +55,23 @@ const modelChosenWochentag = computed({
 });
 
 function getWochentagText(key: string): string | undefined {
-    return wochentagText.get(key);
+    return tagesTypText.get(key);
 }
 
 const helperText = computed(() => {
     if (props.isChosenTagesTypValid) {
-        switch (modelChosenWochentag.value.wochentag) {
-            case Wochentag.WERKTAG_DI_MI_DO:
+        switch (modelChosenWochentag.value.tagesTyp) {
+            case TagesTyp.WERKTAG_DI_MI_DO:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
-            case Wochentag.WERKTAG_MO_FR:
+            case TagesTyp.WERKTAG_MO_FR:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 5 Tage (Mo,Di,Mi,Do,Fr) mit plausiblen Daten nötig.";
-            case Wochentag.SAMSTAG:
+            case TagesTyp.SAMSTAG:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Sa) mit plausiblen Daten nötig.";
-            case Wochentag.SONNTAG_FEIERTAG:
+            case TagesTyp.SONNTAG_FEIERTAG:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (So/Feiertag) mit plausiblen Daten nötig.";
-            case Wochentag.WERKTAG_FERIEN:
+            case TagesTyp.WERKTAG_FERIEN:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) mit plausiblen Daten nötig.";
-            case Wochentag.DTV:
+            case TagesTyp.DTV:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Beliebige Wochentage) mit plausiblen Daten nötig.";
         }
     }

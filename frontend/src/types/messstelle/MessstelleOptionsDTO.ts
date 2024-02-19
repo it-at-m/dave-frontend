@@ -6,7 +6,7 @@ export default interface MessstelleOptionsDTO {
     fahrzeuge: FahrzeugOptions;
     zeitauswahl: string;
     zeitblock: string;
-    wochentag: string;
+    tagesTyp: string;
     intervall: ZaehldatenIntervall;
     messquerschnitte: [];
 }

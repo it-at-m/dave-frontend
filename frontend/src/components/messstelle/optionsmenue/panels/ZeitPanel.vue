@@ -71,7 +71,7 @@
                 padding="10px 0 0 0"
                 header-text="Wochentag"
             ></panel-header>
-            <wochentag-radiogroup
+            <tages-typ-radiogroup
                 v-model="chosenOptionsCopy"
                 :is-chosen-tages-typ-valid="isChosenTagesTypValid"
             />
@@ -83,7 +83,12 @@
                 header-text="Zeitauswahl"
             ></panel-header>
             <v-row no-gutters>
-                <zeitauswahl-radiogroup v-model="chosenOptionsCopy" />
+                <zeitauswahl-radiogroup
+                    v-model="chosenOptionsCopy"
+                    :messstelle-detektierte-fahrzeugart="
+                        messstelleDetektierteFahrzeugart
+                    "
+                />
             </v-row>
             <v-row no-gutters>
                 <zeitauswahl-stunde-or-block
@@ -129,7 +134,7 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
-import WochentagRadiogroup from "@/components/messstelle/optionsmenue/panels/WochentagRadiogroup.vue";
+import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
 
 const zeitblock = ref(Zeitblock.ZB_00_24);
 
@@ -173,7 +178,7 @@ const chosenOptionsCopyZeitraum = computed(() => {
 });
 
 const chosenOptionsCopyWochentag = computed(() => {
-    return chosenOptionsCopy.value.wochentag ?? "";
+    return chosenOptionsCopy.value.tagesTyp ?? "";
 });
 
 const getChosenDateAsText = computed(() => {
@@ -274,12 +279,12 @@ watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
     if (
         getSortedDateRange.value[0] &&
         getSortedDateRange.value[1] &&
-        chosenOptionsCopy.value.wochentag
+        chosenOptionsCopy.value.tagesTyp
     ) {
         MessstelleOptionsmenuService.isTagesTypValid(
             getSortedDateRange.value[1],
             getSortedDateRange.value[0],
-            chosenOptionsCopy.value.wochentag
+            chosenOptionsCopy.value.tagesTyp
         ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
             isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
         });

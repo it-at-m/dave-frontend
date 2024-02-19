@@ -13,7 +13,7 @@ export default {
             fahrzeuge: {} as FahrzeugOptions,
             zeitauswahl: "",
             zeitblock: "",
-            wochentag: "",
+            tagesTyp: "",
             intervall: "" as ZaehldatenIntervall,
             messquerschnitte: [],
         } as MessstelleOptionsDTO,
