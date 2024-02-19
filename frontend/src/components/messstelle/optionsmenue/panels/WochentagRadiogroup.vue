@@ -36,9 +36,8 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
-import { wochentagText } from "@/types/enum/Wochentag";
-import Wochentag from "@/types/enum/Wochentag";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import Wochentag, { wochentagText } from "@/types/enum/Wochentag";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 interface Props {
     value: MessstelleOptionsDTO;
     isChosenTagesTypValid: boolean;
