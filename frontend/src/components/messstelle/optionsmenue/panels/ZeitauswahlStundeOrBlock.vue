@@ -28,7 +28,7 @@ import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 interface Props {
     zeitblock: string;

@@ -17,7 +17,7 @@ import ZaehldatenIntervall, {
     ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";
 import { computed, watch } from "vue";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 const emit = defineEmits<{
