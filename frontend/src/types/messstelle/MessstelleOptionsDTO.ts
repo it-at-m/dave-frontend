@@ -8,5 +8,5 @@ export default interface MessstelleOptionsDTO {
     zeitblock: string;
     tagesTyp: string;
     intervall: ZaehldatenIntervall;
-    messquerschnitte: [];
+    messquerschnitte: any[];
 }

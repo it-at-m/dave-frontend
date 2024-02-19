@@ -7,7 +7,7 @@
             no-gutters
             style="width: 100%"
         >
-            <v-col cols="6">
+            <v-col cols="4">
                 <v-radio
                     label="Tageswert (Durchschnitt)"
                     value="Tageswert"
@@ -23,7 +23,7 @@
                     :disabled="isDateBiggerFiveYears"
                 />
             </v-col>
-            <v-col cols="6">
+            <v-col cols="4">
                 <v-radio
                     label="Spitzenstunde Kfz (Durchschnitt)"
                     value="Spitzenstunde KFZ"
@@ -39,6 +39,9 @@
                     value="Spitzenstunde Fuß"
                     :disabled="isTypeDisabled('FUSS')"
                 />
+            </v-col>
+            <v-col>
+                {{ helperText }}
             </v-col>
         </v-row>
     </v-radio-group>
@@ -66,7 +69,10 @@ const chosenOptionsCopy = computed({
 const dateUtils = useDateUtils();
 
 function isTypeDisabled(type: string): boolean {
-    return type != props.messstelleDetektierteFahrzeugart;
+    return (
+        type != props.messstelleDetektierteFahrzeugart ||
+        chosenOptionsCopy.value.messquerschnitte.length != 1
+    );
 }
 
 const isDateBiggerFiveYears = computed(() => {
@@ -81,5 +87,12 @@ const isDateBiggerFiveYears = computed(() => {
         return timeDifferenceInYears > 5;
     }
     return false;
+});
+
+const helperText = computed(() => {
+    if (chosenOptionsCopy.value.messquerschnitte.length != 1) {
+        return "Für die Spitzenstunde muss exakt ein Messquerschnitt ausgewählt sein";
+    }
+    return "";
 });
 </script>

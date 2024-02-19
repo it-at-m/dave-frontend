@@ -72,6 +72,9 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import _ from "lodash";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 interface Props {
     messstelleId: string;
@@ -124,6 +127,10 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.zeitraum = [
         messstelle.value.datumLetztePlausibleMessung,
     ];
+    chosenOptions.value.messquerschnitte = [];
+    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+    chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
+    chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
     saveChosenOptions();
 }
 
