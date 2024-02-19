@@ -125,8 +125,6 @@ import { useStore } from "@/api/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
@@ -137,6 +135,7 @@ const zeitblock = ref(Zeitblock.ZB_00_24);
 
 interface Props {
     messstelleId: string;
+    messstelleDetektierteFahrzeugart: string;
     chosenOptions: MessstelleOptionsDTO;
 }
 

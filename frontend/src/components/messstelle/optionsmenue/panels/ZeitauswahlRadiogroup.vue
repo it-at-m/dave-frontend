@@ -50,6 +50,7 @@ import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
     value: MessstelleOptionsDTO;
+    messstelleDetektierteFahrzeugart: string;
 }
 
 const props = defineProps<Props>();
@@ -65,7 +66,7 @@ const chosenOptionsCopy = computed({
 const dateUtils = useDateUtils();
 
 function isTypeDisabled(type: string): boolean {
-    return false;
+    return type != props.messstelleDetektierteFahrzeugart;
 }
 
 const isDateBiggerFiveYears = computed(() => {

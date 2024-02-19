@@ -72,6 +72,7 @@ import _ from "lodash";
 
 interface Props {
     messstelleId: string;
+    messstelleDetektierteFahrzeugart: string;
 }
 defineProps<Props>();
 const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {

@@ -66,7 +66,12 @@
                 >
             </v-col>
         </v-row>
-        <OptionsmenueMessstelle messstelle-id="messstelleId" />
+        <OptionsmenueMessstelle
+            messstelle-id="messstelleId"
+            :messstelle-detektierte-fahrzeugart="
+                messstelle.detektierteVerkehrsarten
+            "
+        />
     </v-sheet>
 </template>
 <script setup lang="ts">
@@ -75,7 +80,7 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useDateUtils } from "@/util/DateUtils";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 const store = useStore();
 const dateUtils = useDateUtils();
