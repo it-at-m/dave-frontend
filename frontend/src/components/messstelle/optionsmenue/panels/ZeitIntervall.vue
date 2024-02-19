@@ -13,8 +13,10 @@
     </v-col>
 </template>
 <script setup lang="ts">
-import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
-import { computed } from "vue";
+import ZaehldatenIntervall, {
+    ZaehldatenIntervallToSelect,
+} from "@/types/enum/ZaehldatenIntervall";
+import { computed, watch } from "vue";
 import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
@@ -46,4 +48,16 @@ const messdatenIntervalle = computed(() => {
 const isZeitauswahlSpitzenstundeKfz = computed(() => {
     return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ;
 });
+
+watch(
+    () => chosenOptionsCopy.value.zeitauswahl,
+    () => {
+        if (
+            chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ
+        ) {
+            chosenOptionsCopy.value.intervall =
+                ZaehldatenIntervall.STUNDE_VIERTEL;
+        }
+    }
+);
 </script>

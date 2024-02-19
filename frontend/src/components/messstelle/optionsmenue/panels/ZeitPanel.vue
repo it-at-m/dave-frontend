@@ -124,7 +124,7 @@ import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
-import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
+import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
@@ -282,16 +282,4 @@ watch([chosenOptionsCopy, chosenOptionsCopyZeitraum], () => {
         });
     }
 });
-
-watch(
-    () => chosenOptionsCopy.value.zeitauswahl,
-    () => {
-        if (
-            chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ
-        ) {
-            chosenOptionsCopy.value.intervall =
-                ZaehldatenIntervall.STUNDE_VIERTEL;
-        }
-    }
-);
 </script>
