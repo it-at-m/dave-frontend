@@ -1,5 +1,6 @@
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 export interface FilteroptionsMessstelle {
     messstelleFilterOptions: MessstelleOptionsDTO;
@@ -10,6 +11,11 @@ export default {
         messstelleFilterOptions: {
             zeitraum: [],
             fahrzeuge: {} as FahrzeugOptions,
+            zeitauswahl: "",
+            zeitblock: "",
+            wochentag: "",
+            intervall: "" as ZaehldatenIntervall,
+            messquerschnitte: [],
         } as MessstelleOptionsDTO,
     },
     getters: {
