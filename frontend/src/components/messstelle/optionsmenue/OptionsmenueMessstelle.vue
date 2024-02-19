@@ -128,7 +128,7 @@ function setDefaultOptionsForMessstelle(): void {
         messstelle.value.datumLetztePlausibleMessung,
     ];
     chosenOptions.value.messquerschnitte = [];
-    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
     chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
     saveChosenOptions();
