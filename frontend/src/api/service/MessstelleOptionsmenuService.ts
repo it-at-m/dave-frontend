@@ -1,6 +1,6 @@
 import FetchService from "@/api/service/FetchService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
-import ChosenTagesTypValidDTO from "@/types/messung/ChosenTagesTypValidDTO";
+import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 
 export default class MessstelleOptionsmenuService {
     private static readonly ENDPOINT: string = "api/dave-backend-service";
