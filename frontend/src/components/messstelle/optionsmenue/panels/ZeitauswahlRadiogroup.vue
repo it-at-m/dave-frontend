@@ -45,7 +45,7 @@
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
-import MessstelleOptionsDTO from "@/types/messung/MessstelleOptionsDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
