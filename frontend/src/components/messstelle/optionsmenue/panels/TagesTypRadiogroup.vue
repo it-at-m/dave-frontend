@@ -2,32 +2,32 @@
     <v-row no-gutters>
         <v-col cols="6">
             <v-radio-group
-                v-model="modelChosenWochentag.tagesTyp"
+                v-model="chosenOptionsCopy.tagesTyp"
                 class="full-width"
             >
                 <v-radio
                     :value="TagesTyp.WERKTAG_DI_MI_DO"
-                    :label="getWochentagText(TagesTyp.WERKTAG_DI_MI_DO)"
+                    :label="getTagesTypText(TagesTyp.WERKTAG_DI_MI_DO)"
                 />
                 <v-radio
                     :value="TagesTyp.WERKTAG_MO_FR"
-                    :label="getWochentagText(TagesTyp.WERKTAG_MO_FR)"
+                    :label="getTagesTypText(TagesTyp.WERKTAG_MO_FR)"
                 />
                 <v-radio
                     :value="TagesTyp.SAMSTAG"
-                    :label="getWochentagText(TagesTyp.SAMSTAG)"
+                    :label="getTagesTypText(TagesTyp.SAMSTAG)"
                 />
                 <v-radio
                     :value="TagesTyp.SONNTAG_FEIERTAG"
-                    :label="getWochentagText(TagesTyp.SONNTAG_FEIERTAG)"
+                    :label="getTagesTypText(TagesTyp.SONNTAG_FEIERTAG)"
                 />
                 <v-radio
                     :value="TagesTyp.WERKTAG_FERIEN"
-                    :label="getWochentagText(TagesTyp.WERKTAG_FERIEN)"
+                    :label="getTagesTypText(TagesTyp.WERKTAG_FERIEN)"
                 />
                 <v-radio
                     :value="TagesTyp.DTV"
-                    :label="getWochentagText(TagesTyp.DTV)"
+                    :label="getTagesTypText(TagesTyp.DTV)"
                 />
             </v-radio-group>
         </v-col>
@@ -49,18 +49,18 @@ const emits = defineEmits<{
     (e: "input", v: MessstelleOptionsDTO): void;
 }>();
 
-const modelChosenWochentag = computed({
+const chosenOptionsCopy = computed({
     get: () => props.value,
     set: (payload: MessstelleOptionsDTO) => emits("input", payload),
 });
 
-function getWochentagText(key: string): string | undefined {
+function getTagesTypText(key: string): string | undefined {
     return tagesTypText.get(key);
 }
 
 const helperText = computed(() => {
     if (props.isChosenTagesTypValid) {
-        switch (modelChosenWochentag.value.tagesTyp) {
+        switch (chosenOptionsCopy.value.tagesTyp) {
             case TagesTyp.WERKTAG_DI_MI_DO:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
             case TagesTyp.WERKTAG_MO_FR:
