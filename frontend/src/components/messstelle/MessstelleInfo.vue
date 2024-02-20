@@ -3,56 +3,119 @@
         class="pa-0"
         fluid
     >
-        <v-row
-            class="px-4"
-            no-gutters
-        >
-            <span class="primary--text"
-                >Letzter Messtag: {{ datumLetztePlausibleMessung }}
-            </span>
-        </v-row>
-        <v-row
-            no-gutters
-            class="my-2 px-4"
-        >
-            <DetektierteFahrzeugartIcon
-                :detektierte-fahrzeugart="messstelle.detektierteVerkehrsarten"
-            />
-            <MessstelleKommentar :kommentar="messstelle.kommentar" />
-        </v-row>
-        <v-row
-            no-gutters
-            class="my-1"
-        >
+        <v-row no-gutters>
             <v-sheet
                 color="white"
                 width="100%"
-                class="px-4 py-2"
+                class="px-4 py-2 primary--text text-body-2"
+                height="72px"
             >
-                <span class="d-inline-flex pr-1">
-                    <base-icon
-                        :small="true"
-                        :icon="aufbauIcon.iconPath"
-                        :tooltip="aufbauIcon.tooltip"
-                    ></base-icon>
-                    {{ formatDate(messstelle.realisierungsdatum) }}
-                </span>
-                <span v-if="abbauDatumExists">
-                    |
-                    <span class="d-inline-flex pl-1">
-                        <base-icon
-                            :small="true"
-                            :icon="abbauIcon.iconPath"
-                            :tooltip="abbauIcon.tooltip"
-                        ></base-icon>
-                        {{ formatDate(messstelle.abbaudatum) }}
-                    </span>
-                </span>
-                <br />
-                <span>
-                    Fahrzeugklassen:
-                    {{ messstelle.fahrzeugKlassen }}
-                </span>
+                <v-row
+                    no-gutters
+                    class="pa-0 ma-0"
+                >
+                    <v-col
+                        cols="12"
+                        lg="8"
+                    >
+                        <v-row no-gutters>
+                            <v-tooltip bottom>
+                                <template #activator="{ on, attrs }">
+                                    <span
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        >Letzte Messung:
+                                        {{ datumLetztePlausibleMessung }}
+                                    </span>
+                                </template>
+                                <span> Datum letzte plausible Messung </span>
+                            </v-tooltip>
+                        </v-row>
+                        <v-row no-gutters>
+                            <span class="text-truncate">
+                                <v-tooltip bottom>
+                                    <template #activator="{ on, attrs }">
+                                        <span
+                                            v-bind="attrs"
+                                            class="d-inline-flex pr-1"
+                                            v-on="on"
+                                        >
+                                            <v-icon
+                                                small
+                                                color="primary"
+                                                class="mb-1 mr-1"
+                                                >{{ aufbauIcon.iconPath }}
+                                            </v-icon>
+                                            {{
+                                                formatDate(
+                                                    messstelle.realisierungsdatum
+                                                )
+                                            }}
+                                        </span>
+                                    </template>
+                                    <span> {{ aufbauIcon.tooltip }} </span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template #activator="{ on, attrs }">
+                                        <span
+                                            v-if="abbauDatumExists"
+                                            v-bind="attrs"
+                                            class="d-inline-flex px-1"
+                                            v-on="on"
+                                            >|
+                                            <v-icon
+                                                small
+                                                color="primary"
+                                                class="mb-1 mx-1"
+                                                >{{ abbauIcon.iconPath }}
+                                            </v-icon>
+                                            {{
+                                                formatDate(
+                                                    messstelle.abbaudatum
+                                                )
+                                            }}
+                                        </span>
+                                    </template>
+                                    <span> {{ abbauIcon.tooltip }} </span>
+                                </v-tooltip>
+                            </span>
+                        </v-row>
+                        <v-row no-gutters>
+                            <span class="text-truncate align-end">
+                                <DetektierteFahrzeugartIcon
+                                    :detektierte-fahrzeugart="
+                                        detektierteVerkehrsart
+                                    "
+                                    color="primary"
+                                />
+                                <MessstelleKommentar
+                                    :kommentar="messstelle.kommentar"
+                                />
+                                Fahrzeugklassen: {{ fahrzeugKlasse }}
+                            </span>
+                        </v-row>
+                    </v-col>
+                    <v-col
+                        lg
+                        class="hidden-md-and-down"
+                    >
+                        <v-spacer></v-spacer>
+                    </v-col>
+                    <v-col
+                        lg
+                        class="hidden-md-and-down"
+                    >
+                        <!-- todo: knotenarme hier anpassen -->
+                        <zaehlung-geometrie
+                            height="60"
+                            width="60"
+                            active-color="#1565C0"
+                            passive-color="#EEEEEE"
+                            :knotenarme="knotenarme"
+                        ></zaehlung-geometrie>
+                    </v-col>
+                </v-row>
             </v-sheet>
         </v-row>
     </v-container>
@@ -63,8 +126,8 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
-import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
+import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
@@ -87,7 +150,7 @@ function formatDate(date: string): string {
 
 const fahrzeugKlasse = computed(() => {
     if (props.messstelle.messquerschnitte.length > 0) {
-        return props.messstelle.messquerschnitte[0].fahrzeugKlassen;
+        return props.messstelle.fahrzeugKlassen;
     } else {
         return "k.A.";
     }
@@ -95,13 +158,15 @@ const fahrzeugKlasse = computed(() => {
 
 const detektierteVerkehrsart = computed(() => {
     if (props.messstelle.messquerschnitte.length > 0) {
-        return props.messstelle.messquerschnitte[0].detektierteVerkehrsarten;
+        return props.messstelle.detektierteVerkehrsarten;
     } else {
         return undefined;
     }
 });
 
 const abbauDatumExists = computed(() => {
+    // todo: abbaudatum ist beim ersten abruf leer und beim zweiten steht es drin, wird aber nicht richtig angezeigt
+    console.log("abbau:" + props.messstelle.abbaudatum);
     return props.messstelle.abbaudatum;
 });
 
