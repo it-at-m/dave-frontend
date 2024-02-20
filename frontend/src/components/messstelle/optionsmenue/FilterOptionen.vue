@@ -66,9 +66,7 @@
                 >
             </v-col>
         </v-row>
-        <OptionsmenueMessstelle
-            messstelle-id="messstelleId"
-        />
+        <OptionsmenueMessstelle messstelle-id="messstelleId" />
     </v-sheet>
 </template>
 <script setup lang="ts">
