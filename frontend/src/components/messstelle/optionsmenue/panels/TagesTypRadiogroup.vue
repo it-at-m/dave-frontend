@@ -1,6 +1,6 @@
 <template>
     <v-row no-gutters>
-        <v-col cols="6">
+        <v-col cols="4">
             <v-radio-group
                 v-model="chosenOptionsCopy.tagesTyp"
                 class="full-width"
@@ -31,7 +31,7 @@
                 />
             </v-radio-group>
         </v-col>
-        <v-col cols="6"> {{ helperText }}</v-col>
+        <v-col cols="4"> {{ helperText }}</v-col>
     </v-row>
 </template>
 <script setup lang="ts">

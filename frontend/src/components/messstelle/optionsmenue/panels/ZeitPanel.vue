@@ -86,7 +86,7 @@
                 <zeitauswahl-radiogroup
                     v-model="chosenOptionsCopy"
                     :messstelle-detektierte-fahrzeugart="
-                        messstelleDetektierteFahrzeugart
+                        messstelleInfo.detektierteVerkehrsarten
                     "
                 />
             </v-row>
@@ -135,12 +135,14 @@ import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitInter
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
+import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import { useRoute } from "vue-router/composables";
 
 const zeitblock = ref(Zeitblock.ZB_00_24);
+const route = useRoute();
 
 interface Props {
-    messstelleId: string;
-    messstelleDetektierteFahrzeugart: string;
     chosenOptions: MessstelleOptionsDTO;
 }
 
@@ -152,11 +154,16 @@ const isChosenTagesTypValid = ref(false);
 const hoverSelectZeitintervall = ref(false);
 
 onMounted(() => {
-    MessstelleOptionsmenuService.getNichtPlausibleTage(props.messstelleId).then(
+    const messstelleId = route.params.messstelleId;
+    MessstelleOptionsmenuService.getNichtPlausibleTage(messstelleId).then(
         (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
             (nichtPlausibleTage.value =
                 nichtPlausibleTageDTO.nichtPlausibleTage)
     );
+});
+
+const messstelleInfo: Ref<MessstelleInfoDTO> = computed(() => {
+    return store.getters["messstelleInfo/getMessstelleInfo"];
 });
 
 const getSortedDateRange = computed(() => {

@@ -32,11 +32,7 @@
                             focusable
                         >
                             <zeit-panel
-                                :messstelle-id="messstelleId"
                                 :chosen-options.sync="chosenOptions"
-                                :messstelle-detektierte-fahrzeugart="
-                                    messstelleDetektierteFahrzeugart
-                                "
                             />
                             <fahrzeug-panel v-model="chosenOptions" />
                         </v-expansion-panels>
@@ -78,7 +74,6 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 interface Props {
     messstelleId: string;
-    messstelleDetektierteFahrzeugart: string;
 }
 defineProps<Props>();
 const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {

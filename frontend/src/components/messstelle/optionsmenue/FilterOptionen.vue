@@ -68,9 +68,6 @@
         </v-row>
         <OptionsmenueMessstelle
             messstelle-id="messstelleId"
-            :messstelle-detektierte-fahrzeugart="
-                messstelle.detektierteVerkehrsarten
-            "
         />
     </v-sheet>
 </template>
