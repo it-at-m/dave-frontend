@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 interface Props {
     messstelle: MessstelleInfoDTO;

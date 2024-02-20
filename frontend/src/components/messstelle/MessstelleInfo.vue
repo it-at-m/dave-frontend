@@ -13,7 +13,7 @@
             class="ma-0"
         >
             <DetektierteFahrzeugartIcon
-                :detektierte-fahrzeugart="detektierteVerkehrsart"
+                :detektierte-fahrzeugart="messstelle.detektierteVerkehrsarten"
             />
             <MessstelleKommentar :kommentar="messstelle.kommentar" />
         </v-row>
@@ -32,7 +32,7 @@
                 <br />
                 <span>
                     Fahrzeugklassen:
-                    {{ fahrzeugKlasse }}
+                    {{ messstelle.fahrzeugKlassen }}
                 </span>
             </v-sheet>
         </v-row>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
@@ -60,22 +60,6 @@ function formatDate(date: string): string {
     const [year, month, day] = date.split("-");
     return `${day}.${month}.${year}`;
 }
-
-const fahrzeugKlasse = computed(() => {
-    if (props.messstelle.messquerschnitte.length > 0) {
-        return props.messstelle.messquerschnitte[0].fahrzeugKlassen;
-    } else {
-        return "k.A.";
-    }
-});
-
-const detektierteVerkehrsart = computed(() => {
-    if (props.messstelle.messquerschnitte.length > 0) {
-        return props.messstelle.messquerschnitte[0].detektierteVerkehrsarten;
-    } else {
-        return undefined;
-    }
-});
 
 const props = defineProps<Props>();
 </script>

@@ -142,9 +142,11 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import markerIconRed from "@/assets/marker-icon-red.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
+import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
 import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
 import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
+import { useDateUtils } from "@/util/DateUtils";
 
 @Component({
     components: {
@@ -425,7 +427,7 @@ export default class ZaehlstelleMap extends Vue {
             this.createTooltipMessstelle(messstelleKarteDto.tooltip),
             {
                 direction: "top",
-                offset: [-14, 0],
+                offset: [0, -25],
             }
         );
         marker.on("click", () => {
@@ -508,13 +510,19 @@ export default class ZaehlstelleMap extends Vue {
             tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
         }
         if (tooltipDto.realisierungsdatum) {
-            tooltip = `${tooltip} Aufbau: ${tooltipDto.realisierungsdatum}<br/>`;
+            tooltip = `${tooltip} Aufbau: ${useDateUtils().formatDate(
+                tooltipDto.realisierungsdatum
+            )}<br/>`;
         }
         if (tooltipDto.abbaudatum) {
-            tooltip = `${tooltip}Abbau: ${tooltipDto.abbaudatum}<br/>`;
+            tooltip = `${tooltip}Abbau: ${useDateUtils().formatDate(
+                tooltipDto.abbaudatum
+            )}<br/>`;
         }
         if (tooltipDto.datumLetztePlausibleMessung) {
-            tooltip = `${tooltip}Letzte plausible Messung: ${tooltipDto.datumLetztePlausibleMessung}<br/>`;
+            tooltip = `${tooltip}Letzte plausible Messung: ${useDateUtils().formatDate(
+                tooltipDto.datumLetztePlausibleMessung
+            )}<br/>`;
         }
 
         tooltip = `${tooltip}</div>`;
@@ -540,8 +548,14 @@ export default class ZaehlstelleMap extends Vue {
      * Setzt die Optionen bezüglich verwendetes Icon für den Messstellenmarker.
      */
     private markerOptionsMessstelle(messstelleKarte: MessstelleKarteDTO) {
-        let defaultIcon = new Icon.Default();
-        defaultIcon.options.iconUrl = markerIconDiamondViolet;
+        let defaultIcon = new Icon({
+            iconUrl: markerIconDiamondViolet,
+            shadowUrl: markerIconDiamondShadow,
+            shadowAnchor: [8, 45],
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+        });
+
         if (this.zId) {
             if (this.zId === messstelleKarte.id) {
                 defaultIcon.options.iconUrl = markerIconDiamondRed;

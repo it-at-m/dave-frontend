@@ -40,7 +40,9 @@
                         >
                         <v-list-item-subtitle
                             >Lage Messquerschnitt:
-                            {{ messstelle.standort }}</v-list-item-subtitle
+                            {{
+                                messquerschnitt.lageMessquerschnitt
+                            }}</v-list-item-subtitle
                         >
                     </v-list-item-content>
                 </v-list-item>
@@ -50,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 interface Props {
     messstelle: MessstelleInfoDTO;

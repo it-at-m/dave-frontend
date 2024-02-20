@@ -104,17 +104,17 @@ export default class ZaehlstelleView extends Vue {
             Object.assign(zaehlungen, zaehlstelle.zaehlungen);
             // Die Zählungen und id der aktiven Zählung werden an den Store übergeben.
             // Dort werden die Daten weiter verarbeitet.
-            if (this.$store.getters["security/isNoSecurityActive"]) {
+            if (this.$store.getters["user/hasAuthorities"]) {
                 this.$store.dispatch("setZaehlungen", {
                     zs: zaehlungen,
                     id: this.$route.params.zaehlungId,
-                    isAnwender: false,
+                    isAnwender: this.$store.getters["user/isAnwender"],
                 });
             } else {
                 this.$store.dispatch("setZaehlungen", {
                     zs: zaehlungen,
                     id: this.$route.params.zaehlungId,
-                    isAnwender: this.$store.getters["user/isAnwender"],
+                    isAnwender: false,
                 });
             }
             this.$store.commit("setZaehlstelle", zaehlstelle);

@@ -18,7 +18,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const iconOptions = computed(() => {
-    if (props.detektierteFahrzeugart == DetektierteFahrzeugart.FAHRRAD) {
+    if (props.detektierteFahrzeugart == DetektierteFahrzeugart.RAD) {
         return new IconOptions("mdi-bicycle", "Fahrrad");
     } else if (props.detektierteFahrzeugart == DetektierteFahrzeugart.KFZ) {
         return new IconOptions("mdi-car", "KFZ");
