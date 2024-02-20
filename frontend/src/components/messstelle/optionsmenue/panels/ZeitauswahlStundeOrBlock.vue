@@ -1,24 +1,26 @@
 <template>
-    <v-col cols="4">
-        <v-select
-            v-if="isZeitauswahlSpitzenstundeOrBlock"
-            v-model="chosenOptionsCopy.zeitblock"
-            label="Zeitblock"
-            :items="zeitblockValues"
-            filled
-            dense
-        >
-        </v-select>
-        <v-select
-            v-if="isZeitauswahlStunde"
-            v-model="chosenOptionsCopy.zeitblock"
-            label="Stunde"
-            :items="stuendlichValues"
-            filled
-            dense
-        >
-        </v-select>
-    </v-col>
+    <v-row no-gutters>
+        <v-col cols="4">
+            <v-select
+                v-if="isZeitauswahlSpitzenstundeOrBlock"
+                v-model="chosenOptionsCopy.zeitblock"
+                label="Zeitblock"
+                :items="zeitblockValues"
+                filled
+                dense
+            >
+            </v-select>
+            <v-select
+                v-if="isZeitauswahlStunde"
+                v-model="chosenOptionsCopy.zeitblock"
+                label="Stunde"
+                :items="stuendlichValues"
+                filled
+                dense
+            >
+            </v-select>
+        </v-col>
+    </v-row>
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";

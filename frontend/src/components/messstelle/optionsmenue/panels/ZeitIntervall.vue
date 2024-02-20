@@ -1,16 +1,18 @@
 <template>
-    <v-col cols="4">
-        <v-hover v-model="hoverSelectZeitintervallCopy">
-            <v-select
-                v-model="chosenOptionsCopy.intervall"
-                :items="messdatenIntervalle"
-                label="Zeitintervall"
-                filled
-                dense
-                :disabled="isZeitauswahlSpitzenstundeKfz"
-            ></v-select>
-        </v-hover>
-    </v-col>
+    <v-row>
+        <v-col cols="4">
+            <v-hover v-model="hoverSelectZeitintervallCopy">
+                <v-select
+                    v-model="chosenOptionsCopy.intervall"
+                    :items="messdatenIntervalle"
+                    label="Zeitintervall"
+                    filled
+                    dense
+                    :disabled="isZeitauswahlSpitzenstundeKfz"
+                ></v-select>
+            </v-hover>
+        </v-col>
+    </v-row>
 </template>
 <script setup lang="ts">
 import ZaehldatenIntervall, {

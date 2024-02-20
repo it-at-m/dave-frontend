@@ -82,21 +82,17 @@
                 padding="10px 0 0 0"
                 header-text="Zeitauswahl"
             ></panel-header>
-            <v-row no-gutters>
-                <zeitauswahl-radiogroup
-                    v-model="chosenOptionsCopy"
-                    :messstelle-detektierte-fahrzeugart="
-                        messstelleInfo.detektierteVerkehrsarten
-                    "
-                />
-            </v-row>
-            <v-row no-gutters>
-                <zeitauswahl-stunde-or-block
-                    v-model="chosenOptionsCopy"
-                    :zeitblock="zeitblock"
-                />
-                <v-spacer />
-            </v-row>
+            <zeitauswahl-radiogroup
+                v-model="chosenOptionsCopy"
+                :messstelle-detektierte-fahrzeugart="
+                    messstelleInfo.detektierteVerkehrsarten
+                "
+            />
+            <zeitauswahl-stunde-or-block
+                v-model="chosenOptionsCopy"
+                :zeitblock="zeitblock"
+            />
+            <v-spacer />
             <v-divider></v-divider>
             <panel-header
                 font-size="0.875rem"
@@ -110,13 +106,10 @@
                 padding="0 0 10px 0"
                 header-text="(außer Belastungsplan und Zeitreihe)"
             ></panel-header>
-
-            <v-row>
-                <zeit-intervall
-                    v-model="chosenOptionsCopy"
-                    :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
-                />
-            </v-row>
+            <zeit-intervall
+                v-model="chosenOptionsCopy"
+                :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
+            />
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
