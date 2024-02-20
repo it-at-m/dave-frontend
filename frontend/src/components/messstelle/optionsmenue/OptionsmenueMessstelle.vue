@@ -64,7 +64,7 @@ import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue
 import { useVuetify } from "@/util/useVuetify";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useStore } from "@/api/util/useStore";
-import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanel.vue";
+import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
