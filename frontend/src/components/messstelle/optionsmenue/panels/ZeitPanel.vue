@@ -128,7 +128,6 @@ import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitInter
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
-import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 
