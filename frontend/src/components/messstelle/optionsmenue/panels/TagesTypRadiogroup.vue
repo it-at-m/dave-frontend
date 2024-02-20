@@ -1,6 +1,6 @@
 <template>
     <v-row no-gutters>
-        <v-col cols="4">
+        <v-col cols="8">
             <v-radio-group
                 v-model="chosenOptionsCopy.tagesTyp"
                 class="full-width"
