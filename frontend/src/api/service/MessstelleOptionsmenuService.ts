@@ -1,6 +1,7 @@
 import FetchService from "@/api/service/FetchService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
+import ChosenTagesTypValidRequestDTO from "@/types/messstelle/ChosenTagesTypValidRequestDTO";
 
 export default class MessstelleOptionsmenuService {
     private static readonly ENDPOINT: string = "api/dave-backend-service";
@@ -15,12 +16,11 @@ export default class MessstelleOptionsmenuService {
     }
 
     static isTagesTypValid(
-        startDate: string,
-        endDate: string,
-        tagesTyp: string
+        chosenTagesTypValidRequestDto: ChosenTagesTypValidRequestDTO
     ): Promise<ChosenTagesTypValidDTO> {
-        return FetchService.getData(
-            `${this.ENDPOINT}/messstelleOptionsmenu/validateTagesTyp?start_date=${startDate}&end_date=${endDate}&tages_typ=${tagesTyp}`,
+        return FetchService.postData(
+            chosenTagesTypValidRequestDto,
+            `${this.ENDPOINT}/messstelleOptionsmenu/validateTagesTyp`,
             "Beim Lesen ob der Tagestyp valide ist, ist ein Fehler aufgetreten."
         );
     }

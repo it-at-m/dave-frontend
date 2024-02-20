@@ -281,10 +281,13 @@ watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
         getSortedDateRange.value[1] &&
         chosenOptionsCopy.value.tagesTyp
     ) {
+        const chosenTagesTypValidRequestDto = {
+            startDate: getSortedDateRange.value[1],
+            endDate: getSortedDateRange.value[0],
+            tagesTyp: chosenOptionsCopy.value.tagesTyp,
+        };
         MessstelleOptionsmenuService.isTagesTypValid(
-            getSortedDateRange.value[1],
-            getSortedDateRange.value[0],
-            chosenOptionsCopy.value.tagesTyp
+            chosenTagesTypValidRequestDto
         ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
             isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
         });

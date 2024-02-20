@@ -26,8 +26,8 @@
                     :label="getTagesTypText(TagesTyp.WERKTAG_FERIEN)"
                 />
                 <v-radio
-                    :value="TagesTyp.DTV"
-                    :label="getTagesTypText(TagesTyp.DTV)"
+                    :value="TagesTyp.MO_SO"
+                    :label="getTagesTypText(TagesTyp.MO_SO)"
                 />
             </v-radio-group>
         </v-col>
@@ -71,7 +71,7 @@ const helperText = computed(() => {
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (So/Feiertag) mit plausiblen Daten nötig.";
             case TagesTyp.WERKTAG_FERIEN:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) mit plausiblen Daten nötig.";
-            case TagesTyp.DTV:
+            case TagesTyp.MO_SO:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Beliebige Wochentage) mit plausiblen Daten nötig.";
         }
     }
