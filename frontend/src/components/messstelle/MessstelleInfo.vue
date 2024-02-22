@@ -89,10 +89,14 @@
                                     "
                                     color="primary"
                                 />
+                                <FahrzeugklassenIcon
+                                    :fahrzeugklasse="fahrzeugKlasse"
+                                    color="primary"
+                                    small="true"
+                                ></FahrzeugklassenIcon>
                                 <MessstelleKommentar
                                     :kommentar="messstelle.kommentar"
                                 />
-                                Fahrzeugklassen: {{ fahrzeugKlasse }}
                             </span>
                         </v-row>
                     </v-col>
@@ -126,6 +130,7 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { computed } from "vue";
 import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
+import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 

@@ -7,6 +7,7 @@
                     color="secondary"
                     icon
                     height="20px"
+                    class="ml-n2"
                     v-on="on"
                     @click="showDialog = true"
                 >
