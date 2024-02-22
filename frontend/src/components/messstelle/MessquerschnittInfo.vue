@@ -38,8 +38,8 @@
 
 <script setup lang="ts">
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import FahrtrichtungIcon from "@/components/zaehlstelle/icons/FahrtrichtungIcon.vue";
-import FahrstreifenIcon from "@/components/zaehlstelle/icons/FahrspurenIcon.vue";
+import FahrtrichtungIcon from "@/components/messstelle/icons/FahrtrichtungIcon.vue";
+import FahrstreifenIcon from "@/components/messstelle/icons/FahrspurenIcon.vue";
 import { useAlternateRowColor } from "@/composables/alternateRowColorComposable";
 
 interface Props {
