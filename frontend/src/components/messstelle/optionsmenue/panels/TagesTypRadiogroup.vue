@@ -1,43 +1,52 @@
 <template>
-    <v-row no-gutters>
-        <v-col cols="8">
-            <v-radio-group
-                v-model="chosenOptionsCopy.tagesTyp"
-                class="full-width"
-            >
-                <v-radio
-                    :value="TagesTyp.WERKTAG_DI_MI_DO"
-                    :label="getTagesTypText(TagesTyp.WERKTAG_DI_MI_DO)"
-                />
-                <v-radio
-                    :value="TagesTyp.WERKTAG_MO_FR"
-                    :label="getTagesTypText(TagesTyp.WERKTAG_MO_FR)"
-                />
-                <v-radio
-                    :value="TagesTyp.SAMSTAG"
-                    :label="getTagesTypText(TagesTyp.SAMSTAG)"
-                />
-                <v-radio
-                    :value="TagesTyp.SONNTAG_FEIERTAG"
-                    :label="getTagesTypText(TagesTyp.SONNTAG_FEIERTAG)"
-                />
-                <v-radio
-                    :value="TagesTyp.WERKTAG_FERIEN"
-                    :label="getTagesTypText(TagesTyp.WERKTAG_FERIEN)"
-                />
-                <v-radio
-                    :value="TagesTyp.MO_SO"
-                    :label="getTagesTypText(TagesTyp.MO_SO)"
-                />
-            </v-radio-group>
-        </v-col>
-        <v-col cols="4"> {{ helperText }}</v-col>
-    </v-row>
+    <div>
+        <panel-header
+            font-size="0.875rem"
+            font-weight="bold"
+            padding="10px 0 0 0"
+            header-text="Wochentag"
+        ></panel-header>
+        <v-row no-gutters>
+            <v-col cols="8">
+                <v-radio-group
+                    v-model="chosenOptionsCopy.tagesTyp"
+                    class="full-width"
+                >
+                    <v-radio
+                        :value="TagesTyp.WERKTAG_DI_MI_DO"
+                        :label="getTagesTypText(TagesTyp.WERKTAG_DI_MI_DO)"
+                    />
+                    <v-radio
+                        :value="TagesTyp.WERKTAG_MO_FR"
+                        :label="getTagesTypText(TagesTyp.WERKTAG_MO_FR)"
+                    />
+                    <v-radio
+                        :value="TagesTyp.SAMSTAG"
+                        :label="getTagesTypText(TagesTyp.SAMSTAG)"
+                    />
+                    <v-radio
+                        :value="TagesTyp.SONNTAG_FEIERTAG"
+                        :label="getTagesTypText(TagesTyp.SONNTAG_FEIERTAG)"
+                    />
+                    <v-radio
+                        :value="TagesTyp.WERKTAG_FERIEN"
+                        :label="getTagesTypText(TagesTyp.WERKTAG_FERIEN)"
+                    />
+                    <v-radio
+                        :value="TagesTyp.MO_SO"
+                        :label="getTagesTypText(TagesTyp.MO_SO)"
+                    />
+                </v-radio-group>
+            </v-col>
+            <v-col cols="4"> {{ helperText }}</v-col>
+        </v-row>
+    </div>
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import PanelHeader from "@/components/common/PanelHeader.vue";
 interface Props {
     value: MessstelleOptionsDTO;
     isChosenTagesTypValid: boolean;

@@ -1,57 +1,66 @@
 <template>
-    <v-row no-gutters>
-        <v-radio-group
-            v-model="chosenOptionsCopy.zeitauswahl"
-            style="width: 100%"
-        >
-            <v-row
-                no-gutters
+    <div>
+        <panel-header
+            font-size="0.875rem"
+            font-weight="bold"
+            padding="10px 0 0 0"
+            header-text="Zeitauswahl"
+        ></panel-header>
+        <v-row no-gutters>
+            <v-radio-group
+                v-model="chosenOptionsCopy.zeitauswahl"
                 style="width: 100%"
             >
-                <v-col cols="4">
-                    <v-radio
-                        label="Tageswert (Durchschnitt)"
-                        value="Tageswert"
-                    />
-                    <v-radio
-                        label="Block (Durchschnitt)"
-                        value="Block"
-                        :disabled="isDateBiggerFiveYears"
-                    />
-                    <v-radio
-                        label="Stunde (Durchschnitt)"
-                        value="Stunde"
-                        :disabled="isDateBiggerFiveYears"
-                    />
-                </v-col>
-                <v-col cols="4">
-                    <v-radio
-                        label="Spitzenstunde Kfz (Durchschnitt)"
-                        value="Spitzenstunde KFZ"
-                        :disabled="isTypeDisabled('KFZ')"
-                    />
-                    <v-radio
-                        label="Spitzenstunde Rad (Durchschnitt)"
-                        value="Spitzenstunde Rad"
-                        :disabled="isTypeDisabled('RAD')"
-                    />
-                    <v-radio
-                        label="Spitzenstunde Fuß (Durchschnitt)"
-                        value="Spitzenstunde Fuß"
-                        :disabled="isTypeDisabled('FUSS')"
-                    />
-                </v-col>
-                <v-col>
-                    {{ helperText }}
-                </v-col>
-            </v-row>
-        </v-radio-group>
-    </v-row>
+                <v-row
+                    no-gutters
+                    style="width: 100%"
+                >
+                    <v-col cols="4">
+                        <v-radio
+                            label="Tageswert (Durchschnitt)"
+                            value="Tageswert"
+                        />
+                        <v-radio
+                            label="Block (Durchschnitt)"
+                            value="Block"
+                            :disabled="isDateBiggerFiveYears"
+                        />
+                        <v-radio
+                            label="Stunde (Durchschnitt)"
+                            value="Stunde"
+                            :disabled="isDateBiggerFiveYears"
+                        />
+                    </v-col>
+                    <v-col cols="4">
+                        <v-radio
+                            label="Spitzenstunde Kfz (Durchschnitt)"
+                            value="Spitzenstunde KFZ"
+                            :disabled="isTypeDisabled('KFZ')"
+                        />
+                        <v-radio
+                            label="Spitzenstunde Rad (Durchschnitt)"
+                            value="Spitzenstunde Rad"
+                            :disabled="isTypeDisabled('RAD')"
+                        />
+                        <v-radio
+                            label="Spitzenstunde Fuß (Durchschnitt)"
+                            value="Spitzenstunde Fuß"
+                            :disabled="isTypeDisabled('FUSS')"
+                        />
+                    </v-col>
+                    <v-col>
+                        {{ helperText }}
+                    </v-col>
+                </v-row>
+            </v-radio-group>
+        </v-row>
+    </div>
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
+import PanelHeader from "@/components/common/PanelHeader.vue";
 
 interface Props {
     value: MessstelleOptionsDTO;

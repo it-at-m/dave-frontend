@@ -33,12 +33,10 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 interface Props {
-    zeitblock: string;
     value: MessstelleOptionsDTO;
 }
 
 const emit = defineEmits<{
-    (e: "update:zeitblock", i: string): void;
     (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 const props = defineProps<Props>();
@@ -90,6 +88,10 @@ const stuendlichValues = computed(() => {
 
 const isZeitauswahlStunde = computed(() => {
     return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE;
+});
+
+const test = computed(() => {
+    return chosenOptionsCopy.value.zeitauswahl;
 });
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {

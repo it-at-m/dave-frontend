@@ -65,47 +65,22 @@
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Wochentag"
-            ></panel-header>
+
             <tages-typ-radiogroup
                 v-model="chosenOptionsCopy"
                 :is-chosen-tages-typ-valid="isChosenTagesTypValid"
             />
             <v-divider></v-divider>
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Zeitauswahl"
-            ></panel-header>
+
             <zeitauswahl-radiogroup
                 v-model="chosenOptionsCopy"
                 :messstelle-detektierte-fahrzeugart="
                     messstelleInfo.detektierteVerkehrsarten
                 "
             />
-            <zeitauswahl-stunde-or-block
-                v-model="chosenOptionsCopy"
-                :zeitblock="zeitblock"
-            />
+            <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
             <v-spacer />
             <v-divider></v-divider>
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Zeitintervall"
-            ></panel-header>
-            <panel-header
-                font-size="small"
-                font-weight="normal"
-                padding="0 0 10px 0"
-                header-text="(außer Belastungsplan und Zeitreihe)"
-            ></panel-header>
             <zeit-intervall
                 v-model="chosenOptionsCopy"
                 :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
