@@ -67,6 +67,7 @@
             <v-divider></v-divider>
 
             <tages-typ-radiogroup
+                v-if="chosenOptionsCopyZeitraum.length == 2"
                 v-model="chosenOptionsCopy"
                 :is-chosen-tages-typ-valid="isChosenTagesTypValid"
             />
