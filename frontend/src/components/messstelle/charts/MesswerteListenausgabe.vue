@@ -14,6 +14,7 @@
             <thead>
                 <tr>
                     <th
+                        id="th-zeit"
                         colspan="3"
                         class="text-center parent-header"
                         :style="headerCategoryStyle"
@@ -22,6 +23,7 @@
                     </th>
                     <th
                         v-if="activeFahrzeugtypen > 0"
+                        id="th-fahrzeugtypen"
                         :colspan="activeFahrzeugtypen"
                         class="text-center parent-header"
                         :style="headerCategoryStyle"
@@ -30,6 +32,7 @@
                     </th>
                     <th
                         v-if="activeFahrzeugklassen > 0"
+                        id="th-fahrzeugklassen"
                         :colspan="activeFahrzeugklassen"
                         class="text-center parent-header"
                         :style="headerCategoryStyle"
@@ -38,6 +41,7 @@
                     </th>
                     <th
                         v-if="activeAnteil > 0"
+                        id="th-anteil"
                         :colspan="activeAnteil"
                         class="text-center parent-header"
                         :style="headerCategoryStyle"
@@ -50,369 +54,45 @@
     </v-data-table>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+<script setup lang="ts">
 // eslint-disable-next-line no-unused-vars
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import DataManipulatorUtil from "@/util/DataManipulatorUtil";
 // eslint-disable-next-line no-unused-vars
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import { computed, ComputedRef, watch } from "vue";
+import { useStore } from "@/api/util/useStore";
+import DataTableHeader from "@/types/util/DataTableHeader";
 
-@Component({
-    components: {},
-})
-export default class ZaehldatenListenausgabe extends Vue {
-    private static TYPE_GESAMT = "Gesamt";
+const store = useStore();
 
-    private static TYPE_TAGESWERT = "Tageswert";
+const TYPE_GESAMT = "Gesamt";
+const TYPE_TAGESWERT = "Tageswert";
+const TYPE_STUNDE = "Stunde";
+const TYPE_BLOCK = "Block";
+const TYPE_SP_STD_BLOCK = "SpStdBlock";
+const TYPE_SP_STD_TAG = "SpStdTag";
 
-    private static TYPE_STUNDE = "Stunde";
+const headerCategoryStyle =
+    "font-weight: bolder; position: sticky; top: 0; z-index: 2";
 
-    private static TYPE_BLOCK = "Block";
+interface Props {
+    listenausgabeData: Array<LadeZaehldatumDTO>;
+    height?: string;
+}
 
-    private static TYPE_SP_STD_BLOCK = "SpStdBlock";
+const props = withDefaults(defineProps<Props>(), {
+    height: "100%",
+});
 
-    private static TYPE_SP_STD_TAG = "SpStdTag";
+const optionen: ComputedRef<MessstelleOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
 
-    @Prop()
-    listenausgabeData!: Array<LadeZaehldatumDTO>;
-
-    @Prop({ default: "100%" }) height?: string;
-
-    /**
-     * Liefert die Anzahl der ausgewaehlten Fahrzeugtypen zurueck.
-     * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
-     * und die Breite der einzelnen Eintraege darin zu steuern
-     */
-    get activeFahrzeugtypen() {
-        let activeFahrzeugtypen = 0;
-        let options = this.optionen.fahrzeuge;
-        if (options.personenkraftwagen) {
-            activeFahrzeugtypen++;
-        }
-        if (options.lastkraftwagen) {
-            activeFahrzeugtypen++;
-        }
-        if (options.lastzuege) {
-            activeFahrzeugtypen++;
-        }
-        if (options.lieferwagen) {
-            activeFahrzeugtypen++;
-        }
-        if (options.busse) {
-            activeFahrzeugtypen++;
-        }
-        if (options.kraftraeder) {
-            activeFahrzeugtypen++;
-        }
-        if (options.radverkehr) {
-            activeFahrzeugtypen++;
-        }
-        if (options.fussverkehr) {
-            activeFahrzeugtypen++;
-        }
-        return activeFahrzeugtypen;
-    }
-
-    /**
-     * Liefert die Anzahl der ausgewaehlten Fahrzeugklasse zurueck.
-     * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
-     * und die Breite der einzelnen Eintraege darin zu steuern
-     */
-    get activeFahrzeugklassen() {
-        let activeFahrzeugklassen = 0;
-        let options = this.optionen.fahrzeuge;
-        if (options.kraftfahrzeugverkehr) {
-            activeFahrzeugklassen++;
-        }
-        if (options.schwerverkehr) {
-            activeFahrzeugklassen++;
-        }
-        if (options.gueterverkehr) {
-            activeFahrzeugklassen++;
-        }
-        return activeFahrzeugklassen;
-    }
-
-    /**
-     * Liefert die Anzahl der ausgewaehlten Anteile (SV%/GV&) zurueck.
-     * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
-     * und die Breite der einzelnen Eintraege darin zu steuern
-     */
-    get activeAnteil() {
-        let activeAnteil = 0;
-        let options = this.optionen;
-        if (options.fahrzeuge.schwerverkehrsanteilProzent) {
-            activeAnteil++;
-        }
-        if (options.fahrzeuge.gueterverkehrsanteilProzent) {
-            activeAnteil++;
-        }
-        return activeAnteil;
-    }
-
-    /** Berechnet die Spaltenbreite für die einzelnen Eintraege */
-    private calculateColumnWidth(
-        maxWidth: number,
-        activeElements: number
-    ): string {
-        return `${activeElements > 0 ? maxWidth / activeElements : 0}%`;
-    }
-
-    get optionen(): MessstelleOptionsDTO {
-        return this.$store.getters[
-            "filteroptionsMessstelle/getFilteroptions"
-        ] as MessstelleOptionsDTO;
-    }
-
-    /**
-     * Baut den Listenheader dynamisch anhand der ausgewaehlten Felder im Optionsmenue auf
-     */
-    get headers() {
-        let options = this.optionen;
-        let widthFahrzeugtypen: string = this.calculateColumnWidth(
-            42,
-            this.activeFahrzeugtypen
-        );
-        let widthFahrzeugklassen: string = this.calculateColumnWidth(
-            21,
-            this.activeFahrzeugklassen
-        );
-        let widthAnteil: string = this.calculateColumnWidth(
-            8,
-            this.activeAnteil
-        );
-        /* eslint-disable @typescript-eslint/ban-types */
-        let headers: Array<{}> = [
-            {
-                text: "von",
-                value: "startUhrzeit",
-                align: "center",
-                sortable: false,
-                width: "7%",
-            },
-            {
-                text: "bis",
-                value: "endeUhrzeit",
-                align: "center",
-                sortable: false,
-                width: "7%",
-            },
-            {
-                text: "",
-                value: "type",
-                align: "center",
-                divider: "true",
-                sortable: false,
-                width: "8%",
-            },
-        ];
-
-        // Kategorien
-        if (options.fahrzeuge.personenkraftwagen) {
-            headers.push({
-                text: "Pkw",
-                value: "pkw",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.radverkehr ||
-                    options.fahrzeuge.fussverkehr ||
-                    options.fahrzeuge.kraftraeder ||
-                    options.fahrzeuge.busse ||
-                    options.fahrzeuge.lieferwagen ||
-                    options.fahrzeuge.lastzuege ||
-                    options.fahrzeuge.lastkraftwagen
-                ),
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.lastkraftwagen) {
-            headers.push({
-                text: "Lkw",
-                value: "lkw",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.radverkehr ||
-                    options.fahrzeuge.fussverkehr ||
-                    options.fahrzeuge.kraftraeder ||
-                    options.fahrzeuge.busse ||
-                    options.fahrzeuge.lieferwagen ||
-                    options.fahrzeuge.lastzuege
-                ),
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.lastzuege) {
-            headers.push({
-                text: "Lz",
-                value: "lastzuege",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.radverkehr ||
-                    options.fahrzeuge.fussverkehr ||
-                    options.fahrzeuge.kraftraeder ||
-                    options.fahrzeuge.busse ||
-                    options.fahrzeuge.lieferwagen
-                ),
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.lieferwagen) {
-            headers.push({
-                text: "Lfw",
-                value: "lfw",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.radverkehr ||
-                    options.fahrzeuge.fussverkehr ||
-                    options.fahrzeuge.kraftraeder ||
-                    options.fahrzeuge.busse
-                ),
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.busse) {
-            headers.push({
-                text: "Bus",
-                value: "busse",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.radverkehr ||
-                    options.fahrzeuge.fussverkehr ||
-                    options.fahrzeuge.kraftraeder
-                ),
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.kraftraeder) {
-            headers.push({
-                text: "Krad",
-                value: "kraftraeder",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.radverkehr ||
-                    options.fahrzeuge.fussverkehr
-                ),
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.radverkehr) {
-            headers.push({
-                text: "Rad",
-                value: "fahrradfahrer",
-                align: "center",
-                divider: !options.fahrzeuge.fussverkehr,
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-        if (options.fahrzeuge.fussverkehr) {
-            headers.push({
-                text: "Fuß",
-                value: "fussgaenger",
-                align: "center",
-                divider: true,
-                sortable: false,
-                width: widthFahrzeugtypen,
-            });
-        }
-
-        // Klassen
-        if (options.fahrzeuge.kraftfahrzeugverkehr) {
-            headers.push({
-                text: "KFZ",
-                value: "kfz",
-                align: "center",
-                divider: !(
-                    options.fahrzeuge.schwerverkehr ||
-                    options.fahrzeuge.gueterverkehr
-                ),
-                sortable: false,
-                width: widthFahrzeugklassen,
-            });
-        }
-        if (options.fahrzeuge.schwerverkehr) {
-            headers.push({
-                text: "SV",
-                value: "schwerverkehr",
-                align: "center",
-                divider: !options.fahrzeuge.gueterverkehr,
-                sortable: false,
-                width: widthFahrzeugklassen,
-            });
-        }
-        if (options.fahrzeuge.gueterverkehr) {
-            headers.push({
-                text: "GV",
-                value: "gueterverkehr",
-                align: "center",
-                divider: true,
-                sortable: false,
-                width: widthFahrzeugklassen,
-            });
-        }
-
-        // Anteile
-        if (options.fahrzeuge.schwerverkehrsanteilProzent) {
-            headers.push({
-                text: "SV%",
-                value: "anteilSchwerverkehrAnKfzProzent",
-                align: "center",
-                divider: !options.fahrzeuge.gueterverkehrsanteilProzent,
-                sortable: false,
-                width: widthAnteil,
-            });
-        }
-        if (options.fahrzeuge.gueterverkehrsanteilProzent) {
-            headers.push({
-                text: "GV%",
-                value: "anteilGueterverkehrAnKfzProzent",
-                align: "center",
-                divider: true,
-                sortable: false,
-                width: widthAnteil,
-            });
-        }
-
-        return headers;
-    }
-
-    rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
-        if (ladeZaehldatum.type === ZaehldatenListenausgabe.TYPE_STUNDE) {
-            return "blue-grey lighten-4 font-weight-bold";
-        } else if (
-            ladeZaehldatum.type != undefined &&
-            (ladeZaehldatum.type.includes(
-                ZaehldatenListenausgabe.TYPE_SP_STD_BLOCK
-            ) ||
-                ladeZaehldatum.type.includes(
-                    ZaehldatenListenausgabe.TYPE_SP_STD_TAG
-                ))
-        ) {
-            return "blue-grey lighten-3 font-weight-bold";
-        } else if (ladeZaehldatum.type === ZaehldatenListenausgabe.TYPE_BLOCK) {
-            return "blue-grey lighten-2 font-weight-black";
-        } else if (
-            ladeZaehldatum.type === ZaehldatenListenausgabe.TYPE_GESAMT ||
-            ladeZaehldatum.type === ZaehldatenListenausgabe.TYPE_TAGESWERT
-        ) {
-            return "blue-grey lighten-1 font-weight-black";
-        }
-    }
-
-    get headerCategoryStyle() {
-        return "font-weight: bolder; position: sticky; top: 0; z-index: 2";
-    }
-
-    @Watch("listenausgabeData", { immediate: true })
-    watchZaehldaten(listenausgabeData: Array<LadeZaehldatumDTO>) {
-        listenausgabeData.forEach((zaehldatum) => {
+watch(
+    props.listenausgabeData,
+    () => {
+        props.listenausgabeData.forEach((zaehldatum) => {
             zaehldatum.endeUhrzeit =
                 DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
             // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0
@@ -423,11 +103,320 @@ export default class ZaehldatenListenausgabe extends Vue {
                 zaehldatum.anteilSchwerverkehrAnKfzProzent
             ).toFixed(1);
         });
+    },
+    { immediate: true }
+);
+
+/**
+ * Liefert die Anzahl der ausgewaehlten Fahrzeugtypen zurueck.
+ * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
+ * und die Breite der einzelnen Eintraege darin zu steuern
+ */
+const activeFahrzeugtypen = computed(() => {
+    let activeFahrzeugtypen = 0;
+    let options = optionen.value.fahrzeuge;
+    if (options.personenkraftwagen) {
+        activeFahrzeugtypen++;
     }
+    if (options.lastkraftwagen) {
+        activeFahrzeugtypen++;
+    }
+    if (options.lastzuege) {
+        activeFahrzeugtypen++;
+    }
+    if (options.lieferwagen) {
+        activeFahrzeugtypen++;
+    }
+    if (options.busse) {
+        activeFahrzeugtypen++;
+    }
+    if (options.kraftraeder) {
+        activeFahrzeugtypen++;
+    }
+    if (options.radverkehr) {
+        activeFahrzeugtypen++;
+    }
+    if (options.fussverkehr) {
+        activeFahrzeugtypen++;
+    }
+    return activeFahrzeugtypen;
+});
+
+/**
+ * Liefert die Anzahl der ausgewaehlten Fahrzeugklasse zurueck.
+ * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
+ * und die Breite der einzelnen Eintraege darin zu steuern
+ */
+const activeFahrzeugklassen = computed(() => {
+    let activeFahrzeugklassen = 0;
+    let options = optionen.value.fahrzeuge;
+    if (options.kraftfahrzeugverkehr) {
+        activeFahrzeugklassen++;
+    }
+    if (options.schwerverkehr) {
+        activeFahrzeugklassen++;
+    }
+    if (options.gueterverkehr) {
+        activeFahrzeugklassen++;
+    }
+    return activeFahrzeugklassen;
+});
+
+/**
+ * Liefert die Anzahl der ausgewaehlten Anteile (SV%/GV&) zurueck.
+ * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
+ * und die Breite der einzelnen Eintraege darin zu steuern
+ */
+const activeAnteil = computed(() => {
+    let activeAnteil = 0;
+    let options = optionen.value.fahrzeuge;
+    if (options.schwerverkehrsanteilProzent) {
+        activeAnteil++;
+    }
+    if (options.gueterverkehrsanteilProzent) {
+        activeAnteil++;
+    }
+    return activeAnteil;
+});
+
+/**
+ * Baut den Listenheader dynamisch anhand der ausgewaehlten Felder im Optionsmenue auf
+ */
+const headers: ComputedRef<Array<DataTableHeader>> = computed(() => {
+    let options = optionen.value.fahrzeuge;
+    let widthFahrzeugtypen: string = calculateColumnWidth(
+        42,
+        activeFahrzeugtypen.value
+    );
+    let widthFahrzeugklassen: string = calculateColumnWidth(
+        21,
+        activeFahrzeugklassen.value
+    );
+    let widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
+    /* eslint-disable @typescript-eslint/ban-types */
+    let headers: Array<DataTableHeader> = [
+        {
+            text: "von",
+            value: "startUhrzeit",
+            align: "center",
+            sortable: false,
+            width: "7%",
+        } as DataTableHeader,
+        {
+            text: "bis",
+            value: "endeUhrzeit",
+            align: "center",
+            sortable: false,
+            width: "7%",
+        } as DataTableHeader,
+        {
+            text: "",
+            value: "type",
+            align: "center",
+            divider: true,
+            sortable: false,
+            width: "8%",
+        } as DataTableHeader,
+    ];
+
+    // Kategorien
+    if (options.personenkraftwagen) {
+        headers.push({
+            text: "Pkw",
+            value: "pkw",
+            align: "center",
+            divider: !(
+                options.radverkehr ||
+                options.fussverkehr ||
+                options.kraftraeder ||
+                options.busse ||
+                options.lieferwagen ||
+                options.lastzuege ||
+                options.lastkraftwagen
+            ),
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.lastkraftwagen) {
+        headers.push({
+            text: "Lkw",
+            value: "lkw",
+            align: "center",
+            divider: !(
+                options.radverkehr ||
+                options.fussverkehr ||
+                options.kraftraeder ||
+                options.busse ||
+                options.lieferwagen ||
+                options.lastzuege
+            ),
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.lastzuege) {
+        headers.push({
+            text: "Lz",
+            value: "lastzuege",
+            align: "center",
+            divider: !(
+                options.radverkehr ||
+                options.fussverkehr ||
+                options.kraftraeder ||
+                options.busse ||
+                options.lieferwagen
+            ),
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.lieferwagen) {
+        headers.push({
+            text: "Lfw",
+            value: "lfw",
+            align: "center",
+            divider: !(
+                options.radverkehr ||
+                options.fussverkehr ||
+                options.kraftraeder ||
+                options.busse
+            ),
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.busse) {
+        headers.push({
+            text: "Bus",
+            value: "busse",
+            align: "center",
+            divider: !(
+                options.radverkehr ||
+                options.fussverkehr ||
+                options.kraftraeder
+            ),
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.kraftraeder) {
+        headers.push({
+            text: "Krad",
+            value: "kraftraeder",
+            align: "center",
+            divider: !(options.radverkehr || options.fussverkehr),
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.radverkehr) {
+        headers.push({
+            text: "Rad",
+            value: "fahrradfahrer",
+            align: "center",
+            divider: !options.fussverkehr,
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+    if (options.fussverkehr) {
+        headers.push({
+            text: "Fuß",
+            value: "fussgaenger",
+            align: "center",
+            divider: true,
+            sortable: false,
+            width: widthFahrzeugtypen,
+        });
+    }
+
+    // Klassen
+    if (options.kraftfahrzeugverkehr) {
+        headers.push({
+            text: "KFZ",
+            value: "kfz",
+            align: "center",
+            divider: !(options.schwerverkehr || options.gueterverkehr),
+            sortable: false,
+            width: widthFahrzeugklassen,
+        });
+    }
+    if (options.schwerverkehr) {
+        headers.push({
+            text: "SV",
+            value: "schwerverkehr",
+            align: "center",
+            divider: !options.gueterverkehr,
+            sortable: false,
+            width: widthFahrzeugklassen,
+        });
+    }
+    if (options.gueterverkehr) {
+        headers.push({
+            text: "GV",
+            value: "gueterverkehr",
+            align: "center",
+            divider: true,
+            sortable: false,
+            width: widthFahrzeugklassen,
+        });
+    }
+
+    // Anteile
+    if (options.schwerverkehrsanteilProzent) {
+        headers.push({
+            text: "SV%",
+            value: "anteilSchwerverkehrAnKfzProzent",
+            align: "center",
+            divider: !options.gueterverkehrsanteilProzent,
+            sortable: false,
+            width: widthAnteil,
+        });
+    }
+    if (options.gueterverkehrsanteilProzent) {
+        headers.push({
+            text: "GV%",
+            value: "anteilGueterverkehrAnKfzProzent",
+            align: "center",
+            divider: true,
+            sortable: false,
+            width: widthAnteil,
+        });
+    }
+
+    return headers;
+});
+
+/** Berechnet die Spaltenbreite für die einzelnen Eintraege */
+function calculateColumnWidth(
+    maxWidth: number,
+    activeElements: number
+): string {
+    return `${activeElements > 0 ? maxWidth / activeElements : 0}%`;
+}
+function rowClasses(ladeZaehldatum: LadeZaehldatumDTO): string {
+    if (ladeZaehldatum.type === TYPE_STUNDE) {
+        return "blue-grey lighten-4 font-weight-bold";
+    } else if (
+        ladeZaehldatum.type != undefined &&
+        (ladeZaehldatum.type.includes(TYPE_SP_STD_BLOCK) ||
+            ladeZaehldatum.type.includes(TYPE_SP_STD_TAG))
+    ) {
+        return "blue-grey lighten-3 font-weight-bold";
+    } else if (ladeZaehldatum.type === TYPE_BLOCK) {
+        return "blue-grey lighten-2 font-weight-black";
+    } else if (
+        ladeZaehldatum.type === TYPE_GESAMT ||
+        ladeZaehldatum.type === TYPE_TAGESWERT
+    ) {
+        return "blue-grey lighten-1 font-weight-black";
+    }
+    return "";
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
 @import '../../../../node_modules/vuetify/src/components/VDataTable/variables'
 .v-data-table--fixed-header
   > .v-data-table__wrapper
