@@ -59,7 +59,6 @@
 import { computed, ref, Ref, watch } from "vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
-import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useStore } from "@/api/util/useStore";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanel.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
@@ -74,9 +73,6 @@ interface Props {
     messstelleId: string;
 }
 defineProps<Props>();
-const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
-});
 
 const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
     return store.getters["messstelleInfo/getMessstelleInfo"];
@@ -85,7 +81,9 @@ const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
 const vuetify = useVuetify();
 const store = useStore();
 const dialog = ref(false);
-const chosenOptions = ref({} as MessstelleOptionsDTO);
+const chosenOptions = ref(
+    DefaultObjectCreator.createDefaultMessstelleOptions()
+);
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -111,7 +109,6 @@ function saveChosenOptions(): void {
 }
 
 function setDefaultOptionsForMessstelle(): void {
-    chosenOptions.value = _.cloneDeep(filterOptionsMessstelle.value);
     chosenOptions.value.fahrzeuge =
         DefaultObjectCreator.createDefaultFahrzeugOptions(
             messstelle.value.detektierteVerkehrsarten ===
@@ -128,7 +125,6 @@ function setDefaultOptionsForMessstelle(): void {
 }
 
 function resetOptions(): void {
-    store.dispatch("filteroptionsMessstelle/resetFilteroptions");
     setDefaultOptionsForMessstelle();
 }
 </script>
