@@ -106,7 +106,6 @@ import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/Tage
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 
-const zeitblock = ref(Zeitblock.ZB_00_24);
 const route = useRoute();
 
 interface Props {
