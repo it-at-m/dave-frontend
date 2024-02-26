@@ -21,7 +21,7 @@
                         label="Zeitintervall"
                         filled
                         dense
-                        :disabled="isZeitauswahlSpitzenstundeKfz"
+                        :disabled="isIntervallChangingLocked"
                     ></v-select>
                 </v-hover>
             </v-col>
@@ -62,16 +62,31 @@ const messdatenIntervalle = computed(() => {
     return ZaehldatenIntervallToSelect;
 });
 
+const isIntervallChangingLocked = computed(() => {
+    return (
+        (isZeitauswahlSpitzenstunde.value &&
+            chosenOptionsCopy.value.zeitraum.length != 2) ||
+        (isZeitauswahlSpitzenstundeKfz.value &&
+            chosenOptionsCopy.value.zeitraum.length == 2)
+    );
+});
+
 const isZeitauswahlSpitzenstundeKfz = computed(() => {
     return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ;
+});
+
+const isZeitauswahlSpitzenstunde = computed(() => {
+    return (
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_RAD ||
+        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_FUSS
+    );
 });
 
 watch(
     () => chosenOptionsCopy.value.zeitauswahl,
     () => {
-        if (
-            chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ
-        ) {
+        if (isIntervallChangingLocked.value) {
             chosenOptionsCopy.value.intervall =
                 ZaehldatenIntervall.STUNDE_VIERTEL;
         }
