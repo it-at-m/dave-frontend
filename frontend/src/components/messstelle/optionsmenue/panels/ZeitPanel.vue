@@ -110,11 +110,11 @@ const zeitblock = ref(Zeitblock.ZB_00_24);
 const route = useRoute();
 
 interface Props {
-    chosenOptions: MessstelleOptionsDTO;
+    value: MessstelleOptionsDTO;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits(["update:chosen-options"]);
+const emit = defineEmits(["input"]);
 const store = useStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(false);
@@ -142,9 +142,8 @@ const getSortedDateRange = computed(() => {
 const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 const chosenOptionsCopy = computed({
-    get: () => props.chosenOptions,
-    set: (payload: MessstelleOptionsDTO) =>
-        emit("update:chosen-options", payload),
+    get: () => props.value,
+    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
 const chosenOptionsCopyZeitraum = computed(() => {

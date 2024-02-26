@@ -31,7 +31,7 @@
                             hover
                             focusable
                         >
-                            <zeit-panel :chosen-options.sync="chosenOptions" />
+                            <zeit-panel v-model="chosenOptions" />
                             <fahrzeug-panel v-model="chosenOptions" />
                         </v-expansion-panels>
                     </v-sheet>
