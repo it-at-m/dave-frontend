@@ -68,7 +68,7 @@ function getTagesTypText(key: string): string | undefined {
 }
 
 const helperText = computed(() => {
-    if (props.isChosenTagesTypValid) {
+    if (!props.isChosenTagesTypValid) {
         switch (chosenOptionsCopy.value.tagesTyp) {
             case TagesTyp.WERKTAG_DI_MI_DO:
                 return "Der  ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
