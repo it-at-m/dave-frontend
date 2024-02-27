@@ -23,7 +23,7 @@
     </v-row>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import KeyVal from "@/types/KeyVal";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
@@ -90,10 +90,6 @@ const isZeitauswahlStunde = computed(() => {
     return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE;
 });
 
-const test = computed(() => {
-    return chosenOptionsCopy.value.zeitauswahl;
-});
-
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
     return (
         chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK ||
@@ -107,5 +103,13 @@ const isZeitauswahlSpitzenstunde = computed(() => {
         chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_RAD ||
         chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_FUSS
     );
+});
+
+watch(isZeitauswahlStunde, () => {
+    if (isZeitauswahlStunde.value) {
+        chosenOptionsCopy.value.zeitblock = ZeitblockStuendlich.ZB_06_07;
+    } else {
+        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_10;
+    }
 });
 </script>
