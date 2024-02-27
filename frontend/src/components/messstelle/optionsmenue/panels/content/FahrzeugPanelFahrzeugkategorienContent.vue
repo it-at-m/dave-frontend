@@ -79,7 +79,7 @@
                 <v-hover v-model="hoverLfw">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
-                        label="Lieferwagen (LFW)"
+                        label="Lieferwagen (Lfw)"
                         :persistent-hint="isTypeDisabled('LFW')"
                         :disabled="isTypeDisabled('LFW')"
                         color="grey darken-1"
