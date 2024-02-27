@@ -45,9 +45,11 @@ export default class FahrzeugklassenIcon extends Vue {
      */
     static fahrzeugklassenIcons(): Map<string, IconTooltip> {
         return new Map([
-            ["8+1", new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1")],
+            [
+                "8 Fahrzeugklassen + sonst. gem. TLS 2002",
+                new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1"),
+            ],
             ["QKFZ", new IconTooltip("$qkfz", "Fahrzeugklassen: QKFZ")],
-            //todo: ist bei QPKW + QLKW ein leerzeichen dazwischen?
             [
                 "QPKW + QLKW",
                 new IconTooltip("$qpkwLkw", "Fahrzeugklassen: QPKW + QLKW"),

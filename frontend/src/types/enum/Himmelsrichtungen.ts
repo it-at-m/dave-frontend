@@ -6,10 +6,3 @@ export enum Himmelsrichtungen {
 }
 
 export default Himmelsrichtungen;
-
-export const himmelsrichtungText = new Map<string, string>([
-    [Himmelsrichtungen.NORD, "Nord"],
-    [Himmelsrichtungen.SUED, "Süd"],
-    [Himmelsrichtungen.OST, "Ost"],
-    [Himmelsrichtungen.WEST, "West"],
-]);

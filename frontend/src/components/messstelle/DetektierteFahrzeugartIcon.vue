@@ -24,9 +24,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const iconOptions = computed(() => {
     if (props.detektierteFahrzeugart == DetektierteFahrzeugart.RAD) {
-        return new IconOptions("mdi-bicycle", "Fahrrad");
+        return new IconOptions("mdi-bicycle", "Fahrzeugart: Fahrrad");
     } else if (props.detektierteFahrzeugart == DetektierteFahrzeugart.KFZ) {
-        return new IconOptions("mdi-car", "KFZ");
+        return new IconOptions("mdi-car", "Fahrzeugart: KFZ");
     } else {
         return new IconOptions(
             "mdi-alert-circle",
