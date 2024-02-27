@@ -27,11 +27,11 @@
                 <span class="grey--text text--lighten-1"
                     >Zeit:
                     <span class="font-weight-medium white--text"
-                        >{{ zeitblock }} Uhr</span
-                    >
+                        >{{ zeitblock }}
+                    </span>
                     in
                     <span class="font-weight-medium white--text"
-                        >{{ zeitintervall }} min
+                        >{{ zeitintervall }}
                     </span>
                     Intervallen
                     <span class="font-weight-medium white--text">{{
@@ -75,7 +75,10 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useDateUtils } from "@/util/DateUtils";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -103,12 +106,21 @@ const zeitraum: Ref<string> = computed(() => {
 });
 
 const zeitblock: Ref<string> = computed(() => {
-    // Hier wird nachher der Zeitblock bestimmt
-    return "0-24";
+    const zeitblock = zeitblockInfo.get(
+        filterOptionsMessstelle.value.zeitblock
+    );
+    if (
+        zeitblock &&
+        filterOptionsMessstelle.value.zeitauswahl != Zeitauswahl.TAGESWERT
+    ) {
+        return zeitblock.text;
+    }
+    return Zeitauswahl.TAGESWERT;
 });
 
 const zeitintervall = computed(() => {
-    // Hier wird nachher das Zeitintervall bestimmt
-    return "15";
+    return ZaehldatenIntervallToBeschreibung.get(
+        filterOptionsMessstelle.value.intervall
+    );
 });
 </script>

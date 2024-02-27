@@ -34,8 +34,8 @@
                         @change="checkIfDateIsAlreadySelected"
                     ></v-date-picker>
                 </v-col>
-                <v-col cols="4"
-                    ><v-text-field
+                <v-col cols="4">
+                    <v-text-field
                         :label="getChosenDateAsText"
                         readonly
                         :value="getFormattedSelectedZeit"
@@ -64,47 +64,92 @@
                     </p>
                 </v-col>
             </v-row>
+            <v-divider></v-divider>
+
+            <tages-typ-radiogroup
+                v-model="chosenOptionsCopy"
+                :is-chosen-tages-typ-valid="isChosenTagesTypValid"
+            />
+            <v-divider></v-divider>
+
+            <zeitauswahl-radiogroup
+                v-model="chosenOptionsCopy"
+                :messstelle-detektierte-fahrzeugart="
+                    messstelleInfo.detektierteVerkehrsarten
+                "
+            />
+            <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
+            <v-spacer />
+            <v-divider></v-divider>
+            <zeit-intervall
+                v-model="chosenOptionsCopy"
+                :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
+            />
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
 
 <script setup lang="ts">
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { computed, onMounted, ref, Ref } from "vue";
+import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import { useStore } from "@/api/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
+import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
+import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
+import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
+import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
+import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import { useRoute } from "vue-router/composables";
+
+const route = useRoute();
 
 interface Props {
-    messstelleId: string;
-    chosenOptions: MessstelleOptionsDTO;
+    value: MessstelleOptionsDTO;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits(["update:chosen-options"]);
+const emit = defineEmits(["input"]);
 const store = useStore();
 const dateUtils = useDateUtils();
+const isChosenTagesTypValid = ref(false);
+const hoverSelectZeitintervall = ref(false);
 
 onMounted(() => {
-    MessstelleOptionsmenuService.getNichtPlausibleTage(props.messstelleId).then(
+    const messstelleId = route.params.messstelleId;
+    MessstelleOptionsmenuService.getNichtPlausibleTage(messstelleId).then(
         (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
             (nichtPlausibleTage.value =
                 nichtPlausibleTageDTO.nichtPlausibleTage)
     );
 });
 
+const messstelleInfo: Ref<MessstelleInfoDTO> = computed(() => {
+    return store.getters["messstelleInfo/getMessstelleInfo"];
+});
+
+const getSortedDateRange = computed(() => {
+    return dateUtils.sortDatesDescAsStrings(
+        chosenOptionsCopyZeitraum.value.slice()
+    );
+});
+
 const nichtPlausibleTage: Ref<string[]> = ref([]);
 
 const chosenOptionsCopy = computed({
-    get: () => props.chosenOptions,
-    set: (payload: MessstelleOptionsDTO) =>
-        emit("update:chosen-options", payload),
+    get: () => props.value,
+    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
 const chosenOptionsCopyZeitraum = computed(() => {
-    return chosenOptionsCopy.value.zeitraum;
+    return chosenOptionsCopy.value.zeitraum ?? [];
+});
+
+const chosenOptionsCopyWochentag = computed(() => {
+    return chosenOptionsCopy.value.tagesTyp ?? "";
 });
 
 const getChosenDateAsText = computed(() => {
@@ -140,6 +185,7 @@ const getFormattedSelectedZeit = computed(() => {
         return "";
     }
 });
+
 function allowedDatesRangeDatePicker(val: string) {
     const today = new Date();
     return new Date(val) < today;
@@ -154,7 +200,6 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
     }
     if (chosenOptionsCopyZeitraum.value.length == 2) {
         const filter = getAllDatesBetweenTwoDates();
-
         const tageAsDates: number[] = nichtPlausibleTage.value.map(
             (dateAsString: string) => new Date(dateAsString).valueOf()
         );
@@ -200,4 +245,23 @@ function checkIfDateIsAlreadySelected(val: string[]) {
         chosenOptionsCopyZeitraum.value.splice(0, 1);
     }
 }
+
+watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
+    if (
+        getSortedDateRange.value[0] &&
+        getSortedDateRange.value[1] &&
+        chosenOptionsCopy.value.tagesTyp
+    ) {
+        const chosenTagesTypValidRequestDto = {
+            startDate: getSortedDateRange.value[1],
+            endDate: getSortedDateRange.value[0],
+            tagesTyp: chosenOptionsCopy.value.tagesTyp,
+        };
+        MessstelleOptionsmenuService.isTagesTypValid(
+            chosenTagesTypValidRequestDto
+        ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
+            isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
+        });
+    }
+});
 </script>
