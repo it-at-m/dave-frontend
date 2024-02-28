@@ -11,7 +11,7 @@
                 font-size="0.875rem"
                 font-weight="bold"
                 padding="10px 0 0 0"
-                header-text="Zeitauswahl"
+                header-text="Zeitraum"
             ></panel-header>
             <v-row
                 no-gutters
@@ -31,6 +31,7 @@
                         event-color="red"
                         locale="de-DE"
                         first-day-of-week="1"
+                        :picker-date.sync="pickerDate"
                         @change="checkIfDateIsAlreadySelected"
                     ></v-date-picker>
                 </v-col>
@@ -118,7 +119,7 @@ const store = useStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(false);
 const hoverSelectZeitintervall = ref(false);
-
+const pickerDate = ref("");
 onMounted(() => {
     const messstelleId = route.params.messstelleId;
     MessstelleOptionsmenuService.getNichtPlausibleTage(messstelleId).then(
@@ -263,6 +264,16 @@ watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
         ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
             isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
         });
+    }
+});
+
+watch(chosenOptionsCopyZeitraum, () => {
+    if (
+        chosenOptionsCopyZeitraum.value.length == 1 &&
+        chosenOptionsCopyZeitraum.value[0] ==
+            messstelleInfo.value.datumLetztePlausibleMessung
+    ) {
+        pickerDate.value = messstelleInfo.value.datumLetztePlausibleMessung;
     }
 });
 </script>
