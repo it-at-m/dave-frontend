@@ -50,6 +50,7 @@ declare module '@vue/runtime-core' {
     MessstelleHeaderInfo: typeof import('./src/components/messstelle/MessstelleHeaderInfo.vue')['default']
     MessstelleInfo: typeof import('./src/components/messstelle/MessstelleInfo.vue')['default']
     MessstelleKommentar: typeof import('./src/components/messstelle/MessstelleKommentar.vue')['default']
+    MesswerteListenausgabe: typeof import('./src/components/messstelle/charts/MesswerteListenausgabe.vue')['default']
     NichtAusgewaehlteZaehlung: typeof import('./src/components/zaehlstelle/NichtAusgewaehlteZaehlung.vue')['default']
     Optionsmenue: typeof import('./src/components/zaehlstelle/optionsmenue/Optionsmenue.vue')['default']
     OptionsmenueMessstelle: typeof import('./src/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue')['default']
