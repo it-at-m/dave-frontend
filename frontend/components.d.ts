@@ -46,6 +46,7 @@ declare module '@vue/runtime-core' {
     Loader: typeof import('./src/components/common/Loader.vue')['default']
     MessquerschnittAnzahlInfo: typeof import('./src/components/messstelle/MessquerschnittAnzahlInfo.vue')['default']
     MessquerschnittInfo: typeof import('./src/components/messstelle/MessquerschnittInfo.vue')['default']
+    MessquerschnittPanel: typeof import('./src/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue')['default']
     MessstelleDiagramme: typeof import('./src/components/messstelle/charts/MessstelleDiagramme.vue')['default']
     MessstelleHeaderInfo: typeof import('./src/components/messstelle/MessstelleHeaderInfo.vue')['default']
     MessstelleInfo: typeof import('./src/components/messstelle/MessstelleInfo.vue')['default']

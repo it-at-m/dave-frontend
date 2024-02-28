@@ -33,6 +33,7 @@
                         >
                             <zeit-panel v-model="chosenOptions" />
                             <fahrzeug-panel v-model="chosenOptions" />
+                            <messquerschnitt-panel v-model="chosenOptions" />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -68,6 +69,7 @@ import _ from "lodash";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 
 interface Props {
     messstelleId: string;
@@ -118,6 +120,9 @@ function setDefaultOptionsForMessstelle(): void {
         messstelle.value.datumLetztePlausibleMessung,
     ];
     chosenOptions.value.messquerschnitte = [];
+    messstelle.value.messquerschnitte.forEach((q) =>
+        chosenOptions.value.messquerschnitte.push(q.mqId)
+    );
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
     chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
