@@ -92,7 +92,7 @@
                                 <FahrzeugklassenIcon
                                     :fahrzeugklasse="fahrzeugKlasse"
                                     color="primary"
-                                    small="true"
+                                    small
                                 ></FahrzeugklassenIcon>
                                 <MessstelleKommentar
                                     :kommentar="messstelle.kommentar"
@@ -110,14 +110,13 @@
                         lg
                         class="hidden-md-and-down"
                     >
-                        <!-- todo: knotenarme hier anpassen -->
-                        <zaehlung-geometrie
+                        <messstelle-geometrie
                             height="60"
                             width="60"
                             active-color="#1565C0"
                             passive-color="#EEEEEE"
-                            :knotenarme="knotenarme"
-                        ></zaehlung-geometrie>
+                            :knotenarme="calculateKnotenarme(messstelle)"
+                        ></messstelle-geometrie>
                     </v-col>
                 </v-row>
             </v-sheet>
@@ -132,7 +131,8 @@ import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrz
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
-import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
+import MessstelleGeometrie from "@/components/messstelle/MEssstelleGeometrie.vue";
+import LadeKnotenarmMessstelleDTO from "@/types/messstelle/LadeKnotenarmMessstelleDTO";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
@@ -170,10 +170,20 @@ const detektierteVerkehrsart = computed(() => {
 });
 
 const abbauDatumExists = computed(() => {
-    // todo: abbaudatum ist beim ersten abruf leer und beim zweiten steht es drin, wird aber nicht richtig angezeigt
-    console.log("abbau:" + props.messstelle.abbaudatum);
-    return props.messstelle.abbaudatum;
+    return props.messstelle.abbaudatum != null;
 });
+
+function calculateKnotenarme(messstelle: MessstelleInfoDTO) {
+    let knotenarme: LadeKnotenarmMessstelleDTO[] = [];
+    for (let messquerschnitt of messstelle.messquerschnitte) {
+        knotenarme.push({
+            fahrtrichtung: messquerschnitt.fahrtrichtung,
+            strassenname: messquerschnitt.strassenname,
+        });
+    }
+    console.log(knotenarme);
+    return knotenarme;
+}
 
 const props = defineProps<Props>();
 </script>
