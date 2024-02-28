@@ -71,7 +71,7 @@
                 v-model="chosenOptionsCopy"
                 :is-chosen-tages-typ-valid="isChosenTagesTypValid"
             />
-            <v-divider></v-divider>
+            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"></v-divider>
 
             <zeitauswahl-radiogroup
                 v-model="chosenOptionsCopy"
