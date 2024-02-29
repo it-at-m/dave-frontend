@@ -3,6 +3,7 @@ import LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungspla
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
+import LadePrcessedMessdatenDTO from "@/types/messstelle/LadePrcessedMessdatenDTO";
 
 export default class LadeMessdatenService {
     private static readonly ENDPOINT_LADE_MESSDATEN_PROCESSED: string =
@@ -16,7 +17,7 @@ export default class LadeMessdatenService {
 
     public static ladeMessdatenProcessed(
         messstelleId: string
-    ): Promise<LadeProcessedZaehldatenDTO> {
+    ): Promise<LadePrcessedMessdatenDTO> {
         return FetchService.getData(
             `${this.ENDPOINT_LADE_MESSDATEN_PROCESSED}?messstelle_id=${messstelleId}`,
             "Beim Laden der aufbreiteteten Messdaten ist ein Fehler aufgetreten."

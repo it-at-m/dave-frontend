@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     BelastungsplanKreisverkehr: typeof import('./src/components/zaehlstelle/charts/BelastungsplanKreisverkehr.vue')['default']
     BelastungsplanKreuzungSvg: typeof import('./src/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue')['default']
     BelastungsplanKreuzungSvgSchematischeUebersicht: typeof import('./src/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue')['default']
+    BelastungsplanMessquerschnittCard: typeof import('./src/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue')['default']
     DarstellungsoptionenPanel: typeof import('./src/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue')['default']
     DatatableAssetForm: typeof import('./src/components/pdfreport/assetforms/DatatableAssetForm.vue')['default']
     DatetimeInput: typeof import('./src/components/common/DatetimeInput.vue')['default']

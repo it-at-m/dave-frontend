@@ -51,6 +51,9 @@
                             Under Construction
                             <v-icon>mdi-car-wrench</v-icon>
                         </v-card-title>
+                        <belastungsplan-messquerschnitt-card
+                            :belastungsplan-data="belastungsplanDataDTO"
+                        />
                     </v-card>
                 </v-sheet>
             </v-tab-item>
@@ -139,6 +142,10 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
+import LadePrcessedMessdatenDTO from "@/types/messstelle/LadePrcessedMessdatenDTO";
+import ListBelastungsplanMessquerschnitteDTO from "@/types/messstelle/ListBelastungsplanMessquerschnitteDTO";
+import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
+import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -162,6 +169,8 @@ const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
 );
 
 const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
+
+const belastungsplanDataDTO = ref({} as ListBelastungsplanMessquerschnitteDTO);
 
 // Wieder entfernen, wenn alle Tabs fertig sind
 const showSpeedial: Ref<boolean> = ref(false);
@@ -217,12 +226,14 @@ function loadData() {
 function loadProcessedChartData() {
     chartDataLoading.value = true;
     LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value)
-        .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+        .then((processedZaehldaten: LadePrcessedMessdatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
+            belastungsplanDataDTO.value =
+                processedZaehldaten.listBelastungsplanMessquerschnitteDTO;
         })
         .finally(() => {
             chartDataLoading.value = false;
