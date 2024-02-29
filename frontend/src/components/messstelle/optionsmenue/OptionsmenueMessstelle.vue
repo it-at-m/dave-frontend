@@ -70,6 +70,7 @@ import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 interface Props {
     messstelleId: string;
@@ -82,6 +83,7 @@ const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
 
 const vuetify = useVuetify();
 const store = useStore();
+const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
 const chosenOptions = ref(
     DefaultObjectCreator.createDefaultMessstelleOptions()
@@ -123,6 +125,16 @@ function setDefaultOptionsForMessstelle(): void {
     messstelle.value.messquerschnitte.forEach((q) =>
         chosenOptions.value.messquerschnitte.push(q.mqId)
     );
+    if (messstelle.value.messquerschnitte.length === 1) {
+        store.commit(
+            "filteroptionsMessstelle/setDirection",
+            messstelleUtils.getDirectionOfMessquerschnitt(
+                messstelle.value.messquerschnitte[0]
+            )
+        );
+    } else {
+        store.commit("filteroptionsMessstelle/setDirection", "Alle Richtungen");
+    }
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
     chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
