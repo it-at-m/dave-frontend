@@ -133,7 +133,10 @@ function setDefaultOptionsForMessstelle(): void {
             )
         );
     } else {
-        store.commit("filteroptionsMessstelle/setDirection", "Alle Richtungen");
+        store.commit(
+            "filteroptionsMessstelle/setDirection",
+            messstelleUtils.alleRichtungen
+        );
     }
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
     chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;

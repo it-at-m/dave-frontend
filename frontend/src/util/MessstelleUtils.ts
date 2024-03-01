@@ -1,10 +1,11 @@
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 
 export function useMessstelleUtils() {
+    const alleRichtungen = "Alle Richtungen";
     function getDirectionOfMessquerschnitt(
         messquerschnitt: MessquerschnittInfoDTO
     ): string {
-        let direction = "";
+        let direction;
         switch (messquerschnitt.fahrtrichtung.toUpperCase()) {
             case "N":
                 direction = "Norden";
@@ -25,6 +26,7 @@ export function useMessstelleUtils() {
     }
 
     return {
+        alleRichtungen,
         getDirectionOfMessquerschnitt,
     };
 }
