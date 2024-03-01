@@ -1,5 +1,9 @@
 <template>
-    <div id="drawingMessquerschnittBelastungsplan" />
+    <v-sheet
+        id="drawingMessquerschnittBelastungsplan"
+        :width="props.dimension"
+        :height="props.dimension"
+    />
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
@@ -7,19 +11,27 @@ import ListBelastungsplanMessquerschnitteDTO from "@/types/messstelle/ListBelast
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
-import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
 
 interface Props {
     belastungsplanData: ListBelastungsplanMessquerschnitteDTO;
+    dimension: string;
 }
 
 const canvas = ref<Svg>(SVG.SVG());
+const viewbox = ref(800);
 
 const rotation = new Map<string, number>([
     ["N", 180],
-    ["O", 270],
+    ["O", 0],
     ["S", 0],
-    ["W", 90],
+    ["W", 180],
+]);
+
+const farben = new Map<string, string>([
+    ["N", "#000000"],
+    ["O", "#F44336"],
+    ["S", "#4CAF50"],
+    ["W", "#2196F3"],
 ]);
 
 const props = defineProps<Props>();
@@ -27,7 +39,8 @@ const props = defineProps<Props>();
 onMounted(() => {
     canvas.value
         .addTo("#drawingMessquerschnittBelastungsplan")
-        .size(1000, 1000);
+        .size(props.dimension, props.dimension)
+        .viewbox(0, 0, viewbox.value, viewbox.value);
     let groupedByDirecition = _.chain(
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
     )
@@ -35,10 +48,11 @@ onMounted(() => {
         .map((value, key) => ({ direction: key, data: value }))
         .value();
     console.log(groupedByDirecition);
-    drawArrowDownwards(150, 250, "S");
+    drawArrowDownwards(150, 250);
 });
 
-function drawArrowDownwards(startX: number, startY: number, direction: string) {
+function drawArrowDownwards(startX: number, startY: number) {
+    let querschnittGroup = canvas.value.group();
     let groupedByDirecition = _.chain(
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
     )
@@ -46,39 +60,47 @@ function drawArrowDownwards(startX: number, startY: number, direction: string) {
         .map((value, key) => ({ direction: key, data: value }))
         .value();
     let arrayOfDataForDirectionNorth = groupedByDirecition.find(
-        (obj) => obj.direction == "N"
+        (obj) => obj.direction == "N" || obj.direction == "W"
     );
     let arrayOfDataForDirectionSouth = groupedByDirecition.find(
-        (obj) => obj.direction == "S"
+        (obj) => obj.direction == "S" || obj.direction == "O"
     );
     arrayOfDataForDirectionSouth?.data.forEach((mq) => {
-        canvas.value
-            .path(
-                `M ${startX} ${startY} L ${startX} ${startY + 300} L ${
-                    startX - 10
-                } ${startY + 300} L ${startX + 10} ${startY + 315} L ${
-                    startX + 30
-                } ${startY + 300} L ${startX + 20} ${startY + 300} L ${
-                    startX + 20
-                } ${startY} L ${startX} ${startY}`
-            )
-            .stroke({ width: 2, color: "black" })
-            .attr("fill", "none")
-            .transform({
-                rotate: rotation.get(mq.direction),
-            });
-        canvas.value
-            .text(`${mq.sumKfz}`)
-            .rotate(270, startX, startY)
-            .move(startX + 10, startY);
-        canvas.value
-            .text(`${mq.sumSv}`)
-            .rotate(270, startX, startY)
-            .move(startX + 75, startY);
-        canvas.value
-            .text(`${mq.sumGv}`)
-            .rotate(270, startX, startY)
-            .move(startX + 140, startY);
+        querschnittGroup.add(
+            SVG.SVG()
+                .path(
+                    `M ${startX} ${startY} L ${startX} ${startY + 300} L ${
+                        startX - 10
+                    } ${startY + 300} L ${startX + 10} ${startY + 315} L ${
+                        startX + 30
+                    } ${startY + 300} L ${startX + 20} ${startY + 300} L ${
+                        startX + 20
+                    } ${startY} L ${startX} ${startY}`
+                )
+                .stroke({ width: 2, color: "black" })
+                .attr("fill", "none")
+                .transform({
+                    rotate: rotation.get(mq.direction),
+                })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumKfz}`)
+                .rotate(270, startX, startY)
+                .move(startX + 10, startY)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumSv}`)
+                .rotate(270, startX, startY)
+                .move(startX + 75, startY)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumGv}`)
+                .rotate(270, startX, startY)
+                .move(startX + 140, startY)
+        );
         startX += 50;
     });
     if (
@@ -97,60 +119,78 @@ function drawArrowDownwards(startX: number, startY: number, direction: string) {
             (accumulator, currentValue) => accumulator + currentValue.sumGv,
             0
         );
-        canvas.value
-            .line(startX - 25, startY, startX - 25, startY - 180)
-            .stroke({ width: 1, color: "black" });
-        canvas.value
-            .text(`${sumMqKfz}`)
-            .rotate(270, startX, startY)
-            .move(startX + 10, startY - 20);
-        canvas.value
-            .text(`${sumMqSv}`)
-            .rotate(270, startX, startY)
-            .move(startX + 75, startY - 20);
-        canvas.value
-            .text(`${sumMqGv}`)
-            .rotate(270, startX, startY)
-            .move(startX + 140, startY - 20);
+        querschnittGroup.add(
+            SVG.SVG()
+                .line(startX - 25, startY, startX - 25, startY - 180)
+                .stroke({ width: 1, color: "black" })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqKfz}`)
+                .rotate(270, startX, startY)
+                .move(startX + 10, startY - 20)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqSv}`)
+                .rotate(270, startX, startY)
+                .move(startX + 75, startY - 20)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqGv}`)
+                .rotate(270, startX, startY)
+                .move(startX + 140, startY - 20)
+        );
     }
     startX += 20;
-    canvas.value
-        .text("Dave-STraße")
-        .move(startX, startY + 150)
-        .font({ anchor: "middle", size: 25 })
-        .rotate(270, startX, startY + 150);
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("Dave-STraße")
+            .move(startX, startY + 150)
+            .font({ anchor: "middle", size: 25 })
+            .rotate(270, startX, startY + 150)
+    );
     startX += 90;
     arrayOfDataForDirectionNorth?.data.forEach((mq) => {
-        canvas.value
-            .path(
-                `M ${startX} ${startY} L ${startX} ${startY + 300} L ${
-                    startX - 10
-                } ${startY + 300} L ${startX + 10} ${startY + 315} L ${
-                    startX + 30
-                } ${startY + 300} L ${startX + 20} ${startY + 300} L ${
-                    startX + 20
-                } ${startY} L ${startX} ${startY}`
-            )
-            .stroke({ width: 2, color: "black" })
-            .attr("fill", "none")
-            .transform({
-                rotate: rotation.get(mq.direction),
-            });
-        canvas.value
-            .text(`${mq.sumKfz}`)
-            .move(startX, startY + 455)
-            .font({ anchor: "end" })
-            .rotate(270, startX, startY + 455);
-        canvas.value
-            .text(`${mq.sumSv}`)
-            .move(startX, startY + 390)
-            .font({ anchor: "end" })
-            .rotate(270, startX, startY + 390);
-        canvas.value
-            .text(`${mq.sumGv}`)
-            .move(startX, startY + 325)
-            .font({ anchor: "end" })
-            .rotate(270, startX, startY + 325);
+        querschnittGroup.add(
+            SVG.SVG()
+                .path(
+                    `M ${startX} ${startY} L ${startX} ${startY + 300} L ${
+                        startX - 10
+                    } ${startY + 300} L ${startX + 10} ${startY + 315} L ${
+                        startX + 30
+                    } ${startY + 300} L ${startX + 20} ${startY + 300} L ${
+                        startX + 20
+                    } ${startY} L ${startX} ${startY}`
+                )
+                .stroke({ width: 2, color: "black" })
+                .attr("fill", "none")
+                .transform({
+                    rotate: rotation.get(mq.direction),
+                })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumKfz}`)
+                .move(startX, startY + 455)
+                .font({ anchor: "end" })
+                .rotate(270, startX, startY + 455)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumSv}`)
+                .move(startX, startY + 390)
+                .font({ anchor: "end" })
+                .rotate(270, startX, startY + 390)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumGv}`)
+                .move(startX, startY + 325)
+                .font({ anchor: "end" })
+                .rotate(270, startX, startY + 325)
+        );
         startX += 50;
     });
     if (arrayOfDataForDirectionNorth?.data.length > 1) {
@@ -166,26 +206,66 @@ function drawArrowDownwards(startX: number, startY: number, direction: string) {
             (accumulator, currentValue) => accumulator + currentValue.sumGv,
             0
         );
-        canvas.value
-            .line(startX - 25, startY + 500, startX - 25, startY + 315)
-            .stroke({ width: 1, color: "black" });
-        canvas.value
-            .text(`${sumMqKfz}`)
-            .move(startX - 20, startY + 455)
-            .font({ anchor: "end" })
-            .rotate(270, startX - 20, startY + 455);
-        canvas.value
-            .text(`${sumMqSv}`)
-            .move(startX - 20, startY + 390)
-            .font({ anchor: "end" })
-            .rotate(270, startX - 20, startY + 390);
-        canvas.value
-            .text(`${sumMqGv}`)
-            .move(startX - 20, startY + 325)
-            .font({ anchor: "end" })
-            .rotate(270, startX - 20, startY + 325);
+        querschnittGroup.add(
+            SVG.SVG()
+                .line(startX - 25, startY + 500, startX - 25, startY + 315)
+                .stroke({ width: 1, color: "black" })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqKfz}`)
+                .move(startX - 20, startY + 455)
+                .font({ anchor: "end" })
+                .rotate(270, startX - 20, startY + 455)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqSv}`)
+                .move(startX - 20, startY + 390)
+                .font({ anchor: "end" })
+                .rotate(270, startX - 20, startY + 390)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqGv}`)
+                .move(startX - 20, startY + 325)
+                .font({ anchor: "end" })
+                .rotate(270, startX - 20, startY + 325)
+        );
     }
-    canvas.value.rotate(90, 100, 350);
+    let messtelleInfoGroupXCoords = startX;
+    if (arrayOfDataForDirectionSouth?.direction == "W") {
+        querschnittGroup.rotate(90).translate(100, -150);
+        messtelleInfoGroupXCoords = startY + 500;
+    }
+    let messstelleInfoGroup = canvas.value.group();
+    messstelleInfoGroup.add(
+        SVG.SVG().text("Messstelle: 4xxx").move(messtelleInfoGroupXCoords, 0)
+    );
+    messstelleInfoGroup.add(
+        SVG.SVG().text("Stadtbezirk: 4xxx").move(messtelleInfoGroupXCoords, 20)
+    );
+    messstelleInfoGroup.add(
+        SVG.SVG().text("Messtag: 4xxx").move(messtelleInfoGroupXCoords, 40)
+    );
+    messstelleInfoGroup.add(
+        SVG.SVG().text("Messzeitraum: 4xxx").move(messtelleInfoGroupXCoords, 60)
+    );
+    let northGroup = canvas.value.group();
+    northGroup
+        .path("M 30 0 L 20 30 L 40 30 L 30 0")
+        .stroke({ width: 1, color: "black" })
+        .attr("fill", "none");
+    northGroup.text("N").move(25, 15).font({ size: 13 });
+    canvas.value
+        .text(function (add) {
+            add.tspan("Tageswert ");
+            add.tspan("0-24 Uhr").newLine();
+            add.tspan("KV = Pkw + Lfw + Lkw + Lz + Bus + Krad").newLine();
+            add.tspan("SV = Lkw + lz + Bus").newLine();
+            add.tspan("GV = Lkw + Lz").newLine();
+        })
+        .move(0, startY + 500);
 }
 </script>
 
