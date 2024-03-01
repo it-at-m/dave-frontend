@@ -31,6 +31,7 @@ import ZeitblockStuendlich, {
 } from "@/types/enum/ZeitblockStuendlich";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -40,6 +41,7 @@ const emit = defineEmits<{
     (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 const props = defineProps<Props>();
+const messstelleUtils = useMessstelleUtils();
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
@@ -98,10 +100,8 @@ const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
 });
 
 const isZeitauswahlSpitzenstunde = computed(() => {
-    return (
-        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_KFZ ||
-        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_RAD ||
-        chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_FUSS
+    return messstelleUtils.isZeitauswahlSpitzenstunde(
+        chosenOptionsCopy.value.zeitauswahl
     );
 });
 

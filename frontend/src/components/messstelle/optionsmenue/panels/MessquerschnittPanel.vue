@@ -44,6 +44,8 @@
                             filled
                             dense
                             multiple
+                            :rules="[REQUIRED]"
+                            @change="updateLage"
                         />
                     </v-hover>
                 </v-col>
@@ -68,8 +70,6 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import KeyVal from "@/types/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
-import Zeitblock from "@/types/enum/Zeitblock";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -105,16 +105,12 @@ const direction = computed({
         store.commit("filteroptionsMessstelle/setDirection", payload),
 });
 
-function updateOptions() {
-    chosenOptionsCopy.value.messquerschnitte = [];
-    lageValues.value.forEach((value) =>
-        chosenOptionsCopy.value.messquerschnitte.push(value.value)
-    );
-}
-
 const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
     let result: Array<KeyVal> = [];
-    if (messstelle.value.messquerschnitte.length > 1) {
+    if (
+        messstelle.value.messquerschnitte.length > 1 &&
+        !isZeitauswahlSpitzenstunde.value
+    ) {
         result.push({
             text: messstelleUtils.alleRichtungen,
             value: messstelleUtils.alleRichtungen,
@@ -180,4 +176,59 @@ const helpTextLageHover: ComputedRef<string> = computed(() => {
     }
     return text;
 });
+
+const isZeitauswahlSpitzenstunde = computed(() => {
+    return messstelleUtils.isZeitauswahlSpitzenstunde(
+        chosenOptionsCopy.value.zeitauswahl
+    );
+});
+const zeitauswahl = computed(() => {
+    return chosenOptionsCopy.value.zeitauswahl;
+});
+
+const previousSelectedStructures: Ref<Array<string>> = ref(
+    chosenOptionsCopy.value.messquerschnitte
+);
+
+watch(zeitauswahl, () => {
+    if (
+        isZeitauswahlSpitzenstunde.value &&
+        chosenOptionsCopy.value.messquerschnitte.length > 1
+    ) {
+        chosenOptionsCopy.value.messquerschnitte = [];
+    }
+    previousSelectedStructures.value = chosenOptionsCopy.value.messquerschnitte;
+});
+
+function updateOptions() {
+    if (!isZeitauswahlSpitzenstunde.value) {
+        chosenOptionsCopy.value.messquerschnitte = [];
+        lageValues.value.forEach((value) =>
+            chosenOptionsCopy.value.messquerschnitte.push(value.value)
+        );
+    }
+    previousSelectedStructures.value = chosenOptionsCopy.value.messquerschnitte;
+}
+
+function updateLage(value: Array<string>) {
+    const added = value.filter(
+        (val) => !previousSelectedStructures.value.includes(val)
+    );
+    previousSelectedStructures.value = value;
+    if (isZeitauswahlSpitzenstunde.value) {
+        chosenOptionsCopy.value.messquerschnitte = added;
+        previousSelectedStructures.value =
+            chosenOptionsCopy.value.messquerschnitte;
+    }
+}
+
+function REQUIRED(v: Array<string>) {
+    if (v.length > 0) return true;
+
+    let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+    if (isZeitauswahlSpitzenstunde.value) {
+        errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+    }
+    return errortext;
+}
 </script>

@@ -71,6 +71,7 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import { Levels } from "@/api/error";
 
 interface Props {
     messstelleId: string;
@@ -101,8 +102,24 @@ watch(messstelle, () => {
 });
 
 function setChosenOptions(): void {
-    saveChosenOptions();
-    dialog.value = false;
+    if (chosenOptions.value.messquerschnitte.length > 0) {
+        saveChosenOptions();
+        dialog.value = false;
+    } else {
+        let errortext =
+            "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+        if (
+            messstelleUtils.isZeitauswahlSpitzenstunde(
+                chosenOptions.value.zeitauswahl
+            )
+        ) {
+            errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        }
+        store.dispatch("snackbar/showToast", {
+            snackbarTextPart1: errortext,
+            level: Levels.ERROR,
+        });
+    }
 }
 
 function saveChosenOptions(): void {
