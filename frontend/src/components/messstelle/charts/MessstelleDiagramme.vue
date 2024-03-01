@@ -153,17 +153,14 @@ withDefaults(defineProps<Props>(), {
 
 const chartDataLoading: Ref<boolean> = ref(false);
 
-// Stepline
 const zaehldatenSteplineDTO: Ref<LadeZaehldatenSteplineDTO> = ref(
     {} as LadeZaehldatenSteplineDTO
 );
 
-// Heatmap
 const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
     {} as LadeZaehldatenHeatmapDTO
 );
 
-// Stepline
 const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
 // Wieder entfernen, wenn alle Tabs fertig sind
@@ -203,7 +200,11 @@ watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    showSpeedial.value = [TAB_GANGLINIE, TAB_HEATMAP].includes(activeTab.value);
+    showSpeedial.value = [
+        TAB_GANGLINIE,
+        TAB_HEATMAP,
+        TAB_LISTENAUSGABE,
+    ].includes(activeTab.value);
 });
 
 /**
