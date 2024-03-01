@@ -45,16 +45,10 @@
                     width="100%"
                     class="overflow-y-auto"
                 >
-                    <v-card ref="belastungsplanCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                        <belastungsplan-messquerschnitt-card
-                            :belastungsplan-data="belastungsplanDataDTO"
-                        />
-                    </v-card>
+                    <belastungsplan-messquerschnitt-card
+                        :belastungsplan-data="belastungsplanDataDTO"
+                        :dimension="contentHeight"
+                    />
                 </v-sheet>
             </v-tab-item>
             <v-tab-item>
