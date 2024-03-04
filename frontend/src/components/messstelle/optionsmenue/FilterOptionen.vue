@@ -54,15 +54,35 @@
                     >mdi-arrow-decision</v-icon
                 >
             </v-col>
-            <v-col cols="6">
-                <span class="text-caption grey--text text--lighten-1"
+            <v-col cols="9">
+                <span :class="getStyleClass(messquerschnitt.mqId)"
                     >{{ messquerschnitt.mqId }}
                     {{ messquerschnitt.lageMessquerschnitt }}</span
                 >
             </v-col>
-            <v-col cols="4">
-                <span class="text-caption grey--text text--lighten-1"
-                    >[ {{ messquerschnitt.fahrtrichtung }} ]</span
+            <v-col cols="2">
+                <span
+                    :class="
+                        getStyleClass(messquerschnitt.mqId) + ' hidden-xl-only'
+                    "
+                    >[
+                    {{
+                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
+                            .short
+                    }}
+                    ]</span
+                >
+                <span
+                    :class="
+                        getStyleClass(messquerschnitt.mqId) +
+                        ' hidden-lg-and-down'
+                    "
+                    >[
+                    {{
+                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
+                            .long
+                    }}
+                    ]</span
                 >
             </v-col>
         </v-row>
@@ -123,4 +143,19 @@ const zeitintervall = computed(() => {
         filterOptionsMessstelle.value.intervall
     );
 });
+
+const himmelsRichtungen: Map<string, unknown> = new Map<string, unknown>([
+    ["N", { long: "Nord", short: "N" }],
+    ["O", { long: "Ost", short: "O" }],
+    ["S", { long: "Süd", short: "S" }],
+    ["W", { long: "West", short: "W" }],
+]);
+
+function getStyleClass(mqId: string): string {
+    let notIncluded = "text-caption grey--text text--lighten-1";
+    let included = "text-caption font-weight-medium white--text";
+    return filterOptionsMessstelle.value.messquerschnitte.includes(mqId)
+        ? included
+        : notIncluded;
+}
 </script>
