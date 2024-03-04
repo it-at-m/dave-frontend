@@ -66,7 +66,10 @@
                         getStyleClass(messquerschnitt.mqId) + ' hidden-xl-only'
                     "
                     >[
-                    {{ himmelsRichtungen.get(messquerschnitt.fahrtrichtung).s }}
+                    {{
+                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
+                            .short
+                    }}
                     ]</span
                 >
                 <span
@@ -75,7 +78,10 @@
                         ' hidden-lg-and-down'
                     "
                     >[
-                    {{ himmelsRichtungen.get(messquerschnitt.fahrtrichtung).l }}
+                    {{
+                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
+                            .long
+                    }}
                     ]</span
                 >
             </v-col>
@@ -138,18 +144,18 @@ const zeitintervall = computed(() => {
     );
 });
 
-const himmelsRichtungen: Map<string, any> = new Map<string, any>([
-    ["N", { l: "Nord", s: "N" }],
-    ["O", { l: "Ost", s: "O" }],
-    ["S", { l: "Süd", s: "S" }],
-    ["W", { l: "West", s: "W" }],
+const himmelsRichtungen: Map<string, unknown> = new Map<string, unknown>([
+    ["N", { long: "Nord", short: "N" }],
+    ["O", { long: "Ost", short: "O" }],
+    ["S", { long: "Süd", short: "S" }],
+    ["W", { long: "West", short: "W" }],
 ]);
 
 function getStyleClass(mqId: string): string {
-    let styleClasse = "text-caption grey--text text--lighten-1";
-    if (filterOptionsMessstelle.value.messquerschnitte.includes(mqId)) {
-        styleClasse = "text-caption font-weight-medium white--text";
-    }
-    return styleClasse;
+    let notIncluded = "text-caption grey--text text--lighten-1";
+    let included = "text-caption font-weight-medium white--text";
+    return filterOptionsMessstelle.value.messquerschnitte.includes(mqId)
+        ? included
+        : notIncluded;
 }
 </script>

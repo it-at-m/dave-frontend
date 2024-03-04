@@ -116,15 +116,19 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
             value: messstelleUtils.alleRichtungen,
         });
     }
-    messstelle.value.messquerschnitte.forEach((q: MessquerschnittInfoDTO) => {
-        const keyVal: KeyVal = {
-            text: messstelleUtils.getDirectionOfMessquerschnitt(q),
-            value: q.fahrtrichtung,
-        };
-        if (!result.includes(keyVal)) {
-            result.push(keyVal);
+    messstelle.value.messquerschnitte.forEach(
+        (querschnitt: MessquerschnittInfoDTO) => {
+            const keyVal: KeyVal = {
+                text: messstelleUtils.getDirectionOfMessquerschnitt(
+                    querschnitt
+                ),
+                value: querschnitt.fahrtrichtung,
+            };
+            if (!result.includes(keyVal)) {
+                result.push(keyVal);
+            }
         }
-    });
+    );
     return result;
 });
 
@@ -132,14 +136,14 @@ const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
     let result: Array<KeyVal> = [];
     if (messstelle.value.messquerschnitte) {
         messstelle.value.messquerschnitte.forEach(
-            (q: MessquerschnittInfoDTO) => {
+            (querschnitt: MessquerschnittInfoDTO) => {
                 if (
-                    q.fahrtrichtung === direction.value ||
+                    querschnitt.fahrtrichtung === direction.value ||
                     direction.value === messstelleUtils.alleRichtungen
                 ) {
                     result.push({
-                        text: `${q.mqId} - ${q.lageMessquerschnitt}`,
-                        value: q.mqId,
+                        text: `${querschnitt.mqId} - ${querschnitt.lageMessquerschnitt}`,
+                        value: querschnitt.mqId,
                     });
                 }
             }
