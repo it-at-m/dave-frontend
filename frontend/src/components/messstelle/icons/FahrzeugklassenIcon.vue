@@ -8,53 +8,52 @@
     ></base-icon>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
+import { computed, ComputedRef } from "vue";
 
-@Component({
-    components: {
-        BaseIcon,
-    },
-})
-export default class FahrzeugklassenIcon extends Vue {
-    @Prop({ default: false }) small?: boolean;
-    @Prop({ default: false }) dense?: boolean;
-    @Prop({ default: "black" }) color?: string;
-    @Prop() fahrzeugklasse!: string;
+interface Props {
+    small: boolean;
+    dense: boolean;
+    color: string;
+    fahrzeugklasse: string;
+}
 
-    /**
-     * Lädt das richtige SVG Icon aus der Liste.
-     */
-    get icon() {
-        let result = FahrzeugklassenIcon.fahrzeugklassenIcons().get(
-            this.fahrzeugklasse
+const props = withDefaults(defineProps<Props>(), {
+    small: false,
+    dense: false,
+    color: "black",
+});
+
+/**
+ * Lädt das richtige SVG Icon aus der Liste.
+ */
+const icon: ComputedRef<IconTooltip> = computed(() => {
+    let result = fahrzeugklassenIcons().get(props.fahrzeugklasse);
+    if (result === undefined) {
+        result = new IconTooltip(
+            "mdi-help",
+            "Keine Information zu den Fahrzeugklassen"
         );
-        if (result === undefined) {
-            result = new IconTooltip(
-                "mdi-help",
-                "Keine Information zu den Fahrzeugklassen"
-            );
-        }
-        return result;
     }
+    return result;
+});
 
-    /**
-     * Alle Fahrzeugklassen Icons zu den Schlüsseln.
-     */
-    static fahrzeugklassenIcons(): Map<string, IconTooltip> {
-        return new Map([
-            [
-                "8 Fahrzeugklassen + sonst. gem. TLS 2002",
-                new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1"),
-            ],
-            ["QKFZ", new IconTooltip("$qkfz", "Fahrzeugklassen: QKFZ")],
-            [
-                "QPKW + QLKW",
-                new IconTooltip("$qpkwLkw", "Fahrzeugklassen: QPKW + QLKW"),
-            ],
-        ]);
-    }
+/**
+ * Alle Fahrzeugklassen Icons zu den Schlüsseln.
+ */
+function fahrzeugklassenIcons(): Map<string, IconTooltip> {
+    return new Map([
+        [
+            "8 Fahrzeugklassen + sonst. gem. TLS 2002",
+            new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1"),
+        ],
+        ["QKFZ", new IconTooltip("$qkfz", "Fahrzeugklassen: QKFZ")],
+        [
+            "QPKW + QLKW",
+            new IconTooltip("$qpkwLkw", "Fahrzeugklassen: QPKW + QLKW"),
+        ],
+    ]);
 }
 </script>

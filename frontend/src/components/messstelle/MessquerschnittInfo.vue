@@ -19,10 +19,12 @@
                     ID: {{ messquerschnitt.mqId }} |
                     {{ messquerschnitt.strassenname }} </span
                 ><br />
+                <!-- todo: der default wert für small wird nicht erkannt. hier wird dense übergeben und small nicht, deswegen meckert er dass small fehlt -->
                 <fahrtrichtung-icon
                     dense
                     :fahrtrichtung="messquerschnitt.fahrtrichtung"
                 ></fahrtrichtung-icon>
+                <!-- todo: der default wert für small wird nicht erkannt. hier wird dense übergeben und small nicht, deswegen meckert er dass small fehlt -->
                 <fahrstreifen-icon
                     dense
                     :fahrspuren="messquerschnitt.anzahlFahrspuren"
