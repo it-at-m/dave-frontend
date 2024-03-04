@@ -132,7 +132,6 @@ import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
 import MessstelleGeometrie from "@/components/messstelle/MEssstelleGeometrie.vue";
-import LadeKnotenarmMessstelleDTO from "@/types/messstelle/LadeKnotenarmMessstelleDTO";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
@@ -174,14 +173,13 @@ const abbauDatumExists = computed(() => {
 });
 
 function calculateKnotenarme(messstelle: MessstelleInfoDTO) {
-    let knotenarme: LadeKnotenarmMessstelleDTO[] = [];
+    let knotenarme = [];
     for (let messquerschnitt of messstelle.messquerschnitte) {
         knotenarme.push({
             fahrtrichtung: messquerschnitt.fahrtrichtung,
             strassenname: messquerschnitt.strassenname,
         });
     }
-    console.log(knotenarme);
     return knotenarme;
 }
 

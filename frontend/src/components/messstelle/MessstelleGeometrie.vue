@@ -134,55 +134,63 @@
     </v-sheet>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-// Typen
 /* eslint-disable no-unused-vars */
-import LadeKnotenarmMessstelleDTO from "@/types/messstelle/LadeKnotenarmMessstelleDTO";
+import { computed, ComputedRef } from "vue";
+import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 /* eslint-enable no-unused-vars */
 
-// todo: in composition api umwandeln!
-@Component
-export default class MessstelleGeometrie extends Vue {
-    @Prop({ default: 72 }) height?: number;
-    @Prop({ default: 72 }) width?: number;
-    @Prop({ default: "#FFFFFF" }) activeColor?: string;
-    @Prop({ default: "#757575" }) passiveColor?: string;
-    @Prop() knotenarme?: LadeKnotenarmMessstelleDTO[];
-
-    /**
-     * Wenn für der knotenarm im Array gefunden wurde, wird diese in der Grafik in der "activeColor" dargestellt,
-     * ansonsten in der passiveColor.
-     */
-    calculateColor(himmelsrichtung: string): string | undefined {
-        let color = this.passiveColor;
-
-        const gefilteterKnotenarm = this.knotenarme?.filter(
-            (k) => k.fahrtrichtung === himmelsrichtung
-        )[0];
-        if (gefilteterKnotenarm) {
-            color = this.activeColor;
-        }
-        console.log(color);
-        return color;
-    }
-
-    get includesKnotenarm1and3() {
-        return (
-            this.knotenarme?.filter((k) => k.fahrtrichtung === "N")[0] &&
-            this.knotenarme?.filter((k) => k.fahrtrichtung === "S")[0]
-        );
-    }
-
-    get includesKnotenarm2and4() {
-        return (
-            this.knotenarme?.filter((k) => k.fahrtrichtung === "O")[0] &&
-            this.knotenarme?.filter((k) => k.fahrtrichtung === "W")[0]
-        );
-    }
-
-    get hasKnotenarme() {
-        return this.knotenarme && this.knotenarme.length > 0;
-    }
+interface Props {
+    height: number;
+    width: number;
+    activeColor: string;
+    passiveColor: string;
+    knotenarme: MessquerschnittInfoDTO[];
 }
+
+const props = withDefaults(defineProps<Props>(), {
+    height: 72,
+    width: 72,
+    activeColor: "#FFFFFF",
+    passiveColor: "#757575",
+});
+
+/**
+ * Wenn für der knotenarm im Array gefunden wurde, wird diese in der Grafik in der "activeColor" dargestellt,
+ * ansonsten in der passiveColor.
+ */
+function calculateColor(himmelsrichtung: string): string | undefined {
+    let color = props.passiveColor;
+
+    const gefilteterKnotenarm = props.knotenarme?.filter(
+        (k) => k.fahrtrichtung === himmelsrichtung
+    )[0];
+    if (gefilteterKnotenarm) {
+        color = props.activeColor;
+    }
+    return color;
+}
+
+const hasKnotenarme: ComputedRef<boolean> = computed(() => {
+    return props.knotenarme && props.knotenarme.length > 0;
+});
+
+const includesKnotenarm1and3: ComputedRef<boolean> = computed(() => {
+    let north = false;
+    let south = false;
+    props.knotenarme.forEach((q) => {
+        north = north || q.fahrtrichtung === "N" || q.fahrtrichtung === "n";
+        south = south || q.fahrtrichtung === "S" || q.fahrtrichtung === "s";
+    });
+    return north && south;
+});
+
+const includesKnotenarm2and4: ComputedRef<boolean> = computed(() => {
+    let east = false;
+    let west = false;
+    props.knotenarme.forEach((q) => {
+        east = east || q.fahrtrichtung === "O" || q.fahrtrichtung === "o";
+        west = west || q.fahrtrichtung === "W" || q.fahrtrichtung === "w";
+    });
+    return east && west;
+});
 </script>
