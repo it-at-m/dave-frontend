@@ -11,6 +11,7 @@ import ListBelastungsplanMessquerschnitteDTO from "@/types/messstelle/ListBelast
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
+import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
 
 interface Props {
     belastungsplanData: ListBelastungsplanMessquerschnitteDTO;
@@ -34,13 +35,16 @@ const farben = new Map<string, string>([
     ["W", "#2196F3"],
 ]);
 
+const startX = ref(0);
+const startY = ref(0);
+
 const props = defineProps<Props>();
 
 onMounted(() => {
     canvas.value
         .addTo("#drawingMessquerschnittBelastungsplan")
-        .size(props.dimension, props.dimension)
-        .viewbox(0, 0, viewbox.value, viewbox.value);
+        .size(1500, 1500)
+        .viewbox(0, 0, viewbox.value + 200, viewbox.value + 200);
     let groupedByDirecition = _.chain(
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
     )
@@ -48,10 +52,12 @@ onMounted(() => {
         .map((value, key) => ({ direction: key, data: value }))
         .value();
     console.log(groupedByDirecition);
-    drawArrowDownwards(150, 250);
+    startX.value = 150;
+    startY.value = 250;
+    drawArrowDownwards();
 });
 
-function drawArrowDownwards(startX: number, startY: number) {
+function drawArrowDownwards() {
     let querschnittGroup = canvas.value.group();
     let groupedByDirecition = _.chain(
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
@@ -59,9 +65,45 @@ function drawArrowDownwards(startX: number, startY: number) {
         .groupBy("direction")
         .map((value, key) => ({ direction: key, data: value }))
         .value();
-    let arrayOfDataForDirectionNorth = groupedByDirecition.find(
-        (obj) => obj.direction == "N" || obj.direction == "W"
-    );
+
+    drawArrowsPointingSouth(groupedByDirecition, querschnittGroup);
+    startX.value += 20;
+    drawStreetName(querschnittGroup);
+    startX.value += 90;
+    drawArrowsPointingNorth(groupedByDirecition, querschnittGroup);
+    rotateArrowsIfNeccacary(querschnittGroup);
+    drawMessstelleInfo();
+    drawNorthSymbol();
+    drawLegende();
+}
+function rotateArrowsIfNeccacary(querschnittGroup: any) {
+    const direction =
+        props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
+            .direction;
+    if (direction == "O" || direction == "W") {
+        querschnittGroup.rotate(90).translate(100, -150);
+        startX.value = startY.value + 500;
+    }
+}
+function drawLegende() {
+    canvas.value
+        .text(function (add) {
+            add.tspan("Tageswert ");
+            add.tspan("0-24 Uhr").newLine();
+            add.tspan("KV = Pkw + Lfw + Lkw + Lz + Bus + Krad").newLine();
+            add.tspan("SV = Lkw + lz + Bus").newLine();
+            add.tspan("GV = Lkw + Lz").newLine();
+        })
+        .move(0, startY.value + 500);
+}
+
+function drawArrowsPointingSouth(
+    groupedByDirecition: {
+        data: LadeBelastungsplanMessqueschnittDataDTO[];
+        direction: string;
+    }[],
+    querschnittGroup: any
+) {
     let arrayOfDataForDirectionSouth = groupedByDirecition.find(
         (obj) => obj.direction == "S" || obj.direction == "O"
     );
@@ -69,16 +111,18 @@ function drawArrowDownwards(startX: number, startY: number) {
         querschnittGroup.add(
             SVG.SVG()
                 .path(
-                    `M ${startX} ${startY} L ${startX} ${startY + 300} L ${
-                        startX - 10
-                    } ${startY + 300} L ${startX + 10} ${startY + 315} L ${
-                        startX + 30
-                    } ${startY + 300} L ${startX + 20} ${startY + 300} L ${
-                        startX + 20
-                    } ${startY} L ${startX} ${startY}`
+                    `M ${startX.value} ${startY.value} L ${startX.value} ${
+                        startY.value + 300
+                    } L ${startX.value - 10} ${startY.value + 300} L ${
+                        startX.value + 10
+                    } ${startY.value + 315} L ${startX.value + 30} ${
+                        startY.value + 300
+                    } L ${startX.value + 20} ${startY.value + 300} L ${
+                        startX.value + 20
+                    } ${startY.value} L ${startX.value} ${startY.value}`
                 )
                 .stroke({ width: 2, color: "black" })
-                .attr("fill", "none")
+                .attr("fill", farben.get(mq.direction))
                 .transform({
                     rotate: rotation.get(mq.direction),
                 })
@@ -86,23 +130,171 @@ function drawArrowDownwards(startX: number, startY: number) {
         querschnittGroup.add(
             SVG.SVG()
                 .text(`${mq.sumKfz}`)
-                .rotate(270, startX, startY)
-                .move(startX + 10, startY)
+                .rotate(270, startX.value, startY.value)
+                .move(startX.value + 10, startY.value)
         );
         querschnittGroup.add(
             SVG.SVG()
                 .text(`${mq.sumSv}`)
-                .rotate(270, startX, startY)
-                .move(startX + 75, startY)
+                .rotate(270, startX.value, startY.value)
+                .move(startX.value + 75, startY.value)
         );
         querschnittGroup.add(
             SVG.SVG()
                 .text(`${mq.sumGv}`)
-                .rotate(270, startX, startY)
-                .move(startX + 140, startY)
+                .rotate(270, startX.value, startY.value)
+                .move(startX.value + 140, startY.value)
         );
-        startX += 50;
+        startX.value += 50;
     });
+    addSumSouthIfNeccacary(arrayOfDataForDirectionSouth, querschnittGroup);
+}
+
+function drawStreetName(querschnittGroup: any) {
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("Dave-STraße")
+            .move(startX.value, startY.value + 150)
+            .font({ anchor: "middle", size: 25 })
+            .rotate(270, startX.value, startY.value + 150)
+    );
+}
+
+function addSumNorthIfNeccacary(
+    arrayOfDataForDirectionNorth: {
+        data: LadeBelastungsplanMessqueschnittDataDTO[] | undefined;
+        direction: string | undefined;
+    },
+    querschnittGroup: any
+) {
+    if (arrayOfDataForDirectionNorth?.data.length > 1) {
+        let sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumKfz,
+            0
+        );
+        let sumMqSv = arrayOfDataForDirectionNorth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumSv,
+            0
+        );
+        let sumMqGv = arrayOfDataForDirectionNorth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumGv,
+            0
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .line(
+                    startX.value - 25,
+                    startY.value + 500,
+                    startX.value - 25,
+                    startY.value + 315
+                )
+                .stroke({ width: 1, color: "black" })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqKfz}`)
+                .move(startX.value - 20, startY.value + 455)
+                .font({ anchor: "end" })
+                .rotate(270, startX.value - 20, startY.value + 455)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqSv}`)
+                .move(startX.value - 20, startY.value + 390)
+                .font({ anchor: "end" })
+                .rotate(270, startX.value - 20, startY.value + 390)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${sumMqGv}`)
+                .move(startX.value - 20, startY.value + 325)
+                .font({ anchor: "end" })
+                .rotate(270, startX.value - 20, startY.value + 325)
+        );
+    }
+}
+
+function drawArrowsPointingNorth(
+    groupedByDirecition: {
+        data: LadeBelastungsplanMessqueschnittDataDTO[];
+        direction: string;
+    }[],
+    querschnittGroup: any
+) {
+    let arrayOfDataForDirectionNorth = groupedByDirecition.find(
+        (obj) => obj.direction == "N" || obj.direction == "W"
+    );
+    arrayOfDataForDirectionNorth?.data.forEach((mq) => {
+        querschnittGroup.add(
+            SVG.SVG()
+                .path(
+                    `M ${startX.value} ${startY.value} L ${startX.value} ${
+                        startY.value + 300
+                    } L ${startX.value - 10} ${startY.value + 300} L ${
+                        startX.value + 10
+                    } ${startY.value + 315} L ${startX.value + 30} ${
+                        startY.value + 300
+                    } L ${startX.value + 20} ${startY.value + 300} L ${
+                        startX.value + 20
+                    } ${startY.value} L ${startX.value} ${startY.value}`
+                )
+                .stroke({ width: 2, color: "black" })
+                .attr("fill", farben.get(mq.direction))
+                .transform({
+                    rotate: rotation.get(mq.direction),
+                })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumKfz}`)
+                .move(startX.value, startY.value + 455)
+                .font({ anchor: "end" })
+                .rotate(270, startX.value, startY.value + 455)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumSv}`)
+                .move(startX.value, startY.value + 390)
+                .font({ anchor: "end" })
+                .rotate(270, startX.value, startY.value + 390)
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${mq.sumGv}`)
+                .move(startX.value, startY.value + 325)
+                .font({ anchor: "end" })
+                .rotate(270, startX.value, startY.value + 325)
+        );
+        startX.value += 50;
+    });
+    addSumNorthIfNeccacary(arrayOfDataForDirectionNorth, querschnittGroup);
+}
+
+function drawMessstelleInfo() {
+    canvas.value
+        .text(function (add) {
+            add.tspan("Messstelle ").font({ weight: "bold" });
+            add.tspan("Stadtbezirk").newLine();
+            add.tspan("Messtag").newLine();
+            add.tspan("Messzeitraum").newLine();
+        })
+        .move(startX.value, 0);
+}
+
+function drawNorthSymbol() {
+    canvas.value
+        .path("M 30 0 L 20 30 L 40 30 L 30 0")
+        .stroke({ width: 1, color: "black" })
+        .attr("fill", "none");
+    canvas.value.text("N").move(25, 15).font({ size: 13 });
+}
+
+function addSumSouthIfNeccacary(
+    arrayOfDataForDirectionSouth:
+        | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+        | undefined,
+    querschnittGroup: any
+) {
     if (
         arrayOfDataForDirectionSouth &&
         arrayOfDataForDirectionSouth.data.length > 1
@@ -121,151 +313,33 @@ function drawArrowDownwards(startX: number, startY: number) {
         );
         querschnittGroup.add(
             SVG.SVG()
-                .line(startX - 25, startY, startX - 25, startY - 180)
-                .stroke({ width: 1, color: "black" })
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${sumMqKfz}`)
-                .rotate(270, startX, startY)
-                .move(startX + 10, startY - 20)
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${sumMqSv}`)
-                .rotate(270, startX, startY)
-                .move(startX + 75, startY - 20)
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${sumMqGv}`)
-                .rotate(270, startX, startY)
-                .move(startX + 140, startY - 20)
-        );
-    }
-    startX += 20;
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("Dave-STraße")
-            .move(startX, startY + 150)
-            .font({ anchor: "middle", size: 25 })
-            .rotate(270, startX, startY + 150)
-    );
-    startX += 90;
-    arrayOfDataForDirectionNorth?.data.forEach((mq) => {
-        querschnittGroup.add(
-            SVG.SVG()
-                .path(
-                    `M ${startX} ${startY} L ${startX} ${startY + 300} L ${
-                        startX - 10
-                    } ${startY + 300} L ${startX + 10} ${startY + 315} L ${
-                        startX + 30
-                    } ${startY + 300} L ${startX + 20} ${startY + 300} L ${
-                        startX + 20
-                    } ${startY} L ${startX} ${startY}`
+                .line(
+                    startX.value - 25,
+                    startY.value,
+                    startX.value - 25,
+                    startY.value - 180
                 )
-                .stroke({ width: 2, color: "black" })
-                .attr("fill", "none")
-                .transform({
-                    rotate: rotation.get(mq.direction),
-                })
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${mq.sumKfz}`)
-                .move(startX, startY + 455)
-                .font({ anchor: "end" })
-                .rotate(270, startX, startY + 455)
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${mq.sumSv}`)
-                .move(startX, startY + 390)
-                .font({ anchor: "end" })
-                .rotate(270, startX, startY + 390)
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${mq.sumGv}`)
-                .move(startX, startY + 325)
-                .font({ anchor: "end" })
-                .rotate(270, startX, startY + 325)
-        );
-        startX += 50;
-    });
-    if (arrayOfDataForDirectionNorth?.data.length > 1) {
-        let sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.sumKfz,
-            0
-        );
-        let sumMqSv = arrayOfDataForDirectionNorth?.data.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.sumSv,
-            0
-        );
-        let sumMqGv = arrayOfDataForDirectionNorth?.data.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.sumGv,
-            0
-        );
-        querschnittGroup.add(
-            SVG.SVG()
-                .line(startX - 25, startY + 500, startX - 25, startY + 315)
                 .stroke({ width: 1, color: "black" })
         );
         querschnittGroup.add(
             SVG.SVG()
                 .text(`${sumMqKfz}`)
-                .move(startX - 20, startY + 455)
-                .font({ anchor: "end" })
-                .rotate(270, startX - 20, startY + 455)
+                .rotate(270, startX.value, startY.value)
+                .move(startX.value + 10, startY.value - 20)
         );
         querschnittGroup.add(
             SVG.SVG()
                 .text(`${sumMqSv}`)
-                .move(startX - 20, startY + 390)
-                .font({ anchor: "end" })
-                .rotate(270, startX - 20, startY + 390)
+                .rotate(270, startX.value, startY.value)
+                .move(startX.value + 75, startY.value - 20)
         );
         querschnittGroup.add(
             SVG.SVG()
                 .text(`${sumMqGv}`)
-                .move(startX - 20, startY + 325)
-                .font({ anchor: "end" })
-                .rotate(270, startX - 20, startY + 325)
+                .rotate(270, startX.value, startY.value)
+                .move(startX.value + 140, startY.value - 20)
         );
     }
-    let messtelleInfoGroupXCoords = startX;
-    if (arrayOfDataForDirectionSouth?.direction == "W") {
-        querschnittGroup.rotate(90).translate(100, -150);
-        messtelleInfoGroupXCoords = startY + 500;
-    }
-    let messstelleInfoGroup = canvas.value.group();
-    messstelleInfoGroup.add(
-        SVG.SVG().text("Messstelle: 4xxx").move(messtelleInfoGroupXCoords, 0)
-    );
-    messstelleInfoGroup.add(
-        SVG.SVG().text("Stadtbezirk: 4xxx").move(messtelleInfoGroupXCoords, 20)
-    );
-    messstelleInfoGroup.add(
-        SVG.SVG().text("Messtag: 4xxx").move(messtelleInfoGroupXCoords, 40)
-    );
-    messstelleInfoGroup.add(
-        SVG.SVG().text("Messzeitraum: 4xxx").move(messtelleInfoGroupXCoords, 60)
-    );
-    let northGroup = canvas.value.group();
-    northGroup
-        .path("M 30 0 L 20 30 L 40 30 L 30 0")
-        .stroke({ width: 1, color: "black" })
-        .attr("fill", "none");
-    northGroup.text("N").move(25, 15).font({ size: 13 });
-    canvas.value
-        .text(function (add) {
-            add.tspan("Tageswert ");
-            add.tspan("0-24 Uhr").newLine();
-            add.tspan("KV = Pkw + Lfw + Lkw + Lz + Bus + Krad").newLine();
-            add.tspan("SV = Lkw + lz + Bus").newLine();
-            add.tspan("GV = Lkw + Lz").newLine();
-        })
-        .move(0, startY + 500);
 }
 </script>
 
