@@ -25,6 +25,7 @@
                         v-model="chosenOptionsCopy.zeitraum"
                         range
                         :allowed-dates="allowedDatesRangeDatePicker"
+                        min="2006-01-01"
                         full-width
                         no-title
                         :events="nichtPlausibleTage"
