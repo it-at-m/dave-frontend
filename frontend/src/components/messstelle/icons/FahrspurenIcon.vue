@@ -1,11 +1,14 @@
 <template>
-    <base-icon
-        :small="small"
-        :dense="dense"
-        color="black"
-        :icon="icon.iconPath"
-        :tooltip="icon.tooltip"
-    ></base-icon>
+    <span class="text-caption">
+        <base-icon
+            :small="small"
+            :dense="dense"
+            color="black"
+            :icon="icon.iconPath"
+            :tooltip="icon.tooltip"
+        ></base-icon>
+        {{ icon.tooltip }}
+    </span>
 </template>
 
 <script setup lang="ts">

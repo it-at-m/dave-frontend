@@ -7,7 +7,7 @@
             <v-sheet
                 color="white"
                 width="100%"
-                class="px-4 py-2 primary--text text-body-2"
+                class="px-4 py-2 primary--text text-caption"
                 height="72px"
             >
                 <v-row

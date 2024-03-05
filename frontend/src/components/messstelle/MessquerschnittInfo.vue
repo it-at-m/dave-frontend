@@ -15,21 +15,23 @@
                 :color="calcRowColor(index)"
                 width="100%"
             >
-                <span>
-                    ID: {{ messquerschnitt.mqId }} |
-                    {{ messquerschnitt.strassenname }} </span
+                <span class="text-body-2">
+                    ID MQ: {{ messquerschnitt.mqId }} |
+                    <fahrtrichtung-icon
+                        small
+                        dense
+                        :fahrtrichtung="messquerschnitt.fahrtrichtung"
+                    ></fahrtrichtung-icon> </span
                 ><br />
-                <fahrtrichtung-icon
-                    dense
-                    :fahrtrichtung="messquerschnitt.fahrtrichtung"
-                ></fahrtrichtung-icon>
                 <fahrstreifen-icon
+                    small
                     dense
                     :fahrspuren="messquerschnitt.anzahlFahrspuren"
-                ></fahrstreifen-icon
-                ><br />
-                <span class="text-body-2">
-                    Lage: {{ messquerschnitt.standort }}
+                >
+                </fahrstreifen-icon>
+                <br />
+                <span class="text-caption">
+                    {{ messquerschnitt.standort }}
                 </span>
             </v-sheet>
         </v-row>

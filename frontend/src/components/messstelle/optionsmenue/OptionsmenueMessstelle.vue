@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-btn
+            class="ml-6 mt-2"
             color="secondary"
             @click="dialog = true"
         >
