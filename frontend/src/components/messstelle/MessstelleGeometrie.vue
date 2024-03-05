@@ -140,10 +140,10 @@ import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 /* eslint-enable no-unused-vars */
 
 interface Props {
-    height: number;
-    width: number;
-    activeColor: string;
-    passiveColor: string;
+    height?: number;
+    width?: number;
+    activeColor?: string;
+    passiveColor?: string;
     knotenarme: MessquerschnittInfoDTO[];
 }
 

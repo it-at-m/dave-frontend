@@ -131,7 +131,7 @@ import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrz
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
-import MessstelleGeometrie from "@/components/messstelle/MEssstelleGeometrie.vue";
+import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
