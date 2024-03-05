@@ -29,7 +29,7 @@
                 ></fahrstreifen-icon
                 ><br />
                 <span class="text-body-2">
-                    Lage: {{ messquerschnitt.lageMessquerschnitt }}
+                    Lage: {{ messquerschnitt.standort }}
                 </span>
             </v-sheet>
         </v-row>
