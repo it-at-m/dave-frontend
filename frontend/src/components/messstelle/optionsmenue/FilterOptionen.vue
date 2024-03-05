@@ -27,11 +27,11 @@
                 <span class="grey--text text--lighten-1"
                     >Zeit:
                     <span class="font-weight-medium white--text"
-                        >{{ zeitblock }} Uhr</span
-                    >
+                        >{{ zeitblock }}
+                    </span>
                     in
                     <span class="font-weight-medium white--text"
-                        >{{ zeitintervall }} min
+                        >{{ zeitintervall }}
                     </span>
                     Intervallen
                     <span class="font-weight-medium white--text">{{
@@ -54,15 +54,35 @@
                     >mdi-arrow-decision</v-icon
                 >
             </v-col>
-            <v-col cols="6">
-                <span class="text-caption grey--text text--lighten-1"
+            <v-col cols="9">
+                <span :class="getStyleClass(messquerschnitt.mqId)"
                     >{{ messquerschnitt.mqId }}
                     {{ messquerschnitt.lageMessquerschnitt }}</span
                 >
             </v-col>
-            <v-col cols="4">
-                <span class="text-caption grey--text text--lighten-1"
-                    >[ {{ messquerschnitt.fahrtrichtung }} ]</span
+            <v-col cols="2">
+                <span
+                    :class="
+                        getStyleClass(messquerschnitt.mqId) + ' hidden-xl-only'
+                    "
+                    >[
+                    {{
+                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
+                            .short
+                    }}
+                    ]</span
+                >
+                <span
+                    :class="
+                        getStyleClass(messquerschnitt.mqId) +
+                        ' hidden-lg-and-down'
+                    "
+                    >[
+                    {{
+                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
+                            .long
+                    }}
+                    ]</span
                 >
             </v-col>
         </v-row>
@@ -75,7 +95,10 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useDateUtils } from "@/util/DateUtils";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -103,12 +126,36 @@ const zeitraum: Ref<string> = computed(() => {
 });
 
 const zeitblock: Ref<string> = computed(() => {
-    // Hier wird nachher der Zeitblock bestimmt
-    return "0-24";
+    const zeitblock = zeitblockInfo.get(
+        filterOptionsMessstelle.value.zeitblock
+    );
+    if (
+        zeitblock &&
+        filterOptionsMessstelle.value.zeitauswahl != Zeitauswahl.TAGESWERT
+    ) {
+        return zeitblock.text;
+    }
+    return Zeitauswahl.TAGESWERT;
 });
 
 const zeitintervall = computed(() => {
-    // Hier wird nachher das Zeitintervall bestimmt
-    return "15";
+    return ZaehldatenIntervallToBeschreibung.get(
+        filterOptionsMessstelle.value.intervall
+    );
 });
+
+const himmelsRichtungen: Map<string, unknown> = new Map<string, unknown>([
+    ["N", { long: "Nord", short: "N" }],
+    ["O", { long: "Ost", short: "O" }],
+    ["S", { long: "Süd", short: "S" }],
+    ["W", { long: "West", short: "W" }],
+]);
+
+function getStyleClass(mqId: string): string {
+    let notIncluded = "text-caption grey--text text--lighten-1";
+    let included = "text-caption font-weight-medium white--text";
+    return filterOptionsMessstelle.value.messquerschnitte.includes(mqId)
+        ? included
+        : notIncluded;
+}
 </script>

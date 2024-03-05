@@ -273,7 +273,7 @@ const actualNumberOfSelectedVerkehrsarten = computed(() => {
  */
 const helpTextVerkehrsarten = computed(() => {
     if (hoverKfz.value) {
-        return "Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lastkraftwagen und Lastzüge.";
+        return "Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lieferwagen, Lastkraftwagen und Lastzüge.";
     }
     if (hoverSv.value) {
         return "Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).";

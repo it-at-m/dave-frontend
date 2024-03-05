@@ -5,6 +5,8 @@ import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -77,5 +79,17 @@ export default class DefaultObjectCreator {
             personenkraftwagen: false,
             lieferwagen: false,
         } as FahrzeugOptions;
+    }
+
+    public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
+        return {
+            fahrzeuge: this.createDefaultFahrzeugOptions(true),
+            intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
+            messquerschnitte: [],
+            tagesTyp: "",
+            zeitauswahl: "",
+            zeitblock: "",
+            zeitraum: [],
+        };
     }
 }
