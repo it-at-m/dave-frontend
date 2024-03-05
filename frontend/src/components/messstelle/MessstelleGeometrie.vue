@@ -133,7 +133,7 @@
         </svg>
     </v-sheet>
 </template>
-<script lang="ts">
+<script setup lang="ts">
 /* eslint-disable no-unused-vars */
 import { computed, ComputedRef } from "vue";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";

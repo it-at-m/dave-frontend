@@ -111,8 +111,8 @@
                         class="hidden-md-and-down"
                     >
                         <messstelle-geometrie
-                            height="60"
-                            width="60"
+                            :height="60"
+                            :width="60"
                             active-color="#1565C0"
                             passive-color="#EEEEEE"
                             :knotenarme="calculateKnotenarme(messstelle)"

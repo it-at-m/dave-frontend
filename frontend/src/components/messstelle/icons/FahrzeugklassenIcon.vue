@@ -14,9 +14,9 @@ import IconTooltip from "@/types/util/IconTooltip";
 import { computed, ComputedRef } from "vue";
 
 interface Props {
-    small: boolean;
-    dense: boolean;
-    color: string;
+    small?: boolean;
+    dense?: boolean;
+    color?: string;
     fahrzeugklasse: string;
 }
 
@@ -45,10 +45,7 @@ const icon: ComputedRef<IconTooltip> = computed(() => {
  */
 function fahrzeugklassenIcons(): Map<string, IconTooltip> {
     return new Map([
-        [
-            "8 Fahrzeugklassen + sonst. gem. TLS 2002",
-            new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1"),
-        ],
+        ["8+1", new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1")],
         ["QKFZ", new IconTooltip("$qkfz", "Fahrzeugklassen: QKFZ")],
         [
             "QPKW + QLKW",

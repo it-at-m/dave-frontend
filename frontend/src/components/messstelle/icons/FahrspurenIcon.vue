@@ -14,8 +14,8 @@ import IconTooltip from "@/types/util/IconTooltip";
 import { computed, ComputedRef } from "vue";
 
 interface Props {
-    small: boolean;
-    dense: boolean;
+    small?: boolean;
+    dense?: boolean;
     fahrspuren: number;
 }
 

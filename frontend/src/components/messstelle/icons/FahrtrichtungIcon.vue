@@ -14,8 +14,8 @@ import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 import { computed, ComputedRef } from "vue";
 
 interface Props {
-    small: boolean;
-    dense: boolean;
+    small?: boolean;
+    dense?: boolean;
     fahrtrichtung: string;
 }
 
