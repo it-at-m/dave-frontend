@@ -2,6 +2,8 @@
     <tooltip-with-icon
         :icon="iconOptions.icon"
         :tooltip="iconOptions.tooltip"
+        :color="color"
+        :small="true"
     />
 </template>
 
@@ -13,15 +15,18 @@ import IconOptions from "@/types/util/IconOptions";
 
 interface Props {
     detektierteFahrzeugart?: DetektierteFahrzeugart;
+    color?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    color: "black",
+});
 
 const iconOptions = computed(() => {
     if (props.detektierteFahrzeugart == DetektierteFahrzeugart.RAD) {
-        return new IconOptions("mdi-bicycle", "Fahrrad");
+        return new IconOptions("mdi-bicycle", "Fahrzeugart: Fahrrad");
     } else if (props.detektierteFahrzeugart == DetektierteFahrzeugart.KFZ) {
-        return new IconOptions("mdi-car", "KFZ");
+        return new IconOptions("mdi-car", "Fahrzeugart: KFZ");
     } else {
         return new IconOptions(
             "mdi-alert-circle",
