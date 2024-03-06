@@ -156,7 +156,7 @@ function setDefaultOptionsForMessstelle(): void {
         );
     }
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
-    chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
+    chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
     chosenOptions.value.tagesTyp = "";
     saveChosenOptions();
