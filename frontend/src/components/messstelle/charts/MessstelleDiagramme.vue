@@ -139,6 +139,7 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -196,6 +197,10 @@ const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
 
+const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
 watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
@@ -207,6 +212,10 @@ watch(activeTab, (active) => {
     ].includes(activeTab.value);
 });
 
+watch(options, () => {
+    loadData();
+});
+
 /**
  * Die Requests für alle Diagramme werden abgesetzt.
  */
@@ -216,7 +225,10 @@ function loadData() {
 
 function loadProcessedChartData() {
     chartDataLoading.value = true;
-    LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value)
+    LadeMessdatenService.ladeMessdatenProcessed(
+        messstelleId.value,
+        options.value
+    )
         .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;

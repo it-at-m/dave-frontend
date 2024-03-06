@@ -19,6 +19,7 @@
                         <v-radio
                             label="Tageswert (Durchschnitt)"
                             value="Tageswert"
+                            @change="zeitauswahlChanged"
                         />
                         <v-radio
                             label="Block (Durchschnitt)"
@@ -61,6 +62,8 @@ import { computed } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock from "@/types/enum/Zeitblock";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -106,4 +109,10 @@ const helperText = computed(() => {
     }
     return "";
 });
+
+function zeitauswahlChanged() {
+    if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+    }
+}
 </script>
