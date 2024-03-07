@@ -123,7 +123,7 @@
     </v-sheet>
 </template>
 <script setup lang="ts">
-import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
+import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
@@ -189,10 +189,6 @@ const store = useStore();
 const route = useRoute();
 const reportTools = useReportTools();
 
-onMounted(() => {
-    loadData();
-});
-
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
@@ -213,15 +209,8 @@ watch(activeTab, (active) => {
 });
 
 watch(options, () => {
-    loadData();
-});
-
-/**
- * Die Requests für alle Diagramme werden abgesetzt.
- */
-function loadData() {
     loadProcessedChartData();
-}
+});
 
 function loadProcessedChartData() {
     chartDataLoading.value = true;
