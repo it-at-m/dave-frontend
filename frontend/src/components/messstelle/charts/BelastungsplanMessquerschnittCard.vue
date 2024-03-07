@@ -57,6 +57,48 @@ onMounted(() => {
     drawArrowDownwards();
 });
 
+function drawTotal(querschnittGroup: any) {
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("asdff")
+            .move(startX.value, startY.value - 10)
+            .rotate(270, startX.value, startY.value - 10)
+    );
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("asdff")
+            .move(startX.value, startY.value - 75)
+            .rotate(270, startX.value, startY.value - 75)
+    );
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("asdff")
+            .move(startX.value, startY.value - 140)
+            .rotate(270, startX.value, startY.value - 140)
+    );
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("123")
+            .font({ anchor: "start" })
+            .move(startX.value, startY.value + 360)
+            .rotate(270, startX.value, startY.value + 360)
+    );
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("123")
+            .font({ anchor: "start" })
+            .move(startX.value, startY.value + 425)
+            .rotate(270, startX.value, startY.value + 425)
+    );
+    querschnittGroup.add(
+        SVG.SVG()
+            .text("1234")
+            .font({ anchor: "end" })
+            .move(startX.value, startY.value + 500)
+            .rotate(270, startX.value, startY.value + 500)
+    );
+}
+
 function drawArrowDownwards() {
     let querschnittGroup = canvas.value.group();
     let groupedByDirecition = _.chain(
@@ -69,6 +111,7 @@ function drawArrowDownwards() {
     drawArrowsPointingSouth(groupedByDirecition, querschnittGroup);
     startX.value += 20;
     drawStreetName(querschnittGroup);
+    drawTotal(querschnittGroup);
     startX.value += 90;
     drawArrowsPointingNorth(groupedByDirecition, querschnittGroup);
     rotateArrowsIfNeccacary(querschnittGroup);
@@ -80,7 +123,7 @@ function rotateArrowsIfNeccacary(querschnittGroup: any) {
     const direction =
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
             .direction;
-    if (direction == "O" || direction == "W") {
+    if (direction == "S" || direction == "N") {
         querschnittGroup.rotate(90).translate(100, -150);
         startX.value = startY.value + 500;
     }
@@ -110,22 +153,25 @@ function drawArrowsPointingSouth(
     arrayOfDataForDirectionSouth?.data.forEach((mq) => {
         querschnittGroup.add(
             SVG.SVG()
-                .path(
-                    `M ${startX.value} ${startY.value} L ${startX.value} ${
-                        startY.value + 300
-                    } L ${startX.value - 10} ${startY.value + 300} L ${
-                        startX.value + 10
-                    } ${startY.value + 315} L ${startX.value + 30} ${
-                        startY.value + 300
-                    } L ${startX.value + 20} ${startY.value + 300} L ${
-                        startX.value + 20
-                    } ${startY.value} L ${startX.value} ${startY.value}`
+                .line(
+                    startX.value + 10,
+                    startY.value,
+                    startX.value + 10,
+                    startY.value + 300
                 )
-                .stroke({ width: 2, color: "black" })
-                .attr("fill", farben.get(mq.direction))
-                .transform({
-                    rotate: rotation.get(mq.direction),
-                })
+                .stroke({ width: 10, color: "black" })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .polygon(
+                    `${startX.value + 20},${startY.value + 301} ${
+                        startX.value
+                    },${startY.value + 301} ${startX.value + 10} ${
+                        startY.value + 310
+                    }`
+                )
+                .stroke({ width: 1, color: "black" })
+                .attr("fill", "none")
         );
         querschnittGroup.add(
             SVG.SVG()
@@ -227,22 +273,23 @@ function drawArrowsPointingNorth(
     arrayOfDataForDirectionNorth?.data.forEach((mq) => {
         querschnittGroup.add(
             SVG.SVG()
-                .path(
-                    `M ${startX.value} ${startY.value} L ${startX.value} ${
-                        startY.value + 300
-                    } L ${startX.value - 10} ${startY.value + 300} L ${
-                        startX.value + 10
-                    } ${startY.value + 315} L ${startX.value + 30} ${
-                        startY.value + 300
-                    } L ${startX.value + 20} ${startY.value + 300} L ${
-                        startX.value + 20
-                    } ${startY.value} L ${startX.value} ${startY.value}`
+                .line(
+                    startX.value + 10,
+                    startY.value,
+                    startX.value + 10,
+                    startY.value + 300
                 )
-                .stroke({ width: 2, color: "black" })
-                .attr("fill", farben.get(mq.direction))
-                .transform({
-                    rotate: rotation.get(mq.direction),
-                })
+                .stroke({ width: 10, color: farben.get(mq.direction) })
+        );
+        querschnittGroup.add(
+            SVG.SVG()
+                .polygon(
+                    `${startX.value + 20},${startY.value - 1} ${startX.value},${
+                        startY.value - 1
+                    } ${startX.value + 10} ${startY.value - 10}`
+                )
+                .stroke({ width: 1, color: "black" })
+                .attr("fill", "none")
         );
         querschnittGroup.add(
             SVG.SVG()

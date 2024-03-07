@@ -41,6 +41,9 @@
             <!-- Inhalte -->
             <v-tab-item>
                 <v-sheet
+                    v-if="
+                        belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
+                    "
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
