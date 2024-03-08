@@ -13,7 +13,7 @@
         <span class="text-caption">{{ standort }} </span>
         <br />
         <span class="text-caption"
-            >{{ stadtbezirk }} - {{ stadtbezirkNummer }}
+            >Stadtbezirk {{ stadtbezirkNummer }}, {{ stadtbezirk }}
         </span>
     </v-sheet>
 </template>

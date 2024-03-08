@@ -1,15 +1,17 @@
 <template>
-    <div v-if="kommentar">
+    <span v-if="kommentar">
         <v-tooltip bottom>
             <template #activator="{ on, attrs }">
                 <v-btn
                     v-bind="attrs"
                     color="secondary"
                     icon
+                    height="20px"
+                    class="ml-n2"
                     v-on="on"
                     @click="showDialog = true"
                 >
-                    <v-icon>mdi-message-text</v-icon>
+                    <v-icon small>mdi-message-text</v-icon>
                 </v-btn>
             </template>
             <span>Kommentar anzeigen</span>
@@ -38,7 +40,7 @@
                 <v-spacer></v-spacer>
             </v-footer>
         </v-dialog>
-    </div>
+    </span>
 </template>
 
 <script setup lang="ts">
