@@ -35,6 +35,9 @@
                             <zeit-panel v-model="chosenOptions" />
                             <fahrzeug-panel v-model="chosenOptions" />
                             <messquerschnitt-panel v-model="chosenOptions" />
+                            <darstellungsoptionen-panel-messstelle
+                                v-model="chosenOptions"
+                            />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -74,6 +77,7 @@ import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/Me
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { Levels } from "@/api/error";
 import TagesTyp from "@/types/enum/TagesTyp";
+import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 
 interface Props {
     messstelleId: string;
@@ -178,6 +182,12 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
     chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
     chosenOptions.value.tagesTyp = "" as TagesTyp;
+    chosenOptions.value.blackPrintMode = false;
+    chosenOptions.value.werteHundertRunden = false;
+    chosenOptions.value.blocksumme = true;
+    chosenOptions.value.stundensumme = true;
+    chosenOptions.value.tagessumme = true;
+    chosenOptions.value.spitzenstunde = true;
     saveChosenOptions();
 }
 
