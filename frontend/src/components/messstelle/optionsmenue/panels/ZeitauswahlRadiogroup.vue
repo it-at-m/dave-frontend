@@ -118,6 +118,12 @@ function zeitauswahlChanged() {
         chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
     } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
         chosenOptionsCopy.value.zeitblock = ZeitblockStuendlich.ZB_00_01;
+    } else if (
+        chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+        chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    ) {
+        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
     }
 }
 </script>
