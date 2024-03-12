@@ -8,7 +8,7 @@ export default interface MessstelleOptionsDTO {
     zeitblock: string;
     tagesTyp: string;
     intervall: ZaehldatenIntervall;
-    messquerschnitte: string[];
+    messquerschnittIds: string[];
     // Darstellungsoptionen
     werteHundertRunden: boolean;
     blackPrintMode: boolean;

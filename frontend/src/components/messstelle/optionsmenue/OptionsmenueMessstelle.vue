@@ -116,7 +116,7 @@ function setChosenOptions(): void {
 
 function areChosenOptionsValid(): boolean {
     let result = true;
-    if (chosenOptions.value.messquerschnitte.length === 0) {
+    if (chosenOptions.value.messquerschnittIds.length === 0) {
         result = false;
         let errortext =
             "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
@@ -161,9 +161,9 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.zeitraum = [
         messstelle.value.datumLetztePlausibleMessung,
     ];
-    chosenOptions.value.messquerschnitte = [];
+    chosenOptions.value.messquerschnittIds = [];
     messstelle.value.messquerschnitte.forEach((q) =>
-        chosenOptions.value.messquerschnitte.push(q.mqId)
+        chosenOptions.value.messquerschnittIds.push(q.mqId)
     );
     if (messstelle.value.messquerschnitte.length === 1) {
         store.commit(

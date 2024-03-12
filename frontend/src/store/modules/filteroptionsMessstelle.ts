@@ -17,7 +17,7 @@ export default {
             zeitblock: "",
             tagesTyp: "" as TagesTyp,
             intervall: "" as ZaehldatenIntervall,
-            messquerschnitte: [],
+            messquerschnittIds: [],
             blocksumme: true,
             tagessumme: true,
             stundensumme: true,

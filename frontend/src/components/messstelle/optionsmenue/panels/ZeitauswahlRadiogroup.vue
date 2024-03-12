@@ -86,7 +86,7 @@ const dateUtils = useDateUtils();
 function isTypeDisabled(type: string): boolean {
     return (
         type != props.messstelleDetektierteFahrzeugart ||
-        chosenOptionsCopy.value.messquerschnitte.length != 1
+        chosenOptionsCopy.value.messquerschnittIds.length != 1
     );
 }
 
@@ -105,7 +105,7 @@ const isDateBiggerFiveYears = computed(() => {
 });
 
 const helperText = computed(() => {
-    if (chosenOptionsCopy.value.messquerschnitte.length != 1) {
+    if (chosenOptionsCopy.value.messquerschnittIds.length != 1) {
         return "Für die Spitzenstunde muss exakt ein Messquerschnitt ausgewählt sein";
     }
     return "";
