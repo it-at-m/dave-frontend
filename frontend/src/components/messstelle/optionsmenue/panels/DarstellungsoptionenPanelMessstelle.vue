@@ -9,11 +9,9 @@
         <darstellungsoptionen-panel-belastungsplan-content
             v-model="chosenOptionsCopy"
         />
-        <v-divider />
         <darstellungsoptionen-panel-ganglinie-content
             v-model="chosenOptionsCopy"
         />
-        <v-divider />
         <darstellungsoptionen-panel-listenausgabe-content
             v-model="chosenOptionsCopy"
         />
@@ -23,7 +21,6 @@
 <script setup lang="ts">
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed } from "vue";
-import { useStore } from "@/api/util/useStore";
 import DarstellungsoptionenPanelGanglinieContent from "@/components/messstelle/optionsmenue/panels/content/DarstellungsoptionenPanelGanglinieContent.vue";
 import DarstellungsoptionenPanelListenausgabeContent from "@/components/messstelle/optionsmenue/panels/content/DarstellungsoptionenPanelListenausgabeContent.vue";
 import DarstellungsoptionenPanelBelastungsplanContent from "@/components/messstelle/optionsmenue/panels/content/DarstellungsoptionenPanelBelastungsplanContent.vue";
@@ -34,7 +31,6 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
-const store = useStore();
 
 const chosenOptionsCopy = computed({
     get: () => props.value,

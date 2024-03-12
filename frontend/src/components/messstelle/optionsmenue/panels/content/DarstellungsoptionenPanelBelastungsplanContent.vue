@@ -49,6 +49,7 @@
                 </v-card>
             </v-col>
         </v-row>
+        <v-divider></v-divider>
     </v-expansion-panel-content>
 </template>
 

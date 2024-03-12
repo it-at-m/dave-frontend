@@ -5,11 +5,11 @@ export function useRules() {
         toCheck: string,
         minValue: number
     ): boolean | string {
-        if (toCheck === null) return true;
+        if (toCheck === null || toCheck === undefined) return true;
+        if (!toCheck.trim()) return true;
         const parsed = parseFloat(toCheck);
         if (!isNaN(parsed)) return true;
         if (parsed >= minValue) return true;
-        if (!toCheck.trim()) return true;
         return "Das Feld darf nur positive Zahlen enthalten";
     }
 
@@ -18,11 +18,11 @@ export function useRules() {
         minvalue: number,
         maxValue: number
     ): boolean | string {
-        if (toCheck === null) return true;
+        if (toCheck === null || toCheck === undefined) return true;
+        if (!toCheck.trim()) return true;
         const parsed = parseFloat(toCheck);
         if (!isNaN(parsed) && _.inRange(parsed, minvalue, maxValue))
             return true;
-        if (!toCheck.trim()) return true;
         return "Das Feld darf nur positive Zahlen kleiner gleich 100 enthalten";
     }
 

@@ -224,10 +224,33 @@ function loadProcessedChartData() {
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
+            setMaxRangeYAchse();
         })
         .finally(() => {
             chartDataLoading.value = false;
         });
+}
+
+function setMaxRangeYAchse() {
+    let ganglinieYAchse1MaxValue: number | null =
+        options.value.ganglinieYAchse1MaxValue;
+    if (
+        ganglinieYAchse1MaxValue !== undefined &&
+        ganglinieYAchse1MaxValue !== null &&
+        ganglinieYAchse1MaxValue > 0
+    ) {
+        zaehldatenSteplineDTO.value.rangeMax = ganglinieYAchse1MaxValue;
+    }
+
+    let ganglinieYAchse2MaxValue: number | null =
+        options.value.ganglinieYAchse2MaxValue;
+    if (
+        ganglinieYAchse2MaxValue !== undefined &&
+        ganglinieYAchse2MaxValue !== null &&
+        ganglinieYAchse2MaxValue > 0
+    ) {
+        zaehldatenSteplineDTO.value.rangeMaxPercent = ganglinieYAchse2MaxValue;
+    }
 }
 
 /**
