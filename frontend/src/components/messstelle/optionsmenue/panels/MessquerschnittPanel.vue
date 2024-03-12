@@ -37,7 +37,7 @@
                 <v-col cols="4">
                     <v-hover v-model="hoverLage">
                         <v-select
-                            v-model="chosenOptionsCopy.messquerschnitte"
+                            v-model="chosenOptionsCopy.messquerschnittIds"
                             label="Lage"
                             :items="lageValues"
                             :readonly="isLageReadonly"
@@ -191,27 +191,29 @@ const zeitauswahl = computed(() => {
 });
 
 const previousSelectedStructures: Ref<Array<string>> = ref(
-    chosenOptionsCopy.value.messquerschnitte
+    chosenOptionsCopy.value.messquerschnittIds
 );
 
 watch(zeitauswahl, () => {
     if (
         isZeitauswahlSpitzenstunde.value &&
-        chosenOptionsCopy.value.messquerschnitte.length > 1
+        chosenOptionsCopy.value.messquerschnittIds.length > 1
     ) {
-        chosenOptionsCopy.value.messquerschnitte = [];
+        chosenOptionsCopy.value.messquerschnittIds = [];
     }
-    previousSelectedStructures.value = chosenOptionsCopy.value.messquerschnitte;
+    previousSelectedStructures.value =
+        chosenOptionsCopy.value.messquerschnittIds;
 });
 
 function updateOptions() {
     if (!isZeitauswahlSpitzenstunde.value) {
-        chosenOptionsCopy.value.messquerschnitte = [];
+        chosenOptionsCopy.value.messquerschnittIds = [];
         lageValues.value.forEach((value) =>
-            chosenOptionsCopy.value.messquerschnitte.push(value.value)
+            chosenOptionsCopy.value.messquerschnittIds.push(value.value)
         );
     }
-    previousSelectedStructures.value = chosenOptionsCopy.value.messquerschnitte;
+    previousSelectedStructures.value =
+        chosenOptionsCopy.value.messquerschnittIds;
 }
 
 function updateLage(value: Array<string>) {
@@ -220,9 +222,9 @@ function updateLage(value: Array<string>) {
     );
     previousSelectedStructures.value = value;
     if (isZeitauswahlSpitzenstunde.value) {
-        chosenOptionsCopy.value.messquerschnitte = added;
+        chosenOptionsCopy.value.messquerschnittIds = added;
         previousSelectedStructures.value =
-            chosenOptionsCopy.value.messquerschnitte;
+            chosenOptionsCopy.value.messquerschnittIds;
     }
 }
 
