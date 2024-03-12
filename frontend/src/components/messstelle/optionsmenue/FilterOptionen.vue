@@ -67,8 +67,9 @@
                     "
                     >[
                     {{
-                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
-                            .short
+                        himmelsRichtungenTextShort.get(
+                            messquerschnitt.fahrtrichtung
+                        )
                     }}
                     ]</span
                 >
@@ -79,8 +80,9 @@
                     "
                     >[
                     {{
-                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
-                            .long
+                        himmelsRichtungenTextLong.get(
+                            messquerschnitt.fahrtrichtung
+                        )
                     }}
                     ]</span
                 >
@@ -99,6 +101,10 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
+import {
+    himmelsRichtungenTextLong,
+    himmelsRichtungenTextShort,
+} from "@/types/enum/Himmelsrichtungen";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -143,13 +149,6 @@ const zeitintervall = computed(() => {
         filterOptionsMessstelle.value.intervall
     );
 });
-
-const himmelsRichtungen: Map<string, unknown> = new Map<string, unknown>([
-    ["N", { long: "Nord", short: "N" }],
-    ["O", { long: "Ost", short: "O" }],
-    ["S", { long: "Süd", short: "S" }],
-    ["W", { long: "West", short: "W" }],
-]);
 
 function getStyleClass(mqId: string): string {
     let notIncluded = "text-caption grey--text text--lighten-1";
