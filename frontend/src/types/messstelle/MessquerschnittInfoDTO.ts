@@ -6,4 +6,5 @@ export default interface MessquerschnittInfoDTO {
     fahrtrichtung: string;
     anzahlFahrspuren: number;
     anzahlDetektoren: number;
+    standort: string;
 }

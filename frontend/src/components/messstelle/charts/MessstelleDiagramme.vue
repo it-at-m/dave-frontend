@@ -73,13 +73,11 @@
                     :max-height="contentHeight"
                     width="100%"
                 >
-                    <v-card>
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                    </v-card>
+                    <messwerte-listenausgabe
+                        :listenausgabe-data="listenausgabeDTO"
+                        :height="contentHeight"
+                    >
+                    </messwerte-listenausgabe>
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
@@ -139,6 +137,8 @@ import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
+import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -153,15 +153,15 @@ withDefaults(defineProps<Props>(), {
 
 const chartDataLoading: Ref<boolean> = ref(false);
 
-// Stepline
 const zaehldatenSteplineDTO: Ref<LadeZaehldatenSteplineDTO> = ref(
     {} as LadeZaehldatenSteplineDTO
 );
 
-// Heatmap
 const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
     {} as LadeZaehldatenHeatmapDTO
 );
+
+const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
 // Wieder entfernen, wenn alle Tabs fertig sind
 const showSpeedial: Ref<boolean> = ref(false);
@@ -200,7 +200,11 @@ watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    showSpeedial.value = [TAB_GANGLINIE, TAB_HEATMAP].includes(activeTab.value);
+    showSpeedial.value = [
+        TAB_GANGLINIE,
+        TAB_HEATMAP,
+        TAB_LISTENAUSGABE,
+    ].includes(activeTab.value);
 });
 
 /**
@@ -217,6 +221,8 @@ function loadProcessedChartData() {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
+            listenausgabeDTO.value =
+                processedZaehldaten.zaehldatenTable.zaehldaten;
         })
         .finally(() => {
             chartDataLoading.value = false;

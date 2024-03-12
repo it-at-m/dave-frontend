@@ -24,6 +24,11 @@ import ArtR from "@/components/zaehlstelle/icons/ArtIcons/ArtR.vue";
 import ArtT from "@/components/zaehlstelle/icons/ArtIcons/ArtT.vue";
 import ArtTK from "@/components/zaehlstelle/icons/ArtIcons/ArtTK.vue";
 
+//Fahrzeugklasse
+import AchtUndEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtUndEinsIcon.vue";
+import QKFZIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QKFZIcon.vue";
+import QpkwLkwIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QpkwLkwIcon.vue";
+
 Vue.use(Vuetify);
 
 const theme = {
@@ -97,6 +102,16 @@ export default new Vuetify({
             },
             zaehldauerSoZ: {
                 component: ZaehldauerSoZ,
+            },
+            // Fahrzeugklasse
+            achtUndEins: {
+                component: AchtUndEins,
+            },
+            qkfz: {
+                component: QKFZIcon,
+            },
+            qpkwLkw: {
+                component: QpkwLkwIcon,
             },
         },
     },
