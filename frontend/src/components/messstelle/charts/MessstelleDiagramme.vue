@@ -139,6 +139,8 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
+import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -226,6 +228,17 @@ function loadProcessedChartData() {
         })
         .finally(() => {
             chartDataLoading.value = false;
+            const messstelle: MessstelleInfoDTO =
+                store.getters["messstelleInfo/getMessstelleInfo"];
+            // TODO Options mitspeichern
+            store.commit(
+                "historyNew/addHistoryItem",
+                new MessstelleHistoryItem(
+                    messstelle.id,
+                    messstelle.mstId,
+                    messstelle.standort
+                )
+            );
         });
 }
 

@@ -128,6 +128,7 @@
                 </template>
                 <span> PDF-Report </span>
             </v-tooltip>
+            <NewHistory />
             <History></History>
             <info-message />
             <v-tooltip bottom>
@@ -179,10 +180,11 @@ import SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import InfoMessage from "@/components/app/InfoMessage.vue";
 import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
+import NewHistory from "@/components/app/NewHistory.vue";
 /* eslint-enable no-unused-vars */
 
 @Component({
-    components: { InfoMessage, TheSnackbar, History },
+    components: { NewHistory, InfoMessage, TheSnackbar, History },
 })
 export default class App extends Vue {
     private static readonly SUGGESTION_TYPE_SEARCH_TEXT: string = "searchtext";

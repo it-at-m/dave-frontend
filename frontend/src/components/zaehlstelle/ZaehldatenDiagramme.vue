@@ -390,6 +390,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { Levels } from "@/api/error";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
+import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 @Component({
@@ -580,6 +581,28 @@ export default class ZaehldatenDiagramme extends Vue {
         this.loadBelastungsplan(o);
         this.loadProcessedChartData(o);
         this.loadZeitreihe(o);
+
+        // Save HistoryItem
+        const selectedZaehlung = this.selectedZaehlung;
+        const zaehlstelle = this.$store.getters.getZaehlstelle;
+        this.$store.commit(
+            "historyNew/addHistoryItem",
+            new ZaehlstelleHistoryItem(
+                selectedZaehlung.id,
+                selectedZaehlung.datum,
+                selectedZaehlung.projektName,
+                zaehlstelle.nummer,
+                zaehlstelle.id,
+                Object.assign({}, this.options)
+            )
+        );
+    }
+
+    convertDate(date: string): Date {
+        if (!Date.parse(date)) {
+            return new Date();
+        }
+        return new Date(date);
     }
 
     private loadZeitreihe(options: OptionsDTO) {

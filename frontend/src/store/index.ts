@@ -12,6 +12,7 @@ import pdfreport from "@/store/modules/pdfreport";
 import belastungsplanSize from "@/store/modules/belastungsplanSize";
 import filteroptionsMessstelle from "@/store/modules/filteroptionsMessstelle";
 import messstelleInfo from "@/store/modules/messstelle";
+import historyNew from "@/store/modules/historyNew";
 
 Vue.use(Vuex);
 const debug = import.meta.env.NODE_ENV !== "production";
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         belastungsplanSize,
         filteroptionsMessstelle,
         messstelleInfo,
+        historyNew,
     },
     strict: debug,
 });
