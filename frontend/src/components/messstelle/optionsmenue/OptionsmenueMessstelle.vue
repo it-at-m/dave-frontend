@@ -78,6 +78,7 @@ import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { Levels } from "@/api/error";
 import TagesTyp from "@/types/enum/TagesTyp";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
+import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 
 interface Props {
     messstelleId: string;
@@ -168,8 +169,8 @@ function setDefaultOptionsForMessstelle(): void {
     if (messstelle.value.messquerschnitte.length === 1) {
         store.commit(
             "filteroptionsMessstelle/setDirection",
-            messstelleUtils.getDirectionOfMessquerschnitt(
-                messstelle.value.messquerschnitte[0]
+            himmelsRichtungenTextLong.get(
+                messstelle.value.messquerschnitte[0].fahrtrichtung
             )
         );
     } else {
