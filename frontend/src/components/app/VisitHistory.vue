@@ -114,7 +114,10 @@ function getTitle(item: AbstractHistoryItem): string {
 function getSubTitle(item: AbstractHistoryItem): string {
     let subTitle = "";
     if (isMessstelleHistoryItem(item)) {
-        subTitle = `${(item as MessstelleHistoryItem).standortMs}`;
+        const standortMs = (item as MessstelleHistoryItem).standortMs;
+        if (standortMs != null) {
+            subTitle = `${standortMs}`;
+        }
     }
     if (isZaehlstelleHistoryItem(item)) {
         const zaehlstelleHistoryItem = item as ZaehlstelleHistoryItem;

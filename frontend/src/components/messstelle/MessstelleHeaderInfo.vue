@@ -22,7 +22,7 @@ interface Props {
     mstId: string;
     stadtbezirkNummer: number;
     stadtbezirk: string;
-    standort: string;
+    standort?: string;
     height: string;
     minheight: string;
 }
