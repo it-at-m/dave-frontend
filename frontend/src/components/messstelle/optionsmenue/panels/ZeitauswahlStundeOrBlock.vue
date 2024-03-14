@@ -23,7 +23,7 @@
     </v-row>
 </template>
 <script lang="ts" setup>
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import KeyVal from "@/types/KeyVal";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
@@ -103,13 +103,5 @@ const isZeitauswahlSpitzenstunde = computed(() => {
     return messstelleUtils.isZeitauswahlSpitzenstunde(
         chosenOptionsCopy.value.zeitauswahl
     );
-});
-
-watch(isZeitauswahlStunde, () => {
-    if (isZeitauswahlStunde.value) {
-        chosenOptionsCopy.value.zeitblock = ZeitblockStuendlich.ZB_06_07;
-    } else {
-        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_10;
-    }
 });
 </script>

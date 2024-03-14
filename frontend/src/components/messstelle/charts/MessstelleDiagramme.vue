@@ -123,7 +123,7 @@
     </v-sheet>
 </template>
 <script setup lang="ts">
-import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
+import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
@@ -141,6 +141,7 @@ import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
 import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -190,12 +191,12 @@ const store = useStore();
 const route = useRoute();
 const reportTools = useReportTools();
 
-onMounted(() => {
-    loadData();
-});
-
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
+});
+
+const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
 watch(activeTab, (active) => {
@@ -209,22 +210,23 @@ watch(activeTab, (active) => {
     ].includes(activeTab.value);
 });
 
-/**
- * Die Requests für alle Diagramme werden abgesetzt.
- */
-function loadData() {
+watch(options, () => {
     loadProcessedChartData();
-}
+});
 
 function loadProcessedChartData() {
     chartDataLoading.value = true;
-    LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value)
+    LadeMessdatenService.ladeMessdatenProcessed(
+        messstelleId.value,
+        options.value
+    )
         .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
+            setMaxRangeYAchse();
         })
         .finally(() => {
             chartDataLoading.value = false;
@@ -240,6 +242,28 @@ function loadProcessedChartData() {
                 )
             );
         });
+}
+
+function setMaxRangeYAchse() {
+    let ganglinieYAchse1MaxValue: number | null =
+        options.value.ganglinieYAchse1MaxValue;
+    if (
+        ganglinieYAchse1MaxValue !== undefined &&
+        ganglinieYAchse1MaxValue !== null &&
+        ganglinieYAchse1MaxValue > 0
+    ) {
+        zaehldatenSteplineDTO.value.rangeMax = ganglinieYAchse1MaxValue;
+    }
+
+    let ganglinieYAchse2MaxValue: number | null =
+        options.value.ganglinieYAchse2MaxValue;
+    if (
+        ganglinieYAchse2MaxValue !== undefined &&
+        ganglinieYAchse2MaxValue !== null &&
+        ganglinieYAchse2MaxValue > 0
+    ) {
+        zaehldatenSteplineDTO.value.rangeMaxPercent = ganglinieYAchse2MaxValue;
+    }
 }
 
 /**

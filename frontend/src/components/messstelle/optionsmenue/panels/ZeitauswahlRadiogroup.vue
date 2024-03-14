@@ -10,6 +10,7 @@
             <v-radio-group
                 v-model="chosenOptionsCopy.zeitauswahl"
                 style="width: 100%"
+                @change="zeitauswahlChanged"
             >
                 <v-row
                     no-gutters
@@ -18,33 +19,33 @@
                     <v-col cols="4">
                         <v-radio
                             label="Tageswert (Durchschnitt)"
-                            value="Tageswert"
+                            :value="Zeitauswahl.TAGESWERT"
                         />
                         <v-radio
                             label="Block (Durchschnitt)"
-                            value="Block"
+                            :value="Zeitauswahl.BLOCK"
                             :disabled="isDateBiggerFiveYears"
                         />
                         <v-radio
                             label="Stunde (Durchschnitt)"
-                            value="Stunde"
+                            :value="Zeitauswahl.STUNDE"
                             :disabled="isDateBiggerFiveYears"
                         />
                     </v-col>
                     <v-col cols="4">
                         <v-radio
                             label="Spitzenstunde Kfz (Durchschnitt)"
-                            value="Spitzenstunde KFZ"
+                            :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
                             :disabled="isTypeDisabled('KFZ')"
                         />
                         <v-radio
                             label="Spitzenstunde Rad (Durchschnitt)"
-                            value="Spitzenstunde Rad"
+                            :value="Zeitauswahl.SPITZENSTUNDE_RAD"
                             :disabled="isTypeDisabled('RAD')"
                         />
                         <v-radio
                             label="Spitzenstunde Fuß (Durchschnitt)"
-                            value="Spitzenstunde Fuß"
+                            :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
                             :disabled="isTypeDisabled('FUSS')"
                         />
                     </v-col>
@@ -61,6 +62,9 @@ import { computed } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock from "@/types/enum/Zeitblock";
+import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -82,7 +86,7 @@ const dateUtils = useDateUtils();
 function isTypeDisabled(type: string): boolean {
     return (
         type != props.messstelleDetektierteFahrzeugart ||
-        chosenOptionsCopy.value.messquerschnitte.length != 1
+        chosenOptionsCopy.value.messquerschnittIds.length != 1
     );
 }
 
@@ -101,9 +105,25 @@ const isDateBiggerFiveYears = computed(() => {
 });
 
 const helperText = computed(() => {
-    if (chosenOptionsCopy.value.messquerschnitte.length != 1) {
+    if (chosenOptionsCopy.value.messquerschnittIds.length != 1) {
         return "Für die Spitzenstunde muss exakt ein Messquerschnitt ausgewählt sein";
     }
     return "";
 });
+
+function zeitauswahlChanged() {
+    if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+    } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK) {
+        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
+        chosenOptionsCopy.value.zeitblock = ZeitblockStuendlich.ZB_00_01;
+    } else if (
+        chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+        chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    ) {
+        chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    }
+}
 </script>

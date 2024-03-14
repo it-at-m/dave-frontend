@@ -1,6 +1,7 @@
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import TagesTyp from "@/types/enum/TagesTyp";
 
 export interface FilteroptionsMessstelle {
     messstelleFilterOptions: MessstelleOptionsDTO;
@@ -14,9 +15,17 @@ export default {
             fahrzeuge: {} as FahrzeugOptions,
             zeitauswahl: "",
             zeitblock: "",
-            tagesTyp: "",
+            tagesTyp: "" as TagesTyp,
             intervall: "" as ZaehldatenIntervall,
-            messquerschnitte: [],
+            messquerschnittIds: [],
+            blocksumme: true,
+            tagessumme: true,
+            stundensumme: true,
+            spitzenstunde: true,
+            ganglinieYAchse2MaxValue: null,
+            ganglinieYAchse1MaxValue: null,
+            blackPrintMode: false,
+            werteHundertRunden: false,
         } as MessstelleOptionsDTO,
         direction: "",
     },
