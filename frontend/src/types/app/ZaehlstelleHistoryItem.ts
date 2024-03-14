@@ -17,7 +17,7 @@ export default class ZaehlstelleHistoryItem extends AbstractHistoryItem {
         zaehlstellId: string,
         options?: OptionsDTO
     ) {
-        super(zaehlungId);
+        super(zaehlungId, "mdi-map-marker");
         this.zaehlungId = zaehlungId;
         if (!Date.parse(zaehlungDatum)) {
             this.zaehlungDatum = new Date();

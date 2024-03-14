@@ -110,6 +110,7 @@ declare module '@vue/runtime-core' {
     VListItem: typeof import('vuetify/lib')['VListItem']
     VListItemAction: typeof import('vuetify/lib')['VListItemAction']
     VListItemContent: typeof import('vuetify/lib')['VListItemContent']
+    VListItemIcon: typeof import('vuetify/lib')['VListItemIcon']
     VListItemSubtitle: typeof import('vuetify/lib')['VListItemSubtitle']
     VListItemTitle: typeof import('vuetify/lib')['VListItemTitle']
     VMain: typeof import('vuetify/lib')['VMain']

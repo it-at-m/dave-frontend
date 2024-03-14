@@ -16,15 +16,20 @@
                 Historie
             </v-tooltip>
         </template>
-        <v-list>
+        <v-list dense>
             <v-list-item
                 v-for="(item, index) in items"
                 :key="index"
                 two-line
                 @click="selectItem(item)"
             >
+                <v-list-item-icon class="mr-1 mt-4">
+                    <v-icon large>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
                 <v-list-item-content>
-                    <v-list-item-title>{{ getTitle(item) }}</v-list-item-title>
+                    <v-list-item-title>
+                        {{ getTitle(item) }}
+                    </v-list-item-title>
                     <v-list-item-subtitle
                         >{{ getSubTitle(item) }}
                     </v-list-item-subtitle>

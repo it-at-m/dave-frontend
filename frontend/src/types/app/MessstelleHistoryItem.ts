@@ -13,7 +13,7 @@ export default class MessstelleHistoryItem extends AbstractHistoryItem {
         standortMs: string,
         options?: MessstelleOptionsDTO
     ) {
-        super(id);
+        super(id, "mdi-cards-diamond");
         this.id = id;
         this.mstId = mstId;
         this.standortMs = standortMs;
