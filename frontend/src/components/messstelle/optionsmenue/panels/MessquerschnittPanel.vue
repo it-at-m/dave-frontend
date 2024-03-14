@@ -70,6 +70,7 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import KeyVal from "@/types/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -118,10 +119,14 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
     }
     messstelle.value.messquerschnitte.forEach(
         (querschnitt: MessquerschnittInfoDTO) => {
+            let himmelsrichtungAsText = himmelsRichtungenTextLong.get(
+                querschnitt.fahrtrichtung
+            );
+            if (himmelsrichtungAsText === undefined) {
+                himmelsrichtungAsText = querschnitt.fahrtrichtung.valueOf();
+            }
             const keyVal: KeyVal = {
-                text: messstelleUtils.getDirectionOfMessquerschnitt(
-                    querschnitt
-                ),
+                text: himmelsrichtungAsText,
                 value: querschnitt.fahrtrichtung,
             };
             if (!result.includes(keyVal)) {
