@@ -586,7 +586,7 @@ export default class ZaehldatenDiagramme extends Vue {
         const selectedZaehlung = this.selectedZaehlung;
         const zaehlstelle = this.$store.getters.getZaehlstelle;
         this.$store.commit(
-            "historyNew/addHistoryItem",
+            "history/addHistoryItem",
             new ZaehlstelleHistoryItem(
                 selectedZaehlung.id,
                 selectedZaehlung.datum,
@@ -596,13 +596,6 @@ export default class ZaehldatenDiagramme extends Vue {
                 Object.assign({}, this.options)
             )
         );
-    }
-
-    convertDate(date: string): Date {
-        if (!Date.parse(date)) {
-            return new Date();
-        }
-        return new Date(date);
     }
 
     private loadZeitreihe(options: OptionsDTO) {

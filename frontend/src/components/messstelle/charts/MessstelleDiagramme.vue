@@ -142,6 +142,7 @@ import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteList
 import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import _ from "lodash";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -232,13 +233,13 @@ function loadProcessedChartData() {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =
                 store.getters["messstelleInfo/getMessstelleInfo"];
-            // TODO Options mitspeichern: Heben auf Anderen Branch
             store.commit(
-                "historyNew/addHistoryItem",
+                "history/addHistoryItem",
                 new MessstelleHistoryItem(
                     messstelle.id,
                     messstelle.mstId,
-                    messstelle.standort
+                    messstelle.standort,
+                    _.cloneDeep(options.value)
                 )
             );
         });

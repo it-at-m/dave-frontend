@@ -128,8 +128,7 @@
                 </template>
                 <span> PDF-Report </span>
             </v-tooltip>
-            <NewHistory />
-            <History></History>
+            <visit-history />
             <info-message />
             <v-tooltip bottom>
                 <template #activator="{ on, attrs }">
@@ -162,7 +161,6 @@ import Vue from "vue";
 import Component from "vue-class-component";
 // Komponenten
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
-import History from "@/components/app/History.vue";
 
 // API
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
@@ -180,11 +178,11 @@ import SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import InfoMessage from "@/components/app/InfoMessage.vue";
 import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
-import NewHistory from "@/components/app/NewHistory.vue";
+import VisitHistory from "@/components/app/VisitHistory.vue";
 /* eslint-enable no-unused-vars */
 
 @Component({
-    components: { NewHistory, InfoMessage, TheSnackbar, History },
+    components: { VisitHistory, InfoMessage, TheSnackbar, History },
 })
 export default class App extends Vue {
     private static readonly SUGGESTION_TYPE_SEARCH_TEXT: string = "searchtext";

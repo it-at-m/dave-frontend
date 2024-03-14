@@ -43,6 +43,7 @@ import { useRouter } from "vue-router/composables";
 import AbstractHistoryItem from "@/types/app/AbstractHistoryItem";
 import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
+import _ from "lodash";
 /* eslint-enable no-unused-vars */
 
 const store = useStore();
@@ -50,7 +51,7 @@ const router = useRouter();
 const dateUtils = useDateUtils();
 
 const items: ComputedRef<Array<AbstractHistoryItem>> = computed(() => {
-    return store.getters["historyNew/getHistoryItems"];
+    return store.getters["history/getHistoryItems"];
 });
 
 const isHistory: ComputedRef<boolean> = computed(() => {
@@ -65,16 +66,25 @@ function isZaehlstelleHistoryItem(item: AbstractHistoryItem) {
 }
 
 function selectItem(item: AbstractHistoryItem): void {
-    // TODO Options wieder in Store speichern
-    // TODO Messstelle so umbauen, dass die Daten aus dem Store geladen werden
     if (isMessstelleHistoryItem(item)) {
-        router.push(`/messstelle/${(item as MessstelleHistoryItem).id}`);
+        const historyItem: MessstelleHistoryItem =
+            item as MessstelleHistoryItem;
+        store.commit(
+            "filteroptionsMessstelle/setFilteroptionsHistory",
+            _.cloneDeep(historyItem.optionsEinstellungen)
+        );
+        router.push(`/messstelle/${historyItem.id}`);
     }
     if (isZaehlstelleHistoryItem(item)) {
+        const historyItem: ZaehlstelleHistoryItem =
+            item as ZaehlstelleHistoryItem;
+        store.dispatch(
+            "setFilteroptionsHistory",
+            // Object.assign({}, historyItem.optionsEinstellungen)
+            _.cloneDeep(historyItem.optionsEinstellungen)
+        );
         router.push(
-            `/zaehlstelle/${(item as ZaehlstelleHistoryItem).zaehlstelleId}/${
-                (item as ZaehlstelleHistoryItem).zaehlungId
-            }`
+            `/zaehlstelle/${historyItem.zaehlstelleId}/${historyItem.zaehlungId}`
         );
     }
 }

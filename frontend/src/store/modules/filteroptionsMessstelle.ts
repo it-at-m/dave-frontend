@@ -6,6 +6,7 @@ import TagesTyp from "@/types/enum/TagesTyp";
 export interface FilteroptionsMessstelle {
     messstelleFilterOptions: MessstelleOptionsDTO;
     direction: string;
+    history: boolean;
 }
 export default {
     namespaced: true,
@@ -28,6 +29,7 @@ export default {
             werteHundertRunden: false,
         } as MessstelleOptionsDTO,
         direction: "",
+        history: false,
     },
     getters: {
         getFilteroptions(state: FilteroptionsMessstelle): MessstelleOptionsDTO {
@@ -36,6 +38,9 @@ export default {
         getDirection(state: FilteroptionsMessstelle): string {
             return state.direction;
         },
+        isHistory(state: FilteroptionsMessstelle): boolean {
+            return state.history;
+        },
     },
     mutations: {
         setFilteroptions(
@@ -43,9 +48,23 @@ export default {
             payload: MessstelleOptionsDTO
         ) {
             state.messstelleFilterOptions = payload;
+            state.history = false;
+        },
+        setFilteroptionsHistory(
+            state: FilteroptionsMessstelle,
+            payload: MessstelleOptionsDTO
+        ) {
+            state.messstelleFilterOptions = payload;
+            state.history = true;
         },
         setDirection(state: FilteroptionsMessstelle, payload: string) {
             state.direction = payload;
+        },
+        reloadFilteroptions(state: FilteroptionsMessstelle) {
+            state.messstelleFilterOptions = Object.assign(
+                {},
+                state.messstelleFilterOptions
+            );
         },
     },
 };
