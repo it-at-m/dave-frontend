@@ -65,6 +65,8 @@ function isZaehlstelleHistoryItem(item: AbstractHistoryItem) {
 }
 
 function selectItem(item: AbstractHistoryItem): void {
+    // TODO Options wieder in Store speichern
+    // TODO Messstelle so umbauen, dass die Daten aus dem Store geladen werden
     if (isMessstelleHistoryItem(item)) {
         router.push(`/messstelle/${(item as MessstelleHistoryItem).id}`);
     }

@@ -232,7 +232,7 @@ function loadProcessedChartData() {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =
                 store.getters["messstelleInfo/getMessstelleInfo"];
-            // TODO Options mitspeichern
+            // TODO Options mitspeichern: Heben auf Anderen Branch
             store.commit(
                 "historyNew/addHistoryItem",
                 new MessstelleHistoryItem(
