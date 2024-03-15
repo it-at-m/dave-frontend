@@ -75,6 +75,11 @@ import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 /* eslint-disable no-unused-vars */
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
+import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
+import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
+import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
+import DaveUtils from "@/util/DaveUtils";
 /* eslint-enable no-unused-vars */
 
 @Component({
@@ -112,12 +117,39 @@ export default class App extends Vue {
      */
     printSearchResult(): void {
         this.printingSearchResult = true;
-        const searchResult: Array<ZaehlstelleKarteDTO> = this.getSearchResult;
+        const searchResult: Array<AnzeigeKarteDTO> = this.getSearchResult;
         const searchQuery: string = this.getSearchQuery;
+
+        const zaehlstellenResult = searchResult.filter(
+            (value: AnzeigeKarteDTO) => value.type === "zaehlstelle"
+        ) as Array<ZaehlstelleKarteDTO>;
+
+        const messstellenResult = searchResult.filter(
+            (value: AnzeigeKarteDTO) => value.type === "messstelle"
+        ) as Array<MessstelleKarteDTO>;
+
+        if (zaehlstellenResult.length > 0) {
+            this.printZaehlstellenOfSearchResult(
+                zaehlstellenResult,
+                searchQuery
+            );
+        }
+        if (messstellenResult.length > 0) {
+            this.printMessstellenOfSearchResult(messstellenResult, searchQuery);
+        }
+
+        this.printingSearchResult = false;
+    }
+
+    printZaehlstellenOfSearchResult(
+        searchResult: Array<ZaehlstelleKarteDTO>,
+        searchQuery: string
+    ): void {
         let filenamePrefix = "Alle_Zaehlstellen";
         if (searchQuery && searchQuery.trim() !== "") {
-            filenamePrefix = searchQuery.replace(/\s/g, "_");
+            filenamePrefix = `Zaehlstellen_${searchQuery.replace(/\s/g, "_")}`;
         }
+        const filename = `${filenamePrefix}_Suchergebnis.csv`;
 
         const searchResultAsCsvString: Array<string> = [];
         // Suchbegriff hinzufügen
@@ -132,8 +164,8 @@ export default class App extends Vue {
             const tooltip: TooltipZaehlstelleDTO = element.tooltip;
             const elementAsCsvString: Array<string> = [];
             elementAsCsvString.push(tooltip.zaehlstellennnummer);
-            elementAsCsvString.push(element.longitude);
-            elementAsCsvString.push(element.latitude);
+            elementAsCsvString.push(element.longitude.toString());
+            elementAsCsvString.push(element.latitude.toString());
             elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
             elementAsCsvString.push(tooltip.stadtbezirk);
             elementAsCsvString.push(tooltip.kreuzungsname);
@@ -141,21 +173,52 @@ export default class App extends Vue {
             elementAsCsvString.push(tooltip.datumLetzteZaehlung);
             searchResultAsCsvString.push(elementAsCsvString.join(";"));
         });
-
-        let csvContent =
-            "data:text/csv;charset=utf-8," + searchResultAsCsvString.join("\n");
-
-        let encodedUri = encodeURI(csvContent);
-        let link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `${filenamePrefix}_Suchergebnis.csv`);
-        document.body.appendChild(link); // Required for FF
-
-        link.click();
-        this.printingSearchResult = false;
+        DaveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
     }
 
-    get getSearchResult(): ZaehlstelleKarteDTO[] {
+    printMessstellenOfSearchResult(
+        searchResult: Array<MessstelleKarteDTO>,
+        searchQuery: string
+    ): void {
+        let filenamePrefix = "Alle_Messstellen";
+        if (searchQuery && searchQuery.trim() !== "") {
+            filenamePrefix = `Messstellen_${searchQuery.replace(/\s/g, "_")}`;
+        }
+        const filename = `${filenamePrefix}_Suchergebnis.csv`;
+
+        const searchResultAsCsvString: Array<string> = [];
+        // Suchbegriff hinzufügen
+        searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
+        // Headerzeile hinzufügen
+        searchResultAsCsvString.push(
+            "ID Messstelle;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Standort MS;Status;Datum Aufbau;Datum Abbau;Letzter plausibler Messtag"
+        );
+
+        // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
+        searchResult.forEach((element: MessstelleKarteDTO) => {
+            const tooltip: TooltipMessstelleDTO = element.tooltip;
+            const elementAsCsvString: Array<string> = [];
+            elementAsCsvString.push(tooltip.mstId);
+            elementAsCsvString.push(`${element.longitude}`);
+            elementAsCsvString.push(`${element.latitude}`);
+            elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
+            elementAsCsvString.push(tooltip.stadtbezirk);
+            elementAsCsvString.push(tooltip.standort);
+            const statusAsText = messstelleStatusText.get(element.status);
+            if (statusAsText) {
+                elementAsCsvString.push(statusAsText);
+            } else {
+                elementAsCsvString.push(element.status);
+            }
+            elementAsCsvString.push(tooltip.realisierungsdatum);
+            elementAsCsvString.push(tooltip.abbaudatum);
+            elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
+            searchResultAsCsvString.push(elementAsCsvString.join(";"));
+        });
+        DaveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+    }
+
+    get getSearchResult(): AnzeigeKarteDTO[] {
         return this.$store.getters["search/result"];
     }
 
