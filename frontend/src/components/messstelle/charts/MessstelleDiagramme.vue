@@ -278,9 +278,15 @@ function addChartToPdfReport(): void {
             "Die"
         );
     }
-    // Heatmap
     if (activeTab.value === TAB_HEATMAP) {
         reportTools.addChartToPdfReport(getHeatmapBase64(), "Heatmap", "Die");
+    }
+    if (activeTab.value === TAB_LISTENAUSGABE) {
+        reportTools.addDatatabelToPdfReport(
+            _.cloneDeep(options.value),
+            "Datentabelle",
+            "Die"
+        );
     }
 }
 

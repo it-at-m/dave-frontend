@@ -5,6 +5,8 @@ import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { Levels } from "@/api/error";
 import { computed, ComputedRef } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 export function useReportTools() {
     const store = useStore();
@@ -65,6 +67,27 @@ export function useReportTools() {
         });
     }
 
+    function addDatatabelToPdfReport(
+        options: MessstelleOptionsDTO,
+        type: string,
+        artikel: string
+    ): void {
+        addHeadingToReport();
+        const mstId = messstelle.value.mstId;
+        const datatableAsset: MessstelleDatatableAsset =
+            new MessstelleDatatableAsset(
+                options,
+                mstId,
+                `Datentabelle zur Messstelle ${mstId}`
+            );
+        store.dispatch("addAsset", datatableAsset);
+
+        store.dispatch("snackbar/showToast", {
+            snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
+            level: Levels.SUCCESS,
+        });
+    }
+
     function saveGraphAsImage(base64: string, type: string): void {
         const filename = getFileName(type);
 
@@ -81,5 +104,6 @@ export function useReportTools() {
         addImageToReport,
         addChartToPdfReport,
         saveGraphAsImage,
+        addDatatabelToPdfReport,
     };
 }
