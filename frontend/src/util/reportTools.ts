@@ -73,12 +73,11 @@ export function useReportTools() {
         artikel: string
     ): void {
         addHeadingToReport();
-        const mstId = messstelle.value.mstId;
         const datatableAsset: MessstelleDatatableAsset =
             new MessstelleDatatableAsset(
                 options,
-                mstId,
-                `Datentabelle zur Messstelle ${mstId}`
+                messstelle.value.id,
+                `Datentabelle zur Messstelle ${messstelle.value.mstId}`
             );
         store.dispatch("addAsset", datatableAsset);
 

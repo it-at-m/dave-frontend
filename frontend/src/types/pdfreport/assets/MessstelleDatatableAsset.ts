@@ -4,17 +4,13 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 export default class MessstelleDatatableAsset extends BaseAsset {
     options?: MessstelleOptionsDTO;
-    messstelleId?: string;
+    mstId?: string;
     text?: string;
 
-    constructor(
-        options: MessstelleOptionsDTO,
-        messstelleId: string,
-        text: string
-    ) {
-        super(AssetTypesEnum.DATATABLE);
+    constructor(options: MessstelleOptionsDTO, mstId: string, text: string) {
+        super(AssetTypesEnum.DATATABLE_MESSSTELLE);
         this.options = options;
-        this.messstelleId = messstelleId;
+        this.mstId = mstId;
         this.text = text;
     }
 }

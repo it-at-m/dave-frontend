@@ -92,7 +92,7 @@ import VuePdfEmbed from "vue-pdf-embed/dist/vue2-pdf-embed";
 export default class DeleteDialog extends Vue {
     @Prop() source!: Uint8Array;
 
-    @Prop() open = false;
+    @Prop({ default: false }) open: boolean | undefined;
 
     fab = false;
 

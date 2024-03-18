@@ -44,7 +44,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class DeleteDialog extends Vue {
-    @Prop() open = false;
+    @Prop({ default: false }) open: boolean | undefined;
     @Prop() assetId!: number;
 
     deleteAsset(): void {
