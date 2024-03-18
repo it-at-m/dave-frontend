@@ -8,7 +8,7 @@ export default class DataManipulatorUtil {
     private static readonly TIME_VALUE_TARGET_END_OF_DAY: string = "24:00";
 
     public static manipulateEndeUhrzeit(zaehldatum: LadeZaehldatumDTO): string {
-        let manipualtedEndeUrhzeit: string;
+        let manipualtedEndeUhrzeit: string;
         if (
             zaehldatum.endeUhrzeit ===
                 DataManipulatorUtil.TIME_VALUE_FOUND_END_OF_DAY ||
@@ -16,11 +16,11 @@ export default class DataManipulatorUtil {
                 zaehldatum.endeUhrzeit ===
                     DataManipulatorUtil.TIME_VALUE_FOUND_START_OF_DAY)
         ) {
-            manipualtedEndeUrhzeit =
+            manipualtedEndeUhrzeit =
                 DataManipulatorUtil.TIME_VALUE_TARGET_END_OF_DAY;
         } else {
-            manipualtedEndeUrhzeit = zaehldatum.endeUhrzeit;
+            manipualtedEndeUhrzeit = zaehldatum.endeUhrzeit;
         }
-        return manipualtedEndeUrhzeit;
+        return manipualtedEndeUhrzeit;
     }
 }

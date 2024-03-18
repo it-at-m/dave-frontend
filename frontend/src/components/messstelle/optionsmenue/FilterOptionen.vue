@@ -154,7 +154,7 @@ const himmelsRichtungen: Map<string, unknown> = new Map<string, unknown>([
 function getStyleClass(mqId: string): string {
     let notIncluded = "text-caption grey--text text--lighten-1";
     let included = "text-caption font-weight-medium white--text";
-    return filterOptionsMessstelle.value.messquerschnitte.includes(mqId)
+    return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
         ? included
         : notIncluded;
 }

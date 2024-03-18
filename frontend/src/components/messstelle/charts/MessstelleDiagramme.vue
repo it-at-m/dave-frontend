@@ -123,7 +123,7 @@
     </v-sheet>
 </template>
 <script setup lang="ts">
-import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
+import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
@@ -139,6 +139,7 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -188,12 +189,12 @@ const store = useStore();
 const route = useRoute();
 const reportTools = useReportTools();
 
-onMounted(() => {
-    loadData();
-});
-
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
+});
+
+const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
 watch(activeTab, (active) => {
@@ -207,16 +208,16 @@ watch(activeTab, (active) => {
     ].includes(activeTab.value);
 });
 
-/**
- * Die Requests für alle Diagramme werden abgesetzt.
- */
-function loadData() {
+watch(options, () => {
     loadProcessedChartData();
-}
+});
 
 function loadProcessedChartData() {
     chartDataLoading.value = true;
-    LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value)
+    LadeMessdatenService.ladeMessdatenProcessed(
+        messstelleId.value,
+        options.value
+    )
         .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;

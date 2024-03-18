@@ -73,6 +73,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { Levels } from "@/api/error";
+import TagesTyp from "@/types/enum/TagesTyp";
 
 interface Props {
     messstelleId: string;
@@ -103,10 +104,16 @@ watch(messstelle, () => {
 });
 
 function setChosenOptions(): void {
-    if (chosenOptions.value.messquerschnitte.length > 0) {
+    if (areChosenOptionsValid()) {
         saveChosenOptions();
         dialog.value = false;
-    } else {
+    }
+}
+
+function areChosenOptionsValid(): boolean {
+    let result = true;
+    if (chosenOptions.value.messquerschnittIds.length === 0) {
+        result = false;
         let errortext =
             "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
         if (
@@ -121,6 +128,17 @@ function setChosenOptions(): void {
             level: Levels.ERROR,
         });
     }
+    if (
+        chosenOptions.value.zeitraum.length === 2 &&
+        chosenOptions.value.tagesTyp === ""
+    ) {
+        result = false;
+        store.dispatch("snackbar/showToast", {
+            snackbarTextPart1: "Es muss ein Wochentag ausgewählt sein.",
+            level: Levels.ERROR,
+        });
+    }
+    return result;
 }
 
 function saveChosenOptions(): void {
@@ -139,9 +157,9 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.zeitraum = [
         messstelle.value.datumLetztePlausibleMessung,
     ];
-    chosenOptions.value.messquerschnitte = [];
+    chosenOptions.value.messquerschnittIds = [];
     messstelle.value.messquerschnitte.forEach((q) =>
-        chosenOptions.value.messquerschnitte.push(q.mqId)
+        chosenOptions.value.messquerschnittIds.push(q.mqId)
     );
     if (messstelle.value.messquerschnitte.length === 1) {
         store.commit(
@@ -156,10 +174,10 @@ function setDefaultOptionsForMessstelle(): void {
             messstelleUtils.alleRichtungen
         );
     }
-    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
-    chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-    chosenOptions.value.tagesTyp = "";
+    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
+    chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
+    chosenOptions.value.tagesTyp = "" as TagesTyp;
     saveChosenOptions();
 }
 
