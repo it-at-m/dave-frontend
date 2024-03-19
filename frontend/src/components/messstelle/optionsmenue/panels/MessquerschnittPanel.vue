@@ -90,6 +90,11 @@ const lageErrorText: Ref<string> = ref("");
 const store = useStore();
 const messstelleUtils = useMessstelleUtils();
 
+const MIND_EIN_MESSQUERSCHNITT =
+    "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+const GENAU_EIN_MESSQUERSCHNITT =
+    "Es muss genau ein Messquerschnitt ausgewählt sein.";
+
 const chosenOptionsCopy = computed({
     get: () => props.value,
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
@@ -181,9 +186,9 @@ const helpTextLage: ComputedRef<string> = computed(() => {
         isZeitauswahlSpitzenstunde.value &&
         chosenOptionsCopy.value.messquerschnittIds.length !== 1
     ) {
-        text = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        text = GENAU_EIN_MESSQUERSCHNITT;
     } else if (chosenOptionsCopy.value.messquerschnittIds.length === 0) {
-        text = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+        text = MIND_EIN_MESSQUERSCHNITT;
     }
     return text;
 });
@@ -243,11 +248,11 @@ function updateOptions() {
 
 function updateLage(value: Array<string>) {
     resetErrorText();
-    previousSelectedStructures.value = value;
+
     if (isZeitauswahlSpitzenstunde.value) {
         if (chosenOptionsCopy.value.messquerschnittIds.length === 2) {
             lageErrorText.value =
-                "Bei der Spitzenstunde darf nur ein Messquerschnitt ausgewählt sein.";
+                "Zur Berechnung der Spitzenstunde muss genau ein Messquerschnitt ausgewählt sein.";
         }
         chosenOptionsCopy.value.messquerschnittIds = value.filter(
             (val) => !previousSelectedStructures.value.includes(val)
@@ -255,15 +260,16 @@ function updateLage(value: Array<string>) {
         previousSelectedStructures.value = _.cloneDeep(
             chosenOptionsCopy.value.messquerschnittIds
         );
+    } else {
+        previousSelectedStructures.value = value;
     }
 }
 
 function REQUIRED(v: Array<string>) {
     if (v.length > 0) return true;
-
-    let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+    let errortext = MIND_EIN_MESSQUERSCHNITT;
     if (isZeitauswahlSpitzenstunde.value) {
-        errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        errortext = GENAU_EIN_MESSQUERSCHNITT;
     }
     return errortext;
 }
