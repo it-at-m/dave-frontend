@@ -1,7 +1,7 @@
 <template>
     <v-data-table
         :headers="headers"
-        :items="listenausgabeData"
+        :items="computedListenausgabeData"
         :item-class="rowClasses"
         :items-per-page="-1"
         dense
@@ -89,10 +89,15 @@ const optionen: ComputedRef<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
+const computedListenausgabeData: ComputedRef<Array<LadeZaehldatumDTO>> =
+    computed(() => {
+        return props.listenausgabeData;
+    });
+
 watch(
-    props.listenausgabeData,
+    computedListenausgabeData,
     () => {
-        props.listenausgabeData.forEach((zaehldatum) => {
+        computedListenausgabeData.value.forEach((zaehldatum) => {
             zaehldatum.endeUhrzeit =
                 DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
             // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0

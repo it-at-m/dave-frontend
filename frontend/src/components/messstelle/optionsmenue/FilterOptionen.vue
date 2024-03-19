@@ -54,15 +54,37 @@
                     >mdi-arrow-decision</v-icon
                 >
             </v-col>
-            <v-col cols="6">
-                <span class="text-caption grey--text text--lighten-1"
+            <v-col cols="9">
+                <span :class="getStyleClass(messquerschnitt.mqId)"
                     >{{ messquerschnitt.mqId }}
                     {{ messquerschnitt.lageMessquerschnitt }}</span
                 >
             </v-col>
-            <v-col cols="4">
-                <span class="text-caption grey--text text--lighten-1"
-                    >[ {{ messquerschnitt.fahrtrichtung }} ]</span
+            <v-col cols="2">
+                <span
+                    :class="
+                        getStyleClass(messquerschnitt.mqId) + ' hidden-xl-only'
+                    "
+                    >[
+                    {{
+                        himmelsRichtungenTextShort.get(
+                            messquerschnitt.fahrtrichtung
+                        )
+                    }}
+                    ]</span
+                >
+                <span
+                    :class="
+                        getStyleClass(messquerschnitt.mqId) +
+                        ' hidden-lg-and-down'
+                    "
+                    >[
+                    {{
+                        himmelsRichtungenTextLong.get(
+                            messquerschnitt.fahrtrichtung
+                        )
+                    }}
+                    ]</span
                 >
             </v-col>
         </v-row>
@@ -79,6 +101,10 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
+import {
+    himmelsRichtungenTextLong,
+    himmelsRichtungenTextShort,
+} from "@/types/enum/Himmelsrichtungen";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -123,4 +149,12 @@ const zeitintervall = computed(() => {
         filterOptionsMessstelle.value.intervall
     );
 });
+
+function getStyleClass(mqId: string): string {
+    let notIncluded = "text-caption grey--text text--lighten-1";
+    let included = "text-caption font-weight-medium white--text";
+    return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
+        ? included
+        : notIncluded;
+}
 </script>

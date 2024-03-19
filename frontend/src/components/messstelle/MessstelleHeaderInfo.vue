@@ -13,7 +13,7 @@
         <span class="text-caption">{{ standort }} </span>
         <br />
         <span class="text-caption"
-            >{{ stadtbezirk }} - {{ stadtbezirkNummer }}
+            >Stadtbezirk {{ stadtbezirkNummer }}, {{ stadtbezirk }}
         </span>
     </v-sheet>
 </template>
@@ -22,7 +22,7 @@ interface Props {
     mstId: string;
     stadtbezirkNummer: number;
     stadtbezirk: string;
-    standort: string;
+    standort?: string;
     height: string;
     minheight: string;
 }

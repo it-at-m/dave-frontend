@@ -85,7 +85,7 @@ export default class DefaultObjectCreator {
         return {
             fahrzeuge: this.createDefaultFahrzeugOptions(true),
             intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-            messquerschnitte: [],
+            messquerschnittIds: [],
             tagesTyp: "",
             zeitauswahl: "",
             zeitblock: "",

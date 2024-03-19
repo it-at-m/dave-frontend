@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-btn
+            class="ml-6 mt-2"
             color="secondary"
             @click="dialog = true"
         >
@@ -33,6 +34,10 @@
                         >
                             <zeit-panel v-model="chosenOptions" />
                             <fahrzeug-panel v-model="chosenOptions" />
+                            <messquerschnitt-panel v-model="chosenOptions" />
+                            <darstellungsoptionen-panel-messstelle
+                                v-model="chosenOptions"
+                            />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -68,6 +73,12 @@ import _ from "lodash";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import { Levels } from "@/api/error";
+import TagesTyp from "@/types/enum/TagesTyp";
+import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
+import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 
 interface Props {
     messstelleId: string;
@@ -80,6 +91,7 @@ const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
 
 const vuetify = useVuetify();
 const store = useStore();
+const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
 const chosenOptions = ref(
     DefaultObjectCreator.createDefaultMessstelleOptions()
@@ -93,12 +105,49 @@ const getContentSheetHeight = computed(() => {
 });
 
 watch(messstelle, () => {
-    resetOptions();
+    if (store.getters["filteroptionsMessstelle/isHistory"]) {
+        store.commit("filteroptionsMessstelle/reloadFilteroptions");
+    } else {
+        resetOptions();
+    }
 });
 
 function setChosenOptions(): void {
-    saveChosenOptions();
-    dialog.value = false;
+    if (areChosenOptionsValid()) {
+        saveChosenOptions();
+        dialog.value = false;
+    }
+}
+
+function areChosenOptionsValid(): boolean {
+    let result = true;
+    if (chosenOptions.value.messquerschnittIds.length === 0) {
+        result = false;
+        let errortext =
+            "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+        if (
+            messstelleUtils.isZeitauswahlSpitzenstunde(
+                chosenOptions.value.zeitauswahl
+            )
+        ) {
+            errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        }
+        store.dispatch("snackbar/showToast", {
+            snackbarTextPart1: errortext,
+            level: Levels.ERROR,
+        });
+    }
+    if (
+        chosenOptions.value.zeitraum.length === 2 &&
+        chosenOptions.value.tagesTyp === ""
+    ) {
+        result = false;
+        store.dispatch("snackbar/showToast", {
+            snackbarTextPart1: "Es muss ein Wochentag ausgewählt sein.",
+            level: Levels.ERROR,
+        });
+    }
+    return result;
 }
 
 function saveChosenOptions(): void {
@@ -117,11 +166,33 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.zeitraum = [
         messstelle.value.datumLetztePlausibleMessung,
     ];
-    chosenOptions.value.messquerschnitte = [];
-    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
-    chosenOptions.value.zeitblock = Zeitblock.ZB_06_10;
+    chosenOptions.value.messquerschnittIds = [];
+    messstelle.value.messquerschnitte.forEach((q) =>
+        chosenOptions.value.messquerschnittIds.push(q.mqId)
+    );
+    if (messstelle.value.messquerschnitte.length === 1) {
+        store.commit(
+            "filteroptionsMessstelle/setDirection",
+            himmelsRichtungenTextLong.get(
+                messstelle.value.messquerschnitte[0].fahrtrichtung
+            )
+        );
+    } else {
+        store.commit(
+            "filteroptionsMessstelle/setDirection",
+            messstelleUtils.alleRichtungen
+        );
+    }
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-    chosenOptions.value.tagesTyp = "";
+    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
+    chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
+    chosenOptions.value.tagesTyp = "" as TagesTyp;
+    chosenOptions.value.blackPrintMode = false;
+    chosenOptions.value.werteHundertRunden = false;
+    chosenOptions.value.blocksumme = true;
+    chosenOptions.value.stundensumme = true;
+    chosenOptions.value.tagessumme = true;
+    chosenOptions.value.spitzenstunde = true;
     saveChosenOptions();
 }
 
