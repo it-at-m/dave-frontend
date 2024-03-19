@@ -9,4 +9,15 @@ export default interface MessstelleOptionsDTO {
     tagesTyp: string;
     intervall: ZaehldatenIntervall;
     messquerschnittIds: string[];
+    // Darstellungsoptionen
+    werteHundertRunden: boolean;
+    blackPrintMode: boolean;
+    // Ganglinie
+    ganglinieYAchse1MaxValue: number | null;
+    ganglinieYAchse2MaxValue: number | null;
+    // Listenausgabe
+    stundensumme: boolean;
+    blocksumme: boolean;
+    tagessumme: boolean;
+    spitzenstunde: boolean;
 }
