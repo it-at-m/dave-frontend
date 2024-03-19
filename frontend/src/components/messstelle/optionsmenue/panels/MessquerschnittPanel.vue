@@ -46,7 +46,7 @@
                             multiple
                             :rules="[REQUIRED]"
                             @change="updateLage"
-                            @blur="resetErrorText"
+                            @blur="resetSpitzenstundeErrorText"
                         />
                     </v-hover>
                 </v-col>
@@ -54,8 +54,8 @@
                 <v-col cols="4">
                     <v-card flat>
                         <div v-if="hoverLage">{{ helpTextLageHover }}</div>
-                        <div v-if="lageErrorText.length > 0">
-                            {{ lageErrorText }}
+                        <div v-if="spitzenstundeErrorText.length > 0">
+                            {{ spitzenstundeErrorText }}
                         </div>
                         <div>{{ helpTextLage }}</div>
                     </v-card>
@@ -86,7 +86,7 @@ const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 
 const hoverDirection: Ref<boolean> = ref(false);
 const hoverLage: Ref<boolean> = ref(false);
-const lageErrorText: Ref<string> = ref("");
+const spitzenstundeErrorText: Ref<string> = ref("");
 const store = useStore();
 const messstelleUtils = useMessstelleUtils();
 
@@ -244,15 +244,14 @@ function updateOptions() {
     previousSelectedStructures.value = _.cloneDeep(
         chosenOptionsCopy.value.messquerschnittIds
     );
-    resetErrorText();
+    resetSpitzenstundeErrorText();
 }
 
 function updateLage(value: Array<string>) {
-    resetErrorText();
-
+    resetSpitzenstundeErrorText();
     if (isZeitauswahlSpitzenstunde.value) {
         if (chosenOptionsCopy.value.messquerschnittIds.length === 2) {
-            lageErrorText.value =
+            spitzenstundeErrorText.value =
                 "Zur Berechnung der Spitzenstunde muss genau ein Messquerschnitt ausgewählt sein.";
         }
         chosenOptionsCopy.value.messquerschnittIds = value.filter(
@@ -274,7 +273,7 @@ function REQUIRED(v: Array<string>) {
     }
     return errortext;
 }
-function resetErrorText(): void {
-    lageErrorText.value = "";
+function resetSpitzenstundeErrorText(): void {
+    spitzenstundeErrorText.value = "";
 }
 </script>
