@@ -173,7 +173,11 @@ export default class Optionsmenue extends Vue {
 
     @Watch("zaehlung")
     zaehlungChanged() {
-        this.resetOptions();
+        if (this.$store.getters.isHistory) {
+            this.$store.dispatch("reloadFilteroptions");
+        } else {
+            this.resetOptions();
+        }
     }
 
     /**
