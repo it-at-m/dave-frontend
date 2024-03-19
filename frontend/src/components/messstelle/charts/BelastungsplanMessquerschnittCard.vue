@@ -21,7 +21,7 @@ interface Props {
 
 const store = useStore();
 const canvas = ref<Svg>(SVG.SVG());
-const viewbox = ref(800);
+const viewbox = ref(1050);
 
 const rotation = new Map<string, number>([
     ["N", 180],
@@ -45,8 +45,8 @@ const props = defineProps<Props>();
 onMounted(() => {
     canvas.value
         .addTo("#drawingMessquerschnittBelastungsplan")
-        .size(1500, 1500)
-        .viewbox(0, 0, viewbox.value + 200, viewbox.value + 200);
+        .size("80vh", "80vh")
+        .viewbox(0, 0, viewbox.value, viewbox.value);
     let groupedByDirecition = _.chain(
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
     )
@@ -116,45 +116,99 @@ const isGv_pInBelastungsPlan = computed(() => {
 });
 
 function drawTotal(querschnittGroup: any) {
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("asdff")
-            .move(startX.value, startY.value - 10)
-            .rotate(270, startX.value, startY.value - 10)
-    );
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("asdff")
-            .move(startX.value, startY.value - 75)
-            .rotate(270, startX.value, startY.value - 75)
-    );
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("asdff")
-            .move(startX.value, startY.value - 140)
-            .rotate(270, startX.value, startY.value - 140)
-    );
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("123")
-            .font({ anchor: "start" })
-            .move(startX.value, startY.value + 360)
-            .rotate(270, startX.value, startY.value + 360)
-    );
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("123")
-            .font({ anchor: "start" })
-            .move(startX.value, startY.value + 425)
-            .rotate(270, startX.value, startY.value + 425)
-    );
-    querschnittGroup.add(
-        SVG.SVG()
-            .text("1234")
-            .font({ anchor: "end" })
-            .move(startX.value, startY.value + 500)
-            .rotate(270, startX.value, startY.value + 500)
-    );
+    let positionLeft = 10;
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalKfz}`)
+                .move(startX.value, startY.value - positionLeft)
+                .rotate(270, startX.value, startY.value - positionLeft)
+        );
+        positionLeft += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalGv}`)
+                .move(startX.value, startY.value - positionLeft)
+                .rotate(270, startX.value, startY.value - positionLeft)
+        );
+        positionLeft += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalSv}`)
+                .move(startX.value, startY.value - positionLeft)
+                .rotate(270, startX.value, startY.value - positionLeft)
+        );
+        positionLeft += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalPercentGv}`)
+                .move(startX.value, startY.value - positionLeft)
+                .rotate(270, startX.value, startY.value - positionLeft)
+        );
+        positionLeft += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.totalPercentGv) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalPercentSv}`)
+                .move(startX.value, startY.value - positionLeft)
+                .rotate(270, startX.value, startY.value - positionLeft)
+        );
+        positionLeft += 65;
+    }
+
+    let positionRight = 360;
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalKfz}`)
+                .move(startX.value, startY.value + positionRight)
+                .rotate(270, startX.value, startY.value + positionRight)
+        );
+        positionRight += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalGv}`)
+                .move(startX.value, startY.value + positionRight)
+                .rotate(270, startX.value, startY.value + positionRight)
+        );
+        positionRight += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalSv}`)
+                .move(startX.value, startY.value + positionRight)
+                .rotate(270, startX.value, startY.value + positionRight)
+        );
+        positionRight += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalPercentGv}`)
+                .move(startX.value, startY.value + positionRight)
+                .rotate(270, startX.value, startY.value + positionRight)
+        );
+        positionRight += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.totalPercentGv) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalPercentSv}`)
+                .move(startX.value, startY.value + positionRight)
+                .rotate(270, startX.value, startY.value + positionRight)
+        );
+        positionRight += 65;
+    }
 }
 
 function drawArrowDownwards() {
