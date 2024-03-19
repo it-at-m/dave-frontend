@@ -46,7 +46,7 @@
                             multiple
                             :rules="[REQUIRED]"
                             @change="updateLage"
-                            @blur="checkErrorText"
+                            @blur="resetErrorText"
                         />
                     </v-hover>
                 </v-col>
@@ -177,13 +177,13 @@ const helpTextLage: ComputedRef<string> = computed(() => {
     if (direction.value === messstelleUtils.alleRichtungen) {
         text =
             "Hinweis: Um einzelne Messquerschnitte auszuwählen, muss zuvor eine Richtung bestimmt werden.";
-    } else {
-        if (chosenOptionsCopy.value.messquerschnittIds.length === 0) {
-            text = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
-            if (isZeitauswahlSpitzenstunde.value) {
-                text = "Es muss genau ein Messquerschnitt ausgewählt sein.";
-            }
-        }
+    } else if (
+        isZeitauswahlSpitzenstunde.value &&
+        chosenOptionsCopy.value.messquerschnittIds.length !== 1
+    ) {
+        text = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+    } else if (chosenOptionsCopy.value.messquerschnittIds.length === 0) {
+        text = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
     }
     return text;
 });
@@ -226,7 +226,6 @@ watch(zeitauswahl, () => {
 function updateOptions() {
     chosenOptionsCopy.value.messquerschnittIds = [];
     if (isZeitauswahlSpitzenstunde.value) {
-        // TODO Welchen soll ich zum vorbelegen verwenden
         const keyVal = lageValues.value.at(0);
         if (keyVal) {
             chosenOptionsCopy.value.messquerschnittIds.push(keyVal.value);
@@ -239,34 +238,24 @@ function updateOptions() {
     previousSelectedStructures.value = _.cloneDeep(
         chosenOptionsCopy.value.messquerschnittIds
     );
-    lageErrorText.value = "";
+    resetErrorText();
 }
 
 function updateLage(value: Array<string>) {
-    const removed = previousSelectedStructures.value.filter(
-        (val) => !value.includes(val)
-    );
-    if (value.length === 0) {
-        chosenOptionsCopy.value.messquerschnittIds = removed;
-        lageErrorText.value =
-            "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
-        if (isZeitauswahlSpitzenstunde.value) {
+    resetErrorText();
+    previousSelectedStructures.value = value;
+    if (isZeitauswahlSpitzenstunde.value) {
+        if (chosenOptionsCopy.value.messquerschnittIds.length === 2) {
             lageErrorText.value =
-                "Es muss genau ein Messquerschnitt ausgewählt sein.";
+                "Bei der Spitzenstunde darf nur ein Messquerschnitt ausgewählt sein.";
         }
-    } else if (value.length > 1 && isZeitauswahlSpitzenstunde.value) {
-        const added = value.filter(
+        chosenOptionsCopy.value.messquerschnittIds = value.filter(
             (val) => !previousSelectedStructures.value.includes(val)
         );
-        chosenOptionsCopy.value.messquerschnittIds = added;
-        lageErrorText.value =
-            "Es muss genau ein Messquerschnitt ausgewählt sein.";
-    } else {
-        lageErrorText.value = "";
+        previousSelectedStructures.value = _.cloneDeep(
+            chosenOptionsCopy.value.messquerschnittIds
+        );
     }
-    previousSelectedStructures.value = _.cloneDeep(
-        chosenOptionsCopy.value.messquerschnittIds
-    );
 }
 
 function REQUIRED(v: Array<string>) {
@@ -278,10 +267,7 @@ function REQUIRED(v: Array<string>) {
     }
     return errortext;
 }
-
-function checkErrorText(): void {
-    if (chosenOptionsCopy.value.messquerschnittIds.length === 1) {
-        lageErrorText.value = "";
-    }
+function resetErrorText(): void {
+    lageErrorText.value = "";
 }
 </script>
