@@ -123,7 +123,8 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
                 querschnitt.fahrtrichtung
             );
             if (himmelsrichtungAsText === undefined) {
-                himmelsrichtungAsText = querschnitt.fahrtrichtung.valueOf();
+                himmelsrichtungAsText =
+                    "Fehler bei der Bestimmung der Himmelsrichtung.";
             }
             const keyVal: KeyVal = {
                 text: himmelsrichtungAsText,
