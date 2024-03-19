@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable no-unused-vars */
 import { useStore } from "@/api/util/useStore";
 import { computed, ComputedRef } from "vue";
 import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
@@ -49,7 +48,6 @@ import AbstractHistoryItem from "@/types/app/AbstractHistoryItem";
 import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
 import _ from "lodash";
-/* eslint-enable no-unused-vars */
 
 const store = useStore();
 const router = useRouter();
