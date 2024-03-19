@@ -7,4 +7,15 @@ export default class DaveUtils {
         document.body.appendChild(link);
         link.click();
     }
+
+    public static downloadCsv(content: string, filename: string) {
+        const csvContent = `data:text/csv;charset=utf-8,${content}`;
+
+        const link = document.createElement("a");
+        link.setAttribute("href", encodeURI(csvContent));
+        link.setAttribute("download", filename);
+        document.body.appendChild(link); // Required for FF
+
+        link.click();
+    }
 }
