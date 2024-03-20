@@ -105,6 +105,7 @@ import {
     himmelsRichtungenTextLong,
     himmelsRichtungenTextShort,
 } from "@/types/enum/Himmelsrichtungen";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -132,16 +133,25 @@ const zeitraum: Ref<string> = computed(() => {
 });
 
 const zeitblock: Ref<string> = computed(() => {
-    const zeitblock = zeitblockInfo.get(
+    let text = Zeitauswahl.TAGESWERT.valueOf();
+    const existsBlock = zeitblockInfo.get(
+        filterOptionsMessstelle.value.zeitblock
+    );
+    const existsStunde = zeitblockStuendlichInfo.get(
         filterOptionsMessstelle.value.zeitblock
     );
     if (
-        zeitblock &&
-        filterOptionsMessstelle.value.zeitauswahl != Zeitauswahl.TAGESWERT
+        Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
+        existsBlock
     ) {
-        return zeitblock.text;
+        text = existsBlock.text;
+    } else if (
+        Zeitauswahl.STUNDE === filterOptionsMessstelle.value.zeitauswahl &&
+        existsStunde
+    ) {
+        text = existsStunde.text;
     }
-    return Zeitauswahl.TAGESWERT;
+    return text;
 });
 
 const zeitintervall = computed(() => {
