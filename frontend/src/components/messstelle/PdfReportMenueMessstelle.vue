@@ -141,8 +141,16 @@ const options: Ref<MessstelleOptionsDTO> = computed(() => {
 });
 
 function closeDialog(): void {
+    resetCheckboxes();
     emits("close");
 }
+
+function resetCheckboxes(): void {
+    messstelleninfo.value = false;
+    messinfo.value = false;
+    legende.value = false;
+}
+
 function saveItems(): void {
     if (messstelleninfo.value) {
         createMessstelleInfo();
