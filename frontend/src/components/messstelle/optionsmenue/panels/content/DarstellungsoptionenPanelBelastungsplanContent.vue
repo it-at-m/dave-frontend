@@ -26,8 +26,9 @@
                     <v-slider
                         v-model="sizeBelastungsplan"
                         label="Belastungsplangröße"
-                        :max="maxSizeBelastungsplanSvg"
-                        :min="minSizeBelastungsplanSvg"
+                        :max="10"
+                        :min="1"
+                        thumb-label="always"
                     />
                 </v-hover>
             </v-col>
@@ -70,7 +71,15 @@ const store = useStore();
 const hoverWerteHundertRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
 const hoverBlackPrintMode = ref(false);
-const sizeBelastungsplan = ref(0);
+const sizeBelastungsplan = computed({
+    get: () =>
+        store.getters["filteroptionsMessstelle/getBelastungsplanChosenSize"],
+    set: (payload: number) =>
+        store.commit(
+            "filteroptionsMessstelle/setBelastungsplanChosenSize",
+            payload
+        ),
+});
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
@@ -92,13 +101,5 @@ const helpTextBelastungsplan = computed(() => {
 
 watch(sizeBelastungsplan, () => {
     store.dispatch("setSizeBelastungsplanSvg", sizeBelastungsplan.value);
-});
-
-const maxSizeBelastungsplanSvg = computed(() => {
-    return store.getters.getMaxSizeBelastungsplanSvg;
-});
-
-const minSizeBelastungsplanSvg = computed(() => {
-    return store.getters.getMinSizeBelastungsplanSvg;
 });
 </script>

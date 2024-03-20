@@ -139,9 +139,7 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
-import LadePrcessedMessdatenDTO from "@/types/messstelle/LadePrcessedMessdatenDTO";
 import ListBelastungsplanMessquerschnitteDTO from "@/types/messstelle/ListBelastungsplanMessquerschnitteDTO";
-import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
 import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
 import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -198,10 +196,6 @@ const store = useStore();
 const route = useRoute();
 const reportTools = useReportTools();
 
-onMounted(() => {
-    loadData();
-});
-
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
@@ -223,7 +217,7 @@ watch(activeTab, (active) => {
 
 watch(options, () => {
     loadProcessedChartData();
-}
+});
 
 function loadProcessedChartData() {
     chartDataLoading.value = true;
