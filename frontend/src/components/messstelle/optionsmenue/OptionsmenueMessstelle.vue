@@ -139,7 +139,7 @@ function areChosenOptionsValid(): boolean {
     }
     if (
         chosenOptions.value.zeitraum.length === 2 &&
-        chosenOptions.value.tagesTyp === ""
+        !chosenOptions.value.tagesTyp
     ) {
         result = false;
         store.dispatch("snackbar/showToast", {
