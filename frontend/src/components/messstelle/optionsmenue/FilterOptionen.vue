@@ -41,6 +41,29 @@
             </v-col>
         </v-row>
         <v-row
+            v-if="wochentag"
+            no-gutters
+        >
+            <v-col
+                cols="1"
+                align-self="start"
+            >
+                <v-icon
+                    small
+                    color="grey lighten-1"
+                    >mdi-calendar-week-outline</v-icon
+                >
+            </v-col>
+            <v-col cols="10">
+                <span class="grey--text text--lighten-1"
+                    >Wochentag:
+                    <span class="font-weight-medium white--text"
+                        >{{ wochentag }}
+                    </span>
+                </span>
+            </v-col>
+        </v-row>
+        <v-row
             v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
             :key="index"
             no-gutters
@@ -106,6 +129,7 @@ import {
     himmelsRichtungenTextShort,
 } from "@/types/enum/Himmelsrichtungen";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { tagesTypText } from "@/types/enum/TagesTyp";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -117,6 +141,10 @@ defineProps<Props>();
 
 const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+const wochentag: Ref<string | undefined> = computed(() => {
+    return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
 });
 
 const zeitraum: Ref<string> = computed(() => {
