@@ -67,6 +67,7 @@ declare module '@vue/runtime-core' {
     PanelHeader: typeof import('./src/components/common/PanelHeader.vue')['default']
     PdfPreviewDialog: typeof import('./src/components/pdfreport/assetforms/PdfPreviewDialog.vue')['default']
     PdfReportMenue: typeof import('./src/components/zaehlstelle/PdfReportMenue.vue')['default']
+    PdfReportMenueMessstelle: typeof import('./src/components/messstelle/PdfReportMenueMessstelle.vue')['default']
     QKFZIcon: typeof import('./src/components/messstelle/icons/FahrzeugklasseIcons/QKFZIcon.vue')['default']
     QpkwLkwIcon: typeof import('./src/components/messstelle/icons/FahrzeugklasseIcons/QpkwLkwIcon.vue')['default']
     QuelleIcon: typeof import('./src/components/zaehlstelle/icons/QuelleIcon.vue')['default']
