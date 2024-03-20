@@ -18,33 +18,33 @@
                 >
                     <v-col cols="4">
                         <v-radio
-                            label="Tageswert (Durchschnitt)"
+                            :label="`Tageswert${durchschnitt}`"
                             :value="Zeitauswahl.TAGESWERT"
                         />
                         <v-radio
-                            label="Block (Durchschnitt)"
+                            :label="`Block${durchschnitt}`"
                             :value="Zeitauswahl.BLOCK"
                             :disabled="isDateBiggerFiveYears"
                         />
                         <v-radio
-                            label="Stunde (Durchschnitt)"
+                            :label="`Stunde${durchschnitt}`"
                             :value="Zeitauswahl.STUNDE"
                             :disabled="isDateBiggerFiveYears"
                         />
                     </v-col>
                     <v-col cols="4">
                         <v-radio
-                            label="Spitzenstunde Kfz (Durchschnitt)"
+                            :label="`Spitzenstunde Kfz${durchschnitt}`"
                             :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
                             :disabled="isTypeDisabled('KFZ')"
                         />
                         <v-radio
-                            label="Spitzenstunde Rad (Durchschnitt)"
+                            :label="`Spitzenstunde Rad${durchschnitt}`"
                             :value="Zeitauswahl.SPITZENSTUNDE_RAD"
                             :disabled="isTypeDisabled('RAD')"
                         />
                         <v-radio
-                            label="Spitzenstunde Fuß (Durchschnitt)"
+                            :label="`Spitzenstunde Fuß${durchschnitt}`"
                             :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
                             :disabled="isTypeDisabled('FUSS')"
                         />
@@ -83,6 +83,13 @@ const chosenOptionsCopy = computed({
 
 const dateUtils = useDateUtils();
 
+const durchschnitt = computed(() => {
+    if (chosenOptionsCopy.value.zeitraum.length === 2) {
+        return " (Durchschnitt)";
+    }
+    return "";
+});
+
 function isTypeDisabled(type: string): boolean {
     return (
         type != props.messstelleDetektierteFahrzeugart ||
@@ -106,7 +113,7 @@ const isDateBiggerFiveYears = computed(() => {
 
 const helperText = computed(() => {
     if (chosenOptionsCopy.value.messquerschnittIds.length != 1) {
-        return "Für die Spitzenstunde muss exakt ein Messquerschnitt ausgewählt sein";
+        return "Spitzenstunde kann nur für einen einzelnen Messquerschnitt ausgegeben werden";
     }
     return "";
 });
