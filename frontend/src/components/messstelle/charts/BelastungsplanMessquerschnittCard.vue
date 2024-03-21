@@ -172,29 +172,12 @@ function drawTotal(querschnittGroup: any) {
         positionTotalTextRight += 65;
     }
 
-    let positionTotalTextLeft = 370;
-    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+    let positionTotalTextLeft = 520;
+
+    if (isSv_pInBelastungsPlan.value) {
         querschnittGroup.add(
             SVG.SVG()
-                .text(`${props.belastungsplanData.totalKfz}`)
-                .move(startX.value, startY.value + positionTotalTextLeft)
-                .rotate(270, startX.value, startY.value + positionTotalTextLeft)
-        );
-        positionTotalTextLeft += 65;
-    }
-    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${props.belastungsplanData.totalGv}`)
-                .move(startX.value, startY.value + positionTotalTextLeft)
-                .rotate(270, startX.value, startY.value + positionTotalTextLeft)
-        );
-        positionTotalTextLeft += 65;
-    }
-    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        querschnittGroup.add(
-            SVG.SVG()
-                .text(`${props.belastungsplanData.totalSv}`)
+                .text(`${props.belastungsplanData.totalPercentSv}`)
                 .move(startX.value, startY.value + positionTotalTextLeft)
                 .rotate(270, startX.value, startY.value + positionTotalTextLeft)
         );
@@ -209,10 +192,28 @@ function drawTotal(querschnittGroup: any) {
         );
         positionTotalTextLeft += 65;
     }
-    if (isSv_pInBelastungsPlan.value) {
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
         querschnittGroup.add(
             SVG.SVG()
-                .text(`${props.belastungsplanData.totalPercentSv}`)
+                .text(`${props.belastungsplanData.totalSv}`)
+                .move(startX.value, startY.value + positionTotalTextLeft)
+                .rotate(270, startX.value, startY.value + positionTotalTextLeft)
+        );
+        positionTotalTextLeft += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalGv}`)
+                .move(startX.value, startY.value + positionTotalTextLeft)
+                .rotate(270, startX.value, startY.value + positionTotalTextLeft)
+        );
+        positionTotalTextLeft += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        querschnittGroup.add(
+            SVG.SVG()
+                .text(`${props.belastungsplanData.totalKfz}`)
                 .move(startX.value, startY.value + positionTotalTextLeft)
                 .rotate(270, startX.value, startY.value + positionTotalTextLeft)
         );
@@ -225,7 +226,7 @@ function rotateArrowsIfNeccacary(querschnittGroup: any) {
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
             .direction;
     if (direction == "S" || direction == "W") {
-        querschnittGroup.rotate(90).translate(100, 0);
+        querschnittGroup.rotate(90).translate(-100, -50);
     }
 }
 function drawLegende() {
@@ -254,16 +255,19 @@ function drawLegende() {
 
     canvas.value
         .text(function (add) {
-            add.tspan("Tageswert ");
+            add.tspan("Tageswert").font({ weight: "bold" });
             add.tspan("0-24 Uhr").newLine();
             if (chosenFahrzeugartAsTextArray.length != 0) {
                 let textstart = 0;
                 add.tspan(chosenFahrzeugartAsTextArray[0])
                     .newLine()
-                    .x(textstart);
+                    .x(textstart)
+                    .font({ weight: "bold" });
                 textstart += 60;
                 for (let i = 1; i < chosenFahrzeugartAsTextArray.length; i++) {
-                    add.tspan(chosenFahrzeugartAsTextArray[i]).x(textstart);
+                    add.tspan(chosenFahrzeugartAsTextArray[i])
+                        .x(textstart)
+                        .font({ weight: "bold" });
                     textstart += 60;
                 }
                 chosenFahrzeugartAsTextArray.forEach((text) => {
@@ -271,7 +275,7 @@ function drawLegende() {
                 });
             }
         })
-        .move(0, startY.value + 500);
+        .move(10, startY.value + 550);
 }
 
 function drawArrowsPointingSouth(
@@ -291,17 +295,17 @@ function drawArrowsPointingSouth(
                     startX.value + 10,
                     startY.value,
                     startX.value + 10,
-                    startY.value + 300
+                    startY.value + 450
                 )
-                .stroke({ width: 10, color: "black" })
+                .stroke({ width: 10, color: farben.get(mq.direction) })
         );
         querschnittGroup.add(
             SVG.SVG()
                 .polygon(
-                    `${startX.value + 20},${startY.value + 301} ${
+                    `${startX.value + 20},${startY.value + 451} ${
                         startX.value
-                    },${startY.value + 301} ${startX.value + 10} ${
-                        startY.value + 310
+                    },${startY.value + 451} ${startX.value + 10} ${
+                        startY.value + 460
                     }`
                 )
                 .stroke({ width: 1, color: "black" })
@@ -366,9 +370,9 @@ function drawStreetName(querschnittGroup: any) {
     querschnittGroup.add(
         SVG.SVG()
             .text(`${props.belastungsplanData.strassenname}`)
-            .move(startX.value, startY.value + 150)
+            .move(startX.value, startY.value + 225)
             .font({ anchor: "middle", size: 20 })
-            .rotate(270, startX.value, startY.value + 150)
+            .rotate(270, startX.value, startY.value + 225)
     );
 }
 
@@ -399,13 +403,13 @@ function addSumNorthIfNeccacary(
             SVG.SVG()
                 .line(
                     startX.value - 25,
-                    startY.value + 500,
+                    startY.value + 650,
                     startX.value - 25,
-                    startY.value + 315
+                    startY.value + 465
                 )
                 .stroke({ width: 1, color: "black" })
         );
-        let textStart = 325;
+        let textStart = 475;
         if (isGv_pInBelastungsPlan.value) {
             querschnittGroup.add(
                 SVG.SVG()
@@ -454,7 +458,6 @@ function addSumNorthIfNeccacary(
                     .font({ anchor: "end" })
                     .rotate(270, startX.value - 20, startY.value + textStart)
             );
-            textStart += 65;
         }
     }
 }
@@ -476,7 +479,7 @@ function drawArrowsPointingNorth(
                     startX.value + 10,
                     startY.value,
                     startX.value + 10,
-                    startY.value + 300
+                    startY.value + 450
                 )
                 .stroke({ width: 10, color: farben.get(mq.direction) })
         );
@@ -490,7 +493,7 @@ function drawArrowsPointingNorth(
                 .stroke({ width: 1, color: "black" })
                 .attr("fill", "none")
         );
-        let textstart = 325;
+        let textstart = 475;
         if (isSv_pInBelastungsPlan.value) {
             querschnittGroup.add(
                 SVG.SVG()
@@ -555,15 +558,15 @@ function drawMessstelleInfo() {
             add.tspan("Messtag").newLine();
             add.tspan("Messzeitraum").newLine();
         })
-        .move(startX.value, 0);
+        .move(startX.value + 50, 10);
 }
 
 function drawNorthSymbol() {
     canvas.value
-        .path("M 30 0 L 20 30 L 40 30 L 30 0")
+        .path("M 40 10 L 30 40 L 50 40 L 40 10")
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none");
-    canvas.value.text("N").move(25, 15).font({ size: 13 });
+    canvas.value.text("N").move(35, 25).font({ size: 13 });
 }
 
 function addSumSouthIfNeccacary(
