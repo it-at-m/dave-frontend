@@ -26,12 +26,6 @@ const vuetify = useVuetify();
 const canvas = ref<Svg>(SVG.SVG());
 const viewbox = ref(900);
 const querschnittGroup = ref(canvas.value.group());
-const rotation = new Map<string, number>([
-    ["N", 180],
-    ["O", 0],
-    ["S", 0],
-    ["W", 180],
-]);
 
 const farben = new Map<string, string>([
     ["N", "#000000"],
@@ -84,33 +78,39 @@ watch(chosenOptionsCopyFahrzeuge, () => {
     canvas.value.clear();
     drawingConfig();
 });
+
+/**
+ * Die Pfeile werden immer zuerst nach Norden und Süden gezeichnet,
+ * wenn es sich um einem Messquerschnitt mit richtung Osten/Westen
+ * handelt wird die Zeichnung im anschluss gedreht und in die richtige position geschoben
+ */
 function draw() {
     querschnittGroup.value = canvas.value.group();
-    let groupedByDirecition = _.chain(
+    let groupedByDirection = _.chain(
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
     )
         .groupBy("direction")
         .map((value, key) => ({ direction: key, data: value }))
         .value();
-    drawArrowsPointingSouth(groupedByDirecition);
+    drawArrowsPointingSouth(groupedByDirection);
     startX.value += 50;
     drawStreetName();
     drawTotal();
     startX.value += 90;
-    drawArrowsPointingNorth(groupedByDirecition);
-    rotateArrowsIfNeccacary();
+    drawArrowsPointingNorth(groupedByDirection);
+    rotateArrowsIfNecessary();
     drawMessstelleInfo();
     drawNorthSymbol();
     drawLegende();
 }
 
 function drawArrowsPointingSouth(
-    groupedByDirecition: {
+    groupedByDirection: {
         data: LadeBelastungsplanMessqueschnittDataDTO[];
         direction: string;
     }[]
 ) {
-    let arrayOfDataForDirectionSouth = groupedByDirecition.find(
+    let arrayOfDataForDirectionSouth = groupedByDirection.find(
         (obj) => obj.direction == "S" || obj.direction == "O"
     );
     arrayOfDataForDirectionSouth?.data.forEach((mq) => {
@@ -122,7 +122,10 @@ function drawArrowsPointingSouth(
                     startX.value + 10,
                     startY.value + 450
                 )
-                .stroke({ width: 10, color: farben.get(mq.direction) })
+                .stroke({
+                    width: calcStrokeSize(mq),
+                    color: farben.get(mq.direction),
+                })
         );
         querschnittGroup.value.add(
             SVG.SVG()
@@ -147,10 +150,10 @@ function drawArrowsPointingSouth(
         );
         startX.value += 50;
     });
-    addSumSouthIfNeccacary(arrayOfDataForDirectionSouth);
+    addSumSouthIfNecessary(arrayOfDataForDirectionSouth);
 }
 
-function addSumSouthIfNeccacary(
+function addSumSouthIfNecessary(
     arrayOfDataForDirectionSouth:
         | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
         | undefined
@@ -217,7 +220,7 @@ function drawTotal() {
         props.belastungsplanData.totalPercentGv,
         props.belastungsplanData.totalPercentSv
     );
-    addTextOnSouthSide(
+    addTextSouthSide(
         startX.value,
         startY.value + 510,
         props.belastungsplanData.totalKfz,
@@ -229,12 +232,12 @@ function drawTotal() {
 }
 
 function drawArrowsPointingNorth(
-    groupedByDirecition: {
+    groupedByDirection: {
         data: LadeBelastungsplanMessqueschnittDataDTO[];
         direction: string;
     }[]
 ) {
-    let arrayOfDataForDirectionNorth = groupedByDirecition.find(
+    let arrayOfDataForDirectionNorth = groupedByDirection.find(
         (obj) => obj.direction == "N" || obj.direction == "W"
     );
     arrayOfDataForDirectionNorth?.data.forEach((mq) => {
@@ -246,7 +249,10 @@ function drawArrowsPointingNorth(
                     startX.value + 10,
                     startY.value + 450
                 )
-                .stroke({ width: 10, color: farben.get(mq.direction) })
+                .stroke({
+                    width: calcStrokeSize(mq),
+                    color: farben.get(mq.direction),
+                })
         );
         querschnittGroup.value.add(
             SVG.SVG()
@@ -258,7 +264,7 @@ function drawArrowsPointingNorth(
                 .stroke({ width: 1, color: "black" })
                 .attr("fill", "none")
         );
-        addTextOnSouthSide(
+        addTextSouthSide(
             startX.value,
             startY.value + 510,
             mq.sumKfz,
@@ -269,14 +275,18 @@ function drawArrowsPointingNorth(
         );
         startX.value += 50;
     });
-    addSumNorthIfNeccacary(arrayOfDataForDirectionNorth);
+    addSumNorthIfNecessary(arrayOfDataForDirectionNorth);
 }
 
-function addSumNorthIfNeccacary(arrayOfDataForDirectionNorth: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[] | undefined;
-    direction: string | undefined;
-}) {
-    if (arrayOfDataForDirectionNorth?.data.length > 1) {
+function addSumNorthIfNecessary(
+    arrayOfDataForDirectionNorth:
+        | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+        | undefined
+) {
+    if (
+        arrayOfDataForDirectionNorth != undefined &&
+        arrayOfDataForDirectionNorth?.data.length > 1
+    ) {
         let sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
             (accumulator, currentValue) => accumulator + currentValue.sumKfz,
             0
@@ -302,7 +312,7 @@ function addSumNorthIfNeccacary(arrayOfDataForDirectionNorth: {
                 )
                 .stroke({ width: 1, color: "black" })
         );
-        addTextOnSouthSide(
+        addTextSouthSide(
             startX.value - 20,
             startY.value + 510,
             sumMqKfz,
@@ -314,7 +324,7 @@ function addSumNorthIfNeccacary(arrayOfDataForDirectionNorth: {
     }
 }
 
-function rotateArrowsIfNeccacary() {
+function rotateArrowsIfNecessary() {
     const direction =
         props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
             .direction;
@@ -337,7 +347,7 @@ function calcPercentage(partial: number, total: number) {
     return ((100 * partial) / total).toFixed(1);
 }
 
-function addTextOnSouthSide(
+function addTextSouthSide(
     startPointX: number,
     startPointY: number,
     kfz: number,
@@ -464,6 +474,18 @@ function drawLegende() {
             }
         })
         .move(10, startY.value + 550);
+}
+
+function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
+    const maxLineWidth = 20;
+    const totalVerkehrMq = mq.sumKfz + mq.sumGv + mq.sumSv;
+    const totalVerkehr =
+        props.belastungsplanData.totalKfz +
+        props.belastungsplanData.totalGv +
+        props.belastungsplanData.totalSv;
+    const percentageMqComparedToTotal = totalVerkehrMq / totalVerkehr;
+    let result = percentageMqComparedToTotal * maxLineWidth;
+    return result > 1 ? result : 1;
 }
 </script>
 
