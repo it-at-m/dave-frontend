@@ -7,6 +7,8 @@ export default interface LadeBelastungsplanMessqueschnittDataDTO {
 
     sumGv: number;
 
+    sumRad: number;
+
     direction: string;
 
     percentSv: number;

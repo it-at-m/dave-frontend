@@ -8,6 +8,7 @@ export default interface ListBelastungsplanMessquerschnitteDTO {
     totalKfz: number;
     totalSv: number;
     totalGv: number;
+    totalRad: number;
     totalPercentSv: number;
     totalPercentGv: number;
 }

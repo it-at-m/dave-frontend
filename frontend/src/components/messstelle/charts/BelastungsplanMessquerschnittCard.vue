@@ -151,6 +151,7 @@ function drawArrowsPointingSouth(
             mq.sumKfz,
             mq.sumGv,
             mq.sumSv,
+            mq.sumRad,
             mq.percentGV,
             mq.percentSv
         );
@@ -180,6 +181,10 @@ function addSumSouthIfNecessary(
             (accumulator, currentValue) => accumulator + currentValue.sumGv,
             0
         );
+        let sumMqRad = arrayOfDataForDirectionSouth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumRad,
+            0
+        );
         const sumTotal = sumMqKfz + sumMqSv + sumMqGv;
         const percentageMqSv = calcPercentage(sumMqSv, sumTotal);
         const percentageMqGv = calcPercentage(sumMqGv, sumTotal);
@@ -200,6 +205,7 @@ function addSumSouthIfNecessary(
             sumMqKfz,
             sumMqGv,
             sumMqSv,
+            sumMqRad,
             percentageMqGv,
             percentageMqSv
         );
@@ -223,6 +229,7 @@ function drawTotal() {
         props.belastungsplanData.totalKfz,
         props.belastungsplanData.totalGv,
         props.belastungsplanData.totalSv,
+        props.belastungsplanData.totalRad,
         props.belastungsplanData.totalPercentGv,
         props.belastungsplanData.totalPercentSv
     );
@@ -232,6 +239,7 @@ function drawTotal() {
         props.belastungsplanData.totalKfz,
         props.belastungsplanData.totalGv,
         props.belastungsplanData.totalSv,
+        props.belastungsplanData.totalRad,
         props.belastungsplanData.totalPercentGv,
         props.belastungsplanData.totalPercentSv
     );
@@ -276,6 +284,7 @@ function drawArrowsPointingNorth(
             mq.sumKfz,
             mq.sumGv,
             mq.sumSv,
+            mq.sumRad,
             mq.percentGV,
             mq.percentSv
         );
@@ -305,6 +314,10 @@ function addSumNorthIfNecessary(
             (accumulator, currentValue) => accumulator + currentValue.sumGv,
             0
         );
+        let sumMqRad = arrayOfDataForDirectionNorth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumRad,
+            0
+        );
         const sumTotal = sumMqKfz + sumMqSv + sumMqGv;
         const percentageMqSv = calcPercentage(sumMqSv, sumTotal);
         const percentageMqGv = calcPercentage(sumMqGv, sumTotal);
@@ -325,6 +338,7 @@ function addSumNorthIfNecessary(
             sumMqKfz,
             sumMqGv,
             sumMqSv,
+            sumMqRad,
             percentageMqGv,
             percentageMqSv
         );
@@ -360,6 +374,7 @@ function addTextSouthSide(
     kfz: number,
     gv: number,
     sv: number,
+    rad: number,
     percentGv: number | string,
     percentSv: number | string
 ) {
@@ -367,9 +382,14 @@ function addTextSouthSide(
         kfz = Math.round(kfz / 100) * 100;
         gv = Math.round(gv / 100) * 100;
         sv = Math.round(sv / 100) * 100;
+        rad = Math.round(rad / 100) * 100;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
+        startPointY += 65;
     }
     if (isGv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(`${percentGv}`, startPointX, startPointY);
+        addTextToQuerschnittGroup(`${percentGv}%`, startPointX, startPointY);
         startPointY += 65;
     }
     if (isSv_pInBelastungsPlan.value) {
@@ -395,6 +415,7 @@ function addTextNorthSide(
     kfz: number,
     gv: number,
     sv: number,
+    rad: number,
     percentGv: number | string,
     percentSv: number | string
 ) {
@@ -421,6 +442,9 @@ function addTextNorthSide(
     }
     if (isGv_pInBelastungsPlan.value) {
         addTextToQuerschnittGroup(`${percentGv}%`, startPointX, startPointY);
+    }
+    if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
     }
 }
 
@@ -467,6 +491,7 @@ function drawLegende() {
     formeln.set("GV", "GV = Lkw + Lz");
     formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
     formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
+    formeln.set("Rad", "");
     let chosenFahrzeugartAsTextArray: string[] = [];
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
         chosenFahrzeugartAsTextArray.push("KFZ");
@@ -482,6 +507,9 @@ function drawLegende() {
     }
     if (isGv_pInBelastungsPlan.value) {
         chosenFahrzeugartAsTextArray.push("GV%");
+    }
+    if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        chosenFahrzeugartAsTextArray.push("Rad");
     }
 
     canvas.value
@@ -527,11 +555,30 @@ const getZeitblockText = computed(() => {
 
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
     const maxLineWidth = 20;
-    const totalVerkehrMq = mq.sumKfz + mq.sumGv + mq.sumSv;
-    const totalVerkehr =
-        props.belastungsplanData.totalKfz +
-        props.belastungsplanData.totalGv +
-        props.belastungsplanData.totalSv;
+    let totalVerkehr = 0;
+    let totalVerkehrMq = 0;
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        totalVerkehrMq += mq.sumKfz;
+        totalVerkehr += props.belastungsplanData.totalKfz;
+    }
+    if (
+        chosenOptionsCopyFahrzeuge.value.schwerverkehr ||
+        isSv_pInBelastungsPlan
+    ) {
+        totalVerkehrMq += mq.sumSv;
+        totalVerkehr += props.belastungsplanData.totalSv;
+    }
+    if (
+        chosenOptionsCopyFahrzeuge.value.gueterverkehr ||
+        isGv_pInBelastungsPlan
+    ) {
+        totalVerkehrMq += mq.sumGv;
+        totalVerkehr += props.belastungsplanData.totalGv;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        totalVerkehrMq += mq.sumRad;
+        totalVerkehr += props.belastungsplanData.totalRad;
+    }
     const percentageMqComparedToTotal = totalVerkehrMq / totalVerkehr;
     let result = percentageMqComparedToTotal * maxLineWidth;
     return result > 1 ? result : 1;
