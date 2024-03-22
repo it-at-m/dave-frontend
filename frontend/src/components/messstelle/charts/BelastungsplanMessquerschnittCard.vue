@@ -345,55 +345,27 @@ function addSumNorthIfNeccacary(arrayOfDataForDirectionNorth: {
                 )
                 .stroke({ width: 1, color: "black" })
         );
-        let textStart = 475;
+        let textStart = startY.value + 510;
+        let textX = startX.value - 15;
         if (isGv_pInBelastungsPlan.value) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${percentageMqGv}`)
-                    .move(startX.value - 20, startY.value + textStart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value - 20, startY.value + textStart)
-            );
+            addTextToQuerschnittGroup(percentageMqGv, textX, textStart);
             textStart += 65;
         }
         if (isSv_pInBelastungsPlan.value) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${percentageMqSv}`)
-                    .move(startX.value - 20, startY.value + textStart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value - 20, startY.value + textStart)
-            );
+            addTextToQuerschnittGroup(percentageMqSv, textX, textStart);
             textStart += 65;
         }
         if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${sumMqGv}`)
-                    .move(startX.value - 20, startY.value + textStart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value - 20, startY.value + textStart)
-            );
+            addTextToQuerschnittGroup(sumMqGv, textX, textStart);
             textStart += 65;
         }
         if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${sumMqSv}`)
-                    .move(startX.value - 20, startY.value + textStart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value - 20, startY.value + textStart)
-            );
+            addTextToQuerschnittGroup(sumMqSv, textX, textStart);
             textStart += 65;
         }
         if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${sumMqKfz}`)
-                    .move(startX.value - 20, startY.value + textStart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value - 20, startY.value + textStart)
-            );
+            addTextToQuerschnittGroup(sumMqKfz, textX, textStart);
+            textStart += 65;
         }
     }
 }
@@ -428,58 +400,15 @@ function drawArrowsPointingNorth(
                 .stroke({ width: 1, color: "black" })
                 .attr("fill", "none")
         );
-        let textstart = 475;
-        if (isSv_pInBelastungsPlan.value) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${mq.percentSv}`)
-                    .move(startX.value, startY.value + textstart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value, startY.value + textstart)
-            );
-            textstart += 65;
-        }
-        if (isGv_pInBelastungsPlan.value) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${mq.percentGV}`)
-                    .move(startX.value, startY.value + textstart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value, startY.value + textstart)
-            );
-            textstart += 65;
-        }
-        if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${mq.sumGv}`)
-                    .move(startX.value, startY.value + textstart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value, startY.value + textstart)
-            );
-            textstart += 65;
-        }
-        if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${mq.sumSv}`)
-                    .move(startX.value, startY.value + textstart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value, startY.value + textstart)
-            );
-            textstart += 65;
-        }
-        if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-            querschnittGroup.value.add(
-                SVG.SVG()
-                    .text(`${mq.sumKfz}`)
-                    .move(startX.value, startY.value + textstart)
-                    .font({ anchor: "end" })
-                    .rotate(270, startX.value, startY.value + textstart)
-            );
-            textstart += 65;
-        }
-
+        addTextOnSouthSide(
+            startX.value,
+            startY.value + 510,
+            mq.sumKfz,
+            mq.sumGv,
+            mq.sumSv,
+            mq.percentGV,
+            mq.percentSv
+        );
         startX.value += 50;
     });
     addSumNorthIfNeccacary(arrayOfDataForDirectionNorth);
@@ -575,6 +504,68 @@ function addTextToQuerschnittGroup(
 
 function calcPercentage(partial: number, total: number) {
     return ((100 * partial) / total).toFixed(1);
+}
+
+function addTextOnSouthSide(
+    startPointX: number,
+    startPointY: number,
+    kfz: number,
+    gv: number,
+    sv: number,
+    percentGv: number,
+    percentSv: number
+) {
+    if (isGv_pInBelastungsPlan.value) {
+        addTextToQuerschnittGroup(percentSv, startPointX, startPointY);
+        startPointY += 65;
+    }
+    if (isSv_pInBelastungsPlan.value) {
+        addTextToQuerschnittGroup(percentGv, startPointX, startPointY);
+        startPointY += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        addTextToQuerschnittGroup(sv, startPointX, startPointY);
+        startPointY += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        addTextToQuerschnittGroup(gv, startPointX, startPointY);
+        startPointY += 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        addTextToQuerschnittGroup(kfz, startPointX, startPointY);
+        startPointY += 65;
+    }
+}
+
+function addTextNorthSide(
+    startPointX: number,
+    startPointY: number,
+    kfz: number,
+    gv: number,
+    sv: number,
+    percentGv: number,
+    percentSv: number
+) {
+    if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        addTextToQuerschnittGroup(kfz, startPointX, startPointY);
+        startPointY -= 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+        addTextToQuerschnittGroup(gv, startPointX, startPointY);
+        startPointY -= 65;
+    }
+    if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
+        addTextToQuerschnittGroup(sv, startPointX, startPointY);
+        startPointY -= 65;
+    }
+    if (isSv_pInBelastungsPlan.value) {
+        addTextToQuerschnittGroup(percentGv, startPointX, startPointY);
+        startPointY -= 65;
+    }
+    if (isGv_pInBelastungsPlan.value) {
+        addTextToQuerschnittGroup(percentSv, startPointX, startPointY);
+        startPointY -= 65;
+    }
 }
 </script>
 
