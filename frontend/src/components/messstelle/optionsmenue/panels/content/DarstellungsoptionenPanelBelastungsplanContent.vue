@@ -28,7 +28,6 @@
                         label="Belastungsplangröße"
                         :max="10"
                         :min="1"
-                        thumb-label="always"
                     />
                 </v-hover>
             </v-col>

@@ -15,6 +15,11 @@ import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBela
 import { useStore } from "@/api/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { belastungsplanAnzeigeUtils } from "@/components/messstelle/optionsmenue/composable/belastungsplanAnzeigeUtils";
+import { useDateUtils } from "@/util/DateUtils";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 interface Props {
     belastungsplanData: ListBelastungsplanMessquerschnitteDTO;
@@ -23,6 +28,7 @@ interface Props {
 
 const store = useStore();
 const vuetify = useVuetify();
+const dateUtils = useDateUtils();
 const canvas = ref<Svg>(SVG.SVG());
 const viewbox = ref(900);
 const querschnittGroup = ref(canvas.value.group());
@@ -61,7 +67,7 @@ function drawingConfig() {
         .addTo("#drawingMessquerschnittBelastungsplan")
         .size(svgHeight.value, svgHeight.value)
         .viewbox(0, 0, viewbox.value, viewbox.value);
-    startX.value = 350;
+    startX.value = 250;
     startY.value = 200;
     draw();
 }
@@ -184,7 +190,7 @@ function addSumSouthIfNecessary(
                     startX.value - 25,
                     startY.value,
                     startX.value - 25,
-                    startY.value - 180
+                    startY.value - numberOfChosenFahrzeugOptions.value * 65
                 )
                 .stroke({ width: 1, color: "black" })
         );
@@ -306,9 +312,10 @@ function addSumNorthIfNecessary(
             SVG.SVG()
                 .line(
                     startX.value - 25,
-                    startY.value + 650,
+                    startY.value + 460,
                     startX.value - 25,
-                    startY.value + 465
+                    startY.value +
+                        (650 - (3 - numberOfChosenFahrzeugOptions.value) * 65)
                 )
                 .stroke({ width: 1, color: "black" })
         );
@@ -356,20 +363,25 @@ function addTextSouthSide(
     percentGv: number | string,
     percentSv: number | string
 ) {
+    if (chosenOptionsCopy.value.werteHundertRunden) {
+        kfz = Math.round(kfz / 100) * 100;
+        gv = Math.round(gv / 100) * 100;
+        sv = Math.round(sv / 100) * 100;
+    }
     if (isGv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(percentSv, startPointX, startPointY);
+        addTextToQuerschnittGroup(`${percentGv}`, startPointX, startPointY);
         startPointY += 65;
     }
     if (isSv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(percentGv, startPointX, startPointY);
+        addTextToQuerschnittGroup(`(${percentSv}%)`, startPointX, startPointY);
         startPointY += 65;
     }
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-        addTextToQuerschnittGroup(sv, startPointX, startPointY);
+        addTextToQuerschnittGroup(gv, startPointX, startPointY);
         startPointY += 65;
     }
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        addTextToQuerschnittGroup(gv, startPointX, startPointY);
+        addTextToQuerschnittGroup(`(${sv})`, startPointX, startPointY);
         startPointY += 65;
     }
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
@@ -386,24 +398,29 @@ function addTextNorthSide(
     percentGv: number | string,
     percentSv: number | string
 ) {
+    if (chosenOptionsCopy.value.werteHundertRunden) {
+        kfz = Math.round(kfz / 100) * 100;
+        gv = Math.round(gv / 100) * 100;
+        sv = Math.round(sv / 100) * 100;
+    }
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
         addTextToQuerschnittGroup(kfz, startPointX, startPointY);
         startPointY -= 65;
     }
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        addTextToQuerschnittGroup(gv, startPointX, startPointY);
+        addTextToQuerschnittGroup(`(${sv})`, startPointX, startPointY);
         startPointY -= 65;
     }
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-        addTextToQuerschnittGroup(sv, startPointX, startPointY);
+        addTextToQuerschnittGroup(gv, startPointX, startPointY);
         startPointY -= 65;
     }
     if (isSv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(percentGv, startPointX, startPointY);
+        addTextToQuerschnittGroup(`(${percentSv}%)`, startPointX, startPointY);
         startPointY -= 65;
     }
     if (isGv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(percentSv, startPointX, startPointY);
+        addTextToQuerschnittGroup(`${percentGv}%`, startPointX, startPointY);
     }
 }
 
@@ -418,12 +435,29 @@ function drawNorthSymbol() {
 function drawMessstelleInfo() {
     canvas.value
         .text(function (add) {
-            add.tspan("Messstelle ").font({ weight: "bold" });
-            add.tspan("Stadtbezirk").newLine();
-            add.tspan("Messtag").newLine();
-            add.tspan("Messzeitraum").newLine();
+            add.tspan(
+                `Messstelle ${props.belastungsplanData.messstelleId}`
+            ).font({ weight: "bold" });
+            add.tspan(
+                `Stadtbezirk: ${props.belastungsplanData.stadtbezirkNummer}`
+            ).newLine();
+            if (chosenOptionsCopy.value.zeitraum.length == 2) {
+                add.tspan(
+                    `Messzeitraum:  ${dateUtils.formatDate(
+                        chosenOptionsCopy.value.zeitraum[0]
+                    )} -  ${dateUtils.formatDate(
+                        chosenOptionsCopy.value.zeitraum[1]
+                    )}`
+                ).newLine();
+            } else {
+                add.tspan(
+                    `Messtag: ${dateUtils.formatDate(
+                        chosenOptionsCopy.value.zeitraum[0]
+                    )}`
+                ).newLine();
+            }
         })
-        .move(startX.value + 50, 10);
+        .move(startX.value - 80, 10);
 }
 
 function drawLegende() {
@@ -452,8 +486,10 @@ function drawLegende() {
 
     canvas.value
         .text(function (add) {
-            add.tspan("Tageswert").font({ weight: "bold" });
-            add.tspan("0-24 Uhr").newLine();
+            add.tspan(`${chosenOptionsCopy.value.zeitauswahl}`).font({
+                weight: "bold",
+            });
+            add.tspan(`${getZeitblockText.value}`).newLine();
             if (chosenFahrzeugartAsTextArray.length != 0) {
                 let textstart = 0;
                 add.tspan("").newLine();
@@ -476,6 +512,19 @@ function drawLegende() {
         .move(10, startY.value + 550);
 }
 
+const getZeitblockText = computed(() => {
+    if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
+        return "0-24 Uhr";
+    } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
+        return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.text;
+    } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
+        return zeitblockStuendlichInfo.get(chosenOptionsCopy.value.zeitblock)
+            ?.text;
+    } else {
+        return "";
+    }
+});
+
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
     const maxLineWidth = 20;
     const totalVerkehrMq = mq.sumKfz + mq.sumGv + mq.sumSv;
@@ -487,6 +536,18 @@ function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
     let result = percentageMqComparedToTotal * maxLineWidth;
     return result > 1 ? result : 1;
 }
+
+/**
+ * gibt einen wert zwischen 0-3 zurück, welcher benötigt wird um den Trennstrich bei den summen zu berechnen
+ */
+const numberOfChosenFahrzeugOptions = computed(() => {
+    const number = Object.values(chosenOptionsCopyFahrzeuge.value).reduce(
+        (accumulator: number, currentObject) =>
+            accumulator + (currentObject == true ? 1 : 0),
+        0
+    );
+    return number > 3 ? 3 : number;
+});
 </script>
 
 <style scoped>

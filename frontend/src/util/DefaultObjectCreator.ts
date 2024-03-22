@@ -66,8 +66,8 @@ export default class DefaultObjectCreator {
     public static createDefaultFahrzeugOptions(kfz: boolean): FahrzeugOptions {
         return {
             kraftfahrzeugverkehr: kfz,
-            schwerverkehr: true,
-            gueterverkehr: true,
+            schwerverkehr: false,
+            gueterverkehr: false,
             schwerverkehrsanteilProzent: false,
             gueterverkehrsanteilProzent: false,
             radverkehr: !kfz,
