@@ -104,36 +104,6 @@ function draw() {
     drawLegende();
 }
 
-function drawTotal() {
-    addTextNorthSide(
-        startX.value,
-        startY.value - 10,
-        props.belastungsplanData.totalKfz,
-        props.belastungsplanData.totalGv,
-        props.belastungsplanData.totalSv,
-        props.belastungsplanData.totalPercentGv,
-        props.belastungsplanData.totalPercentSv
-    );
-    addTextOnSouthSide(
-        startX.value,
-        startY.value + 510,
-        props.belastungsplanData.totalKfz,
-        props.belastungsplanData.totalGv,
-        props.belastungsplanData.totalSv,
-        props.belastungsplanData.totalPercentGv,
-        props.belastungsplanData.totalPercentSv
-    );
-}
-
-function rotateArrowsIfNeccacary() {
-    const direction =
-        props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
-            .direction;
-    if (direction == "S" || direction == "W") {
-        querschnittGroup.value.rotate(90).translate(-100, -50);
-    }
-}
-
 function drawArrowsPointingSouth(
     groupedByDirecition: {
         data: LadeBelastungsplanMessqueschnittDataDTO[];
@@ -180,6 +150,53 @@ function drawArrowsPointingSouth(
     addSumSouthIfNeccacary(arrayOfDataForDirectionSouth);
 }
 
+function addSumSouthIfNeccacary(
+    arrayOfDataForDirectionSouth:
+        | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+        | undefined
+) {
+    if (
+        arrayOfDataForDirectionSouth &&
+        arrayOfDataForDirectionSouth.data.length > 1
+    ) {
+        let sumMqKfz = arrayOfDataForDirectionSouth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumKfz,
+            0
+        );
+        let sumMqSv = arrayOfDataForDirectionSouth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumSv,
+            0
+        );
+        let sumMqGv = arrayOfDataForDirectionSouth?.data.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.sumGv,
+            0
+        );
+        const sumTotal = sumMqKfz + sumMqSv + sumMqGv;
+        const percentageMqSv = calcPercentage(sumMqSv, sumTotal);
+        const percentageMqGv = calcPercentage(sumMqGv, sumTotal);
+
+        querschnittGroup.value.add(
+            SVG.SVG()
+                .line(
+                    startX.value - 25,
+                    startY.value,
+                    startX.value - 25,
+                    startY.value - 180
+                )
+                .stroke({ width: 1, color: "black" })
+        );
+        addTextNorthSide(
+            startX.value - 20,
+            startY.value - 10,
+            sumMqKfz,
+            sumMqGv,
+            sumMqSv,
+            percentageMqGv,
+            percentageMqSv
+        );
+    }
+}
+
 function drawStreetName() {
     querschnittGroup.value.add(
         SVG.SVG()
@@ -190,46 +207,25 @@ function drawStreetName() {
     );
 }
 
-function addSumNorthIfNeccacary(arrayOfDataForDirectionNorth: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[] | undefined;
-    direction: string | undefined;
-}) {
-    if (arrayOfDataForDirectionNorth?.data.length > 1) {
-        let sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.sumKfz,
-            0
-        );
-        let sumMqSv = arrayOfDataForDirectionNorth?.data.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.sumSv,
-            0
-        );
-        let sumMqGv = arrayOfDataForDirectionNorth?.data.reduce(
-            (accumulator, currentValue) => accumulator + currentValue.sumGv,
-            0
-        );
-        const sumTotal = sumMqKfz + sumMqSv + sumMqGv;
-        const percentageMqSv = calcPercentage(sumMqSv, sumTotal);
-        const percentageMqGv = calcPercentage(sumMqGv, sumTotal);
-        querschnittGroup.value.add(
-            SVG.SVG()
-                .line(
-                    startX.value - 25,
-                    startY.value + 650,
-                    startX.value - 25,
-                    startY.value + 465
-                )
-                .stroke({ width: 1, color: "black" })
-        );
-        addTextOnSouthSide(
-            startX.value - 20,
-            startY.value + 510,
-            sumMqKfz,
-            sumMqGv,
-            sumMqSv,
-            percentageMqGv,
-            percentageMqSv
-        );
-    }
+function drawTotal() {
+    addTextNorthSide(
+        startX.value,
+        startY.value - 10,
+        props.belastungsplanData.totalKfz,
+        props.belastungsplanData.totalGv,
+        props.belastungsplanData.totalSv,
+        props.belastungsplanData.totalPercentGv,
+        props.belastungsplanData.totalPercentSv
+    );
+    addTextOnSouthSide(
+        startX.value,
+        startY.value + 510,
+        props.belastungsplanData.totalKfz,
+        props.belastungsplanData.totalGv,
+        props.belastungsplanData.totalSv,
+        props.belastungsplanData.totalPercentGv,
+        props.belastungsplanData.totalPercentSv
+    );
 }
 
 function drawArrowsPointingNorth(
@@ -276,50 +272,54 @@ function drawArrowsPointingNorth(
     addSumNorthIfNeccacary(arrayOfDataForDirectionNorth);
 }
 
-function addSumSouthIfNeccacary(
-    arrayOfDataForDirectionSouth:
-        | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
-        | undefined
-) {
-    if (
-        arrayOfDataForDirectionSouth &&
-        arrayOfDataForDirectionSouth.data.length > 1
-    ) {
-        let sumMqKfz = arrayOfDataForDirectionSouth?.data.reduce(
+function addSumNorthIfNeccacary(arrayOfDataForDirectionNorth: {
+    data: LadeBelastungsplanMessqueschnittDataDTO[] | undefined;
+    direction: string | undefined;
+}) {
+    if (arrayOfDataForDirectionNorth?.data.length > 1) {
+        let sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
             (accumulator, currentValue) => accumulator + currentValue.sumKfz,
             0
         );
-        let sumMqSv = arrayOfDataForDirectionSouth?.data.reduce(
+        let sumMqSv = arrayOfDataForDirectionNorth?.data.reduce(
             (accumulator, currentValue) => accumulator + currentValue.sumSv,
             0
         );
-        let sumMqGv = arrayOfDataForDirectionSouth?.data.reduce(
+        let sumMqGv = arrayOfDataForDirectionNorth?.data.reduce(
             (accumulator, currentValue) => accumulator + currentValue.sumGv,
             0
         );
         const sumTotal = sumMqKfz + sumMqSv + sumMqGv;
         const percentageMqSv = calcPercentage(sumMqSv, sumTotal);
         const percentageMqGv = calcPercentage(sumMqGv, sumTotal);
-
         querschnittGroup.value.add(
             SVG.SVG()
                 .line(
                     startX.value - 25,
-                    startY.value,
+                    startY.value + 650,
                     startX.value - 25,
-                    startY.value - 180
+                    startY.value + 465
                 )
                 .stroke({ width: 1, color: "black" })
         );
-        addTextNorthSide(
+        addTextOnSouthSide(
             startX.value - 20,
-            startY.value - 10,
+            startY.value + 510,
             sumMqKfz,
             sumMqGv,
             sumMqSv,
             percentageMqGv,
             percentageMqSv
         );
+    }
+}
+
+function rotateArrowsIfNeccacary() {
+    const direction =
+        props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
+            .direction;
+    if (direction == "S" || direction == "W") {
+        querschnittGroup.value.rotate(90).translate(-100, -50);
     }
 }
 
