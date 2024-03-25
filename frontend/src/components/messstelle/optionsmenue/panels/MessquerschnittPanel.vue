@@ -46,6 +46,7 @@
                             multiple
                             :rules="[REQUIRED]"
                             @change="updateLage"
+                            @blur="resetSpitzenstundeErrorText"
                         />
                     </v-hover>
                 </v-col>
@@ -53,6 +54,9 @@
                 <v-col cols="4">
                     <v-card flat>
                         <div v-if="hoverLage">{{ helpTextLageHover }}</div>
+                        <div v-if="spitzenstundeErrorText.length > 0">
+                            {{ spitzenstundeErrorText }}
+                        </div>
                         <div>{{ helpTextLage }}</div>
                     </v-card>
                 </v-col>
@@ -71,6 +75,7 @@ import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import KeyVal from "@/types/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import _ from "lodash";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -81,8 +86,14 @@ const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 
 const hoverDirection: Ref<boolean> = ref(false);
 const hoverLage: Ref<boolean> = ref(false);
+const spitzenstundeErrorText: Ref<string> = ref("");
 const store = useStore();
 const messstelleUtils = useMessstelleUtils();
+
+const MIND_EIN_MESSQUERSCHNITT =
+    "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+const GENAU_EIN_MESSQUERSCHNITT =
+    "Es muss genau ein Messquerschnitt ausgewählt sein.";
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
@@ -172,6 +183,13 @@ const helpTextLage: ComputedRef<string> = computed(() => {
     if (direction.value === messstelleUtils.alleRichtungen) {
         text =
             "Hinweis: Um einzelne Messquerschnitte auszuwählen, muss zuvor eine Richtung bestimmt werden.";
+    } else if (
+        isZeitauswahlSpitzenstunde.value &&
+        chosenOptionsCopy.value.messquerschnittIds.length !== 1
+    ) {
+        text = GENAU_EIN_MESSQUERSCHNITT;
+    } else if (chosenOptionsCopy.value.messquerschnittIds.length === 0) {
+        text = MIND_EIN_MESSQUERSCHNITT;
     }
     return text;
 });
@@ -212,35 +230,52 @@ watch(zeitauswahl, () => {
 });
 
 function updateOptions() {
-    if (!isZeitauswahlSpitzenstunde.value) {
-        chosenOptionsCopy.value.messquerschnittIds = [];
+    chosenOptionsCopy.value.messquerschnittIds = [];
+    if (isZeitauswahlSpitzenstunde.value) {
+        const firstLageValue = lageValues.value.at(0);
+        if (firstLageValue) {
+            chosenOptionsCopy.value.messquerschnittIds.push(
+                firstLageValue.value
+            );
+        }
+    } else {
         lageValues.value.forEach((value) =>
             chosenOptionsCopy.value.messquerschnittIds.push(value.value)
         );
     }
-    previousSelectedStructures.value =
-        chosenOptionsCopy.value.messquerschnittIds;
+    previousSelectedStructures.value = _.cloneDeep(
+        chosenOptionsCopy.value.messquerschnittIds
+    );
+    resetSpitzenstundeErrorText();
 }
 
-function updateLage(value: Array<string>) {
-    const added = value.filter(
-        (val) => !previousSelectedStructures.value.includes(val)
-    );
-    previousSelectedStructures.value = value;
+function updateLage(lageValue: Array<string>) {
+    resetSpitzenstundeErrorText();
     if (isZeitauswahlSpitzenstunde.value) {
-        chosenOptionsCopy.value.messquerschnittIds = added;
-        previousSelectedStructures.value =
-            chosenOptionsCopy.value.messquerschnittIds;
+        if (chosenOptionsCopy.value.messquerschnittIds.length === 2) {
+            spitzenstundeErrorText.value =
+                "Zur Berechnung der Spitzenstunde muss genau ein Messquerschnitt ausgewählt sein.";
+        }
+        chosenOptionsCopy.value.messquerschnittIds = lageValue.filter(
+            (val) => !previousSelectedStructures.value.includes(val)
+        );
+        previousSelectedStructures.value = _.cloneDeep(
+            chosenOptionsCopy.value.messquerschnittIds
+        );
+    } else {
+        previousSelectedStructures.value = lageValue;
     }
 }
 
 function REQUIRED(v: Array<string>) {
     if (v.length > 0) return true;
-
-    let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+    let errortext = MIND_EIN_MESSQUERSCHNITT;
     if (isZeitauswahlSpitzenstunde.value) {
-        errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        errortext = GENAU_EIN_MESSQUERSCHNITT;
     }
     return errortext;
+}
+function resetSpitzenstundeErrorText(): void {
+    spitzenstundeErrorText.value = "";
 }
 </script>
