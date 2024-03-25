@@ -232,9 +232,11 @@ watch(zeitauswahl, () => {
 function updateOptions() {
     chosenOptionsCopy.value.messquerschnittIds = [];
     if (isZeitauswahlSpitzenstunde.value) {
-        const keyVal = lageValues.value.at(0);
-        if (keyVal) {
-            chosenOptionsCopy.value.messquerschnittIds.push(keyVal.value);
+        const firstLageValue = lageValues.value.at(0);
+        if (firstLageValue) {
+            chosenOptionsCopy.value.messquerschnittIds.push(
+                firstLageValue.value
+            );
         }
     } else {
         lageValues.value.forEach((value) =>
@@ -247,21 +249,21 @@ function updateOptions() {
     resetSpitzenstundeErrorText();
 }
 
-function updateLage(value: Array<string>) {
+function updateLage(lageValue: Array<string>) {
     resetSpitzenstundeErrorText();
     if (isZeitauswahlSpitzenstunde.value) {
         if (chosenOptionsCopy.value.messquerschnittIds.length === 2) {
             spitzenstundeErrorText.value =
                 "Zur Berechnung der Spitzenstunde muss genau ein Messquerschnitt ausgewählt sein.";
         }
-        chosenOptionsCopy.value.messquerschnittIds = value.filter(
+        chosenOptionsCopy.value.messquerschnittIds = lageValue.filter(
             (val) => !previousSelectedStructures.value.includes(val)
         );
         previousSelectedStructures.value = _.cloneDeep(
             chosenOptionsCopy.value.messquerschnittIds
         );
     } else {
-        previousSelectedStructures.value = value;
+        previousSelectedStructures.value = lageValue;
     }
 }
 

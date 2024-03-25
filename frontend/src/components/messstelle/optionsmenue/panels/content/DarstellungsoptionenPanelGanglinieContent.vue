@@ -4,7 +4,7 @@
             font-size="0.875rem"
             font-weight="bold"
             padding="10px 0 10px 0"
-            header-text="Verkehrsarten"
+            header-text="Ganglinie"
         ></panel-header>
         <v-row
             align="start"

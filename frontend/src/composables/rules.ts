@@ -8,8 +8,7 @@ export function useRules() {
         if (toCheck === null || toCheck === undefined) return true;
         if (!toCheck.trim()) return true;
         const parsed = parseFloat(toCheck);
-        if (!isNaN(parsed)) return true;
-        if (parsed >= minValue) return true;
+        if (!isNaN(parsed) && parsed >= minValue) return true;
         return "Das Feld darf nur positive Zahlen enthalten";
     }
 
