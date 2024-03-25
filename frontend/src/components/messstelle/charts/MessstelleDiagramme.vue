@@ -139,7 +139,7 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
-import ListBelastungsplanMessquerschnitteDTO from "@/types/messstelle/ListBelastungsplanMessquerschnitteDTO";
+import BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
 import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -169,7 +169,7 @@ const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
 
 const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
-const belastungsplanDataDTO = ref({} as ListBelastungsplanMessquerschnitteDTO);
+const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
 // Wieder entfernen, wenn alle Tabs fertig sind
 const showSpeedial: Ref<boolean> = ref(false);

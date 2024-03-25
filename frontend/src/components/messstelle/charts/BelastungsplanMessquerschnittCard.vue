@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import ListBelastungsplanMessquerschnitteDTO from "@/types/messstelle/ListBelastungsplanMessquerschnitteDTO";
+import BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
@@ -16,14 +16,13 @@ import { useStore } from "@/api/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { belastungsplanAnzeigeUtils } from "@/components/messstelle/optionsmenue/composable/belastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 interface Props {
-    belastungsplanData: ListBelastungsplanMessquerschnitteDTO;
-    dimension: string;
+    belastungsplanData: BelastungsplanMessquerschnitteDTO;
+    dimension?: string;
 }
 
 const store = useStore();

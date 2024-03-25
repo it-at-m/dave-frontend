@@ -1,6 +1,6 @@
 import LadeBelastungsplanMessqueschnittDataDTO from "./LadeBelastungsplanMessqueschnittDataDTO";
 
-export default interface ListBelastungsplanMessquerschnitteDTO {
+export default interface BelastungsplanMessquerschnitteDTO {
     ladeBelastungsplanMessquerschnittDataDTOList: LadeBelastungsplanMessqueschnittDataDTO[];
     strassenname: string;
     stadtbezirkNummer: string;
