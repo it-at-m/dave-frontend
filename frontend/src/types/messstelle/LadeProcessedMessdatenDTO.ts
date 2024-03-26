@@ -3,7 +3,7 @@ import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldate
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 
-export default interface LadePrcessedMessdatenDTO {
+export default interface LadeProcessedMessdatenDTO {
     zaehldatenTable: LadeZaehldatenTableDTO;
 
     zaehldatenStepline: LadeZaehldatenSteplineDTO;

@@ -130,7 +130,7 @@ import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
-import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
+import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import Loader from "@/components/common/Loader.vue";
 import { useStore } from "@/api/util/useStore";
 import { useRoute } from "vue-router/composables";
@@ -225,7 +225,7 @@ function loadProcessedChartData() {
         messstelleId.value,
         options.value
     )
-        .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+        .then((processedZaehldaten: LadeProcessedMessdatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;

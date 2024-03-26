@@ -458,9 +458,9 @@ function drawNorthSymbol() {
 function drawMessstelleInfo() {
     canvas.value
         .text(function (add) {
-            add.tspan(
-                `Messstelle ${props.belastungsplanData.messstelleId}`
-            ).font({ weight: "bold" });
+            add.tspan(`Messstelle ${props.belastungsplanData.mstId}`).font({
+                weight: "bold",
+            });
             add.tspan(
                 `Stadtbezirk: ${props.belastungsplanData.stadtbezirkNummer}`
             ).newLine();
@@ -480,7 +480,7 @@ function drawMessstelleInfo() {
                 ).newLine();
             }
         })
-        .move(startX.value - 80, 10);
+        .move(600, 10);
 }
 
 function drawLegende() {
@@ -496,13 +496,13 @@ function drawLegende() {
         chosenFahrzeugartAsTextArray.push("KFZ");
     }
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        chosenFahrzeugartAsTextArray.push("SV");
+        chosenFahrzeugartAsTextArray.push("(SV)");
     }
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
         chosenFahrzeugartAsTextArray.push("GV");
     }
     if (isSv_pInBelastungsPlan.value) {
-        chosenFahrzeugartAsTextArray.push("SV%");
+        chosenFahrzeugartAsTextArray.push("(SV%)");
     }
     if (isGv_pInBelastungsPlan.value) {
         chosenFahrzeugartAsTextArray.push("GV%");

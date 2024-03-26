@@ -4,7 +4,7 @@ export default interface BelastungsplanMessquerschnitteDTO {
     ladeBelastungsplanMessquerschnittDataDTOList: LadeBelastungsplanMessqueschnittDataDTO[];
     strassenname: string;
     stadtbezirkNummer: string;
-    messstelleId: string;
+    mstId: string;
     totalKfz: number;
     totalSv: number;
     totalGv: number;
