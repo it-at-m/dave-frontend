@@ -119,6 +119,11 @@
             :loading-file="loadingFile"
             @addChartToPdfReport="addChartToPdfReport"
             @saveGraphAsImage="saveGraphAsImage"
+            @openPdfReportDialog="openPdfReportDialog"
+        />
+        <pdf-report-menue-messstelle
+            v-model="pdfReportDialog"
+            @close="closePdfReportDialog"
         />
     </v-sheet>
 </template>
@@ -145,6 +150,7 @@ import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import _ from "lodash";
+import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -176,6 +182,7 @@ const showSpeedial: Ref<boolean> = ref(false);
 
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
+const pdfReportDialog: Ref<boolean> = ref(false);
 
 const activeTab: Ref<number> = ref(0);
 
@@ -284,9 +291,15 @@ function addChartToPdfReport(): void {
             "Die"
         );
     }
-    // Heatmap
     if (activeTab.value === TAB_HEATMAP) {
         reportTools.addChartToPdfReport(getHeatmapBase64(), "Heatmap", "Die");
+    }
+    if (activeTab.value === TAB_LISTENAUSGABE) {
+        reportTools.addDatatabelToPdfReport(
+            _.cloneDeep(options.value),
+            "Datentabelle",
+            "Die"
+        );
     }
 }
 
@@ -323,5 +336,13 @@ function getHeatmapBase64(): string {
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
     });
+}
+
+function openPdfReportDialog(): void {
+    pdfReportDialog.value = true;
+}
+
+function closePdfReportDialog(): void {
+    pdfReportDialog.value = false;
 }
 </script>

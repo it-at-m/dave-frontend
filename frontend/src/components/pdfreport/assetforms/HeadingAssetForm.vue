@@ -86,7 +86,7 @@ import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 
 @Component
 export default class HeadingAssetForm extends Vue {
-    @Prop({ default: false }) open = false;
+    @Prop({ default: false }) open: boolean | undefined;
     @Prop() heading?: HeadingAsset;
 
     asset: HeadingAsset = new HeadingAsset("", AssetTypesEnum.HEADING1);
