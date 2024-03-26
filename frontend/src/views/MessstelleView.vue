@@ -51,7 +51,7 @@
 </template>
 <script setup lang="ts">
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
-import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
+import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
@@ -75,6 +75,7 @@ const store = useStore();
 onMounted(() => {
     loadMessstelle();
 });
+
 const headerHeight: ComputedRef<number> = computed(() => {
     return 160 / (vuetify.breakpoint.height / 100);
 });
@@ -96,6 +97,7 @@ const appBarHeight = computed(() => {
 const rightHeightVh = computed(() => {
     return 100 - headerHeight.value - appBarHeight.value + "vh";
 });
+
 /**
  * Berechnet die Höhe der Fläche unter den Tabs (72px hoch) in "vh"
  */
@@ -105,6 +107,7 @@ const rightContentHeightVh = computed(() => {
         headerHeight.value -
         appBarHeight.value -
         72 / (vuetify.breakpoint.height / 100);
+    store.commit("filteroptionsMessstelle/setBelastungsplanMinSize", h + "vh");
     return h + "vh";
 });
 

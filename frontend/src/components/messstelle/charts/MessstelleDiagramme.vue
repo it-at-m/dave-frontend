@@ -41,17 +41,17 @@
             <!-- Inhalte -->
             <v-tab-item>
                 <v-sheet
+                    v-if="
+                        belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
+                    "
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
                 >
-                    <v-card ref="belastungsplanCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                    </v-card>
+                    <belastungsplan-messquerschnitt-card
+                        :belastungsplan-data="belastungsplanDataDTO"
+                        :dimension="contentHeight"
+                    />
                 </v-sheet>
             </v-tab-item>
             <v-tab-item>
@@ -130,7 +130,7 @@ import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
-import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
+import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import Loader from "@/components/common/Loader.vue";
 import { useStore } from "@/api/util/useStore";
 import { useRoute } from "vue-router/composables";
@@ -139,6 +139,8 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
+import BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
+import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
 import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
@@ -166,6 +168,8 @@ const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
 );
 
 const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
+
+const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
 // Wieder entfernen, wenn alle Tabs fertig sind
 const showSpeedial: Ref<boolean> = ref(false);
@@ -221,12 +225,14 @@ function loadProcessedChartData() {
         messstelleId.value,
         options.value
     )
-        .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+        .then((processedZaehldaten: LadeProcessedMessdatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
+            belastungsplanDataDTO.value =
+                processedZaehldaten.listBelastungsplanMessquerschnitteDTO;
             setMaxRangeYAchse();
         })
         .finally(() => {
