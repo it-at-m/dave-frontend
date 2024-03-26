@@ -49,8 +49,10 @@
                     class="overflow-y-auto"
                 >
                     <belastungsplan-messquerschnitt-card
+                        ref="belastungsplanCard"
                         :belastungsplan-data="belastungsplanDataDTO"
                         :dimension="contentHeight"
+                        @print="storeSvg($event)"
                     />
                 </v-sheet>
             </v-tab-item>
@@ -113,7 +115,6 @@
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
-            v-show="showSpeedial"
             :is-listenausgabe="isTabListenausgabe"
             :is-not-heatmap="isNotTabHeatmap"
             :loading-file="loadingFile"
@@ -130,7 +131,6 @@
 <script setup lang="ts">
 import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
@@ -177,9 +177,6 @@ const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
-// Wieder entfernen, wenn alle Tabs fertig sind
-const showSpeedial: Ref<boolean> = ref(false);
-
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
 const pdfReportDialog: Ref<boolean> = ref(false);
@@ -194,10 +191,11 @@ const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 const TAB_ZEITREIHE = 4;
 
-const belastungsplanCard = ref<BelastungsplanCard>();
+const belastungsplanCard = ref<BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<StepLineCard>();
 const heatmapCard = ref<HeatmapCard>();
 const zeitreiheCard = ref<ZeitreiheCard>();
+const belastungsplanSvg = ref<Blob>();
 
 const store = useStore();
 const route = useRoute();
@@ -215,11 +213,6 @@ watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    showSpeedial.value = [
-        TAB_GANGLINIE,
-        TAB_HEATMAP,
-        TAB_LISTENAUSGABE,
-    ].includes(activeTab.value);
 });
 
 watch(options, () => {
@@ -312,6 +305,12 @@ function saveGraphAsImage(): void {
         reportTools.saveGraphAsImage(getGanglinieBase64(), "Ganglinie");
     } else if (activeTab.value === TAB_HEATMAP) {
         reportTools.saveGraphAsImage(getHeatmapBase64(), "Heatmap");
+    } else if (
+        activeTab.value == TAB_BELASTUNGSPLAN &&
+        belastungsplanSvg.value
+    ) {
+        const uri = URL.createObjectURL(belastungsplanSvg.value);
+        reportTools.saveGraphAsImage(uri, "Belastungsplan");
     }
     loadingFile.value = false;
 }
@@ -336,6 +335,10 @@ function getHeatmapBase64(): string {
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
     });
+}
+
+function storeSvg(svg: Blob): void {
+    belastungsplanSvg.value = svg;
 }
 
 function openPdfReportDialog(): void {

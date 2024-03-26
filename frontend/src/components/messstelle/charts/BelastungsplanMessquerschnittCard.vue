@@ -24,6 +24,9 @@ interface Props {
     belastungsplanData: BelastungsplanMessquerschnitteDTO;
     dimension?: string;
 }
+const emits = defineEmits<{
+    (e: "print", v: Blob): void;
+}>();
 
 const store = useStore();
 const vuetify = useVuetify();
@@ -107,6 +110,7 @@ function draw() {
     drawMessstelleInfo();
     drawNorthSymbol();
     drawLegende();
+    storeImageForPrinting();
 }
 
 function drawArrowsPointingSouth(
@@ -594,6 +598,14 @@ const numberOfChosenFahrzeugOptions = computed(() => {
     );
     return number > 3 ? 3 : number;
 });
+
+function storeImageForPrinting() {
+    const ex = canvas.value
+        .flatten(canvas.value)
+        .size(svgHeight.value, svgHeight.value)
+        .svg() as string;
+    emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+}
 </script>
 
 <style scoped>
