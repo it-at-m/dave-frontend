@@ -179,6 +179,8 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import InfoMessage from "@/components/app/InfoMessage.vue";
 import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 import VisitHistory from "@/components/app/VisitHistory.vue";
+import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
+import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
 /* eslint-enable no-unused-vars */
 
 @Component({
@@ -260,6 +262,7 @@ export default class App extends Vue {
         this.getBackendVersion().then((version: string) => {
             this.backendVersion = version;
         });
+        window.addEventListener("keypress", this.shortCuts);
     }
 
     private async getFrontendVersion(): Promise<string> {
@@ -450,6 +453,44 @@ export default class App extends Vue {
 
     navigateToHandbuch() {
         window.open(App.URL_HANDBUCH_LINK);
+    }
+
+    // Easter Egg
+    private static easterEgg: Array<string> = [];
+    private static easterEggReq: Array<string> = ["B", "o", "u", "l", "e"];
+    shortCuts(event: KeyboardEvent) {
+        const location = window.location.host;
+        if (location.includes("localhost") || location.includes("muenchen")) {
+            if (App.easterEggReq.includes(event.key)) {
+                App.easterEgg.push(event.key);
+                if (
+                    App.easterEgg.length === App.easterEggReq.length &&
+                    App.easterEgg.join() === App.easterEggReq.join()
+                ) {
+                    const split = this.loggedInUser.split(" ");
+                    if (
+                        split.length === 2 &&
+                        split[0].startsWith("R") &&
+                        split[1].startsWith("B")
+                    ) {
+                        window.open(
+                            goldTrophy,
+                            "Image",
+                            "width=700,height=700"
+                        );
+                    } else {
+                        window.open(
+                            silverTrophy,
+                            "Image",
+                            "width=700,height=700"
+                        );
+                    }
+                    App.easterEgg = [];
+                }
+            } else {
+                App.easterEgg = [];
+            }
+        }
     }
 }
 </script>

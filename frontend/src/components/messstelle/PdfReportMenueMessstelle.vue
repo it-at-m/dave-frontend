@@ -101,7 +101,6 @@ import { computed, Ref, ref } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useStore } from "@/api/util/useStore";
 import { Levels } from "@/api/error";
-import _ from "lodash";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
@@ -188,7 +187,7 @@ function createMessstelleInfo(): void {
         let text = "Messquerschnitt(e):<br/>";
         messquerschnittInfoDTOS.forEach((value) => {
             text += `- ${value.mqId}`;
-            if (!_.isNil(value.standort)) {
+            if (value.standort) {
                 text += ` - ${value.standort}`;
             }
             text += "<br/>\n";
@@ -200,7 +199,7 @@ function createMessstelleInfo(): void {
     );
     assets.push(stadtbezirk);
     let kommentar = new TextAsset(
-        `Messstellenkommentar: ${checkForNull(messstelle.value.kommentar)}`
+        `Messstellenkommentar: ${messstelle.value.kommentar ?? "---"}`
     );
     assets.push(kommentar);
     store.dispatch("addAssets", assets);
@@ -243,12 +242,5 @@ function createLegende(): void {
             "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
     );
     store.dispatch("addAssets", [ueberschrift, legende]);
-}
-
-function checkForNull(value: string): string {
-    if (_.isNil(value)) {
-        return "---";
-    }
-    return value;
 }
 </script>
