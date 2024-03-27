@@ -17,18 +17,58 @@
                 Belastungsplan
                 <v-icon>mdi-arrow-decision</v-icon>
             </v-tab>
-            <v-tab>
-                Ganglinie
-                <v-icon>mdi-chart-histogram</v-icon>
-            </v-tab>
-            <v-tab>
-                Listenausgabe
-                <v-icon>mdi-table</v-icon>
-            </v-tab>
-            <v-tab>
-                Heatmap
-                <v-icon>mdi-chart-bubble</v-icon>
-            </v-tab>
+            <v-tooltip
+                :disabled="!isBiggerThanFiveYears"
+                top
+            >
+                <template #activator="{ on }">
+                    <div
+                        style="width: 100%"
+                        class="d-flex justify-center"
+                        v-on="on"
+                    >
+                        <v-tab :disabled="isBiggerThanFiveYears">
+                            Ganglinie
+                            <v-icon>mdi-chart-histogram</v-icon>
+                        </v-tab>
+                    </div>
+                </template>
+                <span>{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</span>
+            </v-tooltip>
+            <v-tooltip
+                :disabled="!isBiggerThanFiveYears"
+                top
+            >
+                <template #activator="{ on }">
+                    <div
+                        style="width: 100%"
+                        class="d-flex justify-center"
+                        v-on="on"
+                    >
+                        <v-tab :disabled="isBiggerThanFiveYears">
+                            Listenausgabe
+                            <v-icon>mdi-table</v-icon>
+                        </v-tab>
+                    </div>
+                </template>
+                <span>{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</span>
+            </v-tooltip>
+            <v-tooltip
+                :disabled="!isBiggerThanFiveYears"
+                top
+            >
+                <template #activator="{ on, attrs }">
+                    <v-tab
+                        v-bind="attrs"
+                        :disabled="isBiggerThanFiveYears"
+                        v-on="on"
+                    >
+                        Heatmap
+                        <v-icon>mdi-chart-bubble</v-icon>
+                    </v-tab>
+                </template>
+                <span>{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</span>
+            </v-tooltip>
             <v-tab>
                 Zeitreihe
                 <v-icon>mdi-timer-sand</v-icon>
@@ -157,6 +197,9 @@ import CsvDTO from "@/types/CsvDTO";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
+const ZEITRAUM_GROESSER_FUENF_JAHRE =
+    "Da der Zeitraum größer 5 Jahre ist steht die anzeige nicht zur verfügung";
+
 interface Props {
     height?: string;
     contentHeight?: string;
@@ -212,6 +255,22 @@ const messstelleId: ComputedRef<string> = computed(() => {
 
 const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+const isBiggerThanFiveYears = computed(() => {
+    let zeitraum = options.value.zeitraum;
+    const differenceInMs = Math.abs(
+        new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
+    );
+    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+    const differenceInYears = Math.floor(differenceInDays / 365);
+    return differenceInYears >= 5;
+});
+
+watch(isBiggerThanFiveYears, () => {
+    if (isBiggerThanFiveYears) {
+        activeTab.value = TAB_BELASTUNGSPLAN;
+    }
 });
 
 watch(activeTab, (active) => {
