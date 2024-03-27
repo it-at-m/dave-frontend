@@ -178,7 +178,7 @@ const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
-const showSpeedial: Ref<boolean> = ref(false);
+const showSpeedial: Ref<boolean> = ref(true);
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
 const pdfReportDialog: Ref<boolean> = ref(false);
