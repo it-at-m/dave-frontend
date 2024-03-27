@@ -7,6 +7,9 @@ export interface FilteroptionsMessstelle {
     messstelleFilterOptions: MessstelleOptionsDTO;
     direction: string;
     history: boolean;
+    belastungsplanMinSize: string;
+    belastungsplanMaxSize: string;
+    belastungsplanChosenSize: number;
 }
 export default {
     namespaced: true,
@@ -29,6 +32,8 @@ export default {
             werteHundertRunden: false,
         } as MessstelleOptionsDTO,
         direction: "",
+        belastungsplanMinSize: "",
+        belastungsplanChosenSize: 1,
         history: false,
     },
     getters: {
@@ -40,6 +45,15 @@ export default {
         },
         isHistory(state: FilteroptionsMessstelle): boolean {
             return state.history;
+        },
+        getBelastungsplanMinSize(state: FilteroptionsMessstelle): string {
+            return state.belastungsplanMinSize;
+        },
+        getBelastungsplanMaxSize(state: FilteroptionsMessstelle): string {
+            return state.belastungsplanMinSize;
+        },
+        getBelastungsplanChosenSize(state: FilteroptionsMessstelle): number {
+            return state.belastungsplanChosenSize;
         },
     },
     mutations: {
@@ -65,6 +79,24 @@ export default {
                 {},
                 state.messstelleFilterOptions
             );
+        },
+        setBelastungsplanMinSize(
+            state: FilteroptionsMessstelle,
+            payload: string
+        ) {
+            state.belastungsplanMinSize = payload;
+        },
+        setBelastungsplanMaxSize(
+            state: FilteroptionsMessstelle,
+            payload: string
+        ) {
+            state.belastungsplanMinSize = payload;
+        },
+        setBelastungsplanChosenSize(
+            state: FilteroptionsMessstelle,
+            payload: number
+        ) {
+            state.belastungsplanChosenSize = payload;
         },
     },
 };
