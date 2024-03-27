@@ -6,54 +6,68 @@
             padding="10px 0 0 0"
             header-text="Zeitauswahl"
         ></panel-header>
-        <v-row no-gutters>
-            <v-radio-group
-                v-model="chosenOptionsCopy.zeitauswahl"
-                style="width: 100%"
-                @change="zeitauswahlChanged"
-            >
-                <v-row
-                    no-gutters
+        <v-row
+            align="start"
+            justify="center"
+            dense
+            no-gutters
+        >
+            <v-col cols="8">
+                <v-radio-group
+                    v-model="chosenOptionsCopy.zeitauswahl"
                     style="width: 100%"
+                    @change="zeitauswahlChanged"
                 >
-                    <v-col cols="4">
-                        <v-radio
-                            label="Tageswert (Durchschnitt)"
-                            :value="Zeitauswahl.TAGESWERT"
-                        />
-                        <v-radio
-                            label="Block (Durchschnitt)"
-                            :value="Zeitauswahl.BLOCK"
-                            :disabled="isDateBiggerFiveYears"
-                        />
-                        <v-radio
-                            label="Stunde (Durchschnitt)"
-                            :value="Zeitauswahl.STUNDE"
-                            :disabled="isDateBiggerFiveYears"
-                        />
-                    </v-col>
-                    <v-col cols="4">
-                        <v-radio
-                            label="Spitzenstunde Kfz (Durchschnitt)"
-                            :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
-                            :disabled="isTypeDisabled('KFZ')"
-                        />
-                        <v-radio
-                            label="Spitzenstunde Rad (Durchschnitt)"
-                            :value="Zeitauswahl.SPITZENSTUNDE_RAD"
-                            :disabled="isTypeDisabled('RAD')"
-                        />
-                        <v-radio
-                            label="Spitzenstunde Fuß (Durchschnitt)"
-                            :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
-                            :disabled="isTypeDisabled('FUSS')"
-                        />
-                    </v-col>
-                    <v-col>
-                        {{ helperText }}
-                    </v-col>
+                    <v-row
+                        align="start"
+                        justify="center"
+                        dense
+                    >
+                        <v-col cols="6">
+                            <v-radio
+                                :label="`Tageswert${durchschnitt}`"
+                                :value="Zeitauswahl.TAGESWERT"
+                            />
+                            <v-radio
+                                :label="`Block${durchschnitt}`"
+                                :value="Zeitauswahl.BLOCK"
+                                :disabled="isDateBiggerFiveYears"
+                            />
+                            <v-radio
+                                :label="`Stunde${durchschnitt}`"
+                                :value="Zeitauswahl.STUNDE"
+                                :disabled="isDateBiggerFiveYears"
+                            />
+                        </v-col>
+                        <v-col cols="6">
+                            <v-radio
+                                :label="`Spitzenstunde Kfz${durchschnitt}`"
+                                :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
+                                :disabled="isTypeDisabled('KFZ')"
+                            />
+                            <v-radio
+                                :label="`Spitzenstunde Rad${durchschnitt}`"
+                                :value="Zeitauswahl.SPITZENSTUNDE_RAD"
+                                :disabled="isTypeDisabled('RAD')"
+                            />
+                            <v-radio
+                                :label="`Spitzenstunde Fuß${durchschnitt}`"
+                                :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
+                                :disabled="isTypeDisabled('FUSS')"
+                            />
+                        </v-col>
+                    </v-row>
+                </v-radio-group>
+            </v-col>
+            <v-col cols="4">
+                <v-row
+                    align="start"
+                    justify="center"
+                    dense
+                >
+                    {{ helperText }}
                 </v-row>
-            </v-radio-group>
+            </v-col>
         </v-row>
     </div>
 </template>
@@ -83,6 +97,13 @@ const chosenOptionsCopy = computed({
 
 const dateUtils = useDateUtils();
 
+const durchschnitt = computed(() => {
+    if (chosenOptionsCopy.value.zeitraum.length === 2) {
+        return " (Durchschnitt)";
+    }
+    return "";
+});
+
 function isTypeDisabled(type: string): boolean {
     return (
         type != props.messstelleDetektierteFahrzeugart ||
@@ -106,7 +127,7 @@ const isDateBiggerFiveYears = computed(() => {
 
 const helperText = computed(() => {
     if (chosenOptionsCopy.value.messquerschnittIds.length != 1) {
-        return "Für die Spitzenstunde muss exakt ein Messquerschnitt ausgewählt sein";
+        return "Spitzenstunde kann nur für einen einzelnen Messquerschnitt ausgegeben werden";
     }
     return "";
 });

@@ -29,6 +29,10 @@
                 Heatmap
                 <v-icon>mdi-chart-bubble</v-icon>
             </v-tab>
+            <v-tab>
+                Zeitreihe
+                <v-icon>mdi-timer-sand</v-icon>
+            </v-tab>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
@@ -102,6 +106,7 @@
             @addChartToPdfReport="addChartToPdfReport"
             @saveGraphAsImage="saveGraphAsImage"
             @openPdfReportDialog="openPdfReportDialog"
+            @generateCsv="generateCsv"
         />
         <pdf-report-menue-messstelle
             v-model="pdfReportDialog"
@@ -131,6 +136,8 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import _ from "lodash";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
+import GenerateCsvService from "@/api/service/GenerateCsvService";
+import CsvDTO from "@/types/CsvDTO";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -280,9 +287,17 @@ function addChartToPdfReport(): void {
 function saveGraphAsImage(): void {
     loadingFile.value = true;
     if (activeTab.value === TAB_GANGLINIE) {
-        reportTools.saveGraphAsImage(getGanglinieBase64(), "Ganglinie");
+        reportTools.saveGraphAsImage(
+            getGanglinieBase64(),
+            "Ganglinie",
+            options.value.zeitraum
+        );
     } else if (activeTab.value === TAB_HEATMAP) {
-        reportTools.saveGraphAsImage(getHeatmapBase64(), "Heatmap");
+        reportTools.saveGraphAsImage(
+            getHeatmapBase64(),
+            "Heatmap",
+            options.value.zeitraum
+        );
     } else if (
         activeTab.value == TAB_BELASTUNGSPLAN &&
         belastungsplanSvg.value
@@ -291,6 +306,35 @@ function saveGraphAsImage(): void {
         reportTools.saveGraphAsImage(uri, "Belastungsplan");
     }
     loadingFile.value = false;
+}
+
+function generateCsv() {
+    loadingFile.value = true;
+    const optionsDTO = _.cloneDeep(options.value);
+
+    GenerateCsvService.generateCsvMst(messstelleId.value, optionsDTO)
+        .then((result: CsvDTO) => {
+            // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
+            let filename = `${reportTools.getFileName(
+                "Listenausgabe",
+                options.value.zeitraum
+            )}.csv`;
+
+            let csvContent =
+                "data:text/csv;charset=utf-8," + result.csvAsString;
+
+            let encodedUri = encodeURI(csvContent);
+            let link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link); // Required for FF
+
+            link.click();
+        })
+        .catch((error) => {
+            store.dispatch("snackbar/showError", error);
+        })
+        .finally(() => (loadingFile.value = false));
 }
 
 /**

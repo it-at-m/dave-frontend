@@ -1,6 +1,7 @@
 import FetchService from "@/api/service/FetchService";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import CsvDTO from "@/types/CsvDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 export default class GenerateCsvService {
     private static readonly ENDPOINT: string =
@@ -13,6 +14,16 @@ export default class GenerateCsvService {
         return FetchService.postData(
             options,
             `${this.ENDPOINT}?zaehlung_id=${zaehlungId}`,
+            "Beim Erzeugen der CSV ist ein Fehler aufgetreten."
+        );
+    }
+    public static generateCsvMst(
+        messstelleId: string,
+        options: MessstelleOptionsDTO
+    ): Promise<CsvDTO> {
+        return FetchService.postData(
+            options,
+            `${this.ENDPOINT}-mst?messstelle_id=${messstelleId}`,
             "Beim Erzeugen der CSV ist ein Fehler aufgetreten."
         );
     }

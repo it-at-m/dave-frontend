@@ -43,14 +43,16 @@ export function useReportTools() {
         return `${diagram} zur Messstelle ${messstelle.value.mstId}`;
     }
 
-    function getFileName(type: string): string {
-        const dateForFilename: string = new Date(
-            messstelle.value.datumLetztePlausibleMessung
-        )
+    function getFileName(type: string, zeitraum: Array<string>): string {
+        let dateForFilename: string = new Date(zeitraum[0])
             .toISOString()
             .split("T")[0];
 
-        // Beispiel: 251101K_15-11-2020
+        if (zeitraum.length === 2) {
+            dateForFilename = `${dateForFilename}_bis_${
+                new Date(zeitraum[1]).toISOString().split("T")[0]
+            }`;
+        }
         return `${messstelle.value.mstId}_${dateForFilename}_${type}`;
     }
 
@@ -87,8 +89,12 @@ export function useReportTools() {
         });
     }
 
-    function saveGraphAsImage(base64: string, type: string): void {
-        const filename = getFileName(type);
+    function saveGraphAsImage(
+        base64: string,
+        type: string,
+        zeitraum: Array<string>
+    ): void {
+        const filename = getFileName(type, zeitraum);
 
         if (base64 !== "") {
             const link = document.createElement("a");
@@ -104,5 +110,6 @@ export function useReportTools() {
         addChartToPdfReport,
         saveGraphAsImage,
         addDatatabelToPdfReport,
+        getFileName,
     };
 }

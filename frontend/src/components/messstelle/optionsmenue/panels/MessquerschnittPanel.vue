@@ -159,7 +159,7 @@ const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
                     direction.value === messstelleUtils.alleRichtungen
                 ) {
                     result.push({
-                        text: `${querschnitt.mqId} - ${querschnitt.lageMessquerschnitt}`,
+                        text: `${querschnitt.mqId} - ${querschnitt.standort}`,
                         value: querschnitt.mqId,
                     });
                 }
