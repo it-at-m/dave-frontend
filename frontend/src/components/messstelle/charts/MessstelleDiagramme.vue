@@ -17,58 +17,24 @@
                 Belastungsplan
                 <v-icon>mdi-arrow-decision</v-icon>
             </v-tab>
-            <v-tooltip
-                :disabled="!isBiggerThanFiveYears"
-                top
-            >
-                <template #activator="{ on }">
-                    <div
-                        style="width: 100%"
-                        class="d-flex justify-center"
-                        v-on="on"
-                    >
-                        <v-tab :disabled="isBiggerThanFiveYears">
-                            Ganglinie
-                            <v-icon>mdi-chart-histogram</v-icon>
-                        </v-tab>
-                    </div>
-                </template>
-                <span>{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</span>
-            </v-tooltip>
-            <v-tooltip
-                :disabled="!isBiggerThanFiveYears"
-                top
-            >
-                <template #activator="{ on }">
-                    <div
-                        style="width: 100%"
-                        class="d-flex justify-center"
-                        v-on="on"
-                    >
-                        <v-tab :disabled="isBiggerThanFiveYears">
-                            Listenausgabe
-                            <v-icon>mdi-table</v-icon>
-                        </v-tab>
-                    </div>
-                </template>
-                <span>{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</span>
-            </v-tooltip>
-            <v-tooltip
-                :disabled="!isBiggerThanFiveYears"
-                top
-            >
-                <template #activator="{ on, attrs }">
-                    <v-tab
-                        v-bind="attrs"
-                        :disabled="isBiggerThanFiveYears"
-                        v-on="on"
-                    >
-                        Heatmap
-                        <v-icon>mdi-chart-bubble</v-icon>
-                    </v-tab>
-                </template>
-                <span>{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</span>
-            </v-tooltip>
+            <tooltipTab
+                :is-disabled="isBiggerThanFiveYears"
+                :tooltip-text="ZEITRAUM_GROESSER_FUENF_JAHRE"
+                icon="mdi-chart-histogram"
+                tab-name="Ganglinie"
+            />
+            <tooltipTab
+                :is-disabled="isBiggerThanFiveYears"
+                :tooltip-text="ZEITRAUM_GROESSER_FUENF_JAHRE"
+                icon="mdi-table"
+                tab-name="listenausgabe"
+            />
+            <tooltipTab
+                :is-disabled="isBiggerThanFiveYears"
+                :tooltip-text="ZEITRAUM_GROESSER_FUENF_JAHRE"
+                icon="mdi-chart-bubble"
+                tab-name="Heatmap"
+            />
             <v-tab>
                 Zeitreihe
                 <v-icon>mdi-timer-sand</v-icon>
@@ -194,6 +160,7 @@ import _ from "lodash";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/CsvDTO";
+import TooltipTab from "@/components/messstelle/charts/TooltipTab.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
