@@ -115,6 +115,7 @@
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
+            v-show="showSpeedial"
             :is-listenausgabe="isTabListenausgabe"
             :is-not-heatmap="isNotTabHeatmap"
             :loading-file="loadingFile"
@@ -177,6 +178,7 @@ const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
+const showSpeedial: Ref<boolean> = ref(false);
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
 const pdfReportDialog: Ref<boolean> = ref(false);
@@ -213,6 +215,12 @@ watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
+    showSpeedial.value = [
+        TAB_GANGLINIE,
+        TAB_HEATMAP,
+        TAB_LISTENAUSGABE,
+        TAB_BELASTUNGSPLAN,
+    ].includes(activeTab.value);
 });
 
 watch(options, () => {
