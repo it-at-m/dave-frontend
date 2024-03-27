@@ -29,10 +29,6 @@
                 Heatmap
                 <v-icon>mdi-chart-bubble</v-icon>
             </v-tab>
-            <v-tab>
-                Zeitreihe
-                <v-icon>mdi-timer-sand</v-icon>
-            </v-tab>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
@@ -96,26 +92,10 @@
                 </v-sheet>
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
-            <v-tab-item>
-                <v-sheet
-                    :max-height="contentHeight"
-                    width="100%"
-                    class="overflow-y-auto"
-                >
-                    <v-card ref="zeitreiheCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                    </v-card>
-                </v-sheet>
-            </v-tab-item>
         </v-tabs-items>
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
-            v-show="showSpeedial"
             :is-listenausgabe="isTabListenausgabe"
             :is-not-heatmap="isNotTabHeatmap"
             :loading-file="loadingFile"
@@ -134,7 +114,6 @@ import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
-import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import Loader from "@/components/common/Loader.vue";
@@ -178,7 +157,6 @@ const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
-const showSpeedial: Ref<boolean> = ref(true);
 const isTabListenausgabe: Ref<boolean> = ref(false);
 const isNotTabHeatmap: Ref<boolean> = ref(false);
 const pdfReportDialog: Ref<boolean> = ref(false);
@@ -191,12 +169,10 @@ const TAB_BELASTUNGSPLAN = 0;
 const TAB_GANGLINIE = 1;
 const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
-const TAB_ZEITREIHE = 4;
 
 const belastungsplanCard = ref<BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<StepLineCard>();
 const heatmapCard = ref<HeatmapCard>();
-const zeitreiheCard = ref<ZeitreiheCard>();
 const belastungsplanSvg = ref<Blob>();
 
 const store = useStore();
@@ -215,12 +191,6 @@ watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    showSpeedial.value = [
-        TAB_GANGLINIE,
-        TAB_HEATMAP,
-        TAB_LISTENAUSGABE,
-        TAB_BELASTUNGSPLAN,
-    ].includes(activeTab.value);
 });
 
 watch(options, () => {
