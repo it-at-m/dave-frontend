@@ -27,6 +27,7 @@
                         class="px-0"
                         :messstelle="messstelle"
                     />
+                    <ValidWochentage />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
@@ -65,6 +66,7 @@ import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
+import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
