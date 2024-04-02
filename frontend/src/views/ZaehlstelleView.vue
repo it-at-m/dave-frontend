@@ -125,7 +125,9 @@ export default class ZaehlstelleView extends Vue {
                 this.hasZaehlungen = false;
             }
             // die Zählungsoptionen werden zurück gesetzt
-            this.$store.dispatch("resetFilteroptions");
+            if (!this.$store.getters.isHistory) {
+                this.$store.dispatch("resetFilteroptions");
+            }
         });
     }
 

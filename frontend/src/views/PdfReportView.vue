@@ -87,6 +87,9 @@
                         <p v-if="isDatatable(asset)">
                             {{ getTextOfAsset(asset) }}
                         </p>
+                        <p v-if="isDatatableMessstelle(asset)">
+                            {{ getTextOfAsset(asset) }}
+                        </p>
                         <p v-if="isZaehlungskenngroesse(asset)">
                             {{ getTextOfAsset(asset) }}
                         </p>
@@ -358,6 +361,7 @@ import _ from "lodash";
 import PdfPreviewDialog from "@/components/pdfreport/assetforms/PdfPreviewDialog.vue";
 import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
+import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 
 @Component({
     components: {
@@ -411,6 +415,7 @@ export default class PdfReportView extends Vue {
         AssetTypesEnum.HEADING4,
         AssetTypesEnum.HEADING5,
         AssetTypesEnum.DATATABLE,
+        AssetTypesEnum.DATATABLE_MESSSTELLE,
     ];
 
     fab = false;
@@ -507,6 +512,11 @@ export default class PdfReportView extends Vue {
         }
 
         if (this.isDatatable(asset)) {
+            this.editDatatable = true;
+            this.datatableAsset = asset;
+        }
+
+        if (this.isDatatableMessstelle(asset)) {
             this.editDatatable = true;
             this.datatableAsset = asset;
         }
@@ -627,6 +637,8 @@ export default class PdfReportView extends Vue {
             result = (asset as HeadingAsset).text;
         } else if (this.isDatatable(asset)) {
             result = (asset as DatatableAsset).text;
+        } else if (this.isDatatableMessstelle(asset)) {
+            result = (asset as MessstelleDatatableAsset).text;
         } else if (this.isZaehlungskenngroesse(asset)) {
             result = (asset as ZaehlungskenngroessenAsset).text;
         } else if (this.isText(asset)) {
@@ -704,6 +716,9 @@ export default class PdfReportView extends Vue {
     isDatatable(asset: BaseAsset): boolean {
         return asset.type === AssetTypesEnum.DATATABLE;
     }
+    isDatatableMessstelle(asset: BaseAsset): boolean {
+        return asset.type === AssetTypesEnum.DATATABLE_MESSSTELLE;
+    }
 
     isZaehlungskenngroesse(asset: BaseAsset): boolean {
         return asset.type === AssetTypesEnum.ZAEHLUNGSKENNGROESSEN;
@@ -752,6 +767,10 @@ export default class PdfReportView extends Vue {
         }
 
         if (this.isDatatable(asset)) {
+            icon = "mdi-view-list";
+        }
+
+        if (this.isDatatableMessstelle(asset)) {
             icon = "mdi-view-list";
         }
 
@@ -806,6 +825,10 @@ export default class PdfReportView extends Vue {
         }
 
         if (this.isDatatable(asset)) {
+            header = "Datentabelle";
+        }
+
+        if (this.isDatatableMessstelle(asset)) {
             header = "Datentabelle";
         }
 

@@ -11,6 +11,7 @@ const state = {
     filteroptions: {},
     zeitblock: "",
     zeitauswahl: "",
+    history: false,
 };
 
 const getters = {
@@ -29,17 +30,28 @@ const getters = {
     getZeitauswahl(state: any): string {
         return state.zeitauswahl;
     },
+    isHistory(state: any): boolean {
+        return state.history;
+    },
 };
 
 const mutations = {
     setFilteroptions(state: any, payload: OptionsDTO) {
         state.filteroptions = payload;
+        state.history = false;
+    },
+    setFilteroptionsHistory(state: any, payload: OptionsDTO) {
+        state.filteroptions = payload;
+        state.history = true;
     },
     setZeitblock(state: any, payload: string) {
         state.zeitblock = payload;
     },
     setZeitauswahl(state: any, payload: string) {
         state.zeitauswahl = payload;
+    },
+    reloadFilteroptions(state: any) {
+        state.filteroptions = Object.assign({}, state.filteroptions);
     },
 };
 
@@ -52,6 +64,9 @@ const actions = {
      */
     setFilteroptions(context: any, payload: OptionsDTO) {
         context.commit("setFilteroptions", payload);
+    },
+    setFilteroptionsHistory(context: any, payload: OptionsDTO) {
+        context.commit("setFilteroptionsHistory", payload);
     },
     /**
      * Setzt die Filteroptionen auf ihren ursprünglichen Wert zurück.
@@ -104,6 +119,9 @@ const actions = {
             idVergleichszaehlungZeitreihe: null,
             zeitreiheGesamt: false,
         });
+    },
+    reloadFilteroptions(context: any) {
+        context.commit("reloadFilteroptions");
     },
 };
 

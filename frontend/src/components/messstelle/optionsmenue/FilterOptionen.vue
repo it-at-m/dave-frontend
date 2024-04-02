@@ -41,6 +41,29 @@
             </v-col>
         </v-row>
         <v-row
+            v-if="wochentag"
+            no-gutters
+        >
+            <v-col
+                cols="1"
+                align-self="start"
+            >
+                <v-icon
+                    small
+                    color="grey lighten-1"
+                    >mdi-calendar-week-outline</v-icon
+                >
+            </v-col>
+            <v-col cols="10">
+                <span class="grey--text text--lighten-1"
+                    >Wochentag:
+                    <span class="font-weight-medium white--text"
+                        >{{ wochentag }}
+                    </span>
+                </span>
+            </v-col>
+        </v-row>
+        <v-row
             v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
             :key="index"
             no-gutters
@@ -67,8 +90,9 @@
                     "
                     >[
                     {{
-                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
-                            .short
+                        himmelsRichtungenTextShort.get(
+                            messquerschnitt.fahrtrichtung
+                        )
                     }}
                     ]</span
                 >
@@ -79,8 +103,9 @@
                     "
                     >[
                     {{
-                        himmelsRichtungen.get(messquerschnitt.fahrtrichtung)
-                            .long
+                        himmelsRichtungenTextLong.get(
+                            messquerschnitt.fahrtrichtung
+                        )
                     }}
                     ]</span
                 >
@@ -99,6 +124,12 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
+import {
+    himmelsRichtungenTextLong,
+    himmelsRichtungenTextShort,
+} from "@/types/enum/Himmelsrichtungen";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { tagesTypText } from "@/types/enum/TagesTyp";
 
 const store = useStore();
 const dateUtils = useDateUtils();
@@ -110,6 +141,10 @@ defineProps<Props>();
 
 const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+const wochentag: Ref<string | undefined> = computed(() => {
+    return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
 });
 
 const zeitraum: Ref<string> = computed(() => {
@@ -126,16 +161,25 @@ const zeitraum: Ref<string> = computed(() => {
 });
 
 const zeitblock: Ref<string> = computed(() => {
-    const zeitblock = zeitblockInfo.get(
+    let text = Zeitauswahl.TAGESWERT.valueOf();
+    const existsBlock = zeitblockInfo.get(
+        filterOptionsMessstelle.value.zeitblock
+    );
+    const existsStunde = zeitblockStuendlichInfo.get(
         filterOptionsMessstelle.value.zeitblock
     );
     if (
-        zeitblock &&
-        filterOptionsMessstelle.value.zeitauswahl != Zeitauswahl.TAGESWERT
+        Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
+        existsBlock
     ) {
-        return zeitblock.text;
+        text = existsBlock.text;
+    } else if (
+        Zeitauswahl.STUNDE === filterOptionsMessstelle.value.zeitauswahl &&
+        existsStunde
+    ) {
+        text = existsStunde.text;
     }
-    return Zeitauswahl.TAGESWERT;
+    return text;
 });
 
 const zeitintervall = computed(() => {
@@ -144,17 +188,10 @@ const zeitintervall = computed(() => {
     );
 });
 
-const himmelsRichtungen: Map<string, unknown> = new Map<string, unknown>([
-    ["N", { long: "Nord", short: "N" }],
-    ["O", { long: "Ost", short: "O" }],
-    ["S", { long: "Süd", short: "S" }],
-    ["W", { long: "West", short: "W" }],
-]);
-
 function getStyleClass(mqId: string): string {
     let notIncluded = "text-caption grey--text text--lighten-1";
     let included = "text-caption font-weight-medium white--text";
-    return filterOptionsMessstelle.value.messquerschnitte.includes(mqId)
+    return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
         ? included
         : notIncluded;
 }

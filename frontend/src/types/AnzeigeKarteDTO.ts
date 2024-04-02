@@ -1,9 +1,8 @@
 export default interface AnzeigeKarteDTO {
     id: string;
-
-    type?: string;
-
+    fachId: string;
+    type: string;
     longitude: number;
-
     latitude: number;
+    sichtbarDatenportal: boolean;
 }

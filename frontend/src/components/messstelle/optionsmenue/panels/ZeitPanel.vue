@@ -44,22 +44,16 @@
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
                     />
-                    <p class="text-caption pt-5">Hinweise:</p>
-                    <p class="text-caption">
+                    <p>Hinweise:</p>
+                    <p>
                         An den rot markierten Tagen sind keine plausiblen
                         Messwerte vorhanden
                     </p>
-                    <p
-                        v-if="isAnwender"
-                        class="text-caption"
-                    >
+                    <p v-if="isAnwender">
                         Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
                     </p>
-                    <p
-                        v-if="isZeitraum"
-                        class="text-caption"
-                    >
+                    <p v-if="isZeitraum">
                         Alle Auswertungen stellen Durchschnittswerte des
                         ausgewählten Zeitraums dar
                     </p>
@@ -117,7 +111,7 @@ const props = defineProps<Props>();
 const emit = defineEmits(["input"]);
 const store = useStore();
 const dateUtils = useDateUtils();
-const isChosenTagesTypValid = ref(false);
+const isChosenTagesTypValid = ref(true);
 const hoverSelectZeitintervall = ref(false);
 const pickerDate = ref("");
 onMounted(() => {

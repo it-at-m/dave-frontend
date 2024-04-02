@@ -101,7 +101,7 @@ import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 
 @Component
 export default class ImageAssetForm extends Vue {
-    @Prop({ default: false }) open = false;
+    @Prop({ default: false }) open: boolean | undefined;
     @Prop({ default: new ImageAsset("", "") }) image?: ImageAsset;
 
     asset: ImageAsset = new ImageAsset("", "");

@@ -8,5 +8,16 @@ export default interface MessstelleOptionsDTO {
     zeitblock: string;
     tagesTyp: string;
     intervall: ZaehldatenIntervall;
-    messquerschnitte: string[];
+    messquerschnittIds: string[];
+    // Darstellungsoptionen
+    werteHundertRunden: boolean;
+    blackPrintMode: boolean;
+    // Ganglinie
+    ganglinieYAchse1MaxValue: number | null;
+    ganglinieYAchse2MaxValue: number | null;
+    // Listenausgabe
+    stundensumme: boolean;
+    blocksumme: boolean;
+    tagessumme: boolean;
+    spitzenstunde: boolean;
 }
