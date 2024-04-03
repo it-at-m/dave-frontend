@@ -1,32 +1,47 @@
 <template>
-    <v-card
-        color="grey lighten-1"
-        class="mb-12"
-        height="200px"
-    >
-        <v-autocomplete
-            v-model="values"
-            :items="jahre"
-            outlined
-            dense
-            chips
-            small-chips
-            label="Jahre"
-            multiple
-        ></v-autocomplete>
-    </v-card>
+    <v-autocomplete
+        v-model="auswertungOptions.jahre"
+        :items="jahre"
+        class="mt-4"
+        outlined
+        dense
+        chips
+        small-chips
+        label="Jahre"
+        multiple
+        clearable
+        deletable-chips
+    />
 </template>
 
 <script setup lang="ts">
+import { computed, ComputedRef } from "vue";
+import KeyVal from "@/types/KeyVal";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
 
-import { computed } from "vue";
+interface Props {
+    value: MessstelleAuswertungOptionsDTO;
+}
 
-const jahre = computed(() => {
-    // TODO Einschränkung der Jahre je nach Zeitintervall
-    const years = [];
-    for (let index = 2006; index <= new Date().getFullYear(); index++) {
-        years.push(index);
+const props = defineProps<Props>();
+
+const emits = defineEmits<{
+    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
+}>();
+
+const auswertungOptions = computed({
+    get: () => props.value,
+    set: (v) => emits("input", v),
+});
+
+const jahre: ComputedRef<Array<KeyVal>> = computed(() => {
+    const result: Array<KeyVal> = [];
+    for (let index = 2006; index < new Date().getFullYear(); index++) {
+        result.push({
+            text: `${index}`,
+            value: `${index}`,
+        });
     }
-    return years;
+    return result;
 });
 </script>

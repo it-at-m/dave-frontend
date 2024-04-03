@@ -3,11 +3,13 @@
         <v-row dense>
             <v-col cols="4">
                 <auswertung-stepper
-                    v-model="activeStep"
+                    v-model="auswertungsOptions"
                     :height="leftHeightVh"
+                    :active-step.sync="activeStep"
                 />
                 <v-card-actions>
                     <v-btn
+                        :disabled="activeStep === 3"
                         class="mr-2"
                         color="primary"
                         @click="activeStep++"
@@ -15,6 +17,7 @@
                         Weiter
                     </v-btn>
                     <v-btn
+                        :disabled="activeStep === 1"
                         class="mr-2"
                         color="primary"
                         @click="activeStep--"
@@ -33,10 +36,15 @@
 import { computed, ref, Ref } from "vue";
 import { useVuetify } from "@/util/useVuetify";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const vuetify = useVuetify();
 
 const activeStep: Ref<number> = ref(1);
+const auswertungsOptions: Ref<MessstelleAuswertungOptionsDTO> = ref(
+    DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
+);
 
 const appBarHeight = computed(() => {
     return 65 / (vuetify.breakpoint.height / 100);
