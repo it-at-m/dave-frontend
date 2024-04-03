@@ -1,7 +1,8 @@
 export interface ValidWochentageInPeriodDto {
-    startDate: string;
-
-    endDate: string;
-
-    messstelleId: string;
+    numberOfValidTagesTypDiMiDo: number;
+    numberOfValidTagesTypMoFr: number;
+    numberOfValidTagesTypSamstag: number;
+    numberOfValidTagesTypSonntagFeiertag: number;
+    numberOfValidTagesTypWerktagFerien: number;
+    numberOfValidTagesTypMoSo: number;
 }
