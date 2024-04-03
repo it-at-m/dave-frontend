@@ -118,6 +118,21 @@
                 <template #activator="{ on, attrs }">
                     <v-btn
                         v-bind="attrs"
+                        class="mr-2"
+                        icon
+                        small
+                        to="/auswertung"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-clipboard-pulse-outline</v-icon>
+                    </v-btn>
+                </template>
+                <span> Gesamtauswertungen </span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                    <v-btn
+                        v-bind="attrs"
                         icon
                         small
                         to="/pdfreport"
