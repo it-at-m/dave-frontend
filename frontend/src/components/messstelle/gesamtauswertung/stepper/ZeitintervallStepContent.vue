@@ -2,8 +2,8 @@
     <div>
         <p>Welche Zeitintervalle sollen verglichen werden?</p>
         <v-autocomplete
-            v-model="selected"
-            :items="zeitintervalle"
+            v-model="selectedCategory"
+            :items="categories"
             class="mt-4"
             outlined
             dense
@@ -11,15 +11,15 @@
             @input="checkIfJahreIsSelected"
         />
         <v-autocomplete
-            v-if="showSecondSelect"
+            v-if="showSubCategoriesSelect"
             v-model="auswertungOptions.zeitintervalle"
-            :items="selectableItems"
+            :items="selectableSubCategories"
             class="mt-4"
             outlined
             dense
             chips
             small-chips
-            :label="selected"
+            :label="selectedCategory"
             multiple
             clearable
             deletable-chips
@@ -42,8 +42,8 @@ const quartale = "Quartale";
 const monate = "Monate";
 const selectAll = "alle auswählen";
 
-const zeitintervalle = [jahre, halbjahre, quartale, monate];
-const monateItems = [
+const categories = [jahre, halbjahre, quartale, monate];
+const categoryMonth = [
     "Januar",
     "Februar",
     "März",
@@ -58,7 +58,7 @@ const monateItems = [
     "Dezember",
 ];
 
-const selected = ref("");
+const selectedCategory = ref("");
 
 const props = defineProps<Props>();
 
@@ -71,18 +71,21 @@ const auswertungOptions = computed({
     set: (v) => emits("input", v),
 });
 
-const showSecondSelect = computed(() => {
-    return selected.value && selected.value !== jahre;
+const showSubCategoriesSelect = computed(() => {
+    return selectedCategory.value && selectedCategory.value !== jahre;
 });
 
-const selectableItems = computed(() => {
-    let items: Array<string> = [];
-    switch (selected.value) {
+const selectableSubCategories = computed(() => {
+    let categories: Array<string> = [];
+    switch (selectedCategory.value) {
         case halbjahre:
-            items = ["1. Halbjahr (Jan - Juni)", "2. Halbjahr (Juli - Dez)"];
+            categories = [
+                "1. Halbjahr (Jan - Juni)",
+                "2. Halbjahr (Juli - Dez)",
+            ];
             break;
         case quartale:
-            items = [
+            categories = [
                 "1. Quartal (Jan - März)",
                 "2. Quartal (Apr - Juni)",
                 "3. Quartal (Juli - Sept)",
@@ -90,15 +93,14 @@ const selectableItems = computed(() => {
             ];
             break;
         case monate:
-            items = [...monateItems, selectAll];
+            categories = [...categoryMonth, selectAll];
             break;
     }
-    return items;
+    return categories;
 });
-
 function checkIfJahreIsSelected() {
-    if (selected.value === jahre) {
-        auswertungOptions.value.zeitintervalle.push(selected.value);
+    if (selectedCategory.value === jahre) {
+        auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
     } else {
         auswertungOptions.value.zeitintervalle = [];
     }
@@ -107,7 +109,7 @@ function checkIfJahreIsSelected() {
 function checkIfSelectAll() {
     if (auswertungOptions.value.zeitintervalle.includes(selectAll)) {
         auswertungOptions.value.zeitintervalle = [];
-        auswertungOptions.value.zeitintervalle.push(...monateItems);
+        auswertungOptions.value.zeitintervalle.push(...categoryMonth);
     }
 }
 </script>
