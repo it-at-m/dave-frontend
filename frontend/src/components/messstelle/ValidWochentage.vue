@@ -57,10 +57,12 @@ import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuSer
 import { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
 import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
+import { useRoute } from "vue-router/composables";
 
 const store = useStore();
 const numberValidWochentage = ref({} as ValidWochentageInPeriodDto);
 const dateUtils = useDateUtils();
+const route = useRoute();
 
 onMounted(() => {
     getValidWochentage();
@@ -98,7 +100,7 @@ const validWochentageRequestDto = computed(() => {
     return {
         startDate: sortedDates[1],
         endDate: sortedDates[0],
-        messstelleId: "testid",
+        messstelleId: route.params.messstelleId,
     };
 });
 
