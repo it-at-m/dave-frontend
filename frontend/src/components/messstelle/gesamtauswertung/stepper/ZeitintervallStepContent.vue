@@ -99,10 +99,9 @@ const selectableSubCategories = computed(() => {
     return categories;
 });
 function checkIfJahreIsSelected() {
+    auswertungOptions.value.zeitintervalle = [];
     if (selectedCategory.value === jahre) {
         auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
-    } else {
-        auswertungOptions.value.zeitintervalle = [];
     }
 }
 
