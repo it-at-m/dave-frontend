@@ -27,7 +27,7 @@
                         class="px-0"
                         :messstelle="messstelle"
                     />
-                    <ValidWochentage />
+                    <ValidWochentage v-if="chosenOptions.zeitraum.length > 1" />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
@@ -76,6 +76,10 @@ const store = useStore();
 // eslint-disable-next-line no-undef
 onMounted(() => {
     loadMessstelle();
+});
+
+const chosenOptions = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
 const headerHeight: ComputedRef<number> = computed(() => {
