@@ -165,7 +165,7 @@ import TooltipTab from "@/components/messstelle/charts/TooltipTab.vue";
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
 const ZEITRAUM_GROESSER_FUENF_JAHRE =
-    "Da der Zeitraum größer 5 Jahre ist steht die anzeige nicht zur verfügung";
+    "Da der Zeitraum größer als 5 Jahre ist steht die anzeige nicht zur verfügung";
 
 interface Props {
     height?: string;
