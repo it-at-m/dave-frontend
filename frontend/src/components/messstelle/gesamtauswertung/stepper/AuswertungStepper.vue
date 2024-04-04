@@ -57,7 +57,7 @@
             </v-stepper-step>
 
             <v-stepper-content step="4">
-                <messstelle-step-content v-model="auswertungOptions" />
+                <ort-step-content v-model="auswertungOptions" />
             </v-stepper-content>
         </v-stepper>
     </v-sheet>
@@ -70,7 +70,7 @@ import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswert
 import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue";
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import { tagesTypText } from "@/types/enum/TagesTyp";
-import MessstelleStepContent from "@/components/messstelle/gesamtauswertung/stepper/MessstelleStepContent.vue";
+import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -138,7 +138,7 @@ function isJahresintervallSelected(): boolean {
     );
 }
 
-function isMessstelleSelected(): boolean {
+function isOrtSelected(): boolean {
     return !(
         auswertungOptions.value.mstIds.length === 0 &&
         auswertungOptions.value.mqIds.length === 0 &&
