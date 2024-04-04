@@ -1,45 +1,103 @@
 <template>
-    <div>
+    <v-sheet class="px-4 py-2 text-caption">
         <v-menu offset-x>
             <template #activator="{ on, props }">
-                <v-btn
+                <button
                     v-bind="props"
-                    width="100%"
-                    elevation="0"
+                    class="text-sm-left"
                     v-on="on"
                 >
-                    test
-                </v-btn>
+                    Von den ausgewählten {{ zeitraumRange }} Tagen sind
+                    {{ getChosenWochentageNumber }} Tage in die Auswertung
+                    eingeflossen
+                </button>
             </template>
-            <v-list>
+            <v-list class="text-caption">
+                <v-list-item class="py-0 my-0">
+                    Von {{ zeitraumRange }} ausgewählten Tagen liegen für
+                    {{ totalValidWochentage }} Wochentage plausible Daten vor
+                </v-list-item>
                 <v-list-item>
-                    <v-list-item-title>test</v-list-item-title>
+                    {{ numberValidWochentage.numberOfValidTagesTypDiMiDo }}
+                    Di/Mi/Do
+                </v-list-item>
+                <v-list-item>
+                    {{ numberValidWochentage.numberOfValidTagesTypMoFr }}
+                    Mo-Fr
+                </v-list-item>
+                <v-list-item>
+                    {{ numberValidWochentage.numberOfValidTagesTypSamstag }}
+                    Sa
+                </v-list-item>
+                <v-list-item>
+                    {{
+                        numberValidWochentage.numberOfValidTagesTypSonntagFeiertag
+                    }}
+                    So/Feiertag
+                </v-list-item>
+                <v-list-item>
+                    {{ numberValidWochentage.numberOfValidTagesTypMoSo }}
+                    Mo-So
+                </v-list-item>
+                <v-list-item>
+                    {{
+                        numberValidWochentage.numberOfValidTagesTypWerktagFerien
+                    }}
+                    Werktag/Ferien
                 </v-list-item>
             </v-list>
         </v-menu>
-    </div>
+    </v-sheet>
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { useStore } from "@/api/util/useStore";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import { ValidWochentageInPeriodRequestDto } from "@/types/messstelle/ValidWochentageInPeriodRequestDto";
 import { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
-import { valid } from "semver";
 import TagesTyp from "@/types/enum/TagesTyp";
+import { useDateUtils } from "@/util/DateUtils";
 
 const store = useStore();
 const numberValidWochentage = ref({} as ValidWochentageInPeriodDto);
+const dateUtils = useDateUtils();
+
+onMounted(() => {
+    getValidWochentage();
+});
 
 const chosenOptions = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
+const zeitraumRange = computed(() => {
+    const sortedDates = dateUtils.sortDatesDescAsStrings(
+        chosenOptions.value.zeitraum.slice()
+    );
+    const startDate = new Date(sortedDates[1]);
+    const endDate = new Date(sortedDates[0]);
+    const differenceBetweenDays = endDate.getTime() - startDate.getTime();
+    return Math.round(differenceBetweenDays / (1000 * 3600 * 24));
+});
+
+const totalValidWochentage = computed(() => {
+    return (
+        numberValidWochentage.value.numberOfValidTagesTypMoSo +
+        numberValidWochentage.value.numberOfValidTagesTypMoFr +
+        numberValidWochentage.value.numberOfValidTagesTypDiMiDo +
+        numberValidWochentage.value.numberOfValidTagesTypSamstag +
+        numberValidWochentage.value.numberOfValidTagesTypSonntagFeiertag +
+        numberValidWochentage.value.numberOfValidTagesTypWerktagFerien
+    );
+});
+
 const validWochentageRequestDto = computed(() => {
+    const sortedDates = dateUtils.sortDatesDescAsStrings(
+        chosenOptions.value.zeitraum.slice()
+    );
     return {
-        startDate: chosenOptions.value.zeitraum[1],
-        endDate: chosenOptions.value.zeitraum[0],
+        startDate: sortedDates[1],
+        endDate: sortedDates[0],
         messstelleId: "testid",
     };
 });
@@ -73,10 +131,20 @@ const getChosenWochentageNumber = computed(() => {
 });
 
 watch(chosenOptions, () => {
+    getValidWochentage();
+});
+
+function getValidWochentage() {
     MessstelleOptionsmenuService.getValidWochentageInPeriod(
         validWochentageRequestDto.value
     ).then((response) => {
         numberValidWochentage.value = response;
     });
-});
+}
 </script>
+
+<style scoped>
+.v-list-item {
+    min-height: 0;
+}
+</style>
