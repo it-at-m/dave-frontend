@@ -9,13 +9,13 @@
                 />
                 <v-card-actions>
                     <v-btn
-                        :disabled="activeStep === 3"
+                        :disabled="isEverythingValid"
                         class="mr-2"
-                        color="primary"
-                        @click="activeStep++"
+                        color="secondary"
                     >
-                        Weiter
+                        Auswerten
                     </v-btn>
+                    <v-spacer />
                     <v-btn
                         :disabled="activeStep === 1"
                         class="mr-2"
@@ -24,7 +24,14 @@
                     >
                         Zurück
                     </v-btn>
-                    <v-btn color="grey lighten-1"> Zurücksetzen </v-btn>
+                    <v-btn
+                        :disabled="activeStep === 3"
+                        class="mr-2"
+                        color="primary"
+                        @click="activeStep++"
+                    >
+                        Weiter
+                    </v-btn>
                 </v-card-actions>
             </v-col>
             <v-divider vertical />
@@ -56,5 +63,13 @@ const cardActionsHeight = computed(() => {
 
 const leftHeightVh = computed(() => {
     return 100 - appBarHeight.value - cardActionsHeight.value + "vh";
+});
+
+const isEverythingValid = computed(() => {
+    return !(
+        auswertungsOptions.value.zeitintervalle.length > 0 &&
+        auswertungsOptions.value.tagesTyp.length > 0 &&
+        auswertungsOptions.value.jahre.length > 0
+    );
 });
 </script>
