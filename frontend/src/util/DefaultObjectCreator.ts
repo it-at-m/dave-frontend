@@ -103,6 +103,12 @@ export default class DefaultObjectCreator {
     }
 
     public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptionsDTO {
-        return { jahre: [], tagesTyp: "", zeitintervalle: [] };
+        return {
+            jahre: [],
+            tagesTyp: "",
+            zeitintervalle: [],
+            mstIds: [],
+            mqIds: [],
+        };
     }
 }

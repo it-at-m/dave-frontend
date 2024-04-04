@@ -46,6 +46,19 @@
             <v-stepper-content step="3">
                 <tages-typ-step-content v-model="auswertungOptions" />
             </v-stepper-content>
+
+            <v-stepper-step
+                step="4"
+                editable
+                :rules="[isOrtSelected]"
+            >
+                Ort
+                <small> {{ selectedTagesTypAsSummary }}</small>
+            </v-stepper-step>
+
+            <v-stepper-content step="4">
+                <messstelle-step-content v-model="auswertungOptions" />
+            </v-stepper-content>
         </v-stepper>
     </v-sheet>
 </template>
@@ -57,6 +70,7 @@ import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswert
 import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue";
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import { tagesTypText } from "@/types/enum/TagesTyp";
+import MessstelleStepContent from "@/components/messstelle/gesamtauswertung/stepper/MessstelleStepContent.vue";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -121,6 +135,14 @@ function isJahresintervallSelected(): boolean {
     return !(
         auswertungOptions.value.zeitintervalle.length === 0 &&
         activeStep.value > 0
+    );
+}
+
+function isMessstelleSelected(): boolean {
+    return !(
+        auswertungOptions.value.mstIds.length === 0 &&
+        auswertungOptions.value.mqIds.length === 0 &&
+        activeStep.value > 3
     );
 }
 </script>

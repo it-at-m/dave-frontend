@@ -25,7 +25,7 @@
                         Zurück
                     </v-btn>
                     <v-btn
-                        :disabled="activeStep === 3"
+                        :disabled="activeStep === numberOfSteps"
                         class="mr-2"
                         color="primary"
                         @click="activeStep++"
@@ -48,6 +48,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const vuetify = useVuetify();
 
+const numberOfSteps: Ref<number> = ref(4);
 const activeStep: Ref<number> = ref(1);
 const auswertungsOptions: Ref<MessstelleAuswertungOptionsDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
