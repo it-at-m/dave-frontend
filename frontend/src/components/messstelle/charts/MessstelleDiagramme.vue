@@ -35,10 +35,6 @@
                 icon="mdi-chart-bubble"
                 tab-name="Heatmap"
             />
-            <v-tab>
-                Zeitreihe
-                <v-icon>mdi-timer-sand</v-icon>
-            </v-tab>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
