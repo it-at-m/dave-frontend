@@ -26,10 +26,18 @@
         >
             <template #append-item>
                 <v-btn
+                    v-if="showSelectAllButton"
                     width="100%"
                     text
                     @click="selectAll"
                     >Alle auswählen</v-btn
+                >
+                <v-btn
+                    v-else
+                    width="100%"
+                    text
+                    @click="deselectAll"
+                    >Alle abwählen</v-btn
                 >
             </template>
         </v-autocomplete>
@@ -38,7 +46,7 @@
 
 <script setup lang="ts">
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
-import { computed, ref } from "vue";
+import { computed, ComputedRef, ref } from "vue";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -128,4 +136,25 @@ function selectAll() {
             break;
     }
 }
+
+function deselectAll() {
+    auswertungOptions.value.zeitintervalle = [];
+}
+
+const showSelectAllButton: ComputedRef<boolean> = computed(() => {
+    let helper = 1;
+    switch (selectedCategory.value) {
+        case halbjahre:
+            helper = categoryHalbJahre.length / 2;
+            break;
+        case quartale:
+            helper = categoryQuartale.length / 2;
+            break;
+        case monate:
+            helper = categoryMonate.length / 2;
+            break;
+    }
+
+    return auswertungOptions.value.zeitintervalle.length <= helper;
+});
 </script>
