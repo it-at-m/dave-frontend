@@ -23,8 +23,16 @@
             multiple
             clearable
             deletable-chips
-            @input="checkIfSelectAll"
-        />
+        >
+            <template #append-item>
+                <v-btn
+                    width="100%"
+                    text
+                    @click="selectAll"
+                    >Alle auswählen</v-btn
+                >
+            </template>
+        </v-autocomplete>
     </div>
 </template>
 
@@ -36,14 +44,29 @@ interface Props {
     value: MessstelleAuswertungOptionsDTO;
 }
 
+const props = defineProps<Props>();
+
+const emits = defineEmits<{
+    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
+}>();
+
 const jahre = "Jahre";
 const halbjahre = "Halbjahre";
 const quartale = "Quartale";
 const monate = "Monate";
-const selectAll = "alle auswählen";
 
 const categories = [jahre, halbjahre, quartale, monate];
-const categoryMonth = [
+const categoryHalbJahre = [
+    "1. Halbjahr (Jan - Juni)",
+    "2. Halbjahr (Juli - Dez)",
+];
+const categoryQuartale = [
+    "1. Quartal (Jan - März)",
+    "2. Quartal (Apr - Juni)",
+    "3. Quartal (Juli - Sept)",
+    "4. Quartal (Okt - Dez)",
+];
+const categoryMonate = [
     "Januar",
     "Februar",
     "März",
@@ -60,15 +83,9 @@ const categoryMonth = [
 
 const selectedCategory = ref("");
 
-const props = defineProps<Props>();
-
-const emits = defineEmits<{
-    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
-}>();
-
 const auswertungOptions = computed({
     get: () => props.value,
-    set: (v) => emits("input", v),
+    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
 const showSubCategoriesSelect = computed(() => {
@@ -79,21 +96,13 @@ const selectableSubCategories = computed(() => {
     let categories: Array<string> = [];
     switch (selectedCategory.value) {
         case halbjahre:
-            categories = [
-                "1. Halbjahr (Jan - Juni)",
-                "2. Halbjahr (Juli - Dez)",
-            ];
+            categories = [...categoryHalbJahre];
             break;
         case quartale:
-            categories = [
-                "1. Quartal (Jan - März)",
-                "2. Quartal (Apr - Juni)",
-                "3. Quartal (Juli - Sept)",
-                "4. Quartal (Okt - Dez)",
-            ];
+            categories = [...categoryQuartale];
             break;
         case monate:
-            categories = [...categoryMonth, selectAll];
+            categories = [...categoryMonate];
             break;
     }
     return categories;
@@ -105,10 +114,18 @@ function checkIfJahreIsSelected() {
     }
 }
 
-function checkIfSelectAll() {
-    if (auswertungOptions.value.zeitintervalle.includes(selectAll)) {
-        auswertungOptions.value.zeitintervalle = [];
-        auswertungOptions.value.zeitintervalle.push(...categoryMonth);
+function selectAll() {
+    auswertungOptions.value.zeitintervalle = [];
+    switch (selectedCategory.value) {
+        case halbjahre:
+            auswertungOptions.value.zeitintervalle.push(...categoryHalbJahre);
+            break;
+        case quartale:
+            auswertungOptions.value.zeitintervalle.push(...categoryQuartale);
+            break;
+        case monate:
+            auswertungOptions.value.zeitintervalle.push(...categoryMonate);
+            break;
     }
 }
 </script>

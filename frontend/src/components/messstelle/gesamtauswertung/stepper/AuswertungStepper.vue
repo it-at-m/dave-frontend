@@ -10,32 +10,32 @@
         >
             <v-stepper-step
                 :complete="activeStep > 1"
-                step="1"
+                :step="1"
                 editable
                 :rules="[isJahresintervallSelected]"
             >
                 Zeitintervalle
                 <small> {{ selectedJahresintervallAsSummary }}</small>
             </v-stepper-step>
-            <v-stepper-content step="1">
+            <v-stepper-content :step="1">
                 <zeitintervall-step-content v-model="auswertungOptions" />
             </v-stepper-content>
 
             <v-stepper-step
                 :complete="activeStep > 2"
-                step="2"
+                :step="2"
                 editable
                 :rules="[isOneYearSelected]"
             >
                 Jahre
                 <small> {{ selectedYearsAsSummary }}</small>
             </v-stepper-step>
-            <v-stepper-content step="2">
+            <v-stepper-content :step="2">
                 <jahre-step-content v-model="auswertungOptions" />
             </v-stepper-content>
 
             <v-stepper-step
-                step="3"
+                :step="3"
                 editable
                 :rules="[isTagesTypSelected]"
             >
@@ -43,7 +43,7 @@
                 <small> {{ selectedTagesTypAsSummary }}</small>
             </v-stepper-step>
 
-            <v-stepper-content step="3">
+            <v-stepper-content :step="3">
                 <tages-typ-step-content v-model="auswertungOptions" />
             </v-stepper-content>
 

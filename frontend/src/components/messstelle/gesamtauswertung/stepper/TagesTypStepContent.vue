@@ -47,7 +47,7 @@ const emits = defineEmits<{
 
 const auswertungOptions = computed({
     get: () => props.value,
-    set: (v) => emits("input", v),
+    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
 function getTagesTypText(key: string): string | undefined {
