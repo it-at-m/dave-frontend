@@ -8,24 +8,45 @@
             dense
             chips
             small-chips
-            label="Jahre"
+            label="Messstellen"
             multiple
             clearable
             deletable-chips
+            :disabled="
+                auswertungOptions.mqIds.length !== 0 &&
+                direction !== messstelleUtils.alleRichtungen
+            "
+            :persistent-hint="
+                auswertungOptions.mqIds.length !== 0 &&
+                direction !== messstelleUtils.alleRichtungen
+            "
+            hint="Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden."
+            @input="direction = messstelleUtils.alleRichtungen"
         />
 
         <v-autocomplete
-            v-model="auswertungOptions.mqIds"
-            :items="messquerschnitte"
-            class="mt-4"
-            outlined
+            v-if="auswertungOptions.mstIds.length === 1"
+            v-model="direction"
+            label="Richtung"
+            :items="richtungValues"
+            filled
             dense
-            chips
-            small-chips
-            label="Jahre"
-            multiple
             clearable
-            deletable-chips
+            :persistent-hint="auswertungOptions.mstIds.length > 1"
+            hint="Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden."
+            @input="updateOptions"
+        />
+
+        <v-select
+            v-if="auswertungOptions.mstIds.length === 1"
+            v-model="auswertungOptions.mqIds"
+            label="Lage"
+            :items="lageValues"
+            :readonly="isLageReadonly"
+            filled
+            dense
+            multiple
+            :rules="[REQUIRED]"
         />
     </div>
 </template>
@@ -36,6 +57,9 @@ import KeyVal from "@/types/KeyVal";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -47,9 +71,12 @@ const emits = defineEmits<{
     (e: "input", v: MessstelleAuswertungOptionsDTO): void;
 }>();
 
+const messstelleUtils = useMessstelleUtils();
+
 loadAllVisibleMessstellen();
 
 const allVisibleMessstellen: Ref<Array<MessstelleAuswertungDTO>> = ref([]);
+const direction: Ref<string> = ref("");
 
 const auswertungOptions = computed({
     get: () => props.value,
@@ -64,6 +91,66 @@ const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
             value: mst.mstId,
         });
     });
+    return result;
+});
+
+const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
+    let result: Array<KeyVal> = [];
+    if (auswertungOptions.value.mstIds.length > 0) {
+        allVisibleMessstellen.value.forEach((messstelle) => {
+            if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+                if (messstelle.messquerschnitte.length > 1) {
+                    result.push({
+                        text: messstelleUtils.alleRichtungen,
+                        value: messstelleUtils.alleRichtungen,
+                    });
+                }
+                messstelle.messquerschnitte.forEach(
+                    (querschnitt: MessquerschnittAuswertungDTO) => {
+                        let himmelsrichtungAsText =
+                            himmelsRichtungenTextLong.get(
+                                querschnitt.fahrtrichtung
+                            );
+                        if (himmelsrichtungAsText === undefined) {
+                            himmelsrichtungAsText =
+                                "Fehler bei der Bestimmung der Himmelsrichtung.";
+                        }
+                        const keyVal: KeyVal = {
+                            text: himmelsrichtungAsText,
+                            value: querschnitt.fahrtrichtung,
+                        };
+                        if (!result.includes(keyVal)) {
+                            result.push(keyVal);
+                        }
+                    }
+                );
+            }
+        });
+    }
+    return result;
+});
+
+const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
+    let result: Array<KeyVal> = [];
+    if (auswertungOptions.value.mstIds.length > 0) {
+        allVisibleMessstellen.value.forEach((messstelle) => {
+            if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+                messstelle.messquerschnitte.forEach(
+                    (querschnitt: MessquerschnittAuswertungDTO) => {
+                        if (
+                            querschnitt.fahrtrichtung === direction.value ||
+                            direction.value === messstelleUtils.alleRichtungen
+                        ) {
+                            result.push({
+                                text: `${querschnitt.mqId} - ${querschnitt.standort}`,
+                                value: querschnitt.mqId,
+                            });
+                        }
+                    }
+                );
+            }
+        });
+    }
     return result;
 });
 
@@ -85,4 +172,23 @@ const messquerschnitte: ComputedRef<Array<KeyVal>> = computed(() => {
     }
     return result;
 });
+
+function REQUIRED(v: Array<string>) {
+    if (v.length > 0) return true;
+    return "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+}
+
+const isLageReadonly: ComputedRef<boolean> = computed(() => {
+    return (
+        direction.value === messstelleUtils.alleRichtungen ||
+        lageValues.value.length === 1
+    );
+});
+
+function updateOptions() {
+    auswertungOptions.value.mqIds = [];
+    lageValues.value.forEach((value) =>
+        auswertungOptions.value.mqIds.push(value.value)
+    );
+}
 </script>
