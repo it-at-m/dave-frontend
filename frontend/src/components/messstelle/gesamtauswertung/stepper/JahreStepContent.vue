@@ -31,7 +31,7 @@ const emits = defineEmits<{
 
 const auswertungOptions = computed({
     get: () => props.value,
-    set: (v) => emits("input", v),
+    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
 const jahre: ComputedRef<Array<KeyVal>> = computed(() => {
