@@ -48,7 +48,7 @@
             </v-stepper-content>
 
             <v-stepper-step
-                step="4"
+                :step="4"
                 editable
                 :rules="[isOrtSelected]"
             >
@@ -56,7 +56,7 @@
                 <small> {{ selectedTagesTypAsSummary }}</small>
             </v-stepper-step>
 
-            <v-stepper-content step="4">
+            <v-stepper-content :step="4">
                 <ort-step-content v-model="auswertungOptions" />
             </v-stepper-content>
         </v-stepper>

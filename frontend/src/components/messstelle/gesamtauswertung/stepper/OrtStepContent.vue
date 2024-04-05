@@ -31,9 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef } from "vue";
+import { computed, ComputedRef, ref, Ref } from "vue";
 import KeyVal from "@/types/KeyVal";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
+import MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -45,6 +47,10 @@ const emits = defineEmits<{
     (e: "input", v: MessstelleAuswertungOptionsDTO): void;
 }>();
 
+loadAllVisibleMessstellen();
+
+const allVisibleMessstellen: Ref<Array<MessstelleAuswertungDTO>> = ref([]);
+
 const auswertungOptions = computed({
     get: () => props.value,
     set: (v) => emits("input", v),
@@ -52,14 +58,22 @@ const auswertungOptions = computed({
 
 const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
     const result: Array<KeyVal> = [];
-    for (let index = 2006; index < new Date().getFullYear(); index++) {
+    allVisibleMessstellen.value.forEach((mst) => {
         result.push({
-            text: `${index}`,
-            value: `${index}`,
+            text: `${mst.mstId}-${mst.standort ?? ""}`,
+            value: mst.mstId,
         });
-    }
+    });
     return result;
 });
+
+function loadAllVisibleMessstellen(): void {
+    MessstelleAuswertungService.getAllVisibleMessstellen().then(
+        (messstellen: Array<MessstelleAuswertungDTO>) => {
+            allVisibleMessstellen.value = messstellen;
+        }
+    );
+}
 
 const messquerschnitte: ComputedRef<Array<KeyVal>> = computed(() => {
     const result: Array<KeyVal> = [];
