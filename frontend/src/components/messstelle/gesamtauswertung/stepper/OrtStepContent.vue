@@ -22,7 +22,24 @@
             "
             hint="Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden."
             @input="direction = messstelleUtils.alleRichtungen"
-        />
+        >
+            <template #append-item>
+                <v-btn
+                    v-if="showSelectAllButton"
+                    width="100%"
+                    text
+                    @click="selectAll"
+                    >Alle auswählen</v-btn
+                >
+                <v-btn
+                    v-else
+                    width="100%"
+                    text
+                    @click="deselectAll"
+                    >Alle abwählen</v-btn
+                >
+            </template>
+        </v-autocomplete>
 
         <v-autocomplete
             v-if="auswertungOptions.mstIds.length === 1"
@@ -191,4 +208,22 @@ function updateOptions() {
         auswertungOptions.value.mqIds.push(value.value)
     );
 }
+
+function selectAll() {
+    auswertungOptions.value.mstIds = [];
+    allVisibleMessstellen.value.forEach((mst) => {
+        auswertungOptions.value.mstIds.push(mst.mstId);
+    });
+}
+
+function deselectAll() {
+    auswertungOptions.value.mstIds = [];
+}
+
+const showSelectAllButton: ComputedRef<boolean> = computed(() => {
+    return (
+        auswertungOptions.value.mstIds.length <=
+        allVisibleMessstellen.value.length / 2
+    );
+});
 </script>
