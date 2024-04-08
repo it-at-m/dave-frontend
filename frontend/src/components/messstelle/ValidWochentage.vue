@@ -139,9 +139,13 @@ watch([chosenOptions.value.zeitraum, chosenOptions.value.tagesTyp], () => {
 function getValidWochentage() {
     MessstelleOptionsmenuService.getValidWochentageInPeriod(
         validWochentageRequestDto.value
-    ).then((response) => {
-        numberValidWochentage.value = response;
-    });
+    )
+        .then((response) => {
+            numberValidWochentage.value = response;
+        })
+        .catch((error) => {
+            store.dispatch("snackbar/showError", error);
+        });
 }
 </script>
 
