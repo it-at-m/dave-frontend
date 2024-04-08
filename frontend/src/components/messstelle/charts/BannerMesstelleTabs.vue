@@ -11,5 +11,5 @@
 </template>
 <script setup lang="ts">
 const ZEITRAUM_GROESSER_FUENF_JAHRE =
-    "Da der Zeitraum größer als 5 Jahre ist steht die anzeige nicht zur verfügung";
+    "Da der Zeitraum größer als 5 Jahre ist steht die Anzeige nicht zur Verfügung";
 </script>
