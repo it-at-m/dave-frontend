@@ -17,46 +17,18 @@
                 Belastungsplan
                 <v-icon>mdi-arrow-decision</v-icon>
             </v-tab>
-            <v-tab-item>
-                <v-sheet
-                    :min-height="contentHeight"
-                    :max-height="contentHeight"
-                    width="100%"
-                    class="overflow-y-auto"
-                >
-                    <step-line-card
-                        ref="steplineCard"
-                        :zaehldaten-stepline="zaehldatenSteplineDTO"
-                    ></step-line-card>
-                </v-sheet>
-                <loader :value="chartDataLoading"></loader>
-            </v-tab-item>
-            <v-tab-item>
-                <v-sheet
-                    :max-height="contentHeight"
-                    width="100%"
-                >
-                    <messwerte-listenausgabe
-                        :listenausgabe-data="listenausgabeDTO"
-                        :height="contentHeight"
-                    >
-                    </messwerte-listenausgabe>
-                </v-sheet>
-                <loader :value="chartDataLoading"></loader>
-            </v-tab-item>
-            <v-tab-item>
-                <v-sheet
-                    :max-height="contentHeight"
-                    width="100%"
-                    class="overflow-y-auto"
-                >
-                    <heatmap-card
-                        ref="heatmapCard"
-                        :zaehldaten-heatmap="zaehldatenHeatmapDTO"
-                    ></heatmap-card>
-                </v-sheet>
-                <loader :value="chartDataLoading"></loader>
-            </v-tab-item>
+            <v-tab>
+                Ganglinie
+                <v-icon>mdi-chart-histogram</v-icon>
+            </v-tab>
+            <v-tab>
+                Listenausgabe
+                <v-icon>mdi-table</v-icon>
+            </v-tab>
+            <v-tab>
+                Heatmap
+                <v-icon>mdi-chart-bubble</v-icon>
+            </v-tab>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
@@ -81,7 +53,16 @@
                 </v-sheet>
             </v-tab-item>
             <v-tab-item>
+                <v-banner v-if="isBiggerThanFiveYears"
+                    ><v-icon
+                        color="error"
+                        size="36"
+                    >
+                        mdi-alert-decagram-outline </v-icon
+                    >{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</v-banner
+                >
                 <v-sheet
+                    v-else
                     :min-height="contentHeight"
                     :max-height="contentHeight"
                     width="100%"
@@ -95,7 +76,16 @@
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
             <v-tab-item>
+                <v-banner v-if="isBiggerThanFiveYears"
+                    ><v-icon
+                        color="error"
+                        size="36"
+                    >
+                        mdi-alert-decagram-outline </v-icon
+                    >{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</v-banner
+                >
                 <v-sheet
+                    v-else
                     :max-height="contentHeight"
                     width="100%"
                 >
@@ -108,7 +98,16 @@
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
             <v-tab-item>
+                <v-banner v-if="isBiggerThanFiveYears"
+                    ><v-icon
+                        color="error"
+                        size="36"
+                    >
+                        mdi-alert-decagram-outline </v-icon
+                    >{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</v-banner
+                >
                 <v-sheet
+                    v-else
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
