@@ -9,7 +9,10 @@
             color="primary"
             dark
         >
-            <router-link to="/">
+            <router-link
+                to="/"
+                @click.native="clear"
+            >
                 <v-toolbar-title class="white--text">
                     <span class="font-weight-medium">DAVe</span>
                     <span class="font-weight-thin"> | Mobilitätsreferat</span>
