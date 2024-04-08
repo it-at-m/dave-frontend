@@ -132,7 +132,7 @@ const getChosenWochentageNumber = computed(() => {
     }
 });
 
-watch(chosenOptions, () => {
+watch([chosenOptions.value.zeitraum, chosenOptions.value.tagesTyp], () => {
     getValidWochentage();
 });
 
