@@ -17,24 +17,46 @@
                 Belastungsplan
                 <v-icon>mdi-arrow-decision</v-icon>
             </v-tab>
-            <tooltipTab
-                :is-disabled="isBiggerThanFiveYears"
-                :tooltip-text="ZEITRAUM_GROESSER_FUENF_JAHRE"
-                icon="mdi-chart-histogram"
-                tab-name="Ganglinie"
-            />
-            <tooltipTab
-                :is-disabled="isBiggerThanFiveYears"
-                :tooltip-text="ZEITRAUM_GROESSER_FUENF_JAHRE"
-                icon="mdi-table"
-                tab-name="listenausgabe"
-            />
-            <tooltipTab
-                :is-disabled="isBiggerThanFiveYears"
-                :tooltip-text="ZEITRAUM_GROESSER_FUENF_JAHRE"
-                icon="mdi-chart-bubble"
-                tab-name="Heatmap"
-            />
+            <v-tab-item>
+                <v-sheet
+                    :min-height="contentHeight"
+                    :max-height="contentHeight"
+                    width="100%"
+                    class="overflow-y-auto"
+                >
+                    <step-line-card
+                        ref="steplineCard"
+                        :zaehldaten-stepline="zaehldatenSteplineDTO"
+                    ></step-line-card>
+                </v-sheet>
+                <loader :value="chartDataLoading"></loader>
+            </v-tab-item>
+            <v-tab-item>
+                <v-sheet
+                    :max-height="contentHeight"
+                    width="100%"
+                >
+                    <messwerte-listenausgabe
+                        :listenausgabe-data="listenausgabeDTO"
+                        :height="contentHeight"
+                    >
+                    </messwerte-listenausgabe>
+                </v-sheet>
+                <loader :value="chartDataLoading"></loader>
+            </v-tab-item>
+            <v-tab-item>
+                <v-sheet
+                    :max-height="contentHeight"
+                    width="100%"
+                    class="overflow-y-auto"
+                >
+                    <heatmap-card
+                        ref="heatmapCard"
+                        :zaehldaten-heatmap="zaehldatenHeatmapDTO"
+                    ></heatmap-card>
+                </v-sheet>
+                <loader :value="chartDataLoading"></loader>
+            </v-tab-item>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
@@ -140,7 +162,6 @@ import _ from "lodash";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/CsvDTO";
-import TooltipTab from "@/components/messstelle/charts/TooltipTab.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
