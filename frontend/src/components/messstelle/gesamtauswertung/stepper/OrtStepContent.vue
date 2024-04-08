@@ -104,7 +104,9 @@ const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
     const result: Array<KeyVal> = [];
     allVisibleMessstellen.value.forEach((mst) => {
         result.push({
-            text: `${mst.mstId}-${mst.standort ?? ""}`,
+            text: `${mst.mstId}-${mst.standort ?? ""} (${
+                mst.detektierteVerkehrsarten ?? ""
+            })`,
             value: mst.mstId,
         });
     });

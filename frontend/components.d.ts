@@ -136,8 +136,6 @@ declare module '@vue/runtime-core' {
     VSpeedDial: typeof import('vuetify/lib')['VSpeedDial']
     VStepper: typeof import('vuetify/lib')['VStepper']
     VStepperContent: typeof import('vuetify/lib')['VStepperContent']
-    VStepperHeader: typeof import('vuetify/lib')['VStepperHeader']
-    VStepperItems: typeof import('vuetify/lib')['VStepperItems']
     VStepperStep: typeof import('vuetify/lib')['VStepperStep']
     VSubheader: typeof import('vuetify/lib')['VSubheader']
     VTab: typeof import('vuetify/lib')['VTab']
