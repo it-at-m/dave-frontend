@@ -113,7 +113,7 @@ const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
 
 const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
     let result: Array<KeyVal> = [];
-    if (auswertungOptions.value.mstIds.length > 0) {
+    if (auswertungOptions.value.mstIds.length === 1) {
         for (let messstelle of allVisibleMessstellen.value) {
             if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
                 if (messstelle.messquerschnitte.length > 1) {
@@ -124,16 +124,12 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
                 }
                 messstelle.messquerschnitte.forEach(
                     (querschnitt: MessquerschnittAuswertungDTO) => {
-                        let himmelsrichtungAsText =
-                            himmelsRichtungenTextLong.get(
-                                querschnitt.fahrtrichtung
-                            );
-                        if (himmelsrichtungAsText === undefined) {
-                            himmelsrichtungAsText =
-                                "Fehler bei der Bestimmung der Himmelsrichtung.";
-                        }
                         const keyVal: KeyVal = {
-                            text: himmelsrichtungAsText,
+                            text:
+                                himmelsRichtungenTextLong.get(
+                                    querschnitt.fahrtrichtung
+                                ) ??
+                                "Fehler bei der Bestimmung der Himmelsrichtung.",
                             value: querschnitt.fahrtrichtung,
                         };
                         if (!result.includes(keyVal)) {
