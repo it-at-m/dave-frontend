@@ -12,64 +12,58 @@
             multiple
             clearable
             deletable-chips
-            :disabled="
-                auswertungOptions.mqIds.length !== 0 &&
-                direction !== messstelleUtils.alleRichtungen
-            "
-            :persistent-hint="
-                auswertungOptions.mqIds.length !== 0 &&
-                direction !== messstelleUtils.alleRichtungen
-            "
-            hint="Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden."
-            @input="direction = messstelleUtils.alleRichtungen"
+            :disabled="disableMessstelle"
+            persistent-hint
+            :hint="messstelleHint"
+            @input="setDefaultDirection"
         >
             <template #append-item>
                 <v-btn
                     v-if="showSelectAllButton"
                     width="100%"
                     text
-                    @click="selectAll"
+                    @click="selectAllMessstellen"
                     >Alle auswählen</v-btn
                 >
                 <v-btn
                     v-else
                     width="100%"
                     text
-                    @click="deselectAll"
+                    @click="deselectAllMessstellen"
                     >Alle abwählen</v-btn
                 >
             </template>
         </v-autocomplete>
 
-        <v-autocomplete
-            v-if="auswertungOptions.mstIds.length === 1"
-            v-model="direction"
-            label="Richtung"
-            :items="richtungValues"
-            filled
-            dense
-            clearable
-            :persistent-hint="auswertungOptions.mstIds.length > 1"
-            hint="Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden."
-            @input="updateOptions"
-        />
+        <div v-if="auswertungOptions.mstIds.length === 1">
+            <v-autocomplete
+                v-model="direction"
+                label="Richtung"
+                :items="richtungValues"
+                filled
+                dense
+                :readonly="richtungValues.length === 1"
+                persistent-hint
+                :hint="directionHint"
+                @input="preassignMqIdsInOptions"
+            />
 
-        <v-autocomplete
-            v-if="auswertungOptions.mstIds.length === 1"
-            v-model="auswertungOptions.mqIds"
-            label="Lage"
-            :items="lageValues"
-            :readonly="isLageReadonly"
-            filled
-            dense
-            multiple
-            :rules="[REQUIRED]"
-        />
+            <v-autocomplete
+                v-model="auswertungOptions.mqIds"
+                label="Lage"
+                :items="lageValues"
+                :readonly="isLageReadonly"
+                filled
+                dense
+                multiple
+                :rules="[REQUIRED]"
+            />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, ref, Ref } from "vue";
+import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import KeyVal from "@/types/KeyVal";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -100,6 +94,14 @@ const auswertungOptions = computed({
     set: (v) => emits("input", v),
 });
 
+watch(direction, () => {
+    if (direction.value == null) {
+        setDefaultDirection();
+    } else {
+        preassignMqIdsInOptions();
+    }
+});
+
 const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
     const result: Array<KeyVal> = [];
     allVisibleMessstellen.value.forEach((mst) => {
@@ -114,7 +116,7 @@ const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
 const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
     let result: Array<KeyVal> = [];
     if (auswertungOptions.value.mstIds.length > 0) {
-        allVisibleMessstellen.value.forEach((messstelle) => {
+        for (let messstelle of allVisibleMessstellen.value) {
             if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
                 if (messstelle.messquerschnitte.length > 1) {
                     result.push({
@@ -141,8 +143,9 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
                         }
                     }
                 );
+                break;
             }
-        });
+        }
     }
     return result;
 });
@@ -150,7 +153,7 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
 const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
     let result: Array<KeyVal> = [];
     if (auswertungOptions.value.mstIds.length > 0) {
-        allVisibleMessstellen.value.forEach((messstelle) => {
+        for (let messstelle of allVisibleMessstellen.value) {
             if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
                 messstelle.messquerschnitte.forEach(
                     (querschnitt: MessquerschnittAuswertungDTO) => {
@@ -165,10 +168,55 @@ const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
                         }
                     }
                 );
+                break;
             }
-        });
+        }
     }
     return result;
+});
+
+const isLageReadonly: ComputedRef<boolean> = computed(() => {
+    return (
+        direction.value === messstelleUtils.alleRichtungen ||
+        lageValues.value.length === 1
+    );
+});
+
+const showSelectAllButton: ComputedRef<boolean> = computed(() => {
+    return (
+        auswertungOptions.value.mstIds.length <=
+        allVisibleMessstellen.value.length / 2
+    );
+});
+
+const directionHint: ComputedRef<string> = computed(() => {
+    let hint = "";
+    if (auswertungOptions.value.mstIds.length > 1) {
+        hint =
+            "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
+    }
+    return hint;
+});
+
+const messstelleHint: ComputedRef<string> = computed(() => {
+    let hint = "";
+    if (auswertungOptions.value.mstIds.length > 1) {
+        hint =
+            "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
+    } else if (disableMessstelle.value) {
+        hint =
+            "Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden.";
+    }
+    return hint;
+});
+
+const disableMessstelle: ComputedRef<boolean> = computed(() => {
+    return (
+        auswertungOptions.value.mqIds.length !== 0 &&
+        direction.value !== messstelleUtils.alleRichtungen &&
+        auswertungOptions.value.mqIds.length > 0 &&
+        richtungValues.value.length > 1
+    );
 });
 
 function loadAllVisibleMessstellen(): void {
@@ -179,51 +227,41 @@ function loadAllVisibleMessstellen(): void {
     );
 }
 
-const messquerschnitte: ComputedRef<Array<KeyVal>> = computed(() => {
-    const result: Array<KeyVal> = [];
-    for (let index = 2006; index < new Date().getFullYear(); index++) {
-        result.push({
-            text: `${index}`,
-            value: `${index}`,
-        });
+function setDefaultDirection(): void {
+    if (auswertungOptions.value.mstIds.length === 1) {
+        for (let messstelle of allVisibleMessstellen.value) {
+            if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+                if (messstelle.messquerschnitte.length === 1) {
+                    direction.value =
+                        messstelle.messquerschnitte[0].fahrtrichtung;
+                } else if (messstelle.messquerschnitte.length > 1) {
+                    direction.value = messstelleUtils.alleRichtungen;
+                }
+            }
+        }
     }
-    return result;
-});
-
-function REQUIRED(v: Array<string>) {
-    if (v.length > 0) return true;
-    return "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
 }
 
-const isLageReadonly: ComputedRef<boolean> = computed(() => {
-    return (
-        direction.value === messstelleUtils.alleRichtungen ||
-        lageValues.value.length === 1
-    );
-});
-
-function updateOptions() {
+function preassignMqIdsInOptions() {
     auswertungOptions.value.mqIds = [];
     lageValues.value.forEach((value) =>
         auswertungOptions.value.mqIds.push(value.value)
     );
 }
 
-function selectAll() {
+function selectAllMessstellen() {
     auswertungOptions.value.mstIds = [];
-    allVisibleMessstellen.value.forEach((mst) => {
+    allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
         auswertungOptions.value.mstIds.push(mst.mstId);
     });
 }
 
-function deselectAll() {
+function deselectAllMessstellen() {
     auswertungOptions.value.mstIds = [];
 }
 
-const showSelectAllButton: ComputedRef<boolean> = computed(() => {
-    return (
-        auswertungOptions.value.mstIds.length <=
-        allVisibleMessstellen.value.length / 2
-    );
-});
+function REQUIRED(v: Array<string>) {
+    if (v.length > 0) return true;
+    return "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+}
 </script>
