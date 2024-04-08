@@ -53,14 +53,7 @@
                 </v-sheet>
             </v-tab-item>
             <v-tab-item>
-                <v-banner v-if="isBiggerThanFiveYears"
-                    ><v-icon
-                        color="error"
-                        size="36"
-                    >
-                        mdi-alert-decagram-outline </v-icon
-                    >{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</v-banner
-                >
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
                     v-else
                     :min-height="contentHeight"
@@ -76,14 +69,7 @@
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
             <v-tab-item>
-                <v-banner v-if="isBiggerThanFiveYears"
-                    ><v-icon
-                        color="error"
-                        size="36"
-                    >
-                        mdi-alert-decagram-outline </v-icon
-                    >{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</v-banner
-                >
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
                     v-else
                     :max-height="contentHeight"
@@ -98,14 +84,7 @@
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
             <v-tab-item>
-                <v-banner v-if="isBiggerThanFiveYears"
-                    ><v-icon
-                        color="error"
-                        size="36"
-                    >
-                        mdi-alert-decagram-outline </v-icon
-                    >{{ ZEITRAUM_GROESSER_FUENF_JAHRE }}</v-banner
-                >
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
                     v-else
                     :max-height="contentHeight"
@@ -161,11 +140,9 @@ import _ from "lodash";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/CsvDTO";
+import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
-
-const ZEITRAUM_GROESSER_FUENF_JAHRE =
-    "Da der Zeitraum größer als 5 Jahre ist steht die anzeige nicht zur verfügung";
 
 interface Props {
     height?: string;
