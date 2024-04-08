@@ -70,7 +70,17 @@ const isEverythingValid = computed(() => {
     return !(
         auswertungsOptions.value.zeitintervalle.length > 0 &&
         auswertungsOptions.value.tagesTyp.length > 0 &&
-        auswertungsOptions.value.jahre.length > 0
+        auswertungsOptions.value.jahre.length > 0 &&
+        areMstAndMqValid.value
+    );
+});
+
+const areMstAndMqValid = computed(() => {
+    return (
+        (auswertungsOptions.value.mstIds.length > 1 &&
+            auswertungsOptions.value.mqIds.length === 0) ||
+        (auswertungsOptions.value.mstIds.length === 1 &&
+            auswertungsOptions.value.mqIds.length > 0)
     );
 });
 </script>

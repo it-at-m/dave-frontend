@@ -97,8 +97,6 @@ const auswertungOptions = computed({
 watch(direction, () => {
     if (direction.value == null) {
         setDefaultDirection();
-    } else {
-        preassignMqIdsInOptions();
     }
 });
 
@@ -152,7 +150,7 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
 
 const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
     let result: Array<KeyVal> = [];
-    if (auswertungOptions.value.mstIds.length > 0) {
+    if (auswertungOptions.value.mstIds.length === 1) {
         for (let messstelle of allVisibleMessstellen.value) {
             if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
                 messstelle.messquerschnitte.forEach(
@@ -228,6 +226,7 @@ function loadAllVisibleMessstellen(): void {
 }
 
 function setDefaultDirection(): void {
+    resetMqsIfNecessary();
     if (auswertungOptions.value.mstIds.length === 1) {
         for (let messstelle of allVisibleMessstellen.value) {
             if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
@@ -239,6 +238,7 @@ function setDefaultDirection(): void {
                 }
             }
         }
+        preassignMqIdsInOptions();
     }
 }
 
@@ -258,6 +258,11 @@ function selectAllMessstellen() {
 
 function deselectAllMessstellen() {
     auswertungOptions.value.mstIds = [];
+}
+
+function resetMqsIfNecessary() {
+    if (auswertungOptions.value.mstIds.length > 1)
+        auswertungOptions.value.mqIds = [];
 }
 
 function REQUIRED(v: Array<string>) {
