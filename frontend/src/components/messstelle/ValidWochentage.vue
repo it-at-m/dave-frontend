@@ -1,10 +1,13 @@
 <template>
-    <v-sheet class="px-4 py-2 text-caption">
-        <v-menu offset-x>
+    <v-sheet>
+        <v-menu
+            color="secondary"
+            offset-x
+        >
             <template #activator="{ on, props }">
                 <button
                     v-bind="props"
-                    class="text-sm-left"
+                    class="text-sm-left px-4 py-2 white--text button-background-color"
                     v-on="on"
                 >
                     Von den ausgewählten {{ zeitraumRange }} Tagen sind
@@ -152,5 +155,9 @@ function getValidWochentage() {
 <style scoped>
 .v-list-item {
     min-height: 0;
+}
+
+.button-background-color {
+    background-color: #f57c00;
 }
 </style>
