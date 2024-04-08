@@ -35,6 +35,7 @@
             </v-stepper-content>
 
             <v-stepper-step
+                :complete="activeStep > 3"
                 :step="3"
                 editable
                 :rules="[isTagesTypSelected]"
@@ -48,12 +49,13 @@
             </v-stepper-content>
 
             <v-stepper-step
+                :complete="activeStep > 4"
                 :step="4"
                 editable
-                :rules="[isOrtSelected]"
+                :rules="[isOrtMessstelleSelected, isOrtMessquerschnittSelected]"
             >
                 Ort
-                <small> {{ selectedTagesTypAsSummary }}</small>
+                <small> {{ selectedOrtAsSummary }}</small>
             </v-stepper-step>
 
             <v-stepper-content :step="4">
@@ -118,6 +120,26 @@ const selectedTagesTypAsSummary = computed(() => {
     }
     return summary;
 });
+const selectedOrtAsSummary = computed(() => {
+    const mstIds = auswertungOptions.value.mstIds;
+    let summary = ``;
+    if (mstIds.length > 1) {
+        summary = `Mst-Id's': ${mstIds.join(", ")}`;
+    }
+    if (mstIds.length === 1) {
+        const mqIds = auswertungOptions.value.mqIds;
+        summary = `Mst-Id: ${mstIds[0]}, MQ-Id${
+            mqIds.length > 1 ? "'s" : ""
+        }: ${mqIds.join(", ")} `;
+    }
+    if (!isOrtMessstelleSelected()) {
+        summary = "Es muss mindestens eine Messstelle ausgewählt sein.";
+    }
+    if (!isOrtMessquerschnittSelected()) {
+        summary = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+    }
+    return summary;
+});
 
 function isOneYearSelected(): boolean {
     return !(
@@ -138,9 +160,15 @@ function isJahresintervallSelected(): boolean {
     );
 }
 
-function isOrtSelected(): boolean {
+function isOrtMessstelleSelected(): boolean {
     return !(
-        auswertungOptions.value.mstIds.length === 0 &&
+        auswertungOptions.value.mstIds.length === 0 && activeStep.value > 3
+    );
+}
+
+function isOrtMessquerschnittSelected(): boolean {
+    return !(
+        auswertungOptions.value.mstIds.length === 1 &&
         auswertungOptions.value.mqIds.length === 0 &&
         activeStep.value > 3
     );

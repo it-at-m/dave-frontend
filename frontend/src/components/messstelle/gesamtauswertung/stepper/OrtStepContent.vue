@@ -54,7 +54,7 @@
             @input="updateOptions"
         />
 
-        <v-select
+        <v-autocomplete
             v-if="auswertungOptions.mstIds.length === 1"
             v-model="auswertungOptions.mqIds"
             label="Lage"
