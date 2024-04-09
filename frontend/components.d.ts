@@ -39,6 +39,7 @@ declare module '@vue/runtime-core' {
     DisplayImageAsset: typeof import('./src/components/pdfreport/assets/DisplayImageAsset.vue')['default']
     FahrspurenIcon: typeof import('./src/components/messstelle/icons/FahrspurenIcon.vue')['default']
     FahrtrichtungIcon: typeof import('./src/components/messstelle/icons/FahrtrichtungIcon.vue')['default']
+    FahrzeugeStepContent: typeof import('./src/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue')['default']
     FahrzeugklassenIcon: typeof import('./src/components/messstelle/icons/FahrzeugklassenIcon.vue')['default']
     FahrzeugPanel: typeof import('./src/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue')['default']
     FahrzeugPanelFahrzeugkategorienContent: typeof import('./src/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue')['default']

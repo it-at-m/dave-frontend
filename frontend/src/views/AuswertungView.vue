@@ -48,7 +48,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const vuetify = useVuetify();
 
-const numberOfSteps: Ref<number> = ref(4);
+const numberOfSteps: Ref<number> = ref(5);
 const activeStep: Ref<number> = ref(1);
 const auswertungsOptions: Ref<MessstelleAuswertungOptionsDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()

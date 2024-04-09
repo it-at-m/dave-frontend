@@ -61,6 +61,20 @@
             <v-stepper-content :step="4">
                 <ort-step-content v-model="auswertungOptions" />
             </v-stepper-content>
+
+            <v-stepper-step
+                :complete="activeStep > 5"
+                :step="5"
+                editable
+                :rules="[isFahrzeugSelected]"
+            >
+                Fahrzeuge
+                <small> {{ selectedFahrzeugAsSummary }}</small>
+            </v-stepper-step>
+
+            <v-stepper-content :step="5">
+                <fahrzeuge-step-content v-model="auswertungOptions" />
+            </v-stepper-content>
         </v-stepper>
     </v-sheet>
 </template>
@@ -73,6 +87,7 @@ import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/J
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import { tagesTypText } from "@/types/enum/TagesTyp";
 import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
+import FahrzeugeStepContent from "@/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -173,4 +188,75 @@ function isOrtMessquerschnittSelected(): boolean {
         activeStep.value > 3
     );
 }
+
+function isFahrzeugSelected(): boolean {
+    const fahrzeuge = auswertungOptions.value.fahrzeuge;
+    return (
+        fahrzeuge.lieferwagen ||
+        fahrzeuge.busse ||
+        fahrzeuge.personenkraftwagen ||
+        fahrzeuge.kraftraeder ||
+        fahrzeuge.lastzuege ||
+        fahrzeuge.lastkraftwagen ||
+        fahrzeuge.fussverkehr ||
+        fahrzeuge.radverkehr ||
+        fahrzeuge.gueterverkehrsanteilProzent ||
+        fahrzeuge.schwerverkehrsanteilProzent ||
+        fahrzeuge.gueterverkehr ||
+        fahrzeuge.schwerverkehr ||
+        fahrzeuge.kraftfahrzeugverkehr
+    );
+}
+
+const selectedFahrzeugAsSummary = computed(() => {
+    const fahrzeuge = auswertungOptions.value.fahrzeuge;
+    const selectedValues: Array<string> = [];
+    if (fahrzeuge.kraftfahrzeugverkehr) {
+        selectedValues.push(`KFZ`);
+    }
+    if (fahrzeuge.schwerverkehr) {
+        selectedValues.push(`SV`);
+    }
+    if (fahrzeuge.gueterverkehr) {
+        selectedValues.push(`GV`);
+    }
+    if (fahrzeuge.schwerverkehrsanteilProzent) {
+        selectedValues.push(`SV %`);
+    }
+    if (fahrzeuge.gueterverkehrsanteilProzent) {
+        selectedValues.push(`GV %`);
+    }
+    if (fahrzeuge.personenkraftwagen) {
+        selectedValues.push(`Pkw`);
+    }
+    if (fahrzeuge.lastkraftwagen) {
+        selectedValues.push(`Lkw`);
+    }
+    if (fahrzeuge.lastzuege) {
+        selectedValues.push(`Lz`);
+    }
+    if (fahrzeuge.lieferwagen) {
+        selectedValues.push(`Lfw`);
+    }
+    if (fahrzeuge.busse) {
+        selectedValues.push(`Bus`);
+    }
+    if (fahrzeuge.kraftraeder) {
+        selectedValues.push(`Krad`);
+    }
+    if (fahrzeuge.radverkehr) {
+        selectedValues.push(`Rad`);
+    }
+    if (fahrzeuge.fussverkehr) {
+        selectedValues.push(`Fuß`);
+    }
+
+    let summary = selectedValues.join(", ");
+
+    if (!isFahrzeugSelected()) {
+        summary =
+            "Es muss mindestens eine Fahrzeugkategorie oder Verkehrsart ausgewählt sein.";
+    }
+    return summary;
+});
 </script>
