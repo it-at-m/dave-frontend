@@ -20,6 +20,7 @@
                             v-model="direction"
                             label="Richtung"
                             :items="richtungValues"
+                            item-value="value"
                             filled
                             dense
                             @input="updateOptions"

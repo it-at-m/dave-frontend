@@ -173,9 +173,7 @@ function setDefaultOptionsForMessstelle(): void {
     if (messstelle.value.messquerschnitte.length === 1) {
         store.commit(
             "filteroptionsMessstelle/setDirection",
-            himmelsRichtungenTextLong.get(
-                messstelle.value.messquerschnitte[0].fahrtrichtung
-            )
+            messstelle.value.messquerschnitte[0].fahrtrichtung
         );
     } else {
         store.commit(
