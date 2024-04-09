@@ -80,7 +80,7 @@
             <v-col cols="9">
                 <span :class="getStyleClass(messquerschnitt.mqId)"
                     >{{ messquerschnitt.mqId }}
-                    {{ messquerschnitt.lageMessquerschnitt }}</span
+                    {{ messquerschnitt.standort }}</span
                 >
             </v-col>
             <v-col cols="2">

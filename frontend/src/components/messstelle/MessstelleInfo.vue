@@ -24,7 +24,7 @@
                                     <span
                                         v-bind="attrs"
                                         v-on="on"
-                                        >Letzte Messung:
+                                        >letzter Messtag:
                                         {{ datumLetztePlausibleMessung }}
                                     </span>
                                 </template>

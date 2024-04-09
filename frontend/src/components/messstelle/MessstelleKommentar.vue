@@ -11,7 +11,7 @@
                     v-on="on"
                     @click="showDialog = true"
                 >
-                    <v-icon small>mdi-message-text</v-icon>
+                    <v-icon small>mdi-comment-text</v-icon>
                 </v-btn>
             </template>
             <span>Kommentar anzeigen</span>
