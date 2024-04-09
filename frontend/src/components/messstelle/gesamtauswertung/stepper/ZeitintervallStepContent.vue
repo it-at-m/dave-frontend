@@ -47,6 +47,12 @@
 <script setup lang="ts">
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
 import { computed, ComputedRef, ref } from "vue";
+import {
+    Halbjahre,
+    Monate,
+    Quartale,
+    ZeitintervallCategories,
+} from "@/types/enum/AuswertungCategories";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -58,35 +64,32 @@ const emits = defineEmits<{
     (e: "input", v: MessstelleAuswertungOptionsDTO): void;
 }>();
 
-const jahre = "Jahre";
-const halbjahre = "Halbjahre";
-const quartale = "Quartale";
-const monate = "Monate";
-
-const categories = [jahre, halbjahre, quartale, monate];
-const categoryHalbJahre = [
-    "1. Halbjahr (Jan - Juni)",
-    "2. Halbjahr (Juli - Dez)",
+const categories = [
+    ZeitintervallCategories.JAHRE,
+    ZeitintervallCategories.HALBJAHRE,
+    ZeitintervallCategories.QUARTALE,
+    ZeitintervallCategories.MONATE,
 ];
+const categoryHalbJahre = [Halbjahre.HALBJAHR_1, Halbjahre.HALBJAHR_2];
 const categoryQuartale = [
-    "1. Quartal (Jan - März)",
-    "2. Quartal (Apr - Juni)",
-    "3. Quartal (Juli - Sept)",
-    "4. Quartal (Okt - Dez)",
+    Quartale.QUARTAL_1,
+    Quartale.QUARTAL_2,
+    Quartale.QUARTAL_3,
+    Quartale.QUARTAL_4,
 ];
 const categoryMonate = [
-    "Januar",
-    "Februar",
-    "März",
-    "April",
-    "Mai",
-    "Juni",
-    "Juli",
-    "August",
-    "September",
-    "Oktober",
-    "November",
-    "Dezember",
+    Monate.JANUAR,
+    Monate.FEBRUAR,
+    Monate.MAERZ,
+    Monate.APRIL,
+    Monate.MAI,
+    Monate.JUNI,
+    Monate.JULI,
+    Monate.AUGUST,
+    Monate.SEPTEMBER,
+    Monate.OKTOBER,
+    Monate.NOVEMBER,
+    Monate.DEZEMBER,
 ];
 
 const selectedCategory = ref("");
@@ -97,19 +100,22 @@ const auswertungOptions = computed({
 });
 
 const showSubCategoriesSelect = computed(() => {
-    return selectedCategory.value && selectedCategory.value !== jahre;
+    return (
+        selectedCategory.value &&
+        selectedCategory.value !== ZeitintervallCategories.JAHRE
+    );
 });
 
 const selectableSubCategories = computed(() => {
     let categories: Array<string> = [];
     switch (selectedCategory.value) {
-        case halbjahre:
+        case ZeitintervallCategories.HALBJAHRE:
             categories = [...categoryHalbJahre];
             break;
-        case quartale:
+        case ZeitintervallCategories.QUARTALE:
             categories = [...categoryQuartale];
             break;
-        case monate:
+        case ZeitintervallCategories.MONATE:
             categories = [...categoryMonate];
             break;
     }
@@ -117,7 +123,7 @@ const selectableSubCategories = computed(() => {
 });
 function checkIfJahreIsSelected() {
     auswertungOptions.value.zeitintervalle = [];
-    if (selectedCategory.value === jahre) {
+    if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
         auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
     }
 }
@@ -125,13 +131,13 @@ function checkIfJahreIsSelected() {
 function selectAll() {
     auswertungOptions.value.zeitintervalle = [];
     switch (selectedCategory.value) {
-        case halbjahre:
+        case ZeitintervallCategories.HALBJAHRE:
             auswertungOptions.value.zeitintervalle.push(...categoryHalbJahre);
             break;
-        case quartale:
+        case ZeitintervallCategories.QUARTALE:
             auswertungOptions.value.zeitintervalle.push(...categoryQuartale);
             break;
-        case monate:
+        case ZeitintervallCategories.MONATE:
             auswertungOptions.value.zeitintervalle.push(...categoryMonate);
             break;
     }
@@ -144,13 +150,13 @@ function deselectAll() {
 const showSelectAllButton: ComputedRef<boolean> = computed(() => {
     let helper = 1;
     switch (selectedCategory.value) {
-        case halbjahre:
+        case ZeitintervallCategories.HALBJAHRE:
             helper = categoryHalbJahre.length / 2;
             break;
-        case quartale:
+        case ZeitintervallCategories.QUARTALE:
             helper = categoryQuartale.length / 2;
             break;
-        case monate:
+        case ZeitintervallCategories.MONATE:
             helper = categoryMonate.length / 2;
             break;
     }

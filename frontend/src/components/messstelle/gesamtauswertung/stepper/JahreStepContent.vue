@@ -36,7 +36,8 @@ const auswertungOptions = computed({
 
 const jahre: ComputedRef<Array<KeyVal>> = computed(() => {
     const result: Array<KeyVal> = [];
-    for (let index = 2006; index < new Date().getFullYear(); index++) {
+    const actualDate = new Date();
+    for (let index = 2006; index <= actualDate.getFullYear(); index++) {
         result.push({
             text: `${index}`,
             value: `${index}`,
