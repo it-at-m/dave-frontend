@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import { computed } from "vue";
 
 interface Props {

@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import KeyVal from "@/types/KeyVal";
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";

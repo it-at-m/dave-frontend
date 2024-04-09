@@ -25,7 +25,7 @@
                 :complete="activeStep > 2"
                 :step="2"
                 editable
-                :rules="[isOneYearSelected]"
+                :rules="[isJahreSelected]"
             >
                 Jahre
                 <small> {{ selectedYearsAsSummary }}</small>
@@ -68,7 +68,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue";
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import { tagesTypText } from "@/types/enum/TagesTyp";
@@ -99,7 +99,7 @@ const activeStep = computed({
 
 const selectedYearsAsSummary = computed(() => {
     let summary = auswertungOptions.value.jahre.join(", ");
-    if (!isOneYearSelected()) {
+    if (!isJahreSelected()) {
         summary = "Es muss mindestens ein Jahr ausgewählt sein.";
     }
     return summary;
@@ -141,7 +141,7 @@ const selectedOrtAsSummary = computed(() => {
     return summary;
 });
 
-function isOneYearSelected(): boolean {
+function isJahreSelected(): boolean {
     return !(
         auswertungOptions.value.jahre.length === 0 && activeStep.value > 1
     );
