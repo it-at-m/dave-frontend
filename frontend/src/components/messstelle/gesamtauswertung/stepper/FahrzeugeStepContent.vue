@@ -14,6 +14,10 @@
                 <v-btn
                     dense
                     text
+                    :disabled="
+                        isTypeDisabled(Fahrzeug.KFZ) &&
+                        isTypeDisabled(Fahrzeug.RAD)
+                    "
                     @click="selectOrDeselectAllVerkehrsarten()"
                 >
                     {{ labelSelectOrDeselectAllVerkehrsarten }}
@@ -137,6 +141,7 @@
                 <v-btn
                     dense
                     text
+                    :disabled="isTypeDisabled(Fahrzeug.KFZ)"
                     @click="selectOrDeselectAll()"
                 >
                     {{ labelSelectOrDeselectAll }}
@@ -247,21 +252,25 @@ const auswertungOptions = computed({
     set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
+const fahrzeugWatch = computed(() => {
+    return auswertungOptions.value.fahrzeuge;
+});
+const verkehrsartenWatch = computed(() => {
+    return auswertungOptions.value.verfuegbareVerkehrsarten;
+});
+
 onMounted(() => {
     calculateSelectOrDeselectVerkehrsarten();
     calculateSelectOrDeselect();
-    // preassignFahrzeuge();
 });
 
-watch(
-    auswertungOptions,
-    () => {
-        calculateSelectOrDeselectVerkehrsarten();
-        calculateSelectOrDeselect();
-        // preassignFahrzeuge();
-    },
-    { deep: true }
-);
+watch(fahrzeugWatch, () => {
+    calculateSelectOrDeselectVerkehrsarten();
+    calculateSelectOrDeselect();
+});
+watch(verkehrsartenWatch, () => {
+    preassignFahrzeuge();
+});
 
 function preassignFahrzeuge() {
     const rad = auswertungOptions.value.verfuegbareVerkehrsarten.includes(
@@ -465,15 +474,14 @@ function isTypeDisabled(type: string): boolean {
 }
 
 function isTypeEnabled(type: string): boolean {
-    return true;
-    // if (type === Fahrzeug.RAD) {
-    //     return auswertungOptions.value.verfuegbareVerkehrsarten.includes(type);
-    // } else if (type === Fahrzeug.FUSS) {
-    //     return false;
-    // } else {
-    //     return auswertungOptions.value.verfuegbareVerkehrsarten.includes(
-    //         Fahrzeug.KFZ
-    //     );
-    // }
+    if (type === Fahrzeug.RAD) {
+        return auswertungOptions.value.verfuegbareVerkehrsarten.includes(type);
+    } else if (type === Fahrzeug.FUSS) {
+        return false;
+    } else {
+        return auswertungOptions.value.verfuegbareVerkehrsarten.includes(
+            Fahrzeug.KFZ
+        );
+    }
 }
 </script>

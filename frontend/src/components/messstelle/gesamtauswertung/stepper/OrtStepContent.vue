@@ -225,7 +225,7 @@ function loadAllVisibleMessstellen(): void {
 
 function mstIdsHaveChanged() {
     setDefaultDirection();
-    // setVerfuegbareVerkehrsarten();
+    setVerfuegbareVerkehrsarten();
 }
 
 function setDefaultDirection(): void {
