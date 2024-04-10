@@ -25,7 +25,7 @@
                         Zurück
                     </v-btn>
                     <v-btn
-                        :disabled="activeStep === 3"
+                        :disabled="activeStep === numberOfSteps"
                         class="mr-2"
                         color="primary"
                         @click="activeStep++"
@@ -43,11 +43,12 @@
 import { computed, ref, Ref } from "vue";
 import { useVuetify } from "@/util/useVuetify";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const vuetify = useVuetify();
 
+const numberOfSteps: Ref<number> = ref(4);
 const activeStep: Ref<number> = ref(1);
 const auswertungsOptions: Ref<MessstelleAuswertungOptionsDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
@@ -69,7 +70,17 @@ const isEverythingValid = computed(() => {
     return !(
         auswertungsOptions.value.zeitintervalle.length > 0 &&
         auswertungsOptions.value.tagesTyp.length > 0 &&
-        auswertungsOptions.value.jahre.length > 0
+        auswertungsOptions.value.jahre.length > 0 &&
+        areMstAndMqValid.value
+    );
+});
+
+const areMstAndMqValid = computed(() => {
+    return (
+        (auswertungsOptions.value.mstIds.length > 1 &&
+            auswertungsOptions.value.mqIds.length === 0) ||
+        (auswertungsOptions.value.mstIds.length === 1 &&
+            auswertungsOptions.value.mqIds.length > 0)
     );
 });
 </script>

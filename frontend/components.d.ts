@@ -66,6 +66,7 @@ declare module '@vue/runtime-core' {
     NichtAusgewaehlteZaehlung: typeof import('./src/components/zaehlstelle/NichtAusgewaehlteZaehlung.vue')['default']
     Optionsmenue: typeof import('./src/components/zaehlstelle/optionsmenue/Optionsmenue.vue')['default']
     OptionsmenueMessstelle: typeof import('./src/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue')['default']
+    OrtStepContent: typeof import('./src/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue')['default']
     PanelHeader: typeof import('./src/components/common/PanelHeader.vue')['default']
     PdfPreviewDialog: typeof import('./src/components/pdfreport/assetforms/PdfPreviewDialog.vue')['default']
     PdfReportMenue: typeof import('./src/components/zaehlstelle/PdfReportMenue.vue')['default']

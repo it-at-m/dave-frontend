@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import { computed, ComputedRef, ref } from "vue";
 
 interface Props {

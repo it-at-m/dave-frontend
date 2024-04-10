@@ -7,7 +7,7 @@ import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/MessstelleAuswertungOptionsDTO";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -103,6 +103,12 @@ export default class DefaultObjectCreator {
     }
 
     public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptionsDTO {
-        return { jahre: [], tagesTyp: "", zeitintervalle: [] };
+        return {
+            jahre: [],
+            tagesTyp: "",
+            zeitintervalle: [],
+            mstIds: [],
+            mqIds: [],
+        };
     }
 }
