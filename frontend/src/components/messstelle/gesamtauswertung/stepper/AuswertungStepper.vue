@@ -89,12 +89,12 @@ const emits = defineEmits<{
 
 const auswertungOptions = computed({
     get: () => props.value,
-    set: (v) => emits("input", v),
+    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
 const activeStep = computed({
     get: () => props.activeStep,
-    set: (v) => emits("update:activeStep", v),
+    set: (payload: number) => emits("update:activeStep", payload),
 });
 
 const selectedYearsAsSummary = computed(() => {
