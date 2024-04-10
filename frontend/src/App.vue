@@ -414,9 +414,12 @@ export default class App extends Vue {
         }
 
         this.$store.commit("search/lastSearchQuery", this.searchQuery);
+        const routeName = this.$route.name;
         if (
-            (this.$route.name === "zaehlstelle" ||
-                this.$route.name === "messstelle") &&
+            (routeName === "zaehlstelle" ||
+                routeName === "messstelle" ||
+                routeName === "pdfreport" ||
+                routeName === "auswertung") &&
             this.searchQuery !== ""
         ) {
             this.$router.push(`/`);
