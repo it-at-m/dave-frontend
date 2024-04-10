@@ -15,7 +15,7 @@
             :disabled="disableMessstelle"
             persistent-hint
             :hint="messstelleHint"
-            @input="setDefaultDirection"
+            @input="mstIdsHaveChanged"
         >
             <template #append-item>
                 <v-btn
@@ -223,6 +223,11 @@ function loadAllVisibleMessstellen(): void {
     );
 }
 
+function mstIdsHaveChanged() {
+    setDefaultDirection();
+    // setVerfuegbareVerkehrsarten();
+}
+
 function setDefaultDirection(): void {
     resetMqsIfNecessary();
     if (auswertungOptions.value.mstIds.length === 1) {
@@ -237,6 +242,27 @@ function setDefaultDirection(): void {
             }
         }
         preassignMqIdsInOptions();
+    }
+}
+
+function setVerfuegbareVerkehrsarten() {
+    auswertungOptions.value.verfuegbareVerkehrsarten = [];
+    if (auswertungOptions.value.mstIds.length > 0) {
+        for (let messstelle of allVisibleMessstellen.value) {
+            if (
+                auswertungOptions.value.mstIds.includes(messstelle.mstId) &&
+                !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
+                    messstelle.detektierteVerkehrsarten
+                )
+            ) {
+                auswertungOptions.value.verfuegbareVerkehrsarten.push(
+                    messstelle.detektierteVerkehrsarten
+                );
+            }
+            if (auswertungOptions.value.verfuegbareVerkehrsarten.length === 2) {
+                break;
+            }
+        }
     }
 }
 

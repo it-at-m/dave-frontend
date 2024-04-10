@@ -7,4 +7,7 @@ export default interface MessstelleAuswertungOptionsDTO {
     mstIds: Array<string>;
     mqIds: Array<string>;
     fahrzeuge: FahrzeugOptions;
+
+    // Nicht fuer das Backend
+    verfuegbareVerkehrsarten: Array<string>;
 }

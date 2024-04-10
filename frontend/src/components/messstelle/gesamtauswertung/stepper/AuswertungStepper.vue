@@ -191,20 +191,22 @@ function isOrtMessquerschnittSelected(): boolean {
 
 function isFahrzeugSelected(): boolean {
     const fahrzeuge = auswertungOptions.value.fahrzeuge;
-    return (
-        fahrzeuge.lieferwagen ||
-        fahrzeuge.busse ||
-        fahrzeuge.personenkraftwagen ||
-        fahrzeuge.kraftraeder ||
-        fahrzeuge.lastzuege ||
-        fahrzeuge.lastkraftwagen ||
-        fahrzeuge.fussverkehr ||
-        fahrzeuge.radverkehr ||
-        fahrzeuge.gueterverkehrsanteilProzent ||
-        fahrzeuge.schwerverkehrsanteilProzent ||
-        fahrzeuge.gueterverkehr ||
-        fahrzeuge.schwerverkehr ||
-        fahrzeuge.kraftfahrzeugverkehr
+    return !(
+        !(
+            fahrzeuge.lieferwagen ||
+            fahrzeuge.busse ||
+            fahrzeuge.personenkraftwagen ||
+            fahrzeuge.kraftraeder ||
+            fahrzeuge.lastzuege ||
+            fahrzeuge.lastkraftwagen ||
+            fahrzeuge.fussverkehr ||
+            fahrzeuge.radverkehr ||
+            fahrzeuge.gueterverkehrsanteilProzent ||
+            fahrzeuge.schwerverkehrsanteilProzent ||
+            fahrzeuge.gueterverkehr ||
+            fahrzeuge.schwerverkehr ||
+            fahrzeuge.kraftfahrzeugverkehr
+        ) && activeStep.value > 4
     );
 }
 

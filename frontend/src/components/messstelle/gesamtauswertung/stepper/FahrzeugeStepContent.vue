@@ -29,9 +29,9 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.kraftfahrzeugverkehr"
+                    v-model="auswertungOptions.fahrzeuge.kraftfahrzeugverkehr"
                     label="Kraftfahrzeugverkehr (KFZ)"
-                    :disabled="isTypeDisabled('KFZ')"
+                    :disabled="isTypeDisabled(Fahrzeug.KFZ)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -47,9 +47,9 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.schwerverkehr"
+                    v-model="auswertungOptions.fahrzeuge.schwerverkehr"
                     label="Schwerverkehr (SV)"
-                    :disabled="isTypeDisabled('SV')"
+                    :disabled="isTypeDisabled(Fahrzeug.SV)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -57,10 +57,10 @@
             <v-col cols="6">
                 <v-checkbox
                     v-model="
-                        auswertungOptionsFahrzeuge.schwerverkehrsanteilProzent
+                        auswertungOptions.fahrzeuge.schwerverkehrsanteilProzent
                     "
                     label="Schwerverkehrsanteil [%]"
-                    :disabled="isTypeDisabled('SV_P')"
+                    :disabled="isTypeDisabled(Fahrzeug.SV_P)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -75,9 +75,9 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.gueterverkehr"
+                    v-model="auswertungOptions.fahrzeuge.gueterverkehr"
                     label="Güterverkehr (GV)"
-                    :disabled="isTypeDisabled('GV')"
+                    :disabled="isTypeDisabled(Fahrzeug.GV)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -85,10 +85,10 @@
             <v-col cols="6">
                 <v-checkbox
                     v-model="
-                        auswertungOptionsFahrzeuge.gueterverkehrsanteilProzent
+                        auswertungOptions.fahrzeuge.gueterverkehrsanteilProzent
                     "
                     label="Güterverkehrsanteil [%]"
-                    :disabled="isTypeDisabled('GV_P')"
+                    :disabled="isTypeDisabled(Fahrzeug.GV_P)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -103,18 +103,18 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.radverkehr"
+                    v-model="auswertungOptions.fahrzeuge.radverkehr"
                     label="Radverkehr (Rad)"
-                    :disabled="isTypeDisabled('RAD')"
+                    :disabled="isTypeDisabled(Fahrzeug.RAD)"
                     hide-details
                     dense
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.fussverkehr"
+                    v-model="auswertungOptions.fahrzeuge.fussverkehr"
                     label="Fußgänger (Fuß)"
-                    :disabled="isTypeDisabled('FUSS')"
+                    :disabled="isTypeDisabled(Fahrzeug.FUSS)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -152,18 +152,18 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.personenkraftwagen"
+                    v-model="auswertungOptions.fahrzeuge.personenkraftwagen"
                     label="Personenkraftwagen (Pkw)"
-                    :disabled="isTypeDisabled('PKW')"
+                    :disabled="isTypeDisabled(Fahrzeug.PKW)"
                     hide-details
                     dense
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.kraftraeder"
+                    v-model="auswertungOptions.fahrzeuge.kraftraeder"
                     label="Krafträder (Krad)"
-                    :disabled="isTypeDisabled('KRAD')"
+                    :disabled="isTypeDisabled(Fahrzeug.KRAD)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -178,18 +178,18 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.lastkraftwagen"
+                    v-model="auswertungOptions.fahrzeuge.lastkraftwagen"
                     label="Lastkraftwagen (Lkw)"
-                    :disabled="isTypeDisabled('LKW')"
+                    :disabled="isTypeDisabled(Fahrzeug.LKW)"
                     hide-details
                     dense
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.lieferwagen"
+                    v-model="auswertungOptions.fahrzeuge.lieferwagen"
                     label="Lieferwagen (Lfw)"
-                    :disabled="isTypeDisabled('LFW')"
+                    :disabled="isTypeDisabled(Fahrzeug.LFW)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -204,18 +204,18 @@
         >
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.lastzuege"
+                    v-model="auswertungOptions.fahrzeuge.lastzuege"
                     label="Lastzüge (Lz)"
-                    :disabled="isTypeDisabled('LZ')"
+                    :disabled="isTypeDisabled(Fahrzeug.LZ)"
                     hide-details
                     dense
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
                 <v-checkbox
-                    v-model="auswertungOptionsFahrzeuge.busse"
+                    v-model="auswertungOptions.fahrzeuge.busse"
                     label="Bus"
-                    :disabled="isTypeDisabled('BUS')"
+                    :disabled="isTypeDisabled(Fahrzeug.BUS)"
                     hide-details
                     dense
                 ></v-checkbox>
@@ -246,13 +246,11 @@ const auswertungOptions = computed({
     get: () => props.value,
     set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
-const auswertungOptionsFahrzeuge = computed(() => {
-    return auswertungOptions.value.fahrzeuge;
-});
 
 onMounted(() => {
     calculateSelectOrDeselectVerkehrsarten();
     calculateSelectOrDeselect();
+    // preassignFahrzeuge();
 });
 
 watch(
@@ -260,9 +258,41 @@ watch(
     () => {
         calculateSelectOrDeselectVerkehrsarten();
         calculateSelectOrDeselect();
+        // preassignFahrzeuge();
     },
     { deep: true }
 );
+
+function preassignFahrzeuge() {
+    const rad = auswertungOptions.value.verfuegbareVerkehrsarten.includes(
+        Fahrzeug.RAD
+    );
+    const kfz = auswertungOptions.value.verfuegbareVerkehrsarten.includes(
+        Fahrzeug.KFZ
+    );
+    resetFahrzeuge();
+    if (rad && !kfz) {
+        auswertungOptions.value.fahrzeuge.radverkehr = true;
+    } else if (!rad && kfz) {
+        auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = true;
+    }
+}
+
+function resetFahrzeuge() {
+    auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = false;
+    auswertungOptions.value.fahrzeuge.schwerverkehr = false;
+    auswertungOptions.value.fahrzeuge.gueterverkehr = false;
+    auswertungOptions.value.fahrzeuge.schwerverkehrsanteilProzent = false;
+    auswertungOptions.value.fahrzeuge.gueterverkehrsanteilProzent = false;
+    auswertungOptions.value.fahrzeuge.radverkehr = false;
+    auswertungOptions.value.fahrzeuge.fussverkehr = false;
+    auswertungOptions.value.fahrzeuge.lastkraftwagen = false;
+    auswertungOptions.value.fahrzeuge.lastzuege = false;
+    auswertungOptions.value.fahrzeuge.busse = false;
+    auswertungOptions.value.fahrzeuge.kraftraeder = false;
+    auswertungOptions.value.fahrzeuge.personenkraftwagen = false;
+    auswertungOptions.value.fahrzeuge.lieferwagen = false;
+}
 
 const labelSelectOrDeselectAllVerkehrsarten = computed(() => {
     return selectOrDeselectAllVerkehrsartenVmodel.value
@@ -280,43 +310,43 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
     let counter = 0;
     let maxSelectable = 0;
     if (isTypeEnabled(Fahrzeug.KFZ)) {
-        if (auswertungOptionsFahrzeuge.value.kraftfahrzeugverkehr) {
+        if (auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.SV)) {
-        if (auswertungOptionsFahrzeuge.value.schwerverkehr) {
+        if (auswertungOptions.value.fahrzeuge.schwerverkehr) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.GV)) {
-        if (auswertungOptionsFahrzeuge.value.gueterverkehr) {
+        if (auswertungOptions.value.fahrzeuge.gueterverkehr) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.SV_P)) {
-        if (auswertungOptionsFahrzeuge.value.schwerverkehrsanteilProzent) {
+        if (auswertungOptions.value.fahrzeuge.schwerverkehrsanteilProzent) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.GV_P)) {
-        if (auswertungOptionsFahrzeuge.value.gueterverkehrsanteilProzent) {
+        if (auswertungOptions.value.fahrzeuge.gueterverkehrsanteilProzent) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.RAD)) {
-        if (auswertungOptionsFahrzeuge.value.radverkehr) {
+        if (auswertungOptions.value.fahrzeuge.radverkehr) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.FUSS)) {
-        if (auswertungOptionsFahrzeuge.value.fussverkehr) {
+        if (auswertungOptions.value.fahrzeuge.fussverkehr) {
             counter++;
         }
         maxSelectable++;
@@ -330,37 +360,37 @@ function calculateSelectOrDeselect() {
     let counter = 0;
     let maxSelectable = 0;
     if (isTypeEnabled(Fahrzeug.PKW)) {
-        if (auswertungOptionsFahrzeuge.value.personenkraftwagen) {
+        if (auswertungOptions.value.fahrzeuge.personenkraftwagen) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.LKW)) {
-        if (auswertungOptionsFahrzeuge.value.lastkraftwagen) {
+        if (auswertungOptions.value.fahrzeuge.lastkraftwagen) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.LZ)) {
-        if (auswertungOptionsFahrzeuge.value.lastzuege) {
+        if (auswertungOptions.value.fahrzeuge.lastzuege) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.BUS)) {
-        if (auswertungOptionsFahrzeuge.value.busse) {
+        if (auswertungOptions.value.fahrzeuge.busse) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.KRAD)) {
-        if (auswertungOptionsFahrzeuge.value.kraftraeder) {
+        if (auswertungOptions.value.fahrzeuge.kraftraeder) {
             counter++;
         }
         maxSelectable++;
     }
     if (isTypeEnabled(Fahrzeug.LFW)) {
-        if (auswertungOptionsFahrzeuge.value.lieferwagen) {
+        if (auswertungOptions.value.fahrzeuge.lieferwagen) {
             counter++;
         }
         maxSelectable++;
@@ -374,31 +404,31 @@ function selectOrDeselectAllVerkehrsarten(): void {
     selectOrDeselectAllVerkehrsartenVmodel.value =
         !selectOrDeselectAllVerkehrsartenVmodel.value;
     if (isTypeEnabled(Fahrzeug.KFZ)) {
-        auswertungOptionsFahrzeuge.value.kraftfahrzeugverkehr =
+        auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.SV)) {
-        auswertungOptionsFahrzeuge.value.schwerverkehr =
+        auswertungOptions.value.fahrzeuge.schwerverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.GV)) {
-        auswertungOptionsFahrzeuge.value.gueterverkehr =
+        auswertungOptions.value.fahrzeuge.gueterverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.SV_P)) {
-        auswertungOptionsFahrzeuge.value.schwerverkehrsanteilProzent =
+        auswertungOptions.value.fahrzeuge.schwerverkehrsanteilProzent =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.GV_P)) {
-        auswertungOptionsFahrzeuge.value.gueterverkehrsanteilProzent =
+        auswertungOptions.value.fahrzeuge.gueterverkehrsanteilProzent =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.RAD)) {
-        auswertungOptionsFahrzeuge.value.radverkehr =
+        auswertungOptions.value.fahrzeuge.radverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.FUSS)) {
-        auswertungOptionsFahrzeuge.value.fussverkehr =
+        auswertungOptions.value.fahrzeuge.fussverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
 }
@@ -406,35 +436,44 @@ function selectOrDeselectAllVerkehrsarten(): void {
 function selectOrDeselectAll(): void {
     selectOrDeselectAllVmodel.value = !selectOrDeselectAllVmodel.value;
     if (isTypeEnabled(Fahrzeug.PKW)) {
-        auswertungOptionsFahrzeuge.value.personenkraftwagen =
+        auswertungOptions.value.fahrzeuge.personenkraftwagen =
             selectOrDeselectAllVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.LKW)) {
-        auswertungOptionsFahrzeuge.value.lastkraftwagen =
+        auswertungOptions.value.fahrzeuge.lastkraftwagen =
             selectOrDeselectAllVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.LZ)) {
-        auswertungOptionsFahrzeuge.value.lastzuege =
+        auswertungOptions.value.fahrzeuge.lastzuege =
             selectOrDeselectAllVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.BUS)) {
-        auswertungOptionsFahrzeuge.value.busse =
+        auswertungOptions.value.fahrzeuge.busse =
             selectOrDeselectAllVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.KRAD)) {
-        auswertungOptionsFahrzeuge.value.kraftraeder =
+        auswertungOptions.value.fahrzeuge.kraftraeder =
             selectOrDeselectAllVmodel.value;
     }
     if (isTypeEnabled(Fahrzeug.LFW)) {
-        auswertungOptionsFahrzeuge.value.lieferwagen =
+        auswertungOptions.value.fahrzeuge.lieferwagen =
             selectOrDeselectAllVmodel.value;
     }
 }
 function isTypeDisabled(type: string): boolean {
-    return false;
+    return !isTypeEnabled(type);
 }
 
 function isTypeEnabled(type: string): boolean {
-    return !isTypeDisabled(type);
+    return true;
+    // if (type === Fahrzeug.RAD) {
+    //     return auswertungOptions.value.verfuegbareVerkehrsarten.includes(type);
+    // } else if (type === Fahrzeug.FUSS) {
+    //     return false;
+    // } else {
+    //     return auswertungOptions.value.verfuegbareVerkehrsarten.includes(
+    //         Fahrzeug.KFZ
+    //     );
+    // }
 }
 </script>
