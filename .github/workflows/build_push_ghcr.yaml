@@ -49,7 +49,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=main-ls1-dev
+            type=raw,value=main-ls1
           labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
       
