@@ -69,8 +69,6 @@ spring:
           keycloak:
             client-id: dave
             client-secret: TBD
-            scope:
-              - <Hier Scope definieren>
 
   mvc:
     log-request-details: false
