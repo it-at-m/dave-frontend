@@ -168,7 +168,7 @@ const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
 const isTabListenausgabe: Ref<boolean> = ref(false);
-const isNotTabHeatmap: Ref<boolean> = ref(false);
+const isNotTabHeatmap: Ref<boolean> = ref(true);
 const pdfReportDialog: Ref<boolean> = ref(false);
 
 const activeTab: Ref<number> = ref(0);
@@ -220,6 +220,7 @@ watch(activeTab, (active) => {
 });
 
 watch(options, () => {
+    activeTab.value = TAB_BELASTUNGSPLAN;
     loadProcessedChartData();
 });
 
