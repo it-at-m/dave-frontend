@@ -29,10 +29,6 @@
                 Heatmap
                 <v-icon>mdi-chart-bubble</v-icon>
             </v-tab>
-            <v-tab>
-                Zeitreihe
-                <v-icon>mdi-timer-sand</v-icon>
-            </v-tab>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
@@ -57,7 +53,9 @@
                 </v-sheet>
             </v-tab-item>
             <v-tab-item>
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
+                    v-else
                     :min-height="contentHeight"
                     :max-height="contentHeight"
                     width="100%"
@@ -71,7 +69,9 @@
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
             <v-tab-item>
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
+                    v-else
                     :max-height="contentHeight"
                     width="100%"
                 >
@@ -84,7 +84,9 @@
                 <loader :value="chartDataLoading"></loader>
             </v-tab-item>
             <v-tab-item>
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
+                    v-else
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
@@ -138,6 +140,7 @@ import _ from "lodash";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/CsvDTO";
+import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -192,6 +195,22 @@ const messstelleId: ComputedRef<string> = computed(() => {
 
 const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+const isBiggerThanFiveYears = computed(() => {
+    let zeitraum = options.value.zeitraum;
+    const differenceInMs = Math.abs(
+        new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
+    );
+    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+    const differenceInYears = Math.floor(differenceInDays / 365);
+    return differenceInYears >= 5;
+});
+
+watch(isBiggerThanFiveYears, () => {
+    if (isBiggerThanFiveYears) {
+        activeTab.value = TAB_BELASTUNGSPLAN;
+    }
 });
 
 watch(activeTab, (active) => {
