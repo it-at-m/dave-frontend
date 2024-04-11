@@ -133,7 +133,7 @@ function drawArrowsPointingSouth(
                 )
                 .stroke({
                     width: calcStrokeSize(mq),
-                    color: farben.get(mq.direction),
+                    color: getLineColor(mq.direction),
                 })
         );
         querschnittGroup.value.add(
@@ -268,7 +268,7 @@ function drawArrowsPointingNorth(
                 )
                 .stroke({
                     width: calcStrokeSize(mq),
-                    color: farben.get(mq.direction),
+                    color: getLineColor(mq.direction),
                 })
         );
         querschnittGroup.value.add(
@@ -426,6 +426,7 @@ function addTextNorthSide(
         kfz = Math.round(kfz / 100) * 100;
         gv = Math.round(gv / 100) * 100;
         sv = Math.round(sv / 100) * 100;
+        rad = Math.round(rad / 100) * 100;
     }
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
         addTextToQuerschnittGroup(kfz, startPointX, startPointY);
@@ -605,6 +606,12 @@ function storeImageForPrinting() {
         .size(svgHeight.value, svgHeight.value)
         .svg() as string;
     emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+}
+
+function getLineColor(direction: string) {
+    return chosenOptionsCopy.value.blackPrintMode
+        ? "#000000"
+        : farben.get(direction);
 }
 </script>
 
