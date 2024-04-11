@@ -12,16 +12,16 @@
                 >
                     <v-icon class="pr-3">mdi-chart-line</v-icon>
                     <span>
-                        Von den ausgewählten {{ zeitraumRange }} Tagen sind
-                        {{ getChosenWochentageNumber }} Tage in die Auswertung
+                        Von den ausgewählten {{ zeitraumRange }} Tagen
+                        {{ getChosenWochentageNumberText }} in die Auswertung
                         eingeflossen
                     </span>
                 </button>
             </template>
             <v-list class="text-caption">
                 <v-list-item class="py-0 my-0">
-                    Von {{ zeitraumRange }} ausgewählten Tagen liegen für
-                    {{ totalValidWochentage }} Wochentage plausible Daten vor
+                    Von {{ zeitraumRange }} ausgewählten Tagen
+                    {{ totalValidWochentageText }} plausible Daten vor
                 </v-list-item>
                 <v-list-item>
                     {{ numberValidWochentage.numberOfValidTagesTypDiMiDo }}
@@ -78,6 +78,14 @@ const chosenOptions = computed(() => {
     return store.getters["filteroptionsMessstelle/getFilteroptions"];
 });
 
+const chosenOptionsZeitraum = computed(() => {
+    return chosenOptions.value.zeitraum;
+});
+
+const chosenOptionsTagesTyp = computed(() => {
+    return chosenOptions.value.tagesTyp;
+});
+
 const zeitraumRange = computed(() => {
     const sortedDates = dateUtils.sortDatesDescAsStrings(
         chosenOptions.value.zeitraum.slice()
@@ -97,6 +105,14 @@ const totalValidWochentage = computed(() => {
         numberValidWochentage.value.numberOfValidTagesTypSonntagFeiertag +
         numberValidWochentage.value.numberOfValidTagesTypWerktagFerien
     );
+});
+
+const totalValidWochentageText = computed(() => {
+    if (totalValidWochentage.value == 1) {
+        return `liegt für 1 Wochentag`;
+    } else {
+        return `liegen für ${totalValidWochentage.value} Wochentage`;
+    }
 });
 
 const validWochentageRequestDto = computed(() => {
@@ -138,7 +154,15 @@ const getChosenWochentageNumber = computed(() => {
     }
 });
 
-watch([chosenOptions.value.zeitraum, chosenOptions.value.tagesTyp], () => {
+const getChosenWochentageNumberText = computed(() => {
+    if (getChosenWochentageNumber.value == 1) {
+        return "ist 1 Tag";
+    } else {
+        return `sind ${getChosenWochentageNumber.value} Tage`;
+    }
+});
+
+watch([chosenOptionsZeitraum, chosenOptionsTagesTyp], () => {
     getValidWochentage();
 });
 
