@@ -7,12 +7,15 @@
             <template #activator="{ on, props }">
                 <button
                     v-bind="props"
-                    class="text-sm-left px-4 py-2 white--text button-background-color"
+                    class="text-sm-left px-4 py-2 primary--text d-flex flex-row"
                     v-on="on"
                 >
-                    Von den ausgewählten {{ zeitraumRange }} Tagen sind
-                    {{ getChosenWochentageNumber }} Tage in die Auswertung
-                    eingeflossen
+                    <v-icon class="pr-3">mdi-chart-line</v-icon>
+                    <span>
+                        Von den ausgewählten {{ zeitraumRange }} Tagen sind
+                        {{ getChosenWochentageNumber }} Tage in die Auswertung
+                        eingeflossen
+                    </span>
                 </button>
             </template>
             <v-list class="text-caption">
@@ -155,9 +158,5 @@ function getValidWochentage() {
 <style scoped>
 .v-list-item {
     min-height: 0;
-}
-
-.button-background-color {
-    background-color: #f57c00;
 }
 </style>
