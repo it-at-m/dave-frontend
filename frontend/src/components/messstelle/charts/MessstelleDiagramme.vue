@@ -109,6 +109,7 @@
             @saveGraphAsImage="saveGraphAsImage"
             @openPdfReportDialog="openPdfReportDialog"
             @generateCsv="generateCsv"
+            @generatePdf="generatePdf"
         />
         <pdf-report-menue-messstelle
             v-model="pdfReportDialog"
@@ -141,6 +142,8 @@ import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMess
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/CsvDTO";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
+import GeneratePdfService from "@/api/service/GeneratePdfService";
+import DaveUtils from "@/util/DaveUtils";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -152,6 +155,10 @@ interface Props {
 withDefaults(defineProps<Props>(), {
     height: "100%",
 });
+
+const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
+const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
+    "schematischeUebersichtAsBase64Png";
 
 const chartDataLoading: Ref<boolean> = ref(false);
 
@@ -237,7 +244,7 @@ function loadProcessedChartData() {
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
             belastungsplanDataDTO.value =
-                processedZaehldaten.listBelastungsplanMessquerschnitteDTO;
+                processedZaehldaten.belastungsplanMessquerschnitte;
             setMaxRangeYAchse();
         })
         .finally(() => {
@@ -323,7 +330,11 @@ function saveGraphAsImage(): void {
         belastungsplanSvg.value
     ) {
         const uri = URL.createObjectURL(belastungsplanSvg.value);
-        reportTools.saveGraphAsImage(uri, "Belastungsplan");
+        reportTools.saveGraphAsImage(
+            uri,
+            "Belastungsplan",
+            options.value.zeitraum
+        );
     }
     loadingFile.value = false;
 }
@@ -389,5 +400,78 @@ function openPdfReportDialog(): void {
 
 function closePdfReportDialog(): void {
     pdfReportDialog.value = false;
+}
+
+function generatePdf(): void {
+    let formData = new FormData();
+    let type = "";
+    loadingFile.value = true;
+
+    formData.append(
+        "options",
+        new Blob([JSON.stringify(options.value)], {
+            type: "application/json",
+        })
+    );
+
+    switch (activeTab.value) {
+        case TAB_BELASTUNGSPLAN:
+            if (belastungsplanSvg.value) {
+                type = "belastungsplan";
+                formData.append(
+                    REQUEST_PART_CHART_AS_BASE64_PNG,
+                    URL.createObjectURL(belastungsplanSvg.value)
+                );
+            }
+            break;
+        case TAB_GANGLINIE:
+            type = "ganglinie";
+            formData.append(
+                REQUEST_PART_CHART_AS_BASE64_PNG,
+                new Blob([getGanglinieBase64()], {
+                    type: "image/png",
+                })
+            );
+            if (belastungsplanSvg.value) {
+                formData.append(
+                    REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+                    URL.createObjectURL(belastungsplanSvg.value)
+                );
+            }
+            break;
+        case TAB_LISTENAUSGABE:
+            type = "datentabelle";
+            if (belastungsplanSvg.value) {
+                formData.append(
+                    REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+                    URL.createObjectURL(belastungsplanSvg.value)
+                );
+            }
+            break;
+    }
+    fetchPdf(formData, type);
+}
+
+function fetchPdf(formData: any, type: string) {
+    formData.append("department", store.getters["user/getDepartment"]);
+    // TODO umstellen auf Messstelle
+    GeneratePdfService.postPdfCustomFetchTemplate(
+        type,
+        this.zaehlung.id,
+        formData
+    )
+        .then((res) => {
+            res.blob().then((blob) => {
+                // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
+                let typeForFilename: string =
+                    type.charAt(0).toUpperCase() + type.slice(1);
+
+                // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
+                let filename = `${this.getFileName()}_${typeForFilename}.pdf`;
+                DaveUtils.downloadFile(blob, filename);
+            });
+        })
+        .catch((error) => store.dispatch("snackbar/showError", error))
+        .finally(() => (loadingFile.value = false));
 }
 </script>
