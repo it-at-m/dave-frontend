@@ -236,7 +236,7 @@ function loadProcessedChartData() {
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
             belastungsplanDataDTO.value =
-                processedZaehldaten.listBelastungsplanMessquerschnitteDTO;
+                processedZaehldaten.belastungsplanMessquerschnitte;
             setMaxRangeYAchse();
         })
         .finally(() => {
@@ -322,7 +322,11 @@ function saveGraphAsImage(): void {
         belastungsplanSvg.value
     ) {
         const uri = URL.createObjectURL(belastungsplanSvg.value);
-        reportTools.saveGraphAsImage(uri, "Belastungsplan");
+        reportTools.saveGraphAsImage(
+            uri,
+            "Belastungsplan",
+            options.value.zeitraum
+        );
     }
     loadingFile.value = false;
 }
