@@ -109,6 +109,8 @@ export default class DefaultObjectCreator {
             zeitintervalle: [],
             mstIds: [],
             mqIds: [],
+            fahrzeuge: {} as FahrzeugOptions,
+            verfuegbareVerkehrsarten: [],
         };
     }
 }

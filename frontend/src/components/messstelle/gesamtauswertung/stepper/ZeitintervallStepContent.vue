@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import { computed, ComputedRef, ref } from "vue";
+import { computed, ComputedRef, ref, watch } from "vue";
 import {
     Halbjahre,
     Monate,
@@ -99,6 +99,16 @@ const auswertungOptions = computed({
     set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
+const zeitintervallWatch = computed(() => {
+    return auswertungOptions.value.zeitintervalle;
+});
+
+watch(zeitintervallWatch, () => {
+    if (zeitintervallWatch.value.length === 0) {
+        selectedCategory.value = "";
+    }
+});
+
 const showSubCategoriesSelect = computed(() => {
     return (
         selectedCategory.value &&
@@ -122,8 +132,8 @@ const selectableSubCategories = computed(() => {
     return categories;
 });
 function checkIfJahreIsSelected() {
-    auswertungOptions.value.zeitintervalle = [];
     if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
+        auswertungOptions.value.zeitintervalle = [];
         auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
     }
 }

@@ -17,20 +17,10 @@
                     </v-btn>
                     <v-spacer />
                     <v-btn
-                        :disabled="activeStep === 1"
                         class="mr-2"
-                        color="primary"
-                        @click="activeStep--"
+                        @click="resetAuswertungsOptions()"
                     >
-                        Zurück
-                    </v-btn>
-                    <v-btn
-                        :disabled="activeStep === numberOfSteps"
-                        class="mr-2"
-                        color="primary"
-                        @click="activeStep++"
-                    >
-                        Weiter
+                        Zurücksetzen
                     </v-btn>
                 </v-card-actions>
             </v-col>
@@ -48,7 +38,6 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const vuetify = useVuetify();
 
-const numberOfSteps: Ref<number> = ref(4);
 const activeStep: Ref<number> = ref(1);
 const auswertungsOptions: Ref<MessstelleAuswertungOptionsDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
@@ -83,4 +72,9 @@ const areMstAndMqValid = computed(() => {
             auswertungsOptions.value.mqIds.length > 0)
     );
 });
+
+function resetAuswertungsOptions() {
+    auswertungsOptions.value =
+        DefaultObjectCreator.createDefaultMessstelleAuswertungOptions();
+}
 </script>
