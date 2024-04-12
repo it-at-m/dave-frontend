@@ -82,10 +82,13 @@ const chosenOptionsCopyFahrzeuge = computed(() => {
     return chosenOptionsCopy.value.fahrzeuge;
 });
 
-watch(chosenOptionsCopyFahrzeuge, () => {
-    canvas.value.clear();
-    drawingConfig();
-});
+watch(
+    () => props.belastungsplanData,
+    () => {
+        canvas.value.clear();
+        drawingConfig();
+    }
+);
 
 /**
  * Die Pfeile werden immer zuerst nach Norden und Süden gezeichnet,
@@ -381,12 +384,6 @@ function addTextSouthSide(
     percentGv: number | string,
     percentSv: number | string
 ) {
-    if (chosenOptionsCopy.value.werteHundertRunden) {
-        kfz = Math.round(kfz / 100) * 100;
-        gv = Math.round(gv / 100) * 100;
-        sv = Math.round(sv / 100) * 100;
-        rad = Math.round(rad / 100) * 100;
-    }
     if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
         addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
         startPointY += 65;
@@ -422,12 +419,6 @@ function addTextNorthSide(
     percentGv: number | string,
     percentSv: number | string
 ) {
-    if (chosenOptionsCopy.value.werteHundertRunden) {
-        kfz = Math.round(kfz / 100) * 100;
-        gv = Math.round(gv / 100) * 100;
-        sv = Math.round(sv / 100) * 100;
-        rad = Math.round(rad / 100) * 100;
-    }
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
         addTextToQuerschnittGroup(kfz, startPointX, startPointY);
         startPointY -= 65;
