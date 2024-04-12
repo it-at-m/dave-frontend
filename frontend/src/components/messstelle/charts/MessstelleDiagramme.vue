@@ -157,6 +157,7 @@ withDefaults(defineProps<Props>(), {
 });
 
 const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
+const BELASTUNGSPLAN_PNG_DIMENSION = 1400;
 const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
     "schematischeUebersichtAsBase64Png";
 
@@ -191,6 +192,7 @@ const belastungsplanCard = ref<BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<StepLineCard>();
 const heatmapCard = ref<HeatmapCard>();
 const belastungsplanSvg = ref<Blob>();
+const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
 const route = useRoute();
@@ -229,6 +231,24 @@ watch(activeTab, (active) => {
 watch(options, () => {
     activeTab.value = TAB_BELASTUNGSPLAN;
     loadProcessedChartData();
+});
+watch(belastungsplanSvg, () => {
+    if (belastungsplanSvg.value) {
+        const image = new Image();
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            const dimension = BELASTUNGSPLAN_PNG_DIMENSION;
+            canvas.width = dimension;
+            canvas.height = dimension;
+            const context = canvas.getContext("2d");
+            if (context) {
+                context.drawImage(image, 0, 0, dimension, dimension);
+                // Image Asset erstellen und in Variable speichern
+                belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
+            }
+        };
+        image.src = URL.createObjectURL(belastungsplanSvg.value);
+    }
 });
 
 function loadProcessedChartData() {
@@ -417,10 +437,12 @@ function generatePdf(): void {
     switch (activeTab.value) {
         case TAB_BELASTUNGSPLAN:
             if (belastungsplanSvg.value) {
+                // TODO grafik nicht sichtbar
                 type = "belastungsplan";
                 formData.append(
                     REQUEST_PART_CHART_AS_BASE64_PNG,
-                    URL.createObjectURL(belastungsplanSvg.value)
+                    belastungsplanPngBase64.value
+                    // URL.createObjectURL(belastungsplanSvg.value)
                 );
             }
             break;
@@ -435,7 +457,7 @@ function generatePdf(): void {
             if (belastungsplanSvg.value) {
                 formData.append(
                     REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-                    URL.createObjectURL(belastungsplanSvg.value)
+                    belastungsplanPngBase64.value
                 );
             }
             break;
@@ -444,7 +466,7 @@ function generatePdf(): void {
             if (belastungsplanSvg.value) {
                 formData.append(
                     REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-                    URL.createObjectURL(belastungsplanSvg.value)
+                    belastungsplanPngBase64.value
                 );
             }
             break;
@@ -452,22 +474,24 @@ function generatePdf(): void {
     fetchPdf(formData, type);
 }
 
-function fetchPdf(formData: any, type: string) {
+function fetchPdf(formData: FormData, type: string) {
     formData.append("department", store.getters["user/getDepartment"]);
-    // TODO umstellen auf Messstelle
-    GeneratePdfService.postPdfCustomFetchTemplate(
+    GeneratePdfService.postPdfCustomFetchTemplateMessstelle(
         type,
-        this.zaehlung.id,
+        messstelleId.value,
         formData
     )
         .then((res) => {
             res.blob().then((blob) => {
                 // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
-                let typeForFilename: string =
+                const typeForFilename: string =
                     type.charAt(0).toUpperCase() + type.slice(1);
 
                 // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
-                let filename = `${this.getFileName()}_${typeForFilename}.pdf`;
+                const filename = `${reportTools.getFileName(
+                    typeForFilename,
+                    options.value.zeitraum
+                )}.pdf`;
                 DaveUtils.downloadFile(blob, filename);
             });
         })
