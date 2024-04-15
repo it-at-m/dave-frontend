@@ -106,6 +106,8 @@ const getContentSheetHeight = computed(() => {
 
 watch(messstelle, () => {
     if (store.getters["filteroptionsMessstelle/isHistory"]) {
+        chosenOptions.value =
+            store.getters["filteroptionsMessstelle/getFilteroptions"];
         store.commit("filteroptionsMessstelle/reloadFilteroptions");
     } else {
         resetOptions();
