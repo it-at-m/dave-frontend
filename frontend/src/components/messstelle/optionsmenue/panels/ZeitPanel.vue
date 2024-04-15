@@ -32,6 +32,8 @@
                         locale="de-DE"
                         first-day-of-week="1"
                         :picker-date.sync="pickerDate"
+                        :min="minDate"
+                        :max="maxDate"
                         @change="checkIfDateIsAlreadySelected"
                     ></v-date-picker>
                 </v-col>
@@ -166,6 +168,14 @@ const isAnwender = computed(() => {
     return (
         store.getters["user/hasAuthorities"] && store.getters["user/isAnwender"]
     );
+});
+
+const minDate = computed(() => {
+    return messstelleInfo.value.realisierungsdatum ?? "";
+});
+
+const maxDate = computed(() => {
+    return messstelleInfo.value.abbaudatum ?? "";
 });
 
 const getFormattedSelectedZeit = computed(() => {
