@@ -482,9 +482,9 @@ function drawMessstelleInfo() {
 function drawLegende() {
     const formeln = new Map<string, string>();
     formeln.set("KFZ", "KFZ = Pkw + Lkw + Lz + Bus + Krad");
-    formeln.set("SV", "SV = Lkw + Lz + Bus");
+    formeln.set("(SV)", "SV = Lkw + Lz + Bus");
     formeln.set("GV", "GV = Lkw + Lz");
-    formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
+    formeln.set("(SV%)", "SV-Anteil = SV : KFZ x 100(%)");
     formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
     formeln.set("Rad", "");
     let chosenFahrzeugartAsTextArray: string[] = [];
