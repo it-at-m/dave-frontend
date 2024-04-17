@@ -594,7 +594,7 @@ const numberOfChosenFahrzeugOptions = computed(() => {
 function storeImageForPrinting() {
     const ex = canvas.value
         .flatten(canvas.value)
-        .size(svgHeight.value, svgHeight.value)
+        .size(getSizeInPx.value + "px", getSizeInPx.value + "px")
         .svg() as string;
     emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
 }
@@ -604,6 +604,14 @@ function getLineColor(direction: string) {
         ? "#000000"
         : farben.get(direction);
 }
+
+const getSizeInPx = computed(() => {
+    return (
+        (parseInt(svgHeight.value.trim().replace("vh", "")) *
+            vuetify.breakpoint.height) /
+        100
+    );
+});
 </script>
 
 <style scoped>
