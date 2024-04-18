@@ -78,8 +78,9 @@
             />
             <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
             <v-spacer />
-            <v-divider></v-divider>
+            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>
             <zeit-intervall
+                v-if="!isDateBiggerFiveYears"
                 v-model="chosenOptionsCopy"
                 :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
             />
@@ -102,6 +103,7 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
+import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
 const route = useRoute();
 
@@ -141,6 +143,8 @@ const chosenOptionsCopy = computed({
     get: () => props.value,
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
+
+const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
 
 const chosenOptionsCopyZeitraum = computed(() => {
     return chosenOptionsCopy.value.zeitraum ?? [];

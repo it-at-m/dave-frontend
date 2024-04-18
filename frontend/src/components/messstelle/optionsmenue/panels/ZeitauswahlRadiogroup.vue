@@ -43,17 +43,26 @@
                             <v-radio
                                 :label="`Spitzenstunde Kfz${durchschnitt}`"
                                 :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
-                                :disabled="isTypeDisabled('KFZ')"
+                                :disabled="
+                                    isTypeDisabled('KFZ') ||
+                                    isDateBiggerFiveYears
+                                "
                             />
                             <v-radio
                                 :label="`Spitzenstunde Rad${durchschnitt}`"
                                 :value="Zeitauswahl.SPITZENSTUNDE_RAD"
-                                :disabled="isTypeDisabled('RAD')"
+                                :disabled="
+                                    isTypeDisabled('RAD') ||
+                                    isDateBiggerFiveYears
+                                "
                             />
                             <v-radio
                                 :label="`Spitzenstunde Fuß${durchschnitt}`"
                                 :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
-                                :disabled="isTypeDisabled('FUSS')"
+                                :disabled="
+                                    isTypeDisabled('FUSS') ||
+                                    isDateBiggerFiveYears
+                                "
                             />
                         </v-col>
                     </v-row>
@@ -72,13 +81,15 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { useDateUtils } from "@/util/DateUtils";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
+import { useStore } from "@/api/util/useStore";
+import { Levels } from "@/api/error";
+import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -90,12 +101,14 @@ const emit = defineEmits<{
     (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 
+const store = useStore();
+
 const chosenOptionsCopy = computed({
     get: () => props.value,
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
-const dateUtils = useDateUtils();
+const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
 
 const durchschnitt = computed(() => {
     if (chosenOptionsCopy.value.zeitraum.length === 2) {
@@ -110,20 +123,6 @@ function isTypeDisabled(type: string): boolean {
         chosenOptionsCopy.value.messquerschnittIds.length != 1
     );
 }
-
-const isDateBiggerFiveYears = computed(() => {
-    if (chosenOptionsCopy.value.zeitraum.length == 2) {
-        const zeitraum = chosenOptionsCopy.value.zeitraum.slice();
-        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
-        const timeDifferenceInMilliseconds =
-            new Date(sortedDates[0]).valueOf() -
-            new Date(sortedDates[1]).valueOf();
-        const timeDifferenceInYears =
-            timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
-        return timeDifferenceInYears > 5;
-    }
-    return false;
-});
 
 const helperText = computed(() => {
     if (chosenOptionsCopy.value.messquerschnittIds.length != 1) {
@@ -147,4 +146,20 @@ function zeitauswahlChanged() {
         chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
     }
 }
+
+watch(
+    () => chosenOptionsCopy.value.zeitraum,
+    () => {
+        if (
+            isDateBiggerFiveYears.value &&
+            chosenOptionsCopy.value.zeitauswahl != Zeitauswahl.TAGESWERT
+        ) {
+            chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.TAGESWERT;
+            store.dispatch("snackbar/showToast", {
+                snackbarTextPart1: "Zeitauswahl wurde auf Tageswert gesetzt",
+                level: Levels.INFO,
+            });
+        }
+    }
+);
 </script>
