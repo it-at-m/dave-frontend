@@ -8,7 +8,7 @@
             outlined
             dense
             label="Zeitintervalle"
-            @input="checkIfJahreIsSelected"
+            @input="categoryIsSelected"
         />
         <v-autocomplete
             v-if="showSubCategoriesSelect"
@@ -46,7 +46,7 @@
 
 <script setup lang="ts">
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import { computed, ComputedRef, ref, watch } from "vue";
+import { computed, ComputedRef, ref } from "vue";
 import {
     Halbjahre,
     Monate,
@@ -93,20 +93,11 @@ const categoryMonate = [
 ];
 
 const selectedCategory = ref("");
+const previuosSelectedCategory = ref("");
 
 const auswertungOptions = computed({
     get: () => props.value,
     set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
-});
-
-const zeitintervallWatch = computed(() => {
-    return auswertungOptions.value.zeitintervalle;
-});
-
-watch(zeitintervallWatch, () => {
-    if (zeitintervallWatch.value.length === 0) {
-        selectedCategory.value = "";
-    }
 });
 
 const showSubCategoriesSelect = computed(() => {
@@ -131,11 +122,14 @@ const selectableSubCategories = computed(() => {
     }
     return categories;
 });
-function checkIfJahreIsSelected() {
-    if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
+function categoryIsSelected() {
+    if (previuosSelectedCategory.value !== selectedCategory.value) {
         auswertungOptions.value.zeitintervalle = [];
+    }
+    if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
         auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
     }
+    previuosSelectedCategory.value = selectedCategory.value;
 }
 
 function selectAll() {
