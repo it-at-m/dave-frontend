@@ -60,7 +60,8 @@ const isEverythingValid = computed(() => {
         auswertungsOptions.value.zeitintervalle.length > 0 &&
         auswertungsOptions.value.tagesTyp.length > 0 &&
         auswertungsOptions.value.jahre.length > 0 &&
-        areMstAndMqValid.value
+        areMstAndMqValid.value &&
+        areFahrzeugeValid.value
     );
 });
 
@@ -70,6 +71,24 @@ const areMstAndMqValid = computed(() => {
             auswertungsOptions.value.mqIds.length === 0) ||
         (auswertungsOptions.value.mstIds.length === 1 &&
             auswertungsOptions.value.mqIds.length > 0)
+    );
+});
+
+const areFahrzeugeValid = computed(() => {
+    return (
+        auswertungsOptions.value.fahrzeuge.kraftfahrzeugverkehr ||
+        auswertungsOptions.value.fahrzeuge.schwerverkehr ||
+        auswertungsOptions.value.fahrzeuge.gueterverkehr ||
+        auswertungsOptions.value.fahrzeuge.schwerverkehrsanteilProzent ||
+        auswertungsOptions.value.fahrzeuge.gueterverkehrsanteilProzent ||
+        auswertungsOptions.value.fahrzeuge.radverkehr ||
+        auswertungsOptions.value.fahrzeuge.fussverkehr ||
+        auswertungsOptions.value.fahrzeuge.lastkraftwagen ||
+        auswertungsOptions.value.fahrzeuge.lastzuege ||
+        auswertungsOptions.value.fahrzeuge.busse ||
+        auswertungsOptions.value.fahrzeuge.kraftraeder ||
+        auswertungsOptions.value.fahrzeuge.personenkraftwagen ||
+        auswertungsOptions.value.fahrzeuge.lieferwagen
     );
 });
 
