@@ -109,7 +109,21 @@ export default class DefaultObjectCreator {
             zeitintervalle: [],
             mstIds: [],
             mqIds: [],
-            fahrzeuge: {} as FahrzeugOptions,
+            fahrzeuge: {
+                kraftfahrzeugverkehr: false,
+                schwerverkehr: false,
+                gueterverkehr: false,
+                schwerverkehrsanteilProzent: false,
+                gueterverkehrsanteilProzent: false,
+                radverkehr: false,
+                fussverkehr: false,
+                lastkraftwagen: false,
+                lastzuege: false,
+                busse: false,
+                kraftraeder: false,
+                personenkraftwagen: false,
+                lieferwagen: false,
+            } as FahrzeugOptions,
             verfuegbareVerkehrsarten: [],
         };
     }
