@@ -7,6 +7,7 @@ import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -83,6 +84,14 @@ export default class DefaultObjectCreator {
 
     public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
         return {
+            blackPrintMode: false,
+            blocksumme: false,
+            ganglinieYAchse1MaxValue: null,
+            ganglinieYAchse2MaxValue: null,
+            spitzenstunde: false,
+            stundensumme: false,
+            tagessumme: false,
+            werteHundertRunden: false,
             fahrzeuge: this.createDefaultFahrzeugOptions(true),
             intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
             messquerschnittIds: [],
@@ -90,6 +99,32 @@ export default class DefaultObjectCreator {
             zeitauswahl: "",
             zeitblock: "",
             zeitraum: [],
+        };
+    }
+
+    public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptionsDTO {
+        return {
+            jahre: [],
+            tagesTyp: "",
+            zeitintervalle: [],
+            mstIds: [],
+            mqIds: [],
+            fahrzeuge: {
+                kraftfahrzeugverkehr: false,
+                schwerverkehr: false,
+                gueterverkehr: false,
+                schwerverkehrsanteilProzent: false,
+                gueterverkehrsanteilProzent: false,
+                radverkehr: false,
+                fussverkehr: false,
+                lastkraftwagen: false,
+                lastzuege: false,
+                busse: false,
+                kraftraeder: false,
+                personenkraftwagen: false,
+                lieferwagen: false,
+            } as FahrzeugOptions,
+            verfuegbareVerkehrsarten: [],
         };
     }
 }

@@ -9,7 +9,10 @@
             color="primary"
             dark
         >
-            <router-link to="/">
+            <router-link
+                to="/"
+                @click.native="clear"
+            >
                 <v-toolbar-title class="white--text">
                     <span class="font-weight-medium">DAVe</span>
                     <span class="font-weight-thin"> | Mobilitätsreferat</span>
@@ -114,6 +117,21 @@
                 </span>
             </v-tooltip>
             <v-spacer></v-spacer>
+            <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                    <v-btn
+                        v-bind="attrs"
+                        class="mr-2"
+                        icon
+                        small
+                        to="/auswertung"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-clipboard-pulse-outline</v-icon>
+                    </v-btn>
+                </template>
+                <span> Gesamtauswertungen </span>
+            </v-tooltip>
             <v-tooltip bottom>
                 <template #activator="{ on, attrs }">
                     <v-btn
@@ -396,9 +414,12 @@ export default class App extends Vue {
         }
 
         this.$store.commit("search/lastSearchQuery", this.searchQuery);
+        const routeName = this.$route.name;
         if (
-            (this.$route.name === "zaehlstelle" ||
-                this.$route.name === "messstelle") &&
+            (routeName === "zaehlstelle" ||
+                routeName === "messstelle" ||
+                routeName === "pdfreport" ||
+                routeName === "auswertung") &&
             this.searchQuery !== ""
         ) {
             this.$router.push(`/`);
