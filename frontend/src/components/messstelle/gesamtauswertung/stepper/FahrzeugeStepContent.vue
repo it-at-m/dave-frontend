@@ -252,9 +252,6 @@ const auswertungOptions = computed({
     set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
 });
 
-const fahrzeugWatch = computed(() => {
-    return auswertungOptions.value.fahrzeuge;
-});
 const verkehrsartenWatch = computed(() => {
     return auswertungOptions.value.verfuegbareVerkehrsarten;
 });
@@ -264,10 +261,6 @@ onMounted(() => {
     calculateSelectOrDeselect();
 });
 
-watch(fahrzeugWatch, () => {
-    calculateSelectOrDeselectVerkehrsarten();
-    calculateSelectOrDeselect();
-});
 watch(verkehrsartenWatch, () => {
     preassignFahrzeuge();
 });
@@ -285,6 +278,8 @@ function preassignFahrzeuge() {
     } else if (!rad && kfz) {
         auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = true;
     }
+    calculateSelectOrDeselectVerkehrsarten();
+    calculateSelectOrDeselect();
 }
 
 function resetFahrzeuge() {
