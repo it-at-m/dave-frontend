@@ -384,24 +384,44 @@ function addTextSouthSide(
     percentGv: number | string,
     percentSv: number | string
 ) {
+    let textposition = 2;
     if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
         addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
         startPointY += 65;
     }
     if (isGv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(`${percentGv}%`, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(`${percentGv}%`, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY += 65;
+        textposition -= 1;
     }
     if (isSv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(`(${percentSv}%)`, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(`${percentSv}%`, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY += 65;
+        textposition -= 1;
     }
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-        addTextToQuerschnittGroup(gv, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(gv, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY += 65;
+        textposition -= 1;
     }
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        addTextToQuerschnittGroup(`(${sv})`, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(`${sv}`, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY += 65;
     }
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
@@ -419,24 +439,45 @@ function addTextNorthSide(
     percentGv: number | string,
     percentSv: number | string
 ) {
+    let textposition = 0;
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
         addTextToQuerschnittGroup(kfz, startPointX, startPointY);
         startPointY -= 65;
+        textposition += 1;
     }
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        addTextToQuerschnittGroup(`(${sv})`, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(sv, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY -= 65;
+        textposition += 1;
     }
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-        addTextToQuerschnittGroup(gv, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(gv, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY -= 65;
+        textposition += 1;
     }
     if (isSv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(`(${percentSv}%)`, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(`${percentSv}%`, textposition),
+            startPointX,
+            startPointY
+        );
         startPointY -= 65;
+        textposition += 1;
     }
     if (isGv_pInBelastungsPlan.value) {
-        addTextToQuerschnittGroup(`${percentGv}%`, startPointX, startPointY);
+        addTextToQuerschnittGroup(
+            addBracketsDependingOnPostition(`${percentGv}%`, textposition),
+            startPointX,
+            startPointY
+        );
     }
     if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
         addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
@@ -482,9 +523,9 @@ function drawMessstelleInfo() {
 function drawLegende() {
     const formeln = new Map<string, string>();
     formeln.set("KFZ", "KFZ = Pkw + Lkw + Lz + Lfw + Bus + Krad");
-    formeln.set("(SV)", "SV = Lkw + Lz + Bus");
+    formeln.set("SV", "SV = Lkw + Lz + Bus");
     formeln.set("GV", "GV = Lkw + Lz");
-    formeln.set("(SV%)", "SV-Anteil = SV : KFZ x 100(%)");
+    formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
     formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
     formeln.set("Rad", "");
     let chosenFahrzeugartAsTextArray: string[] = [];
@@ -492,13 +533,13 @@ function drawLegende() {
         chosenFahrzeugartAsTextArray.push("KFZ");
     }
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-        chosenFahrzeugartAsTextArray.push("(SV)");
+        chosenFahrzeugartAsTextArray.push("SV");
     }
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
         chosenFahrzeugartAsTextArray.push("GV");
     }
     if (isSv_pInBelastungsPlan.value) {
-        chosenFahrzeugartAsTextArray.push("(SV%)");
+        chosenFahrzeugartAsTextArray.push("SV%");
     }
     if (isGv_pInBelastungsPlan.value) {
         chosenFahrzeugartAsTextArray.push("GV%");
@@ -520,13 +561,19 @@ function drawLegende() {
                     .newLine()
                     .x(textstart)
                     .font({ weight: "bold" });
-                textstart += 60;
-                for (let i = 1; i < chosenFahrzeugartAsTextArray.length; i++) {
-                    add.tspan(chosenFahrzeugartAsTextArray[i])
+                if (chosenFahrzeugartAsTextArray.length >= 2) {
+                    textstart += 60;
+                    add.tspan(`(${chosenFahrzeugartAsTextArray[1]})`)
                         .x(textstart)
                         .font({ weight: "bold" });
-                    textstart += 60;
                 }
+                if (chosenFahrzeugartAsTextArray.length == 3) {
+                    textstart += 60;
+                    add.tspan(chosenFahrzeugartAsTextArray[2])
+                        .x(textstart)
+                        .font({ weight: "bold" });
+                }
+
                 chosenFahrzeugartAsTextArray.forEach((text) => {
                     add.tspan(formeln.get(text)!).newLine();
                 });
@@ -612,6 +659,13 @@ const getSizeInPx = computed(() => {
         100
     );
 });
+
+function addBracketsDependingOnPostition(
+    text: string | number,
+    position: number
+) {
+    return position == 1 ? `(${text})` : text;
+}
 </script>
 
 <style scoped>
