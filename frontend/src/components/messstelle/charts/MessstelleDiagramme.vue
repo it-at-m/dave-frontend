@@ -437,7 +437,6 @@ watch(belastungsplanSvg, () => {
             }
         };
         image.src = URL.createObjectURL(belastungsplanSvg.value);
-
     }
 });
 
@@ -456,12 +455,10 @@ function generatePdf(): void {
     switch (activeTab.value) {
         case TAB_BELASTUNGSPLAN:
             if (belastungsplanSvg.value) {
-                // TODO grafik nicht sichtbar
                 type = "belastungsplan";
                 formData.append(
                     REQUEST_PART_CHART_AS_BASE64_PNG,
                     belastungsplanPngBase64.value
-                    // URL.createObjectURL(belastungsplanSvg.value)
                 );
             }
             break;
