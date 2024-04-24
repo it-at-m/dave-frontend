@@ -309,6 +309,14 @@ function setMaxRangeYAchse() {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
+    if (activeTab.value === TAB_BELASTUNGSPLAN) {
+        reportTools.addChartToPdfReport(
+            belastungsplanPngBase64.value,
+            "Belastungsplan",
+            "Der"
+        );
+    }
+
     if (activeTab.value === TAB_GANGLINIE) {
         reportTools.addChartToPdfReport(
             getGanglinieBase64(),
@@ -432,8 +440,7 @@ watch(belastungsplanSvg, () => {
             const context = canvas.getContext("2d");
             if (context) {
                 context.drawImage(image, 0, 0, 1400, 1400);
-                const base64 = canvas.toDataURL("image/jpg");
-                belastungsplanPngBase64.value = base64;
+                belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
             }
         };
         image.src = URL.createObjectURL(belastungsplanSvg.value);
