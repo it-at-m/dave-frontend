@@ -8,6 +8,7 @@ import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import InfoMessageDTO from "@/types/InfoMessageDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -125,6 +126,16 @@ export default class DefaultObjectCreator {
                 lieferwagen: false,
             } as FahrzeugOptions,
             verfuegbareVerkehrsarten: [],
+        };
+    }
+
+    public static createDefaultInfoMessageDto(): InfoMessageDTO {
+        return {
+            content: "",
+            gueltig: false,
+            id: "",
+            entityVersion: 0,
+            createdTime: "",
         };
     }
 }
