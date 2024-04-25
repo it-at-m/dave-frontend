@@ -4,12 +4,11 @@
             {{ label }}
         </div>
         <v-input
-            v-model="value"
             :readonly="readonly"
             :hide-details="hideDetails"
             :rules="validierungsRegeln"
-            :dense="dense"
-            :error.sync="error"
+            :density="dense ? 'compact' : 'default'"
+            :error="error"
             :error-messages="errorMessages"
             :persistent-hint="persistentHint"
             :hint="hint"
@@ -24,7 +23,7 @@
                         :readonly="readonly"
                         :error="error"
                         hide-details
-                        :dense="dense"
+                        :density="dense ? 'compact' : 'default'"
                         :filled="filled"
                         :outlined="outlined"
                         type="date"
@@ -42,7 +41,7 @@
                         :readonly="readonly"
                         :error="error"
                         hide-details
-                        :dense="dense"
+                        :density="dense ? 'compact' : 'default'"
                         :filled="filled"
                         :outlined="outlined"
                         type="time"
@@ -52,14 +51,14 @@
                     >
                         <template
                             v-if="clearable && !readonly"
-                            #append-outer
+                            #append-inner
                         >
                             <v-btn
                                 icon
-                                :disabled="!value"
+                                :disabled="!modelValue"
                                 @click="clear"
                             >
-                                <v-icon v-if="value"> mdi-close </v-icon>
+                                <v-icon v-if="modelValue"> mdi-close </v-icon>
                             </v-btn>
                         </template>
                     </v-text-field>
@@ -69,8 +68,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+<script setup lang="ts">
+import { computed, onMounted, ref, watch } from "vue";
 
 /**
  * Das Date-Time-Input` Feld bietet eine Eingabemöglichkeit von Date-Times ohne zusätzliche
@@ -85,125 +84,123 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
  *   label="Kontakt am"
  *   :rules="[(v: string) => !v || moment(v).isBefore(moment.now()) || 'Datum muss in der Vergangenheit liegen.']"
  * ></datetime-input>
- *
- * @Prop value: Date-Time im ISO Format (Zugriff in der Regel per v-model)
- * @Prop readonly: Feld ist nicht beschreibbar
- * @Prop hideDetails: Hinweistexte und Errors werden nicht angezeigt
- * @Prop dense: Feld ist kompakter
- * @Prop filled: Feld wird ausgefüllt
- * @Prop outlined: Feld erhält den Outline Style
- * @Prop clearable: Feld ist löschbar
- * @Prop persistentHint: Dauerhafte Anzeige eines Hint-Textes (in Kombination mit @Prop hint)
- * @Prop hint: Hinweistext
- * @Prop label: Label für den Input
- * @Prop rules: Validierungsregeln
  */
-@Component
-export default class DatetimeInput extends Vue {
-    @Prop()
-    value!: string;
-    @Prop({ type: Boolean, default: false })
-    readonly!: boolean;
-    @Prop({ type: Boolean, default: false })
-    hideDetails!: boolean;
-    @Prop({ type: Boolean, default: false })
-    dense!: boolean;
-    @Prop({ type: Boolean, default: false })
-    filled!: boolean;
-    @Prop({ type: Boolean, default: false })
-    outlined!: boolean;
-    @Prop({ type: Boolean, default: true })
-    clearable!: boolean;
-    @Prop({ type: Boolean, default: false })
-    persistentHint!: boolean;
-    @Prop({ type: String, default: "" })
-    hint!: string;
-    @Prop({ type: String, default: "" })
-    label!: string;
-    @Prop({ type: Array, default: () => [] })
-    rules!: { (v: string): string | boolean }[];
 
-    day: string | null = null;
-    time: string | null = null;
-    error = false;
-    errorMessages = "";
-    dateFilled = (): string | boolean =>
-        this.checkBothFieldsFilled() || "Datum und Zeit muss ausgefüllt werden";
+interface Props {
+    modelValue: string;
+    readonly: boolean;
+    hideDetails: boolean;
+    dense: boolean;
+    filled: boolean;
+    outlined: boolean;
+    clearable: boolean;
+    persistentHint: boolean;
+    hint: string;
+    label: string;
+    rules: { (v: string): string | boolean }[];
+}
 
-    get validierungsRegeln(): { (v: string): string | boolean }[] {
-        if (this.rules) {
-            return [...this.rules, this.dateFilled];
-        } else {
-            return [this.dateFilled];
-        }
+const props = withDefaults(defineProps<Props>(), {
+    readonly: false,
+    hideDetails: false,
+    dense: false,
+    filled: false,
+    outlined: false,
+    clearable: true,
+    persistentHint: false,
+    hint: "",
+    label: "",
+    rules: () => [],
+});
+
+const day = ref<string | null>(null);
+const time = ref<string | null>(null);
+const error = ref(false);
+const errorMessages = ref("");
+const dateFilled = (): string | boolean =>
+    checkBothFieldsFilled() || "Datum und Zeit muss ausgefüllt werden";
+
+const emits = defineEmits<{
+    (e: "update:modelValue", v: string | null): void;
+}>();
+
+const validierungsRegeln = computed(() => {
+    if (props.rules) {
+        return [...props.rules, dateFilled];
+    } else {
+        return [dateFilled];
+    }
+});
+
+onMounted(() => {
+    parseValue();
+});
+
+function clear(): void {
+    errorMessages.value = "";
+    time.value = null;
+    day.value = null;
+    emits("update:modelValue", getDate());
+}
+
+function getDate(): string | null {
+    if (day.value && time.value) {
+        error.value = false;
+        errorMessages.value = "";
+        return new Date(day.value + "T" + time.value).toISOString();
     }
 
-    mounted(): void {
-        this.parseValue();
-    }
+    return null;
+}
 
-    clear(): void {
-        this.errorMessages = "";
-        this.time = null;
-        this.day = null;
-        this.$emit("input", this.getDate());
+function parseValue(): void {
+    if (props.modelValue) {
+        const newDate = new Date(props.modelValue);
+        day.value = parseDay(newDate);
+        time.value = parseTime(newDate);
+    } else {
+        day.value = null;
+        time.value = null;
     }
+}
 
-    getDate(): string | null {
-        if (this.day && this.time) {
-            this.error = false;
-            this.errorMessages = "";
-            return new Date(this.day + "T" + this.time).toISOString();
-        }
+watch(
+    () => props.modelValue,
+    () => parseValue()
+);
 
-        return null;
+function parseDay(timestamp: Date): string {
+    return timestamp.toISOString().replace(/T.*/, "");
+}
+
+function parseTime(timestamp: Date): string {
+    return timestamp.toLocaleTimeString(navigator.language, {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
+function leaveInput(): void {
+    if (!checkBothFieldsFilled()) {
+        error.value = true;
+        errorMessages.value = "Datum und Zeit muss ausgefüllt werden";
     }
+}
 
-    @Watch("value")
-    parseValue(): void {
-        if (this.value) {
-            const newDate = new Date(this.value);
-            this.day = this.parseDay(newDate);
-            this.time = this.parseTime(newDate);
-        } else {
-            this.day = null;
-            this.time = null;
-        }
+function enterInput(): void {
+    if (!checkBothFieldsFilled()) {
+        error.value = false;
+        errorMessages.value = "";
     }
+}
 
-    parseDay(timestamp: Date): string {
-        return timestamp.toISOString().replace(/T.*/, "");
+function sendInput(): void {
+    if (checkBothFieldsFilled()) {
+        emits("update:modelValue", getDate());
     }
+}
 
-    parseTime(timestamp: Date): string {
-        return timestamp.toLocaleTimeString(navigator.language, {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-    }
-
-    leaveInput(): void {
-        if (!this.checkBothFieldsFilled()) {
-            this.error = true;
-            this.errorMessages = "Datum und Zeit muss ausgefüllt werden";
-        }
-    }
-
-    enterInput(): void {
-        if (!this.checkBothFieldsFilled()) {
-            this.error = false;
-            this.errorMessages = "";
-        }
-    }
-
-    sendInput(): void {
-        if (this.checkBothFieldsFilled()) {
-            this.$emit("input", this.getDate());
-        }
-    }
-
-    checkBothFieldsFilled(): boolean {
-        return !!(this.time && this.day) || (!this.time && !this.day);
-    }
+function checkBothFieldsFilled(): boolean {
+    return !!(time.value && day.value) || (!time.value && !day.value);
 }
 </script>
