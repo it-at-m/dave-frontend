@@ -93,7 +93,7 @@ const zeitraumRange = computed(() => {
     const startDate = new Date(sortedDates[1]);
     const endDate = new Date(sortedDates[0]);
     const differenceInMs = Math.abs(endDate.valueOf() - startDate.valueOf());
-    return differenceInMs / (1000 * 60 * 60 * 24);
+    return differenceInMs / (1000 * 60 * 60 * 24) + 1;
 });
 
 const totalValidWochentage = computed(() => {

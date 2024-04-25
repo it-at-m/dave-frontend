@@ -184,6 +184,7 @@ const belastungsplanCard = ref<BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<StepLineCard>();
 const heatmapCard = ref<HeatmapCard>();
 const belastungsplanSvg = ref<Blob>();
+const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
 const route = useRoute();
@@ -236,7 +237,7 @@ function loadProcessedChartData() {
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
             belastungsplanDataDTO.value =
-                processedZaehldaten.listBelastungsplanMessquerschnitteDTO;
+                processedZaehldaten.belastungsplanMessquerschnitte;
             setMaxRangeYAchse();
         })
         .finally(() => {
@@ -322,7 +323,11 @@ function saveGraphAsImage(): void {
         belastungsplanSvg.value
     ) {
         const uri = URL.createObjectURL(belastungsplanSvg.value);
-        reportTools.saveGraphAsImage(uri, "Belastungsplan");
+        reportTools.saveGraphAsImage(
+            uri,
+            "Belastungsplan",
+            options.value.zeitraum
+        );
     }
     loadingFile.value = false;
 }
@@ -389,4 +394,23 @@ function openPdfReportDialog(): void {
 function closePdfReportDialog(): void {
     pdfReportDialog.value = false;
 }
+
+watch(belastungsplanSvg, () => {
+    if (belastungsplanSvg.value) {
+        const image = new Image();
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = 1400;
+            canvas.height = 1400;
+            const context = canvas.getContext("2d");
+            if (context) {
+                context.drawImage(image, 0, 0, 1400, 1400);
+                const base64 = canvas.toDataURL("image/jpg");
+                belastungsplanPngBase64.value = base64;
+            }
+        };
+        image.src = URL.createObjectURL(belastungsplanSvg.value);
+
+    }
+});
 </script>
