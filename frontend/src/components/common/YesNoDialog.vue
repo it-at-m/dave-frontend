@@ -1,27 +1,24 @@
 <template>
     <v-dialog
-        :key="value"
-        :value="value"
+        v-model="visible"
         persistent
         width="800"
-        @input="changed"
     >
-        <template #activator="{ on }">
+        <template #activator="{ props: open }">
             <template v-if="buttontext">
                 <v-btn
                     color="primary"
-                    v-on="on"
+                    v-bind="open"
                 >
                     {{ buttontext }}
                 </v-btn>
             </template>
             <template v-else-if="icontext">
                 <v-btn
-                    text
                     color="primary"
-                    v-on="on"
+                    v-bind="open"
                 >
-                    <v-icon large>
+                    <v-icon size="large">
                         {{ icontext }}
                     </v-icon>
                 </v-btn>
@@ -38,7 +35,7 @@
                 <v-spacer />
                 <v-btn
                     id="yesnodialog-btn-no"
-                    text
+                    variant="text"
                     @click="no"
                 >
                     Nein
@@ -55,8 +52,8 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { computed } from "vue";
 
 /**
  * Der YesNo-Dialog ist ein generischer Dialog zur binären Abfrage beim Nutzer.
@@ -81,32 +78,32 @@ import { Component, Prop, Vue } from "vue-property-decorator";
  *    @yes="deleteSome"></yes-no-dialog>
  */
 
-@Component
-export default class YesNoDialog extends Vue {
-    @Prop()
-    buttontext = "";
-    @Prop()
-    icontext = "";
-    @Prop()
-    dialogtitle!: string;
-    @Prop()
-    dialogtext!: string;
+const props = defineProps<{
+    buttontext?: string;
+    icontext?: string;
+    dialogtitle: string;
+    dialogtext: string;
     /**
      * Steuerflag für den Dialog
      */
-    @Prop()
-    value!: boolean;
+    modelValue: boolean;
+}>();
 
-    no(): void {
-        this.$emit("no");
-    }
+const emits = defineEmits<{
+    (e: "no"): void;
+    (e: "yes"): void;
+    (e: "update:modelValue", v: boolean): void;
+}>();
 
-    yes(): void {
-        this.$emit("yes");
-    }
+const visible = computed({
+    get: () => props.modelValue,
+    set: (v) => emits("update:modelValue", v),
+});
 
-    changed(val: boolean): void {
-        this.$emit("input", val);
-    }
+function no(): void {
+    emits("no");
+}
+function yes(): void {
+    emits("yes");
 }
 </script>
