@@ -109,6 +109,7 @@
             @saveGraphAsImage="saveGraphAsImage"
             @openPdfReportDialog="openPdfReportDialog"
             @generateCsv="generateCsv"
+            @generatePdf="generatePdf"
         />
         <pdf-report-menue-messstelle
             v-model="pdfReportDialog"
@@ -141,6 +142,8 @@ import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMess
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/CsvDTO";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
+import GeneratePdfService from "@/api/service/GeneratePdfService";
+import DaveUtils from "@/util/DaveUtils";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -152,6 +155,11 @@ interface Props {
 withDefaults(defineProps<Props>(), {
     height: "100%",
 });
+
+const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
+const BELASTUNGSPLAN_PNG_DIMENSION = 1400;
+const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
+    "schematischeUebersichtAsBase64Png";
 
 const chartDataLoading: Ref<boolean> = ref(false);
 
@@ -168,7 +176,7 @@ const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
 const isTabListenausgabe: Ref<boolean> = ref(false);
-const isNotTabHeatmap: Ref<boolean> = ref(false);
+const isNotTabHeatmap: Ref<boolean> = ref(true);
 const pdfReportDialog: Ref<boolean> = ref(false);
 
 const activeTab: Ref<number> = ref(0);
@@ -221,7 +229,26 @@ watch(activeTab, (active) => {
 });
 
 watch(options, () => {
+    activeTab.value = TAB_BELASTUNGSPLAN;
     loadProcessedChartData();
+});
+watch(belastungsplanSvg, () => {
+    if (belastungsplanSvg.value) {
+        const image = new Image();
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            const dimension = BELASTUNGSPLAN_PNG_DIMENSION;
+            canvas.width = dimension;
+            canvas.height = dimension;
+            const context = canvas.getContext("2d");
+            if (context) {
+                context.drawImage(image, 0, 0, dimension, dimension);
+                // Image Asset erstellen und in Variable speichern
+                belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
+            }
+        };
+        image.src = URL.createObjectURL(belastungsplanSvg.value);
+    }
 });
 
 function loadProcessedChartData() {
@@ -282,6 +309,14 @@ function setMaxRangeYAchse() {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
+    if (activeTab.value === TAB_BELASTUNGSPLAN) {
+        reportTools.addChartToPdfReport(
+            belastungsplanPngBase64.value,
+            "Belastungsplan",
+            "Der"
+        );
+    }
+
     if (activeTab.value === TAB_GANGLINIE) {
         reportTools.addChartToPdfReport(
             getGanglinieBase64(),
@@ -405,11 +440,85 @@ watch(belastungsplanSvg, () => {
             const context = canvas.getContext("2d");
             if (context) {
                 context.drawImage(image, 0, 0, 1400, 1400);
-                const base64 = canvas.toDataURL("image/jpg");
-                belastungsplanPngBase64.value = base64;
+                belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
             }
         };
         image.src = URL.createObjectURL(belastungsplanSvg.value);
     }
 });
+
+function generatePdf(): void {
+    let formData = new FormData();
+    let type = "";
+    loadingFile.value = true;
+
+    formData.append(
+        "options",
+        new Blob([JSON.stringify(options.value)], {
+            type: "application/json",
+        })
+    );
+
+    switch (activeTab.value) {
+        case TAB_BELASTUNGSPLAN:
+            if (belastungsplanSvg.value) {
+                type = "belastungsplan";
+                formData.append(
+                    REQUEST_PART_CHART_AS_BASE64_PNG,
+                    belastungsplanPngBase64.value
+                );
+            }
+            break;
+        case TAB_GANGLINIE:
+            type = "ganglinie";
+            formData.append(
+                REQUEST_PART_CHART_AS_BASE64_PNG,
+                new Blob([getGanglinieBase64()], {
+                    type: "image/png",
+                })
+            );
+            if (belastungsplanSvg.value) {
+                formData.append(
+                    REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+                    belastungsplanPngBase64.value
+                );
+            }
+            break;
+        case TAB_LISTENAUSGABE:
+            type = "datentabelle";
+            if (belastungsplanSvg.value) {
+                formData.append(
+                    REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+                    belastungsplanPngBase64.value
+                );
+            }
+            break;
+    }
+    fetchPdf(formData, type);
+}
+
+function fetchPdf(formData: FormData, type: string) {
+    formData.append("department", store.getters["user/getDepartment"]);
+    GeneratePdfService.postPdfCustomFetchTemplateMessstelle(
+        type,
+        messstelleId.value,
+        formData
+    )
+        .then((res) => {
+            res.blob().then((blob) => {
+                // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
+                const typeForFilename: string =
+                    type.charAt(0).toUpperCase() + type.slice(1);
+
+                // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
+                const filename = `${reportTools.getFileName(
+                    typeForFilename,
+                    options.value.zeitraum
+                )}.pdf`;
+                DaveUtils.downloadFile(blob, filename);
+            });
+        })
+        .catch((error) => store.dispatch("snackbar/showError", error))
+        .finally(() => (loadingFile.value = false));
+}
 </script>

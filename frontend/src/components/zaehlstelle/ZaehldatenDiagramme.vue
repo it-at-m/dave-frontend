@@ -923,7 +923,7 @@ export default class ZaehldatenDiagramme extends Vue {
             "department",
             this.$store.getters["user/getDepartment"]
         );
-        GeneratePdfService.postPdfCustomFetchTemplate(
+        GeneratePdfService.postPdfCustomFetchTemplateZaehlung(
             type,
             this.zaehlung.id,
             formData
