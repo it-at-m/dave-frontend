@@ -7,7 +7,7 @@ import { computed } from "vue";
 interface Props {
     fontSize?: string;
     fontWeight?: string;
-    padding: string;
+    padding?: string;
     headerText: string;
 }
 
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
 const headerStyle = computed(() => {
     let headerStyle = `font-size: ${props.fontSize}; font-weight: ${props.fontWeight};`;
     if (props.padding) {
-        headerStyle = headerStyle + `padding: ${props.padding}`;
+        headerStyle = `${headerStyle} padding: ${props.padding}`;
     }
     return headerStyle;
 });
