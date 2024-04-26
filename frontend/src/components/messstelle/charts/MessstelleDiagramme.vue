@@ -410,7 +410,6 @@ watch(belastungsplanSvg, () => {
             }
         };
         image.src = URL.createObjectURL(belastungsplanSvg.value);
-
     }
 });
 </script>

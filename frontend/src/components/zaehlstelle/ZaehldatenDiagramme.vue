@@ -341,11 +341,7 @@
                 <span>Graph herunterladen</span>
             </v-tooltip>
         </v-speed-dial>
-        <PdfReportMenue
-            :open="pdfReportDialog"
-            @close="closePdfReportDialog"
-        >
-        </PdfReportMenue>
+        <pdf-report-menue v-model="pdfReportDialog"> </pdf-report-menue>
     </v-sheet>
 </template>
 <script lang="ts">
@@ -546,10 +542,6 @@ export default class ZaehldatenDiagramme extends Vue {
 
     openPdfReportDialog(): void {
         this.pdfReportDialog = true;
-    }
-
-    closePdfReportDialog(): void {
-        this.pdfReportDialog = false;
     }
 
     get fabColor(): string {

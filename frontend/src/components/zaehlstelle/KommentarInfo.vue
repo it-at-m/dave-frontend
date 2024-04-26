@@ -56,10 +56,10 @@ import { computed, ref } from "vue";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
-    kommentarZaehlstelle: string;
-    kommentarZaehlung: string;
-    zaehlsituation: string;
-    zaehlsituationErweitert: string;
+    kommentarZaehlstelle?: string;
+    kommentarZaehlung?: string;
+    zaehlsituation?: string;
+    zaehlsituationErweitert?: string;
 }
 
 const props = defineProps<Props>();
