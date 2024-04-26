@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty } from "lodash";
 import KeyVal from "@/types/KeyVal";
 import { computed, ref } from "vue";
 import IconTooltip from "@/types/util/IconTooltip";
@@ -83,12 +82,12 @@ const KOMMENTAR_ANZEIGEN = "Kommentar anzeigen";
  * die normalen comment Icons benutzt. Bei mehr als einem Kommentar werden -multiple Icons benutzt.
  */
 const icon = computed(() => {
-    if (isNotUndefinedOrEmpty(props.kommentarZaehlstelle)) {
+    if (props.kommentarZaehlstelle) {
         // Zählstellenkommentar vorhanden
         if (
-            isNotUndefinedOrEmpty(props.kommentarZaehlung) ||
-            isNotUndefinedOrEmpty(props.zaehlsituation) ||
-            isNotUndefinedOrEmpty(props.zaehlsituationErweitert)
+            props.kommentarZaehlung ||
+            props.zaehlsituation ||
+            props.zaehlsituationErweitert
         ) {
             // Info von Zählstelle UND Zählung liegt vor
             return new IconTooltip(
@@ -99,15 +98,14 @@ const icon = computed(() => {
             // Nur Info von Zählstelle liegt vor
             return new IconTooltip("mdi-comment-text", KOMMENTAR_ANZEIGEN);
         }
-    } else {
-        // Zählstellenkommentar NICHT vorhanden
-        if (kommentarArray.value.length > 1)
-            // Mehrere Kommentare vorhanden
-            return new IconTooltip("mdi-comment-multiple", KOMMENTARE_ANZEIGEN);
-        else {
-            // Nur ein Kommentar vorhanden
-            return new IconTooltip("mdi-comment", KOMMENTAR_ANZEIGEN);
-        }
+    }
+    // Zählstellenkommentar NICHT vorhanden
+    else if (kommentarArray.value.length > 1)
+        // Mehrere Kommentare vorhanden
+        return new IconTooltip("mdi-comment-multiple", KOMMENTARE_ANZEIGEN);
+    else {
+        // Nur ein Kommentar vorhanden
+        return new IconTooltip("mdi-comment", KOMMENTAR_ANZEIGEN);
     }
 });
 
@@ -139,11 +137,8 @@ function addToArrayIfNotEmpty(
     title: string,
     value: string | undefined
 ): void {
-    if (isNotUndefinedOrEmpty(value)) {
-        kommArr.push({ text: title, value: value! });
+    if (value) {
+        kommArr.push({ text: title, value: value });
     }
-}
-function isNotUndefinedOrEmpty(value: string | undefined): boolean {
-    return value != undefined && !isEmpty(value);
 }
 </script>
