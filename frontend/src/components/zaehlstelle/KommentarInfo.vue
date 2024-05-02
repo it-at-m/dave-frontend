@@ -50,120 +50,95 @@
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { isEmpty } from "lodash";
-
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import KeyVal from "@/types/KeyVal";
+import { computed, ref } from "vue";
 import IconTooltip from "@/types/util/IconTooltip";
-/* eslint-enable no-unused-vars */
 
-@Component
-export default class KommentarInfo extends Vue {
-    @Prop({ default: "" }) private kommentarZaehlstelle?: string;
-    @Prop({ default: "" }) private kommentarZaehlung?: string;
-    @Prop({ default: "" }) private zaehlsituation?: string;
-    @Prop({ default: "" }) private zaehlsituationErweitert?: string;
+interface Props {
+    kommentarZaehlstelle?: string;
+    kommentarZaehlung?: string;
+    zaehlsituation?: string;
+    zaehlsituationErweitert?: string;
+}
 
-    // Variables
-    showDialog = false;
+const props = defineProps<Props>();
 
-    // Constants
-    private static readonly KOMMENTARE_ANZEIGEN: string = "Kommentare anzeigen";
-    private static readonly KOMMENTAR_ANZEIGEN: string = "Kommentar anzeigen";
+// Variables
+const showDialog = ref(false);
 
-    /** Berechnet, welches Icon und welcher Tooltip angezeigt werden sollen
-     * Es werden vier Fälle unterschieden, die sich in den Icons unterscheiden:
-     * 1.) Nur Zählstellenkommentar vorhanden
-     * 2.) Zählstellenkommentar und Zählungsinformationen vorhanden
-     * 3.) Kein Zählstellenkommentar vorhanden, nur eine Zählungsinformation vorhanden
-     * 4.) Kein Zählstellenkommentar vorhanden, mehrere Zählungsinformationen vorhanden
-     *
-     * Wenn ein Zählstellenkommentar vorhanden ist werden comment-text Icons benutzt, wenn keiner vorhanden ist werden
-     * die normalen comment Icons benutzt. Bei mehr als einem Kommentar werden -multiple Icons benutzt.
-     */
-    get icon(): IconTooltip {
-        if (this.isNotUndefinedOrEmpty(this.kommentarZaehlstelle)) {
-            // Zählstellenkommentar vorhanden
-            if (
-                this.isNotUndefinedOrEmpty(this.kommentarZaehlung) ||
-                this.isNotUndefinedOrEmpty(this.zaehlsituation) ||
-                this.isNotUndefinedOrEmpty(this.zaehlsituationErweitert)
-            ) {
-                // Info von Zählstelle UND Zählung liegt vor
-                return new IconTooltip(
-                    "mdi-comment-text-multiple",
-                    KommentarInfo.KOMMENTARE_ANZEIGEN
-                );
-            } else {
-                // Nur Info von Zählstelle liegt vor
-                return new IconTooltip(
-                    "mdi-comment-text",
-                    KommentarInfo.KOMMENTAR_ANZEIGEN
-                );
-            }
+// Constants
+const KOMMENTARE_ANZEIGEN = "Kommentare anzeigen";
+const KOMMENTAR_ANZEIGEN = "Kommentar anzeigen";
+
+/** Berechnet, welches Icon und welcher Tooltip angezeigt werden sollen
+ * Es werden vier Fälle unterschieden, die sich in den Icons unterscheiden:
+ * 1.) Nur Zählstellenkommentar vorhanden
+ * 2.) Zählstellenkommentar und Zählungsinformationen vorhanden
+ * 3.) Kein Zählstellenkommentar vorhanden, nur eine Zählungsinformation vorhanden
+ * 4.) Kein Zählstellenkommentar vorhanden, mehrere Zählungsinformationen vorhanden
+ *
+ * Wenn ein Zählstellenkommentar vorhanden ist werden comment-text Icons benutzt, wenn keiner vorhanden ist werden
+ * die normalen comment Icons benutzt. Bei mehr als einem Kommentar werden -multiple Icons benutzt.
+ */
+const icon = computed(() => {
+    if (props.kommentarZaehlstelle) {
+        // Zählstellenkommentar vorhanden
+        if (
+            props.kommentarZaehlung ||
+            props.zaehlsituation ||
+            props.zaehlsituationErweitert
+        ) {
+            // Info von Zählstelle UND Zählung liegt vor
+            return new IconTooltip(
+                "mdi-comment-text-multiple",
+                KOMMENTARE_ANZEIGEN
+            );
         } else {
-            // Zählstellenkommentar NICHT vorhanden
-            if (this.kommentarArray.length > 1)
-                // Mehrere Kommentare vorhanden
-                return new IconTooltip(
-                    "mdi-comment-multiple",
-                    KommentarInfo.KOMMENTARE_ANZEIGEN
-                );
-            else {
-                // Nur ein Kommentar vorhanden
-                return new IconTooltip(
-                    "mdi-comment",
-                    KommentarInfo.KOMMENTAR_ANZEIGEN
-                );
-            }
+            // Nur Info von Zählstelle liegt vor
+            return new IconTooltip("mdi-comment-text", KOMMENTAR_ANZEIGEN);
         }
     }
-
-    // Zusammenbauen der Kommentare in ein Array. Hier wird auch die Anzeigereihenfolge bestimmt.
-    get kommentarArray(): KeyVal[] {
-        let kommArr: KeyVal[] = [] as KeyVal[];
-        this.addToArrayIfNotEmpty(
-            kommArr,
-            "Kommentar zur Zählstelle",
-            this.kommentarZaehlstelle
-        );
-        this.addToArrayIfNotEmpty(
-            kommArr,
-            "Kommentar zur Zählung",
-            this.kommentarZaehlung
-        );
-        this.addToArrayIfNotEmpty(
-            kommArr,
-            "Zählsituation",
-            this.zaehlsituation
-        );
-        this.addToArrayIfNotEmpty(
-            kommArr,
-            "Erweiterte Zählsituation",
-            this.zaehlsituationErweitert
-        );
-        return kommArr;
+    // Zählstellenkommentar NICHT vorhanden
+    else if (kommentarArray.value.length > 1)
+        // Mehrere Kommentare vorhanden
+        return new IconTooltip("mdi-comment-multiple", KOMMENTARE_ANZEIGEN);
+    else {
+        // Nur ein Kommentar vorhanden
+        return new IconTooltip("mdi-comment", KOMMENTAR_ANZEIGEN);
     }
+});
 
-    // Hilfsfunktionen
-    private addToArrayIfNotEmpty(
-        kommArr: KeyVal[],
-        title: string,
-        value: string | undefined
-    ): void {
-        if (this.isNotUndefinedOrEmpty(value)) {
-            kommArr.push({ text: title, value: value! });
-        }
-    }
+// Zusammenbauen der Kommentare in ein Array. Hier wird auch die Anzeigereihenfolge bestimmt.
+const kommentarArray = computed(() => {
+    let kommArr: KeyVal[] = [] as KeyVal[];
+    addToArrayIfNotEmpty(
+        kommArr,
+        "Kommentar zur Zählstelle",
+        props.kommentarZaehlstelle
+    );
+    addToArrayIfNotEmpty(
+        kommArr,
+        "Kommentar zur Zählung",
+        props.kommentarZaehlung
+    );
+    addToArrayIfNotEmpty(kommArr, "Zählsituation", props.zaehlsituation);
+    addToArrayIfNotEmpty(
+        kommArr,
+        "Erweiterte Zählsituation",
+        props.zaehlsituationErweitert
+    );
+    return kommArr;
+});
 
-    private isNotUndefinedOrEmpty(value: string | undefined): boolean {
-        return value != undefined && !isEmpty(value);
+// Hilfsfunktionen
+function addToArrayIfNotEmpty(
+    kommArr: KeyVal[],
+    title: string,
+    value: string | undefined
+): void {
+    if (value) {
+        kommArr.push({ text: title, value: value });
     }
 }
 </script>
-
-<style scoped>
-
-</style>
