@@ -103,7 +103,9 @@
                         :zaehlung-id="zaehlungsId"
                     ></belastungsplan-card>
                 </v-sheet>
-                <loader :value="belastungsplanLoading"></loader>
+                <progress-loader
+                    :value="belastungsplanLoading"
+                ></progress-loader>
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -117,7 +119,7 @@
                         :zaehldaten-stepline="zaehldatenStepline"
                     ></step-line-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -130,7 +132,7 @@
                     >
                     </zaehldaten-listenausgabe>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -143,7 +145,7 @@
                         :zaehldaten-heatmap="zaehldatenHeatmapData"
                     ></heatmap-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -157,7 +159,7 @@
                     >
                     </zeitreihe-card>
                 </v-sheet>
-                <loader :value="zeitreiheLoading"></loader>
+                <progress-loader :value="zeitreiheLoading"></progress-loader>
             </v-tab-item>
         </v-tabs-items>
 
@@ -355,7 +357,7 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
-import Loader from "@/components/common/Loader.vue";
+import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import PdfReportMenue from "@/components/zaehlstelle/PdfReportMenue.vue";
 
 // Typen
@@ -398,7 +400,7 @@ import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
         ZeitreiheCard,
         BelastungsplanKreuzungSvg,
         BelastungsplanKreuzungSvgSchematischeUebersicht,
-        Loader,
+        ProgressLoader: ProgressLoader,
         PdfReportMenue,
     },
 })

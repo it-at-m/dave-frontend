@@ -66,7 +66,7 @@
                         :zaehldaten-stepline="zaehldatenSteplineDTO"
                     ></step-line-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
@@ -81,7 +81,7 @@
                     >
                     </messwerte-listenausgabe>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
@@ -96,7 +96,7 @@
                         :zaehldaten-heatmap="zaehldatenHeatmapDTO"
                     ></heatmap-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
         </v-tabs-items>
 
@@ -124,7 +124,7 @@ import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
-import Loader from "@/components/common/Loader.vue";
+import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import { useStore } from "@/api/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";

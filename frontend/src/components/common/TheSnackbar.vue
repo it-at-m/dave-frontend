@@ -25,50 +25,54 @@
     </v-snackbar>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+<script lang="ts" setup>
+import { ref, computed, watch } from "vue";
 import { Levels } from "@/api/error";
+import { useStore } from "@/api/util/useStore";
 
-@Component
-export default class TheSnackbar extends Vue {
-    private static defaultTimeout = 6000;
+const defaultTimeout = 6000;
 
-    show = false;
-    timeout: number = TheSnackbar.defaultTimeout;
-    snackbarTextPart1 = "";
-    snackbarTextPart2 = "";
-    color = "info";
+const show = ref(false);
+const timeout = ref(defaultTimeout);
+const snackbarTextPart1 = ref("");
+const snackbarTextPart2 = ref("");
+const color = ref("info");
 
-    @Watch("$store.state.snackbar.switch")
-    setToast(): void {
-        this.show = false;
+const store = useStore();
+
+const snackbarState = computed(() => {
+    return store.state.snackbar;
+});
+
+watch(
+    () => snackbarState.value.switch,
+    () => {
+        show.value = false;
         setTimeout(() => {
-            this.snackbarTextPart1 =
-                this.$store.state.snackbar.snackbarTextPart1;
-            this.snackbarTextPart2 =
-                this.$store.state.snackbar.snackbarTextPart2;
-            this.color = this.$store.state.snackbar.level;
-            switch (this.color) {
+            snackbarTextPart1.value = snackbarState.value.snackbarTextPart1;
+            snackbarTextPart2.value = snackbarState.value.snackbarTextPart2;
+            color.value = snackbarState.value.level;
+            switch (color.value) {
                 case Levels.ERROR: {
-                    this.timeout = 0;
+                    timeout.value = 0;
                     break;
                 }
                 case Levels.WARNING: {
-                    this.timeout = 8000;
+                    timeout.value = 8000;
                     break;
                 }
                 case Levels.SUCCESS: {
-                    this.timeout = 4000;
+                    timeout.value = 4000;
                     break;
                 }
                 default: {
-                    this.timeout = 6000;
+                    timeout.value = 6000;
                     break;
                 }
             }
-            this.show = true;
+            show.value = true;
         }, 100);
     }
-}
+);
 </script>
 
