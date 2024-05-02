@@ -430,23 +430,6 @@ function closePdfReportDialog(): void {
     pdfReportDialog.value = false;
 }
 
-watch(belastungsplanSvg, () => {
-    if (belastungsplanSvg.value) {
-        const image = new Image();
-        image.onload = () => {
-            const canvas = document.createElement("canvas");
-            canvas.width = 1400;
-            canvas.height = 1400;
-            const context = canvas.getContext("2d");
-            if (context) {
-                context.drawImage(image, 0, 0, 1400, 1400);
-                belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
-            }
-        };
-        image.src = URL.createObjectURL(belastungsplanSvg.value);
-    }
-});
-
 function generatePdf(): void {
     let formData = new FormData();
     let type = "";
