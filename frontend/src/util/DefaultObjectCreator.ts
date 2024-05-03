@@ -8,6 +8,7 @@ import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -125,6 +126,19 @@ export default class DefaultObjectCreator {
                 lieferwagen: false,
             } as FahrzeugOptions,
             verfuegbareVerkehrsarten: [],
+        };
+    }
+
+    public static createDefaultZaehlstelleHeaderDTO() {
+        return {
+            nummer: "",
+            name: "",
+            stadtbezirk: "",
+            stadtbezirkNummer: "",
+            lat: "",
+            lng: "",
+            zaehlungen: [] as Array<LadeZaehlungDTO>,
+            kommentar: "",
         };
     }
 }
