@@ -440,7 +440,7 @@ const loadingFile: Ref<boolean> = ref(false);
 
 const belastungsplanCard = ref<BelastungsplanCard>();
 const steplineCard = ref<StepLineCard>();
-const heatmapCard = ref<HeatmapCard>();
+const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const zeitreiheCard = ref<ZeitreiheCard>();
 
 const store = useStore();
@@ -804,8 +804,8 @@ function getGanglinieBase64(): string {
 /**
  * Base64 String der Heatmap
  */
-function getHeatmapBase64(): string {
-    return heatmapCard?.value?.heatmapChart.chart.getDataURL({
+function getHeatmapBase64(): string | undefined {
+    return heatmapCard?.value?.heatmapChart?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],

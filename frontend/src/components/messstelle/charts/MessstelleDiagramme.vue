@@ -191,7 +191,7 @@ const TAB_HEATMAP = 3;
 
 const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<StepLineCard>();
-const heatmapCard = ref<HeatmapCard>();
+const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
@@ -417,8 +417,8 @@ function getGanglinieBase64(): string {
 /**
  * Base 64 String der Heatmap
  */
-function getHeatmapBase64(): string {
-    return heatmapCard?.value?.heatmapChart.chart.getDataURL({
+function getHeatmapBase64(): string | undefined {
+    return heatmapCard?.value?.heatmapChart?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
