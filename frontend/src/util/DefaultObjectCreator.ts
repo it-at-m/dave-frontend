@@ -9,6 +9,7 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import InfoMessageDTO from "@/types/InfoMessageDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -139,6 +140,16 @@ export default class DefaultObjectCreator {
             lng: "",
             zaehlungen: [] as Array<LadeZaehlungDTO>,
             kommentar: "",
+        };
+    }
+
+    public static createDefaultInfoMessageDto(): InfoMessageDTO {
+        return {
+            content: "",
+            gueltig: false,
+            id: "",
+            entityVersion: 0,
+            createdTime: "",
         };
     }
 }

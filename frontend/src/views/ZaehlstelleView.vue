@@ -17,7 +17,7 @@
                         :minheight="headerHeightVh"
                         :nummer="zaehlstelle.nummer"
                         :kreuzungsname="kreuzungsname"
-                        :stadtbezirk-nummer="zaehlstelle.stadtbezirkNummer"
+                        :stadtbezirk-nummer="`${zaehlstelle.stadtbezirkNummer}`"
                         :stadtbezirk="zaehlstelle.stadtbezirk"
                     ></zaehlstelle-info>
                     <!-- Information zur aktiven Zählung -->
