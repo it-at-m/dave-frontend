@@ -36,6 +36,7 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 /* eslint-enable no-unused-vars */
 import _ from "lodash";
 import ChartUtils from "@/util/ChartUtils";
+import DaveUtils from "@/util/DaveUtils";
 
 use([
     CanvasRenderer,
@@ -431,14 +432,7 @@ export default class Zeitreihe extends Vue {
             );
             rows.push(row);
         }
-        let csvContent = "data:text/csv;charset=UTF-8," + rows.join("\n");
-        let encodedUri = encodeURI(csvContent);
-        let link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `zeitreihe.csv`);
-        document.body.appendChild(link); // Required for FF
-
-        link.click(); // Lädt die Datei herunter
+        DaveUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
     }
 
     /**

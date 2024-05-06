@@ -144,6 +144,7 @@ import CsvDTO from "@/types/CsvDTO";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import DaveUtils from "@/util/DaveUtils";
+import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -188,7 +189,7 @@ const TAB_GANGLINIE = 1;
 const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
-const belastungsplanCard = ref<BelastungsplanMessquerschnittCard>();
+const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<StepLineCard>();
 const heatmapCard = ref<HeatmapCard>();
 const belastungsplanSvg = ref<Blob>();
@@ -311,27 +312,37 @@ function setMaxRangeYAchse() {
 function addChartToPdfReport(): void {
     if (activeTab.value === TAB_BELASTUNGSPLAN) {
         reportTools.addChartToPdfReport(
-            belastungsplanPngBase64.value,
+            Erhebungsstelle.MESSSTELLE,
+            "Der",
             "Belastungsplan",
-            "Der"
+            belastungsplanPngBase64.value,
+            false
         );
     }
 
     if (activeTab.value === TAB_GANGLINIE) {
         reportTools.addChartToPdfReport(
-            getGanglinieBase64(),
+            Erhebungsstelle.MESSSTELLE,
+            "Die",
             "Ganglinie",
-            "Die"
+            getGanglinieBase64(),
+            true
         );
     }
     if (activeTab.value === TAB_HEATMAP) {
-        reportTools.addChartToPdfReport(getHeatmapBase64(), "Heatmap", "Die");
+        reportTools.addChartToPdfReport(
+            Erhebungsstelle.MESSSTELLE,
+            "Die",
+            "Heatmap",
+            getHeatmapBase64(),
+            true
+        );
     }
     if (activeTab.value === TAB_LISTENAUSGABE) {
-        reportTools.addDatatabelToPdfReport(
-            _.cloneDeep(options.value),
-            "Datentabelle",
-            "Die"
+        reportTools.addDatatableToPdfReport(
+            Erhebungsstelle.MESSSTELLE,
+            "Die",
+            "Datentabelle"
         );
     }
 }
@@ -341,29 +352,35 @@ function addChartToPdfReport(): void {
  */
 function saveGraphAsImage(): void {
     loadingFile.value = true;
-    if (activeTab.value === TAB_GANGLINIE) {
+    let encodedUri = "";
+    let type = "";
+
+    switch (activeTab.value) {
+        case TAB_GANGLINIE:
+            type = "Ganglinie";
+            encodedUri = getGanglinieBase64();
+            break;
+        case TAB_HEATMAP:
+            type = "Heatmap";
+            encodedUri = getHeatmapBase64();
+            break;
+        case TAB_BELASTUNGSPLAN:
+            type = "Belastungsplan";
+            if (belastungsplanSvg.value) {
+                encodedUri = URL.createObjectURL(belastungsplanSvg.value);
+            }
+            break;
+    }
+
+    if (encodedUri && type) {
         reportTools.saveGraphAsImage(
-            getGanglinieBase64(),
-            "Ganglinie",
-            options.value.zeitraum
-        );
-    } else if (activeTab.value === TAB_HEATMAP) {
-        reportTools.saveGraphAsImage(
-            getHeatmapBase64(),
-            "Heatmap",
-            options.value.zeitraum
-        );
-    } else if (
-        activeTab.value == TAB_BELASTUNGSPLAN &&
-        belastungsplanSvg.value
-    ) {
-        const uri = URL.createObjectURL(belastungsplanSvg.value);
-        reportTools.saveGraphAsImage(
-            uri,
-            "Belastungsplan",
-            options.value.zeitraum
+            Erhebungsstelle.MESSSTELLE,
+            type,
+            options.value.zeitraum,
+            encodedUri
         );
     }
+
     loadingFile.value = false;
 }
 
@@ -373,22 +390,12 @@ function generateCsv() {
 
     GenerateCsvService.generateCsvMst(messstelleId.value, optionsDTO)
         .then((result: CsvDTO) => {
-            // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
-            let filename = `${reportTools.getFileName(
+            const filename = `${reportTools.getFileName(
+                Erhebungsstelle.MESSSTELLE,
                 "Listenausgabe",
                 options.value.zeitraum
             )}.csv`;
-
-            let csvContent =
-                "data:text/csv;charset=utf-8," + result.csvAsString;
-
-            let encodedUri = encodeURI(csvContent);
-            let link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", filename);
-            document.body.appendChild(link); // Required for FF
-
-            link.click();
+            DaveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
             store.dispatch("snackbar/showError", error);
@@ -495,6 +502,7 @@ function fetchPdf(formData: FormData, type: string) {
 
                 // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
                 const filename = `${reportTools.getFileName(
+                    Erhebungsstelle.MESSSTELLE,
                     typeForFilename,
                     options.value.zeitraum
                 )}.pdf`;

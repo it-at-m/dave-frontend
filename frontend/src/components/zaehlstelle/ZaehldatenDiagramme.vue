@@ -374,16 +374,12 @@ import GeneratePdfService from "@/api/service/GeneratePdfService";
 // Util
 import DaveUtils from "@/util/DaveUtils";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import _ from "lodash";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { Levels } from "@/api/error";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
 import { useStore } from "@/api/util/useStore";
-import { useDateUtils } from "@/util/DateUtils";
+import { useReportTools } from "@/util/reportTools";
+import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -448,7 +444,7 @@ const heatmapCard = ref<HeatmapCard>();
 const zeitreiheCard = ref<ZeitreiheCard>();
 
 const store = useStore();
-const dateUtils = useDateUtils();
+const reportTools = useReportTools();
 
 const fabColor: ComputedRef<string> = computed(() => {
     return fab.value ? "grey darken-1" : "secondary";
@@ -680,72 +676,61 @@ function setMaxRangeYAchse() {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
-    let type = "";
-    // Belastungsplan
-    if (activeTab.value === TAB_BELASTUNGSPLAN) {
-        type = "Der Belastungsplan";
-        if (belastungsplanDTO.value.kreisverkehr) {
-            // Kreisverkehr
-            addImageToReport(
-                getKreisverkehrBase64(),
-                createCaption("Belastungsplan"),
-                false
+    switch (activeTab.value) {
+        case TAB_BELASTUNGSPLAN:
+            if (belastungsplanDTO.value.kreisverkehr) {
+                reportTools.addChartToPdfReport(
+                    Erhebungsstelle.ZAEHLSTELLE,
+                    "Der",
+                    "Belastungsplan",
+                    getKreisverkehrBase64(),
+                    false
+                );
+            } else {
+                reportTools.addChartToPdfReport(
+                    Erhebungsstelle.ZAEHLSTELLE,
+                    "Der",
+                    "Belastungsplan",
+                    "belastungsplanPngBase64.value",
+                    false
+                );
+            }
+            break;
+        case TAB_GANGLINIE:
+            reportTools.addChartToPdfReport(
+                Erhebungsstelle.ZAEHLSTELLE,
+                "Die",
+                "Ganglinie",
+                getGanglinieBase64(),
+                true
             );
-        } else {
-            // Kreuzung
-            addImageToReport(
-                belastungsplanPngBase64.value,
-                createCaption("Belastungsplan"),
-                false
+            break;
+        case TAB_HEATMAP:
+            reportTools.addChartToPdfReport(
+                Erhebungsstelle.ZAEHLSTELLE,
+                "Die",
+                "Heatmap",
+                getHeatmapBase64(),
+                true
             );
-        }
+            break;
+        case TAB_ZEITREIHE:
+            reportTools.addChartToPdfReport(
+                Erhebungsstelle.ZAEHLSTELLE,
+                "Die",
+                "Zeitreihe",
+                getZeitreiheBase64(),
+                true
+            );
+            break;
+        case TAB_LISTENAUSGABE:
+            reportTools.addDatatableToPdfReport(
+                Erhebungsstelle.ZAEHLSTELLE,
+                "Die",
+                "Datentabelle"
+            );
+            break;
     }
-    // Ganglinie
-    if (activeTab.value === TAB_GANGLINIE) {
-        type = "Die Ganglinie";
-
-        addImageToReport(
-            getGanglinieBase64(),
-            createCaption("Ganglinie"),
-            true
-        );
-    }
-    // Heatmap
-    if (activeTab.value === TAB_HEATMAP) {
-        type = "Die Heatmap";
-        addImageToReport(getHeatmapBase64(), createCaption("Heatmap"), true);
-    }
-    // Zeitreihe
-    if (activeTab.value === TAB_ZEITREIHE) {
-        type = "Die Zeitreihe";
-        addImageToReport(
-            getZeitreiheBase64(),
-            createCaption("Zeitreihe"),
-            true
-        );
-    }
-    // Listenausgabe
-    if (activeTab.value === TAB_LISTENAUSGABE) {
-        type = "Die Datentabelle";
-        addHeadingToReport();
-        const datatableAsset: DatatableAsset = new DatatableAsset(
-            Object.assign({}, options.value),
-            zaehlungsId.value,
-            createCaption("Datentabelle")
-        );
-        store.dispatch("addAsset", datatableAsset);
-    }
-    store.dispatch("snackbar/showToast", {
-        snackbarTextPart1: `${type} wurde dem PDF Report hinzugefügt.`,
-        level: Levels.SUCCESS,
-    });
-}
-
-function createCaption(diagram: string): string {
-    const zdate = dateUtils.getShortVersionOfDate(
-        new Date(selectedZaehlung.value.datum)
-    );
-    return `${diagram} zur Zählung vom ${zdate} für Zählstelle ${zaehlstelle.value.nummer}`;
 }
 
 /**
@@ -754,41 +739,41 @@ function createCaption(diagram: string): string {
 function saveGraphAsImage(): void {
     loadingFile.value = true;
 
-    let filename: string = getFileName();
     let encodedUri = "";
-    // Belastungsplan
-    if (activeTab.value === TAB_BELASTUNGSPLAN) {
-        filename += "_Belastungsplan";
-        // Kreisverkehr
-        if (belastungsplanDTO.value.kreisverkehr) {
-            encodedUri = getKreisverkehrBase64();
-        } else if (belastungsplanSvg.value != null) {
-            // Kreuzung
-            encodedUri = URL.createObjectURL(belastungsplanSvg.value);
-        }
-        // Ganglinie
-    } else if (activeTab.value === TAB_GANGLINIE) {
-        filename += "_Ganglinie";
-        encodedUri = getGanglinieBase64();
-        // Listenausgabe
-    } else if (activeTab.value === TAB_HEATMAP) {
-        filename += "_Heatmap";
-        encodedUri = getHeatmapBase64();
-        // Zeitreihe
-    } else if (activeTab.value === TAB_ZEITREIHE) {
-        filename += "_Zeitreihe";
-        encodedUri = getZeitreiheBase64();
+    let type = "";
+
+    switch (activeTab.value) {
+        case TAB_BELASTUNGSPLAN:
+            type = "Belastungsplan";
+            if (belastungsplanDTO.value.kreisverkehr) {
+                encodedUri = getKreisverkehrBase64();
+            } else if (belastungsplanSvg.value) {
+                // Kreuzung
+                encodedUri = URL.createObjectURL(belastungsplanSvg.value);
+            }
+            break;
+        case TAB_GANGLINIE:
+            type = "Ganglinie";
+            encodedUri = getGanglinieBase64();
+            break;
+        case TAB_HEATMAP:
+            type = "Heatmap";
+            encodedUri = getHeatmapBase64();
+            break;
+        case TAB_ZEITREIHE:
+            type = "Zeitreihe";
+            encodedUri = getZeitreiheBase64();
+            break;
     }
 
-    if (encodedUri !== "") {
-        let link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", filename);
-        document.body.appendChild(link); // Required for FF
-
-        link.click();
+    if (encodedUri && type) {
+        reportTools.saveGraphAsImage(
+            Erhebungsstelle.ZAEHLSTELLE,
+            type,
+            [selectedZaehlung.value.datum],
+            encodedUri
+        );
     }
-
     loadingFile.value = false;
 }
 
@@ -836,53 +821,6 @@ function getZeitreiheBase64(): string {
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
     });
-}
-
-/**
- * Sendet die übergebenen Bildaten und Bildunterschrift als "ImageAsset" an den Vuex Store.
- */
-function addImageToReport(
-    base64: string,
-    name: string,
-    heading: boolean
-): void {
-    if (heading) {
-        addHeadingToReport();
-    }
-    const imageAsset = new ImageAsset(name, base64);
-    imageAsset.width = 100;
-    store.dispatch("addAsset", imageAsset);
-}
-
-function addHeadingToReport(): void {
-    // Calculate Heading
-    let chartTitle = "";
-    if (options.value.vonKnotenarm !== null) {
-        selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
-            if (knotenarm.nummer === options.value.vonKnotenarm) {
-                if (!selectedZaehlung.value.kreisverkehr) {
-                    chartTitle = "von ";
-                }
-                chartTitle = `${chartTitle} ${knotenarm.strassenname} (${knotenarm.nummer}) `;
-            }
-        });
-    }
-
-    if (options.value.nachKnotenarm !== null) {
-        selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
-            if (knotenarm.nummer === options.value.nachKnotenarm) {
-                chartTitle = `${chartTitle} nach ${knotenarm.strassenname} (${knotenarm.nummer})`;
-            }
-        });
-    }
-
-    if (chartTitle !== "") {
-        const headingAsset = new HeadingAsset(
-            chartTitle,
-            AssetTypesEnum.HEADING5
-        );
-        store.dispatch("addAsset", headingAsset);
-    }
 }
 
 // PDF
@@ -967,11 +905,13 @@ function fetchPdf(formData: FormData, type: string) {
         .then((res) => {
             res.blob().then((blob) => {
                 // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
-                let typeForFilename: string =
+                const typeForFilename: string =
                     type.charAt(0).toUpperCase() + type.slice(1);
-
-                // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
-                let filename = `${getFileName()}_${typeForFilename}.pdf`;
+                const filename = `${reportTools.getFileName(
+                    Erhebungsstelle.ZAEHLSTELLE,
+                    typeForFilename,
+                    [selectedZaehlung.value.datum]
+                )}.pdf`;
                 DaveUtils.downloadFile(blob, filename);
             });
         })
@@ -987,31 +927,17 @@ function generateCsv() {
     GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)
         .then((result: CsvDTO) => {
             // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
-            let filename = `${getFileName()}_Listenausgabe.csv`;
+            const filename = `${reportTools.getFileName(
+                Erhebungsstelle.ZAEHLSTELLE,
+                "Listenausgabe",
+                [selectedZaehlung.value.datum]
+            )}.csv`;
 
-            let csvContent =
-                "data:text/csv;charset=utf-8," + result.csvAsString;
-
-            let encodedUri = encodeURI(csvContent);
-            let link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", filename);
-            document.body.appendChild(link); // Required for FF
-
-            link.click();
+            DaveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
             store.dispatch("snackbar/showError", error);
         })
         .finally(() => (loadingFile.value = false));
-}
-
-function getFileName(): string {
-    let dateForFilename: string = new Date(selectedZaehlung.value.datum)
-        .toISOString()
-        .split("T")[0];
-
-    // Beispiel: 251101K_15-11-2020
-    return `${zaehlstelle.value.nummer}${selectedZaehlung.value.zaehlart}_${dateForFilename}`;
 }
 </script>
