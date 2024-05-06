@@ -102,7 +102,7 @@
                         :zaehlung-id="zaehlungsId"
                     ></belastungsplan-card>
                 </v-sheet>
-                <loader :value="belastungsplanLoading"></loader>
+                <progress-loader :value="belastungsplanLoading" />
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -116,7 +116,7 @@
                         :zaehldaten-stepline="zaehldatenSteplineDTO"
                     ></step-line-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading" />
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -129,7 +129,7 @@
                     >
                     </zaehldaten-listenausgabe>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading" />
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -142,7 +142,7 @@
                         :zaehldaten-heatmap="zaehldatenHeatmap"
                     ></heatmap-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading" />
             </v-tab-item>
             <v-tab-item>
                 <v-sheet
@@ -156,7 +156,7 @@
                     >
                     </zeitreihe-card>
                 </v-sheet>
-                <loader :value="zeitreiheLoading"></loader>
+                <progress-loader :value="zeitreiheLoading" />
             </v-tab-item>
         </v-tabs-items>
 
@@ -354,7 +354,6 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
-import Loader from "@/components/common/Loader.vue";
 import PdfReportMenue from "@/components/zaehlstelle/PdfReportMenue.vue";
 // Typen
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
@@ -380,6 +379,7 @@ import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
 import { useStore } from "@/api/util/useStore";
 import { useReportTools } from "@/util/reportTools";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import ProgressLoader from "@/components/common/ProgressLoader.vue";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
