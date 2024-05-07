@@ -16,42 +16,38 @@
         />
     </v-card>
 </template>
-<script lang="ts">
-import Vue from "vue";
-import { Component, Prop, Ref } from "vue-property-decorator";
-
-import StepLine from "@/components/zaehlstelle/charts/StepLine.vue";
-// eslint-disable-next-line no-unused-vars
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import StepLine from "@/components/zaehlstelle/charts/StepLineChart.vue";
+import StepLineChart from "@/components/zaehlstelle/charts/StepLineChart.vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import { ResizeOpts } from "echarts/core";
+import { SeriesOption } from "echarts";
 
-@Component({
-    components: {
-        StepLine,
-    },
-})
-export default class StepLineCard extends Vue {
-    @Prop()
-    zaehldatenStepline!: LadeZaehldatenSteplineDTO;
+interface Props {
+    zaehldatenStepline: LadeZaehldatenSteplineDTO;
+}
 
-    @Ref("steplineForPdf") readonly steplineForPdf!: StepLine;
+defineProps<Props>();
 
-    mounted(): void {
-        // Der steplineForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
-        let chartOptions: any = {} as {
-            width?: number | string;
-            height?: number | string;
-            silent?: boolean;
-        };
-        chartOptions.width = 900;
-        chartOptions.height = 430;
-        chartOptions.silent = true;
-        this.steplineForPdf.chart.resize(chartOptions);
-    }
+const steplineForPdf = ref<InstanceType<typeof StepLineChart> | null>();
+defineExpose({
+    steplineForPdf,
+});
+onMounted(() => {
+    // Der steplineForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
+    let chartOptions = {} as ResizeOpts;
+    chartOptions.width = 900;
+    chartOptions.height = 430;
+    chartOptions.silent = true;
+    steplineForPdf?.value?.chart?.resize(chartOptions);
+});
 
-    charttypeChanged(newChartType: string) {
-        this.steplineForPdf.chart.option.series.forEach((series: any) => {
-            series.type = newChartType;
-        });
-    }
+function charttypeChanged(newChartType: "line" | "bar") {
+    (
+        steplineForPdf?.value?.chart?.option?.series as Array<SeriesOption>
+    ).forEach((series: SeriesOption) => {
+        series.type = newChartType;
+    });
 }
 </script>

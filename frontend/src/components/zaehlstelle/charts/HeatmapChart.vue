@@ -51,21 +51,13 @@ defineExpose({
 });
 
 const vuetify = useVuetify();
-
-const twoChartsNeeded = ref(false);
-
+const twoChartsNeeded: Ref<boolean> = ref(false);
 const chartLegend: Ref<Array<string>> = ref([]);
-
 const xAxisDataFirstChart: Ref<Array<string>> = ref([]);
-
 const xAxisDataSecondChart: Ref<Array<string>> = ref([]);
-
 const seriesEntriesFirstChart: Ref<Array<Array<number>>> = ref([]);
-
 const seriesEntriesSecondChart: Ref<Array<Array<number>>> = ref([]);
-
 const rangeMin: Ref<number> = ref(0);
-
 const rangeMax: Ref<number> = ref(0);
 
 function formatYAxisLabel(value: any): string {
