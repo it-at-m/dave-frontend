@@ -190,7 +190,7 @@ const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
 const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
-const steplineCard = ref<StepLineCard>();
+const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
@@ -406,8 +406,8 @@ function generateCsv() {
 /**
  * Base 64 String der Ganglinie
  */
-function getGanglinieBase64(): string {
-    return steplineCard?.value?.steplineForPdf.chart.getDataURL({
+function getGanglinieBase64(): string | undefined {
+    return steplineCard?.value?.steplineForPdf?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],

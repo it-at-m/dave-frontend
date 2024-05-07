@@ -439,7 +439,7 @@ const activeTab: Ref<number> = ref(0);
 const loadingFile: Ref<boolean> = ref(false);
 
 const belastungsplanCard = ref<BelastungsplanCard>();
-const steplineCard = ref<StepLineCard>();
+const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const zeitreiheCard = ref<ZeitreiheCard>();
 
@@ -739,7 +739,7 @@ function addChartToPdfReport(): void {
 function saveGraphAsImage(): void {
     loadingFile.value = true;
 
-    let encodedUri = "";
+    let encodedUri = undefined;
     let type = "";
 
     switch (activeTab.value) {
@@ -793,8 +793,8 @@ function getKreisverkehrBase64(): string {
 /**
  * Base 64 String der Ganglinie
  */
-function getGanglinieBase64(): string {
-    return steplineCard?.value?.steplineForPdf.chart.getDataURL({
+function getGanglinieBase64(): string | undefined {
+    return steplineCard?.value?.steplineForPdf?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
@@ -859,12 +859,15 @@ function generatePdf() {
 
         // Ganglinie
     } else if (activeTab.value === TAB_GANGLINIE) {
-        formData.append(
-            REQUEST_PART_CHART_AS_BASE64_PNG,
-            new Blob([getGanglinieBase64()], {
-                type: "image/png",
-            })
-        );
+        const ganglinieBase64 = getGanglinieBase64();
+        if (ganglinieBase64) {
+            formData.append(
+                REQUEST_PART_CHART_AS_BASE64_PNG,
+                new Blob([ganglinieBase64], {
+                    type: "image/png",
+                })
+            );
+        }
         formData.append(
             REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
             belastungsplanSchematischeUebersichtPngBase64.value
