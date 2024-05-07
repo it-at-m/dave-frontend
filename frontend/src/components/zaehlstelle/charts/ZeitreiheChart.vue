@@ -15,11 +15,11 @@ import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { BarChart, LineChart } from "echarts/charts";
 import {
+    GridComponent,
     LegendComponent,
     TitleComponent,
     ToolboxComponent,
     TooltipComponent,
-    GridComponent,
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
 
@@ -53,7 +53,6 @@ const SCHWERVERKEHR = "Schwerverkehr";
 const RADVERKEHR = "Radverkehr";
 const FUSSVERKEHR = "Fussverkehr";
 const GESAMT = "Summe alle Verkehrsarten";
-const SYMBOL_SIZE = 5;
 
 provide(THEME_KEY, "default");
 interface Props {
@@ -290,7 +289,7 @@ const secondYAxis = computed(() => {
  * Kraftfahrzeugverkehr, Schwerverkehr, Güterverkehr, Radverkehr, Fußverkehr, Schwerverkehr Anteil in Prozent, Gesamt
  **/
 function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
-    let series = [] as any;
+    let series: Array<unknown> = [];
 
     if (filterOptions.value.kraftfahrzeugverkehr) {
         series.push({
@@ -436,9 +435,9 @@ function fillCsvRow(isWanted: boolean, data: number) {
 
 watch(
     () => props.zeitreiheDaten,
-    () => {
+    (zeitreiheDaten: LadeZaehldatenZeitreiheDTO) => {
         seriesEntriesChart.value = [];
-        seriesEntriesChart.value = createSeriesEntries(props.zeitreiheDaten);
+        seriesEntriesChart.value = createSeriesEntries(zeitreiheDaten);
     },
     { immediate: true }
 );

@@ -332,26 +332,25 @@ function formatYAxisLabel(params: Array<any>): string {
 
 watch(
     () => props.zaehldatenStepline,
-    () => {
+    (zaehldatenStepline: LadeZaehldatenSteplineDTO) => {
         resetData();
-        twoChartsNeeded.value = checkTwoChartsNeeded(props.zaehldatenStepline);
-        chartLegend.value = props.zaehldatenStepline.legend;
-        rangeMax.value = props.zaehldatenStepline.rangeMax;
-        rangeMaxPercent.value = props.zaehldatenStepline.rangeMaxPercent;
-        xAxisDataFirstChart.value =
-            props.zaehldatenStepline.xaxisDataFirstChart;
-        if (props.zaehldatenStepline.xaxisDataSecondChart !== null) {
+        twoChartsNeeded.value = checkTwoChartsNeeded(zaehldatenStepline);
+        chartLegend.value = zaehldatenStepline.legend;
+        rangeMax.value = zaehldatenStepline.rangeMax;
+        rangeMaxPercent.value = zaehldatenStepline.rangeMaxPercent;
+        xAxisDataFirstChart.value = zaehldatenStepline.xaxisDataFirstChart;
+        if (zaehldatenStepline.xaxisDataSecondChart !== null) {
             xAxisDataSecondChart.value =
-                props.zaehldatenStepline.xaxisDataSecondChart;
+                zaehldatenStepline.xaxisDataSecondChart;
         }
-        if (props.zaehldatenStepline.seriesEntriesSecondChart !== null) {
+        if (zaehldatenStepline.seriesEntriesSecondChart !== null) {
             seriesEntriesChart.value = createSeriesDataForChart([
-                ...props.zaehldatenStepline.seriesEntriesFirstChart,
-                ...props.zaehldatenStepline.seriesEntriesSecondChart,
+                ...zaehldatenStepline.seriesEntriesFirstChart,
+                ...zaehldatenStepline.seriesEntriesSecondChart,
             ]);
         } else {
             seriesEntriesChart.value = createSeriesDataForChart(
-                props.zaehldatenStepline.seriesEntriesFirstChart
+                zaehldatenStepline.seriesEntriesFirstChart
             );
         }
     },

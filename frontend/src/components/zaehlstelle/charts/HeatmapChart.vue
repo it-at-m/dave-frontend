@@ -278,23 +278,22 @@ const options2x4 = computed(() => {
 
 watch(
     () => props.zaehldatenHeatmap,
-    () => {
+    (zaehldatenHeatmap: LadeZaehldatenHeatmapDTO) => {
         resetData();
-        twoChartsNeeded.value = checkTwoChartsNeeded(props.zaehldatenHeatmap);
-        chartLegend.value = props.zaehldatenHeatmap.legend;
-        xAxisDataFirstChart.value = props.zaehldatenHeatmap.xaxisDataFirstChart;
-        if (props.zaehldatenHeatmap.xaxisDataSecondChart !== null) {
-            xAxisDataSecondChart.value =
-                props.zaehldatenHeatmap.xaxisDataSecondChart;
+        twoChartsNeeded.value = checkTwoChartsNeeded(zaehldatenHeatmap);
+        chartLegend.value = zaehldatenHeatmap.legend;
+        xAxisDataFirstChart.value = zaehldatenHeatmap.xaxisDataFirstChart;
+        if (zaehldatenHeatmap.xaxisDataSecondChart !== null) {
+            xAxisDataSecondChart.value = zaehldatenHeatmap.xaxisDataSecondChart;
         }
         seriesEntriesFirstChart.value =
-            props.zaehldatenHeatmap.seriesEntriesFirstChart;
-        if (props.zaehldatenHeatmap.seriesEntriesSecondChart !== null) {
+            zaehldatenHeatmap.seriesEntriesFirstChart;
+        if (zaehldatenHeatmap.seriesEntriesSecondChart !== null) {
             seriesEntriesSecondChart.value =
-                props.zaehldatenHeatmap.seriesEntriesSecondChart;
+                zaehldatenHeatmap.seriesEntriesSecondChart;
         }
-        rangeMin.value = props.zaehldatenHeatmap.rangeMin;
-        rangeMax.value = props.zaehldatenHeatmap.rangeMax;
+        rangeMin.value = zaehldatenHeatmap.rangeMin;
+        rangeMax.value = zaehldatenHeatmap.rangeMax;
     },
     { immediate: true }
 );

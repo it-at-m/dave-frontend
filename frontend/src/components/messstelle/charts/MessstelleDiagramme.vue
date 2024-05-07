@@ -230,7 +230,6 @@ watch(activeTab, (active) => {
 });
 
 watch(options, () => {
-    activeTab.value = TAB_BELASTUNGSPLAN;
     loadProcessedChartData();
 });
 watch(belastungsplanSvg, () => {
