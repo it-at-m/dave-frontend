@@ -55,7 +55,7 @@ defineExpose({
 });
 
 defineEmits<{
-    (e: "charttypeChanged", payload: string): void;
+    (e: "charttypeChanged", payload: "line" | "bar"): void;
 }>();
 
 const vuetify = useVuetify();

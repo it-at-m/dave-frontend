@@ -3,13 +3,13 @@
         elevation="0"
         class="pt-5"
     >
-        <step-line
+        <step-line-chart
             :zaehldaten-stepline="zaehldatenStepline"
             @charttypeChanged="charttypeChanged"
         />
         <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
-        <step-line
+        <step-line-chart
             ref="steplineForPdf"
             style="display: none"
             :zaehldaten-stepline="zaehldatenStepline"
@@ -18,7 +18,6 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import StepLine from "@/components/zaehlstelle/charts/StepLineChart.vue";
 import StepLineChart from "@/components/zaehlstelle/charts/StepLineChart.vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import { ResizeOpts } from "echarts/core";
