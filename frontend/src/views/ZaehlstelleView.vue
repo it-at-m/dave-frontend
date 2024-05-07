@@ -40,7 +40,7 @@
                     :zoom="17"
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
-                    show-marker="true"
+                    :show-marker="true"
                     width="100%"
                     @zeahlart-ausgewaehlt="setZaehlart($event)"
                 />
@@ -57,7 +57,6 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue";
-
 
 import ZaehlstelleInfo from "@/components/zaehlstelle/ZaehlstelleInfo.vue";
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
