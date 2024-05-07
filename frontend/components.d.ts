@@ -171,7 +171,7 @@ declare module '@vue/runtime-core' {
     ZeitIntervall: typeof import('./src/components/messstelle/optionsmenue/panels/ZeitIntervall.vue')['default']
     ZeitintervallStepContent: typeof import('./src/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue')['default']
     ZeitPanel: typeof import('./src/components/messstelle/optionsmenue/panels/ZeitPanel.vue')['default']
-    Zeitreihe: typeof import('./src/components/zaehlstelle/charts/Zeitreihe.vue')['default']
     ZeitreiheCard: typeof import('./src/components/zaehlstelle/charts/ZeitreiheCard.vue')['default']
+    ZeitreiheChart: typeof import('./src/components/zaehlstelle/charts/ZeitreiheChart.vue')['default']
   }
 }

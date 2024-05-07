@@ -352,7 +352,7 @@ function addChartToPdfReport(): void {
  */
 function saveGraphAsImage(): void {
     loadingFile.value = true;
-    let encodedUri = "";
+    let encodedUri = undefined;
     let type = "";
 
     switch (activeTab.value) {
@@ -463,7 +463,7 @@ function generatePdf(): void {
             type = "ganglinie";
             formData.append(
                 REQUEST_PART_CHART_AS_BASE64_PNG,
-                new Blob([getGanglinieBase64()], {
+                new Blob([getGanglinieBase64() ?? ""], {
                     type: "image/png",
                 })
             );

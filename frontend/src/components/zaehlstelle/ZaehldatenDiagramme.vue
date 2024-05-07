@@ -441,7 +441,7 @@ const loadingFile: Ref<boolean> = ref(false);
 const belastungsplanCard = ref<BelastungsplanCard>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
-const zeitreiheCard = ref<ZeitreiheCard>();
+const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
 
 const store = useStore();
 const reportTools = useReportTools();
@@ -815,8 +815,8 @@ function getHeatmapBase64(): string | undefined {
 /**
  * Base64 String der Zeitreihe
  */
-function getZeitreiheBase64(): string {
-    return zeitreiheCard?.value?.zeitreiheForPdf.chart.getDataURL({
+function getZeitreiheBase64(): string | undefined {
+    return zeitreiheCard?.value?.zeitreiheForPdf?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
@@ -882,12 +882,15 @@ function generatePdf() {
         fetchPdf(formData, "datentabelle");
         // Zeitreihe
     } else if (activeTab.value === TAB_ZEITREIHE) {
-        formData.append(
-            REQUEST_PART_CHART_AS_BASE64_PNG,
-            new Blob([getZeitreiheBase64()], {
-                type: "image/png",
-            })
-        );
+        const zeitreiheBase64 = getZeitreiheBase64();
+        if (zeitreiheBase64) {
+            formData.append(
+                REQUEST_PART_CHART_AS_BASE64_PNG,
+                new Blob([zeitreiheBase64], {
+                    type: "image/png",
+                })
+            );
+        }
         formData.append(
             REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
             belastungsplanSchematischeUebersichtPngBase64.value
