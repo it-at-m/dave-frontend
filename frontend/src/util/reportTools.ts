@@ -140,11 +140,16 @@ export function useReportTools() {
         }
         if (base64) {
             addImageToReport(base64, createCaption(erhebungsstelle, type));
+            store.dispatch("snackbar/showToast", {
+                snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
+                level: Levels.SUCCESS,
+            });
+        } else {
+            store.dispatch("snackbar/showError", {
+                snackbarTextPart1: `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`,
+                level: Levels.ERROR,
+            });
         }
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-            level: Levels.SUCCESS,
-        });
     }
 
     function addDatatableToPdfReport(
