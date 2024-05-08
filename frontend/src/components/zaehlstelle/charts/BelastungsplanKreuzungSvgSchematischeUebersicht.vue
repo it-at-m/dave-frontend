@@ -1446,7 +1446,6 @@ watch(
         if (!data.kreisverkehr) {
             calcFahrbeziehungen(data);
         }
-    },
-    { immediate: true }
+    }
 );
 </script>
