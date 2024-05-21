@@ -438,7 +438,9 @@ const isTabHeatmap: Ref<boolean> = ref(false);
 const activeTab: Ref<number> = ref(0);
 const loadingFile: Ref<boolean> = ref(false);
 
-const belastungsplanCard = ref<BelastungsplanCard>();
+const belastungsplanCard = ref<InstanceType<
+    typeof BelastungsplanCard
+> | null>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
@@ -780,8 +782,8 @@ function saveGraphAsImage(): void {
 /**
  * Base 64 String des Kreisverkehrs
  */
-function getKreisverkehrBase64(): string {
-    return belastungsplanCard?.value?.belastungsplanKreisverkehr.chart.getDataURL(
+function getKreisverkehrBase64(): string | undefined {
+    return belastungsplanCard?.value?.belastungsplanKreisverkehr?.chart?.getDataURL(
         {
             pixelRatio: 2,
             backgroundColor: "#fff",
@@ -841,10 +843,11 @@ function generatePdf() {
     // Belastungsplan
     if (activeTab.value === TAB_BELASTUNGSPLAN) {
         // Kreisverkehr
-        if (belastungsplanDTO.value.kreisverkehr) {
+        const kreisverkehrBase64 = getKreisverkehrBase64();
+        if (belastungsplanDTO.value.kreisverkehr && kreisverkehrBase64) {
             formData.append(
                 REQUEST_PART_CHART_AS_BASE64_PNG,
-                new Blob([getKreisverkehrBase64()], {
+                new Blob([kreisverkehrBase64], {
                     type: "image/png",
                 })
             );
