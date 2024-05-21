@@ -10,6 +10,13 @@ import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import InfoMessageDTO from "@/types/InfoMessageDTO";
+import Wetter, { Wetter } from "@/types/enum/Wetter";
+import Zaehldauer, { Zaehldauer } from "@/types/enum/Zaehldauer";
+import Quelle, { Quelle } from "@/types/enum/Quelle";
+import LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
+import FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
+import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -147,6 +154,41 @@ export default class DefaultObjectCreator {
         return {
             content: "",
             gueltig: false,
+            id: "",
+            entityVersion: 0,
+            createdTime: "",
+        };
+    }
+
+    public static createDefaultLadeZaehlungDto(): LadeZaehlungDTO {
+        return {
+            datum: "",
+            jahr: "",
+            monat: "",
+            jahreszeit: "",
+            zaehlart: "",
+            lat: "",
+            lng: "",
+            tagesTyp: "",
+            projektNummer: "",
+            projektName: "",
+            kreuzungsname: "",
+            sonderzaehlung: false,
+            kreisverkehr: false,
+            zaehlsituation: "",
+            zaehlsituationErweitert: "",
+            zaehlIntervall: "",
+            wetter: Wetter.NO_INFORMATION,
+            zaehldauer: Zaehldauer.SONSTIGE,
+            quelle: Quelle.MANUALLY,
+            schulZeiten: "",
+            kommentar: "",
+            knotenarme: [],
+            fahrbeziehungen: [],
+            auswaehlbareFahrbeziehungen: {} as FahrbeziehungenDTO,
+            zeitauswahl: {} as ZeitauswahlDTO,
+            kategorien: [],
+            pkwEinheit: [],
             id: "",
             entityVersion: 0,
             createdTime: "",

@@ -17,7 +17,7 @@ interface Props {
     small?: boolean;
     dense?: boolean;
     color?: string;
-    quelle?: string;
+    quelle: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {

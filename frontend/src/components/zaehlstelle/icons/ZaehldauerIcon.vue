@@ -17,7 +17,7 @@ interface Props {
     small?: boolean;
     dense?: boolean;
     color?: string;
-    zaehldauer?: string;
+    zaehldauer: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
