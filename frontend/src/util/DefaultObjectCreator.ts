@@ -10,11 +10,9 @@ import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import InfoMessageDTO from "@/types/InfoMessageDTO";
-import Wetter, { Wetter } from "@/types/enum/Wetter";
-import Zaehldauer, { Zaehldauer } from "@/types/enum/Zaehldauer";
-import Quelle, { Quelle } from "@/types/enum/Quelle";
-import LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
+import Wetter from "@/types/enum/Wetter";
+import Zaehldauer from "@/types/enum/Zaehldauer";
+import Quelle from "@/types/enum/Quelle";
 import FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
