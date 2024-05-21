@@ -190,8 +190,8 @@ const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
 const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
-const steplineCard = ref<StepLineCard>();
-const heatmapCard = ref<HeatmapCard>();
+const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
+const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
@@ -230,7 +230,6 @@ watch(activeTab, (active) => {
 });
 
 watch(options, () => {
-    activeTab.value = TAB_BELASTUNGSPLAN;
     loadProcessedChartData();
 });
 watch(belastungsplanSvg, () => {
@@ -352,7 +351,7 @@ function addChartToPdfReport(): void {
  */
 function saveGraphAsImage(): void {
     loadingFile.value = true;
-    let encodedUri = "";
+    let encodedUri = undefined;
     let type = "";
 
     switch (activeTab.value) {
@@ -406,8 +405,8 @@ function generateCsv() {
 /**
  * Base 64 String der Ganglinie
  */
-function getGanglinieBase64(): string {
-    return steplineCard?.value?.steplineForPdf.chart.getDataURL({
+function getGanglinieBase64(): string | undefined {
+    return steplineCard?.value?.steplineForPdf?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
@@ -417,8 +416,8 @@ function getGanglinieBase64(): string {
 /**
  * Base 64 String der Heatmap
  */
-function getHeatmapBase64(): string {
-    return heatmapCard?.value?.heatmapChart.chart.getDataURL({
+function getHeatmapBase64(): string | undefined {
+    return heatmapCard?.value?.heatmapChart?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
@@ -463,7 +462,7 @@ function generatePdf(): void {
             type = "ganglinie";
             formData.append(
                 REQUEST_PART_CHART_AS_BASE64_PNG,
-                new Blob([getGanglinieBase64()], {
+                new Blob([getGanglinieBase64() ?? ""], {
                     type: "image/png",
                 })
             );

@@ -48,8 +48,8 @@ declare module '@vue/runtime-core' {
     FilterOptionen: typeof import('./src/components/messstelle/optionsmenue/FilterOptionen.vue')['default']
     GeometriePanel: typeof import('./src/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue')['default']
     HeadingAssetForm: typeof import('./src/components/pdfreport/assetforms/HeadingAssetForm.vue')['default']
-    Heatmap: typeof import('./src/components/zaehlstelle/charts/Heatmap.vue')['default']
     HeatmapCard: typeof import('./src/components/zaehlstelle/charts/HeatmapCard.vue')['default']
+    HeatmapChart: typeof import('./src/components/zaehlstelle/charts/HeatmapChart.vue')['default']
     ImageAssetForm: typeof import('./src/components/pdfreport/assetforms/ImageAssetForm.vue')['default']
     InfoMessage: typeof import('./src/components/app/InfoMessage.vue')['default']
     JahreStepContent: typeof import('./src/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue')['default']
@@ -79,8 +79,8 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SonderzaehlungIcon: typeof import('./src/components/zaehlstelle/icons/SonderzaehlungIcon.vue')['default']
     SpeedDial: typeof import('./src/components/messstelle/charts/SpeedDial.vue')['default']
-    StepLine: typeof import('./src/components/zaehlstelle/charts/StepLine.vue')['default']
     StepLineCard: typeof import('./src/components/zaehlstelle/charts/StepLineCard.vue')['default']
+    StepLineChart: typeof import('./src/components/zaehlstelle/charts/StepLineChart.vue')['default']
     TagesTypRadiogroup: typeof import('./src/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue')['default']
     TagesTypStepContent: typeof import('./src/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue')['default']
     TextAssetForm: typeof import('./src/components/pdfreport/assetforms/TextAssetForm.vue')['default']
@@ -171,7 +171,7 @@ declare module '@vue/runtime-core' {
     ZeitIntervall: typeof import('./src/components/messstelle/optionsmenue/panels/ZeitIntervall.vue')['default']
     ZeitintervallStepContent: typeof import('./src/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue')['default']
     ZeitPanel: typeof import('./src/components/messstelle/optionsmenue/panels/ZeitPanel.vue')['default']
-    Zeitreihe: typeof import('./src/components/zaehlstelle/charts/Zeitreihe.vue')['default']
     ZeitreiheCard: typeof import('./src/components/zaehlstelle/charts/ZeitreiheCard.vue')['default']
+    ZeitreiheChart: typeof import('./src/components/zaehlstelle/charts/ZeitreiheChart.vue')['default']
   }
 }

@@ -132,17 +132,24 @@ export function useReportTools() {
         erhebungsstelle: Erhebungsstelle,
         artikel: string,
         type: string,
-        base64: string,
+        base64: string | undefined,
         heading: boolean
     ): void {
         if (heading) {
             addHeadingToReport(erhebungsstelle);
         }
-        addImageToReport(base64, createCaption(erhebungsstelle, type));
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-            level: Levels.SUCCESS,
-        });
+        if (base64) {
+            addImageToReport(base64, createCaption(erhebungsstelle, type));
+            store.dispatch("snackbar/showToast", {
+                snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
+                level: Levels.SUCCESS,
+            });
+        } else {
+            store.dispatch("snackbar/showError", {
+                snackbarTextPart1: `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`,
+                level: Levels.ERROR,
+            });
+        }
     }
 
     function addDatatableToPdfReport(
