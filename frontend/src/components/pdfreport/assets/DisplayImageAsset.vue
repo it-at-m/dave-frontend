@@ -20,13 +20,14 @@
     </v-sheet>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
-export default class ImageAsset extends Vue {
-    @Prop() caption?: string;
-    @Prop() image?: string;
-    @Prop({ default: "100%" }) width?: string;
+<script setup lang="ts">
+interface Props {
+    caption?: string;
+    image?: string;
+    width?: string;
 }
+
+withDefaults(defineProps<Props>(), {
+    width: "100%",
+});
 </script>
