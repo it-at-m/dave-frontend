@@ -10,7 +10,7 @@ export interface StartEndeUhrzeitIntervalls {
 }
 
 const state = {
-    aktiveZaehlung: {} as LadeZaehlungDTO,
+    aktiveZaehlung: DefaultObjectCreator.createDefaultLadeZaehlungDto(),
     zaehlungen: [] as LadeZaehlungDTO[],
     inaktiveZaehlungen: [] as LadeZaehlungDTO[],
     sortedKnotenarme: [] as LadeKnotenarmDTO[],
