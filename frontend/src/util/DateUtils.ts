@@ -36,11 +36,23 @@ export function useDateUtils() {
         });
     }
 
+    /**
+     * es muss für i18n ein Datumsobjekt erzeugt werden.
+     */
+    function getDatumOfString(datum: string): Date {
+        const d = datum;
+        if (Date.parse(d)) {
+            return new Date(d);
+        }
+        return new Date();
+    }
+
     return {
         sortDatesDescAsStrings,
         formatDate,
         getTimeOfDate,
         getShortVersionOfDate,
         getLongVersionOfDate,
+        getDatumOfString,
     };
 }
