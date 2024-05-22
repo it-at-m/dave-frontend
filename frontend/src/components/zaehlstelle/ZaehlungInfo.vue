@@ -238,7 +238,7 @@ import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
+import Optionsmenue from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
 
 // Typen
 /* eslint-disable no-unused-vars */

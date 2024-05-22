@@ -364,7 +364,6 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 /* eslint-enable no-unused-vars */
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
 
 @Component({
     components: { PanelHeader },
@@ -986,7 +985,14 @@ export default class FahrzeugPanel extends Vue {
      * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
      */
     isTypeDisabled(type: string): boolean {
-        return Optionsmenue.isTypeDisabled(type, this.activeZaehlung);
+        if (
+            this.activeZaehlung === undefined ||
+            this.activeZaehlung.kategorien === undefined
+        ) {
+            return true;
+        }
+        return !this.activeZaehlung.kategorien.includes(type);
+        // return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
     }
 }
 </script>
