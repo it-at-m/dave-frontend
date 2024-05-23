@@ -352,647 +352,642 @@
     </v-expansion-panel>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-// Typen
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-/* eslint-enable no-unused-vars */
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useStore } from "@/api/util/useStore";
+import { computed, onMounted, Ref, ref, watch } from "vue";
+import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-@Component({
-    components: { PanelHeader },
-})
-export default class FahrzeugPanel extends Vue {
-    @Prop()
-    actualZeitauswahl!: string;
+interface Props {
+    actualZeitauswahl: string;
+    isDifferenzdatenvergleichActive: boolean;
+}
 
-    @Prop()
-    isDifferenzdatenvergleichActive!: boolean;
+const props = defineProps<Props>();
+const store = useStore();
+const zaehlstelleUtils = useZaehlstelleUtils();
 
-    // Bei Auswahl der Checkbox für einen Differenzdatenvergleich werden die Werte für SV- und GV-Anteil in Prozent gespeichert,
-    // um diese bei Abwahl der Checkbox wieder anzeigen zu können.
-    svAnteilForDifferenzdatenSaved = true;
-    gvAnteilForDifferenzdatenSaved = true;
+const emits = defineEmits<{
+    (e: "fahrzeugOptions", v: OptionsDTO): void;
+}>();
 
-    // Variablen für die Auswahloptionen
-    fahrzeugOptions: OptionsDTO = {} as OptionsDTO;
+// Bei Auswahl der Checkbox für einen Differenzdatenvergleich werden die Werte für SV- und GV-Anteil in Prozent gespeichert,
+// um diese bei Abwahl der Checkbox wieder anzeigen zu können.
+const svAnteilForDifferenzdatenSaved = ref(true);
+const gvAnteilForDifferenzdatenSaved = ref(true);
 
-    selectOrDeselectAllVmodel = false;
-    selectOrDeselectAllVerkehrsartenVmodel = false;
-    hoverSelectOrDeselectAll = false;
-    hoverSelectOrDeselectAllVerkehrsarten = false;
+// Variablen für die Auswahloptionen
+const fahrzeugOptions = ref({} as OptionsDTO);
 
-    get labelSelectOrDeselectAll(): string {
-        return this.selectOrDeselectAllVmodel
-            ? "Alles abwählen"
-            : "Alles auswählen";
+const selectOrDeselectAllVmodel = ref(false);
+const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
+const hoverSelectOrDeselectAll = ref(false);
+const hoverSelectOrDeselectAllVerkehrsarten = ref(false);
+
+// Verkehrsarten
+const hoverKfz = ref(false);
+const hoverSv = ref(false);
+const hoverGv = ref(false);
+const hoverSv_p = ref(false);
+const hoverGv_p = ref(false);
+const hoverRad = ref(false);
+const hoverFuss = ref(false);
+// Fahrzeugkategorien
+const hoverPkw = ref(false);
+const hoverLkw = ref(false);
+const hoverLz = ref(false);
+const hoverBus = ref(false);
+const hoverKrad = ref(false);
+const hoverPkweinheit = ref(false);
+
+onMounted(() => {
+    loadOptions(options.value);
+});
+
+// reaktiver getter auf den Store
+const options: Ref<OptionsDTO> = computed(() => {
+    return store.getters.getFilteroptions;
+});
+
+const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
+    return store.getters.getAktiveZaehlung;
+});
+
+const isTageswertAndNot24h: Ref<boolean> = computed(() => {
+    return (
+        fahrzeugOptions.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
+        activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+    );
+});
+
+const isAnyKFZselected: Ref<boolean> = computed(() => {
+    return (
+        fahrzeugOptions.value.kraftfahrzeugverkehr ||
+        fahrzeugOptions.value.schwerverkehr ||
+        fahrzeugOptions.value.gueterverkehr ||
+        fahrzeugOptions.value.schwerverkehrsanteilProzent ||
+        fahrzeugOptions.value.gueterverkehrsanteilProzent
+    );
+});
+
+/**
+ * Liefert den Text für die einzelnen Verkehrsarten, welcher
+ * bei MouseOver in der dritten Spalte des Optionsmenüs angezeigt wird.
+ */
+const helpTextVerkehrsarten: Ref<string> = computed(() => {
+    if (hoverKfz.value) {
+        return "Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lastkraftwagen und Lastzüge.";
     }
-
-    get labelSelectOrDeselectAllVerkehrsarten(): string {
-        return this.selectOrDeselectAllVerkehrsartenVmodel
-            ? "Alles abwählen"
-            : "Alles auswählen";
+    if (hoverSv.value) {
+        return "Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).";
     }
-
-    @Watch("isDifferenzdatenvergleichActive")
-    private differenzdatenvergleichChanged() {
-        if (this.isDifferenzdatenvergleichActive) {
-            // Werte zwischenspeichern und auf false setzen
-            this.svAnteilForDifferenzdatenSaved =
-                this.fahrzeugOptions.schwerverkehrsanteilProzent;
-            this.gvAnteilForDifferenzdatenSaved =
-                this.fahrzeugOptions.gueterverkehrsanteilProzent;
-            this.fahrzeugOptions.schwerverkehrsanteilProzent = false;
-            this.fahrzeugOptions.gueterverkehrsanteilProzent = false;
-        } else {
-            // Zwischengespeicherte Werte den Optionen zuweisen
-            this.fahrzeugOptions.schwerverkehrsanteilProzent =
-                this.svAnteilForDifferenzdatenSaved;
-            this.fahrzeugOptions.gueterverkehrsanteilProzent =
-                this.gvAnteilForDifferenzdatenSaved;
-        }
+    if (hoverGv.value) {
+        return "Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).";
     }
-
-    /**
-     * Hilfsmethode, um alle Checkboxen der Fahrzeugkategorien aufeinmal
-     * aus- oder abzuwählen, wenn diese nicht disabled sind.
-     * @private
-     */
-    selectOrDeselectAll() {
-        if (!this.isTypeDisabled(Fahrzeug.PKW)) {
-            this.fahrzeugOptions.personenkraftwagen =
-                this.selectOrDeselectAllVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.LKW)) {
-            this.fahrzeugOptions.lastkraftwagen =
-                this.selectOrDeselectAllVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.LZ)) {
-            this.fahrzeugOptions.lastzuege = this.selectOrDeselectAllVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.BUS)) {
-            this.fahrzeugOptions.busse = this.selectOrDeselectAllVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.KRAD)) {
-            this.fahrzeugOptions.kraftraeder = this.selectOrDeselectAllVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.PKW_EINHEIT)) {
-            this.fahrzeugOptions.pkwEinheiten = this.selectOrDeselectAllVmodel;
-        }
+    if (hoverSv_p.value) {
+        return "Anteil des Schwerverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
     }
-
-    /**
-     * Hilfsmethode, um alle Checkboxen der Verkehrsarten aufeinmal
-     * aus- oder abzuwählen, wenn diese nicht disabled sind.
-     * @private
-     */
-    selectOrDeselectAllVerkehrsarten() {
-        if (!this.isTypeDisabled(Fahrzeug.KFZ)) {
-            this.fahrzeugOptions.kraftfahrzeugverkehr =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.SV)) {
-            this.fahrzeugOptions.schwerverkehr =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.GV)) {
-            this.fahrzeugOptions.gueterverkehr =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.SV_P)) {
-            this.fahrzeugOptions.schwerverkehrsanteilProzent =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.GV_P)) {
-            this.fahrzeugOptions.gueterverkehrsanteilProzent =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.RAD)) {
-            this.fahrzeugOptions.radverkehr =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.FUSS)) {
-            this.fahrzeugOptions.fussverkehr =
-                this.selectOrDeselectAllVerkehrsartenVmodel;
-        }
+    if (hoverGv_p.value) {
+        return "Anteil des Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
     }
-
-    get activeZaehlung(): LadeZaehlungDTO {
-        return this.$store.getters.getAktiveZaehlung;
+    if (hoverRad.value) {
+        return "Hinweis: Um den Radverkehr im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
     }
-
-    // Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-    @Watch("fahrzeugOptions", { deep: true })
-    storeFahrzeugOptions() {
-        this.calculateSelectOrDeselect();
-        this.calculateSelectOrDeselectVerkehrsarten();
-        this.$emit("fahrzeugOptions", this.fahrzeugOptions);
+    if (hoverFuss.value) {
+        return "Hinweis: Um die Fußgänger im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
     }
-
-    // reaktiver getter auf den Store
-    get options(): OptionsDTO {
-        return this.$store.getters.getFilteroptions;
+    if (hoverSelectOrDeselectAllVerkehrsarten.value) {
+        let text = "Aktiviert alle Verkehrsarten.";
+        if (selectOrDeselectAllVerkehrsartenVmodel.value) {
+            text = "Deaktiviert alle Verkehrsarten.";
+        }
+        return text;
     }
+    return "";
+});
 
-    // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-    // Oberfläche ändern.
-    @Watch("options", { immediate: true })
-    optionsChanged(n: OptionsDTO) {
-        this.loadOptions(n);
-    }
-
-    // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-    // Oberfläche ändern.
-    @Watch("actualZeitauswahl")
-    zeitauswahlchanged(zeitauswahl: string) {
-        this.fahrzeugOptions.zeitauswahl = zeitauswahl;
-        this.adaptFahrzeugauswahl(this.fahrzeugOptions);
-    }
-
-    loadOptions(newOptions: OptionsDTO) {
-        const options = {} as OptionsDTO;
-        Object.assign(options, newOptions);
-        this.fahrzeugOptions = options;
-        this.calculateSelectOrDeselect();
-        this.calculateSelectOrDeselectVerkehrsarten();
-    }
-
-    mounted() {
-        this.loadOptions(this.options);
-    }
-
-    get isTageswertAndNot24h(): boolean {
-        return (
-            this.fahrzeugOptions.zeitauswahl === Zeitauswahl.TAGESWERT &&
-            this.activeZaehlung.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
-        );
-    }
-
-    get isAnyKFZselected(): boolean {
-        return (
-            this.fahrzeugOptions.kraftfahrzeugverkehr ||
-            this.fahrzeugOptions.schwerverkehr ||
-            this.fahrzeugOptions.gueterverkehr ||
-            this.fahrzeugOptions.schwerverkehrsanteilProzent ||
-            this.fahrzeugOptions.gueterverkehrsanteilProzent
-        );
-    }
-
-    /**
-     * Liefert den Hinweistext pro Verkehrsart, der unter der Checkbox
-     * angezeigt werden soll, wenn diese nicht erfasst wurde, nicht
-     * im Belastungsplan dargestellt wird (max 3 Werte) oder im Falle des
-     * Rad- und Fußverkehrs nicht bei aktivem Tageswert dargestellt werden kann
-     */
-    getHintToDisplay(type: string): string {
-        // KFZ, SV und GV werden immer im Belastungsplan angezeigt, wenn aktiv
-        let hint = "";
-        if (this.isTypeDisabled(type)) {
-            return ``;
-        }
-        switch (type) {
-            case "RAD": {
-                /**
-                 * Durch die KI-Aufbereitung hat der Radverkehr hochgerechnete Werte
-                 */
-                if (this.isTageswertAndNot24h) {
-                    hint =
-                        "Hinweis: Die Tageswerte für den Radverkehr wurden vom KI-Modul hochgerechnet.";
-                    if (this.isAnyKFZselected) {
-                        hint =
-                            "Der Tageswert für den Radverkehr kann nicht gleichzeitg mit KFZ-Werten im Belastungsplan zusammen angezeigt werden.";
-                    }
-                }
-                break;
-            }
-            case "FUSS": {
-                if (this.isTageswertAndNot24h) {
-                    hint =
-                        "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
-                }
-                break;
-            }
-            case "SV_P": {
-                if (this.isDifferenzdatenvergleichActive) {
-                    hint =
-                        "Schwerverkehrsanteil bei Differenzdatenvergleich deaktiviert.";
-                }
-                break;
-            }
-            case "GV_P": {
-                if (this.isDifferenzdatenvergleichActive) {
-                    hint =
-                        "Güterverkehrsanteil bei Differenzdatenvergleich deaktiviert.";
-                }
-                break;
-            }
-        }
-        return hint;
-    }
-
-    /**
-     * Wenn eine Verkehrsart ausgewählt ist und im Belastunsplan
-     * angezeigt wird, so wird zur Kennzeichnung die Checkbox blau dargestellt.
-     * Ansonsten ist diese grau.
-     */
-    getCheckboxColor(type: string): string {
-        // KFZ, SV udn GV sind immer primary, wenn aktiv
-        let color = "primary";
-        switch (type) {
-            case "SV_P": {
-                if (!this.isSv_pInBelastungsPlan) {
-                    color = "grey darken-1";
-                }
-                break;
-            }
-            case "GV_P": {
-                if (!this.isGv_pInBelastungsPlan) {
-                    color = "grey darken-1";
-                }
-                break;
-            }
-            case "RAD": {
-                if (!this.isRadInBelastungsplan) {
-                    color = "grey darken-1";
-                }
-                break;
-            }
-            case "FUSS": {
-                if (
-                    this.fahrzeugOptions.fussverkehr &&
-                    this.actualNumberOfSelectedVerkehrsarten > 1
-                ) {
-                    color = "grey darken-1";
-                }
-                if (this.isTageswertAndNot24h) {
-                    color = "grey darken-1";
-                }
-                break;
-            }
-        }
-        return color;
-    }
-
-    /**
-     * Wenn eine Verkehrsart ausgewählt ist und im Belastunsplan
-     * angezeigt wird, so wird zur Kennzeichnung das Icon des
-     * Belastungsplan davor gestellt
-     */
-    getIcon(type: string): string {
-        let icon = "";
-        switch (type) {
-            case Fahrzeug.KFZ: {
-                if (this.fahrzeugOptions.kraftfahrzeugverkehr) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-            case Fahrzeug.SV: {
-                if (this.fahrzeugOptions.schwerverkehr) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-            case Fahrzeug.GV: {
-                if (this.fahrzeugOptions.gueterverkehr) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-            case "SV_P": {
-                // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV < 3
-                if (this.isSv_pInBelastungsPlan) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-            case "GV_P": {
-                // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV + SV% < 3
-                if (this.isGv_pInBelastungsPlan) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-            case "RAD": {
-                // Angezeigt, wenn RAD oder RAD && FUSS
-                if (this.isRadInBelastungsplan) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-            case "FUSS": {
-                // Angezeigt, wenn FUSS
-                if (
-                    !this.isTageswertAndNot24h &&
-                    this.fahrzeugOptions.fussverkehr &&
-                    this.actualNumberOfSelectedVerkehrsarten === 1
-                ) {
-                    icon = `mdi-arrow-decision`;
-                }
-                break;
-            }
-        }
-        return icon;
-    }
-
-    /**
-     * Gibt vor, ob die Checkbox Alle Fahrzeugkategorien auswählen oder
-     * abwählen soll. Dazu wird die Anzahl der aktiven Checkboxen, sowie
-     * die Anzahl der maximal Auswählbaren bestimmt.
-     * Wenn mehr wie die Hälfte der Möglichen ausgewählt ist, so ist es
-     * ein abwählen, sonst ein auswählen.
-     */
-    private calculateSelectOrDeselect() {
-        let counter = 0;
-        let maxSelectable = 0;
-        if (!this.isTypeDisabled(Fahrzeug.PKW)) {
-            this.fahrzeugOptions.personenkraftwagen ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.LKW)) {
-            this.fahrzeugOptions.lastkraftwagen ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.LZ)) {
-            this.fahrzeugOptions.lastzuege ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.BUS)) {
-            this.fahrzeugOptions.busse ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.KRAD)) {
-            this.fahrzeugOptions.kraftraeder ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.PKW_EINHEIT)) {
-            this.fahrzeugOptions.pkwEinheiten ? counter++ : "";
-            maxSelectable++;
-        }
-        // counter > maxSelectable/2 => abwählen
-        // sonst => auswählen
-        this.selectOrDeselectAllVmodel = counter > maxSelectable / 2;
-    }
-
-    /**
-     * Gibt vor, ob die Checkbox Alle Verkehrsarten auswählen oder
-     * abwählen soll. Dazu wird die Anzahl der aktiven Checkboxen, sowie
-     * die Anzahl der maximal Auswählbaren bestimmt.
-     * Wenn mehr wie die Hälfte der Möglichen ausgewählt ist, so ist es
-     * ein abwählen, sonst ein auswählen.
-     */
-    private calculateSelectOrDeselectVerkehrsarten() {
-        let counter = 0;
-        let maxSelectable = 0;
-        if (!this.isTypeDisabled(Fahrzeug.KFZ)) {
-            this.fahrzeugOptions.kraftfahrzeugverkehr ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.SV)) {
-            this.fahrzeugOptions.schwerverkehr ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.GV)) {
-            this.fahrzeugOptions.gueterverkehr ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.SV_P)) {
-            this.fahrzeugOptions.schwerverkehrsanteilProzent ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.GV_P)) {
-            this.fahrzeugOptions.gueterverkehrsanteilProzent ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.RAD)) {
-            this.fahrzeugOptions.radverkehr ? counter++ : "";
-            maxSelectable++;
-        }
-        if (!this.isTypeDisabled(Fahrzeug.FUSS)) {
-            this.fahrzeugOptions.fussverkehr ? counter++ : "";
-            maxSelectable++;
-        }
-        // counter > maxSelectable/2 => abwählen
-        // sonst => auswählen
-        this.selectOrDeselectAllVerkehrsartenVmodel =
-            counter > maxSelectable / 2;
-    }
-
-    // Verkehrsarten
-    hoverKfz = false;
-    hoverSv = false;
-    hoverGv = false;
-    hoverSv_p = false;
-    hoverGv_p = false;
-    hoverRad = false;
-    hoverFuss = false;
-
-    // Fahrzeugkategorien
-    hoverPkw = false;
-    hoverLkw = false;
-    hoverLz = false;
-    hoverBus = false;
-    hoverKrad = false;
-    hoverPkweinheit = false;
-
-    /**
-     * Liefert den Text für die einzelnen Verkehrsarten, welcher
-     * bei MouseOver in der dritten Spalte des Optionsmenüs angezeigt wird.
-     */
-    get helpTextVerkehrsarten(): string {
-        if (this.hoverKfz) {
-            return "Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lastkraftwagen und Lastzüge.";
-        }
-        if (this.hoverSv) {
-            return "Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).";
-        }
-        if (this.hoverGv) {
-            return "Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).";
-        }
-        if (this.hoverSv_p) {
-            return "Anteil des Schwerverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
-        }
-        if (this.hoverGv_p) {
-            return "Anteil des Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
-        }
-        if (this.hoverRad) {
-            return "Hinweis: Um den Radverkehr im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
-        }
-        if (this.hoverFuss) {
-            return "Hinweis: Um die Fußgänger im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
-        }
-        if (this.hoverSelectOrDeselectAllVerkehrsarten) {
-            let text = "Aktiviert alle Verkehrsarten.";
-            if (this.selectOrDeselectAllVerkehrsartenVmodel) {
-                text = "Deaktiviert alle Verkehrsarten.";
-            }
-            return text;
-        }
+/**
+ * Liefert den Text für die einzelnen Fahrzeugkategorien, welcher
+ * bei MouseOver in der dritten Spalte des Optionsmenüs angezeigt wird.
+ */
+const helpTextFahrzeugkategorien: Ref<string> = computed(() => {
+    if (hoverPkw.value) {
         return "";
     }
-
-    /**
-     * Liefert den Text für die einzelnen Fahrzeugkategorien, welcher
-     * bei MouseOver in der dritten Spalte des Optionsmenüs angezeigt wird.
-     */
-    get helpTextFahrzeugkategorien(): string {
-        if (this.hoverPkw) {
-            return "";
-        }
-        if (this.hoverLkw) {
-            return "Fahrzeuge mit einem zul. Gesamtgewicht > 3,5t ohne Anhänger.";
-        }
-        if (this.hoverLz) {
-            return "Fahrzeuge mit einem zul. Gesamtgewicht > 3,5t mit Anhänger.";
-        }
-        if (this.hoverBus) {
-            return "";
-        }
-        if (this.hoverKrad) {
-            return "Krafträder beinhalten Motorräder, Motorroller, Mopeds, Mofas usw.";
-        }
-        if (this.hoverPkweinheit) {
-            return "PKW-Einheiten sind die Maßeinheit, um die unterschiedliche Belastung einer Straße durch verschiedene Arten von Fahrzeugen (inklusive des Radverkehrs) in einer Größe auszudrücken.";
-        }
-        if (this.hoverSelectOrDeselectAll) {
-            let text = "Aktiviert alle Fahrzeugkategorien.";
-            if (this.selectOrDeselectAllVmodel) {
-                text = "Deaktiviert alle Fahrzeugkategorien.";
-            }
-            return text;
-        }
+    if (hoverLkw.value) {
+        return "Fahrzeuge mit einem zul. Gesamtgewicht > 3,5t ohne Anhänger.";
+    }
+    if (hoverLz.value) {
+        return "Fahrzeuge mit einem zul. Gesamtgewicht > 3,5t mit Anhänger.";
+    }
+    if (hoverBus.value) {
         return "";
     }
-
-    /**
-     * Hilfsmethode, um zu schauen, ob der Wert SV% im Belastungsplan angezeigt wird.
-     * Dies ist nur der Fall, wenn KFZ, SV oder SV aktiviert sind und inklusive SV_P nicht
-     * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
-     */
-    get isSv_pInBelastungsPlan(): boolean {
-        let actualNumberOfSelectedKfzSvAndGv = 0;
-        this.fahrzeugOptions.kraftfahrzeugverkehr
-            ? actualNumberOfSelectedKfzSvAndGv++
-            : "";
-        this.fahrzeugOptions.schwerverkehr
-            ? actualNumberOfSelectedKfzSvAndGv++
-            : "";
-        this.fahrzeugOptions.gueterverkehr
-            ? actualNumberOfSelectedKfzSvAndGv++
-            : "";
-        return (
-            this.fahrzeugOptions.schwerverkehrsanteilProzent &&
-            (this.fahrzeugOptions.kraftfahrzeugverkehr ||
-                this.fahrzeugOptions.schwerverkehr ||
-                this.fahrzeugOptions.gueterverkehr) &&
-            actualNumberOfSelectedKfzSvAndGv < 3
-        );
+    if (hoverKrad.value) {
+        return "Krafträder beinhalten Motorräder, Motorroller, Mopeds, Mofas usw.";
     }
-
-    /**
-     * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
-     * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
-     * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
-     */
-    get isGv_pInBelastungsPlan(): boolean {
-        let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
-        this.fahrzeugOptions.kraftfahrzeugverkehr
-            ? actualNumberOfSelectedKfzSvGvAndSV_P++
-            : "";
-        this.fahrzeugOptions.schwerverkehr
-            ? actualNumberOfSelectedKfzSvGvAndSV_P++
-            : "";
-        this.fahrzeugOptions.gueterverkehr
-            ? actualNumberOfSelectedKfzSvGvAndSV_P++
-            : "";
-        this.fahrzeugOptions.schwerverkehrsanteilProzent
-            ? actualNumberOfSelectedKfzSvGvAndSV_P++
-            : "";
-        return (
-            this.fahrzeugOptions.gueterverkehrsanteilProzent &&
-            (this.fahrzeugOptions.kraftfahrzeugverkehr ||
-                this.fahrzeugOptions.schwerverkehr ||
-                this.fahrzeugOptions.gueterverkehr) &&
-            actualNumberOfSelectedKfzSvGvAndSV_P < 3
-        );
+    if (hoverPkweinheit.value) {
+        return "PKW-Einheiten sind die Maßeinheit, um die unterschiedliche Belastung einer Straße durch verschiedene Arten von Fahrzeugen (inklusive des Radverkehrs) in einer Größe auszudrücken.";
     }
-
-    get isRadInBelastungsplan(): boolean {
-        return (
-            this.fahrzeugOptions.radverkehr &&
-            this.actualNumberOfSelectedVerkehrsarten === 1
-        );
-    }
-
-    /**
-     * Liefert die aktuelle Anzahl der ausgewählten Verkehrsarten zurück.
-     */
-    get actualNumberOfSelectedVerkehrsarten(): number {
-        let counter = 0;
-        this.fahrzeugOptions.kraftfahrzeugverkehr ? counter++ : "";
-        this.fahrzeugOptions.schwerverkehr ? counter++ : "";
-        this.fahrzeugOptions.gueterverkehr ? counter++ : "";
-        this.fahrzeugOptions.schwerverkehrsanteilProzent ? counter++ : "";
-        this.fahrzeugOptions.gueterverkehrsanteilProzent ? counter++ : "";
-        this.fahrzeugOptions.radverkehr ? counter++ : "";
-        this.fahrzeugOptions.fussverkehr ? counter++ : "";
-        return counter;
-    }
-
-    /**
-     * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im OptionsDTO entsprechend der gewählten Zeitauswahl.
-     */
-    adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
-        if (
-            options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-            options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
-        ) {
-            options.kraftfahrzeugverkehr = false;
-            options.schwerverkehr = false;
-            options.gueterverkehr = false;
-            options.schwerverkehrsanteilProzent = false;
-            options.gueterverkehrsanteilProzent = false;
-            options.personenkraftwagen = false;
-            options.lastkraftwagen = false;
-            options.lastzuege = false;
-            options.busse = false;
-            options.kraftraeder = false;
-        } else {
-            options.kraftfahrzeugverkehr = true;
-            options.schwerverkehr = true;
-            options.gueterverkehr = true;
-            options.schwerverkehrsanteilProzent = true;
-            options.gueterverkehrsanteilProzent = true;
+    if (hoverSelectOrDeselectAll.value) {
+        let text = "Aktiviert alle Fahrzeugkategorien.";
+        if (selectOrDeselectAllVmodel.value) {
+            text = "Deaktiviert alle Fahrzeugkategorien.";
         }
-        if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD) {
-            options.radverkehr = true;
-            options.fussverkehr = false;
-        } else if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS) {
-            options.radverkehr = false;
-            options.fussverkehr = true;
-        }
-        return options;
+        return text;
     }
+    return "";
+});
 
-    /**
-     * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
-     * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
-     */
-    isTypeDisabled(type: string): boolean {
-        if (
-            this.activeZaehlung === undefined ||
-            this.activeZaehlung.kategorien === undefined
-        ) {
-            return true;
-        }
-        return !this.activeZaehlung.kategorien.includes(type);
-        // return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
+/**
+ * Hilfsmethode, um zu schauen, ob der Wert SV% im Belastungsplan angezeigt wird.
+ * Dies ist nur der Fall, wenn KFZ, SV oder SV aktiviert sind und inklusive SV_P nicht
+ * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
+ */
+const isSv_pInBelastungsPlan: Ref<boolean> = computed(() => {
+    let actualNumberOfSelectedKfzSvAndGv = 0;
+    fahrzeugOptions.value.kraftfahrzeugverkehr
+        ? actualNumberOfSelectedKfzSvAndGv++
+        : "";
+    fahrzeugOptions.value.schwerverkehr
+        ? actualNumberOfSelectedKfzSvAndGv++
+        : "";
+    fahrzeugOptions.value.gueterverkehr
+        ? actualNumberOfSelectedKfzSvAndGv++
+        : "";
+    return (
+        fahrzeugOptions.value.schwerverkehrsanteilProzent &&
+        (fahrzeugOptions.value.kraftfahrzeugverkehr ||
+            fahrzeugOptions.value.schwerverkehr ||
+            fahrzeugOptions.value.gueterverkehr) &&
+        actualNumberOfSelectedKfzSvAndGv < 3
+    );
+});
+
+/**
+ * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
+ * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
+ * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
+ */
+const isGv_pInBelastungsPlan: Ref<boolean> = computed(() => {
+    let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
+    fahrzeugOptions.value.kraftfahrzeugverkehr
+        ? actualNumberOfSelectedKfzSvGvAndSV_P++
+        : "";
+    fahrzeugOptions.value.schwerverkehr
+        ? actualNumberOfSelectedKfzSvGvAndSV_P++
+        : "";
+    fahrzeugOptions.value.gueterverkehr
+        ? actualNumberOfSelectedKfzSvGvAndSV_P++
+        : "";
+    fahrzeugOptions.value.schwerverkehrsanteilProzent
+        ? actualNumberOfSelectedKfzSvGvAndSV_P++
+        : "";
+    return (
+        fahrzeugOptions.value.gueterverkehrsanteilProzent &&
+        (fahrzeugOptions.value.kraftfahrzeugverkehr ||
+            fahrzeugOptions.value.schwerverkehr ||
+            fahrzeugOptions.value.gueterverkehr) &&
+        actualNumberOfSelectedKfzSvGvAndSV_P < 3
+    );
+});
+
+const isRadInBelastungsplan: Ref<boolean> = computed(() => {
+    return (
+        fahrzeugOptions.value.radverkehr &&
+        actualNumberOfSelectedVerkehrsarten.value === 1
+    );
+});
+
+/**
+ * Liefert die aktuelle Anzahl der ausgewählten Verkehrsarten zurück.
+ */
+const actualNumberOfSelectedVerkehrsarten: Ref<number> = computed(() => {
+    let counter = 0;
+    fahrzeugOptions.value.kraftfahrzeugverkehr ? counter++ : "";
+    fahrzeugOptions.value.schwerverkehr ? counter++ : "";
+    fahrzeugOptions.value.gueterverkehr ? counter++ : "";
+    fahrzeugOptions.value.schwerverkehrsanteilProzent ? counter++ : "";
+    fahrzeugOptions.value.gueterverkehrsanteilProzent ? counter++ : "";
+    fahrzeugOptions.value.radverkehr ? counter++ : "";
+    fahrzeugOptions.value.fussverkehr ? counter++ : "";
+    return counter;
+});
+
+const labelSelectOrDeselectAll: Ref<string> = computed(() => {
+    return selectOrDeselectAllVmodel.value
+        ? "Alles abwählen"
+        : "Alles auswählen";
+});
+
+const labelSelectOrDeselectAllVerkehrsarten: Ref<string> = computed(() => {
+    return selectOrDeselectAllVerkehrsartenVmodel.value
+        ? "Alles abwählen"
+        : "Alles auswählen";
+});
+
+/**
+ * Hilfsmethode, um alle Checkboxen der Fahrzeugkategorien aufeinmal
+ * aus- oder abzuwählen, wenn diese nicht disabled sind.
+ * @private
+ */
+function selectOrDeselectAll() {
+    if (!isTypeDisabled(Fahrzeug.PKW)) {
+        fahrzeugOptions.value.personenkraftwagen =
+            selectOrDeselectAllVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.LKW)) {
+        fahrzeugOptions.value.lastkraftwagen = selectOrDeselectAllVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.LZ)) {
+        fahrzeugOptions.value.lastzuege = selectOrDeselectAllVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.BUS)) {
+        fahrzeugOptions.value.busse = selectOrDeselectAllVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.KRAD)) {
+        fahrzeugOptions.value.kraftraeder = selectOrDeselectAllVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.PKW_EINHEIT)) {
+        fahrzeugOptions.value.pkwEinheiten = selectOrDeselectAllVmodel.value;
     }
 }
+
+/**
+ * Hilfsmethode, um alle Checkboxen der Verkehrsarten aufeinmal
+ * aus- oder abzuwählen, wenn diese nicht disabled sind.
+ * @private
+ */
+function selectOrDeselectAllVerkehrsarten() {
+    if (!isTypeDisabled(Fahrzeug.KFZ)) {
+        fahrzeugOptions.value.kraftfahrzeugverkehr =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.SV)) {
+        fahrzeugOptions.value.schwerverkehr =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.GV)) {
+        fahrzeugOptions.value.gueterverkehr =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.SV_P)) {
+        fahrzeugOptions.value.schwerverkehrsanteilProzent =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.GV_P)) {
+        fahrzeugOptions.value.gueterverkehrsanteilProzent =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.RAD)) {
+        fahrzeugOptions.value.radverkehr =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+    if (!isTypeDisabled(Fahrzeug.FUSS)) {
+        fahrzeugOptions.value.fussverkehr =
+            selectOrDeselectAllVerkehrsartenVmodel.value;
+    }
+}
+
+function loadOptions(newOptions: OptionsDTO) {
+    const options = {} as OptionsDTO;
+    Object.assign(options, newOptions);
+    fahrzeugOptions.value = options;
+    calculateSelectOrDeselect();
+    calculateSelectOrDeselectVerkehrsarten();
+}
+
+/**
+ * Liefert den Hinweistext pro Verkehrsart, der unter der Checkbox
+ * angezeigt werden soll, wenn diese nicht erfasst wurde, nicht
+ * im Belastungsplan dargestellt wird (max 3 Werte) oder im Falle des
+ * Rad- und Fußverkehrs nicht bei aktivem Tageswert dargestellt werden kann
+ */
+function getHintToDisplay(type: string): string {
+    // KFZ, SV und GV werden immer im Belastungsplan angezeigt, wenn aktiv
+    let hint = "";
+    if (isTypeDisabled(type)) {
+        return ``;
+    }
+    switch (type) {
+        case "RAD": {
+            /**
+             * Durch die KI-Aufbereitung hat der Radverkehr hochgerechnete Werte
+             */
+            if (isTageswertAndNot24h.value) {
+                hint =
+                    "Hinweis: Die Tageswerte für den Radverkehr wurden vom KI-Modul hochgerechnet.";
+                if (isAnyKFZselected.value) {
+                    hint =
+                        "Der Tageswert für den Radverkehr kann nicht gleichzeitg mit KFZ-Werten im Belastungsplan zusammen angezeigt werden.";
+                }
+            }
+            break;
+        }
+        case "FUSS": {
+            if (isTageswertAndNot24h.value) {
+                hint =
+                    "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
+            }
+            break;
+        }
+        case "SV_P": {
+            if (props.isDifferenzdatenvergleichActive) {
+                hint =
+                    "Schwerverkehrsanteil bei Differenzdatenvergleich deaktiviert.";
+            }
+            break;
+        }
+        case "GV_P": {
+            if (props.isDifferenzdatenvergleichActive) {
+                hint =
+                    "Güterverkehrsanteil bei Differenzdatenvergleich deaktiviert.";
+            }
+            break;
+        }
+    }
+    return hint;
+}
+
+/**
+ * Wenn eine Verkehrsart ausgewählt ist und im Belastunsplan
+ * angezeigt wird, so wird zur Kennzeichnung die Checkbox blau dargestellt.
+ * Ansonsten ist diese grau.
+ */
+function getCheckboxColor(type: string): string {
+    // KFZ, SV udn GV sind immer primary, wenn aktiv
+    let color = "primary";
+    switch (type) {
+        case "SV_P": {
+            if (!isSv_pInBelastungsPlan.value) {
+                color = "grey darken-1";
+            }
+            break;
+        }
+        case "GV_P": {
+            if (!isGv_pInBelastungsPlan.value) {
+                color = "grey darken-1";
+            }
+            break;
+        }
+        case "RAD": {
+            if (!isRadInBelastungsplan.value) {
+                color = "grey darken-1";
+            }
+            break;
+        }
+        case "FUSS": {
+            if (
+                fahrzeugOptions.value.fussverkehr &&
+                actualNumberOfSelectedVerkehrsarten.value > 1
+            ) {
+                color = "grey darken-1";
+            }
+            if (isTageswertAndNot24h.value) {
+                color = "grey darken-1";
+            }
+            break;
+        }
+    }
+    return color;
+}
+
+/**
+ * Wenn eine Verkehrsart ausgewählt ist und im Belastunsplan
+ * angezeigt wird, so wird zur Kennzeichnung das Icon des
+ * Belastungsplan davor gestellt
+ */
+function getIcon(type: string): string {
+    let icon = "";
+    switch (type) {
+        case Fahrzeug.KFZ: {
+            if (fahrzeugOptions.value.kraftfahrzeugverkehr) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+        case Fahrzeug.SV: {
+            if (fahrzeugOptions.value.schwerverkehr) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+        case Fahrzeug.GV: {
+            if (fahrzeugOptions.value.gueterverkehr) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+        case "SV_P": {
+            // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV < 3
+            if (isSv_pInBelastungsPlan.value) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+        case "GV_P": {
+            // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV + SV% < 3
+            if (isGv_pInBelastungsPlan.value) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+        case "RAD": {
+            // Angezeigt, wenn RAD oder RAD && FUSS
+            if (isRadInBelastungsplan.value) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+        case "FUSS": {
+            // Angezeigt, wenn FUSS
+            if (
+                !isTageswertAndNot24h.value &&
+                fahrzeugOptions.value.fussverkehr &&
+                actualNumberOfSelectedVerkehrsarten.value === 1
+            ) {
+                icon = `mdi-arrow-decision`;
+            }
+            break;
+        }
+    }
+    return icon;
+}
+
+/**
+ * Gibt vor, ob die Checkbox Alle Fahrzeugkategorien auswählen oder
+ * abwählen soll. Dazu wird die Anzahl der aktiven Checkboxen, sowie
+ * die Anzahl der maximal Auswählbaren bestimmt.
+ * Wenn mehr wie die Hälfte der Möglichen ausgewählt ist, so ist es
+ * ein abwählen, sonst ein auswählen.
+ */
+function calculateSelectOrDeselect() {
+    let counter = 0;
+    let maxSelectable = 0;
+    if (!isTypeDisabled(Fahrzeug.PKW)) {
+        fahrzeugOptions.value.personenkraftwagen ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.LKW)) {
+        fahrzeugOptions.value.lastkraftwagen ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.LZ)) {
+        fahrzeugOptions.value.lastzuege ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.BUS)) {
+        fahrzeugOptions.value.busse ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.KRAD)) {
+        fahrzeugOptions.value.kraftraeder ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.PKW_EINHEIT)) {
+        fahrzeugOptions.value.pkwEinheiten ? counter++ : "";
+        maxSelectable++;
+    }
+    // counter > maxSelectable/2 => abwählen
+    // sonst => auswählen
+    selectOrDeselectAllVmodel.value = counter > maxSelectable / 2;
+}
+
+/**
+ * Gibt vor, ob die Checkbox Alle Verkehrsarten auswählen oder
+ * abwählen soll. Dazu wird die Anzahl der aktiven Checkboxen, sowie
+ * die Anzahl der maximal Auswählbaren bestimmt.
+ * Wenn mehr wie die Hälfte der Möglichen ausgewählt ist, so ist es
+ * ein abwählen, sonst ein auswählen.
+ */
+function calculateSelectOrDeselectVerkehrsarten() {
+    let counter = 0;
+    let maxSelectable = 0;
+    if (!isTypeDisabled(Fahrzeug.KFZ)) {
+        fahrzeugOptions.value.kraftfahrzeugverkehr ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.SV)) {
+        fahrzeugOptions.value.schwerverkehr ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.GV)) {
+        fahrzeugOptions.value.gueterverkehr ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.SV_P)) {
+        fahrzeugOptions.value.schwerverkehrsanteilProzent ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.GV_P)) {
+        fahrzeugOptions.value.gueterverkehrsanteilProzent ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.RAD)) {
+        fahrzeugOptions.value.radverkehr ? counter++ : "";
+        maxSelectable++;
+    }
+    if (!isTypeDisabled(Fahrzeug.FUSS)) {
+        fahrzeugOptions.value.fussverkehr ? counter++ : "";
+        maxSelectable++;
+    }
+    // counter > maxSelectable/2 => abwählen
+    // sonst => auswählen
+    selectOrDeselectAllVerkehrsartenVmodel.value = counter > maxSelectable / 2;
+}
+
+/**
+ * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im OptionsDTO entsprechend der gewählten Zeitauswahl.
+ */
+function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
+    if (
+        options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+        options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    ) {
+        options.kraftfahrzeugverkehr = false;
+        options.schwerverkehr = false;
+        options.gueterverkehr = false;
+        options.schwerverkehrsanteilProzent = false;
+        options.gueterverkehrsanteilProzent = false;
+        options.personenkraftwagen = false;
+        options.lastkraftwagen = false;
+        options.lastzuege = false;
+        options.busse = false;
+        options.kraftraeder = false;
+    } else {
+        options.kraftfahrzeugverkehr = true;
+        options.schwerverkehr = true;
+        options.gueterverkehr = true;
+        options.schwerverkehrsanteilProzent = true;
+        options.gueterverkehrsanteilProzent = true;
+    }
+    if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD) {
+        options.radverkehr = true;
+        options.fussverkehr = false;
+    } else if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS) {
+        options.radverkehr = false;
+        options.fussverkehr = true;
+    }
+    return options;
+}
+
+/**
+ * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
+ * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
+ */
+function isTypeDisabled(type: string): boolean {
+    return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
+}
+
+watch(
+    () => props.isDifferenzdatenvergleichActive,
+    () => {
+        if (props.isDifferenzdatenvergleichActive) {
+            // Werte zwischenspeichern und auf false setzen
+            svAnteilForDifferenzdatenSaved.value =
+                fahrzeugOptions.value.schwerverkehrsanteilProzent;
+            gvAnteilForDifferenzdatenSaved.value =
+                fahrzeugOptions.value.gueterverkehrsanteilProzent;
+            fahrzeugOptions.value.schwerverkehrsanteilProzent = false;
+            fahrzeugOptions.value.gueterverkehrsanteilProzent = false;
+        } else {
+            // Zwischengespeicherte Werte den Optionen zuweisen
+            fahrzeugOptions.value.schwerverkehrsanteilProzent =
+                svAnteilForDifferenzdatenSaved.value;
+            fahrzeugOptions.value.gueterverkehrsanteilProzent =
+                gvAnteilForDifferenzdatenSaved.value;
+        }
+    }
+);
+
+watch(
+    fahrzeugOptions,
+    () => {
+        calculateSelectOrDeselect();
+        calculateSelectOrDeselectVerkehrsarten();
+        emits("fahrzeugOptions", fahrzeugOptions.value);
+    },
+    { deep: true }
+);
+
+watch(
+    options,
+    (newOptions: OptionsDTO) => {
+        loadOptions(newOptions);
+    },
+    { immediate: true }
+);
+
+watch(
+    () => props.actualZeitauswahl,
+    (zeitauswahl: string) => {
+        fahrzeugOptions.value.zeitauswahl = zeitauswahl;
+        adaptFahrzeugauswahl(fahrzeugOptions.value);
+    }
+);
 </script>
