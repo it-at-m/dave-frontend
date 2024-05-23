@@ -16,17 +16,22 @@
         <span>{{ tooltip }}</span>
     </v-tooltip>
 </template>
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
-export default class TooltipWithIcon extends Vue {
-    @Prop({ default: false }) small?: boolean;
-    @Prop({ default: false }) large?: boolean;
-    @Prop({ default: false }) xLarge?: boolean;
-    @Prop({ default: false }) dense?: boolean;
-    @Prop({ default: "black" }) color?: string;
-    @Prop() icon?: string;
-    @Prop() tooltip?: string;
+<script setup lang="ts">
+interface Props {
+    small?: boolean;
+    large?: boolean;
+    xLarge?: boolean;
+    dense?: boolean;
+    color?: string;
+    icon?: string;
+    tooltip?: string;
 }
+
+withDefaults(defineProps<Props>(), {
+    small: false,
+    large: false,
+    xLarge: false,
+    dense: false,
+    color: "black",
+});
 </script>
