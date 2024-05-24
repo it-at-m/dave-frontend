@@ -39,7 +39,6 @@
                     :latlng="latlng"
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
-                    show-marker="true"
                     width="100%"
                 />
                 <messstelle-diagramme
@@ -52,7 +51,7 @@
 </template>
 <script setup lang="ts">
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
-import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
+import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
