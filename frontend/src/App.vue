@@ -185,9 +185,9 @@ import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
 
 /* eslint-disable no-unused-vars */
-import SsoUserInfoResponse from "@/types/SsoUserInfoResponse";
-import VersionInfoResponse from "@/types/VersionInfoResponse";
-import Suggest from "@/types/Suggest";
+import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
+import VersionInfoResponse from "@/types/app/VersionInfoResponse";
+import Suggest from "@/types/suche/Suggest";
 import SucheService from "@/api/service/SucheService";
 import SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
 import SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";

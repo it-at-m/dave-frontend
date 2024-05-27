@@ -1,4 +1,4 @@
-import SsoUserInfoResponse from "@/types/SsoUserInfoResponse";
+import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 
 const roleAnwender = "ROLE_ANWENDER";
 

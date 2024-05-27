@@ -73,7 +73,7 @@ import { useStore } from "@/api/util/useStore";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 import _ from "lodash";

@@ -1,5 +1,5 @@
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
-import VersionInfoResponse from "@/types/VersionInfoResponse";
+import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 import { ApiError, Levels } from "@/api/error";
 import FetchUtils from "@/api/util/FetchUtils";
 

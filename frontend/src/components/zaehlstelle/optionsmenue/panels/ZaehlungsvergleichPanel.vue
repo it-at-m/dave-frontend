@@ -94,7 +94,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 /* eslint-disable no-unused-vars */
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 /* eslint-enable no-unused-vars */
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";

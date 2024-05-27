@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 import { computed, ref } from "vue";
 import IconTooltip from "@/types/util/IconTooltip";
 

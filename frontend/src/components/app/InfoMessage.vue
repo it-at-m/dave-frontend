@@ -68,7 +68,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, computed } from "vue";
 /* eslint-disable no-unused-vars */
-import InfoMessageDTO from "@/types/InfoMessageDTO";
+import InfoMessageDTO from "@/types/app/InfoMessageDTO";
 import InfoMessageService from "@/api/service/InfoMessageService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 /* eslint-enable no-unused-vars */

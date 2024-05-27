@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,

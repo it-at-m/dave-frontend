@@ -1,5 +1,5 @@
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import AbstractHistoryItem from "@/types/app/AbstractHistoryItem";
+import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 
 export default class ZaehlstelleHistoryItem extends AbstractHistoryItem {
     zaehlungId: string;

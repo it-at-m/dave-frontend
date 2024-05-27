@@ -1,6 +1,6 @@
 import FetchService from "@/api/service/FetchService";
 import SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
-import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 
 export default class SucheService {
     private static readonly ENDPOINT: string = "api/dave-backend-service";

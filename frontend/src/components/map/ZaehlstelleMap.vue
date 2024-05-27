@@ -134,18 +134,18 @@ import L, { control, Icon, LatLng, latLng, Marker } from "leaflet";
 // eslint-disable-next-line no-unused-vars
 import ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 // eslint-disable-next-line no-unused-vars
-import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
+import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 // eslint-disable-next-line no-unused-vars
-import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
+import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import SucheService from "@/api/service/SucheService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import markerIconRed from "@/assets/marker-icon-red.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
-import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
-import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
-import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
+import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import { useDateUtils } from "@/util/DateUtils";
 
 @Component({

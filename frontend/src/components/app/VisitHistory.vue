@@ -42,10 +42,10 @@
 <script setup lang="ts">
 import { useStore } from "@/api/util/useStore";
 import { computed, ComputedRef } from "vue";
-import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
+import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useRouter } from "vue-router/composables";
-import AbstractHistoryItem from "@/types/app/AbstractHistoryItem";
-import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
+import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
+import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
 import _ from "lodash";
 

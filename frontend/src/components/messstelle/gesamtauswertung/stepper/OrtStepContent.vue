@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { computed, ComputedRef, ref, Ref, watch } from "vue";
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
