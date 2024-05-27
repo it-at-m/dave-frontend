@@ -293,40 +293,40 @@
             </v-tooltip>
         </v-speed-dial>
         <ImageAssetForm
+            v-model="editImage"
             :image="imageAsset"
-            :open="editImage"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></ImageAssetForm>
         <DatatableAssetForm
+            v-model="editDatatable"
             :datatable="datatableAsset"
-            :open="editDatatable"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></DatatableAssetForm>
         <HeadingAssetForm
+            v-model="editHeading"
             :heading="headingAsset"
-            :open="editHeading"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></HeadingAssetForm>
         <TextAssetForm
-            :open="editText"
+            v-model="editText"
             :text="textAsset"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></TextAssetForm>
         <DeleteDialog
+            v-model="deleteDialog"
             :asset-id="assetId"
-            :open="deleteDialog"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @delete="deleteIt($event)"
         ></DeleteDialog>
 
         <pdf-preview-dialog
-            :open="previewPdfDialog"
+            v-model="previewPdfDialog"
             :source="previewSource"
-            @cancel="cancel"
+            @cancelDialog="cancel"
             @download="downloadPdf"
         />
     </v-container>
