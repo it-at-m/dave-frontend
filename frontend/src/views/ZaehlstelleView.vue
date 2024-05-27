@@ -40,7 +40,6 @@
                     :zoom="17"
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
-                    :show-marker="true"
                     width="100%"
                     @zeahlart-ausgewaehlt="setZaehlart($event)"
                 />

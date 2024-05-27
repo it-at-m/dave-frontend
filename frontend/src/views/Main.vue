@@ -7,7 +7,6 @@
             ref="map"
             height="100%"
             width="100%"
-            show-marker="true"
             :zoom="12"
         />
 
@@ -84,7 +83,7 @@ import { useStore } from "@/api/util/useStore";
 /* eslint-enable no-unused-vars */
 
 const store = useStore();
-const map = ref<null | ZaehlstelleMap>(null);
+const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const fab = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
