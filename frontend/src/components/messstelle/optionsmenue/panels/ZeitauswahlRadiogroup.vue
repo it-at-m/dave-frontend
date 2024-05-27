@@ -87,7 +87,7 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { Levels } from "@/api/error";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 

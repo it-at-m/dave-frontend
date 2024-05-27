@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
 import TagesTyp from "@/types/enum/TagesTyp";

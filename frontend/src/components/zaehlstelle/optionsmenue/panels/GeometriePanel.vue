@@ -85,7 +85,7 @@ import LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import _ from "lodash";
 import { computed, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 
 interface Props {
     zaehlung?: LadeZaehlungDTO;

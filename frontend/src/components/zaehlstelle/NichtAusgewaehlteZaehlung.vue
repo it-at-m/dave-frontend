@@ -62,7 +62,7 @@ import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import { computed, ref } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 
 interface Props {

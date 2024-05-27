@@ -115,7 +115,7 @@
     </v-sheet>
 </template>
 <script setup lang="ts">
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";

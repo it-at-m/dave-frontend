@@ -83,7 +83,7 @@ import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { DateTimeFormatOptions } from "vue-i18n";
 import { computed, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 
 /* eslint-enable no-unused-vars */
 

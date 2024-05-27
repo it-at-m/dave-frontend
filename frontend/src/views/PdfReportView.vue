@@ -355,13 +355,13 @@ import GeneratePdfService from "@/api/service/GeneratePdfService";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 /* eslint-enable no-unused-vars */
 // Utils
-import DaveUtils from "@/util/DaveUtils";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import _ from "lodash";
 import PdfPreviewDialog from "@/components/pdfreport/assetforms/PdfPreviewDialog.vue";
 import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
+import { useDaveUtils } from "@/util/DaveUtils";
 
 @Component({
     components: {
@@ -900,7 +900,7 @@ export default class PdfReportView extends Vue {
 
     downloadPdf() {
         let filename = `report_${Date.now()}.pdf`;
-        DaveUtils.downloadFile(this.pdfSourceAsBlob, filename);
+        useDaveUtils().downloadFile(this.pdfSourceAsBlob, filename);
     }
 
     get previewSource(): Uint8Array {

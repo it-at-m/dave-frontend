@@ -130,7 +130,7 @@ import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { computed, Ref, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 
 /**

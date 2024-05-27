@@ -61,7 +61,7 @@ import DataManipulatorUtil from "@/util/DataManipulatorUtil";
 // eslint-disable-next-line no-unused-vars
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ComputedRef, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import DataTableHeader from "@/types/util/DataTableHeader";
 
 const store = useStore();

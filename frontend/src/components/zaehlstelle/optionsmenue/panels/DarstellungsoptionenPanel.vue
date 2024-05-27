@@ -274,9 +274,9 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import _ from "lodash";
 import { computed, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
-import { useRules } from "@/composables/rules";
+import { useRules } from "@/util/rules";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;

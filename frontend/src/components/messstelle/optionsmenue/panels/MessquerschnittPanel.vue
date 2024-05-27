@@ -69,7 +69,7 @@
 <script setup lang="ts">
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ComputedRef, Ref, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";

@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { computed, ComputedRef } from "vue";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useRouter } from "vue-router/composables";

@@ -93,7 +93,7 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import KeyVal from "@/types/common/KeyVal";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";
 

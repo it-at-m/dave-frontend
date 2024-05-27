@@ -23,7 +23,7 @@ import {
 import VChart, { THEME_KEY } from "vue-echarts";
 import { computed, ComputedRef, provide, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 
 /**
  * Die Berechnung der Koordinaten für die einzelnen Fahrbeziehungen erfolgt anhand einer Drehmatrix.

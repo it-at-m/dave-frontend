@@ -57,7 +57,7 @@
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 
 interface Props {
     value: MessstelleOptionsDTO;

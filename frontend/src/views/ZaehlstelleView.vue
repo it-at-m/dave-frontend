@@ -65,7 +65,7 @@ import ZaehlungenTimeline from "@/components/zaehlstelle/ZaehlungenTimeline.vue"
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import ZaehlstellenService from "@/api/service/ZaehlstellenService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { useRoute } from "vue-router/composables";
 

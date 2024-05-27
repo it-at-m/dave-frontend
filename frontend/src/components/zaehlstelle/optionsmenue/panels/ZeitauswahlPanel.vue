@@ -176,7 +176,7 @@ import ZeitblockStuendlich, {
 } from "@/types/enum/ZeitblockStuendlich";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
