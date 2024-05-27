@@ -162,11 +162,7 @@
     </v-expansion-panel>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-// Typen
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -178,245 +174,243 @@ import KeyVal from "@/types/common/KeyVal";
 import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
-/* eslint-enable no-unused-vars */
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
 import Zaehldauer from "@/types/enum/Zaehldauer";
+import { useStore } from "@/api/util/useStore";
+import { computed, onMounted, Ref, ref, watch } from "vue";
+import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-@Component({
-    components: { PanelHeader },
-})
-export default class ZeitauswahlPanel extends Vue {
-    @Prop() zaehlung?: LadeZaehlungDTO;
+interface Props {
+    zaehlung?: LadeZaehlungDTO;
+}
 
-    zeitauswahl: string = Zeitauswahl.TAGESWERT;
-    zeitblock: string = Zeitblock.ZB_00_24;
-    intervall: ZaehldatenIntervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+const props = defineProps<Props>();
+const store = useStore();
+const zaehlstelleUtils = useZaehlstelleUtils();
 
-    // Zeitauswahl
-    hoverTageswert = false;
-    hoverBlock = false;
-    hoverStunde = false;
-    hoverSpitzenstundeKfz = false;
-    hoverSpitzenstundeRad = false;
-    hoverSpitzenstundeFuss = false;
+const emits = defineEmits<{
+    (e: "zeitauswahl", v: string): void;
+    (e: "zeitblock", v: string): void;
+    (e: "intervall", v: ZaehldatenIntervall): void;
+}>();
 
-    hoverSelectBlockOrSpitzenstunde = false;
-    hoverSelectStunde = false;
+const zeitauswahl = ref(Zeitauswahl.TAGESWERT.valueOf());
+const zeitblock = ref(Zeitblock.ZB_00_24.valueOf());
+const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
 
-    // Zeitintervall
-    hoverSelectZeitintervall = false;
+// Zeitauswahl
+const hoverTageswert = ref(false);
+const hoverBlock = ref(false);
+const hoverStunde = ref(false);
+const hoverSpitzenstundeKfz = ref(false);
+const hoverSpitzenstundeRad = ref(false);
+const hoverSpitzenstundeFuss = ref(false);
 
-    mounted() {
-        const options = this.$store.getters.getFilteroptions as OptionsDTO;
-        this.update(options);
-    }
+const hoverSelectBlockOrSpitzenstunde = ref(false);
+const hoverSelectStunde = ref(false);
 
-    get isZeitauswahlSpitzenstundeOrBlock(): boolean {
-        return (
-            this.zeitauswahl === Zeitauswahl.BLOCK ||
-            this.isZeitauswahlSpitzenstunde
-        );
-    }
+// Zeitintervall
+const hoverSelectZeitintervall = ref(false);
 
-    get isZeitauswahlStunde(): boolean {
-        return this.zeitauswahl === Zeitauswahl.STUNDE;
-    }
+onMounted(() => {
+    update(options.value);
+});
 
-    get isZeitauswahlSpitzenstunde(): boolean {
-        return (
-            this.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-            this.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-            this.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
-        );
-    }
+const options: Ref<OptionsDTO> = computed(() => {
+    return store.getters.getFilteroptions;
+});
 
-    get helpTextZeitauswahl(): string {
-        if (this.hoverTageswert) {
-            return "";
-        }
-        if (this.hoverBlock) {
-            return "";
-        }
-        if (this.hoverStunde) {
-            return "";
-        }
-        if (this.hoverSpitzenstundeKfz) {
-            return "Stunde der höchsten Belastung des Kraftfahrzeugverkehrs an einem Knoten (gleitend).";
-        }
-        if (this.hoverSpitzenstundeRad) {
-            return "Stunde der höchsten Belastung des Radverkehrs an einem Knoten (gleitend).";
-        }
-        if (this.hoverSpitzenstundeFuss) {
-            return "Stunde der höchsten Belastung des Fußverkehrs an einem Knoten (gleitend).";
-        }
-        if (this.hoverSelectBlockOrSpitzenstunde) {
-            return "";
-        }
-        if (this.hoverSelectStunde) {
-            return "";
-        }
+const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
+    return store.getters.getAktiveZaehlung;
+});
+
+const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
+    return (
+        zeitauswahl.value === Zeitauswahl.BLOCK ||
+        isZeitauswahlSpitzenstunde.value
+    );
+});
+
+const isZeitauswahlStunde = computed(() => {
+    return zeitauswahl.value === Zeitauswahl.STUNDE;
+});
+
+const isZeitauswahlSpitzenstunde = computed(() => {
+    return (
+        zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_RAD ||
+        zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_FUSS
+    );
+});
+
+const helpTextZeitauswahl = computed(() => {
+    if (hoverTageswert.value) {
         return "";
     }
-
-    get helpTextZeitintervall(): string {
-        if (this.hoverSelectZeitintervall) {
-            return "";
-        }
+    if (hoverBlock.value) {
         return "";
     }
+    if (hoverStunde.value) {
+        return "";
+    }
+    if (hoverSpitzenstundeKfz.value) {
+        return "Stunde der höchsten Belastung des Kraftfahrzeugverkehrs an einem Knoten (gleitend).";
+    }
+    if (hoverSpitzenstundeRad.value) {
+        return "Stunde der höchsten Belastung des Radverkehrs an einem Knoten (gleitend).";
+    }
+    if (hoverSpitzenstundeFuss.value) {
+        return "Stunde der höchsten Belastung des Fußverkehrs an einem Knoten (gleitend).";
+    }
+    if (hoverSelectBlockOrSpitzenstunde.value) {
+        return "";
+    }
+    if (hoverSelectStunde.value) {
+        return "";
+    }
+    return "";
+});
 
-    /**
-     * Lädt - abhängig von der aktuellen Zählung - die Labels und Werte für das Zeitblock Select Control
-     * Wurde bei der Zeitauswahl die Option Spitzenstunde gewählt, so wird der Zeitblock 0-24 Uhr an
-     * den Array der Zeitblöcke angehangen.
-     */
-    get zeitblockValues(): Array<KeyVal> {
-        let result = new Array<KeyVal>();
-        // die möglichen Blöcke aus der Zählung
-        const blocks: Zeitblock[] = this.zaehlung?.zeitauswahl
-            .blocks as Zeitblock[];
+const helpTextZeitintervall = computed(() => {
+    if (hoverSelectZeitintervall.value) {
+        return "";
+    }
+    return "";
+});
 
-        if (blocks && Array.isArray(blocks)) {
-            // Select Control mit den entsprechenden text/value Werten füllen
-            blocks.forEach((b) => {
-                const kv = zeitblockInfo.get(b);
-                if (kv) {
-                    result.push(kv);
-                }
-            });
-            // Block 0-24 bei Zeitauswahl Spitzenstunde hinzufügen falls kein Zeitblock ZB_06_19 oder ZB_06_22 existiert.
-            if (
-                this.isZeitauswahlSpitzenstunde &&
-                !result.some(
-                    (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_19)
-                ) &&
-                !result.some(
-                    (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22)
-                )
-            ) {
-                if (this.activeZaehlung.zaehldauer === Zaehldauer.SONSTIGE) {
-                    const zeitBlockMaximal: KeyVal = {} as KeyVal;
-                    zeitBlockMaximal.value = Zeitblock.ZB_00_24;
-                    zeitBlockMaximal.text = "maximal";
-                    result.push(zeitBlockMaximal);
-                } else {
-                    result.push(
-                        zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal
-                    );
-                }
+/**
+ * Lädt - abhängig von der aktuellen Zählung - die Labels und Werte für das Zeitblock Select Control
+ * Wurde bei der Zeitauswahl die Option Spitzenstunde gewählt, so wird der Zeitblock 0-24 Uhr an
+ * den Array der Zeitblöcke angehangen.
+ */
+const zeitblockValues: Ref<Array<KeyVal>> = computed(() => {
+    let result = new Array<KeyVal>();
+    // die möglichen Blöcke aus der Zählung
+    const blocks: Zeitblock[] = props.zaehlung?.zeitauswahl
+        .blocks as Zeitblock[];
+
+    if (blocks && Array.isArray(blocks)) {
+        // Select Control mit den entsprechenden text/value Werten füllen
+        blocks.forEach((b) => {
+            const kv = zeitblockInfo.get(b);
+            if (kv) {
+                result.push(kv);
             }
-        }
-        return result;
-    }
-
-    /**
-     * Lädt - abhängig von der aktuellen Zählung - die Labels und Werte für das Stunden Select Control
-     */
-    get stuendlichValues(): Array<KeyVal> {
-        let result = new Array<KeyVal>();
-        // die möglichen Stunden aus der Zählung
-        const hrs = this.zaehlung?.zeitauswahl.hours as ZeitblockStuendlich[];
-
-        if (hrs && typeof Array.isArray(hrs)) {
-            // Select Control mit den entsprechenden text/value Werten füllen
-            hrs.forEach((h) => {
-                const kv = zeitblockStuendlichInfo.get(h);
-                if (kv) {
-                    result.push(kv);
-                }
-            });
-        }
-        return result;
-    }
-
-    /**
-     * Gibt die ZaehldatenIntervalle zurück welche für den Intervall Select zur Anzeige relevant sind.
-     */
-    get zaehldatenIntervalle(): Array<KeyVal> {
-        return ZaehldatenIntervallToSelect;
-    }
-
-    /**
-     * Wird der Tageswert gewählt, so gibt es kein Dropdown Menü, da die Ansicht dann immer
-     * über den kompletten Tag geht. Deshalb muss hier auf das "Change" event der Checkbox
-     * Gruppe gelauscht werden.
-     */
-    zeitauswahlChanged() {
-        if (this.zeitauswahl === Zeitauswahl.TAGESWERT) {
-            this.zeitblock = Zeitblock.ZB_00_24;
-        }
-        // Der erste Eintrag wird als ausgewählt gesetzt
-        if (this.isZeitauswahlSpitzenstundeOrBlock) {
-            const zb = zeitblockInfo.get(this.zeitblockValues[0].value)?.value;
-            if (zb) {
-                this.zeitblock = zb;
-            }
-        }
-        //Der erste Eintrag wird als ausgewählt gesetzt
-        if (this.zeitauswahl === Zeitauswahl.STUNDE) {
-            const zs = zeitblockStuendlichInfo.get(
-                this.stuendlichValues[0].value
-            )?.value;
-            if (zs) {
-                this.zeitblock = zs;
+        });
+        // Block 0-24 bei Zeitauswahl Spitzenstunde hinzufügen falls kein Zeitblock ZB_06_19 oder ZB_06_22 existiert.
+        if (
+            isZeitauswahlSpitzenstunde.value &&
+            !result.some(
+                (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_19)
+            ) &&
+            !result.some(
+                (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22)
+            )
+        ) {
+            if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+                const zeitBlockMaximal: KeyVal = {} as KeyVal;
+                zeitBlockMaximal.value = Zeitblock.ZB_00_24;
+                zeitBlockMaximal.text = "maximal";
+                result.push(zeitBlockMaximal);
+            } else {
+                result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
             }
         }
     }
+    return result;
+});
 
-    // Watcher
-    // Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-    @Watch("zeitauswahl")
-    storeZeitauswahl() {
-        this.$emit("zeitauswahl", this.zeitauswahl);
+/**
+ * Lädt - abhängig von der aktuellen Zählung - die Labels und Werte für das Stunden Select Control
+ */
+const stuendlichValues: Ref<Array<KeyVal>> = computed(() => {
+    let result = new Array<KeyVal>();
+    // die möglichen Stunden aus der Zählung
+    const hrs = props.zaehlung?.zeitauswahl.hours as ZeitblockStuendlich[];
+
+    if (hrs && typeof Array.isArray(hrs)) {
+        // Select Control mit den entsprechenden text/value Werten füllen
+        hrs.forEach((h) => {
+            const kv = zeitblockStuendlichInfo.get(h);
+            if (kv) {
+                result.push(kv);
+            }
+        });
     }
+    return result;
+});
 
-    @Watch("zeitblock")
-    storeZeitblock() {
-        this.$emit("zeitblock", this.zeitblock);
+/**
+ * Gibt die ZaehldatenIntervalle zurück welche für den Intervall Select zur Anzeige relevant sind.
+ */
+const zaehldatenIntervalle: Ref<Array<KeyVal>> = computed(() => {
+    return ZaehldatenIntervallToSelect;
+});
+
+/**
+ * Wird der Tageswert gewählt, so gibt es kein Dropdown Menü, da die Ansicht dann immer
+ * über den kompletten Tag geht. Deshalb muss hier auf das "Change" event der Checkbox
+ * Gruppe gelauscht werden.
+ */
+function zeitauswahlChanged() {
+    if (zeitauswahl.value === Zeitauswahl.TAGESWERT) {
+        zeitblock.value = Zeitblock.ZB_00_24;
     }
-
-    @Watch("intervall")
-    storeIntervall() {
-        this.$emit("intervall", this.intervall);
+    // Der erste Eintrag wird als ausgewählt gesetzt
+    if (isZeitauswahlSpitzenstundeOrBlock.value) {
+        const zb = zeitblockInfo.get(zeitblockValues.value[0].value)?.value;
+        if (zb) {
+            zeitblock.value = zb;
+        }
     }
-
-    // reaktiver getter auf den Store
-    get options(): OptionsDTO {
-        return this.$store.getters.getFilteroptions;
-    }
-
-    get activeZaehlung(): LadeZaehlungDTO {
-        return this.$store.getters.getAktiveZaehlung;
-    }
-
-    // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-    // Oberfläche ändern.
-    @Watch("options")
-    optionsChanged(newOptions: OptionsDTO) {
-        this.update(newOptions);
-    }
-
-    // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
-    //  übergebenen Werten im Optionsobjekt
-    update(newOptions: OptionsDTO) {
-        newOptions.zeitauswahl === null
-            ? (this.zeitauswahl = Zeitauswahl.TAGESWERT)
-            : (this.zeitauswahl = newOptions.zeitauswahl);
-        newOptions.zeitblock === null
-            ? (this.zeitblock = Zeitblock.ZB_00_24)
-            : (this.zeitblock = newOptions.zeitblock);
-        newOptions.intervall === null
-            ? (this.intervall = ZaehldatenIntervall.STUNDE_VIERTEL)
-            : (this.intervall = newOptions.intervall);
-    }
-
-    /**
-     * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
-     * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
-     */
-    isTypeDisabled(type: string): boolean {
-        return Optionsmenue.isTypeDisabled(type, this.activeZaehlung);
+    //Der erste Eintrag wird als ausgewählt gesetzt
+    if (zeitauswahl.value === Zeitauswahl.STUNDE) {
+        const zs = zeitblockStuendlichInfo.get(
+            stuendlichValues.value[0].value
+        )?.value;
+        if (zs) {
+            zeitblock.value = zs;
+        }
     }
 }
+
+// Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
+//  übergebenen Werten im Optionsobjekt
+function update(newOptions: OptionsDTO) {
+    newOptions.zeitauswahl === null
+        ? (zeitauswahl.value = Zeitauswahl.TAGESWERT)
+        : (zeitauswahl.value = newOptions.zeitauswahl);
+    newOptions.zeitblock === null
+        ? (zeitblock.value = Zeitblock.ZB_00_24)
+        : (zeitblock.value = newOptions.zeitblock);
+    newOptions.intervall === null
+        ? (intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL)
+        : (intervall.value = newOptions.intervall);
+}
+
+/**
+ * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
+ * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
+ */
+function isTypeDisabled(type: string): boolean {
+    return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
+}
+
+// Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
+// Oberfläche ändern.
+watch(options, (newOptions: OptionsDTO) => {
+    update(newOptions);
+});
+
+watch(zeitauswahl, () => {
+    emits("zeitauswahl", zeitauswahl.value);
+});
+
+watch(zeitblock, () => {
+    emits("zeitblock", zeitblock.value);
+});
+
+watch(intervall, () => {
+    emits("intervall", intervall.value);
+});
 </script>

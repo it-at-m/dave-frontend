@@ -75,433 +75,400 @@
     </v-expansion-panel>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-// Typen
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
 import LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
-/* eslint-enable no-unused-vars */
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import _ from "lodash";
+import { computed, onMounted, Ref, ref, watch } from "vue";
+import { useStore } from "@/api/util/useStore";
 
-@Component({
-    components: { PanelHeader },
-})
-export default class GeometriePanel extends Vue {
-    @Prop() zaehlung?: LadeZaehlungDTO;
+interface Props {
+    zaehlung?: LadeZaehlungDTO;
+}
 
-    /**
-     * Je im von-Dropdown wählbaren Knotenarm werden die für den nach-Dropdown möglichen Zielknotenarme vorgehalten.
-     */
-    moeglicheBeziehungenVon = new Map<number, KnotenarmVerbindungen>();
-    /**
-     * Je im nach-Dropdown wählbaren Knotenarm werden die für den von-Dropdown möglichen Knotenarme vorgehalten.
-     */
-    moeglicheBeziehungenNach = new Map<number, KnotenarmVerbindungen>();
+const props = defineProps<Props>();
+const store = useStore();
+const emits = defineEmits<{
+    (e: "beideRichtungen", v: boolean): void;
+    (e: "von", v: Array<number>): void;
+    (e: "nach", v: Array<number>): void;
+}>();
 
-    /**
-     * Der gewählte von-Knotenarm
-     */
-    von = -1;
+/**
+ * Je im von-Dropdown wählbaren Knotenarm werden die für den nach-Dropdown möglichen Zielknotenarme vorgehalten.
+ */
+const moeglicheBeziehungenVon = ref(new Map<number, KnotenarmVerbindungen>());
+/**
+ * Je im nach-Dropdown wählbaren Knotenarm werden die für den von-Dropdown möglichen Knotenarme vorgehalten.
+ */
+const moeglicheBeziehungenNach = ref(new Map<number, KnotenarmVerbindungen>());
 
-    /**
-     * Der gewählte nach-Knotenarm
-     */
-    nach = -1;
+/**
+ * Der gewählte von-Knotenarm
+ */
+const von = ref(-1);
+/**
+ * Der gewählte nach-Knotenarm
+ */
+const nach = ref(-1);
 
-    vonIds = new Array<number>();
-    alle = { nummer: 0, strassenname: "Alle Knotenarme" };
+const alle = { nummer: 0, strassenname: "Alle Knotenarme" };
 
-    beideRichtungen = false;
+const beideRichtungen = ref(false);
+const hoverSelectVon = ref(false);
+const hoverSelectNach = ref(false);
+const hoverBeideRichtungen = ref(false);
 
-    hoverSelectVon = false;
-    hoverSelectNach = false;
-    hoverBeideRichtungen = false;
+const options: Ref<OptionsDTO> = computed(() => {
+    return store.getters.getFilteroptions;
+});
 
-    // Lädt die "von" Knotenarme für den aktuell gewählten "nach" Knotenarm
-    get vonKnotenarme(): LadeKnotenarmDTO[] | undefined {
-        const k = this.moeglicheBeziehungenNach.get(this.nach);
-        if (k) {
-            return k.moeglicheVerbindungen.sort(
-                LadeKnotenarmComperator.sortByNumber
-            );
-        } else {
-            return [this.alle];
-        }
-    }
-
-    // Lädt die "nach" Knotenarme für den aktuell gewählten "von" Knotenarm
-    get nachKnotenarme(): LadeKnotenarmDTO[] | undefined {
-        const k = this.moeglicheBeziehungenVon.get(this.von);
-        if (k) {
-            return k.moeglicheVerbindungen.sort(
-                LadeKnotenarmComperator.sortByNumber
-            );
-        } else {
-            return [this.alle];
-        }
-    }
-
-    get helpTextFahrbeziehung(): string {
-        if (this.hoverSelectVon) {
-            return "Auf den Knoten zulaufende Fahrtrichtung.";
-        }
-        if (this.hoverSelectNach) {
-            return "Vom Knoten ablaufende Fahrtrichtung.";
-        }
-        if (this.hoverBeideRichtungen) {
-            return "Zulaufende und Ablaufende Fahrtrichtung. Hat nur eine Auswirkung auf den Belastungsplan.";
-        }
-        return "";
-    }
-
-    /**
-     * reaktiver Getter zum Steuern der Anzeige der Checkbox
-     * fuer den Zulauf/Ablauf
-     */
-    get beideRichtungenAnzeigen(): boolean {
-        return this.von > 0 || this.nach > 0;
-    }
-
-    // Watcher
-
-    /**
-     * Hier werden die Kreuzungsbeziehungen erstellt sobald eine neue Zaehlung gesetzt wird.
-     */
-    @Watch("zaehlung", { immediate: true })
-    zaehlungChanged() {
-        this.initFahrbeziehungen();
-    }
-
-    /**
-     * Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-     */
-    @Watch("beideRichtungen")
-    storeBeideRichtungen() {
-        this.$emit("beideRichtungen", this.beideRichtungen);
-    }
-
-    /**
-     * Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-     * @param n gewählter Knotenarm
-     */
-    @Watch("von")
-    storeVon(n: number) {
-        let von = [n];
-        if (n === 0) {
-            const nachK = this.moeglicheBeziehungenNach.get(this.von);
-            if (nachK) {
-                // werden die möglichen Zielknoten übergeben
-                von = nachK.moeglicheVerbindungenIds;
-            }
-        }
-        this.$emit("von", von);
-    }
-
-    /**
-     * Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-     * @param n gewählter Knotenarm
-     */
-    @Watch("nach")
-    storeNach(n: number) {
-        let nach = [n];
-        // wenn das Ziel "alle" sind...
-        if (n === 0) {
-            const vonK = this.moeglicheBeziehungenVon.get(this.von);
-            if (vonK) {
-                // werden die möglichen Zielknoten übergeben
-                nach = vonK.moeglicheVerbindungenIds;
-            }
-        }
-        this.$emit("nach", nach);
-    }
-
-    // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-    // Oberfläche ändern.
-    @Watch("options")
-    optionsChanged(n: OptionsDTO) {
-        this.reset(n);
-    }
-
-    // reaktiver getter auf den Store
-    get options(): OptionsDTO {
-        return this.$store.getters.getFilteroptions;
-    }
-
-    // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
-    //  übergebenen Werten im Optionsobjekt
-    reset(fo: OptionsDTO) {
-        fo.vonKnotenarm === null
-            ? (this.von = 0)
-            : (this.von = fo.vonKnotenarm);
-        fo.nachKnotenarm === null
-            ? (this.nach = 0)
-            : (this.nach = fo.nachKnotenarm);
-        fo.beideRichtungen === null
-            ? (this.beideRichtungen = false)
-            : (this.beideRichtungen = fo.beideRichtungen);
-    }
-
-    mounted() {
-        // Von und nach Werte auf die Werte aus dem Options Objekt aus dem Store setzen.
-        //
-        // Es ist wichtig, dass diese Funktion ausgeführt wird, nachdem die Fahrbeziehungen
-        // aufbereitet wurden, da durch das Setzen von "von" und "nach" in den entspechenden
-        // watch Methoden automatisch die richtigen "vonIds" und "nachIds" gesetzt werden. Damit
-        // ist sichergestellt, dass bei einer 1 : n Beziehung alle "nach" Knotenarme in der
-        // ZaehlungInfo angezeigt werden.
-        const fo = this.$store.getters.getFilteroptions as OptionsDTO;
-        this.reset(fo);
-    }
-
-    /**
-     * In dieser Methode werden die wählbaren von- und nach-Knotenarme ermittelt.
-     *
-     * Jeder wählbare von-Knotenarm wird mit den möglichen nach-Knotearmen befüllt.
-     * Jeder wählbare nach-Knotenarm wird mit den möglichen von-Knotearmen befüllt.
-     *
-     * Als Basis zur Ermittlung der relevanten Knotenarme dient die Klasse "LadeFahrbeziehungDTO"
-     * welche als relevante Attribute "von" und "nach" für Kreuzungen sowie "knotenarmKreisverkehr"
-     * und "hinein" vorhält.
-     */
-    private initFahrbeziehungen(): void {
-        // Init default Knotenarmauswahl
-        this.von = 0;
-        this.nach = 0;
-
-        // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
-        const knotenarme: Map<number, string> = new Map<number, string>(
-            this.zaehlung?.knotenarme.map((knotenarm) => [
-                knotenarm.nummer,
-                knotenarm.nummer + " - " + knotenarm.strassenname,
-            ])
+// Lädt die "von" Knotenarme für den aktuell gewählten "nach" Knotenarm
+const vonKnotenarme: Ref<Array<LadeKnotenarmDTO>> = computed(() => {
+    const k = moeglicheBeziehungenNach.value.get(nach.value);
+    if (k) {
+        return k.moeglicheVerbindungen.sort(
+            LadeKnotenarmComperator.sortByNumber
         );
+    } else {
+        return [alle];
+    }
+});
+// Lädt die "nach" Knotenarme für den aktuell gewählten "von" Knotenarm
+const nachKnotenarme: Ref<Array<LadeKnotenarmDTO>> = computed(() => {
+    const k = moeglicheBeziehungenVon.value.get(von.value);
+    if (k) {
+        return k.moeglicheVerbindungen.sort(
+            LadeKnotenarmComperator.sortByNumber
+        );
+    } else {
+        return [alle];
+    }
+});
 
-        // Wird für die Erstellung der Zielknotenarme und eingehenden Knotenarme bei Auswahl "alle" benötigt.
-        const alleZielknotenarmeVon: Set<LadeKnotenarmDTO> =
-            new Set<LadeKnotenarmDTO>();
-        const alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO> =
-            new Set<LadeKnotenarmDTO>();
+const helpTextFahrbeziehung = computed(() => {
+    if (hoverSelectVon.value) {
+        return "Auf den Knoten zulaufende Fahrtrichtung.";
+    }
+    if (hoverSelectNach.value) {
+        return "Vom Knoten ablaufende Fahrtrichtung.";
+    }
+    if (hoverBeideRichtungen.value) {
+        return "Zulaufende und Ablaufende Fahrtrichtung. Hat nur eine Auswirkung auf den Belastungsplan.";
+    }
+    return "";
+});
 
-        // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
-        // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
-        const fahrbeziehungen = this.zaehlung?.fahrbeziehungen;
-        if (fahrbeziehungen && Array.isArray(fahrbeziehungen)) {
-            fahrbeziehungen?.forEach((fahrbeziehung) => {
-                if (this.isZaehlungForKreuzung()) {
-                    this.addVonKnotenarmWithPossibleNachKnotenarm(
-                        fahrbeziehung,
-                        alleZielknotenarmeVon,
-                        knotenarme
-                    );
-                    this.addNachKnotenarmWithPossibleVonKnotenarm(
-                        fahrbeziehung,
-                        alleEingehendeKnotenarmeNach,
-                        knotenarme
-                    );
-                } else {
-                    // Kreisverkehr
-                    if (
-                        fahrbeziehung.knotenarm != null &&
-                        fahrbeziehung.hinein
-                    ) {
-                        alleEingehendeKnotenarmeNach.add({
-                            nummer: fahrbeziehung.knotenarm,
-                            strassenname: this.getKnotenarmBezeichnung(
-                                fahrbeziehung.knotenarm,
-                                knotenarme
-                            ),
-                        });
-                    }
-                }
-            });
+/**
+ * reaktiver Getter zum Steuern der Anzeige der Checkbox
+ * fuer den Zulauf/Ablauf
+ */
+const beideRichtungenAnzeigen = computed(() => {
+    return von.value > 0 || nach.value > 0;
+});
 
-            // Nachfolgend werden die eingehenden bzw. ausgehenden Beziehungen bei Auswahl von "alle" gesetzt.
-            let kv: KnotenarmVerbindungen;
-            if (this.isZaehlungForKreuzung()) {
-                let kv = {
-                    knotenarm: this.alle,
-                    moeglicheVerbindungen: _.union(
-                        [this.alle],
-                        Array.from(alleZielknotenarmeVon.values())
-                    ),
-                    moeglicheVerbindungenIds: _.union(
-                        [this.alle],
-                        Array.from(alleZielknotenarmeVon.values())
-                    ).map((knotenarm) => knotenarm.nummer),
-                };
-                this.moeglicheBeziehungenVon.set(this.alle.nummer, kv);
+// Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
+//  übergebenen Werten im Optionsobjekt
+function reset(fo: OptionsDTO) {
+    fo.vonKnotenarm === null ? (von.value = 0) : (von.value = fo.vonKnotenarm);
+    fo.nachKnotenarm === null
+        ? (nach.value = 0)
+        : (nach.value = fo.nachKnotenarm);
+    fo.beideRichtungen === null
+        ? (beideRichtungen.value = false)
+        : (beideRichtungen.value = fo.beideRichtungen);
+}
+
+/**
+ * In dieser Methode werden die wählbaren von- und nach-Knotenarme ermittelt.
+ *
+ * Jeder wählbare von-Knotenarm wird mit den möglichen nach-Knotearmen befüllt.
+ * Jeder wählbare nach-Knotenarm wird mit den möglichen von-Knotearmen befüllt.
+ *
+ * Als Basis zur Ermittlung der relevanten Knotenarme dient die Klasse "LadeFahrbeziehungDTO"
+ * welche als relevante Attribute "von" und "nach" für Kreuzungen sowie "knotenarmKreisverkehr"
+ * und "hinein" vorhält.
+ */
+function initFahrbeziehungen(): void {
+    // Init default Knotenarmauswahl
+    von.value = 0;
+    nach.value = 0;
+
+    // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
+    const knotenarme: Map<number, string> = new Map<number, string>(
+        props.zaehlung?.knotenarme.map((knotenarm) => [
+            knotenarm.nummer,
+            knotenarm.nummer + " - " + knotenarm.strassenname,
+        ])
+    );
+
+    // Wird für die Erstellung der Zielknotenarme und eingehenden Knotenarme bei Auswahl "alle" benötigt.
+    const alleZielknotenarmeVon: Set<LadeKnotenarmDTO> =
+        new Set<LadeKnotenarmDTO>();
+    const alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO> =
+        new Set<LadeKnotenarmDTO>();
+
+    // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
+    // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
+    const fahrbeziehungen = props.zaehlung?.fahrbeziehungen;
+    if (fahrbeziehungen && Array.isArray(fahrbeziehungen)) {
+        fahrbeziehungen?.forEach((fahrbeziehung) => {
+            if (isZaehlungForKreuzung()) {
+                addVonKnotenarmWithPossibleNachKnotenarm(
+                    fahrbeziehung,
+                    alleZielknotenarmeVon,
+                    knotenarme
+                );
+                addNachKnotenarmWithPossibleVonKnotenarm(
+                    fahrbeziehung,
+                    alleEingehendeKnotenarmeNach,
+                    knotenarme
+                );
             } else {
                 // Kreisverkehr
-                let kv = {
-                    knotenarm: this.alle,
-                    moeglicheVerbindungen: [this.alle],
-                    moeglicheVerbindungenIds: [this.alle.nummer],
-                };
-                this.moeglicheBeziehungenVon.set(this.alle.nummer, kv);
-            }
-            // Kreuzung und Kreisverkehr
-            kv = {
-                knotenarm: this.alle,
-                moeglicheVerbindungen: _.union(
-                    [this.alle],
-                    Array.from(alleEingehendeKnotenarmeNach.values())
-                ),
-                moeglicheVerbindungenIds: _.union(
-                    [this.alle],
-                    Array.from(alleEingehendeKnotenarmeNach.values())
-                ).map((knotenarm) => knotenarm.nummer),
-            };
-            this.moeglicheBeziehungenNach.set(this.alle.nummer, kv);
-        }
-    }
-
-    /**
-     * Diese Methode fügt an den wählbaren Knotenarm für das Dropdown von-Knotenarm
-     * die möglichen nach-Knotenarme an.
-     */
-    private addVonKnotenarmWithPossibleNachKnotenarm(
-        fahrbeziehung: LadeFahrbeziehungDTO,
-        alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
-        knotenarme: Map<number, string>
-    ): void {
-        if (this.moeglicheBeziehungenVon.has(fahrbeziehung.von)) {
-            // Erweitern bereits vorhandener von-Knotenarm um zusätzlichen möglichen nach-Knotenarm
-            const kv: KnotenarmVerbindungen | undefined =
-                this.moeglicheBeziehungenVon.get(fahrbeziehung.von);
-            kv?.moeglicheVerbindungen.push({
-                nummer: fahrbeziehung.nach,
-                strassenname: this.getKnotenarmBezeichnung(
-                    fahrbeziehung.nach,
-                    knotenarme
-                ),
-            });
-            kv?.moeglicheVerbindungenIds.push(fahrbeziehung.nach);
-        } else {
-            // Erstbefüllung noch nicht vorhandener von-Knotenarm
-            const kv: KnotenarmVerbindungen = {
-                knotenarm: {
-                    nummer: fahrbeziehung.von,
-                    strassenname: this.getKnotenarmBezeichnung(
-                        fahrbeziehung.von,
-                        knotenarme
-                    ),
-                },
-                moeglicheVerbindungen: [
-                    this.alle,
-                    {
-                        nummer: fahrbeziehung.nach,
-                        strassenname: this.getKnotenarmBezeichnung(
-                            fahrbeziehung.nach,
+                if (fahrbeziehung.knotenarm != null && fahrbeziehung.hinein) {
+                    alleEingehendeKnotenarmeNach.add({
+                        nummer: fahrbeziehung.knotenarm,
+                        strassenname: getKnotenarmBezeichnung(
+                            fahrbeziehung.knotenarm,
                             knotenarme
                         ),
-                    },
-                ],
-                moeglicheVerbindungenIds: [
-                    this.alle.nummer,
-                    fahrbeziehung.nach,
-                ],
+                    });
+                }
+            }
+        });
+
+        // Nachfolgend werden die eingehenden bzw. ausgehenden Beziehungen bei Auswahl von "alle" gesetzt.
+        let kv: KnotenarmVerbindungen;
+        if (isZaehlungForKreuzung()) {
+            let kv = {
+                knotenarm: alle,
+                moeglicheVerbindungen: _.union(
+                    [alle],
+                    Array.from(alleZielknotenarmeVon.values())
+                ),
+                moeglicheVerbindungenIds: _.union(
+                    [alle],
+                    Array.from(alleZielknotenarmeVon.values())
+                ).map((knotenarm) => knotenarm.nummer),
             };
-            this.moeglicheBeziehungenVon.set(fahrbeziehung.von, kv);
+            moeglicheBeziehungenVon.value.set(alle.nummer, kv);
+        } else {
+            // Kreisverkehr
+            let kv = {
+                knotenarm: alle,
+                moeglicheVerbindungen: [alle],
+                moeglicheVerbindungenIds: [alle.nummer],
+            };
+            moeglicheBeziehungenVon.value.set(alle.nummer, kv);
         }
-        alleZielknotenarmeVon.add({
+        // Kreuzung und Kreisverkehr
+        kv = {
+            knotenarm: alle,
+            moeglicheVerbindungen: _.union(
+                [alle],
+                Array.from(alleEingehendeKnotenarmeNach.values())
+            ),
+            moeglicheVerbindungenIds: _.union(
+                [alle],
+                Array.from(alleEingehendeKnotenarmeNach.values())
+            ).map((knotenarm) => knotenarm.nummer),
+        };
+        moeglicheBeziehungenNach.value.set(alle.nummer, kv);
+    }
+}
+
+/**
+ * Diese Methode fügt an den wählbaren Knotenarm für das Dropdown von-Knotenarm
+ * die möglichen nach-Knotenarme an.
+ */
+function addVonKnotenarmWithPossibleNachKnotenarm(
+    fahrbeziehung: LadeFahrbeziehungDTO,
+    alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
+    knotenarme: Map<number, string>
+): void {
+    if (moeglicheBeziehungenVon.value.has(fahrbeziehung.von)) {
+        // Erweitern bereits vorhandener von-Knotenarm um zusätzlichen möglichen nach-Knotenarm
+        const kv: KnotenarmVerbindungen | undefined =
+            moeglicheBeziehungenVon.value.get(fahrbeziehung.von);
+        kv?.moeglicheVerbindungen.push({
             nummer: fahrbeziehung.nach,
-            strassenname: this.getKnotenarmBezeichnung(
+            strassenname: getKnotenarmBezeichnung(
                 fahrbeziehung.nach,
                 knotenarme
             ),
         });
-    }
-
-    /**
-     * Diese Methode fügt an den wählbaren Knotenarm für das Dropdown nach-Knotenarm
-     * die möglichen von-Knotenarme an.
-     */
-    private addNachKnotenarmWithPossibleVonKnotenarm(
-        fahrbeziehung: LadeFahrbeziehungDTO,
-        alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
-        knotenarme: Map<number, string>
-    ): void {
-        if (this.moeglicheBeziehungenNach.has(fahrbeziehung.nach)) {
-            // Erweitern bereits vorhandener nach-Knotenarm um zusätzlichen möglichen von-Knotenarm
-            const kv: KnotenarmVerbindungen | undefined =
-                this.moeglicheBeziehungenNach.get(fahrbeziehung.nach);
-            kv?.moeglicheVerbindungen.push({
+        kv?.moeglicheVerbindungenIds.push(fahrbeziehung.nach);
+    } else {
+        // Erstbefüllung noch nicht vorhandener von-Knotenarm
+        const kv: KnotenarmVerbindungen = {
+            knotenarm: {
                 nummer: fahrbeziehung.von,
-                strassenname: this.getKnotenarmBezeichnung(
+                strassenname: getKnotenarmBezeichnung(
                     fahrbeziehung.von,
                     knotenarme
                 ),
-            });
-            kv?.moeglicheVerbindungenIds.push(fahrbeziehung.von);
-        } else {
-            // Erstbefüllung noch nicht vorhandener nach-Knotenarm
-            const kv: KnotenarmVerbindungen = {
-                knotenarm: {
+            },
+            moeglicheVerbindungen: [
+                alle,
+                {
                     nummer: fahrbeziehung.nach,
-                    strassenname: this.getKnotenarmBezeichnung(
+                    strassenname: getKnotenarmBezeichnung(
                         fahrbeziehung.nach,
                         knotenarme
                     ),
                 },
-                moeglicheVerbindungen: [
-                    this.alle,
-                    {
-                        nummer: fahrbeziehung.von,
-                        strassenname: this.getKnotenarmBezeichnung(
-                            fahrbeziehung.von,
-                            knotenarme
-                        ),
-                    },
-                ],
-                moeglicheVerbindungenIds: [this.alle.nummer, fahrbeziehung.von],
-            };
-            this.moeglicheBeziehungenNach.set(fahrbeziehung.nach, kv);
-        }
-        alleEingehendeKnotenarmeNach.add({
+            ],
+            moeglicheVerbindungenIds: [alle.nummer, fahrbeziehung.nach],
+        };
+        moeglicheBeziehungenVon.value.set(fahrbeziehung.von, kv);
+    }
+    alleZielknotenarmeVon.add({
+        nummer: fahrbeziehung.nach,
+        strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
+    });
+}
+
+/**
+ * Diese Methode fügt an den wählbaren Knotenarm für das Dropdown nach-Knotenarm
+ * die möglichen von-Knotenarme an.
+ */
+function addNachKnotenarmWithPossibleVonKnotenarm(
+    fahrbeziehung: LadeFahrbeziehungDTO,
+    alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
+    knotenarme: Map<number, string>
+): void {
+    if (moeglicheBeziehungenNach.value.has(fahrbeziehung.nach)) {
+        // Erweitern bereits vorhandener nach-Knotenarm um zusätzlichen möglichen von-Knotenarm
+        const kv: KnotenarmVerbindungen | undefined =
+            moeglicheBeziehungenNach.value.get(fahrbeziehung.nach);
+        kv?.moeglicheVerbindungen.push({
             nummer: fahrbeziehung.von,
-            strassenname: this.getKnotenarmBezeichnung(
+            strassenname: getKnotenarmBezeichnung(
                 fahrbeziehung.von,
                 knotenarme
             ),
         });
+        kv?.moeglicheVerbindungenIds.push(fahrbeziehung.von);
+    } else {
+        // Erstbefüllung noch nicht vorhandener nach-Knotenarm
+        const kv: KnotenarmVerbindungen = {
+            knotenarm: {
+                nummer: fahrbeziehung.nach,
+                strassenname: getKnotenarmBezeichnung(
+                    fahrbeziehung.nach,
+                    knotenarme
+                ),
+            },
+            moeglicheVerbindungen: [
+                alle,
+                {
+                    nummer: fahrbeziehung.von,
+                    strassenname: getKnotenarmBezeichnung(
+                        fahrbeziehung.von,
+                        knotenarme
+                    ),
+                },
+            ],
+            moeglicheVerbindungenIds: [alle.nummer, fahrbeziehung.von],
+        };
+        moeglicheBeziehungenNach.value.set(fahrbeziehung.nach, kv);
     }
-
-    /**
-     * true falls die aktuelle Zählung eine Kreuzung darstellt, andernfalls false.
-     */
-    public isZaehlungForKreuzung(): boolean {
-        return (
-            this.zaehlung?.kreisverkehr !== undefined &&
-            !this.zaehlung?.kreisverkehr
-        );
-    }
-
-    /**
-     * Die Methode extrahiert für den Knotenarm im Parameter folgende Knotenarmbezeichnung:
-     *
-     * "NUMMER_KNOTENARM - STRASSENNAME"
-     *
-     * Ist in der Map der gegebene Knotenarm nicht vorhanden,
-     * so wird der Fluchtwert "Kein Knotenarm gefunden" zurückgegeben.
-     *
-     * @param knotenarm für den der Knotenarmbezeichner erstellt werden soll.
-     * @param knotenarme Map bestehend aus dem Knotenarmbezeichnung je Knotenarm
-     */
-    public getKnotenarmBezeichnung(
-        knotenarm: number,
-        knotenarme: Map<number, string>
-    ): string {
-        const strassenname: string | undefined = knotenarme.get(knotenarm);
-        return strassenname === undefined
-            ? "Kein Knotenarm gefunden"
-            : strassenname;
-    }
+    alleEingehendeKnotenarmeNach.add({
+        nummer: fahrbeziehung.von,
+        strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
+    });
 }
+
+/**
+ * true falls die aktuelle Zählung eine Kreuzung darstellt, andernfalls false.
+ */
+function isZaehlungForKreuzung(): boolean {
+    return (
+        props.zaehlung?.kreisverkehr !== undefined &&
+        !props.zaehlung?.kreisverkehr
+    );
+}
+
+/**
+ * Die Methode extrahiert für den Knotenarm im Parameter folgende Knotenarmbezeichnung:
+ *
+ * "NUMMER_KNOTENARM - STRASSENNAME"
+ *
+ * Ist in der Map der gegebene Knotenarm nicht vorhanden,
+ * so wird der Fluchtwert "Kein Knotenarm gefunden" zurückgegeben.
+ *
+ * @param knotenarm für den der Knotenarmbezeichner erstellt werden soll.
+ * @param knotenarme Map bestehend aus dem Knotenarmbezeichnung je Knotenarm
+ */
+function getKnotenarmBezeichnung(
+    knotenarm: number,
+    knotenarme: Map<number, string>
+): string {
+    const strassenname: string | undefined = knotenarme.get(knotenarm);
+    return strassenname === undefined
+        ? "Kein Knotenarm gefunden"
+        : strassenname;
+}
+
+watch(beideRichtungen, () => {
+    emits("beideRichtungen", beideRichtungen.value);
+});
+
+/**
+ * Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
+ * @param n gewählter Knotenarm
+ */
+watch(von, (n: number) => {
+    let vonCopy = [n];
+    if (n === 0) {
+        const nachK = moeglicheBeziehungenNach.value.get(von.value);
+        if (nachK) {
+            // werden die möglichen Zielknoten übergeben
+            vonCopy = nachK.moeglicheVerbindungenIds;
+        }
+    }
+    emits("von", vonCopy);
+});
+
+/**
+ * Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
+ * @param n gewählter Knotenarm
+ */
+watch(nach, (n: number) => {
+    let nachCopy = [n];
+    // wenn das Ziel "alle" sind...
+    if (n === 0) {
+        const vonK = moeglicheBeziehungenVon.value.get(von.value);
+        if (vonK) {
+            // werden die möglichen Zielknoten übergeben
+            nachCopy = vonK.moeglicheVerbindungenIds;
+        }
+    }
+    emits("nach", nachCopy);
+});
+
+watch(
+    () => props.zaehlung,
+    () => {
+        initFahrbeziehungen();
+    },
+    { immediate: true }
+);
+
+onMounted(() => {
+    // Von und nach Werte auf die Werte aus dem Options Objekt aus dem Store setzen.
+    //
+    // Es ist wichtig, dass diese Funktion ausgeführt wird, nachdem die Fahrbeziehungen
+    // aufbereitet wurden, da durch das Setzen von "von" und "nach" in den entspechenden
+    // watch Methoden automatisch die richtigen "vonIds" und "nachIds" gesetzt werden. Damit
+    // ist sichergestellt, dass bei einer 1 : n Beziehung alle "nach" Knotenarme in der
+    // ZaehlungInfo angezeigt werden.
+    reset(options.value);
+});
 </script>
