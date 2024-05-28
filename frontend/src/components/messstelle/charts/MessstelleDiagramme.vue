@@ -145,6 +145,7 @@ import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleT
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import { useHistoryStore } from "@/store/modules/history";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -196,6 +197,7 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
+const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
 const daveUtils = useDaveUtils();
@@ -272,8 +274,7 @@ function loadProcessedChartData() {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =
                 store.getters["messstelleInfo/getMessstelleInfo"];
-            store.commit(
-                "history/addHistoryItem",
+            historyStore.addHistoryItem(
                 new MessstelleHistoryItem(
                     messstelle.id,
                     messstelle.mstId,

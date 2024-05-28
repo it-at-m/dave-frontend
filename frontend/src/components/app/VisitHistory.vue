@@ -48,13 +48,15 @@ import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
 import _ from "lodash";
+import { useHistoryStore } from "@/store/modules/history";
 
 const store = useStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
 
 const items: ComputedRef<Array<AbstractHistoryItem>> = computed(() => {
-    return store.getters["history/getHistoryItems"];
+    return useHistoryStore().historyItems;
+    // return store.getters["history/getHistoryItems"];
 });
 
 const isHistory: ComputedRef<boolean> = computed(() => {
