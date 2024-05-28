@@ -2,6 +2,7 @@ import FetchService from "@/api/service/FetchService";
 import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import ChosenTagesTypValidRequestDTO from "@/types/messstelle/ChosenTagesTypValidRequestDTO";
+import { ValidWochentageInPeriodRequestDto } from "@/types/messstelle/ValidWochentageInPeriodRequestDto";
 
 export default class MessstelleOptionsmenuService {
     private static readonly ENDPOINT: string = "api/dave-backend-service";
@@ -21,6 +22,16 @@ export default class MessstelleOptionsmenuService {
         return FetchService.postData(
             chosenTagesTypValidRequestDto,
             `${this.ENDPOINT}/messstelleOptionsmenu/validateTagesTyp`,
+            "Beim Lesen ob der Tagestyp valide ist, ist ein Fehler aufgetreten."
+        );
+    }
+
+    static getValidWochentageInPeriod(
+        validWochentageinPeriodRequestDto: ValidWochentageInPeriodRequestDto
+    ) {
+        return FetchService.postData(
+            validWochentageinPeriodRequestDto,
+            `${this.ENDPOINT}/messstelleOptionsmenu/validWochentageInPeriod`,
             "Beim Lesen ob der Tagestyp valide ist, ist ein Fehler aufgetreten."
         );
     }

@@ -27,6 +27,7 @@
                         class="px-0"
                         :messstelle="messstelle"
                     />
+                    <ValidWochentage v-if="chosenOptions.zeitraum.length > 1" />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
@@ -51,7 +52,7 @@
 </template>
 <script setup lang="ts">
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
-import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
+import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
@@ -65,6 +66,7 @@ import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
+import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
@@ -75,6 +77,11 @@ const store = useStore();
 onMounted(() => {
     loadMessstelle();
 });
+
+const chosenOptions = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
 const headerHeight: ComputedRef<number> = computed(() => {
     return 160 / (vuetify.breakpoint.height / 100);
 });
@@ -96,6 +103,7 @@ const appBarHeight = computed(() => {
 const rightHeightVh = computed(() => {
     return 100 - headerHeight.value - appBarHeight.value + "vh";
 });
+
 /**
  * Berechnet die Höhe der Fläche unter den Tabs (72px hoch) in "vh"
  */
@@ -105,6 +113,7 @@ const rightContentHeightVh = computed(() => {
         headerHeight.value -
         appBarHeight.value -
         72 / (vuetify.breakpoint.height / 100);
+    store.commit("filteroptionsMessstelle/setBelastungsplanMinSize", h + "vh");
     return h + "vh";
 });
 

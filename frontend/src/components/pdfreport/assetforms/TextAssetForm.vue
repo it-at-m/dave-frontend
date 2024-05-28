@@ -156,7 +156,7 @@ import TextAsset from "@/types/pdfreport/assets/TextAsset";
 
 @Component
 export default class TextAssetForm extends Vue {
-    @Prop({ default: false }) open = false;
+    @Prop({ default: false }) open: boolean | undefined;
     @Prop() text?: TextAsset;
 
     asset: TextAsset = new TextAsset("");

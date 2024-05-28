@@ -20,6 +20,7 @@
                             v-model="direction"
                             label="Richtung"
                             :items="richtungValues"
+                            item-value="value"
                             filled
                             dense
                             @input="updateOptions"
@@ -37,7 +38,7 @@
                 <v-col cols="4">
                     <v-hover v-model="hoverLage">
                         <v-select
-                            v-model="chosenOptionsCopy.messquerschnitte"
+                            v-model="chosenOptionsCopy.messquerschnittIds"
                             label="Lage"
                             :items="lageValues"
                             :readonly="isLageReadonly"
@@ -46,6 +47,7 @@
                             multiple
                             :rules="[REQUIRED]"
                             @change="updateLage"
+                            @blur="resetSpitzenstundeErrorText"
                         />
                     </v-hover>
                 </v-col>
@@ -53,6 +55,9 @@
                 <v-col cols="4">
                     <v-card flat>
                         <div v-if="hoverLage">{{ helpTextLageHover }}</div>
+                        <div v-if="spitzenstundeErrorText.length > 0">
+                            {{ spitzenstundeErrorText }}
+                        </div>
                         <div>{{ helpTextLage }}</div>
                     </v-card>
                 </v-col>
@@ -70,6 +75,8 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import KeyVal from "@/types/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import _ from "lodash";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -80,8 +87,14 @@ const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 
 const hoverDirection: Ref<boolean> = ref(false);
 const hoverLage: Ref<boolean> = ref(false);
+const spitzenstundeErrorText: Ref<string> = ref("");
 const store = useStore();
 const messstelleUtils = useMessstelleUtils();
+
+const MIND_EIN_MESSQUERSCHNITT =
+    "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+const GENAU_EIN_MESSQUERSCHNITT =
+    "Es muss genau ein Messquerschnitt ausgewählt sein.";
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
@@ -118,10 +131,15 @@ const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
     }
     messstelle.value.messquerschnitte.forEach(
         (querschnitt: MessquerschnittInfoDTO) => {
+            let himmelsrichtungAsText = himmelsRichtungenTextLong.get(
+                querschnitt.fahrtrichtung
+            );
+            if (himmelsrichtungAsText === undefined) {
+                himmelsrichtungAsText =
+                    "Fehler bei der Bestimmung der Himmelsrichtung.";
+            }
             const keyVal: KeyVal = {
-                text: messstelleUtils.getDirectionOfMessquerschnitt(
-                    querschnitt
-                ),
+                text: himmelsrichtungAsText,
                 value: querschnitt.fahrtrichtung,
             };
             if (!result.includes(keyVal)) {
@@ -142,7 +160,7 @@ const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
                     direction.value === messstelleUtils.alleRichtungen
                 ) {
                     result.push({
-                        text: `${querschnitt.mqId} - ${querschnitt.lageMessquerschnitt}`,
+                        text: `${querschnitt.mqId} - ${querschnitt.standort}`,
                         value: querschnitt.mqId,
                     });
                 }
@@ -166,6 +184,13 @@ const helpTextLage: ComputedRef<string> = computed(() => {
     if (direction.value === messstelleUtils.alleRichtungen) {
         text =
             "Hinweis: Um einzelne Messquerschnitte auszuwählen, muss zuvor eine Richtung bestimmt werden.";
+    } else if (
+        isZeitauswahlSpitzenstunde.value &&
+        chosenOptionsCopy.value.messquerschnittIds.length !== 1
+    ) {
+        text = GENAU_EIN_MESSQUERSCHNITT;
+    } else if (chosenOptionsCopy.value.messquerschnittIds.length === 0) {
+        text = MIND_EIN_MESSQUERSCHNITT;
     }
     return text;
 });
@@ -191,48 +216,67 @@ const zeitauswahl = computed(() => {
 });
 
 const previousSelectedStructures: Ref<Array<string>> = ref(
-    chosenOptionsCopy.value.messquerschnitte
+    chosenOptionsCopy.value.messquerschnittIds
 );
 
 watch(zeitauswahl, () => {
     if (
         isZeitauswahlSpitzenstunde.value &&
-        chosenOptionsCopy.value.messquerschnitte.length > 1
+        chosenOptionsCopy.value.messquerschnittIds.length > 1
     ) {
-        chosenOptionsCopy.value.messquerschnitte = [];
+        chosenOptionsCopy.value.messquerschnittIds = [];
     }
-    previousSelectedStructures.value = chosenOptionsCopy.value.messquerschnitte;
+    previousSelectedStructures.value =
+        chosenOptionsCopy.value.messquerschnittIds;
 });
 
 function updateOptions() {
-    if (!isZeitauswahlSpitzenstunde.value) {
-        chosenOptionsCopy.value.messquerschnitte = [];
+    chosenOptionsCopy.value.messquerschnittIds = [];
+    if (isZeitauswahlSpitzenstunde.value) {
+        const firstLageValue = lageValues.value.at(0);
+        if (firstLageValue) {
+            chosenOptionsCopy.value.messquerschnittIds.push(
+                firstLageValue.value
+            );
+        }
+    } else {
         lageValues.value.forEach((value) =>
-            chosenOptionsCopy.value.messquerschnitte.push(value.value)
+            chosenOptionsCopy.value.messquerschnittIds.push(value.value)
         );
     }
-    previousSelectedStructures.value = chosenOptionsCopy.value.messquerschnitte;
+    previousSelectedStructures.value = _.cloneDeep(
+        chosenOptionsCopy.value.messquerschnittIds
+    );
+    resetSpitzenstundeErrorText();
 }
 
-function updateLage(value: Array<string>) {
-    const added = value.filter(
-        (val) => !previousSelectedStructures.value.includes(val)
-    );
-    previousSelectedStructures.value = value;
+function updateLage(lageValue: Array<string>) {
+    resetSpitzenstundeErrorText();
     if (isZeitauswahlSpitzenstunde.value) {
-        chosenOptionsCopy.value.messquerschnitte = added;
-        previousSelectedStructures.value =
-            chosenOptionsCopy.value.messquerschnitte;
+        if (chosenOptionsCopy.value.messquerschnittIds.length === 2) {
+            spitzenstundeErrorText.value =
+                "Zur Berechnung der Spitzenstunde muss genau ein Messquerschnitt ausgewählt sein.";
+        }
+        chosenOptionsCopy.value.messquerschnittIds = lageValue.filter(
+            (val) => !previousSelectedStructures.value.includes(val)
+        );
+        previousSelectedStructures.value = _.cloneDeep(
+            chosenOptionsCopy.value.messquerschnittIds
+        );
+    } else {
+        previousSelectedStructures.value = lageValue;
     }
 }
 
 function REQUIRED(v: Array<string>) {
     if (v.length > 0) return true;
-
-    let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+    let errortext = MIND_EIN_MESSQUERSCHNITT;
     if (isZeitauswahlSpitzenstunde.value) {
-        errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        errortext = GENAU_EIN_MESSQUERSCHNITT;
     }
     return errortext;
+}
+function resetSpitzenstundeErrorText(): void {
+    spitzenstundeErrorText.value = "";
 }
 </script>

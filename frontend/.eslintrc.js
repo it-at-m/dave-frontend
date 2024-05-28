@@ -93,6 +93,9 @@ module.exports = {
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
     'vue/require-default-prop': 'off',
     'vue/script-setup-uses-vars': 'error',
+    'vue/multi-word-component-names': ['error', {
+      'ignores': ['Main']
+    }],
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

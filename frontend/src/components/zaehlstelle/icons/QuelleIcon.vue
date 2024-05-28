@@ -7,50 +7,49 @@
         :tooltip="icon.tooltip"
     ></tooltip-with-icon>
 </template>
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
 import Quelle from "@/types/enum/Quelle";
+import { computed, ComputedRef } from "vue";
 
-@Component({
-    components: {
-        TooltipWithIcon,
-    },
-})
-export default class QuelleIcon extends Vue {
-    @Prop({ default: false }) small?: boolean;
-    @Prop({ default: false }) dense?: boolean;
-    @Prop({ default: "black" }) color?: string;
-    @Prop() quelle!: string;
-
-    /**
-     * Lädt das richtige MDI Icon aus der Liste.
-     */
-    get icon() {
-        let result = QuelleIcon.quelleIcons().get(this.quelle);
-        if (result === undefined) {
-            result = new IconTooltip(
-                "mdi-help-box",
-                "Keine Information zur Quelle"
-            );
-        }
-        return result;
-    }
-
-    /**
-     * Alle Quelle Icons zu den Schlüsseln.
-     */
-    static quelleIcons(): Map<string, IconTooltip> {
-        return new Map([
-            [
-                Quelle.MANUALLY,
-                new IconTooltip("mdi-clipboard-account", "Manuelle Zählung"),
-            ],
-            [Quelle.DETECTOR, new IconTooltip("mdi-robot", "Detektorzählung")],
-            [Quelle.RADAR, new IconTooltip("mdi-radar", "Radarzählung")],
-            [Quelle.VIDEO, new IconTooltip("mdi-video", "Videozählung")],
-        ]);
-    }
+interface Props {
+    small?: boolean;
+    dense?: boolean;
+    color?: string;
+    quelle: string;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+    small: false,
+    dense: false,
+    color: "black",
+});
+
+/**
+ * Alle Quelle Icons zu den Schlüsseln.
+ */
+const quelleIcons: Map<string, IconTooltip> = new Map([
+    [
+        Quelle.MANUALLY,
+        new IconTooltip("mdi-clipboard-account", "Manuelle Zählung"),
+    ],
+    [Quelle.DETECTOR, new IconTooltip("mdi-robot", "Detektorzählung")],
+    [Quelle.RADAR, new IconTooltip("mdi-radar", "Radarzählung")],
+    [Quelle.VIDEO, new IconTooltip("mdi-video", "Videozählung")],
+]);
+
+/**
+ * Lädt das richtige MDI Icon aus der Liste.
+ */
+const icon: ComputedRef<IconTooltip> = computed(() => {
+    let result = quelleIcons.get(props.quelle);
+    if (result === undefined) {
+        result = new IconTooltip(
+            "mdi-help-box",
+            "Keine Information zur Quelle"
+        );
+    }
+    return result;
+});
 </script>

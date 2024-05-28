@@ -15,7 +15,7 @@ const doMesssquerschnitteExist = computed(() => {
 
 <template>
     <v-container
-        class="pa-0 px-4"
+        class="py-2 px-4"
         fluid
     >
         <v-sheet
@@ -40,7 +40,3 @@ const doMesssquerschnitteExist = computed(() => {
         </v-sheet>
     </v-container>
 </template>
-
-<style scoped>
-
-</style>

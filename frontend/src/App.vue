@@ -9,7 +9,10 @@
             color="primary"
             dark
         >
-            <router-link to="/">
+            <router-link
+                to="/"
+                @click.native="clear"
+            >
                 <v-toolbar-title class="white--text">
                     <span class="font-weight-medium">DAVe</span>
                     <span class="font-weight-thin"> | Mobilitätsreferat</span>
@@ -118,6 +121,21 @@
                 <template #activator="{ on, attrs }">
                     <v-btn
                         v-bind="attrs"
+                        class="mr-2"
+                        icon
+                        small
+                        to="/auswertung"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-clipboard-pulse-outline</v-icon>
+                    </v-btn>
+                </template>
+                <span> Gesamtauswertungen </span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                    <v-btn
+                        v-bind="attrs"
                         icon
                         small
                         to="/pdfreport"
@@ -128,7 +146,7 @@
                 </template>
                 <span> PDF-Report </span>
             </v-tooltip>
-            <History></History>
+            <visit-history />
             <info-message />
             <v-tooltip bottom>
                 <template #activator="{ on, attrs }">
@@ -161,7 +179,6 @@ import Vue from "vue";
 import Component from "vue-class-component";
 // Komponenten
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
-import History from "@/components/app/History.vue";
 
 // API
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
@@ -179,10 +196,13 @@ import SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import InfoMessage from "@/components/app/InfoMessage.vue";
 import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
+import VisitHistory from "@/components/app/VisitHistory.vue";
+import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
+import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
 /* eslint-enable no-unused-vars */
 
 @Component({
-    components: { InfoMessage, TheSnackbar, History },
+    components: { VisitHistory, InfoMessage, TheSnackbar, History },
 })
 export default class App extends Vue {
     private static readonly SUGGESTION_TYPE_SEARCH_TEXT: string = "searchtext";
@@ -260,6 +280,7 @@ export default class App extends Vue {
         this.getBackendVersion().then((version: string) => {
             this.backendVersion = version;
         });
+        window.addEventListener("keypress", this.shortCuts);
     }
 
     private async getFrontendVersion(): Promise<string> {
@@ -393,9 +414,12 @@ export default class App extends Vue {
         }
 
         this.$store.commit("search/lastSearchQuery", this.searchQuery);
+        const routeName = this.$route.name;
         if (
-            (this.$route.name === "zaehlstelle" ||
-                this.$route.name === "messstelle") &&
+            (routeName === "zaehlstelle" ||
+                routeName === "messstelle" ||
+                routeName === "pdfreport" ||
+                routeName === "auswertung") &&
             this.searchQuery !== ""
         ) {
             this.$router.push(`/`);
@@ -450,6 +474,44 @@ export default class App extends Vue {
 
     navigateToHandbuch() {
         window.open(App.URL_HANDBUCH_LINK);
+    }
+
+    // Easter Egg
+    private static easterEgg: Array<string> = [];
+    private static easterEggReq: Array<string> = ["B", "o", "u", "l", "e"];
+    shortCuts(event: KeyboardEvent) {
+        const location = window.location.host;
+        if (location.includes("localhost") || location.includes("muenchen")) {
+            if (App.easterEggReq.includes(event.key)) {
+                App.easterEgg.push(event.key);
+                if (
+                    App.easterEgg.length === App.easterEggReq.length &&
+                    App.easterEgg.join() === App.easterEggReq.join()
+                ) {
+                    const split = this.loggedInUser.split(" ");
+                    if (
+                        split.length === 2 &&
+                        split[0].startsWith("R") &&
+                        split[1].startsWith("B")
+                    ) {
+                        window.open(
+                            goldTrophy,
+                            "Image",
+                            "width=700,height=700"
+                        );
+                    } else {
+                        window.open(
+                            silverTrophy,
+                            "Image",
+                            "width=700,height=700"
+                        );
+                    }
+                    App.easterEgg = [];
+                }
+            } else {
+                App.easterEgg = [];
+            }
+        }
     }
 }
 </script>

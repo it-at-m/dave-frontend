@@ -33,6 +33,8 @@
                         locale="de-DE"
                         first-day-of-week="1"
                         :picker-date.sync="pickerDate"
+                        :min="minDate"
+                        :max="maxDate"
                         @change="checkIfDateIsAlreadySelected"
                     ></v-date-picker>
                 </v-col>
@@ -45,22 +47,16 @@
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
                     />
-                    <p class="text-caption pt-5">Hinweise:</p>
-                    <p class="text-caption">
+                    <p>Hinweise:</p>
+                    <p>
                         An den rot markierten Tagen sind keine plausiblen
                         Messwerte vorhanden
                     </p>
-                    <p
-                        v-if="isAnwender"
-                        class="text-caption"
-                    >
+                    <p v-if="isAnwender">
                         Als Anwender beträgt der maximal mögliche
                         Auswahlzeitraum 5 Jahre
                     </p>
-                    <p
-                        v-if="isZeitraum"
-                        class="text-caption"
-                    >
+                    <p v-if="isZeitraum">
                         Alle Auswertungen stellen Durchschnittswerte des
                         ausgewählten Zeitraums dar
                     </p>
@@ -83,8 +79,9 @@
             />
             <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
             <v-spacer />
-            <v-divider></v-divider>
+            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>
             <zeit-intervall
+                v-if="!isDateBiggerFiveYears"
                 v-model="chosenOptionsCopy"
                 :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
             />
@@ -107,6 +104,7 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
+import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
 const route = useRoute();
 
@@ -118,7 +116,7 @@ const props = defineProps<Props>();
 const emit = defineEmits(["input"]);
 const store = useStore();
 const dateUtils = useDateUtils();
-const isChosenTagesTypValid = ref(false);
+const isChosenTagesTypValid = ref(true);
 const hoverSelectZeitintervall = ref(false);
 const pickerDate = ref("");
 onMounted(() => {
@@ -147,6 +145,8 @@ const chosenOptionsCopy = computed({
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
+const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
+
 const chosenOptionsCopyZeitraum = computed(() => {
     return chosenOptionsCopy.value.zeitraum ?? [];
 });
@@ -173,6 +173,14 @@ const isAnwender = computed(() => {
     return (
         store.getters["user/hasAuthorities"] && store.getters["user/isAnwender"]
     );
+});
+
+const minDate = computed(() => {
+    return messstelleInfo.value.realisierungsdatum ?? "";
+});
+
+const maxDate = computed(() => {
+    return messstelleInfo.value.abbaudatum ?? "";
 });
 
 const getFormattedSelectedZeit = computed(() => {

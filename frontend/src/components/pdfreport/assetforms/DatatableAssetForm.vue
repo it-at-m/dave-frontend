@@ -72,7 +72,7 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 @Component
 export default class DatatableAssetForm extends Vue {
-    @Prop({ default: false }) open = false;
+    @Prop({ default: false }) open: boolean | undefined;
     @Prop() datatable?: DatatableAsset;
 
     asset: DatatableAsset = new DatatableAsset({} as OptionsDTO, "", "");

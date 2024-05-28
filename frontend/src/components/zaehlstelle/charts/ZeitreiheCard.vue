@@ -3,59 +3,52 @@
         elevation="0"
         class="pt-5"
     >
-        <zeitreihe
+        <zeitreihe-chart
             :zeitreihe-daten="zaehldatenZeitreihe"
             @charttypeChanged="charttypeChanged"
-        ></zeitreihe>
+        ></zeitreihe-chart>
         <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
-        <zeitreihe
+        <zeitreihe-chart
             ref="zeitreiheForPdf"
             style="display: none"
             :zeitreihe-daten="zaehldatenZeitreihe"
-        ></zeitreihe>
+        ></zeitreihe-chart>
     </v-card>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Ref, Vue } from "vue-property-decorator";
-import Zeitreihe from "@/components/zaehlstelle/charts/Zeitreihe.vue";
-
-// eslint-disable-next-line no-unused-vars
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
+import ZeitreiheChart from "@/components/zaehlstelle/charts/ZeitreiheChart.vue";
+import { ResizeOpts } from "echarts/core";
+import { SeriesOption } from "echarts";
 
-@Component({
-    components: {
-        Zeitreihe,
-    },
-})
-export default class ZeitreiheCard extends Vue {
-    @Prop()
-    zaehldatenZeitreihe!: LadeZaehldatenZeitreiheDTO;
+interface Props {
+    zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
+}
 
-    @Ref("zeitreiheForPdf") readonly zeitreiheForPdf!: Zeitreihe;
+defineProps<Props>();
 
-    mounted(): void {
-        // Der zeitreiheForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
-        let chartOptions: any = {} as {
-            width?: number | string;
-            height?: number | string;
-            silent?: boolean;
-        };
-        chartOptions.width = 900;
-        chartOptions.height = 490;
-        chartOptions.silent = true;
-        this.zeitreiheForPdf.chart.resize(chartOptions);
-    }
+const zeitreiheForPdf = ref<InstanceType<typeof ZeitreiheChart> | null>();
+defineExpose({
+    zeitreiheForPdf,
+});
 
-    charttypeChanged(newChartType: string) {
-        this.zeitreiheForPdf.chart.option.series.forEach((series: any) => {
-            series.type = newChartType;
-        });
-    }
+onMounted(() => {
+    // Der zeitreiheForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
+    let chartOptions = {} as ResizeOpts;
+    chartOptions.width = 900;
+    chartOptions.height = 490;
+    chartOptions.silent = true;
+    zeitreiheForPdf?.value?.chart?.resize(chartOptions);
+});
+
+function charttypeChanged(newChartType: "line" | "bar") {
+    (
+        zeitreiheForPdf?.value?.chart?.option?.series as Array<SeriesOption>
+    ).forEach((series: SeriesOption) => {
+        series.type = newChartType;
+    });
 }
 </script>
-
-<style scoped>
-
-</style>

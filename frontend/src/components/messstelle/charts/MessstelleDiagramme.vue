@@ -29,10 +29,6 @@
                 Heatmap
                 <v-icon>mdi-chart-bubble</v-icon>
             </v-tab>
-            <v-tab>
-                Zeitreihe
-                <v-icon>mdi-timer-sand</v-icon>
-            </v-tab>
         </v-tabs>
         <v-tabs-items
             v-model="activeTab"
@@ -41,21 +37,25 @@
             <!-- Inhalte -->
             <v-tab-item>
                 <v-sheet
+                    v-if="
+                        belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
+                    "
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
                 >
-                    <v-card ref="belastungsplanCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                    </v-card>
+                    <belastungsplan-messquerschnitt-card
+                        ref="belastungsplanCard"
+                        :belastungsplan-data="belastungsplanDataDTO"
+                        :dimension="contentHeight"
+                        @print="storeSvg($event)"
+                    />
                 </v-sheet>
             </v-tab-item>
             <v-tab-item>
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
+                    v-else
                     :min-height="contentHeight"
                     :max-height="contentHeight"
                     width="100%"
@@ -66,10 +66,12 @@
                         :zaehldaten-stepline="zaehldatenSteplineDTO"
                     ></step-line-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
+                    v-else
                     :max-height="contentHeight"
                     width="100%"
                 >
@@ -79,10 +81,12 @@
                     >
                     </messwerte-listenausgabe>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
             <v-tab-item>
+                <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
+                    v-else
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
@@ -92,46 +96,35 @@
                         :zaehldaten-heatmap="zaehldatenHeatmapDTO"
                     ></heatmap-card>
                 </v-sheet>
-                <loader :value="chartDataLoading"></loader>
-            </v-tab-item>
-            <v-tab-item>
-                <v-sheet
-                    :max-height="contentHeight"
-                    width="100%"
-                    class="overflow-y-auto"
-                >
-                    <v-card ref="zeitreiheCard">
-                        <v-card-title>
-                            <v-icon>mdi-account-hard-hat-outline</v-icon>
-                            Under Construction
-                            <v-icon>mdi-car-wrench</v-icon>
-                        </v-card-title>
-                    </v-card>
-                </v-sheet>
+                <progress-loader :value="chartDataLoading"></progress-loader>
             </v-tab-item>
         </v-tabs-items>
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
-            v-show="showSpeedial"
             :is-listenausgabe="isTabListenausgabe"
             :is-not-heatmap="isNotTabHeatmap"
             :loading-file="loadingFile"
             @addChartToPdfReport="addChartToPdfReport"
             @saveGraphAsImage="saveGraphAsImage"
+            @openPdfReportDialog="openPdfReportDialog"
+            @generateCsv="generateCsv"
+            @generatePdf="generatePdf"
+        />
+        <pdf-report-menue-messstelle
+            v-model="pdfReportDialog"
+            @close="closePdfReportDialog"
         />
     </v-sheet>
 </template>
 <script setup lang="ts">
-import { computed, ComputedRef, onMounted, ref, Ref, watch } from "vue";
+import { computed, ComputedRef, ref, Ref, watch } from "vue";
 import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
-import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
-import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
-import Loader from "@/components/common/Loader.vue";
+import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
+import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import { useStore } from "@/api/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
@@ -139,6 +132,19 @@ import { useReportTools } from "@/util/reportTools";
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
+import BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
+import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
+import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import _ from "lodash";
+import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
+import GenerateCsvService from "@/api/service/GenerateCsvService";
+import CsvDTO from "@/types/CsvDTO";
+import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
+import GeneratePdfService from "@/api/service/GeneratePdfService";
+import DaveUtils from "@/util/DaveUtils";
+import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -150,6 +156,11 @@ interface Props {
 withDefaults(defineProps<Props>(), {
     height: "100%",
 });
+
+const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
+const BELASTUNGSPLAN_PNG_DIMENSION = 1400;
+const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
+    "schematischeUebersichtAsBase64Png";
 
 const chartDataLoading: Ref<boolean> = ref(false);
 
@@ -163,11 +174,11 @@ const zaehldatenHeatmapDTO: Ref<LadeZaehldatenHeatmapDTO> = ref(
 
 const listenausgabeDTO: Ref<Array<LadeZaehldatumDTO>> = ref([]);
 
-// Wieder entfernen, wenn alle Tabs fertig sind
-const showSpeedial: Ref<boolean> = ref(false);
+const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
 const isTabListenausgabe: Ref<boolean> = ref(false);
-const isNotTabHeatmap: Ref<boolean> = ref(false);
+const isNotTabHeatmap: Ref<boolean> = ref(true);
+const pdfReportDialog: Ref<boolean> = ref(false);
 
 const activeTab: Ref<number> = ref(0);
 
@@ -177,72 +188,161 @@ const TAB_BELASTUNGSPLAN = 0;
 const TAB_GANGLINIE = 1;
 const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
-const TAB_ZEITREIHE = 4;
 
-const belastungsplanCard = ref<BelastungsplanCard>();
-const steplineCard = ref<StepLineCard>();
-const heatmapCard = ref<HeatmapCard>();
-const zeitreiheCard = ref<ZeitreiheCard>();
+const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
+const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
+const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
+const belastungsplanSvg = ref<Blob>();
+const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
 const route = useRoute();
 const reportTools = useReportTools();
 
-onMounted(() => {
-    loadData();
-});
-
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
+});
+
+const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
+    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+});
+
+const isBiggerThanFiveYears = computed(() => {
+    let zeitraum = options.value.zeitraum;
+    const differenceInMs = Math.abs(
+        new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
+    );
+    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+    const differenceInYears = Math.floor(differenceInDays / 365);
+    return differenceInYears >= 5;
+});
+
+watch(isBiggerThanFiveYears, () => {
+    if (isBiggerThanFiveYears) {
+        activeTab.value = TAB_BELASTUNGSPLAN;
+    }
 });
 
 watch(activeTab, (active) => {
     store.dispatch("messstelleInfo/setActiveTab", active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-    showSpeedial.value = [
-        TAB_GANGLINIE,
-        TAB_HEATMAP,
-        TAB_LISTENAUSGABE,
-    ].includes(activeTab.value);
 });
 
-/**
- * Die Requests für alle Diagramme werden abgesetzt.
- */
-function loadData() {
+watch(options, () => {
     loadProcessedChartData();
-}
+});
+watch(belastungsplanSvg, () => {
+    if (belastungsplanSvg.value) {
+        const image = new Image();
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            const dimension = BELASTUNGSPLAN_PNG_DIMENSION;
+            canvas.width = dimension;
+            canvas.height = dimension;
+            const context = canvas.getContext("2d");
+            if (context) {
+                context.drawImage(image, 0, 0, dimension, dimension);
+                // Image Asset erstellen und in Variable speichern
+                belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
+            }
+        };
+        image.src = URL.createObjectURL(belastungsplanSvg.value);
+    }
+});
 
 function loadProcessedChartData() {
     chartDataLoading.value = true;
-    LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value)
-        .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+    LadeMessdatenService.ladeMessdatenProcessed(
+        messstelleId.value,
+        options.value
+    )
+        .then((processedZaehldaten: LadeProcessedMessdatenDTO) => {
             zaehldatenSteplineDTO.value =
                 processedZaehldaten.zaehldatenStepline;
             zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
             listenausgabeDTO.value =
                 processedZaehldaten.zaehldatenTable.zaehldaten;
+            belastungsplanDataDTO.value =
+                processedZaehldaten.belastungsplanMessquerschnitte;
+            setMaxRangeYAchse();
         })
         .finally(() => {
             chartDataLoading.value = false;
+            const messstelle: MessstelleInfoDTO =
+                store.getters["messstelleInfo/getMessstelleInfo"];
+            store.commit(
+                "history/addHistoryItem",
+                new MessstelleHistoryItem(
+                    messstelle.id,
+                    messstelle.mstId,
+                    messstelle.standort,
+                    _.cloneDeep(options.value)
+                )
+            );
         });
+}
+
+function setMaxRangeYAchse() {
+    let ganglinieYAchse1MaxValue: number | null =
+        options.value.ganglinieYAchse1MaxValue;
+    if (
+        ganglinieYAchse1MaxValue !== undefined &&
+        ganglinieYAchse1MaxValue !== null &&
+        ganglinieYAchse1MaxValue > 0
+    ) {
+        zaehldatenSteplineDTO.value.rangeMax = ganglinieYAchse1MaxValue;
+    }
+
+    let ganglinieYAchse2MaxValue: number | null =
+        options.value.ganglinieYAchse2MaxValue;
+    if (
+        ganglinieYAchse2MaxValue !== undefined &&
+        ganglinieYAchse2MaxValue !== null &&
+        ganglinieYAchse2MaxValue > 0
+    ) {
+        zaehldatenSteplineDTO.value.rangeMaxPercent = ganglinieYAchse2MaxValue;
+    }
 }
 
 /**
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
-    if (activeTab.value === TAB_GANGLINIE) {
+    if (activeTab.value === TAB_BELASTUNGSPLAN) {
         reportTools.addChartToPdfReport(
-            getGanglinieBase64(),
-            "Ganglinie",
-            "Die"
+            Erhebungsstelle.MESSSTELLE,
+            "Der",
+            "Belastungsplan",
+            belastungsplanPngBase64.value,
+            false
         );
     }
-    // Heatmap
+
+    if (activeTab.value === TAB_GANGLINIE) {
+        reportTools.addChartToPdfReport(
+            Erhebungsstelle.MESSSTELLE,
+            "Die",
+            "Ganglinie",
+            getGanglinieBase64(),
+            true
+        );
+    }
     if (activeTab.value === TAB_HEATMAP) {
-        reportTools.addChartToPdfReport(getHeatmapBase64(), "Heatmap", "Die");
+        reportTools.addChartToPdfReport(
+            Erhebungsstelle.MESSSTELLE,
+            "Die",
+            "Heatmap",
+            getHeatmapBase64(),
+            true
+        );
+    }
+    if (activeTab.value === TAB_LISTENAUSGABE) {
+        reportTools.addDatatableToPdfReport(
+            Erhebungsstelle.MESSSTELLE,
+            "Die",
+            "Datentabelle"
+        );
     }
 }
 
@@ -251,19 +351,62 @@ function addChartToPdfReport(): void {
  */
 function saveGraphAsImage(): void {
     loadingFile.value = true;
-    if (activeTab.value === TAB_GANGLINIE) {
-        reportTools.saveGraphAsImage(getGanglinieBase64(), "Ganglinie");
-    } else if (activeTab.value === TAB_HEATMAP) {
-        reportTools.saveGraphAsImage(getHeatmapBase64(), "Heatmap");
+    let encodedUri = undefined;
+    let type = "";
+
+    switch (activeTab.value) {
+        case TAB_GANGLINIE:
+            type = "Ganglinie";
+            encodedUri = getGanglinieBase64();
+            break;
+        case TAB_HEATMAP:
+            type = "Heatmap";
+            encodedUri = getHeatmapBase64();
+            break;
+        case TAB_BELASTUNGSPLAN:
+            type = "Belastungsplan";
+            if (belastungsplanSvg.value) {
+                encodedUri = URL.createObjectURL(belastungsplanSvg.value);
+            }
+            break;
     }
+
+    if (encodedUri && type) {
+        reportTools.saveGraphAsImage(
+            Erhebungsstelle.MESSSTELLE,
+            type,
+            options.value.zeitraum,
+            encodedUri
+        );
+    }
+
     loadingFile.value = false;
+}
+
+function generateCsv() {
+    loadingFile.value = true;
+    const optionsDTO = _.cloneDeep(options.value);
+
+    GenerateCsvService.generateCsvMst(messstelleId.value, optionsDTO)
+        .then((result: CsvDTO) => {
+            const filename = `${reportTools.getFileName(
+                Erhebungsstelle.MESSSTELLE,
+                "Listenausgabe",
+                options.value.zeitraum
+            )}.csv`;
+            DaveUtils.downloadCsv(result.csvAsString, filename);
+        })
+        .catch((error) => {
+            store.dispatch("snackbar/showError", error);
+        })
+        .finally(() => (loadingFile.value = false));
 }
 
 /**
  * Base 64 String der Ganglinie
  */
-function getGanglinieBase64(): string {
-    return steplineCard?.value?.steplineForPdf.chart.getDataURL({
+function getGanglinieBase64(): string | undefined {
+    return steplineCard?.value?.steplineForPdf?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
@@ -273,11 +416,99 @@ function getGanglinieBase64(): string {
 /**
  * Base 64 String der Heatmap
  */
-function getHeatmapBase64(): string {
-    return heatmapCard?.value?.heatmapChart.chart.getDataURL({
+function getHeatmapBase64(): string | undefined {
+    return heatmapCard?.value?.heatmapChart?.chart?.getDataURL({
         pixelRatio: 2,
         backgroundColor: "#fff",
         excludeComponents: ["toolbox"],
     });
+}
+
+function storeSvg(svg: Blob): void {
+    belastungsplanSvg.value = svg;
+}
+
+function openPdfReportDialog(): void {
+    pdfReportDialog.value = true;
+}
+
+function closePdfReportDialog(): void {
+    pdfReportDialog.value = false;
+}
+
+function generatePdf(): void {
+    let formData = new FormData();
+    let type = "";
+    loadingFile.value = true;
+
+    formData.append(
+        "options",
+        new Blob([JSON.stringify(options.value)], {
+            type: "application/json",
+        })
+    );
+
+    switch (activeTab.value) {
+        case TAB_BELASTUNGSPLAN:
+            if (belastungsplanSvg.value) {
+                type = "belastungsplan";
+                formData.append(
+                    REQUEST_PART_CHART_AS_BASE64_PNG,
+                    belastungsplanPngBase64.value
+                );
+            }
+            break;
+        case TAB_GANGLINIE:
+            type = "ganglinie";
+            formData.append(
+                REQUEST_PART_CHART_AS_BASE64_PNG,
+                new Blob([getGanglinieBase64() ?? ""], {
+                    type: "image/png",
+                })
+            );
+            if (belastungsplanSvg.value) {
+                formData.append(
+                    REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+                    belastungsplanPngBase64.value
+                );
+            }
+            break;
+        case TAB_LISTENAUSGABE:
+            type = "datentabelle";
+            if (belastungsplanSvg.value) {
+                formData.append(
+                    REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+                    belastungsplanPngBase64.value
+                );
+            }
+            break;
+    }
+    fetchPdf(formData, type);
+}
+
+function fetchPdf(formData: FormData, type: string) {
+    formData.append("department", store.getters["user/getDepartment"]);
+    GeneratePdfService.postPdfCustomFetchTemplateMessstelle(
+        type,
+        messstelleId.value,
+        formData
+    )
+        .then((res) => {
+            res.blob().then((blob) => {
+                // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
+                const typeForFilename: string =
+                    type.charAt(0).toUpperCase() + type.slice(1);
+
+                // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
+                const filename = `${reportTools.getFileName(
+                    Erhebungsstelle.MESSSTELLE,
+                    typeForFilename,
+                    options.value.zeitraum
+                )}.pdf`;
+                DaveUtils.downloadFile(blob, filename);
+            });
+        })
+        .catch((error) => store.dispatch("snackbar/showError", error))
+        .finally(() => (loadingFile.value = false));
 }
 </script>
