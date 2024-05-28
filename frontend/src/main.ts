@@ -9,13 +9,18 @@ import "./plugins/leafletmaps";
 import i18n from "./i18n";
 import "./registerServiceWorker";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
+import { createPinia, PiniaVuePlugin } from "pinia";
 
 Vue.config.productionTip = false;
 
 moment.locale(window.navigator.language);
 
+Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
+
 new Vue({
     router,
+    pinia,
     store: store,
     vuetify: Vuetify,
     i18n,
