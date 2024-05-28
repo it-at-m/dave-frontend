@@ -25,7 +25,6 @@
                         v-model="chosenOptionsCopy.zeitraum"
                         range
                         :allowed-dates="allowedDatesRangeDatePicker"
-                        min="2006-01-01"
                         full-width
                         no-title
                         :events="nichtPlausibleTage"
@@ -40,9 +39,8 @@
                 </v-col>
                 <v-col cols="4">
                     <v-text-field
+                        v-model="getFormattedSelectedZeit"
                         :label="getChosenDateAsText"
-                        readonly
-                        :value="getFormattedSelectedZeit"
                         :rules="[
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
@@ -176,25 +174,40 @@ const isAnwender = computed(() => {
 });
 
 const minDate = computed(() => {
-    return messstelleInfo.value.realisierungsdatum ?? "";
+    return messstelleInfo.value.realisierungsdatum ?? "2006-01-01";
 });
 
 const maxDate = computed(() => {
     return messstelleInfo.value.abbaudatum ?? "";
 });
 
-const getFormattedSelectedZeit = computed(() => {
-    const zeitraum = chosenOptionsCopyZeitraum.value.slice(0);
-    if (zeitraum.length == 1) {
-        return dateUtils.formatDate(chosenOptionsCopyZeitraum.value[0]);
-    } else if (zeitraum.length == 2) {
-        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
-        return `${dateUtils.formatDate(
-            sortedDates[1]
-        )} - ${dateUtils.formatDate(sortedDates[0])}`;
-    } else {
-        return "";
-    }
+const getFormattedSelectedZeit = computed({
+    get: () => {
+        const zeitraum = chosenOptionsCopyZeitraum.value.slice(0);
+        if (zeitraum.length == 1) {
+            return dateUtils.formatDate(chosenOptionsCopyZeitraum.value[0]);
+        } else if (zeitraum.length == 2) {
+            const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
+            return `${dateUtils.formatDate(
+                sortedDates[1]
+            )} - ${dateUtils.formatDate(sortedDates[0])}`;
+        } else {
+            return "";
+        }
+    },
+    set: (newDate) => {
+        if (newDate.length == 10) {
+            chosenOptionsCopy.value.zeitraum = [
+                dateUtils.formatDateYYYYMMDD(newDate),
+            ];
+        } else if (newDate.length == 23) {
+            const [datum1, datum2] = newDate.split(" - ");
+            chosenOptionsCopy.value.zeitraum = [
+                dateUtils.formatDateYYYYMMDD(datum1),
+                dateUtils.formatDateYYYYMMDD(datum2),
+            ];
+        }
+    },
 });
 
 function allowedDatesRangeDatePicker(val: string) {

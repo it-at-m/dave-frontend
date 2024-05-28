@@ -9,6 +9,14 @@ export function useDateUtils() {
         return `${day}.${month}.${year}`;
     }
 
+    function formatDateYYYYMMDD(date: string): string {
+        if (!date) {
+            return "";
+        }
+        const [day, month, year] = date.split(".");
+        return `${year}-${month}-${day}`;
+    }
+
     function getTimeOfDate(date: Date): string {
         if (!date) {
             return "";
@@ -39,6 +47,7 @@ export function useDateUtils() {
     return {
         sortDatesDescAsStrings,
         formatDate,
+        formatDateYYYYMMDD,
         getTimeOfDate,
         getShortVersionOfDate,
         getLongVersionOfDate,
