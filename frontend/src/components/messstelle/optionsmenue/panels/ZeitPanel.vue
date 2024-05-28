@@ -198,13 +198,13 @@ const getFormattedSelectedZeit = computed({
     set: (newDate) => {
         if (newDate.length == 10) {
             chosenOptionsCopy.value.zeitraum = [
-                dateUtils.formatDateYYYYMMDD(newDate),
+                dateUtils.formatDateToISO(newDate),
             ];
         } else if (newDate.length == 23) {
             const [datum1, datum2] = newDate.split(" - ");
             chosenOptionsCopy.value.zeitraum = [
-                dateUtils.formatDateYYYYMMDD(datum1),
-                dateUtils.formatDateYYYYMMDD(datum2),
+                dateUtils.formatDateToISO(datum1),
+                dateUtils.formatDateToISO(datum2),
             ];
         }
     },

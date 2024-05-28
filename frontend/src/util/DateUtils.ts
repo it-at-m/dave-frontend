@@ -9,7 +9,7 @@ export function useDateUtils() {
         return `${day}.${month}.${year}`;
     }
 
-    function formatDateYYYYMMDD(date: string): string {
+    function formatDateToISO(date: string): string {
         if (!date) {
             return "";
         }
@@ -47,7 +47,7 @@ export function useDateUtils() {
     return {
         sortDatesDescAsStrings,
         formatDate,
-        formatDateYYYYMMDD,
+        formatDateToISO,
         getTimeOfDate,
         getShortVersionOfDate,
         getLongVersionOfDate,
