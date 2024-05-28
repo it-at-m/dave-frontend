@@ -178,7 +178,10 @@ const minDate = computed(() => {
 });
 
 const maxDate = computed(() => {
-    return messstelleInfo.value.abbaudatum ?? "";
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+        .toISOString()
+        .slice(0, 10);
+    return messstelleInfo.value.abbaudatum ?? yesterday;
 });
 
 const getFormattedSelectedZeit = computed({
