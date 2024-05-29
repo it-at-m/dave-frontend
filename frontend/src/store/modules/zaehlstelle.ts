@@ -1,25 +1,20 @@
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import { defineStore } from "pinia";
+import { computed, ref, Ref } from "vue";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
-const state = {
-    zaehlstelle: {} as ZaehlstelleHeaderDTO,
-};
-
-const getters = {
-    getZaehlstelle(state: any) {
-        return state.zaehlstelle;
-    },
-};
-
-const mutations = {
-    setZaehlstelle(state: any, payload: ZaehlstelleHeaderDTO) {
-        // Zählungen sind in einem anderen VueX Store Modul vorhanden und werden hier nicht mitgespeichert
+export const useZaehlstelleStore = defineStore("zaehlstelle", () => {
+    // ref()s become state properties
+    const zaehlstelleHeader: Ref<ZaehlstelleHeaderDTO> = ref(
+        DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
+    );
+    // computed()s become getters
+    const getZaehlstelleHeader = computed(() => zaehlstelleHeader.value);
+    // function()s become actions
+    function setZaehlstelleHeader(payload: ZaehlstelleHeaderDTO) {
         payload.zaehlungen = [];
-        state.zaehlstelle = payload;
-    },
-};
+        zaehlstelleHeader.value = payload;
+    }
 
-export default {
-    state,
-    getters,
-    mutations,
-};
+    return { getZaehlstelleHeader, setZaehlstelleHeader };
+});

@@ -120,8 +120,6 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable no-unused-vars */
-import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
@@ -132,11 +130,11 @@ import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
 import { wetterText } from "@/types/enum/Wetter";
 import { quelleText } from "@/types/enum/Quelle";
-/* eslint-enable no-unused-vars */
 import _ from "lodash";
 import { computed, ref } from "vue";
 import { useStore } from "@/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     value: boolean;
@@ -145,6 +143,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 
 const zaehlstelleinfo = ref(false);
@@ -197,7 +196,7 @@ function saveItems(): void {
  * Erstellt die Zählstelleninformationen und übermittelt diese an den PDF Report.
  */
 function createZaehlstelleInfo() {
-    const zs = store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
     const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
     const headline = new HeadingAsset(
         `Info für Zählstelle Nr. ${zs.nummer}`,
@@ -217,7 +216,7 @@ function createZaehlstelleInfo() {
  * Erstellt die Zählungsinformationen und übermittelt diese an den PDF Report.
  */
 function createZaehlungsInfo() {
-    const zs = store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
     const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
     const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
     const headline = new HeadingAsset(
@@ -265,7 +264,7 @@ function createZaehlungsInfo() {
  * Die einzelnen, anzuzeigenden Werte werden erst bei PDF-Erstellung im Backend generiert.
  */
 function createZaehlungskenngroessen() {
-    const zs = store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
     const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
     const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
 

@@ -5,7 +5,6 @@ import snackbar from "./modules/snackbar";
 import search from "./modules/search";
 import filteroptions from "./modules/filteroptions";
 import zaehlung from "./modules/zaehlung";
-import zaehlstelle from "./modules/zaehlstelle";
 import eventbus from "@/store/modules/eventbus";
 import pdfreport from "@/store/modules/pdfreport";
 import belastungsplanSize from "@/store/modules/belastungsplanSize";
@@ -22,7 +21,6 @@ export default new Vuex.Store({
         search,
         filteroptions,
         zaehlung,
-        zaehlstelle,
         eventbus,
         pdfreport,
         belastungsplanSize,

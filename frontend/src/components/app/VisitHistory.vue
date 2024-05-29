@@ -51,12 +51,12 @@ import _ from "lodash";
 import { useHistoryStore } from "@/store/modules/history";
 
 const store = useStore();
+const historyStore = useHistoryStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
 
 const items: ComputedRef<Array<AbstractHistoryItem>> = computed(() => {
-    return useHistoryStore().historyItems;
-    // return store.getters["history/getHistoryItems"];
+    return historyStore.historyItems;
 });
 
 const isHistory: ComputedRef<boolean> = computed(() => {

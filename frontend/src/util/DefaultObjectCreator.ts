@@ -15,6 +15,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Quelle from "@/types/enum/Quelle";
 import FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
+import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -136,8 +137,11 @@ export default class DefaultObjectCreator {
         };
     }
 
-    public static createDefaultZaehlstelleHeaderDTO() {
+    public static createDefaultZaehlstelleHeaderDTO(): ZaehlstelleHeaderDTO {
         return {
+            id: "",
+            entityVersion: 0,
+            createdTime: "",
             nummer: "",
             name: "",
             stadtbezirk: "",

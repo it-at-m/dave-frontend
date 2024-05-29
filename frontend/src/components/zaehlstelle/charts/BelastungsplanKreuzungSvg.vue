@@ -29,6 +29,7 @@ import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -70,6 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits<(e: "print", v: Blob) => void>();
 
 const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 const dateUtils = useDateUtils();
 
@@ -163,7 +165,7 @@ const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
 });
 
 const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
-    return store.getters.getZaehlstelle;
+    return zaehlstelleStore.getZaehlstelleHeader;
 });
 
 const optionen: ComputedRef<OptionsDTO> = computed(() => {

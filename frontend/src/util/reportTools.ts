@@ -14,9 +14,11 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import _ from "lodash";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 export function useReportTools() {
     const store = useStore();
+    const zaehlstelleStore = useZaehlstelleStore();
     const dateUtils = useDateUtils();
 
     const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
@@ -28,7 +30,7 @@ export function useReportTools() {
         }
     );
     const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
-        return store.getters.getZaehlstelle;
+        return zaehlstelleStore.getZaehlstelleHeader;
     });
     const selectedZaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
         return store.getters.getAktiveZaehlung;

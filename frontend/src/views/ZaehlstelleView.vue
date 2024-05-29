@@ -68,6 +68,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { useRoute } from "vue-router/composables";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 const zaehlstelle = ref(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
@@ -76,6 +77,7 @@ const zaehlstelle = ref(
 const hasZaehlungen = ref(true);
 const externalQuery = ref("");
 const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 const route = useRoute();
 
@@ -208,7 +210,7 @@ onMounted(() => {
             });
         }
 
-        store.commit("setZaehlstelle", loadedZaehlstelle);
+        zaehlstelleStore.setZaehlstelleHeader(loadedZaehlstelle);
         zaehlstelle.value = loadedZaehlstelle;
         // Prüft, ob die Zählstelle Zählungen hat. Falls nicht, werden auch keine
         // Diagramme angezeigt.

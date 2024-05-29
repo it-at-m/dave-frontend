@@ -381,6 +381,7 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import { useDaveUtils } from "@/util/DaveUtils";
 import { useHistoryStore } from "@/store/modules/history";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -447,6 +448,7 @@ const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
 
 const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const daveUtils = useDaveUtils();
@@ -467,7 +469,7 @@ const selectedZaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
 });
 
 const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
-    return store.getters.getZaehlstelle;
+    return zaehlstelleStore.getZaehlstelleHeader;
 });
 
 watch(options, () => {
