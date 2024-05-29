@@ -213,7 +213,7 @@ const line = computed(() => {
  * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
  */
 const activeTab = computed(() => {
-    return store.getters.getChangetabevent;
+    return zaehlstelleStore.getActiveTab;
 });
 
 const sizeBelastungsplan = computed(() => {

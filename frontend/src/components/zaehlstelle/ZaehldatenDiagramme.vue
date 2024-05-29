@@ -477,7 +477,7 @@ watch(options, () => {
 });
 
 watch(activeTab, (active) => {
-    store.commit("changetabevent", active);
+    zaehlstelleStore.setActiveTab(active);
     isTabListenausgabe.value = [TAB_LISTENAUSGABE].includes(activeTab.value);
     isTabHeatmap.value = [TAB_HEATMAP].includes(activeTab.value);
     isFabShown.value = [
