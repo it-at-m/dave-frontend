@@ -22,7 +22,7 @@
             <v-autocomplete
                 id="suchfeld"
                 v-model="selectedSuggestion"
-                :items="getSuggestions"
+                :items="suggestions"
                 :search-input.sync="searchQuery"
                 clearable
                 color="black"
@@ -49,35 +49,35 @@
                 <template #item="{ item }">
                     <v-list-item-content>
                         <v-list-item-title
-                            v-if="item.type === suggestionTypeSearchText"
+                            v-if="item.type === SUGGESTION_TYPE_SEARCH_TEXT"
                             @click="searchForSuggestion(item.text)"
                         >
                             <v-icon small>mdi-format-text</v-icon>
                             {{ item.text }}
                         </v-list-item-title>
                         <v-list-item-title
-                            v-if="item.type === suggestionTypeVorschlag"
+                            v-if="item.type === SUGGESTION_TYPE_VORSCHLAG"
                             @click="searchForSuggestion(item.text)"
                         >
                             <v-icon small>mdi-magnify</v-icon>
                             {{ item.text }}
                         </v-list-item-title>
                         <v-list-item-title
-                            v-if="item.type === suggestionTypeZaehlstelle"
+                            v-if="item.type === SUGGESTION_TYPE_ZAEHLSTELLE"
                             @click="showZaehlstelle(item)"
                         >
                             <v-icon small>mdi-map-marker</v-icon>
                             {{ item.text }}
                         </v-list-item-title>
                         <v-list-item-title
-                            v-if="item.type === suggestionTypeZaehlung"
+                            v-if="item.type === SUGGESTION_TYPE_ZAEHLUNG"
                             @click="showZaehlung(item)"
                         >
                             <v-icon small>mdi-counter</v-icon>
                             {{ item.text }}
                         </v-list-item-title>
                         <v-list-item-title
-                            v-if="item.type === suggestionTypeMessstelle"
+                            v-if="item.type === SUGGESTION_TYPE_MESSSTELLE"
                             @click="showMessstelle(item)"
                         >
                             <v-icon small>mdi-cards-diamond</v-icon>
@@ -174,17 +174,11 @@
     </v-app>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-// Komponenten
+<script setup lang="ts">
+import { Ref, ref } from "vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
-
-// API
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
-
-/* eslint-disable no-unused-vars */
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 import Suggest from "@/types/suche/Suggest";
@@ -199,318 +193,246 @@ import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
-/* eslint-enable no-unused-vars */
+import { useStore } from "@/util/useStore";
+import { useRoute, useRouter } from "vue-router/composables";
 
-@Component({
-    components: { VisitHistory, InfoMessage, TheSnackbar, History },
-})
-export default class App extends Vue {
-    private static readonly SUGGESTION_TYPE_SEARCH_TEXT: string = "searchtext";
+const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 
-    private static readonly SUGGESTION_TYPE_VORSCHLAG: string = "vorschlag";
+const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
 
-    private static readonly SUGGESTION_TYPE_ZAEHLSTELLE: string = "zaehlstelle";
+const SUGGESTION_TYPE_ZAEHLSTELLE = "zaehlstelle";
 
-    private static readonly SUGGESTION_TYPE_ZAEHLUNG: string = "zaehlung";
+const SUGGESTION_TYPE_ZAEHLUNG = "zaehlung";
 
-    private static readonly SUGGESTION_TYPE_MESSSTELLE: string = "messstelle";
-    private static readonly URL_HANDBUCH_LINK: string =
-        "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
+const SUGGESTION_TYPE_MESSSTELLE = "messstelle";
+const URL_HANDBUCH_LINK =
+    "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
 
-    showtooltip = false;
+const showtooltip = ref(false);
+const loggedInUser = ref("no-security");
+const backendVersion = ref("");
+const frontendVersion = ref("");
+const searchQuery = ref("");
+const lastSuggestQuery = ref("");
+const suggestions: Ref<Array<Suggest>> = ref([]);
+const selectedSuggestion: Ref<Suggest | null> = ref(
+    DefaultObjectCreator.createDefaultSuggestion()
+);
 
-    loggedInUser = "no-security";
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
 
-    // Versionen
-    private backendVersion = "";
+created();
 
-    private frontendVersion = "";
-
-    // Suche
-    searchQuery = "";
-
-    private lastSuggestQuery = "";
-
-    private suggestions: Suggest[] = [];
-
-    selectedSuggestion: Suggest | null =
-        DefaultObjectCreator.createDefaultSuggestion();
-
-    get getSuggestions() {
-        return this.suggestions;
-    }
-
-    get suggestionTypeSearchText(): string {
-        return App.SUGGESTION_TYPE_SEARCH_TEXT;
-    }
-
-    get suggestionTypeVorschlag(): string {
-        return App.SUGGESTION_TYPE_VORSCHLAG;
-    }
-
-    get suggestionTypeZaehlstelle(): string {
-        return App.SUGGESTION_TYPE_ZAEHLSTELLE;
-    }
-
-    get suggestionTypeZaehlung(): string {
-        return App.SUGGESTION_TYPE_ZAEHLUNG;
-    }
-
-    get suggestionTypeMessstelle(): string {
-        return App.SUGGESTION_TYPE_MESSSTELLE;
-    }
-
-    // Lifecycle hook
-    created() {
-        SsoUserInfoService.getUserInfo()
-            .then((ssoUserInfoResponse: SsoUserInfoResponse) => {
-                this.$store.dispatch(
-                    "user/setSsoUserInfoResponse",
-                    ssoUserInfoResponse
-                );
-                this.loggedInUser = this.$store.getters["user/getName"];
-            })
-            .catch(() => {
-                return false;
-            });
-        this.getFrontendVersion().then((version: string) => {
-            this.frontendVersion = version;
+function created() {
+    SsoUserInfoService.getUserInfo()
+        .then((ssoUserInfoResponse: SsoUserInfoResponse) => {
+            store.dispatch("user/setSsoUserInfoResponse", ssoUserInfoResponse);
+            loggedInUser.value = store.getters["user/getName"];
+        })
+        .catch(() => {
+            return false;
         });
-
-        this.getBackendVersion().then((version: string) => {
-            this.backendVersion = version;
+    VersionInfoService.getFrontendInfo()
+        .then((frontendInfoResponse: VersionInfoResponse) => {
+            frontendVersion.value = frontendInfoResponse.application.version;
+        })
+        .catch(() => {
+            frontendVersion.value = "error";
         });
-        window.addEventListener("keypress", this.shortCuts);
-    }
+    VersionInfoService.getBackendInfo()
+        .then((backendInfoResponse: VersionInfoResponse) => {
+            backendVersion.value = backendInfoResponse.application.version;
+        })
+        .catch(() => {
+            backendVersion.value = "error";
+        });
+    window.addEventListener("keypress", shortCuts);
+}
 
-    private async getFrontendVersion(): Promise<string> {
-        return await VersionInfoService.getFrontendInfo()
-            .then((frontendInfoResponse: VersionInfoResponse) => {
-                return frontendInfoResponse.application.version;
-            })
-            .catch(() => {
-                return "error";
-            });
-    }
-
-    private async getBackendVersion(): Promise<string> {
-        return await VersionInfoService.getBackendInfo()
-            .then((backendInfoResponse: VersionInfoResponse) => {
-                return backendInfoResponse.application.version;
-            })
-            .catch(() => {
-                return "error";
-            });
-    }
-
-    suggest(query: string) {
-        if (query !== "" && query != null) {
-            this.lastSuggestQuery = query;
-            SucheService.getSuggestions(query)
-                .then((suggestions: SucheComplexSuggestsDTO) => {
-                    this.suggestions = [];
-                    suggestions.wordSuggests.forEach(
-                        (word: SucheWordSuggestDTO) => {
-                            this.suggestions.push(
-                                new Suggest(
-                                    word.text,
-                                    this.suggestionTypeVorschlag,
-                                    "",
-                                    "",
-                                    ""
-                                )
-                            );
-                        }
+function suggest(query: string) {
+    if (query !== "" && query != null) {
+        lastSuggestQuery.value = query;
+        SucheService.getSuggestions(query)
+            .then((response: SucheComplexSuggestsDTO) => {
+                suggestions.value = [];
+                response.wordSuggests.forEach((word: SucheWordSuggestDTO) => {
+                    suggestions.value.push(
+                        new Suggest(
+                            word.text,
+                            SUGGESTION_TYPE_VORSCHLAG,
+                            "",
+                            "",
+                            ""
+                        )
                     );
+                });
 
-                    suggestions.zaehlungenSuggests.forEach(
-                        (zaehlung: SucheZaehlungSuggestDTO) => {
-                            this.suggestions.push(
-                                new Suggest(
-                                    zaehlung.text,
-                                    this.suggestionTypeZaehlung,
-                                    zaehlung.zaehlstelleId,
-                                    zaehlung.id,
-                                    ""
-                                )
-                            );
-                        }
-                    );
-
-                    suggestions.zaehlstellenSuggests.forEach(
-                        (zaehlstelle: SucheZaehlstelleSuggestDTO) => {
-                            this.suggestions.push(
-                                new Suggest(
-                                    zaehlstelle.text,
-                                    this.suggestionTypeZaehlstelle,
-                                    zaehlstelle.id,
-                                    "",
-                                    ""
-                                )
-                            );
-                        }
-                    );
-
-                    suggestions.messstellenSuggests.forEach(
-                        (messstelle: SucheMessstelleSuggestDTO) => {
-                            this.suggestions.push(
-                                new Suggest(
-                                    messstelle.text,
-                                    this.suggestionTypeMessstelle,
-                                    "",
-                                    "",
-                                    messstelle.id
-                                )
-                            );
-                        }
-                    );
-                })
-                .catch((error) =>
-                    this.$store.dispatch("snackbar/showError", error)
-                );
-        } else {
-            if (this.lastSuggestQuery !== "" && this.lastSuggestQuery != null) {
-                this.lastSuggestQuery = query;
-                this.suggestions = [];
-            }
-        }
-    }
-
-    clear() {
-        this.searchQuery = "";
-        this.selectedSuggestion =
-            DefaultObjectCreator.createDefaultSuggestion();
-        this.$store.commit("search/lastSearchQuery", this.searchQuery);
-        this.search();
-    }
-
-    searchOrShowSelectedSuggestion() {
-        if (this.selectedSuggestion == null) {
-            this.search();
-        } else if (
-            this.selectedSuggestion.type === this.suggestionTypeVorschlag
-        ) {
-            this.searchForSuggestion(this.selectedSuggestion.text);
-        } else if (
-            this.selectedSuggestion.type === this.suggestionTypeZaehlstelle
-        ) {
-            this.showZaehlstelle(this.selectedSuggestion);
-        } else if (
-            this.selectedSuggestion.type === this.suggestionTypeZaehlung
-        ) {
-            this.showZaehlung(this.selectedSuggestion);
-        } else if (
-            this.selectedSuggestion.type === this.suggestionTypeMessstelle
-        ) {
-            this.showMessstelle(this.selectedSuggestion);
-        } else {
-            this.search();
-        }
-    }
-
-    private search() {
-        if (this.searchQuery == null) {
-            this.searchQuery = "";
-        }
-
-        this.$store.commit("search/lastSearchQuery", this.searchQuery);
-        const routeName = this.$route.name;
-        if (
-            (routeName === "zaehlstelle" ||
-                routeName === "messstelle" ||
-                routeName === "pdfreport" ||
-                routeName === "auswertung") &&
-            this.searchQuery !== ""
-        ) {
-            this.$router.push(`/`);
-        }
-
-        SucheService.searchErhebungsstelle(this.searchQuery)
-            .then((result) => {
-                this.$store.commit("search/result", result);
-            })
-            .catch((error) => {
-                this.$store.dispatch("snackbar/showError", error);
-            });
-    }
-
-    searchForSuggestion(query: string) {
-        this.searchQuery = query;
-        this.search();
-    }
-
-    showZaehlstelle(item: Suggest) {
-        this.selectedSuggestion =
-            DefaultObjectCreator.createDefaultSuggestion();
-        this.$router.push(`/zaehlstelle/${item.zaehlstelleId}`);
-    }
-
-    showZaehlung(item: Suggest) {
-        this.selectedSuggestion =
-            DefaultObjectCreator.createDefaultSuggestion();
-        this.$router.push(
-            `/zaehlstelle/${item.zaehlstelleId}/${item.zaehlungId}`
-        );
-    }
-
-    showMessstelle(item: Suggest) {
-        this.selectedSuggestion =
-            DefaultObjectCreator.createDefaultSuggestion();
-        this.$router.push(`/messstelle/${item.mstId}`);
-    }
-
-    updateSearchQuery(itemIndex: number) {
-        if (itemIndex >= 0) {
-            this.searchQuery = this.getSuggestions[itemIndex].text;
-        }
-    }
-
-    deleteChar() {
-        if (this.selectedSuggestion != null) {
-            this.selectedSuggestion.type = "";
-        }
-        this.suggest(this.searchQuery);
-    }
-
-    navigateToHandbuch() {
-        window.open(App.URL_HANDBUCH_LINK);
-    }
-
-    // Easter Egg
-    private static easterEgg: Array<string> = [];
-    private static easterEggReq: Array<string> = ["B", "o", "u", "l", "e"];
-    shortCuts(event: KeyboardEvent) {
-        const location = window.location.host;
-        if (location.includes("localhost") || location.includes("muenchen")) {
-            if (App.easterEggReq.includes(event.key)) {
-                App.easterEgg.push(event.key);
-                if (
-                    App.easterEgg.length === App.easterEggReq.length &&
-                    App.easterEgg.join() === App.easterEggReq.join()
-                ) {
-                    const split = this.loggedInUser.split(" ");
-                    if (
-                        split.length === 2 &&
-                        split[0].startsWith("R") &&
-                        split[1].startsWith("B")
-                    ) {
-                        window.open(
-                            goldTrophy,
-                            "Image",
-                            "width=700,height=700"
-                        );
-                    } else {
-                        window.open(
-                            silverTrophy,
-                            "Image",
-                            "width=700,height=700"
+                response.zaehlungenSuggests.forEach(
+                    (zaehlung: SucheZaehlungSuggestDTO) => {
+                        suggestions.value.push(
+                            new Suggest(
+                                zaehlung.text,
+                                SUGGESTION_TYPE_ZAEHLUNG,
+                                zaehlung.zaehlstelleId,
+                                zaehlung.id,
+                                ""
+                            )
                         );
                     }
-                    App.easterEgg = [];
+                );
+
+                response.zaehlstellenSuggests.forEach(
+                    (zaehlstelle: SucheZaehlstelleSuggestDTO) => {
+                        suggestions.value.push(
+                            new Suggest(
+                                zaehlstelle.text,
+                                SUGGESTION_TYPE_ZAEHLSTELLE,
+                                zaehlstelle.id,
+                                "",
+                                ""
+                            )
+                        );
+                    }
+                );
+
+                response.messstellenSuggests.forEach(
+                    (messstelle: SucheMessstelleSuggestDTO) => {
+                        suggestions.value.push(
+                            new Suggest(
+                                messstelle.text,
+                                SUGGESTION_TYPE_MESSSTELLE,
+                                "",
+                                "",
+                                messstelle.id
+                            )
+                        );
+                    }
+                );
+            })
+            .catch((error) => store.dispatch("snackbar/showError", error));
+    } else if (
+        lastSuggestQuery.value !== "" &&
+        lastSuggestQuery.value != null
+    ) {
+        lastSuggestQuery.value = query;
+        suggestions.value = [];
+    }
+}
+
+function clear() {
+    searchQuery.value = "";
+    selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+    store.commit("search/lastSearchQuery", searchQuery.value);
+    search();
+}
+
+function searchOrShowSelectedSuggestion() {
+    if (selectedSuggestion.value == null) {
+        search();
+    } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_VORSCHLAG) {
+        searchForSuggestion(selectedSuggestion.value.text);
+    } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_ZAEHLSTELLE) {
+        showZaehlstelle(selectedSuggestion.value);
+    } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_ZAEHLUNG) {
+        showZaehlung(selectedSuggestion.value);
+    } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_MESSSTELLE) {
+        showMessstelle(selectedSuggestion.value);
+    } else {
+        search();
+    }
+}
+
+function search() {
+    if (searchQuery.value == null) {
+        searchQuery.value = "";
+    }
+
+    store.commit("search/lastSearchQuery", searchQuery.value);
+    const routeName = route.name;
+    if (
+        (routeName === "zaehlstelle" ||
+            routeName === "messstelle" ||
+            routeName === "pdfreport" ||
+            routeName === "auswertung") &&
+        searchQuery.value !== ""
+    ) {
+        router.push(`/`);
+    }
+
+    SucheService.searchErhebungsstelle(searchQuery.value)
+        .then((result) => {
+            store.commit("search/result", result);
+        })
+        .catch((error) => {
+            store.dispatch("snackbar/showError", error);
+        });
+}
+
+function searchForSuggestion(query: string) {
+    searchQuery.value = query;
+    search();
+}
+
+function showZaehlstelle(item: Suggest) {
+    selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+    router.push(`/zaehlstelle/${item.zaehlstelleId}`);
+}
+
+function showZaehlung(item: Suggest) {
+    selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+    router.push(`/zaehlstelle/${item.zaehlstelleId}/${item.zaehlungId}`);
+}
+
+function showMessstelle(item: Suggest) {
+    selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+    router.push(`/messstelle/${item.mstId}`);
+}
+
+function updateSearchQuery(itemIndex: number) {
+    if (itemIndex >= 0) {
+        searchQuery.value = suggestions.value[itemIndex].text;
+    }
+}
+
+function deleteChar() {
+    if (selectedSuggestion.value != null) {
+        selectedSuggestion.value.type = "";
+    }
+    suggest(searchQuery.value);
+}
+
+function navigateToHandbuch() {
+    window.open(URL_HANDBUCH_LINK);
+}
+
+// Easter Egg
+const easterEgg: Ref<Array<string>> = ref([]);
+const easterEggReq: Ref<Array<string>> = ref(["B", "o", "u", "l", "e"]);
+function shortCuts(event: KeyboardEvent) {
+    const location = window.location.host;
+    if (location.includes("localhost") || location.includes("muenchen")) {
+        if (easterEggReq.value.includes(event.key)) {
+            easterEgg.value.push(event.key);
+            if (
+                easterEgg.value.length === easterEggReq.value.length &&
+                easterEgg.value.join() === easterEggReq.value.join()
+            ) {
+                const split = loggedInUser.value.split(" ");
+                if (
+                    split.length === 2 &&
+                    split[0].startsWith("R") &&
+                    split[1].startsWith("B")
+                ) {
+                    window.open(goldTrophy, "Image", "width=700,height=700");
+                } else {
+                    window.open(silverTrophy, "Image", "width=700,height=700");
                 }
-            } else {
-                App.easterEgg = [];
+                easterEgg.value = [];
             }
+        } else {
+            easterEgg.value = [];
         }
     }
 }
