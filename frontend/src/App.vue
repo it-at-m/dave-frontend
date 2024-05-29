@@ -199,6 +199,7 @@ import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 /* eslint-enable no-unused-vars */
 
 @Component({
@@ -365,9 +366,7 @@ export default class App extends Vue {
                         }
                     );
                 })
-                .catch((error) =>
-                    this.$store.dispatch("snackbar/showError", error)
-                );
+                .catch((error) => useSnackbarStore().showApiError(error));
         } else {
             if (this.lastSuggestQuery !== "" && this.lastSuggestQuery != null) {
                 this.lastSuggestQuery = query;
@@ -430,7 +429,7 @@ export default class App extends Vue {
                 this.$store.commit("search/result", result);
             })
             .catch((error) => {
-                this.$store.dispatch("snackbar/showError", error);
+                useSnackbarStore().showApiError(error);
             });
     }
 

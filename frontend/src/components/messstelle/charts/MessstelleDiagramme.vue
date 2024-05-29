@@ -146,6 +146,7 @@ import GeneratePdfService from "@/api/service/GeneratePdfService";
 import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import { useHistoryStore } from "@/store/modules/history";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -197,6 +198,7 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
@@ -399,7 +401,7 @@ function generateCsv() {
             daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => (loadingFile.value = false));
 }
@@ -510,7 +512,7 @@ function fetchPdf(formData: FormData, type: string) {
                 daveUtils.downloadFile(blob, filename);
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingFile.value = false));
 }
 </script>

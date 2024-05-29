@@ -66,13 +66,15 @@ import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAn
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
 const vuetify = useVuetify();
 const store = useStore();
-// eslint-disable-next-line no-undef
+const snackbarStore = useSnackbarStore();
+
 onMounted(() => {
     loadMessstelle();
 });
@@ -141,7 +143,7 @@ function loadMessstelle() {
             );
         })
         .catch((error: ApiError) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         });
 }
 </script>

@@ -125,7 +125,6 @@ import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/Zaehlungskenngr
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import { Levels } from "@/api/error";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
 import { wetterText } from "@/types/enum/Wetter";
@@ -135,6 +134,7 @@ import { computed, ref } from "vue";
 import { useStore } from "@/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 interface Props {
     value: boolean;
@@ -143,6 +143,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 
@@ -185,10 +186,9 @@ function saveItems(): void {
         createLegende();
     }
 
-    store.dispatch("snackbar/showToast", {
-        snackbarTextPart1: `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`,
-        level: Levels.SUCCESS,
-    });
+    snackbarStore.showSuccess(
+        `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
+    );
     closeDialog();
 }
 

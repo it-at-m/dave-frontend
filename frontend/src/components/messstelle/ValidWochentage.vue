@@ -64,8 +64,10 @@ import { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageIn
 import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 import { useRoute } from "vue-router/composables";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const numberValidWochentage = ref({} as ValidWochentageInPeriodDto);
 const dateUtils = useDateUtils();
 const route = useRoute();
@@ -174,7 +176,7 @@ function getValidWochentage() {
             numberValidWochentage.value = response;
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         });
 }
 </script>

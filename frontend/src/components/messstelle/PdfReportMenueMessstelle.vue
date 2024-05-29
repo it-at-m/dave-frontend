@@ -100,7 +100,6 @@
 import { computed, Ref, ref } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useStore } from "@/util/useStore";
-import { Levels } from "@/api/error";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
@@ -108,6 +107,7 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
 import { useDateUtils } from "@/util/DateUtils";
 import { tagesTypText } from "@/types/enum/TagesTyp";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 interface Props {
     value: boolean;
@@ -125,6 +125,7 @@ const emits = defineEmits<{
 }>();
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const dateUtils = useDateUtils();
 
 const messstelleninfo = ref(false);
@@ -163,11 +164,9 @@ function saveItems(): void {
         createLegende();
     }
 
-    store.dispatch("snackbar/showToast", {
-        snackbarTextPart1: `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`,
-        level: Levels.SUCCESS,
-    });
-
+    snackbarStore.showSuccess(
+        `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
+    );
     closeDialog();
 }
 

@@ -382,6 +382,7 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import { useDaveUtils } from "@/util/DaveUtils";
 import { useHistoryStore } from "@/store/modules/history";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -448,6 +449,7 @@ const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
@@ -928,7 +930,7 @@ function fetchPdf(formData: FormData, type: string) {
                 daveUtils.downloadFile(blob, filename);
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingFile.value = false));
 }
 
@@ -949,7 +951,7 @@ function generateCsv() {
             daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => (loadingFile.value = false));
 }

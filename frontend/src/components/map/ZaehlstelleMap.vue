@@ -37,6 +37,7 @@ import {
 } from "vue";
 import { useStore } from "@/util/useStore";
 import { useRouter } from "vue-router/composables";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -69,6 +70,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const router = useRouter();
 
 const mapStyle: ComputedRef<string> = computed(() => {
@@ -356,7 +358,7 @@ function searchErhebungsstelle() {
             store.commit("search/result", result);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => {
             setMarkerToMap();

@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import { Levels } from "@/api/error";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { GraphChart } from "echarts/charts";
@@ -24,6 +23,7 @@ import VChart, { THEME_KEY } from "vue-echarts";
 import { computed, ComputedRef, provide, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
 import { useStore } from "@/util/useStore";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 /**
  * Die Berechnung der Koordinaten für die einzelnen Fahrbeziehungen erfolgt anhand einer Drehmatrix.
@@ -240,6 +240,7 @@ defineExpose({
 });
 const vuetify = useVuetify();
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 
 const maxNumberOfCars = ref(0);
 
@@ -2357,13 +2358,10 @@ function calculatePositionLegend() {
 
 watch(isFahrzeugkategorieSelected, () => {
     if (!isFahrzeugkategorieSelected.value) {
-        store.dispatch("snackbar/showToast", {
-            level: Levels.ERROR,
-            snackbarTextPart1:
-                "Es wurde keine der 3 Fahrzeugkategorien (KFZ, SV oder GV) ausgewählt.",
-            snackbarTextPart2:
-                "Eine Anzeige des Belastungsplans ist daher nicht möglich.",
-        });
+        snackbarStore.showError(
+            "Es wurde keine der 3 Fahrzeugkategorien (KFZ, SV oder GV) ausgewählt.",
+            "Eine Anzeige des Belastungsplans ist daher nicht möglich."
+        );
     }
 });
 </script>

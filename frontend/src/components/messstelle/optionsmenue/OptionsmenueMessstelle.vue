@@ -75,10 +75,9 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { Levels } from "@/api/error";
 import TagesTyp from "@/types/enum/TagesTyp";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
-import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 interface Props {
     messstelleId: string;
@@ -91,6 +90,7 @@ const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
 
 const vuetify = useVuetify();
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
 const chosenOptions = ref(
@@ -134,20 +134,14 @@ function areChosenOptionsValid(): boolean {
         ) {
             errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
         }
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: errortext,
-            level: Levels.ERROR,
-        });
+        snackbarStore.showError(errortext);
     }
     if (
         chosenOptions.value.zeitraum.length === 2 &&
         !chosenOptions.value.tagesTyp
     ) {
         result = false;
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: "Es muss ein Wochentag ausgewählt sein.",
-            level: Levels.ERROR,
-        });
+        snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
     }
     return result;
 }

@@ -362,6 +362,7 @@ import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 @Component({
     components: {
@@ -865,7 +866,7 @@ export default class PdfReportView extends Vue {
                     this.downloadPdf();
                 });
             })
-            .catch((error) => this.$store.dispatch("snackbar/showError", error))
+            .catch((error) => useSnackbarStore().showApiError(error))
             .finally(() => (this.loadingPdf = false));
     }
 
@@ -894,7 +895,7 @@ export default class PdfReportView extends Vue {
                     this.pdfSourceAsBlob = blob;
                 });
             })
-            .catch((error) => this.$store.dispatch("snackbar/showError", error))
+            .catch((error) => useSnackbarStore().showApiError(error))
             .finally(() => (this.loadingPdf = false));
     }
 

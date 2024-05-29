@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import user from "./modules/user";
-import snackbar from "./modules/snackbar";
 import search from "./modules/search";
 import filteroptions from "./modules/filteroptions";
 import zaehlung from "./modules/zaehlung";
@@ -16,7 +15,6 @@ const debug = import.meta.env.NODE_ENV !== "production";
 export default new Vuex.Store({
     modules: {
         user,
-        snackbar,
         search,
         filteroptions,
         zaehlung,

@@ -2,7 +2,6 @@ import { useStore } from "@/util/useStore";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import { Levels } from "@/api/error";
 import { computed, ComputedRef } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
@@ -15,9 +14,11 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import _ from "lodash";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 export function useReportTools() {
     const store = useStore();
+    const snackbarStore = useSnackbarStore();
     const zaehlstelleStore = useZaehlstelleStore();
     const dateUtils = useDateUtils();
 
@@ -142,15 +143,13 @@ export function useReportTools() {
         }
         if (base64) {
             addImageToReport(base64, createCaption(erhebungsstelle, type));
-            store.dispatch("snackbar/showToast", {
-                snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-                level: Levels.SUCCESS,
-            });
+            snackbarStore.showSuccess(
+                `${artikel} ${type} wurde dem PDF Report hinzugefügt.`
+            );
         } else {
-            store.dispatch("snackbar/showError", {
-                snackbarTextPart1: `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`,
-                level: Levels.ERROR,
-            });
+            snackbarStore.showError(
+                `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`
+            );
         }
     }
 
@@ -184,10 +183,9 @@ export function useReportTools() {
                 break;
         }
 
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-            level: Levels.SUCCESS,
-        });
+        snackbarStore.showSuccess(
+            `${artikel} ${type} wurde dem PDF Report hinzugefügt.`
+        );
     }
 
     function getFileName(

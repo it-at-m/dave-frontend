@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 import { Levels } from "@/api/error";
-import { useStore } from "@/util/useStore";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 const defaultTimeout = 6000;
 
@@ -38,20 +38,16 @@ const snackbarTextPart1 = ref("");
 const snackbarTextPart2 = ref("");
 const color = ref("info");
 
-const store = useStore();
-
-const snackbarState = computed(() => {
-    return store.state.snackbar;
-});
+const snackbarStore = useSnackbarStore();
 
 watch(
-    () => snackbarState.value.switch,
+    () => snackbarStore.trigger,
     () => {
         show.value = false;
         setTimeout(() => {
-            snackbarTextPart1.value = snackbarState.value.snackbarTextPart1;
-            snackbarTextPart2.value = snackbarState.value.snackbarTextPart2;
-            color.value = snackbarState.value.level;
+            snackbarTextPart1.value = snackbarStore.getTextPart1;
+            snackbarTextPart2.value = snackbarStore.getTextPart2;
+            color.value = snackbarStore.getLevel;
             switch (color.value) {
                 case Levels.ERROR: {
                     timeout.value = 0;
