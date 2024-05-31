@@ -38,6 +38,7 @@ import {
 import { useStore } from "@/util/useStore";
 import { useRouter } from "vue-router/composables";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useSearchStore } from "@/store/modules/search";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -70,6 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const store = useStore();
+const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
 
@@ -241,10 +243,9 @@ function createOverlayLayers(): L.Control.LayersObject {
 }
 
 const searchResult = computed(() => {
-    return store.getters["search/result"];
+    return searchStore.getSearchResult;
 });
 
-// @Watch("$store.state.search.result")
 watch(searchResult, () => {
     resetMarker();
 });
@@ -261,6 +262,7 @@ function resetMarker(): void {
 }
 
 function setMarkerToMap() {
+    markerCluster.value.clearLayers();
     markerCluster.value = L.markerClusterGroup({
         disableClusteringAtZoom: 15,
         spiderfyOnMaxZoom: false,
@@ -270,8 +272,7 @@ function setMarkerToMap() {
     selectedZaehlstelleKarte.value =
         DefaultObjectCreator.createDefaultZaehlstelleKarte();
 
-    const zaehlstellenKarte: Array<AnzeigeKarteDTO> =
-        getZaehlstellenKarteFromStore.value;
+    const zaehlstellenKarte: Array<AnzeigeKarteDTO> = searchResult.value;
     const markers: Array<Marker> = [];
     zaehlstellenKarte.forEach((zaehlstelleKarte) => {
         if (zaehlstelleKarte.type != "messstelle") {
@@ -347,15 +348,10 @@ const selectedZaehlstelleKarte = ref(
     DefaultObjectCreator.createDefaultZaehlstelleKarte()
 );
 
-const getZaehlstellenKarteFromStore: ComputedRef<Array<AnzeigeKarteDTO>> =
-    computed(() => {
-        return store.getters["search/result"];
-    });
-
 function searchErhebungsstelle() {
-    SucheService.searchErhebungsstelle(store.getters["search/lastSearchQuery"])
+    SucheService.searchErhebungsstelle(searchStore.getLastSearchQuery)
         .then((result) => {
-            store.commit("search/result", result);
+            searchStore.setSearchResult(result);
         })
         .catch((error) => {
             snackbarStore.showApiError(error);

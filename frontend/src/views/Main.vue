@@ -79,8 +79,10 @@ import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import { useStore } from "@/util/useStore";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useSearchStore } from "@/store/modules/search";
 
 const store = useStore();
+const searchStore = useSearchStore();
 const daveUtils = useDaveUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const fab = ref(false);
@@ -212,11 +214,11 @@ function printZaehlstellenOfSearchResult(
 }
 
 const getSearchQuery = computed(() => {
-    return store.getters["search/lastSearchQuery"];
+    return searchStore.getLastSearchQuery;
 });
 
 const getSearchResult = computed(() => {
-    return store.getters["search/result"];
+    return searchStore.getSearchResult;
 });
 
 const fabColor = computed(() => {

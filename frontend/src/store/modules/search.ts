@@ -1,31 +1,26 @@
-export default {
-    namespaced: true,
-    state: {
-        result: [],
-        lastSearchQuery: "",
-    },
-    getters: {
-        result: (state: any) => {
-            return state.result;
-        },
-        lastSearchQuery: (state: any) => {
-            return state.lastSearchQuery;
-        },
-    },
-    mutations: {
-        result(state: any, payload: number[]) {
-            state.result = payload;
-        },
-        lastSearchQuery(state: any, payload: string) {
-            state.lastSearchQuery = payload;
-        },
-    },
-    actions: {
-        result(context: any, payload: number[]) {
-            context.commit("result", payload);
-        },
-        lastSearchQuery(context: any, payload: string) {
-            context.commit("lastSearchQuery", payload);
-        },
-    },
-};
+import { defineStore } from "pinia";
+import { computed, ref, Ref } from "vue";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+
+export const useSearchStore = defineStore("searchStore", () => {
+    // ref()s become state properties
+    const searchResult: Ref<Array<AnzeigeKarteDTO>> = ref([]);
+    const lastSearchQuery: Ref<string> = ref("");
+    // computed()s become getters
+    const getSearchResult = computed(() => searchResult.value);
+    const getLastSearchQuery = computed(() => lastSearchQuery.value);
+    // function()s become actions
+    function setSearchResult(payload: Array<AnzeigeKarteDTO>) {
+        searchResult.value = payload;
+    }
+    function setLastSearchQuery(payload: string) {
+        lastSearchQuery.value = payload;
+    }
+
+    return {
+        getSearchResult,
+        getLastSearchQuery,
+        setSearchResult,
+        setLastSearchQuery,
+    };
+});
