@@ -1,4 +1,3 @@
-import { useStore } from "@/util/useStore";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
@@ -13,13 +12,12 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import _ from "lodash";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { usePdfReportStore } from "@/store/modules/pdfReport";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useMessstelleStore } from "@/store/messstelle";
 
 export function useReportTools() {
-    const store = useStore();
     const messstelleStore = useMessstelleStore();
     const pdfReportStore = usePdfReportStore();
     const snackbarStore = useSnackbarStore();
@@ -38,7 +36,7 @@ export function useReportTools() {
         return zaehlstelleStore.getZaehlstelleHeader;
     });
     const selectedZaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-        return store.getters.getAktiveZaehlung;
+        return zaehlstelleStore.getAktiveZaehlung;
     });
     const zaehlstelleOptions: ComputedRef<OptionsDTO> = computed(() => {
         return zaehlstelleStore.getFilteroptions;

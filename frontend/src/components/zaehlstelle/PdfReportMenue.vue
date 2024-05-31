@@ -124,18 +124,16 @@ import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
 import { wetterText } from "@/types/enum/Wetter";
 import { quelleText } from "@/types/enum/Quelle";
 import _ from "lodash";
 import { computed, ref } from "vue";
-import { useStore } from "@/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { usePdfReportStore } from "@/store/modules/pdfReport";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
 
 interface Props {
     value: boolean;
@@ -143,7 +141,6 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const store = useStore();
 const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const zaehlstelleStore = useZaehlstelleStore();
@@ -199,7 +196,7 @@ function saveItems(): void {
  */
 function createZaehlstelleInfo() {
     const zs = zaehlstelleStore.getZaehlstelleHeader;
-    const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
     const headline = new HeadingAsset(
         `Info für Zählstelle Nr. ${zs.nummer}`,
         AssetTypesEnum.HEADING3
@@ -219,7 +216,7 @@ function createZaehlstelleInfo() {
  */
 function createZaehlungsInfo() {
     const zs = zaehlstelleStore.getZaehlstelleHeader;
-    const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
     const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
     const headline = new HeadingAsset(
         `Info zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
@@ -267,7 +264,7 @@ function createZaehlungsInfo() {
  */
 function createZaehlungskenngroessen() {
     const zs = zaehlstelleStore.getZaehlstelleHeader;
-    const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
     const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
 
     const headline = new HeadingAsset(

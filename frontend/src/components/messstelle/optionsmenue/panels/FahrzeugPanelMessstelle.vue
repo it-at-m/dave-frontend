@@ -22,8 +22,7 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed } from "vue";
 import FahrzeugPanelVerkehrsartenContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelVerkehrsartenContent.vue";
 import FahrzeugPanelFahrzeugkategorienContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue";
-import { useStore } from "@/util/useStore";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;

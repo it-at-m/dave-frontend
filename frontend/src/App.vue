@@ -193,11 +193,10 @@ import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
-import { useStore } from "@/util/useStore";
 import { useRoute, useRouter } from "vue-router/composables";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { useSearchStore } from "@/store/modules/search";
-import { useUserStore } from "@/store/modules/user";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useSearchStore } from "@/store/search";
+import { useUserStore } from "@/store/user";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 
@@ -222,7 +221,6 @@ const selectedSuggestion: Ref<Suggest | null> = ref(
     DefaultObjectCreator.createDefaultSuggestion()
 );
 
-const store = useStore();
 const snackbarStore = useSnackbarStore();
 const searchStore = useSearchStore();
 const userStore = useUserStore();

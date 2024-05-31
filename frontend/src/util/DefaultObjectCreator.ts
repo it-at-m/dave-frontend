@@ -1,6 +1,5 @@
 import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import Suggest from "@/types/suche/Suggest";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
@@ -20,6 +19,7 @@ import TagesTyp from "@/types/enum/TagesTyp";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {

@@ -61,7 +61,7 @@ import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import DataManipulatorUtil from "@/util/DataManipulatorUtil";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import { computed, ComputedRef, watch } from "vue";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const TYPE_GESAMT = "Gesamt";
 

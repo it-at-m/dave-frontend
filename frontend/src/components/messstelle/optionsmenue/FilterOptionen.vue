@@ -129,7 +129,7 @@ import {
 } from "@/types/enum/Himmelsrichtungen";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { tagesTypText } from "@/types/enum/TagesTyp";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();

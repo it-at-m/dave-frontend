@@ -30,7 +30,7 @@ import ChartUtils from "@/util/ChartUtils";
 import { computed, ComputedRef, provide, Ref, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
 import { useDaveUtils } from "@/util/DaveUtils";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 use([
     CanvasRenderer,

@@ -77,12 +77,10 @@ import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import { useStore } from "@/util/useStore";
 import { useDaveUtils } from "@/util/DaveUtils";
-import { useSearchStore } from "@/store/modules/search";
-import { usePdfReportStore } from "@/store/modules/pdfReport";
+import { useSearchStore } from "@/store/search";
+import { usePdfReportStore } from "@/store/pdfReport";
 
-const store = useStore();
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const daveUtils = useDaveUtils();

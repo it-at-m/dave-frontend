@@ -47,10 +47,10 @@ import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
 import _ from "lodash";
-import { useHistoryStore } from "@/store/modules/history";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useHistoryStore } from "@/store/history";
+import { useMessstelleStore } from "@/store/messstelle";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const zaehlstelleStore = useZaehlstelleStore();
 const messstelleStore = useMessstelleStore();

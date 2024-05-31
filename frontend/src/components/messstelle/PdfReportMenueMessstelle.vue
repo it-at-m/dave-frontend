@@ -99,7 +99,6 @@
 <script setup lang="ts">
 import { computed, Ref, ref } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import { useStore } from "@/util/useStore";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
@@ -107,9 +106,9 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
 import { useDateUtils } from "@/util/DateUtils";
 import { tagesTypText } from "@/types/enum/TagesTyp";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { usePdfReportStore } from "@/store/modules/pdfReport";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     value: boolean;
@@ -126,7 +125,6 @@ const emits = defineEmits<{
     (e: "input", v: boolean): void;
 }>();
 
-const store = useStore();
 const messstelleStore = useMessstelleStore();
 const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();

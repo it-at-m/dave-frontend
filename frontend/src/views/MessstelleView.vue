@@ -65,8 +65,8 @@ import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAn
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()

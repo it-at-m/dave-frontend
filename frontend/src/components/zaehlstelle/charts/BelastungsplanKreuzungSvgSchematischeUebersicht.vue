@@ -20,9 +20,8 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import * as SVG from "@svgdotjs/svg.js";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -57,7 +56,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<(e: "print", v: Blob) => void>();
 
-const store = useStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
@@ -154,7 +152,7 @@ const nachIds = computed(() => {
 });
 
 const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const maxFahrtrichtungWidth = computed(() => {

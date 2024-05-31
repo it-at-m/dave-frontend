@@ -63,8 +63,8 @@ import { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageIn
 import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 import { useRoute } from "vue-router/composables";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();

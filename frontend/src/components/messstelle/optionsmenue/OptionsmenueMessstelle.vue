@@ -64,7 +64,6 @@
 import { computed, ref, Ref, watch } from "vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useStore } from "@/util/useStore";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -77,8 +76,8 @@ import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/Me
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import TagesTyp from "@/types/enum/TagesTyp";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     messstelleId: string;
@@ -86,7 +85,6 @@ interface Props {
 defineProps<Props>();
 
 const vuetify = useVuetify();
-const store = useStore();
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();

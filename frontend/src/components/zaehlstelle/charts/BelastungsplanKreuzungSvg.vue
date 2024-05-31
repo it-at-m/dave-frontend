@@ -19,17 +19,16 @@ import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import * as SVG from "@svgdotjs/svg.js";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -70,7 +69,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<(e: "print", v: Blob) => void>();
 
-const store = useStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 const dateUtils = useDateUtils();
@@ -160,7 +158,7 @@ onMounted(() => {
 });
 
 const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
@@ -276,8 +274,9 @@ const isDifferenzdatendarstellung = computed(() => {
  */
 const vergleichsZaehlung = computed(() => {
     if (isDifferenzdatendarstellung.value) {
-        const vergleichsId = optionen.value.vergleichszaehlungsId;
-        return store.getters.getZaehlungById(vergleichsId) as LadeZaehlungDTO;
+        return zaehlstelleStore.getZaehlungById(
+            optionen.value.vergleichszaehlungsId
+        );
     }
     return undefined;
 });
@@ -1369,7 +1368,7 @@ function legendeSpalten() {
         zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
     ) {
         const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
-            store.getters.getStartEndeUhrzeitIntervalls;
+            zaehlstelleStore.getStartEndeUhrzeitIntervalls;
         zaehlzeitSecondLine = `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
     }
 

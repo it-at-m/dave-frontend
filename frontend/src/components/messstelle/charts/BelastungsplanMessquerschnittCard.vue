@@ -12,14 +12,13 @@ import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
 import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { belastungsplanAnzeigeUtils } from "@/components/messstelle/optionsmenue/composable/belastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -29,7 +28,6 @@ const emits = defineEmits<{
     (e: "print", v: Blob): void;
 }>();
 
-const store = useStore();
 const messstelleStore = useMessstelleStore();
 const vuetify = useVuetify();
 const dateUtils = useDateUtils();

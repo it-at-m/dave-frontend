@@ -131,7 +131,7 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { computed, Ref, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 /**
  * Beschreibung Optionsmenü

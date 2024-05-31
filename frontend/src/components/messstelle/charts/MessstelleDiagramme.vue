@@ -125,7 +125,6 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
-import { useStore } from "@/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
@@ -145,10 +144,10 @@ import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleT
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-import { useHistoryStore } from "@/store/modules/history";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { useUserStore } from "@/store/modules/user";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useHistoryStore } from "@/store/history";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useUserStore } from "@/store/user";
+import { useMessstelleStore } from "@/store/messstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -199,7 +198,6 @@ const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
-const store = useStore();
 const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const snackbarStore = useSnackbarStore();

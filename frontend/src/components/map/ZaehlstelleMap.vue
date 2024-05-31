@@ -35,10 +35,10 @@ import {
     ref,
     watch,
 } from "vue";
-import { useStore } from "@/util/useStore";
 import { useRouter } from "vue-router/composables";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { useSearchStore } from "@/store/modules/search";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useSearchStore } from "@/store/search";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -70,7 +70,7 @@ const props = withDefaults(defineProps<Props>(), {
     zoom: 12,
 });
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
@@ -360,7 +360,7 @@ function searchErhebungsstelle() {
 }
 
 function getColorForZaehlartenMarker(zaehlart: string): string {
-    if (zaehlart == store.getters.getAktiveZaehlung.zaehlart) {
+    if (zaehlart == zaehlstelleStore.getAktiveZaehlung.zaehlart) {
         return ICON_COLOR_RED;
     } else {
         return ICON_COLOR_SECONDARY;

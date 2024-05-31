@@ -274,16 +274,14 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import _ from "lodash";
 import { computed, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 import { useRules } from "@/util/rules";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;
 const MAX_VALUE_EXCLUDE = 101;
 
-const store = useStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useRules();
@@ -358,7 +356,7 @@ const options: Ref<OptionsDTO> = computed(() => {
 });
 
 const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isZeitauswahlForSpitzenstunde: Ref<boolean> = computed(() => {

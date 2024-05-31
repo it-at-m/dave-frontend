@@ -93,7 +93,6 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
-import { useStore } from "@/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
@@ -104,8 +103,8 @@ import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/Tage
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
-import { useUserStore } from "@/store/modules/user";
-import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useUserStore } from "@/store/user";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const route = useRoute();
 
@@ -115,7 +114,6 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits(["input"]);
-const store = useStore();
 const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const dateUtils = useDateUtils();

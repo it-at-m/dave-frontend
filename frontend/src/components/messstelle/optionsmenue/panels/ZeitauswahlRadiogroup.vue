@@ -88,7 +88,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
-import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useSnackbarStore } from "@/store/snackbar";
 
 interface Props {
     value: MessstelleOptionsDTO;

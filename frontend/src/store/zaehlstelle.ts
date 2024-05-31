@@ -3,8 +3,16 @@ import { defineStore } from "pinia";
 import { computed, ref, Ref } from "vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import { useUserStore } from "@/store/user";
+import LadeZaehlungComperator from "@/types/zaehlung/LadeZaehlungComperator";
+import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
+import { useRoute } from "vue-router/composables";
 
 export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
+    const route = useRoute();
     // ref()s become state properties
     const zaehlstelleHeader: Ref<ZaehlstelleHeaderDTO> = ref(
         DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
@@ -22,6 +30,17 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     const sizeBelastungsplanSvgSchematischeUebersicht: Ref<number> = ref(0);
     const maxSizeBelastungsplanSvgSchematischeUebersicht: Ref<number> = ref(0);
     const minSizeBelastungsplanSvgSchematischeUebersicht: Ref<number> = ref(0);
+
+    const aktiveZaehlung: Ref<LadeZaehlungDTO> = ref(
+        DefaultObjectCreator.createDefaultLadeZaehlungDto()
+    );
+    const zaehlungen: Ref<Array<LadeZaehlungDTO>> = ref([]);
+    const inaktiveZaehlungen: Ref<Array<LadeZaehlungDTO>> = ref([]);
+    const sortedKnotenarme: Ref<Array<LadeKnotenarmDTO>> = ref([]);
+    const inaktiveZaehlungenVorhanden: Ref<boolean> = ref(false);
+    const startEndeUhrzeitIntervalls: Ref<StartEndeUhrzeitIntervalls> = ref(
+        DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
+    );
     // computed()s become getters
     const getZaehlstelleHeader = computed(() => zaehlstelleHeader.value);
     const getActiveTab = computed(() => activeTab.value);
@@ -50,6 +69,31 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     );
     const getMinSizeBelastungsplanSvgSchematischeUebersicht = computed(
         () => minSizeBelastungsplanSvgSchematischeUebersicht.value
+    );
+    const getAktiveZaehlung = computed(() => aktiveZaehlung.value);
+    const getZaehlungsId = computed(() => aktiveZaehlung.value.id ?? undefined);
+    const getKnotenarme = computed(() => aktiveZaehlung.value.knotenarme ?? []);
+    const getSortedKnotenarme = computed(
+        () => aktiveZaehlung.value.knotenarme ?? []
+    );
+    const getZaehlungen = computed(() => zaehlungen.value);
+    const getInaktiveZaehlungen = computed(() => inaktiveZaehlungen.value);
+    const hasInaktiveZaehlungen = computed(
+        () => inaktiveZaehlungenVorhanden.value
+    );
+    const getZaehlungById = computed((id: string) => {
+        const selected = zaehlungen.value.filter(
+            (z: LadeZaehlungDTO) => z.id === id
+        ) as LadeZaehlungDTO[];
+        if (selected.length === 1) {
+            return selected[0];
+        } else if (selected.length > 1) {
+            return selected[0];
+        }
+        return undefined;
+    });
+    const getStartEndeUhrzeitIntervalls = computed(
+        () => startEndeUhrzeitIntervalls.value
     );
     // function()s become actions
     function setZaehlstelleHeader(payload: ZaehlstelleHeaderDTO) {
@@ -109,6 +153,58 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         sizeBelastungsplanSvgSchematischeUebersicht.value =
             minSizeBelastungsplanSvgSchematischeUebersicht.value;
     }
+    function setZaehlungen(payload: Array<LadeZaehlungDTO>) {
+        const userStore = useUserStore();
+        if (userStore.hasAuthorities && userStore.isAnwender) {
+            zaehlungen.value = payload.filter((value) => !value.sonderzaehlung);
+        } else {
+            zaehlungen.value = payload;
+        }
+        setZaehlungAlsAktiv(route.params.zaehlungId);
+    }
+    function setZaehlungAlsAktiv(payload: string) {
+        if (zaehlungen.value.length > 0) {
+            let aktiv = [] as LadeZaehlungDTO[];
+            if (payload) {
+                // wenn eine ID übergeben wird, dann nimm diese als aktive Zählung
+                aktiv = zaehlungen.value.filter(
+                    (z: LadeZaehlungDTO) => z.id === payload
+                ) as LadeZaehlungDTO[];
+            } else {
+                // ansonsten ist es die neuste Zählung
+                aktiv.push(
+                    zaehlungen.value.sort(LadeZaehlungComperator.sortByDatum)[0]
+                );
+            }
+
+            if (aktiv.length > 0) {
+                // neue aktive Zählung setzen
+                aktiveZaehlung.value = aktiv[0];
+                // sortierte Knotenarme setzen
+                sortedKnotenarme.value = aktiv[0].knotenarme.sort(
+                    LadeKnotenarmComperator.sortByNumber
+                );
+                // inaktive Zählungen aktualisieren und sortieren
+                const iz = zaehlungen.value.filter(
+                    (z: LadeZaehlungDTO) => z.id != aktiveZaehlung.value.id
+                ) as LadeZaehlungDTO[];
+                inaktiveZaehlungen.value = iz.sort(
+                    LadeZaehlungComperator.sortByDatum
+                );
+                // Wenn inaktive Zählungen vorhanden sind, dann Wert auf true setzen
+                if (iz.length > 0) {
+                    inaktiveZaehlungenVorhanden.value = true;
+                } else {
+                    inaktiveZaehlungenVorhanden.value = false;
+                }
+            }
+        }
+    }
+    function setStartEndeUhrzeitIntervalls(
+        payload: StartEndeUhrzeitIntervalls
+    ) {
+        startEndeUhrzeitIntervalls.value = payload;
+    }
 
     return {
         getZaehlstelleHeader,
@@ -125,6 +221,15 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         getSizeBelastungsplanSvgSchematischeUebersicht,
         getMaxSizeBelastungsplanSvgSchematischeUebersicht,
         getMinSizeBelastungsplanSvgSchematischeUebersicht,
+        getAktiveZaehlung,
+        getZaehlungsId,
+        getKnotenarme,
+        getSortedKnotenarme,
+        getZaehlungen,
+        getInaktiveZaehlungen,
+        hasInaktiveZaehlungen,
+        getZaehlungById,
+        getStartEndeUhrzeitIntervalls,
         setZaehlstelleHeader,
         setActiveTab,
         setFilteroptions,
@@ -141,5 +246,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         setMaxSizeBelastungsplanSvgSchematischeUebersicht,
         setMinSizeBelastungsplanSvgSchematischeUebersicht,
         resetSizeBelastungsplanSvgSchematischeUebersicht,
+        setZaehlungen,
+        setZaehlungAlsAktiv,
+        setStartEndeUhrzeitIntervalls,
     };
 });

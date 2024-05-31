@@ -362,9 +362,9 @@ import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useDaveUtils } from "@/util/DaveUtils";
-import { useSnackbarStore } from "@/store/modules/snackbar";
-import { usePdfReportStore } from "@/store/modules/pdfReport";
-import { useUserStore } from "@/store/modules/user";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useUserStore } from "@/store/user";
 
 @Component({
     components: {

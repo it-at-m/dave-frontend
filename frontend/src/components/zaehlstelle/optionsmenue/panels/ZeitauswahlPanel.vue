@@ -176,17 +176,15 @@ import ZeitblockStuendlich, {
 } from "@/types/enum/ZeitblockStuendlich";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
-import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
     zaehlung?: LadeZaehlungDTO;
 }
 
 const props = defineProps<Props>();
-const store = useStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 
@@ -223,7 +221,7 @@ const options: Ref<OptionsDTO> = computed(() => {
 });
 
 const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
