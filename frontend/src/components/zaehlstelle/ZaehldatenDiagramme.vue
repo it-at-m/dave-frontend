@@ -699,7 +699,7 @@ function addChartToPdfReport(): void {
                     Erhebungsstelle.ZAEHLSTELLE,
                     "Der",
                     "Belastungsplan",
-                    "belastungsplanPngBase64.value",
+                    belastungsplanPngBase64.value,
                     false
                 );
             }

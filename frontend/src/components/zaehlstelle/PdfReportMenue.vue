@@ -135,6 +135,7 @@ import { useStore } from "@/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { usePdfReportStore } from "@/store/modules/pdfReport";
 
 interface Props {
     value: boolean;
@@ -143,6 +144,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const store = useStore();
+const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
@@ -209,7 +211,7 @@ function createZaehlstelleInfo() {
     let kommentar = new TextAsset(
         `Zählstellenkommentar: ${checkForNull(zs.kommentar)}`
     );
-    store.dispatch("addAssets", [headline, platz, stadtbezirk, kommentar]);
+    pdfReportStore.addAssets([headline, platz, stadtbezirk, kommentar]);
 }
 
 /**
@@ -246,7 +248,7 @@ function createZaehlungsInfo() {
             knotenarmListe + `${k.nummer} ${k.strassenname}<br/>\n`;
     });
     const knotenarme = new TextAsset(knotenarmListe);
-    store.dispatch("addAssets", [
+    pdfReportStore.addAssets([
         headline,
         projektname,
         zaehlart,
@@ -277,7 +279,7 @@ function createZaehlungskenngroessen() {
         zl.id
     );
 
-    store.dispatch("addAssets", [headline, zaehlungskenngroessen]);
+    pdfReportStore.addAssets([headline, zaehlungskenngroessen]);
 }
 
 /**
@@ -294,7 +296,7 @@ function createLegende() {
             "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +
             "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
     );
-    store.dispatch("addAssets", [ueberschrift, legende]);
+    pdfReportStore.addAssets([ueberschrift, legende]);
 }
 
 /**

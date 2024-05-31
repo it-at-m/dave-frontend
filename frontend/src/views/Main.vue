@@ -80,8 +80,10 @@ import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import { useStore } from "@/util/useStore";
 import { useDaveUtils } from "@/util/DaveUtils";
 import { useSearchStore } from "@/store/modules/search";
+import { usePdfReportStore } from "@/store/modules/pdfReport";
 
 const store = useStore();
+const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const daveUtils = useDaveUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
@@ -101,7 +103,7 @@ function takePicture() {
             .then((dataUrl: string) => {
                 const image = new ImageAsset("Hauptkarte", dataUrl);
                 image.width = 100;
-                store.dispatch("addAsset", image);
+                pdfReportStore.addAsset(image);
             })
             .finally(() => {
                 creatingPicture.value = false;

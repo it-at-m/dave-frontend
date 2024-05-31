@@ -363,6 +363,7 @@ import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/Zaehlungskenngr
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useDaveUtils } from "@/util/DaveUtils";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { usePdfReportStore } from "@/store/modules/pdfReport";
 
 @Component({
     components: {
@@ -399,6 +400,7 @@ export default class PdfReportView extends Vue {
         "",
         ""
     );
+    pdfReportStore = usePdfReportStore();
 
     // liste der Assets
     assets: BaseAsset[] = this.assetsFromStore;
@@ -428,7 +430,7 @@ export default class PdfReportView extends Vue {
     }
 
     created() {
-        if (!this.$store.getters.hasTitlePage) {
+        if (!this.pdfReportStore.getHasTitlePage) {
             this.createFirstPage();
         }
     }
@@ -462,12 +464,12 @@ export default class PdfReportView extends Vue {
         this.assets.reverse();
 
         // Titel wurde erstellt
-        this.$store.dispatch("hasTitlePage");
+        this.pdfReportStore.setHasTitlePage();
     }
 
     // Assets werden aus dem Store geladen
     get assetsFromStore(): BaseAsset[] {
-        return _.cloneDeep(this.$store.getters.getAssets);
+        return _.cloneDeep(this.pdfReportStore.getAssets);
     }
 
     /**
@@ -487,7 +489,7 @@ export default class PdfReportView extends Vue {
     // Immer wenn sich das assets-Array, oder ein Objekt in diesem, ändert => Speichern im Store
     @Watch("assets", { deep: true })
     saveAssetsInStore(assets: BaseAsset[]) {
-        this.$store.dispatch("setAssets", _.cloneDeep(assets));
+        this.pdfReportStore.setAssets(_.cloneDeep(assets));
     }
 
     edit(asset: BaseAsset): void {

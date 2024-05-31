@@ -108,6 +108,7 @@ import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
 import { useDateUtils } from "@/util/DateUtils";
 import { tagesTypText } from "@/types/enum/TagesTyp";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { usePdfReportStore } from "@/store/modules/pdfReport";
 
 interface Props {
     value: boolean;
@@ -125,6 +126,7 @@ const emits = defineEmits<{
 }>();
 
 const store = useStore();
+const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const dateUtils = useDateUtils();
 
@@ -201,7 +203,7 @@ function createMessstelleInfo(): void {
         `Messstellenkommentar: ${messstelle.value.kommentar ?? "---"}`
     );
     assets.push(kommentar);
-    store.dispatch("addAssets", assets);
+    pdfReportStore.addAssets(assets);
 }
 
 function createMessInfo(): void {
@@ -226,7 +228,7 @@ function createMessInfo(): void {
     );
     assets.push(statistikAuswertung);
 
-    store.dispatch("addAssets", assets);
+    pdfReportStore.addAssets(assets);
 }
 
 function createLegende(): void {
@@ -240,6 +242,6 @@ function createLegende(): void {
             "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +
             "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
     );
-    store.dispatch("addAssets", [ueberschrift, legende]);
+    pdfReportStore.addAssets([ueberschrift, legende]);
 }
 </script>
