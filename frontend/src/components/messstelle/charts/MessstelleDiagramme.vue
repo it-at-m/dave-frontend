@@ -147,6 +147,7 @@ import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import { useHistoryStore } from "@/store/modules/history";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useUserStore } from "@/store/modules/user";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -198,6 +199,7 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
+const userStore = useUserStore();
 const snackbarStore = useSnackbarStore();
 const historyStore = useHistoryStore();
 const route = useRoute();
@@ -494,7 +496,7 @@ function generatePdf(): void {
 }
 
 function fetchPdf(formData: FormData, type: string) {
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", userStore.getDepartment);
     GeneratePdfService.postPdfCustomFetchTemplateMessstelle(
         type,
         messstelleId.value,

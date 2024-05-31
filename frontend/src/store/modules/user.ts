@@ -1,7 +1,8 @@
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
+import { defineStore } from "pinia";
+import { computed, ref, Ref } from "vue";
 
 const roleAnwender = "ROLE_ANWENDER";
-
 const rolePoweruser = "ROLE_POWERUSER";
 
 /**
@@ -9,44 +10,36 @@ const rolePoweruser = "ROLE_POWERUSER";
  * über alle Views hinweg verteilen zu können. Dies betrifft vor allem die Authorities, da einzelnen Elemente
  * der Oberfläche nur für bestimmte Rollen sichtbar sein sollen.
  */
-export default {
-    namespaced: true,
-    state: {
-        ssoUserInfoResponse: {} as SsoUserInfoResponse,
-    },
-    getters: {
-        getName(state: any): string {
-            return state.ssoUserInfoResponse.name;
-        },
-        getDepartment(state: any): string {
-            return state.ssoUserInfoResponse.department;
-        },
-        isAnwender(state: any): boolean {
-            return (
-                state.ssoUserInfoResponse.authorities.includes(roleAnwender) &&
-                !state.ssoUserInfoResponse.authorities.includes(rolePoweruser)
-            );
-        },
-        isPoweruser(state: any): boolean {
-            return state.ssoUserInfoResponse.authorities.includes(
-                rolePoweruser
-            );
-        },
-        hasAuthorities(state: any): boolean {
-            return (
-                state.ssoUserInfoResponse.authorities &&
-                state.ssoUserInfoResponse.authorities.length > 0
-            );
-        },
-    },
-    mutations: {
-        setSsoUserInfoResponse(state: any, payload: SsoUserInfoResponse) {
-            state.ssoUserInfoResponse = payload;
-        },
-    },
-    actions: {
-        setSsoUserInfoResponse(context: any, payload: SsoUserInfoResponse) {
-            context.commit("setSsoUserInfoResponse", payload);
-        },
-    },
-};
+export const useUserStore = defineStore("userStore", () => {
+    // ref()s become state properties
+    const ssoUserInfoResponse: Ref<SsoUserInfoResponse> = ref(
+        {} as SsoUserInfoResponse
+    );
+    // computed()s become getters
+    const getName = computed(() => ssoUserInfoResponse.value.name);
+    const getDepartment = computed(() => ssoUserInfoResponse.value.department);
+    const isAnwender = computed(() => {
+        return (
+            ssoUserInfoResponse.value.authorities.includes(roleAnwender) &&
+            !ssoUserInfoResponse.value.authorities.includes(rolePoweruser)
+        );
+    });
+    const hasAuthorities = computed(() => {
+        return (
+            ssoUserInfoResponse.value.authorities &&
+            ssoUserInfoResponse.value.authorities.length > 0
+        );
+    });
+    // function()s become actions
+    function setSsoUserInfoResponse(payload: SsoUserInfoResponse) {
+        ssoUserInfoResponse.value = payload;
+    }
+
+    return {
+        getName,
+        getDepartment,
+        isAnwender,
+        hasAuthorities,
+        setSsoUserInfoResponse,
+    };
+});

@@ -104,6 +104,7 @@ import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/Tage
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
+import { useUserStore } from "@/store/modules/user";
 
 const route = useRoute();
 
@@ -114,6 +115,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits(["input"]);
 const store = useStore();
+const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
 const hoverSelectZeitintervall = ref(false);
@@ -169,9 +171,7 @@ const isZeitraum = computed(() => {
 });
 
 const isAnwender = computed(() => {
-    return (
-        store.getters["user/hasAuthorities"] && store.getters["user/isAnwender"]
-    );
+    return userStore.hasAuthorities && userStore.isAnwender;
 });
 
 const minDate = computed(() => {
@@ -223,11 +223,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
             new Date(sortedDates[1]).valueOf();
         const timeDifferenceInYears =
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
-        if (
-            store.getters["user/hasAuthorities"] &&
-            store.getters["user/isAnwender"] &&
-            timeDifferenceInYears > 5
-        ) {
+        if (isAnwender.value && timeDifferenceInYears > 5) {
             return "Der Ausgewählte Zeitraum ist zu groß";
         }
     }

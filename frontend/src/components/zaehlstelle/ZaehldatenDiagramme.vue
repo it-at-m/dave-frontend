@@ -383,6 +383,7 @@ import { useDaveUtils } from "@/util/DaveUtils";
 import { useHistoryStore } from "@/store/modules/history";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useUserStore } from "@/store/modules/user";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -450,6 +451,7 @@ const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
 
 const store = useStore();
 const snackbarStore = useSnackbarStore();
+const userStore = useUserStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
@@ -911,7 +913,7 @@ function generatePdf() {
 }
 
 function fetchPdf(formData: FormData, type: string) {
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", userStore.getDepartment);
     GeneratePdfService.postPdfCustomFetchTemplateZaehlung(
         type,
         selectedZaehlung.value.id,

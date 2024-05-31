@@ -364,6 +364,7 @@ import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatab
 import { useDaveUtils } from "@/util/DaveUtils";
 import { useSnackbarStore } from "@/store/modules/snackbar";
 import { usePdfReportStore } from "@/store/modules/pdfReport";
+import { useUserStore } from "@/store/modules/user";
 
 @Component({
     components: {
@@ -401,6 +402,7 @@ export default class PdfReportView extends Vue {
         ""
     );
     pdfReportStore = usePdfReportStore();
+    userStore = useUserStore();
 
     // liste der Assets
     assets: BaseAsset[] = this.assetsFromStore;
@@ -428,6 +430,9 @@ export default class PdfReportView extends Vue {
     get fabColor(): string {
         return this.fab ? "grey darken-1" : "secondary";
     }
+    get department(): string {
+        return this.userStore.getDepartment;
+    }
 
     created() {
         if (!this.pdfReportStore.getHasTitlePage) {
@@ -452,8 +457,8 @@ export default class PdfReportView extends Vue {
             )
         );
         // Autor
-        const name = this.$store.getters["user/getName"] as string;
-        const department = this.$store.getters["user/getDepartment"] as string;
+        const name = this.userStore.getName;
+        const department = this.department;
         this.save(
             new HeadingAsset(`${name} (${department})`, AssetTypesEnum.HEADING3)
         );
@@ -857,10 +862,7 @@ export default class PdfReportView extends Vue {
     }
 
     private fetchPdf(formData: any) {
-        formData.append(
-            "department",
-            this.$store.getters["user/getDepartment"]
-        );
+        formData.append("department", this.department);
         GeneratePdfService.postPdfCustomFetchReport(formData)
             .then((res) => {
                 res.blob().then((blob) => {
@@ -883,10 +885,7 @@ export default class PdfReportView extends Vue {
             })
         );
 
-        formData.append(
-            "department",
-            this.$store.getters["user/getDepartment"]
-        );
+        formData.append("department", this.department);
         GeneratePdfService.postPdfCustomFetchReport(formData)
             .then((res) => {
                 res.blob().then((blob) => {

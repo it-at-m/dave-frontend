@@ -197,6 +197,7 @@ import { useStore } from "@/util/useStore";
 import { useRoute, useRouter } from "vue-router/composables";
 import { useSnackbarStore } from "@/store/modules/snackbar";
 import { useSearchStore } from "@/store/modules/search";
+import { useUserStore } from "@/store/modules/user";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 
@@ -224,6 +225,7 @@ const selectedSuggestion: Ref<Suggest | null> = ref(
 const store = useStore();
 const snackbarStore = useSnackbarStore();
 const searchStore = useSearchStore();
+const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -232,8 +234,8 @@ created();
 function created() {
     SsoUserInfoService.getUserInfo()
         .then((ssoUserInfoResponse: SsoUserInfoResponse) => {
-            store.dispatch("user/setSsoUserInfoResponse", ssoUserInfoResponse);
-            loggedInUser.value = store.getters["user/getName"];
+            userStore.setSsoUserInfoResponse(ssoUserInfoResponse);
+            loggedInUser.value = userStore.getName;
         })
         .catch(() => {
             return false;
