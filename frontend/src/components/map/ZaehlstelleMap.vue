@@ -342,8 +342,6 @@ function setZaehlartenmarkerToMap() {
     }
 }
 
-// Alter Teil
-
 const selectedZaehlstelleKarte = ref(
     DefaultObjectCreator.createDefaultZaehlstelleKarte()
 );
