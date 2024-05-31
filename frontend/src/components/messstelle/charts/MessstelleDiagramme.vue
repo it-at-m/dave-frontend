@@ -272,6 +272,9 @@ function loadProcessedChartData() {
                 processedZaehldaten.belastungsplanMessquerschnitte;
             setMaxRangeYAchse();
         })
+        .catch((error) => {
+            snackbarStore.showApiError(error);
+        })
         .finally(() => {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =

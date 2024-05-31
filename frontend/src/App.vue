@@ -195,6 +195,7 @@ import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
 import { useStore } from "@/util/useStore";
 import { useRoute, useRouter } from "vue-router/composables";
+import { useSnackbarStore } from "@/store/modules/snackbar";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 
@@ -220,6 +221,7 @@ const selectedSuggestion: Ref<Suggest | null> = ref(
 );
 
 const store = useStore();
+const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -311,7 +313,7 @@ function suggest(query: string) {
                     }
                 );
             })
-            .catch((error) => store.dispatch("snackbar/showError", error));
+            .catch((error) => snackbarStore.showApiError(error));
     } else if (
         lastSuggestQuery.value !== "" &&
         lastSuggestQuery.value != null
@@ -366,7 +368,7 @@ function search() {
             store.commit("search/result", result);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         });
 }
 
