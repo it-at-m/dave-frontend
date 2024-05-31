@@ -67,12 +67,14 @@ import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
 const vuetify = useVuetify();
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
 
 onMounted(() => {
@@ -137,10 +139,7 @@ function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
         .then((messstelleDTO) => {
             messstelle.value = messstelleDTO;
-            store.dispatch(
-                "messstelleInfo/setMessstelleInfo",
-                messstelle.value
-            );
+            messstelleStore.setMessstelleInfo(messstelle.value);
         })
         .catch((error: ApiError) => {
             snackbarStore.showApiError(error);

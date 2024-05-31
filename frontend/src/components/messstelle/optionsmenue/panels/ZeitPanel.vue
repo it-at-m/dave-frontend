@@ -105,6 +105,7 @@ import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 import { useUserStore } from "@/store/modules/user";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 const route = useRoute();
 
@@ -115,6 +116,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits(["input"]);
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
@@ -130,7 +132,7 @@ onMounted(() => {
 });
 
 const messstelleInfo: Ref<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
+    return messstelleStore.getMessstelleInfo;
 });
 
 const getSortedDateRange = computed(() => {

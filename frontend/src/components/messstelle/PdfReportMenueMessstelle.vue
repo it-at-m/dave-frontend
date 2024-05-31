@@ -109,6 +109,7 @@ import { useDateUtils } from "@/util/DateUtils";
 import { tagesTypText } from "@/types/enum/TagesTyp";
 import { useSnackbarStore } from "@/store/modules/snackbar";
 import { usePdfReportStore } from "@/store/modules/pdfReport";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 interface Props {
     value: boolean;
@@ -126,6 +127,7 @@ const emits = defineEmits<{
 }>();
 
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const dateUtils = useDateUtils();
@@ -135,7 +137,7 @@ const messinfo = ref(false);
 const legende = ref(false);
 
 const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
+    return messstelleStore.getMessstelleInfo;
 });
 
 const options: Ref<MessstelleOptionsDTO> = computed(() => {

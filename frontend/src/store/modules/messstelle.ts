@@ -1,51 +1,33 @@
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import { defineStore } from "pinia";
+import { computed, ref, Ref } from "vue";
 
-export interface MessstelleState {
-    messstelleInfo: MessstelleInfoDTO;
-    activeTab: number;
-}
+export const useMessstelleStore = defineStore("messstelleStore", () => {
+    // ref()s become state properties
+    const messstelleInfo: Ref<MessstelleInfoDTO> = ref({} as MessstelleInfoDTO);
+    const activeTab: Ref<number> = ref(0);
+    // computed()s become getters
+    const getMessstelleInfo = computed(() => messstelleInfo.value);
+    const getActiveTab = computed(() => activeTab.value);
+    const isKfzMessstelle = computed(
+        () =>
+            messstelleInfo.value.detektierteVerkehrsarten ===
+            DetektierteFahrzeugart.KFZ
+    );
+    // function()s become actions
+    function setActiveTab(payload: number) {
+        activeTab.value = payload;
+    }
+    function setMessstelleInfo(payload: MessstelleInfoDTO) {
+        messstelleInfo.value = payload;
+    }
 
-export default {
-    namespaced: true,
-    state: {
-        messstelleInfo: {} as MessstelleInfoDTO,
-        activeTab: 0,
-    } as MessstelleState,
-    getters: {
-        getMessstelleInfo(state: MessstelleState): MessstelleInfoDTO {
-            return state.messstelleInfo;
-        },
-        getActiveTab: (state: MessstelleState) => {
-            return state.activeTab;
-        },
-        isKfzMessstelle: (state: MessstelleState) => {
-            return (
-                state.messstelleInfo.detektierteVerkehrsarten ===
-                DetektierteFahrzeugart.KFZ
-            );
-        },
-    },
-    mutations: {
-        SET_MESSSTELLE_INFO(
-            state: MessstelleState,
-            payload: MessstelleInfoDTO
-        ): void {
-            state.messstelleInfo = payload;
-        },
-        SET_ACTIVE_TAB(state: MessstelleState, payload: number) {
-            state.activeTab = payload;
-        },
-    },
-    actions: {
-        setMessstelleInfo(
-            context: any,
-            messstelleInfo: MessstelleInfoDTO
-        ): void {
-            context.commit("SET_MESSSTELLE_INFO", messstelleInfo);
-        },
-        setActiveTab(context: any, activeTab: number) {
-            context.commit("SET_ACTIVE_TAB", activeTab);
-        },
-    },
-};
+    return {
+        getMessstelleInfo,
+        getActiveTab,
+        isKfzMessstelle,
+        setActiveTab,
+        setMessstelleInfo,
+    };
+});

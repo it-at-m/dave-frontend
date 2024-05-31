@@ -77,6 +77,7 @@ import KeyVal from "@/types/common/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 import _ from "lodash";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -89,6 +90,7 @@ const hoverDirection: Ref<boolean> = ref(false);
 const hoverLage: Ref<boolean> = ref(false);
 const spitzenstundeErrorText: Ref<string> = ref("");
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
 
 const MIND_EIN_MESSQUERSCHNITT =
@@ -102,7 +104,7 @@ const chosenOptionsCopy = computed({
 });
 
 const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
+    return messstelleStore.getMessstelleInfo;
 });
 
 const isLageReadonly: ComputedRef<boolean> = computed(() => {

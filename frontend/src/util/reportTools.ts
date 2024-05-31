@@ -16,16 +16,18 @@ import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 import { useSnackbarStore } from "@/store/modules/snackbar";
 import { usePdfReportStore } from "@/store/modules/pdfReport";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 export function useReportTools() {
     const store = useStore();
+    const messstelleStore = useMessstelleStore();
     const pdfReportStore = usePdfReportStore();
     const snackbarStore = useSnackbarStore();
     const zaehlstelleStore = useZaehlstelleStore();
     const dateUtils = useDateUtils();
 
     const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-        return store.getters["messstelleInfo/getMessstelleInfo"];
+        return messstelleStore.getMessstelleInfo;
     });
     const messstelleOptions: ComputedRef<MessstelleOptionsDTO> = computed(
         () => {

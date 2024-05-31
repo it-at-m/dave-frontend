@@ -76,6 +76,7 @@ const getters = {
 };
 
 const mutations = {
+    // Umstellen und auf anderen Store zugriefen
     setZaehlungen(
         state: any,
         payload: { zs: LadeZaehlungDTO[]; isAnwender: boolean }

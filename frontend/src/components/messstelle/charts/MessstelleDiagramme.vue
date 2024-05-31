@@ -148,6 +148,7 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import { useHistoryStore } from "@/store/modules/history";
 import { useSnackbarStore } from "@/store/modules/snackbar";
 import { useUserStore } from "@/store/modules/user";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -199,6 +200,7 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const snackbarStore = useSnackbarStore();
 const historyStore = useHistoryStore();
@@ -231,7 +233,7 @@ watch(isBiggerThanFiveYears, () => {
 });
 
 watch(activeTab, (active) => {
-    store.dispatch("messstelleInfo/setActiveTab", active);
+    messstelleStore.setActiveTab(active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
 });
@@ -280,7 +282,7 @@ function loadProcessedChartData() {
         .finally(() => {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =
-                store.getters["messstelleInfo/getMessstelleInfo"];
+                messstelleStore.getMessstelleInfo;
             historyStore.addHistoryItem(
                 new MessstelleHistoryItem(
                     messstelle.id,

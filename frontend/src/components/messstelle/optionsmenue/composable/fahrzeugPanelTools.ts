@@ -1,16 +1,16 @@
-import { useStore } from "@/util/useStore";
 import { computed } from "vue";
 import Fahrzeug from "@/types/enum/Fahrzeug";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 export function useFahrzeugPanelTools() {
-    const store = useStore();
+    const messstelleStore = useMessstelleStore();
 
     const actualMessstelle = computed(() => {
-        return store.getters["messstelleInfo/getMessstelleInfo"];
+        return messstelleStore.getMessstelleInfo;
     });
 
     const isKfzMessstelle = computed(() => {
-        return store.getters["messstelleInfo/isKfzMessstelle"];
+        return messstelleStore.isKfzMessstelle;
     });
 
     /**

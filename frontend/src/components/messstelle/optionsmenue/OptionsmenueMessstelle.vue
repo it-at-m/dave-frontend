@@ -78,24 +78,26 @@ import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import TagesTyp from "@/types/enum/TagesTyp";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 interface Props {
     messstelleId: string;
 }
 defineProps<Props>();
 
-const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
-});
-
 const vuetify = useVuetify();
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
 const chosenOptions = ref(
     DefaultObjectCreator.createDefaultMessstelleOptions()
 );
+
+const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
+    return messstelleStore.getMessstelleInfo;
+});
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
