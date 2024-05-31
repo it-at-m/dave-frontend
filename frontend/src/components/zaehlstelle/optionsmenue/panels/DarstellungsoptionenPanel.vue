@@ -277,14 +277,14 @@ import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useStore } from "@/util/useStore";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 import { useRules } from "@/util/rules";
-import { useBelastungsplanStore } from "@/store/modules/belastungsplan";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;
 const MAX_VALUE_EXCLUDE = 101;
 
 const store = useStore();
-const belastungsplanStore = useBelastungsplanStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useRules();
 
@@ -342,15 +342,15 @@ onMounted(() => {
 });
 
 const sizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return belastungsplanStore.getSizeBelastungsplanSvg;
+    return zaehlstelleStore.getSizeBelastungsplanSvg;
 });
 
 const maxSizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return belastungsplanStore.getMaxSizeBelastungsplanSvg;
+    return zaehlstelleStore.getMaxSizeBelastungsplanSvg;
 });
 
 const minSizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return belastungsplanStore.getMinSizeBelastungsplanSvg;
+    return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
 const options: Ref<OptionsDTO> = computed(() => {
@@ -527,7 +527,7 @@ watch(blackPrintMode, () => {
 });
 
 watch(sizeBelastungsplan, () => {
-    belastungsplanStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
+    zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
 });
 
 watch(stundensumme, () => {

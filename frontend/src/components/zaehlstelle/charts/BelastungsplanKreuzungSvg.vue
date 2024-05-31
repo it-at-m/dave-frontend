@@ -30,7 +30,6 @@ import { useVuetify } from "@/util/useVuetify";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
-import { useBelastungsplanStore } from "@/store/modules/belastungsplan";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -73,7 +72,6 @@ const emits = defineEmits<(e: "print", v: Blob) => void>();
 
 const store = useStore();
 const zaehlstelleStore = useZaehlstelleStore();
-const belastungsplanStore = useBelastungsplanStore();
 const vuetify = useVuetify();
 const dateUtils = useDateUtils();
 
@@ -154,15 +152,11 @@ onMounted(() => {
         .addTo("#belastungsplan")
         .size(props.dimension, props.dimension)
         .viewbox(0, 0, viewbox, viewbox);
-    belastungsplanStore.setSizeBelastungsplanSvg(
+    zaehlstelleStore.setSizeBelastungsplanSvg(
         Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
     );
-    belastungsplanStore.setMaxSizeBelastungsplanSvg(
-        maxSizeBelastungsplan.value
-    );
-    belastungsplanStore.setMinSizeBelastungsplanSvg(
-        minSizeBelastungsplan.value
-    );
+    zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+    zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 });
 
 const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
@@ -223,7 +217,7 @@ const activeTab = computed(() => {
 
 const sizeBelastungsplan = computed(() => {
     let sizeBelastungsplanSvg: number =
-        belastungsplanStore.getSizeBelastungsplanSvg;
+        zaehlstelleStore.getSizeBelastungsplanSvg;
     if (sizeBelastungsplanSvg === 0) {
         sizeBelastungsplanSvg = minSizeBelastungsplan.value;
     }

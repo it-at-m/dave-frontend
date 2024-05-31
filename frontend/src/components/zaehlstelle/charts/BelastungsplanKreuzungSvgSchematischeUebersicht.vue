@@ -22,7 +22,7 @@ import * as SVG from "@svgdotjs/svg.js";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
-import { useBelastungsplanStore } from "@/store/modules/belastungsplan";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -58,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits<(e: "print", v: Blob) => void>();
 
 const store = useStore();
-const belastungsplanStore = useBelastungsplanStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
@@ -130,13 +130,13 @@ onMounted(() => {
         .addTo("#belastungsplanSchematischeUebersicht")
         .size(props.dimension, props.dimension)
         .viewbox(0, 0, viewbox, viewbox);
-    belastungsplanStore.setSizeBelastungsplanSvgSchematischeUebersicht(
+    zaehlstelleStore.setSizeBelastungsplanSvgSchematischeUebersicht(
         Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
     );
-    belastungsplanStore.setMaxSizeBelastungsplanSvgSchematischeUebersicht(
+    zaehlstelleStore.setMaxSizeBelastungsplanSvgSchematischeUebersicht(
         maxSizeBelastungsplan.value
     );
-    belastungsplanStore.setMinSizeBelastungsplanSvgSchematischeUebersicht(
+    zaehlstelleStore.setMinSizeBelastungsplanSvgSchematischeUebersicht(
         minSizeBelastungsplan.value
     );
 });
@@ -194,7 +194,7 @@ const line = computed(() => {
 
 const sizeBelastungsplan = computed(() => {
     let sizeBelastungsplanSvg: number =
-        belastungsplanStore.getSizeBelastungsplanSvgSchematischeUebersicht;
+        zaehlstelleStore.getSizeBelastungsplanSvgSchematischeUebersicht;
     if (sizeBelastungsplanSvg === 0) {
         sizeBelastungsplanSvg = minSizeBelastungsplan.value;
     }

@@ -132,7 +132,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { computed, Ref, ref, watch } from "vue";
 import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
-import { useBelastungsplanStore } from "@/store/modules/belastungsplan";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 /**
  * Beschreibung Optionsmenü
@@ -149,7 +149,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const store = useStore();
-const belastungsplanStore = useBelastungsplanStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
 const dialog = ref(false);
@@ -417,7 +417,7 @@ function resetOptions() {
 }
 
 function resetSizeBelastungsplan() {
-    belastungsplanStore.resetSizeBelastungsplanSvg;
+    zaehlstelleStore.resetSizeBelastungsplanSvg;
 }
 
 /**

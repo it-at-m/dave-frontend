@@ -57,8 +57,8 @@
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useBelastungsplanStore } from "@/store/modules/belastungsplan";
 import { useMessstelleStore } from "@/store/modules/messstelle";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -67,7 +67,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 const messstelleStore = useMessstelleStore();
-const belastungsplanStore = useBelastungsplanStore();
+const zaehlstelleStore = useZaehlstelleStore();
 
 const hoverWerteHundertRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
@@ -97,6 +97,6 @@ const helpTextBelastungsplan = computed(() => {
 });
 
 watch(sizeBelastungsplan, () => {
-    belastungsplanStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
+    zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
 });
 </script>
