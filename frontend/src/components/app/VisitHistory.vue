@@ -49,8 +49,11 @@ import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
 import _ from "lodash";
 import { useHistoryStore } from "@/store/modules/history";
+import { useMessstelleStore } from "@/store/modules/messstelle";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const store = useStore();
+const messstelleStore = useMessstelleStore();
 const historyStore = useHistoryStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
@@ -74,9 +77,11 @@ function selectItem(item: AbstractHistoryItem): void {
     if (isMessstelleHistoryItem(item)) {
         const historyItem: MessstelleHistoryItem =
             item as MessstelleHistoryItem;
-        store.commit(
-            "filteroptionsMessstelle/setFilteroptionsHistory",
-            _.cloneDeep(historyItem.optionsEinstellungen)
+        messstelleStore.setFilteroptionsHistory(
+            _.cloneDeep(
+                historyItem.optionsEinstellungen ??
+                    DefaultObjectCreator.createDefaultMessstelleOptions()
+            )
         );
         router.push(`/messstelle/${historyItem.id}`);
     }

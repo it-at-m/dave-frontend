@@ -58,15 +58,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
 import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 import { useRoute } from "vue-router/composables";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
 const numberValidWochentage = ref({} as ValidWochentageInPeriodDto);
 const dateUtils = useDateUtils();
@@ -77,7 +77,7 @@ onMounted(() => {
 });
 
 const chosenOptions = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const chosenOptionsZeitraum = computed(() => {

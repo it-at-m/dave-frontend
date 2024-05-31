@@ -141,7 +141,7 @@ const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
 });
 
 const options: Ref<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 function closeDialog(): void {

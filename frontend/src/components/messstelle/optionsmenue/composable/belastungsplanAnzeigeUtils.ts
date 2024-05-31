@@ -1,11 +1,11 @@
-import { useStore } from "@/util/useStore";
 import { computed } from "vue";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 export function belastungsplanAnzeigeUtils() {
-    const store = useStore();
+    const messstelleStore = useMessstelleStore();
 
     const chosenOptionsCopy = computed(() => {
-        return store.getters["filteroptionsMessstelle/getFilteroptions"];
+        return messstelleStore.getFilteroptions;
     });
 
     const chosenOptionsCopyFahrzeuge = computed(() => {

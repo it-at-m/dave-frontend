@@ -3,7 +3,7 @@ import HistoryItemComperator from "@/types/history/HistoryItemComperator";
 import { defineStore } from "pinia";
 import { computed, Ref, ref } from "vue";
 
-export const useHistoryStore = defineStore("history", () => {
+export const useHistoryStore = defineStore("historyStore", () => {
     // ref()s become state properties
     const items: Ref<Array<AbstractHistoryItem>> = ref([]);
     // computed()s become getters

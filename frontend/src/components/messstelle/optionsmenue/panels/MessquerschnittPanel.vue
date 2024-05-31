@@ -115,9 +115,8 @@ const isLageReadonly: ComputedRef<boolean> = computed(() => {
 });
 
 const direction = computed({
-    get: () => store.getters["filteroptionsMessstelle/getDirection"],
-    set: (payload: string) =>
-        store.commit("filteroptionsMessstelle/setDirection", payload),
+    get: () => messstelleStore.getDirection,
+    set: (payload: string) => messstelleStore.setDirection(payload),
 });
 
 const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {

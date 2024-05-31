@@ -213,7 +213,7 @@ const messstelleId: ComputedRef<string> = computed(() => {
 });
 
 const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const isBiggerThanFiveYears = computed(() => {

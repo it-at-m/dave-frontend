@@ -16,6 +16,7 @@ import Quelle from "@/types/enum/Quelle";
 import FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import TagesTyp from "@/types/enum/TagesTyp";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -73,14 +74,14 @@ export default class DefaultObjectCreator {
         };
     }
 
-    public static createDefaultFahrzeugOptions(kfz: boolean): FahrzeugOptions {
+    public static createDefaultFahrzeugOptions(): FahrzeugOptions {
         return {
-            kraftfahrzeugverkehr: kfz,
+            kraftfahrzeugverkehr: false,
             schwerverkehr: false,
             gueterverkehr: false,
             schwerverkehrsanteilProzent: false,
             gueterverkehrsanteilProzent: false,
-            radverkehr: !kfz,
+            radverkehr: false,
             fussverkehr: false,
             lastkraftwagen: false,
             lastzuege: false,
@@ -94,17 +95,17 @@ export default class DefaultObjectCreator {
     public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
         return {
             blackPrintMode: false,
-            blocksumme: false,
+            blocksumme: true,
             ganglinieYAchse1MaxValue: null,
             ganglinieYAchse2MaxValue: null,
-            spitzenstunde: false,
-            stundensumme: false,
-            tagessumme: false,
+            spitzenstunde: true,
+            stundensumme: true,
+            tagessumme: true,
             werteHundertRunden: false,
-            fahrzeuge: this.createDefaultFahrzeugOptions(true),
-            intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
+            fahrzeuge: this.createDefaultFahrzeugOptions(),
+            intervall: "" as ZaehldatenIntervall,
             messquerschnittIds: [],
-            tagesTyp: "",
+            tagesTyp: "" as TagesTyp,
             zeitauswahl: "",
             zeitblock: "",
             zeitraum: [],

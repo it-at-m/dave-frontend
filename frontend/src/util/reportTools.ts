@@ -31,7 +31,7 @@ export function useReportTools() {
     });
     const messstelleOptions: ComputedRef<MessstelleOptionsDTO> = computed(
         () => {
-            return store.getters["filteroptionsMessstelle/getFilteroptions"];
+            return messstelleStore.getFilteroptions;
         }
     );
     const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {

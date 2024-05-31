@@ -107,10 +107,9 @@ const getContentSheetHeight = computed(() => {
 });
 
 watch(messstelle, () => {
-    if (store.getters["filteroptionsMessstelle/isHistory"]) {
-        chosenOptions.value =
-            store.getters["filteroptionsMessstelle/getFilteroptions"];
-        store.commit("filteroptionsMessstelle/reloadFilteroptions");
+    if (messstelleStore.isHistory) {
+        chosenOptions.value = messstelleStore.getFilteroptions;
+        messstelleStore.reloadFilteroptions();
     } else {
         resetOptions();
     }
@@ -149,18 +148,19 @@ function areChosenOptionsValid(): boolean {
 }
 
 function saveChosenOptions(): void {
-    store.commit(
-        "filteroptionsMessstelle/setFilteroptions",
-        _.cloneDeep(chosenOptions.value)
-    );
+    messstelleStore.setFilteroptions(_.cloneDeep(chosenOptions.value));
 }
 
 function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.fahrzeuge =
-        DefaultObjectCreator.createDefaultFahrzeugOptions(
-            messstelle.value.detektierteVerkehrsarten ===
-                DetektierteFahrzeugart.KFZ
-        );
+        DefaultObjectCreator.createDefaultFahrzeugOptions();
+
+    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+        messstelle.value.detektierteVerkehrsarten ===
+        DetektierteFahrzeugart.KFZ;
+    chosenOptions.value.fahrzeuge.radverkehr =
+        !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+
     chosenOptions.value.zeitraum = [
         messstelle.value.datumLetztePlausibleMessung,
     ];
@@ -169,15 +169,11 @@ function setDefaultOptionsForMessstelle(): void {
         chosenOptions.value.messquerschnittIds.push(q.mqId)
     );
     if (messstelle.value.messquerschnitte.length === 1) {
-        store.commit(
-            "filteroptionsMessstelle/setDirection",
+        messstelleStore.setDirection(
             messstelle.value.messquerschnitte[0].fahrtrichtung
         );
     } else {
-        store.commit(
-            "filteroptionsMessstelle/setDirection",
-            messstelleUtils.alleRichtungen
-        );
+        messstelleStore.setDirection(messstelleUtils.alleRichtungen);
     }
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;

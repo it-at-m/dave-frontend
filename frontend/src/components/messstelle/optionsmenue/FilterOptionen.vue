@@ -115,7 +115,6 @@
     </v-sheet>
 </template>
 <script setup lang="ts">
-import { useStore } from "@/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, Ref } from "vue";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
@@ -130,8 +129,9 @@ import {
 } from "@/types/enum/Himmelsrichtungen";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { tagesTypText } from "@/types/enum/TagesTyp";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
 interface Props {
     messstelle: MessstelleInfoDTO;
@@ -140,7 +140,7 @@ interface Props {
 defineProps<Props>();
 
 const filterOptionsMessstelle: Ref<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const wochentag: Ref<string | undefined> = computed(() => {

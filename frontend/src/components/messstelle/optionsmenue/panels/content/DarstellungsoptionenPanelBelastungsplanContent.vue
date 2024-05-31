@@ -57,8 +57,8 @@
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useStore } from "@/util/useStore";
 import { useBelastungsplanStore } from "@/store/modules/belastungsplan";
+import { useMessstelleStore } from "@/store/modules/messstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -66,20 +66,16 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 const belastungsplanStore = useBelastungsplanStore();
 
 const hoverWerteHundertRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
 const hoverBlackPrintMode = ref(false);
 const sizeBelastungsplan = computed({
-    get: () =>
-        store.getters["filteroptionsMessstelle/getBelastungsplanChosenSize"],
+    get: () => messstelleStore.getBelastungsplanChosenSize,
     set: (payload: number) =>
-        store.commit(
-            "filteroptionsMessstelle/setBelastungsplanChosenSize",
-            payload
-        ),
+        messstelleStore.setBelastungsplanChosenSize(payload),
 });
 
 const chosenOptionsCopy = computed({
