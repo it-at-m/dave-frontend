@@ -22,8 +22,8 @@ import {
 import VChart, { THEME_KEY } from "vue-echarts";
 import { computed, ComputedRef, provide, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useStore } from "@/util/useStore";
 import { useSnackbarStore } from "@/store/modules/snackbar";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 /**
  * Die Berechnung der Koordinaten für die einzelnen Fahrbeziehungen erfolgt anhand einer Drehmatrix.
@@ -239,7 +239,7 @@ defineExpose({
     chart,
 });
 const vuetify = useVuetify();
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const snackbarStore = useSnackbarStore();
 
 const maxNumberOfCars = ref(0);
@@ -253,7 +253,7 @@ const belastungsplanHeightAndWidth = computed(() => {
 });
 
 const selectedOptions: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 /** Damit nicht für jede Linie die maximale an Fahrzeugen über alle Fahrbeziehungen berechnet wird,

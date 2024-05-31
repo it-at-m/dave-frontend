@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/util/useStore";
 import { computed, ComputedRef } from "vue";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useRouter } from "vue-router/composables";
@@ -51,8 +50,9 @@ import _ from "lodash";
 import { useHistoryStore } from "@/store/modules/history";
 import { useMessstelleStore } from "@/store/modules/messstelle";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const messstelleStore = useMessstelleStore();
 const historyStore = useHistoryStore();
 const router = useRouter();
@@ -88,10 +88,11 @@ function selectItem(item: AbstractHistoryItem): void {
     if (isZaehlstelleHistoryItem(item)) {
         const historyItem: ZaehlstelleHistoryItem =
             item as ZaehlstelleHistoryItem;
-        store.dispatch(
-            "setFilteroptionsHistory",
-            // Object.assign({}, historyItem.optionsEinstellungen)
-            _.cloneDeep(historyItem.optionsEinstellungen)
+        zaehlstelleStore.setFilteroptionsHistory(
+            _.cloneDeep(
+                historyItem.optionsEinstellungen ??
+                    DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
+            )
         );
         router.push(
             `/zaehlstelle/${historyItem.zaehlstelleId}/${historyItem.zaehlungId}`

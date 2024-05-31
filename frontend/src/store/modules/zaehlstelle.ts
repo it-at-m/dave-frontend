@@ -2,13 +2,20 @@ import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import { defineStore } from "pinia";
 import { computed, ref, Ref } from "vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     // ref()s become state properties
     const zaehlstelleHeader: Ref<ZaehlstelleHeaderDTO> = ref(
         DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
     );
-    const activeTab = ref(0);
+    const activeTab: Ref<number> = ref(0);
+    const filteroptions: Ref<OptionsDTO> = ref(
+        DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
+    );
+    const zeitblock: Ref<string> = ref("");
+    const zeitauswahl: Ref<string> = ref("");
+    const history: Ref<boolean> = ref(false);
     const sizeBelastungsplanSvg: Ref<number> = ref(0);
     const maxSizeBelastungsplanSvg: Ref<number> = ref(0);
     const minSizeBelastungsplanSvg: Ref<number> = ref(0);
@@ -18,6 +25,14 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     // computed()s become getters
     const getZaehlstelleHeader = computed(() => zaehlstelleHeader.value);
     const getActiveTab = computed(() => activeTab.value);
+    const getFilteroptions = computed(() => filteroptions.value);
+    const isDifferenzdatenDarstellung = computed(
+        () => filteroptions.value.differenzdatenDarstellen
+    );
+    const isBlackprintMode = computed(() => filteroptions.value.blackPrintMode);
+    const getZeitblock = computed(() => zeitblock.value);
+    const getZeitauswahl = computed(() => zeitauswahl.value);
+    const isHistory = computed(() => history.value);
     const getSizeBelastungsplanSvg = computed(
         () => sizeBelastungsplanSvg.value
     );
@@ -43,6 +58,27 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     }
     function setActiveTab(payload: number) {
         activeTab.value = payload;
+    }
+    function setFilteroptions(payload: OptionsDTO) {
+        filteroptions.value = payload;
+        history.value = false;
+    }
+    function setFilteroptionsHistory(payload: OptionsDTO) {
+        filteroptions.value = payload;
+        history.value = true;
+    }
+    function setZeitblock(payload: string) {
+        zeitblock.value = payload;
+    }
+    function setZeitauswahl(payload: string) {
+        zeitauswahl.value = payload;
+    }
+    function reloadFilteroptions() {
+        filteroptions.value = Object.assign({}, filteroptions.value);
+    }
+    function resetFilteroptions() {
+        filteroptions.value =
+            DefaultObjectCreator.createDefaultZaehlstelleOptionsDto();
     }
     function setSizeBelastungsplanSvg(payload: number) {
         sizeBelastungsplanSvg.value = payload;
@@ -77,6 +113,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     return {
         getZaehlstelleHeader,
         getActiveTab,
+        getFilteroptions,
+        isDifferenzdatenDarstellung,
+        isBlackprintMode,
+        getZeitblock,
+        getZeitauswahl,
+        isHistory,
         getSizeBelastungsplanSvg,
         getMaxSizeBelastungsplanSvg,
         getMinSizeBelastungsplanSvg,
@@ -85,6 +127,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         getMinSizeBelastungsplanSvgSchematischeUebersicht,
         setZaehlstelleHeader,
         setActiveTab,
+        setFilteroptions,
+        setFilteroptionsHistory,
+        setZeitblock,
+        setZeitauswahl,
+        reloadFilteroptions,
+        resetFilteroptions,
         setSizeBelastungsplanSvg,
         setMaxSizeBelastungsplanSvg,
         setMinSizeBelastungsplanSvg,

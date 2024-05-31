@@ -257,6 +257,7 @@ import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     kommentarZaehlstelle?: string;
@@ -267,6 +268,7 @@ withDefaults(defineProps<Props>(), {
 });
 
 const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
 const showSpitzenstundeInfo = ref(false);
@@ -303,7 +305,7 @@ const sortedKnotenarme = computed(() => {
  * Die aktuell eingestellten Optionen werden aus dem Store geladen.
  */
 const options: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 /**

@@ -29,8 +29,8 @@ import _ from "lodash";
 import ChartUtils from "@/util/ChartUtils";
 import { computed, ComputedRef, provide, Ref, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useStore } from "@/util/useStore";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 use([
     CanvasRenderer,
@@ -70,7 +70,7 @@ defineEmits<{
 }>();
 
 const vuetify = useVuetify();
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const daveUtils = useDaveUtils();
 const seriesEntriesChart: Ref<Array<unknown>> = ref([]);
 
@@ -82,7 +82,7 @@ const zeitreiheHeightAndWidth = computed(() => {
     return `width: 100%; height: ${height}`;
 });
 const filterOptions: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 /**

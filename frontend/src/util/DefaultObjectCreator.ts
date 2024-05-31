@@ -17,6 +17,9 @@ import FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import TagesTyp from "@/types/enum/TagesTyp";
+import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -196,6 +199,54 @@ export default class DefaultObjectCreator {
             id: "",
             entityVersion: 0,
             createdTime: "",
+        };
+    }
+
+    public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
+        return {
+            beideRichtungen: false,
+            vergleichszaehlungsId: null,
+            zaehldauer: Zaehldauer.DAUER_24_STUNDEN,
+            intervall: ZaehldatenIntervall.STUNDE_VIERTEL,
+            zeitblock: Zeitblock.ZB_00_24,
+            zeitauswahl: Zeitauswahl.TAGESWERT,
+            kraftfahrzeugverkehr: false,
+            schwerverkehr: false,
+            gueterverkehr: false,
+            schwerverkehrsanteilProzent: false,
+            gueterverkehrsanteilProzent: false,
+            radverkehr: false,
+            fussverkehr: false,
+            lastkraftwagen: false,
+            lastzuege: false,
+            busse: false,
+            kraftraeder: false,
+            personenkraftwagen: false,
+            pkwEinheiten: false,
+            stundensumme: true,
+            blocksumme: true,
+            tagessumme: true,
+            spitzenstunde: true,
+            spitzenstundeKfz: true,
+            spitzenstundeRad: false,
+            spitzenstundeFuss: false,
+            mittelwert: false,
+            beschriftung: false,
+            datentabelle: false,
+            fahrzeugklassenStapeln: false,
+            werteHundertRunden: false,
+            differenzdatenDarstellen: false,
+            vonKnotenarm: null,
+            // Setzen aller möglichen Knotenarme als Defaultwert da "vonKnotenarm" gleich "null"
+            vonIds: [1, 2, 3, 4, 5, 6, 7, 8],
+            nachKnotenarm: null,
+            // Setzen aller möglichen Knotenarme als Defaultwert da "nachKnotenarm" gleich "null"
+            nachIds: [1, 2, 3, 4, 5, 6, 7, 8],
+            blackPrintMode: false,
+            ganglinieYAchse1MaxValue: null,
+            ganglinieYAchse2MaxValue: null,
+            idVergleichszaehlungZeitreihe: null,
+            zeitreiheGesamt: false,
         };
     }
 }

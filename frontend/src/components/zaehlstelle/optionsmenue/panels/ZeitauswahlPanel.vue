@@ -179,6 +179,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     zaehlung?: LadeZaehlungDTO;
@@ -186,6 +187,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 
 const emits = defineEmits<{
@@ -217,7 +219,7 @@ onMounted(() => {
 });
 
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {

@@ -218,8 +218,8 @@ onMounted(() => {
             hasZaehlungen.value = false;
         }
         // die Zählungsoptionen werden zurück gesetzt
-        if (!store.getters.isHistory) {
-            store.dispatch("resetFilteroptions");
+        if (!zaehlstelleStore.isHistory) {
+            zaehlstelleStore.resetFilteroptions();
         }
     });
 });

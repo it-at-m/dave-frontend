@@ -85,14 +85,14 @@ import LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import _ from "lodash";
 import { computed, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 interface Props {
     zaehlung?: LadeZaehlungDTO;
 }
 
 const props = defineProps<Props>();
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const emits = defineEmits<{
     (e: "beideRichtungen", v: boolean): void;
     (e: "von", v: Array<number>): void;
@@ -125,7 +125,7 @@ const hoverSelectNach = ref(false);
 const hoverBeideRichtungen = ref(false);
 
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 // Lädt die "von" Knotenarme für den aktuell gewählten "nach" Knotenarm

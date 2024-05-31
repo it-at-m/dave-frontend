@@ -168,7 +168,7 @@ const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
 });
 
 const optionen: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const maxFahrtrichtungWidth = computed(() => {
@@ -268,7 +268,7 @@ const lineFactor = computed(() => {
 });
 
 const isDifferenzdatendarstellung = computed(() => {
-    return store.getters.isDifferenzdatenDarstellung;
+    return zaehlstelleStore.isDifferenzdatenDarstellung;
 });
 
 /**
@@ -283,7 +283,7 @@ const vergleichsZaehlung = computed(() => {
 });
 
 const isBlackPrintMode = computed(() => {
-    return store.getters.isBlackprintMode;
+    return zaehlstelleStore.isBlackprintMode;
 });
 
 const vonIds = computed(() => {

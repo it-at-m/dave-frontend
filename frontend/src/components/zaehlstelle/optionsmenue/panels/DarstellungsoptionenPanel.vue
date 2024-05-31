@@ -354,7 +354,7 @@ const minSizeBelastungsplanSvg: Ref<number> = computed(() => {
 });
 
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
@@ -362,7 +362,7 @@ const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
 });
 
 const isZeitauswahlForSpitzenstunde: Ref<boolean> = computed(() => {
-    return store.getters.getZeitauswahl.includes(SPITZENSTUNDE);
+    return zaehlstelleStore.getZeitauswahl.includes(SPITZENSTUNDE);
 });
 
 const helpTextBelastungsplan: Ref<string> = computed(() => {

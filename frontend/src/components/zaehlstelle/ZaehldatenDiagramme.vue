@@ -462,7 +462,7 @@ const fabColor: ComputedRef<string> = computed(() => {
 });
 
 const options: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const zaehlungsId: ComputedRef<string> = computed(() => {

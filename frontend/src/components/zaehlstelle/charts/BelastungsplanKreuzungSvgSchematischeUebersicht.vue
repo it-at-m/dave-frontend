@@ -142,7 +142,7 @@ onMounted(() => {
 });
 
 const optionen: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const vonIds = computed(() => {

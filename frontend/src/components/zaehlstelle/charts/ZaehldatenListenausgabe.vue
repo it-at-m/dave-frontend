@@ -61,7 +61,7 @@ import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import DataManipulatorUtil from "@/util/DataManipulatorUtil";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import { computed, ComputedRef, watch } from "vue";
-import { useStore } from "@/util/useStore";
+import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
 const TYPE_GESAMT = "Gesamt";
 
@@ -87,7 +87,7 @@ const props = withDefaults(defineProps<Props>(), {
     height: "100%",
 });
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 
 /**
  * Liefert die Anzahl der ausgewaehlten Fahrzeugtypen zurueck.
@@ -164,7 +164,7 @@ const activePkweinheiten = computed(() => {
 });
 
 const optionen: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 /**

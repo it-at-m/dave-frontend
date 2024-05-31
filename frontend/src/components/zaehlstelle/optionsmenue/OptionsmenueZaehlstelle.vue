@@ -130,7 +130,6 @@ import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { computed, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { useZaehlstelleStore } from "@/store/modules/zaehlstelle";
 
@@ -148,7 +147,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const store = useStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
@@ -156,7 +154,7 @@ const dialog = ref(false);
 const chosenOptions = ref({} as OptionsDTO);
 
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const getContentSheetHeight = computed(() => {
@@ -227,12 +225,12 @@ function setDefaultOptionsForZaehlung() {
 // Event Methoden für die Zeitauswahl Komponente
 function setZeitauswahl(event: string) {
     chosenOptions.value.zeitauswahl = event;
-    store.commit("setZeitauswahl", event);
+    zaehlstelleStore.setZeitauswahl(event);
 }
 
 function setZeitblock(event: string) {
     chosenOptions.value.zeitblock = event;
-    store.commit("setZeitblock", event);
+    zaehlstelleStore.setZeitblock(event);
 }
 
 function setIntervall(event: ZaehldatenIntervall) {
@@ -402,7 +400,7 @@ function setOptions() {
  * @private
  */
 function saveOptions() {
-    store.dispatch("setFilteroptions", Object.assign({}, chosenOptions.value));
+    zaehlstelleStore.setFilteroptions(Object.assign({}, chosenOptions.value));
 }
 
 // Funktionalität für den "Zurücksetzen" Button
@@ -412,7 +410,7 @@ function resetOptionsmenu() {
 }
 
 function resetOptions() {
-    store.dispatch("resetFilteroptions");
+    zaehlstelleStore.resetFilteroptions();
     setDefaultOptionsForZaehlung();
 }
 
@@ -435,8 +433,8 @@ watch(options, (newOptions: OptionsDTO) => {
 watch(
     () => props.zaehlung,
     () => {
-        if (store.getters.isHistory) {
-            store.dispatch("reloadFilteroptions");
+        if (zaehlstelleStore.isHistory) {
+            zaehlstelleStore.reloadFilteroptions();
         } else {
             resetOptions();
         }

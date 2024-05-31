@@ -41,7 +41,7 @@ export function useReportTools() {
         return store.getters.getAktiveZaehlung;
     });
     const zaehlstelleOptions: ComputedRef<OptionsDTO> = computed(() => {
-        return store.getters.getFilteroptions;
+        return zaehlstelleStore.getFilteroptions;
     });
 
     function addImageToReport(base64: string, name: string): void {
