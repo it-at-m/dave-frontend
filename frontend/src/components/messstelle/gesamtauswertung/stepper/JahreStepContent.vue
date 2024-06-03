@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { computed, ComputedRef } from "vue";
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 interface Props {

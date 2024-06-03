@@ -1,6 +1,6 @@
 import FetchService from "@/api/service/FetchService";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import CsvDTO from "@/types/CsvDTO";
+import CsvDTO from "@/types/common/CsvDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 export default class GenerateCsvService {

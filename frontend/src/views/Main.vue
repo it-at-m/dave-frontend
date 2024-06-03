@@ -72,11 +72,11 @@ import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 /* eslint-disable no-unused-vars */
 import { computed, onMounted, ref } from "vue";
-import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
-import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
-import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
-import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
-import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
+import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
+import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import DaveUtils from "@/util/DaveUtils";
 import { useStore } from "@/api/util/useStore";

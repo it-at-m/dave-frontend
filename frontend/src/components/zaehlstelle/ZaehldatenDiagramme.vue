@@ -364,7 +364,7 @@ import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldate
 import LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import CsvDTO from "@/types/CsvDTO";
+import CsvDTO from "@/types/common/CsvDTO";
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 // API Services
@@ -375,7 +375,7 @@ import DaveUtils from "@/util/DaveUtils";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import _ from "lodash";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import ZaehlstelleHistoryItem from "@/types/app/ZaehlstelleHistoryItem";
+import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useStore } from "@/api/util/useStore";
 import { useReportTools } from "@/util/reportTools";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";

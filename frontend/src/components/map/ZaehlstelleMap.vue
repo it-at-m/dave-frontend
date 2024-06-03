@@ -14,17 +14,17 @@
 <script setup lang="ts">
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
 import ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
-import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
-import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
+import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import SucheService from "@/api/service/SucheService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import markerIconRed from "@/assets/marker-icon-red.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
-import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
-import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
-import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
+import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import {
     computed,
@@ -69,6 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const store = useStore();
+const dateUtils = useDateUtils();
 const router = useRouter();
 
 const mapStyle: ComputedRef<string> = computed(() => {
@@ -534,17 +535,17 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
         tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
     }
     if (tooltipDto.realisierungsdatum) {
-        tooltip = `${tooltip} Aufbau: ${useDateUtils().formatDate(
+        tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
             tooltipDto.realisierungsdatum
         )}<br/>`;
     }
     if (tooltipDto.abbaudatum) {
-        tooltip = `${tooltip}Abbau: ${useDateUtils().formatDate(
+        tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
             tooltipDto.abbaudatum
         )}<br/>`;
     }
     if (tooltipDto.datumLetztePlausibleMessung) {
-        tooltip = `${tooltip}Letzte plausible Messung: ${useDateUtils().formatDate(
+        tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
             tooltipDto.datumLetztePlausibleMessung
         )}<br/>`;
     }

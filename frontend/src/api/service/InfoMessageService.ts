@@ -1,5 +1,5 @@
 import FetchService from "@/api/service/FetchService";
-import InfoMessageDTO from "@/types/InfoMessageDTO";
+import InfoMessageDTO from "@/types/app/InfoMessageDTO";
 
 export default class InfoMessageService {
     private static readonly ENDPOINT: string =

@@ -170,7 +170,7 @@ import ZaehldatenIntervall, {
     ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 import ZeitblockStuendlich, {
     zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";

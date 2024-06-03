@@ -1,4 +1,4 @@
-import BaseEntity from "@/types/BaseEntity";
+import BaseEntity from "@/types/common/BaseEntity";
 import LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
 import Wetter from "@/types/enum/Wetter";

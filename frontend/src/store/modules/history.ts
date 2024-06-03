@@ -1,5 +1,5 @@
-import AbstractHistoryItem from "@/types/app/AbstractHistoryItem";
-import HistoryItemComperator from "@/types/app/HistoryItemComperator";
+import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
+import HistoryItemComperator from "@/types/history/HistoryItemComperator";
 
 export interface HistoryState {
     items: Array<AbstractHistoryItem>;
