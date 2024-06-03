@@ -1,6 +1,8 @@
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n-composable";
 
 export function useDateUtils() {
+    const i18n = useI18n();
+
     function formatDate(date: string): string {
         if (!date) {
             return "";
