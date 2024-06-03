@@ -363,6 +363,7 @@ import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useStore } from "@/api/util/useStore";
+import { useI18n } from "vue-i18n-composable";
 
 const clickable = ref(0);
 const isDraggable = ref(false);
@@ -375,19 +376,19 @@ const editDatatable = ref(false);
 const deleteDialog = ref(false);
 const previewPdfDialog = ref(false);
 
-let imageAsset = ref<ImageAsset>(new ImageAsset("", ""));
-let headingAsset = ref<HeadingAsset>(
+const imageAsset = ref<ImageAsset>(new ImageAsset("", ""));
+const headingAsset = ref<HeadingAsset>(
     new HeadingAsset("", AssetTypesEnum.HEADING1)
 );
-let textAsset = ref<TextAsset>(new TextAsset(""));
-let datatableAsset = ref<DatatableAsset>(
+const textAsset = ref<TextAsset>(new TextAsset(""));
+const datatableAsset = ref<DatatableAsset>(
     new DatatableAsset({} as OptionsDTO, "", "")
 );
 
-let assetId = ref(0);
-let loadingPdf = ref(false);
+const assetId = ref(0);
+const loadingPdf = ref(false);
 
-let editables = ref([
+const editables = ref([
     AssetTypesEnum.TEXT,
     AssetTypesEnum.IMAGE,
     AssetTypesEnum.HEADING1,
@@ -399,17 +400,18 @@ let editables = ref([
     AssetTypesEnum.DATATABLE_MESSSTELLE,
 ]);
 
-let fab = ref(false);
-let pdfSourceAsBlob = ref<Blob>(new Blob());
-let pdfSourceForPreview = ref<Uint8Array>(new Uint8Array());
-let assets = ref<BaseAsset[]>([]);
+const fab = ref(false);
+const pdfSourceAsBlob = ref<Blob>(new Blob());
+const pdfSourceForPreview = ref<Uint8Array>(new Uint8Array());
+const assets = ref<BaseAsset[]>([]);
 const store = useStore();
+const i18n = useI18n();
 
 onMounted(() => {
+    assets.value = assetsFromStore();
     if (!store.getters.hasTitlePage) {
         createFirstPage();
     }
-    assets.value = assetsFromStore();
 });
 
 const fabColor = computed(() => {
@@ -428,7 +430,7 @@ function createFirstPage(): void {
     // Datum
     save(
         new HeadingAsset(
-            "erstellt am " + this.$d(new Date(), "short", "de-DE"),
+            "erstellt am " + i18n.d(new Date(), "short", "de-DE"),
             AssetTypesEnum.HEADING3
         )
     );
