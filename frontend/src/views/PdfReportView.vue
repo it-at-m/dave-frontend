@@ -60,7 +60,7 @@
                     </v-app-bar>
                     <v-card-text
                         :style="{ cursor: selectedCursor }"
-                        @mouseover="isDraggable = true"
+                        @mouseover="draggableCard = true"
                     >
                         <h1 v-if="isHeading1(asset)">
                             {{ getTextOfAsset(asset) }}
@@ -363,10 +363,10 @@ import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useStore } from "@/api/util/useStore";
-import {useDateUtils} from "@/util/DateUtils";
+import { useDateUtils } from "@/util/DateUtils";
 
 const clickable = ref(0);
-const isDraggable = ref(false);
+const draggableCard = ref(false);
 const dragging = ref(false);
 
 const editImage = ref(false);
@@ -487,7 +487,7 @@ function assetsFromStore(): BaseAsset[] {
 
 const selectedCursor = computed(() => {
     let cursor = "default";
-    if (isDraggable.value) {
+    if (draggableCard.value) {
         cursor = "grab";
     }
     if (dragging.value) {
