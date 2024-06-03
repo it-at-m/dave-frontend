@@ -1,9 +1,9 @@
 <template>
     <v-dialog
-        v-model="open"
+        v-model="openDialog"
         width="80vh"
         height="60vh"
-        @click:outside="cancel"
+        @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
@@ -63,41 +63,49 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+<script setup lang="ts">
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
-/* eslint-disable no-unused-vars */
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-/* eslint-enable no-unused-vars */
+import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { computed, ref, watch } from "vue";
 
-@Component
-export default class DatatableAssetForm extends Vue {
-    @Prop({ default: false }) open: boolean | undefined;
-    @Prop() datatable?: DatatableAsset;
-
-    asset: DatatableAsset = new DatatableAsset({} as OptionsDTO, "", "");
-
-    @Watch("datatable")
-    copyAsset(asset: DatatableAsset): void {
-        if (asset) {
-            this.asset = Object.assign({}, asset);
-        }
-    }
-
-    /**
-     * Um den Text im Array zu "speichern", wird es als Event an die View geschickt.
-     */
-    save(): void {
-        const event = {};
-        Object.assign(event, this.asset);
-        this.$emit("save", event);
-    }
-
-    /**
-     * Verläßt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel", Object.assign({}, this.asset));
-    }
+interface Props {
+    value: boolean;
+    datatable: DatatableAsset;
 }
+
+const props = defineProps<Props>();
+
+const emits = defineEmits<{
+    (e: "save", v: TextAsset): void;
+    (e: "cancelDialog"): void;
+    (e: "input", v: boolean): void;
+}>();
+
+const asset = ref(new DatatableAsset({} as OptionsDTO, "", ""));
+
+const openDialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emits("input", payload),
+});
+
+/**
+ * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.
+ */
+function save(): void {
+    emits("save", Object.assign({}, asset.value));
+}
+
+/**
+ * Verläßt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+    emits("cancelDialog");
+}
+
+watch(openDialog, () => {
+    if (props.datatable) {
+        asset.value = Object.assign({}, props.datatable);
+    }
+});
 </script>

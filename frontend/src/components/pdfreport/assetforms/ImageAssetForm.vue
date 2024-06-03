@@ -1,9 +1,9 @@
 <template>
     <v-dialog
-        v-model="open"
+        v-model="openDialog"
         width="80vh"
         height="60vh"
-        @click:outside="cancel"
+        @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
@@ -92,67 +92,70 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-/* eslint-enable no-unused-vars */
+import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { computed, ref, watch } from "vue";
 
-@Component
-export default class ImageAssetForm extends Vue {
-    @Prop({ default: false }) open: boolean | undefined;
-    @Prop({ default: new ImageAsset("", "") }) image?: ImageAsset;
+interface Props {
+    value: boolean;
+    image: ImageAsset;
+}
 
-    asset: ImageAsset = new ImageAsset("", "");
+const props = defineProps<Props>();
 
-    @Watch("image")
-    copyAsset(asset: ImageAsset): void {
-        if (asset) {
-            this.asset = Object.assign({}, asset);
-        }
-    }
+const emits = defineEmits<{
+    (e: "save", v: TextAsset): void;
+    (e: "cancelDialog"): void;
+    (e: "input", v: boolean): void;
+}>();
 
-    /**
-     * Speichert den Base64 String des Bildes im ImageAsset Objekt.
-     *
-     * @param file
-     */
-    upload(file: File): void {
-        if (file) {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const base64 = reader.result;
-                if (this.asset && base64 && !(base64 instanceof ArrayBuffer)) {
-                    this.asset.image = base64;
-                }
-            };
-        }
-    }
+const asset = ref(new ImageAsset("", ""));
 
-    /**
-     * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.
-     */
-    save(): void {
-        if (this.asset?.image && this.asset.image?.length > 0) {
-            const event = {};
-            Object.assign(event, this.asset);
-            this.$emit("save", event);
-            const form = this.$refs.form as HTMLFormElement;
-            form.reset();
-        } else {
-            this.cancel();
-        }
-    }
+const openDialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emits("input", payload),
+});
 
-    /**
-     * Verläßt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel", this.asset);
-        const form = this.$refs.form as HTMLFormElement;
-        form.reset();
+/**
+ * Speichert den Base64 String des Bildes im ImageAsset Objekt.
+ *
+ * @param file
+ */
+function upload(file: File): void {
+    if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const base64 = reader.result;
+            if (asset.value && base64 && !(base64 instanceof ArrayBuffer)) {
+                asset.value.image = base64;
+            }
+        };
     }
 }
+
+/**
+ * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.
+ */
+function save(): void {
+    if (asset.value.image && asset.value.image?.length > 0) {
+        emits("save", Object.assign({}, asset.value));
+    } else {
+        cancelDialog();
+    }
+}
+
+/**
+ * Verläßt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+    emits("cancelDialog");
+}
+
+watch(openDialog, () => {
+    if (props.image) {
+        asset.value = Object.assign({}, props.image);
+    }
+});
 </script>
