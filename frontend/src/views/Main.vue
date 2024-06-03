@@ -7,7 +7,6 @@
             ref="map"
             height="100%"
             width="100%"
-            show-marker="true"
             :zoom="12"
         />
 
@@ -67,13 +66,12 @@
 </template>
 
 <script lang="ts" setup>
-import { Component, Ref, Vue } from "vue-property-decorator";
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 
 import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 /* eslint-disable no-unused-vars */
-import { ref, onMounted, computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
 import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
 import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
@@ -85,7 +83,7 @@ import { useStore } from "@/api/util/useStore";
 /* eslint-enable no-unused-vars */
 
 const store = useStore();
-const map = ref<null | ZaehlstelleMap>(null);
+const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const fab = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
