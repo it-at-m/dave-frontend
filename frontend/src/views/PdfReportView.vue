@@ -363,7 +363,7 @@ import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useStore } from "@/api/util/useStore";
-import { useI18n } from "vue-i18n-composable";
+import {useDateUtils} from "@/util/DateUtils";
 
 const clickable = ref(0);
 const isDraggable = ref(false);
@@ -405,7 +405,7 @@ const pdfSourceAsBlob = ref<Blob>(new Blob());
 const pdfSourceForPreview = ref<Uint8Array>(new Uint8Array());
 const assets = ref<BaseAsset[]>([]);
 const store = useStore();
-const i18n = useI18n();
+const dateUtils = useDateUtils();
 
 onMounted(() => {
     assets.value = assetsFromStore();
@@ -430,7 +430,7 @@ function createFirstPage(): void {
     // Datum
     save(
         new HeadingAsset(
-            "erstellt am " + i18n.d(new Date(), "short", "de-DE"),
+            "erstellt am " + dateUtils.getShortVersionOfDate(new Date()),
             AssetTypesEnum.HEADING3
         )
     );
