@@ -69,6 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const store = useStore();
+const dateUtils = useDateUtils();
 const router = useRouter();
 
 const mapStyle: ComputedRef<string> = computed(() => {
@@ -534,17 +535,17 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
         tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
     }
     if (tooltipDto.realisierungsdatum) {
-        tooltip = `${tooltip} Aufbau: ${useDateUtils().formatDate(
+        tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
             tooltipDto.realisierungsdatum
         )}<br/>`;
     }
     if (tooltipDto.abbaudatum) {
-        tooltip = `${tooltip}Abbau: ${useDateUtils().formatDate(
+        tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
             tooltipDto.abbaudatum
         )}<br/>`;
     }
     if (tooltipDto.datumLetztePlausibleMessung) {
-        tooltip = `${tooltip}Letzte plausible Messung: ${useDateUtils().formatDate(
+        tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
             tooltipDto.datumLetztePlausibleMessung
         )}<br/>`;
     }
