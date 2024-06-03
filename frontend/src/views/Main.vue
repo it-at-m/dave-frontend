@@ -70,7 +70,6 @@ import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 
 import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-/* eslint-disable no-unused-vars */
 import { computed, onMounted, ref } from "vue";
 import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
@@ -78,11 +77,11 @@ import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import DaveUtils from "@/util/DaveUtils";
-import { useStore } from "@/api/util/useStore";
-/* eslint-enable no-unused-vars */
+import { useStore } from "@/util/useStore";
+import { useDaveUtils } from "@/util/DaveUtils";
 
 const store = useStore();
+const daveUtils = useDaveUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const fab = ref(false);
 const creatingPicture = ref(false);
@@ -174,7 +173,7 @@ function printMessstellenOfSearchResult(
         elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
         searchResultAsCsvString.push(elementAsCsvString.join(";"));
     });
-    DaveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 function printZaehlstellenOfSearchResult(
@@ -209,7 +208,7 @@ function printZaehlstellenOfSearchResult(
         elementAsCsvString.push(tooltip.datumLetzteZaehlung);
         searchResultAsCsvString.push(elementAsCsvString.join(";"));
     });
-    DaveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 const getSearchQuery = computed(() => {

@@ -99,7 +99,7 @@
 <script setup lang="ts">
 import { computed, Ref, ref } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { Levels } from "@/api/error";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";

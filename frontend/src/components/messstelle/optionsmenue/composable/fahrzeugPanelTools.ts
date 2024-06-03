@@ -1,4 +1,4 @@
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { computed } from "vue";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 

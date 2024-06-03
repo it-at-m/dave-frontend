@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
 import { Levels } from "@/api/error";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 
 const defaultTimeout = 6000;
 

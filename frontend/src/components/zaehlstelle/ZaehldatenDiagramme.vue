@@ -371,15 +371,15 @@ import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import LadeZaehldatenService from "@/api/service/LadeZaehldatenService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 // Util
-import DaveUtils from "@/util/DaveUtils";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import _ from "lodash";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useReportTools } from "@/util/reportTools";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
+import { useDaveUtils } from "@/util/DaveUtils";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -447,6 +447,7 @@ const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
 
 const store = useStore();
 const reportTools = useReportTools();
+const daveUtils = useDaveUtils();
 
 const fabColor: ComputedRef<string> = computed(() => {
     return fab.value ? "grey darken-1" : "secondary";
@@ -921,7 +922,7 @@ function fetchPdf(formData: FormData, type: string) {
                     typeForFilename,
                     [selectedZaehlung.value.datum]
                 )}.pdf`;
-                DaveUtils.downloadFile(blob, filename);
+                daveUtils.downloadFile(blob, filename);
             });
         })
         .catch((error) => store.dispatch("snackbar/showError", error))
@@ -942,7 +943,7 @@ function generateCsv() {
                 [selectedZaehlung.value.datum]
             )}.csv`;
 
-            DaveUtils.downloadCsv(result.csvAsString, filename);
+            daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
             store.dispatch("snackbar/showError", error);

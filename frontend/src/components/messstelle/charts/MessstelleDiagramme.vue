@@ -125,7 +125,7 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
@@ -143,7 +143,7 @@ import GenerateCsvService from "@/api/service/GenerateCsvService";
 import CsvDTO from "@/types/common/CsvDTO";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
-import DaveUtils from "@/util/DaveUtils";
+import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
@@ -198,6 +198,7 @@ const belastungsplanPngBase64 = ref("");
 const store = useStore();
 const route = useRoute();
 const reportTools = useReportTools();
+const daveUtils = useDaveUtils();
 
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
@@ -394,7 +395,7 @@ function generateCsv() {
                 "Listenausgabe",
                 options.value.zeitraum
             )}.csv`;
-            DaveUtils.downloadCsv(result.csvAsString, filename);
+            daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
             store.dispatch("snackbar/showError", error);
@@ -505,7 +506,7 @@ function fetchPdf(formData: FormData, type: string) {
                     typeForFilename,
                     options.value.zeitraum
                 )}.pdf`;
-                DaveUtils.downloadFile(blob, filename);
+                daveUtils.downloadFile(blob, filename);
             });
         })
         .catch((error) => store.dispatch("snackbar/showError", error))

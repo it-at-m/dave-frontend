@@ -25,7 +25,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";

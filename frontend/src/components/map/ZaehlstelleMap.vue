@@ -35,7 +35,7 @@ import {
     ref,
     watch,
 } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useRouter } from "vue-router/composables";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;

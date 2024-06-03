@@ -12,7 +12,7 @@ import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
 import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { belastungsplanAnzeigeUtils } from "@/components/messstelle/optionsmenue/composable/belastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";

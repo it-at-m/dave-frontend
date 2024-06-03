@@ -1,4 +1,4 @@
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";

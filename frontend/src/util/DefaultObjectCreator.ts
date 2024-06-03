@@ -19,8 +19,9 @@ import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
         return {
+            fachId: "",
+            type: "",
             id: "",
-            nummer: "",
             letzteZaehlungId: "",
             tooltip: {} as TooltipZaehlstelleDTO,
             latitude: 0,

@@ -20,7 +20,7 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import * as SVG from "@svgdotjs/svg.js";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 
 interface Props {

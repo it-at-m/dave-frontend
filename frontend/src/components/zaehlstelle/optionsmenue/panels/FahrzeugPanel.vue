@@ -359,7 +359,7 @@ import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 

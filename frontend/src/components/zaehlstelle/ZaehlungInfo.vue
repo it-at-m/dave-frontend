@@ -253,7 +253,7 @@ import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import _ from "lodash";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import { computed, ComputedRef, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";

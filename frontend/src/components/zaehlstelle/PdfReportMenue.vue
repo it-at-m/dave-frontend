@@ -135,7 +135,7 @@ import { quelleText } from "@/types/enum/Quelle";
 /* eslint-enable no-unused-vars */
 import _ from "lodash";
 import { computed, ref } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {

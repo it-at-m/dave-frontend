@@ -93,7 +93,7 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
-import { useStore } from "@/api/util/useStore";
+import { useStore } from "@/util/useStore";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
