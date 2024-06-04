@@ -42,6 +42,7 @@
                         v-model="getFormattedSelectedZeit"
                         :label="getChosenDateAsText"
                         :rules="[
+                            RULE_EINGABE_HAT_PLAUSIBLES_FORMAT,
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
                     />
@@ -198,13 +199,14 @@ const getFormattedSelectedZeit = computed({
             return "";
         }
     },
-    set: (newDate) => {
+    set: (newValue) => {
+        let newDate = newValue.replace(/\s/g, "");
         if (newDate.length == 10) {
             chosenOptionsCopy.value.zeitraum = [
                 dateUtils.formatDateToISO(newDate),
             ];
-        } else if (newDate.length == 23) {
-            const [datum1, datum2] = newDate.split(" - ");
+        } else if (newDate.length == 21) {
+            const [datum1, datum2] = newDate.split("-");
             chosenOptionsCopy.value.zeitraum = [
                 dateUtils.formatDateToISO(datum1),
                 dateUtils.formatDateToISO(datum2),
@@ -216,6 +218,35 @@ const getFormattedSelectedZeit = computed({
 function allowedDatesRangeDatePicker(val: string) {
     const today = new Date();
     return new Date(val) < today;
+}
+
+function RULE_EINGABE_HAT_PLAUSIBLES_FORMAT() {
+    const dates = chosenOptionsCopyZeitraum.value;
+    const falschesFormat = "Datumsformat ist nicht korrekt";
+    const keinDatum = "Dieses Datum existiert nicht";
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (dates.length == 1) {
+        const dateObj = new Date(dates[0]).toString();
+        if (!dateRegex.test(dates[0])) {
+            return falschesFormat;
+        }
+        if (dateObj == "Invalid Date") {
+            return keinDatum;
+        }
+        return true;
+    }
+    if (dates.length == 2) {
+        let dateObj1 = new Date(dates[0]).toString();
+        let dateObj2 = new Date(dates[1]).toString();
+        if (!dateRegex.test(dates[0]) || !dateRegex.test(dates[1])) {
+            return falschesFormat;
+        }
+        if (dateObj1 == "Invalid Date" || dateObj2 == "Invalid Date") {
+            return keinDatum;
+        }
+        return true;
+    }
+    return true;
 }
 
 function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
