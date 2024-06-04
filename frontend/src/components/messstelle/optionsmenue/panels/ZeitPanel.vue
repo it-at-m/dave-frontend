@@ -39,7 +39,7 @@
                 </v-col>
                 <v-col cols="4">
                     <v-text-field
-                        v-model="getFormattedSelectedZeit"
+                        v-model="formattedDateInput"
                         :label="getChosenDateAsText"
                         :rules="[
                             RULE_EINGABE_HAT_PLAUSIBLES_FORMAT,
@@ -185,7 +185,7 @@ const maxDate = computed(() => {
     return messstelleInfo.value.abbaudatum ?? yesterday;
 });
 
-const getFormattedSelectedZeit = computed({
+const formattedDateInput = computed({
     get: () => {
         const zeitraum = chosenOptionsCopyZeitraum.value.slice(0);
         if (zeitraum.length == 1) {
@@ -330,6 +330,8 @@ watch(chosenOptionsCopyZeitraum, () => {
             messstelleInfo.value.datumLetztePlausibleMessung
     ) {
         pickerDate.value = messstelleInfo.value.datumLetztePlausibleMessung;
+    } else {
+        pickerDate.value = chosenOptionsCopyZeitraum.value[0];
     }
 });
 </script>
