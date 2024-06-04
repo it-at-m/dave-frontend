@@ -231,7 +231,8 @@ function created() {
             store.dispatch("user/setSsoUserInfoResponse", ssoUserInfoResponse);
             loggedInUser.value = store.getters["user/getName"];
         })
-        .catch(() => {
+        .catch((error) => {
+            store.dispatch("snackbar/showError", error);
             return false;
         });
     VersionInfoService.getFrontendInfo()
