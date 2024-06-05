@@ -63,11 +63,9 @@
 </template>
 
 <script setup lang="ts">
-import Fahrzeug from "@/types/enum/Fahrzeug";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
 
 interface Props {
     value: MessstelleOptionsDTO;

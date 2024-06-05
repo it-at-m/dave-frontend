@@ -1,7 +1,10 @@
 import { useI18n } from "vue-i18n-composable";
+import { useSnackbarStore } from "@/store/snackbar";
 
 export function useDateUtils() {
     const i18n = useI18n();
+
+    const snackbarStore = useSnackbarStore();
 
     function formatDate(date: string): string {
         if (!date) {
@@ -38,11 +41,26 @@ export function useDateUtils() {
         });
     }
 
+    /**
+     * es muss für i18n ein Datumsobjekt erzeugt werden.
+     */
+    function getDatumOfString(datum: string): Date {
+        const d = datum;
+        if (Date.parse(d)) {
+            return new Date(d);
+        }
+        snackbarStore.showError(
+            `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
+        );
+        return new Date();
+    }
+
     return {
         sortDatesDescAsStrings,
         formatDate,
         getTimeOfDate,
         getShortVersionOfDate,
         getLongVersionOfDate,
+        getDatumOfString,
     };
 }

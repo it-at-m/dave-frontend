@@ -1,6 +1,6 @@
 import { ApiError, Levels } from "@/api/error";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
-import SsoUserInfoResponse from "@/types/SsoUserInfoResponse";
+import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import FetchUtils from "@/api/util/FetchUtils";
 
 export default class SsoUserInfoService {

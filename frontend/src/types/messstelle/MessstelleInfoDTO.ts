@@ -1,4 +1,4 @@
-import BaseEntity from "@/types/BaseEntity";
+import BaseEntity from "@/types/common/BaseEntity";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 

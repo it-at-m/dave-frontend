@@ -10,7 +10,6 @@
 
 
 <script setup lang="ts">
-// chart
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { BarChart, LineChart } from "echarts/charts";
@@ -27,10 +26,10 @@ import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldat
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import _ from "lodash";
 import ChartUtils from "@/util/ChartUtils";
-import DaveUtils from "@/util/DaveUtils";
 import { computed, ComputedRef, provide, Ref, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useStore } from "@/api/util/useStore";
+import { useDaveUtils } from "@/util/DaveUtils";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 use([
     CanvasRenderer,
@@ -43,8 +42,8 @@ use([
     GridComponent,
 ]);
 
-const CHART_TYPE_X_AXIS = "bar";
 // Konstanten
+const CHART_TYPE_X_AXIS = "bar";
 const SCHWERVERKEHRSANTEIL = "Schwerverkehrsanteil";
 const GUETERVERKEHRSANTEIL = "Güterverkehrsanteil";
 const KRAFTFAHRZEUGVERKEHR = "Kraftfahrzeugverkehr";
@@ -70,7 +69,8 @@ defineEmits<{
 }>();
 
 const vuetify = useVuetify();
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
+const daveUtils = useDaveUtils();
 const seriesEntriesChart: Ref<Array<unknown>> = ref([]);
 
 const zeitreiheHeightAndWidth = computed(() => {
@@ -81,7 +81,7 @@ const zeitreiheHeightAndWidth = computed(() => {
     return `width: 100%; height: ${height}`;
 });
 const filterOptions: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 /**
@@ -414,7 +414,7 @@ function downloadCsv() {
         );
         rows.push(row);
     }
-    DaveUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
+    daveUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
 }
 
 /**

@@ -293,40 +293,40 @@
             </v-tooltip>
         </v-speed-dial>
         <ImageAssetForm
+            v-model="editImage"
             :image="imageAsset"
-            :open="editImage"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></ImageAssetForm>
         <DatatableAssetForm
+            v-model="editDatatable"
             :datatable="datatableAsset"
-            :open="editDatatable"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></DatatableAssetForm>
         <HeadingAssetForm
+            v-model="editHeading"
             :heading="headingAsset"
-            :open="editHeading"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></HeadingAssetForm>
         <TextAssetForm
-            :open="editText"
+            v-model="editText"
             :text="textAsset"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @save="save($event)"
         ></TextAssetForm>
         <DeleteDialog
+            v-model="deleteDialog"
             :asset-id="assetId"
-            :open="deleteDialog"
-            @cancel="cancel()"
+            @cancelDialog="cancel()"
             @delete="deleteIt($event)"
         ></DeleteDialog>
 
         <pdf-preview-dialog
-            :open="previewPdfDialog"
+            v-model="previewPdfDialog"
             :source="previewSource"
-            @cancel="cancel"
+            @cancelDialog="cancel"
             @download="downloadPdf"
         />
     </v-container>
@@ -355,7 +355,6 @@ import GeneratePdfService from "@/api/service/GeneratePdfService";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 /* eslint-enable no-unused-vars */
 // Utils
-import DaveUtils from "@/util/DaveUtils";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import _ from "lodash";
 import PdfPreviewDialog from "@/components/pdfreport/assetforms/PdfPreviewDialog.vue";
@@ -364,6 +363,10 @@ import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/Zaehlungskenngr
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useStore } from "@/api/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
+import { useDaveUtils } from "@/util/DaveUtils";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useUserStore } from "@/store/user";
 
 const clickable = ref(0);
 const draggableCard = ref(false);
@@ -405,6 +408,8 @@ const pdfSourceAsBlob = ref<Blob>(new Blob());
 const pdfSourceForPreview = ref<Uint8Array>(new Uint8Array());
 const assets = ref<BaseAsset[]>([]);
 const store = useStore();
+const userStore = useUserStore();
+const pdfReportStore = usePdfReportStore();
 const dateUtils = useDateUtils();
 
 onMounted(() => {
@@ -416,6 +421,10 @@ onMounted(() => {
 
 const fabColor = computed(() => {
     return fab.value ? "grey darken-1" : "secondary";
+});
+
+const getDepartment = computed(() => {
+  return userStore.getDepartment;
 });
 
 /**
@@ -435,8 +444,8 @@ function createFirstPage(): void {
         )
     );
     // Autor
-    const name = store.getters["user/getName"] as string;
-    const department = store.getters["user/getDepartment"] as string;
+    const name = userStore.getName;
+    const department = getDepartment.value;
     save(new HeadingAsset(`${name} (${department})`, AssetTypesEnum.HEADING3));
     // Untertitel
     save(new HeadingAsset("Untertitel", AssetTypesEnum.HEADING2));

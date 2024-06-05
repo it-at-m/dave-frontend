@@ -1,4 +1,4 @@
-import BaseEntity from "@/types/BaseEntity";
+import BaseEntity from "@/types/common/BaseEntity";
 import Wetter from "@/types/enum/Wetter";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Quelle from "@/types/enum/Quelle";

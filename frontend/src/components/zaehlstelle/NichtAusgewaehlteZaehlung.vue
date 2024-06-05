@@ -62,8 +62,8 @@ import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import { computed, ref } from "vue";
-import { useStore } from "@/api/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
     id: string;
@@ -81,7 +81,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
 const hover = ref(false);
@@ -105,6 +105,6 @@ const isLarge = computed(() => {
  * Die Zählung wird über den store auf aktiv gesetzt.
  */
 function openZaehlung(): void {
-    store.dispatch("setZaehlungAlsAktiv", props.id);
+    zaehlstelleStore.setZaehlungAlsAktiv(props.id);
 }
 </script>

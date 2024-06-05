@@ -1,4 +1,4 @@
-import BaseEntity from "@/types/BaseEntity";
+import BaseEntity from "@/types/common/BaseEntity";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 
 export default interface ZaehlstelleHeaderDTO extends BaseEntity {

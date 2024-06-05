@@ -67,7 +67,7 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import _ from "lodash";
-import { useRules } from "@/composables/rules";
+import { useRules } from "@/util/rules";
 
 interface Props {
     value: MessstelleOptionsDTO;

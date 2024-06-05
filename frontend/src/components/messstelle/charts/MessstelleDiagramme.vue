@@ -125,7 +125,6 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
-import { useStore } from "@/api/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
@@ -134,17 +133,21 @@ import LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
 import BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
-import MessstelleHistoryItem from "@/types/app/MessstelleHistoryItem";
+import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import _ from "lodash";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
-import CsvDTO from "@/types/CsvDTO";
+import CsvDTO from "@/types/common/CsvDTO";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
-import DaveUtils from "@/util/DaveUtils";
+import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import { useHistoryStore } from "@/store/history";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useUserStore } from "@/store/user";
+import { useMessstelleStore } from "@/store/messstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -195,16 +198,20 @@ const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
-const store = useStore();
+const messstelleStore = useMessstelleStore();
+const userStore = useUserStore();
+const snackbarStore = useSnackbarStore();
+const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
+const daveUtils = useDaveUtils();
 
 const messstelleId: ComputedRef<string> = computed(() => {
     return route.params.messstelleId;
 });
 
 const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const isBiggerThanFiveYears = computed(() => {
@@ -224,7 +231,7 @@ watch(isBiggerThanFiveYears, () => {
 });
 
 watch(activeTab, (active) => {
-    store.dispatch("messstelleInfo/setActiveTab", active);
+    messstelleStore.setActiveTab(active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
 });
@@ -267,12 +274,14 @@ function loadProcessedChartData() {
                 processedZaehldaten.belastungsplanMessquerschnitte;
             setMaxRangeYAchse();
         })
+        .catch((error) => {
+            snackbarStore.showApiError(error);
+        })
         .finally(() => {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =
-                store.getters["messstelleInfo/getMessstelleInfo"];
-            store.commit(
-                "history/addHistoryItem",
+                messstelleStore.getMessstelleInfo;
+            historyStore.addHistoryItem(
                 new MessstelleHistoryItem(
                     messstelle.id,
                     messstelle.mstId,
@@ -394,10 +403,10 @@ function generateCsv() {
                 "Listenausgabe",
                 options.value.zeitraum
             )}.csv`;
-            DaveUtils.downloadCsv(result.csvAsString, filename);
+            daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => (loadingFile.value = false));
 }
@@ -487,7 +496,7 @@ function generatePdf(): void {
 }
 
 function fetchPdf(formData: FormData, type: string) {
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", userStore.getDepartment);
     GeneratePdfService.postPdfCustomFetchTemplateMessstelle(
         type,
         messstelleId.value,
@@ -505,10 +514,10 @@ function fetchPdf(formData: FormData, type: string) {
                     typeForFilename,
                     options.value.zeitraum
                 )}.pdf`;
-                DaveUtils.downloadFile(blob, filename);
+                daveUtils.downloadFile(blob, filename);
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingFile.value = false));
 }
 </script>

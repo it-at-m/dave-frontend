@@ -1,4 +1,4 @@
-import BaseEntity from "@/types/BaseEntity";
+import BaseEntity from "@/types/common/BaseEntity";
 
 export default interface InfoMessageDTO extends BaseEntity {
     content: string;

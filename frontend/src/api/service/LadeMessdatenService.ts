@@ -1,5 +1,4 @@
 import FetchService from "@/api/service/FetchService";
-import LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 
