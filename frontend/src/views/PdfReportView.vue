@@ -361,9 +361,8 @@ import PdfPreviewDialog from "@/components/pdfreport/assetforms/PdfPreviewDialog
 import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
-import { useStore } from "@/api/util/useStore";
-import { useDateUtils } from "@/util/DateUtils";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useDateUtils } from "@/util/DateUtils";
 import { useSnackbarStore } from "@/store/snackbar";
 import { usePdfReportStore } from "@/store/pdfReport";
 import { useUserStore } from "@/store/user";
@@ -407,14 +406,14 @@ const fab = ref(false);
 const pdfSourceAsBlob = ref<Blob>(new Blob());
 const pdfSourceForPreview = ref<Uint8Array>(new Uint8Array());
 const assets = ref<BaseAsset[]>([]);
-const store = useStore();
 const userStore = useUserStore();
+const snackbarStore = useSnackbarStore();
 const pdfReportStore = usePdfReportStore();
 const dateUtils = useDateUtils();
 
 onMounted(() => {
     assets.value = assetsFromStore();
-    if (!store.getters.hasTitlePage) {
+    if (pdfReportStore.getHasTitlePage) {
         createFirstPage();
     }
 });
@@ -424,7 +423,7 @@ const fabColor = computed(() => {
 });
 
 const getDepartment = computed(() => {
-  return userStore.getDepartment;
+    return userStore.getDepartment;
 });
 
 /**
@@ -454,7 +453,7 @@ function createFirstPage(): void {
     assets.value.reverse();
 
     // Titel wurde erstellt
-    store.dispatch("hasTitlePage");
+    pdfReportStore.setHasTitlePage;
 }
 
 function cancel() {
@@ -491,7 +490,7 @@ function save(asset: BaseAsset) {
 }
 
 function assetsFromStore(): BaseAsset[] {
-    return _.cloneDeep(store.getters.getAssets);
+    return _.cloneDeep(pdfReportStore.getAssets);
 }
 
 const selectedCursor = computed(() => {
@@ -508,7 +507,7 @@ const selectedCursor = computed(() => {
 watch(
     assets,
     () => {
-        store.dispatch("setAssets", _.cloneDeep(assets.value));
+        pdfReportStore.setAssets(_.cloneDeep(assets));
     },
     { deep: true }
 );
@@ -557,7 +556,7 @@ function previewPdf() {
         })
     );
 
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", getDepartment.value);
     GeneratePdfService.postPdfCustomFetchReport(formData)
         .then((res) => {
             res.blob().then((blob) => {
@@ -568,7 +567,7 @@ function previewPdf() {
                 pdfSourceAsBlob.value = blob;
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingPdf.value = false));
 }
 
@@ -587,7 +586,7 @@ function generatePdf() {
 }
 
 function fetchPdf(formData: any) {
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", getDepartment.value);
     GeneratePdfService.postPdfCustomFetchReport(formData)
         .then((res) => {
             res.blob().then((blob) => {
@@ -595,7 +594,7 @@ function fetchPdf(formData: any) {
                 downloadPdf();
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingPdf.value = false));
 }
 
@@ -865,7 +864,7 @@ function getTextOfAsset(asset: BaseAsset): string | undefined {
 
 function downloadPdf() {
     let filename = `report_${Date.now()}.pdf`;
-    DaveUtils.downloadFile(pdfSourceAsBlob.value, filename);
+    useDaveUtils().downloadFile(pdfSourceAsBlob.value, filename);
 }
 
 const previewSource = computed(() => {
