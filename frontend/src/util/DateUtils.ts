@@ -1,7 +1,9 @@
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n-composable";
 import { useSnackbarStore } from "@/store/snackbar";
 
 export function useDateUtils() {
+    const i18n = useI18n();
+
     const snackbarStore = useSnackbarStore();
 
     function formatDate(date: string): string {

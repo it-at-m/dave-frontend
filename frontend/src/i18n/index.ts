@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import DateTimeFormats = VueI18n.DateTimeFormats;
+import { createI18n } from "vue-i18n-composable";
 
 const dateTimeFormats: DateTimeFormats = {
     "de-DE": {
@@ -23,7 +24,7 @@ const dateTimeFormats: DateTimeFormats = {
 
 Vue.use(VueI18n);
 
-const i18n = new VueI18n({
+const i18n = createI18n({
     dateTimeFormats,
 });
 
