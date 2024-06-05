@@ -235,7 +235,8 @@ function created() {
             userStore.setSsoUserInfoResponse(ssoUserInfoResponse);
             loggedInUser.value = userStore.getName;
         })
-        .catch(() => {
+        .catch((error) => {
+            snackbarStore.showApiError(error);
             return false;
         });
     VersionInfoService.getFrontendInfo()

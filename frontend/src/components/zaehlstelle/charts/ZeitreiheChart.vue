@@ -10,7 +10,6 @@
 
 
 <script setup lang="ts">
-// chart
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { BarChart, LineChart } from "echarts/charts";
@@ -31,7 +30,6 @@ import { computed, ComputedRef, provide, Ref, ref, watch } from "vue";
 import { useVuetify } from "@/util/useVuetify";
 import { useDaveUtils } from "@/util/DaveUtils";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
-import { useDaveUtils } from "@/util/DaveUtils";
 
 use([
     CanvasRenderer,
@@ -44,8 +42,8 @@ use([
     GridComponent,
 ]);
 
-const CHART_TYPE_X_AXIS = "bar";
 // Konstanten
+const CHART_TYPE_X_AXIS = "bar";
 const SCHWERVERKEHRSANTEIL = "Schwerverkehrsanteil";
 const GUETERVERKEHRSANTEIL = "Güterverkehrsanteil";
 const KRAFTFAHRZEUGVERKEHR = "Kraftfahrzeugverkehr";
