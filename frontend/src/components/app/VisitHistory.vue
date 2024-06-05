@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/util/useStore";
 import { computed, ComputedRef } from "vue";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useRouter } from "vue-router/composables";
@@ -48,13 +47,19 @@ import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useDateUtils } from "@/util/DateUtils";
 import _ from "lodash";
+import { useHistoryStore } from "@/store/history";
+import { useMessstelleStore } from "@/store/messstelle";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
+const messstelleStore = useMessstelleStore();
+const historyStore = useHistoryStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
 
 const items: ComputedRef<Array<AbstractHistoryItem>> = computed(() => {
-    return store.getters["history/getHistoryItems"];
+    return historyStore.historyItems;
 });
 
 const isHistory: ComputedRef<boolean> = computed(() => {
@@ -72,19 +77,22 @@ function selectItem(item: AbstractHistoryItem): void {
     if (isMessstelleHistoryItem(item)) {
         const historyItem: MessstelleHistoryItem =
             item as MessstelleHistoryItem;
-        store.commit(
-            "filteroptionsMessstelle/setFilteroptionsHistory",
-            _.cloneDeep(historyItem.optionsEinstellungen)
+        messstelleStore.setFilteroptionsHistory(
+            _.cloneDeep(
+                historyItem.optionsEinstellungen ??
+                    DefaultObjectCreator.createDefaultMessstelleOptions()
+            )
         );
         router.push(`/messstelle/${historyItem.id}`);
     }
     if (isZaehlstelleHistoryItem(item)) {
         const historyItem: ZaehlstelleHistoryItem =
             item as ZaehlstelleHistoryItem;
-        store.dispatch(
-            "setFilteroptionsHistory",
-            // Object.assign({}, historyItem.optionsEinstellungen)
-            _.cloneDeep(historyItem.optionsEinstellungen)
+        zaehlstelleStore.setFilteroptionsHistory(
+            _.cloneDeep(
+                historyItem.optionsEinstellungen ??
+                    DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
+            )
         );
         router.push(
             `/zaehlstelle/${historyItem.zaehlstelleId}/${historyItem.zaehlungId}`

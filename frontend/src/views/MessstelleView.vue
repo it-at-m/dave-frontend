@@ -61,24 +61,26 @@ import { useVuetify } from "@/util/useVuetify";
 import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
-import { useStore } from "@/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
 const vuetify = useVuetify();
-const store = useStore();
-// eslint-disable-next-line no-undef
+const messstelleStore = useMessstelleStore();
+const snackbarStore = useSnackbarStore();
+
 onMounted(() => {
     loadMessstelle();
 });
 
 const chosenOptions = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const headerHeight: ComputedRef<number> = computed(() => {
@@ -107,13 +109,13 @@ const rightHeightVh = computed(() => {
  * Berechnet die Höhe der Fläche unter den Tabs (72px hoch) in "vh"
  */
 const rightContentHeightVh = computed(() => {
-    const h =
+    const height =
         100 -
         headerHeight.value -
         appBarHeight.value -
         72 / (vuetify.breakpoint.height / 100);
-    store.commit("filteroptionsMessstelle/setBelastungsplanMinSize", h + "vh");
-    return h + "vh";
+    messstelleStore.setBelastungsplanMinSize(height);
+    return height + "vh";
 });
 
 const messstelleId: ComputedRef<string> = computed(() => {
@@ -135,13 +137,10 @@ function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
         .then((messstelleDTO) => {
             messstelle.value = messstelleDTO;
-            store.dispatch(
-                "messstelleInfo/setMessstelleInfo",
-                messstelle.value
-            );
+            messstelleStore.setMessstelleInfo(messstelle.value);
         })
         .catch((error: ApiError) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         });
 }
 </script>

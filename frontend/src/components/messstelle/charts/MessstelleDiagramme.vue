@@ -125,7 +125,6 @@ import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
-import { useStore } from "@/util/useStore";
 import { useRoute } from "vue-router/composables";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import { useReportTools } from "@/util/reportTools";
@@ -145,6 +144,10 @@ import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleT
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import { useDaveUtils } from "@/util/DaveUtils";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import { useHistoryStore } from "@/store/history";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useUserStore } from "@/store/user";
+import { useMessstelleStore } from "@/store/messstelle";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -195,7 +198,10 @@ const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
-const store = useStore();
+const messstelleStore = useMessstelleStore();
+const userStore = useUserStore();
+const snackbarStore = useSnackbarStore();
+const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
 const daveUtils = useDaveUtils();
@@ -205,7 +211,7 @@ const messstelleId: ComputedRef<string> = computed(() => {
 });
 
 const options: ComputedRef<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const isBiggerThanFiveYears = computed(() => {
@@ -225,7 +231,7 @@ watch(isBiggerThanFiveYears, () => {
 });
 
 watch(activeTab, (active) => {
-    store.dispatch("messstelleInfo/setActiveTab", active);
+    messstelleStore.setActiveTab(active);
     isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
     isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
 });
@@ -268,12 +274,14 @@ function loadProcessedChartData() {
                 processedZaehldaten.belastungsplanMessquerschnitte;
             setMaxRangeYAchse();
         })
+        .catch((error) => {
+            snackbarStore.showApiError(error);
+        })
         .finally(() => {
             chartDataLoading.value = false;
             const messstelle: MessstelleInfoDTO =
-                store.getters["messstelleInfo/getMessstelleInfo"];
-            store.commit(
-                "history/addHistoryItem",
+                messstelleStore.getMessstelleInfo;
+            historyStore.addHistoryItem(
                 new MessstelleHistoryItem(
                     messstelle.id,
                     messstelle.mstId,
@@ -398,7 +406,7 @@ function generateCsv() {
             daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => (loadingFile.value = false));
 }
@@ -488,7 +496,7 @@ function generatePdf(): void {
 }
 
 function fetchPdf(formData: FormData, type: string) {
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", userStore.getDepartment);
     GeneratePdfService.postPdfCustomFetchTemplateMessstelle(
         type,
         messstelleId.value,
@@ -509,7 +517,7 @@ function fetchPdf(formData: FormData, type: string) {
                 daveUtils.downloadFile(blob, filename);
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingFile.value = false));
 }
 </script>

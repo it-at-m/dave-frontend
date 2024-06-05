@@ -93,16 +93,16 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import KeyVal from "@/types/common/KeyVal";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
     zaehlung?: LadeZaehlungDTO;
 }
 
 const props = defineProps<Props>();
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 const emits = defineEmits<{
     (e: "vergleichszaehlungsId", v: string): void;
@@ -131,15 +131,15 @@ onMounted(() => {
 });
 
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const zeitblock: Ref<string> = computed(() => {
-    return store.getters.getZeitblock;
+    return zaehlstelleStore.getZeitblock;
 });
 
 const zeitauswahl: Ref<string> = computed(() => {
-    return store.getters.getZeitauswahl;
+    return zaehlstelleStore.getZeitauswahl;
 });
 
 /**
@@ -218,7 +218,7 @@ function vergleichsdatumCalculator(
     newZeitauswahl: string
 ): void {
     const result: Array<KeyVal> = new Array<KeyVal>();
-    const zaehlungen: Array<LadeZaehlungDTO> = store.getters.getZaehlungen;
+    const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
     if (props.zaehlung?.id) {
         zaehlungen.forEach((zaehl) => {
             if (
@@ -253,7 +253,7 @@ function zeitreihenVergleichsdatumCalculator(
     newZeitauswahl: string
 ): void {
     const result: Array<KeyVal> = new Array<KeyVal>();
-    const zaehlungen: Array<LadeZaehlungDTO> = store.getters.getZaehlungen;
+    const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
     if (props.zaehlung?.id != undefined && props.zaehlung?.datum != undefined) {
         zaehlungen.forEach((zaehl) => {
             if (

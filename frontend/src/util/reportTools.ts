@@ -1,8 +1,6 @@
-import { useStore } from "@/util/useStore";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import { Levels } from "@/api/error";
 import { computed, ComputedRef } from "vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
@@ -14,33 +12,40 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import _ from "lodash";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useMessstelleStore } from "@/store/messstelle";
 
 export function useReportTools() {
-    const store = useStore();
+    const messstelleStore = useMessstelleStore();
+    const pdfReportStore = usePdfReportStore();
+    const snackbarStore = useSnackbarStore();
+    const zaehlstelleStore = useZaehlstelleStore();
     const dateUtils = useDateUtils();
 
     const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-        return store.getters["messstelleInfo/getMessstelleInfo"];
+        return messstelleStore.getMessstelleInfo;
     });
     const messstelleOptions: ComputedRef<MessstelleOptionsDTO> = computed(
         () => {
-            return store.getters["filteroptionsMessstelle/getFilteroptions"];
+            return messstelleStore.getFilteroptions;
         }
     );
     const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
-        return store.getters.getZaehlstelle;
+        return zaehlstelleStore.getZaehlstelleHeader;
     });
     const selectedZaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-        return store.getters.getAktiveZaehlung;
+        return zaehlstelleStore.getAktiveZaehlung;
     });
     const zaehlstelleOptions: ComputedRef<OptionsDTO> = computed(() => {
-        return store.getters.getFilteroptions;
+        return zaehlstelleStore.getFilteroptions;
     });
 
     function addImageToReport(base64: string, name: string): void {
         const imageAsset = new ImageAsset(name, base64);
         imageAsset.width = 100;
-        store.dispatch("addAsset", imageAsset);
+        pdfReportStore.addAsset(imageAsset);
     }
 
     function addHeadingToReport(erhebungsstelle: Erhebungsstelle): void {
@@ -50,7 +55,7 @@ export function useReportTools() {
                 heading,
                 AssetTypesEnum.HEADING5
             );
-            store.dispatch("addAsset", headingAsset);
+            pdfReportStore.addAsset(headingAsset);
         }
     }
 
@@ -140,15 +145,13 @@ export function useReportTools() {
         }
         if (base64) {
             addImageToReport(base64, createCaption(erhebungsstelle, type));
-            store.dispatch("snackbar/showToast", {
-                snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-                level: Levels.SUCCESS,
-            });
+            snackbarStore.showSuccess(
+                `${artikel} ${type} wurde dem PDF Report hinzugefügt.`
+            );
         } else {
-            store.dispatch("snackbar/showError", {
-                snackbarTextPart1: `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`,
-                level: Levels.ERROR,
-            });
+            snackbarStore.showError(
+                `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`
+            );
         }
     }
 
@@ -161,8 +164,7 @@ export function useReportTools() {
 
         switch (erhebungsstelle) {
             case Erhebungsstelle.MESSSTELLE:
-                store.dispatch(
-                    "addAsset",
+                pdfReportStore.addAsset(
                     new MessstelleDatatableAsset(
                         _.cloneDeep(messstelleOptions.value),
                         messstelle.value.id,
@@ -171,8 +173,7 @@ export function useReportTools() {
                 );
                 break;
             case Erhebungsstelle.ZAEHLSTELLE:
-                store.dispatch(
-                    "addAsset",
+                pdfReportStore.addAsset(
                     new DatatableAsset(
                         _.cloneDeep(zaehlstelleOptions.value),
                         selectedZaehlung.value.id,
@@ -182,10 +183,9 @@ export function useReportTools() {
                 break;
         }
 
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-            level: Levels.SUCCESS,
-        });
+        snackbarStore.showSuccess(
+            `${artikel} ${type} wurde dem PDF Report hinzugefügt.`
+        );
     }
 
     function getFileName(

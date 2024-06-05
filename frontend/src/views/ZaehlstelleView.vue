@@ -65,9 +65,9 @@ import ZaehlungenTimeline from "@/components/zaehlstelle/ZaehlungenTimeline.vue"
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import ZaehlstellenService from "@/api/service/ZaehlstellenService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { useRoute } from "vue-router/composables";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const zaehlstelle = ref(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
@@ -75,7 +75,7 @@ const zaehlstelle = ref(
 
 const hasZaehlungen = ref(true);
 const externalQuery = ref("");
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 const route = useRoute();
 
@@ -108,7 +108,7 @@ const headerHeight = computed(() => {
  * (72px + 160px + 5*24px) / (breakpoint.height / 100)
  */
 const zInfoHeight = computed(() => {
-    const z = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const z = zaehlstelleStore.getAktiveZaehlung;
     let anzahlKnotenarme = 0;
     if (z.knotenarme) {
         anzahlKnotenarme = z.knotenarme.length;
@@ -194,21 +194,8 @@ onMounted(() => {
         Object.assign(zaehlungen, loadedZaehlstelle.zaehlungen);
         // Die Zählungen und id der aktiven Zählung werden an den Store übergeben.
         // Dort werden die Daten weiter verarbeitet.
-        if (store.getters) {
-            store.dispatch("setZaehlungen", {
-                zs: zaehlungen,
-                id: route.params.zaehlungId,
-                isAnwender: store.getters,
-            });
-        } else {
-            store.dispatch("setZaehlungen", {
-                zs: zaehlungen,
-                id: route.params.zaehlungId,
-                isAnwender: false,
-            });
-        }
-
-        store.commit("setZaehlstelle", loadedZaehlstelle);
+        zaehlstelleStore.setZaehlungen(zaehlungen);
+        zaehlstelleStore.setZaehlstelleHeader(loadedZaehlstelle);
         zaehlstelle.value = loadedZaehlstelle;
         // Prüft, ob die Zählstelle Zählungen hat. Falls nicht, werden auch keine
         // Diagramme angezeigt.
@@ -216,8 +203,8 @@ onMounted(() => {
             hasZaehlungen.value = false;
         }
         // die Zählungsoptionen werden zurück gesetzt
-        if (!store.getters.isHistory) {
-            store.dispatch("resetFilteroptions");
+        if (!zaehlstelleStore.isHistory) {
+            zaehlstelleStore.resetFilteroptions();
         }
     });
 });
@@ -232,7 +219,7 @@ const zaehlstelleId = computed(() => {
 
 const kreuzungsname = computed(() => {
     let kreuzungsname = "";
-    let aktiveZaehlung: LadeZaehlungDTO = store.getters.getAktiveZaehlung;
+    let aktiveZaehlung: LadeZaehlungDTO = zaehlstelleStore.getAktiveZaehlung;
     if (aktiveZaehlung) {
         kreuzungsname = aktiveZaehlung.kreuzungsname;
     }

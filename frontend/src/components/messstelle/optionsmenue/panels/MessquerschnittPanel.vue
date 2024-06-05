@@ -69,7 +69,6 @@
 <script setup lang="ts">
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ComputedRef, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
@@ -77,6 +76,7 @@ import KeyVal from "@/types/common/KeyVal";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 import _ from "lodash";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -88,7 +88,7 @@ const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 const hoverDirection: Ref<boolean> = ref(false);
 const hoverLage: Ref<boolean> = ref(false);
 const spitzenstundeErrorText: Ref<string> = ref("");
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
 
 const MIND_EIN_MESSQUERSCHNITT =
@@ -102,7 +102,7 @@ const chosenOptionsCopy = computed({
 });
 
 const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
+    return messstelleStore.getMessstelleInfo;
 });
 
 const isLageReadonly: ComputedRef<boolean> = computed(() => {
@@ -113,9 +113,8 @@ const isLageReadonly: ComputedRef<boolean> = computed(() => {
 });
 
 const direction = computed({
-    get: () => store.getters["filteroptionsMessstelle/getDirection"],
-    set: (payload: string) =>
-        store.commit("filteroptionsMessstelle/setDirection", payload),
+    get: () => messstelleStore.getDirection,
+    set: (payload: string) => messstelleStore.setDirection(payload),
 });
 
 const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {

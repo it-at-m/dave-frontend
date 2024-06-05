@@ -193,8 +193,10 @@ import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
-import { useStore } from "@/util/useStore";
 import { useRoute, useRouter } from "vue-router/composables";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useSearchStore } from "@/store/search";
+import { useUserStore } from "@/store/user";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 
@@ -219,7 +221,9 @@ const selectedSuggestion: Ref<Suggest | null> = ref(
     DefaultObjectCreator.createDefaultSuggestion()
 );
 
-const store = useStore();
+const snackbarStore = useSnackbarStore();
+const searchStore = useSearchStore();
+const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -228,11 +232,11 @@ created();
 function created() {
     SsoUserInfoService.getUserInfo()
         .then((ssoUserInfoResponse: SsoUserInfoResponse) => {
-            store.dispatch("user/setSsoUserInfoResponse", ssoUserInfoResponse);
-            loggedInUser.value = store.getters["user/getName"];
+            userStore.setSsoUserInfoResponse(ssoUserInfoResponse);
+            loggedInUser.value = userStore.getName;
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
             return false;
         });
     VersionInfoService.getFrontendInfo()
@@ -258,6 +262,11 @@ function suggest(query: string) {
         SucheService.getSuggestions(query)
             .then((response: SucheComplexSuggestsDTO) => {
                 suggestions.value = [];
+
+                suggestions.value.push(
+                    new Suggest(query, SUGGESTION_TYPE_SEARCH_TEXT, "", "", "")
+                );
+
                 response.wordSuggests.forEach((word: SucheWordSuggestDTO) => {
                     suggestions.value.push(
                         new Suggest(
@@ -312,7 +321,7 @@ function suggest(query: string) {
                     }
                 );
             })
-            .catch((error) => store.dispatch("snackbar/showError", error));
+            .catch((error) => snackbarStore.showApiError(error));
     } else if (
         lastSuggestQuery.value !== "" &&
         lastSuggestQuery.value != null
@@ -325,7 +334,7 @@ function suggest(query: string) {
 function clear() {
     searchQuery.value = "";
     selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
-    store.commit("search/lastSearchQuery", searchQuery.value);
+    searchStore.setLastSearchQuery(searchQuery.value);
     search();
 }
 
@@ -349,8 +358,7 @@ function search() {
     if (searchQuery.value == null) {
         searchQuery.value = "";
     }
-
-    store.commit("search/lastSearchQuery", searchQuery.value);
+    searchStore.setLastSearchQuery(searchQuery.value);
     const routeName = route.name;
     if (
         (routeName === "zaehlstelle" ||
@@ -364,10 +372,10 @@ function search() {
 
     SucheService.searchErhebungsstelle(searchQuery.value)
         .then((result) => {
-            store.commit("search/result", result);
+            searchStore.setSearchResult(result);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         });
 }
 

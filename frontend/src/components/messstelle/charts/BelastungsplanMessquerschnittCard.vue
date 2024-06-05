@@ -12,13 +12,13 @@ import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
 import LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { belastungsplanAnzeigeUtils } from "@/components/messstelle/optionsmenue/composable/belastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -28,7 +28,7 @@ const emits = defineEmits<{
     (e: "print", v: Blob): void;
 }>();
 
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 const vuetify = useVuetify();
 const dateUtils = useDateUtils();
 const canvas = ref<Svg>(SVG.SVG());
@@ -49,15 +49,11 @@ const { isSv_pInBelastungsPlan, isGv_pInBelastungsPlan } =
 const props = defineProps<Props>();
 
 const svgHeight = computed(() => {
-    const minSizeWithVh =
-        store.getters["filteroptionsMessstelle/getBelastungsplanMinSize"];
-    const minSitzeWithoutVh = minSizeWithVh.substring(
-        0,
-        minSizeWithVh.length - 2
+    return (
+        messstelleStore.getBelastungsplanMinSize *
+            (0.9 + messstelleStore.getBelastungsplanChosenSize / 10) +
+        "vh"
     );
-    const sizeMultiplikator =
-        store.getters["filteroptionsMessstelle/getBelastungsplanChosenSize"];
-    return minSitzeWithoutVh * (0.9 + sizeMultiplikator / 10) + "vh";
 });
 
 onMounted(() => {
@@ -75,7 +71,7 @@ function drawingConfig() {
 }
 
 const chosenOptionsCopy = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const chosenOptionsCopyFahrzeuge = computed(() => {

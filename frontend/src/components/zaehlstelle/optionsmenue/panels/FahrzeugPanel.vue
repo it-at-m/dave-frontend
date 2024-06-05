@@ -359,9 +359,9 @@ import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useStore } from "@/util/useStore";
 import { computed, onMounted, Ref, ref, watch } from "vue";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
     actualZeitauswahl: string;
@@ -369,7 +369,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 
 const emits = defineEmits<{
@@ -411,11 +411,11 @@ onMounted(() => {
 
 // reaktiver getter auf den Store
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isTageswertAndNot24h: Ref<boolean> = computed(() => {

@@ -20,8 +20,8 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import * as SVG from "@svgdotjs/svg.js";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<(e: "print", v: Blob) => void>();
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
@@ -128,22 +128,19 @@ onMounted(() => {
         .addTo("#belastungsplanSchematischeUebersicht")
         .size(props.dimension, props.dimension)
         .viewbox(0, 0, viewbox, viewbox);
-    store.dispatch(
-        "setSizeBelastungsplanSvgSchematischeUebersicht",
-        sizeBelastungsplan.value.replace("px", "")
+    zaehlstelleStore.setSizeBelastungsplanSvgSchematischeUebersicht(
+        Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
     );
-    store.dispatch(
-        "setMaxSizeBelastungsplanSvgSchematischeUebersicht",
+    zaehlstelleStore.setMaxSizeBelastungsplanSvgSchematischeUebersicht(
         maxSizeBelastungsplan.value
     );
-    store.dispatch(
-        "setMinSizeBelastungsplanSvgSchematischeUebersicht",
+    zaehlstelleStore.setMinSizeBelastungsplanSvgSchematischeUebersicht(
         minSizeBelastungsplan.value
     );
 });
 
 const optionen: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const vonIds = computed(() => {
@@ -155,7 +152,7 @@ const nachIds = computed(() => {
 });
 
 const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const maxFahrtrichtungWidth = computed(() => {
@@ -195,7 +192,7 @@ const line = computed(() => {
 
 const sizeBelastungsplan = computed(() => {
     let sizeBelastungsplanSvg: number =
-        store.getters.getSizeBelastungsplanSvgSchematischeUebersicht;
+        zaehlstelleStore.getSizeBelastungsplanSvgSchematischeUebersicht;
     if (sizeBelastungsplanSvg === 0) {
         sizeBelastungsplanSvg = minSizeBelastungsplan.value;
     }

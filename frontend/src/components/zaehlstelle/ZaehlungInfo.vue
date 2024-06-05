@@ -231,7 +231,6 @@
     </v-container>
 </template>
 <script setup lang="ts">
-// Komponenten
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
@@ -239,24 +238,19 @@ import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import Optionsmenue from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
-
-// Typen
-/* eslint-disable no-unused-vars */
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
-/* eslint-enable no-unused-vars */
-// Util
 import _ from "lodash";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import { computed, ComputedRef, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 interface Props {
     kommentarZaehlstelle?: string;
@@ -266,7 +260,7 @@ withDefaults(defineProps<Props>(), {
     kommentarZaehlstelle: "",
 });
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 
 const showSpitzenstundeInfo = ref(false);
@@ -274,7 +268,7 @@ const startUhrzeitIntervalls = ref("");
 const endeUhrzeitIntervalls = ref("");
 
 const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 /**
@@ -289,21 +283,21 @@ const datum = computed(() => {
 });
 
 const knotenarme = computed(() => {
-    return store.getters.getKnotenarme;
+    return zaehlstelleStore.getKnotenarme;
 });
 
 /**
  * Holt die sortierten Knotenarme aus dem Store.
  */
 const sortedKnotenarme = computed(() => {
-    return store.getters.getSortedKnotenarme;
+    return zaehlstelleStore.getSortedKnotenarme;
 });
 
 /**
  * Die aktuell eingestellten Optionen werden aus dem Store geladen.
  */
 const options: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 /**
@@ -363,7 +357,7 @@ const isSpitzenstundeInZeitauswahlChosen = computed(() => {
 });
 
 const startEndeUhrzeitIntervalls = computed(() => {
-    return store.getters.getStartEndeUhrzeitIntervalls;
+    return zaehlstelleStore.getStartEndeUhrzeitIntervalls;
 });
 
 const isLarge = computed(() => {

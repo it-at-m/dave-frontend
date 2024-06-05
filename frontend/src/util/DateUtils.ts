@@ -1,9 +1,8 @@
 import i18n from "@/i18n";
-import { Levels } from "@/api/error";
-import { useStore } from "@/util/useStore";
+import { useSnackbarStore } from "@/store/snackbar";
 
 export function useDateUtils() {
-    const store = useStore();
+    const snackbarStore = useSnackbarStore();
 
     function formatDate(date: string): string {
         if (!date) {
@@ -48,10 +47,9 @@ export function useDateUtils() {
         if (Date.parse(d)) {
             return new Date(d);
         }
-        store.dispatch("snackbar/showError", {
-            snackbarTextPart1: `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`,
-            level: Levels.ERROR,
-        });
+        snackbarStore.showError(
+            `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
+        );
         return new Date();
     }
 

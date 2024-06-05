@@ -22,7 +22,7 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed } from "vue";
 import FahrzeugPanelVerkehrsartenContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelVerkehrsartenContent.vue";
 import FahrzeugPanelFahrzeugkategorienContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue";
-import { useStore } from "@/util/useStore";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -30,7 +30,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
@@ -38,6 +38,6 @@ const chosenOptionsCopy = computed({
 });
 
 const isKfzMessstelle = computed(() => {
-    return store.getters["messstelleInfo/isKfzMessstelle"];
+    return messstelleStore.isKfzMessstelle;
 });
 </script>

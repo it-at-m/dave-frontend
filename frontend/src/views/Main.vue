@@ -77,10 +77,12 @@ import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import { useStore } from "@/util/useStore";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useSearchStore } from "@/store/search";
+import { usePdfReportStore } from "@/store/pdfReport";
 
-const store = useStore();
+const pdfReportStore = usePdfReportStore();
+const searchStore = useSearchStore();
 const daveUtils = useDaveUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const fab = ref(false);
@@ -99,7 +101,7 @@ function takePicture() {
             .then((dataUrl: string) => {
                 const image = new ImageAsset("Hauptkarte", dataUrl);
                 image.width = 100;
-                store.dispatch("addAsset", image);
+                pdfReportStore.addAsset(image);
             })
             .finally(() => {
                 creatingPicture.value = false;
@@ -212,11 +214,11 @@ function printZaehlstellenOfSearchResult(
 }
 
 const getSearchQuery = computed(() => {
-    return store.getters["search/lastSearchQuery"];
+    return searchStore.getLastSearchQuery;
 });
 
 const getSearchResult = computed(() => {
-    return store.getters["search/result"];
+    return searchStore.getSearchResult;
 });
 
 const fabColor = computed(() => {

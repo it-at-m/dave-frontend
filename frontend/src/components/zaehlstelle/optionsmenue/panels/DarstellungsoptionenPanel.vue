@@ -274,15 +274,15 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import _ from "lodash";
 import { computed, onMounted, Ref, ref, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 import { useRules } from "@/util/rules";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;
 const MAX_VALUE_EXCLUDE = 101;
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useRules();
 
@@ -340,27 +340,27 @@ onMounted(() => {
 });
 
 const sizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return store.getters.getSizeBelastungsplanSvg;
+    return zaehlstelleStore.getSizeBelastungsplanSvg;
 });
 
 const maxSizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return store.getters.getMaxSizeBelastungsplanSvg;
+    return zaehlstelleStore.getMaxSizeBelastungsplanSvg;
 });
 
 const minSizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return store.getters.getMinSizeBelastungsplanSvg;
+    return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
 const options: Ref<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isZeitauswahlForSpitzenstunde: Ref<boolean> = computed(() => {
-    return store.getters.getZeitauswahl.includes(SPITZENSTUNDE);
+    return zaehlstelleStore.getZeitauswahl.includes(SPITZENSTUNDE);
 });
 
 const helpTextBelastungsplan: Ref<string> = computed(() => {
@@ -525,7 +525,7 @@ watch(blackPrintMode, () => {
 });
 
 watch(sizeBelastungsplan, () => {
-    store.dispatch("setSizeBelastungsplanSvg", sizeBelastungsplan.value);
+    zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
 });
 
 watch(stundensumme, () => {

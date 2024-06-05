@@ -362,6 +362,9 @@ import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useUserStore } from "@/store/user";
 
 @Component({
     components: {
@@ -398,6 +401,8 @@ export default class PdfReportView extends Vue {
         "",
         ""
     );
+    pdfReportStore = usePdfReportStore();
+    userStore = useUserStore();
 
     // liste der Assets
     assets: BaseAsset[] = this.assetsFromStore;
@@ -425,9 +430,12 @@ export default class PdfReportView extends Vue {
     get fabColor(): string {
         return this.fab ? "grey darken-1" : "secondary";
     }
+    get department(): string {
+        return this.userStore.getDepartment;
+    }
 
     created() {
-        if (!this.$store.getters.hasTitlePage) {
+        if (!this.pdfReportStore.getHasTitlePage) {
             this.createFirstPage();
         }
     }
@@ -449,8 +457,8 @@ export default class PdfReportView extends Vue {
             )
         );
         // Autor
-        const name = this.$store.getters["user/getName"] as string;
-        const department = this.$store.getters["user/getDepartment"] as string;
+        const name = this.userStore.getName;
+        const department = this.department;
         this.save(
             new HeadingAsset(`${name} (${department})`, AssetTypesEnum.HEADING3)
         );
@@ -461,12 +469,12 @@ export default class PdfReportView extends Vue {
         this.assets.reverse();
 
         // Titel wurde erstellt
-        this.$store.dispatch("hasTitlePage");
+        this.pdfReportStore.setHasTitlePage();
     }
 
     // Assets werden aus dem Store geladen
     get assetsFromStore(): BaseAsset[] {
-        return _.cloneDeep(this.$store.getters.getAssets);
+        return _.cloneDeep(this.pdfReportStore.getAssets);
     }
 
     /**
@@ -486,7 +494,7 @@ export default class PdfReportView extends Vue {
     // Immer wenn sich das assets-Array, oder ein Objekt in diesem, ändert => Speichern im Store
     @Watch("assets", { deep: true })
     saveAssetsInStore(assets: BaseAsset[]) {
-        this.$store.dispatch("setAssets", _.cloneDeep(assets));
+        this.pdfReportStore.setAssets(_.cloneDeep(assets));
     }
 
     edit(asset: BaseAsset): void {
@@ -854,10 +862,7 @@ export default class PdfReportView extends Vue {
     }
 
     private fetchPdf(formData: any) {
-        formData.append(
-            "department",
-            this.$store.getters["user/getDepartment"]
-        );
+        formData.append("department", this.department);
         GeneratePdfService.postPdfCustomFetchReport(formData)
             .then((res) => {
                 res.blob().then((blob) => {
@@ -865,7 +870,7 @@ export default class PdfReportView extends Vue {
                     this.downloadPdf();
                 });
             })
-            .catch((error) => this.$store.dispatch("snackbar/showError", error))
+            .catch((error) => useSnackbarStore().showApiError(error))
             .finally(() => (this.loadingPdf = false));
     }
 
@@ -880,10 +885,7 @@ export default class PdfReportView extends Vue {
             })
         );
 
-        formData.append(
-            "department",
-            this.$store.getters["user/getDepartment"]
-        );
+        formData.append("department", this.department);
         GeneratePdfService.postPdfCustomFetchReport(formData)
             .then((res) => {
                 res.blob().then((blob) => {
@@ -894,7 +896,7 @@ export default class PdfReportView extends Vue {
                     this.pdfSourceAsBlob = blob;
                 });
             })
-            .catch((error) => this.$store.dispatch("snackbar/showError", error))
+            .catch((error) => useSnackbarStore().showApiError(error))
             .finally(() => (this.loadingPdf = false));
     }
 

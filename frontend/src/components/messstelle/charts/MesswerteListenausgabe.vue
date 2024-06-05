@@ -61,10 +61,10 @@ import DataManipulatorUtil from "@/util/DataManipulatorUtil";
 // eslint-disable-next-line no-unused-vars
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ComputedRef, watch } from "vue";
-import { useStore } from "@/util/useStore";
 import DataTableHeader from "@/types/util/DataTableHeader";
+import { useMessstelleStore } from "@/store/messstelle";
 
-const store = useStore();
+const messstelleStore = useMessstelleStore();
 
 const TYPE_GESAMT = "Gesamt";
 const TYPE_TAGESWERT = "Tageswert";
@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const optionen: ComputedRef<MessstelleOptionsDTO> = computed(() => {
-    return store.getters["filteroptionsMessstelle/getFilteroptions"];
+    return messstelleStore.getFilteroptions;
 });
 
 const computedListenausgabeData: ComputedRef<Array<LadeZaehldatumDTO>> =

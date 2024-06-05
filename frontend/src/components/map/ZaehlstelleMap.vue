@@ -35,8 +35,10 @@ import {
     ref,
     watch,
 } from "vue";
-import { useStore } from "@/util/useStore";
 import { useRouter } from "vue-router/composables";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useSearchStore } from "@/store/search";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -68,8 +70,9 @@ const props = withDefaults(defineProps<Props>(), {
     zoom: 12,
 });
 
-const store = useStore();
-const dateUtils = useDateUtils();
+const zaehlstelleStore = useZaehlstelleStore();
+const searchStore = useSearchStore();
+const snackbarStore = useSnackbarStore();
 const router = useRouter();
 
 const mapStyle: ComputedRef<string> = computed(() => {
@@ -240,10 +243,9 @@ function createOverlayLayers(): L.Control.LayersObject {
 }
 
 const searchResult = computed(() => {
-    return store.getters["search/result"];
+    return searchStore.getSearchResult;
 });
 
-// @Watch("$store.state.search.result")
 watch(searchResult, () => {
     resetMarker();
 });
@@ -260,6 +262,7 @@ function resetMarker(): void {
 }
 
 function setMarkerToMap() {
+    markerCluster.value.clearLayers();
     markerCluster.value = L.markerClusterGroup({
         disableClusteringAtZoom: 15,
         spiderfyOnMaxZoom: false,
@@ -269,8 +272,7 @@ function setMarkerToMap() {
     selectedZaehlstelleKarte.value =
         DefaultObjectCreator.createDefaultZaehlstelleKarte();
 
-    const zaehlstellenKarte: Array<AnzeigeKarteDTO> =
-        getZaehlstellenKarteFromStore.value;
+    const zaehlstellenKarte: Array<AnzeigeKarteDTO> = searchResult.value;
     const markers: Array<Marker> = [];
     zaehlstellenKarte.forEach((zaehlstelleKarte) => {
         if (zaehlstelleKarte.type != "messstelle") {
@@ -340,24 +342,17 @@ function setZaehlartenmarkerToMap() {
     }
 }
 
-// Alter Teil
-
 const selectedZaehlstelleKarte = ref(
     DefaultObjectCreator.createDefaultZaehlstelleKarte()
 );
 
-const getZaehlstellenKarteFromStore: ComputedRef<Array<AnzeigeKarteDTO>> =
-    computed(() => {
-        return store.getters["search/result"];
-    });
-
 function searchErhebungsstelle() {
-    SucheService.searchErhebungsstelle(store.getters["search/lastSearchQuery"])
+    SucheService.searchErhebungsstelle(searchStore.getLastSearchQuery)
         .then((result) => {
-            store.commit("search/result", result);
+            searchStore.setSearchResult(result);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => {
             setMarkerToMap();
@@ -365,7 +360,7 @@ function searchErhebungsstelle() {
 }
 
 function getColorForZaehlartenMarker(zaehlart: string): string {
-    if (zaehlart == store.getters.getAktiveZaehlung.zaehlart) {
+    if (zaehlart == zaehlstelleStore.getAktiveZaehlung.zaehlart) {
         return ICON_COLOR_RED;
     } else {
         return ICON_COLOR_SECONDARY;
@@ -535,17 +530,17 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
         tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
     }
     if (tooltipDto.realisierungsdatum) {
-        tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
+        tooltip = `${tooltip} Aufbau: ${useDateUtils().formatDate(
             tooltipDto.realisierungsdatum
         )}<br/>`;
     }
     if (tooltipDto.abbaudatum) {
-        tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
+        tooltip = `${tooltip}Abbau: ${useDateUtils().formatDate(
             tooltipDto.abbaudatum
         )}<br/>`;
     }
     if (tooltipDto.datumLetztePlausibleMessung) {
-        tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
+        tooltip = `${tooltip}Letzte plausible Messung: ${useDateUtils().formatDate(
             tooltipDto.datumLetztePlausibleMessung
         )}<br/>`;
     }

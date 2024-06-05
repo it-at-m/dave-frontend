@@ -366,7 +366,6 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import CsvDTO from "@/types/common/CsvDTO";
 import LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 // API Services
 import LadeZaehldatenService from "@/api/service/LadeZaehldatenService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
@@ -375,11 +374,15 @@ import GenerateCsvService from "@/api/service/GenerateCsvService";
 import _ from "lodash";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
-import { useStore } from "@/util/useStore";
 import { useReportTools } from "@/util/reportTools";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import { useDaveUtils } from "@/util/DaveUtils";
+import { useHistoryStore } from "@/store/history";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useUserStore } from "@/store/user";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -445,7 +448,10 @@ const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const zeitreiheCard = ref<InstanceType<typeof ZeitreiheCard> | null>();
 
-const store = useStore();
+const snackbarStore = useSnackbarStore();
+const userStore = useUserStore();
+const zaehlstelleStore = useZaehlstelleStore();
+const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const daveUtils = useDaveUtils();
 
@@ -454,18 +460,18 @@ const fabColor: ComputedRef<string> = computed(() => {
 });
 
 const options: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const zaehlungsId: ComputedRef<string> = computed(() => {
-    return store.getters.getZaehlungsId;
+    return zaehlstelleStore.getZaehlungsId;
 });
 const selectedZaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
-    return store.getters.getZaehlstelle;
+    return zaehlstelleStore.getZaehlstelleHeader;
 });
 
 watch(options, () => {
@@ -473,7 +479,7 @@ watch(options, () => {
 });
 
 watch(activeTab, (active) => {
-    store.commit("changetabevent", active);
+    zaehlstelleStore.setActiveTab(active);
     isTabListenausgabe.value = [TAB_LISTENAUSGABE].includes(activeTab.value);
     isTabHeatmap.value = [TAB_HEATMAP].includes(activeTab.value);
     isFabShown.value = [
@@ -536,8 +542,7 @@ function loadData(): void {
     loadZeitreihe(o);
 
     // Save HistoryItem
-    store.commit(
-        "history/addHistoryItem",
+    historyStore.addHistoryItem(
         new ZaehlstelleHistoryItem(
             selectedZaehlung.value.id,
             selectedZaehlung.value.datum,
@@ -636,8 +641,7 @@ function storeStartAndEndeUhrzeitOfIntervalls(
             startUhrzeitIntervalls: firstIntervall?.startUhrzeit,
             endeUhrzeitIntervalls: lastIntervall?.endeUhrzeit,
         } as StartEndeUhrzeitIntervalls;
-        store.commit(
-            "setStartEndeUhrzeitIntervalls",
+        zaehlstelleStore.setStartEndeUhrzeitIntervalls(
             startEndeUhrzeitIntervalls
         );
     }
@@ -647,8 +651,7 @@ function storeStartAndEndeUhrzeitOfIntervalls(
  * Zurücksetzen der Start- und Endeuhrzeit des ersten und letzten Zeitintervalls.
  */
 function resetStartEndeUhrzeitIntervallsInStore(): void {
-    store.commit(
-        "setStartEndeUhrzeitIntervalls",
+    zaehlstelleStore.setStartEndeUhrzeitIntervalls(
         DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
     );
 }
@@ -694,7 +697,7 @@ function addChartToPdfReport(): void {
                     Erhebungsstelle.ZAEHLSTELLE,
                     "Der",
                     "Belastungsplan",
-                    "belastungsplanPngBase64.value",
+                    belastungsplanPngBase64.value,
                     false
                 );
             }
@@ -906,7 +909,7 @@ function generatePdf() {
 }
 
 function fetchPdf(formData: FormData, type: string) {
-    formData.append("department", store.getters["user/getDepartment"]);
+    formData.append("department", userStore.getDepartment);
     GeneratePdfService.postPdfCustomFetchTemplateZaehlung(
         type,
         selectedZaehlung.value.id,
@@ -925,7 +928,7 @@ function fetchPdf(formData: FormData, type: string) {
                 daveUtils.downloadFile(blob, filename);
             });
         })
-        .catch((error) => store.dispatch("snackbar/showError", error))
+        .catch((error) => snackbarStore.showApiError(error))
         .finally(() => (loadingFile.value = false));
 }
 
@@ -946,7 +949,7 @@ function generateCsv() {
             daveUtils.downloadCsv(result.csvAsString, filename);
         })
         .catch((error) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         })
         .finally(() => (loadingFile.value = false));
 }
