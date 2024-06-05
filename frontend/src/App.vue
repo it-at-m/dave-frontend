@@ -163,7 +163,11 @@
                 </template>
                 <span> Anwenderhandbuch </span>
             </v-tooltip>
-            <span> {{ loggedInUser }} </span>
+            <NoSecurityUserSwitch
+                v-if="isDevelopementModeActive"
+                class="mt-6"
+            />
+            <span v-else> {{ loggedInUser }} </span>
         </v-app-bar>
         <v-main>
             <v-fade-transition mode="out-in">
@@ -175,7 +179,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { Ref, ref, computed } from "vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
@@ -197,6 +201,7 @@ import { useRoute, useRouter } from "vue-router/composables";
 import { useSnackbarStore } from "@/store/snackbar";
 import { useSearchStore } from "@/store/search";
 import { useUserStore } from "@/store/user";
+import NoSecurityUserSwitch from "@/components/common/NoSecurityUserSwitch.vue";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 
@@ -445,6 +450,10 @@ function shortCuts(event: KeyboardEvent) {
         }
     }
 }
+
+const isDevelopementModeActive = computed(() => {
+    return import.meta.env.DEV;
+});
 </script>
 
 <style>
