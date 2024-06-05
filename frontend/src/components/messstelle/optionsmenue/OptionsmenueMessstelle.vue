@@ -78,6 +78,8 @@ import TagesTyp from "@/types/enum/TagesTyp";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import { useSnackbarStore } from "@/store/snackbar";
 import { useMessstelleStore } from "@/store/messstelle";
+import { useUserStore } from "@/store/user";
+import { useTimeUtils } from "@/util/TimeUtils";
 
 interface Props {
     messstelleId: string;
@@ -93,6 +95,9 @@ const chosenOptions = ref(
     DefaultObjectCreator.createDefaultMessstelleOptions()
 );
 
+const userStore = useUserStore();
+const timeUtils = useTimeUtils();
+
 const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
     return messstelleStore.getMessstelleInfo;
 });
@@ -102,6 +107,10 @@ const getContentSheetHeight = computed(() => {
         return "650px";
     }
     return "400px";
+});
+
+const isAnwender = computed(() => {
+    return userStore.hasAuthorities && userStore.isAnwender;
 });
 
 watch(messstelle, () => {
@@ -141,6 +150,15 @@ function areChosenOptionsValid(): boolean {
     ) {
         result = false;
         snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
+    }
+    if (
+        isAnwender.value &&
+        timeUtils.isDateRangeBiggerFiveYears(
+            chosenOptions.value.zeitraum.slice()
+        )
+    ) {
+        result = false;
+        snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
     }
     return result;
 }
