@@ -1,4 +1,4 @@
-import BaseEntity from "@/types/BaseEntity";
+import BaseEntity from "@/types/common/BaseEntity";
 import MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
 
 export default interface MessstelleAuswertungDTO extends BaseEntity {

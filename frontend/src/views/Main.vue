@@ -7,7 +7,6 @@
             ref="map"
             height="100%"
             width="100%"
-            show-marker="true"
             :zoom="12"
         />
 
@@ -67,25 +66,25 @@
 </template>
 
 <script lang="ts" setup>
-import { Component, Ref, Vue } from "vue-property-decorator";
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 
 import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-/* eslint-disable no-unused-vars */
-import { ref, onMounted, computed } from "vue";
-import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
-import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
-import AnzeigeKarteDTO from "@/types/AnzeigeKarteDTO";
-import MessstelleKarteDTO from "@/types/MessstelleKarteDTO";
-import TooltipMessstelleDTO from "@/types/TooltipMessstelleDTO";
+import { computed, onMounted, ref } from "vue";
+import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
+import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import DaveUtils from "@/util/DaveUtils";
-import { useStore } from "@/api/util/useStore";
-/* eslint-enable no-unused-vars */
+import { useDaveUtils } from "@/util/DaveUtils";
+import { useSearchStore } from "@/store/search";
+import { usePdfReportStore } from "@/store/pdfReport";
 
-const store = useStore();
-const map = ref<null | ZaehlstelleMap>(null);
+const pdfReportStore = usePdfReportStore();
+const searchStore = useSearchStore();
+const daveUtils = useDaveUtils();
+const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const fab = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
@@ -102,7 +101,7 @@ function takePicture() {
             .then((dataUrl: string) => {
                 const image = new ImageAsset("Hauptkarte", dataUrl);
                 image.width = 100;
-                store.dispatch("addAsset", image);
+                pdfReportStore.addAsset(image);
             })
             .finally(() => {
                 creatingPicture.value = false;
@@ -176,7 +175,7 @@ function printMessstellenOfSearchResult(
         elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
         searchResultAsCsvString.push(elementAsCsvString.join(";"));
     });
-    DaveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 function printZaehlstellenOfSearchResult(
@@ -211,15 +210,15 @@ function printZaehlstellenOfSearchResult(
         elementAsCsvString.push(tooltip.datumLetzteZaehlung);
         searchResultAsCsvString.push(elementAsCsvString.join(";"));
     });
-    DaveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 const getSearchQuery = computed(() => {
-    return store.getters["search/lastSearchQuery"];
+    return searchStore.getLastSearchQuery;
 });
 
 const getSearchResult = computed(() => {
-    return store.getters["search/result"];
+    return searchStore.getSearchResult;
 });
 
 const fabColor = computed(() => {

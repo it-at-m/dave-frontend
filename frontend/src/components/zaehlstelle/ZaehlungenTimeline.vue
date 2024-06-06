@@ -79,11 +79,10 @@ import NichtAusgewaehlteZaehlung from "@/components/zaehlstelle/NichtAusgewaehlt
 
 // Typen
 /* eslint-disable no-unused-vars */
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { DateTimeFormatOptions } from "vue-i18n";
 import { computed, ref, watch } from "vue";
-import { useStore } from "@/api/util/useStore";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 /* eslint-enable no-unused-vars */
 
@@ -94,7 +93,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 
 const query = ref("");
 const dateOptions: DateTimeFormatOptions = {
@@ -119,8 +118,7 @@ function updateQuery(n: string) {
         if (filteredZaehlungen.value.length > 0) {
             // Wenn eine oder mehr als eine Zählung gefunden wird, so wird die erste
             // Zählung in der Liste auf aktiv gesetzt.
-            store.dispatch(
-                "setZaehlungAlsAktiv",
+            zaehlstelleStore.setZaehlungAlsAktiv(
                 filteredZaehlungen.value[0].id
             );
         }
@@ -130,14 +128,14 @@ function updateQuery(n: string) {
 // Prüft, ob in der Liste der inaktiven Zählungen mindestens ein Eintrag ist. Wenn
 // nicht, dann werden Liste und Suchfeld nicht angezeigt.
 const isNotEmpty = computed(() => {
-    return store.getters.isInaktiveZaehlungen;
+    return zaehlstelleStore.hasInaktiveZaehlungen;
 });
 
 /**
  * Filtert die Zählungen nach den Suchwörter.
  */
 const filteredZaehlungen = computed(() => {
-    let filteredZs = store.getters.getInaktiveZaehlungen as LadeZaehlungDTO[];
+    let filteredZs = zaehlstelleStore.getInaktiveZaehlungen;
     if (query.value.length > 0) {
         if (
             !props.externalQuery &&

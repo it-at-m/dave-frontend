@@ -1,5 +1,5 @@
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import AbstractHistoryItem from "@/types/app/AbstractHistoryItem";
+import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 
 export default class MessstelleHistoryItem extends AbstractHistoryItem {
     id: string;

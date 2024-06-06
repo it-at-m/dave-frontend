@@ -22,7 +22,7 @@ export function useRules() {
         const parsed = parseFloat(toCheck);
         if (!isNaN(parsed) && _.inRange(parsed, minvalue, maxValue))
             return true;
-        return "Das Feld darf nur positive Zahlen kleiner gleich 100 enthalten";
+        return `Das Feld darf nur positive Zahlen kleiner gleich ${maxValue} enthalten`;
     }
 
     return {
