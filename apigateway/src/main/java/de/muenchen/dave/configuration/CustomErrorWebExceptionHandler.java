@@ -38,8 +38,7 @@ public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
             final ServerProperties serverProperties,
             final ApplicationContext applicationContext,
             final ObjectProvider<ViewResolver> viewResolvers,
-            final ServerCodecConfigurer serverCodecConfigurer
-    ) {
+            final ServerCodecConfigurer serverCodecConfigurer) {
         super(errorAttributes, webProperties.getResources(), serverProperties.getError(), applicationContext);
         this.setViewResolvers(viewResolvers.orderedStream().collect(Collectors.toList()));
         this.setMessageWriters(serverCodecConfigurer.getWriters());
