@@ -175,7 +175,9 @@ const isAnwender = computed(() => {
 });
 
 const minDate = computed(() => {
-    return messstelleInfo.value.realisierungsdatum ?? "2006-01-01";
+    if (messstelleInfo.value.realisierungsdatum >= "2006-01-01")
+        return messstelleInfo.value.realisierungsdatum;
+    else return "2006-01-01";
 });
 
 const maxDate = computed(() => {
