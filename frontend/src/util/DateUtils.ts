@@ -2,8 +2,6 @@ import { useI18n } from "vue-i18n-composable";
 import { useSnackbarStore } from "@/store/snackbar";
 
 export function useDateUtils() {
-    const i18n = useI18n();
-
     const snackbarStore = useSnackbarStore();
 
     function formatDate(date: string): string {
@@ -15,6 +13,7 @@ export function useDateUtils() {
     }
 
     function getTimeOfDate(date: Date): string {
+        const i18n = useI18n();
         if (!date) {
             return "";
         }
@@ -22,6 +21,7 @@ export function useDateUtils() {
     }
 
     function getShortVersionOfDate(date: Date): string {
+        const i18n = useI18n();
         if (!date) {
             return "";
         }
@@ -29,6 +29,7 @@ export function useDateUtils() {
     }
 
     function getLongVersionOfDate(date: Date): string {
+        const i18n = useI18n();
         if (!date) {
             return "";
         }
