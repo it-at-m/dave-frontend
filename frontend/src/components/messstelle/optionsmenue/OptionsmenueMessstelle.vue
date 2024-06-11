@@ -201,10 +201,47 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.stundensumme = true;
     chosenOptions.value.tagessumme = true;
     chosenOptions.value.spitzenstunde = true;
+    // messstelleStore.calculateActiveMessfaehigkeit(
+    //     messstelle.value.datumLetztePlausibleMessung
+    // );
     saveChosenOptions();
 }
 
 function resetOptions(): void {
     setDefaultOptionsForMessstelle();
 }
+
+// TODO hübsch machen
+watch(
+    () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
+    (value, oldValue, onCleanup) => {
+        console.log(
+            `Old: ${oldValue}, newValue: ${value}, onCLeanup: ${onCleanup}`
+        );
+        chosenOptions.value.fahrzeuge =
+            DefaultObjectCreator.createDefaultFahrzeugOptions();
+        // if (value === Fahrzeugklasse.SUMME_KFZ) {
+        //     chosenOptions.value.fahrzeuge =
+        //         DefaultObjectCreator.createDefaultFahrzeugOptions();
+        // }
+        // if (value === Fahrzeugklasse.ZWEI_PLUS_EINS) {
+        //     chosenOptions.value.fahrzeuge. =
+        //         DefaultObjectCreator.createDefaultFahrzeugOptions();
+        // }
+        // if (oldValue === Fahrzeugklasse.ACHT_PLUS_EINS) {
+        //     chosenOptions.value.fahrzeuge =
+        //         DefaultObjectCreator.createDefaultFahrzeugOptions();
+        // }
+        //
+        chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+            messstelle.value.detektierteVerkehrsarten ===
+            DetektierteFahrzeugart.KFZ;
+        chosenOptions.value.fahrzeuge.radverkehr =
+            !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+
+        snackbarStore.showWarning(
+            'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
+        );
+    }
+);
 </script>

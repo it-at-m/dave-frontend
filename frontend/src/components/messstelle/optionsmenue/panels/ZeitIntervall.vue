@@ -36,6 +36,8 @@ import { computed, watch } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useMessstelleStore } from "@/store/messstelle";
+import { def } from "@vue/shared";
 
 const emit = defineEmits<{
     (e: "update:hoverSelectZeitintervall", i: boolean): void;
@@ -57,9 +59,19 @@ const hoverSelectZeitintervallCopy = computed({
     set: (payload: boolean) => emit("update:hoverSelectZeitintervall", payload),
 });
 const props = defineProps<Props>();
+const messstelleStore = useMessstelleStore();
 
 const messdatenIntervalle = computed(() => {
-    return ZaehldatenIntervallToSelect;
+    if (
+        messstelleStore.getActiveMessfaehigkeit.intervall ===
+        ZaehldatenIntervall.STUNDE_KOMPLETT
+    ) {
+        return ZaehldatenIntervallToSelect.filter((value) => {
+            return value.value === ZaehldatenIntervall.STUNDE_KOMPLETT;
+        });
+    } else {
+        return ZaehldatenIntervallToSelect;
+    }
 });
 
 const isIntervallChangingLocked = computed(() => {

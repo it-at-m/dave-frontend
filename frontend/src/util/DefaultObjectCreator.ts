@@ -20,6 +20,8 @@ import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
+import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -248,5 +250,14 @@ export default class DefaultObjectCreator {
             idVergleichszaehlungZeitreihe: null,
             zeitreiheGesamt: false,
         };
+    }
+
+    public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
+        return {
+            fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+            gueltigAb: "",
+            gueltigBis: "",
+            intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,
+        } as MessfaehigkeitDTO;
     }
 }

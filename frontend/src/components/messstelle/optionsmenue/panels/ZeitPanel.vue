@@ -279,5 +279,12 @@ watch(chosenOptionsCopyZeitraum, () => {
     ) {
         pickerDate.value = messstelleInfo.value.datumLetztePlausibleMessung;
     }
+    calculateChoosableOptions();
 });
+
+function calculateChoosableOptions(): void {
+    messstelleStore.calculateActiveMessfaehigkeit(
+        dateUtils.sortDatesAscAsStrings(chosenOptionsCopy.value.zeitraum)[0]
+    );
+}
 </script>
