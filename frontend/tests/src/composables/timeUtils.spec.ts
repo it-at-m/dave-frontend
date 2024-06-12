@@ -12,7 +12,7 @@ describe("test", () => {
     beforeEach(() => {
         setActivePinia(createPinia());
     });
-
+    
     it("ZeitraumGroesserFuenfJahre", () => {
         const timeUtils = useTimeUtils();
         const result = timeUtils.isDateRangeBiggerFiveYears([
@@ -20,10 +20,10 @@ describe("test", () => {
             "2015-09-20",
         ]);
         const expected = true;
-
+        
         expect(result).toBe(expected);
     });
-
+    
     it("ZeitraumKleinerFuenfJahre", () => {
         const timeUtils = useTimeUtils();
         const result = timeUtils.isDateRangeBiggerFiveYears([
@@ -31,10 +31,10 @@ describe("test", () => {
             "2020-09-21",
         ]);
         const expected = false;
-
+        
         expect(result).toBe(expected);
     });
-
+    
     it("ZeitraumExaktFuenfJahre", () => {
         const timeUtils = useTimeUtils();
         const result = timeUtils.isDateRangeBiggerFiveYears([
@@ -42,10 +42,10 @@ describe("test", () => {
             "2018-09-20",
         ]);
         const expected = true;
-
+        
         expect(result).toBe(expected);
     });
-
+    
     it("ZeitraumKleinerFuenfJahreAtLimit", () => {
         const timeUtils = useTimeUtils();
         const result = timeUtils.isDateRangeBiggerFiveYears([
@@ -53,10 +53,10 @@ describe("test", () => {
             "2018-09-21",
         ]);
         const expected = false;
-
+        
         expect(result).toBe(expected);
     });
-
+    
     it("ZeitraumLengthTooBig", () => {
         const timeUtils = useTimeUtils();
         const result = timeUtils.isDateRangeBiggerFiveYears([
@@ -65,17 +65,17 @@ describe("test", () => {
             "2010-09-21",
         ]);
         const expected = false;
-
+        
         expect(result).toBe(expected);
     });
-
+    
     it("ZeitraumLengthTooShort", () => {
         const timeUtils = useTimeUtils();
         const result = timeUtils.isDateRangeBiggerFiveYears([
             "2023-09-20"
         ]);
         const expected = false;
-
+        
         expect(result).toBe(expected);
     });
 });
