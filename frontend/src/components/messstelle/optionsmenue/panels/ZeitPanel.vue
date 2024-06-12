@@ -82,7 +82,6 @@
             <zeit-intervall
                 v-if="!isDateBiggerFiveYears"
                 v-model="chosenOptionsCopy"
-                :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
             />
         </v-expansion-panel-content>
     </v-expansion-panel>
@@ -118,7 +117,6 @@ const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
-const hoverSelectZeitintervall = ref(false);
 const pickerDate = ref("");
 onMounted(() => {
     const messstelleId = route.params.messstelleId;

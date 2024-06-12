@@ -57,6 +57,7 @@ export default class DefaultObjectCreator {
 
     public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
         return {
+            messfaehigkeiten: [],
             detektierteVerkehrsarten: DetektierteFahrzeugart.KFZ,
             fahrzeugKlassen: "",
             hersteller: "",

@@ -24,6 +24,7 @@ import FahrzeugPanelVerkehrsartenContent from "@/components/messstelle/optionsme
 import FahrzeugPanelFahrzeugkategorienContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue";
 import { useMessstelleStore } from "@/store/messstelle";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -42,7 +43,13 @@ const showFahrzeugkategorien = computed(() => {
     return (
         messstelleStore.isKfzMessstelle &&
         messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen ===
-            Fahrzeugklasse.ACHT_PLUS_EINS
+            Fahrzeugklasse.ACHT_PLUS_EINS &&
+        !(
+            chosenOptionsCopy.value.intervall ===
+                ZaehldatenIntervall.STUNDE_VIERTEL ||
+            chosenOptionsCopy.value.intervall ===
+                ZaehldatenIntervall.STUNDE_HALB
+        )
     );
 });
 </script>

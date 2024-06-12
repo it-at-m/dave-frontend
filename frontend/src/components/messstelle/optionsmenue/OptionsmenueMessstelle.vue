@@ -14,7 +14,8 @@
         <v-dialog
             v-model="dialog"
             max-width="900px"
-            ><v-card
+        >
+            <v-card
                 width="900px"
                 flat
             >
@@ -84,6 +85,7 @@ import { useTimeUtils } from "@/util/TimeUtils";
 interface Props {
     messstelleId: string;
 }
+
 defineProps<Props>();
 
 const vuetify = useVuetify();
@@ -201,9 +203,9 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.stundensumme = true;
     chosenOptions.value.tagessumme = true;
     chosenOptions.value.spitzenstunde = true;
-    // messstelleStore.calculateActiveMessfaehigkeit(
-    //     messstelle.value.datumLetztePlausibleMessung
-    // );
+    messstelleStore.calculateActiveMessfaehigkeit(
+        messstelle.value.datumLetztePlausibleMessung
+    );
     saveChosenOptions();
 }
 
@@ -211,28 +213,11 @@ function resetOptions(): void {
     setDefaultOptionsForMessstelle();
 }
 
-// TODO hübsch machen
 watch(
     () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
-    (value, oldValue, onCleanup) => {
-        console.log(
-            `Old: ${oldValue}, newValue: ${value}, onCLeanup: ${onCleanup}`
-        );
+    () => {
         chosenOptions.value.fahrzeuge =
             DefaultObjectCreator.createDefaultFahrzeugOptions();
-        // if (value === Fahrzeugklasse.SUMME_KFZ) {
-        //     chosenOptions.value.fahrzeuge =
-        //         DefaultObjectCreator.createDefaultFahrzeugOptions();
-        // }
-        // if (value === Fahrzeugklasse.ZWEI_PLUS_EINS) {
-        //     chosenOptions.value.fahrzeuge. =
-        //         DefaultObjectCreator.createDefaultFahrzeugOptions();
-        // }
-        // if (oldValue === Fahrzeugklasse.ACHT_PLUS_EINS) {
-        //     chosenOptions.value.fahrzeuge =
-        //         DefaultObjectCreator.createDefaultFahrzeugOptions();
-        // }
-        //
         chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
             messstelle.value.detektierteVerkehrsarten ===
             DetektierteFahrzeugart.KFZ;
