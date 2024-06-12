@@ -1,10 +1,14 @@
-import { useTimeUtils } from "@/util/TimeUtils";
-import { expect } from "vitest";
-import { useSnackbarStore } from "@/store/snackbar";
-import { createLocalVue } from "@vue/test-utils";
-import { createPinia, setActivePinia } from "pinia";
+import {useTimeUtils} from "@/util/TimeUtils";
+import {expect} from "vitest";
+import {createPinia, setActivePinia} from "pinia";
+import Vue from "vue";
+import i18n from "@/i18n";
 
 describe("test", () => {
+    beforeAll(() => {
+        Vue.set(i18n, "i18n", i18n);
+    });
+    
     beforeEach(() => {
         setActivePinia(createPinia());
     });
