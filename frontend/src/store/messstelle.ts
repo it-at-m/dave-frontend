@@ -75,12 +75,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     function setBelastungsplanChosenSize(payload: number) {
         belastungsplanChosenSize.value = payload;
     }
-    // function setActiveFahrzeugklasse(payload: Fahrzeugklasse) {
-    //     activeFahrzeugklasse.value = payload;
-    // }
-    // function setActiveMessfaehigkeit(payload: MessfaehigkeitDTO) {
-    //
-    // }
     function calculateActiveMessfaehigkeit(selectedDate: string): void {
         messstelleInfo.value.messfaehigkeiten.forEach(
             (faehigkeit: MessfaehigkeitDTO) => {
