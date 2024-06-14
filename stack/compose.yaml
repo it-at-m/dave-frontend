@@ -15,7 +15,7 @@ services:
     container_name: dave-backend
     image: itatm/dave-backend:latest
     environment:
-      - SPRING_PROFILES_ACTIVE=local,no-security,sample
+      - SPRING_PROFILES_ACTIVE=docker,no-security,sample
       - elasticsearch.host=dave-elasticsearch
       - SSO_BASE_URL=http://sso.de
     ports:
