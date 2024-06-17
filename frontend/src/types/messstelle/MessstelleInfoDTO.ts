@@ -1,6 +1,7 @@
 import BaseEntity from "@/types/common/BaseEntity";
 import MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 export default interface MessstelleInfoDTO extends BaseEntity {
     mstId: string;
@@ -19,4 +20,5 @@ export default interface MessstelleInfoDTO extends BaseEntity {
     datumLetztePlausibleMessung: string;
     abbaudatum: string;
     realisierungsdatum: string;
+    messfaehigkeiten: Array<MessfaehigkeitDTO>;
 }

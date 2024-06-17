@@ -5,8 +5,11 @@ import { computed, ref, Ref } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import _ from "lodash";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { useDateUtils } from "@/util/DateUtils";
+import MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 export const useMessstelleStore = defineStore("messstelleStore", () => {
+    const dateUtils = useDateUtils();
     // ref()s become state properties
     const messstelleInfo: Ref<MessstelleInfoDTO> = ref({} as MessstelleInfoDTO);
     const activeTab: Ref<number> = ref(0);
@@ -18,6 +21,9 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     const belastungsplanMinSize: Ref<number> = ref(0);
     const belastungsplanMaxSize: Ref<string> = ref("");
     const belastungsplanChosenSize: Ref<number> = ref(1);
+    const activeMessfaehigkeit = ref(
+        DefaultObjectCreator.createDefaultMessfaehigkeitDTO()
+    );
     // computed()s become getters
     const getMessstelleInfo = computed(() => messstelleInfo.value);
     const getActiveTab = computed(() => activeTab.value);
@@ -38,6 +44,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     const getBelastungsplanChosenSize = computed(
         () => belastungsplanChosenSize.value
     );
+    const getActiveMessfaehigkeit = computed(() => activeMessfaehigkeit.value);
     // function()s become actions
     function setActiveTab(payload: number) {
         activeTab.value = payload;
@@ -68,6 +75,21 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     function setBelastungsplanChosenSize(payload: number) {
         belastungsplanChosenSize.value = payload;
     }
+    function calculateActiveMessfaehigkeit(selectedDate: string): void {
+        messstelleInfo.value.messfaehigkeiten.forEach(
+            (faehigkeit: MessfaehigkeitDTO) => {
+                if (
+                    dateUtils.isDateBetweenAsStrings(
+                        selectedDate,
+                        faehigkeit.gueltigAb,
+                        faehigkeit.gueltigBis
+                    )
+                ) {
+                    activeMessfaehigkeit.value = faehigkeit;
+                }
+            }
+        );
+    }
 
     return {
         getMessstelleInfo,
@@ -79,6 +101,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
         getBelastungsplanMinSize,
         getBelastungsplanMaxSize,
         getBelastungsplanChosenSize,
+        getActiveMessfaehigkeit,
         setActiveTab,
         setMessstelleInfo,
         setFilteroptions,
@@ -88,5 +111,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
         setBelastungsplanMinSize,
         setBelastungsplanMaxSize,
         setBelastungsplanChosenSize,
+        calculateActiveMessfaehigkeit,
     };
 });

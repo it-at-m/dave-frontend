@@ -34,22 +34,22 @@ const icon: ComputedRef<IconTooltip> = computed(() => {
     if (result === undefined) {
         result = new IconTooltip(
             "mdi-help",
-            "Keine Information zu den Fahrzeugklassen"
+            "Keine Information zu den Fahrzeugklasse"
         );
     }
     return result;
 });
 
 /**
- * Alle Fahrzeugklassen Icons zu den Schlüsseln.
+ * Alle Fahrzeugklasse Icons zu den Schlüsseln.
  */
 function fahrzeugklassenIcons(): Map<string, IconTooltip> {
     return new Map([
-        ["8+1", new IconTooltip("$achtUndEins", "Fahrzeugklassen: 8+1")],
-        ["QKFZ", new IconTooltip("$qkfz", "Fahrzeugklassen: QKFZ")],
+        ["8+1", new IconTooltip("$achtUndEins", "Fahrzeugklasse: 8+1")],
+        ["QKFZ", new IconTooltip("$qkfz", "Fahrzeugklasse: QKFZ")],
         [
             "QPKW + QLKW",
-            new IconTooltip("$qpkwLkw", "Fahrzeugklassen: QPKW + QLKW"),
+            new IconTooltip("$qpkwLkw", "Fahrzeugklasse: QPKW + QLKW"),
         ],
     ]);
 }

@@ -41,6 +41,34 @@ export function useDateUtils() {
         });
     }
 
+    function sortDatesAscAsStrings(arrayToSort: string[]): string[] {
+        return arrayToSort.sort(function (a, b) {
+            return new Date(a).valueOf() - new Date(b).valueOf();
+        });
+    }
+
+    function isDateBetweenAsStrings(
+        dateToCheck: string,
+        dateBefore: string,
+        dateAfter: string
+    ): boolean {
+        return isDateBetween(
+            getDatumOfString(dateToCheck),
+            getDatumOfString(dateBefore),
+            getDatumOfString(dateAfter)
+        );
+    }
+    function isDateBetween(
+        dateToCheck: Date,
+        dateBefore: Date,
+        dateAfter: Date
+    ): boolean {
+        return (
+            dateToCheck.valueOf() >= dateBefore.valueOf() &&
+            dateToCheck.valueOf() <= dateAfter.valueOf()
+        );
+    }
+
     /**
      * es muss für i18n ein Datumsobjekt erzeugt werden.
      */
@@ -62,5 +90,8 @@ export function useDateUtils() {
         getShortVersionOfDate,
         getLongVersionOfDate,
         getDatumOfString,
+        isDateBetween,
+        isDateBetweenAsStrings,
+        sortDatesAscAsStrings,
     };
 }

@@ -37,7 +37,7 @@
                         class="text-center parent-header"
                         :style="headerCategoryStyle"
                     >
-                        Fahrzeugklassen
+                        Fahrzeugklasse
                     </th>
                     <th
                         v-if="activeAnteil > 0"

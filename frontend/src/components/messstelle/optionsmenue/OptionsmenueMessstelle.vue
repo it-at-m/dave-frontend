@@ -14,7 +14,8 @@
         <v-dialog
             v-model="dialog"
             max-width="900px"
-            ><v-card
+        >
+            <v-card
                 width="900px"
                 flat
             >
@@ -84,6 +85,7 @@ import { useTimeUtils } from "@/util/TimeUtils";
 interface Props {
     messstelleId: string;
 }
+
 defineProps<Props>();
 
 const vuetify = useVuetify();
@@ -201,10 +203,30 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.stundensumme = true;
     chosenOptions.value.tagessumme = true;
     chosenOptions.value.spitzenstunde = true;
+    messstelleStore.calculateActiveMessfaehigkeit(
+        messstelle.value.datumLetztePlausibleMessung
+    );
     saveChosenOptions();
 }
 
 function resetOptions(): void {
     setDefaultOptionsForMessstelle();
 }
+
+watch(
+    () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
+    () => {
+        chosenOptions.value.fahrzeuge =
+            DefaultObjectCreator.createDefaultFahrzeugOptions();
+        chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+            messstelle.value.detektierteVerkehrsarten ===
+            DetektierteFahrzeugart.KFZ;
+        chosenOptions.value.fahrzeuge.radverkehr =
+            !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+
+        snackbarStore.showWarning(
+            'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
+        );
+    }
+);
 </script>

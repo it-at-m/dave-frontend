@@ -13,17 +13,26 @@
             header-text="(außer Belastungsplan und Zeitreihe)"
         ></panel-header>
         <v-row>
-            <v-col cols="4">
-                <v-hover v-model="hoverSelectZeitintervallCopy">
-                    <v-select
+            <v-col cols="8">
+                <v-hover v-model="hoverZeitintervall">
+                    <v-autocomplete
                         v-model="chosenOptionsCopy.intervall"
                         :items="messdatenIntervalle"
                         label="Zeitintervall"
                         filled
                         dense
                         :disabled="isIntervallChangingLocked"
-                    ></v-select>
+                    ></v-autocomplete>
                 </v-hover>
+            </v-col>
+            <v-col cols="4">
+                <v-row
+                    align="start"
+                    justify="center"
+                    dense
+                >
+                    {{ helpTextZeitintervall }}
+                </v-row>
             </v-col>
         </v-row>
     </div>
@@ -32,34 +41,63 @@
 import ZaehldatenIntervall, {
     ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useMessstelleStore } from "@/store/messstelle";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 
 const emit = defineEmits<{
-    (e: "update:hoverSelectZeitintervall", i: boolean): void;
     (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 
 interface Props {
-    hoverSelectZeitintervall: boolean;
     value: MessstelleOptionsDTO;
 }
+
+const hoverZeitintervall = ref(false);
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
     set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
-const hoverSelectZeitintervallCopy = computed({
-    get: () => props.hoverSelectZeitintervall,
-    set: (payload: boolean) => emit("update:hoverSelectZeitintervall", payload),
-});
 const props = defineProps<Props>();
+const messstelleStore = useMessstelleStore();
 
 const messdatenIntervalle = computed(() => {
-    return ZaehldatenIntervallToSelect;
+    if (
+        messstelleStore.getActiveMessfaehigkeit.intervall ===
+            ZaehldatenIntervall.STUNDE_KOMPLETT ||
+        (messstelleStore.getActiveMessfaehigkeit.intervall ===
+            ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
+            notOnlyKfzSelected.value)
+    ) {
+        return ZaehldatenIntervallToSelect.filter((value) => {
+            return value.value === ZaehldatenIntervall.STUNDE_KOMPLETT;
+        });
+    } else {
+        return ZaehldatenIntervallToSelect;
+    }
+});
+
+const notOnlyKfzSelected = computed(() => {
+    const fahrzeuge = chosenOptionsCopy.value.fahrzeuge;
+    return (
+        fahrzeuge.busse ||
+        fahrzeuge.fussverkehr ||
+        fahrzeuge.gueterverkehr ||
+        fahrzeuge.schwerverkehr ||
+        fahrzeuge.gueterverkehrsanteilProzent ||
+        fahrzeuge.schwerverkehrsanteilProzent ||
+        fahrzeuge.kraftraeder ||
+        fahrzeuge.lastkraftwagen ||
+        fahrzeuge.lastzuege ||
+        fahrzeuge.lieferwagen ||
+        fahrzeuge.personenkraftwagen ||
+        fahrzeuge.radverkehr
+    );
 });
 
 const isIntervallChangingLocked = computed(() => {
@@ -81,6 +119,31 @@ const isZeitauswahlSpitzenstunde = computed(() => {
         chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_RAD ||
         chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.SPITZENSTUNDE_FUSS
     );
+});
+
+const helpTextZeitintervall = computed(() => {
+    if (hoverZeitintervall.value) {
+        if (
+            messstelleStore.getActiveMessfaehigkeit.intervall ===
+                ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
+            notOnlyKfzSelected.value
+        ) {
+            return `Es sind Verkehrsarten und / oder Fahrzeugkategorien ausgewählt für die nur 60 Minuten Intervalle vorliegen.`;
+        }
+        if (
+            messstelleStore.getActiveMessfaehigkeit.intervall ===
+            ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT
+        ) {
+            return `Nur für die Fahrzeugkategorie ${Fahrzeug.KFZ} liegen 15 und 30 Minuten Intervalle vor.`;
+        }
+        if (
+            messstelleStore.getActiveMessfaehigkeit.intervall ===
+            ZaehldatenIntervall.STUNDE_KOMPLETT
+        ) {
+            return `Auf Grund der Messfähigkeit der Messstelle können nur 60 Minuten als Intervallgröße ausgewählt werden.`;
+        }
+    }
+    return "";
 });
 
 watch(
