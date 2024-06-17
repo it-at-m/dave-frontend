@@ -12,7 +12,7 @@
         />
         <v-autocomplete
             v-if="showSubCategoriesSelect"
-            v-model="auswertungOptions.zeitintervalle"
+            v-model="auswertungOptions.zeitraum"
             :items="selectableSubCategories"
             class="mt-4"
             outlined
@@ -47,10 +47,12 @@
 <script setup lang="ts">
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import { computed, ComputedRef, ref } from "vue";
+import KeyVal from "@/types/common/KeyVal";
 import {
-    Halbjahre,
-    Monate,
-    Quartale,
+    AuswertungsZeitraum,
+    halbjahre,
+    monate,
+    quartale,
     ZeitintervallCategories,
 } from "@/types/enum/AuswertungCategories";
 
@@ -70,26 +72,29 @@ const categories = [
     ZeitintervallCategories.QUARTALE,
     ZeitintervallCategories.MONATE,
 ];
-const categoryHalbJahre = [Halbjahre.HALBJAHR_1, Halbjahre.HALBJAHR_2];
+const categoryHalbJahre = [
+    halbjahre.get(AuswertungsZeitraum.HALBJAHR_1),
+    halbjahre.get(AuswertungsZeitraum.HALBJAHR_2),
+];
 const categoryQuartale = [
-    Quartale.QUARTAL_1,
-    Quartale.QUARTAL_2,
-    Quartale.QUARTAL_3,
-    Quartale.QUARTAL_4,
+    quartale.get(AuswertungsZeitraum.QUARTAL_1),
+    quartale.get(AuswertungsZeitraum.QUARTAL_2),
+    quartale.get(AuswertungsZeitraum.QUARTAL_3),
+    quartale.get(AuswertungsZeitraum.QUARTAL_4),
 ];
 const categoryMonate = [
-    Monate.JANUAR,
-    Monate.FEBRUAR,
-    Monate.MAERZ,
-    Monate.APRIL,
-    Monate.MAI,
-    Monate.JUNI,
-    Monate.JULI,
-    Monate.AUGUST,
-    Monate.SEPTEMBER,
-    Monate.OKTOBER,
-    Monate.NOVEMBER,
-    Monate.DEZEMBER,
+    monate.get(AuswertungsZeitraum.JANUAR),
+    monate.get(AuswertungsZeitraum.FEBRUAR),
+    monate.get(AuswertungsZeitraum.MAERZ),
+    monate.get(AuswertungsZeitraum.APRIL),
+    monate.get(AuswertungsZeitraum.MAI),
+    monate.get(AuswertungsZeitraum.JUNI),
+    monate.get(AuswertungsZeitraum.JULI),
+    monate.get(AuswertungsZeitraum.AUGUST),
+    monate.get(AuswertungsZeitraum.SEPTEMBER),
+    monate.get(AuswertungsZeitraum.OKTOBER),
+    monate.get(AuswertungsZeitraum.NOVEMBER),
+    monate.get(AuswertungsZeitraum.DEZEMBER),
 ];
 
 const selectedCategory = ref("");
@@ -108,7 +113,7 @@ const showSubCategoriesSelect = computed(() => {
 });
 
 const selectableSubCategories = computed(() => {
-    let categories: Array<string> = [];
+    let categories: Array<KeyVal | undefined> = [];
     switch (selectedCategory.value) {
         case ZeitintervallCategories.HALBJAHRE:
             categories = [...categoryHalbJahre];
@@ -124,31 +129,51 @@ const selectableSubCategories = computed(() => {
 });
 function categoryIsSelected() {
     if (previuosSelectedCategory.value !== selectedCategory.value) {
-        auswertungOptions.value.zeitintervalle = [];
+        auswertungOptions.value.zeitraum = [];
     }
     if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
-        auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
+        auswertungOptions.value.zeitraum.push(AuswertungsZeitraum.JAHRE);
     }
     previuosSelectedCategory.value = selectedCategory.value;
 }
 
 function selectAll() {
-    auswertungOptions.value.zeitintervalle = [];
+    auswertungOptions.value.zeitraum = [];
     switch (selectedCategory.value) {
         case ZeitintervallCategories.HALBJAHRE:
-            auswertungOptions.value.zeitintervalle.push(...categoryHalbJahre);
+            auswertungOptions.value.zeitraum.push(
+                AuswertungsZeitraum.HALBJAHR_1,
+                AuswertungsZeitraum.HALBJAHR_2
+            );
             break;
         case ZeitintervallCategories.QUARTALE:
-            auswertungOptions.value.zeitintervalle.push(...categoryQuartale);
+            auswertungOptions.value.zeitraum.push(
+                AuswertungsZeitraum.QUARTAL_1,
+                AuswertungsZeitraum.QUARTAL_2,
+                AuswertungsZeitraum.QUARTAL_3,
+                AuswertungsZeitraum.QUARTAL_4
+            );
             break;
         case ZeitintervallCategories.MONATE:
-            auswertungOptions.value.zeitintervalle.push(...categoryMonate);
+            auswertungOptions.value.zeitraum.push(
+                AuswertungsZeitraum.JANUAR,
+                AuswertungsZeitraum.FEBRUAR,
+                AuswertungsZeitraum.MAERZ,
+                AuswertungsZeitraum.MAI,
+                AuswertungsZeitraum.JUNI,
+                AuswertungsZeitraum.JULI,
+                AuswertungsZeitraum.AUGUST,
+                AuswertungsZeitraum.SEPTEMBER,
+                AuswertungsZeitraum.OKTOBER,
+                AuswertungsZeitraum.NOVEMBER,
+                AuswertungsZeitraum.DEZEMBER
+            );
             break;
     }
 }
 
 function deselectAll() {
-    auswertungOptions.value.zeitintervalle = [];
+    auswertungOptions.value.zeitraum = [];
 }
 
 const showSelectAllButton: ComputedRef<boolean> = computed(() => {
@@ -165,6 +190,6 @@ const showSelectAllButton: ComputedRef<boolean> = computed(() => {
             break;
     }
 
-    return auswertungOptions.value.zeitintervalle.length <= helper;
+    return auswertungOptions.value.zeitraum.length <= helper;
 });
 </script>
