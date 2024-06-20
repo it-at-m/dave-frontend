@@ -53,7 +53,7 @@ public class WebSessionConfiguration {
     }
 
     @Bean
-    @Profile({ "local", "docker", "test" })
+    @Profile({ "local", "test" })
     public Config localConfig(@Value("${spring.session.timeout}") final int timeout) {
         final var hazelcastConfig = new Config();
         hazelcastConfig.setInstanceName(this.hazelcastInstanceName);
