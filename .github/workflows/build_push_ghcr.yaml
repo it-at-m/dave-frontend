@@ -2,7 +2,7 @@ name: build image and push to ghcr.io
 
 on: 
   push:
-    branches: [main]
+    branches: [main-ls2]
 
 env:
   REGISTRY: ghcr.io
@@ -49,7 +49,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=main-ls1
+            type=raw,value=main-ls2
           labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
       
@@ -75,4 +75,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          
