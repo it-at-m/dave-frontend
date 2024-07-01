@@ -15,7 +15,7 @@ export default class MessstelleAuswertungService {
         return FetchService.postData(
             options,
             `${this.ENDPOINT}`,
-            "Beim Laden der Messstellen ist ein Fehler aufgetreten."
+            "Beim Laden der Auswertung ist ein Fehler aufgetreten."
         );
     }
 }
