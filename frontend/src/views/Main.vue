@@ -1,85 +1,84 @@
 <template>
-    <v-sheet
-        height="100%"
-        width="100%"
-    >
-        <zaehlstelle-map
-            ref="map"
-            height="100%"
-            width="100%"
-            :zoom="12"
-        />
+  <v-sheet
+    height="100%"
+    width="100%"
+  >
+    <zaehlstelle-map
+      ref="map"
+      height="100%"
+      width="100%"
+      :zoom="12"
+    />
 
-        <v-speed-dial
-            v-model="fab"
-            absolute
-            bottom
-            right
-            open-on-hover
+    <v-speed-dial
+      v-model="fab"
+      absolute
+      bottom
+      right
+      open-on-hover
+    >
+      <template #activator>
+        <v-btn
+          v-model="fab"
+          dark
+          fab
+          :color="fabColor"
+          :loading="creatingPicture || printingSearchResult"
         >
-            <template #activator>
-                <v-btn
-                    v-model="fab"
-                    dark
-                    fab
-                    :color="fabColor"
-                    :loading="creatingPicture || printingSearchResult"
-                >
-                    <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                    <v-icon v-else> mdi-plus-thick </v-icon>
-                </v-btn>
-            </template>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="printSearchResult"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-delimited</v-icon>
-                    </v-btn>
-                </template>
-                <span>Suchergebnis als CSV herunterladen</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="takePicture"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-camera</v-icon>
-                    </v-btn>
-                </template>
-                <span>Karte dem PDF Report hinzufügen</span>
-            </v-tooltip>
-        </v-speed-dial>
-    </v-sheet>
+          <v-icon v-if="fab"> mdi-close-thick </v-icon>
+          <v-icon v-else> mdi-plus-thick </v-icon>
+        </v-btn>
+      </template>
+      <v-tooltip location="left">
+        <template #activator="{ props }">
+          <v-btn
+            fab
+            dark
+            size="small"
+            color="secondary"
+            v-bind="props"
+            @click="printSearchResult"
+          >
+            <v-icon>mdi-file-delimited</v-icon>
+          </v-btn>
+        </template>
+        <span>Suchergebnis als CSV herunterladen</span>
+      </v-tooltip>
+      <v-tooltip location="left">
+        <template #activator="{ props }">
+          <v-btn
+            fab
+            dark
+            size="small"
+            color="secondary"
+            v-bind="props"
+            @click="takePicture"
+          >
+            <v-icon>mdi-camera</v-icon>
+          </v-btn>
+        </template>
+        <span>Karte dem PDF Report hinzufügen</span>
+      </v-tooltip>
+    </v-speed-dial>
+  </v-sheet>
 </template>
 
 <script lang="ts" setup>
-import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
+import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
+import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
+import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
+import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 
 import domtoimage from "dom-to-image-more";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { computed, onMounted, ref } from "vue";
-import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
-import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
-import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
-import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
-import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
-import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import { useDaveUtils } from "@/util/DaveUtils";
-import { useSearchStore } from "@/store/search";
+
+import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 import { usePdfReportStore } from "@/store/pdfReport";
+import { useSearchStore } from "@/store/search";
+import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
+import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
+import { useDaveUtils } from "@/util/DaveUtils";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
@@ -90,23 +89,23 @@ const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
 
 onMounted(() => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 });
 
 function takePicture() {
-    if (map.value != null) {
-        creatingPicture.value = true;
-        domtoimage
-            .toJpeg(map.value.$el, { quality: 0.95, cacheBust: true })
-            .then((dataUrl: string) => {
-                const image = new ImageAsset("Hauptkarte", dataUrl);
-                image.width = 100;
-                pdfReportStore.addAsset(image);
-            })
-            .finally(() => {
-                creatingPicture.value = false;
-            });
-    }
+  if (map.value != null) {
+    creatingPicture.value = true;
+    domtoimage
+      .toJpeg(map.value.$el, { quality: 0.95, cacheBust: true })
+      .then((dataUrl: string) => {
+        const image = new ImageAsset("Hauptkarte", dataUrl);
+        image.width = 100;
+        pdfReportStore.addAsset(image);
+      })
+      .finally(() => {
+        creatingPicture.value = false;
+      });
+  }
 }
 
 /**
@@ -114,114 +113,114 @@ function takePicture() {
  * bietet diese als Download an
  */
 function printSearchResult(): void {
-    printingSearchResult.value = true;
-    const searchResult: Array<AnzeigeKarteDTO> = getSearchResult.value;
-    const searchQuery: string = getSearchQuery.value;
+  printingSearchResult.value = true;
+  const searchResult: Array<AnzeigeKarteDTO> = getSearchResult.value;
+  const searchQuery: string = getSearchQuery.value;
 
-    const zaehlstellenResult = searchResult.filter(
-        (value: AnzeigeKarteDTO) => value.type === "zaehlstelle"
-    ) as Array<ZaehlstelleKarteDTO>;
+  const zaehlstellenResult = searchResult.filter(
+    (value: AnzeigeKarteDTO) => value.type === "zaehlstelle"
+  ) as Array<ZaehlstelleKarteDTO>;
 
-    const messstellenResult = searchResult.filter(
-        (value: AnzeigeKarteDTO) => value.type === "messstelle"
-    ) as Array<MessstelleKarteDTO>;
+  const messstellenResult = searchResult.filter(
+    (value: AnzeigeKarteDTO) => value.type === "messstelle"
+  ) as Array<MessstelleKarteDTO>;
 
-    if (zaehlstellenResult.length > 0) {
-        printZaehlstellenOfSearchResult(zaehlstellenResult, searchQuery);
-    }
-    if (messstellenResult.length > 0) {
-        printMessstellenOfSearchResult(messstellenResult, searchQuery);
-    }
+  if (zaehlstellenResult.length > 0) {
+    printZaehlstellenOfSearchResult(zaehlstellenResult, searchQuery);
+  }
+  if (messstellenResult.length > 0) {
+    printMessstellenOfSearchResult(messstellenResult, searchQuery);
+  }
 
-    printingSearchResult.value = false;
+  printingSearchResult.value = false;
 }
 
 function printMessstellenOfSearchResult(
-    searchResult: Array<MessstelleKarteDTO>,
-    searchQuery: string
+  searchResult: Array<MessstelleKarteDTO>,
+  searchQuery: string
 ): void {
-    let filenamePrefix = "Alle_Messstellen";
-    if (searchQuery && searchQuery.trim() !== "") {
-        filenamePrefix = `Messstellen_${searchQuery.replace(/\s/g, "_")}`;
+  let filenamePrefix = "Alle_Messstellen";
+  if (searchQuery && searchQuery.trim() !== "") {
+    filenamePrefix = `Messstellen_${searchQuery.replace(/\s/g, "_")}`;
+  }
+  const filename = `${filenamePrefix}_Suchergebnis.csv`;
+
+  const searchResultAsCsvString: Array<string> = [];
+  // Suchbegriff hinzufügen
+  searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
+  // Headerzeile hinzufügen
+  searchResultAsCsvString.push(
+    "ID Messstelle;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Standort MS;Status;Datum Aufbau;Datum Abbau;Letzter plausibler Messtag"
+  );
+
+  // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
+  searchResult.forEach((element: MessstelleKarteDTO) => {
+    const tooltip: TooltipMessstelleDTO = element.tooltip;
+    const elementAsCsvString: Array<string> = [];
+    elementAsCsvString.push(tooltip.mstId);
+    elementAsCsvString.push(`${element.longitude}`);
+    elementAsCsvString.push(`${element.latitude}`);
+    elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
+    elementAsCsvString.push(tooltip.stadtbezirk);
+    elementAsCsvString.push(tooltip.standort);
+    const statusAsText = messstelleStatusText.get(element.status);
+    if (statusAsText) {
+      elementAsCsvString.push(statusAsText);
+    } else {
+      elementAsCsvString.push(element.status);
     }
-    const filename = `${filenamePrefix}_Suchergebnis.csv`;
-
-    const searchResultAsCsvString: Array<string> = [];
-    // Suchbegriff hinzufügen
-    searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
-    // Headerzeile hinzufügen
-    searchResultAsCsvString.push(
-        "ID Messstelle;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Standort MS;Status;Datum Aufbau;Datum Abbau;Letzter plausibler Messtag"
-    );
-
-    // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
-    searchResult.forEach((element: MessstelleKarteDTO) => {
-        const tooltip: TooltipMessstelleDTO = element.tooltip;
-        const elementAsCsvString: Array<string> = [];
-        elementAsCsvString.push(tooltip.mstId);
-        elementAsCsvString.push(`${element.longitude}`);
-        elementAsCsvString.push(`${element.latitude}`);
-        elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
-        elementAsCsvString.push(tooltip.stadtbezirk);
-        elementAsCsvString.push(tooltip.standort);
-        const statusAsText = messstelleStatusText.get(element.status);
-        if (statusAsText) {
-            elementAsCsvString.push(statusAsText);
-        } else {
-            elementAsCsvString.push(element.status);
-        }
-        elementAsCsvString.push(tooltip.realisierungsdatum);
-        elementAsCsvString.push(tooltip.abbaudatum);
-        elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
-        searchResultAsCsvString.push(elementAsCsvString.join(";"));
-    });
-    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+    elementAsCsvString.push(tooltip.realisierungsdatum);
+    elementAsCsvString.push(tooltip.abbaudatum);
+    elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
+    searchResultAsCsvString.push(elementAsCsvString.join(";"));
+  });
+  daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 function printZaehlstellenOfSearchResult(
-    searchResult: Array<ZaehlstelleKarteDTO>,
-    searchQuery: string
+  searchResult: Array<ZaehlstelleKarteDTO>,
+  searchQuery: string
 ): void {
-    let filenamePrefix = "Alle_Zaehlstellen";
-    if (searchQuery && searchQuery.trim() !== "") {
-        filenamePrefix = `Zaehlstellen_${searchQuery.replace(/\s/g, "_")}`;
-    }
-    const filename = `${filenamePrefix}_Suchergebnis.csv`;
+  let filenamePrefix = "Alle_Zaehlstellen";
+  if (searchQuery && searchQuery.trim() !== "") {
+    filenamePrefix = `Zaehlstellen_${searchQuery.replace(/\s/g, "_")}`;
+  }
+  const filename = `${filenamePrefix}_Suchergebnis.csv`;
 
-    const searchResultAsCsvString: Array<string> = [];
-    // Suchbegriff hinzufügen
-    searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
-    // Headerzeile hinzufügen
-    searchResultAsCsvString.push(
-        "Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung"
-    );
+  const searchResultAsCsvString: Array<string> = [];
+  // Suchbegriff hinzufügen
+  searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
+  // Headerzeile hinzufügen
+  searchResultAsCsvString.push(
+    "Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung"
+  );
 
-    // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
-    searchResult.forEach((element: ZaehlstelleKarteDTO) => {
-        const tooltip: TooltipZaehlstelleDTO = element.tooltip;
-        const elementAsCsvString: Array<string> = [];
-        elementAsCsvString.push(tooltip.zaehlstellennnummer);
-        elementAsCsvString.push(element.longitude.toString());
-        elementAsCsvString.push(element.latitude.toString());
-        elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
-        elementAsCsvString.push(tooltip.stadtbezirk);
-        elementAsCsvString.push(tooltip.kreuzungsname);
-        elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
-        elementAsCsvString.push(tooltip.datumLetzteZaehlung);
-        searchResultAsCsvString.push(elementAsCsvString.join(";"));
-    });
-    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+  // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
+  searchResult.forEach((element: ZaehlstelleKarteDTO) => {
+    const tooltip: TooltipZaehlstelleDTO = element.tooltip;
+    const elementAsCsvString: Array<string> = [];
+    elementAsCsvString.push(tooltip.zaehlstellennnummer);
+    elementAsCsvString.push(element.longitude.toString());
+    elementAsCsvString.push(element.latitude.toString());
+    elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
+    elementAsCsvString.push(tooltip.stadtbezirk);
+    elementAsCsvString.push(tooltip.kreuzungsname);
+    elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
+    elementAsCsvString.push(tooltip.datumLetzteZaehlung);
+    searchResultAsCsvString.push(elementAsCsvString.join(";"));
+  });
+  daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 const getSearchQuery = computed(() => {
-    return searchStore.getLastSearchQuery;
+  return searchStore.getLastSearchQuery;
 });
 
 const getSearchResult = computed(() => {
-    return searchStore.getSearchResult;
+  return searchStore.getSearchResult;
 });
 
 const fabColor = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
+  return fab.value ? "grey darken-1" : "secondary";
 });
 </script>

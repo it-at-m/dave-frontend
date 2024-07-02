@@ -1,282 +1,281 @@
 <template>
-    <v-expansion-panel>
-        <v-expansion-panel-header>
-            <div>
-                <v-icon left>mdi-cogs</v-icon>
-                Darstellungsoptionen
-            </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-1">
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Belastungsplan"
-            ></panel-header>
+  <v-expansion-panel>
+    <v-expansion-panel-title>
+      <div>
+        <v-icon start>mdi-cogs</v-icon>
+        Darstellungsoptionen
+      </div>
+    </v-expansion-panel-title>
+    <v-expansion-panel-text class="mt-1">
+      <panel-header
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Belastungsplan"
+      ></panel-header>
 
-            <v-row
-                align="start"
-                justify="center"
-                dense
+      <v-row
+        align="start"
+        justify="center"
+        dense
+      >
+        <v-col cols="4">
+          <v-hover v-model="hoverWerteHundertRunden">
+            <v-checkbox
+              v-model="werteHundertRunden"
+              :label="'Werte auf 100 Runden'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+          <v-hover v-model="hoverSizeBelastungsplan">
+            <v-slider
+              v-model="sizeBelastungsplan"
+              label="Belastungsplangröße"
+              :max="maxSizeBelastungsplanSvg"
+              :min="minSizeBelastungsplanSvg"
+            />
+          </v-hover>
+        </v-col>
+        <v-col cols="4">
+          <v-hover v-model="hoverBlackPrintMode">
+            <v-checkbox
+              v-model="blackPrintMode"
+              :label="'schwarz-weiß Druckausgabe'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+        </v-col>
+        <v-col cols="4">
+          <v-card flat>
+            {{ helpTextBelastungsplan }}
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-divider></v-divider>
+      <panel-header
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 10px 0"
+        header-text="Ganglinie"
+      ></panel-header>
+
+      <v-row
+        align="start"
+        justify="center"
+        dense
+      >
+        <v-col cols="4">
+          <v-hover v-model="hoverYAchse1">
+            <v-text-field
+              v-model="ganglinieYAchse1MaxValue"
+              :label="'Y-Achse 1'"
+              :rules="[
+                (toCheck) =>
+                  rules.onlyPositivNumbersBiggerThan(toCheck, MIN_VALUE),
+              ]"
+              type="number"
+              clearable
+              density="compact"
+              @blur="checkRangeYAchse1"
             >
-                <v-col cols="4">
-                    <v-hover v-model="hoverWerteHundertRunden">
-                        <v-checkbox
-                            v-model="werteHundertRunden"
-                            :label="'Werte auf 100 Runden'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                    <v-hover v-model="hoverSizeBelastungsplan">
-                        <v-slider
-                            v-model="sizeBelastungsplan"
-                            label="Belastungsplangröße"
-                            :max="maxSizeBelastungsplanSvg"
-                            :min="minSizeBelastungsplanSvg"
-                        />
-                    </v-hover>
-                </v-col>
-                <v-col cols="4">
-                    <v-hover v-model="hoverBlackPrintMode">
-                        <v-checkbox
-                            v-model="blackPrintMode"
-                            :label="'schwarz-weiß Druckausgabe'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                </v-col>
-                <v-col cols="4">
-                    <v-card flat>
-                        {{ helpTextBelastungsplan }}
-                    </v-card>
-                </v-col>
-            </v-row>
-
-            <v-divider></v-divider>
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 10px 0"
-                header-text="Ganglinie"
-            ></panel-header>
-
-            <v-row
-                align="start"
-                justify="center"
-                dense
+            </v-text-field>
+          </v-hover>
+        </v-col>
+        <v-col cols="4">
+          <v-hover v-model="hoverYAchse2">
+            <v-text-field
+              v-model="ganglinieYAchse2MaxValue"
+              :label="'Y-Achse 2 (%)'"
+              type="number"
+              :rules="[
+                (toCheck) =>
+                  rules.onlyNumbersInRange(
+                    toCheck,
+                    MIN_VALUE,
+                    MAX_VALUE_EXCLUDE
+                  ),
+              ]"
+              clearable
+              density="compact"
+              @blur="checkRangeYAchse2"
             >
-                <v-col cols="4">
-                    <v-hover v-model="hoverYAchse1">
-                        <v-text-field
-                            v-model="ganglinieYAchse1MaxValue"
-                            :label="'Y-Achse 1'"
-                            :rules="[
-                                (toCheck) =>
-                                    rules.onlyPositivNumbersBiggerThan(
-                                        toCheck,
-                                        MIN_VALUE
-                                    ),
-                            ]"
-                            type="number"
-                            clearable
-                            dense
-                            @blur="checkRangeYAchse1"
-                        >
-                        </v-text-field>
-                    </v-hover>
-                </v-col>
-                <v-col cols="4">
-                    <v-hover v-model="hoverYAchse2">
-                        <v-text-field
-                            v-model="ganglinieYAchse2MaxValue"
-                            :label="'Y-Achse 2 (%)'"
-                            type="number"
-                            :rules="[
-                                (toCheck) =>
-                                    rules.onlyNumbersInRange(
-                                        toCheck,
-                                        MIN_VALUE,
-                                        MAX_VALUE_EXCLUDE
-                                    ),
-                            ]"
-                            clearable
-                            dense
-                            @blur="checkRangeYAchse2"
-                        >
-                        </v-text-field>
-                    </v-hover>
-                </v-col>
-                <v-col cols="4">
-                    <v-card flat>
-                        {{ helpTextGanglinie }}
-                    </v-card>
-                </v-col>
-            </v-row>
+            </v-text-field>
+          </v-hover>
+        </v-col>
+        <v-col cols="4">
+          <v-card flat>
+            {{ helpTextGanglinie }}
+          </v-card>
+        </v-col>
+      </v-row>
 
-            <v-divider></v-divider>
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Listenausgabe"
-            ></panel-header>
-            <v-row
-                align="start"
-                justify="center"
-                dense
-            >
-                <v-col cols="4">
-                    <v-hover v-model="hoverStundensumme">
-                        <v-checkbox
-                            v-model="stundensumme"
-                            :label="'Stundensumme'"
-                            hide-details
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                    <v-hover v-model="hoverBlocksumme">
-                        <v-checkbox
-                            v-model="blocksumme"
-                            :label="'Blocksumme'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                </v-col>
-                <v-col cols="4">
-                    <v-hover v-model="hoverTagessumme">
-                        <v-checkbox
-                            v-model="tagessumme"
-                            :label="'Tagessumme'"
-                            hide-details
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                    <v-hover v-model="hoverSpitzenstunde">
-                        <v-checkbox
-                            v-model="spitzenstunde"
-                            :label="'Spitzenstunde'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                </v-col>
-                <v-col cols="4">
-                    <v-card flat>
-                        {{ helpTextListenausgabe }}
-                    </v-card>
-                </v-col>
-            </v-row>
+      <v-divider></v-divider>
+      <panel-header
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Listenausgabe"
+      ></panel-header>
+      <v-row
+        align="start"
+        justify="center"
+        dense
+      >
+        <v-col cols="4">
+          <v-hover v-model="hoverStundensumme">
+            <v-checkbox
+              v-model="stundensumme"
+              :label="'Stundensumme'"
+              hide-details
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+          <v-hover v-model="hoverBlocksumme">
+            <v-checkbox
+              v-model="blocksumme"
+              :label="'Blocksumme'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+        </v-col>
+        <v-col cols="4">
+          <v-hover v-model="hoverTagessumme">
+            <v-checkbox
+              v-model="tagessumme"
+              :label="'Tagessumme'"
+              hide-details
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+          <v-hover v-model="hoverSpitzenstunde">
+            <v-checkbox
+              v-model="spitzenstunde"
+              :label="'Spitzenstunde'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+        </v-col>
+        <v-col cols="4">
+          <v-card flat>
+            {{ helpTextListenausgabe }}
+          </v-card>
+        </v-col>
+      </v-row>
 
-            <panel-header
-                v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Detailauswahl Listenausgabe"
-            ></panel-header>
-            <v-hover v-model="hoverSpitzenstundeDetailauswahl">
-                <v-row
-                    v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
-                    align="start"
-                    justify="center"
-                    dense
-                >
-                    <v-col cols="4"> </v-col>
-                    <v-col cols="4">
-                        <v-checkbox
-                            v-model="spitzenstundeKfz"
-                            :label="'Spitzenstunde KFZ'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                            :disabled="isTypeKfzDisabled()"
-                        ></v-checkbox>
-                        <v-checkbox
-                            v-model="spitzenstundeRad"
-                            :label="'Spitzenstunde Rad'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                            :disabled="isTypeRadDisabled()"
-                        ></v-checkbox>
-                        <v-checkbox
-                            v-model="spitzenstundeFuss"
-                            :label="'Spitzenstunde Fuß'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                            :disabled="isTypeFussDisabled()"
-                        ></v-checkbox>
-                    </v-col>
-                    <v-col cols="4">
-                        <v-card flat>
-                            {{ helpTextDetailauswahlListenausgabe }}
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-hover>
+      <panel-header
+        v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Detailauswahl Listenausgabe"
+      ></panel-header>
+      <v-hover v-model="hoverSpitzenstundeDetailauswahl">
+        <v-row
+          v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
+          align="start"
+          justify="center"
+          dense
+        >
+          <v-col cols="4"> </v-col>
+          <v-col cols="4">
+            <v-checkbox
+              v-model="spitzenstundeKfz"
+              :label="'Spitzenstunde KFZ'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+              :disabled="isTypeKfzDisabled()"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="spitzenstundeRad"
+              :label="'Spitzenstunde Rad'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+              :disabled="isTypeRadDisabled()"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="spitzenstundeFuss"
+              :label="'Spitzenstunde Fuß'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+              :disabled="isTypeFussDisabled()"
+            ></v-checkbox>
+          </v-col>
+          <v-col cols="4">
+            <v-card flat>
+              {{ helpTextDetailauswahlListenausgabe }}
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-hover>
 
-            <!-- Zeitreihe -->
-            <panel-header
-                font-size="0.875rem"
-                font-weight="bold"
-                padding="10px 0 0 0"
-                header-text="Zeitreihe"
-            ></panel-header>
+      <!-- Zeitreihe -->
+      <panel-header
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Zeitreihe"
+      ></panel-header>
 
-            <v-row
-                align="start"
-                justify="center"
-                dense
-            >
-                <v-col cols="4">
-                    <v-hover v-model="hoverZeitreiheGesamt">
-                        <v-checkbox
-                            v-model="zeitreiheGesamt"
-                            :label="'Summe alle Verkehrsarten anzeigen'"
-                            hide-details
-                            style="margin-bottom: 12px"
-                            color="grey darken-1"
-                            dense
-                        ></v-checkbox>
-                    </v-hover>
-                </v-col>
-                <v-col cols="4"> </v-col>
-                <v-col cols="4">
-                    <v-card flat>
-                        {{ helpTextZeitreihe }}
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-expansion-panel-content>
-    </v-expansion-panel>
+      <v-row
+        align="start"
+        justify="center"
+        dense
+      >
+        <v-col cols="4">
+          <v-hover v-model="hoverZeitreiheGesamt">
+            <v-checkbox
+              v-model="zeitreiheGesamt"
+              :label="'Summe alle Verkehrsarten anzeigen'"
+              hide-details
+              style="margin-bottom: 12px"
+              color="grey-darken-1"
+              dense
+            ></v-checkbox>
+          </v-hover>
+        </v-col>
+        <v-col cols="4"> </v-col>
+        <v-col cols="4">
+          <v-card flat>
+            {{ helpTextZeitreihe }}
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-expansion-panel-text>
+  </v-expansion-panel>
 </template>
 
 <script setup lang="ts">
-import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import PanelHeader from "@/components/common/PanelHeader.vue";
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+
 import _ from "lodash";
-import { computed, onMounted, Ref, ref, watch } from "vue";
-import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
-import { useRules } from "@/util/rules";
+import { computed, onMounted, ref, watch } from "vue";
+
+import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useRules } from "@/util/rules";
+import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;
@@ -287,18 +286,18 @@ const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useRules();
 
 const emits = defineEmits<{
-    (e: "werteHundertRunden", v: boolean): void;
-    (e: "blackPrintMode", v: boolean): void;
-    (e: "stundensumme", v: boolean): void;
-    (e: "blocksumme", v: boolean): void;
-    (e: "tagessumme", v: boolean): void;
-    (e: "spitzenstunde", v: boolean): void;
-    (e: "spitzenstundeKfz", v: boolean): void;
-    (e: "spitzenstundeRad", v: boolean): void;
-    (e: "spitzenstundeFuss", v: boolean): void;
-    (e: "ganglinieYAchse1MaxValue", v: number | null): void;
-    (e: "ganglinieYAchse2MaxValue", v: number | null): void;
-    (e: "zeitreiheGesamt", v: boolean): void;
+  (e: "werteHundertRunden", v: boolean): void;
+  (e: "blackPrintMode", v: boolean): void;
+  (e: "stundensumme", v: boolean): void;
+  (e: "blocksumme", v: boolean): void;
+  (e: "tagessumme", v: boolean): void;
+  (e: "spitzenstunde", v: boolean): void;
+  (e: "spitzenstundeKfz", v: boolean): void;
+  (e: "spitzenstundeRad", v: boolean): void;
+  (e: "spitzenstundeFuss", v: boolean): void;
+  (e: "ganglinieYAchse1MaxValue", v: number | null): void;
+  (e: "ganglinieYAchse2MaxValue", v: number | null): void;
+  (e: "zeitreiheGesamt", v: boolean): void;
 }>();
 
 // Belastungsplan
@@ -335,152 +334,150 @@ const hoverYAchse2 = ref(false);
 const hoverZeitreiheGesamt = ref(false);
 
 onMounted(() => {
-    update(options.value);
-    sizeBelastungsplan.value = sizeBelastungsplanSvg.value;
+  update(options.value);
+  sizeBelastungsplan.value = sizeBelastungsplanSvg.value;
 });
 
-const sizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return zaehlstelleStore.getSizeBelastungsplanSvg;
+const sizeBelastungsplanSvg = computed(() => {
+  return zaehlstelleStore.getSizeBelastungsplanSvg;
 });
 
-const maxSizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return zaehlstelleStore.getMaxSizeBelastungsplanSvg;
+const maxSizeBelastungsplanSvg = computed(() => {
+  return zaehlstelleStore.getMaxSizeBelastungsplanSvg;
 });
 
-const minSizeBelastungsplanSvg: Ref<number> = computed(() => {
-    return zaehlstelleStore.getMinSizeBelastungsplanSvg;
+const minSizeBelastungsplanSvg = computed(() => {
+  return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
-const options: Ref<OptionsDTO> = computed(() => {
-    return zaehlstelleStore.getFilteroptions;
+const options = computed<OptionsDTO>(() => {
+  return zaehlstelleStore.getFilteroptions;
 });
 
-const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
-    return zaehlstelleStore.getAktiveZaehlung;
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const isZeitauswahlForSpitzenstunde: Ref<boolean> = computed(() => {
-    return zaehlstelleStore.getZeitauswahl.includes(SPITZENSTUNDE);
+const isZeitauswahlForSpitzenstunde = computed(() => {
+  return zaehlstelleStore.getZeitauswahl.includes(SPITZENSTUNDE);
 });
 
-const helpTextBelastungsplan: Ref<string> = computed(() => {
-    if (hoverWerteHundertRunden.value) {
-        return "";
-    }
-    if (hoverBlackPrintMode.value) {
-        return "";
-    }
-    if (hoverSizeBelastungsplan.value) {
-        return "";
-    }
+const helpTextBelastungsplan = computed(() => {
+  if (hoverWerteHundertRunden.value) {
     return "";
+  }
+  if (hoverBlackPrintMode.value) {
+    return "";
+  }
+  if (hoverSizeBelastungsplan.value) {
+    return "";
+  }
+  return "";
 });
 
-const helpTextGanglinie: Ref<string> = computed(() => {
-    if (hoverYAchse1.value) {
-        return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 ist.";
-    }
-    if (hoverYAchse2.value) {
-        return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 oder > 100 ist.";
-    }
-    return "";
+const helpTextGanglinie = computed(() => {
+  if (hoverYAchse1.value) {
+    return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 ist.";
+  }
+  if (hoverYAchse2.value) {
+    return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 oder > 100 ist.";
+  }
+  return "";
 });
 
-const helpTextListenausgabe: Ref<string> = computed(() => {
-    if (hoverStundensumme.value) {
-        return "Ausgabe der Summen für jede Stunde als Zeile.";
-    }
-    if (hoverBlocksumme.value) {
-        return "Ausgabe der Summen für jeden Zählblock als Zeile.";
-    }
-    if (hoverTagessumme.value) {
-        return "Ausgabe der Summe für den Tageswert als Zeile.";
-    }
-    if (hoverSpitzenstunde.value) {
-        return "Ausgaben der Summe für die Spitzenstunde(n) als Zeile.";
-    }
-    return "";
+const helpTextListenausgabe = computed(() => {
+  if (hoverStundensumme.value) {
+    return "Ausgabe der Summen für jede Stunde als Zeile.";
+  }
+  if (hoverBlocksumme.value) {
+    return "Ausgabe der Summen für jeden Zählblock als Zeile.";
+  }
+  if (hoverTagessumme.value) {
+    return "Ausgabe der Summe für den Tageswert als Zeile.";
+  }
+  if (hoverSpitzenstunde.value) {
+    return "Ausgaben der Summe für die Spitzenstunde(n) als Zeile.";
+  }
+  return "";
 });
 
-const helpTextDetailauswahlListenausgabe: Ref<string> = computed(() => {
-    if (hoverSpitzenstundeDetailauswahl.value) {
-        return "Detailauswahl der auszugebenden Spitzenstunde(n)";
-    }
-    return "";
+const helpTextDetailauswahlListenausgabe = computed(() => {
+  if (hoverSpitzenstundeDetailauswahl.value) {
+    return "Detailauswahl der auszugebenden Spitzenstunde(n)";
+  }
+  return "";
 });
 
-const helpTextZeitreihe: Ref<string> = computed(() => {
-    if (hoverZeitreiheGesamt.value) {
-        return "";
-    }
+const helpTextZeitreihe = computed(() => {
+  if (hoverZeitreiheGesamt.value) {
     return "";
+  }
+  return "";
 });
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
 function update(newOptions: OptionsDTO) {
-    newOptions.werteHundertRunden === null
-        ? (werteHundertRunden.value = false)
-        : (werteHundertRunden.value = newOptions.werteHundertRunden);
-    newOptions.blackPrintMode === null
-        ? (blackPrintMode.value = false)
-        : (blackPrintMode.value = newOptions.blackPrintMode);
-    newOptions.stundensumme === null
-        ? (stundensumme.value = false)
-        : (stundensumme.value = newOptions.stundensumme);
-    newOptions.blocksumme === null
-        ? (blocksumme.value = false)
-        : (blocksumme.value = newOptions.blocksumme);
-    newOptions.tagessumme === null
-        ? (tagessumme.value = false)
-        : (tagessumme.value = newOptions.tagessumme);
-    newOptions.spitzenstunde === null
-        ? (spitzenstunde.value = false)
-        : (spitzenstunde.value = newOptions.spitzenstunde);
-    newOptions.spitzenstundeKfz === null
-        ? (spitzenstundeKfz.value = false)
-        : (spitzenstundeKfz.value = newOptions.spitzenstundeKfz);
-    newOptions.spitzenstundeRad === null
-        ? (spitzenstundeRad.value = false)
-        : (spitzenstundeRad.value = newOptions.spitzenstundeRad);
-    newOptions.spitzenstundeFuss === null
-        ? (spitzenstundeFuss.value = false)
-        : (spitzenstundeFuss.value = newOptions.spitzenstundeFuss);
-    newOptions.ganglinieYAchse1MaxValue === null
-        ? (ganglinieYAchse1MaxValue.value = null)
-        : (ganglinieYAchse1MaxValue.value =
-              newOptions.ganglinieYAchse1MaxValue);
-    newOptions.ganglinieYAchse2MaxValue === null
-        ? (ganglinieYAchse2MaxValue.value = null)
-        : (ganglinieYAchse2MaxValue.value =
-              newOptions.ganglinieYAchse2MaxValue);
-    newOptions.zeitreiheGesamt === null
-        ? (zeitreiheGesamt.value = false)
-        : (zeitreiheGesamt.value = newOptions.zeitreiheGesamt);
+  newOptions.werteHundertRunden === null
+    ? (werteHundertRunden.value = false)
+    : (werteHundertRunden.value = newOptions.werteHundertRunden);
+  newOptions.blackPrintMode === null
+    ? (blackPrintMode.value = false)
+    : (blackPrintMode.value = newOptions.blackPrintMode);
+  newOptions.stundensumme === null
+    ? (stundensumme.value = false)
+    : (stundensumme.value = newOptions.stundensumme);
+  newOptions.blocksumme === null
+    ? (blocksumme.value = false)
+    : (blocksumme.value = newOptions.blocksumme);
+  newOptions.tagessumme === null
+    ? (tagessumme.value = false)
+    : (tagessumme.value = newOptions.tagessumme);
+  newOptions.spitzenstunde === null
+    ? (spitzenstunde.value = false)
+    : (spitzenstunde.value = newOptions.spitzenstunde);
+  newOptions.spitzenstundeKfz === null
+    ? (spitzenstundeKfz.value = false)
+    : (spitzenstundeKfz.value = newOptions.spitzenstundeKfz);
+  newOptions.spitzenstundeRad === null
+    ? (spitzenstundeRad.value = false)
+    : (spitzenstundeRad.value = newOptions.spitzenstundeRad);
+  newOptions.spitzenstundeFuss === null
+    ? (spitzenstundeFuss.value = false)
+    : (spitzenstundeFuss.value = newOptions.spitzenstundeFuss);
+  newOptions.ganglinieYAchse1MaxValue === null
+    ? (ganglinieYAchse1MaxValue.value = null)
+    : (ganglinieYAchse1MaxValue.value = newOptions.ganglinieYAchse1MaxValue);
+  newOptions.ganglinieYAchse2MaxValue === null
+    ? (ganglinieYAchse2MaxValue.value = null)
+    : (ganglinieYAchse2MaxValue.value = newOptions.ganglinieYAchse2MaxValue);
+  newOptions.zeitreiheGesamt === null
+    ? (zeitreiheGesamt.value = false)
+    : (zeitreiheGesamt.value = newOptions.zeitreiheGesamt);
 }
 
 function isTypeKfzDisabled(): boolean {
-    const disabled: boolean = isTypeDisabled("KFZ");
-    if (disabled) {
-        spitzenstundeKfz.value = false;
-    }
-    return disabled;
+  const disabled: boolean = isTypeDisabled("KFZ");
+  if (disabled) {
+    spitzenstundeKfz.value = false;
+  }
+  return disabled;
 }
 
 function isTypeRadDisabled(): boolean {
-    const disabled: boolean = isTypeDisabled("RAD");
-    if (disabled) {
-        spitzenstundeRad.value = false;
-    }
-    return disabled;
+  const disabled: boolean = isTypeDisabled("RAD");
+  if (disabled) {
+    spitzenstundeRad.value = false;
+  }
+  return disabled;
 }
 
 function isTypeFussDisabled(): boolean {
-    const disabled: boolean = isTypeDisabled("FUSS");
-    if (disabled) {
-        spitzenstundeFuss.value = false;
-    }
-    return disabled;
+  const disabled: boolean = isTypeDisabled("FUSS");
+  if (disabled) {
+    spitzenstundeFuss.value = false;
+  }
+  return disabled;
 }
 
 /**
@@ -488,93 +485,89 @@ function isTypeFussDisabled(): boolean {
  * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
  */
 function isTypeDisabled(type: string): boolean {
-    return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
+  return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
 }
 
 function checkRangeYAchse2() {
-    if (ganglinieYAchse2MaxValue.value) {
-        if (
-            !_.inRange(
-                ganglinieYAchse2MaxValue.value,
-                MIN_VALUE,
-                MAX_VALUE_EXCLUDE
-            )
-        ) {
-            ganglinieYAchse2MaxValue.value = null;
-        }
+  if (ganglinieYAchse2MaxValue.value) {
+    if (
+      !_.inRange(ganglinieYAchse2MaxValue.value, MIN_VALUE, MAX_VALUE_EXCLUDE)
+    ) {
+      ganglinieYAchse2MaxValue.value = null;
     }
+  }
 }
 
 function checkRangeYAchse1() {
-    if (
-        ganglinieYAchse1MaxValue.value &&
-        ganglinieYAchse1MaxValue.value < MIN_VALUE
-    ) {
-        ganglinieYAchse1MaxValue.value = null;
-    }
+  if (
+    ganglinieYAchse1MaxValue.value &&
+    ganglinieYAchse1MaxValue.value < MIN_VALUE
+  ) {
+    ganglinieYAchse1MaxValue.value = null;
+  }
 }
 
 // Watcher
 // Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
 watch(werteHundertRunden, () => {
-    emits("werteHundertRunden", werteHundertRunden.value);
+  emits("werteHundertRunden", werteHundertRunden.value);
 });
 
 watch(blackPrintMode, () => {
-    emits("blackPrintMode", blackPrintMode.value);
+  emits("blackPrintMode", blackPrintMode.value);
 });
 
 watch(sizeBelastungsplan, () => {
-    zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
+  zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
 });
 
 watch(stundensumme, () => {
-    emits("stundensumme", stundensumme.value);
+  emits("stundensumme", stundensumme.value);
 });
 
 watch(blocksumme, () => {
-    emits("blocksumme", blocksumme.value);
+  emits("blocksumme", blocksumme.value);
 });
 
 watch(tagessumme, () => {
-    emits("tagessumme", tagessumme.value);
+  emits("tagessumme", tagessumme.value);
 });
 
 watch(spitzenstunde, () => {
-    emits("spitzenstunde", spitzenstunde.value);
+  emits("spitzenstunde", spitzenstunde.value);
 });
 
 watch(spitzenstundeKfz, () => {
-    emits("spitzenstundeKfz", spitzenstundeKfz.value);
+  emits("spitzenstundeKfz", spitzenstundeKfz.value);
 });
 
 watch(spitzenstundeRad, () => {
-    emits("spitzenstundeRad", spitzenstundeRad.value);
+  emits("spitzenstundeRad", spitzenstundeRad.value);
 });
 
 watch(spitzenstundeFuss, () => {
-    emits("spitzenstundeFuss", spitzenstundeFuss.value);
+  emits("spitzenstundeFuss", spitzenstundeFuss.value);
 });
 
 watch(ganglinieYAchse1MaxValue, () => {
-    emits("ganglinieYAchse1MaxValue", ganglinieYAchse1MaxValue.value);
+  emits("ganglinieYAchse1MaxValue", ganglinieYAchse1MaxValue.value);
 });
 
 watch(ganglinieYAchse2MaxValue, () => {
-    emits("ganglinieYAchse2MaxValue", ganglinieYAchse2MaxValue.value);
+  emits("ganglinieYAchse2MaxValue", ganglinieYAchse2MaxValue.value);
 });
 
 watch(zeitreiheGesamt, () => {
-    emits("zeitreiheGesamt", zeitreiheGesamt.value);
+  emits("zeitreiheGesamt", zeitreiheGesamt.value);
 });
 
 // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
 // Oberfläche ändern.
 watch(options, (newOptions: OptionsDTO) => {
-    update(newOptions);
+  update(newOptions);
 });
 
 watch(sizeBelastungsplanSvg, (newSize: number) => {
-    sizeBelastungsplan.value = newSize;
+  sizeBelastungsplan.value = newSize;
 });
 </script>

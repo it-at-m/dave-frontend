@@ -1,120 +1,119 @@
 <template>
-    <v-dialog
-        v-model="openDialog"
-        width="80vh"
-        height="60vh"
-        @click:outside="cancelDialog"
-    >
-        <v-card>
-            <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
-            >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >mdi-image</v-icon
-                >
-                Bildeinstellungen bearbeiten
-            </v-card-title>
-            <v-card-text>
-                <p class="text-caption">
-                    (Die Höhe der Grafik wird nur bis max. 200px angezeigt. Im
-                    Dokument ist sie dann in voller Höhe zu sehen)
-                </p>
-                <v-sheet
-                    width="100%"
-                    height="200px"
-                    color="grey lighten-4"
-                    outlined
-                >
-                    <v-img
-                        :src="asset.image"
-                        :width="`${asset.width}%`"
-                        max-height="200px"
-                    ></v-img>
-                </v-sheet>
-                <p>{{ asset.caption }}</p>
-                <v-divider></v-divider>
-                <v-form
-                    ref="form"
-                    class="mx-3"
-                >
-                    <v-container>
-                        <v-row>
-                            <v-col>
-                                <v-text-field
-                                    v-model="asset.caption"
-                                    label="Bildunterschrift"
-                                    prepend-icon="mdi-message-image"
-                                    outlined
-                                    dense
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col>
-                                <v-file-input
-                                    label="Bilder vom Rechner hoch laden."
-                                    accept="image/*"
-                                    prepend-icon="mdi-image-plus"
-                                    outlined
-                                    dense
-                                    show-size
-                                    @change="upload($event)"
-                                ></v-file-input>
-                            </v-col>
-                            <v-col>
-                                <v-slider
-                                    v-model="asset.width"
-                                    label="Breite in %"
-                                    thumb-color="red"
-                                    thumb-label="always"
-                                    prepend-icon="mdi-image-size-select-large"
-                                ></v-slider>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-form>
-            </v-card-text>
-            <v-divider></v-divider>
+  <v-dialog
+    v-model="openDialog"
+    width="80vh"
+    height="60vh"
+    @click:outside="cancelDialog"
+  >
+    <v-card>
+      <v-card-title class="text-h6 text-grey-lighten-1 bg-grey-lighten-2 mb-3">
+        <v-icon
+          color="grey-lighten-1"
+          class="mr-2"
+          >mdi-image</v-icon
+        >
+        Bildeinstellungen bearbeiten
+      </v-card-title>
+      <v-card-text>
+        <p class="text-caption">
+          (Die Höhe der Grafik wird nur bis max. 200px angezeigt. Im Dokument
+          ist sie dann in voller Höhe zu sehen)
+        </p>
+        <v-sheet
+          width="100%"
+          height="200px"
+          color="grey-lighten-4"
+          border
+        >
+          <v-img
+            :src="asset.image"
+            :width="`${asset.width}%`"
+            max-height="200px"
+          ></v-img>
+        </v-sheet>
+        <p>{{ asset.caption }}</p>
+        <v-divider></v-divider>
+        <v-form
+          ref="form"
+          class="mx-3"
+        >
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="asset.caption"
+                  label="Bildunterschrift"
+                  prepend-icon="mdi-message-image"
+                  variant="outlined"
+                  density="compact"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-file-input
+                  label="Bilder vom Rechner hoch laden."
+                  accept="image/*"
+                  prepend-icon="mdi-image-plus"
+                  variant="outlined"
+                  density="compact"
+                  show-size
+                  @change="upload($event)"
+                ></v-file-input>
+              </v-col>
+              <v-col>
+                <v-slider
+                  v-model="asset.width"
+                  label="Breite in %"
+                  thumb-color="red"
+                  thumb-label="always"
+                  prepend-icon="mdi-image-size-select-large"
+                ></v-slider>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card-text>
+      <v-divider></v-divider>
 
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="save"
-                >
-                    Speichern
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          variant="text"
+          @click="save"
+        >
+          Speichern
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import { computed, ref, watch } from "vue";
 
+import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
+import TextAsset from "@/types/pdfreport/assets/TextAsset";
+
 interface Props {
-    value: boolean;
-    image: ImageAsset;
+  value: boolean;
+  image: ImageAsset;
 }
 
 const props = defineProps<Props>();
 
 const emits = defineEmits<{
-    (e: "save", v: TextAsset): void;
-    (e: "cancelDialog"): void;
-    (e: "input", v: boolean): void;
+  (e: "save", v: TextAsset): void;
+  (e: "cancelDialog"): void;
+  (e: "input", v: boolean): void;
 }>();
 
 const asset = ref(new ImageAsset("", ""));
 
 const openDialog = computed({
-    get: () => props.value,
-    set: (payload: boolean) => emits("input", payload),
+  get: () => props.value,
+  set: (payload: boolean) => emits("input", payload),
 });
 
 /**
@@ -123,39 +122,39 @@ const openDialog = computed({
  * @param file
  */
 function upload(file: File): void {
-    if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const base64 = reader.result;
-            if (asset.value && base64 && !(base64 instanceof ArrayBuffer)) {
-                asset.value.image = base64;
-            }
-        };
-    }
+  if (file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result;
+      if (asset.value && base64 && !(base64 instanceof ArrayBuffer)) {
+        asset.value.image = base64;
+      }
+    };
+  }
 }
 
 /**
  * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.
  */
 function save(): void {
-    if (asset.value.image && asset.value.image?.length > 0) {
-        emits("save", Object.assign({}, asset.value));
-    } else {
-        cancelDialog();
-    }
+  if (asset.value.image && asset.value.image?.length > 0) {
+    emits("save", Object.assign({}, asset.value));
+  } else {
+    cancelDialog();
+  }
 }
 
 /**
  * Verläßt das Formular ohne zu speichern.
  */
 function cancelDialog(): void {
-    emits("cancelDialog");
+  emits("cancelDialog");
 }
 
 watch(openDialog, () => {
-    if (props.image) {
-        asset.value = Object.assign({}, props.image);
-    }
+  if (props.image) {
+    asset.value = Object.assign({}, props.image);
+  }
 });
 </script>

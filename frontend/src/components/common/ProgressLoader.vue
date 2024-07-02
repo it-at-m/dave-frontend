@@ -1,23 +1,23 @@
 <template>
-    <v-overlay
-        absolute
-        :value="value"
+  <v-overlay
+    absolute
+    :model-value="value"
+  >
+    <v-progress-circular
+      :size="120"
+      :width="10"
+      model-value="30"
+      color="grey-lighten-3"
+      indeterminate
     >
-        <v-progress-circular
-            :size="120"
-            :width="10"
-            value="30"
-            color="grey lighten-3"
-            indeterminate
-        >
-            laden
-        </v-progress-circular>
-    </v-overlay>
+      laden
+    </v-progress-circular>
+  </v-overlay>
 </template>
 
 <script lang="ts" setup>
 interface Props {
-    value: boolean;
+  value: boolean;
 }
 
 defineProps<Props>();
