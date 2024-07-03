@@ -79,9 +79,9 @@ const mapStyle = computed<string>(() => {
 });
 
 const map = ref<L.Map | undefined>(undefined);
-const markerCluster = ref(L.markerClusterGroup());
+const markerCluster = ref<L.MarkerClusterGroup>(L.markerClusterGroup());
 
-const zaehlartenLayer = ref(L.layerGroup());
+const zaehlartenLayer = ref<L.LayerGroup>(L.layerGroup());
 
 onMounted(() => {
     createMap();
@@ -119,7 +119,7 @@ function initMap(): void {
                     );
                     map.value.setZoom(zoomValue.value);
                     createLayersAndAddToMap();
-                    markerCluster.value.addTo(map.value);
+                    markerCluster.value.addTo(map.value as L.Map);
                     searchErhebungsstelle();
                 }
             }, 10)
@@ -164,8 +164,8 @@ function createLayersAndAddToMap(): void {
     if (map.value) {
         const baseLayers = createBaseLayers();
         const overlayLayers = createOverlayLayers();
-        baseLayers.Stadtkarte.addTo(map.value);
-        L.control.layers(baseLayers, overlayLayers).addTo(map.value);
+        baseLayers.Stadtkarte.addTo(map.value as L.Map);
+        L.control.layers(baseLayers, overlayLayers).addTo(map.value as L.Map);
     }
 }
 
@@ -252,10 +252,10 @@ watch(searchResult, () => {
 function resetMarker(): void {
     if (map.value) {
         if (markerCluster.value) {
-            markerCluster.value.removeFrom(map.value);
+            markerCluster.value.removeFrom(map.value as L.Map);
             markerCluster.value.clearLayers();
         }
-        zaehlartenLayer.value.removeFrom(map.value);
+        zaehlartenLayer.value.removeFrom(map.value as L.Map);
         setMarkerToMap();
     }
 }
@@ -305,7 +305,7 @@ function setMarkerToMap() {
 
     markerCluster.value.addLayers(markers);
     if (map.value) {
-        markerCluster.value.addTo(map.value);
+        markerCluster.value.addTo(map.value as L.Map);
         if (zaehlstellenKarte.length === 1) {
             /**
              * Falls in der Main.view nach einer bestimmten Zaehlstelle gesucht
@@ -337,7 +337,7 @@ function setZaehlartenmarkerToMap() {
     });
     zaehlartenLayer.value = L.layerGroup(markers);
     if (map.value) {
-        zaehlartenLayer.value.addTo(map.value);
+        zaehlartenLayer.value.addTo(map.value as L.Map);
     }
 }
 
@@ -375,7 +375,7 @@ function saveMapPositionInUrl() {
         const zoom = map.value.getZoom().toString();
 
         router.replace({
-            path: router.currentRoute.path,
+            path: route.path,
             query: { lat: lat, lng: lng, zoom: zoom },
         });
     }
@@ -449,7 +449,7 @@ function createMarkerForZaehlart(
         choosenZaehlartIconToZaehlstelleHeader(zaehlart);
         nextTick(() => {
             if (map.value) {
-                zaehlartenLayer.value.removeFrom(map.value);
+                zaehlartenLayer.value.removeFrom(map.value as L.Map);
                 setZaehlartenmarkerToMap();
             }
         });
