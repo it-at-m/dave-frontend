@@ -202,15 +202,16 @@ export default class Optionsmenue extends Vue {
     private setDefaultOptionsForZaehlung() {
         let options = {} as OptionsDTO;
         Object.assign(options, this.options);
-
+        
+        if (this.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+                options.zeitauswahl = Zeitauswahl.BLOCK;
+                options.zeitblock = Zeitblock.ZB_06_19;
+            }
         if (
             this.zaehlung.zaehlart === Zaehlart.R ||
             this.zaehlung.zaehlart === Zaehlart.QR
         ) {
-            if (this.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
-                options.zeitauswahl = Zeitauswahl.BLOCK;
-                options.zeitblock = Zeitblock.ZB_06_19;
-            } else if (
+            if (
                 this.zaehlung.zaehldauer === Zaehldauer.DAUER_16_STUNDEN
             ) {
                 options.zeitauswahl = Zeitauswahl.BLOCK;
