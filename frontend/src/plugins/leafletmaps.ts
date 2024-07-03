@@ -1,5 +1,4 @@
 import { Icon } from "leaflet";
-
 import "leaflet.markercluster";
 import "leaflet.fullscreen";
 import "leaflet.fullscreen/Control.FullScreen.css";
@@ -15,13 +14,13 @@ import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 // https://vue2-leaflet.netlify.app/quickstart/#marker-icons-are-missing
 
 Icon.Default.mergeOptions({
-  iconRetinaUrl: iconRetinaUrl,
-  iconUrl: iconUrl,
-  shadowUrl: shadowUrl,
+    iconRetinaUrl: iconRetinaUrl,
+    iconUrl: iconUrl,
+    shadowUrl: shadowUrl,
 });
 
 // Default-Icon
 type D = Icon.Default & {
-  _getIconUrl?: string;
+    _getIconUrl?: string;
 };
 delete (Icon.Default.prototype as D)._getIconUrl;

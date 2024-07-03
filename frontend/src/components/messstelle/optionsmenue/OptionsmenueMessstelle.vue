@@ -1,87 +1,90 @@
 <template>
-  <div>
-    <v-btn
-      class="ml-6 mt-2"
-      color="secondary"
-      @click="dialog = true"
-    >
-      <v-icon start>mdi-filter-outline</v-icon>
-      <span class="hidden-lg-and-down">Filtereinstellungen bearbeiten</span>
-      <span class="hidden-xl">Filtereinstellungen</span>
-    </v-btn>
-    <v-dialog
-      v-model="dialog"
-      max-width="900px"
-    >
-      <v-card
-        width="900px"
-        flat
-      >
-        <v-card-title>
-          <v-icon start>mdi-filter-outline</v-icon>
-          Filtereinstellungen
-        </v-card-title>
-        <v-card-text>
-          <v-sheet
-            class="overflow-y-auto"
-            :max-height="getContentSheetHeight"
-            width="100%"
-          >
-            <v-expansion-panels
-              hover
-              focusable
-            >
-              <zeit-panel v-model="chosenOptions" />
-              <fahrzeug-panel v-model="chosenOptions" />
-              <messquerschnitt-panel v-model="chosenOptions" />
-              <darstellungsoptionen-panel-messstelle v-model="chosenOptions" />
-            </v-expansion-panels>
-          </v-sheet>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
+    <div>
+        <v-btn
+            class="ml-6 mt-2"
             color="secondary"
-            @click="setChosenOptions"
-            >Aktualisiere Daten
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="grey-lighten-1"
-            @click="resetOptions"
-            >Zurücksetzen
-          </v-btn>
-          <v-spacer></v-spacer>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
+            @click="dialog = true"
+        >
+            <v-icon left>mdi-filter-outline</v-icon>
+            <span class="hidden-lg-and-down"
+                >Filtereinstellungen bearbeiten</span
+            >
+            <span class="hidden-xl-only">Filtereinstellungen</span>
+        </v-btn>
+        <v-dialog
+            v-model="dialog"
+            max-width="900px"
+        >
+            <v-card
+                width="900px"
+                flat
+            >
+                <v-card-title>
+                    <v-icon left>mdi-filter-outline</v-icon>
+                    Filtereinstellungen
+                </v-card-title>
+                <v-card-text>
+                    <v-sheet
+                        class="overflow-y-auto"
+                        :max-height="getContentSheetHeight"
+                        width="100%"
+                    >
+                        <v-expansion-panels
+                            hover
+                            focusable
+                        >
+                            <zeit-panel v-model="chosenOptions" />
+                            <fahrzeug-panel v-model="chosenOptions" />
+                            <messquerschnitt-panel v-model="chosenOptions" />
+                            <darstellungsoptionen-panel-messstelle
+                                v-model="chosenOptions"
+                            />
+                        </v-expansion-panels>
+                    </v-sheet>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="secondary"
+                        @click="setChosenOptions"
+                        >Aktualisiere Daten
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="grey lighten-1"
+                        @click="resetOptions"
+                        >Zurücksetzen
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
 </template>
 <script setup lang="ts">
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-
-import _ from "lodash";
-import { computed, ref, watch } from "vue";
-import { useDisplay } from "vuetify";
-
-import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
-import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
-import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
+import {computed, ref, watch} from "vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useUserStore } from "@/store/user";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
-import TagesTyp from "@/types/enum/TagesTyp";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
+import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { useTimeUtils } from "@/util/TimeUtils";
+import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import _ from "lodash";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
+import {useMessstelleUtils} from "@/util/MessstelleUtils";
+import TagesTyp from "@/types/enum/TagesTyp";
+import DarstellungsoptionenPanelMessstelle
+  from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
+import {useSnackbarStore} from "@/store/snackbar";
+import {useMessstelleStore} from "@/store/messstelle";
+import {useUserStore} from "@/store/user";
+import {useTimeUtils} from "@/util/TimeUtils";
+import {useDisplay} from "vuetify";
 
 interface Props {
-  messstelleId: string;
+    messstelleId: string;
 }
 
 defineProps<Props>();
@@ -92,132 +95,139 @@ const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
 const chosenOptions = ref(
-  DefaultObjectCreator.createDefaultMessstelleOptions()
+    DefaultObjectCreator.createDefaultMessstelleOptions()
 );
 
 const userStore = useUserStore();
 const timeUtils = useTimeUtils();
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
-  return messstelleStore.getMessstelleInfo;
+    return messstelleStore.getMessstelleInfo;
 });
 
 const getContentSheetHeight = computed(() => {
-  if (display.xl.value) {
-    return "650px";
-  }
-  return "400px";
+    if (display.xl.value) {
+        return "650px";
+    }
+    return "400px";
 });
 
 const isAnwender = computed(() => {
-  return userStore.hasAuthorities && userStore.isAnwender;
+    return userStore.hasAuthorities && userStore.isAnwender;
 });
 
 watch(messstelle, () => {
-  if (messstelleStore.isHistory) {
-    chosenOptions.value = messstelleStore.getFilteroptions;
-    messstelleStore.reloadFilteroptions();
-  } else {
-    resetOptions();
-  }
+    if (messstelleStore.isHistory) {
+        chosenOptions.value = messstelleStore.getFilteroptions;
+        messstelleStore.reloadFilteroptions();
+    } else {
+        resetOptions();
+    }
 });
 
 function setChosenOptions(): void {
-  if (areChosenOptionsValid()) {
-    saveChosenOptions();
-    dialog.value = false;
-  }
+    if (areChosenOptionsValid()) {
+        saveChosenOptions();
+        dialog.value = false;
+    }
 }
 
 function areChosenOptionsValid(): boolean {
-  let result = true;
-  if (chosenOptions.value.messquerschnittIds.length === 0) {
-    result = false;
-    let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
-    if (
-      messstelleUtils.isZeitauswahlSpitzenstunde(
-        chosenOptions.value.zeitauswahl
-      )
-    ) {
-      errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+    let result = true;
+    if (chosenOptions.value.messquerschnittIds.length === 0) {
+        result = false;
+        let errortext =
+            "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+        if (
+            messstelleUtils.isZeitauswahlSpitzenstunde(
+                chosenOptions.value.zeitauswahl
+            )
+        ) {
+            errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
+        }
+        snackbarStore.showError(errortext);
     }
-    snackbarStore.showError(errortext);
-  }
-  if (
-    chosenOptions.value.zeitraum.length === 2 &&
-    !chosenOptions.value.tagesTyp
-  ) {
-    result = false;
-    snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
-  }
-  if (
-    isAnwender.value &&
-    timeUtils.isDateRangeBiggerFiveYears(chosenOptions.value.zeitraum.slice())
-  ) {
-    result = false;
-    snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
-  }
-  return result;
+    if (
+        chosenOptions.value.zeitraum.length === 2 &&
+        !chosenOptions.value.tagesTyp
+    ) {
+        result = false;
+        snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
+    }
+    if (
+        isAnwender.value &&
+        timeUtils.isDateRangeBiggerFiveYears(
+            chosenOptions.value.zeitraum.slice()
+        )
+    ) {
+        result = false;
+        snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
+    }
+    return result;
 }
 
 function saveChosenOptions(): void {
-  messstelleStore.setFilteroptions(_.cloneDeep(chosenOptions.value));
+    messstelleStore.setFilteroptions(_.cloneDeep(chosenOptions.value));
 }
 
 function setDefaultOptionsForMessstelle(): void {
-  chosenOptions.value.fahrzeuge =
-    DefaultObjectCreator.createDefaultFahrzeugOptions();
+    chosenOptions.value.fahrzeuge =
+        DefaultObjectCreator.createDefaultFahrzeugOptions();
 
-  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-  chosenOptions.value.fahrzeuge.radverkehr =
-    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+        messstelle.value.detektierteVerkehrsarten ===
+        DetektierteFahrzeugart.KFZ;
+    chosenOptions.value.fahrzeuge.radverkehr =
+        !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
-  chosenOptions.value.zeitraum = [messstelle.value.datumLetztePlausibleMessung];
-  chosenOptions.value.messquerschnittIds = [];
-  messstelle.value.messquerschnitte.forEach((q) =>
-    chosenOptions.value.messquerschnittIds.push(q.mqId)
-  );
-  if (messstelle.value.messquerschnitte.length === 1) {
-    messstelleStore.setDirection(
-      messstelle.value.messquerschnitte[0].fahrtrichtung
+    chosenOptions.value.zeitraum = [
+        messstelle.value.datumLetztePlausibleMessung,
+    ];
+    chosenOptions.value.messquerschnittIds = [];
+    messstelle.value.messquerschnitte.forEach((q) =>
+        chosenOptions.value.messquerschnittIds.push(q.mqId)
     );
-  } else {
-    messstelleStore.setDirection(messstelleUtils.alleRichtungen);
-  }
-  chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-  chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
-  chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
-  chosenOptions.value.tagesTyp = "" as TagesTyp;
-  chosenOptions.value.blackPrintMode = false;
-  chosenOptions.value.werteHundertRunden = false;
-  chosenOptions.value.blocksumme = true;
-  chosenOptions.value.stundensumme = true;
-  chosenOptions.value.tagessumme = true;
-  chosenOptions.value.spitzenstunde = true;
-  messstelleStore.calculateActiveMessfaehigkeit(
-    messstelle.value.datumLetztePlausibleMessung
-  );
-  saveChosenOptions();
+    if (messstelle.value.messquerschnitte.length === 1) {
+        messstelleStore.setDirection(
+            messstelle.value.messquerschnitte[0].fahrtrichtung
+        );
+    } else {
+        messstelleStore.setDirection(messstelleUtils.alleRichtungen);
+    }
+    chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
+    chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
+    chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
+    chosenOptions.value.tagesTyp = "" as TagesTyp;
+    chosenOptions.value.blackPrintMode = false;
+    chosenOptions.value.werteHundertRunden = false;
+    chosenOptions.value.blocksumme = true;
+    chosenOptions.value.stundensumme = true;
+    chosenOptions.value.tagessumme = true;
+    chosenOptions.value.spitzenstunde = true;
+    messstelleStore.calculateActiveMessfaehigkeit(
+        messstelle.value.datumLetztePlausibleMessung
+    );
+    saveChosenOptions();
 }
 
 function resetOptions(): void {
-  setDefaultOptionsForMessstelle();
+    setDefaultOptionsForMessstelle();
 }
 
 watch(
-  () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
-  () => {
-    chosenOptions.value.fahrzeuge =
-      DefaultObjectCreator.createDefaultFahrzeugOptions();
-    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-      messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-    chosenOptions.value.fahrzeuge.radverkehr =
-      !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+    () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
+    () => {
+        chosenOptions.value.fahrzeuge =
+            DefaultObjectCreator.createDefaultFahrzeugOptions();
+        chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+            messstelle.value.detektierteVerkehrsarten ===
+            DetektierteFahrzeugart.KFZ;
+        chosenOptions.value.fahrzeuge.radverkehr =
+            !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
-    snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
-    );
-  }
+        snackbarStore.showWarning(
+            'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
+        );
+    }
 );
 </script>

@@ -1,3 +1,3 @@
 export default interface NichtPlausibleTageDTO {
-  nichtPlausibleTage: string[];
+    nichtPlausibleTage: string[];
 }

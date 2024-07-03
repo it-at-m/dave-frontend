@@ -1,5 +1,5 @@
 export default interface ChosenTagesTypValidRequestDTO {
-  startDate: string;
-  endDate: string;
-  tagesTyp: string;
+    startDate: string;
+    endDate: string;
+    tagesTyp: string;
 }

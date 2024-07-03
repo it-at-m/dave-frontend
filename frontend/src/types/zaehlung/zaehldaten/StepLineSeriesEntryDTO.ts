@@ -1,9 +1,9 @@
 export default interface StepLineSeriesEntryDTO {
-  name: string;
+    name: string;
 
-  yaxisData: Array<number>;
+    yaxisData: Array<number>;
 
-  xaxisIndex: number;
+    xaxisIndex: number;
 
-  yaxisIndex: number;
+    yaxisIndex: number;
 }

@@ -2,256 +2,256 @@
  * In dieser Klasse befinden sich alle Informationen zum Knotenarm.
  */
 export default class BelastungsplanKnotenarm {
-  constructor(strasse: string, knotenarmNummer: number) {
-    this.cleanseStrasse(strasse);
-    this._knotenarmNummer = knotenarmNummer;
-  }
-
-  private _knotenarmNummer: number;
-
-  // Das sind die Ausgleichswerte für Knotenarme, die sich gegenüber liegen und durch eine
-  // gerade Fahrbeziehung verbunden sind. Das ist immer dann ein Problem, wenn links und/oder
-  // rechts von der geraden Fahrbeziehung eine ungleiche Anzahl an Fahrbeziehungen vorhanden
-  // ist. Das muss dann auf der "NACH" Seite ausgegliechen werden.
-  private _ausgleich = 0;
-
-  // eingehende Fahrbeziehungstypen
-  private _nachFahrbeziehungsTypen: number[] = [];
-  // ausgehende Fahrbeziehungstypen
-  private _vonFahrbeziehungsTypen: number[] = [];
-
-  // Anzahl der Fahrzeuge nach Fahrtrichtung ("_vonTotal[Typ]" / "_nachTotal[Typ]") und
-  // nach Knotenarm ("_total[Typ]").
-
-  // Wert 1
-  private _vonTotalValue1 = 0;
-  private _nachTotalValue1 = 0;
-  private _totalValue1 = 0;
-  private _is1Filled = false;
-
-  // Wert 2
-  private _vonTotalValue2 = 0;
-  private _nachTotalValue2 = 0;
-  private _totalValue2 = 0;
-  private _is2Filled = false;
-
-  // Wert 3
-  private _vonTotalValue3 = 0;
-  private _nachTotalValue3 = 0;
-  private _totalValue3 = 0;
-  private _is3Filled = false;
-
-  /**
-   * Gibt die "nach" Position des Fahrbeziehungstypes in der (für diesen Knotenarm)
-   * eingehenden Fahrtrichtung zurück.
-   * @param fahrbeziehungsTyp
-   */
-  findFahrbeziehungsNachPosition(fahrbeziehungsTyp: number): number {
-    const typen = this._nachFahrbeziehungsTypen.sort() as number[];
-    if (!typen.includes(fahrbeziehungsTyp)) {
-      return -1;
-    }
-    return typen.indexOf(fahrbeziehungsTyp) + this.ausgleich;
-  }
-
-  /**
-   * Gibt die Position des Fahrbeziehungstypes in der (für diesen Knotenarm)
-   * ausgehenden Fahrtrichtung zurück.
-   *
-   * @param fahrbeziehungsTyp
-   */
-  findFahrbeziehungVonPosition(fahrbeziehungsTyp: number): number {
-    const typen = this._vonFahrbeziehungsTypen.sort() as number[];
-    if (!typen.includes(fahrbeziehungsTyp)) {
-      return -1;
-    }
-    return typen.indexOf(fahrbeziehungsTyp);
-  }
-
-  /**
-   * Falls der Starßenname nicht abgekürzt ankommt,
-   * dann wird er hier abgekürzt.
-   *
-   * @param strasse
-   */
-  cleanseStrasse(strasse: string) {
-    if (strasse) {
-      if (strasse.toLowerCase().includes("straße")) {
-        strasse.replace("traße", "tr.");
-      }
-
-      if (strasse.toLowerCase().includes("platz")) {
-        strasse.replace("latz", "l.");
-      }
+    constructor(strasse: string, knotenarmNummer: number) {
+        this.cleanseStrasse(strasse);
+        this._knotenarmNummer = knotenarmNummer;
     }
 
-    this._strasse = strasse;
-  }
+    private _knotenarmNummer: number;
 
-  get is1Filled(): boolean {
-    return this._is1Filled;
-  }
+    // Das sind die Ausgleichswerte für Knotenarme, die sich gegenüber liegen und durch eine
+    // gerade Fahrbeziehung verbunden sind. Das ist immer dann ein Problem, wenn links und/oder
+    // rechts von der geraden Fahrbeziehung eine ungleiche Anzahl an Fahrbeziehungen vorhanden
+    // ist. Das muss dann auf der "NACH" Seite ausgegliechen werden.
+    private _ausgleich = 0;
 
-  set is1Filled(value: boolean) {
-    this._is1Filled = value;
-  }
+    // eingehende Fahrbeziehungstypen
+    private _nachFahrbeziehungsTypen: number[] = [];
+    // ausgehende Fahrbeziehungstypen
+    private _vonFahrbeziehungsTypen: number[] = [];
 
-  get is2Filled(): boolean {
-    return this._is2Filled;
-  }
+    // Anzahl der Fahrzeuge nach Fahrtrichtung ("_vonTotal[Typ]" / "_nachTotal[Typ]") und
+    // nach Knotenarm ("_total[Typ]").
 
-  set is2Filled(value: boolean) {
-    this._is2Filled = value;
-  }
+    // Wert 1
+    private _vonTotalValue1 = 0;
+    private _nachTotalValue1 = 0;
+    private _totalValue1 = 0;
+    private _is1Filled = false;
 
-  get is3Filled(): boolean {
-    return this._is3Filled;
-  }
+    // Wert 2
+    private _vonTotalValue2 = 0;
+    private _nachTotalValue2 = 0;
+    private _totalValue2 = 0;
+    private _is2Filled = false;
 
-  set is3Filled(value: boolean) {
-    this._is3Filled = value;
-  }
+    // Wert 3
+    private _vonTotalValue3 = 0;
+    private _nachTotalValue3 = 0;
+    private _totalValue3 = 0;
+    private _is3Filled = false;
 
-  get knotenarmNummer(): number {
-    return this._knotenarmNummer;
-  }
+    /**
+     * Gibt die "nach" Position des Fahrbeziehungstypes in der (für diesen Knotenarm)
+     * eingehenden Fahrtrichtung zurück.
+     * @param fahrbeziehungsTyp
+     */
+    findFahrbeziehungsNachPosition(fahrbeziehungsTyp: number): number {
+        const typen = this._nachFahrbeziehungsTypen.sort() as number[];
+        if (!typen.includes(fahrbeziehungsTyp)) {
+            return -1;
+        }
+        return typen.indexOf(fahrbeziehungsTyp) + this.ausgleich;
+    }
 
-  set knotenarmNummer(value: number) {
-    this._knotenarmNummer = value;
-  }
+    /**
+     * Gibt die Position des Fahrbeziehungstypes in der (für diesen Knotenarm)
+     * ausgehenden Fahrtrichtung zurück.
+     *
+     * @param fahrbeziehungsTyp
+     */
+    findFahrbeziehungVonPosition(fahrbeziehungsTyp: number): number {
+        const typen = this._vonFahrbeziehungsTypen.sort() as number[];
+        if (!typen.includes(fahrbeziehungsTyp)) {
+            return -1;
+        }
+        return typen.indexOf(fahrbeziehungsTyp);
+    }
 
-  get ausgleich(): number {
-    return this._ausgleich;
-  }
+    /**
+     * Falls der Starßenname nicht abgekürzt ankommt,
+     * dann wird er hier abgekürzt.
+     *
+     * @param strasse
+     */
+    cleanseStrasse(strasse: string) {
+        if (strasse) {
+            if (strasse.toLowerCase().includes("straße")) {
+                strasse.replace("traße", "tr.");
+            }
 
-  set ausgleich(value: number) {
-    this._ausgleich = value;
-  }
+            if (strasse.toLowerCase().includes("platz")) {
+                strasse.replace("latz", "l.");
+            }
+        }
 
-  get vonFahrbeziehungsTypen(): number[] {
-    return this._vonFahrbeziehungsTypen;
-  }
+        this._strasse = strasse;
+    }
 
-  addVonFahrbeziehungsType(value: number) {
-    this._vonFahrbeziehungsTypen.push(value);
-  }
+    get is1Filled(): boolean {
+        return this._is1Filled;
+    }
 
-  get nachFahrbeziehungsTypen(): number[] {
-    return this._nachFahrbeziehungsTypen;
-  }
+    set is1Filled(value: boolean) {
+        this._is1Filled = value;
+    }
 
-  addNachFahrbeziehungsTyp(value: number) {
-    this._nachFahrbeziehungsTypen.push(value);
-  }
+    get is2Filled(): boolean {
+        return this._is2Filled;
+    }
 
-  get vonTotalValue1(): number {
-    return this._vonTotalValue1;
-  }
+    set is2Filled(value: boolean) {
+        this._is2Filled = value;
+    }
 
-  set vonTotalValue1(value: number) {
-    this._vonTotalValue1 = value;
-  }
+    get is3Filled(): boolean {
+        return this._is3Filled;
+    }
 
-  get nachTotalValue1(): number {
-    return this._nachTotalValue1;
-  }
+    set is3Filled(value: boolean) {
+        this._is3Filled = value;
+    }
 
-  set nachTotalValue1(value: number) {
-    this._nachTotalValue1 = value;
-  }
+    get knotenarmNummer(): number {
+        return this._knotenarmNummer;
+    }
 
-  get totalValue1(): number {
-    return this._totalValue1;
-  }
+    set knotenarmNummer(value: number) {
+        this._knotenarmNummer = value;
+    }
 
-  set totalValue1(value: number) {
-    this._totalValue1 = value;
-  }
+    get ausgleich(): number {
+        return this._ausgleich;
+    }
 
-  get vonTotalValue2(): number {
-    return this._vonTotalValue2;
-  }
+    set ausgleich(value: number) {
+        this._ausgleich = value;
+    }
 
-  set vonTotalValue2(value: number) {
-    this._vonTotalValue2 = value;
-  }
+    get vonFahrbeziehungsTypen(): number[] {
+        return this._vonFahrbeziehungsTypen;
+    }
 
-  get nachTotalValue2(): number {
-    return this._nachTotalValue2;
-  }
+    addVonFahrbeziehungsType(value: number) {
+        this._vonFahrbeziehungsTypen.push(value);
+    }
 
-  set nachTotalValue2(value: number) {
-    this._nachTotalValue2 = value;
-  }
+    get nachFahrbeziehungsTypen(): number[] {
+        return this._nachFahrbeziehungsTypen;
+    }
 
-  get totalValue2(): number {
-    return this._totalValue2;
-  }
+    addNachFahrbeziehungsTyp(value: number) {
+        this._nachFahrbeziehungsTypen.push(value);
+    }
 
-  set totalValue2(value: number) {
-    this._totalValue2 = value;
-  }
+    get vonTotalValue1(): number {
+        return this._vonTotalValue1;
+    }
 
-  get vonTotalValue3(): number {
-    return this._vonTotalValue3;
-  }
+    set vonTotalValue1(value: number) {
+        this._vonTotalValue1 = value;
+    }
 
-  set vonTotalValue3(value: number) {
-    this._vonTotalValue3 = value;
-  }
+    get nachTotalValue1(): number {
+        return this._nachTotalValue1;
+    }
 
-  get nachTotalValue3(): number {
-    return this._nachTotalValue3;
-  }
+    set nachTotalValue1(value: number) {
+        this._nachTotalValue1 = value;
+    }
 
-  set nachTotalValue3(value: number) {
-    this._nachTotalValue3 = value;
-  }
+    get totalValue1(): number {
+        return this._totalValue1;
+    }
 
-  get totalValue3(): number {
-    return this._totalValue3;
-  }
+    set totalValue1(value: number) {
+        this._totalValue1 = value;
+    }
 
-  set totalValue3(value: number) {
-    this._totalValue3 = value;
-  }
+    get vonTotalValue2(): number {
+        return this._vonTotalValue2;
+    }
 
-  private _strasse!: string;
+    set vonTotalValue2(value: number) {
+        this._vonTotalValue2 = value;
+    }
 
-  // Anzahl der Fahrbeziehungen, die aus diesem Knotenarm heraus gehen
-  private _anzahlVonFahrbeziehungen = 0;
-  // Anzahl der Fahrbeziehungen, die in diesen Knotenarm hinein gehen
-  private _anzahlNachFahrbeziehungen = 0;
+    get nachTotalValue2(): number {
+        return this._nachTotalValue2;
+    }
 
-  /**
-   * Die Anzahl der ausgehenden Fahrbeziehungen.
-   */
-  get anzahlVonFahrbeziehungen(): number {
-    return this._anzahlVonFahrbeziehungen;
-  }
+    set nachTotalValue2(value: number) {
+        this._nachTotalValue2 = value;
+    }
 
-  /**
-   * Den Zähler für ausgehende Fahrbeziehungen um 1 erhöhen.
-   */
-  plusFahrbeziehungenVon() {
-    this._anzahlVonFahrbeziehungen = this._anzahlVonFahrbeziehungen + 1;
-  }
+    get totalValue2(): number {
+        return this._totalValue2;
+    }
 
-  /**
-   * Die Anzahl der eingehenden Fahrbeziehungen.
-   */
-  get anzahlNachFahrbeziehungen(): number {
-    return this._anzahlNachFahrbeziehungen;
-  }
+    set totalValue2(value: number) {
+        this._totalValue2 = value;
+    }
 
-  /**
-   * Den Zähler für eingehende Fahrbeziehungen um 1 erhöhen.
-   */
-  plusFahrbeziehungenNach() {
-    this._anzahlNachFahrbeziehungen = this._anzahlNachFahrbeziehungen + 1;
-  }
+    get vonTotalValue3(): number {
+        return this._vonTotalValue3;
+    }
 
-  get strasse(): string {
-    return this._strasse;
-  }
+    set vonTotalValue3(value: number) {
+        this._vonTotalValue3 = value;
+    }
+
+    get nachTotalValue3(): number {
+        return this._nachTotalValue3;
+    }
+
+    set nachTotalValue3(value: number) {
+        this._nachTotalValue3 = value;
+    }
+
+    get totalValue3(): number {
+        return this._totalValue3;
+    }
+
+    set totalValue3(value: number) {
+        this._totalValue3 = value;
+    }
+
+    private _strasse!: string;
+
+    // Anzahl der Fahrbeziehungen, die aus diesem Knotenarm heraus gehen
+    private _anzahlVonFahrbeziehungen = 0;
+    // Anzahl der Fahrbeziehungen, die in diesen Knotenarm hinein gehen
+    private _anzahlNachFahrbeziehungen = 0;
+
+    /**
+     * Die Anzahl der ausgehenden Fahrbeziehungen.
+     */
+    get anzahlVonFahrbeziehungen(): number {
+        return this._anzahlVonFahrbeziehungen;
+    }
+
+    /**
+     * Den Zähler für ausgehende Fahrbeziehungen um 1 erhöhen.
+     */
+    plusFahrbeziehungenVon() {
+        this._anzahlVonFahrbeziehungen = this._anzahlVonFahrbeziehungen + 1;
+    }
+
+    /**
+     * Die Anzahl der eingehenden Fahrbeziehungen.
+     */
+    get anzahlNachFahrbeziehungen(): number {
+        return this._anzahlNachFahrbeziehungen;
+    }
+
+    /**
+     * Den Zähler für eingehende Fahrbeziehungen um 1 erhöhen.
+     */
+    plusFahrbeziehungenNach() {
+        this._anzahlNachFahrbeziehungen = this._anzahlNachFahrbeziehungen + 1;
+    }
+
+    get strasse(): string {
+        return this._strasse;
+    }
 }
