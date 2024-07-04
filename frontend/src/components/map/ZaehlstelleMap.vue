@@ -6,13 +6,14 @@
     >
         <div
             id="map"
+            ref="mapRef"
             :style="mapStyle"
         />
     </v-sheet>
 </template>
 
 <script setup lang="ts">
-import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
+import L, {DivIcon, Icon, LatLng, latLng, Marker} from "leaflet";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
@@ -25,18 +26,12 @@ import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
-import { useDateUtils } from "@/util/DateUtils";
-import {
-    computed,
-    nextTick,
-    onMounted,
-    ref,
-    watch,
-} from "vue";
+import {useDateUtils} from "@/util/DateUtils";
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch,} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useSearchStore } from "@/store/search";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import {useSnackbarStore} from "@/store/snackbar";
+import {useSearchStore} from "@/store/search";
+import {useZaehlstelleStore} from "@/store/zaehlstelle";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -78,53 +73,48 @@ const mapStyle = computed<string>(() => {
     return `height: ${props.height}; width: ${props.width}; min-height: ${props.minheight}; z-index: 1`;
 });
 
-const map = ref<L.Map | undefined>(undefined);
-const markerCluster = ref<L.MarkerClusterGroup>(L.markerClusterGroup());
+const mapRef = ref<HTMLDivElement | null>(null);
 
-const zaehlartenLayer = ref<L.LayerGroup>(L.layerGroup());
+let map: L.Map;
+let mapMarkerClusterGroup = L.markerClusterGroup();
+let zaehlartenLayer = L.layerGroup();
 
 onMounted(() => {
-    createMap();
     initMap();
 });
 
-function createMap(): void {
-    if (!map.value) {
-        map.value = new L.Map("map", {
-            minZoom: 10,
-            maxZoom: 18,
-            preferCanvas: false,
-            attributionControl: false,
-            fullscreenControl: true,
-            fullscreenControlOptions: {
-                position: "topleft",
-            },
-            center: center.value,
-            zoom: zoomValue.value,
-        });
-    }
-}
+onBeforeUnmount(() => {
+  map.remove();
+});
 
 function initMap(): void {
-    if (map.value) {
-        map.value.whenReady(() =>
-            setTimeout(() => {
-                if (map.value) {
-                    map.value.invalidateSize();
-                    map.value.addControl(
-                        L.control.attribution({
-                            position: "bottomleft",
-                            prefix: "Leaflet",
-                        })
-                    );
-                    map.value.setZoom(zoomValue.value);
-                    createLayersAndAddToMap();
-                    markerCluster.value.addTo(map.value as L.Map);
-                    searchErhebungsstelle();
-                }
-            }, 10)
-        );
-    }
+    map = L.map(mapRef.value as HTMLElement, {
+      zoom: zoomValue.value,
+      minZoom: 10,
+      maxZoom: 18,
+      preferCanvas: false,
+      attributionControl: false,
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+          position: "topleft",
+      },
+      center: center.value,
+    });
+    map.whenReady(() => {
+        setTimeout(() => {
+            map.invalidateSize();
+            map.addControl(
+                L.control.attribution({
+                  position: "bottomleft",
+                  prefix: "Leaflet",
+                })
+            );
+            map.setZoom(zoomValue.value);
+            createLayersAndAddToMap();
+            mapMarkerClusterGroup.addTo(map);
+            searchErhebungsstelle();
+        }, 10)
+    })
 }
 
 const zoomValue = computed(() => {
@@ -161,12 +151,11 @@ function createLatLngFromString(lat: string, lng: string): LatLng {
 }
 
 function createLayersAndAddToMap(): void {
-    if (map.value) {
-        const baseLayers = createBaseLayers();
-        const overlayLayers = createOverlayLayers();
-        baseLayers.Stadtkarte.addTo(map.value as L.Map);
-        L.control.layers(baseLayers, overlayLayers).addTo(map.value as L.Map);
-    }
+    const baseLayers = createBaseLayers();
+    const overlayLayers = createOverlayLayers();
+
+    baseLayers.Stadtkarte.addTo(map);
+    L.control.layers(baseLayers, overlayLayers).addTo(map);
 }
 
 function createBaseLayers(): L.Control.LayersObject {
@@ -250,19 +239,15 @@ watch(searchResult, () => {
 });
 
 function resetMarker(): void {
-    if (map.value) {
-        if (markerCluster.value) {
-            markerCluster.value.removeFrom(map.value as L.Map);
-            markerCluster.value.clearLayers();
-        }
-        zaehlartenLayer.value.removeFrom(map.value as L.Map);
+        mapMarkerClusterGroup.removeFrom(map);
+        mapMarkerClusterGroup.clearLayers();
+        zaehlartenLayer.removeFrom(map);
         setMarkerToMap();
-    }
 }
 
 function setMarkerToMap() {
-    markerCluster.value.clearLayers();
-    markerCluster.value = L.markerClusterGroup({
+    mapMarkerClusterGroup.clearLayers();
+    mapMarkerClusterGroup = L.markerClusterGroup({
         disableClusteringAtZoom: 15,
         spiderfyOnMaxZoom: false,
         chunkedLoading: true,
@@ -303,9 +288,8 @@ function setMarkerToMap() {
         }
     });
 
-    markerCluster.value.addLayers(markers);
-    if (map.value) {
-        markerCluster.value.addTo(map.value as L.Map);
+    mapMarkerClusterGroup.addLayers(markers);
+        mapMarkerClusterGroup.addTo(map);
         if (zaehlstellenKarte.length === 1) {
             /**
              * Falls in der Main.view nach einer bestimmten Zaehlstelle gesucht
@@ -313,13 +297,12 @@ function setMarkerToMap() {
              * umfasst das Suchergebnis somit nur eine Zaehlstelle.
              * Auf diese eine mit einem Icon angezeigte Zaehlstelle muss dann zentriert werden.
              */
-            map.value.setView(createLatLng(zaehlstellenKarte[0]), 18);
+            map.setView(createLatLng(zaehlstellenKarte[0]), 18);
         } else if (props.zId && props.latlng && props.latlng.length > 0) {
             // Zaehlartenmarker erzeugen
             setZaehlartenmarkerToMap();
-            map.value.setView(center.value, zoomValue.value);
+            map.setView(center.value, zoomValue.value);
         }
-    }
 }
 
 function setZaehlartenmarkerToMap() {
@@ -335,10 +318,8 @@ function setZaehlartenmarkerToMap() {
             }
         );
     });
-    zaehlartenLayer.value = L.layerGroup(markers);
-    if (map.value) {
-        zaehlartenLayer.value.addTo(map.value as L.Map);
-    }
+    zaehlartenLayer = L.layerGroup(markers);
+    zaehlartenLayer.addTo(map);
 }
 
 const selectedZaehlstelleKarte = ref(
@@ -367,18 +348,16 @@ function getColorForZaehlartenMarker(zaehlart: string): string {
 }
 
 function saveMapPositionInUrl() {
-    if (map.value) {
-        const mapCenter = map.value.getBounds().getCenter();
+        const mapCenter = map.getBounds().getCenter();
 
         const lat = mapCenter?.lat.toString();
         const lng = mapCenter?.lng.toString();
-        const zoom = map.value.getZoom().toString();
+        const zoom = map.getZoom().toString();
 
         router.replace({
             path: route.path,
             query: { lat: lat, lng: lng, zoom: zoom },
         });
-    }
 }
 
 function routeToZaehlstelle(id: string) {
@@ -448,10 +427,8 @@ function createMarkerForZaehlart(
     marker.on("click", () => {
         choosenZaehlartIconToZaehlstelleHeader(zaehlart);
         nextTick(() => {
-            if (map.value) {
-                zaehlartenLayer.value.removeFrom(map.value as L.Map);
+                zaehlartenLayer.removeFrom(map);
                 setZaehlartenmarkerToMap();
-            }
         });
     });
     return marker;
