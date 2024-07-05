@@ -19,16 +19,16 @@ import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
 import * as SVG from "@svgdotjs/svg.js";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-import { useStore } from "@/api/util/useStore";
 import { useVuetify } from "@/util/useVuetify";
 import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import { useDateUtils } from "@/util/DateUtils";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 interface Props {
     data: LadeBelastungsplanDTO;
@@ -69,7 +69,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<(e: "print", v: Blob) => void>();
 
-const store = useStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const vuetify = useVuetify();
 const dateUtils = useDateUtils();
 
@@ -150,24 +150,23 @@ onMounted(() => {
         .addTo("#belastungsplan")
         .size(props.dimension, props.dimension)
         .viewbox(0, 0, viewbox, viewbox);
-    store.dispatch(
-        "setSizeBelastungsplanSvg",
-        sizeBelastungsplan.value.replace("px", "")
+    zaehlstelleStore.setSizeBelastungsplanSvg(
+        Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
     );
-    store.dispatch("setMaxSizeBelastungsplanSvg", maxSizeBelastungsplan.value);
-    store.dispatch("setMinSizeBelastungsplanSvg", minSizeBelastungsplan.value);
+    zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+    zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 });
 
 const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
-    return store.getters.getAktiveZaehlung;
+    return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
-    return store.getters.getZaehlstelle;
+    return zaehlstelleStore.getZaehlstelleHeader;
 });
 
 const optionen: ComputedRef<OptionsDTO> = computed(() => {
-    return store.getters.getFilteroptions;
+    return zaehlstelleStore.getFilteroptions;
 });
 
 const maxFahrtrichtungWidth = computed(() => {
@@ -211,11 +210,12 @@ const line = computed(() => {
  * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
  */
 const activeTab = computed(() => {
-    return store.getters.getChangetabevent;
+    return zaehlstelleStore.getActiveTab;
 });
 
 const sizeBelastungsplan = computed(() => {
-    let sizeBelastungsplanSvg: number = store.getters.getSizeBelastungsplanSvg;
+    let sizeBelastungsplanSvg: number =
+        zaehlstelleStore.getSizeBelastungsplanSvg;
     if (sizeBelastungsplanSvg === 0) {
         sizeBelastungsplanSvg = minSizeBelastungsplan.value;
     }
@@ -266,7 +266,7 @@ const lineFactor = computed(() => {
 });
 
 const isDifferenzdatendarstellung = computed(() => {
-    return store.getters.isDifferenzdatenDarstellung;
+    return zaehlstelleStore.isDifferenzdatenDarstellung;
 });
 
 /**
@@ -274,14 +274,15 @@ const isDifferenzdatendarstellung = computed(() => {
  */
 const vergleichsZaehlung = computed(() => {
     if (isDifferenzdatendarstellung.value) {
-        const vergleichsId = optionen.value.vergleichszaehlungsId;
-        return store.getters.getZaehlungById(vergleichsId) as LadeZaehlungDTO;
+        return zaehlstelleStore.getZaehlungById(
+            optionen.value.vergleichszaehlungsId
+        );
     }
     return undefined;
 });
 
 const isBlackPrintMode = computed(() => {
-    return store.getters.isBlackprintMode;
+    return zaehlstelleStore.isBlackprintMode;
 });
 
 const vonIds = computed(() => {
@@ -1367,7 +1368,7 @@ function legendeSpalten() {
         zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
     ) {
         const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
-            store.getters.getStartEndeUhrzeitIntervalls;
+            zaehlstelleStore.getStartEndeUhrzeitIntervalls;
         zaehlzeitSecondLine = `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
     }
 

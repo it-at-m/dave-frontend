@@ -120,23 +120,20 @@
 </template>
 
 <script setup lang="ts">
-/* eslint-disable no-unused-vars */
-import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import { Levels } from "@/api/error";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
 import { wetterText } from "@/types/enum/Wetter";
 import { quelleText } from "@/types/enum/Quelle";
-/* eslint-enable no-unused-vars */
 import _ from "lodash";
 import { computed, ref } from "vue";
-import { useStore } from "@/api/util/useStore";
 import { useDateUtils } from "@/util/DateUtils";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
 
 interface Props {
     value: boolean;
@@ -144,7 +141,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const store = useStore();
+const pdfReportStore = usePdfReportStore();
+const snackbarStore = useSnackbarStore();
+const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 
 const zaehlstelleinfo = ref(false);
@@ -186,10 +185,9 @@ function saveItems(): void {
         createLegende();
     }
 
-    store.dispatch("snackbar/showToast", {
-        snackbarTextPart1: `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`,
-        level: Levels.SUCCESS,
-    });
+    snackbarStore.showSuccess(
+        `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
+    );
     closeDialog();
 }
 
@@ -197,8 +195,8 @@ function saveItems(): void {
  * Erstellt die Zählstelleninformationen und übermittelt diese an den PDF Report.
  */
 function createZaehlstelleInfo() {
-    const zs = store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
-    const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
     const headline = new HeadingAsset(
         `Info für Zählstelle Nr. ${zs.nummer}`,
         AssetTypesEnum.HEADING3
@@ -210,15 +208,15 @@ function createZaehlstelleInfo() {
     let kommentar = new TextAsset(
         `Zählstellenkommentar: ${checkForNull(zs.kommentar)}`
     );
-    store.dispatch("addAssets", [headline, platz, stadtbezirk, kommentar]);
+    pdfReportStore.addAssets([headline, platz, stadtbezirk, kommentar]);
 }
 
 /**
  * Erstellt die Zählungsinformationen und übermittelt diese an den PDF Report.
  */
 function createZaehlungsInfo() {
-    const zs = store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
-    const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
     const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
     const headline = new HeadingAsset(
         `Info zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
@@ -247,7 +245,7 @@ function createZaehlungsInfo() {
             knotenarmListe + `${k.nummer} ${k.strassenname}<br/>\n`;
     });
     const knotenarme = new TextAsset(knotenarmListe);
-    store.dispatch("addAssets", [
+    pdfReportStore.addAssets([
         headline,
         projektname,
         zaehlart,
@@ -265,8 +263,8 @@ function createZaehlungsInfo() {
  * Die einzelnen, anzuzeigenden Werte werden erst bei PDF-Erstellung im Backend generiert.
  */
 function createZaehlungskenngroessen() {
-    const zs = store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
-    const zl = store.getters.getAktiveZaehlung as LadeZaehlungDTO;
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
     const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
 
     const headline = new HeadingAsset(
@@ -278,7 +276,7 @@ function createZaehlungskenngroessen() {
         zl.id
     );
 
-    store.dispatch("addAssets", [headline, zaehlungskenngroessen]);
+    pdfReportStore.addAssets([headline, zaehlungskenngroessen]);
 }
 
 /**
@@ -295,7 +293,7 @@ function createLegende() {
             "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +
             "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
     );
-    store.dispatch("addAssets", [ueberschrift, legende]);
+    pdfReportStore.addAssets([ueberschrift, legende]);
 }
 
 /**

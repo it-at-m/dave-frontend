@@ -14,7 +14,8 @@
         <v-dialog
             v-model="dialog"
             max-width="900px"
-            ><v-card
+        >
+            <v-card
                 width="900px"
                 flat
             >
@@ -64,7 +65,6 @@
 import { computed, ref, Ref, watch } from "vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useVuetify } from "@/util/useVuetify";
-import { useStore } from "@/api/util/useStore";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -75,27 +75,34 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { Levels } from "@/api/error";
 import TagesTyp from "@/types/enum/TagesTyp";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
-import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/messstelle";
+import { useUserStore } from "@/store/user";
+import { useTimeUtils } from "@/util/TimeUtils";
 
 interface Props {
     messstelleId: string;
 }
+
 defineProps<Props>();
 
-const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
-});
-
 const vuetify = useVuetify();
-const store = useStore();
+const messstelleStore = useMessstelleStore();
+const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
 const chosenOptions = ref(
     DefaultObjectCreator.createDefaultMessstelleOptions()
 );
+
+const userStore = useUserStore();
+const timeUtils = useTimeUtils();
+
+const messstelle: Ref<MessstelleInfoDTO> = computed(() => {
+    return messstelleStore.getMessstelleInfo;
+});
 
 const getContentSheetHeight = computed(() => {
     if (vuetify.breakpoint.xl) {
@@ -104,11 +111,14 @@ const getContentSheetHeight = computed(() => {
     return "400px";
 });
 
+const isAnwender = computed(() => {
+    return userStore.hasAuthorities && userStore.isAnwender;
+});
+
 watch(messstelle, () => {
-    if (store.getters["filteroptionsMessstelle/isHistory"]) {
-        chosenOptions.value =
-            store.getters["filteroptionsMessstelle/getFilteroptions"];
-        store.commit("filteroptionsMessstelle/reloadFilteroptions");
+    if (messstelleStore.isHistory) {
+        chosenOptions.value = messstelleStore.getFilteroptions;
+        messstelleStore.reloadFilteroptions();
     } else {
         resetOptions();
     }
@@ -134,37 +144,41 @@ function areChosenOptionsValid(): boolean {
         ) {
             errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
         }
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: errortext,
-            level: Levels.ERROR,
-        });
+        snackbarStore.showError(errortext);
     }
     if (
         chosenOptions.value.zeitraum.length === 2 &&
         !chosenOptions.value.tagesTyp
     ) {
         result = false;
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: "Es muss ein Wochentag ausgewählt sein.",
-            level: Levels.ERROR,
-        });
+        snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
+    }
+    if (
+        isAnwender.value &&
+        timeUtils.isDateRangeBiggerFiveYears(
+            chosenOptions.value.zeitraum.slice()
+        )
+    ) {
+        result = false;
+        snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
     }
     return result;
 }
 
 function saveChosenOptions(): void {
-    store.commit(
-        "filteroptionsMessstelle/setFilteroptions",
-        _.cloneDeep(chosenOptions.value)
-    );
+    messstelleStore.setFilteroptions(_.cloneDeep(chosenOptions.value));
 }
 
 function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.fahrzeuge =
-        DefaultObjectCreator.createDefaultFahrzeugOptions(
-            messstelle.value.detektierteVerkehrsarten ===
-                DetektierteFahrzeugart.KFZ
-        );
+        DefaultObjectCreator.createDefaultFahrzeugOptions();
+
+    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+        messstelle.value.detektierteVerkehrsarten ===
+        DetektierteFahrzeugart.KFZ;
+    chosenOptions.value.fahrzeuge.radverkehr =
+        !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+
     chosenOptions.value.zeitraum = [
         messstelle.value.datumLetztePlausibleMessung,
     ];
@@ -173,15 +187,11 @@ function setDefaultOptionsForMessstelle(): void {
         chosenOptions.value.messquerschnittIds.push(q.mqId)
     );
     if (messstelle.value.messquerschnitte.length === 1) {
-        store.commit(
-            "filteroptionsMessstelle/setDirection",
+        messstelleStore.setDirection(
             messstelle.value.messquerschnitte[0].fahrtrichtung
         );
     } else {
-        store.commit(
-            "filteroptionsMessstelle/setDirection",
-            messstelleUtils.alleRichtungen
-        );
+        messstelleStore.setDirection(messstelleUtils.alleRichtungen);
     }
     chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
     chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
@@ -193,10 +203,30 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.stundensumme = true;
     chosenOptions.value.tagessumme = true;
     chosenOptions.value.spitzenstunde = true;
+    messstelleStore.calculateActiveMessfaehigkeit(
+        messstelle.value.datumLetztePlausibleMessung
+    );
     saveChosenOptions();
 }
 
 function resetOptions(): void {
     setDefaultOptionsForMessstelle();
 }
+
+watch(
+    () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
+    () => {
+        chosenOptions.value.fahrzeuge =
+            DefaultObjectCreator.createDefaultFahrzeugOptions();
+        chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+            messstelle.value.detektierteVerkehrsarten ===
+            DetektierteFahrzeugart.KFZ;
+        chosenOptions.value.fahrzeuge.radverkehr =
+            !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+
+        snackbarStore.showWarning(
+            'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
+        );
+    }
+);
 </script>

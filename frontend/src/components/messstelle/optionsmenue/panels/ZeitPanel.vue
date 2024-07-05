@@ -82,7 +82,6 @@
             <zeit-intervall
                 v-if="!isDateBiggerFiveYears"
                 v-model="chosenOptionsCopy"
-                :hover-select-zeitintervall.sync="hoverSelectZeitintervall"
             />
         </v-expansion-panel-content>
     </v-expansion-panel>
@@ -92,8 +91,7 @@
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { computed, onMounted, ref, Ref, watch } from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
-import { useStore } from "@/api/util/useStore";
+import NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { useDateUtils } from "@/util/DateUtils";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
@@ -104,6 +102,8 @@ import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/Tage
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
+import { useUserStore } from "@/store/user";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const route = useRoute();
 
@@ -113,10 +113,10 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits(["input"]);
-const store = useStore();
+const messstelleStore = useMessstelleStore();
+const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
-const hoverSelectZeitintervall = ref(false);
 const pickerDate = ref("");
 onMounted(() => {
     const messstelleId = route.params.messstelleId;
@@ -128,7 +128,7 @@ onMounted(() => {
 });
 
 const messstelleInfo: Ref<MessstelleInfoDTO> = computed(() => {
-    return store.getters["messstelleInfo/getMessstelleInfo"];
+    return messstelleStore.getMessstelleInfo;
 });
 
 const getSortedDateRange = computed(() => {
@@ -169,9 +169,7 @@ const isZeitraum = computed(() => {
 });
 
 const isAnwender = computed(() => {
-    return (
-        store.getters["user/hasAuthorities"] && store.getters["user/isAnwender"]
-    );
+    return userStore.hasAuthorities && userStore.isAnwender;
 });
 
 const minDate = computed(() => {
@@ -273,11 +271,7 @@ function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
             new Date(sortedDates[1]).valueOf();
         const timeDifferenceInYears =
             timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
-        if (
-            store.getters["user/hasAuthorities"] &&
-            store.getters["user/isAnwender"] &&
-            timeDifferenceInYears > 5
-        ) {
+        if (isAnwender.value && timeDifferenceInYears > 5) {
             return "Der Ausgewählte Zeitraum ist zu groß";
         }
     }
@@ -335,5 +329,12 @@ watch(chosenOptionsCopyZeitraum, () => {
     } else {
         pickerDate.value = chosenOptionsCopyZeitraum.value[0];
     }
+    calculateChoosableOptions();
 });
+
+function calculateChoosableOptions(): void {
+    messstelleStore.calculateActiveMessfaehigkeit(
+        dateUtils.sortDatesAscAsStrings(chosenOptionsCopy.value.zeitraum)[0]
+    );
+}
 </script>

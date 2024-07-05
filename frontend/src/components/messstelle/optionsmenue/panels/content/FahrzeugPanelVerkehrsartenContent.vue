@@ -192,6 +192,8 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, onMounted, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import { useMessstelleStore } from "@/store/messstelle";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -200,6 +202,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 const fahrzeugPanelTools = useFahrzeugPanelTools();
+const messstelleStore = useMessstelleStore();
 
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
 const hoverSelectOrDeselectAllVerkehrsarten = ref(false);
@@ -373,43 +376,43 @@ const isRadInBelastungsplan = computed(() => {
 function calculateSelectOrDeselectVerkehrsarten(): void {
     let counter = 0;
     let maxSelectable = 0;
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KFZ)) {
+    if (isTypeEnabled(Fahrzeug.KFZ)) {
         if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV)) {
+    if (isTypeEnabled(Fahrzeug.SV)) {
         if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV)) {
+    if (isTypeEnabled(Fahrzeug.GV)) {
         if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV_P)) {
+    if (isTypeEnabled(Fahrzeug.SV_P)) {
         if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
             counter++;
         }
         maxSelectable++;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV_P)) {
+    if (isTypeEnabled(Fahrzeug.GV_P)) {
         if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
             counter++;
         }
         maxSelectable++;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.RAD)) {
+    if (isTypeEnabled(Fahrzeug.RAD)) {
         if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
             counter++;
         }
         maxSelectable++;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.FUSS)) {
+    if (isTypeEnabled(Fahrzeug.FUSS)) {
         if (chosenOptionsCopyFahrzeuge.value.fussverkehr) {
             counter++;
         }
@@ -426,31 +429,31 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
  * @private
  */
 function selectOrDeselectAllVerkehrsarten(): void {
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KFZ)) {
+    if (isTypeEnabled(Fahrzeug.KFZ)) {
         chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV)) {
+    if (isTypeEnabled(Fahrzeug.SV)) {
         chosenOptionsCopyFahrzeuge.value.schwerverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV)) {
+    if (isTypeEnabled(Fahrzeug.GV)) {
         chosenOptionsCopyFahrzeuge.value.gueterverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.SV_P)) {
+    if (isTypeEnabled(Fahrzeug.SV_P)) {
         chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.GV_P)) {
+    if (isTypeEnabled(Fahrzeug.GV_P)) {
         chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.RAD)) {
+    if (isTypeEnabled(Fahrzeug.RAD)) {
         chosenOptionsCopyFahrzeuge.value.radverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
-    if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.FUSS)) {
+    if (isTypeEnabled(Fahrzeug.FUSS)) {
         chosenOptionsCopyFahrzeuge.value.fussverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
     }
@@ -557,7 +560,20 @@ function getIcon(type: string): string {
     return icon;
 }
 
+function isTypeEnabled(type: string): boolean {
+    return !isTypeDisabled(type);
+}
+
 function isTypeDisabled(type: string): boolean {
-    return fahrzeugPanelTools.isTypeDisabled(type);
+    return (
+        fahrzeugPanelTools.isTypeDisabled(type) ||
+        ((chosenOptionsCopy.value.intervall ===
+            ZaehldatenIntervall.STUNDE_VIERTEL ||
+            chosenOptionsCopy.value.intervall ===
+                ZaehldatenIntervall.STUNDE_HALB) &&
+            messstelleStore.getActiveMessfaehigkeit.intervall ===
+                ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
+            Fahrzeug.KFZ !== type)
+    );
 }
 </script>

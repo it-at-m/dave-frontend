@@ -1,4 +1,4 @@
-import { useAlternateRowColor } from "@/composables/alternateRowColorComposable";
+import { useAlternateRowColor } from "@/util/alternateRowColorComposable";
 import Vuetify from "vuetify";
 import Vue from "vue";
 

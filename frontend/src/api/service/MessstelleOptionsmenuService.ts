@@ -1,5 +1,5 @@
 import FetchService from "@/api/service/FetchService";
-import NichtPlausibleTageDTO from "@/types/NichtPlausibleTageDTO";
+import NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 import ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import ChosenTagesTypValidRequestDTO from "@/types/messstelle/ChosenTagesTypValidRequestDTO";
 import { ValidWochentageInPeriodRequestDto } from "@/types/messstelle/ValidWochentageInPeriodRequestDto";

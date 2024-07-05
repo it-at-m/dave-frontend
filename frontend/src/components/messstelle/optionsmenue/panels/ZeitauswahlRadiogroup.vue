@@ -87,9 +87,8 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
-import { useStore } from "@/api/util/useStore";
-import { Levels } from "@/api/error";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
+import { useSnackbarStore } from "@/store/snackbar";
 
 interface Props {
     value: MessstelleOptionsDTO;
@@ -101,7 +100,7 @@ const emit = defineEmits<{
     (e: "input", i: MessstelleOptionsDTO): void;
 }>();
 
-const store = useStore();
+const snackbarStore = useSnackbarStore();
 
 const chosenOptionsCopy = computed({
     get: () => props.value,
@@ -155,10 +154,7 @@ watch(
             chosenOptionsCopy.value.zeitauswahl != Zeitauswahl.TAGESWERT
         ) {
             chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-            store.dispatch("snackbar/showToast", {
-                snackbarTextPart1: "Zeitauswahl wurde auf Tageswert gesetzt",
-                level: Levels.INFO,
-            });
+            snackbarStore.showInfo("Zeitauswahl wurde auf Tageswert gesetzt");
         }
     }
 );

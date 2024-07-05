@@ -12,6 +12,7 @@
                         :disabled="isEverythingValid"
                         class="mr-2"
                         color="secondary"
+                        @click="auswertungStarten"
                     >
                         Auswerten
                     </v-btn>
@@ -35,6 +36,7 @@ import { useVuetify } from "@/util/useVuetify";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 
 const vuetify = useVuetify();
 
@@ -57,7 +59,7 @@ const leftHeightVh = computed(() => {
 
 const isEverythingValid = computed(() => {
     return !(
-        auswertungsOptions.value.zeitintervalle.length > 0 &&
+        auswertungsOptions.value.zeitraum.length > 0 &&
         auswertungsOptions.value.tagesTyp.length > 0 &&
         auswertungsOptions.value.jahre.length > 0 &&
         areMstAndMqValid.value &&
@@ -95,5 +97,9 @@ const areFahrzeugeValid = computed(() => {
 function resetAuswertungsOptions() {
     auswertungsOptions.value =
         DefaultObjectCreator.createDefaultMessstelleAuswertungOptions();
+}
+
+function auswertungStarten() {
+    MessstelleAuswertungService.generate(auswertungsOptions.value);
 }
 </script>

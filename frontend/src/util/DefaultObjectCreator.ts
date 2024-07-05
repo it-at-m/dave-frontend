@@ -1,7 +1,6 @@
-import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
-import Suggest from "@/types/Suggest";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
-import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
+import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import Suggest from "@/types/suche/Suggest";
+import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
@@ -9,18 +8,27 @@ import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import InfoMessageDTO from "@/types/InfoMessageDTO";
+import InfoMessageDTO from "@/types/app/InfoMessageDTO";
 import Wetter from "@/types/enum/Wetter";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Quelle from "@/types/enum/Quelle";
 import FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
+import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import TagesTyp from "@/types/enum/TagesTyp";
+import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
+import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 
 export default class DefaultObjectCreator {
     public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
         return {
+            fachId: "",
+            type: "",
             id: "",
-            nummer: "",
             letzteZaehlungId: "",
             tooltip: {} as TooltipZaehlstelleDTO,
             latitude: 0,
@@ -49,6 +57,7 @@ export default class DefaultObjectCreator {
 
     public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
         return {
+            messfaehigkeiten: [],
             detektierteVerkehrsarten: DetektierteFahrzeugart.KFZ,
             fahrzeugKlassen: "",
             hersteller: "",
@@ -71,14 +80,14 @@ export default class DefaultObjectCreator {
         };
     }
 
-    public static createDefaultFahrzeugOptions(kfz: boolean): FahrzeugOptions {
+    public static createDefaultFahrzeugOptions(): FahrzeugOptions {
         return {
-            kraftfahrzeugverkehr: kfz,
+            kraftfahrzeugverkehr: false,
             schwerverkehr: false,
             gueterverkehr: false,
             schwerverkehrsanteilProzent: false,
             gueterverkehrsanteilProzent: false,
-            radverkehr: !kfz,
+            radverkehr: false,
             fussverkehr: false,
             lastkraftwagen: false,
             lastzuege: false,
@@ -92,17 +101,17 @@ export default class DefaultObjectCreator {
     public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
         return {
             blackPrintMode: false,
-            blocksumme: false,
+            blocksumme: true,
             ganglinieYAchse1MaxValue: null,
             ganglinieYAchse2MaxValue: null,
-            spitzenstunde: false,
-            stundensumme: false,
-            tagessumme: false,
+            spitzenstunde: true,
+            stundensumme: true,
+            tagessumme: true,
             werteHundertRunden: false,
-            fahrzeuge: this.createDefaultFahrzeugOptions(true),
-            intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
+            fahrzeuge: this.createDefaultFahrzeugOptions(),
+            intervall: "" as ZaehldatenIntervall,
             messquerschnittIds: [],
-            tagesTyp: "",
+            tagesTyp: "" as TagesTyp,
             zeitauswahl: "",
             zeitblock: "",
             zeitraum: [],
@@ -113,7 +122,7 @@ export default class DefaultObjectCreator {
         return {
             jahre: [],
             tagesTyp: "",
-            zeitintervalle: [],
+            zeitraum: [],
             mstIds: [],
             mqIds: [],
             fahrzeuge: {
@@ -135,8 +144,11 @@ export default class DefaultObjectCreator {
         };
     }
 
-    public static createDefaultZaehlstelleHeaderDTO() {
+    public static createDefaultZaehlstelleHeaderDTO(): ZaehlstelleHeaderDTO {
         return {
+            id: "",
+            entityVersion: 0,
+            createdTime: "",
             nummer: "",
             name: "",
             stadtbezirk: "",
@@ -191,5 +203,62 @@ export default class DefaultObjectCreator {
             entityVersion: 0,
             createdTime: "",
         };
+    }
+
+    public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
+        return {
+            beideRichtungen: false,
+            vergleichszaehlungsId: null,
+            zaehldauer: Zaehldauer.DAUER_24_STUNDEN,
+            intervall: ZaehldatenIntervall.STUNDE_VIERTEL,
+            zeitblock: Zeitblock.ZB_00_24,
+            zeitauswahl: Zeitauswahl.TAGESWERT,
+            kraftfahrzeugverkehr: false,
+            schwerverkehr: false,
+            gueterverkehr: false,
+            schwerverkehrsanteilProzent: false,
+            gueterverkehrsanteilProzent: false,
+            radverkehr: false,
+            fussverkehr: false,
+            lastkraftwagen: false,
+            lastzuege: false,
+            busse: false,
+            kraftraeder: false,
+            personenkraftwagen: false,
+            pkwEinheiten: false,
+            stundensumme: true,
+            blocksumme: true,
+            tagessumme: true,
+            spitzenstunde: true,
+            spitzenstundeKfz: true,
+            spitzenstundeRad: false,
+            spitzenstundeFuss: false,
+            mittelwert: false,
+            beschriftung: false,
+            datentabelle: false,
+            fahrzeugklassenStapeln: false,
+            werteHundertRunden: false,
+            differenzdatenDarstellen: false,
+            vonKnotenarm: null,
+            // Setzen aller möglichen Knotenarme als Defaultwert da "vonKnotenarm" gleich "null"
+            vonIds: [1, 2, 3, 4, 5, 6, 7, 8],
+            nachKnotenarm: null,
+            // Setzen aller möglichen Knotenarme als Defaultwert da "nachKnotenarm" gleich "null"
+            nachIds: [1, 2, 3, 4, 5, 6, 7, 8],
+            blackPrintMode: false,
+            ganglinieYAchse1MaxValue: null,
+            ganglinieYAchse2MaxValue: null,
+            idVergleichszaehlungZeitreihe: null,
+            zeitreiheGesamt: false,
+        };
+    }
+
+    public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
+        return {
+            fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+            gueltigAb: "",
+            gueltigBis: "",
+            intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,
+        } as MessfaehigkeitDTO;
     }
 }

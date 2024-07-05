@@ -1,9 +1,9 @@
 <template>
     <v-dialog
-        v-model="open"
+        v-model="openDialog"
         width="80vh"
         height="60vh"
-        @click:outside="cancel"
+        @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
@@ -147,63 +147,70 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
-/* eslint-enable no-unused-vars */
+import { computed, ref, watch } from "vue";
 
-@Component
-export default class TextAssetForm extends Vue {
-    @Prop({ default: false }) open: boolean | undefined;
-    @Prop() text?: TextAsset;
+interface Props {
+    value: boolean;
+    text: TextAsset;
+}
 
-    asset: TextAsset = new TextAsset("");
+const props = defineProps<Props>();
 
-    @Watch("text")
-    copyAsset(asset: TextAsset): void {
-        if (asset) {
-            this.asset = Object.assign({}, asset);
-        }
-    }
+const emits = defineEmits<{
+    (e: "save", v: TextAsset): void;
+    (e: "cancelDialog"): void;
+    (e: "input", v: boolean): void;
+}>();
 
-    /**
-     * Um den Text im Array zu "speichern", wird es als Event an die View geschickt.
-     */
-    save(): void {
-        if (this.asset?.text && this.asset.text.length > 0) {
-            const event = {};
-            Object.assign(event, this.asset);
-            this.$emit("save", event);
-        } else {
-            this.cancel();
-        }
-    }
+const asset = ref(new TextAsset(""));
 
-    /**
-     * Verläßt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel", Object.assign({}, this.asset));
-    }
+const openDialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emits("input", payload),
+});
 
-    addBoldText() {
-        if (this.asset) {
-            this.asset.text = `${this.asset.text?.trim()} <strong>Text einfügen</strong>`;
-        }
-    }
-
-    addItalicText() {
-        if (this.asset) {
-            this.asset.text = `${this.asset.text?.trim()} <em>Text einfügen</em>`;
-        }
-    }
-
-    changeTextSize(size: string): void {
-        if (this.asset) {
-            this.asset.size = size;
-        }
+/**
+ * Um den Text im Array zu "speichern", wird es als Event an die View geschickt.
+ */
+function save(): void {
+    if (asset.value.text && asset.value.text.length > 0) {
+        emits("save", Object.assign({}, asset.value));
+    } else {
+        cancelDialog();
     }
 }
+
+/**
+ * Verläßt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+    asset.value = new TextAsset("");
+    emits("cancelDialog");
+}
+
+function addBoldText() {
+    if (asset.value) {
+        asset.value.text = `${asset.value.text?.trim()} <strong>Text einfügen</strong>`;
+    }
+}
+
+function addItalicText() {
+    if (asset.value) {
+        asset.value.text = `${asset.value.text?.trim()} <em>Text einfügen</em>`;
+    }
+}
+
+function changeTextSize(size: string): void {
+    if (asset.value) {
+        asset.value.size = size;
+    }
+}
+
+watch(openDialog, () => {
+    if (props.text) {
+        asset.value = Object.assign({}, props.text);
+    }
+});
 </script>

@@ -76,7 +76,13 @@
                         <v-text-field
                             v-model="ganglinieYAchse1MaxValue"
                             :label="'Y-Achse 1'"
-                            :rules="[onlyNumbers]"
+                            :rules="[
+                                (toCheck) =>
+                                    rules.onlyPositivNumbersBiggerThan(
+                                        toCheck,
+                                        MIN_VALUE
+                                    ),
+                            ]"
                             type="number"
                             clearable
                             dense
@@ -91,7 +97,14 @@
                             v-model="ganglinieYAchse2MaxValue"
                             :label="'Y-Achse 2 (%)'"
                             type="number"
-                            :rules="[onlyNumbersSmaller100]"
+                            :rules="[
+                                (toCheck) =>
+                                    rules.onlyNumbersInRange(
+                                        toCheck,
+                                        MIN_VALUE,
+                                        MAX_VALUE_EXCLUDE
+                                    ),
+                            ]"
                             clearable
                             dense
                             @blur="checkRangeYAchse2"
@@ -255,349 +268,313 @@
     </v-expansion-panel>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
-
-// Typen
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import OptionsDTO from "@/types/zaehlung/OptionsDTO";
-/* eslint-enable no-unused-vars */
 import PanelHeader from "@/components/common/PanelHeader.vue";
-/* eslint-disable no-unused-vars */
 import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-/* eslint-enable no-unused-vars */
 import _ from "lodash";
-/* eslint-enable no-unused-vars */
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
+import { computed, onMounted, Ref, ref, watch } from "vue";
+import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import { useRules } from "@/util/rules";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
-@Component({
-    components: { PanelHeader },
-})
-export default class DarstellungsoptionenPanel extends Vue {
-    private static readonly SPITZENSTUNDE: string = "Spitzenstunde";
-    private static readonly MIN_VALUE: number = 0;
-    private static readonly MAX_VALUE_EXCLUDE: number = 101;
+const SPITZENSTUNDE = "Spitzenstunde";
+const MIN_VALUE = 0;
+const MAX_VALUE_EXCLUDE = 101;
 
-    // Belastungsplan
-    werteHundertRunden = false;
-    blackPrintMode = false;
-    sizeBelastungsplan = 0;
+const zaehlstelleStore = useZaehlstelleStore();
+const zaehlstelleUtils = useZaehlstelleUtils();
+const rules = useRules();
 
-    // Ganglinie
-    ganglinieYAchse1MaxValue: number | null = null;
-    ganglinieYAchse2MaxValue: number | null = null;
+const emits = defineEmits<{
+    (e: "werteHundertRunden", v: boolean): void;
+    (e: "blackPrintMode", v: boolean): void;
+    (e: "stundensumme", v: boolean): void;
+    (e: "blocksumme", v: boolean): void;
+    (e: "tagessumme", v: boolean): void;
+    (e: "spitzenstunde", v: boolean): void;
+    (e: "spitzenstundeKfz", v: boolean): void;
+    (e: "spitzenstundeRad", v: boolean): void;
+    (e: "spitzenstundeFuss", v: boolean): void;
+    (e: "ganglinieYAchse1MaxValue", v: number | null): void;
+    (e: "ganglinieYAchse2MaxValue", v: number | null): void;
+    (e: "zeitreiheGesamt", v: boolean): void;
+}>();
 
-    // Listenausgabe
-    stundensumme = false;
-    blocksumme = false;
-    tagessumme = false;
-    spitzenstunde = false;
-    spitzenstundeKfz = false;
-    spitzenstundeRad = false;
-    spitzenstundeFuss = false;
+// Belastungsplan
+const werteHundertRunden = ref(false);
+const blackPrintMode = ref(false);
+const sizeBelastungsplan = ref(0);
 
-    // Zeitreihe
-    zeitreiheGesamt = false;
+// Ganglinie
+const ganglinieYAchse1MaxValue: Ref<number | null> = ref(null);
+const ganglinieYAchse2MaxValue: Ref<number | null> = ref(null);
 
-    mounted() {
-        const options = this.$store.getters.getFilteroptions as OptionsDTO;
-        this.update(options);
-        this.sizeBelastungsplan = this.$store.getters.getSizeBelastungsplanSvg;
+// Listenausgabe
+const stundensumme = ref(false);
+const blocksumme = ref(false);
+const tagessumme = ref(false);
+const spitzenstunde = ref(false);
+const spitzenstundeKfz = ref(false);
+const spitzenstundeRad = ref(false);
+const spitzenstundeFuss = ref(false);
+
+// Zeitreihe
+const zeitreiheGesamt = ref(false);
+
+const hoverWerteHundertRunden = ref(false);
+const hoverSizeBelastungsplan = ref(false);
+const hoverBlackPrintMode = ref(false);
+const hoverStundensumme = ref(false);
+const hoverBlocksumme = ref(false);
+const hoverTagessumme = ref(false);
+const hoverSpitzenstunde = ref(false);
+const hoverSpitzenstundeDetailauswahl = ref(false);
+const hoverYAchse1 = ref(false);
+const hoverYAchse2 = ref(false);
+const hoverZeitreiheGesamt = ref(false);
+
+onMounted(() => {
+    update(options.value);
+    sizeBelastungsplan.value = sizeBelastungsplanSvg.value;
+});
+
+const sizeBelastungsplanSvg: Ref<number> = computed(() => {
+    return zaehlstelleStore.getSizeBelastungsplanSvg;
+});
+
+const maxSizeBelastungsplanSvg: Ref<number> = computed(() => {
+    return zaehlstelleStore.getMaxSizeBelastungsplanSvg;
+});
+
+const minSizeBelastungsplanSvg: Ref<number> = computed(() => {
+    return zaehlstelleStore.getMinSizeBelastungsplanSvg;
+});
+
+const options: Ref<OptionsDTO> = computed(() => {
+    return zaehlstelleStore.getFilteroptions;
+});
+
+const activeZaehlung: Ref<LadeZaehlungDTO> = computed(() => {
+    return zaehlstelleStore.getAktiveZaehlung;
+});
+
+const isZeitauswahlForSpitzenstunde: Ref<boolean> = computed(() => {
+    return zaehlstelleStore.getZeitauswahl.includes(SPITZENSTUNDE);
+});
+
+const helpTextBelastungsplan: Ref<string> = computed(() => {
+    if (hoverWerteHundertRunden.value) {
+        return "";
     }
-
-    onlyNumbers(v: any) {
-        if (v === null) return true;
-        if (!isNaN(parseFloat(v)) && v >= DarstellungsoptionenPanel.MIN_VALUE)
-            return true;
-        if (!v.trim()) return true;
-        return "Das Feld darf nur positive Zahlen enthalten";
+    if (hoverBlackPrintMode.value) {
+        return "";
     }
+    if (hoverSizeBelastungsplan.value) {
+        return "";
+    }
+    return "";
+});
 
-    onlyNumbersSmaller100(v: any) {
-        if (v === null) return true;
+const helpTextGanglinie: Ref<string> = computed(() => {
+    if (hoverYAchse1.value) {
+        return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 ist.";
+    }
+    if (hoverYAchse2.value) {
+        return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 oder > 100 ist.";
+    }
+    return "";
+});
+
+const helpTextListenausgabe: Ref<string> = computed(() => {
+    if (hoverStundensumme.value) {
+        return "Ausgabe der Summen für jede Stunde als Zeile.";
+    }
+    if (hoverBlocksumme.value) {
+        return "Ausgabe der Summen für jeden Zählblock als Zeile.";
+    }
+    if (hoverTagessumme.value) {
+        return "Ausgabe der Summe für den Tageswert als Zeile.";
+    }
+    if (hoverSpitzenstunde.value) {
+        return "Ausgaben der Summe für die Spitzenstunde(n) als Zeile.";
+    }
+    return "";
+});
+
+const helpTextDetailauswahlListenausgabe: Ref<string> = computed(() => {
+    if (hoverSpitzenstundeDetailauswahl.value) {
+        return "Detailauswahl der auszugebenden Spitzenstunde(n)";
+    }
+    return "";
+});
+
+const helpTextZeitreihe: Ref<string> = computed(() => {
+    if (hoverZeitreiheGesamt.value) {
+        return "";
+    }
+    return "";
+});
+
+// Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
+//  übergebenen Werten im Optionsobjekt
+function update(newOptions: OptionsDTO) {
+    newOptions.werteHundertRunden === null
+        ? (werteHundertRunden.value = false)
+        : (werteHundertRunden.value = newOptions.werteHundertRunden);
+    newOptions.blackPrintMode === null
+        ? (blackPrintMode.value = false)
+        : (blackPrintMode.value = newOptions.blackPrintMode);
+    newOptions.stundensumme === null
+        ? (stundensumme.value = false)
+        : (stundensumme.value = newOptions.stundensumme);
+    newOptions.blocksumme === null
+        ? (blocksumme.value = false)
+        : (blocksumme.value = newOptions.blocksumme);
+    newOptions.tagessumme === null
+        ? (tagessumme.value = false)
+        : (tagessumme.value = newOptions.tagessumme);
+    newOptions.spitzenstunde === null
+        ? (spitzenstunde.value = false)
+        : (spitzenstunde.value = newOptions.spitzenstunde);
+    newOptions.spitzenstundeKfz === null
+        ? (spitzenstundeKfz.value = false)
+        : (spitzenstundeKfz.value = newOptions.spitzenstundeKfz);
+    newOptions.spitzenstundeRad === null
+        ? (spitzenstundeRad.value = false)
+        : (spitzenstundeRad.value = newOptions.spitzenstundeRad);
+    newOptions.spitzenstundeFuss === null
+        ? (spitzenstundeFuss.value = false)
+        : (spitzenstundeFuss.value = newOptions.spitzenstundeFuss);
+    newOptions.ganglinieYAchse1MaxValue === null
+        ? (ganglinieYAchse1MaxValue.value = null)
+        : (ganglinieYAchse1MaxValue.value =
+              newOptions.ganglinieYAchse1MaxValue);
+    newOptions.ganglinieYAchse2MaxValue === null
+        ? (ganglinieYAchse2MaxValue.value = null)
+        : (ganglinieYAchse2MaxValue.value =
+              newOptions.ganglinieYAchse2MaxValue);
+    newOptions.zeitreiheGesamt === null
+        ? (zeitreiheGesamt.value = false)
+        : (zeitreiheGesamt.value = newOptions.zeitreiheGesamt);
+}
+
+function isTypeKfzDisabled(): boolean {
+    const disabled: boolean = isTypeDisabled("KFZ");
+    if (disabled) {
+        spitzenstundeKfz.value = false;
+    }
+    return disabled;
+}
+
+function isTypeRadDisabled(): boolean {
+    const disabled: boolean = isTypeDisabled("RAD");
+    if (disabled) {
+        spitzenstundeRad.value = false;
+    }
+    return disabled;
+}
+
+function isTypeFussDisabled(): boolean {
+    const disabled: boolean = isTypeDisabled("FUSS");
+    if (disabled) {
+        spitzenstundeFuss.value = false;
+    }
+    return disabled;
+}
+
+/**
+ * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
+ * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
+ */
+function isTypeDisabled(type: string): boolean {
+    return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
+}
+
+function checkRangeYAchse2() {
+    if (ganglinieYAchse2MaxValue.value) {
         if (
-            !isNaN(parseFloat(v)) &&
-            _.inRange(
-                v,
-                DarstellungsoptionenPanel.MIN_VALUE,
-                DarstellungsoptionenPanel.MAX_VALUE_EXCLUDE
+            !_.inRange(
+                ganglinieYAchse2MaxValue.value,
+                MIN_VALUE,
+                MAX_VALUE_EXCLUDE
             )
-        )
-            return true;
-        if (!v.trim()) return true;
-        return "Das Feld darf nur positive Zahlen kleiner gleich 100 enthalten";
-    }
-
-    // Watcher
-    // Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-
-    @Watch("werteHundertRunden")
-    storeWerteHundertRunden() {
-        this.$emit("werteHundertRunden", this.werteHundertRunden);
-    }
-
-    @Watch("blackPrintMode")
-    storeBlackPrintMode() {
-        this.$emit("blackPrintMode", this.blackPrintMode);
-    }
-
-    @Watch("sizeBelastungsplan")
-    storeSizeBelastungsplan() {
-        this.$store.dispatch(
-            "setSizeBelastungsplanSvg",
-            this.sizeBelastungsplan
-        );
-    }
-
-    @Watch("stundensumme")
-    storeStundensumme() {
-        this.$emit("stundensumme", this.stundensumme);
-    }
-
-    @Watch("blocksumme")
-    storeBlocksumme() {
-        this.$emit("blocksumme", this.blocksumme);
-    }
-
-    @Watch("tagessumme")
-    storeTagessumme() {
-        this.$emit("tagessumme", this.tagessumme);
-    }
-
-    @Watch("spitzenstunde")
-    storeSpitzenstunde() {
-        this.$emit("spitzenstunde", this.spitzenstunde);
-    }
-
-    @Watch("spitzenstundeKfz")
-    storeSpitzenstundeKfz() {
-        this.$emit("spitzenstundeKfz", this.spitzenstundeKfz);
-    }
-
-    @Watch("spitzenstundeRad")
-    storeSpitzenstundeRad() {
-        this.$emit("spitzenstundeRad", this.spitzenstundeRad);
-    }
-
-    @Watch("spitzenstundeFuss")
-    storeSpitzenstundeFuss() {
-        this.$emit("spitzenstundeFuss", this.spitzenstundeFuss);
-    }
-
-    @Watch("ganglinieYAchse1MaxValue")
-    storeGanglinieYAchse1MaxValue() {
-        this.$emit("ganglinieYAchse1MaxValue", this.ganglinieYAchse1MaxValue);
-    }
-
-    @Watch("ganglinieYAchse2MaxValue")
-    storeGanglinieYAchse2MaxValue() {
-        this.$emit("ganglinieYAchse2MaxValue", this.ganglinieYAchse2MaxValue);
-    }
-
-    @Watch("zeitreiheGesamt")
-    storeZeitreiheGesamt() {
-        this.$emit("zeitreiheGesamt", this.zeitreiheGesamt);
-    }
-
-    // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-    // Oberfläche ändern.
-    @Watch("options")
-    optionsChanged(newOptions: OptionsDTO) {
-        this.update(newOptions);
-    }
-
-    get sizeBelastungsplanSvg(): number {
-        return this.$store.getters.getSizeBelastungsplanSvg;
-    }
-
-    @Watch("sizeBelastungsplanSvg")
-    sizeBelastungsplanSvgChanged(newSize: number) {
-        this.sizeBelastungsplan = newSize;
-    }
-
-    hoverWerteHundertRunden = false;
-    hoverSizeBelastungsplan = false;
-    hoverBlackPrintMode = false;
-    hoverStundensumme = false;
-    hoverBlocksumme = false;
-    hoverTagessumme = false;
-    hoverSpitzenstunde = false;
-    hoverSpitzenstundeDetailauswahl = false;
-    hoverYAchse1 = false;
-    hoverYAchse2 = false;
-    hoverZeitreiheGesamt = false;
-
-    get helpTextBelastungsplan(): string {
-        if (this.hoverWerteHundertRunden) {
-            return "";
-        }
-        if (this.hoverBlackPrintMode) {
-            return "";
-        }
-        if (this.hoverSizeBelastungsplan) {
-            return "";
-        }
-        return "";
-    }
-
-    get helpTextGanglinie(): string {
-        if (this.hoverYAchse1) {
-            return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 ist.";
-        }
-        if (this.hoverYAchse2) {
-            return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 oder > 100 ist.";
-        }
-        return "";
-    }
-
-    get helpTextListenausgabe(): string {
-        if (this.hoverStundensumme) {
-            return "Ausgabe der Summen für jede Stunde als Zeile.";
-        }
-        if (this.hoverBlocksumme) {
-            return "Ausgabe der Summen für jeden Zählblock als Zeile.";
-        }
-        if (this.hoverTagessumme) {
-            return "Ausgabe der Summe für den Tageswert als Zeile.";
-        }
-        if (this.hoverSpitzenstunde) {
-            return "Ausgaben der Summe für die Spitzenstunde(n) als Zeile.";
-        }
-        return "";
-    }
-
-    get helpTextDetailauswahlListenausgabe(): string {
-        if (this.hoverSpitzenstundeDetailauswahl) {
-            return "Detailauswahl der auszugebenden Spitzenstunde(n)";
-        }
-        return "";
-    }
-
-    get helpTextZeitreihe(): string {
-        if (this.hoverZeitreiheGesamt) {
-            return "";
-        }
-        return "";
-    }
-
-    // reaktiver getter auf den Store
-    get options(): OptionsDTO {
-        return this.$store.getters.getFilteroptions;
-    }
-
-    get isZeitauswahlForSpitzenstunde(): boolean {
-        const zeitauswahl: string = this.$store.getters.getZeitauswahl;
-        return zeitauswahl.includes(DarstellungsoptionenPanel.SPITZENSTUNDE);
-    }
-
-    get activeZaehlung(): LadeZaehlungDTO {
-        return this.$store.getters.getAktiveZaehlung;
-    }
-
-    // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
-    //  übergebenen Werten im Optionsobjekt
-    update(newOptions: OptionsDTO) {
-        newOptions.werteHundertRunden === null
-            ? (this.werteHundertRunden = false)
-            : (this.werteHundertRunden = newOptions.werteHundertRunden);
-        newOptions.blackPrintMode === null
-            ? (this.blackPrintMode = false)
-            : (this.blackPrintMode = newOptions.blackPrintMode);
-        newOptions.stundensumme === null
-            ? (this.stundensumme = false)
-            : (this.stundensumme = newOptions.stundensumme);
-        newOptions.blocksumme === null
-            ? (this.blocksumme = false)
-            : (this.blocksumme = newOptions.blocksumme);
-        newOptions.tagessumme === null
-            ? (this.tagessumme = false)
-            : (this.tagessumme = newOptions.tagessumme);
-        newOptions.spitzenstunde === null
-            ? (this.spitzenstunde = false)
-            : (this.spitzenstunde = newOptions.spitzenstunde);
-        newOptions.spitzenstundeKfz === null
-            ? (this.spitzenstundeKfz = false)
-            : (this.spitzenstundeKfz = newOptions.spitzenstundeKfz);
-        newOptions.spitzenstundeRad === null
-            ? (this.spitzenstundeRad = false)
-            : (this.spitzenstundeRad = newOptions.spitzenstundeRad);
-        newOptions.spitzenstundeFuss === null
-            ? (this.spitzenstundeFuss = false)
-            : (this.spitzenstundeFuss = newOptions.spitzenstundeFuss);
-        newOptions.ganglinieYAchse1MaxValue === null
-            ? (this.ganglinieYAchse1MaxValue = null)
-            : (this.ganglinieYAchse1MaxValue =
-                  newOptions.ganglinieYAchse1MaxValue);
-        newOptions.ganglinieYAchse2MaxValue === null
-            ? (this.ganglinieYAchse2MaxValue = null)
-            : (this.ganglinieYAchse2MaxValue =
-                  newOptions.ganglinieYAchse2MaxValue);
-        newOptions.zeitreiheGesamt === null
-            ? (this.zeitreiheGesamt = false)
-            : (this.zeitreiheGesamt = newOptions.zeitreiheGesamt);
-    }
-
-    isTypeKfzDisabled(): boolean {
-        const disabled: boolean = this.isTypeDisabled("KFZ");
-        if (disabled) {
-            this.spitzenstundeKfz = false;
-        }
-        return disabled;
-    }
-
-    isTypeRadDisabled(): boolean {
-        const disabled: boolean = this.isTypeDisabled("RAD");
-        if (disabled) {
-            this.spitzenstundeRad = false;
-        }
-        return disabled;
-    }
-
-    isTypeFussDisabled(): boolean {
-        const disabled: boolean = this.isTypeDisabled("FUSS");
-        if (disabled) {
-            this.spitzenstundeFuss = false;
-        }
-        return disabled;
-    }
-
-    /**
-     * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
-     * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
-     */
-    isTypeDisabled(type: string): boolean {
-        return Optionsmenue.isTypeDisabled(type, this.activeZaehlung);
-    }
-
-    checkRangeYAchse2() {
-        if (this.ganglinieYAchse2MaxValue) {
-            if (
-                !_.inRange(
-                    this.ganglinieYAchse2MaxValue,
-                    DarstellungsoptionenPanel.MIN_VALUE,
-                    DarstellungsoptionenPanel.MAX_VALUE_EXCLUDE
-                )
-            ) {
-                this.ganglinieYAchse2MaxValue = null;
-            }
-        }
-    }
-
-    checkRangeYAchse1() {
-        if (
-            this.ganglinieYAchse1MaxValue &&
-            this.ganglinieYAchse1MaxValue < DarstellungsoptionenPanel.MIN_VALUE
         ) {
-            this.ganglinieYAchse1MaxValue = null;
+            ganglinieYAchse2MaxValue.value = null;
         }
-    }
-
-    get maxSizeBelastungsplanSvg() {
-        return this.$store.getters.getMaxSizeBelastungsplanSvg;
-    }
-
-    get minSizeBelastungsplanSvg() {
-        return this.$store.getters.getMinSizeBelastungsplanSvg;
     }
 }
+
+function checkRangeYAchse1() {
+    if (
+        ganglinieYAchse1MaxValue.value &&
+        ganglinieYAchse1MaxValue.value < MIN_VALUE
+    ) {
+        ganglinieYAchse1MaxValue.value = null;
+    }
+}
+
+// Watcher
+// Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
+watch(werteHundertRunden, () => {
+    emits("werteHundertRunden", werteHundertRunden.value);
+});
+
+watch(blackPrintMode, () => {
+    emits("blackPrintMode", blackPrintMode.value);
+});
+
+watch(sizeBelastungsplan, () => {
+    zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
+});
+
+watch(stundensumme, () => {
+    emits("stundensumme", stundensumme.value);
+});
+
+watch(blocksumme, () => {
+    emits("blocksumme", blocksumme.value);
+});
+
+watch(tagessumme, () => {
+    emits("tagessumme", tagessumme.value);
+});
+
+watch(spitzenstunde, () => {
+    emits("spitzenstunde", spitzenstunde.value);
+});
+
+watch(spitzenstundeKfz, () => {
+    emits("spitzenstundeKfz", spitzenstundeKfz.value);
+});
+
+watch(spitzenstundeRad, () => {
+    emits("spitzenstundeRad", spitzenstundeRad.value);
+});
+
+watch(spitzenstundeFuss, () => {
+    emits("spitzenstundeFuss", spitzenstundeFuss.value);
+});
+
+watch(ganglinieYAchse1MaxValue, () => {
+    emits("ganglinieYAchse1MaxValue", ganglinieYAchse1MaxValue.value);
+});
+
+watch(ganglinieYAchse2MaxValue, () => {
+    emits("ganglinieYAchse2MaxValue", ganglinieYAchse2MaxValue.value);
+});
+
+watch(zeitreiheGesamt, () => {
+    emits("zeitreiheGesamt", zeitreiheGesamt.value);
+});
+
+// Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
+// Oberfläche ändern.
+watch(options, (newOptions: OptionsDTO) => {
+    update(newOptions);
+});
+
+watch(sizeBelastungsplanSvg, (newSize: number) => {
+    sizeBelastungsplan.value = newSize;
+});
 </script>
