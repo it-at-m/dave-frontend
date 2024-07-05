@@ -122,7 +122,7 @@ export default class DefaultObjectCreator {
         return {
             jahre: [],
             tagesTyp: "",
-            zeitintervalle: [],
+            zeitraum: [],
             mstIds: [],
             mqIds: [],
             fahrzeuge: {

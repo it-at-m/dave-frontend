@@ -88,6 +88,7 @@ import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/steppe
 import { tagesTypText } from "@/types/enum/TagesTyp";
 import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
 import FahrzeugeStepContent from "@/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue";
+import { auswertungszeitraumToText } from "@/types/enum/AuswertungCategories";
 
 interface Props {
     value: MessstelleAuswertungOptionsDTO;
@@ -121,7 +122,14 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-    let summary = auswertungOptions.value.zeitintervalle.join(", ");
+    let helper: Array<string> = [];
+    auswertungOptions.value.zeitraum.forEach((key) => {
+        const value = auswertungszeitraumToText.get(key);
+        if (value) {
+            helper.push(value.text);
+        }
+    });
+    let summary = helper.join(", ");
     if (!isJahresintervallSelected()) {
         summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
     }
@@ -170,8 +178,7 @@ function isTagesTypSelected(): boolean {
 
 function isJahresintervallSelected(): boolean {
     return !(
-        auswertungOptions.value.zeitintervalle.length === 0 &&
-        activeStep.value > 0
+        auswertungOptions.value.zeitraum.length === 0 && activeStep.value > 0
     );
 }
 
