@@ -1,15 +1,9 @@
-import { createPinia, setActivePinia } from "pinia";
-import { expect } from "vitest";
-import Vue from "vue";
+import {createPinia, setActivePinia} from "pinia";
+import {beforeEach, describe, expect, it} from "vitest";
 
-import i18n from "@/i18n";
-import { useTimeUtils } from "@/util/TimeUtils";
+import {useTimeUtils} from "@/util/TimeUtils";
 
 describe("test", () => {
-  beforeAll(() => {
-    Vue.set(i18n, "i18n", i18n);
-  });
-
   beforeEach(() => {
     setActivePinia(createPinia());
   });

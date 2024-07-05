@@ -1,6 +1,9 @@
 import "@mdi/font/css/materialdesignicons.css";
 import {createVuetify} from "vuetify";
 import colors from 'vuetify/util/colors'
+import "@fontsource/roboto";
+import "vuetify/styles";
+import { de } from "vuetify/locale";
 
 // Zaehldauer
 import Zaehldauer2x4h from "@/components/zaehlstelle/icons/ZaehldauerIcons/Zaehldauer2x4hIcon.vue";
@@ -114,5 +117,9 @@ export default createVuetify({
                 component: QpkwLkwIcon,
             },
         },
+    },
+    locale: {
+        locale: "de",
+        messages: { de },
     },
 });

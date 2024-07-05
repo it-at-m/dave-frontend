@@ -1,5 +1,5 @@
 <template>
-    <v-sheet
+    <v-main
         height="100%"
         width="100%"
     >
@@ -10,59 +10,52 @@
             :zoom="12"
         />
 
-        <v-speed-dial
-            v-model="fab"
-            absolute
-            bottom
-            right
-            open-on-hover
-        >
-            <template #activator>
-                <v-btn
-                    v-model="fab"
-                    dark
-                    fab
-                    :color="fabColor"
-                    :loading="creatingPicture || printingSearchResult"
-                >
-                    <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                    <v-icon v-else> mdi-plus-thick </v-icon>
-                </v-btn>
-            </template>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="printSearchResult"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-delimited</v-icon>
-                    </v-btn>
-                </template>
-                <span>Suchergebnis als CSV herunterladen</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="takePicture"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-camera</v-icon>
-                    </v-btn>
-                </template>
-                <span>Karte dem PDF Report hinzufügen</span>
-            </v-tooltip>
-        </v-speed-dial>
-    </v-sheet>
+      <v-speed-dial
+          v-model="speedDialOpen"
+          location="top"
+          open-on-hover
+      >
+        <template #activator="{ props: activatorProps }">
+          <v-btn
+              v-bind="activatorProps"
+              :color="speedDialColor"
+              :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-plus-thick'"
+              size="large"
+              elevation="6"
+              location="bottom end"
+              position="absolute"
+              class="mr-4 mb-4"
+              style="z-index: 400"
+              :data-x="activatorProps"
+              :loading="creatingPicture || printingSearchResult"
+          />
+        </template>
+        <v-tooltip location="left">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-file-delimited"
+                color="secondary"
+                size="small"
+                v-bind="props"
+                @click="printSearchResult"
+            />
+          </template>
+          <span>Suchergebnis als CSV herunterladen</span>
+        </v-tooltip>
+        <v-tooltip location="left">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-camera"
+                color="secondary"
+                size="small"
+                v-bind="props"
+                @click="takePicture"
+            />
+          </template>
+          <span>Karte dem PDF Report hinzufügen</span>
+        </v-tooltip>
+      </v-speed-dial>
+    </v-main>
 </template>
 
 <script lang="ts" setup>
@@ -85,7 +78,7 @@ const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const daveUtils = useDaveUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
-const fab = ref(false);
+const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
 
@@ -221,7 +214,7 @@ const getSearchResult = computed(() => {
     return searchStore.getSearchResult;
 });
 
-const fabColor = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
+const speedDialColor = computed(() => {
+    return speedDialOpen.value ? "grey darken-1" : "secondary";
 });
 </script>

@@ -1,42 +1,32 @@
 <template>
-    <v-menu offset-y>
-        <template #activator="{ on: dialog }">
-            <v-tooltip bottom>
-                <template #activator="{ on: tooltip }">
-                    <v-btn
-                        icon
-                        small
-                        :disabled="!isHistory"
-                        class="ml-2"
-                        v-on="{ ...tooltip, ...dialog }"
-                    >
-                        <v-icon>mdi-history</v-icon>
-                    </v-btn>
-                </template>
-                Historie
-            </v-tooltip>
-        </template>
-        <v-list dense>
-            <v-list-item
-                v-for="(item, index) in items"
-                :key="index"
-                two-line
-                @click="selectItem(item)"
-            >
-                <v-list-item-icon class="mr-1 mt-4">
-                    <v-icon large>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title>
-                        {{ getTitle(item) }}
-                    </v-list-item-title>
-                    <v-list-item-subtitle
-                        >{{ getSubTitle(item) }}
-                    </v-list-item-subtitle>
-                </v-list-item-content>
-            </v-list-item>
-        </v-list>
-    </v-menu>
+
+    <v-tooltip location="bottom">
+      <template #activator="{ props }">
+        <v-btn
+            id="menu-activator"
+            v-bind="props"
+            icon="mdi-history"
+            :disabled="!isHistory"
+        >
+        </v-btn>
+      </template>
+      Historie
+    </v-tooltip>
+
+  <v-menu activator="#menu-activator" location="bottom center">
+    <v-list density="compact">
+      <v-list-item
+          v-for="(item, index) in items"
+          :key="index"
+          two-line
+          :prepend-icon="item.icon"
+          :title="getTitle(item)"
+          :subtitle="getSubTitle(item)"
+          @click="selectItem(item)"
+      >
+      </v-list-item>
+    </v-list>
+  </v-menu>
 </template>
 
 <script setup lang="ts">

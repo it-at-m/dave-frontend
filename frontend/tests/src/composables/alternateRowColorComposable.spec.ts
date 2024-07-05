@@ -1,19 +1,24 @@
-import Vue from "vue";
-import Vuetify from "vuetify";
+import {createVuetify} from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 
-import { useAlternateRowColor } from "@/util/alternateRowColorComposable";
+import {useAlternateRowColor} from "@/util/alternateRowColorComposable";
+import {beforeAll, beforeEach, describe, expect, it} from "vitest";
 
 describe("alternateRowColorComposable.ts", () => {
-  let vuetify: any;
+  let vuetify: ReturnType<typeof createVuetify>;
 
   const { calcRowColor } = useAlternateRowColor();
 
   beforeAll(() => {
-    Vue.use(Vuetify);
+    createVuetify();
   });
 
   beforeEach(() => {
-    vuetify = new Vuetify();
+    vuetify = createVuetify({
+      components,
+      directives,
+    });
   });
 
   it("returns 'grey lighten-4' when index is odd", () => {
