@@ -1,6 +1,6 @@
 // Composables
 import {createRouter, createWebHistory} from "vue-router";
-import Main from "@/views/Main.vue";
+import HomeView from "@/views/HomeView.vue";
 import ZaehlstelleView from "@/views/ZaehlstelleView.vue";
 import MessstelleView from "@/views/MessstelleView.vue";
 import AuswertungView from "@/views/AuswertungView.vue";
@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Main,
+    component: HomeView,
   },
   {
     path: "/zaehlstelle/:zaehlstelleId/:zaehlungId?",
