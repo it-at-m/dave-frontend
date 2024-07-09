@@ -31,6 +31,7 @@ import ArtTK from "@/components/zaehlstelle/icons/ArtIcons/ArtTK.vue";
 import AchtUndEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtUndEinsIcon.vue";
 import QKFZIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QKFZIcon.vue";
 import QpkwLkwIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QpkwLkwIcon.vue";
+import {VStepperVertical, VStepperVerticalItem} from "vuetify/labs/components";
 
 const theme = {
     themes: {
@@ -122,4 +123,9 @@ export default createVuetify({
         locale: "de",
         messages: { de },
     },
+    components: {
+        VStepperVertical,
+        VStepperVerticalItem,
+        // VStepperVerticalActions,
+    }
 });

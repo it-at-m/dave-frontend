@@ -16,9 +16,9 @@
     "pinia": "^2.1.7",
     "@fontsource/roboto": "^4.5.8",
     "sass": "^1.77.6",
-    "vue": "^3.3.7",
-    "vue-router": "^4.2.5",
-    "vuetify": "^3.3.23"
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0",
+    "vuetify": "^3.6.11"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",

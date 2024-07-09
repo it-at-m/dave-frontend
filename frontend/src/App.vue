@@ -4,7 +4,7 @@
 
         <v-app-bar
             color="primary"
-            height="64"
+            height="50"
             class="px-4"
         >
           <v-row align="center">

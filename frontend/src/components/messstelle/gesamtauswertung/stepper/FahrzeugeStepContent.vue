@@ -12,13 +12,13 @@
             </v-col>
             <v-col cols="6">
                 <v-btn
-                    dense
-                    text
+                    density="compact"
                     :disabled="
                         isTypeDisabled(Fahrzeug.KFZ) &&
                         isTypeDisabled(Fahrzeug.RAD)
                     "
                     @click="selectOrDeselectAllVerkehrsarten()"
+                    class="text-none"
                 >
                     {{ labelSelectOrDeselectAllVerkehrsarten }}
                 </v-btn>
@@ -37,7 +37,7 @@
                     label="Kraftfahrzeugverkehr (KFZ)"
                     :disabled="isTypeDisabled(Fahrzeug.KFZ)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-spacer />
@@ -55,7 +55,7 @@
                     label="Schwerverkehr (SV)"
                     :disabled="isTypeDisabled(Fahrzeug.SV)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
@@ -66,7 +66,7 @@
                     label="Schwerverkehrsanteil [%]"
                     :disabled="isTypeDisabled(Fahrzeug.SV_P)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
         </v-row>
@@ -83,7 +83,7 @@
                     label="Güterverkehr (GV)"
                     :disabled="isTypeDisabled(Fahrzeug.GV)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
@@ -94,7 +94,7 @@
                     label="Güterverkehrsanteil [%]"
                     :disabled="isTypeDisabled(Fahrzeug.GV_P)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
         </v-row>
@@ -111,7 +111,7 @@
                     label="Radverkehr (Rad)"
                     :disabled="isTypeDisabled(Fahrzeug.RAD)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
@@ -120,7 +120,7 @@
                     label="Fußgänger (Fuß)"
                     :disabled="isTypeDisabled(Fahrzeug.FUSS)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
         </v-row>
@@ -139,8 +139,8 @@
             </v-col>
             <v-col cols="6">
                 <v-btn
-                    dense
-                    text
+                    density="compact"
+                    class="text-none"
                     :disabled="isTypeDisabled(Fahrzeug.KFZ)"
                     @click="selectOrDeselectAll()"
                 >
@@ -161,7 +161,7 @@
                     label="Personenkraftwagen (Pkw)"
                     :disabled="isTypeDisabled(Fahrzeug.PKW)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
@@ -170,7 +170,7 @@
                     label="Krafträder (Krad)"
                     :disabled="isTypeDisabled(Fahrzeug.KRAD)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
         </v-row>
@@ -187,7 +187,7 @@
                     label="Lastkraftwagen (Lkw)"
                     :disabled="isTypeDisabled(Fahrzeug.LKW)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
@@ -196,7 +196,7 @@
                     label="Lieferwagen (Lfw)"
                     :disabled="isTypeDisabled(Fahrzeug.LFW)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
         </v-row>
@@ -213,7 +213,7 @@
                     label="Lastzüge (Lz)"
                     :disabled="isTypeDisabled(Fahrzeug.LZ)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
             <v-col cols="6">
@@ -222,7 +222,7 @@
                     label="Bus"
                     :disabled="isTypeDisabled(Fahrzeug.BUS)"
                     hide-details
-                    dense
+                    density="compact"
                 ></v-checkbox>
             </v-col>
         </v-row>

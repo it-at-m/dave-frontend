@@ -5,37 +5,37 @@
             v-model="selectedCategory"
             :items="categories"
             class="mt-4"
-            outlined
-            dense
+            density="compact"
             label="Zeitintervalle"
             @input="categoryIsSelected"
         />
+<!--            outlined-->
         <v-autocomplete
             v-if="showSubCategoriesSelect"
             v-model="auswertungOptions.zeitintervalle"
             :items="selectableSubCategories"
             class="mt-4"
-            outlined
-            dense
+            density="compact"
             chips
-            small-chips
             :label="selectedCategory"
             multiple
             clearable
-            deletable-chips
         >
+<!--            outlined-->
+<!--            small-chips-->
+<!--            deletable-chips-->
             <template #append-item>
                 <v-btn
                     v-if="showSelectAllButton"
                     width="100%"
-                    text
+                    class="text-none"
                     @click="selectAll"
                     >Alle auswählen</v-btn
                 >
                 <v-btn
                     v-else
                     width="100%"
-                    text
+                    class="text-none"
                     @click="deselectAll"
                     >Alle abwählen</v-btn
                 >

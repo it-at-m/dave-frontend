@@ -1,23 +1,23 @@
 <template>
-    <v-container class="pa-0">
+    <v-container>
         <v-row dense>
             <v-col cols="4">
                 <auswertung-stepper
                     v-model="auswertungsOptions"
                     :height="leftHeightVh"
                     :active-step.sync="activeStep"
-                />
+                 value=""/>
                 <v-card-actions>
                     <v-btn
                         :disabled="isEverythingValid"
-                        class="mr-2"
+                        class="mr-2 text-none"
                         color="secondary"
                     >
                         Auswerten
                     </v-btn>
                     <v-spacer />
                     <v-btn
-                        class="mr-2"
+                        class="mr-2 text-none"
                         @click="resetAuswertungsOptions()"
                     >
                         Zurücksetzen
@@ -44,7 +44,7 @@ const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
 );
 
 const appBarHeight = computed(() => {
-    return 65 / (display.height.value / 100);
+    return 50 / (display.height.value / 100);
 });
 
 const cardActionsHeight = computed(() => {
@@ -53,6 +53,11 @@ const cardActionsHeight = computed(() => {
 
 const leftHeightVh = computed(() => {
     return 100 - appBarHeight.value - cardActionsHeight.value + "vh";
+});
+
+const sheetHeightVh = computed(() => {
+  console.log(100 - appBarHeight.value + "vh");
+  return 100 - appBarHeight.value + "vh";
 });
 
 const isEverythingValid = computed(() => {

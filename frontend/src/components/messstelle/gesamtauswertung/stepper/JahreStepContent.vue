@@ -3,15 +3,15 @@
         v-model="auswertungOptions.jahre"
         :items="jahre"
         class="mt-4"
-        outlined
-        dense
-        chips
-        small-chips
+        density="compact"
         label="Jahre"
         multiple
+        chips
         clearable
-        deletable-chips
     />
+<!--        outlined-->
+<!--        deletable-chips-->
+<!--        small-chips-->
 </template>
 
 <script setup lang="ts">

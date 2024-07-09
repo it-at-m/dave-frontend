@@ -4,31 +4,31 @@
             v-model="auswertungOptions.mstIds"
             :items="messstellen"
             class="mt-4"
-            outlined
-            dense
+            density="compact"
             chips
-            small-chips
             label="Messstellen"
             multiple
             clearable
-            deletable-chips
             :disabled="disableMessstelle"
             persistent-hint
             :hint="messstelleHint"
             @input="mstIdsHaveChanged"
         >
+<!--            outlined-->
+<!--            deletable-chips-->
+<!--            small-chips-->
             <template #append-item>
                 <v-btn
                     v-if="showSelectAllButton"
                     width="100%"
-                    text
+                    class="text-none"
                     @click="selectAllMessstellen"
                     >Alle auswählen</v-btn
                 >
                 <v-btn
                     v-else
                     width="100%"
-                    text
+                    class="text-none"
                     @click="deselectAllMessstellen"
                     >Alle abwählen</v-btn
                 >
@@ -41,7 +41,7 @@
                 label="Richtung"
                 :items="richtungValues"
                 filled
-                dense
+                density="compact"
                 :readonly="richtungValues.length === 1"
                 persistent-hint
                 :hint="directionHint"
@@ -54,7 +54,7 @@
                 :items="lageValues"
                 :readonly="isLageReadonly"
                 filled
-                dense
+                density="compact"
                 multiple
                 :rules="[REQUIRED]"
             />
