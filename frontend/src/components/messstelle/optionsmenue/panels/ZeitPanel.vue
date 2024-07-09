@@ -200,13 +200,13 @@ const formattedDateInput = computed({
         }
     },
     set: (newValue) => {
-        let newDate = newValue.replace(/\s/g, "");
-        if (newDate.length == 10) {
+        const NEW_DATE = newValue.replace(/\s/g, "");
+        if (NEW_DATE.length == 10) {
             chosenOptionsCopy.value.zeitraum = [
-                dateUtils.formatDateToISO(newDate),
+                dateUtils.formatDateToISO(NEW_DATE),
             ];
-        } else if (newDate.length == 21) {
-            const [datum1, datum2] = newDate.split("-");
+        } else if (NEW_DATE.length == 21) {
+            const [datum1, datum2] = NEW_DATE.split("-");
             chosenOptionsCopy.value.zeitraum = [
                 dateUtils.formatDateToISO(datum1),
                 dateUtils.formatDateToISO(datum2),
@@ -236,12 +236,12 @@ function RULE_EINGABE_HAT_PLAUSIBLES_FORMAT() {
         return true;
     }
     if (dates.length == 2) {
-        let dateObj1 = new Date(dates[0]).toString();
-        let dateObj2 = new Date(dates[1]).toString();
+        const DATE_OBJ_1 = new Date(dates[0]).toString();
+        const DATE_OBJ_2 = new Date(dates[1]).toString();
         if (!dateRegex.test(dates[0]) || !dateRegex.test(dates[1])) {
             return falschesFormat;
         }
-        if (dateObj1 == "Invalid Date" || dateObj2 == "Invalid Date") {
+        if (DATE_OBJ_1 == "Invalid Date" || DATE_OBJ_2 == "Invalid Date") {
             return keinDatum;
         }
         return true;
