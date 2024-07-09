@@ -1,9 +1,9 @@
 <template>
     <v-dialog
-        v-model="open"
+        v-model="openDialog"
         width="80vh"
         height="60vh"
-        @click:outside="cancel"
+        @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
@@ -76,88 +76,92 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-/* eslint-disable no-unused-vars */
+<script setup lang="ts">
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-/* eslint-enable no-unused-vars */
+import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { computed, ref, watch } from "vue";
 
-@Component
-export default class HeadingAssetForm extends Vue {
-    @Prop({ default: false }) open = false;
-    @Prop() heading?: HeadingAsset;
+interface Props {
+    value: boolean;
+    heading: HeadingAsset;
+}
 
-    asset: HeadingAsset = new HeadingAsset("", AssetTypesEnum.HEADING1);
-    icon = "mdi-format-header-1";
-    style = "h1";
+const props = defineProps<Props>();
 
-    items: string[] = [
-        AssetTypesEnum.HEADING1,
-        AssetTypesEnum.HEADING2,
-        AssetTypesEnum.HEADING3,
-        AssetTypesEnum.HEADING4,
-        AssetTypesEnum.HEADING5,
-    ];
+const emits = defineEmits<{
+    (e: "save", v: TextAsset): void;
+    (e: "cancelDialog"): void;
+    (e: "input", v: boolean): void;
+}>();
 
-    @Watch("heading")
-    copyAsset(asset: HeadingAsset): void {
-        if (asset) {
-            this.setIconAndStyle(asset);
-            this.asset = Object.assign({}, asset);
-        }
+const asset = ref(new HeadingAsset("", AssetTypesEnum.HEADING1));
+const icon = ref("mdi-format-header-1");
+const style = ref("h1");
+
+const items: Array<string> = [
+    AssetTypesEnum.HEADING1,
+    AssetTypesEnum.HEADING2,
+    AssetTypesEnum.HEADING3,
+    AssetTypesEnum.HEADING4,
+    AssetTypesEnum.HEADING5,
+];
+
+const openDialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emits("input", payload),
+});
+
+function setIconAndStyle(headingAsset: HeadingAsset): void {
+    // Icons und Style sind abhängig von der Überschriftsgröße
+    if (headingAsset.type === AssetTypesEnum.HEADING1) {
+        icon.value = "mdi-format-header-1";
+        style.value = "h1";
     }
 
-    /**
-     *
-     */
-    setIconAndStyle(asset: HeadingAsset): void {
-        // Icons und Style sind abhängig von der Überschriftsgröße
-        if (asset.type === AssetTypesEnum.HEADING1) {
-            this.icon = "mdi-format-header-1";
-            this.style = "h1";
-        }
-
-        if (asset.type === AssetTypesEnum.HEADING2) {
-            this.icon = "mdi-format-header-2";
-            this.style = "h2";
-        }
-
-        if (asset.type === AssetTypesEnum.HEADING3) {
-            this.icon = "mdi-format-header-3";
-            this.style = "h3";
-        }
-
-        if (asset.type === AssetTypesEnum.HEADING4) {
-            this.icon = "mdi-format-header-4";
-            this.style = "h4";
-        }
-
-        if (asset.type === AssetTypesEnum.HEADING5) {
-            this.icon = "mdi-format-header-5";
-            this.style = "h5";
-        }
+    if (headingAsset.type === AssetTypesEnum.HEADING2) {
+        icon.value = "mdi-format-header-2";
+        style.value = "h2";
     }
 
-    /**
-     * Um die Überschrift im Array zu "speichern", wird es als Event an die View geschickt.
-     */
-    save(): void {
-        if (this.asset?.text && this.asset.text.length > 0) {
-            const event = {};
-            Object.assign(event, this.asset);
-            this.$emit("save", event);
-        } else {
-            this.cancel();
-        }
+    if (headingAsset.type === AssetTypesEnum.HEADING3) {
+        icon.value = "mdi-format-header-3";
+        style.value = "h3";
     }
 
-    /**
-     * Verläßt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel", Object.assign({}, this.asset));
+    if (headingAsset.type === AssetTypesEnum.HEADING4) {
+        icon.value = "mdi-format-header-4";
+        style.value = "h4";
+    }
+
+    if (headingAsset.type === AssetTypesEnum.HEADING5) {
+        icon.value = "mdi-format-header-5";
+        style.value = "h5";
     }
 }
+
+/**
+ * Um die Überschrift im Array zu "speichern", wird es als Event an die View geschickt.
+ */
+function save(): void {
+    if (asset.value.text && asset.value.text.length > 0) {
+        emits("save", Object.assign({}, asset.value));
+    } else {
+        cancelDialog();
+    }
+}
+
+/**
+ * Verläßt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+    asset.value = new HeadingAsset("", AssetTypesEnum.HEADING1);
+    emits("cancelDialog");
+}
+
+watch(openDialog, () => {
+    if (props.heading) {
+        asset.value = Object.assign({}, props.heading);
+    }
+});
 </script>

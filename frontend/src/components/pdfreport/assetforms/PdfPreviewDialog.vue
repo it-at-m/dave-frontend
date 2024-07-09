@@ -1,10 +1,10 @@
 <template>
     <!-- v-if-Hack to reset Dialog -->
     <v-dialog
-        v-if="open"
-        v-model="open"
+        v-if="openDialog"
+        v-model="openDialog"
         max-width="900px"
-        @click:outside="cancel"
+        @click:outside="cancelDialog"
     >
         <v-card width="900px">
             <v-card-title
@@ -67,7 +67,7 @@
                             small
                             color="secondary"
                             v-bind="attrs"
-                            @click="cancel"
+                            @click="cancelDialog"
                             v-on="on"
                         >
                             <v-icon>mdi-eye-off</v-icon>
@@ -80,46 +80,56 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
 import VuePdfEmbed from "vue-pdf-embed/dist/vue2-pdf-embed";
+import { computed, ComputedRef, ref } from "vue";
+import { useVuetify } from "@/util/useVuetify";
 
-@Component({
-    components: {
-        VuePdfEmbed,
-    },
-})
-export default class DeleteDialog extends Vue {
-    @Prop() source!: Uint8Array;
+interface Props {
+    value: boolean;
+    source: Uint8Array;
+}
 
-    @Prop() open = false;
+const props = defineProps<Props>();
+const vuetify = useVuetify();
 
-    fab = false;
+const emits = defineEmits<{
+    (e: "download"): void;
+    (e: "cancelDialog"): void;
+    (e: "input", v: boolean): void;
+}>();
 
-    get fabColor(): string {
-        return this.fab ? "grey darken-1" : "secondary";
+const openDialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emits("input", payload),
+});
+
+const fab = ref(false);
+
+const fabColor: ComputedRef<string> = computed(() => {
+    return fab.value ? "grey darken-1" : "secondary";
+});
+
+const previewSource: ComputedRef<Uint8Array> = computed(() => {
+    return props.source;
+});
+
+const getContentSheetHeight: ComputedRef<string> = computed(() => {
+    if (vuetify.breakpoint.xl) {
+        return "750px";
     }
+    return "400px";
+});
 
-    downloadPdf(): void {
-        this.$emit("download");
-    }
+function downloadPdf(): void {
+    emits("download");
+}
 
-    get previewSource(): Uint8Array {
-        return this.source;
-    }
-
-    /**
-     * Verlässt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel");
-    }
-
-    get getContentSheetHeight() {
-        if (this.$vuetify.breakpoint.xl) {
-            return "750px";
-        }
-        return "400px";
-    }
+/**
+ * Verlässt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+    fab.value = false;
+    emits("cancelDialog");
 }
 </script>

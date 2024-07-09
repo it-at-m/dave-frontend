@@ -1,74 +1,228 @@
-import { useStore } from "@/api/util/useStore";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import { Levels } from "@/api/error";
 import { computed, ComputedRef } from "vue";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
+import MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import { useDateUtils } from "@/util/DateUtils";
+import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import _ from "lodash";
+import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useMessstelleStore } from "@/store/messstelle";
 
 export function useReportTools() {
-    const store = useStore();
+    const messstelleStore = useMessstelleStore();
+    const pdfReportStore = usePdfReportStore();
+    const snackbarStore = useSnackbarStore();
+    const zaehlstelleStore = useZaehlstelleStore();
+    const dateUtils = useDateUtils();
 
     const messstelle: ComputedRef<MessstelleInfoDTO> = computed(() => {
-        return store.getters["messstelleInfo/getMessstelleInfo"];
+        return messstelleStore.getMessstelleInfo;
+    });
+    const messstelleOptions: ComputedRef<MessstelleOptionsDTO> = computed(
+        () => {
+            return messstelleStore.getFilteroptions;
+        }
+    );
+    const zaehlstelle: ComputedRef<ZaehlstelleHeaderDTO> = computed(() => {
+        return zaehlstelleStore.getZaehlstelleHeader;
+    });
+    const selectedZaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
+        return zaehlstelleStore.getAktiveZaehlung;
+    });
+    const zaehlstelleOptions: ComputedRef<OptionsDTO> = computed(() => {
+        return zaehlstelleStore.getFilteroptions;
     });
 
-    function addImageToReport(
-        base64: string,
-        name: string,
+    function addImageToReport(base64: string, name: string): void {
+        const imageAsset = new ImageAsset(name, base64);
+        imageAsset.width = 100;
+        pdfReportStore.addAsset(imageAsset);
+    }
+
+    function addHeadingToReport(erhebungsstelle: Erhebungsstelle): void {
+        const heading = createHeading(erhebungsstelle);
+        if (heading) {
+            const headingAsset = new HeadingAsset(
+                heading,
+                AssetTypesEnum.HEADING5
+            );
+            pdfReportStore.addAsset(headingAsset);
+        }
+    }
+
+    function createCaption(
+        erhebungsstelle: Erhebungsstelle,
+        diagram: string
+    ): string {
+        let caption = "";
+        switch (erhebungsstelle) {
+            case Erhebungsstelle.MESSSTELLE:
+                caption = `${diagram} zur Messstelle ${messstelle.value.mstId}`;
+                break;
+            case Erhebungsstelle.ZAEHLSTELLE:
+                caption = `${diagram} zur Zählung vom ${dateUtils.getShortVersionOfDate(
+                    new Date(selectedZaehlung.value.datum)
+                )} für Zählstelle ${zaehlstelle.value.nummer}`;
+                break;
+        }
+        return caption;
+    }
+
+    function createHeading(erhebungsstelle: Erhebungsstelle): string {
+        let chartTitle = "";
+        switch (erhebungsstelle) {
+            case Erhebungsstelle.MESSSTELLE:
+                if (
+                    messstelleOptions.value.messquerschnittIds.length <
+                    messstelle.value.messquerschnitte.length
+                ) {
+                    const titleHelper: Array<string> = [];
+                    messstelle.value.messquerschnitte
+                        .filter((querschnitt) =>
+                            messstelleOptions.value.messquerschnittIds.includes(
+                                querschnitt.mqId
+                            )
+                        )
+                        .forEach((querschnitt) => {
+                            titleHelper.push(
+                                `${querschnitt.mqId} - ${
+                                    querschnitt.standort ?? ""
+                                }`
+                            );
+                        });
+                    chartTitle = titleHelper.join(" ");
+                }
+                break;
+            case Erhebungsstelle.ZAEHLSTELLE:
+                if (zaehlstelleOptions.value.vonKnotenarm !== null) {
+                    selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
+                        if (
+                            knotenarm.nummer ===
+                            zaehlstelleOptions.value.vonKnotenarm
+                        ) {
+                            if (!selectedZaehlung.value.kreisverkehr) {
+                                chartTitle = "von ";
+                            }
+                            chartTitle = `${chartTitle} ${knotenarm.strassenname} (${knotenarm.nummer}) `;
+                        }
+                    });
+                }
+
+                if (zaehlstelleOptions.value.nachKnotenarm !== null) {
+                    selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
+                        if (
+                            knotenarm.nummer ===
+                            zaehlstelleOptions.value.nachKnotenarm
+                        ) {
+                            chartTitle = `${chartTitle} nach ${knotenarm.strassenname} (${knotenarm.nummer})`;
+                        }
+                    });
+                }
+                break;
+        }
+        return chartTitle;
+    }
+
+    // von außen aufrufbar
+    function addChartToPdfReport(
+        erhebungsstelle: Erhebungsstelle,
+        artikel: string,
+        type: string,
+        base64: string | undefined,
         heading: boolean
     ): void {
         if (heading) {
-            addHeadingToReport();
+            addHeadingToReport(erhebungsstelle);
         }
-        const imageAsset = new ImageAsset(name, base64);
-        imageAsset.width = 100;
-        store.dispatch("addAsset", imageAsset);
-    }
-
-    function addHeadingToReport(): void {
-        const chartTitle = "";
-        if (chartTitle !== "") {
-            const headingAsset = new HeadingAsset(
-                chartTitle,
-                AssetTypesEnum.HEADING5
+        if (base64) {
+            addImageToReport(base64, createCaption(erhebungsstelle, type));
+            snackbarStore.showSuccess(
+                `${artikel} ${type} wurde dem PDF Report hinzugefügt.`
             );
-            store.dispatch("addAsset", headingAsset);
+        } else {
+            snackbarStore.showError(
+                `${artikel} ${type} konnte dem PDF Report nicht hinzugefügt.`
+            );
         }
     }
 
-    function createCaption(diagram: string): string {
-        return `${diagram} zur Messstelle ${messstelle.value.mstId}`;
+    function addDatatableToPdfReport(
+        erhebungsstelle: Erhebungsstelle,
+        artikel: string,
+        type: string
+    ): void {
+        addHeadingToReport(erhebungsstelle);
+
+        switch (erhebungsstelle) {
+            case Erhebungsstelle.MESSSTELLE:
+                pdfReportStore.addAsset(
+                    new MessstelleDatatableAsset(
+                        _.cloneDeep(messstelleOptions.value),
+                        messstelle.value.id,
+                        createCaption(erhebungsstelle, "Datentabelle")
+                    )
+                );
+                break;
+            case Erhebungsstelle.ZAEHLSTELLE:
+                pdfReportStore.addAsset(
+                    new DatatableAsset(
+                        _.cloneDeep(zaehlstelleOptions.value),
+                        selectedZaehlung.value.id,
+                        createCaption(erhebungsstelle, "Datentabelle")
+                    )
+                );
+                break;
+        }
+
+        snackbarStore.showSuccess(
+            `${artikel} ${type} wurde dem PDF Report hinzugefügt.`
+        );
     }
 
-    function getFileName(type: string): string {
-        const dateForFilename: string = new Date(
-            messstelle.value.datumLetztePlausibleMessung
-        )
+    function getFileName(
+        erhebungsstelle: Erhebungsstelle,
+        type: string,
+        zeitraum: Array<string>
+    ): string {
+        let filename = "";
+        let dateForFilename: string = new Date(zeitraum[0])
             .toISOString()
             .split("T")[0];
 
-        // Beispiel: 251101K_15-11-2020
-        return `${messstelle.value.mstId}_${dateForFilename}_${type}`;
+        if (zeitraum.length === 2) {
+            dateForFilename = `${dateForFilename}_bis_${
+                new Date(zeitraum[1]).toISOString().split("T")[0]
+            }`;
+        }
+        switch (erhebungsstelle) {
+            case Erhebungsstelle.MESSSTELLE:
+                filename = `${messstelle.value.mstId}_${dateForFilename}_${type}`;
+                break;
+            case Erhebungsstelle.ZAEHLSTELLE:
+                filename = `${zaehlstelle.value.nummer}${selectedZaehlung.value.zaehlart}_${dateForFilename}_${type}`;
+                break;
+        }
+        return filename;
     }
 
-    function addChartToPdfReport(
-        base64: string,
+    function saveGraphAsImage(
+        erhebungsstelle: Erhebungsstelle,
         type: string,
-        artikel: string
+        zeitraum: Array<string>,
+        base64: string
     ): void {
-        addImageToReport(base64, createCaption(type), true);
+        const filename = getFileName(erhebungsstelle, type, zeitraum);
 
-        store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: `${artikel} ${type} wurde dem PDF Report hinzugefügt.`,
-            level: Levels.SUCCESS,
-        });
-    }
-
-    function saveGraphAsImage(base64: string, type: string): void {
-        const filename = getFileName(type);
-
-        if (base64 !== "") {
+        if (base64) {
             const link = document.createElement("a");
             link.setAttribute("href", base64);
             link.setAttribute("download", filename);
@@ -78,8 +232,9 @@ export function useReportTools() {
     }
 
     return {
-        addImageToReport,
         addChartToPdfReport,
+        addDatatableToPdfReport,
         saveGraphAsImage,
+        getFileName,
     };
 }

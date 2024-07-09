@@ -27,6 +27,7 @@
                         class="px-0"
                         :messstelle="messstelle"
                     />
+                    <ValidWochentage v-if="chosenOptions.zeitraum.length > 1" />
                     <MessquerschnittAnzahlInfo :messstelle="messstelle" />
                     <MessquerschnittInfo :messstelle="messstelle" />
                 </v-sheet>
@@ -38,7 +39,6 @@
                     :latlng="latlng"
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
-                    show-marker="true"
                     width="100%"
                 />
                 <messstelle-diagramme
@@ -53,7 +53,7 @@
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
 import MessstelleService from "@/api/service/MessstelleService";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import { useRoute } from "vue-router/composables";
 import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
@@ -61,20 +61,28 @@ import { useVuetify } from "@/util/useVuetify";
 import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { ApiError } from "@/api/error";
-import { useStore } from "@/api/util/useStore";
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
-import FilterOptionen from "@/components/messstelle/FilterOptionen.vue";
+import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagramme.vue";
+import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/messstelle";
 
 const messstelle: Ref<MessstelleInfoDTO> = ref(
     DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
 const vuetify = useVuetify();
-const store = useStore();
-// eslint-disable-next-line no-undef
+const messstelleStore = useMessstelleStore();
+const snackbarStore = useSnackbarStore();
+
 onMounted(() => {
     loadMessstelle();
 });
+
+const chosenOptions = computed(() => {
+    return messstelleStore.getFilteroptions;
+});
+
 const headerHeight: ComputedRef<number> = computed(() => {
     return 160 / (vuetify.breakpoint.height / 100);
 });
@@ -96,16 +104,18 @@ const appBarHeight = computed(() => {
 const rightHeightVh = computed(() => {
     return 100 - headerHeight.value - appBarHeight.value + "vh";
 });
+
 /**
  * Berechnet die Höhe der Fläche unter den Tabs (72px hoch) in "vh"
  */
 const rightContentHeightVh = computed(() => {
-    const h =
+    const height =
         100 -
         headerHeight.value -
         appBarHeight.value -
         72 / (vuetify.breakpoint.height / 100);
-    return h + "vh";
+    messstelleStore.setBelastungsplanMinSize(height);
+    return height + "vh";
 });
 
 const messstelleId: ComputedRef<string> = computed(() => {
@@ -127,13 +137,10 @@ function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
         .then((messstelleDTO) => {
             messstelle.value = messstelleDTO;
-            store.dispatch(
-                "messstelleInfo/setMessstelleInfo",
-                messstelle.value
-            );
+            messstelleStore.setMessstelleInfo(messstelle.value);
         })
         .catch((error: ApiError) => {
-            store.dispatch("snackbar/showError", error);
+            snackbarStore.showApiError(error);
         });
 }
 </script>

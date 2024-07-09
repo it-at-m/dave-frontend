@@ -1,4 +1,4 @@
-import KeyVal from "@/types/KeyVal";
+import KeyVal from "@/types/common/KeyVal";
 
 enum ZeitblockStuendlich {
     ZB_00_01 = "ZB_00_01",

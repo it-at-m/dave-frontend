@@ -74,132 +74,121 @@
         </v-sheet>
     </v-sheet>
 </template>
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+<script setup lang="ts">
 import NichtAusgewaehlteZaehlung from "@/components/zaehlstelle/NichtAusgewaehlteZaehlung.vue";
 
 // Typen
 /* eslint-disable no-unused-vars */
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import { zaehlartText } from "@/types/enum/Zaehlart";
-import _ from "lodash";
 import { DateTimeFormatOptions } from "vue-i18n";
+import { computed, ref, watch } from "vue";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+
 /* eslint-enable no-unused-vars */
 
-@Component({
-    components: {
-        NichtAusgewaehlteZaehlung,
-    },
-})
-export default class ZaehlungenTimeline extends Vue {
-    @Prop({ default: "100%" }) listheight?: string;
-    @Prop({ default: "" }) externalQuery?: string;
+interface Props {
+    listheight: string;
+    externalQuery: string;
+}
 
-    // private attribute
-    query = "";
-    dateOptions: DateTimeFormatOptions = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-    };
+const props = defineProps<Props>();
 
-    // hier kommt der Suchstring an, wenn auf eine Zählart
-    // in der Karte geklickt wurde
-    @Watch("externalQuery")
-    updateQuery(n: string) {
-        // statt nach dem Buchstaben wollen wir nach dem Text der Zählart suchen
-        const q = zaehlartText.get(n);
-        if (q) {
-            // schreibt man den Text in "query", wird automatisch der Filter ausgeführt
-            this.query = q;
-            if (this.filteredZaehlungen.length > 0) {
-                // Wenn eine oder mehr als eine Zählung gefunden wird, so wird die erste
-                // Zählung in der Liste auf aktiv gesetzt.
-                this.$store.dispatch(
-                    "setZaehlungAlsAktiv",
-                    this.filteredZaehlungen[0].id
-                );
-            }
+const zaehlstelleStore = useZaehlstelleStore();
+
+const query = ref("");
+const dateOptions: DateTimeFormatOptions = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+};
+
+watch(
+    () => props.externalQuery,
+    (newQuery) => {
+        updateQuery(newQuery);
+    }
+);
+
+function updateQuery(n: string) {
+    // statt nach dem Buchstaben wollen wir nach dem Text der Zählart suchen
+    const q = zaehlartText.get(n);
+    if (q) {
+        // schreibt man den Text in "query", wird automatisch der Filter ausgeführt
+        query.value = q;
+        if (filteredZaehlungen.value.length > 0) {
+            // Wenn eine oder mehr als eine Zählung gefunden wird, so wird die erste
+            // Zählung in der Liste auf aktiv gesetzt.
+            zaehlstelleStore.setZaehlungAlsAktiv(
+                filteredZaehlungen.value[0].id
+            );
         }
     }
+}
 
-    // holt alle inaktiven Zählungen aus dem Store
-    get izs() {
-        return this.$store.getters.inaktiveZaehlungen;
-    }
+// Prüft, ob in der Liste der inaktiven Zählungen mindestens ein Eintrag ist. Wenn
+// nicht, dann werden Liste und Suchfeld nicht angezeigt.
+const isNotEmpty = computed(() => {
+    return zaehlstelleStore.hasInaktiveZaehlungen;
+});
 
-    // Prüft, ob in der Liste der inaktiven Zählungen mindestens ein Eintrag ist. Wenn
-    // nicht, dann werden Liste und Suchfeld nicht angezeigt.
-    get isNotEmpty(): boolean {
-        return this.$store.getters.isInaktiveZaehlungen;
-    }
-
-    /**
-     * Filtert die Zählungen nach den Suchwörter.
-     */
-    get filteredZaehlungen(): LadeZaehlungDTO[] {
-        let filteredZs = this.$store.getters
-            .getInaktiveZaehlungen as LadeZaehlungDTO[];
-        if (this.query.length > 0) {
-            if (
-                !_.isNil(this.externalQuery) &&
-                (this.query === this.externalQuery ||
-                    this.query == zaehlartText.get(this.externalQuery))
-            ) {
+/**
+ * Filtert die Zählungen nach den Suchwörter.
+ */
+const filteredZaehlungen = computed(() => {
+    let filteredZs = zaehlstelleStore.getInaktiveZaehlungen;
+    if (query.value.length > 0) {
+        if (
+            !props.externalQuery &&
+            (query.value === props.externalQuery ||
+                query.value == zaehlartText.get(props.externalQuery))
+        ) {
+            filteredZs = filteredZs.filter(
+                (z) =>
+                    z.zaehlart.toLowerCase() ===
+                        props.externalQuery.trim().toLowerCase() &&
+                    // Suche nach einem Zählartbuchstaben ist manchaml schwierig,
+                    // deshalb kann hier nach dem ganzen Text gesucht werden
+                    zaehlartText
+                        .get(z.zaehlart)
+                        ?.toLowerCase()
+                        .includes(query.value.trim().toLocaleLowerCase())
+            );
+        } else {
+            const words: string[] = query.value.split(" ");
+            words.forEach((w) => {
                 filteredZs = filteredZs.filter(
                     (z) =>
-                        z.zaehlart.toLowerCase() ===
-                            this.externalQuery!.trim().toLowerCase() &&
+                        new Date(z.datum)
+                            .toLocaleDateString("de-De", dateOptions)
+                            .includes(w.toLowerCase()) ||
+                        z.monat.toLowerCase().includes(w.toLowerCase()) ||
+                        z.jahreszeit.toLowerCase().includes(w.toLowerCase()) ||
+                        z.projektName.toLowerCase().includes(w.toLowerCase()) ||
+                        z.zaehlart.toLowerCase().includes(w.toLowerCase()) ||
                         // Suche nach einem Zählartbuchstaben ist manchaml schwierig,
                         // deshalb kann hier nach dem ganzen Text gesucht werden
                         zaehlartText
                             .get(z.zaehlart)
                             ?.toLowerCase()
-                            .includes(this.query.trim().toLocaleLowerCase())
+                            .includes(w.toLocaleLowerCase())
                 );
-            } else {
-                const words: string[] = this.query.split(" ");
-                words.forEach((w) => {
-                    filteredZs = filteredZs.filter(
-                        (z) =>
-                            new Date(z.datum)
-                                .toLocaleDateString("de-De", this.dateOptions)
-                                .includes(w.toLowerCase()) ||
-                            z.monat.toLowerCase().includes(w.toLowerCase()) ||
-                            z.jahreszeit
-                                .toLowerCase()
-                                .includes(w.toLowerCase()) ||
-                            z.projektName
-                                .toLowerCase()
-                                .includes(w.toLowerCase()) ||
-                            z.zaehlart
-                                .toLowerCase()
-                                .includes(w.toLowerCase()) ||
-                            // Suche nach einem Zählartbuchstaben ist manchaml schwierig,
-                            // deshalb kann hier nach dem ganzen Text gesucht werden
-                            zaehlartText
-                                .get(z.zaehlart)
-                                ?.toLowerCase()
-                                .includes(w.toLocaleLowerCase())
-                    );
-                });
-            }
+            });
         }
-        return filteredZs;
     }
+    return filteredZs;
+});
 
-    /**
-     * Die einzelenen Zeilen werden unterschiedlich farblich markiert. Dazu wird eine
-     * modolo Berechnung durchgeführt.
-     *
-     * @param index
-     */
-    calcRowColor(index: number): string {
-        const ungerade = index % 2 > 0;
-        if (ungerade) {
-            return "grey lighten-4";
-        }
-        return "grey lighten-2";
+/**
+ * Die einzelenen Zeilen werden unterschiedlich farblich markiert. Dazu wird eine
+ * modolo Berechnung durchgeführt.
+ *
+ * @param index
+ */
+function calcRowColor(index: number): string {
+    const ungerade = index % 2 > 0;
+    if (ungerade) {
+        return "grey lighten-4";
     }
+    return "grey lighten-2";
 }
 </script>

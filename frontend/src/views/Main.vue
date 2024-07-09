@@ -7,7 +7,6 @@
             ref="map"
             height="100%"
             width="100%"
-            show-marker="true"
             :zoom="12"
         />
 
@@ -66,105 +65,163 @@
     </v-sheet>
 </template>
 
-<script lang="ts">
-import { Component, Ref, Vue } from "vue-property-decorator";
+<script lang="ts" setup>
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 
 import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-/* eslint-disable no-unused-vars */
-import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
-import TooltipZaehlstelleDTO from "@/types/TooltipZaehlstelleDTO";
-/* eslint-enable no-unused-vars */
+import { computed, onMounted, ref } from "vue";
+import ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
+import AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
+import TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
+import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
+import { useDaveUtils } from "@/util/DaveUtils";
+import { useSearchStore } from "@/store/search";
+import { usePdfReportStore } from "@/store/pdfReport";
 
-@Component({
-    components: { ZaehlstelleMap },
-})
-export default class App extends Vue {
-    @Ref("map") readonly map!: any;
+const pdfReportStore = usePdfReportStore();
+const searchStore = useSearchStore();
+const daveUtils = useDaveUtils();
+const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
+const fab = ref(false);
+const creatingPicture = ref(false);
+const printingSearchResult = ref(false);
 
-    fab = false;
-    creatingPicture = false;
-    printingSearchResult = false;
+onMounted(() => {
+    window.scrollTo(0, 0);
+});
 
-    mounted() {
-        window.scrollTo(0, 0);
-    }
-
-    takePicture(): void {
-        this.creatingPicture = true;
-
+function takePicture() {
+    if (map.value != null) {
+        creatingPicture.value = true;
         domtoimage
-            .toJpeg(this.map.$el, { quality: 0.95, cacheBust: true })
+            .toJpeg(map.value.$el, { quality: 0.95, cacheBust: true })
             .then((dataUrl: string) => {
                 const image = new ImageAsset("Hauptkarte", dataUrl);
                 image.width = 100;
-                this.$store.dispatch("addAsset", image);
+                pdfReportStore.addAsset(image);
             })
             .finally(() => {
-                this.creatingPicture = false;
+                creatingPicture.value = false;
             });
     }
-
-    /**
-     * Erzeugt aus dem Suchergebnis eine CSV-Datei und
-     * bietet diese als Download an
-     */
-    printSearchResult(): void {
-        this.printingSearchResult = true;
-        const searchResult: Array<ZaehlstelleKarteDTO> = this.getSearchResult;
-        const searchQuery: string = this.getSearchQuery;
-        let filenamePrefix = "Alle_Zaehlstellen";
-        if (searchQuery && searchQuery.trim() !== "") {
-            filenamePrefix = searchQuery.replace(/\s/g, "_");
-        }
-
-        const searchResultAsCsvString: Array<string> = [];
-        // Suchbegriff hinzufügen
-        searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
-        // Headerzeile hinzufügen
-        searchResultAsCsvString.push(
-            "Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung"
-        );
-
-        // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
-        searchResult.forEach((element: ZaehlstelleKarteDTO) => {
-            const tooltip: TooltipZaehlstelleDTO = element.tooltip;
-            const elementAsCsvString: Array<string> = [];
-            elementAsCsvString.push(tooltip.zaehlstellennnummer);
-            elementAsCsvString.push(element.longitude);
-            elementAsCsvString.push(element.latitude);
-            elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
-            elementAsCsvString.push(tooltip.stadtbezirk);
-            elementAsCsvString.push(tooltip.kreuzungsname);
-            elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
-            elementAsCsvString.push(tooltip.datumLetzteZaehlung);
-            searchResultAsCsvString.push(elementAsCsvString.join(";"));
-        });
-
-        let csvContent =
-            "data:text/csv;charset=utf-8," + searchResultAsCsvString.join("\n");
-
-        let encodedUri = encodeURI(csvContent);
-        let link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `${filenamePrefix}_Suchergebnis.csv`);
-        document.body.appendChild(link); // Required for FF
-
-        link.click();
-        this.printingSearchResult = false;
-    }
-
-    get getSearchResult(): ZaehlstelleKarteDTO[] {
-        return this.$store.getters["search/result"];
-    }
-
-    get getSearchQuery(): string {
-        return this.$store.getters["search/lastSearchQuery"];
-    }
-
-    get fabColor(): string {
-        return this.fab ? "grey darken-1" : "secondary";
-    }
 }
+
+/**
+ * Erzeugt aus dem Suchergebnis eine CSV-Datei und
+ * bietet diese als Download an
+ */
+function printSearchResult(): void {
+    printingSearchResult.value = true;
+    const searchResult: Array<AnzeigeKarteDTO> = getSearchResult.value;
+    const searchQuery: string = getSearchQuery.value;
+
+    const zaehlstellenResult = searchResult.filter(
+        (value: AnzeigeKarteDTO) => value.type === "zaehlstelle"
+    ) as Array<ZaehlstelleKarteDTO>;
+
+    const messstellenResult = searchResult.filter(
+        (value: AnzeigeKarteDTO) => value.type === "messstelle"
+    ) as Array<MessstelleKarteDTO>;
+
+    if (zaehlstellenResult.length > 0) {
+        printZaehlstellenOfSearchResult(zaehlstellenResult, searchQuery);
+    }
+    if (messstellenResult.length > 0) {
+        printMessstellenOfSearchResult(messstellenResult, searchQuery);
+    }
+
+    printingSearchResult.value = false;
+}
+
+function printMessstellenOfSearchResult(
+    searchResult: Array<MessstelleKarteDTO>,
+    searchQuery: string
+): void {
+    let filenamePrefix = "Alle_Messstellen";
+    if (searchQuery && searchQuery.trim() !== "") {
+        filenamePrefix = `Messstellen_${searchQuery.replace(/\s/g, "_")}`;
+    }
+    const filename = `${filenamePrefix}_Suchergebnis.csv`;
+
+    const searchResultAsCsvString: Array<string> = [];
+    // Suchbegriff hinzufügen
+    searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
+    // Headerzeile hinzufügen
+    searchResultAsCsvString.push(
+        "ID Messstelle;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Standort MS;Status;Datum Aufbau;Datum Abbau;Letzter plausibler Messtag"
+    );
+
+    // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
+    searchResult.forEach((element: MessstelleKarteDTO) => {
+        const tooltip: TooltipMessstelleDTO = element.tooltip;
+        const elementAsCsvString: Array<string> = [];
+        elementAsCsvString.push(tooltip.mstId);
+        elementAsCsvString.push(`${element.longitude}`);
+        elementAsCsvString.push(`${element.latitude}`);
+        elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
+        elementAsCsvString.push(tooltip.stadtbezirk);
+        elementAsCsvString.push(tooltip.standort);
+        const statusAsText = messstelleStatusText.get(element.status);
+        if (statusAsText) {
+            elementAsCsvString.push(statusAsText);
+        } else {
+            elementAsCsvString.push(element.status);
+        }
+        elementAsCsvString.push(tooltip.realisierungsdatum);
+        elementAsCsvString.push(tooltip.abbaudatum);
+        elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
+        searchResultAsCsvString.push(elementAsCsvString.join(";"));
+    });
+    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+}
+
+function printZaehlstellenOfSearchResult(
+    searchResult: Array<ZaehlstelleKarteDTO>,
+    searchQuery: string
+): void {
+    let filenamePrefix = "Alle_Zaehlstellen";
+    if (searchQuery && searchQuery.trim() !== "") {
+        filenamePrefix = `Zaehlstellen_${searchQuery.replace(/\s/g, "_")}`;
+    }
+    const filename = `${filenamePrefix}_Suchergebnis.csv`;
+
+    const searchResultAsCsvString: Array<string> = [];
+    // Suchbegriff hinzufügen
+    searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
+    // Headerzeile hinzufügen
+    searchResultAsCsvString.push(
+        "Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung"
+    );
+
+    // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
+    searchResult.forEach((element: ZaehlstelleKarteDTO) => {
+        const tooltip: TooltipZaehlstelleDTO = element.tooltip;
+        const elementAsCsvString: Array<string> = [];
+        elementAsCsvString.push(tooltip.zaehlstellennnummer);
+        elementAsCsvString.push(element.longitude.toString());
+        elementAsCsvString.push(element.latitude.toString());
+        elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
+        elementAsCsvString.push(tooltip.stadtbezirk);
+        elementAsCsvString.push(tooltip.kreuzungsname);
+        elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
+        elementAsCsvString.push(tooltip.datumLetzteZaehlung);
+        searchResultAsCsvString.push(elementAsCsvString.join(";"));
+    });
+    daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+}
+
+const getSearchQuery = computed(() => {
+    return searchStore.getLastSearchQuery;
+});
+
+const getSearchResult = computed(() => {
+    return searchStore.getSearchResult;
+});
+
+const fabColor = computed(() => {
+    return fab.value ? "grey darken-1" : "secondary";
+});
 </script>

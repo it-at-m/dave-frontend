@@ -1,9 +1,9 @@
 <template>
     <v-dialog
-        v-model="open"
+        v-model="openDialog"
         width="25vh"
         height="25vh"
-        @click:outside="cancel"
+        @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
@@ -39,23 +39,35 @@
     </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { computed } from "vue";
 
-@Component
-export default class DeleteDialog extends Vue {
-    @Prop() open = false;
-    @Prop() assetId!: number;
+interface Props {
+    value: boolean;
+    assetId: number;
+}
 
-    deleteAsset(): void {
-        this.$emit("delete", this.assetId);
-    }
+const props = defineProps<Props>();
 
-    /**
-     * Verläßt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel");
-    }
+const emits = defineEmits<{
+    (e: "delete", v: number): void;
+    (e: "cancelDialog"): void;
+    (e: "input", v: boolean): void;
+}>();
+
+const openDialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emits("input", payload),
+});
+
+function deleteAsset(): void {
+    emits("delete", props.assetId);
+}
+
+/**
+ * Verläßt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+    emits("cancelDialog");
 }
 </script>

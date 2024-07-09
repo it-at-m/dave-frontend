@@ -3,6 +3,7 @@
         <v-dialog
             v-model="dialog"
             max-width="900px"
+            @click:outside="resetData"
         >
             <v-card
                 width="900px"
@@ -118,198 +119,197 @@
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-/* eslint-disable no-unused-vars */
-import ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+<script setup lang="ts">
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import { Levels } from "@/api/error";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
 import { wetterText } from "@/types/enum/Wetter";
 import { quelleText } from "@/types/enum/Quelle";
-/* eslint-enable no-unused-vars */
 import _ from "lodash";
+import { computed, ref } from "vue";
+import { useDateUtils } from "@/util/DateUtils";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/snackbar";
+import { usePdfReportStore } from "@/store/pdfReport";
 
-@Component
-export default class PdfReportMenue extends Vue {
-    @Prop({ default: false }) open!: boolean;
-    dialog = false;
+interface Props {
+    value: boolean;
+}
 
-    zaehlstelleinfo = false;
-    zaehlungsinfo = false;
-    legende = false;
-    zaehlungskenngroessen = false;
+const props = defineProps<Props>();
 
-    @Watch("open")
-    setDialog(d: boolean): void {
-        this.dialog = d;
+const pdfReportStore = usePdfReportStore();
+const snackbarStore = useSnackbarStore();
+const zaehlstelleStore = useZaehlstelleStore();
+const dateUtils = useDateUtils();
+
+const zaehlstelleinfo = ref(false);
+const zaehlungsinfo = ref(false);
+const legende = ref(false);
+const zaehlungskenngroessen = ref(false);
+
+const emit = defineEmits<{
+    (e: "input", v: boolean): void;
+}>();
+
+const dialog = computed({
+    get: () => props.value,
+    set: (payload: boolean) => emit("input", payload),
+});
+
+function closeDialog(): void {
+    dialog.value = false;
+    resetData();
+}
+
+/**
+ * Prüft, welche Werte 'angekreuzt' wurden und erstellt diese dann im PDF Report.
+ */
+function saveItems(): void {
+    if (zaehlstelleinfo.value) {
+        createZaehlstelleInfo();
     }
 
-    /**
-     * Bugfix. Ohne diesen Watcher lässt sich der Report Dialog nicht mehr öffnen, nachdem man es durch einen Klick außerhalb des Dialogs geschlossen hat.
-     */
-    @Watch("dialog")
-    closeWhenClickingOutsideOfDialog(dialog: boolean): void {
-        if (dialog === false) {
-            this.closeDialog();
-        }
+    if (zaehlungsinfo.value) {
+        createZaehlungsInfo();
     }
 
-    closeDialog(): void {
-        this.$emit("close");
+    if (zaehlungskenngroessen.value) {
+        createZaehlungskenngroessen();
     }
 
-    /**
-     * Prüft, welche Werte 'angekreuzt' wurden und erstellt diese dann im PDF Report.
-     */
-    saveItems(): void {
-        if (this.zaehlstelleinfo) {
-            this.createZaehlstelleInfo();
-        }
-
-        if (this.zaehlungsinfo) {
-            this.createZaehlungsInfo();
-        }
-
-        if (this.zaehlungskenngroessen) {
-            this.createZaehlungskenngroessen();
-        }
-
-        if (this.legende) {
-            this.createLegende();
-        }
-
-        this.$store.dispatch("snackbar/showToast", {
-            snackbarTextPart1: `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`,
-            level: Levels.SUCCESS,
-        });
-        this.closeDialog();
+    if (legende.value) {
+        createLegende();
     }
 
-    /**
-     * Erstellt die Zählstelleninformationen und übermittelt diese an den PDF Report.
-     */
-    createZaehlstelleInfo() {
-        const zs = this.$store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
-        const zl = this.$store.getters.getAktiveZaehlung as LadeZaehlungDTO;
-        const headline = new HeadingAsset(
-            `Info für Zählstelle Nr. ${zs.nummer}`,
-            AssetTypesEnum.HEADING3
-        );
-        const platz = new TextAsset(`Knoten-/Platzname: ${zl.kreuzungsname}`);
-        const stadtbezirk = new TextAsset(
-            `Stadtbezirk: ${zs.stadtbezirk} (${zs.stadtbezirkNummer})`
-        );
-        let kommentar = new TextAsset(
-            `Zählstellenkommentar: ${this.checkForNull(zs.kommentar)}`
-        );
-        this.$store.dispatch("addAssets", [
-            headline,
-            platz,
-            stadtbezirk,
-            kommentar,
-        ]);
+    snackbarStore.showSuccess(
+        `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
+    );
+    closeDialog();
+}
+
+/**
+ * Erstellt die Zählstelleninformationen und übermittelt diese an den PDF Report.
+ */
+function createZaehlstelleInfo() {
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
+    const headline = new HeadingAsset(
+        `Info für Zählstelle Nr. ${zs.nummer}`,
+        AssetTypesEnum.HEADING3
+    );
+    const platz = new TextAsset(`Knoten-/Platzname: ${zl.kreuzungsname}`);
+    const stadtbezirk = new TextAsset(
+        `Stadtbezirk: ${zs.stadtbezirk} (${zs.stadtbezirkNummer})`
+    );
+    let kommentar = new TextAsset(
+        `Zählstellenkommentar: ${checkForNull(zs.kommentar)}`
+    );
+    pdfReportStore.addAssets([headline, platz, stadtbezirk, kommentar]);
+}
+
+/**
+ * Erstellt die Zählungsinformationen und übermittelt diese an den PDF Report.
+ */
+function createZaehlungsInfo() {
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
+    const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
+    const headline = new HeadingAsset(
+        `Info zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
+        AssetTypesEnum.HEADING3
+    );
+    const projektname = new TextAsset(`Projektname: ${zl.projektName}`);
+    const zaehlart = new TextAsset(
+        `Zählart: ${zl.zaehlart} (${zaehlartText.get(zl.zaehlart)})`
+    );
+    const zaehldauer = new TextAsset(
+        `Zähldauer: ${zaehldauerText.get(zl.zaehldauer)}`
+    );
+    const zaehlsituation = new TextAsset(
+        `Zählsituation/ erweiterte Zählsituation: ${checkForNull(
+            zl.zaehlsituation
+        )} / ${checkForNull(zl.zaehlsituationErweitert)}`
+    );
+    const wetter = new TextAsset(`Wetter: ${wetterText.get(zl.wetter)}`);
+    const quelle = new TextAsset(`Quelle: ${quelleText.get(zl.quelle)}`);
+    const kommentar = new TextAsset(
+        `Zählungskommentar: ${checkForNull(zl.kommentar)}`
+    );
+    let knotenarmListe = "Knotenarme:<br/>";
+    zl.knotenarme.forEach((k) => {
+        knotenarmListe =
+            knotenarmListe + `${k.nummer} ${k.strassenname}<br/>\n`;
+    });
+    const knotenarme = new TextAsset(knotenarmListe);
+    pdfReportStore.addAssets([
+        headline,
+        projektname,
+        zaehlart,
+        zaehldauer,
+        zaehlsituation,
+        wetter,
+        quelle,
+        kommentar,
+        knotenarme,
+    ]);
+}
+
+/**
+ * Erstellt ein Zählungskenngrößen Asset und übermittelt dieses an den PDF Report.
+ * Die einzelnen, anzuzeigenden Werte werden erst bei PDF-Erstellung im Backend generiert.
+ */
+function createZaehlungskenngroessen() {
+    const zs = zaehlstelleStore.getZaehlstelleHeader;
+    const zl = zaehlstelleStore.getAktiveZaehlung;
+    const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
+
+    const headline = new HeadingAsset(
+        `Kenngrößen zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
+        AssetTypesEnum.HEADING3
+    );
+    const zaehlungskenngroessen = new ZaehlungskenngroessenAsset(
+        `Zählungskenngrößen (Zählstelle ${zs.nummer}, ${datum})`,
+        zl.id
+    );
+
+    pdfReportStore.addAssets([headline, zaehlungskenngroessen]);
+}
+
+/**
+ * Erstellt die Legende und übermittelt diese an den PDF Report.
+ */
+function createLegende() {
+    const ueberschrift = new HeadingAsset(
+        "Legende zu den Kennzahlen",
+        AssetTypesEnum.HEADING3
+    );
+    const legende = new TextAsset(
+        "<p>- <b>Kraftfahrzeugverkehr (KFZ)</b>: Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lastkraftwagen und Lastzüge.</p>\n" +
+            "<p>- <b>Schwerverkehr\t(SV)</b>: Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).</p>\n" +
+            "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +
+            "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
+    );
+    pdfReportStore.addAssets([ueberschrift, legende]);
+}
+
+/**
+ * Prüft ob der Wert vorhanden ist. Falls nein, wird '---' zurückgegeben, andernfalls der Wert selbst.
+ */
+function checkForNull(value: string): string {
+    if (_.isNil(value)) {
+        return "---";
     }
+    return value;
+}
 
-    /**
-     * Erstellt die Zählungsinformationen und übermittelt diese an den PDF Report.
-     */
-    createZaehlungsInfo() {
-        const zs = this.$store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
-        const zl = this.$store.getters.getAktiveZaehlung as LadeZaehlungDTO;
-        const datum = this.$d(new Date(zl.datum), "short", "de-DE");
-        const headline = new HeadingAsset(
-            `Info zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
-            AssetTypesEnum.HEADING3
-        );
-        const projektname = new TextAsset(`Projektname: ${zl.projektName}`);
-        const zaehlart = new TextAsset(
-            `Zählart: ${zl.zaehlart} (${zaehlartText.get(zl.zaehlart)})`
-        );
-        const zaehldauer = new TextAsset(
-            `Zähldauer: ${zaehldauerText.get(zl.zaehldauer)}`
-        );
-        const zaehlsituation = new TextAsset(
-            `Zählsituation/ erweiterte Zählsituation: ${this.checkForNull(
-                zl.zaehlsituation
-            )} / ${this.checkForNull(zl.zaehlsituationErweitert)}`
-        );
-        const wetter = new TextAsset(`Wetter: ${wetterText.get(zl.wetter)}`);
-        const quelle = new TextAsset(`Quelle: ${quelleText.get(zl.quelle)}`);
-        const kommentar = new TextAsset(
-            `Zählungskommentar: ${this.checkForNull(zl.kommentar)}`
-        );
-        let knotenarmListe = "Knotenarme:<br/>";
-        zl.knotenarme.forEach((k) => {
-            knotenarmListe =
-                knotenarmListe + `${k.nummer} ${k.strassenname}<br/>\n`;
-        });
-        const knotenarme = new TextAsset(knotenarmListe);
-        this.$store.dispatch("addAssets", [
-            headline,
-            projektname,
-            zaehlart,
-            zaehldauer,
-            zaehlsituation,
-            wetter,
-            quelle,
-            kommentar,
-            knotenarme,
-        ]);
-    }
-
-    /**
-     * Erstellt ein Zählungskenngrößen Asset und übermittelt dieses an den PDF Report.
-     * Die einzelnen, anzuzeigenden Werte werden erst bei PDF-Erstellung im Backend generiert.
-     */
-    createZaehlungskenngroessen() {
-        const zs = this.$store.getters.getZaehlstelle as ZaehlstelleHeaderDTO;
-        const zl = this.$store.getters.getAktiveZaehlung as LadeZaehlungDTO;
-        const datum = this.$d(new Date(zl.datum), "short", "de-DE");
-
-        const headline = new HeadingAsset(
-            `Kenngrößen zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
-            AssetTypesEnum.HEADING3
-        );
-        const zaehlungskenngroessen = new ZaehlungskenngroessenAsset(
-            `Zählungskenngrößen (Zählstelle ${zs.nummer}, ${datum})`,
-            zl.id
-        );
-
-        this.$store.dispatch("addAssets", [headline, zaehlungskenngroessen]);
-    }
-
-    /**
-     * Erstellt die Legende und übermittelt diese an den PDF Report.
-     */
-    createLegende() {
-        const ueberschrift = new HeadingAsset(
-            "Legende zu den Kennzahlen",
-            AssetTypesEnum.HEADING3
-        );
-        const legende = new TextAsset(
-            "<p>- <b>Kraftfahrzeugverkehr (KFZ)</b>: Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lastkraftwagen und Lastzüge.</p>\n" +
-                "<p>- <b>Schwerverkehr\t(SV)</b>: Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).</p>\n" +
-                "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +
-                "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
-        );
-        this.$store.dispatch("addAssets", [ueberschrift, legende]);
-    }
-
-    /**
-     * Prüft ob der Wert vorhanden ist. Falls nein, wird '---' zurückgegeben, andernfalls der Wert selbst.
-     */
-    checkForNull(value: string): string {
-        if (_.isNil(value)) {
-            return "---";
-        }
-        return value;
-    }
+function resetData(): void {
+    zaehlstelleinfo.value = false;
+    zaehlungsinfo.value = false;
+    legende.value = false;
+    zaehlungskenngroessen.value = false;
 }
 </script>

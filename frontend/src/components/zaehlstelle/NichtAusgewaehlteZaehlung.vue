@@ -54,63 +54,57 @@
         </v-row>
     </v-hover>
 </template>
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
+<script setup lang="ts">
 // Komponenten
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
+import { computed, ref } from "vue";
+import { useVuetify } from "@/util/useVuetify";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
-@Component({
-    components: {
-        SonderzaehlungIcon,
-        WetterIcon,
-        QuelleIcon,
-        ZaehldauerIcon,
-        ZaehlartIcon,
-    },
-})
-export default class NichtAusgeweahlteZaehlung extends Vue {
-    @Prop() datum?: string;
-    @Prop() projektName?: string;
-    @Prop() zaehlart?: string;
-    @Prop() wetter?: string;
-    @Prop() zaehldauer?: string;
-    @Prop() quelle?: string;
-    @Prop({ default: false }) sonderzaehlung?: boolean;
-    @Prop() color?: string;
-    @Prop() hoverColor?: string;
-    @Prop() id?: string;
-    @Prop({ default: "black" }) iconColor?: string;
+interface Props {
+    id: string;
+    datum: string;
+    projektName: string;
+    zaehlart: string;
+    wetter: string;
+    zaehldauer: string;
+    quelle: string;
+    sonderzaehlung: boolean;
+    color: string;
+    hoverColor: string;
+    iconColor: string;
+}
 
-    hover = false;
+const props = defineProps<Props>();
 
-    /**
-     * es muss für i18n ein Datumsobjekt erzeugt werden.
-     */
-    get date(): Date {
-        if (this.datum && Date.parse(this.datum)) {
-            return new Date(this.datum);
-        }
-        return new Date();
+const zaehlstelleStore = useZaehlstelleStore();
+const vuetify = useVuetify();
+
+const hover = ref(false);
+
+const date = computed(() => {
+    if (props.datum && Date.parse(props.datum)) {
+        return new Date(props.datum);
     }
+    return new Date();
+});
 
-    get getMaxCols(): number {
-        return this.sonderzaehlung ? 11 : 12;
-    }
+const getMaxCols = computed(() => {
+    return props.sonderzaehlung ? 11 : 12;
+});
 
-    get isLarge(): boolean {
-        return this.$vuetify.breakpoint.name === "xl";
-    }
+const isLarge = computed(() => {
+    return vuetify.breakpoint.name === "xl";
+});
 
-    /**
-     * Die Zählung wird über den store auf aktiv gesetzt.
-     */
-    openZaehlung() {
-        this.$store.dispatch("setZaehlungAlsAktiv", this.id);
-    }
+/**
+ * Die Zählung wird über den store auf aktiv gesetzt.
+ */
+function openZaehlung(): void {
+    zaehlstelleStore.setZaehlungAlsAktiv(props.id);
 }
 </script>

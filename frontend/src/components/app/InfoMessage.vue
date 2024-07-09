@@ -65,45 +65,42 @@
     </v-menu>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script lang="ts" setup>
+import { onMounted, ref, computed } from "vue";
 /* eslint-disable no-unused-vars */
-import InfoMessageDTO from "@/types/InfoMessageDTO";
+import InfoMessageDTO from "@/types/app/InfoMessageDTO";
 import InfoMessageService from "@/api/service/InfoMessageService";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 /* eslint-enable no-unused-vars */
 
-@Component
-export default class InfoMessage extends Vue {
-    infomessage: InfoMessageDTO = {} as InfoMessageDTO;
+const infomessage = ref<InfoMessageDTO>(
+    DefaultObjectCreator.createDefaultInfoMessageDto()
+);
 
-    showDialog = false;
+const showDialog = ref(false);
 
-    mounted() {
-        this.loadInfoMessage();
-    }
+onMounted(() => {
+    loadInfoMessage();
+});
 
-    private loadInfoMessage(): void {
-        InfoMessageService.getActiveInfoMessage().then(
-            (message: InfoMessageDTO) => {
-                this.infomessage = message;
-            }
-        );
-    }
+function loadInfoMessage(): void {
+    InfoMessageService.getActiveInfoMessage().then(
+        (message: InfoMessageDTO) => {
+            infomessage.value = message;
+        }
+    );
+}
 
-    /**
-     * Gibt ein Boolean zurück, ob es eine Infonachricht gibt
-     */
-    get hasInfoMessage(): boolean {
-        return this.infomessage.gueltig;
-    }
+const hasInfoMessage = computed(() => {
+    return infomessage.value.gueltig;
+});
 
-    closeDialog() {
-        this.showDialog = false;
-    }
+function closeDialog() {
+    showDialog.value = false;
+}
 
-    openDialogAndLoadData(): void {
-        this.loadInfoMessage();
-        this.showDialog = true;
-    }
+function openDialogAndLoadData(): void {
+    loadInfoMessage();
+    showDialog.value = true;
 }
 </script>

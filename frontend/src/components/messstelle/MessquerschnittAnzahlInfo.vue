@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import MessstelleInfoDTO from "@/types/MessstelleInfoDTO";
+import MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 interface Props {
     messstelle: MessstelleInfoDTO;
@@ -15,7 +15,7 @@ const doMesssquerschnitteExist = computed(() => {
 
 <template>
     <v-container
-        class="pa-0 px-4"
+        class="py-2 px-4"
         fluid
     >
         <v-sheet
@@ -40,7 +40,3 @@ const doMesssquerschnitteExist = computed(() => {
         </v-sheet>
     </v-container>
 </template>
-
-<style scoped>
-
-</style>

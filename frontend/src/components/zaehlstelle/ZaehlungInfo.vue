@@ -230,174 +230,156 @@
         </v-row>
     </v-container>
 </template>
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
-// Komponenten
+<script setup lang="ts">
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/Optionsmenue.vue";
-
-// Typen
-/* eslint-disable no-unused-vars */
-import LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import Optionsmenue from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { StartEndeUhrzeitIntervalls } from "@/store/modules/zaehlung";
-/* eslint-enable no-unused-vars */
-// Util
 import _ from "lodash";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
+import { computed, ComputedRef, ref, watch } from "vue";
+import { useVuetify } from "@/util/useVuetify";
+import LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
-@Component({
-    components: {
-        SonderzaehlungIcon,
-        WetterIcon,
-        QuelleIcon,
-        ZaehldauerIcon,
-        ZaehlartIcon,
-        KommentarInfo,
-        ZaehlungGeometrie,
-        Optionsmenue,
-    },
-})
-export default class ZaehlungInfo extends Vue {
-    filter = false;
-
-    showSpitzenstundeInfo = false;
-
-    startUhrzeitIntervalls = "";
-
-    endeUhrzeitIntervalls = "";
-
-    @Prop({ default: "" }) kommentarZaehlstelle?: string;
-
-    /**
-     * Setzt die Start- und Endeuhrzeit des ersten und letzten Zeitintervalls
-     * damit diese für die Spitzenstunde angezeigt werden kann.
-     */
-    @Watch("startEndeUhrzeitIntervalls", { immediate: true })
-    showStartEndeUhrzeit(
-        startEndeUhrzeitIntervalle: StartEndeUhrzeitIntervalls
-    ) {
-        this.startUhrzeitIntervalls =
-            startEndeUhrzeitIntervalle.startUhrzeitIntervalls;
-        this.endeUhrzeitIntervalls =
-            startEndeUhrzeitIntervalle.endeUhrzeitIntervalls;
-        this.showSpitzenstundeInfo = !(
-            _.isEmpty(this.startUhrzeitIntervalls) ||
-            _.isEmpty(this.endeUhrzeitIntervalls)
-        );
-    }
-
-    /**
-     * es muss für i18n ein Datumsobjekt erzeugt werden.
-     */
-    get datum(): Date {
-        const d = this.zaehlung.datum;
-        if (Date.parse(d)) {
-            return new Date(d);
-        }
-        return new Date();
-    }
-
-    get zaehlung(): LadeZaehlungDTO {
-        return this.$store.getters.getAktiveZaehlung;
-    }
-
-    get knotenarme(): LadeKnotenarmDTO[] | undefined {
-        return this.$store.getters.getKnotenarme;
-    }
-
-    /**
-     * Holt die sortierten Knotenarme aus dem Store.
-     */
-    get sortedKnotenarme(): LadeKnotenarmDTO[] | undefined {
-        return this.$store.getters.getSortedKnotenarme;
-    }
-
-    /**
-     * Die aktuell eingestellten Optionen werden aus dem Store geladen.
-     */
-    get options(): OptionsDTO {
-        return this.$store.getters.getFilteroptions;
-    }
-
-    /**
-     * Holt die lesbare Schreibweise für einen Zeitblock.
-     */
-    get zeitblock(): string | undefined {
-        // Wenn es sich um keine 24h Zählung handelt, dann darf nicht der Zeitblock 0 - 24 Uhr angezeigt werden, sondern Tageswert
-        if (
-            this.zaehlung.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
-            this.options.zeitblock === Zeitblock.ZB_00_24
-        ) {
-            return "Tageswert";
-        }
-
-        // Wurde ein stündlicher Zeitblock ausgewählt?
-        if (zeitblockStuendlichInfo.has(this.options.zeitblock)) {
-            return zeitblockStuendlichInfo.get(this.options.zeitblock)?.text;
-        }
-
-        // Wurde ein anderer Zeitblock ausgewählt
-        if (zeitblockInfo.has(this.options.zeitblock)) {
-            return zeitblockInfo.get(this.options.zeitblock)?.text;
-        }
-
-        return zeitblockInfo.get(Zeitblock.ZB_00_24)?.text;
-    }
-
-    /**
-     * Holt die lesbare Schreibweise für das Zeitintervall.
-     */
-    get zeitintervall(): string | undefined {
-        return ZaehldatenIntervallToBeschreibung.get(this.options.intervall);
-    }
-
-    /**
-     * Gibt die Himmelsrichtungen als Map zurück.
-     */
-    get himmelsRichtungen(): Map<number, any> {
-        return new Map([
-            [1, { l: "Nord", s: "N" }],
-            [2, { l: "Ost", s: "O" }],
-            [3, { l: "Süd", s: "S" }],
-            [4, { l: "West", s: "W" }],
-            [5, { l: "Nord-Ost", s: "NO" }],
-            [6, { l: "Süd-Ost", s: "SO" }],
-            [7, { l: "Süd-West", s: "SW" }],
-            [8, { l: "Nord-West", s: "NW" }],
-        ]);
-    }
-
-    get isSpitzenstundeInZeitauswahlChosen(): boolean {
-        return (
-            this.options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-            this.options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-            this.options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
-        );
-    }
-
-    get startEndeUhrzeitIntervalls(): StartEndeUhrzeitIntervalls {
-        return this.$store.getters.getStartEndeUhrzeitIntervalls;
-    }
-
-    get isLarge(): boolean {
-        return this.$vuetify.breakpoint.name === "xl";
-    }
-
-    get getMaxCols(): number {
-        return this.zaehlung.sonderzaehlung ? 11 : 12;
-    }
+interface Props {
+    kommentarZaehlstelle?: string;
 }
+
+withDefaults(defineProps<Props>(), {
+    kommentarZaehlstelle: "",
+});
+
+const zaehlstelleStore = useZaehlstelleStore();
+const vuetify = useVuetify();
+
+const showSpitzenstundeInfo = ref(false);
+const startUhrzeitIntervalls = ref("");
+const endeUhrzeitIntervalls = ref("");
+
+const zaehlung: ComputedRef<LadeZaehlungDTO> = computed(() => {
+    return zaehlstelleStore.getAktiveZaehlung;
+});
+
+/**
+ * es muss für i18n ein Datumsobjekt erzeugt werden.
+ */
+const datum = computed(() => {
+    const d = zaehlung.value.datum;
+    if (Date.parse(d)) {
+        return new Date(d);
+    }
+    return new Date();
+});
+
+const knotenarme = computed(() => {
+    return zaehlstelleStore.getKnotenarme;
+});
+
+/**
+ * Holt die sortierten Knotenarme aus dem Store.
+ */
+const sortedKnotenarme = computed(() => {
+    return zaehlstelleStore.getSortedKnotenarme;
+});
+
+/**
+ * Die aktuell eingestellten Optionen werden aus dem Store geladen.
+ */
+const options: ComputedRef<OptionsDTO> = computed(() => {
+    return zaehlstelleStore.getFilteroptions;
+});
+
+/**
+ * Holt die lesbare Schreibweise für einen Zeitblock.
+ */
+const zeitblock = computed(() => {
+    // Wenn es sich um keine 24h Zählung handelt, dann darf nicht der Zeitblock 0 - 24 Uhr angezeigt werden, sondern Tageswert
+    if (
+        zaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
+        options.value.zeitblock === Zeitblock.ZB_00_24
+    ) {
+        return "Tageswert";
+    }
+
+    // Wurde ein stündlicher Zeitblock ausgewählt?
+    if (zeitblockStuendlichInfo.has(options.value.zeitblock)) {
+        return zeitblockStuendlichInfo.get(options.value.zeitblock)?.text;
+    }
+
+    // Wurde ein anderer Zeitblock ausgewählt
+    if (zeitblockInfo.has(options.value.zeitblock)) {
+        return zeitblockInfo.get(options.value.zeitblock)?.text;
+    }
+
+    return zeitblockInfo.get(Zeitblock.ZB_00_24)?.text;
+});
+
+/**
+ * Holt die lesbare Schreibweise für das Zeitintervall.
+ */
+const zeitintervall = computed(() => {
+    return ZaehldatenIntervallToBeschreibung.get(options.value.intervall);
+});
+
+/**
+ * Gibt die Himmelsrichtungen als Map zurück.
+ */
+const himmelsRichtungen = computed(() => {
+    return new Map([
+        [1, { l: "Nord", s: "N" }],
+        [2, { l: "Ost", s: "O" }],
+        [3, { l: "Süd", s: "S" }],
+        [4, { l: "West", s: "W" }],
+        [5, { l: "Nord-Ost", s: "NO" }],
+        [6, { l: "Süd-Ost", s: "SO" }],
+        [7, { l: "Süd-West", s: "SW" }],
+        [8, { l: "Nord-West", s: "NW" }],
+    ]);
+});
+
+const isSpitzenstundeInZeitauswahlChosen = computed(() => {
+    return (
+        options.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+        options.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+        options.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    );
+});
+
+const startEndeUhrzeitIntervalls = computed(() => {
+    return zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+});
+
+const isLarge = computed(() => {
+    return vuetify.breakpoint.name === "xl";
+});
+
+const getMaxCols = computed(() => {
+    return zaehlung.value.sonderzaehlung ? 11 : 12;
+});
+
+watch(
+    startEndeUhrzeitIntervalls,
+    (startEndeUhrzeitIntervalle: StartEndeUhrzeitIntervalls) => {
+        startUhrzeitIntervalls.value =
+            startEndeUhrzeitIntervalle.startUhrzeitIntervalls;
+        endeUhrzeitIntervalls.value =
+            startEndeUhrzeitIntervalle.endeUhrzeitIntervalls;
+        showSpitzenstundeInfo.value = !(
+            _.isEmpty(startUhrzeitIntervalls.value) ||
+            _.isEmpty(endeUhrzeitIntervalls.value)
+        );
+    },
+    { immediate: true }
+);
 </script>
