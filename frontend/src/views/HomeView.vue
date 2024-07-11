@@ -1,8 +1,5 @@
 <template>
-    <v-main
-        height="100%"
-        width="100%"
-    >
+    <v-main class="dave-default">
         <zaehlstelle-map
             ref="map"
             height="100%"

@@ -310,7 +310,7 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
             if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
                 const zeitBlockMaximal: KeyVal = {} as KeyVal;
                 zeitBlockMaximal.value = Zeitblock.ZB_00_24;
-                zeitBlockMaximal.text = "maximal";
+                zeitBlockMaximal.title = "maximal";
                 result.push(zeitBlockMaximal);
             } else {
                 result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);

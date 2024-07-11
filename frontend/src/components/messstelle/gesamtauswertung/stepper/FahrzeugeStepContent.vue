@@ -12,16 +12,15 @@
             </v-col>
             <v-col cols="6">
                 <v-btn
+                    class="text-none"
                     density="compact"
                     :disabled="
                         isTypeDisabled(Fahrzeug.KFZ) &&
                         isTypeDisabled(Fahrzeug.RAD)
                     "
+                    :text="labelSelectOrDeselectAllVerkehrsarten"
                     @click="selectOrDeselectAllVerkehrsarten()"
-                    class="text-none"
-                >
-                    {{ labelSelectOrDeselectAllVerkehrsarten }}
-                </v-btn>
+                />
             </v-col>
         </v-row>
         <v-row
@@ -139,13 +138,12 @@
             </v-col>
             <v-col cols="6">
                 <v-btn
-                    density="compact"
                     class="text-none"
+                    density="compact"
                     :disabled="isTypeDisabled(Fahrzeug.KFZ)"
+                    :text="labelSelectOrDeselectAll"
                     @click="selectOrDeselectAll()"
-                >
-                    {{ labelSelectOrDeselectAll }}
-                </v-btn>
+                />
             </v-col>
         </v-row>
         <v-row
@@ -234,23 +232,9 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 import {computed, onMounted, ref, watch} from "vue";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 
-interface Props {
-    value: MessstelleAuswertungOptionsDTO;
-}
-
-const props = defineProps<Props>();
-
-const emits = defineEmits<{
-    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
-}>();
-
+const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({required: true});
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
 const selectOrDeselectAllVmodel = ref(false);
-
-const auswertungOptions = computed({
-    get: () => props.value,
-    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
-});
 
 const verkehrsartenWatch = computed(() => {
     return auswertungOptions.value.verfuegbareVerkehrsarten;

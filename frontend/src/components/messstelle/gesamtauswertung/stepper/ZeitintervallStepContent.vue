@@ -3,13 +3,12 @@
         <p>Welche Zeitintervalle sollen verglichen werden?</p>
         <v-autocomplete
             v-model="selectedCategory"
-            :items="categories"
+            :items="selectableCategories"
             class="mt-4"
             density="compact"
             label="Zeitintervalle"
-            @input="categoryIsSelected"
+            variant="outlined"
         />
-<!--            outlined-->
         <v-autocomplete
             v-if="showSubCategoriesSelect"
             v-model="auswertungOptions.zeitintervalle"
@@ -20,25 +19,17 @@
             :label="selectedCategory"
             multiple
             clearable
+            variant="outlined"
+            closable-chips
         >
-<!--            outlined-->
-<!--            small-chips-->
-<!--            deletable-chips-->
             <template #append-item>
-                <v-btn
-                    v-if="showSelectAllButton"
-                    width="100%"
-                    class="text-none"
-                    @click="selectAll"
-                    >Alle auswählen</v-btn
-                >
-                <v-btn
-                    v-else
-                    width="100%"
-                    class="text-none"
-                    @click="deselectAll"
-                    >Alle abwählen</v-btn
-                >
+              <v-btn
+                class="text-none"
+                width="100%"
+                flat
+                :text="buttonText"
+                @click="buttonClick"
+              ></v-btn>
             </template>
         </v-autocomplete>
     </div>
@@ -46,18 +37,18 @@
 
 <script setup lang="ts">
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import {computed, ref} from "vue";
-import {Halbjahre, Monate, Quartale, ZeitintervallCategories,} from "@/types/enum/AuswertungCategories";
+import {computed, onMounted, ref, watch} from "vue";
+import {
+  Halbjahre,
+  Monate,
+  Quartale,
+  text2HalbJahr,
+  text2Monat,
+  text2Quartal,
+  ZeitintervallCategories,
+} from "@/types/enum/AuswertungCategories";
 
-interface Props {
-    value: MessstelleAuswertungOptionsDTO;
-}
-
-const props = defineProps<Props>();
-
-const emits = defineEmits<{
-    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
-}>();
+const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({required: true});
 
 const categories = [
     ZeitintervallCategories.JAHRE,
@@ -87,19 +78,23 @@ const categoryMonate = [
     Monate.DEZEMBER,
 ];
 
-const selectedCategory = ref("");
-const previuosSelectedCategory = ref("");
+onMounted(()=> {
+  preSetSelectedCategory();
+})
 
-const auswertungOptions = computed({
-    get: () => props.value,
-    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
-});
+const selectedCategory = ref<string>("");
+const previuosSelectedCategory = ref("");
 
 const showSubCategoriesSelect = computed(() => {
     return (
         selectedCategory.value &&
         selectedCategory.value !== ZeitintervallCategories.JAHRE
     );
+});
+
+const selectableCategories = computed(() => {
+    const result: Array<string> = [...categories];
+    return result;
 });
 
 const selectableSubCategories = computed(() => {
@@ -117,14 +112,43 @@ const selectableSubCategories = computed(() => {
     }
     return categories;
 });
-function categoryIsSelected() {
-    if (previuosSelectedCategory.value !== selectedCategory.value) {
-        auswertungOptions.value.zeitintervalle = [];
-    }
-    if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
-        auswertungOptions.value.zeitintervalle.push(selectedCategory.value);
-    }
-    previuosSelectedCategory.value = selectedCategory.value;
+
+const buttonText = computed(() => {
+  return showSelectAllButton.value ? "Alle auswählen" : "Alle abwählen";
+});
+
+watch(selectedCategory, () => {
+  if (previuosSelectedCategory.value !== selectedCategory.value) {
+    auswertungOptions.value.zeitintervalle = [];
+  }
+  if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
+    auswertungOptions.value.zeitintervalle = [selectedCategory.value];
+  }
+  previuosSelectedCategory.value = selectedCategory.value;
+})
+
+function preSetSelectedCategory() {
+  const zeitintervalle = auswertungOptions.value.zeitintervalle;
+  if (zeitintervalle.length === 0) {
+    selectedCategory.value = "";
+  } else if (text2Monat.has(zeitintervalle[0])) {
+    selectedCategory.value = ZeitintervallCategories.MONATE;
+  } else if (text2Quartal.has(zeitintervalle[0])) {
+    selectedCategory.value = ZeitintervallCategories.QUARTALE;
+  } else if (text2HalbJahr.has(zeitintervalle[0])) {
+    selectedCategory.value = ZeitintervallCategories.HALBJAHRE;
+  } else {
+    selectedCategory.value = ZeitintervallCategories.JAHRE;
+  }
+  previuosSelectedCategory.value = selectedCategory.value;
+}
+
+function buttonClick() {
+  if (showSelectAllButton.value) {
+    selectAll();
+  } else {
+    deselectAll();
+  }
 }
 
 function selectAll() {

@@ -75,11 +75,11 @@
           </v-row>
         </v-app-bar>
 
-      <router-view v-slot="{ Component }" :key="$route.fullPath">
-        <v-fade-transition mode="out-in">
-          <component :is="Component" />
-        </v-fade-transition>
-      </router-view>
+        <router-view v-slot="{ Component }" :key="$route.fullPath">
+          <v-fade-transition mode="out-in">
+            <component :is="Component" />
+          </v-fade-transition>
+        </router-view>
     </v-app>
 </template>
 
@@ -182,5 +182,14 @@ function shortCuts(event: KeyboardEvent) {
 /* Alle Hinweise werden nun rot eingefärbt */
 .v-messages {
     color: #e57373 !important;
+}
+
+.dave-default {
+  --app-bar-height: 50px;
+  width: 100%;
+  height: 100%;
+  /* Um auf der Y-Achse direkt unter der App Bar zu liegen */
+  padding-top: var(--app-bar-height);
+  position: fixed;
 }
 </style>

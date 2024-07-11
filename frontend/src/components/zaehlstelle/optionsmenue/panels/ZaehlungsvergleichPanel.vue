@@ -230,7 +230,7 @@ function vergleichsdatumCalculator(
                         Zeitauswahl.TAGESWERT.toString())
             ) {
                 result.push({
-                    text: dateUtils.getShortVersionOfDate(
+                    title: dateUtils.getShortVersionOfDate(
                         dateUtils.getDatumOfString(zaehl.datum)
                     ),
                     value: zaehl.id,
@@ -266,7 +266,7 @@ function zeitreihenVergleichsdatumCalculator(
                         Zeitauswahl.TAGESWERT.toString())
             ) {
                 result.push({
-                    text: dateUtils.getShortVersionOfDate(
+                    title: dateUtils.getShortVersionOfDate(
                         dateUtils.getDatumOfString(zaehl.datum)
                     ),
                     value: zaehl.id,

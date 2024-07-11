@@ -124,7 +124,7 @@ const richtungValues  = computed<Array<KeyVal>>(() => {
         !isZeitauswahlSpitzenstunde.value
     ) {
         result.push({
-            text: messstelleUtils.alleRichtungen,
+            title: messstelleUtils.alleRichtungen,
             value: messstelleUtils.alleRichtungen,
         });
     }
@@ -138,7 +138,7 @@ const richtungValues  = computed<Array<KeyVal>>(() => {
                     "Fehler bei der Bestimmung der Himmelsrichtung.";
             }
             const keyVal: KeyVal = {
-                text: himmelsrichtungAsText,
+                title: himmelsrichtungAsText,
                 value: querschnitt.fahrtrichtung,
             };
             if (!result.includes(keyVal)) {
@@ -159,7 +159,7 @@ const lageValues  = computed<Array<KeyVal>>(() => {
                     direction.value === messstelleUtils.alleRichtungen
                 ) {
                     result.push({
-                        text: `${querschnitt.mqId} - ${querschnitt.standort}`,
+                        title: `${querschnitt.mqId} - ${querschnitt.standort}`,
                         value: querschnitt.mqId,
                     });
                 }

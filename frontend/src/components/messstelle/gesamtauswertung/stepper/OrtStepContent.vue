@@ -11,27 +11,18 @@
             clearable
             :disabled="disableMessstelle"
             persistent-hint
+            variant="outlined"
+            closable-chips
             :hint="messstelleHint"
-            @input="mstIdsHaveChanged"
         >
-<!--            outlined-->
-<!--            deletable-chips-->
-<!--            small-chips-->
             <template #append-item>
-                <v-btn
-                    v-if="showSelectAllButton"
-                    width="100%"
-                    class="text-none"
-                    @click="selectAllMessstellen"
-                    >Alle auswählen</v-btn
-                >
-                <v-btn
-                    v-else
-                    width="100%"
-                    class="text-none"
-                    @click="deselectAllMessstellen"
-                    >Alle abwählen</v-btn
-                >
+              <v-btn
+                  class="text-none"
+                  width="100%"
+                  flat
+                  :text="buttonText"
+                  @click="buttonClick"
+              ></v-btn>
             </template>
         </v-autocomplete>
 
@@ -63,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import type KeyVal from "@/types/common/KeyVal";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -72,39 +63,28 @@ import {himmelsRichtungenTextLong} from "@/types/enum/Himmelsrichtungen";
 import {useMessstelleUtils} from "@/util/MessstelleUtils";
 import type MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
 
-interface Props {
-    value: MessstelleAuswertungOptionsDTO;
-}
-
-const props = defineProps<Props>();
-
-const emits = defineEmits<{
-    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
-}>();
+const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({required: true});
 
 const messstelleUtils = useMessstelleUtils();
 
-loadAllVisibleMessstellen();
+onMounted(()=> {
+  loadAllVisibleMessstellen();
+})
+
 
 const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
-const direction = ref("");
+const direction = ref(messstelleUtils.alleRichtungen);
 
-const auswertungOptions = computed({
-    get: () => props.value,
-    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
-});
-
-watch(direction, () => {
-    if (direction.value == null) {
-        setDefaultDirection();
-    }
+watch(() => auswertungOptions.value.mstIds, () => {
+  setDefaultDirection();
+  setVerfuegbareVerkehrsarten();
 });
 
 const messstellen  = computed<Array<KeyVal>>(() => {
     const result: Array<KeyVal> = [];
     allVisibleMessstellen.value.forEach((mst) => {
         result.push({
-            text: `${mst.mstId}-${mst.standort ?? ""} (${
+            title: `${mst.mstId}-${mst.standort ?? ""} (${
                 mst.detektierteVerkehrsarten ?? ""
             })`,
             value: mst.mstId,
@@ -120,14 +100,14 @@ const richtungValues  = computed<Array<KeyVal>>(() => {
             if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
                 if (messstelle.messquerschnitte.length > 1) {
                     result.push({
-                        text: messstelleUtils.alleRichtungen,
+                        title: messstelleUtils.alleRichtungen,
                         value: messstelleUtils.alleRichtungen,
                     });
                 }
                 messstelle.messquerschnitte.forEach(
                     (querschnitt: MessquerschnittAuswertungDTO) => {
                         const keyVal: KeyVal = {
-                            text:
+                            title:
                                 himmelsRichtungenTextLong.get(
                                     querschnitt.fahrtrichtung
                                 ) ??
@@ -158,7 +138,7 @@ const lageValues  = computed<Array<KeyVal>>(() => {
                             direction.value === messstelleUtils.alleRichtungen
                         ) {
                             result.push({
-                                text: `${querschnitt.mqId} - ${querschnitt.standort}`,
+                                title: `${querschnitt.mqId} - ${querschnitt.standort}`,
                                 value: querschnitt.mqId,
                             });
                         }
@@ -215,17 +195,16 @@ const disableMessstelle = computed(() => {
     );
 });
 
+const buttonText = computed(() => {
+  return showSelectAllButton.value ? "Alle auswählen" : "Alle abwählen";
+});
+
 function loadAllVisibleMessstellen(): void {
     MessstelleAuswertungService.getAllVisibleMessstellen().then(
         (messstellen: Array<MessstelleAuswertungDTO>) => {
             allVisibleMessstellen.value = messstellen;
         }
     );
-}
-
-function mstIdsHaveChanged() {
-    setDefaultDirection();
-    setVerfuegbareVerkehrsarten();
 }
 
 function setDefaultDirection(): void {
@@ -271,6 +250,14 @@ function preassignMqIdsInOptions() {
     lageValues.value.forEach((value) =>
         auswertungOptions.value.mqIds.push(value.value)
     );
+}
+
+function buttonClick() {
+  if (showSelectAllButton.value) {
+    selectAllMessstellen();
+  } else {
+    deselectAllMessstellen();
+  }
 }
 
 function selectAllMessstellen() {

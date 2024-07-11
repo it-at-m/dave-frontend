@@ -315,15 +315,15 @@ const zeitblock = computed(() => {
 
     // Wurde ein stündlicher Zeitblock ausgewählt?
     if (zeitblockStuendlichInfo.has(options.value.zeitblock)) {
-        return zeitblockStuendlichInfo.get(options.value.zeitblock)?.text;
+        return zeitblockStuendlichInfo.get(options.value.zeitblock)?.title;
     }
 
     // Wurde ein anderer Zeitblock ausgewählt
     if (zeitblockInfo.has(options.value.zeitblock)) {
-        return zeitblockInfo.get(options.value.zeitblock)?.text;
+        return zeitblockInfo.get(options.value.zeitblock)?.title;
     }
 
-    return zeitblockInfo.get(Zeitblock.ZB_00_24)?.text;
+    return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
 });
 
 /**

@@ -169,12 +169,12 @@ const zeitblock = computed(() => {
         Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
         existsBlock
     ) {
-        text = existsBlock.text;
+        text = existsBlock.title;
     } else if (
         Zeitauswahl.STUNDE === filterOptionsMessstelle.value.zeitauswahl &&
         existsStunde
     ) {
-        text = existsStunde.text;
+        text = existsStunde.title;
     }
     return text;
 });

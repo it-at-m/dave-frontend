@@ -30,7 +30,7 @@
                         v-for="(item, index) in kommentarArray"
                         :key="index"
                     >
-                        <strong class="text-subtitle-2">{{ item.text }}</strong>
+                        <strong class="text-subtitle-2">{{ item.title }}</strong>
                         <p>{{ item.value }}</p>
                     </div>
                 </v-card-text>
@@ -138,7 +138,7 @@ function addToArrayIfNotEmpty(
     value: string | undefined
 ): void {
     if (value) {
-        kommArr.push({ text: title, value: value });
+        kommArr.push({ title: title, value: value });
     }
 }
 </script>

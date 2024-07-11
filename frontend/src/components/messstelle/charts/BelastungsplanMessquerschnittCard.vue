@@ -582,10 +582,10 @@ const getZeitblockText = computed(() => {
     if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
         return "0-24 Uhr";
     } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
-        return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.text;
+        return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
     } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
         return zeitblockStuendlichInfo.get(chosenOptionsCopy.value.zeitblock)
-            ?.text;
+            ?.title;
     } else {
         return "";
     }

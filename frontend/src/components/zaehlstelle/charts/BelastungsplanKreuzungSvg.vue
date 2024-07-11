@@ -1352,16 +1352,16 @@ function legendeSpalten() {
     if (zeitauswahl === Zeitauswahl.TAGESWERT) {
         zaehlzeitSecondLine = `${
             zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
-                ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.text
+                ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
                 : "hochgerechnet"
         }`;
     } else if (zeitauswahl === Zeitauswahl.BLOCK) {
         zaehlzeitSecondLine = `${
-            zeitblockInfo.get(optionen.value.zeitblock)?.text
+            zeitblockInfo.get(optionen.value.zeitblock)?.title
         }`;
     } else if (zeitauswahl === Zeitauswahl.STUNDE) {
         zaehlzeitSecondLine = `${
-            zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.text
+            zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
         }`;
     } else if (
         zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
