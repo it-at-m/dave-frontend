@@ -4,24 +4,24 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Quelle from "@/types/enum/Quelle";
 
 export default interface ZaehlungTimelineDTO extends BaseEntity {
-  datum: string;
+    datum: string;
 
-  /**
-   * Wochenende, Wochentag, Feiertag
-   */
-  tagesTyp: string;
-  projektNummer: string;
-  projektName: string;
-  sonderzaehlung: string;
-  zaehlIntervall: number;
-  artDerZaehlung: string;
-  wetter: Wetter;
-  zaehldauer: Zaehldauer;
-  quelle: Quelle;
+    /**
+     * Wochenende, Wochentag, Feiertag
+     */
+    tagesTyp: string;
+    projektNummer: string;
+    projektName: string;
+    sonderzaehlung: string;
+    zaehlIntervall: number;
+    artDerZaehlung: string;
+    wetter: Wetter;
+    zaehldauer: Zaehldauer;
+    quelle: Quelle;
 
-  /**
-   * Ferien, Schule
-   */
-  schulZeiten: string;
-  filterWoerter: string;
+    /**
+     * Ferien, Schule
+     */
+    schulZeiten: string;
+    filterWoerter: string;
 }

@@ -16,7 +16,6 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-
 /**
  * This class subscribes the {@link ServerWebExchange} for csrf token attachment
  * within the classes {@link CookieServerCsrfTokenRepository} and {@link CsrfWebFilter}.

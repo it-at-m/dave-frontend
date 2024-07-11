@@ -2,21 +2,19 @@ import ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 import TooltipDTO from "@/types/TooltipDTO";
 
 export default interface ZaehlstelleKarteDTO {
+    id: string;
 
-  id: string;
+    nummer: string;
 
-  nummer: string;
+    letzteZaehlungId: string;
 
-  letzteZaehlungId: string;
+    longitude: string;
 
-  longitude: string;
+    latitude: string;
 
-  latitude: string;
+    tooltip: TooltipDTO;
 
-  tooltip: TooltipDTO;
+    zaehlartenKarte: Array<ZaehlartenKarteDTO>;
 
-  zaehlartenKarte: Array<ZaehlartenKarteDTO>;
-
-  sichtbarDatenportal: boolean;
-
+    sichtbarDatenportal: boolean;
 }

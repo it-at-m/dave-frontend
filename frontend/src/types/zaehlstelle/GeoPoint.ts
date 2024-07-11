@@ -1,4 +1,4 @@
 export default interface GeoPoint {
-  lat: string;
-  lon: string;
+    lat: string;
+    lon: string;
 }

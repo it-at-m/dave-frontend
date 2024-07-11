@@ -1,9 +1,7 @@
 export default class VersionInfoResponse {
+    public application: any;
 
-  public application: any;
-
-  constructor(application: any) {
-    this.application = application;
-  }
-
+    constructor(application: any) {
+        this.application = application;
+    }
 }

@@ -28,12 +28,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
 
-
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(
-        classes = { ApiGatewayApplication.class },
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-)
+@SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)
 @AutoConfigureWireMock
 public class BackendRouteTest {

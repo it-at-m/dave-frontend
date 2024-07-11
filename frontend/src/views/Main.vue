@@ -1,82 +1,76 @@
 <template>
-  <v-sheet
-      height="100%"
-      width="100%"
-  >
-    <zaehlstelle-map
-        ref="map"
+    <v-sheet
         height="100%"
         width="100%"
-        show-marker=true
-        :zoom="12"
-    />
-
-
-    <v-speed-dial
-        v-model="fab"
-        absolute
-        bottom
-        right
-        open-on-hover
     >
-      <template v-slot:activator>
-        <v-btn
-            v-model="fab"
-            dark
-            fab
-            :color="fabColor"
-            :loading="creatingPicture || printingSearchResult"
-        >
-          <v-icon v-if="fab">
-            mdi-close-thick
-          </v-icon>
-          <v-icon v-else>
-            mdi-plus-thick
-          </v-icon>
-        </v-btn>
-      </template>
-      <v-tooltip left>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              fab
-              dark
-              small
-              color="secondary"
-              @click="printSearchResult"
-              v-bind="attrs"
-              v-on="on"
-          >
-            <v-icon>mdi-file-delimited</v-icon>
-          </v-btn>
-        </template>
-        <span>Suchergebnis als CSV herunterladen</span>
-      </v-tooltip>
-      <v-tooltip left>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              fab
-              dark
-              small
-              color="secondary"
-              @click="takePicture"
-              v-bind="attrs"
-              v-on="on"
-          >
-            <v-icon>mdi-camera</v-icon>
-          </v-btn>
-        </template>
-        <span>Karte dem PDF Report hinzufügen</span>
-      </v-tooltip>
-    </v-speed-dial>
+        <zaehlstelle-map
+            ref="map"
+            height="100%"
+            width="100%"
+            show-marker="true"
+            :zoom="12"
+        />
 
-  </v-sheet>
+        <v-speed-dial
+            v-model="fab"
+            absolute
+            bottom
+            right
+            open-on-hover
+        >
+            <template #activator>
+                <v-btn
+                    v-model="fab"
+                    dark
+                    fab
+                    :color="fabColor"
+                    :loading="creatingPicture || printingSearchResult"
+                >
+                    <v-icon v-if="fab"> mdi-close-thick </v-icon>
+                    <v-icon v-else> mdi-plus-thick </v-icon>
+                </v-btn>
+            </template>
+            <v-tooltip left>
+                <template #activator="{ on, attrs }">
+                    <v-btn
+                        fab
+                        dark
+                        small
+                        color="secondary"
+                        v-bind="attrs"
+                        @click="printSearchResult"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-file-delimited</v-icon>
+                    </v-btn>
+                </template>
+                <span>Suchergebnis als CSV herunterladen</span>
+            </v-tooltip>
+            <v-tooltip left>
+                <template #activator="{ on, attrs }">
+                    <v-btn
+                        fab
+                        dark
+                        small
+                        color="secondary"
+                        v-bind="attrs"
+                        @click="takePicture"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-camera</v-icon>
+                    </v-btn>
+                </template>
+                <span>Karte dem PDF Report hinzufügen</span>
+            </v-tooltip>
+        </v-speed-dial>
+    </v-sheet>
 </template>
 
 <script lang="ts">
-import {Component, Ref, Vue} from 'vue-property-decorator';
+import { Component, Ref, Vue } from "vue-property-decorator";
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 
-import domtoimage from 'dom-to-image-more'
+import domtoimage from "dom-to-image-more";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 /* eslint-disable no-unused-vars */
 import ZaehlstelleKarteDTO from "@/types/zaehlstelle/ZaehlstelleKarteDTO";
@@ -84,94 +78,96 @@ import TooltipDTO from "@/types/TooltipDTO";
 /* eslint-enable no-unused-vars */
 
 @Component({
-  components: {ZaehlstelleMap}
+    components: { ZaehlstelleMap },
 })
 export default class App extends Vue {
-  @Ref('map') readonly map!: any
+    @Ref("map") readonly map!: any;
 
-  private fab: boolean = false;
-  private creatingPicture: boolean = false;
-  private printingSearchResult: boolean = false;
+    private fab = false;
+    private creatingPicture = false;
+    private printingSearchResult = false;
 
-  mounted() {
-    window.scrollTo(0, 0);
-  }
-
-  takePicture(): void {
-    this.creatingPicture = true
-
-    domtoimage.toJpeg(this.map.$el, {quality: 0.95, cacheBust: true})
-        .then((dataUrl: string) => {
-          const image = new ImageAsset("Hauptkarte", dataUrl)
-          image.width = 100
-          this.$store.dispatch("addAsset", image)
-        })
-        .catch((error: any) => {
-          console.warn(error)
-        })
-        .finally(() => {
-          this.creatingPicture = false
-        });
-  }
-
-  /**
-   * Erzeugt aus dem Suchergebnis eine CSV-Datei und
-   * bietet diese als Download an
-   */
-  printSearchResult(): void {
-    this.printingSearchResult = true;
-    const searchResult: Array<ZaehlstelleKarteDTO> = this.getSearchResult;
-    const searchQuery: string = this.getSearchQuery;
-    let filenamePrefix: string = 'Alle_Zaehlstellen';
-    if (searchQuery && searchQuery.trim() !== "") {
-      filenamePrefix = searchQuery.replace(/\s/g, '_');
+    mounted() {
+        window.scrollTo(0, 0);
     }
 
-    const searchResultAsCsvString: Array<string> = [];
-    // Suchbegriff hinzufügen
-    searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
-    // Headerzeile hinzufügen
-    searchResultAsCsvString.push("Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung")
+    takePicture(): void {
+        this.creatingPicture = true;
 
-    // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
-    searchResult.forEach((element: ZaehlstelleKarteDTO) => {
-      const tooltip: TooltipDTO = element.tooltip;
-      const elementAsCsvString: Array<string> = [];
-      elementAsCsvString.push(tooltip.zaehlstellennnummer);
-      elementAsCsvString.push(element.longitude);
-      elementAsCsvString.push(element.latitude);
-      elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
-      elementAsCsvString.push(tooltip.stadtbezirk);
-      elementAsCsvString.push(tooltip.kreuzungsname);
-      elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
-      elementAsCsvString.push(tooltip.datumLetzteZaehlung);
-      searchResultAsCsvString.push(elementAsCsvString.join(';'));
-    });
+        domtoimage
+            .toJpeg(this.map.$el, { quality: 0.95, cacheBust: true })
+            .then((dataUrl: string) => {
+                const image = new ImageAsset("Hauptkarte", dataUrl);
+                image.width = 100;
+                this.$store.dispatch("addAsset", image);
+            })
+            .catch((error: any) => {
+                console.warn(error);
+            })
+            .finally(() => {
+                this.creatingPicture = false;
+            });
+    }
 
-    let csvContent = "data:text/csv;charset=utf-8,"
-        + searchResultAsCsvString.join("\n");
+    /**
+     * Erzeugt aus dem Suchergebnis eine CSV-Datei und
+     * bietet diese als Download an
+     */
+    printSearchResult(): void {
+        this.printingSearchResult = true;
+        const searchResult: Array<ZaehlstelleKarteDTO> = this.getSearchResult;
+        const searchQuery: string = this.getSearchQuery;
+        let filenamePrefix = "Alle_Zaehlstellen";
+        if (searchQuery && searchQuery.trim() !== "") {
+            filenamePrefix = searchQuery.replace(/\s/g, "_");
+        }
 
-    let encodedUri = encodeURI(csvContent);
-    let link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `${filenamePrefix}_Suchergebnis.csv`);
-    document.body.appendChild(link); // Required for FF
+        const searchResultAsCsvString: Array<string> = [];
+        // Suchbegriff hinzufügen
+        searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
+        // Headerzeile hinzufügen
+        searchResultAsCsvString.push(
+            "Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung"
+        );
 
-    link.click();
-    this.printingSearchResult = false;
-  }
+        // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
+        searchResult.forEach((element: ZaehlstelleKarteDTO) => {
+            const tooltip: TooltipDTO = element.tooltip;
+            const elementAsCsvString: Array<string> = [];
+            elementAsCsvString.push(tooltip.zaehlstellennnummer);
+            elementAsCsvString.push(element.longitude);
+            elementAsCsvString.push(element.latitude);
+            elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
+            elementAsCsvString.push(tooltip.stadtbezirk);
+            elementAsCsvString.push(tooltip.kreuzungsname);
+            elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
+            elementAsCsvString.push(tooltip.datumLetzteZaehlung);
+            searchResultAsCsvString.push(elementAsCsvString.join(";"));
+        });
 
-  get getSearchResult(): ZaehlstelleKarteDTO[] {
-    return this.$store.getters["search/result"];
-  }
+        let csvContent =
+            "data:text/csv;charset=utf-8," + searchResultAsCsvString.join("\n");
 
-  get getSearchQuery(): string {
-    return this.$store.getters["search/lastSearchQuery"];
-  }
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${filenamePrefix}_Suchergebnis.csv`);
+        document.body.appendChild(link); // Required for FF
 
-  get fabColor(): string {
-    return this.fab ? "grey darken-1" : "secondary"
-  }
+        link.click();
+        this.printingSearchResult = false;
+    }
 
+    get getSearchResult(): ZaehlstelleKarteDTO[] {
+        return this.$store.getters["search/result"];
+    }
+
+    get getSearchQuery(): string {
+        return this.$store.getters["search/lastSearchQuery"];
+    }
+
+    get fabColor(): string {
+        return this.fab ? "grey darken-1" : "secondary";
+    }
 }
 </script>

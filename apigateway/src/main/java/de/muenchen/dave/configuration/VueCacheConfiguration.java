@@ -4,15 +4,15 @@
  */
 package de.muenchen.dave.configuration;
 
+import java.time.Duration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import java.time.Duration;
-
 /**
- * VueCacheConfigurer setzt Cache Header für die von Vue gebauten Resourcen. Sie enthalten im Namen ein Hash,
+ * VueCacheConfigurer setzt Cache Header für die von Vue gebauten Resourcen. Sie enthalten im Namen
+ * ein Hash,
  * deswegen sollte das Caching hier keine Probleme machen.
  */
 @Configuration

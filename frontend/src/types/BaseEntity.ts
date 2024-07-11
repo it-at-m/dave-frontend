@@ -1,5 +1,5 @@
 export default interface BaseEntity {
-  id: string;
-  entityVersion: number;
-  createdTime: string;
+    id: string;
+    entityVersion: number;
+    createdTime: string;
 }

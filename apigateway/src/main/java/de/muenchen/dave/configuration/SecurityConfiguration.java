@@ -4,14 +4,13 @@
  */
 package de.muenchen.dave.configuration;
 
-import de.muenchen.dave.filter.CsrfTokenAppendingHelperFilter;
 import de.muenchen.dave.util.GatewayUtils;
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -20,9 +19,6 @@ import org.springframework.security.web.server.authentication.RedirectServerAuth
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
-
 
 @Configuration
 @Profile("!no-security")
@@ -53,7 +49,8 @@ public class SecurityConfiguration {
                 .pathMatchers("/api/*/info",
                         "/actuator/health",
                         "/actuator/info",
-                        "/actuator/metrics").permitAll()
+                        "/actuator/metrics")
+                .permitAll()
                 // only authenticated
                 .anyExchange().authenticated()
                 .and()
@@ -73,8 +70,7 @@ public class SecurityConfiguration {
                     @Override
                     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
                         webFilterExchange.getExchange().getSession().subscribe(
-                                webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds))
-                        );
+                                webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
                         return super.onAuthenticationSuccess(webFilterExchange, authentication);
                     }
                 });

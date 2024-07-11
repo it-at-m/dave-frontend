@@ -4,6 +4,10 @@
  */
 package de.muenchen.dave.controller;
 
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
+
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
-
 
 /**
  * Endpoint for pinging with an authorized request

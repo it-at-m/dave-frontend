@@ -21,6 +21,7 @@
         <logstash.encoder.version>7.0.1</logstash.encoder.version>
         <apache.commons.lang.version>3.12.0</apache.commons.lang.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
+        <itm-codeformat.version>1.0.3</itm-codeformat.version>
     </properties>
 
 
@@ -179,6 +180,60 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.28.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>de.muenchen.itm</groupId>
+                        <artifactId>itm-java-codeformat</artifactId>
+                        <version>${itm-codeformat.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <java>
+                        <includes>
+                            <include>src/main/java/**/*.java</include> <!-- Check application code -->
+                            <include>src/test/java/**/*.java</include> <!-- Check application tests code -->
+                        </includes>
+                        <eclipse>
+                            <file>itm-java-codeformat/java_codestyle_formatter.xml</file>
+                        </eclipse>
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>9.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
