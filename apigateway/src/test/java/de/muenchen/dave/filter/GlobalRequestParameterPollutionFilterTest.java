@@ -33,17 +33,14 @@ class GlobalRequestParameterPollutionFilterTest {
     void parameterPollutionAttack() {
         final StringBuilder jsonResponseBody = new StringBuilder();
         webTestClient
-            .get()
-            .uri(
-                "/api/dave-backend-service/testendpoint?parameter1=testdata_1&parameter2=testdata&parameter1=testdata_2"
-            )
-            .exchange()
-            .expectStatus()
-            .isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody()
-            .consumeWith(responseBody ->
-                jsonResponseBody.append(new String(responseBody.getResponseBody(), StandardCharsets.UTF_8))
-            );
+                .get()
+                .uri(
+                        "/api/dave-backend-service/testendpoint?parameter1=testdata_1&parameter2=testdata&parameter1=testdata_2")
+                .exchange()
+                .expectStatus()
+                .isEqualTo(HttpStatus.BAD_REQUEST)
+                .expectBody()
+                .consumeWith(responseBody -> jsonResponseBody.append(new String(responseBody.getResponseBody(), StandardCharsets.UTF_8)));
         assertTrue(jsonResponseBody.toString().contains("\"message\" : \"parameter pollution\""));
     }
 }

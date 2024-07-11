@@ -28,10 +28,10 @@ class CsrfTokenAppendingHelperFilterTest {
     @WithMockUser
     void csrfCookieAppendition() {
         webTestClient
-            .get()
-            .uri("/")
-            .exchange()
-            .expectHeader()
-            .valueMatches("set-cookie", "XSRF-TOKEN=[a-f\\d]{8}(-[a-f\\d]{4}){3}-[a-f\\d]{12}?;\\sPath=/");
+                .get()
+                .uri("/")
+                .exchange()
+                .expectHeader()
+                .valueMatches("set-cookie", "XSRF-TOKEN=[a-f\\d]{8}(-[a-f\\d]{4}){3}-[a-f\\d]{12}?;\\sPath=/");
     }
 }
