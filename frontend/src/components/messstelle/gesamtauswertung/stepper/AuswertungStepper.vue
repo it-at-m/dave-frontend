@@ -65,6 +65,7 @@ import {tagesTypText} from "@/types/enum/TagesTyp";
 import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
 import FahrzeugeStepContent from "@/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue";
 import type {VStepperVerticalItem} from "vuetify/labs/components";
+import { auswertungszeitraumToText } from "@/types/enum/AuswertungCategories";
 
 interface Props {
   height: string;
@@ -85,11 +86,18 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-  let summary = auswertungOptions.value.zeitintervalle.join(", ");
-  if (!isJahresintervallSelected()) {
-    summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
-  }
-  return summary;
+    let helper: Array<string> = [];
+    auswertungOptions.value.zeitraum.forEach((key) => {
+        const value = auswertungszeitraumToText.get(key);
+        if (value) {
+            helper.push(value.title);
+        }
+    });
+    let summary = helper.join(", ");
+    if (!isJahresintervallSelected()) {
+        summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
+    }
+    return summary;
 });
 
 const selectedTagesTypAsSummary = computed(() => {
@@ -134,7 +142,7 @@ function isTagesTypSelected(): boolean {
 
 function isJahresintervallSelected(): boolean {
   return !(
-      auswertungOptions.value.zeitintervalle.length === 0 &&
+      auswertungOptions.value.zeitraum.length === 0 &&
       activeStep.value > 0
   );
 }

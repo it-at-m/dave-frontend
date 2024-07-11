@@ -13,6 +13,14 @@ export function useDateUtils() {
         return `${day}.${month}.${year}`;
     }
 
+    function formatDateToISO(date: string): string {
+        if (!date) {
+            return "";
+        }
+        const [day, month, year] = date.split(".");
+        return `${year}-${month}-${day}`;
+    }
+
     function getTimeOfDate(date: Date): string {
         if (!date) {
             return "";
@@ -85,6 +93,7 @@ export function useDateUtils() {
     return {
         sortDatesDescAsStrings,
         formatDate,
+        formatDateToISO,
         getTimeOfDate,
         getShortVersionOfDate,
         getLongVersionOfDate,

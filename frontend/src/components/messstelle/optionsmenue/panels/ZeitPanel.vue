@@ -39,10 +39,10 @@
                 </v-col>
                 <v-col cols="4">
                     <v-text-field
+                        v-model="formattedDateInput"
                         :label="getChosenDateAsText"
-                        readonly
-                        :value="getFormattedSelectedZeit"
                         :rules="[
+                            RULE_EINGABE_HAT_PLAUSIBLES_FORMAT,
                             RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG,
                         ]"
                     />
@@ -174,30 +174,80 @@ const isAnwender = computed(() => {
 });
 
 const minDate = computed(() => {
-    return messstelleInfo.value.realisierungsdatum ?? "";
+    if (messstelleInfo.value.realisierungsdatum >= "2006-01-01")
+        return messstelleInfo.value.realisierungsdatum;
+    else return "2006-01-01";
 });
 
 const maxDate = computed(() => {
-    return messstelleInfo.value.abbaudatum ?? "";
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+        .toISOString()
+        .slice(0, 10);
+    return messstelleInfo.value.abbaudatum ?? yesterday;
 });
 
-const getFormattedSelectedZeit = computed(() => {
-    const zeitraum = chosenOptionsCopyZeitraum.value.slice(0);
-    if (zeitraum.length == 1) {
-        return dateUtils.formatDate(chosenOptionsCopyZeitraum.value[0]);
-    } else if (zeitraum.length == 2) {
-        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
-        return `${dateUtils.formatDate(
-            sortedDates[1]
-        )} - ${dateUtils.formatDate(sortedDates[0])}`;
-    } else {
-        return "";
-    }
+const formattedDateInput = computed({
+    get: () => {
+        const zeitraum = chosenOptionsCopyZeitraum.value.slice(0);
+        if (zeitraum.length == 1) {
+            return dateUtils.formatDate(chosenOptionsCopyZeitraum.value[0]);
+        } else if (zeitraum.length == 2) {
+            const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
+            return `${dateUtils.formatDate(
+                sortedDates[1]
+            )} - ${dateUtils.formatDate(sortedDates[0])}`;
+        } else {
+            return "";
+        }
+    },
+    set: (newValue) => {
+        const NEW_DATE = newValue.replace(/\s/g, "");
+        if (NEW_DATE.length == 10) {
+            chosenOptionsCopy.value.zeitraum = [
+                dateUtils.formatDateToISO(NEW_DATE),
+            ];
+        } else if (NEW_DATE.length == 21) {
+            const [datum1, datum2] = NEW_DATE.split("-");
+            chosenOptionsCopy.value.zeitraum = [
+                dateUtils.formatDateToISO(datum1),
+                dateUtils.formatDateToISO(datum2),
+            ];
+        }
+    },
 });
 
 function allowedDatesRangeDatePicker(val: string) {
     const today = new Date();
     return new Date(val) < today;
+}
+
+function RULE_EINGABE_HAT_PLAUSIBLES_FORMAT() {
+    const dates = chosenOptionsCopyZeitraum.value;
+    const falschesFormat = "Datumsformat ist nicht korrekt";
+    const keinDatum = "Dieses Datum existiert nicht";
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (dates.length == 1) {
+        const dateObj = new Date(dates[0]).toString();
+        if (!dateRegex.test(dates[0])) {
+            return falschesFormat;
+        }
+        if (dateObj == "Invalid Date") {
+            return keinDatum;
+        }
+        return true;
+    }
+    if (dates.length == 2) {
+        const DATE_OBJ_1 = new Date(dates[0]).toString();
+        const DATE_OBJ_2 = new Date(dates[1]).toString();
+        if (!dateRegex.test(dates[0]) || !dateRegex.test(dates[1])) {
+            return falschesFormat;
+        }
+        if (DATE_OBJ_1 == "Invalid Date" || DATE_OBJ_2 == "Invalid Date") {
+            return keinDatum;
+        }
+        return true;
+    }
+    return true;
 }
 
 function RULE_EINGABE_TAG_ODER_ZEITRAUM_HAT_PLAUSIBLE_MESSUNG() {
@@ -277,6 +327,8 @@ watch(chosenOptionsCopyZeitraum, () => {
             messstelleInfo.value.datumLetztePlausibleMessung
     ) {
         pickerDate.value = messstelleInfo.value.datumLetztePlausibleMessung;
+    } else {
+        pickerDate.value = chosenOptionsCopyZeitraum.value[0];
     }
     calculateChoosableOptions();
 });
