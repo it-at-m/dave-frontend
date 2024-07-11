@@ -1,6 +1,6 @@
 /*
  * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
+ * der Landeshauptstadt München, 2022
  */
 package de.muenchen.dave.filter;
 
@@ -30,7 +30,7 @@ public class GlobalBackendErrorFilter implements GlobalFilter, Ordered {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(final ServerWebExchange exchange, final GatewayFilterChain chain) {
         log.debug("Check for backend errors");
         return GatewayUtils.responseBodyManipulatorForServerWebExchange(
                 exchange,
@@ -38,5 +38,4 @@ public class GlobalBackendErrorFilter implements GlobalFilter, Ordered {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 GENERIC_ERROR);
     }
-
 }
