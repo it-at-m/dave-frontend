@@ -149,9 +149,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         } else {
             zaehlungen.value = payload;
         }
-        if (route.params.zaehlungId) {
-            setZaehlungAlsAktiv(route.params.zaehlungId as string);
-        }
+        setZaehlungAlsAktiv(route.params.zaehlungId as string);
     }
     function setZaehlungAlsAktiv(payload: string) {
         if (zaehlungen.value.length > 0) {

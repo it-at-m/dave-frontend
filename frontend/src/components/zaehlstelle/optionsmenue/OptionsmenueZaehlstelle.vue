@@ -5,10 +5,7 @@
             @click="dialog = true"
         >
             <v-icon left>mdi-filter-outline</v-icon>
-            <span class="hidden-lg-and-down"
-                >Filtereinstellungen bearbeiten</span
-            >
-            <span class="hidden-xl-only">Filtereinstellungen</span>
+            <span> {{buttonText}}</span>
         </v-btn>
 
         <v-dialog
@@ -31,7 +28,7 @@
                         class="overflow-y-auto"
                     >
                         <v-expansion-panels
-                            hover
+                            variant="accordion"
                             focusable
                             elevation="0"
                         >
@@ -99,16 +96,20 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                        color="secondary"
-                        @click="setOptions"
-                        >Aktualisiere Daten
-                    </v-btn>
+                      class="text-none"
+                      color="secondary"
+                      text="Aktualisiere Daten"
+                      variant="elevated"
+                      @click="setOptions"
+                    />
                     <v-spacer></v-spacer>
                     <v-btn
-                        color="grey lighten-1"
-                        @click="resetOptionsmenu"
-                        >Zurücksetzen
-                    </v-btn>
+                      class="text-none"
+                      color="grey-lighten-1"
+                      text="Zurücksetzen"
+                      variant="elevated"
+                      @click="resetOptionsmenu"
+                    />
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -163,6 +164,14 @@ const getContentSheetHeight = computed(() => {
         return "650px";
     }
     return "400px";
+});
+
+const buttonText = computed(() => {
+  let text = "Filtereinstellungen";
+  if (display.xl.value) {
+        text = "Filtereinstellungen bearbeiten";
+    }
+  return text;
 });
 
 /**

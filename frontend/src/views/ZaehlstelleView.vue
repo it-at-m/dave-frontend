@@ -1,14 +1,11 @@
 <template>
-    <v-container
-        fluid
-        class="pa-0"
-    >
-        <v-row no-gutters>
+  <v-sheet class="dave-default">
+    <v-row no-gutters>
             <v-col cols="3">
                 <v-sheet
                     :min-height="leftHeightVh"
                     width="100%"
-                    color="grey lighten-3"
+                    color="grey-lighten-3"
                     class="d-flex flex-column"
                 >
                     <!-- Basisinformation zur Zählstelle -->
@@ -25,7 +22,7 @@
                         v-show="hasZaehlungen"
                         :kommentar-zaehlstelle="zaehlstelle.kommentar"
                     ></zaehlung-info>
-                    <!-- Liste der nicht aktiven Zählungen, die zur Zählstelle gehören -->
+<!--                    &lt;!&ndash; Liste der nicht aktiven Zählungen, die zur Zählstelle gehören &ndash;&gt;-->
                     <zaehlungen-timeline
                         v-show="hasZaehlungen"
                         :external-query="externalQuery"
@@ -34,24 +31,24 @@
                 </v-sheet>
             </v-col>
             <v-col cols="9">
-                <zaehlstelle-map
-                    :z-id="zaehlstelleId"
-                    :latlng="latlng"
-                    :zoom="17"
-                    :height="headerHeightVh"
-                    :minheight="headerHeightVh"
-                    width="100%"
-                    @zeahlart-ausgewaehlt="setZaehlart($event)"
-                />
+<!--                <zaehlstelle-map-->
+<!--                    :z-id="zaehlstelleId"-->
+<!--                    :latlng="latlng"-->
+<!--                    :zoom="17"-->
+<!--                    :height="headerHeightVh"-->
+<!--                    :minheight="headerHeightVh"-->
+<!--                    width="100%"-->
+<!--                    @zeahlart-ausgewaehlt="setZaehlart($event)"-->
+<!--                />-->
                 <!-- Die Diagramme -->
-                <zaehldaten-diagramme
-                    :height="rightHeightVh"
-                    :content-height="rightContentHeightVh"
-                    :has-zaehlungen="hasZaehlungen"
-                ></zaehldaten-diagramme>
+<!--                <zaehldaten-diagramme-->
+<!--                    :height="rightHeightVh"-->
+<!--                    :content-height="rightContentHeightVh"-->
+<!--                    :has-zaehlungen="hasZaehlungen"-->
+<!--                ></zaehldaten-diagramme>-->
             </v-col>
         </v-row>
-    </v-container>
+  </v-sheet>
 </template>
 
 <script lang="ts" setup>
@@ -68,6 +65,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useVuetify } from "@/util/useVuetify";
 import { useRoute } from "vue-router";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import {useDisplay} from "vuetify";
 
 const zaehlstelle = ref(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
@@ -76,7 +74,7 @@ const zaehlstelle = ref(
 const hasZaehlungen = ref(true);
 const externalQuery = ref("");
 const zaehlstelleStore = useZaehlstelleStore();
-const vuetify = useVuetify();
+const display = useDisplay();
 const route = useRoute();
 
 // =============
@@ -86,14 +84,14 @@ const route = useRoute();
  * Berechnet die Höhe der AppBar (65px) in "vh" (Höhe Viewport in Hundert)
  */
 const appBarHeight = computed(() => {
-    return 65 / (vuetify.breakpoint.height / 100);
+    return 50 / (display.height.value / 100);
 });
 
 /**
  * Berechnet die Höhe des Headers (fix 160px) in "vh" (Höhe Viewport in Hundert)
  */
 const headerHeight = computed(() => {
-    return 160 / (vuetify.breakpoint.height / 100);
+    return 160 / (display.height.value / 100);
 });
 
 /**
@@ -114,7 +112,7 @@ const zInfoHeight = computed(() => {
         anzahlKnotenarme = z.knotenarme.length;
     }
     return (
-        (72 + 144 + anzahlKnotenarme * 24) / (vuetify.breakpoint.height / 100)
+        (72 + 144 + anzahlKnotenarme * 24) / (display.height.value / 100)
     );
 });
 
@@ -132,7 +130,7 @@ const timelineHeight = computed(() => {
         appBarHeight.value -
         headerHeight.value -
         zInfoHeight.value -
-        56 / (vuetify.breakpoint.height / 100)
+        56 / (display.height.value / 100)
     );
 });
 
@@ -168,7 +166,7 @@ const rightContentHeightVh = computed(() => {
         100 -
         headerHeight.value -
         appBarHeight.value -
-        72 / (vuetify.breakpoint.height / 100);
+        72 / (display.height.value / 100);
 
     return h + "vh";
 });
@@ -187,7 +185,7 @@ const timelineHeightVh = computed(() => {
 
 onMounted(() => {
     // ID der Zählstelle aus der URL holen (oder Warnung ausgeben, falls keine vorhanden ist)
-    const zaehlstelleId = route.params.zaehlstelleId;
+    const zaehlstelleId = route.params.zaehlstelleId as string;
     // Die Informationen zur Zählstelle werden geladen
     ZaehlstellenService.getById(zaehlstelleId).then((loadedZaehlstelle) => {
         const zaehlungen = new Array<LadeZaehlungDTO>();
@@ -210,7 +208,7 @@ onMounted(() => {
 });
 
 const zaehlstelleId = computed(() => {
-    const zaehlstelleId: string = route.params.zaehlstelleId;
+    const zaehlstelleId: string = route.params.zaehlstelleId as string;
     if (!zaehlstelleId) {
         return "";
     }

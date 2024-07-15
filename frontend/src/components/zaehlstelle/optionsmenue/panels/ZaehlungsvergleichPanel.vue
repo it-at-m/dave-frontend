@@ -1,12 +1,12 @@
 <template>
     <v-expansion-panel>
-        <v-expansion-panel-header>
+        <v-expansion-panel-title>
             <div>
                 <v-icon left>mdi-compare-horizontal</v-icon>
                 Zählungsvergleich
             </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-1">
+        </v-expansion-panel-title>
+        <v-expansion-panel-text class="mt-1">
             <v-hover v-model="hoverSelectBasisdatum">
                 <div>
                     <panel-header
@@ -83,7 +83,7 @@
                     </v-card>
                 </v-col>
             </v-row>
-        </v-expansion-panel-content>
+        </v-expansion-panel-text>
     </v-expansion-panel>
 </template>
 

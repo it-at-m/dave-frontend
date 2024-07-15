@@ -12,9 +12,9 @@ export const ZaehldatenIntervallToBeschreibung = new Map<string, string>([
 ]);
 
 export const ZaehldatenIntervallToSelect = [
-    { text: "15 Minuten", value: ZaehldatenIntervall.STUNDE_VIERTEL },
-    { text: "30 Minuten", value: ZaehldatenIntervall.STUNDE_HALB },
-    { text: "60 Minuten", value: ZaehldatenIntervall.STUNDE_KOMPLETT },
+    { title: "15 Minuten", value: ZaehldatenIntervall.STUNDE_VIERTEL },
+    { title: "30 Minuten", value: ZaehldatenIntervall.STUNDE_HALB },
+    { title: "60 Minuten", value: ZaehldatenIntervall.STUNDE_KOMPLETT },
 ];
 
 export const BeschreibungToZaehldatenIntervall = new Map(

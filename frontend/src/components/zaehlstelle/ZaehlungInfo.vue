@@ -27,7 +27,7 @@
                     width="100%"
                     height="72"
                     color="white"
-                    class="px-4 py-2 primary--text font-weight-regular"
+                    class="px-4 py-2 text-primary font-weight-regular"
                 >
                     <v-row
                         class="pa-0 ma-0"
@@ -102,13 +102,13 @@
             <v-sheet
                 width="100%"
                 min-height="50"
-                color="grey darken-1"
+                color="grey-darken-1"
                 class="px-4 py-3"
             >
                 <v-row>
                     <v-col cols="1"></v-col>
                     <v-col>
-                        <h3 class="grey--text text--lighten-1">
+                        <h3 class="text-grey-lighten-1">
                             Aktuelle Filtereinstellungen
                         </h3>
                     </v-col>
@@ -120,18 +120,18 @@
                     >
                         <v-icon
                             small
-                            color="grey lighten-1"
+                            color="grey-lighten-1"
                             >mdi-clock-time-four-outline</v-icon
                         >
                     </v-col>
                     <v-col cols="10">
-                        <span class="grey--text text--lighten-1"
+                        <span class="text-grey-lighten-1"
                             >Zeitauswahl:
-                            <span class="font-weight-medium white--text">{{
+                            <span class="font-weight-medium text-white">{{
                                 zeitblock
                             }}</span>
                             in
-                            <span class="font-weight-medium white--text">{{
+                            <span class="font-weight-medium text-white">{{
                                 zeitintervall
                             }}</span>
                             Intervallen</span
@@ -151,14 +151,14 @@
                     >
                         <v-icon
                             small
-                            color="grey lighten-1"
+                            color="grey-lighten-1"
                             >mdi-summit</v-icon
                         >
                     </v-col>
                     <v-col cols="10">
-                        <span class="grey--text text--lighten-1"
+                        <span class="text-grey-lighten-1"
                             >{{ options.zeitauswahl }}:
-                            <span class="font-weight-medium white--text">
+                            <span class="font-weight-medium text-white">
                                 {{ startUhrzeitIntervalls }} -
                                 {{ endeUhrzeitIntervalls }} Uhr
                             </span>
@@ -175,46 +175,30 @@
                         <v-icon
                             v-if="index === 0"
                             small
-                            color="grey lighten-1"
+                            color="grey-lighten-1"
                             >mdi-arrow-decision</v-icon
                         >
                     </v-col>
                     <v-col cols="9">
-                        <!-- Wird angezeigt in Viewport Größe lg und darüber -->
                         <span
                             v-if="options.vonIds.includes(k.nummer)"
-                            class="text-caption font-weight-medium white--text hidden-md-and-down"
-                            >von
+                            class="text-caption font-weight-medium text-white"
+                            > {{getDirectionAsText('von')}}
                         </span>
                         <span
                             v-if="options.nachIds.includes(k.nummer)"
-                            class="text-caption font-weight-medium white--text hidden-md-and-down"
-                            >nach
+                            class="text-caption font-weight-medium text-white"
+                            >{{getDirectionAsText('nach')}}
                         </span>
-                        <!-- Wird angezeigt in Viewport Größe md und drunter -->
-                        <span
-                            v-if="options.vonIds.includes(k.nummer)"
-                            class="text-caption font-weight-medium white--text hidden-lg-and-up"
-                            >v
-                        </span>
-                        <span
-                            v-if="options.nachIds.includes(k.nummer)"
-                            class="text-caption font-weight-medium white--text hidden-lg-and-up"
-                            >n
-                        </span>
-                        <span class="text-caption grey--text text--lighten-1"
+                        <span class="text-caption text-grey-lighten-1"
                             >{{ k.nummer }} {{ k.strassenname }}</span
                         >
                     </v-col>
                     <v-col cols="2">
                         <span
-                            class="text-caption grey--text text--lighten-1 hidden-xl-only"
-                            >[ {{ himmelsRichtungen.get(k.nummer).s }} ]</span
-                        >
-                        <span
-                            class="text-caption grey--text text--lighten-1 hidden-lg-and-down"
-                            >[ {{ himmelsRichtungen.get(k.nummer).l }} ]</span
-                        >
+                            class="text-caption text-grey-lighten-1">
+                          [ {{ getHimmelsrichtungAsText(k.nummer) }} ]
+                        </span>
                     </v-col>
                 </v-row>
                 <v-row
@@ -368,6 +352,24 @@ const isLarge = computed(() => {
 const getMaxCols = computed(() => {
     return zaehlung.value.sonderzaehlung ? 11 : 12;
 });
+
+function getHimmelsrichtungAsText(knotenarmnummer: number) {
+  const himmelsrichtung = himmelsRichtungen.value.get(knotenarmnummer);
+  let text = display.xl.value? "unbekannt" : "u";
+  if (himmelsrichtung) {
+    if (display.xl.value) {
+      text = himmelsrichtung.l;
+    } else {
+      text = himmelsrichtung.s;
+    }
+  }
+  return text;
+}
+function getDirectionAsText(direction: string) {
+  const directiontext = display.lgAndUp.value? direction : direction[0];
+  // Append a blank
+  return `${directiontext} `;
+}
 
 watch(
     startEndeUhrzeitIntervalls,

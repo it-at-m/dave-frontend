@@ -1,12 +1,12 @@
 <template>
     <v-expansion-panel>
-        <v-expansion-panel-header>
+        <v-expansion-panel-title>
             <div>
                 <v-icon left>mdi-arrow-decision</v-icon>
                 Fahrbeziehungen
             </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-1">
+        </v-expansion-panel-title>
+        <v-expansion-panel-text class="mt-1">
             <panel-header
                 font-size="0.875rem"
                 font-weight="bold"
@@ -20,58 +20,51 @@
                 dense
             >
                 <v-col cols="4">
-                    <v-hover v-model="hoverSelectVon">
                         <v-select
                             v-model="von"
                             :items="vonKnotenarme"
                             label="Von Knotenarm"
-                            item-text="strassenname"
+                            item-title="strassenname"
                             item-value="nummer"
-                            filled
-                            dense
+                            variant="filled"
+                            density="comfortable"
+                            @mouseover="hoverSelectVon = true"
+                            @mouseleave="hoverSelectVon = false"
                         ></v-select>
-                    </v-hover>
-                    <v-hover v-model="hoverSelectNach">
                         <v-select
                             v-model="nach"
                             :items="nachKnotenarme"
                             label="Nach Knotenarm"
-                            item-text="strassenname"
+                            item-title="strassenname"
                             item-value="nummer"
-                            filled
-                            dense
+                            variant="filled"
+                            density="comfortable"
+                            @mouseover="hoverSelectNach = true"
+                            @mouseleave="hoverSelectNach = false"
                         ></v-select>
-                    </v-hover>
-                    <div v-if="beideRichtungenAnzeigen">
-                        <v-hover v-model="hoverBeideRichtungen">
                             <v-checkbox
+                                v-if="beideRichtungenAnzeigen"
                                 v-model="beideRichtungen"
                                 :label="'Zulaufend/Ablaufend'"
                                 hide-details
                                 style="margin-bottom: 12px"
                                 color="grey darken-1"
-                                dense
+                                density="compact"
                                 :disabled="!beideRichtungenAnzeigen"
+                                @mouseover="hoverBeideRichtungen = true"
+                                @mouseleave="hoverBeideRichtungen = false"
                             />
-                        </v-hover>
-                    </div>
                 </v-col>
                 <v-spacer />
                 <v-col cols="4">
                     <v-card flat>
-                        <div
-                            v-if="hoverBeideRichtungen"
-                            style="color: red"
-                        >
-                            {{ helpTextFahrbeziehung }}
-                        </div>
-                        <div v-else>
+                        <div :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }">
                             {{ helpTextFahrbeziehung }}
                         </div>
                     </v-card>
                 </v-col>
             </v-row>
-        </v-expansion-panel-content>
+        </v-expansion-panel-text>
     </v-expansion-panel>
 </template>
 
@@ -88,7 +81,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
-    zaehlung?: LadeZaehlungDTO;
+    zaehlung: LadeZaehlungDTO;
 }
 
 const props = defineProps<Props>();
@@ -201,7 +194,7 @@ function initFahrbeziehungen(): void {
 
     // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
     const knotenarme: Map<number, string> = new Map<number, string>(
-        props.zaehlung?.knotenarme.map((knotenarm) => [
+        props.zaehlung.knotenarme.map((knotenarm) => [
             knotenarm.nummer,
             knotenarm.nummer + " - " + knotenarm.strassenname,
         ])
@@ -215,7 +208,7 @@ function initFahrbeziehungen(): void {
 
     // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
     // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
-    const fahrbeziehungen = props.zaehlung?.fahrbeziehungen;
+    const fahrbeziehungen = props.zaehlung.fahrbeziehungen;
     if (fahrbeziehungen && Array.isArray(fahrbeziehungen)) {
         fahrbeziehungen?.forEach((fahrbeziehung) => {
             if (isZaehlungForKreuzung()) {
@@ -453,15 +446,16 @@ watch(nach, (n: number) => {
     emits("nach", nachCopy);
 });
 
-watch(
-    () => props.zaehlung,
-    () => {
-        initFahrbeziehungen();
-    },
-    { immediate: true }
-);
+// watch(
+//     () => props.zaehlung,
+//     () => {
+//         initFahrbeziehungen();
+//     },
+//     { immediate: true }
+// );
 
 onMounted(() => {
+  initFahrbeziehungen();
     // Von und nach Werte auf die Werte aus dem Options Objekt aus dem Store setzen.
     //
     // Es ist wichtig, dass diese Funktion ausgeführt wird, nachdem die Fahrbeziehungen

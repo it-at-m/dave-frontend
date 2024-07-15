@@ -8,33 +8,32 @@
             id="empty"
             class="d-flex align-center justify-center pa-4 mx-auto"
         >
-            <span class="text-caption grey--text text--lighten-1"
+            <span class="text-caption text-grey-lighten-1"
                 >Für diese Zählstelle sind keine weiteren Zählungen
                 vorhanden.</span
             >
         </v-sheet>
         <v-tooltip
             v-if="isNotEmpty"
-            right
+            location="end"
             class="pl-5"
         >
-            <template #activator="{ on, attrs }">
+            <template #activator="{ props }">
                 <v-text-field
                     v-model="query"
-                    color="grey darken-1"
+                    color="grey-darken-1"
                     label="Zählung suchen"
-                    dense
-                    outlined
+                    density="compact"
+                    variant="outlined"
                     prepend-inner-icon="mdi-magnify"
                     hide-details
                     class="px-4 my-2"
                 >
-                    <template #append>
+                    <template #append-inner>
                         <v-icon
-                            v-bind="attrs"
-                            v-on="on"
-                            >mdi-information-outline
-                        </v-icon>
+                          v-bind="props"
+                          icon="mdi-information-outline"
+                        />
                     </template>
                 </v-text-field>
             </template>
@@ -67,7 +66,7 @@
                 :quelle="z.quelle"
                 :sonderzaehlung="z.sonderzaehlung"
                 :color="calcRowColor(index)"
-                hover-color="grey lighten-1"
+                hover-color="grey-lighten-1"
                 icon-color="black"
             >
             </nicht-ausgewaehlte-zaehlung>
@@ -76,14 +75,9 @@
 </template>
 <script setup lang="ts">
 import NichtAusgewaehlteZaehlung from "@/components/zaehlstelle/NichtAusgewaehlteZaehlung.vue";
-
-// Typen
-/* eslint-disable no-unused-vars */
 import {zaehlartText} from "@/types/enum/Zaehlart";
 import {computed, ref, watch} from "vue";
 import {useZaehlstelleStore} from "@/store/zaehlstelle";
-
-/* eslint-enable no-unused-vars */
 
 interface Props {
     listheight: string;
@@ -186,8 +180,8 @@ const filteredZaehlungen = computed(() => {
 function calcRowColor(index: number): string {
     const ungerade = index % 2 > 0;
     if (ungerade) {
-        return "grey lighten-4";
+        return "grey-lighten-4";
     }
-    return "grey lighten-2";
+    return "grey-lighten-2";
 }
 </script>
