@@ -55,7 +55,7 @@ public class WebSessionConfiguration {
     }
 
     @Bean
-    @Profile({ "local", "docker", "test" })
+    @Profile({ "local", "docker", "unittest" })
     public Config localConfig(@Value("${spring.session.timeout}") final int timeout) {
         final var hazelcastConfig = new Config();
         // Integrity Check
