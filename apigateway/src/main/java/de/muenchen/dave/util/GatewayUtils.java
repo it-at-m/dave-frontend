@@ -1,11 +1,9 @@
 /*
  * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
+ * der Landeshauptstadt München, 2022
  */
 package de.muenchen.dave.util;
 
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +23,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Utility methods and constants which are used in multiple
  * locations throughout the service.
@@ -40,6 +41,7 @@ public class GatewayUtils {
     /**
      * The method is used in {@link GlobalFilter}s to add the response body given in the
      * parameter when the {@link HttpStatus} given in the parameter is met.
+     * <p>
      * If the {@link HttpStatus} given in the parameter is the same as in {@link ServerHttpResponse}
      * the body within the parameter will be added otherwise the body received from upstream stays the
      * same.
@@ -51,14 +53,14 @@ public class GatewayUtils {
      *            {@link ServerHttpResponse}.
      * @return An empty mono. The results are processed within the {@link GatewayFilterChain}.
      */
-    public static Mono<Void> responseBodyManipulatorForServerWebExchange(final ServerWebExchange exchange,
+    public static Mono<Void> responseBodyManipulatorForServerWebExchange(
+            final ServerWebExchange exchange,
             final GatewayFilterChain chain,
             final HttpStatus httpStatus,
             final String newResponseBody) {
         final ServerHttpResponse response = exchange.getResponse();
 
         final ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(response) {
-
             /**
              * This overridden method adds the response body given in the parameter of
              * the surrounding method when the http status given in the parameter of
@@ -69,26 +71,26 @@ public class GatewayUtils {
              *         the body given by the parameter.
              */
             @Override
-            public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
+            public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
                 final var responseHttpStatus = getDelegate().getStatusCode();
                 if (body instanceof Flux && responseHttpStatus.equals(httpStatus)) {
                     final var dataBufferFactory = response.bufferFactory();
                     final DataBuffer newDataBuffer = dataBufferFactory.wrap(
-                            ObjectUtils.defaultIfNull(newResponseBody, EMPTY_JSON_OBJECT)
-                                    .getBytes(StandardCharsets.UTF_8));
+                            ObjectUtils.defaultIfNull(newResponseBody, EMPTY_JSON_OBJECT).getBytes(StandardCharsets.UTF_8));
 
                     log.debug("Response from upstream {} get new response body: {}", httpStatus, newResponseBody);
                     getDelegate().getHeaders().setContentLength(newDataBuffer.readableByteCount());
                     getDelegate().getHeaders().setContentType(MediaType.APPLICATION_JSON);
                     Flux<? extends DataBuffer> flux = (Flux<? extends DataBuffer>) body;
 
-                    return super.writeWith(flux.buffer().map(
-                            // replace old body represented by dataBuffer by the new one
-                            dataBuffer -> newDataBuffer));
+                    return super.writeWith(
+                            flux
+                                    .buffer()
+                                    .map(dataBuffer -> newDataBuffer // replace old body represented by dataBuffer by the new one
+                    ));
                 }
                 return super.writeWith(body);
             }
-
         };
 
         final ServerWebExchange swe = exchange.mutate().response(decoratedResponse).build();
@@ -107,5 +109,4 @@ public class GatewayUtils {
         successHandler.setLogoutSuccessUrl(URI.create(uri));
         return successHandler;
     }
-
 }

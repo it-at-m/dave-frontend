@@ -1,6 +1,6 @@
 /*
  * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
+ * der Landeshauptstadt München, 2022
  */
 package de.muenchen.dave.filter;
 
@@ -34,7 +34,7 @@ public class GlobalAuthenticationErrorFilter implements GlobalFilter, Ordered {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(final ServerWebExchange exchange, final GatewayFilterChain chain) {
         log.debug("Check for authentication errors");
         return GatewayUtils.responseBodyManipulatorForServerWebExchange(
                 exchange,
@@ -42,5 +42,4 @@ public class GlobalAuthenticationErrorFilter implements GlobalFilter, Ordered {
                 HttpStatus.UNAUTHORIZED,
                 GENERIC_AUTHENTICATION_ERROR);
     }
-
 }

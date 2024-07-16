@@ -27,10 +27,10 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: "11"
+          java-version: "21"
           distribution: "temurin"
           cache: "maven"
 

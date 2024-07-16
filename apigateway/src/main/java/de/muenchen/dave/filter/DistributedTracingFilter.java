@@ -1,12 +1,12 @@
 /*
  * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
+ * der Landeshauptstadt München, 2022
  */
 package de.muenchen.dave.filter;
 
 import brave.Tracer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -19,15 +19,16 @@ import reactor.core.publisher.Mono;
  * This class adds the sleuth headers "X-B3-SpanId" and "X-B3-TraceId"
  * to each route response.
  */
+@RequiredArgsConstructor
 @Component
 @Slf4j
 public class DistributedTracingFilter implements WebFilter {
 
-    public static final String XB3_TRACE_ID = "X-B3-TraceId";
-    public static final String XB3_SPAN_ID = "X-B3-SpanId";
+    public static final String TRACE_ID = "TraceId";
 
-    @Autowired
-    private Tracer tracer;
+    public static final String SPAN_ID = "SpanId";
+
+    private final Tracer tracer;
 
     /**
      * This method adds the zipkin headers "X-B3-SpanId" and "X-B3-TraceId"
@@ -39,15 +40,14 @@ public class DistributedTracingFilter implements WebFilter {
      *         complete
      */
     @Override
-    public Mono<Void> filter(ServerWebExchange serverWebExchange,
-            WebFilterChain webFilterChain) {
+    public Mono<Void> filter(final ServerWebExchange serverWebExchange, final WebFilterChain webFilterChain) {
         ServerHttpResponse response = serverWebExchange.getResponse();
         response.beforeCommit(() -> {
-            var span = tracer.currentSpan();
+            final var span = tracer.currentSpan();
             if (span != null) {
                 HttpHeaders headers = response.getHeaders();
-                headers.add(XB3_TRACE_ID, span.context().traceIdString());
-                headers.add(XB3_SPAN_ID, span.context().spanIdString());
+                headers.add(TRACE_ID, span.context().traceIdString());
+                headers.add(SPAN_ID, span.context().spanIdString());
             } else {
                 log.debug("Traceinformation missing - Skip Trace Header insertion");
             }
@@ -55,5 +55,4 @@ public class DistributedTracingFilter implements WebFilter {
         });
         return webFilterChain.filter(serverWebExchange);
     }
-
 }

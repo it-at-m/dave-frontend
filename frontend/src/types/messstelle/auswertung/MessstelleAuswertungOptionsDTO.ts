@@ -1,6 +1,6 @@
 import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import TagesTyp from "@/types/enum/TagesTyp";
-import {AuswertungsZeitraum} from "@/types/enum/AuswertungCategories";
+import { AuswertungsZeitraum } from "@/types/enum/AuswertungCategories";
 
 export default interface MessstelleAuswertungOptionsDTO {
     jahre: Array<string>;
