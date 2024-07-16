@@ -7,8 +7,9 @@
             </div>
         </v-expansion-panel-title>
         <v-expansion-panel-text class="mt-1">
-            <v-hover v-model="hoverSelectBasisdatum">
-                <div>
+                <div
+                    @mouseover="hoverSelectBasisdatum = true"
+                    @mouseleave="hoverSelectBasisdatum = false">
                     <panel-header
                         font-size="0.875rem"
                         font-weight="bold"
@@ -18,7 +19,6 @@
                     <span class="text">{{ basisdatum }}</span
                     ><br /><br />
                 </div>
-            </v-hover>
             <v-row
                 align="start"
                 justify="center"
@@ -37,25 +37,25 @@
                         header-text="(Anzeige nur im Belastungsplan)"
                     ></panel-header>
 
-                    <v-hover v-model="hoverCheckbox">
                         <v-checkbox
                             v-model="differenzdatenDarstellen"
                             color="grey darken-1"
                             :label="'Differenzdaten darstellen'"
+                            @mouseover="hoverCheckbox = true"
+                            @mouseleave="hoverCheckbox = false"
                         ></v-checkbox>
-                    </v-hover>
                     <div v-if="differenzdatenDarstellen">
-                        <v-hover v-model="hoverSelectVergleichsdatum">
                             <v-select
                                 v-model="vergleichszaehlungsId"
                                 :items="vergleichsdatum"
                                 :disabled="!differenzdatenDarstellen"
                                 no-data-text="Keine Vergleichszählungen vorhanden"
                                 label="Vergleichsdatum Differenzdaten"
-                                filled
-                                dense
+                                variant="filled"
+                                density="comfortable"
+                                @mouseover="hoverSelectVergleichsdatum = true"
+                                @mouseleave="hoverSelectVergleichsdatum = false"
                             ></v-select>
-                        </v-hover>
                     </div>
 
                     <panel-header
@@ -65,16 +65,16 @@
                         header-text="Zeitreihe"
                     ></panel-header>
 
-                    <v-hover v-model="hoverSelectVergleichsdatumZeitreihe">
                         <v-select
                             v-model="idVergleichszaehlungZeitreihe"
                             :items="vergleichsdatumZeitreihe"
                             no-data-text="Keine Vergleichszählungen vorhanden"
                             label="Vergleichsdatum Zeitreihe"
-                            filled
-                            dense
+                            variant="filled"
+                            density="comfortable"
+                            @mouseover="hoverSelectVergleichsdatumZeitreihe = true"
+                            @mouseleave="hoverSelectVergleichsdatumZeitreihe = false"
                         ></v-select>
-                    </v-hover>
                 </v-col>
                 <v-spacer />
                 <v-col cols="4">
@@ -98,7 +98,7 @@ import {useDateUtils} from "@/util/DateUtils";
 import {useZaehlstelleStore} from "@/store/zaehlstelle";
 
 interface Props {
-    zaehlung?: LadeZaehlungDTO;
+    zaehlung: LadeZaehlungDTO;
 }
 
 const props = defineProps<Props>();
@@ -147,7 +147,7 @@ const zeitauswahl = computed(() => {
  */
 const basisdatum = computed(() => {
     let result = "";
-    if (props.zaehlung?.datum) {
+    if (props.zaehlung.datum) {
         result = dateUtils.getShortVersionOfDate(
             dateUtils.getDatumOfString(props.zaehlung.datum)
         );
@@ -219,12 +219,12 @@ function vergleichsdatumCalculator(
 ): void {
     const result: Array<KeyVal> = new Array<KeyVal>();
     const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
-    if (props.zaehlung?.id) {
+    if (props.zaehlung.id) {
         zaehlungen.forEach((zaehl) => {
             if (
-                zaehl.id !== props.zaehlung?.id &&
-                zaehl.zaehlart === props.zaehlung?.zaehlart &&
-                zaehl.sonderzaehlung === props.zaehlung?.sonderzaehlung &&
+                zaehl.id !== props.zaehlung.id &&
+                zaehl.zaehlart === props.zaehlung.zaehlart &&
+                zaehl.sonderzaehlung === props.zaehlung.sonderzaehlung &&
                 (containsZeitblock(zaehl, newZeitblock) ||
                     newZeitauswahl.toString() ===
                         Zeitauswahl.TAGESWERT.toString())
@@ -254,13 +254,13 @@ function zeitreihenVergleichsdatumCalculator(
 ): void {
     const result: Array<KeyVal> = new Array<KeyVal>();
     const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
-    if (props.zaehlung?.id != undefined && props.zaehlung?.datum != undefined) {
+    if (props.zaehlung.id != undefined && props.zaehlung.datum != undefined) {
         zaehlungen.forEach((zaehl) => {
             if (
-                zaehl.id !== props.zaehlung?.id &&
+                zaehl.id !== props.zaehlung.id &&
                 zaehl.datum <= props.zaehlung!.datum &&
-                zaehl.zaehlart === props.zaehlung?.zaehlart &&
-                zaehl.sonderzaehlung === props.zaehlung?.sonderzaehlung &&
+                zaehl.zaehlart === props.zaehlung.zaehlart &&
+                zaehl.sonderzaehlung === props.zaehlung.sonderzaehlung &&
                 (containsZeitblock(zaehl, newZeitblock) ||
                     newZeitauswahl.toString() ===
                         Zeitauswahl.TAGESWERT.toString())
