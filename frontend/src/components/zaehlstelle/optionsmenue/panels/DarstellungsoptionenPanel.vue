@@ -20,36 +20,36 @@
                 dense
             >
                 <v-col cols="4">
-                    <v-hover v-model="hoverWerteHundertRunden">
                         <v-checkbox
                             v-model="werteHundertRunden"
                             :label="'Werte auf 100 Runden'"
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverWerteHundertRunden = true"
+                            @mouseleave="hoverWerteHundertRunden = false"
                         ></v-checkbox>
-                    </v-hover>
-                    <v-hover v-model="hoverSizeBelastungsplan">
-                        <v-slider
+                  <v-slider
                             v-model="sizeBelastungsplan"
                             label="Belastungsplangröße"
                             :max="maxSizeBelastungsplanSvg"
                             :min="minSizeBelastungsplanSvg"
+                            @mouseover="hoverSizeBelastungsplan = true"
+                            @mouseleave="hoverSizeBelastungsplan = false"
                         />
-                    </v-hover>
                 </v-col>
                 <v-col cols="4">
-                    <v-hover v-model="hoverBlackPrintMode">
                         <v-checkbox
                             v-model="blackPrintMode"
                             :label="'schwarz-weiß Druckausgabe'"
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverBlackPrintMode = true"
+                            @mouseleave="hoverBlackPrintMode = false"
                         ></v-checkbox>
-                    </v-hover>
                 </v-col>
                 <v-col cols="4">
                     <v-card flat>
@@ -72,7 +72,6 @@
                 dense
             >
                 <v-col cols="4">
-                    <v-hover v-model="hoverYAchse1">
                         <v-text-field
                             v-model="ganglinieYAchse1MaxValue"
                             :label="'Y-Achse 1'"
@@ -84,15 +83,14 @@
                                     ),
                             ]"
                             type="number"
-                            clearable
-                            dense
+                            density="compact"
                             @blur="checkRangeYAchse1"
+                            @mouseover="hoverYAchse1 = true"
+                            @mouseleave="hoverYAchse1 = false"
                         >
                         </v-text-field>
-                    </v-hover>
                 </v-col>
                 <v-col cols="4">
-                    <v-hover v-model="hoverYAchse2">
                         <v-text-field
                             v-model="ganglinieYAchse2MaxValue"
                             :label="'Y-Achse 2 (%)'"
@@ -105,12 +103,12 @@
                                         MAX_VALUE_EXCLUDE
                                     ),
                             ]"
-                            clearable
-                            dense
+                            density="compact"
                             @blur="checkRangeYAchse2"
+                            @mouseover="hoverYAchse2 = true"
+                            @mouseleave="hoverYAchse2 = false"
                         >
                         </v-text-field>
-                    </v-hover>
                 </v-col>
                 <v-col cols="4">
                     <v-card flat>
@@ -132,46 +130,46 @@
                 dense
             >
                 <v-col cols="4">
-                    <v-hover v-model="hoverStundensumme">
                         <v-checkbox
                             v-model="stundensumme"
                             :label="'Stundensumme'"
                             hide-details
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverStundensumme = true"
+                            @mouseleave="hoverStundensumme = false"
                         ></v-checkbox>
-                    </v-hover>
-                    <v-hover v-model="hoverBlocksumme">
                         <v-checkbox
                             v-model="blocksumme"
                             :label="'Blocksumme'"
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverBlocksumme = true"
+                            @mouseleave="hoverBlocksumme = false"
                         ></v-checkbox>
-                    </v-hover>
                 </v-col>
                 <v-col cols="4">
-                    <v-hover v-model="hoverTagessumme">
                         <v-checkbox
                             v-model="tagessumme"
                             :label="'Tagessumme'"
                             hide-details
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverTagessumme = true"
+                            @mouseleave="hoverTagessumme = false"
                         ></v-checkbox>
-                    </v-hover>
-                    <v-hover v-model="hoverSpitzenstunde">
                         <v-checkbox
                             v-model="spitzenstunde"
                             :label="'Spitzenstunde'"
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverSpitzenstunde = true"
+                            @mouseleave="hoverSpitzenstunde = false"
                         ></v-checkbox>
-                    </v-hover>
                 </v-col>
                 <v-col cols="4">
                     <v-card flat>
@@ -187,12 +185,13 @@
                 padding="10px 0 0 0"
                 header-text="Detailauswahl Listenausgabe"
             ></panel-header>
-            <v-hover v-model="hoverSpitzenstundeDetailauswahl">
                 <v-row
                     v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
                     align="start"
                     justify="center"
                     dense
+                    @mouseover="hoverSpitzenstundeDetailauswahl = true"
+                    @mouseleave="hoverSpitzenstundeDetailauswahl = false"
                 >
                     <v-col cols="4"> </v-col>
                     <v-col cols="4">
@@ -202,7 +201,7 @@
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
                             :disabled="isTypeKfzDisabled()"
                         ></v-checkbox>
                         <v-checkbox
@@ -211,7 +210,7 @@
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
                             :disabled="isTypeRadDisabled()"
                         ></v-checkbox>
                         <v-checkbox
@@ -220,7 +219,7 @@
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
                             :disabled="isTypeFussDisabled()"
                         ></v-checkbox>
                     </v-col>
@@ -230,7 +229,6 @@
                         </v-card>
                     </v-col>
                 </v-row>
-            </v-hover>
 
             <!-- Zeitreihe -->
             <panel-header
@@ -246,16 +244,16 @@
                 dense
             >
                 <v-col cols="4">
-                    <v-hover v-model="hoverZeitreiheGesamt">
                         <v-checkbox
                             v-model="zeitreiheGesamt"
                             :label="'Summe alle Verkehrsarten anzeigen'"
                             hide-details
                             style="margin-bottom: 12px"
                             color="grey darken-1"
-                            dense
+                            density="compact"
+                            @mouseover="hoverZeitreiheGesamt = true"
+                            @mouseleave="hoverZeitreiheGesamt = false"
                         ></v-checkbox>
-                    </v-hover>
                 </v-col>
                 <v-col cols="4"> </v-col>
                 <v-col cols="4">
@@ -307,8 +305,8 @@ const blackPrintMode = ref(false);
 const sizeBelastungsplan = ref(0);
 
 // Ganglinie
-const ganglinieYAchse1MaxValue: Ref<number | null> = ref(null);
-const ganglinieYAchse2MaxValue: Ref<number | null> = ref(null);
+const ganglinieYAchse1MaxValue = ref<number | null>(null);
+const ganglinieYAchse2MaxValue = ref<number | null>(null);
 
 // Listenausgabe
 const stundensumme = ref(false);
