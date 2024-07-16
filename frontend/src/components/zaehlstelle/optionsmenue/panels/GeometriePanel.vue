@@ -321,10 +321,20 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
         };
         moeglicheBeziehungenVon.value.set(fahrbeziehung.von, kv);
     }
+
+  let alreadyExists = false;
+  alleZielknotenarmeVon.forEach(value => {
+    alreadyExists = alreadyExists || value.nummer === fahrbeziehung.von;
+  })
+
+  if (!alreadyExists) {
     alleZielknotenarmeVon.add({
-        nummer: fahrbeziehung.nach,
-        strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
+      nummer: fahrbeziehung.nach,
+      strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
     });
+  }
+
+
 }
 
 /**
@@ -372,10 +382,18 @@ function addNachKnotenarmWithPossibleVonKnotenarm(
         };
         moeglicheBeziehungenNach.value.set(fahrbeziehung.nach, kv);
     }
+
+    let alreadyExists = false;
+    alleEingehendeKnotenarmeNach.forEach(value => {
+      alreadyExists = alreadyExists || value.nummer === fahrbeziehung.von;
+    })
+
+  if (!alreadyExists) {
     alleEingehendeKnotenarmeNach.add({
-        nummer: fahrbeziehung.von,
-        strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
+      nummer: fahrbeziehung.von,
+      strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
     });
+  }
 }
 
 /**
@@ -445,14 +463,6 @@ watch(nach, (n: number) => {
     }
     emits("nach", nachCopy);
 });
-
-// watch(
-//     () => props.zaehlung,
-//     () => {
-//         initFahrbeziehungen();
-//     },
-//     { immediate: true }
-// );
 
 onMounted(() => {
   initFahrbeziehungen();
