@@ -8,15 +8,13 @@
         elevation="2"
         width="80%"
     >
-      <draggable
+      <vue-draggable
           v-model="assets"
-          ghost-class="ghost"
-          item-key="id"
           @end="dragging = false"
           @start="dragging = true"
       >
-        <template #item="{asset}">
           <v-card
+              v-for="asset in assets"
               :key="asset.id"
               class="ma-3"
               elevation="0"
@@ -111,7 +109,7 @@
             <v-tooltip location="bottom">
               <template #activator="{ props }">
                 <v-btn
-                    icon="di-format-header-1"
+                    icon="mdi-format-header-1"
                     v-bind="props"
                     @click="createHeadingAsset('h1')"
                 />
@@ -203,8 +201,7 @@
             <v-spacer/>
             <v-icon color="grey lighten-2">mdi-heart</v-icon>
           </v-toolbar>
-        </template>
-      </draggable>
+      </vue-draggable>
     </v-sheet>
 
     <v-speed-dial
@@ -298,9 +295,9 @@
 
 <script lang="ts" setup>
 import {computed, onMounted, ref, watch} from "vue";
+import { VueDraggable } from 'vue-draggable-plus'
 
 // Components
-import draggable from "vuedraggable";
 import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
 import ImageAssetForm from "@/components/pdfreport/assetforms/ImageAssetForm.vue";
 import HeadingAssetForm from "@/components/pdfreport/assetforms/HeadingAssetForm.vue";
