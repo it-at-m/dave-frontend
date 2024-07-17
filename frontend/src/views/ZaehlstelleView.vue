@@ -22,7 +22,7 @@
                         v-show="hasZaehlungen"
                         :kommentar-zaehlstelle="zaehlstelle.kommentar"
                     ></zaehlung-info>
-<!--                    &lt;!&ndash; Liste der nicht aktiven Zählungen, die zur Zählstelle gehören &ndash;&gt;-->
+                    <!-- Liste der nicht aktiven Zählungen, die zur Zählstelle gehören -->
                     <zaehlungen-timeline
                         v-show="hasZaehlungen"
                         :external-query="externalQuery"
@@ -31,15 +31,15 @@
                 </v-sheet>
             </v-col>
             <v-col cols="9">
-<!--                <zaehlstelle-map-->
-<!--                    :z-id="zaehlstelleId"-->
-<!--                    :latlng="latlng"-->
-<!--                    :zoom="17"-->
-<!--                    :height="headerHeightVh"-->
-<!--                    :minheight="headerHeightVh"-->
-<!--                    width="100%"-->
-<!--                    @zeahlart-ausgewaehlt="setZaehlart($event)"-->
-<!--                />-->
+                <zaehlstelle-map
+                    :z-id="zaehlstelleId"
+                    :latlng="latlng"
+                    :zoom="17"
+                    :height="headerHeightVh"
+                    :minheight="headerHeightVh"
+                    width="100%"
+                    @zeahlart-ausgewaehlt="setZaehlart($event)"
+                />
                 <!-- Die Diagramme -->
 <!--                <zaehldaten-diagramme-->
 <!--                    :height="rightHeightVh"-->
