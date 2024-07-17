@@ -70,11 +70,11 @@ import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import { computed, ref, watch } from "vue";
 
 interface Props {
-    value: boolean;
     datatable: DatatableAsset;
 }
 
 const props = defineProps<Props>();
+const openEditDatatableDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
     (e: "save", v: TextAsset): void;
@@ -85,7 +85,7 @@ const emits = defineEmits<{
 const asset = ref(new DatatableAsset({} as OptionsDTO, "", ""));
 
 const openDialog = computed({
-    get: () => props.value,
+    get: () => openEditDatatableDialog.value,
     set: (payload: boolean) => emits("input", payload),
 });
 

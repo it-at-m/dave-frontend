@@ -43,11 +43,11 @@
 import { computed } from "vue";
 
 interface Props {
-    value: boolean;
     assetId: number;
 }
 
 const props = defineProps<Props>();
+const openDeleteDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
     (e: "delete", v: number): void;
@@ -56,7 +56,7 @@ const emits = defineEmits<{
 }>();
 
 const openDialog = computed({
-    get: () => props.value,
+    get: () => openDeleteDialog.value,
     set: (payload: boolean) => emits("input", payload),
 });
 

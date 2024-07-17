@@ -152,11 +152,11 @@ import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import { computed, ref, watch } from "vue";
 
 interface Props {
-    value: boolean;
     text: TextAsset;
 }
 
 const props = defineProps<Props>();
+const openEditTextDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
     (e: "save", v: TextAsset): void;
@@ -167,7 +167,7 @@ const emits = defineEmits<{
 const asset = ref(new TextAsset(""));
 
 const openDialog = computed({
-    get: () => props.value,
+    get: () => openEditTextDialog.value,
     set: (payload: boolean) => emits("input", payload),
 });
 

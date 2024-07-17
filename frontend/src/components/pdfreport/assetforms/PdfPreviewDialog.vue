@@ -88,7 +88,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const openPreviewDialog = defineModel<boolean>({ required: true });
+const openPreviewPdfDialog = defineModel<boolean>({ required: true });
 
 const display = useDisplay();
 
@@ -99,7 +99,7 @@ const emits = defineEmits<{
 }>();
 
 const openDialog = computed({
-    get: () => openPreviewDialog.value,
+    get: () => openPreviewPdfDialog.value,
     set: (payload: boolean) => emits("input", payload),
 });
 
