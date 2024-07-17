@@ -209,51 +209,37 @@
 
         <v-speed-dial
             v-model="fab"
-            fixed
-            bottom
-            right
+            location="bottom right"
             open-on-hover
         >
-            <template #activator>
+            <template #activator="{ props: activatorProps }">
                 <v-btn
-                    v-model="fab"
-                    dark
-                    fab
+                    v-model="activatorProps"
+                    :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
                     :color="fabColor"
-                >
-                    <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                    <v-icon v-else> mdi-plus-thick </v-icon>
-                </v-btn>
+                />
             </template>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
+            <v-tooltip location="left">
+                <template #activator="{ props }">
                     <v-btn
-                        fab
-                        dark
-                        small
+                        icon="mdi-printer"
+                        size="small"
                         color="secondary"
-                        v-bind="attrs"
+                        v-bind="props"
                         @click="generatePdf"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-printer</v-icon>
-                    </v-btn>
+                    />
                 </template>
                 <span>Report herunterladen</span>
             </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
+            <v-tooltip location="left">
+                <template #activator="{ props }">
                     <v-btn
-                        fab
-                        dark
-                        small
+                        icon="mdi-eye"
+                        size="small"
                         color="secondary"
-                        v-bind="attrs"
+                        v-bind="props"
                         @click="previewPdf"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-eye</v-icon>
-                    </v-btn>
+                    />
                 </template>
                 <span>Vorschau öffnen</span>
             </v-tooltip>
