@@ -6,19 +6,17 @@
         <v-sheet
             class="ma-10 pa-5"
             elevation="2"
-            outlined
             width="80%"
         >
             <draggable
-                :scroll-sensitivity="250"
-                :list="assets"
-                :force-fallback="true"
+                v-model="assets"
+                item-key="id"
                 ghost-class="ghost"
                 @end="dragging = false"
                 @start="dragging = true"
             >
+              <template #item="{asset}">
                 <v-card
-                    v-for="asset in assets"
                     :key="asset.id"
                     class="ma-3"
                     elevation="0"
@@ -27,16 +25,14 @@
                         color="rgba(0, 0, 0, 0)"
                         dense
                         flat
-                        @mouseout="setClickable(0)"
+                        @mouseleave="setClickable(0)"
                         @mouseover="setClickable(asset.id)"
                     >
-                        <v-icon color="grey lighten-2">{{
-                            icon(asset)
-                        }}</v-icon>
+                        <v-icon color="grey lighten-2">{{ icon(asset) }}</v-icon>
                         <v-divider
                             class="mx-4"
                             vertical
-                        ></v-divider>
+                        />
                         <span
                             class="grey--text text--lighten-2 text-body-1 font-weight-regular pl-0"
                         >
@@ -45,18 +41,14 @@
                         <v-spacer></v-spacer>
                         <v-btn
                             v-show="clickable === asset.id && isEditable(asset)"
-                            icon
+                            icon="mdi-lead-pencil"
                             @click="edit(asset)"
-                        >
-                            <v-icon>mdi-lead-pencil</v-icon>
-                        </v-btn>
+                        />
                         <v-btn
                             v-show="clickable === asset.id"
-                            icon
+                            icon="mdi-trash-can"
                             @click="deleteAsset(asset)"
-                        >
-                            <v-icon>mdi-trash-can</v-icon>
-                        </v-btn>
+                        />
                     </v-app-bar>
                     <v-card-text
                         :style="{ cursor: selectedCursor }"
@@ -82,8 +74,8 @@
                             :style="{ fontSize: getSizeOfAsset(asset) }"
                             v-html="getTextOfAsset(asset)"
                         />
-                        <v-divider v-if="isPageBreak(asset)"></v-divider>
-                        <v-divider v-if="isNewline(asset)"></v-divider>
+                        <v-divider v-if="isPageBreak(asset)"/>
+                        <v-divider v-if="isNewline(asset)"/>
                         <p v-if="isDatatable(asset)">
                             {{ getTextOfAsset(asset) }}
                         </p>
@@ -98,7 +90,7 @@
                             :caption="getCaptionOfAsset(asset)"
                             :image="getImageOfAsset(asset)"
                             :width="`${getWidthOfAsset(asset)}%`"
-                        ></DisplayImageAsset>
+                        />
                     </v-card-text>
                 </v-card>
                 <v-toolbar>
@@ -238,6 +230,7 @@
                     <v-spacer></v-spacer>
                     <v-icon color="grey lighten-2">mdi-heart</v-icon>
                 </v-toolbar>
+                </template>
             </draggable>
         </v-sheet>
 
