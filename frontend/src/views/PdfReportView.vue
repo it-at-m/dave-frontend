@@ -209,12 +209,14 @@
 
         <v-speed-dial
             v-model="fab"
-            location="bottom right"
+            location="top"
             open-on-hover
         >
             <template #activator="{ props: activatorProps }">
                 <v-btn
                     v-bind="activatorProps"
+                    location="bottom end"
+                    position="absolute"
                     :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
                     :color="fabColor"
                 />
