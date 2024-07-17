@@ -1,5 +1,5 @@
 // Composables
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import ZaehlstelleView from "@/views/ZaehlstelleView.vue";
 import MessstelleView from "@/views/MessstelleView.vue";
@@ -38,7 +38,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
     return { top: 0, left: 0 };
   },
