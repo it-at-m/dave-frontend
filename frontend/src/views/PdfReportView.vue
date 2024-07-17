@@ -10,6 +10,7 @@
     >
       <vue-draggable
           v-model="assets"
+          ghostClass="ghost"
           @end="dragging = false"
           @start="dragging = true"
       >
@@ -835,3 +836,10 @@ const previewSource = computed(() => {
   return pdfSourceForPreview.value;
 });
 </script>
+
+<style>
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+</style>
