@@ -44,67 +44,67 @@
             v-if="hasZaehlungen"
             v-model="activeTab"
             fixed-tabs
-            background-color="grey darken-1"
+            bg-color="grey-darken-1"
             dark
-            icons-and-text
-            slider-color="grey lighten-1"
-            slider-size="8"
+            slider-color="grey-lighten-1"
+            stacked
         >
             <!-- Kopfzeile -->
-            <v-tab>
+            <v-tab value="tab-1">
+                <v-icon icon="mdi-arrow-decision"/>
                 Belastungsplan
-                <v-icon>mdi-arrow-decision</v-icon>
             </v-tab>
-            <v-tab>
+            <v-tab value="tab-2">
+                <v-icon icon="mdi-chart-histogram"/>
                 Ganglinie
-                <v-icon>mdi-chart-histogram</v-icon>
             </v-tab>
-            <v-tab>
+            <v-tab value="tab-3">
+                <v-icon icon="mdi-table"/>
                 Listenausgabe
-                <v-icon>mdi-table</v-icon>
             </v-tab>
-            <v-tab>
+            <v-tab value="tab-4">
+                <v-icon icon="mdi-chart-bubble"/>
                 Heatmap
-                <v-icon>mdi-chart-bubble</v-icon>
             </v-tab>
-            <v-tab>
+            <v-tab value="tab-5">
+                <v-icon icon="mdi-timer-sand"/>
                 Zeitreihe
-                <v-icon>mdi-timer-sand</v-icon>
             </v-tab>
         </v-tabs>
-        <v-tabs-items
+        <v-tabs-window
             v-if="hasZaehlungen"
             v-model="activeTab"
             class="d-flex flex-column align-stretch"
         >
             <!-- Inhalte -->
-            <v-tab-item>
+            <v-tabs-window-item value="tab-1">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
                 >
-                    <belastungsplan-kreuzung-svg
-                        v-show="!belastungsplanDTO.kreisverkehr"
-                        :dimension="contentHeight"
-                        :data="belastungsplanDTO"
-                        :doc-mode="false"
-                        :geometrie-mode="true"
-                        @print="storeSvg($event)"
-                    ></belastungsplan-kreuzung-svg>
+                  Belatungsplan
+<!--                    <belastungsplan-kreuzung-svg-->
+<!--                        v-show="!belastungsplanDTO.kreisverkehr"-->
+<!--                        :dimension="contentHeight"-->
+<!--                        :data="belastungsplanDTO"-->
+<!--                        :doc-mode="false"-->
+<!--                        :geometrie-mode="true"-->
+<!--                        @print="storeSvg($event)"-->
+<!--                    ></belastungsplan-kreuzung-svg>-->
 
-                    <belastungsplan-card
-                        v-show="belastungsplanDTO.kreisverkehr"
-                        ref="belastungsplanCard"
-                        :dimension="contentHeight"
-                        :belastungsplan-data="belastungsplanDTO"
-                        :loaded="false"
-                        :zaehlung-id="zaehlungsId"
-                    ></belastungsplan-card>
+<!--                    <belastungsplan-card-->
+<!--                        v-show="belastungsplanDTO.kreisverkehr"-->
+<!--                        ref="belastungsplanCard"-->
+<!--                        :dimension="contentHeight"-->
+<!--                        :belastungsplan-data="belastungsplanDTO"-->
+<!--                        :loaded="false"-->
+<!--                        :zaehlung-id="zaehlungsId"-->
+<!--                    ></belastungsplan-card>-->
                 </v-sheet>
                 <progress-loader :value="belastungsplanLoading" />
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item value="tab-2">
                 <v-sheet
                     :min-height="contentHeight"
                     :max-height="contentHeight"
@@ -114,11 +114,11 @@
                     <step-line-card
                         ref="steplineCard"
                         :zaehldaten-stepline="zaehldatenSteplineDTO"
-                    ></step-line-card>
+                    />
                 </v-sheet>
                 <progress-loader :value="chartDataLoading" />
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item value="tab-3">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
@@ -130,8 +130,8 @@
                     </zaehldaten-listenausgabe>
                 </v-sheet>
                 <progress-loader :value="chartDataLoading" />
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item value="tab-4">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
@@ -140,11 +140,11 @@
                     <heatmap-card
                         ref="heatmapCard"
                         :zaehldaten-heatmap="zaehldatenHeatmap"
-                    ></heatmap-card>
+                    />
                 </v-sheet>
                 <progress-loader :value="chartDataLoading" />
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item value="tab-5">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
@@ -153,194 +153,185 @@
                     <zeitreihe-card
                         ref="zeitreiheCard"
                         :zaehldaten-zeitreihe="zaehldatenZeitreihe"
-                    >
-                    </zeitreihe-card>
+                    />
                 </v-sheet>
                 <progress-loader :value="zeitreiheLoading" />
-            </v-tab-item>
-        </v-tabs-items>
+            </v-tabs-window-item>
+        </v-tabs-window>
 
         <!-- Speed Dial Listenausgabe -->
-        <v-speed-dial
-            v-if="isTabListenausgabe"
-            v-model="fab"
-            absolute
-            bottom
-            right
-            open-on-hover
-        >
-            <template #activator>
-                <v-btn
-                    v-show="isFabShown"
-                    v-model="fab"
-                    dark
-                    fab
-                    :color="fabColor"
-                    :loading="loadingFile"
-                >
-                    <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                    <v-icon v-else> mdi-file </v-icon>
-                </v-btn>
-            </template>
+<!--        <v-speed-dial-->
+<!--            v-if="isTabListenausgabe"-->
+<!--            v-model="fab"-->
+<!--            absolute-->
+<!--            bottom-->
+<!--            right-->
+<!--            open-on-hover-->
+<!--        >-->
+<!--            <template #activator>-->
+<!--                <v-btn-->
+<!--                    v-show="isFabShown"-->
+<!--                    v-model="fab"-->
+<!--                    dark-->
+<!--                    fab-->
+<!--                    :color="fabColor"-->
+<!--                    :loading="loadingFile"-->
+<!--                >-->
+<!--                    <v-icon v-if="fab"> mdi-close-thick </v-icon>-->
+<!--                    <v-icon v-else> mdi-file </v-icon>-->
+<!--                </v-btn>-->
+<!--            </template>-->
 
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="generatePdf"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-pdf-box</v-icon>
-                    </v-btn>
-                </template>
-                <span>PDF</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="generateCsv"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-delimited</v-icon>
-                    </v-btn>
-                </template>
-                <span>CSV</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="openPdfReportDialog"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-chart</v-icon>
-                    </v-btn>
-                </template>
-                <span>PDF Report Menü öffnen</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="addChartToPdfReport"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-chart-box-plus-outline</v-icon>
-                    </v-btn>
-                </template>
-                <span>Tabelle dem PDF Report hinzufügen</span>
-            </v-tooltip>
-        </v-speed-dial>
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="generatePdf"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-file-pdf-box</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>PDF</span>-->
+<!--            </v-tooltip>-->
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="generateCsv"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-file-delimited</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>CSV</span>-->
+<!--            </v-tooltip>-->
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="openPdfReportDialog"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-file-chart</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>PDF Report Menü öffnen</span>-->
+<!--            </v-tooltip>-->
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="addChartToPdfReport"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-chart-box-plus-outline</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>Tabelle dem PDF Report hinzufügen</span>-->
+<!--            </v-tooltip>-->
+<!--        </v-speed-dial>-->
 
         <!-- Speed Dial alles außer Listenausgabe-->
-        <v-speed-dial
-            v-else
-            v-model="fab"
-            absolute
-            bottom
-            right
-            open-on-hover
-        >
-            <template #activator>
-                <v-btn
-                    v-show="isFabShown"
-                    v-model="fab"
-                    dark
-                    fab
-                    :color="fabColor"
-                    :loading="loadingFile"
-                >
-                    <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                    <v-icon v-else> mdi-file </v-icon>
-                </v-btn>
-            </template>
-            <v-tooltip
-                v-if="!isTabHeatmap"
-                left
-            >
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="generatePdf"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-pdf-box</v-icon>
-                    </v-btn>
-                </template>
-                <span>Chart als PDF drucken</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="openPdfReportDialog"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-file-chart</v-icon>
-                    </v-btn>
-                </template>
-                <span>PDF Report Menü öffnen</span>
-            </v-tooltip>
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="addChartToPdfReport"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-chart-box-plus-outline</v-icon>
-                    </v-btn>
-                </template>
-                <span>Diagramm dem PDF Report hinzufügen</span>
-            </v-tooltip>
+<!--        <v-speed-dial-->
+<!--            v-else-->
+<!--            v-model="fab"-->
+<!--            absolute-->
+<!--            bottom-->
+<!--            right-->
+<!--            open-on-hover-->
+<!--        >-->
+<!--            <template #activator>-->
+<!--                <v-btn-->
+<!--                    v-show="isFabShown"-->
+<!--                    v-model="fab"-->
+<!--                    dark-->
+<!--                    fab-->
+<!--                    :color="fabColor"-->
+<!--                    :loading="loadingFile"-->
+<!--                >-->
+<!--                    <v-icon v-if="fab"> mdi-close-thick </v-icon>-->
+<!--                    <v-icon v-else> mdi-file </v-icon>-->
+<!--                </v-btn>-->
+<!--            </template>-->
+<!--            <v-tooltip-->
+<!--                v-if="!isTabHeatmap"-->
+<!--                left-->
+<!--            >-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="generatePdf"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-file-pdf-box</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>Chart als PDF drucken</span>-->
+<!--            </v-tooltip>-->
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="openPdfReportDialog"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-file-chart</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>PDF Report Menü öffnen</span>-->
+<!--            </v-tooltip>-->
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="addChartToPdfReport"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-chart-box-plus-outline</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>Diagramm dem PDF Report hinzufügen</span>-->
+<!--            </v-tooltip>-->
 
-            <v-tooltip left>
-                <template #activator="{ on, attrs }">
-                    <v-btn
-                        fab
-                        dark
-                        small
-                        color="secondary"
-                        v-bind="attrs"
-                        @click="saveGraphAsImage"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-download</v-icon>
-                    </v-btn>
-                </template>
-                <span>Graph herunterladen</span>
-            </v-tooltip>
-        </v-speed-dial>
-        <pdf-report-menue v-model="pdfReportDialog"> </pdf-report-menue>
+<!--            <v-tooltip left>-->
+<!--                <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        fab-->
+<!--                        dark-->
+<!--                        small-->
+<!--                        color="secondary"-->
+<!--                        v-bind="props"-->
+<!--                        @click="saveGraphAsImage"-->
+<!--                    >-->
+<!--                        <v-icon>mdi-download</v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+<!--                <span>Graph herunterladen</span>-->
+<!--            </v-tooltip>-->
+<!--        </v-speed-dial>-->
+<!--        <pdf-report-menue v-model="pdfReportDialog"> </pdf-report-menue>-->
     </v-sheet>
 </template>
 <script setup lang="ts">
@@ -955,3 +946,9 @@ function generateCsv() {
         .finally(() => (loadingFile.value = false));
 }
 </script>
+
+<style scoped lang="scss">
+@use 'vuetify/settings' with (
+  $tab-slider-size: 8px,
+);
+</style>

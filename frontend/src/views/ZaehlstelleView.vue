@@ -41,11 +41,11 @@
                     @zeahlart-ausgewaehlt="setZaehlart($event)"
                 />
                 <!-- Die Diagramme -->
-<!--                <zaehldaten-diagramme-->
-<!--                    :height="rightHeightVh"-->
-<!--                    :content-height="rightContentHeightVh"-->
-<!--                    :has-zaehlungen="hasZaehlungen"-->
-<!--                ></zaehldaten-diagramme>-->
+                <zaehldaten-diagramme
+                    :height="rightHeightVh"
+                    :content-height="rightContentHeightVh"
+                    :has-zaehlungen="hasZaehlungen"
+                ></zaehldaten-diagramme>
             </v-col>
         </v-row>
   </v-sheet>
