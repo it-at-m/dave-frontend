@@ -84,11 +84,12 @@ import VuePdfEmbed from 'vue-pdf-embed'
 import {useDisplay} from "vuetify";
 
 interface Props {
-    value: boolean;
     source: Uint8Array;
 }
 
 const props = defineProps<Props>();
+const openPreviewDialog = defineModel<boolean>({ required: true });
+
 const display = useDisplay();
 
 const emits = defineEmits<{
@@ -98,7 +99,7 @@ const emits = defineEmits<{
 }>();
 
 const openDialog = computed({
-    get: () => props.value,
+    get: () => openPreviewDialog.value,
     set: (payload: boolean) => emits("input", payload),
 });
 

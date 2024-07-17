@@ -216,7 +216,11 @@
                 <v-btn
                     v-bind="activatorProps"
                     location="bottom end"
+                    size="large"
+                    elevation="6"
                     position="absolute"
+                    class="mr-4 mb-4"
+                    style="z-index: 400"
                     :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
                     :color="fabColor"
                 />
@@ -277,13 +281,13 @@
             @cancelDialog="cancel()"
             @delete="deleteIt($event)"
         />
+        -->
         <pdf-preview-dialog
             v-model="previewPdfDialog"
             :source="previewSource"
             @cancelDialog="cancel"
             @download="downloadPdf"
         />
-        -->
     </v-container>
 </template>
 
