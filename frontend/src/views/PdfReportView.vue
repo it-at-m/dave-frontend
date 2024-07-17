@@ -94,85 +94,67 @@
                     </v-card-text>
                 </v-card>
                 <v-toolbar>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-text"
                                 @click="createTextAsset"
-                            >
-                                <v-icon>mdi-text</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Freitext </span>
                     </v-tooltip>
                     <v-divider
                         class="mx-4"
                         vertical
-                    ></v-divider>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    />
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="di-format-header-1"
                                 @click="createHeadingAsset('h1')"
-                            >
-                                <v-icon>mdi-format-header-1</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Überschrift 1 </span>
                     </v-tooltip>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-format-header-2"
                                 @click="createHeadingAsset('h2')"
-                            >
-                                <v-icon>mdi-format-header-2</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Überschrift 2 </span>
                     </v-tooltip>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-format-header-3"
                                 @click="createHeadingAsset('h3')"
-                            >
-                                <v-icon>mdi-format-header-3</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Überschrift 3 </span>
                     </v-tooltip>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-format-header-4"
                                 @click="createHeadingAsset('h4')"
-                            >
-                                <v-icon>mdi-format-header-4</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Überschrift 4 </span>
                     </v-tooltip>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-format-header-5"
                                 @click="createHeadingAsset('h5')"
-                            >
-                                <v-icon>mdi-format-header-5</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Überschrift 5 </span>
                     </v-tooltip>
@@ -180,16 +162,13 @@
                         class="mx-4"
                         vertical
                     ></v-divider>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-format-page-break"
                                 @click="createPagebreakAsset"
-                            >
-                                <v-icon>mdi-format-page-break</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Seitenumbruch </span>
                     </v-tooltip>
@@ -197,16 +176,13 @@
                         class="mx-4"
                         vertical
                     ></v-divider>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-format-text-wrapping-wrap"
                                 @click="createNewlineAsset"
-                            >
-                                <v-icon>mdi-format-text-wrapping-wrap</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Zeilenumbruch </span>
                     </v-tooltip>
@@ -214,20 +190,17 @@
                         class="mx-4"
                         vertical
                     ></v-divider>
-                    <v-tooltip bottom>
-                        <template #activator="{ on, attrs }">
+                    <v-tooltip location="bottom">
+                        <template #activator="{ props }">
                             <v-btn
-                                v-bind="attrs"
-                                icon
-                                v-on="on"
+                                v-bind="props"
+                                icon="mdi-image"
                                 @click="createImageAsset"
-                            >
-                                <v-icon>mdi-image</v-icon>
-                            </v-btn>
+                            />
                         </template>
                         <span> Bild hinzufügen </span>
                     </v-tooltip>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-icon color="grey lighten-2">mdi-heart</v-icon>
                 </v-toolbar>
                 </template>
