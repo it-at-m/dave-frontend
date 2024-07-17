@@ -214,7 +214,7 @@
         >
             <template #activator="{ props: activatorProps }">
                 <v-btn
-                    v-model="activatorProps"
+                    v-bind="activatorProps"
                     :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
                     :color="fabColor"
                 />
@@ -244,6 +244,7 @@
                 <span>Vorschau öffnen</span>
             </v-tooltip>
         </v-speed-dial>
+      <!--
         <image-asset-form
             v-model="editImage"
             :image="imageAsset"
@@ -280,6 +281,7 @@
             @cancelDialog="cancel"
             @download="downloadPdf"
         />
+        -->
     </v-container>
 </template>
 
