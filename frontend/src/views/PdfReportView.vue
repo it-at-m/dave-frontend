@@ -244,37 +244,36 @@
                 <span>Vorschau öffnen</span>
             </v-tooltip>
         </v-speed-dial>
-        <ImageAssetForm
+        <image-asset-form
             v-model="editImage"
             :image="imageAsset"
             @cancelDialog="cancel()"
             @save="save($event)"
-        ></ImageAssetForm>
-        <DatatableAssetForm
+        />
+        <datatable-asset-form
             v-model="editDatatable"
             :datatable="datatableAsset"
             @cancelDialog="cancel()"
             @save="save($event)"
-        ></DatatableAssetForm>
-        <HeadingAssetForm
+        />
+        <heading-asset-form
             v-model="editHeading"
             :heading="headingAsset"
             @cancelDialog="cancel()"
             @save="save($event)"
-        ></HeadingAssetForm>
-        <TextAssetForm
+        />
+        <text-asset-form
             v-model="editText"
             :text="textAsset"
             @cancelDialog="cancel()"
             @save="save($event)"
-        ></TextAssetForm>
-        <DeleteDialog
+        />
+        <delete-dialog
             v-model="deleteDialog"
             :asset-id="assetId"
             @cancelDialog="cancel()"
             @delete="deleteIt($event)"
-        ></DeleteDialog>
-
+        />
         <pdf-preview-dialog
             v-model="previewPdfDialog"
             :source="previewSource"
