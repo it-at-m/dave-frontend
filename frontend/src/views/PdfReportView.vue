@@ -463,7 +463,7 @@ const previewSource = computed(() => {
 watch(
     assets,
     () => {
-      pdfReportStore.setAssets(_.cloneDeep(assets));
+      pdfReportStore.setAssets(_.cloneDeep(assets.value));
     },
     {deep: true}
 );
