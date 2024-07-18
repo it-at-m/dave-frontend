@@ -166,7 +166,7 @@
         <v-divider
             class="mx-4"
             vertical
-        ></v-divider>
+        />
         <v-tooltip location="bottom">
           <template #activator="{ props }">
             <v-btn
@@ -180,7 +180,7 @@
         <v-divider
             class="mx-4"
             vertical
-        ></v-divider>
+        />
         <v-tooltip location="bottom">
           <template #activator="{ props }">
             <v-btn
@@ -194,7 +194,7 @@
         <v-divider
             class="mx-4"
             vertical
-        ></v-divider>
+        />
         <v-tooltip location="bottom">
           <template #activator="{ props }">
             <v-btn
