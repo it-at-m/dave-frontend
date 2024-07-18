@@ -1,10 +1,9 @@
 <template>
   <v-container
-      class="pa-0"
-      fluid
+      class="dave-default"
   >
     <v-sheet
-        class="ma-10 pa-5"
+        class="mx-10 mb-10 mt-14 pa-5"
         elevation="2"
         width="80%"
     >
