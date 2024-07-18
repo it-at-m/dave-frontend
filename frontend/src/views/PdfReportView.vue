@@ -8,9 +8,9 @@
         elevation="2"
         width="80%"
     >
-      <vue-draggable
-          v-model="assets"
-          ghostClass="ghost"
+      <vue-draggable-next
+          :list="assets"
+          ghost-class="ghost"
           @end="dragging = false"
           @start="dragging = true"
       >
@@ -21,19 +21,19 @@
               elevation="0"
           >
             <v-app-bar
-                color="rgba(0, 0, 0, 0)"
+                color="transparent"
                 dense
                 flat
                 @mouseleave="setClickable(0)"
                 @mouseover="setClickable(asset.id)"
             >
-              <v-icon color="grey lighten-2">{{ icon(asset) }}</v-icon>
+              <v-icon color="grey-lighten-2">{{ icon(asset) }}</v-icon>
               <v-divider
                   class="mx-4"
                   vertical
               />
               <span
-                  class="grey--text text--lighten-2 text-body-1 font-weight-regular pl-0"
+                  class="text-grey-lighten-2 text-body-1 font-weight-regular pl-0"
               >
                             {{ header(asset) }}
                         </span>
@@ -92,6 +92,7 @@
               />
             </v-card-text>
           </v-card>
+      </vue-draggable-next>
           <v-toolbar>
             <v-tooltip location="bottom">
               <template #activator="{ props }">
@@ -200,9 +201,7 @@
               <span> Bild hinzufügen </span>
             </v-tooltip>
             <v-spacer/>
-            <v-icon color="grey lighten-2">mdi-heart</v-icon>
           </v-toolbar>
-      </vue-draggable>
     </v-sheet>
 
     <v-speed-dial
@@ -296,7 +295,7 @@
 
 <script lang="ts" setup>
 import {computed, onMounted, ref, watch} from "vue";
-import { VueDraggable } from 'vue-draggable-plus'
+import { VueDraggableNext } from "vue-draggable-next";
 
 // Components
 import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
