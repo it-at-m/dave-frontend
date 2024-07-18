@@ -37,7 +37,7 @@
                                     prepend-icon="mdi-format-text-variant-outline"
                                     variant="outlined"
                                     density="compact"
-                                ></v-text-field>
+                                />
                             </v-col>
                         </v-row>
                         <v-row>
@@ -50,7 +50,7 @@
                                     variant="outlined"
                                     density="compact"
                                     @change="setIconAndStyle(asset)"
-                                ></v-select>
+                                />
                             </v-col>
                         </v-row>
                     </v-container>

@@ -17,10 +17,10 @@
                     Wollen Sie das Element wirklich aus dem PDF Report entfernen?
                 </p>
             </v-card-text>
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
                     color="error"
                     @click="deleteAsset"

@@ -7,13 +7,9 @@
     >
         <v-card>
             <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
+                class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >mdi-image</v-icon
-                >
+                <v-icon class="mr-2">mdi-image</v-icon>
                 Bildeinstellungen bearbeiten
             </v-card-title>
             <v-card-text>
@@ -24,17 +20,16 @@
                 <v-sheet
                     width="100%"
                     height="200px"
-                    color="grey lighten-4"
-                    outlined
+                    color="grey-lighten-4"
                 >
                     <v-img
                         :src="asset.image"
                         :width="`${asset.width}%`"
                         max-height="200px"
-                    ></v-img>
+                    />
                 </v-sheet>
                 <p>{{ asset.caption }}</p>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-form
                     ref="form"
                     class="mx-3"
@@ -46,9 +41,9 @@
                                     v-model="asset.caption"
                                     label="Bildunterschrift"
                                     prepend-icon="mdi-message-image"
-                                    outlined
-                                    dense
-                                ></v-text-field>
+                                    variant="outlined"
+                                    density="compact"
+                                />
                             </v-col>
                         </v-row>
                         <v-row>
@@ -57,11 +52,11 @@
                                     label="Bilder vom Rechner hoch laden."
                                     accept="image/*"
                                     prepend-icon="mdi-image-plus"
-                                    outlined
-                                    dense
+                                    variant="outlined"
+                                    density="compact"
                                     show-size
                                     @change="upload($event)"
-                                ></v-file-input>
+                                />
                             </v-col>
                             <v-col>
                                 <v-slider
@@ -70,19 +65,18 @@
                                     thumb-color="red"
                                     thumb-label="always"
                                     prepend-icon="mdi-image-size-select-large"
-                                ></v-slider>
+                                />
                             </v-col>
                         </v-row>
                     </v-container>
                 </v-form>
             </v-card-text>
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
                     color="primary"
-                    text
                     @click="save"
                 >
                     Speichern

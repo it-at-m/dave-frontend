@@ -37,7 +37,7 @@
                                     persistent-hint
                                     variant="outlined"
                                     density="compact"
-                                ></v-textarea>
+                                />
                             </v-col>
                         </v-row>
                     </v-container>
