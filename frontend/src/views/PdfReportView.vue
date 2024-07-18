@@ -418,7 +418,7 @@ function createFirstPage(): void {
   assets.value.reverse();
 
   // Titel wurde erstellt
-  pdfReportStore.setHasTitlePage;
+  pdfReportStore.setHasTitlePage();
 }
 
 function cancel() {
