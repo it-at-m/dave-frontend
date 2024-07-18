@@ -378,7 +378,7 @@ const dateUtils = useDateUtils();
 
 onMounted(() => {
   assets.value = assetsFromStore();
-  if (pdfReportStore.getHasTitlePage) {
+  if (!pdfReportStore.getHasTitlePage) {
     createFirstPage();
   }
 });
