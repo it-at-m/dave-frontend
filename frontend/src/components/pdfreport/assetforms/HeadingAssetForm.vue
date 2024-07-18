@@ -1,19 +1,15 @@
 <template>
     <v-dialog
         v-model="openDialog"
-        width="80vh"
+        width="100vh"
         height="60vh"
         @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
+                class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >{{ icon }}</v-icon
-                >
+                <v-icon class="mr-2">{{ icon }}</v-icon>
                 Überschrift bearbeiten
             </v-card-title>
             <v-card-text>
@@ -27,7 +23,7 @@
                     <h4 v-if="style === 'h4'">{{ asset.text }}</h4>
                     <h5 v-if="style === 'h5'">{{ asset.text }}</h5>
                 </v-sheet>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-form
                     ref="form"
                     class="mx-3"
@@ -39,8 +35,8 @@
                                     v-model="asset.text"
                                     label="Überschrift"
                                     prepend-icon="mdi-format-text-variant-outline"
-                                    outlined
-                                    dense
+                                    variant="outlined"
+                                    density="compact"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -51,8 +47,8 @@
                                     :items="items"
                                     label="Art der Überschrift"
                                     prepend-icon="mdi-format-header-pound"
-                                    outlined
-                                    dense
+                                    variant="outlined"
+                                    density="compact"
                                     @change="setIconAndStyle(asset)"
                                 ></v-select>
                             </v-col>
@@ -60,13 +56,12 @@
                     </v-container>
                 </v-form>
             </v-card-text>
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
                     color="primary"
-                    text
                     @click="save"
                 >
                     Speichern
