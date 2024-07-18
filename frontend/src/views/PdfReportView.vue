@@ -57,10 +57,7 @@
                 @click="deleteAsset(asset)"
             />
           </v-toolbar>
-          <v-card-text
-              :style="{ cursor: selectedCursor }"
-              @mouseover="draggableCard = true"
-          >
+          <v-card-text>
             <h1 v-if="isHeading1(asset)">
               {{ getTextOfAsset(asset) }}
             </h1>
@@ -308,7 +305,6 @@
 
 <script lang="ts" setup>
 import {computed, onMounted, ref, watch} from "vue";
-import {VueDraggableNext} from "vue-draggable-next";
 
 // Components
 import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
@@ -342,8 +338,6 @@ import {usePdfReportStore} from "@/store/pdfReport";
 import {useUserStore} from "@/store/user";
 
 const clickable = ref(0);
-const draggableCard = ref(false);
-const dragging = ref(false);
 
 const editImage = ref(false);
 const editHeading = ref(false);
@@ -466,17 +460,6 @@ function save(asset: BaseAsset) {
 function assetsFromStore(): BaseAsset[] {
   return _.cloneDeep(pdfReportStore.getAssets);
 }
-
-const selectedCursor = computed(() => {
-  let cursor = "default";
-  if (draggableCard.value) {
-    cursor = "grab";
-  }
-  if (dragging.value) {
-    cursor = "grabbing";
-  }
-  return cursor;
-});
 
 const previewSource = computed(() => {
   return pdfSourceForPreview.value;
