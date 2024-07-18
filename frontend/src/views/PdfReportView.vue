@@ -842,10 +842,3 @@ function moveAssetOnePositionDownNotAtLastPosition(index: number) {
   }
 }
 </script>
-
-<style>
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-</style>
