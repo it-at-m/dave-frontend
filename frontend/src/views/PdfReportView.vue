@@ -8,32 +8,30 @@
         elevation="2"
         width="80%"
     >
-      <vue-draggable-next
-          :list="assets"
-          ghost-class="ghost"
-          @end="dragging = false"
-          @start="dragging = true"
-      >
-        <v-card
+      <v-list>
+        <v-list-item
             v-for="asset in assets"
             :key="asset.id"
-            class="ma-3"
-            elevation="0"
         >
-          <v-app-bar
+        <v-card
+            class="ma-1"
+            elevation="0"
+            width="100%"
+            @mouseleave="setClickable(0)"
+            @mouseover="setClickable(asset.id)"
+        >
+          <v-toolbar
               color="transparent"
-              dense
+              density="compact"
               flat
-              @mouseleave="setClickable(0)"
-              @mouseover="setClickable(asset.id)"
           >
-            <v-icon color="grey-lighten-2">{{ icon(asset) }}</v-icon>
+            <v-icon color="grey-lighten-1">{{ icon(asset) }}</v-icon>
             <v-divider
                 class="mx-4"
                 vertical
             />
             <span
-                class="text-grey-lighten-2 text-body-1 font-weight-regular pl-0"
+                class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0"
             >
                             {{ header(asset) }}
                         </span>
@@ -48,7 +46,7 @@
                 icon="mdi-trash-can"
                 @click="deleteAsset(asset)"
             />
-          </v-app-bar>
+          </v-toolbar>
           <v-card-text
               :style="{ cursor: selectedCursor }"
               @mouseover="draggableCard = true"
@@ -92,7 +90,9 @@
             />
           </v-card-text>
         </v-card>
-      </vue-draggable-next>
+        </v-list-item>
+      </v-list>
+
       <v-toolbar
           color="transparent"
           elevation="2"
