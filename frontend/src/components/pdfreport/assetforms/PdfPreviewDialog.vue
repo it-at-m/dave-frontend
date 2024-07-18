@@ -8,7 +8,7 @@
     >
         <v-card width="900px">
             <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
+                class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
                 autofocus
             >
                 Vorschau
