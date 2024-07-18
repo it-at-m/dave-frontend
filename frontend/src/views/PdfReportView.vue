@@ -10,7 +10,7 @@
     >
       <v-list>
         <v-list-item
-            v-for="asset in assets"
+            v-for="(asset, index) in assets"
             :key="asset.id"
         >
         <v-card
@@ -36,6 +36,16 @@
                             {{ header(asset) }}
                         </span>
             <v-spacer></v-spacer>
+            <v-btn
+                v-show="clickable === asset.id && index > 0 && isEditable(asset)"
+                icon="mdi-chevron-up"
+                @click="moveAssetOnePositionUpNotAtFirstPosition(index)"
+            />
+            <v-btn
+                v-show="clickable === asset.id && index < assets.length - 1 && isEditable(asset)"
+                icon="mdi-chevron-down"
+                @click="moveAssetOnePositionDownNotAtLastPosition(index)"
+            />
             <v-btn
                 v-show="clickable === asset.id && isEditable(asset)"
                 icon="mdi-lead-pencil"
@@ -468,6 +478,10 @@ const selectedCursor = computed(() => {
   return cursor;
 });
 
+const previewSource = computed(() => {
+  return pdfSourceForPreview.value;
+});
+
 watch(
     assets,
     () => {
@@ -834,9 +848,21 @@ function downloadPdf() {
   useDaveUtils().downloadFile(pdfSourceAsBlob.value, filename);
 }
 
-const previewSource = computed(() => {
-  return pdfSourceForPreview.value;
-});
+function moveAssetOnePositionUpNotAtFirstPosition(index: number) {
+  const assetToMove = _.nth(assets.value, index);
+  if (!_.isNil(assetToMove) && index > 0) {
+    assets.value.splice(index, 1);
+    assets.value.splice(index - 1, 0, assetToMove);
+  }
+}
+
+function moveAssetOnePositionDownNotAtLastPosition(index: number) {
+  const assetToMove = _.nth(assets.value, index);
+  if (!_.isNil(assetToMove) && index < assets.value.length -1) {
+    assets.value.splice(index, 1);
+    assets.value.splice(index + 1, 0, assetToMove);
+  }
+}
 </script>
 
 <style>
