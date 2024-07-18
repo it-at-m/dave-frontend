@@ -10,88 +10,88 @@
             v-for="(asset, index) in assets"
             :key="asset.id"
         >
-        <v-card
-            class="ma-1"
-            elevation="0"
-            width="100%"
-            @mouseleave="setClickable(0)"
-            @mouseover="setClickable(asset.id)"
-        >
-          <v-toolbar
-              color="transparent"
-              density="compact"
-              flat
+          <v-card
+              class="ma-1"
+              elevation="0"
+              width="100%"
+              @mouseleave="setClickable(0)"
+              @mouseover="setClickable(asset.id)"
           >
-            <v-icon color="grey-lighten-1">{{ icon(asset) }}</v-icon>
-            <v-divider
-                class="mx-4"
-                vertical
-            />
-            <span class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0">
+            <v-toolbar
+                color="transparent"
+                density="compact"
+                flat
+            >
+              <v-icon color="grey-lighten-1">{{ icon(asset) }}</v-icon>
+              <v-divider
+                  class="mx-4"
+                  vertical
+              />
+              <span class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0">
               {{ header(asset) }}
             </span>
-            <v-spacer></v-spacer>
-            <v-btn
-                v-show="clickable === asset.id && index > 0"
-                icon="mdi-chevron-up"
-                @click="moveAssetOnePositionUpNotAtFirstPosition(index)"
-            />
-            <v-btn
-                v-show="clickable === asset.id && index < assets.length - 1"
-                icon="mdi-chevron-down"
-                @click="moveAssetOnePositionDownNotAtLastPosition(index)"
-            />
-            <v-btn
-                v-show="clickable === asset.id && isEditable(asset)"
-                icon="mdi-lead-pencil"
-                @click="edit(asset)"
-            />
-            <v-btn
-                v-show="clickable === asset.id"
-                icon="mdi-trash-can"
-                @click="deleteAsset(asset)"
-            />
-          </v-toolbar>
-          <v-card-text>
-            <h1 v-if="isHeading1(asset)">
-              {{ getTextOfAsset(asset) }}
-            </h1>
-            <h2 v-if="isHeading2(asset)">
-              {{ getTextOfAsset(asset) }}
-            </h2>
-            <h3 v-if="isHeading3(asset)">
-              {{ getTextOfAsset(asset) }}
-            </h3>
-            <h4 v-if="isHeading4(asset)">
-              {{ getTextOfAsset(asset) }}
-            </h4>
-            <h5 v-if="isHeading5(asset)">
-              {{ getTextOfAsset(asset) }}
-            </h5>
-            <p
-                v-if="isText(asset)"
-                :style="{ fontSize: getSizeOfAsset(asset) }"
-                v-html="getTextOfAsset(asset)"
-            />
-            <v-divider v-if="isPageBreak(asset)"/>
-            <v-divider v-if="isNewline(asset)"/>
-            <p v-if="isDatatable(asset)">
-              {{ getTextOfAsset(asset) }}
-            </p>
-            <p v-if="isDatatableMessstelle(asset)">
-              {{ getTextOfAsset(asset) }}
-            </p>
-            <p v-if="isZaehlungskenngroesse(asset)">
-              {{ getTextOfAsset(asset) }}
-            </p>
-            <DisplayImageAsset
-                v-if="isImage(asset)"
-                :caption="getCaptionOfAsset(asset)"
-                :image="getImageOfAsset(asset)"
-                :width="`${getWidthOfAsset(asset)}%`"
-            />
-          </v-card-text>
-        </v-card>
+              <v-spacer></v-spacer>
+              <v-btn
+                  v-show="clickable === asset.id && index > 0"
+                  icon="mdi-chevron-up"
+                  @click="moveAssetOnePositionUpNotAtFirstPosition(index)"
+              />
+              <v-btn
+                  v-show="clickable === asset.id && index < assets.length - 1"
+                  icon="mdi-chevron-down"
+                  @click="moveAssetOnePositionDownNotAtLastPosition(index)"
+              />
+              <v-btn
+                  v-show="clickable === asset.id && isEditable(asset)"
+                  icon="mdi-lead-pencil"
+                  @click="edit(asset)"
+              />
+              <v-btn
+                  v-show="clickable === asset.id"
+                  icon="mdi-trash-can"
+                  @click="deleteAsset(asset)"
+              />
+            </v-toolbar>
+            <v-card-text>
+              <h1 v-if="isHeading1(asset)">
+                {{ getTextOfAsset(asset) }}
+              </h1>
+              <h2 v-if="isHeading2(asset)">
+                {{ getTextOfAsset(asset) }}
+              </h2>
+              <h3 v-if="isHeading3(asset)">
+                {{ getTextOfAsset(asset) }}
+              </h3>
+              <h4 v-if="isHeading4(asset)">
+                {{ getTextOfAsset(asset) }}
+              </h4>
+              <h5 v-if="isHeading5(asset)">
+                {{ getTextOfAsset(asset) }}
+              </h5>
+              <p
+                  v-if="isText(asset)"
+                  :style="{ fontSize: getSizeOfAsset(asset) }"
+                  v-html="getTextOfAsset(asset)"
+              />
+              <v-divider v-if="isPageBreak(asset)"/>
+              <v-divider v-if="isNewline(asset)"/>
+              <p v-if="isDatatable(asset)">
+                {{ getTextOfAsset(asset) }}
+              </p>
+              <p v-if="isDatatableMessstelle(asset)">
+                {{ getTextOfAsset(asset) }}
+              </p>
+              <p v-if="isZaehlungskenngroesse(asset)">
+                {{ getTextOfAsset(asset) }}
+              </p>
+              <DisplayImageAsset
+                  v-if="isImage(asset)"
+                  :caption="getCaptionOfAsset(asset)"
+                  :image="getImageOfAsset(asset)"
+                  :width="`${getWidthOfAsset(asset)}%`"
+              />
+            </v-card-text>
+          </v-card>
         </v-list-item>
       </v-list>
 
@@ -836,7 +836,7 @@ function moveAssetOnePositionUpNotAtFirstPosition(index: number) {
 
 function moveAssetOnePositionDownNotAtLastPosition(index: number) {
   const assetToMove = _.nth(assets.value, index);
-  if (!_.isNil(assetToMove) && index < assets.value.length -1) {
+  if (!_.isNil(assetToMove) && index < assets.value.length - 1) {
     assets.value.splice(index, 1);
     assets.value.splice(index + 1, 0, assetToMove);
   }
