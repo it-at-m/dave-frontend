@@ -1,59 +1,23 @@
 <template>
-    <v-data-table
-        style="margin-left: 3%; margin-right: 3%; border: 0.5px lightgray solid"
-        :headers="headers"
-        :items="listenausgabeData"
-        :item-class="rowClasses"
-        :items-per-page="-1"
-        dense
-        hide-default-footer
-        fixed-header
-        :height="height"
-    >
-        <template #header>
-            <thead>
-                <tr>
-                    <th
-                        colspan="3"
-                        class="text-center parent-header"
-                        :style="headerCategoryStyle"
-                    >
-                        Zeit
-                    </th>
-                    <th
-                        v-if="activeFahrzeugtypen > 0"
-                        :colspan="activeFahrzeugtypen"
-                        class="text-center parent-header"
-                        :style="headerCategoryStyle"
-                    >
-                        Fahrzeugtypen
-                    </th>
-                    <th
-                        v-if="activeFahrzeugklassen > 0"
-                        :colspan="activeFahrzeugklassen"
-                        class="text-center parent-header"
-                        :style="headerCategoryStyle"
-                    >
-                        Fahrzeugklasse
-                    </th>
-                    <th
-                        v-if="activeAnteil > 0"
-                        :colspan="activeAnteil"
-                        class="text-center parent-header"
-                        :style="headerCategoryStyle"
-                    >
-                        Anteil
-                    </th>
-                    <th
-                        v-if="activePkweinheiten"
-                        colspan="1"
-                        class="text-center parent-header"
-                        :style="headerCategoryStyle"
-                    ></th>
-                </tr>
-            </thead>
-        </template>
-    </v-data-table>
+  <v-data-table
+      :headers="headers"
+      :items="listenausgabeData"
+      item-key="name"
+      items-per-page="-1"
+      hide-default-footer
+      density="compact"
+      fixed-header
+      :height="height"
+  >
+  </v-data-table>
+  <!--        :item-class="rowClasses"-->
+
+  <!--    <template v-slot:item.testit="{ item, value }">-->
+  <!--      <div :class="rowClasses(item)">{{value}}</div>-->
+  <!--    </template>-->
+  <!--    <template v-slot:item="{ item }">-->
+  <!--      <tr :class="rowClasses(item)" />-->
+  <!--    </template>-->
 </template>
 
 <script setup lang="ts">
@@ -183,208 +147,204 @@ const headers = computed(() => {
     let widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
     /* eslint-disable @typescript-eslint/ban-types */
     let headers: Array<{}> = [
-        {
-            text: "von",
+       // Zeit
+      {
+        title: 'Zeit',
+        align: 'center',
+        children: [
+          {
+            title: "von",
             value: "startUhrzeit",
             align: "center",
             sortable: false,
-            width: "7%",
-        },
-        {
-            text: "bis",
+            width: '7%',
+          },
+          {
+            title: "bis",
             value: "endeUhrzeit",
             align: "center",
             sortable: false,
-            width: "7%",
-        },
-        {
-            text: "",
+            width: '7%',
+          },
+          {
+            title: "",
             value: "type",
             align: "center",
-            divider: "true",
             sortable: false,
-            width: "8%",
-        },
-    ];
-
-    // Kategorien
-    if (options.personenkraftwagen) {
-        headers.push({
-            text: "Pkw",
+            width: '8%',
+            fixed: true,
+          },
+        ],
+      },
+      {
+        title: 'Fahrzeugtypen',
+        align: 'center',
+        children: [
+          {
+            title: "Pkw",
             value: "pkw",
             align: "center",
-            divider: !(
-                options.radverkehr ||
-                options.fussverkehr ||
-                options.kraftraeder ||
-                options.busse ||
-                options.lastzuege ||
-                options.lastkraftwagen
-            ),
+            // fixed: !(
+            //     options.radverkehr ||
+            //     options.fussverkehr ||
+            //     options.kraftraeder ||
+            //     options.busse ||
+            //     options.lastzuege ||
+            //     options.lastkraftwagen
+            // ),
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-    if (options.lastkraftwagen) {
-        headers.push({
-            text: "Lkw",
+            key: 'testit'
+          },
+          {
+            title: "Lkw",
             value: "lkw",
             align: "center",
-            divider: !(
-                options.radverkehr ||
-                options.fussverkehr ||
-                options.kraftraeder ||
-                options.busse ||
-                options.lastzuege
-            ),
+            // fixed: !(
+            //     options.radverkehr ||
+            //     options.fussverkehr ||
+            //     options.kraftraeder ||
+            //     options.busse ||
+            //     options.lastzuege
+            // ),
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-    if (options.lastzuege) {
-        headers.push({
-            text: "Lz",
+          },
+          {
+            title: "Lz",
             value: "lastzuege",
             align: "center",
-            divider: !(
-                options.radverkehr ||
-                options.fussverkehr ||
-                options.kraftraeder ||
-                options.busse
-            ),
+            // fixed: !(
+            //     options.radverkehr ||
+            //     options.fussverkehr ||
+            //     options.kraftraeder ||
+            //     options.busse
+            // ),
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-    if (options.busse) {
-        headers.push({
-            text: "Bus",
+          },
+          {
+            title: "Bus",
             value: "busse",
             align: "center",
-            divider: !(
-                options.radverkehr ||
-                options.fussverkehr ||
-                options.kraftraeder
-            ),
+            // fixed: !(
+            //     options.radverkehr ||
+            //     options.fussverkehr ||
+            //     options.kraftraeder
+            // ),
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-    if (options.kraftraeder) {
-        headers.push({
-            text: "Krad",
+          },
+          {
+            title: "Krad",
             value: "kraftraeder",
             align: "center",
-            divider: !(options.radverkehr || options.fussverkehr),
+            // fixed: !(options.radverkehr || options.fussverkehr),
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-    if (options.radverkehr) {
-        headers.push({
-            text: "Rad",
+          },
+          {
+            title: "Rad",
             value: "fahrradfahrer",
             align: "center",
-            divider: !options.fussverkehr,
+            // fixed: !options.fussverkehr,
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-    if (options.fussverkehr) {
-        headers.push({
-            text: "Fuß",
+          },
+          {
+            title: "Fuß",
             value: "fussgaenger",
             align: "center",
-            divider: true,
+            fixed: true,
             sortable: false,
             width: widthFahrzeugtypen,
-        });
-    }
-
-    // Klassen
-    if (options.kraftfahrzeugverkehr) {
-        headers.push({
-            text: "KFZ",
+          },
+        ],
+      },
+      {
+        title: 'Fahrzeugklassen',
+        align: 'center',
+        children: [
+          {
+            title: "KFZ",
             value: "kfz",
             align: "center",
-            divider: !(options.schwerverkehr || options.gueterverkehr),
+            fixed: !(options.schwerverkehr || options.gueterverkehr),
             sortable: false,
             width: widthFahrzeugklassen,
-        });
-    }
-    if (options.schwerverkehr) {
-        headers.push({
-            text: "SV",
+          },
+          {
+            title: "SV",
             value: "schwerverkehr",
             align: "center",
-            divider: !options.gueterverkehr,
+            fixed: !options.gueterverkehr,
             sortable: false,
             width: widthFahrzeugklassen,
-        });
-    }
-    if (options.gueterverkehr) {
-        headers.push({
-            text: "GV",
+          },
+          {
+            title: "GV",
             value: "gueterverkehr",
             align: "center",
-            divider: true,
+            fixed: true,
             sortable: false,
             width: widthFahrzeugklassen,
-        });
-    }
-
-    // Anteile
-    if (options.schwerverkehrsanteilProzent) {
-        headers.push({
-            text: "SV%",
+          },
+        ],
+      },{
+        title: 'Anteil',
+        align: 'center',
+        children: [
+          {
+            title: "SV%",
             value: "anteilSchwerverkehrAnKfzProzent",
             align: "center",
-            divider: !options.gueterverkehrsanteilProzent,
+            fixed: !options.gueterverkehrsanteilProzent,
             sortable: false,
             width: widthAnteil,
-        });
-    }
-    if (options.gueterverkehrsanteilProzent) {
-        headers.push({
-            text: "GV%",
+          },
+          {
+            title: "GV%",
             value: "anteilGueterverkehrAnKfzProzent",
             align: "center",
-            divider: true,
+            fixed: true,
             sortable: false,
             width: widthAnteil,
-        });
-    }
-
-    // PKW-Einheiten
-    if (options.pkwEinheiten) {
-        headers.push({
-            text: "PKW-Einheiten",
+          },
+        ],
+      },{
+        title: '',
+        align: 'center',
+        children: [
+          {
+            title: "PKW-Einheiten",
             value: "pkwEinheiten",
             align: "center",
             sortable: false,
-            width: "7%",
-        });
-    }
+            width: '7%'
+          },
+        ],
+      },
+    ];
 
     return headers;
 });
 
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
     if (ladeZaehldatum.type === TYPE_STUNDE) {
-        return "blue-grey lighten-4 font-weight-bold";
+        return "blue-grey-lighten-4 font-weight-bold";
     } else if (
         ladeZaehldatum.type != undefined &&
         (ladeZaehldatum.type.includes(TYPE_SP_STD_BLOCK) ||
             ladeZaehldatum.type.includes(TYPE_SP_STD_TAG))
     ) {
-        return "blue-grey lighten-3 font-weight-bold";
+        return "blue-grey-lighten-3 font-weight-bold";
     } else if (ladeZaehldatum.type === TYPE_BLOCK) {
-        return "blue-grey lighten-2 font-weight-black";
+        return "blue-grey-lighten-2 font-weight-black";
     } else if (
         ladeZaehldatum.type === TYPE_GESAMT ||
         ladeZaehldatum.type === TYPE_TAGESWERT
     ) {
-        return "blue-grey lighten-1 font-weight-black";
+        return "blue-grey-lighten-1 font-weight-black";
     }
 }
 

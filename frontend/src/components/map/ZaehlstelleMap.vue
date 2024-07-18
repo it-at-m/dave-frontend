@@ -7,7 +7,7 @@
         <div
             id="map"
             ref="mapRef"
-            :style="mapStyle"
+            style="width: 100%; height: 100%"
         />
     </v-sheet>
 </template>
@@ -68,10 +68,6 @@ const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const route = useRoute();
-
-const mapStyle = computed<string>(() => {
-    return `height: ${props.height}; width: ${props.width}; min-height: ${props.minheight}; z-index: 1`;
-});
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
