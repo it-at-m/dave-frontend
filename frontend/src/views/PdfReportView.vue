@@ -37,12 +37,12 @@
                         </span>
             <v-spacer></v-spacer>
             <v-btn
-                v-show="clickable === asset.id && index > 0 && isEditable(asset)"
+                v-show="clickable === asset.id && index > 0"
                 icon="mdi-chevron-up"
                 @click="moveAssetOnePositionUpNotAtFirstPosition(index)"
             />
             <v-btn
-                v-show="clickable === asset.id && index < assets.length - 1 && isEditable(asset)"
+                v-show="clickable === asset.id && index < assets.length - 1"
                 icon="mdi-chevron-down"
                 @click="moveAssetOnePositionDownNotAtLastPosition(index)"
             />
