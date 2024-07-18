@@ -8,16 +8,8 @@
       density="compact"
       fixed-header
       :height="height"
-  >
-  </v-data-table>
-  <!--        :item-class="rowClasses"-->
-
-  <!--    <template v-slot:item.testit="{ item, value }">-->
-  <!--      <div :class="rowClasses(item)">{{value}}</div>-->
-  <!--    </template>-->
-  <!--    <template v-slot:item="{ item }">-->
-  <!--      <tr :class="rowClasses(item)" />-->
-  <!--    </template>-->
+      :row-props="(item) => rowClasses(item.item)"
+  />
 </template>
 
 <script setup lang="ts">
@@ -38,9 +30,6 @@ const TYPE_BLOCK = "Block";
 const TYPE_SP_STD_BLOCK = "SpStdBlock";
 
 const TYPE_SP_STD_TAG = "SpStdTag";
-
-const headerCategoryStyle =
-    "font-weight: bolder; position: sticky; top: 0; z-index: 2";
 
 interface Props {
     listenausgabeData: Array<LadeZaehldatumDTO>;
@@ -150,11 +139,13 @@ const headers = computed(() => {
        // Zeit
       {
         title: 'Zeit',
+        key: 'Zeit',
         align: 'center',
         children: [
           {
             title: "von",
             value: "startUhrzeit",
+            key: "startUhrzeit",
             align: "center",
             sortable: false,
             width: '7%',
@@ -162,6 +153,7 @@ const headers = computed(() => {
           {
             title: "bis",
             value: "endeUhrzeit",
+            key: "endeUhrzeit",
             align: "center",
             sortable: false,
             width: '7%',
@@ -169,20 +161,23 @@ const headers = computed(() => {
           {
             title: "",
             value: "type",
+            key: "type",
             align: "center",
             sortable: false,
             width: '8%',
-            fixed: true,
+            // fixed: true,
           },
         ],
       },
       {
         title: 'Fahrzeugtypen',
+        key: 'Fahrzeugtypen',
         align: 'center',
         children: [
           {
             title: "Pkw",
             value: "pkw",
+            key: "pkw",
             align: "center",
             // fixed: !(
             //     options.radverkehr ||
@@ -194,11 +189,11 @@ const headers = computed(() => {
             // ),
             sortable: false,
             width: widthFahrzeugtypen,
-            key: 'testit'
           },
           {
             title: "Lkw",
             value: "lkw",
+            key: "lkw",
             align: "center",
             // fixed: !(
             //     options.radverkehr ||
@@ -213,6 +208,7 @@ const headers = computed(() => {
           {
             title: "Lz",
             value: "lastzuege",
+            key: "lastzuege",
             align: "center",
             // fixed: !(
             //     options.radverkehr ||
@@ -226,6 +222,7 @@ const headers = computed(() => {
           {
             title: "Bus",
             value: "busse",
+            key: "busse",
             align: "center",
             // fixed: !(
             //     options.radverkehr ||
@@ -238,6 +235,7 @@ const headers = computed(() => {
           {
             title: "Krad",
             value: "kraftraeder",
+            key: "kraftraeder",
             align: "center",
             // fixed: !(options.radverkehr || options.fussverkehr),
             sortable: false,
@@ -246,6 +244,7 @@ const headers = computed(() => {
           {
             title: "Rad",
             value: "fahrradfahrer",
+            key: "fahrradfahrer",
             align: "center",
             // fixed: !options.fussverkehr,
             sortable: false,
@@ -254,8 +253,9 @@ const headers = computed(() => {
           {
             title: "Fuß",
             value: "fussgaenger",
+            key: "fussgaenger",
             align: "center",
-            fixed: true,
+            // fixed: true,
             sortable: false,
             width: widthFahrzeugtypen,
           },
@@ -263,61 +263,70 @@ const headers = computed(() => {
       },
       {
         title: 'Fahrzeugklassen',
+        key: 'Fahrzeugklassen',
         align: 'center',
         children: [
           {
             title: "KFZ",
             value: "kfz",
+            key: "kfz",
             align: "center",
-            fixed: !(options.schwerverkehr || options.gueterverkehr),
+            // fixed: !(options.schwerverkehr || options.gueterverkehr),
             sortable: false,
             width: widthFahrzeugklassen,
           },
           {
             title: "SV",
             value: "schwerverkehr",
+            key: "schwerverkehr",
             align: "center",
-            fixed: !options.gueterverkehr,
+            // fixed: !options.gueterverkehr,
             sortable: false,
             width: widthFahrzeugklassen,
           },
           {
             title: "GV",
             value: "gueterverkehr",
+            key: "gueterverkehr",
             align: "center",
-            fixed: true,
+            // fixed: true,
             sortable: false,
             width: widthFahrzeugklassen,
           },
         ],
       },{
         title: 'Anteil',
+        key: 'Anteil',
         align: 'center',
         children: [
           {
             title: "SV%",
             value: "anteilSchwerverkehrAnKfzProzent",
+            key: "anteilSchwerverkehrAnKfzProzent",
             align: "center",
-            fixed: !options.gueterverkehrsanteilProzent,
+            // fixed: !options.gueterverkehrsanteilProzent,
             sortable: false,
             width: widthAnteil,
           },
           {
             title: "GV%",
             value: "anteilGueterverkehrAnKfzProzent",
+            key: "anteilGueterverkehrAnKfzProzent",
             align: "center",
-            fixed: true,
+            // fixed: true,
             sortable: false,
             width: widthAnteil,
           },
         ],
       },{
         title: '',
+        key: 'empty_pkwEinheiten',
         align: 'center',
         children: [
           {
             title: "PKW-Einheiten",
             value: "pkwEinheiten",
+            key: "pkwEinheiten",
             align: "center",
             sortable: false,
             width: '7%'
@@ -330,22 +339,24 @@ const headers = computed(() => {
 });
 
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
-    if (ladeZaehldatum.type === TYPE_STUNDE) {
-        return "blue-grey-lighten-4 font-weight-bold";
+  let color = "bg-white";
+  if (ladeZaehldatum.type === TYPE_STUNDE) {
+        color = "bg-blue-grey-lighten-4 font-weight-bold";
     } else if (
         ladeZaehldatum.type != undefined &&
         (ladeZaehldatum.type.includes(TYPE_SP_STD_BLOCK) ||
             ladeZaehldatum.type.includes(TYPE_SP_STD_TAG))
     ) {
-        return "blue-grey-lighten-3 font-weight-bold";
+        color = "bg-blue-grey-lighten-3 font-weight-bold";
     } else if (ladeZaehldatum.type === TYPE_BLOCK) {
-        return "blue-grey-lighten-2 font-weight-black";
+        color = "bg-blue-grey-lighten-2 font-weight-black text-black";
     } else if (
         ladeZaehldatum.type === TYPE_GESAMT ||
         ladeZaehldatum.type === TYPE_TAGESWERT
     ) {
-        return "blue-grey-lighten-1 font-weight-black";
+        color = "bg-blue-grey-lighten-1 font-weight-black text-black";
     }
+  return {class: color};
 }
 
 /** Berechnet die Spaltenbreite für die einzelnen Eintraege */
@@ -374,31 +385,3 @@ watch(
     { immediate: true }
 );
 </script>
-
-<!--<style lang="sass">-->
-<!--@import 'vuetify/lib/components/VDataTable/variables'-->
-<!--.v-data-table&#45;&#45;fixed-header-->
-<!--  > .v-data-table__wrapper-->
-<!--    overflow-y: auto-->
-
-<!--    > table-->
-<!--      > thead-->
-<!--        > tr-->
-<!--          > th-->
-<!--            border-bottom: 0 !important-->
-<!--            position: sticky-->
-<!--            top: $data-table-dense-header-height-->
-<!--            z-index: 2-->
-
-<!--        > tr:nth-child(2)-->
-<!--          > th-->
-<!--            top: $data-table-dense-header-height-->
-
-<!--  // Account for scroll bar-->
-<!--  .v-data-footer-->
-<!--    +ltr()-->
-<!--      margin-right: $data-table-scroll-bar-width-->
-
-<!--    +rtl()-->
-<!--      margin-left: $data-table-scroll-bar-width-->
-<!--</style>-->
