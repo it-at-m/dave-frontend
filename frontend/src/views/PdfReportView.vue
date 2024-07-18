@@ -1,7 +1,7 @@
 <template>
-  <v-container class="dave-default">
+  <v-container class="ma-0" fluid>
     <v-sheet
-        class="mx-10 mb-10 mt-14 pa-5"
+        class="mx-10 mb-10 mt-14 pa-5 overflow-y-auto"
         elevation="2"
         width="80%"
     >
@@ -222,7 +222,7 @@
             class="mr-4 mb-4"
             elevation="6"
             location="bottom end"
-            position="absolute"
+            position="fixed"
             size="large"
             style="z-index: 400"
             v-bind="activatorProps"
