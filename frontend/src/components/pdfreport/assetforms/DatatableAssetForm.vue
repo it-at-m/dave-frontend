@@ -1,19 +1,15 @@
 <template>
     <v-dialog
         v-model="openDialog"
-        width="80vh"
+        width="100vh"
         height="60vh"
         @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
+                class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >mdi-text</v-icon
-                >
+                <v-icon class="mr-2">mdi-text</v-icon>
                 Tabellenbeschreibung bearbeiten
             </v-card-title>
             <v-card-text>
@@ -25,7 +21,7 @@
                 >
                     <p>{{ asset.text }}</p>
                 </v-sheet>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-form
                     ref="form"
                     class="mx-3"
@@ -39,21 +35,20 @@
                                     prepend-icon="mdi-feather"
                                     hint="Sie können innerhalb des Textes (auf eigene Gefahr) HTML Notation verwenden. Sollte das PDF nicht mehr generiert werden können, so achten Sie bitte darauf, dass alle Elemente geschlossen wurden. Beispiel: <p>text...</p>"
                                     persistent-hint
-                                    outlined
-                                    dense
+                                    variant="outlined"
+                                    density="compact"
                                 ></v-textarea>
                             </v-col>
                         </v-row>
                     </v-container>
                 </v-form>
             </v-card-text>
-            <v-divider></v-divider>
+            <v-divider/>
 
             <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
                     color="primary"
-                    text
                     @click="save"
                 >
                     Speichern
