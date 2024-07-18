@@ -1,25 +1,22 @@
 <template>
     <v-dialog
         v-model="openDialog"
-        width="25vh"
-        height="25vh"
+        width="100vh"
+        height="50vh"
         @click:outside="cancelDialog"
     >
         <v-card>
             <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
+                class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >mdi-trash-can</v-icon
-                >
+                <v-icon class="mr-2">
+                  mdi-trash-can
+                </v-icon>
                 Element entfernen
             </v-card-title>
-            <v-card-text>
+            <v-card-text class="text-body-1">
                 <p>
-                    Wollen Sie das Element wirklich aus dem PDF Report
-                    entfernen?
+                    Wollen Sie das Element wirklich aus dem PDF Report entfernen?
                 </p>
             </v-card-text>
             <v-divider></v-divider>
@@ -28,7 +25,6 @@
                 <v-spacer></v-spacer>
                 <v-btn
                     color="error"
-                    text
                     @click="deleteAsset"
                 >
                     <v-icon left> mdi-alarm-light-outline </v-icon>
