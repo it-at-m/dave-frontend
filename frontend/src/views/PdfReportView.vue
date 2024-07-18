@@ -14,194 +14,197 @@
           @end="dragging = false"
           @start="dragging = true"
       >
-          <v-card
-              v-for="asset in assets"
-              :key="asset.id"
-              class="ma-3"
-              elevation="0"
+        <v-card
+            v-for="asset in assets"
+            :key="asset.id"
+            class="ma-3"
+            elevation="0"
+        >
+          <v-app-bar
+              color="transparent"
+              dense
+              flat
+              @mouseleave="setClickable(0)"
+              @mouseover="setClickable(asset.id)"
           >
-            <v-app-bar
-                color="transparent"
-                dense
-                flat
-                @mouseleave="setClickable(0)"
-                @mouseover="setClickable(asset.id)"
-            >
-              <v-icon color="grey-lighten-2">{{ icon(asset) }}</v-icon>
-              <v-divider
-                  class="mx-4"
-                  vertical
-              />
-              <span
-                  class="text-grey-lighten-2 text-body-1 font-weight-regular pl-0"
-              >
-                            {{ header(asset) }}
-                        </span>
-              <v-spacer></v-spacer>
-              <v-btn
-                  v-show="clickable === asset.id && isEditable(asset)"
-                  icon="mdi-lead-pencil"
-                  @click="edit(asset)"
-              />
-              <v-btn
-                  v-show="clickable === asset.id"
-                  icon="mdi-trash-can"
-                  @click="deleteAsset(asset)"
-              />
-            </v-app-bar>
-            <v-card-text
-                :style="{ cursor: selectedCursor }"
-                @mouseover="draggableCard = true"
-            >
-              <h1 v-if="isHeading1(asset)">
-                {{ getTextOfAsset(asset) }}
-              </h1>
-              <h2 v-if="isHeading2(asset)">
-                {{ getTextOfAsset(asset) }}
-              </h2>
-              <h3 v-if="isHeading3(asset)">
-                {{ getTextOfAsset(asset) }}
-              </h3>
-              <h4 v-if="isHeading4(asset)">
-                {{ getTextOfAsset(asset) }}
-              </h4>
-              <h5 v-if="isHeading5(asset)">
-                {{ getTextOfAsset(asset) }}
-              </h5>
-              <p
-                  v-if="isText(asset)"
-                  :style="{ fontSize: getSizeOfAsset(asset) }"
-                  v-html="getTextOfAsset(asset)"
-              />
-              <v-divider v-if="isPageBreak(asset)"/>
-              <v-divider v-if="isNewline(asset)"/>
-              <p v-if="isDatatable(asset)">
-                {{ getTextOfAsset(asset) }}
-              </p>
-              <p v-if="isDatatableMessstelle(asset)">
-                {{ getTextOfAsset(asset) }}
-              </p>
-              <p v-if="isZaehlungskenngroesse(asset)">
-                {{ getTextOfAsset(asset) }}
-              </p>
-              <DisplayImageAsset
-                  v-if="isImage(asset)"
-                  :caption="getCaptionOfAsset(asset)"
-                  :image="getImageOfAsset(asset)"
-                  :width="`${getWidthOfAsset(asset)}%`"
-              />
-            </v-card-text>
-          </v-card>
-      </vue-draggable-next>
-          <v-toolbar>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-text"
-                    v-bind="props"
-                    @click="createTextAsset"
-                />
-              </template>
-              <span> Freitext </span>
-            </v-tooltip>
+            <v-icon color="grey-lighten-2">{{ icon(asset) }}</v-icon>
             <v-divider
                 class="mx-4"
                 vertical
             />
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-header-1"
-                    v-bind="props"
-                    @click="createHeadingAsset('h1')"
-                />
-              </template>
-              <span> Überschrift 1 </span>
-            </v-tooltip>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-header-2"
-                    v-bind="props"
-                    @click="createHeadingAsset('h2')"
-                />
-              </template>
-              <span> Überschrift 2 </span>
-            </v-tooltip>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-header-3"
-                    v-bind="props"
-                    @click="createHeadingAsset('h3')"
-                />
-              </template>
-              <span> Überschrift 3 </span>
-            </v-tooltip>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-header-4"
-                    v-bind="props"
-                    @click="createHeadingAsset('h4')"
-                />
-              </template>
-              <span> Überschrift 4 </span>
-            </v-tooltip>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-header-5"
-                    v-bind="props"
-                    @click="createHeadingAsset('h5')"
-                />
-              </template>
-              <span> Überschrift 5 </span>
-            </v-tooltip>
-            <v-divider
-                class="mx-4"
-                vertical
-            ></v-divider>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-page-break"
-                    v-bind="props"
-                    @click="createPagebreakAsset"
-                />
-              </template>
-              <span> Seitenumbruch </span>
-            </v-tooltip>
-            <v-divider
-                class="mx-4"
-                vertical
-            ></v-divider>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-format-text-wrapping-wrap"
-                    v-bind="props"
-                    @click="createNewlineAsset"
-                />
-              </template>
-              <span> Zeilenumbruch </span>
-            </v-tooltip>
-            <v-divider
-                class="mx-4"
-                vertical
-            ></v-divider>
-            <v-tooltip location="bottom">
-              <template #activator="{ props }">
-                <v-btn
-                    icon="mdi-image"
-                    v-bind="props"
-                    @click="createImageAsset"
-                />
-              </template>
-              <span> Bild hinzufügen </span>
-            </v-tooltip>
-            <v-spacer/>
-          </v-toolbar>
+            <span
+                class="text-grey-lighten-2 text-body-1 font-weight-regular pl-0"
+            >
+                            {{ header(asset) }}
+                        </span>
+            <v-spacer></v-spacer>
+            <v-btn
+                v-show="clickable === asset.id && isEditable(asset)"
+                icon="mdi-lead-pencil"
+                @click="edit(asset)"
+            />
+            <v-btn
+                v-show="clickable === asset.id"
+                icon="mdi-trash-can"
+                @click="deleteAsset(asset)"
+            />
+          </v-app-bar>
+          <v-card-text
+              :style="{ cursor: selectedCursor }"
+              @mouseover="draggableCard = true"
+          >
+            <h1 v-if="isHeading1(asset)">
+              {{ getTextOfAsset(asset) }}
+            </h1>
+            <h2 v-if="isHeading2(asset)">
+              {{ getTextOfAsset(asset) }}
+            </h2>
+            <h3 v-if="isHeading3(asset)">
+              {{ getTextOfAsset(asset) }}
+            </h3>
+            <h4 v-if="isHeading4(asset)">
+              {{ getTextOfAsset(asset) }}
+            </h4>
+            <h5 v-if="isHeading5(asset)">
+              {{ getTextOfAsset(asset) }}
+            </h5>
+            <p
+                v-if="isText(asset)"
+                :style="{ fontSize: getSizeOfAsset(asset) }"
+                v-html="getTextOfAsset(asset)"
+            />
+            <v-divider v-if="isPageBreak(asset)"/>
+            <v-divider v-if="isNewline(asset)"/>
+            <p v-if="isDatatable(asset)">
+              {{ getTextOfAsset(asset) }}
+            </p>
+            <p v-if="isDatatableMessstelle(asset)">
+              {{ getTextOfAsset(asset) }}
+            </p>
+            <p v-if="isZaehlungskenngroesse(asset)">
+              {{ getTextOfAsset(asset) }}
+            </p>
+            <DisplayImageAsset
+                v-if="isImage(asset)"
+                :caption="getCaptionOfAsset(asset)"
+                :image="getImageOfAsset(asset)"
+                :width="`${getWidthOfAsset(asset)}%`"
+            />
+          </v-card-text>
+        </v-card>
+      </vue-draggable-next>
+      <v-toolbar
+          color="transparent"
+          elevation="2"
+      >
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-text"
+                v-bind="props"
+                @click="createTextAsset"
+            />
+          </template>
+          <span> Freitext </span>
+        </v-tooltip>
+        <v-divider
+            class="mx-4"
+            vertical
+        />
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-header-1"
+                v-bind="props"
+                @click="createHeadingAsset('h1')"
+            />
+          </template>
+          <span> Überschrift 1 </span>
+        </v-tooltip>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-header-2"
+                v-bind="props"
+                @click="createHeadingAsset('h2')"
+            />
+          </template>
+          <span> Überschrift 2 </span>
+        </v-tooltip>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-header-3"
+                v-bind="props"
+                @click="createHeadingAsset('h3')"
+            />
+          </template>
+          <span> Überschrift 3 </span>
+        </v-tooltip>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-header-4"
+                v-bind="props"
+                @click="createHeadingAsset('h4')"
+            />
+          </template>
+          <span> Überschrift 4 </span>
+        </v-tooltip>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-header-5"
+                v-bind="props"
+                @click="createHeadingAsset('h5')"
+            />
+          </template>
+          <span> Überschrift 5 </span>
+        </v-tooltip>
+        <v-divider
+            class="mx-4"
+            vertical
+        ></v-divider>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-page-break"
+                v-bind="props"
+                @click="createPagebreakAsset"
+            />
+          </template>
+          <span> Seitenumbruch </span>
+        </v-tooltip>
+        <v-divider
+            class="mx-4"
+            vertical
+        ></v-divider>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-format-text-wrapping-wrap"
+                v-bind="props"
+                @click="createNewlineAsset"
+            />
+          </template>
+          <span> Zeilenumbruch </span>
+        </v-tooltip>
+        <v-divider
+            class="mx-4"
+            vertical
+        ></v-divider>
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+                icon="mdi-image"
+                v-bind="props"
+                @click="createImageAsset"
+            />
+          </template>
+          <span> Bild hinzufügen </span>
+        </v-tooltip>
+        <v-spacer/>
+      </v-toolbar>
     </v-sheet>
 
     <v-speed-dial
@@ -295,7 +298,7 @@
 
 <script lang="ts" setup>
 import {computed, onMounted, ref, watch} from "vue";
-import { VueDraggableNext } from "vue-draggable-next";
+import {VueDraggableNext} from "vue-draggable-next";
 
 // Components
 import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
