@@ -7,13 +7,9 @@
     >
         <v-card>
             <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
+                class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >mdi-text</v-icon
-                >
+                <v-icon class="mr-2">mdi-text</v-icon>
                 Text Abschnitt bearbeiten
             </v-card-title>
             <v-card-text>
@@ -29,7 +25,7 @@
                         v-html="asset.text"
                     />
                 </v-sheet>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-form
                     ref="form"
                     class="mx-3"
@@ -43,88 +39,76 @@
                                     prepend-icon="mdi-feather"
                                     hint="Sie können innerhalb des Textes (auf eigene Gefahr) HTML Notation verwenden. Sollte das PDF nicht mehr generiert werden können, so achten Sie bitte darauf, dass alle Elemente geschlossen wurden. Beispiel: <p>text...</p>"
                                     persistent-hint
-                                    outlined
-                                    dense
-                                ></v-textarea>
+                                    variant="outlined"
+                                    density="compact"
+                                />
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col>
-                                <v-toolbar flat>
+                                <v-toolbar
+                                    flat
+                                    color="transparent"
+                                >
                                     <v-btn
-                                        icon
+                                        icon="mdi-format-bold"
                                         @click="addBoldText"
-                                    >
-                                        <v-icon>mdi-format-bold</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
+                                        icon="mdi-format-italic"
                                         @click="addItalicText"
-                                    >
-                                        <v-icon>mdi-format-italic</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-divider
                                         class="mx-4"
                                         vertical
                                     />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'xx-small'"
+                                        icon="mdi-size-xxs"
+                                        size="large"
+                                        :active="asset.size === 'xx-small'"
                                         @click="changeTextSize(`xx-small`)"
-                                    >
-                                        <v-icon large>mdi-size-xxs</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'x-small'"
+                                        icon="mdi-size-xs"
+                                        size="large"
+                                        :active="asset.size === 'x-small'"
                                         @click="changeTextSize(`x-small`)"
-                                    >
-                                        <v-icon large>mdi-size-xs</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'small'"
+                                        icon="mdi-size-s"
+                                        size="large"
+                                        :active="asset.size === 'small'"
                                         @click="changeTextSize(`small`)"
-                                    >
-                                        <v-icon large>mdi-size-s</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'medium'"
+                                        icon="mdi-size-m"
+                                        size="large"
+                                        :active="asset.size === 'medium'"
                                         @click="changeTextSize(`medium`)"
-                                    >
-                                        <v-icon large>mdi-size-m</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'large'"
+                                        icon="mdi-size-l"
+                                        size="large"
+                                        :active="asset.size === 'large'"
                                         @click="changeTextSize(`large`)"
-                                    >
-                                        <v-icon large>mdi-size-l</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'x-large'"
+                                        icon="mdi-size-xl"
+                                        size="large"
+                                        :active="asset.size === 'x-large'"
                                         @click="changeTextSize(`x-large`)"
-                                    >
-                                        <v-icon large>mdi-size-xl</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="asset.size === 'xx-large'"
+                                        icon="mdi-size-xxl"
+                                        size="large"
+                                        :active="asset.size === 'xx-large'"
                                         @click="changeTextSize(`xx-large`)"
-                                    >
-                                        <v-icon large>mdi-size-xxl</v-icon>
-                                    </v-btn>
+                                    />
                                     <v-btn
-                                        icon
-                                        :input-value="
-                                            asset.size === 'xxx-large'
-                                        "
+                                        icon="mdi-size-xxxl"
+                                        :active="asset.size === 'xxx-large'"
                                         @click="changeTextSize(`xxx-large`)"
-                                    >
-                                        <v-icon large>mdi-size-xxxl</v-icon>
-                                    </v-btn>
+                                    />
                                 </v-toolbar>
                             </v-col>
                         </v-row>
@@ -137,7 +121,6 @@
                 <v-spacer></v-spacer>
                 <v-btn
                     color="primary"
-                    text
                     @click="save"
                 >
                     Speichern

@@ -9,9 +9,7 @@
             <v-card-title
                 class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon class="mr-2">
-                  mdi-trash-can
-                </v-icon>
+                <v-icon class="mr-2">mdi-trash-can</v-icon>
                 Element entfernen
             </v-card-title>
             <v-card-text class="text-body-1">
