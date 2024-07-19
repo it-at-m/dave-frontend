@@ -27,49 +27,43 @@
             </v-sheet>
             <v-speed-dial
                 v-model="fab"
-                absolute
-                bottom
-                right
                 open-on-hover
             >
-                <template #activator>
+              <template #activator="{ props: activatorProps }">
                     <v-btn
                         v-model="fab"
-                        dark
-                        fab
-                        :color="fabColor"
-                    >
-                        <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                        <v-icon v-else> mdi-plus-thick </v-icon>
-                    </v-btn>
+                        color="secondary"
+                        :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
+                        class="mr-4 mb-4"
+                        elevation="6"
+                        location="bottom end"
+                        position="fixed"
+                        size="large"
+                        style="z-index: 400"
+                        v-bind="activatorProps"
+                    />
                 </template>
-                <v-tooltip left>
-                    <template #activator="{ props }">
+                <v-tooltip location="left">
+                  <template #activator="{ props }">
                         <v-btn
-                            fab
-                            dark
-                            small
                             color="secondary"
+                            icon="mdi-printer"
+                            size="small"
                             v-bind="props"
                             @click="downloadPdf"
-                        >
-                            <v-icon>mdi-printer</v-icon>
-                        </v-btn>
+                        />
                     </template>
                     <span>Report herunterladen</span>
                 </v-tooltip>
-                <v-tooltip left>
-                    <template #activator="{ props }">
+                <v-tooltip location="left">
+                  <template #activator="{ props }">
                         <v-btn
-                            fab
-                            dark
-                            small
                             color="secondary"
+                            icon="mdi-eye-off"
+                            size="small"
                             v-bind="props"
                             @click="cancelDialog"
-                        >
-                            <v-icon>mdi-eye-off</v-icon>
-                        </v-btn>
+                        />
                     </template>
                     <span>Vorschau schließen</span>
                 </v-tooltip>
@@ -104,10 +98,6 @@ const openDialog = computed({
 });
 
 const fab = ref(false);
-
-const fabColor = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
-});
 
 const getContentSheetHeight = computed(() => {
     if (display.xl.value) {

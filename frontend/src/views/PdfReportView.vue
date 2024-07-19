@@ -217,7 +217,7 @@
       <template #activator="{ props: activatorProps }">
         <v-btn
             key="speed-dial-generate-preview-pdf"
-            :color="fabColor"
+            color="secondary"
             :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
             class="mr-4 mb-4"
             elevation="6"
@@ -379,10 +379,6 @@ onMounted(() => {
   if (!pdfReportStore.getHasTitlePage) {
     createFirstPage();
   }
-});
-
-const fabColor = computed(() => {
-  return fab.value ? "grey darken-1" : "secondary";
 });
 
 const getDepartment = computed(() => {
