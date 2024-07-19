@@ -8,16 +8,8 @@
       density="compact"
       fixed-header
       :height="height"
-  >
-  </v-data-table>
-  <!--        :item-class="rowClasses"-->
-
-  <!--    <template v-slot:item.testit="{ item, value }">-->
-  <!--      <div :class="rowClasses(item)">{{value}}</div>-->
-  <!--    </template>-->
-  <!--    <template v-slot:item="{ item }">-->
-  <!--      <tr :class="rowClasses(item)" />-->
-  <!--    </template>-->
+      :row-props="(item) => rowClasses(item.item)"
+  />
 </template>
 
 <script setup lang="ts">
@@ -38,9 +30,6 @@ const TYPE_BLOCK = "Block";
 const TYPE_SP_STD_BLOCK = "SpStdBlock";
 
 const TYPE_SP_STD_TAG = "SpStdTag";
-
-const headerCategoryStyle =
-    "font-weight: bolder; position: sticky; top: 0; z-index: 2";
 
 interface Props {
     listenausgabeData: Array<LadeZaehldatumDTO>;
@@ -150,11 +139,13 @@ const headers = computed(() => {
        // Zeit
       {
         title: 'Zeit',
+        key: 'Zeit',
         align: 'center',
         children: [
           {
             title: "von",
             value: "startUhrzeit",
+            key: "startUhrzeit",
             align: "center",
             sortable: false,
             width: '7%',
@@ -162,6 +153,7 @@ const headers = computed(() => {
           {
             title: "bis",
             value: "endeUhrzeit",
+            key: "endeUhrzeit",
             align: "center",
             sortable: false,
             width: '7%',
@@ -169,183 +161,251 @@ const headers = computed(() => {
           {
             title: "",
             value: "type",
+            key: "type",
             align: "center",
             sortable: false,
             width: '8%',
-            fixed: true,
+            // fixed: true,
           },
         ],
-      },
-      {
+      }
+    ];
+
+    if (activeFahrzeugtypen.value > 0) {
+      const children = [];
+
+      if (options.personenkraftwagen) {
+        children.push({
+          title: "Pkw",
+          value: "pkw",
+          key: "pkw",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder ||
+          //     options.busse ||
+          //     options.lastzuege ||
+          //     options.lastkraftwagen
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.lastkraftwagen) {
+        children.push({
+          title: "Lkw",
+          value: "lkw",
+          key: "lkw",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder ||
+          //     options.busse ||
+          //     options.lastzuege
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.lastzuege) {
+        children.push({
+          title: "Lz",
+          value: "lastzuege",
+          key: "lastzuege",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder ||
+          //     options.busse
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.busse) {
+        children.push({
+          title: "Bus",
+          value: "busse",
+          key: "busse",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.kraftraeder) {
+        children.push({
+          title: "Krad",
+          value: "kraftraeder",
+          key: "kraftraeder",
+          align: "center",
+          // fixed: !(options.radverkehr || options.fussverkehr),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.radverkehr) {
+        children.push({
+          title: "Rad",
+          value: "fahrradfahrer",
+          key: "fahrradfahrer",
+          align: "center",
+          // fixed: !options.fussverkehr,
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.fussverkehr) {
+        children.push({
+          title: "Fuß",
+          value: "fussgaenger",
+          key: "fussgaenger",
+          align: "center",
+          // fixed: true,
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      headers.push({
         title: 'Fahrzeugtypen',
+        key: 'Fahrzeugtypen',
         align: 'center',
-        children: [
-          {
-            title: "Pkw",
-            value: "pkw",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder ||
-            //     options.busse ||
-            //     options.lastzuege ||
-            //     options.lastkraftwagen
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-            key: 'testit'
-          },
-          {
-            title: "Lkw",
-            value: "lkw",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder ||
-            //     options.busse ||
-            //     options.lastzuege
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Lz",
-            value: "lastzuege",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder ||
-            //     options.busse
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Bus",
-            value: "busse",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Krad",
-            value: "kraftraeder",
-            align: "center",
-            // fixed: !(options.radverkehr || options.fussverkehr),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Rad",
-            value: "fahrradfahrer",
-            align: "center",
-            // fixed: !options.fussverkehr,
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Fuß",
-            value: "fussgaenger",
-            align: "center",
-            fixed: true,
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-        ],
-      },
-      {
+        children: children
+      });
+    }
+
+    if (activeFahrzeugklassen.value > 0) {
+      const children = [];
+      if (options.kraftfahrzeugverkehr) {
+        children.push({
+          title: "KFZ",
+          value: "kfz",
+          key: "kfz",
+          align: "center",
+          // fixed: !(options.schwerverkehr || options.gueterverkehr),
+          sortable: false,
+          width: widthFahrzeugklassen,
+        });
+      }
+
+      if (options.schwerverkehr) {
+        children.push({
+          title: "SV",
+          value: "schwerverkehr",
+          key: "schwerverkehr",
+          align: "center",
+          // fixed: !options.gueterverkehr,
+          sortable: false,
+          width: widthFahrzeugklassen,
+        });
+      }
+
+      if (options.gueterverkehr) {
+        children.push({
+          title: "GV",
+          value: "gueterverkehr",
+          key: "gueterverkehr",
+          align: "center",
+          // fixed: true,
+          sortable: false,
+          width: widthFahrzeugklassen,
+        });
+      }
+
+      headers.push({
         title: 'Fahrzeugklassen',
+        key: 'Fahrzeugklassen',
         align: 'center',
-        children: [
-          {
-            title: "KFZ",
-            value: "kfz",
-            align: "center",
-            fixed: !(options.schwerverkehr || options.gueterverkehr),
-            sortable: false,
-            width: widthFahrzeugklassen,
-          },
-          {
-            title: "SV",
-            value: "schwerverkehr",
-            align: "center",
-            fixed: !options.gueterverkehr,
-            sortable: false,
-            width: widthFahrzeugklassen,
-          },
-          {
-            title: "GV",
-            value: "gueterverkehr",
-            align: "center",
-            fixed: true,
-            sortable: false,
-            width: widthFahrzeugklassen,
-          },
-        ],
-      },{
+        children: children,
+      });
+    }
+
+    if (activeAnteil.value > 0) {
+      const children = [];
+      if (options.schwerverkehrsanteilProzent) {
+        children.push({
+          title: "SV%",
+          value: "anteilSchwerverkehrAnKfzProzent",
+          key: "anteilSchwerverkehrAnKfzProzent",
+          align: "center",
+          // fixed: !options.gueterverkehrsanteilProzent,
+          sortable: false,
+          width: widthAnteil,
+        });
+      }
+      if (options.gueterverkehrsanteilProzent) {
+        children.push({
+          title: "GV%",
+          value: "anteilGueterverkehrAnKfzProzent",
+          key: "anteilGueterverkehrAnKfzProzent",
+          align: "center",
+          // fixed: true,
+          sortable: false,
+          width: widthAnteil,
+        });
+      }
+      headers.push({
         title: 'Anteil',
+        key: 'Anteil',
         align: 'center',
-        children: [
-          {
-            title: "SV%",
-            value: "anteilSchwerverkehrAnKfzProzent",
-            align: "center",
-            fixed: !options.gueterverkehrsanteilProzent,
-            sortable: false,
-            width: widthAnteil,
-          },
-          {
-            title: "GV%",
-            value: "anteilGueterverkehrAnKfzProzent",
-            align: "center",
-            fixed: true,
-            sortable: false,
-            width: widthAnteil,
-          },
-        ],
-      },{
+        children: children,
+      });
+    }
+
+    if (options.pkwEinheiten) {
+      headers.push({
         title: '',
+        key: 'empty_pkwEinheiten',
         align: 'center',
         children: [
           {
             title: "PKW-Einheiten",
             value: "pkwEinheiten",
+            key: "pkwEinheiten",
             align: "center",
             sortable: false,
             width: '7%'
           },
         ],
-      },
-    ];
+      })
+    }
 
     return headers;
 });
 
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
-    if (ladeZaehldatum.type === TYPE_STUNDE) {
-        return "blue-grey-lighten-4 font-weight-bold";
+  let color = "bg-white";
+  if (ladeZaehldatum.type === TYPE_STUNDE) {
+        color = "bg-blue-grey-lighten-4 font-weight-bold";
     } else if (
         ladeZaehldatum.type != undefined &&
         (ladeZaehldatum.type.includes(TYPE_SP_STD_BLOCK) ||
             ladeZaehldatum.type.includes(TYPE_SP_STD_TAG))
     ) {
-        return "blue-grey-lighten-3 font-weight-bold";
+        color = "bg-blue-grey-lighten-3 font-weight-bold";
     } else if (ladeZaehldatum.type === TYPE_BLOCK) {
-        return "blue-grey-lighten-2 font-weight-black";
+        color = "bg-blue-grey-lighten-2 font-weight-black text-black";
     } else if (
         ladeZaehldatum.type === TYPE_GESAMT ||
         ladeZaehldatum.type === TYPE_TAGESWERT
     ) {
-        return "blue-grey-lighten-1 font-weight-black";
+        color = "bg-blue-grey-lighten-1 font-weight-black text-black";
     }
+  return {class: color};
 }
 
 /** Berechnet die Spaltenbreite für die einzelnen Eintraege */
@@ -374,31 +434,3 @@ watch(
     { immediate: true }
 );
 </script>
-
-<!--<style lang="sass">-->
-<!--@import 'vuetify/lib/components/VDataTable/variables'-->
-<!--.v-data-table&#45;&#45;fixed-header-->
-<!--  > .v-data-table__wrapper-->
-<!--    overflow-y: auto-->
-
-<!--    > table-->
-<!--      > thead-->
-<!--        > tr-->
-<!--          > th-->
-<!--            border-bottom: 0 !important-->
-<!--            position: sticky-->
-<!--            top: $data-table-dense-header-height-->
-<!--            z-index: 2-->
-
-<!--        > tr:nth-child(2)-->
-<!--          > th-->
-<!--            top: $data-table-dense-header-height-->
-
-<!--  // Account for scroll bar-->
-<!--  .v-data-footer-->
-<!--    +ltr()-->
-<!--      margin-right: $data-table-scroll-bar-width-->
-
-<!--    +rtl()-->
-<!--      margin-left: $data-table-scroll-bar-width-->
-<!--</style>-->
