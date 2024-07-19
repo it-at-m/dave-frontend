@@ -3,6 +3,7 @@
     <v-dialog
         v-if="openDialog"
         v-model="openDialog"
+
         max-width="900px"
         @click:outside="cancelDialog"
     >
@@ -15,6 +16,7 @@
             </v-card-title>
             <v-sheet
                 width="100%"
+                height="600px"
                 :max-height="getContentSheetHeight"
                 class="overflow-y-auto overflow-x-hidden"
             >
@@ -38,7 +40,7 @@
                         class="mr-4 mb-4"
                         elevation="6"
                         location="bottom end"
-                        position="fixed"
+                        position="absolute"
                         size="large"
                         style="z-index: 400"
                         v-bind="activatorProps"
