@@ -30,7 +30,7 @@
               <span class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0">
               {{ header(asset) }}
             </span>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-btn
                   v-show="clickable === asset.id && index > 0"
                   icon="mdi-chevron-up"
