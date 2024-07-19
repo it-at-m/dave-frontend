@@ -25,7 +25,7 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import { useVuetify } from "@/util/useVuetify";
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, onMounted, type Ref, ref, watch} from "vue";
 import { useDateUtils } from "@/util/DateUtils";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
 import type {StartEndeUhrzeitIntervalls} from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
@@ -137,10 +137,10 @@ const highestFahrbeziehungsValue = ref(0);
 const lowestFahrbeziehungsValue = ref(1000000);
 
 const fahrbeziehungsTypen =
-    ref<Map<number, BelastungsplanFahrbeziehung[]>>(new Map<number, BelastungsplanFahrbeziehung[]>());
+    ref<Map<number, BelastungsplanFahrbeziehung[]>>(new Map<number, BelastungsplanFahrbeziehung[]>()) as Ref<Map<number, BelastungsplanFahrbeziehung[]>>;
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
     new Map<number, BelastungsplanKnotenarm>()
-);
+) as Ref<Map<number, BelastungsplanKnotenarm>>;
 const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
@@ -1205,14 +1205,14 @@ function createKnotenarmname(
         trenner = "-";
         if (strasse.endsWith("str.")) {
             const i = strasse.indexOf("str.");
-            pieces[0] = strasse.substr(0, zeichen - 4);
-            pieces[1] = strasse.substr(i, 4);
+            pieces[0] = strasse.substring(0, zeichen - 4);
+            pieces[1] = strasse.substring(i, 4);
         }
         // Platz
         if (strasse.endsWith("pl.")) {
             const i = strasse.indexOf("pl.");
-            pieces[0] = strasse.substr(0, zeichen - 3);
-            pieces[1] = strasse.substr(i, 3);
+            pieces[0] = strasse.substring(0, zeichen - 3);
+            pieces[1] = strasse.substring(i, 3);
         }
     }
     // Bindestrich

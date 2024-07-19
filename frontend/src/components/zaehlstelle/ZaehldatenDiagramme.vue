@@ -50,23 +50,23 @@
             stacked
         >
             <!-- Kopfzeile -->
-            <v-tab value="tab-1">
+            <v-tab :value="TAB_BELASTUNGSPLAN">
                 <v-icon icon="mdi-arrow-decision"/>
                 Belastungsplan
             </v-tab>
-            <v-tab value="tab-2">
+            <v-tab :value="TAB_GANGLINIE">
                 <v-icon icon="mdi-chart-histogram"/>
                 Ganglinie
             </v-tab>
-            <v-tab value="tab-3">
+            <v-tab :value="TAB_LISTENAUSGABE">
                 <v-icon icon="mdi-table"/>
                 Listenausgabe
             </v-tab>
-            <v-tab value="tab-4">
+            <v-tab :value="TAB_HEATMAP">
                 <v-icon icon="mdi-chart-bubble"/>
                 Heatmap
             </v-tab>
-            <v-tab value="tab-5">
+            <v-tab :value="TAB_ZEITREIHE">
                 <v-icon icon="mdi-timer-sand"/>
                 Zeitreihe
             </v-tab>
@@ -75,36 +75,36 @@
             v-if="hasZaehlungen"
             v-model="activeTab"
             class="d-flex flex-column align-stretch"
+            @update:modelValue="changeTab"
         >
             <!-- Inhalte -->
-            <v-tabs-window-item value="tab-1">
+            <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
                     class="overflow-y-auto"
                 >
-                  Belatungsplan
-<!--                    <belastungsplan-kreuzung-svg-->
-<!--                        v-show="!belastungsplanDTO.kreisverkehr"-->
-<!--                        :dimension="contentHeight"-->
-<!--                        :data="belastungsplanDTO"-->
-<!--                        :doc-mode="false"-->
-<!--                        :geometrie-mode="true"-->
-<!--                        @print="storeSvg($event)"-->
-<!--                    ></belastungsplan-kreuzung-svg>-->
+                    <belastungsplan-kreuzung-svg
+                        v-show="!belastungsplanDTO.kreisverkehr"
+                        :dimension="contentHeight"
+                        :data="belastungsplanDTO"
+                        :doc-mode="false"
+                        :geometrie-mode="true"
+                        @print="storeSvg($event)"
+                    ></belastungsplan-kreuzung-svg>
 
-<!--                    <belastungsplan-card-->
-<!--                        v-show="belastungsplanDTO.kreisverkehr"-->
-<!--                        ref="belastungsplanCard"-->
-<!--                        :dimension="contentHeight"-->
-<!--                        :belastungsplan-data="belastungsplanDTO"-->
-<!--                        :loaded="false"-->
-<!--                        :zaehlung-id="zaehlungsId"-->
-<!--                    ></belastungsplan-card>-->
+                    <belastungsplan-card
+                        v-show="belastungsplanDTO.kreisverkehr"
+                        ref="belastungsplanCard"
+                        :dimension="contentHeight"
+                        :belastungsplan-data="belastungsplanDTO"
+                        :loaded="false"
+                        :zaehlung-id="zaehlungsId"
+                    ></belastungsplan-card>
                 </v-sheet>
                 <progress-loader :value="belastungsplanLoading" />
             </v-tabs-window-item>
-            <v-tabs-window-item value="tab-2">
+            <v-tabs-window-item :value="TAB_GANGLINIE">
                 <v-sheet
                     :min-height="contentHeight"
                     :max-height="contentHeight"
@@ -118,7 +118,7 @@
                 </v-sheet>
                 <progress-loader :value="chartDataLoading" />
             </v-tabs-window-item>
-            <v-tabs-window-item value="tab-3">
+            <v-tabs-window-item :value="TAB_LISTENAUSGABE">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
@@ -131,7 +131,7 @@
                 </v-sheet>
                 <progress-loader :value="chartDataLoading" />
             </v-tabs-window-item>
-            <v-tabs-window-item value="tab-4">
+            <v-tabs-window-item :value="TAB_HEATMAP">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
@@ -144,7 +144,7 @@
                 </v-sheet>
                 <progress-loader :value="chartDataLoading" />
             </v-tabs-window-item>
-            <v-tabs-window-item value="tab-5">
+            <v-tabs-window-item :value="TAB_ZEITREIHE">
                 <v-sheet
                     :max-height="contentHeight"
                     width="100%"
@@ -470,18 +470,18 @@ watch(options, () => {
     loadData();
 });
 
-watch(activeTab, (active) => {
-    zaehlstelleStore.setActiveTab(active);
-    isTabListenausgabe.value = [TAB_LISTENAUSGABE].includes(activeTab.value);
-    isTabHeatmap.value = [TAB_HEATMAP].includes(activeTab.value);
-    isFabShown.value = [
-        TAB_BELASTUNGSPLAN,
-        TAB_GANGLINIE,
-        TAB_LISTENAUSGABE,
-        TAB_HEATMAP,
-        TAB_ZEITREIHE,
-    ].includes(activeTab.value);
-});
+function changeTab() {
+  zaehlstelleStore.setActiveTab(activeTab.value);
+  isTabListenausgabe.value = [TAB_LISTENAUSGABE].includes(activeTab.value);
+  isTabHeatmap.value = [TAB_HEATMAP].includes(activeTab.value);
+  isFabShown.value = [
+    TAB_BELASTUNGSPLAN,
+    TAB_GANGLINIE,
+    TAB_LISTENAUSGABE,
+    TAB_HEATMAP,
+    TAB_ZEITREIHE,
+  ].includes(activeTab.value);
+}
 
 watch(belastungsplanSvg, () => {
     if (belastungsplanSvg.value) {
