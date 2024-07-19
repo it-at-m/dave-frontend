@@ -30,7 +30,7 @@
               <span class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0">
               {{ header(asset) }}
             </span>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-btn
                   v-show="clickable === asset.id && index > 0"
                   icon="mdi-chevron-up"
@@ -209,52 +209,23 @@
       </v-toolbar>
     </v-sheet>
 
-    <v-speed-dial
-        v-model="fab"
-        location="top"
-        open-on-hover
-    >
-      <template #activator="{ props: activatorProps }">
+    <v-tooltip location="left">
+      <template #activator="{ props }">
         <v-btn
-            key="speed-dial-generate-preview-pdf"
-            :color="fabColor"
-            :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
             class="mr-4 mb-4"
+            color="secondary"
             elevation="6"
+            icon="mdi-printer"
             location="bottom end"
             position="fixed"
             size="large"
             style="z-index: 400"
-            v-bind="activatorProps"
+            v-bind="props"
+            @click="generatePdf"
         />
       </template>
-      <v-tooltip location="left">
-        <template #activator="{ props }">
-          <v-btn
-              key="generate-pdf-btn"
-              color="secondary"
-              icon="mdi-printer"
-              size="small"
-              v-bind="props"
-              @click="generatePdf"
-          />
-        </template>
-        <span>Report herunterladen</span>
-      </v-tooltip>
-      <v-tooltip location="left">
-        <template #activator="{ props }">
-          <v-btn
-              key="preview-pdf-btn"
-              color="secondary"
-              icon="mdi-eye"
-              size="small"
-              v-bind="props"
-              @click="previewPdf"
-          />
-        </template>
-        <span>Vorschau öffnen</span>
-      </v-tooltip>
-    </v-speed-dial>
+      <span>Report als PDF-Datei herunterladen</span>
+    </v-tooltip>
 
     <image-asset-form
         v-model="editImage"
@@ -262,12 +233,14 @@
         @cancelDialog="cancel()"
         @save="save($event)"
     />
+
     <datatable-asset-form
         v-model="editDatatable"
         :datatable="datatableAsset"
         @cancelDialog="cancel()"
         @save="save($event)"
     />
+
     <heading-asset-form
         v-model="editHeading"
         :heading="headingAsset"
@@ -287,13 +260,6 @@
         :asset-id="assetId"
         @cancelDialog="cancel()"
         @delete="deleteIt($event)"
-    />
-
-    <pdf-preview-dialog
-        v-model="previewPdfDialog"
-        :source="previewSource"
-        @cancelDialog="cancel"
-        @download="downloadPdf"
     />
   </v-container>
 </template>
@@ -322,7 +288,6 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 // Utils
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import _ from "lodash";
-import PdfPreviewDialog from "@/components/pdfreport/assetforms/PdfPreviewDialog.vue";
 import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
@@ -339,7 +304,6 @@ const editHeading = ref(false);
 const editText = ref(false);
 const editDatatable = ref(false);
 const deleteDialog = ref(false);
-const previewPdfDialog = ref(false);
 
 const imageAsset = ref<ImageAsset>(new ImageAsset("", ""));
 const headingAsset = ref<HeadingAsset>(
@@ -365,9 +329,7 @@ const editables = ref([
   AssetTypesEnum.DATATABLE_MESSSTELLE,
 ]);
 
-const fab = ref(false);
 const pdfSourceAsBlob = ref<Blob>(new Blob());
-const pdfSourceForPreview = ref<Uint8Array>(new Uint8Array());
 const assets = ref<BaseAsset[]>([]);
 const userStore = useUserStore();
 const snackbarStore = useSnackbarStore();
@@ -379,10 +341,6 @@ onMounted(() => {
   if (!pdfReportStore.getHasTitlePage) {
     createFirstPage();
   }
-});
-
-const fabColor = computed(() => {
-  return fab.value ? "grey darken-1" : "secondary";
 });
 
 const getDepartment = computed(() => {
@@ -426,7 +384,6 @@ function cancel() {
   editText.value = false;
   editDatatable.value = false;
   deleteDialog.value = false;
-  previewPdfDialog.value = false;
 }
 
 function save(asset: BaseAsset) {
@@ -455,10 +412,6 @@ function save(asset: BaseAsset) {
 function assetsFromStore(): BaseAsset[] {
   return _.cloneDeep(pdfReportStore.getAssets);
 }
-
-const previewSource = computed(() => {
-  return pdfSourceForPreview.value;
-});
 
 watch(
     assets,
@@ -499,32 +452,6 @@ function edit(asset: BaseAsset): void {
     editDatatable.value = true;
     datatableAsset.value = asset;
   }
-}
-
-function previewPdf() {
-  let formData = new FormData();
-  loadingPdf.value = true;
-
-  formData.append(
-      "assets",
-      new Blob([JSON.stringify(assets.value)], {
-        type: "application/json",
-      })
-  );
-
-  formData.append("department", getDepartment.value);
-  GeneratePdfService.postPdfCustomFetchReport(formData)
-      .then((res) => {
-        res.blob().then((blob) => {
-          blob.arrayBuffer().then((value) => {
-            pdfSourceForPreview.value = new Uint8Array(value);
-            previewPdfDialog.value = true;
-          });
-          pdfSourceAsBlob.value = blob;
-        });
-      })
-      .catch((error) => snackbarStore.showApiError(error))
-      .finally(() => (loadingPdf.value = false));
 }
 
 function generatePdf() {
