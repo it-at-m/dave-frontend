@@ -12,9 +12,9 @@
         </v-row>
         <v-row>
             <v-col>
-                <span class="text-caption grey--text text--lighten-1">{{
-                    caption
-                }}</span>
+                <span class="text-caption text-grey-lighten-1">
+                  {{ caption }}
+                </span>
             </v-col>
         </v-row>
     </v-sheet>
