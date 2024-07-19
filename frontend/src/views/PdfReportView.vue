@@ -211,19 +211,19 @@
 
     <v-tooltip location="left">
       <template #activator="{ props }">
-    <v-btn
-        key="speed-dial-generate-preview-pdf"
-        color="secondary"
-        icon="mdi-printer"
-        class="mr-4 mb-4"
-        elevation="6"
-        location="bottom end"
-        position="fixed"
-        size="large"
-        style="z-index: 400"
-        v-bind="props"
-        @click="generatePdf"
-    />
+        <v-btn
+            key="speed-dial-generate-preview-pdf"
+            class="mr-4 mb-4"
+            color="secondary"
+            elevation="6"
+            icon="mdi-printer"
+            location="bottom end"
+            position="fixed"
+            size="large"
+            style="z-index: 400"
+            v-bind="props"
+            @click="generatePdf"
+        />
       </template>
       <span>Report als PDF herunterladen</span>
     </v-tooltip>
@@ -234,12 +234,14 @@
         @cancelDialog="cancel()"
         @save="save($event)"
     />
+
     <datatable-asset-form
         v-model="editDatatable"
         :datatable="datatableAsset"
         @cancelDialog="cancel()"
         @save="save($event)"
     />
+
     <heading-asset-form
         v-model="editHeading"
         :heading="headingAsset"
