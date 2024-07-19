@@ -31,6 +31,7 @@
             >
               <template #activator="{ props: activatorProps }">
                     <v-btn
+                        key="speed-dial-show-preview-pdf"
                         v-model="fab"
                         color="secondary"
                         :icon="fab ? 'mdi-close-thick' : 'mdi-plus-thick'"
@@ -46,6 +47,7 @@
                 <v-tooltip location="left">
                   <template #activator="{ props }">
                         <v-btn
+                            key="download-pdf-btn"
                             color="secondary"
                             icon="mdi-printer"
                             size="small"
@@ -58,6 +60,7 @@
                 <v-tooltip location="left">
                   <template #activator="{ props }">
                         <v-btn
+                            key="cancel-dialog-btn"
                             color="secondary"
                             icon="mdi-eye-off"
                             size="small"
