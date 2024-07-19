@@ -1,7 +1,7 @@
 <template>
     <v-dialog
         v-model="openDialog"
-        width="80vh"
+        width="100vh"
         height="60vh"
         @click:outside="cancelDialog"
     >
