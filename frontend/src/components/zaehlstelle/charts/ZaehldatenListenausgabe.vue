@@ -168,157 +168,206 @@ const headers = computed(() => {
             // fixed: true,
           },
         ],
-      },
-      {
+      }
+    ];
+
+    if (activeFahrzeugtypen.value > 0) {
+      const children = [];
+
+      if (options.personenkraftwagen) {
+        children.push({
+          title: "Pkw",
+          value: "pkw",
+          key: "pkw",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder ||
+          //     options.busse ||
+          //     options.lastzuege ||
+          //     options.lastkraftwagen
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.lastkraftwagen) {
+        children.push({
+          title: "Lkw",
+          value: "lkw",
+          key: "lkw",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder ||
+          //     options.busse ||
+          //     options.lastzuege
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.lastzuege) {
+        children.push({
+          title: "Lz",
+          value: "lastzuege",
+          key: "lastzuege",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder ||
+          //     options.busse
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.busse) {
+        children.push({
+          title: "Bus",
+          value: "busse",
+          key: "busse",
+          align: "center",
+          // fixed: !(
+          //     options.radverkehr ||
+          //     options.fussverkehr ||
+          //     options.kraftraeder
+          // ),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.kraftraeder) {
+        children.push({
+          title: "Krad",
+          value: "kraftraeder",
+          key: "kraftraeder",
+          align: "center",
+          // fixed: !(options.radverkehr || options.fussverkehr),
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.radverkehr) {
+        children.push({
+          title: "Rad",
+          value: "fahrradfahrer",
+          key: "fahrradfahrer",
+          align: "center",
+          // fixed: !options.fussverkehr,
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      if (options.fussverkehr) {
+        children.push({
+          title: "Fuß",
+          value: "fussgaenger",
+          key: "fussgaenger",
+          align: "center",
+          // fixed: true,
+          sortable: false,
+          width: widthFahrzeugtypen,
+        });
+      }
+
+      headers.push({
         title: 'Fahrzeugtypen',
         key: 'Fahrzeugtypen',
         align: 'center',
-        children: [
-          {
-            title: "Pkw",
-            value: "pkw",
-            key: "pkw",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder ||
-            //     options.busse ||
-            //     options.lastzuege ||
-            //     options.lastkraftwagen
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Lkw",
-            value: "lkw",
-            key: "lkw",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder ||
-            //     options.busse ||
-            //     options.lastzuege
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Lz",
-            value: "lastzuege",
-            key: "lastzuege",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder ||
-            //     options.busse
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Bus",
-            value: "busse",
-            key: "busse",
-            align: "center",
-            // fixed: !(
-            //     options.radverkehr ||
-            //     options.fussverkehr ||
-            //     options.kraftraeder
-            // ),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Krad",
-            value: "kraftraeder",
-            key: "kraftraeder",
-            align: "center",
-            // fixed: !(options.radverkehr || options.fussverkehr),
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Rad",
-            value: "fahrradfahrer",
-            key: "fahrradfahrer",
-            align: "center",
-            // fixed: !options.fussverkehr,
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-          {
-            title: "Fuß",
-            value: "fussgaenger",
-            key: "fussgaenger",
-            align: "center",
-            // fixed: true,
-            sortable: false,
-            width: widthFahrzeugtypen,
-          },
-        ],
-      },
-      {
+        children: children
+      });
+    }
+
+    if (activeFahrzeugklassen.value > 0) {
+      const children = [];
+      if (options.kraftfahrzeugverkehr) {
+        children.push({
+          title: "KFZ",
+          value: "kfz",
+          key: "kfz",
+          align: "center",
+          // fixed: !(options.schwerverkehr || options.gueterverkehr),
+          sortable: false,
+          width: widthFahrzeugklassen,
+        });
+      }
+
+      if (options.schwerverkehr) {
+        children.push({
+          title: "SV",
+          value: "schwerverkehr",
+          key: "schwerverkehr",
+          align: "center",
+          // fixed: !options.gueterverkehr,
+          sortable: false,
+          width: widthFahrzeugklassen,
+        });
+      }
+
+      if (options.gueterverkehr) {
+        children.push({
+          title: "GV",
+          value: "gueterverkehr",
+          key: "gueterverkehr",
+          align: "center",
+          // fixed: true,
+          sortable: false,
+          width: widthFahrzeugklassen,
+        });
+      }
+
+      headers.push({
         title: 'Fahrzeugklassen',
         key: 'Fahrzeugklassen',
         align: 'center',
-        children: [
-          {
-            title: "KFZ",
-            value: "kfz",
-            key: "kfz",
-            align: "center",
-            // fixed: !(options.schwerverkehr || options.gueterverkehr),
-            sortable: false,
-            width: widthFahrzeugklassen,
-          },
-          {
-            title: "SV",
-            value: "schwerverkehr",
-            key: "schwerverkehr",
-            align: "center",
-            // fixed: !options.gueterverkehr,
-            sortable: false,
-            width: widthFahrzeugklassen,
-          },
-          {
-            title: "GV",
-            value: "gueterverkehr",
-            key: "gueterverkehr",
-            align: "center",
-            // fixed: true,
-            sortable: false,
-            width: widthFahrzeugklassen,
-          },
-        ],
-      },{
+        children: children,
+      });
+    }
+
+    if (activeAnteil.value > 0) {
+      const children = [];
+      if (options.schwerverkehrsanteilProzent) {
+        children.push({
+          title: "SV%",
+          value: "anteilSchwerverkehrAnKfzProzent",
+          key: "anteilSchwerverkehrAnKfzProzent",
+          align: "center",
+          // fixed: !options.gueterverkehrsanteilProzent,
+          sortable: false,
+          width: widthAnteil,
+        });
+      }
+      if (options.gueterverkehrsanteilProzent) {
+        children.push({
+          title: "GV%",
+          value: "anteilGueterverkehrAnKfzProzent",
+          key: "anteilGueterverkehrAnKfzProzent",
+          align: "center",
+          // fixed: true,
+          sortable: false,
+          width: widthAnteil,
+        });
+      }
+      headers.push({
         title: 'Anteil',
         key: 'Anteil',
         align: 'center',
-        children: [
-          {
-            title: "SV%",
-            value: "anteilSchwerverkehrAnKfzProzent",
-            key: "anteilSchwerverkehrAnKfzProzent",
-            align: "center",
-            // fixed: !options.gueterverkehrsanteilProzent,
-            sortable: false,
-            width: widthAnteil,
-          },
-          {
-            title: "GV%",
-            value: "anteilGueterverkehrAnKfzProzent",
-            key: "anteilGueterverkehrAnKfzProzent",
-            align: "center",
-            // fixed: true,
-            sortable: false,
-            width: widthAnteil,
-          },
-        ],
-      },{
+        children: children,
+      });
+    }
+
+    if (options.pkwEinheiten) {
+      headers.push({
         title: '',
         key: 'empty_pkwEinheiten',
         align: 'center',
@@ -332,8 +381,8 @@ const headers = computed(() => {
             width: '7%'
           },
         ],
-      },
-    ];
+      })
+    }
 
     return headers;
 });
