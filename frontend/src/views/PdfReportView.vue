@@ -212,7 +212,6 @@
     <v-tooltip location="left">
       <template #activator="{ props }">
         <v-btn
-            key="speed-dial-generate-preview-pdf"
             class="mr-4 mb-4"
             color="secondary"
             elevation="6"
