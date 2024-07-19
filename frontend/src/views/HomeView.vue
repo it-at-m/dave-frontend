@@ -25,9 +25,10 @@
               style="z-index: 400"
               :data-x="activatorProps"
               :loading="creatingPicture || printingSearchResult"
+              key="speedDial"
           />
         </template>
-        <v-tooltip location="left">
+        <v-tooltip location="left" key="tooltipPrintSearchResult">
           <template #activator="{ props }">
             <v-btn
                 icon="mdi-file-delimited"
@@ -35,11 +36,12 @@
                 size="small"
                 v-bind="props"
                 @click="printSearchResult"
+                key="printSearchResult"
             />
           </template>
           <span>Suchergebnis als CSV herunterladen</span>
         </v-tooltip>
-        <v-tooltip location="left">
+        <v-tooltip location="left" key="tooltipTakePicture">
           <template #activator="{ props }">
             <v-btn
                 icon="mdi-camera"
@@ -47,6 +49,7 @@
                 size="small"
                 v-bind="props"
                 @click="takePicture"
+                key="takePicture"
             />
           </template>
           <span>Karte dem PDF Report hinzufügen</span>
