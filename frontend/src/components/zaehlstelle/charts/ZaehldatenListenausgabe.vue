@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <v-data-table
       :headers="headers"
       :items="listenausgabeData"
@@ -111,11 +111,6 @@ const activeAnteil = computed(() => {
     return activeAnteil;
 });
 
-/** Liefert zurueck, ob die OPtion PKW-Einheiten ausgewaehlt wurde */
-const activePkweinheiten = computed(() => {
-    return optionen.value.pkwEinheiten;
-});
-
 const optionen = computed<OptionsDTO>(() => {
     return zaehlstelleStore.getFilteroptions;
 });
@@ -141,6 +136,7 @@ const headers = computed(() => {
         title: 'Zeit',
         key: 'Zeit',
         align: 'center',
+        lastFixed: true,
         children: [
           {
             title: "von",
@@ -165,7 +161,7 @@ const headers = computed(() => {
             align: "center",
             sortable: false,
             width: '8%',
-            // fixed: true,
+            lastFixed: true
           },
         ],
       }
@@ -180,14 +176,14 @@ const headers = computed(() => {
           value: "pkw",
           key: "pkw",
           align: "center",
-          // fixed: !(
-          //     options.radverkehr ||
-          //     options.fussverkehr ||
-          //     options.kraftraeder ||
-          //     options.busse ||
-          //     options.lastzuege ||
-          //     options.lastkraftwagen
-          // ),
+          lastFixed: !(
+              options.radverkehr ||
+              options.fussverkehr ||
+              options.kraftraeder ||
+              options.busse ||
+              options.lastzuege ||
+              options.lastkraftwagen
+          ),
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -199,13 +195,13 @@ const headers = computed(() => {
           value: "lkw",
           key: "lkw",
           align: "center",
-          // fixed: !(
-          //     options.radverkehr ||
-          //     options.fussverkehr ||
-          //     options.kraftraeder ||
-          //     options.busse ||
-          //     options.lastzuege
-          // ),
+          lastFixed: !(
+              options.radverkehr ||
+              options.fussverkehr ||
+              options.kraftraeder ||
+              options.busse ||
+              options.lastzuege
+          ),
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -217,12 +213,12 @@ const headers = computed(() => {
           value: "lastzuege",
           key: "lastzuege",
           align: "center",
-          // fixed: !(
-          //     options.radverkehr ||
-          //     options.fussverkehr ||
-          //     options.kraftraeder ||
-          //     options.busse
-          // ),
+          lastFixed: !(
+              options.radverkehr ||
+              options.fussverkehr ||
+              options.kraftraeder ||
+              options.busse
+          ),
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -234,11 +230,11 @@ const headers = computed(() => {
           value: "busse",
           key: "busse",
           align: "center",
-          // fixed: !(
-          //     options.radverkehr ||
-          //     options.fussverkehr ||
-          //     options.kraftraeder
-          // ),
+          lastFixed: !(
+              options.radverkehr ||
+              options.fussverkehr ||
+              options.kraftraeder
+          ),
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -250,7 +246,7 @@ const headers = computed(() => {
           value: "kraftraeder",
           key: "kraftraeder",
           align: "center",
-          // fixed: !(options.radverkehr || options.fussverkehr),
+          lastFixed: !(options.radverkehr || options.fussverkehr),
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -262,7 +258,7 @@ const headers = computed(() => {
           value: "fahrradfahrer",
           key: "fahrradfahrer",
           align: "center",
-          // fixed: !options.fussverkehr,
+          lastFixed: !options.fussverkehr,
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -274,7 +270,7 @@ const headers = computed(() => {
           value: "fussgaenger",
           key: "fussgaenger",
           align: "center",
-          // fixed: true,
+          lastFixed: true,
           sortable: false,
           width: widthFahrzeugtypen,
         });
@@ -284,6 +280,7 @@ const headers = computed(() => {
         title: 'Fahrzeugtypen',
         key: 'Fahrzeugtypen',
         align: 'center',
+        lastFixed: true,
         children: children
       });
     }
@@ -296,7 +293,7 @@ const headers = computed(() => {
           value: "kfz",
           key: "kfz",
           align: "center",
-          // fixed: !(options.schwerverkehr || options.gueterverkehr),
+          lastFixed: !(options.schwerverkehr || options.gueterverkehr),
           sortable: false,
           width: widthFahrzeugklassen,
         });
@@ -308,7 +305,7 @@ const headers = computed(() => {
           value: "schwerverkehr",
           key: "schwerverkehr",
           align: "center",
-          // fixed: !options.gueterverkehr,
+          lastFixed: !options.gueterverkehr,
           sortable: false,
           width: widthFahrzeugklassen,
         });
@@ -320,7 +317,7 @@ const headers = computed(() => {
           value: "gueterverkehr",
           key: "gueterverkehr",
           align: "center",
-          // fixed: true,
+          lastFixed: true,
           sortable: false,
           width: widthFahrzeugklassen,
         });
@@ -330,6 +327,7 @@ const headers = computed(() => {
         title: 'Fahrzeugklassen',
         key: 'Fahrzeugklassen',
         align: 'center',
+        lastFixed: true,
         children: children,
       });
     }
@@ -342,7 +340,7 @@ const headers = computed(() => {
           value: "anteilSchwerverkehrAnKfzProzent",
           key: "anteilSchwerverkehrAnKfzProzent",
           align: "center",
-          // fixed: !options.gueterverkehrsanteilProzent,
+          lastFixed: !options.gueterverkehrsanteilProzent,
           sortable: false,
           width: widthAnteil,
         });
@@ -353,7 +351,7 @@ const headers = computed(() => {
           value: "anteilGueterverkehrAnKfzProzent",
           key: "anteilGueterverkehrAnKfzProzent",
           align: "center",
-          // fixed: true,
+          lastFixed: true,
           sortable: false,
           width: widthAnteil,
         });
@@ -362,6 +360,7 @@ const headers = computed(() => {
         title: 'Anteil',
         key: 'Anteil',
         align: 'center',
+        lastFixed: true,
         children: children,
       });
     }
