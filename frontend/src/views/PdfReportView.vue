@@ -224,7 +224,7 @@
             @click="generatePdf"
         />
       </template>
-      <span>Report als PDF herunterladen</span>
+      <span>Report als PDF-Datei herunterladen</span>
     </v-tooltip>
 
     <image-asset-form
