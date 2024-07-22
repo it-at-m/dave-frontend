@@ -159,179 +159,18 @@
             </v-tabs-window-item>
         </v-tabs-window>
 
-        <!-- Speed Dial Listenausgabe -->
-<!--        <v-speed-dial-->
-<!--            v-if="isTabListenausgabe"-->
-<!--            v-model="fab"-->
-<!--            absolute-->
-<!--            bottom-->
-<!--            right-->
-<!--            open-on-hover-->
-<!--        >-->
-<!--            <template #activator>-->
-<!--                <v-btn-->
-<!--                    v-show="isFabShown"-->
-<!--                    v-model="fab"-->
-<!--                    dark-->
-<!--                    fab-->
-<!--                    :color="fabColor"-->
-<!--                    :loading="loadingFile"-->
-<!--                >-->
-<!--                    <v-icon v-if="fab"> mdi-close-thick </v-icon>-->
-<!--                    <v-icon v-else> mdi-file </v-icon>-->
-<!--                </v-btn>-->
-<!--            </template>-->
+      <speed-dial
+          :is-listenausgabe="isTabListenausgabe"
+          :is-not-heatmap="isNotTabHeatmap"
+          :loading-file="loadingFile"
+          @addChartToPdfReport="addChartToPdfReport"
+          @saveGraphAsImage="saveGraphAsImage"
+          @openPdfReportDialog="openPdfReportDialog"
+          @generateCsv="generateCsv"
+          @generatePdf="generatePdf"
+      />
 
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="generatePdf"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-file-pdf-box</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>PDF</span>-->
-<!--            </v-tooltip>-->
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="generateCsv"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-file-delimited</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>CSV</span>-->
-<!--            </v-tooltip>-->
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="openPdfReportDialog"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-file-chart</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>PDF Report Menü öffnen</span>-->
-<!--            </v-tooltip>-->
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="addChartToPdfReport"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-chart-box-plus-outline</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>Tabelle dem PDF Report hinzufügen</span>-->
-<!--            </v-tooltip>-->
-<!--        </v-speed-dial>-->
-
-        <!-- Speed Dial alles außer Listenausgabe-->
-<!--        <v-speed-dial-->
-<!--            v-else-->
-<!--            v-model="fab"-->
-<!--            absolute-->
-<!--            bottom-->
-<!--            right-->
-<!--            open-on-hover-->
-<!--        >-->
-<!--            <template #activator>-->
-<!--                <v-btn-->
-<!--                    v-show="isFabShown"-->
-<!--                    v-model="fab"-->
-<!--                    dark-->
-<!--                    fab-->
-<!--                    :color="fabColor"-->
-<!--                    :loading="loadingFile"-->
-<!--                >-->
-<!--                    <v-icon v-if="fab"> mdi-close-thick </v-icon>-->
-<!--                    <v-icon v-else> mdi-file </v-icon>-->
-<!--                </v-btn>-->
-<!--            </template>-->
-<!--            <v-tooltip-->
-<!--                v-if="!isTabHeatmap"-->
-<!--                left-->
-<!--            >-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="generatePdf"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-file-pdf-box</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>Chart als PDF drucken</span>-->
-<!--            </v-tooltip>-->
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="openPdfReportDialog"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-file-chart</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>PDF Report Menü öffnen</span>-->
-<!--            </v-tooltip>-->
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="addChartToPdfReport"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-chart-box-plus-outline</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>Diagramm dem PDF Report hinzufügen</span>-->
-<!--            </v-tooltip>-->
-
-<!--            <v-tooltip left>-->
-<!--                <template #activator="{ props }">-->
-<!--                    <v-btn-->
-<!--                        fab-->
-<!--                        dark-->
-<!--                        small-->
-<!--                        color="secondary"-->
-<!--                        v-bind="props"-->
-<!--                        @click="saveGraphAsImage"-->
-<!--                    >-->
-<!--                        <v-icon>mdi-download</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>Graph herunterladen</span>-->
-<!--            </v-tooltip>-->
-<!--        </v-speed-dial>-->
-<!--        <pdf-report-menue v-model="pdfReportDialog"> </pdf-report-menue>-->
+      <pdf-report-menue v-model="pdfReportDialog"/>
     </v-sheet>
 </template>
 <script setup lang="ts">
@@ -375,6 +214,7 @@ import {useZaehlstelleStore} from "@/store/zaehlstelle";
 import {useSnackbarStore} from "@/store/snackbar";
 import {useUserStore} from "@/store/user";
 import type {StartEndeUhrzeitIntervalls} from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
@@ -428,7 +268,7 @@ const zeitreiheLoading = ref(false);
 const fab = ref(false);
 const isFabShown = ref(true);
 const isTabListenausgabe = ref(false);
-const isTabHeatmap = ref(false);
+const isNotTabHeatmap = ref(true);
 
 const activeTab  = ref(0);
 const loadingFile = ref(false);
@@ -472,8 +312,8 @@ watch(options, () => {
 
 function changeTab() {
   zaehlstelleStore.setActiveTab(activeTab.value);
-  isTabListenausgabe.value = [TAB_LISTENAUSGABE].includes(activeTab.value);
-  isTabHeatmap.value = [TAB_HEATMAP].includes(activeTab.value);
+  isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
+  isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
   isFabShown.value = [
     TAB_BELASTUNGSPLAN,
     TAB_GANGLINIE,

@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from "vue";
+import {computed, onMounted, ref} from "vue";
 
 import ZaehlstelleInfo from "@/components/zaehlstelle/ZaehlstelleInfo.vue";
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
@@ -62,9 +62,8 @@ import ZaehlungenTimeline from "@/components/zaehlstelle/ZaehlungenTimeline.vue"
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import ZaehlstellenService from "@/api/service/ZaehlstellenService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useVuetify } from "@/util/useVuetify";
-import { useRoute } from "vue-router";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import {useRoute} from "vue-router";
+import {useZaehlstelleStore} from "@/store/zaehlstelle";
 import {useDisplay} from "vuetify";
 
 const zaehlstelle = ref(
@@ -81,7 +80,7 @@ const route = useRoute();
 // Höhenberechnungen
 // =============
 /**
- * Berechnet die Höhe der AppBar (65px) in "vh" (Höhe Viewport in Hundert)
+ * Berechnet die Höhe der AppBar (50px) in "vh" (Höhe Viewport in Hundert)
  */
 const appBarHeight = computed(() => {
     return 50 / (display.height.value / 100);

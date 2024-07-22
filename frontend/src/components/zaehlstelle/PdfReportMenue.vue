@@ -1,122 +1,78 @@
 <template>
-    <div>
-        <v-dialog
-            v-model="dialog"
-            max-width="900px"
-            @click:outside="resetData"
-        >
-            <v-card
+  <v-dialog
+    v-model="dialog"
+    max-width="900px"
+    @click:outside="resetData"
+  >
+    <v-card
                 width="900px"
-                flat
+                variant="flat"
             >
                 <v-card-title>
                     <v-icon left>mdi-file-chart</v-icon>
                     Auswahl zum PDF Report
                 </v-card-title>
 
+              <v-card-subtitle>Wählen Sie die Inhalte, die dem PDF Report hinzugefügt
+                werden sollen.</v-card-subtitle>
+
                 <v-list
-                    flat
-                    subheader
-                    three-line
+                    variant="flat"
+                    lines="three"
+                    density="compact"
                 >
-                    <v-subheader
-                        >Wählen Sie die Inhalte, die dem PDF Report hinzugefügt
-                        werden sollen.</v-subheader
-                    >
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox v-model="zaehlstelleinfo"></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                            <v-list-item-title
-                                >Zählstelleninformationen</v-list-item-title
-                            >
-                            <v-list-item-subtitle
-                                >Folgende Informationen werden im PDF Report
-                                eingetragen: Zählstellen-Nummer,
-                                Knoten-/Platzname, Stadtbezirk,
-                                Zählstellenkommentar.
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox v-model="zaehlungsinfo"></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                            <v-list-item-title
-                                >Zählungsinformationen</v-list-item-title
-                            >
-                            <v-list-item-subtitle
-                                >Folgende Informationen werden im PDF Report
-                                eingetragen: Projektname, Zählart, Zähldatum,
-                                Zähldauer, Zählsituation und erw. Zählsituation,
-                                Wetter, Quelle, Zählungskommentar,
-                                Knotenarmnummern und Straßenamen (1 bis 8),
-                                Hinweis auf eine etwaige Sonderzählung
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox
-                                v-model="zaehlungskenngroessen"
-                            ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                            <v-list-item-title
-                                >Zählungskenngrößen</v-list-item-title
-                            >
-                            <v-list-item-subtitle
-                                >Folgende Informationen werden im PDF Report
-                                eingetragen: Uhrzeiten Spitzenstunde (morgens,
-                                abends, Tag), Zählblöcke und Tageswert (nur wenn
-                                24h Zählung), jeweils mit den jeweiligen
-                                Zählwerten für KFZ, SV und GV sowie Rad.
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox v-model="legende"></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                            <v-list-item-title>Legende</v-list-item-title>
-                            <v-list-item-subtitle
-                                >Die Legende enthält Kurzbeschreibungen der
-                                einzelnen Zählattribute, z.B. für den
-                                Kraftfahrzeugverkehr, Schwerverkehr etc.
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
+                  <pdf-report-menue-list-item
+                      v-model="zaehlstelleinfo"
+                      title="Zählstelleninformationen"
+                      subtitle="Folgende Informationen werden im PDF Report eingetragen: Zählstellen-Nummer, Knoten-/Platzname, Stadtbezirk, Zählstellenkommentar."
+                  />
+                  <pdf-report-menue-list-item
+                      v-model="zaehlungsinfo"
+                      title="Zählungsinformationen"
+                      subtitle="Folgende Informationen werden im PDF Report
+                          eingetragen: Projektname, Zählart, Zähldatum,
+                          Zähldauer, Zählsituation und erw. Zählsituation,
+                          Wetter, Quelle, Zählungskommentar,
+                          Knotenarmnummern und Straßenamen (1 bis 8),
+                          Hinweis auf eine etwaige Sonderzählung"
+                  />
+                  <pdf-report-menue-list-item
+                      v-model="zaehlungskenngroessen"
+                      title="Zählungskenngrößen"
+                      subtitle="Folgende Informationen werden im PDF Report
+                            eingetragen: Uhrzeiten Spitzenstunde (morgens,
+                            abends, Tag), Zählblöcke und Tageswert (nur wenn
+                            24h Zählung), jeweils mit den jeweiligen
+                            Zählwerten für KFZ, SV und GV sowie Rad."
+                  />
+                  <pdf-report-menue-list-item
+                      v-model="legende"
+                      title="Legende"
+                      subtitle="Die Legende enthält Kurzbeschreibungen der
+                            einzelnen Zählattribute, z.B. für den
+                            Kraftfahrzeugverkehr, Schwerverkehr etc."
+                  />
                 </v-list>
+
                 <v-footer>
                     <v-spacer></v-spacer>
                     <v-btn
+                        class="text-none"
                         color="secondary"
+                        text="Aktualisiere PDF Report"
                         @click="saveItems"
-                    >
-                        Aktualisiere PDF Report
-                    </v-btn>
+                    />
                     <v-spacer></v-spacer>
                     <v-btn
+                        class="text-none"
                         color="grey lighten-1"
+                        text="Abbrechen"
                         @click="closeDialog"
-                    >
-                        Abbrechen
-                    </v-btn>
+                    />
                     <v-spacer></v-spacer>
                 </v-footer>
             </v-card>
-        </v-dialog>
-    </div>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -124,22 +80,19 @@ import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import { zaehlartText } from "@/types/enum/Zaehlart";
-import { zaehldauerText } from "@/types/enum/Zaehldauer";
-import { wetterText } from "@/types/enum/Wetter";
-import { quelleText } from "@/types/enum/Quelle";
+import {zaehlartText} from "@/types/enum/Zaehlart";
+import {zaehldauerText} from "@/types/enum/Zaehldauer";
+import {wetterText} from "@/types/enum/Wetter";
+import {quelleText} from "@/types/enum/Quelle";
 import _ from "lodash";
-import { computed, ref } from "vue";
-import { useDateUtils } from "@/util/DateUtils";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
-import { useSnackbarStore } from "@/store/snackbar";
-import { usePdfReportStore } from "@/store/pdfReport";
+import {ref} from "vue";
+import {useDateUtils} from "@/util/DateUtils";
+import {useZaehlstelleStore} from "@/store/zaehlstelle";
+import {useSnackbarStore} from "@/store/snackbar";
+import {usePdfReportStore} from "@/store/pdfReport";
+import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
 
-interface Props {
-    value: boolean;
-}
-
-const props = defineProps<Props>();
+const dialog = defineModel<boolean>({required: true});
 
 const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
@@ -150,15 +103,6 @@ const zaehlstelleinfo = ref(false);
 const zaehlungsinfo = ref(false);
 const legende = ref(false);
 const zaehlungskenngroessen = ref(false);
-
-const emit = defineEmits<{
-    (e: "input", v: boolean): void;
-}>();
-
-const dialog = computed({
-    get: () => props.value,
-    set: (payload: boolean) => emit("input", payload),
-});
 
 function closeDialog(): void {
     dialog.value = false;

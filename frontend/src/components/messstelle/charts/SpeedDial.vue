@@ -1,109 +1,102 @@
 <template>
     <v-speed-dial
-        v-model="fab"
-        absolute
-        bottom
-        right
+        v-model="speedDialOpen"
+        location="top"
         open-on-hover
     >
-        <template #activator>
-            <v-btn
-                v-model="fab"
-                dark
-                fab
-                :color="fabColor"
-                :loading="loadingFile"
-            >
-                <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                <v-icon v-else> mdi-file </v-icon>
-            </v-btn>
-        </template>
-
+      <template #activator="{ props: activatorProps }">
+        <v-btn
+            v-bind="activatorProps"
+            :color="speedDialColor"
+            :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-file'"
+            size="large"
+            elevation="6"
+            location="bottom end"
+            position="absolute"
+            class="mr-4 mb-4"
+            style="z-index: 400"
+            :data-x="activatorProps"
+            :loading="loadingFile"
+            key="speedDial"
+        />
+      </template>
         <v-tooltip
             v-if="isNotHeatmap"
-            left
+            location="left"
+            key="tooltipGeneratePdf"
         >
-            <template #activator="{ on, attrs }">
+            <template #activator="{ props }">
                 <v-btn
-                    fab
-                    dark
-                    small
+                    v-bind="props"
+                    key="generatePdfButton"
+                    size="small"
                     color="secondary"
-                    v-bind="attrs"
+                    icon="mdi-file-pdf-box"
                     @click="$emit('generatePdf')"
-                    v-on="on"
-                >
-                    <v-icon>mdi-file-pdf-box</v-icon>
-                </v-btn>
+                />
             </template>
             <span>{{ generatePdfTooltip }}</span>
         </v-tooltip>
         <v-tooltip
             v-if="isListenausgabe"
-            left
+            location="left"
+            key="tooltipGenerateCsv"
         >
-            <template #activator="{ on, attrs }">
+            <template #activator="{ props }">
                 <v-btn
-                    fab
-                    dark
-                    small
+                    v-bind="props"
+                    key="generatecsvButton"
+                    size="small"
                     color="secondary"
-                    v-bind="attrs"
+                    icon="mdi-file-delimited"
                     @click="$emit('generateCsv')"
-                    v-on="on"
                 >
-                    <v-icon>mdi-file-delimited</v-icon>
                 </v-btn>
             </template>
             <span>CSV</span>
         </v-tooltip>
-        <v-tooltip left>
-            <template #activator="{ on, attrs }">
+        <v-tooltip localtion="left" key="tooltipOpenPdfReportDialog">
+            <template #activator="{ props }">
                 <v-btn
-                    fab
-                    dark
-                    small
+                    v-bind="props"
+                    key="openPdfReportDialogButton"
+                    size="small"
                     color="secondary"
-                    v-bind="attrs"
+                    icon="mdi-file-chart"
                     @click="$emit('openPdfReportDialog')"
-                    v-on="on"
                 >
-                    <v-icon>mdi-file-chart</v-icon>
                 </v-btn>
             </template>
             <span>PDF Report Menü öffnen</span>
         </v-tooltip>
-        <v-tooltip left>
-            <template #activator="{ on, attrs }">
+        <v-tooltip location="left" key="tooltipAddChartToPdfReport">
+            <template #activator="{ props }">
                 <v-btn
-                    fab
-                    dark
-                    small
+                    v-bind="props"
+                    key="addChartToPdfReportButton"
+                    size="small"
                     color="secondary"
-                    v-bind="attrs"
+                    icon="mdi-chart-box-plus-outline"
                     @click="$emit('addChartToPdfReport')"
-                    v-on="on"
                 >
-                    <v-icon>mdi-chart-box-plus-outline</v-icon>
                 </v-btn>
             </template>
             <span>{{ addChartToReportTooltip }}</span>
         </v-tooltip>
         <v-tooltip
             v-if="!isListenausgabe"
-            left
+            location="left"
+            key="tooltipSaveGraphAsImage"
         >
-            <template #activator="{ on, attrs }">
+            <template #activator="{ props }">
                 <v-btn
-                    fab
-                    dark
-                    small
+                    v-bind="props"
+                    key="saveGraphAsImageButton"
+                    size="small"
                     color="secondary"
-                    v-bind="attrs"
+                    icon="mdi-download"
                     @click="$emit('saveGraphAsImage')"
-                    v-on="on"
                 >
-                    <v-icon>mdi-download</v-icon>
                 </v-btn>
             </template>
             <span>Graph herunterladen</span>
@@ -130,10 +123,10 @@ defineEmits<{
 }>();
 
 // Fab
-const fab = ref(false);
+const speedDialOpen = ref(false);
 
-const fabColor = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
+const speedDialColor = computed(() => {
+    return speedDialOpen.value ? "grey darken-1" : "secondary";
 });
 
 const generatePdfTooltip = computed(() => {
