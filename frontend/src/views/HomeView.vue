@@ -28,32 +28,22 @@
               key="speedDial"
           />
         </template>
-        <v-tooltip location="left" key="tooltipPrintSearchResult">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-file-delimited"
-                color="secondary"
-                size="small"
-                v-bind="props"
-                @click="printSearchResult"
-                key="printSearchResult"
-            />
-          </template>
-          <span>Suchergebnis als CSV herunterladen</span>
-        </v-tooltip>
-        <v-tooltip location="left" key="tooltipTakePicture">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-camera"
-                color="secondary"
-                size="small"
-                v-bind="props"
-                @click="takePicture"
-                key="takePicture"
-            />
-          </template>
-          <span>Karte dem PDF Report hinzufügen</span>
-        </v-tooltip>
+        <v-btn
+            v-tooltip:start="'Suchergebnis als CSV herunterladen'"
+            key="printSearchResult"
+            icon="mdi-file-delimited"
+            color="secondary"
+            size="small"
+            @click="printSearchResult"
+        />
+        <v-btn
+            v-tooltip:start="'Karte dem PDF Report hinzufügen'"
+            key="takePicture"
+            icon="mdi-camera"
+            color="secondary"
+            size="small"
+            @click="takePicture"
+        />
       </v-speed-dial>
     </v-main>
 </template>

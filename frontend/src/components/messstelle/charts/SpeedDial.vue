@@ -20,87 +20,49 @@
             key="speedDial"
         />
       </template>
-        <v-tooltip
-            v-if="isNotHeatmap"
-            location="left"
-            key="tooltipGeneratePdf"
-        >
-            <template #activator="{ props }">
-                <v-btn
-                    v-bind="props"
-                    key="generatePdfButton"
-                    size="small"
-                    color="secondary"
-                    icon="mdi-file-pdf-box"
-                    @click="$emit('generatePdf')"
-                />
-            </template>
-            <span>{{ generatePdfTooltip }}</span>
-        </v-tooltip>
-        <v-tooltip
-            v-if="isListenausgabe"
-            location="left"
-            key="tooltipGenerateCsv"
-        >
-            <template #activator="{ props }">
-                <v-btn
-                    v-bind="props"
-                    key="generatecsvButton"
-                    size="small"
-                    color="secondary"
-                    icon="mdi-file-delimited"
-                    @click="$emit('generateCsv')"
-                >
-                </v-btn>
-            </template>
-            <span>CSV</span>
-        </v-tooltip>
-        <v-tooltip localtion="left" key="tooltipOpenPdfReportDialog">
-            <template #activator="{ props }">
-                <v-btn
-                    v-bind="props"
-                    key="openPdfReportDialogButton"
-                    size="small"
-                    color="secondary"
-                    icon="mdi-file-chart"
-                    @click="$emit('openPdfReportDialog')"
-                >
-                </v-btn>
-            </template>
-            <span>PDF Report Menü öffnen</span>
-        </v-tooltip>
-        <v-tooltip location="left" key="tooltipAddChartToPdfReport">
-            <template #activator="{ props }">
-                <v-btn
-                    v-bind="props"
-                    key="addChartToPdfReportButton"
-                    size="small"
-                    color="secondary"
-                    icon="mdi-chart-box-plus-outline"
-                    @click="$emit('addChartToPdfReport')"
-                >
-                </v-btn>
-            </template>
-            <span>{{ addChartToReportTooltip }}</span>
-        </v-tooltip>
-        <v-tooltip
-            v-if="!isListenausgabe"
-            location="left"
-            key="tooltipSaveGraphAsImage"
-        >
-            <template #activator="{ props }">
-                <v-btn
-                    v-bind="props"
-                    key="saveGraphAsImageButton"
-                    size="small"
-                    color="secondary"
-                    icon="mdi-download"
-                    @click="$emit('saveGraphAsImage')"
-                >
-                </v-btn>
-            </template>
-            <span>Graph herunterladen</span>
-        </v-tooltip>
+      <v-btn
+        v-if="isNotHeatmap"
+        v-tooltip:start="generatePdfTooltip"
+        key="generatePdfButton"
+        size="small"
+        color="secondary"
+        icon="mdi-file-pdf-box"
+        @click="$emit('generatePdf')"
+      />
+      <v-btn
+          v-if="isListenausgabe"
+          v-tooltip:start="'CSV'"
+          key="generatecsvButton"
+          size="small"
+          color="secondary"
+          icon="mdi-file-delimited"
+          @click="$emit('generateCsv')"
+      />
+      <v-btn
+          v-tooltip:start="'PDF Report Menü öffnen'"
+          key="openPdfReportDialogButton"
+          size="small"
+          color="secondary"
+          icon="mdi-file-chart"
+          @click="$emit('openPdfReportDialog')"
+      />
+      <v-btn
+          v-tooltip:start="addChartToReportTooltip"
+          key="addChartToPdfReportButton"
+          size="small"
+          color="secondary"
+          icon="mdi-chart-box-plus-outline"
+          @click="$emit('addChartToPdfReport')"
+      />
+      <v-btn
+        v-if="!isListenausgabe"
+        v-tooltip:start="'Graph herunterladen'"
+        key="saveGraphAsImageButton"
+        size="small"
+        color="secondary"
+        icon="mdi-download"
+        @click="$emit('saveGraphAsImage')"
+      />
     </v-speed-dial>
 </template>
 <script setup lang="ts">
