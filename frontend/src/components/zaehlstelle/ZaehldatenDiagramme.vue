@@ -265,11 +265,6 @@ const zaehldatenZeitreihe = ref<LadeZaehldatenZeitreiheDTO>(
 );
 const zeitreiheLoading = ref(false);
 
-const fab = ref(false);
-const isFabShown = ref(true);
-const isTabListenausgabe = ref(false);
-const isNotTabHeatmap = ref(true);
-
 const activeTab  = ref(0);
 const loadingFile = ref(false);
 
@@ -287,10 +282,6 @@ const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const daveUtils = useDaveUtils();
 
-const fabColor = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
-});
-
 const options = computed<OptionsDTO>(() => {
     return zaehlstelleStore.getFilteroptions;
 });
@@ -305,6 +296,12 @@ const selectedZaehlung  = computed<LadeZaehlungDTO>(() => {
 const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
     return zaehlstelleStore.getZaehlstelleHeader;
 });
+const isTabListenausgabe = computed<boolean>(() => {
+    return TAB_LISTENAUSGABE === activeTab.value;
+});
+const isNotTabHeatmap = computed<boolean>(() => {
+    return TAB_HEATMAP !== activeTab.value;
+});
 
 watch(options, () => {
     loadData();
@@ -312,15 +309,6 @@ watch(options, () => {
 
 function changeTab() {
   zaehlstelleStore.setActiveTab(activeTab.value);
-  isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
-  isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-  isFabShown.value = [
-    TAB_BELASTUNGSPLAN,
-    TAB_GANGLINIE,
-    TAB_LISTENAUSGABE,
-    TAB_HEATMAP,
-    TAB_ZEITREIHE,
-  ].includes(activeTab.value);
 }
 
 watch(belastungsplanSvg, () => {
