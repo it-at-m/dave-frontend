@@ -40,10 +40,10 @@
                     :minheight="headerHeightVh"
                     width="100%"
                 />
-<!--                <messstelle-diagramme-->
-<!--                    :height="rightHeightVh"-->
-<!--                    :content-height="rightContentHeightVh"-->
-<!--                />-->
+                <messstelle-diagramme
+                    :height="rightHeightVh"
+                    :content-height="rightContentHeightVh"
+                />
             </v-col>
         </v-row>
     </v-sheet>

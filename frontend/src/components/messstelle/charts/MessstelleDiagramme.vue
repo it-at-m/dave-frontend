@@ -6,36 +6,36 @@
         <v-tabs
             v-model="activeTab"
             fixed-tabs
-            background-color="grey darken-1"
+            bg-color="grey-darken-1"
             dark
-            icons-and-text
-            slider-color="grey lighten-1"
-            slider-size="8"
+            slider-color="grey-lighten-1"
+            stacked
         >
             <!-- Kopfzeile -->
-            <v-tab>
-                Belastungsplan
+            <v-tab :value="TAB_BELASTUNGSPLAN">
                 <v-icon>mdi-arrow-decision</v-icon>
+                Belastungsplan
             </v-tab>
-            <v-tab>
-                Ganglinie
+            <v-tab :value="TAB_GANGLINIE">
                 <v-icon>mdi-chart-histogram</v-icon>
+                Ganglinie
             </v-tab>
-            <v-tab>
-                Listenausgabe
+            <v-tab :value="TAB_LISTENAUSGABE">
                 <v-icon>mdi-table</v-icon>
+                Listenausgabe
             </v-tab>
-            <v-tab>
-                Heatmap
+            <v-tab :value="TAB_HEATMAP">
                 <v-icon>mdi-chart-bubble</v-icon>
+                Heatmap
             </v-tab>
         </v-tabs>
-        <v-tabs-items
+        <v-tabs-window
             v-model="activeTab"
             class="d-flex flex-column align-stretch"
+            @update:modelValue="changeTab"
         >
             <!-- Inhalte -->
-            <v-tab-item>
+            <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
                 <v-sheet
                     v-if="
                         belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
@@ -51,8 +51,8 @@
                         @print="storeSvg($event)"
                     />
                 </v-sheet>
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item :value="TAB_GANGLINIE">
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
                     v-else
@@ -67,8 +67,8 @@
                     ></step-line-card>
                 </v-sheet>
                 <progress-loader :value="chartDataLoading"></progress-loader>
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item :value="TAB_LISTENAUSGABE">
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
                     v-else
@@ -82,8 +82,8 @@
                     </messwerte-listenausgabe>
                 </v-sheet>
                 <progress-loader :value="chartDataLoading"></progress-loader>
-            </v-tab-item>
-            <v-tab-item>
+            </v-tabs-window-item>
+            <v-tabs-window-item :value="TAB_HEATMAP">
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
                 <v-sheet
                     v-else
@@ -97,8 +97,8 @@
                     ></heatmap-card>
                 </v-sheet>
                 <progress-loader :value="chartDataLoading"></progress-loader>
-            </v-tab-item>
-        </v-tabs-items>
+            </v-tabs-window-item>
+        </v-tabs-window>
 
         <!-- Speed Dial alles außer Listenausgabe-->
         <speed-dial
@@ -111,10 +111,10 @@
             @generateCsv="generateCsv"
             @generatePdf="generatePdf"
         />
-        <pdf-report-menue-messstelle
-            v-model="pdfReportDialog"
-            @close="closePdfReportDialog"
-        />
+<!--        <pdf-report-menue-messstelle-->
+<!--            v-model="pdfReportDialog"-->
+<!--            @close="closePdfReportDialog"-->
+<!--        />-->
     </v-sheet>
 </template>
 <script setup lang="ts">
@@ -179,8 +179,6 @@ const listenausgabeDTO = ref<Array<LadeZaehldatumDTO>>([]);
 
 const belastungsplanDataDTO = ref({} as BelastungsplanMessquerschnitteDTO);
 
-const isTabListenausgabe = ref(false);
-const isNotTabHeatmap = ref(true);
 const pdfReportDialog = ref(false);
 
 const activeTab  = ref(0);
@@ -215,6 +213,14 @@ const options = computed<MessstelleOptionsDTO>(() => {
     return messstelleStore.getFilteroptions;
 });
 
+
+const isTabListenausgabe = computed<boolean>(() => {
+  return TAB_LISTENAUSGABE === activeTab.value;
+});
+const isNotTabHeatmap = computed<boolean>(() => {
+  return TAB_HEATMAP !== activeTab.value;
+});
+
 const isBiggerThanFiveYears = computed(() => {
     let zeitraum = options.value.zeitraum;
     const differenceInMs = Math.abs(
@@ -231,11 +237,9 @@ watch(isBiggerThanFiveYears, () => {
     }
 });
 
-watch(activeTab, (active) => {
-    messstelleStore.setActiveTab(active);
-    isTabListenausgabe.value = TAB_LISTENAUSGABE === activeTab.value;
-    isNotTabHeatmap.value = TAB_HEATMAP !== activeTab.value;
-});
+function changeTab() {
+  messstelleStore.setActiveTab(activeTab.value);
+}
 
 watch(options, () => {
     loadProcessedChartData();
@@ -522,3 +526,9 @@ function fetchPdf(formData: FormData, type: string) {
         .finally(() => (loadingFile.value = false));
 }
 </script>
+
+<style scoped lang="scss">
+@use 'vuetify/settings' with (
+  $tab-slider-size: 8px,
+);
+</style>
