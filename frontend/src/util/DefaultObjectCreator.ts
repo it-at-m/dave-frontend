@@ -69,8 +69,8 @@ export default class DefaultObjectCreator {
             stadtbezirkNummer: 0,
             stadtbezirk: "",
             standort: "",
-            latitude: 0,
-            longitude: 0,
+            latitude: "",
+            longitude: "",
             kommentar: "",
             sichtbarDatenportal: true,
             messquerschnitte: [],
@@ -121,7 +121,7 @@ export default class DefaultObjectCreator {
     public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptionsDTO {
         return {
             jahre: [],
-            tagesTyp: "",
+            tagesTyp: "" as TagesTyp,
             zeitraum: [],
             mstIds: [],
             mqIds: [],

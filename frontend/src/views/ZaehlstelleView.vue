@@ -183,10 +183,8 @@ const timelineHeightVh = computed(() => {
  */
 
 onMounted(() => {
-    // ID der Zählstelle aus der URL holen (oder Warnung ausgeben, falls keine vorhanden ist)
-    const zaehlstelleId = route.params.zaehlstelleId as string;
     // Die Informationen zur Zählstelle werden geladen
-    ZaehlstellenService.getById(zaehlstelleId).then((loadedZaehlstelle) => {
+    ZaehlstellenService.getById(zaehlstelleId.value).then((loadedZaehlstelle) => {
         const zaehlungen = new Array<LadeZaehlungDTO>();
         Object.assign(zaehlungen, loadedZaehlstelle.zaehlungen);
         // Die Zählungen und id der aktiven Zählung werden an den Store übergeben.

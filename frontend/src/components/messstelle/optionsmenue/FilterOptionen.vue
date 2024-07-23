@@ -1,15 +1,16 @@
 <template>
     <v-sheet
         width="100%"
-        color="grey darken-1"
+        min-height="50"
+        color="grey-darken-1"
         class="px-4 py-3"
     >
         <v-row>
             <v-col cols="1"></v-col>
             <v-col>
-                <h3 class="grey--text text--lighten-1">
-                    Aktuelle Filtereinstellungen
-                </h3>
+              <h3 class="text-grey-lighten-1">
+                  Aktuelle Filtereinstellungen
+              </h3>
             </v-col>
         </v-row>
         <v-row no-gutters>
@@ -19,22 +20,22 @@
             >
                 <v-icon
                     small
-                    color="grey lighten-1"
+                    color="grey-lighten-1"
                     >mdi-clock-time-four-outline</v-icon
                 >
             </v-col>
             <v-col cols="10">
-                <span class="grey--text text--lighten-1"
+                <span class="text-grey-lighten-1"
                     >Zeit:
-                    <span class="font-weight-medium white--text"
+                    <span class="font-weight-medium text-white"
                         >{{ zeitblock }}
                     </span>
                     in
-                    <span class="font-weight-medium white--text"
+                    <span class="font-weight-medium text-white"
                         >{{ zeitintervall }}
                     </span>
                     Intervallen
-                    <span class="font-weight-medium white--text">{{
+                    <span class="font-weight-medium text-white">{{
                         zeitraum
                     }}</span>
                 </span>
@@ -50,14 +51,14 @@
             >
                 <v-icon
                     small
-                    color="grey lighten-1"
+                    color="grey-lighten-1"
                     >mdi-calendar-week-outline</v-icon
                 >
             </v-col>
             <v-col cols="10">
-                <span class="grey--text text--lighten-1"
+                <span class="text-grey-lighten-1"
                     >Wochentag:
-                    <span class="font-weight-medium white--text"
+                    <span class="font-weight-medium text-white"
                         >{{ wochentag }}
                     </span>
                 </span>
@@ -73,7 +74,7 @@
                 <v-icon
                     v-if="index === 0"
                     small
-                    color="grey lighten-1"
+                    color="grey-lighten-1"
                     >mdi-arrow-decision</v-icon
                 >
             </v-col>
@@ -84,34 +85,21 @@
                 >
             </v-col>
             <v-col cols="2">
-                <span
-                    :class="
-                        getStyleClass(messquerschnitt.mqId) + ' hidden-xl-only'
-                    "
-                    >[
-                    {{
-                        himmelsRichtungenTextShort.get(
-                            messquerschnitt.fahrtrichtung
-                        )
-                    }}
-                    ]</span
-                >
-                <span
-                    :class="
-                        getStyleClass(messquerschnitt.mqId) +
-                        ' hidden-lg-and-down'
-                    "
-                    >[
-                    {{
-                        himmelsRichtungenTextLong.get(
-                            messquerschnitt.fahrtrichtung
-                        )
-                    }}
-                    ]</span
-                >
+                <span :class="getStyleClass(messquerschnitt.mqId)">
+                    {{ getHimmelsrichtungAsText(messquerschnitt.fahrtrichtung) }}
+                </span>
             </v-col>
         </v-row>
-        <OptionsmenueMessstelle messstelle-id="messstelleId" />
+      <v-row
+          no-gutters
+          class="mt-2"
+      >
+        <v-spacer/>
+        <v-col>
+          <OptionsmenueMessstelle messstelle-id="messstelleId" />
+        </v-col>
+        <v-spacer/>
+      </v-row>
     </v-sheet>
 </template>
 <script setup lang="ts">
@@ -123,13 +111,19 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import {zeitblockInfo} from "@/types/enum/Zeitblock";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import {ZaehldatenIntervallToBeschreibung} from "@/types/enum/ZaehldatenIntervall";
-import {himmelsRichtungenTextLong, himmelsRichtungenTextShort,} from "@/types/enum/Himmelsrichtungen";
+import Himmelsrichtungen, {
+  himmelsRichtungenTextLong,
+  himmelsRichtungenTextShort,
+} from "@/types/enum/Himmelsrichtungen";
 import {zeitblockStuendlichInfo} from "@/types/enum/ZeitblockStuendlich";
 import {tagesTypText} from "@/types/enum/TagesTyp";
 import {useMessstelleStore} from "@/store/messstelle";
+import {useDisplay} from "vuetify";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
+const display = useDisplay();
+
 interface Props {
     messstelle: MessstelleInfoDTO;
 }
@@ -147,7 +141,7 @@ const wochentag = computed<string | undefined>(() => {
 const zeitraum = computed(() => {
     const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
     if (zeitraum.length == 1) {
-        return `am ${dateUtils.formatDate(zeitraum[0])}`;
+        return `am ${dateUtils.formatDate(zeitraum[0].toString())}`;
     } else if (zeitraum.length == 2) {
         const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
         return `im Zeitraum ${dateUtils.formatDate(
@@ -186,10 +180,22 @@ const zeitintervall = computed(() => {
 });
 
 function getStyleClass(mqId: string): string {
-    let notIncluded = "text-caption grey--text text--lighten-1";
-    let included = "text-caption font-weight-medium white--text";
+    let notIncluded = "text-caption text-grey-lighten-1";
+    let included = "text-caption font-weight-medium text-white";
     return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
         ? included
         : notIncluded;
+}
+
+function getHimmelsrichtungAsText(fahrtrichtung: Himmelsrichtungen) {
+  let text = display.xl.value? "unbekannt" : "?";
+  if (fahrtrichtung) {
+    if (display.xl.value) {
+      text = himmelsRichtungenTextLong.get(fahrtrichtung) ?? "?";
+    } else {
+      text = himmelsRichtungenTextShort.get((fahrtrichtung)) ?? "?";
+    }
+  }
+  return `[ ${text} ]`;
 }
 </script>

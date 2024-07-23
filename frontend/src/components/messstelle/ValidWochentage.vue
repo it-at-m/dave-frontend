@@ -1,70 +1,23 @@
 <template>
     <v-sheet>
-        <v-menu
-            color="secondary"
-            offset-x
-        >
-            <template #activator="{ on, props }">
-                <button
-                    v-bind="props"
-                    class="text-sm-left px-4 py-2 primary--text d-flex flex-row"
-                    v-on="on"
-                >
-                    <v-icon class="pr-3">mdi-chart-line</v-icon>
-                    <span>
-                        Von den ausgewählten {{ zeitraumRange }} Tagen
-                        {{ getChosenWochentageNumberText }} in die Auswertung
-                        eingeflossen
-                    </span>
-                </button>
-            </template>
-            <v-list class="text-caption">
-                <v-list-item class="py-0 my-0">
-                    Von {{ zeitraumRange }} ausgewählten Tagen
-                    {{ totalValidWochentageText }} plausible Daten vor
-                </v-list-item>
-                <v-list-item>
-                    {{ numberValidWochentage.numberOfValidTagesTypDiMiDo }}
-                    Di/Mi/Do
-                </v-list-item>
-                <v-list-item>
-                    {{ numberValidWochentage.numberOfValidTagesTypMoFr }}
-                    Mo-Fr
-                </v-list-item>
-                <v-list-item>
-                    {{ numberValidWochentage.numberOfValidTagesTypSamstag }}
-                    Sa
-                </v-list-item>
-                <v-list-item>
-                    {{
-                        numberValidWochentage.numberOfValidTagesTypSonntagFeiertag
-                    }}
-                    So/Feiertag
-                </v-list-item>
-                <v-list-item>
-                    {{ numberValidWochentage.numberOfValidTagesTypMoSo }}
-                    Mo-So
-                </v-list-item>
-                <v-list-item>
-                    {{
-                        numberValidWochentage.numberOfValidTagesTypWerktagFerien
-                    }}
-                    Werktag/Ferien
-                </v-list-item>
-            </v-list>
-        </v-menu>
+      <v-icon class="pr-3">mdi-chart-line</v-icon>
+      <span>
+        Von den ausgewählten {{ zeitraumRange }} Tagen
+        {{ getChosenWochentageNumberText }} in die Auswertung
+        eingeflossen
+      </span>
     </v-sheet>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import type { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
+import type {ValidWochentageInPeriodDto} from "@/types/messstelle/ValidWochentageInPeriodDto";
 import TagesTyp from "@/types/enum/TagesTyp";
-import { useDateUtils } from "@/util/DateUtils";
-import { useRoute } from "vue-router";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useMessstelleStore } from "@/store/messstelle";
+import {useDateUtils} from "@/util/DateUtils";
+import {useRoute} from "vue-router";
+import {useSnackbarStore} from "@/store/snackbar";
+import {useMessstelleStore} from "@/store/messstelle";
 
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
@@ -96,25 +49,6 @@ const zeitraumRange = computed(() => {
     const endDate = new Date(sortedDates[0]);
     const differenceInMs = Math.abs(endDate.valueOf() - startDate.valueOf());
     return differenceInMs / (1000 * 60 * 60 * 24) + 1;
-});
-
-const totalValidWochentage = computed(() => {
-    return (
-        numberValidWochentage.value.numberOfValidTagesTypMoSo +
-        numberValidWochentage.value.numberOfValidTagesTypMoFr +
-        numberValidWochentage.value.numberOfValidTagesTypDiMiDo +
-        numberValidWochentage.value.numberOfValidTagesTypSamstag +
-        numberValidWochentage.value.numberOfValidTagesTypSonntagFeiertag +
-        numberValidWochentage.value.numberOfValidTagesTypWerktagFerien
-    );
-});
-
-const totalValidWochentageText = computed(() => {
-    if (totalValidWochentage.value == 1) {
-        return `liegt für 1 Wochentag`;
-    } else {
-        return `liegen für ${totalValidWochentage.value} Wochentage`;
-    }
 });
 
 const validWochentageRequestDto = computed(() => {
@@ -181,9 +115,3 @@ function getValidWochentage() {
         });
 }
 </script>
-
-<style scoped>
-.v-list-item {
-    min-height: 0;
-}
-</style>

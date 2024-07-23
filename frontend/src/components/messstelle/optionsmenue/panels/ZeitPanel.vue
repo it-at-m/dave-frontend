@@ -1,12 +1,12 @@
 <template>
     <v-expansion-panel>
-        <v-expansion-panel-header>
+        <v-expansion-panel-title>
             <div>
                 <v-icon left>mdi-clock-time-four-outline</v-icon>
                 Zeit
             </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content class="mt-1">
+        </v-expansion-panel-title>
+        <v-expansion-panel-text class="mt-1">
             <panel-header
                 font-size="0.875rem"
                 font-weight="bold"
@@ -21,21 +21,21 @@
                     cols="8"
                     class="pr-2"
                 >
-                    <v-date-picker
-                        v-model="chosenOptionsCopy.zeitraum"
-                        range
-                        :allowed-dates="allowedDatesRangeDatePicker"
-                        full-width
-                        no-title
-                        :events="nichtPlausibleTage"
-                        event-color="red"
-                        locale="de-DE"
-                        first-day-of-week="1"
-                        :picker-date.sync="pickerDate"
-                        :min="minDate"
-                        :max="maxDate"
-                        @change="checkIfDateIsAlreadySelected"
-                    ></v-date-picker>
+<!--                    <v-date-picker-->
+<!--                        v-model="chosenOptionsCopy.zeitraum"-->
+<!--                        event-color="red"-->
+<!--                        full-width-->
+<!--                        no-title-->
+<!--                        :events="nichtPlausibleTage"-->
+<!--                        multiple="range"-->
+<!--                        :allowed-dates="allowedDatesRangeDatePicker"-->
+<!--                        locale="de-DE"-->
+<!--                        first-day-of-week="1"-->
+<!--                        :picker-date.sync="pickerDate"-->
+<!--                        :min="minDate"-->
+<!--                        :max="maxDate"-->
+<!--                        @update:modelValue="checkIfDateIsAlreadySelected"-->
+<!--                    />-->
                 </v-col>
                 <v-col cols="4">
                     <v-text-field
@@ -63,27 +63,27 @@
             </v-row>
             <v-divider></v-divider>
 
-            <tages-typ-radiogroup
-                v-if="chosenOptionsCopyZeitraum.length == 2"
-                v-model="chosenOptionsCopy"
-                :is-chosen-tages-typ-valid="isChosenTagesTypValid"
-            />
-            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"></v-divider>
-
-            <zeitauswahl-radiogroup
-                v-model="chosenOptionsCopy"
-                :messstelle-detektierte-fahrzeugart="
-                    messstelleInfo.detektierteVerkehrsarten
-                "
-            />
-            <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
-            <v-spacer />
-            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>
-            <zeit-intervall
-                v-if="!isDateBiggerFiveYears"
-                v-model="chosenOptionsCopy"
-            />
-        </v-expansion-panel-content>
+<!--            <tages-typ-radiogroup-->
+<!--                v-if="chosenOptionsCopyZeitraum.length == 2"-->
+<!--                v-model="chosenOptionsCopy"-->
+<!--                :is-chosen-tages-typ-valid="isChosenTagesTypValid"-->
+<!--            />-->
+<!--            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"></v-divider>-->
+<!---->
+<!--            <zeitauswahl-radiogroup-->
+<!--                v-model="chosenOptionsCopy"-->
+<!--                :messstelle-detektierte-fahrzeugart="-->
+<!--                    messstelleInfo.detektierteVerkehrsarten-->
+<!--                "-->
+<!--            />-->
+<!--            <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />-->
+<!--            <v-spacer />-->
+<!--            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>-->
+<!--            <zeit-intervall-->
+<!--                v-if="!isDateBiggerFiveYears"-->
+<!--                v-model="chosenOptionsCopy"-->
+<!--            />-->
+        </v-expansion-panel-text>
     </v-expansion-panel>
 </template>
 
@@ -107,12 +107,8 @@ import { useMessstelleStore } from "@/store/messstelle";
 
 const route = useRoute();
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
-const props = defineProps<Props>();
-const emit = defineEmits(["input"]);
 const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
@@ -139,11 +135,6 @@ const getSortedDateRange = computed(() => {
 });
 
 const nichtPlausibleTage = ref<Array<string>>([]);
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
 

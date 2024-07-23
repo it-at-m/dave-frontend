@@ -1,26 +1,22 @@
 <template>
     <div v-if="kommentarArray.length > 0">
-        <v-tooltip bottom>
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    v-bind="attrs"
-                    color="secondary"
-                    icon
-                    v-on="on"
-                    @click="showDialog = true"
-                >
-                    <v-icon>{{ icon.iconPath }}</v-icon>
-                </v-btn>
-            </template>
-            <span>{{ icon.tooltip }}</span>
-        </v-tooltip>
+      <v-btn
+          v-tooltip:bottom="icon.tooltip"
+          color="secondary"
+          :icon="icon.iconPath"
+          size="small"
+          height="20px"
+          class="ml-n1"
+          variant="text"
+          @click="showDialog = true"
+      />
 
         <v-dialog
             v-model="showDialog"
             max-width="600px"
         >
             <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h5 grey-lighten-2">
                     <v-icon left>mdi-comment-multiple</v-icon>
                     Informationen
                 </v-card-title>
@@ -38,7 +34,7 @@
                 <v-footer>
                     <v-spacer></v-spacer>
                     <v-btn
-                        color="grey lighten-1"
+                        color="grey-lighten-1"
                         @click="showDialog = false"
                     >
                         Schließen

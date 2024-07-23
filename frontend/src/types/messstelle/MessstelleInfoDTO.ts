@@ -9,8 +9,8 @@ export default interface MessstelleInfoDTO extends BaseEntity {
     stadtbezirkNummer: number;
     stadtbezirk: string;
     standort: string;
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
     kommentar: string;
     fahrzeugKlassen: string;
     detektierteVerkehrsarten: DetektierteFahrzeugart;

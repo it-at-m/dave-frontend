@@ -1,12 +1,12 @@
 <template>
     <div>
         <v-btn
+            class="text-none"
             color="secondary"
+            prepend-icon="mdi-filter-outline"
+            :text="buttonText"
             @click="dialog = true"
-        >
-            <v-icon left>mdi-filter-outline</v-icon>
-            <span> {{buttonText}}</span>
-        </v-btn>
+        />
 
         <v-dialog
             v-model="dialog"
@@ -425,7 +425,7 @@ function resetOptions() {
 }
 
 function resetSizeBelastungsplan() {
-    zaehlstelleStore.resetSizeBelastungsplanSvg;
+    zaehlstelleStore.resetSizeBelastungsplanSvg();
 }
 
 /**

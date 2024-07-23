@@ -5,7 +5,6 @@
         color="transparent"
     >
         <svg
-            version="1.2"
             :width="width"
             :height="height"
             viewBox="13891 17287 1111 1111"
@@ -160,7 +159,7 @@ const props = withDefaults(defineProps<Props>(), {
 function calculateColor(himmelsrichtung: string): string | undefined {
     let color = props.passiveColor;
 
-    const gefilteterKnotenarm = props.knotenarme?.filter(
+    const gefilteterKnotenarm = props.knotenarme.filter(
         (k) => k.fahrtrichtung === himmelsrichtung
     )[0];
     if (gefilteterKnotenarm) {

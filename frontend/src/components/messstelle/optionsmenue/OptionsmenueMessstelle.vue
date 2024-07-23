@@ -1,16 +1,12 @@
 <template>
     <div>
         <v-btn
-            class="ml-6 mt-2"
+            class="text-none"
             color="secondary"
+            prepend-icon="mdi-filter-outline"
+            :text="buttonText"
             @click="dialog = true"
-        >
-            <v-icon left>mdi-filter-outline</v-icon>
-            <span class="hidden-lg-and-down"
-                >Filtereinstellungen bearbeiten</span
-            >
-            <span class="hidden-xl-only">Filtereinstellungen</span>
-        </v-btn>
+        />
         <v-dialog
             v-model="dialog"
             max-width="900px"
@@ -25,36 +21,41 @@
                 </v-card-title>
                 <v-card-text>
                     <v-sheet
-                        class="overflow-y-auto"
-                        :max-height="getContentSheetHeight"
                         width="100%"
+                        :max-height="getContentSheetHeight"
+                        class="overflow-y-auto"
                     >
                         <v-expansion-panels
-                            hover
+                            variant="accordion"
                             focusable
+                            elevation="0"
                         >
                             <zeit-panel v-model="chosenOptions" />
-                            <fahrzeug-panel v-model="chosenOptions" />
-                            <messquerschnitt-panel v-model="chosenOptions" />
-                            <darstellungsoptionen-panel-messstelle
-                                v-model="chosenOptions"
-                            />
+<!--                            <fahrzeug-panel v-model="chosenOptions" />-->
+<!--                            <messquerschnitt-panel v-model="chosenOptions" />-->
+<!--                            <darstellungsoptionen-panel-messstelle-->
+<!--                                v-model="chosenOptions"-->
+<!--                            />-->
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                        color="secondary"
-                        @click="setChosenOptions"
-                        >Aktualisiere Daten
-                    </v-btn>
+                      class="text-none"
+                      color="secondary"
+                      text="Aktualisiere Daten"
+                      variant="elevated"
+                      @click="setChosenOptions"
+                    />
                     <v-spacer></v-spacer>
                     <v-btn
-                        color="grey lighten-1"
-                        @click="resetOptions"
-                        >Zurücksetzen
-                    </v-btn>
+                      class="text-none"
+                      color="grey-lighten-1"
+                      text="Zurücksetzen"
+                      variant="elevated"
+                      @click="resetOptions"
+                    />
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -110,6 +111,14 @@ const getContentSheetHeight = computed(() => {
         return "650px";
     }
     return "400px";
+});
+
+const buttonText = computed(() => {
+  let text = "Filtereinstellungen";
+  if (display.xl.value) {
+    text = "Filtereinstellungen bearbeiten";
+  }
+  return text;
 });
 
 const isAnwender = computed(() => {
@@ -205,7 +214,7 @@ function setDefaultOptionsForMessstelle(): void {
     chosenOptions.value.tagessumme = true;
     chosenOptions.value.spitzenstunde = true;
     messstelleStore.calculateActiveMessfaehigkeit(
-        messstelle.value.datumLetztePlausibleMessung
+        messstelle.value.datumLetztePlausibleMessung.toString()
     );
     saveChosenOptions();
 }

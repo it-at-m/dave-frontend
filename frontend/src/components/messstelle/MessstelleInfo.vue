@@ -19,11 +19,10 @@
                         lg="8"
                     >
                         <v-row no-gutters>
-                            <v-tooltip bottom>
-                                <template #activator="{ on, attrs }">
+                            <v-tooltip location="bottom">
+                                <template #activator="{ props }">
                                     <span
-                                        v-bind="attrs"
-                                        v-on="on"
+                                        v-bind="props"
                                         >letzter Messtag:
                                         {{ datumLetztePlausibleMessung }}
                                     </span>
@@ -33,12 +32,11 @@
                         </v-row>
                         <v-row no-gutters>
                             <span class="text-truncate">
-                                <v-tooltip bottom>
-                                    <template #activator="{ on, attrs }">
+                                <v-tooltip location="bottom">
+                                    <template #activator="{ props }">
                                         <span
-                                            v-bind="attrs"
+                                            v-bind="props"
                                             class="d-inline-flex pr-1"
-                                            v-on="on"
                                         >
                                             <v-icon
                                                 small
@@ -56,13 +54,12 @@
                                     <span> {{ aufbauIcon.tooltip }} </span>
                                 </v-tooltip>
 
-                                <v-tooltip bottom>
-                                    <template #activator="{ on, attrs }">
+                                <v-tooltip location="bottom">
+                                    <template #activator="{ props }">
                                         <span
                                             v-if="abbauDatumExists"
-                                            v-bind="attrs"
+                                            v-bind="props"
                                             class="d-inline-flex px-1"
-                                            v-on="on"
                                             >|
                                             <v-icon
                                                 small
@@ -115,7 +112,7 @@
                             :width="60"
                             active-color="#1565C0"
                             passive-color="#EEEEEE"
-                            :knotenarme="calculateKnotenarme(messstelle)"
+                            :knotenarme="messstelle.messquerschnitte"
                         ></messstelle-geometrie>
                     </v-col>
                 </v-row>
@@ -137,11 +134,13 @@ interface Props {
     messstelle: MessstelleInfoDTO;
 }
 
+const props = defineProps<Props>();
+
 const aufbauIcon = new IconTooltip("mdi-elevator-up", "Aufbaudatum");
 const abbauIcon = new IconTooltip("mdi-elevator-down", "Abbaudatum");
 
 const datumLetztePlausibleMessung = computed(() => {
-    return formatDate(props.messstelle.datumLetztePlausibleMessung);
+    return formatDate(props.messstelle.datumLetztePlausibleMessung.toString());
 });
 
 function formatDate(date: string): string {
@@ -171,17 +170,4 @@ const detektierteVerkehrsart = computed(() => {
 const abbauDatumExists = computed(() => {
     return props.messstelle.abbaudatum != null;
 });
-
-function calculateKnotenarme(messstelle: MessstelleInfoDTO) {
-    let knotenarme = [];
-    for (let messquerschnitt of messstelle.messquerschnitte) {
-        knotenarme.push({
-            fahrtrichtung: messquerschnitt.fahrtrichtung,
-            strassenname: messquerschnitt.strassenname,
-        });
-    }
-    return knotenarme;
-}
-
-const props = defineProps<Props>();
 </script>

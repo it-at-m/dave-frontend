@@ -1,21 +1,15 @@
 <template>
     <span v-if="kommentar">
-        <v-tooltip bottom>
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    v-bind="attrs"
-                    color="secondary"
-                    icon
-                    height="20px"
-                    class="ml-n2"
-                    v-on="on"
-                    @click="showDialog = true"
-                >
-                    <v-icon small>mdi-comment-text</v-icon>
-                </v-btn>
-            </template>
-            <span>Kommentar anzeigen</span>
-        </v-tooltip>
+        <v-btn
+            color="secondary"
+            icon="mdi-comment-text"
+            size="small"
+            height="20px"
+            class="ml-n2"
+            variant="text"
+            v-tooltip:bottom="'Kommentar anzeigen'"
+            @click="showDialog = true"
+        />
         <v-dialog
             v-model="showDialog"
             max-width="600px"

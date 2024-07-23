@@ -195,9 +195,8 @@
                         >
                     </v-col>
                     <v-col cols="2">
-                        <span
-                            class="text-caption text-grey-lighten-1">
-                          [ {{ getHimmelsrichtungAsText(k.nummer) }} ]
+                        <span class="text-caption text-grey-lighten-1">
+                          {{ getHimmelsrichtungAsText(k.nummer) }}
                         </span>
                     </v-col>
                 </v-row>
@@ -205,10 +204,11 @@
                     no-gutters
                     class="mt-2"
                 >
-                    <v-col cols="1"></v-col>
+                    <v-spacer/>
                     <v-col>
                         <optionsmenue :zaehlung="zaehlung"></optionsmenue>
                     </v-col>
+                    <v-spacer/>
                 </v-row>
             </v-sheet>
         </v-row>
@@ -222,18 +222,17 @@ import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import Optionsmenue from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import Zeitblock, {zeitblockInfo} from "@/types/enum/Zeitblock";
+import {ZaehldatenIntervallToBeschreibung} from "@/types/enum/ZaehldatenIntervall";
+import {zeitblockStuendlichInfo} from "@/types/enum/ZeitblockStuendlich";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import _ from "lodash";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
-import { computed, ref, watch } from "vue";
-import { useVuetify } from "@/util/useVuetify";
+import {computed, ref, watch} from "vue";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import {useZaehlstelleStore} from "@/store/zaehlstelle";
 import type {StartEndeUhrzeitIntervalls} from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import {useDisplay} from "vuetify";
 
@@ -355,7 +354,7 @@ const getMaxCols = computed(() => {
 
 function getHimmelsrichtungAsText(knotenarmnummer: number) {
   const himmelsrichtung = himmelsRichtungen.value.get(knotenarmnummer);
-  let text = display.xl.value? "unbekannt" : "u";
+  let text = display.xl.value? "unbekannt" : "?";
   if (himmelsrichtung) {
     if (display.xl.value) {
       text = himmelsrichtung.l;
@@ -363,7 +362,7 @@ function getHimmelsrichtungAsText(knotenarmnummer: number) {
       text = himmelsrichtung.s;
     }
   }
-  return text;
+  return `[ ${text} ]`;
 }
 function getDirectionAsText(direction: string) {
   const directiontext = display.lgAndUp.value? direction : direction[0];

@@ -1,7 +1,6 @@
 <template>
-    <v-container
-        fluid
-        class="pa-0"
+    <v-sheet
+        class="dave-default"
     >
         <v-row no-gutters>
             <v-col cols="3">
@@ -9,7 +8,7 @@
                     :min-height="leftHeightVh"
                     :max-height="leftHeightVh"
                     width="100%"
-                    color="grey lighten-3"
+                    color="grey-lighten-3"
                     class="d-flex flex-column"
                 >
                     <!-- Basisinformation zur Messstelle -->
@@ -35,19 +34,19 @@
             <v-col cols="9">
                 <zaehlstelle-map
                     :z-id="messstelleId"
-                    :zoom="17"
                     :latlng="latlng"
+                    :zoom="17"
                     :height="headerHeightVh"
                     :minheight="headerHeightVh"
                     width="100%"
                 />
-                <messstelle-diagramme
-                    :height="rightHeightVh"
-                    :content-height="rightContentHeightVh"
-                />
+<!--                <messstelle-diagramme-->
+<!--                    :height="rightHeightVh"-->
+<!--                    :content-height="rightContentHeightVh"-->
+<!--                />-->
             </v-col>
         </v-row>
-    </v-container>
+    </v-sheet>
 </template>
 <script setup lang="ts">
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
@@ -74,6 +73,7 @@ const messstelle = ref<MessstelleInfoDTO>(
 const display = useDisplay();
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
+const route = useRoute();
 
 onMounted(() => {
     loadMessstelle();
@@ -119,7 +119,6 @@ const rightContentHeightVh = computed(() => {
 });
 
 const messstelleId = computed(() => {
-    const route = useRoute();
     // TODO als Prop injecten
     const messstelleId = route.params.messstelleId as string;
     if (!messstelleId) {
@@ -128,12 +127,13 @@ const messstelleId = computed(() => {
     return messstelleId;
 });
 
-const latlng = computed<Array<string>>(() => {
-    return [
-        messstelle.value.latitude.toString(),
-        messstelle.value.longitude.toString(),
-    ];
+const latlng = computed(() => {
+  if (messstelle.value.latitude && messstelle.value.longitude) {
+    return [messstelle.value.latitude, messstelle.value.longitude];
+  }
+  return [];
 });
+
 function loadMessstelle() {
     MessstelleService.getMessstelleById(messstelleId.value)
         .then((messstelleDTO) => {

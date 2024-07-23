@@ -1,16 +1,11 @@
 <template>
-    <v-tooltip location="bottom">
-        <template #activator="{ props }">
-            <v-icon
-              v-bind="props"
-              class="mr-1"
-              :icon="icon"
-              :size="iconSize"
-              :color="color"
-            />
-        </template>
-        <span>{{ tooltip }}</span>
-    </v-tooltip>
+  <v-icon
+    v-tooltip:bottom="tooltip"
+    class="mr-1"
+    :icon="icon"
+    :size="iconSize"
+    :color="color"
+  />
 </template>
 <script setup lang="ts">
 import {computed} from "vue";
