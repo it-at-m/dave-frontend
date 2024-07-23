@@ -111,10 +111,10 @@
             @generateCsv="generateCsv"
             @generatePdf="generatePdf"
         />
-<!--        <pdf-report-menue-messstelle-->
-<!--            v-model="pdfReportDialog"-->
-<!--            @close="closePdfReportDialog"-->
-<!--        />-->
+        <pdf-report-menue-messstelle
+            v-model="pdfReportDialog"
+            @close="closePdfReportDialog"
+        />
     </v-sheet>
 </template>
 <script setup lang="ts">

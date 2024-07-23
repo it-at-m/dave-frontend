@@ -1,99 +1,73 @@
 <template>
-    <div>
-        <v-dialog
-            v-model="openDialog"
+  <v-dialog
+            v-model="dialog"
             max-width="900px"
             @click:outside="closeDialog"
         >
             <v-card
                 width="900px"
-                flat
+                variant="flat"
             >
                 <v-card-title>
                     <v-icon left>mdi-file-chart</v-icon>
                     Auswahl zum PDF Report
                 </v-card-title>
 
-                <v-list
-                    flat
-                    subheader
-                    three-line
-                >
-                    <v-subheader
-                        >Wählen Sie die Inhalte, die dem PDF Report hinzugefügt
-                        werden sollen.</v-subheader
-                    >
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox v-model="messstelleninfo"></v-checkbox>
-                        </v-list-item-action>
+              <v-card-subtitle>Wählen Sie die Inhalte, die dem PDF Report hinzugefügt
+                werden sollen.</v-card-subtitle>
 
-                        <v-list-item-content>
-                            <v-list-item-title
-                                >Messstelleninformationen</v-list-item-title
-                            >
-                            <v-list-item-subtitle
-                                >Folgende Informationen werden im PDF Report
+                <v-list
+                    variant="flat"
+                    lines="three"
+                    density="compact"
+                >
+
+                  <pdf-report-menue-list-item
+                      v-model="messstelleninfo"
+                      title="Messstelleninformationen"
+                      subtitle="Folgende Informationen werden im PDF Report
                                 eingetragen: Messstelle-ID, ID & Standort der
                                 Messquerschnitte, Stadtbezirk,
-                                Messstellenkommentar.
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
+                                Messstellenkommentar."
+                  />
 
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox v-model="messinfo"></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                            <v-list-item-title
-                                >Messinformationen</v-list-item-title
-                            >
-                            <v-list-item-subtitle
-                                >Folgende Informationen werden im PDF Report
+                  <pdf-report-menue-list-item
+                      v-model="messinfo"
+                      title="Messinformationen"
+                      subtitle="Folgende Informationen werden im PDF Report
                                 eingetragen: Zeitraum von ... bis / Einzeltag,
                                 Wochentag, Statistik zur Auswertung (Anzahl
-                                plausible Wochentage)
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
+                                plausible Wochentage)"
+                  />
 
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-checkbox v-model="legende"></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                            <v-list-item-title>Legende</v-list-item-title>
-                            <v-list-item-subtitle
-                                >Die Legende enthält Kurzbeschreibungen der
+                  <pdf-report-menue-list-item
+                      v-model="legende"
+                      title="Legende"
+                      subtitle="Die Legende enthält Kurzbeschreibungen der
                                 einzelnen Zählattribute, z.B. für den
-                                Kraftfahrzeugverkehr, Schwerverkehr etc.
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
+                                Kraftfahrzeugverkehr, Schwerverkehr etc."
+                  />
+
                 </v-list>
                 <v-footer>
                     <v-spacer></v-spacer>
                     <v-btn
+                        class="text-none"
                         color="secondary"
+                        text="Aktualisiere PDF Report"
                         @click="saveItems"
-                    >
-                        Aktualisiere PDF Report
-                    </v-btn>
+                    />
                     <v-spacer></v-spacer>
-                    <v-btn
-                        color="grey lighten-1"
-                        @click="closeDialog"
-                    >
-                        Abbrechen
-                    </v-btn>
+                  <v-btn
+                      class="text-none"
+                      color="grey-lighten-1"
+                      text="Abbrechen"
+                      @click="closeDialog"
+                  />
                     <v-spacer></v-spacer>
                 </v-footer>
             </v-card>
         </v-dialog>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -109,21 +83,9 @@ import {tagesTypText} from "@/types/enum/TagesTyp";
 import {useSnackbarStore} from "@/store/snackbar";
 import {usePdfReportStore} from "@/store/pdfReport";
 import {useMessstelleStore} from "@/store/messstelle";
+import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
 
-interface Props {
-    value: boolean;
-}
-const props = defineProps<Props>();
-
-const openDialog = computed({
-    get: () => props.value,
-    set: (payload: boolean) => emits("input", payload),
-});
-
-const emits = defineEmits<{
-    (e: "close"): void;
-    (e: "input", v: boolean): void;
-}>();
+const dialog = defineModel<boolean>({required: true});
 
 const messstelleStore = useMessstelleStore();
 const pdfReportStore = usePdfReportStore();
@@ -143,8 +105,8 @@ const options = computed<MessstelleOptionsDTO>(() => {
 });
 
 function closeDialog(): void {
+    dialog.value = false;
     resetCheckboxes();
-    emits("close");
 }
 
 function resetCheckboxes(): void {
