@@ -32,10 +32,10 @@
                         >
 <!--                            <zeit-panel v-model="chosenOptions" />-->
                             <fahrzeug-panel v-model="chosenOptions" />
-<!--                            <messquerschnitt-panel v-model="chosenOptions" />-->
-<!--                            <darstellungsoptionen-panel-messstelle-->
-<!--                                v-model="chosenOptions"-->
-<!--                            />-->
+                            <messquerschnitt-panel v-model="chosenOptions" />
+                            <darstellungsoptionen-panel-messstelle
+                                v-model="chosenOptions"
+                            />
                         </v-expansion-panels>
                     </v-sheet>
                 </v-card-text>
@@ -216,6 +216,7 @@ function setDefaultOptionsForMessstelle(): void {
     messstelleStore.calculateActiveMessfaehigkeit(
         messstelle.value.datumLetztePlausibleMessung.toString()
     );
+    messstelleStore.setBelastungsplanChosenSize(1);
     saveChosenOptions();
 }
 

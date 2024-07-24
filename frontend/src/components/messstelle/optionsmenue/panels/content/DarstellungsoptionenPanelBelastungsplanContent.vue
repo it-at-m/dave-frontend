@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panel-content>
+    <v-expansion-panel-text>
         <panel-header
             font-size="0.875rem"
             font-weight="bold"
@@ -10,38 +10,39 @@
             align="start"
             justify="center"
             dense
+            no-gutters
         >
             <v-col cols="4">
-                <v-hover v-model="hoverWerteHundertRunden">
                     <v-checkbox
                         v-model="chosenOptionsCopy.werteHundertRunden"
                         :label="'Werte auf 100 Runden'"
                         hide-details
                         style="margin-bottom: 12px"
                         color="grey-darken-1"
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverSizeBelastungsplan">
+                        density="compact"
+                        @mouseover="hoverWerteHundertRunden = true"
+                        @mouseleave="hoverWerteHundertRunden = false"
+                    />
                     <v-slider
                         v-model="sizeBelastungsplan"
                         label="Belastungsplangröße"
                         :max="10"
                         :min="1"
+                        @mouseover="hoverSizeBelastungsplan = true"
+                        @mouseleave="hoverSizeBelastungsplan = false"
                     />
-                </v-hover>
             </v-col>
             <v-col cols="4">
-                <v-hover v-model="hoverBlackPrintMode">
                     <v-checkbox
                         v-model="chosenOptionsCopy.blackPrintMode"
                         :label="'schwarz-weiß Druckausgabe'"
                         hide-details
                         style="margin-bottom: 12px"
                         color="grey-darken-1"
-                        dense
-                    ></v-checkbox>
-                </v-hover>
+                        density="compact"
+                        @mouseover="hoverBlackPrintMode = true"
+                        @mouseleave="hoverBlackPrintMode = false"
+                    />
             </v-col>
             <v-col cols="4">
                 <v-card flat>
@@ -50,22 +51,17 @@
             </v-col>
         </v-row>
         <v-divider></v-divider>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
 </template>
 
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { computed, ref, watch } from "vue";
+import {computed, ref, watch} from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import {useMessstelleStore} from "@/store/messstelle";
+import {useZaehlstelleStore} from "@/store/zaehlstelle";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();
 const zaehlstelleStore = useZaehlstelleStore();
 
@@ -76,11 +72,6 @@ const sizeBelastungsplan = computed({
     get: () => messstelleStore.getBelastungsplanChosenSize,
     set: (payload: number) =>
         messstelleStore.setBelastungsplanChosenSize(payload),
-});
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
 });
 
 const helpTextBelastungsplan = computed(() => {

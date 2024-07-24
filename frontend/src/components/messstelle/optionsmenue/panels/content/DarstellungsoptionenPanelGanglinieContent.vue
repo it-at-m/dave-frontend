@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panel-content>
+    <v-expansion-panel-text>
         <panel-header
             font-size="0.875rem"
             font-weight="bold"
@@ -12,7 +12,6 @@
             dense
         >
             <v-col cols="4">
-                <v-hover v-model="hoverYAchse1">
                     <v-text-field
                         v-model="chosenOptionsCopy.ganglinieYAchse1MaxValue"
                         :label="'Y-Achse 1'"
@@ -23,20 +22,17 @@
                                     MIN_VALUE
                                 ),
                         ]"
-                        type="number"
                         clearable
-                        dense
+                        density="compact"
+                        @mouseover="hoverYAchse1 = true"
+                        @mouseleave="hoverYAchse1 = false"
                         @blur="checkRangeYAchse1"
-                    >
-                    </v-text-field>
-                </v-hover>
+                    />
             </v-col>
             <v-col cols="4">
-                <v-hover v-model="hoverYAchse2">
                     <v-text-field
                         v-model="chosenOptionsCopy.ganglinieYAchse2MaxValue"
                         :label="'Y-Achse 2 (%)'"
-                        type="number"
                         :rules="[
                             (toCheck) =>
                                 rules.onlyNumbersInRange(
@@ -46,11 +42,11 @@
                                 ),
                         ]"
                         clearable
-                        dense
+                        density="compact"
+                        @mouseover="hoverYAchse2 = true"
+                        @mouseleave="hoverYAchse2 = false"
                         @blur="checkRangeYAchse2"
-                    >
-                    </v-text-field>
-                </v-hover>
+                    />
             </v-col>
             <v-col cols="4">
                 <v-card flat>
@@ -59,7 +55,7 @@
             </v-col>
         </v-row>
         <v-divider></v-divider>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
 </template>
 
 <script setup lang="ts">
@@ -69,12 +65,7 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import _ from "lodash";
 import { useRules } from "@/util/rules";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const rules = useRules();
 
 const hoverYAchse1 = ref(false);
@@ -82,11 +73,6 @@ const hoverYAchse2 = ref(false);
 
 const MIN_VALUE = 0;
 const MAX_VALUE_EXCLUDE = 101;
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const helpTextGanglinie = computed(() => {
     if (hoverYAchse1.value) {

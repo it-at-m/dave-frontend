@@ -1,12 +1,12 @@
 <template>
     <v-expansion-panel>
-        <v-expansion-panel-header>
+        <v-expansion-panel-title>
             <div>
                 <v-icon left>mdi-arrow-decision</v-icon>
                 Messquerschnitt
             </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
             <panel-header
                 font-size="0.875rem"
                 font-weight="bold"
@@ -15,17 +15,16 @@
             ></panel-header>
             <v-row no-gutters>
                 <v-col cols="4">
-                    <v-hover v-model="hoverDirection">
                         <v-select
                             v-model="direction"
                             label="Richtung"
                             :items="richtungValues"
-                            item-value="value"
-                            filled
-                            dense
+                            variant="filled"
                             @input="updateOptions"
+                            density="compact"
+                            @mouseover="hoverDirection = true"
+                            @mouseleave="hoverDirection = false"
                         />
-                    </v-hover>
                 </v-col>
                 <v-spacer />
                 <v-col cols="4">
@@ -36,20 +35,20 @@
             </v-row>
             <v-row no-gutters>
                 <v-col cols="4">
-                    <v-hover v-model="hoverLage">
                         <v-select
                             v-model="chosenOptionsCopy.messquerschnittIds"
                             label="Lage"
                             :items="lageValues"
                             :readonly="isLageReadonly"
-                            filled
-                            dense
+                            variant="filled"
                             multiple
                             :rules="[REQUIRED]"
-                            @change="updateLage"
+                            @update:modelValue="updateLage"
                             @blur="resetSpitzenstundeErrorText"
+                            density="compact"
+                            @mouseover="hoverLage = true"
+                            @mouseleave="hoverLage = false"
                         />
-                    </v-hover>
                 </v-col>
                 <v-spacer />
                 <v-col cols="4">
@@ -62,7 +61,7 @@
                     </v-card>
                 </v-col>
             </v-row>
-        </v-expansion-panel-content>
+        </v-expansion-panel-text>
     </v-expansion-panel>
 </template>
 
@@ -78,12 +77,7 @@ import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 import _ from "lodash";
 import { useMessstelleStore } from "@/store/messstelle";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
 const hoverDirection = ref(false);
 const hoverLage = ref(false);
@@ -95,11 +89,6 @@ const MIND_EIN_MESSQUERSCHNITT =
     "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
 const GENAU_EIN_MESSQUERSCHNITT =
     "Es muss genau ein Messquerschnitt ausgewählt sein.";
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
     return messstelleStore.getMessstelleInfo;

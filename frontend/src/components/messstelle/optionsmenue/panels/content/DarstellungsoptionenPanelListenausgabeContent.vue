@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panel-content>
+    <v-expansion-panel-text>
         <panel-header
             font-size="0.875rem"
             font-weight="bold"
@@ -10,48 +10,49 @@
             align="start"
             justify="center"
             dense
+            no-gutters
         >
             <v-col cols="4">
-                <v-hover v-model="hoverStundensumme">
                     <v-checkbox
                         v-model="chosenOptionsCopy.stundensumme"
                         :label="'Stundensumme'"
                         hide-details
                         color="grey-darken-1"
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverBlocksumme">
+                        density="compact"
+                        @mouseover="hoverStundensumme = true"
+                        @mouseleave="hoverStundensumme = false"
+                    />
                     <v-checkbox
                         v-model="chosenOptionsCopy.blocksumme"
                         :label="'Blocksumme'"
                         hide-details
                         style="margin-bottom: 12px"
                         color="grey-darken-1"
-                        dense
-                    ></v-checkbox>
-                </v-hover>
+                        density="compact"
+                        @mouseover="hoverBlocksumme = true"
+                        @mouseleave="hoverBlocksumme = false"
+                    />
             </v-col>
             <v-col cols="4">
-                <v-hover v-model="hoverTagessumme">
                     <v-checkbox
                         v-model="chosenOptionsCopy.tagessumme"
                         :label="'Tagessumme'"
                         hide-details
                         color="grey-darken-1"
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverSpitzenstunde">
+                        density="compact"
+                        @mouseover="hoverTagessumme = true"
+                        @mouseleave="hoverTagessumme = false"
+                    />
                     <v-checkbox
                         v-model="chosenOptionsCopy.spitzenstunde"
                         :label="'Spitzenstunde'"
                         hide-details
                         style="margin-bottom: 12px"
                         color="grey-darken-1"
-                        dense
-                    ></v-checkbox>
-                </v-hover>
+                        density="compact"
+                        @mouseover="hoverSpitzenstunde = true"
+                        @mouseleave="hoverSpitzenstunde = false"
+                    />
             </v-col>
             <v-col cols="4">
                 <v-card flat>
@@ -59,30 +60,20 @@
                 </v-card>
             </v-col>
         </v-row>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
 </template>
 
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
 const hoverStundensumme = ref(false);
 const hoverBlocksumme = ref(false);
 const hoverTagessumme = ref(false);
 const hoverSpitzenstunde = ref(false);
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const helpTextListenausgabe = computed(() => {
     if (hoverStundensumme.value) {
