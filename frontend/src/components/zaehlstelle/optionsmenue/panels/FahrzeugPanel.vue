@@ -65,7 +65,7 @@
                   @mouseleave="hoverKfz = false"
               ></v-checkbox>
             </v-col>
-            <v-col cols="6"></v-col>
+            <v-spacer/>
           </v-row>
           <v-row
               align="start"

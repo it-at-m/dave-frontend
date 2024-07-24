@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panel-content>
+    <v-expansion-panel-text>
         <v-divider></v-divider>
         <panel-header
             font-size="0.875rem"
@@ -18,8 +18,25 @@
             justify="center"
             dense
         >
+          <v-col cols="4">
+            <v-btn
+                class="text-none"
+                density="compact"
+                variant="outlined"
+                :text="labelSelectOrDeselectAll"
+                @mouseover="hoverSelectOrDeselectAll = true"
+                @mouseleave="hoverSelectOrDeselectAll = false"
+                @click="selectOrDeselectAll()"
+            />
+          </v-col>
+          <v-spacer/>
+        </v-row>
+        <v-row
+            align="start"
+            justify="center"
+            dense
+        >
             <v-col cols="4">
-                <v-hover v-model="hoverPkw">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.personenkraftwagen"
                         label="Personenkraftwagen (Pkw)"
@@ -27,10 +44,10 @@
                         :disabled="isTypeDisabled('PKW')"
                         color="grey-darken-1"
                         hide-details
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverLkw">
+                        density="compact"
+                        @mouseover="hoverPkw = true"
+                        @mouseleave="hoverPkw = false"
+                    />
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lastkraftwagen"
                         label="Lastkraftwagen (Lkw)"
@@ -38,10 +55,10 @@
                         :disabled="isTypeDisabled('LKW')"
                         color="grey-darken-1"
                         hide-details
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverLz">
+                        density="compact"
+                        @mouseover="hoverLkw = true"
+                        @mouseleave="hoverLkw = false"
+                    />
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lastzuege"
                         label="Lastzüge (Lz)"
@@ -49,23 +66,12 @@
                         :disabled="isTypeDisabled('LZ')"
                         color="grey-darken-1"
                         hide-details
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverBus">
-                    <v-checkbox
-                        v-model="chosenOptionsCopyFahrzeuge.busse"
-                        label="Bus"
-                        :persistent-hint="isTypeDisabled('BUS')"
-                        :disabled="isTypeDisabled('BUS')"
-                        color="grey-darken-1"
-                        hide-details
-                        dense
-                    ></v-checkbox>
-                </v-hover>
+                        density="compact"
+                        @mouseover="hoverLz = true"
+                        @mouseleave="hoverLz = false"
+                    />
             </v-col>
             <v-col cols="4">
-                <v-hover v-model="hoverKrad">
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.kraftraeder"
                         label="Krafträder (Krad)"
@@ -73,10 +79,10 @@
                         :disabled="isTypeDisabled('KRAD')"
                         color="grey-darken-1"
                         hide-details
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverLfw">
+                        density="compact"
+                        @mouseover="hoverKrad = true"
+                        @mouseleave="hoverKrad = false"
+                    />
                     <v-checkbox
                         v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
                         label="Lieferwagen (Lfw)"
@@ -84,19 +90,21 @@
                         :disabled="isTypeDisabled('LFW')"
                         color="grey-darken-1"
                         hide-details
-                        dense
-                    ></v-checkbox>
-                </v-hover>
-                <v-hover v-model="hoverSelectOrDeselectAll">
-                    <v-checkbox
-                        v-model="selectOrDeselectAllVmodel"
-                        :label="labelSelectOrDeselectAll"
-                        color="grey-darken-1"
-                        hide-details
-                        dense
-                        @click="selectOrDeselectAll()"
-                    ></v-checkbox>
-                </v-hover>
+                        density="compact"
+                        @mouseover="hoverLfw = true"
+                        @mouseleave="hoverLfw = false"
+                    />
+                  <v-checkbox
+                      v-model="chosenOptionsCopyFahrzeuge.busse"
+                      label="Bus"
+                      :persistent-hint="isTypeDisabled('BUS')"
+                      :disabled="isTypeDisabled('BUS')"
+                      color="grey-darken-1"
+                      hide-details
+                      density="compact"
+                      @mouseover="hoverBus = true"
+                      @mouseleave="hoverBus = false"
+                  />
             </v-col>
             <v-col cols="4">
                 <v-card flat>
@@ -104,22 +112,17 @@
                 </v-card>
             </v-col>
         </v-row>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
 </template>
 
 <script setup lang="ts">
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
+import {useFahrzeugPanelTools} from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const fahrzeugPanelTools = useFahrzeugPanelTools();
 
 const selectOrDeselectAllVmodel = ref(false);
@@ -130,11 +133,6 @@ const hoverLz = ref(false);
 const hoverBus = ref(false);
 const hoverKrad = ref(false);
 const hoverLfw = ref(false);
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const chosenOptionsCopyFahrzeuge = computed(() => {
     return chosenOptionsCopy.value.fahrzeuge;
@@ -197,6 +195,7 @@ const helpTextFahrzeugkategorien = computed(() => {
  * @private
  */
 function selectOrDeselectAll(): void {
+    selectOrDeselectAllVmodel.value = !selectOrDeselectAllVmodel.value;
     if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.PKW)) {
         chosenOptionsCopyFahrzeuge.value.personenkraftwagen =
             selectOrDeselectAllVmodel.value;

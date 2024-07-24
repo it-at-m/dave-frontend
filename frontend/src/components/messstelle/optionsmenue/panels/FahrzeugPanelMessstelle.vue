@@ -1,11 +1,11 @@
 <template>
     <v-expansion-panel>
-        <v-expansion-panel-header>
+        <v-expansion-panel-title>
             <div>
                 <v-icon left>mdi-car-multiple</v-icon>
                 Fahrzeuge
             </div>
-        </v-expansion-panel-header>
+        </v-expansion-panel-title>
         <fahrzeug-panel-verkehrsarten-content
             v-model="chosenOptionsCopy"
             class="mt-1"
@@ -26,18 +26,9 @@ import { useMessstelleStore } from "@/store/messstelle";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 const messstelleStore = useMessstelleStore();
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const showFahrzeugkategorien = computed(() => {
     return (

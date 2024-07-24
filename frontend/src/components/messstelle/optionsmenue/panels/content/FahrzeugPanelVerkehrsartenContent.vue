@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panel-content>
+    <v-expansion-panel-text>
         <panel-header
             font-size="0.875rem"
             font-weight="bold"
@@ -11,6 +11,26 @@
             font-weight="normal"
             header-text="Im Belastungsplan können maximal 3 Werte gleichzeitig angezeigt werden"
         ></panel-header>
+
+      <v-row
+          align="start"
+          justify="center"
+          dense
+      >
+        <v-col cols="4">
+          <v-btn
+              class="text-none"
+              density="compact"
+              variant="outlined"
+              :text="labelSelectOrDeselectAllVerkehrsarten"
+              @mouseover="hoverSelectOrDeselectAllVerkehrsarten = true"
+              @mouseleave="hoverSelectOrDeselectAllVerkehrsarten = false"
+              @click="selectOrDeselectAllVerkehrsarten()"
+          />
+        </v-col>
+        <v-spacer/>
+      </v-row>
+
         <v-row
             align="start"
             justify="center"
@@ -22,31 +42,30 @@
                     align="start"
                     justify="center"
                     dense
+                    no-gutters
                 >
                     <v-col cols="6">
-                        <v-hover v-model="hoverKfz">
-                            <v-checkbox
-                                v-model="
-                                    chosenOptionsCopyFahrzeuge.kraftfahrzeugverkehr
-                                "
-                                label="Kraftfahrzeugverkehr (KFZ)"
-                                :prepend-icon="getIcon('KFZ')"
-                                :color="getCheckboxColor('KFZ')"
-                                :disabled="isTypeDisabled('KFZ')"
-                                hide-details
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                      <v-checkbox
+                          v-model="chosenOptionsCopyFahrzeuge.kraftfahrzeugverkehr"
+                          label="Kraftfahrzeugverkehr (KFZ)"
+                          :prepend-icon="getIcon('KFZ')"
+                          :color="getCheckboxColor('KFZ')"
+                          :disabled="isTypeDisabled('KFZ')"
+                          hide-details
+                          density="compact"
+                          @mouseover="hoverKfz = true"
+                          @mouseleave="hoverKfz = false"
+                      />
                     </v-col>
-                    <v-col cols="6"></v-col>
+                    <v-spacer/>
                 </v-row>
                 <v-row
                     align="start"
                     justify="center"
                     dense
+                    no-gutters
                 >
                     <v-col cols="6">
-                        <v-hover v-model="hoverSv">
                             <v-checkbox
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.schwerverkehr
@@ -56,12 +75,12 @@
                                 :color="getCheckboxColor('SV')"
                                 :disabled="isTypeDisabled('SV')"
                                 hide-details
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                                density="compact"
+                                @mouseover="hoverSv = true"
+                                @mouseleave="hoverSv = false"
+                            />
                     </v-col>
                     <v-col cols="6">
-                        <v-hover v-model="hoverSv_p">
                             <v-checkbox
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.schwerverkehrsanteilProzent
@@ -71,18 +90,19 @@
                                 :color="getCheckboxColor('SV_P')"
                                 :disabled="isTypeDisabled('SV_P')"
                                 hide-details
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                                density="compact"
+                                @mouseover="hoverSv_p = true"
+                                @mouseleave="hoverSv_p = false"
+                            />
                     </v-col>
                 </v-row>
                 <v-row
                     align="start"
                     justify="center"
                     dense
+                    no-gutters
                 >
                     <v-col cols="6">
-                        <v-hover v-model="hoverGv">
                             <v-checkbox
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.gueterverkehr
@@ -92,12 +112,12 @@
                                 :color="getCheckboxColor('GV')"
                                 :disabled="isTypeDisabled('GV')"
                                 hide-details
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                                density="compact"
+                                @mouseover="hoverGv = true"
+                                @mouseleave="hoverGv = false"
+                            />
                     </v-col>
                     <v-col cols="6">
-                        <v-hover v-model="hoverGv_p">
                             <v-checkbox
                                 v-model="
                                     chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent
@@ -107,18 +127,19 @@
                                 :color="getCheckboxColor('GV_P')"
                                 :disabled="isTypeDisabled('GV_P')"
                                 hide-details
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                                density="compact"
+                                @mouseover="hoverGv_p = true"
+                                @mouseleave="hoverGv_p = false"
+                            />
                     </v-col>
                 </v-row>
                 <v-row
                     align="start"
                     justify="center"
                     dense
+                    no-gutters
                 >
                     <v-col cols="6">
-                        <v-hover v-model="hoverRad">
                             <v-checkbox
                                 v-model="chosenOptionsCopyFahrzeuge.radverkehr"
                                 label="Radverkehr (Rad)"
@@ -126,64 +147,38 @@
                                 :color="getCheckboxColor('RAD')"
                                 :disabled="isTypeDisabled('RAD')"
                                 hide-details
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                                density="compact"
+                                @mouseover="hoverRad = true"
+                                @mouseleave="hoverRad = false"
+                            />
                     </v-col>
 
                     <v-col cols="6">
-                        <v-hover
-                            v-model="hoverSelectOrDeselectAllVerkehrsarten"
-                        >
-                            <v-checkbox
-                                v-model="selectOrDeselectAllVerkehrsartenVmodel"
-                                :label="labelSelectOrDeselectAllVerkehrsarten"
-                                color="grey-darken-1"
-                                hide-details
-                                dense
-                                @click="selectOrDeselectAllVerkehrsarten()"
-                            ></v-checkbox>
-                        </v-hover>
-                    </v-col>
-                </v-row>
-                <v-row
-                    align="start"
-                    justify="center"
-                    dense
-                >
-                    <v-col cols="6">
-                        <v-hover v-model="hoverFuss">
-                            <v-checkbox
-                                v-model="chosenOptionsCopyFahrzeuge.fussverkehr"
-                                label="Fußgänger (Fuß)"
-                                :prepend-icon="getIcon('FUSS')"
-                                :color="getCheckboxColor('FUSS')"
-                                :persistent-hint="
+                      <v-checkbox
+                          v-model="chosenOptionsCopyFahrzeuge.fussverkehr"
+                          label="Fußgänger (Fuß)"
+                          :prepend-icon="getIcon('FUSS')"
+                          :color="getCheckboxColor('FUSS')"
+                          :persistent-hint="
                                     chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent ||
                                     isTypeDisabled('FUSS')
                                 "
-                                :disabled="isTypeDisabled('FUSS')"
-                                :hide-details="
+                          :disabled="isTypeDisabled('FUSS')"
+                          :hide-details="
                                     !chosenOptionsCopyFahrzeuge.fussverkehr
                                 "
-                                dense
-                            ></v-checkbox>
-                        </v-hover>
+                          density="compact"
+                          @mouseover="hoverFuss = true"
+                          @mouseleave="hoverFuss = false"
+                      ></v-checkbox>
                     </v-col>
-                    <v-spacer />
                 </v-row>
             </v-col>
             <v-col cols="4">
-                <v-row
-                    align="start"
-                    justify="center"
-                    dense
-                >
-                    {{ helpTextVerkehrsarten }}
-                </v-row>
+              {{ helpTextVerkehrsarten }}
             </v-col>
         </v-row>
-    </v-expansion-panel-content>
+    </v-expansion-panel-text>
 </template>
 
 <script setup lang="ts">
@@ -195,12 +190,8 @@ import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/comp
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import { useMessstelleStore } from "@/store/messstelle";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
-const props = defineProps<Props>();
-const emit = defineEmits<(e: "input", v: MessstelleOptionsDTO) => void>();
 const fahrzeugPanelTools = useFahrzeugPanelTools();
 const messstelleStore = useMessstelleStore();
 
@@ -213,11 +204,6 @@ const hoverSv_p = ref(false);
 const hoverGv_p = ref(false);
 const hoverRad = ref(false);
 const hoverFuss = ref(false);
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 onMounted(() => {
     calculateSelectOrDeselectVerkehrsarten();
@@ -429,6 +415,7 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
  * @private
  */
 function selectOrDeselectAllVerkehrsarten(): void {
+  selectOrDeselectAllVerkehrsartenVmodel.value = !selectOrDeselectAllVerkehrsartenVmodel.value;
     if (isTypeEnabled(Fahrzeug.KFZ)) {
         chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr =
             selectOrDeselectAllVerkehrsartenVmodel.value;
