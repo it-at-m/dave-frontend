@@ -129,8 +129,7 @@ const headers = computed(() => {
         activeFahrzeugklassen.value
     );
     let widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-    /* eslint-disable @typescript-eslint/ban-types */
-    let headers: Array<{}> = [
+    let headers: Array<Object> = [
        // Zeit
       {
         title: 'Zeit',
