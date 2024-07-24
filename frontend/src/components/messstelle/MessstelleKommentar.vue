@@ -15,7 +15,7 @@
             max-width="600px"
         >
             <v-card class="rounded-0">
-                <v-card-title class="text-h5 grey lighten-2">
+                <v-card-title class="text-h5 grey-lighten-2">
                     <v-icon left>mdi-comment-multiple</v-icon>
                     Informationen
                 </v-card-title>
@@ -26,7 +26,7 @@
             <v-footer>
                 <v-spacer></v-spacer>
                 <v-btn
-                    color="grey lighten-1"
+                    color="grey-lighten-1"
                     @click="showDialog = false"
                 >
                     Schließen

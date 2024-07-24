@@ -25,7 +25,7 @@
                         label="Personenkraftwagen (Pkw)"
                         :persistent-hint="isTypeDisabled('PKW')"
                         :disabled="isTypeDisabled('PKW')"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                     ></v-checkbox>
@@ -36,7 +36,7 @@
                         label="Lastkraftwagen (Lkw)"
                         :persistent-hint="isTypeDisabled('LKW')"
                         :disabled="isTypeDisabled('LKW')"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                     ></v-checkbox>
@@ -47,7 +47,7 @@
                         label="Lastzüge (Lz)"
                         :persistent-hint="isTypeDisabled('LZ')"
                         :disabled="isTypeDisabled('LZ')"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                     ></v-checkbox>
@@ -58,7 +58,7 @@
                         label="Bus"
                         :persistent-hint="isTypeDisabled('BUS')"
                         :disabled="isTypeDisabled('BUS')"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                     ></v-checkbox>
@@ -71,7 +71,7 @@
                         label="Krafträder (Krad)"
                         :persistent-hint="isTypeDisabled('KRAD')"
                         :disabled="isTypeDisabled('KRAD')"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                     ></v-checkbox>
@@ -82,7 +82,7 @@
                         label="Lieferwagen (Lfw)"
                         :persistent-hint="isTypeDisabled('LFW')"
                         :disabled="isTypeDisabled('LFW')"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                     ></v-checkbox>
@@ -91,7 +91,7 @@
                     <v-checkbox
                         v-model="selectOrDeselectAllVmodel"
                         :label="labelSelectOrDeselectAll"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         hide-details
                         dense
                         @click="selectOrDeselectAll()"

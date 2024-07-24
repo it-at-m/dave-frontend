@@ -138,7 +138,7 @@
                             <v-checkbox
                                 v-model="selectOrDeselectAllVerkehrsartenVmodel"
                                 :label="labelSelectOrDeselectAllVerkehrsarten"
-                                color="grey darken-1"
+                                color="grey-darken-1"
                                 hide-details
                                 dense
                                 @click="selectOrDeselectAllVerkehrsarten()"
@@ -470,19 +470,19 @@ function getCheckboxColor(type: string): string {
     switch (type) {
         case Fahrzeug.SV_P: {
             if (!isSv_pInBelastungsPlan.value) {
-                color = "grey darken-1";
+                color = "grey-darken-1";
             }
             break;
         }
         case Fahrzeug.GV_P: {
             if (!isGv_pInBelastungsPlan.value) {
-                color = "grey darken-1";
+                color = "grey-darken-1";
             }
             break;
         }
         case Fahrzeug.RAD: {
             if (!isRadInBelastungsplan.value) {
-                color = "grey darken-1";
+                color = "grey-darken-1";
             }
             break;
         }
@@ -491,7 +491,7 @@ function getCheckboxColor(type: string): string {
                 chosenOptionsCopyFahrzeuge.value.fussverkehr &&
                 actualNumberOfSelectedVerkehrsarten.value > 1
             ) {
-                color = "grey darken-1";
+                color = "grey-darken-1";
             }
             break;
         }

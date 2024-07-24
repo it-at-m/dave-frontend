@@ -17,7 +17,7 @@
                         v-model="chosenOptionsCopy.stundensumme"
                         :label="'Stundensumme'"
                         hide-details
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         dense
                     ></v-checkbox>
                 </v-hover>
@@ -27,7 +27,7 @@
                         :label="'Blocksumme'"
                         hide-details
                         style="margin-bottom: 12px"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         dense
                     ></v-checkbox>
                 </v-hover>
@@ -38,7 +38,7 @@
                         v-model="chosenOptionsCopy.tagessumme"
                         :label="'Tagessumme'"
                         hide-details
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         dense
                     ></v-checkbox>
                 </v-hover>
@@ -48,7 +48,7 @@
                         :label="'Spitzenstunde'"
                         hide-details
                         style="margin-bottom: 12px"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         dense
                     ></v-checkbox>
                 </v-hover>

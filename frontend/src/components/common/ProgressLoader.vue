@@ -7,7 +7,7 @@
             :size="120"
             :width="10"
             value="30"
-            color="grey lighten-3"
+            color="grey-lighten-3"
             indeterminate
         >
             laden

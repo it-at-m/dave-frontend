@@ -205,6 +205,6 @@ const getSearchResult = computed(() => {
 });
 
 const speedDialColor = computed(() => {
-    return speedDialOpen.value ? "grey darken-1" : "secondary";
+    return speedDialOpen.value ? "grey-darken-1" : "secondary";
 });
 </script>

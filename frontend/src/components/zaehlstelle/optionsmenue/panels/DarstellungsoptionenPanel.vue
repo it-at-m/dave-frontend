@@ -25,7 +25,7 @@
                             :label="'Werte auf 100 Runden'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverWerteHundertRunden = true"
                             @mouseleave="hoverWerteHundertRunden = false"
@@ -45,7 +45,7 @@
                             :label="'schwarz-weiß Druckausgabe'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverBlackPrintMode = true"
                             @mouseleave="hoverBlackPrintMode = false"
@@ -134,7 +134,7 @@
                             v-model="stundensumme"
                             :label="'Stundensumme'"
                             hide-details
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverStundensumme = true"
                             @mouseleave="hoverStundensumme = false"
@@ -144,7 +144,7 @@
                             :label="'Blocksumme'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverBlocksumme = true"
                             @mouseleave="hoverBlocksumme = false"
@@ -155,7 +155,7 @@
                             v-model="tagessumme"
                             :label="'Tagessumme'"
                             hide-details
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverTagessumme = true"
                             @mouseleave="hoverTagessumme = false"
@@ -165,7 +165,7 @@
                             :label="'Spitzenstunde'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverSpitzenstunde = true"
                             @mouseleave="hoverSpitzenstunde = false"
@@ -200,7 +200,7 @@
                             :label="'Spitzenstunde KFZ'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             :disabled="isTypeKfzDisabled()"
                         ></v-checkbox>
@@ -209,7 +209,7 @@
                             :label="'Spitzenstunde Rad'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             :disabled="isTypeRadDisabled()"
                         ></v-checkbox>
@@ -218,7 +218,7 @@
                             :label="'Spitzenstunde Fuß'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             :disabled="isTypeFussDisabled()"
                         ></v-checkbox>
@@ -249,7 +249,7 @@
                             :label="'Summe alle Verkehrsarten anzeigen'"
                             hide-details
                             style="margin-bottom: 12px"
-                            color="grey darken-1"
+                            color="grey-darken-1"
                             density="compact"
                             @mouseover="hoverZeitreiheGesamt = true"
                             @mouseleave="hoverZeitreiheGesamt = false"

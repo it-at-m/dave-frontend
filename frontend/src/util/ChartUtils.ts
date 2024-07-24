@@ -41,8 +41,8 @@ export default class ChartUtils {
         [ChartUtils.LEGEND_ENTRY_SV, "#0D47A1"], // blue darken-4
         [ChartUtils.LEGEND_ENTRY_GV, "#40C4FF"], // light-blue accent-2
 
-        [ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT, "#263238"], // blue-grey darken-4
-        [ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT, "#90A4AE"], // blue-grey lighten-2
+        [ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT, "#263238"], // blue-grey-darken-4
+        [ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT, "#90A4AE"], // blue-grey-lighten-2
 
         [ChartUtils.LEGEND_ENTRY_RAD, "#1B5E20"], // green darken-4
 

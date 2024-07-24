@@ -18,7 +18,7 @@
                         :label="'Werte auf 100 Runden'"
                         hide-details
                         style="margin-bottom: 12px"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         dense
                     ></v-checkbox>
                 </v-hover>
@@ -38,7 +38,7 @@
                         :label="'schwarz-weiß Druckausgabe'"
                         hide-details
                         style="margin-bottom: 12px"
-                        color="grey darken-1"
+                        color="grey-darken-1"
                         dense
                     ></v-checkbox>
                 </v-hover>

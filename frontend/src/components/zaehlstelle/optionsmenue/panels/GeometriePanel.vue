@@ -48,7 +48,7 @@
                                 :label="'Zulaufend/Ablaufend'"
                                 hide-details
                                 style="margin-bottom: 12px"
-                                color="grey darken-1"
+                                color="grey-darken-1"
                                 density="compact"
                                 :disabled="!beideRichtungenAnzeigen"
                                 @mouseover="hoverBeideRichtungen = true"
