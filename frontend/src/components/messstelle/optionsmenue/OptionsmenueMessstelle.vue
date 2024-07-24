@@ -30,7 +30,7 @@
                             focusable
                             elevation="0"
                         >
-<!--                            <zeit-panel v-model="chosenOptions" />-->
+                            <zeit-panel v-model="chosenOptions" />
                             <fahrzeug-panel v-model="chosenOptions" />
                             <messquerschnitt-panel v-model="chosenOptions" />
                             <darstellungsoptionen-panel-messstelle

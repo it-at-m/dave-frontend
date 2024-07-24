@@ -18,12 +18,13 @@
           align="start"
           justify="center"
           dense
+          no-gutters
       >
         <v-col cols="8">
           <v-radio-group
               v-model="zeitauswahl"
                     color="grey-darken-1"
-              density="comfortable"
+              density="compact"
               @change="zeitauswahlChanged"
           >
             <v-row>
@@ -88,7 +89,7 @@
               label="Zeitblock"
               :items="zeitblockValues"
               variant="filled"
-              density="comfortable"
+              density="compact"
               @mouseover="hoverSelectBlockOrSpitzenstunde = true"
               @mouseleave="hoverSelectBlockOrSpitzenstunde = false"
           >
@@ -100,7 +101,7 @@
               label="Stunde"
               :items="stuendlichValues"
               variant="filled"
-              density="comfortable"
+              density="compact"
               @mouseover="hoverSelectStunde = true"
               @mouseleave="hoverSelectStunde = false"
           >
@@ -127,6 +128,7 @@
           align="start"
           justify="center"
           dense
+          no-gutters
       >
         <v-col cols="4">
           <v-select
@@ -134,7 +136,7 @@
               :items="zaehldatenIntervalle"
               label="Zeitintervall"
               variant="filled"
-              density="comfortable"
+              density="compact"
               :disabled="isZeitauswahlSpitzenstunde"
               @mouseover="hoverSelectZeitintervall = true"
               @mouseleave="hoverSelectZeitintervall = false"

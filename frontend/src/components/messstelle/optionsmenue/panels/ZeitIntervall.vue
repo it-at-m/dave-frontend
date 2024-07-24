@@ -13,17 +13,17 @@
             header-text="(außer Belastungsplan und Zeitreihe)"
         ></panel-header>
         <v-row>
-            <v-col cols="8">
-                <v-hover v-model="hoverZeitintervall">
-                    <v-autocomplete
+            <v-col cols="4">
+                    <v-select
                         v-model="chosenOptionsCopy.intervall"
                         :items="messdatenIntervalle"
                         label="Zeitintervall"
-                        filled
-                        dense
+                        variant="filled"
+                        density="compact"
                         :disabled="isIntervallChangingLocked"
-                    ></v-autocomplete>
-                </v-hover>
+                        @mouseover="hoverZeitintervall = true"
+                        @mouseleave="hoverZeitintervall = false"
+                    />
             </v-col>
             <v-col cols="4">
                 <v-row
@@ -48,22 +48,9 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/messstelle";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 
-const emit = defineEmits<{
-    (e: "input", i: MessstelleOptionsDTO): void;
-}>();
-
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const hoverZeitintervall = ref(false);
 
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
-
-const props = defineProps<Props>();
 const messstelleStore = useMessstelleStore();
 
 const messdatenIntervalle = computed(() => {

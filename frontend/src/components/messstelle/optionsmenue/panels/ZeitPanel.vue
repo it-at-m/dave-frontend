@@ -63,26 +63,26 @@
             </v-row>
             <v-divider></v-divider>
 
-<!--            <tages-typ-radiogroup-->
-<!--                v-if="chosenOptionsCopyZeitraum.length == 2"-->
-<!--                v-model="chosenOptionsCopy"-->
-<!--                :is-chosen-tages-typ-valid="isChosenTagesTypValid"-->
-<!--            />-->
-<!--            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"></v-divider>-->
-<!---->
-<!--            <zeitauswahl-radiogroup-->
-<!--                v-model="chosenOptionsCopy"-->
-<!--                :messstelle-detektierte-fahrzeugart="-->
-<!--                    messstelleInfo.detektierteVerkehrsarten-->
-<!--                "-->
-<!--            />-->
-<!--            <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />-->
-<!--            <v-spacer />-->
-<!--            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>-->
-<!--            <zeit-intervall-->
-<!--                v-if="!isDateBiggerFiveYears"-->
-<!--                v-model="chosenOptionsCopy"-->
-<!--            />-->
+            <tages-typ-radiogroup
+                v-if="chosenOptionsCopyZeitraum.length == 2"
+                v-model="chosenOptionsCopy"
+                :is-chosen-tages-typ-valid="isChosenTagesTypValid"
+            />
+            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"></v-divider>
+
+            <zeitauswahl-radiogroup
+                v-model="chosenOptionsCopy"
+                :messstelle-detektierte-fahrzeugart="
+                    messstelleInfo.detektierteVerkehrsarten
+                "
+            />
+            <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
+            <v-spacer />
+            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>
+            <zeit-intervall
+                v-if="!isDateBiggerFiveYears"
+                v-model="chosenOptionsCopy"
+            />
         </v-expansion-panel-text>
     </v-expansion-panel>
 </template>

@@ -15,8 +15,9 @@
             <v-col cols="8">
                 <v-radio-group
                     v-model="chosenOptionsCopy.zeitauswahl"
-                    style="width: 100%"
-                    @change="zeitauswahlChanged"
+                    class="full-width"
+                    density="compact"
+                    @update:modelValue="zeitauswahlChanged"
                 >
                     <v-row
                         align="start"
@@ -91,21 +92,12 @@ import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 import { useSnackbarStore } from "@/store/snackbar";
 
 interface Props {
-    value: MessstelleOptionsDTO;
     messstelleDetektierteFahrzeugart: string;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits<{
-    (e: "input", i: MessstelleOptionsDTO): void;
-}>();
-
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const snackbarStore = useSnackbarStore();
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
 

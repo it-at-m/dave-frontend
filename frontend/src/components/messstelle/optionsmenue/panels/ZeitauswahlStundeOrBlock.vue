@@ -1,13 +1,16 @@
 <template>
-    <v-row no-gutters>
+    <v-row align="start"
+           justify="center"
+           dense
+           no-gutters>
         <v-col cols="4">
             <v-select
                 v-if="isZeitauswahlSpitzenstundeOrBlock"
                 v-model="chosenOptionsCopy.zeitblock"
                 label="Zeitblock"
                 :items="zeitblockValues"
-                filled
-                dense
+                variant="filled"
+                density="compact"
             >
             </v-select>
             <v-select
@@ -15,38 +18,25 @@
                 v-model="chosenOptionsCopy.zeitblock"
                 label="Stunde"
                 :items="stuendlichValues"
-                filled
-                dense
+                variant="filled"
+                density="compact"
             >
             </v-select>
         </v-col>
+      <v-spacer/>
     </v-row>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import {computed} from "vue";
 import type KeyVal from "@/types/common/KeyVal";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import ZeitblockStuendlich, {
-    zeitblockStuendlichInfo,
-} from "@/types/enum/ZeitblockStuendlich";
+import Zeitblock, {zeitblockInfo} from "@/types/enum/Zeitblock";
+import ZeitblockStuendlich, {zeitblockStuendlichInfo,} from "@/types/enum/ZeitblockStuendlich";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import {useMessstelleUtils} from "@/util/MessstelleUtils";
 
-interface Props {
-    value: MessstelleOptionsDTO;
-}
-
-const emit = defineEmits<{
-    (e: "input", i: MessstelleOptionsDTO): void;
-}>();
-const props = defineProps<Props>();
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleUtils = useMessstelleUtils();
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emit("input", payload),
-});
 
 const zeitblockValues = computed(() => {
     let result = new Array<KeyVal>();

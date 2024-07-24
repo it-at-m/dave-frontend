@@ -11,6 +11,7 @@
                 <v-radio-group
                     v-model="chosenOptionsCopy.tagesTyp"
                     class="full-width"
+                    density="compact"
                 >
                     <v-radio
                         :value="TagesTyp.WERKTAG_DI_MI_DO"
@@ -48,20 +49,12 @@ import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 interface Props {
-    value: MessstelleOptionsDTO;
     isChosenTagesTypValid: boolean;
 }
 
 const props = defineProps<Props>();
 
-const emits = defineEmits<{
-    (e: "input", v: MessstelleOptionsDTO): void;
-}>();
-
-const chosenOptionsCopy = computed({
-    get: () => props.value,
-    set: (payload: MessstelleOptionsDTO) => emits("input", payload),
-});
+const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
 function getTagesTypText(key: string): string | undefined {
     return tagesTypText.get(key);
