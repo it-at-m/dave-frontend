@@ -22,7 +22,7 @@
                 density="compact"
                 flat
             >
-              <v-icon color="grey-lighten-1">{{ icon(asset) }}</v-icon>
+              <v-icon color="grey-lighten-1" :icon="icon(asset)"/>
               <v-divider
                   class="mx-4"
                   vertical
@@ -99,119 +99,73 @@
           color="transparent"
           elevation="2"
       >
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-text"
-                v-bind="props"
-                @click="createTextAsset"
-            />
-          </template>
-          <span> Freitext </span>
-        </v-tooltip>
+        <v-btn
+            v-tooltip:bottom="'Freitext'"
+            icon="mdi-text"
+            @click="createTextAsset"
+        />
         <v-divider
             class="mx-4"
             vertical
         />
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-header-1"
-                v-bind="props"
-                @click="createHeadingAsset('h1')"
-            />
-          </template>
-          <span> Überschrift 1 </span>
-        </v-tooltip>
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-header-2"
-                v-bind="props"
-                @click="createHeadingAsset('h2')"
-            />
-          </template>
-          <span> Überschrift 2 </span>
-        </v-tooltip>
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-header-3"
-                v-bind="props"
-                @click="createHeadingAsset('h3')"
-            />
-          </template>
-          <span> Überschrift 3 </span>
-        </v-tooltip>
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-header-4"
-                v-bind="props"
-                @click="createHeadingAsset('h4')"
-            />
-          </template>
-          <span> Überschrift 4 </span>
-        </v-tooltip>
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-header-5"
-                v-bind="props"
-                @click="createHeadingAsset('h5')"
-            />
-          </template>
-          <span> Überschrift 5 </span>
-        </v-tooltip>
+        <v-btn
+            v-tooltip:bottom="'Überschrift 1'"
+            icon="mdi-format-header-1"
+            @click="createHeadingAsset('h1')"
+        />
+        <v-btn
+            v-tooltip:bottom="'Überschrift 2'"
+            icon="mdi-format-header-2"
+            @click="createHeadingAsset('h2')"
+        />
+        <v-btn
+            v-tooltip:bottom="'Überschrift 3'"
+            icon="mdi-format-header-3"
+            @click="createHeadingAsset('h3')"
+        />
+        <v-btn
+            v-tooltip:bottom="'Überschrift 4'"
+            icon="mdi-format-header-4"
+            @click="createHeadingAsset('h4')"
+        />
+        <v-btn
+            v-tooltip:bottom="'Überschrift 5'"
+            icon="mdi-format-header-5"
+            @click="createHeadingAsset('h5')"
+        />
         <v-divider
             class="mx-4"
             vertical
         />
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-page-break"
-                v-bind="props"
-                @click="createPagebreakAsset"
-            />
-          </template>
-          <span> Seitenumbruch </span>
-        </v-tooltip>
+        <v-btn
+            v-tooltip:bottom="'Seitenumbruch'"
+            icon="mdi-format-page-break"
+            @click="createPagebreakAsset"
+        />
         <v-divider
             class="mx-4"
             vertical
         />
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-format-text-wrapping-wrap"
-                v-bind="props"
-                @click="createNewlineAsset"
-            />
-          </template>
-          <span> Zeilenumbruch </span>
-        </v-tooltip>
+        <v-btn
+            v-tooltip:bottom="'Zeilenumbruch'"
+            icon="mdi-format-text-wrapping-wrap"
+            @click="createNewlineAsset"
+        />
         <v-divider
             class="mx-4"
             vertical
         />
-        <v-tooltip location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-                icon="mdi-image"
-                v-bind="props"
-                @click="createImageAsset"
-            />
-          </template>
-          <span> Bild hinzufügen </span>
-        </v-tooltip>
+        <v-btn
+            v-tooltip:bottom="'Bild hinzufügen'"
+            icon="mdi-image"
+            @click="createImageAsset"
+        />
         <v-spacer/>
       </v-toolbar>
     </v-sheet>
 
-    <v-tooltip location="left">
-      <template #activator="{ props }">
         <v-btn
+            v-tooltip:left="'Report als PDF-Datei herunterladen'"
             class="mr-4 mb-4"
             color="secondary"
             elevation="6"
@@ -220,12 +174,8 @@
             position="fixed"
             size="large"
             style="z-index: 400"
-            v-bind="props"
             @click="generatePdf"
         />
-      </template>
-      <span>Report als PDF-Datei herunterladen</span>
-    </v-tooltip>
 
     <image-asset-form
         v-model="editImage"

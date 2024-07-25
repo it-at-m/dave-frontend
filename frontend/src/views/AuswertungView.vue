@@ -2,11 +2,13 @@
   <v-sheet class="dave-default">
     <v-row dense>
       <v-col cols="4">
-        <auswertung-stepper
-            v-model="auswertungsOptions"
-            :height="leftHeightVh"
-        />
-        <v-card-actions>
+        <v-card class="d-flex flex-column" :height="cardHeight" flat>
+          <auswertung-stepper
+              v-model="auswertungsOptions"
+              :height="stepperHeightVh"
+          />
+          <v-spacer/>
+          <v-card-actions>
           <v-btn
               :disabled="isEverythingValid"
               class="mr-2 text-none"
@@ -23,6 +25,7 @@
               @click="resetAuswertungsOptions()"
           />
         </v-card-actions>
+        </v-card>
       </v-col>
       <v-divider vertical/>
       <v-col cols="8"></v-col>
@@ -47,11 +50,15 @@ const appBarHeight = computed(() => {
   return 50 / (display.height.value / 100);
 });
 
+const cardHeight = computed(() => {
+  return 100 - appBarHeight.value + "vh";
+});
+
 const cardActionsHeight = computed(() => {
   return 60 / (display.height.value / 100);
 });
 
-const leftHeightVh = computed(() => {
+const stepperHeightVh = computed(() => {
   return 100 - appBarHeight.value - cardActionsHeight.value + "vh";
 });
 

@@ -35,41 +35,23 @@
                 cols="3"
                 class="d-flex align-center justify-end"
             >
-              <v-tooltip location="bottom">
-                <template #activator="{ props }">
-                  <v-btn
-                      v-bind="props"
-                      icon="mdi-clipboard-pulse-outline"
-                      to="/auswertung"
-                  >
-                  </v-btn>
-                </template>
-                <span> Gesamtauswertungen </span>
-              </v-tooltip>
-              <v-tooltip location="bottom">
-                <template #activator="{ props }">
-                  <v-btn
-                      v-bind="props"
-                      icon="mdi-file-chart"
-                      to="/pdfreport"
-                  >
-                  </v-btn>
-                </template>
-                <span> PDF-Report </span>
-              </v-tooltip>
+              <v-btn
+                  v-tooltip:bottom="'Gesamtauswertungen'"
+                  icon="mdi-clipboard-pulse-outline"
+                  to="/auswertung"
+              />
+              <v-btn
+                  v-tooltip:bottom="'PDF-Report'"
+                  icon="mdi-file-chart"
+                  to="/pdfreport"
+              />
               <visit-history />
               <info-message />
-              <v-tooltip location="bottom">
-                <template #activator="{ props }">
-                  <v-btn
-                      v-bind="props"
-                      icon="mdi-clippy"
-                      @click="navigateToHandbuch"
-                  >
-                  </v-btn>
-                </template>
-                <span> Anwenderhandbuch </span>
-              </v-tooltip>
+              <v-btn
+                  v-tooltip:bottom="'Anwenderhandbuch'"
+                  icon="mdi-clippy"
+                  @click="navigateToHandbuch"
+              />
               <span> {{ loggedInUser }} </span>
             </v-col>
           </v-row>
