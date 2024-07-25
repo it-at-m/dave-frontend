@@ -12,7 +12,7 @@
                 font-weight="bold"
                 padding="10px 0 0 0"
                 header-text="Belastungsplan"
-            ></panel-header>
+            />
 
             <v-row
                 align="start"
@@ -29,7 +29,7 @@
                             density="compact"
                             @mouseover="hoverWerteHundertRunden = true"
                             @mouseleave="hoverWerteHundertRunden = false"
-                        ></v-checkbox>
+                        />
                   <v-slider
                             v-model="sizeBelastungsplan"
                             label="Belastungsplangröße"
@@ -49,7 +49,7 @@
                             density="compact"
                             @mouseover="hoverBlackPrintMode = true"
                             @mouseleave="hoverBlackPrintMode = false"
-                        ></v-checkbox>
+                        />
                 </v-col>
                 <v-col cols="4">
                     <v-card flat>
@@ -64,7 +64,7 @@
                 font-weight="bold"
                 padding="10px 0 10px 0"
                 header-text="Ganglinie"
-            ></panel-header>
+            />
 
             <v-row
                 align="start"
@@ -87,8 +87,7 @@
                             @blur="checkRangeYAchse1"
                             @mouseover="hoverYAchse1 = true"
                             @mouseleave="hoverYAchse1 = false"
-                        >
-                        </v-text-field>
+                        />
                 </v-col>
                 <v-col cols="4">
                         <v-text-field
@@ -107,8 +106,7 @@
                             @blur="checkRangeYAchse2"
                             @mouseover="hoverYAchse2 = true"
                             @mouseleave="hoverYAchse2 = false"
-                        >
-                        </v-text-field>
+                        />
                 </v-col>
                 <v-col cols="4">
                     <v-card flat>
@@ -123,7 +121,7 @@
                 font-weight="bold"
                 padding="10px 0 0 0"
                 header-text="Listenausgabe"
-            ></panel-header>
+            />
             <v-row
                 align="start"
                 justify="center"
@@ -138,7 +136,7 @@
                             density="compact"
                             @mouseover="hoverStundensumme = true"
                             @mouseleave="hoverStundensumme = false"
-                        ></v-checkbox>
+                        />
                         <v-checkbox
                             v-model="blocksumme"
                             :label="'Blocksumme'"
@@ -148,7 +146,7 @@
                             density="compact"
                             @mouseover="hoverBlocksumme = true"
                             @mouseleave="hoverBlocksumme = false"
-                        ></v-checkbox>
+                        />
                 </v-col>
                 <v-col cols="4">
                         <v-checkbox
@@ -159,7 +157,7 @@
                             density="compact"
                             @mouseover="hoverTagessumme = true"
                             @mouseleave="hoverTagessumme = false"
-                        ></v-checkbox>
+                        />
                         <v-checkbox
                             v-model="spitzenstunde"
                             :label="'Spitzenstunde'"
@@ -169,7 +167,7 @@
                             density="compact"
                             @mouseover="hoverSpitzenstunde = true"
                             @mouseleave="hoverSpitzenstunde = false"
-                        ></v-checkbox>
+                        />
                 </v-col>
                 <v-col cols="4">
                     <v-card flat>
@@ -184,7 +182,7 @@
                 font-weight="bold"
                 padding="10px 0 0 0"
                 header-text="Detailauswahl Listenausgabe"
-            ></panel-header>
+            />
                 <v-row
                     v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
                     align="start"
@@ -193,7 +191,7 @@
                     @mouseover="hoverSpitzenstundeDetailauswahl = true"
                     @mouseleave="hoverSpitzenstundeDetailauswahl = false"
                 >
-                    <v-col cols="4"> </v-col>
+                    <v-spacer/>
                     <v-col cols="4">
                         <v-checkbox
                             v-model="spitzenstundeKfz"
@@ -203,7 +201,7 @@
                             color="grey-darken-1"
                             density="compact"
                             :disabled="isTypeKfzDisabled()"
-                        ></v-checkbox>
+                        />
                         <v-checkbox
                             v-model="spitzenstundeRad"
                             :label="'Spitzenstunde Rad'"
@@ -212,7 +210,7 @@
                             color="grey-darken-1"
                             density="compact"
                             :disabled="isTypeRadDisabled()"
-                        ></v-checkbox>
+                        />
                         <v-checkbox
                             v-model="spitzenstundeFuss"
                             :label="'Spitzenstunde Fuß'"
@@ -221,7 +219,7 @@
                             color="grey-darken-1"
                             density="compact"
                             :disabled="isTypeFussDisabled()"
-                        ></v-checkbox>
+                        />
                     </v-col>
                     <v-col cols="4">
                         <v-card flat>
@@ -236,7 +234,7 @@
                 font-weight="bold"
                 padding="10px 0 0 0"
                 header-text="Zeitreihe"
-            ></panel-header>
+            />
 
             <v-row
                 align="start"
@@ -253,9 +251,9 @@
                             density="compact"
                             @mouseover="hoverZeitreiheGesamt = true"
                             @mouseleave="hoverZeitreiheGesamt = false"
-                        ></v-checkbox>
+                        />
                 </v-col>
-                <v-col cols="4"> </v-col>
+                <v-spacer/>
                 <v-col cols="4">
                     <v-card flat>
                         {{ helpTextZeitreihe }}

@@ -5,7 +5,7 @@
         :color="color"
         :icon="icon.iconPath"
         :tooltip="icon.tooltip"
-    ></tooltip-with-icon>
+    />
 </template>
 <script setup lang="ts">
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";

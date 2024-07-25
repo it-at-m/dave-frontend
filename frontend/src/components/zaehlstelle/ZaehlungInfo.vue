@@ -121,8 +121,8 @@
                         <v-icon
                             small
                             color="grey-lighten-1"
-                            >mdi-clock-time-four-outline</v-icon
-                        >
+                            icon="mdi-clock-time-four-outline"
+                            />
                     </v-col>
                     <v-col cols="10">
                         <span class="text-grey-lighten-1"
@@ -150,10 +150,10 @@
                         align-self="start"
                     >
                         <v-icon
-                            small
-                            color="grey-lighten-1"
-                            >mdi-summit</v-icon
-                        >
+                          small
+                          color="grey-lighten-1"
+                          icon="mdi-summit"
+                        />
                     </v-col>
                     <v-col cols="10">
                         <span class="text-grey-lighten-1"
@@ -176,8 +176,8 @@
                             v-if="index === 0"
                             small
                             color="grey-lighten-1"
-                            >mdi-arrow-decision</v-icon
-                        >
+                            icon="mdi-arrow-decision"
+                            />
                     </v-col>
                     <v-col cols="9">
                         <span

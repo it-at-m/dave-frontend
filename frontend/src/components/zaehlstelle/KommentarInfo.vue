@@ -34,11 +34,11 @@
                 <v-footer>
                     <v-spacer></v-spacer>
                     <v-btn
+                        class="text-none"
                         color="grey-lighten-1"
+                        text="=Schließen"
                         @click="showDialog = false"
-                    >
-                        Schließen
-                    </v-btn>
+                    />
                     <v-spacer></v-spacer>
                 </v-footer>
             </v-card>

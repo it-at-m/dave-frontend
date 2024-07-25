@@ -7,8 +7,7 @@
             :data="belastungsplanData"
             :streets="belastungsplanData.streets"
             :visible-nodes="visibleNodes"
-        >
-        </belastungsplan-kreisverkehr>
+        />
     </v-card>
 </template>
 <script setup lang="ts">

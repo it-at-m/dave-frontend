@@ -5,7 +5,6 @@
         color="transparent"
     >
         <svg
-            version="1.2"
             :width="width"
             :height="height"
             viewBox="13891 17287 1111 1111"

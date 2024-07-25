@@ -94,7 +94,7 @@
                     </v-sheet>
                 </v-card-text>
                 <v-card-actions>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                       class="text-none"
                       color="secondary"
@@ -102,7 +102,7 @@
                       variant="elevated"
                       @click="setOptions"
                     />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                       class="text-none"
                       color="grey-lighten-1"
@@ -110,7 +110,7 @@
                       variant="elevated"
                       @click="resetOptionsmenu"
                     />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                 </v-card-actions>
             </v-card>
         </v-dialog>

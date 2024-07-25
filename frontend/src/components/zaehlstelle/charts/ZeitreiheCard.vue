@@ -6,14 +6,14 @@
         <zeitreihe-chart
             :zeitreihe-daten="zaehldatenZeitreihe"
             @charttypeChanged="charttypeChanged"
-        ></zeitreihe-chart>
+        />
         <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
         <zeitreihe-chart
             ref="zeitreiheForPdf"
             style="display: none"
             :zeitreihe-daten="zaehldatenZeitreihe"
-        ></zeitreihe-chart>
+        />
     </v-card>
 </template>
 

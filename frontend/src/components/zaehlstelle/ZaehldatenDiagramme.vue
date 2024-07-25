@@ -34,9 +34,8 @@
             <v-icon
                 color="error"
                 size="36"
-            >
-                mdi-alert-decagram-outline
-            </v-icon>
+                icon="mdi-alert-decagram-outline"
+            />
             Zu dieser Zählstelle sind aktuell noch keine Zählungen im System
             vorhanden.
         </v-banner>
@@ -185,7 +184,7 @@ import ZeitreiheCard from "@/components/zaehlstelle/charts/ZeitreiheCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht
   from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
-import PdfReportMenue from "@/components/zaehlstelle/PdfReportMenue.vue";
+import PdfReportMenue from "@/components/common/PdfReportMenue.vue";
 // Typen
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";

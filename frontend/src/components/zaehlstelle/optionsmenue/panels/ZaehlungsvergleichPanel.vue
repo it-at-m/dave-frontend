@@ -15,7 +15,7 @@
                         font-weight="bold"
                         padding="10px 0 0 0"
                         header-text="Datum der aktuell ausgewählten Zählung"
-                    ></panel-header>
+                    />
                     <span class="text">{{ basisdatum }}</span
                     ><br /><br />
                 </div>
@@ -30,20 +30,19 @@
                         font-weight="bold"
                         padding="10px 0 0 0"
                         header-text="Differenzdaten anzeigen"
-                    ></panel-header>
+                    />
                     <panel-header
                         font-size="small"
                         font-weight="normal"
                         header-text="(Anzeige nur im Belastungsplan)"
-                    ></panel-header>
-
-                        <v-checkbox
-                            v-model="differenzdatenDarstellen"
-                            color="grey-darken-1"
-                            :label="'Differenzdaten darstellen'"
-                            @mouseover="hoverCheckbox = true"
-                            @mouseleave="hoverCheckbox = false"
-                        ></v-checkbox>
+                    />
+                    <v-checkbox
+                        v-model="differenzdatenDarstellen"
+                        color="grey-darken-1"
+                        :label="'Differenzdaten darstellen'"
+                        @mouseover="hoverCheckbox = true"
+                        @mouseleave="hoverCheckbox = false"
+                    />
                     <div v-if="differenzdatenDarstellen">
                             <v-select
                                 v-model="vergleichszaehlungsId"
@@ -63,7 +62,7 @@
                         font-weight="bold"
                         padding="10px 0 0 0"
                         header-text="Zeitreihe"
-                    ></panel-header>
+                    />
 
                         <v-select
                             v-model="idVergleichszaehlungZeitreihe"
@@ -74,7 +73,7 @@
                             density="comfortable"
                             @mouseover="hoverSelectVergleichsdatumZeitreihe = true"
                             @mouseleave="hoverSelectVergleichsdatumZeitreihe = false"
-                        ></v-select>
+                        />
                 </v-col>
                 <v-spacer />
                 <v-col cols="4">

@@ -3,7 +3,7 @@
         id="belastungsplan"
         :height="dimension"
         :width="dimension"
-    ></v-sheet>
+    />
 </template>
 
 <script setup lang="ts">

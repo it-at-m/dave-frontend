@@ -12,7 +12,7 @@
                 font-weight="bold"
                 padding="10px 0 10px 0"
                 header-text="Fahrbeziehungen zwischen den Knotenarmen"
-            ></panel-header>
+            />
 
             <v-row
                 align="start"
@@ -30,7 +30,7 @@
                             density="comfortable"
                             @mouseover="hoverSelectVon = true"
                             @mouseleave="hoverSelectVon = false"
-                        ></v-select>
+                        />
                         <v-select
                             v-model="nach"
                             :items="nachKnotenarme"
@@ -41,7 +41,7 @@
                             density="comfortable"
                             @mouseover="hoverSelectNach = true"
                             @mouseleave="hoverSelectNach = false"
-                        ></v-select>
+                        />
                             <v-checkbox
                                 v-if="beideRichtungenAnzeigen"
                                 v-model="beideRichtungen"

@@ -12,12 +12,12 @@
           font-weight="bold"
           padding="10px 0 0 0"
           header-text="Verkehrsarten"
-      ></panel-header>
+      />
       <panel-header
           font-size="small"
           font-weight="normal"
           header-text="Im Belastungsplan können maximal 3 Werte gleichzeitig angezeigt werden"
-      ></panel-header>
+      />
 
       <v-row
           align="start"
@@ -63,7 +63,7 @@
                   density="compact"
                   @mouseover="hoverKfz = true"
                   @mouseleave="hoverKfz = false"
-              ></v-checkbox>
+              />
             </v-col>
             <v-spacer/>
           </v-row>
@@ -89,7 +89,7 @@
                   density="compact"
                   @mouseover="hoverSv = true"
                   @mouseleave="hoverSv = false"
-              ></v-checkbox>
+              />
             </v-col>
             <v-col cols="6">
               <v-checkbox
@@ -115,7 +115,7 @@
                   density="compact"
                   @mouseover="hoverSv_p = true"
                   @mouseleave="hoverSv_p = false"
-              ></v-checkbox>
+              />
             </v-col>
           </v-row>
           <v-row
@@ -140,7 +140,7 @@
                   density="compact"
                   @mouseover="hoverGv = true"
                   @mouseleave="hoverGv = false"
-              ></v-checkbox>
+              />
             </v-col>
             <v-col cols="6">
               <v-checkbox
@@ -164,7 +164,7 @@
                   density="compact"
                   @mouseover="hoverGv_p = true"
                   @mouseleave="hoverGv_p = false"
-              ></v-checkbox>
+              />
             </v-col>
           </v-row>
           <v-row
@@ -196,7 +196,7 @@
                   density="compact"
                   @mouseover="hoverRad = true"
                   @mouseleave="hoverRad = false"
-              ></v-checkbox>
+              />
             </v-col>
             <v-col cols="6">
               <v-checkbox
@@ -211,7 +211,7 @@
                   density="compact"
                   @mouseover="hoverFuss = true"
                   @mouseleave="hoverFuss = false"
-              ></v-checkbox>
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -226,12 +226,12 @@
           font-weight="bold"
           padding="10px 0 0 0"
           header-text="Fahrzeugkategorien"
-      ></panel-header>
+      />
       <panel-header
           font-size="small"
           font-weight="normal"
           header-text="(keine Anzeige im Belastungsplan)"
-      ></panel-header>
+      />
 
       <v-row
           align="start"
@@ -268,7 +268,7 @@
               density="compact"
               @mouseover="hoverPkw = true"
               @mouseleave="hoverPkw = false"
-          ></v-checkbox>
+          />
           <v-checkbox
               v-model="fahrzeugOptions.lastkraftwagen"
               :label="'Lastkraftwagen (Lkw)'"
@@ -280,7 +280,7 @@
               density="compact"
               @mouseover="hoverLkw = true"
               @mouseleave="hoverLkw = false"
-          ></v-checkbox>
+          />
           <v-checkbox
               v-model="fahrzeugOptions.lastzuege"
               :label="'Lastzüge (Lz)'"
@@ -292,7 +292,7 @@
               density="compact"
               @mouseover="hoverLz = true"
               @mouseleave="hoverLz = false"
-          ></v-checkbox>
+          />
         </v-col>
         <v-col cols="4">
           <v-checkbox
@@ -306,7 +306,7 @@
               density="compact"
               @mouseover="hoverKrad = true"
               @mouseleave="hoverKrad = false"
-          ></v-checkbox>
+          />
           <v-checkbox
               v-model="fahrzeugOptions.busse"
               :label="'Bus'"
@@ -318,7 +318,7 @@
               density="compact"
               @mouseover="hoverBus = true"
               @mouseleave="hoverBus = false"
-          ></v-checkbox>
+          />
           <v-checkbox
               v-model="fahrzeugOptions.pkwEinheiten"
               :label="'PKW-Einheiten'"
@@ -330,7 +330,7 @@
               density="compact"
               @mouseover="hoverPkweinheit = true"
               @mouseleave="hoverPkweinheit = false"
-          ></v-checkbox>
+          />
         </v-col>
         <v-col cols="4">
           <v-card flat>

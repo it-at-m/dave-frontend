@@ -3,14 +3,14 @@
         elevation="0"
         class="pt-5"
     >
-        <heatmap-chart :zaehldaten-heatmap="zaehldatenHeatmap"></heatmap-chart>
+        <heatmap-chart :zaehldaten-heatmap="zaehldatenHeatmap"/>
         <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
         <heatmap-chart
             ref="heatmapChart"
             style="display: none"
             :zaehldaten-heatmap="zaehldatenHeatmap"
-        ></heatmap-chart>
+        />
     </v-card>
 </template>
 <script setup lang="ts">
