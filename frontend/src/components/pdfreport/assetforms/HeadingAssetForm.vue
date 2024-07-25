@@ -9,7 +9,7 @@
             <v-card-title
                 class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon class="mr-2">{{ icon }}</v-icon>
+                <v-icon class="mr-2" :icon="icon"/>
                 Überschrift bearbeiten
             </v-card-title>
             <v-card-text>
@@ -61,11 +61,11 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn
+                    class="text-none"
                     color="primary"
+                    text="Speichern"
                     @click="save"
-                >
-                    Speichern
-                </v-btn>
+                />
             </v-card-actions>
         </v-card>
     </v-dialog>

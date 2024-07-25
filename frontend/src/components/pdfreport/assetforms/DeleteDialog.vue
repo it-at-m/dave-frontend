@@ -9,7 +9,7 @@
             <v-card-title
                 class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon class="mr-2">mdi-trash-can</v-icon>
+                <v-icon class="mr-2" icon="mdi-trash-can"/>
                 Element entfernen
             </v-card-title>
             <v-card-text class="text-body-1">
@@ -22,12 +22,12 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn
+                    class="text-none"
                     color="error"
+                    append-icon="mdi-alarm-light-outline"
+                    text="Löschen"
                     @click="deleteAsset"
-                >
-                    <v-icon left> mdi-alarm-light-outline </v-icon>
-                    Löschen
-                </v-btn>
+                />
             </v-card-actions>
         </v-card>
     </v-dialog>

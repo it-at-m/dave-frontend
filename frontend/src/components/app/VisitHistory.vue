@@ -1,17 +1,11 @@
 <template>
 
-    <v-tooltip location="bottom">
-      <template #activator="{ props }">
-        <v-btn
-            id="menu-activator"
-            v-bind="props"
-            icon="mdi-history"
-            :disabled="!isHistory"
-        >
-        </v-btn>
-      </template>
-      Historie
-    </v-tooltip>
+  <v-btn
+      id="menu-activator"
+      v-tooltip:bottom="'Historie'"
+      icon="mdi-history"
+      :disabled="!isHistory"
+  />
 
   <v-menu activator="#menu-activator" location="bottom center">
     <v-list density="compact">

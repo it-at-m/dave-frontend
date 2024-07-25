@@ -1,17 +1,10 @@
 <template>
-  <v-tooltip location="bottom">
-    <template #activator="{ props }">
-      <v-btn
-          v-bind="props"
-          icon="mdi-message-text-outline"
-          :disabled="!hasInfoMessage"
-          @click="openDialogAndLoadData"
-      >
-      </v-btn>
-    </template>
-    Infonachricht
-  </v-tooltip>
-
+  <v-btn
+      v-tooltip:bottom="'Infonachricht'"
+      icon="mdi-message-text-outline"
+      :disabled="!hasInfoMessage"
+      @click="openDialogAndLoadData"
+  />
   <v-dialog
       v-model="showDialog"
       max-width="600px"
@@ -24,8 +17,8 @@
     >
       <v-card-title class="d-flex justify-space-between align-center">
         <div>
-        <v-icon color="grey">mdi-email</v-icon>
-        Information der Administratoren
+          <v-icon color="grey" icon="mdi-email"/>
+          Information der Administratoren
         </div>
         <v-btn
             icon="mdi-close"
@@ -48,10 +41,9 @@
             color="secondary"
             class="text-none"
             variant="flat"
+            text="Schließen"
             @click="closeDialog()"
-        >
-          Schließen
-        </v-btn>
+        />
       </v-card-actions>
     </v-card>
   </v-dialog>

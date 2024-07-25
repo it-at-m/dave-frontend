@@ -6,11 +6,10 @@
         <v-progress-circular
             :size="120"
             :width="10"
-            value="30"
             color="grey-lighten-3"
             indeterminate
         >
-            laden
+          <template v-slot:default> laden </template>
         </v-progress-circular>
     </v-overlay>
 </template>

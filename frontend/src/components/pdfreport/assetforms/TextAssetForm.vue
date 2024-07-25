@@ -120,11 +120,11 @@
             <v-card-actions>
                 <v-spacer/>
                 <v-btn
+                    class="text-none"
                     color="primary"
+                    text="Speichern"
                     @click="save"
-                >
-                    Speichern
-                </v-btn>
+                />
             </v-card-actions>
         </v-card>
     </v-dialog>

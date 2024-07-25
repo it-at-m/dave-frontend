@@ -63,7 +63,7 @@ watch(
                     break;
                 }
                 default: {
-                    timeout.value = 6000;
+                    timeout.value = defaultTimeout;
                     break;
                 }
             }
