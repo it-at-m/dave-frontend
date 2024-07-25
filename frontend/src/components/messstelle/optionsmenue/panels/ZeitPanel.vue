@@ -36,6 +36,15 @@
 <!--                        :max="maxDate"-->
 <!--                        @update:modelValue="checkIfDateIsAlreadySelected"-->
 <!--                    />-->
+                  <v-date-picker
+                      v-model="dateValue"
+                      hide-header
+                      locale="de-DE"
+                      first-day-of-week="1"
+                      multiple="range"
+                      :min="minDate"
+                      :max="maxDate"
+                  />
                 </v-col>
                 <v-col cols="4">
                     <v-text-field
@@ -207,9 +216,11 @@ const formattedDateInput = computed({
     },
 });
 
-function allowedDatesRangeDatePicker(val: string) {
+const dateValue = ref<Array<Date>>([new Date()]);
+
+function allowedDatesRangeDatePicker(val: Date) {
     const today = new Date();
-    return new Date(val) < today;
+    return val < today;
 }
 
 function RULE_EINGABE_HAT_PLAUSIBLES_FORMAT() {
