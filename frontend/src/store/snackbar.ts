@@ -31,7 +31,7 @@ export const useSnackbarStore = defineStore("snackbar", () => {
         showToast(
             apiError.level,
             split[0],
-            split.length === 2 ? split[2] : undefined
+            split.length === 2 ? split[1] : undefined
         );
     }
     function showToast(level: Levels, textPart1: string, textPart2?: string) {
