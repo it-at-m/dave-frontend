@@ -31,7 +31,7 @@
                   class="d-inline-flex pr-1"
                 >
                   <v-icon
-                    small
+                    size="small"
                     color="primary"
                     class="mb-1 mr-1"
                     :icon="aufbauIcon.iconPath"
@@ -45,7 +45,7 @@
                   class="d-inline-flex px-1"
                   >|
                   <v-icon
-                    small
+                    size="small"
                     color="primary"
                     class="mb-1 mx-1"
                     :icon="abbauIcon.iconPath"

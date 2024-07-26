@@ -113,7 +113,7 @@
             align-self="start"
           >
             <v-icon
-              small
+              size="small"
               color="grey-lighten-1"
               icon="mdi-clock-time-four-outline"
             />
@@ -139,7 +139,7 @@
             align-self="start"
           >
             <v-icon
-              small
+              size="small"
               color="grey-lighten-1"
               icon="mdi-summit"
             />
@@ -162,7 +162,7 @@
           <v-col cols="1">
             <v-icon
               v-if="index === 0"
-              small
+              size="small"
               color="grey-lighten-1"
               icon="mdi-arrow-decision"
             />

@@ -18,7 +18,7 @@
       >
         <v-card-title>
           <v-icon
-            left
+            start
             icon="mdi-filter-outline"
           />
           Filtereinstellungen
