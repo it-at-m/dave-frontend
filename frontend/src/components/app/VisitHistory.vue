@@ -14,7 +14,7 @@
       <v-list-item
         v-for="(item, index) in items"
         :key="index"
-        two-line
+        lines="two"
         :prepend-icon="item.icon"
         :title="getTitle(item)"
         :subtitle="getSubTitle(item)"

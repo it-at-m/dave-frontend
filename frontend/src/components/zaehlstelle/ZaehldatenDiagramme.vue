@@ -44,7 +44,6 @@
       v-model="activeTab"
       fixed-tabs
       bg-color="grey-darken-1"
-      dark
       slider-color="grey-lighten-1"
       stacked
     >

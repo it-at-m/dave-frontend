@@ -42,8 +42,7 @@
           <v-date-picker
             v-model="dateValue"
             hide-header
-            locale="de-DE"
-            first-day-of-week="1"
+            :weekdays="[1,2,3,4,5,6,0]"
             multiple="range"
             :min="minDate"
             :max="maxDate"
