@@ -5,13 +5,13 @@
             font-weight="bold"
             padding="10px 0 0 0"
             header-text="Zeitintervall"
-        ></panel-header>
+        />
         <panel-header
             font-size="small"
             font-weight="normal"
             padding="0 0 10px 0"
             header-text="(außer Belastungsplan und Zeitreihe)"
-        ></panel-header>
+        />
         <v-row>
             <v-col cols="4">
                     <v-select

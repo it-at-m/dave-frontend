@@ -58,7 +58,7 @@
                 </v-col>
             </v-row>
 
-            <v-divider></v-divider>
+            <v-divider/>
             <panel-header
                 font-size="0.875rem"
                 font-weight="bold"
@@ -115,7 +115,7 @@
                 </v-col>
             </v-row>
 
-            <v-divider></v-divider>
+            <v-divider/>
             <panel-header
                 font-size="0.875rem"
                 font-weight="bold"

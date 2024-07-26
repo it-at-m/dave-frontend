@@ -5,12 +5,12 @@
             font-weight="bold"
             padding="10px 0 0 0"
             header-text="Verkehrsarten"
-        ></panel-header>
+        />
         <panel-header
             font-size="small"
             font-weight="normal"
             header-text="Im Belastungsplan können maximal 3 Werte gleichzeitig angezeigt werden"
-        ></panel-header>
+        />
 
       <v-row
           align="start"
@@ -170,7 +170,7 @@
                           density="compact"
                           @mouseover="hoverFuss = true"
                           @mouseleave="hoverFuss = false"
-                      ></v-checkbox>
+                      />
                     </v-col>
                 </v-row>
             </v-col>

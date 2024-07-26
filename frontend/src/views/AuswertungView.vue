@@ -28,7 +28,7 @@
         </v-card>
       </v-col>
       <v-divider vertical/>
-      <v-col cols="8"></v-col>
+      <v-col cols="8"/>
     </v-row>
   </v-sheet>
 </template>

@@ -21,14 +21,14 @@
                         small
                         dense
                         :fahrtrichtung="messquerschnitt.fahrtrichtung"
-                    ></fahrtrichtung-icon> </span
-                ><br />
+                    />
+                </span>
+                <br />
                 <fahrstreifen-icon
                     small
                     dense
                     :fahrspuren="messquerschnitt.anzahlFahrspuren"
-                >
-                </fahrstreifen-icon>
+                />
                 <br />
                 <span class="text-caption">
                     {{ messquerschnitt.standort }}

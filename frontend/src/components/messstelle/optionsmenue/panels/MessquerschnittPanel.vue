@@ -2,7 +2,7 @@
     <v-expansion-panel>
         <v-expansion-panel-title>
             <div>
-                <v-icon left>mdi-arrow-decision</v-icon>
+                <v-icon left icon="mdi-arrow-decision"/>
                 Messquerschnitt
             </div>
         </v-expansion-panel-title>
@@ -12,7 +12,7 @@
                 font-weight="bold"
                 padding="10px 0 0 0"
                 header-text="Vorhandene Messquerschnitte (Richtungen)"
-            ></panel-header>
+            />
             <v-row no-gutters>
                 <v-col cols="4">
                         <v-select

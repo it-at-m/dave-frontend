@@ -9,7 +9,7 @@
                 variant="flat"
             >
                 <v-card-title>
-                    <v-icon left>mdi-file-chart</v-icon>
+                    <v-icon left icon="mdi-file-chart"/>
                     Auswahl zum PDF Report
                 </v-card-title>
 
@@ -50,21 +50,21 @@
 
                 </v-list>
                 <v-footer>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                         class="text-none"
                         color="secondary"
                         text="Aktualisiere PDF Report"
                         @click="saveItems"
                     />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                   <v-btn
                       class="text-none"
                       color="grey-lighten-1"
                       text="Abbrechen"
                       @click="closeDialog"
                   />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                 </v-footer>
             </v-card>
         </v-dialog>

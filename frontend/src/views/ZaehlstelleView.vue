@@ -16,18 +16,18 @@
                         :kreuzungsname="kreuzungsname"
                         :stadtbezirk-nummer="`${zaehlstelle.stadtbezirkNummer}`"
                         :stadtbezirk="zaehlstelle.stadtbezirk"
-                    ></zaehlstelle-info>
+                    />
                     <!-- Information zur aktiven Zählung -->
                     <zaehlung-info
                         v-show="hasZaehlungen"
                         :kommentar-zaehlstelle="zaehlstelle.kommentar"
-                    ></zaehlung-info>
+                    />
                     <!-- Liste der nicht aktiven Zählungen, die zur Zählstelle gehören -->
                     <zaehlungen-timeline
                         v-show="hasZaehlungen"
                         :external-query="externalQuery"
                         :listheight="timelineHeightVh"
-                    ></zaehlungen-timeline>
+                    />
                 </v-sheet>
             </v-col>
             <v-col cols="9">
@@ -45,7 +45,7 @@
                     :height="rightHeightVh"
                     :content-height="rightContentHeightVh"
                     :has-zaehlungen="hasZaehlungen"
-                ></zaehldaten-diagramme>
+                />
             </v-col>
         </v-row>
   </v-sheet>

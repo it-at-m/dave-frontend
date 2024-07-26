@@ -1,17 +1,17 @@
 <template>
     <v-expansion-panel-text>
-        <v-divider></v-divider>
+        <v-divider/>
         <panel-header
             font-size="0.875rem"
             font-weight="bold"
             padding="10px 0 0 0"
             header-text="Fahrzeugkategorien"
-        ></panel-header>
+        />
         <panel-header
             font-size="small"
             font-weight="normal"
             header-text="(keine Anzeige im Belastungsplan)"
-        ></panel-header>
+        />
 
         <v-row
             align="start"

@@ -35,22 +35,22 @@
             dense
             :zaehlart="zaehlart"
             :color="iconColor"
-        ></zaehlart-icon>
+        />
         <wetter-icon
             dense
             :wetter="wetter"
             :color="iconColor"
-        ></wetter-icon>
+        />
         <zaehldauer-icon
             dense
             :zaehldauer="zaehldauer"
             :color="iconColor"
-        ></zaehldauer-icon>
+        />
         <quelle-icon
             dense
             :quelle="quelle"
             :color="iconColor"
-        ></quelle-icon>
+        />
       </v-sheet>
     </v-col>
   </v-row>

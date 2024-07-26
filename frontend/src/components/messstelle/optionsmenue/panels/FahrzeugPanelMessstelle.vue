@@ -2,7 +2,7 @@
     <v-expansion-panel>
         <v-expansion-panel-title>
             <div>
-                <v-icon left>mdi-car-multiple</v-icon>
+                <v-icon left icon="mdi-car-multiple"/>
                 Fahrzeuge
             </div>
         </v-expansion-panel-title>

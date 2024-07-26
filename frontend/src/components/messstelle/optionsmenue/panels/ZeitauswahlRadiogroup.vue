@@ -5,7 +5,7 @@
             font-weight="bold"
             padding="10px 0 0 0"
             header-text="Zeitauswahl"
-        ></panel-header>
+        />
         <v-row
             align="start"
             justify="center"

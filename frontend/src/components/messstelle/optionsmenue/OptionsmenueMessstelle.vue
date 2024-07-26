@@ -16,7 +16,7 @@
                 flat
             >
                 <v-card-title>
-                    <v-icon left>mdi-filter-outline</v-icon>
+                    <v-icon left icon="mdi-filter-outline"/>
                     Filtereinstellungen
                 </v-card-title>
                 <v-card-text>
@@ -40,7 +40,7 @@
                     </v-sheet>
                 </v-card-text>
                 <v-card-actions>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                       class="text-none"
                       color="secondary"
@@ -48,7 +48,7 @@
                       variant="elevated"
                       @click="setChosenOptions"
                     />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                       class="text-none"
                       color="grey-lighten-1"
@@ -56,7 +56,7 @@
                       variant="elevated"
                       @click="resetOptions"
                     />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                 </v-card-actions>
             </v-card>
         </v-dialog>

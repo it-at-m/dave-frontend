@@ -15,10 +15,10 @@
         <v-btn
             class="text-none"
             width="100%"
-            flat
+            variant="flat"
             :text="buttonText"
             @click="buttonClick"
-        ></v-btn>
+        />
       </template>
     </v-autocomplete>
 </template>

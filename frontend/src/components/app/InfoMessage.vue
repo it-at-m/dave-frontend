@@ -24,7 +24,7 @@
             icon="mdi-close"
             variant="text"
             @click="closeDialog"
-        ></v-btn>
+        />
       </v-card-title>
       <v-card-text>
         <v-sheet

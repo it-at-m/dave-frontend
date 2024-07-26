@@ -50,19 +50,19 @@
                                 <zaehlart-icon
                                     :zaehlart="zaehlung.zaehlart"
                                     color="primary"
-                                ></zaehlart-icon>
+                                />
                                 <wetter-icon
                                     :wetter="zaehlung.wetter"
                                     color="primary"
-                                ></wetter-icon>
+                                />
                                 <zaehldauer-icon
                                     :zaehldauer="zaehlung.zaehldauer"
                                     color="primary"
-                                ></zaehldauer-icon>
+                                />
                                 <quelle-icon
                                     :quelle="zaehlung.quelle"
                                     color="primary"
-                                ></quelle-icon>
+                                />
                                 <kommentar-info
                                     :kommentar-zaehlstelle="
                                         kommentarZaehlstelle
@@ -72,14 +72,14 @@
                                     :zaehlsituation-erweitert="
                                         zaehlung.zaehlsituationErweitert
                                     "
-                                ></kommentar-info>
+                                />
                             </v-row>
                         </v-col>
                         <v-col
                             lg
                             class="hidden-md-and-down"
                         >
-                            <v-spacer></v-spacer>
+                            <v-spacer/>
                         </v-col>
                         <v-col
                             lg
@@ -91,7 +91,7 @@
                                 active-color="#1565C0"
                                 passive-color="#EEEEEE"
                                 :knotenarme="knotenarme"
-                            ></zaehlung-geometrie>
+                            />
                         </v-col>
                     </v-row>
                 </v-sheet>
@@ -106,7 +106,7 @@
                 class="px-4 py-3"
             >
                 <v-row>
-                    <v-col cols="1"></v-col>
+                    <v-col cols="1"/>
                     <v-col>
                         <h3 class="text-grey-lighten-1">
                             Aktuelle Filtereinstellungen
@@ -206,7 +206,7 @@
                 >
                     <v-spacer/>
                     <v-col>
-                        <optionsmenue :zaehlung="zaehlung"></optionsmenue>
+                        <optionsmenue :zaehlung="zaehlung"/>
                     </v-col>
                     <v-spacer/>
                 </v-row>

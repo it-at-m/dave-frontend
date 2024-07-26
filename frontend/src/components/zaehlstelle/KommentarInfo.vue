@@ -32,14 +32,14 @@
                 </v-card-text>
 
                 <v-footer>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn
                         class="text-none"
                         color="grey-lighten-1"
                         text="=Schließen"
                         @click="showDialog = false"
                     />
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                 </v-footer>
             </v-card>
         </v-dialog>

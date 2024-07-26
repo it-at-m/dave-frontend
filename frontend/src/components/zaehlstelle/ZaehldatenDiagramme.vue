@@ -25,7 +25,7 @@
                 :doc-mode="false"
                 :geometrie-mode="true"
                 @print="storeSvgSchematischeUebersicht($event)"
-            ></belastungsplan-kreuzung-svg-schematische-uebersicht>
+            />
         </v-overlay>
         <v-banner
             v-if="!hasZaehlungen"
@@ -90,7 +90,7 @@
                         :doc-mode="false"
                         :geometrie-mode="true"
                         @print="storeSvg($event)"
-                    ></belastungsplan-kreuzung-svg>
+                    />
 
                     <belastungsplan-card
                         v-show="belastungsplanDTO.kreisverkehr"
@@ -99,7 +99,7 @@
                         :belastungsplan-data="belastungsplanDTO"
                         :loaded="false"
                         :zaehlung-id="zaehlungsId"
-                    ></belastungsplan-card>
+                    />
                 </v-sheet>
                 <progress-loader :value="belastungsplanLoading" />
             </v-tabs-window-item>

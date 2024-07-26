@@ -37,7 +37,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.KFZ)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-spacer />
         </v-row>
@@ -55,7 +55,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.SV)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-col cols="6">
                 <v-checkbox
@@ -66,7 +66,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.SV_P)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
         </v-row>
         <v-row
@@ -83,7 +83,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.GV)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-col cols="6">
                 <v-checkbox
@@ -94,7 +94,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.GV_P)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
         </v-row>
         <v-row
@@ -111,7 +111,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.RAD)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-col cols="6">
                 <v-checkbox
@@ -120,7 +120,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.FUSS)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
         </v-row>
 
@@ -160,7 +160,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.PKW)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-col cols="6">
                 <v-checkbox
@@ -169,7 +169,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.KRAD)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
         </v-row>
         <v-row
@@ -186,7 +186,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.LKW)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-col cols="6">
                 <v-checkbox
@@ -195,7 +195,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.LFW)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
         </v-row>
         <v-row
@@ -212,7 +212,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.LZ)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
             <v-col cols="6">
                 <v-checkbox
@@ -221,7 +221,7 @@
                     :disabled="isTypeDisabled(Fahrzeug.BUS)"
                     hide-details
                     density="compact"
-                ></v-checkbox>
+                />
             </v-col>
         </v-row>
     </div>

@@ -7,7 +7,7 @@
                     :width="width"
                     max-width="100%"
                     max-height="200px"
-                ></v-img>
+                />
             </v-col>
         </v-row>
         <v-row>

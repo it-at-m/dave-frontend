@@ -1,6 +1,6 @@
 <template>
     <v-sheet>
-      <v-icon class="pr-3">mdi-chart-line</v-icon>
+      <v-icon class="pr-3" icon="mdi-chart-line"/>
       <span>
         Von den ausgewählten {{ zeitraumRange }} Tagen
         {{ getChosenWochentageNumberText }} in die Auswertung

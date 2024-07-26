@@ -16,7 +16,7 @@
         >
             <v-card class="rounded-0">
                 <v-card-title class="text-h5 grey-lighten-2">
-                    <v-icon left>mdi-comment-multiple</v-icon>
+                    <v-icon left icon="mdi-comment-multiple"/>
                     Informationen
                 </v-card-title>
                 <br />
@@ -24,14 +24,14 @@
             </v-card>
 
             <v-footer>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
+                    class="text-none"
                     color="grey-lighten-1"
+                    text="Schließen"
                     @click="showDialog = false"
-                >
-                    Schließen
-                </v-btn>
-                <v-spacer></v-spacer>
+                />
+                <v-spacer/>
             </v-footer>
         </v-dialog>
     </span>

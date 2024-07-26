@@ -2,7 +2,7 @@
     <v-expansion-panel>
         <v-expansion-panel-title>
             <div>
-                <v-icon left>mdi-cogs</v-icon>
+                <v-icon left icon="mdi-cogs"/>
                 Darstellungsoptionen
             </div>
         </v-expansion-panel-title>

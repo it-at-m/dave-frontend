@@ -11,8 +11,7 @@
                 :items="zeitblockValues"
                 variant="filled"
                 density="compact"
-            >
-            </v-select>
+            />
             <v-select
                 v-if="isZeitauswahlStunde"
                 v-model="chosenOptionsCopy.zeitblock"
@@ -20,8 +19,7 @@
                 :items="stuendlichValues"
                 variant="filled"
                 density="compact"
-            >
-            </v-select>
+            />
         </v-col>
       <v-spacer/>
     </v-row>

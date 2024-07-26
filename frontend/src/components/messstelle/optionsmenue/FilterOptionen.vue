@@ -6,7 +6,7 @@
         class="px-4 py-3"
     >
         <v-row>
-            <v-col cols="1"></v-col>
+            <v-col cols="1"/>
             <v-col>
               <h3 class="text-grey-lighten-1">
                   Aktuelle Filtereinstellungen
@@ -19,10 +19,10 @@
                 align-self="start"
             >
                 <v-icon
-                    small
+                    size="small"
                     color="grey-lighten-1"
-                    >mdi-clock-time-four-outline</v-icon
-                >
+                    icon="mdi-clock-time-four-outline"
+                    />
             </v-col>
             <v-col cols="10">
                 <span class="text-grey-lighten-1"
@@ -50,10 +50,10 @@
                 align-self="start"
             >
                 <v-icon
-                    small
+                    size="small"
                     color="grey-lighten-1"
-                    >mdi-calendar-week-outline</v-icon
-                >
+                    icon="mdi-calendar-week-outline"
+                    />
             </v-col>
             <v-col cols="10">
                 <span class="text-grey-lighten-1"
@@ -73,10 +73,10 @@
             <v-col cols="1">
                 <v-icon
                     v-if="index === 0"
-                    small
+                    size="small"
                     color="grey-lighten-1"
-                    >mdi-arrow-decision</v-icon
-                >
+                    icon="mdi-arrow-decision"
+                    />
             </v-col>
             <v-col cols="9">
                 <span :class="getStyleClass(messquerschnitt.mqId)"

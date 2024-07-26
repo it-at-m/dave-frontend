@@ -6,7 +6,7 @@
             color="black"
             :icon="icon.iconPath"
             :tooltip="icon.tooltip"
-        ></base-icon>
+        />
         {{ icon.tooltip }}
     </span>
 </template>

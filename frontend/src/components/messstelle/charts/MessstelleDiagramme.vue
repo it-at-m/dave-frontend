@@ -13,19 +13,19 @@
         >
             <!-- Kopfzeile -->
             <v-tab :value="TAB_BELASTUNGSPLAN">
-                <v-icon>mdi-arrow-decision</v-icon>
+                <v-icon icon="mdi-arrow-decision"/>
                 Belastungsplan
             </v-tab>
             <v-tab :value="TAB_GANGLINIE">
-                <v-icon>mdi-chart-histogram</v-icon>
+                <v-icon icon="mdi-chart-histogram"/>
                 Ganglinie
             </v-tab>
             <v-tab :value="TAB_LISTENAUSGABE">
-                <v-icon>mdi-table</v-icon>
+                <v-icon icon="mdi-table"/>
                 Listenausgabe
             </v-tab>
             <v-tab :value="TAB_HEATMAP">
-                <v-icon>mdi-chart-bubble</v-icon>
+                <v-icon icon="mdi-chart-bubble"/>
                 Heatmap
             </v-tab>
         </v-tabs>
@@ -64,9 +64,9 @@
                     <step-line-card
                         ref="steplineCard"
                         :zaehldaten-stepline="zaehldatenSteplineDTO"
-                    ></step-line-card>
+                    />
                 </v-sheet>
-                <progress-loader :value="chartDataLoading"></progress-loader>
+                <progress-loader :value="chartDataLoading"/>
             </v-tabs-window-item>
             <v-tabs-window-item :value="TAB_LISTENAUSGABE">
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
@@ -78,10 +78,9 @@
                     <messwerte-listenausgabe
                         :listenausgabe-data="listenausgabeDTO"
                         :height="contentHeight"
-                    >
-                    </messwerte-listenausgabe>
+                    />
                 </v-sheet>
-                <progress-loader :value="chartDataLoading"></progress-loader>
+                <progress-loader :value="chartDataLoading"/>
             </v-tabs-window-item>
             <v-tabs-window-item :value="TAB_HEATMAP">
                 <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
@@ -94,9 +93,9 @@
                     <heatmap-card
                         ref="heatmapCard"
                         :zaehldaten-heatmap="zaehldatenHeatmapDTO"
-                    ></heatmap-card>
+                    />
                 </v-sheet>
-                <progress-loader :value="chartDataLoading"></progress-loader>
+                <progress-loader :value="chartDataLoading"/>
             </v-tabs-window-item>
         </v-tabs-window>
 

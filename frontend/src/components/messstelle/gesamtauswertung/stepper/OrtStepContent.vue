@@ -19,10 +19,10 @@
               <v-btn
                   class="text-none"
                   width="100%"
-                  flat
+                  variant="flat"
                   :text="buttonText"
                   @click="buttonClick"
-              ></v-btn>
+              />
             </template>
         </v-autocomplete>
 
@@ -31,7 +31,7 @@
                 v-model="direction"
                 label="Richtung"
                 :items="richtungValues"
-                filled
+                variant="filled"
                 density="compact"
                 :readonly="richtungValues.length === 1"
                 persistent-hint
@@ -44,7 +44,7 @@
                 label="Lage"
                 :items="lageValues"
                 :readonly="isLageReadonly"
-                filled
+                variant="filled"
                 density="compact"
                 multiple
                 :rules="[REQUIRED]"

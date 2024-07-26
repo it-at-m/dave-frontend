@@ -3,9 +3,8 @@
         <v-icon
             color="error"
             size="36"
-        >
-            mdi-alert-decagram-outline
-        </v-icon>
+            icon="mdi-alert-decagram-outline"
+        />
         {{ ZEITRAUM_GROESSER_FUENF_JAHRE }}
     </v-banner>
 </template>

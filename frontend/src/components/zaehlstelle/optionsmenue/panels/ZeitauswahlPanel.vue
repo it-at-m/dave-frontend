@@ -12,7 +12,7 @@
           font-weight="bold"
           padding="10px 0 0 0"
           header-text="Zeitauswahl"
-      ></panel-header>
+      />
 
       <v-row
           align="start"
@@ -40,13 +40,13 @@
                     :value="Zeitauswahl.BLOCK"
                     @mouseover="hoverBlock = true"
                     @mouseleave="hoverBlock = false"
-                ></v-radio>
+                />
                 <v-radio
                     label="Stunde"
                     :value="Zeitauswahl.STUNDE"
                     @mouseover="hoverStunde = true"
                     @mouseleave="hoverStunde = false"
-                ></v-radio>
+                />
               </v-col>
               <v-col cols="6">
                 <v-radio
@@ -55,21 +55,21 @@
                     :disabled="isTypeDisabled('KFZ')"
                     @mouseover="hoverSpitzenstundeKfz = true"
                     @mouseleave="hoverSpitzenstundeKfz = false"
-                ></v-radio>
+                />
                 <v-radio
                     label="Spitzenstunde Rad"
                     :value="Zeitauswahl.SPITZENSTUNDE_RAD"
                     :disabled="isTypeDisabled('RAD')"
                     @mouseover="hoverSpitzenstundeRad = true"
                     @mouseleave="hoverSpitzenstundeRad = false"
-                ></v-radio>
+                />
                 <v-radio
                     label="Spitzenstunde Fuß"
                     :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
                     :disabled="isTypeDisabled('FUSS')"
                     @mouseover="hoverSpitzenstundeFuss = true"
                     @mouseleave="hoverSpitzenstundeFuss = false"
-                ></v-radio>
+                />
               </v-col>
             </v-row>
           </v-radio-group>
@@ -92,8 +92,7 @@
               density="compact"
               @mouseover="hoverSelectBlockOrSpitzenstunde = true"
               @mouseleave="hoverSelectBlockOrSpitzenstunde = false"
-          >
-          </v-select>
+          />
           <!-- Auszuwählende Stunden -->
           <v-select
               v-if="isZeitauswahlStunde"
@@ -104,25 +103,24 @@
               density="compact"
               @mouseover="hoverSelectStunde = true"
               @mouseleave="hoverSelectStunde = false"
-          >
-          </v-select>
+          />
         </v-col>
         <v-spacer/>
       </v-row>
 
-      <v-divider></v-divider>
+      <v-divider/>
       <panel-header
           font-size="0.875rem"
           font-weight="bold"
           padding="10px 0 0 0"
           header-text="Zeitintervall"
-      ></panel-header>
+      />
       <panel-header
           font-size="small"
           font-weight="normal"
           padding="0 0 10px 0"
           header-text="(außer Belastungsplan und Zeitreihe)"
-      ></panel-header>
+      />
 
       <v-row
           align="start"
@@ -140,7 +138,7 @@
               :disabled="isZeitauswahlSpitzenstunde"
               @mouseover="hoverSelectZeitintervall = true"
               @mouseleave="hoverSelectZeitintervall = false"
-          ></v-select>
+          />
         </v-col>
         <v-spacer/>
         <v-col cols="4">

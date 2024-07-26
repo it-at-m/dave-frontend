@@ -5,7 +5,7 @@
             font-weight="bold"
             padding="10px 0 10px 0"
             header-text="Ganglinie"
-        ></panel-header>
+        />
         <v-row
             align="start"
             justify="center"
@@ -54,7 +54,7 @@
                 </v-card>
             </v-col>
         </v-row>
-        <v-divider></v-divider>
+        <v-divider/>
     </v-expansion-panel-text>
 </template>
 

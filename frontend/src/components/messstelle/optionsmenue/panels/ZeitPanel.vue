@@ -2,7 +2,7 @@
     <v-expansion-panel>
         <v-expansion-panel-title>
             <div>
-                <v-icon left>mdi-clock-time-four-outline</v-icon>
+                <v-icon left icon="mdi-clock-time-four-outline"/>
                 Zeit
             </div>
         </v-expansion-panel-title>
@@ -12,7 +12,7 @@
                 font-weight="bold"
                 padding="10px 0 0 0"
                 header-text="Zeitraum"
-            ></panel-header>
+            />
             <v-row
                 no-gutters
                 class="mt-3"
@@ -70,14 +70,14 @@
                     </p>
                 </v-col>
             </v-row>
-            <v-divider></v-divider>
+            <v-divider/>
 
             <tages-typ-radiogroup
                 v-if="chosenOptionsCopyZeitraum.length == 2"
                 v-model="chosenOptionsCopy"
                 :is-chosen-tages-typ-valid="isChosenTagesTypValid"
             />
-            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"></v-divider>
+            <v-divider v-if="chosenOptionsCopyZeitraum.length == 2"/>
 
             <zeitauswahl-radiogroup
                 v-model="chosenOptionsCopy"
@@ -87,7 +87,7 @@
             />
             <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
             <v-spacer />
-            <v-divider v-if="!isDateBiggerFiveYears"></v-divider>
+            <v-divider v-if="!isDateBiggerFiveYears"/>
             <zeit-intervall
                 v-if="!isDateBiggerFiveYears"
                 v-model="chosenOptionsCopy"

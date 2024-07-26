@@ -5,7 +5,7 @@
             font-weight="bold"
             padding="10px 0 0 0"
             header-text="Wochentag"
-        ></panel-header>
+        />
         <v-row no-gutters>
             <v-col cols="8">
                 <v-radio-group

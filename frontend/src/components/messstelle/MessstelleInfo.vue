@@ -19,63 +19,48 @@
                         lg="8"
                     >
                         <v-row no-gutters>
-                            <v-tooltip location="bottom">
-                                <template #activator="{ props }">
                                     <span
-                                        v-bind="props"
+                                        v-tooltip:bottom="'Datum letzte plausible Messung'"
                                         >letzter Messtag:
                                         {{ datumLetztePlausibleMessung }}
                                     </span>
-                                </template>
-                                <span> Datum letzte plausible Messung </span>
-                            </v-tooltip>
                         </v-row>
                         <v-row no-gutters>
                             <span class="text-truncate">
-                                <v-tooltip location="bottom">
-                                    <template #activator="{ props }">
                                         <span
-                                            v-bind="props"
+                                            v-tooltip:bottom="aufbauIcon.tooltip"
                                             class="d-inline-flex pr-1"
                                         >
                                             <v-icon
                                                 small
                                                 color="primary"
                                                 class="mb-1 mr-1"
-                                                >{{ aufbauIcon.iconPath }}
-                                            </v-icon>
+                                                :icon="aufbauIcon.iconPath"
+                                            />
                                             {{
                                                 formatDate(
                                                     messstelle.realisierungsdatum
                                                 )
                                             }}
                                         </span>
-                                    </template>
-                                    <span> {{ aufbauIcon.tooltip }} </span>
-                                </v-tooltip>
 
-                                <v-tooltip location="bottom">
-                                    <template #activator="{ props }">
                                         <span
                                             v-if="abbauDatumExists"
-                                            v-bind="props"
+                                            v-tooltip:bottom="abbauIcon.tooltip"
                                             class="d-inline-flex px-1"
                                             >|
                                             <v-icon
                                                 small
                                                 color="primary"
                                                 class="mb-1 mx-1"
-                                                >{{ abbauIcon.iconPath }}
-                                            </v-icon>
+                                                :icon="abbauIcon.iconPath"
+                                                />
                                             {{
                                                 formatDate(
                                                     messstelle.abbaudatum
                                                 )
                                             }}
                                         </span>
-                                    </template>
-                                    <span> {{ abbauIcon.tooltip }} </span>
-                                </v-tooltip>
                             </span>
                         </v-row>
                         <v-row no-gutters>
@@ -90,7 +75,7 @@
                                     :fahrzeugklasse="fahrzeugKlasse"
                                     color="primary"
                                     small
-                                ></FahrzeugklassenIcon>
+                                />
                                 <MessstelleKommentar
                                     :kommentar="messstelle.kommentar"
                                 />
@@ -101,7 +86,7 @@
                         lg
                         class="hidden-md-and-down"
                     >
-                        <v-spacer></v-spacer>
+                        <v-spacer/>
                     </v-col>
                     <v-col
                         lg
@@ -113,7 +98,7 @@
                             active-color="#1565C0"
                             passive-color="#EEEEEE"
                             :knotenarme="messstelle.messquerschnitte"
-                        ></messstelle-geometrie>
+                        />
                     </v-col>
                 </v-row>
             </v-sheet>

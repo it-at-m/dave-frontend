@@ -54,7 +54,7 @@
                                 density="comfortable"
                                 @mouseover="hoverSelectVergleichsdatum = true"
                                 @mouseleave="hoverSelectVergleichsdatum = false"
-                            ></v-select>
+                            />
                     </div>
 
                     <panel-header
