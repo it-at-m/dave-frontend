@@ -25,60 +25,60 @@
     </template>
     <template #item="{ props, item, index }">
       <v-list-item
-          v-bind="props"
-          density="compact"
-          :prepend-icon="iconOfSuggestion(item.value.type)"
-          :title="item.value.text"
-          @click="searchOrShowSelectedSuggestion"
-          @focus="updateSearchQuery(index)"
+        v-bind="props"
+        density="compact"
+        :prepend-icon="iconOfSuggestion(item.value.type)"
+        :title="item.value.text"
+        @click="searchOrShowSelectedSuggestion"
+        @focus="updateSearchQuery(index)"
       />
     </template>
     <template #append>
       <v-tooltip
-          v-model="showtooltip"
-          location="bottom start"
-          :open-on-hover="false"
+        v-model="showtooltip"
+        location="bottom start"
+        :open-on-hover="false"
       >
         <template v-slot:activator="{ props }">
           <v-btn
-              v-bind="props"
-              icon="mdi-information"
-              @click="showtooltip = !showtooltip"
+            v-bind="props"
+            icon="mdi-information"
+            @click="showtooltip = !showtooltip"
           >
           </v-btn>
         </template>
         <span>
-                    <b>Beispiele, wonach gesucht werden kann:</b><br />
-                    * Zählstellnummer / -art (123456, 123456T, ...)<br />
-                    * Schlagwörter (Bahn, Isar, Tunnel, Brücke, ...)<br />
-                    * Monat (Januar, Februar, ...)<br />
-                    * Jahreszeit (Frühling, Sommer, ...)<br />
-                    * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019,
-                    ...)<br />
-                    * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße,
-                    ...)<br />
-                    * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
-                    * Messstellennummer / -name (4203,...)<br />
+          <b>Beispiele, wonach gesucht werden kann:</b><br />
+          * Zählstellnummer / -art (123456, 123456T, ...)<br />
+          * Schlagwörter (Bahn, Isar, Tunnel, Brücke, ...)<br />
+          * Monat (Januar, Februar, ...)<br />
+          * Jahreszeit (Frühling, Sommer, ...)<br />
+          * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019, ...)<br />
+          * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />
+          * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
+          * Messstellennummer / -name (4203,...)<br />
           <!--            Es fehlt noch: Wetter, Schulzeit, (erweiterte) Zählsituation-->
-                </span>
+        </span>
       </v-tooltip>
     </template>
   </v-autocomplete>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import SucheService from "@/api/service/SucheService";
 import type SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
-import Suggest from "@/types/suche/Suggest";
-import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
-import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
-import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
 import type SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
+import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
+import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
+import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
+
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+import SucheService from "@/api/service/SucheService";
+import { useSearchStore } from "@/store/search";
+import { useSnackbarStore } from "@/store/snackbar";
+import Suggest from "@/types/suche/Suggest";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useSnackbarStore} from "@/store/snackbar";
-import {useSearchStore} from "@/store/search";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
@@ -88,9 +88,7 @@ const SUGGESTION_TYPE_MESSSTELLE = "messstelle";
 
 const searchQuery = ref<string>("");
 const suggestions = ref<Array<Suggest>>([]);
-const selectedSuggestion = ref<Suggest | null>(
-    null
-);
+const selectedSuggestion = ref<Suggest | null>(null);
 const lastSuggestQuery = ref("");
 const showtooltip = ref(false);
 
@@ -107,72 +105,63 @@ function suggest(query: string) {
   if (query !== "" && query != null) {
     lastSuggestQuery.value = query;
     SucheService.getSuggestions(query)
-        .then((response: SucheComplexSuggestsDTO) => {
-          suggestions.value = [];
+      .then((response: SucheComplexSuggestsDTO) => {
+        suggestions.value = [];
 
+        suggestions.value.push(
+          new Suggest(query, SUGGESTION_TYPE_SEARCH_TEXT, "", "", "")
+        );
+
+        response.wordSuggests.forEach((word: SucheWordSuggestDTO) => {
           suggestions.value.push(
-              new Suggest(query, SUGGESTION_TYPE_SEARCH_TEXT, "", "", "")
+            new Suggest(word.text, SUGGESTION_TYPE_VORSCHLAG, "", "", "")
           );
+        });
 
-          response.wordSuggests.forEach((word: SucheWordSuggestDTO) => {
+        response.zaehlungenSuggests.forEach(
+          (zaehlung: SucheZaehlungSuggestDTO) => {
             suggestions.value.push(
-                new Suggest(
-                    word.text,
-                    SUGGESTION_TYPE_VORSCHLAG,
-                    "",
-                    "",
-                    ""
-                )
+              new Suggest(
+                zaehlung.text,
+                SUGGESTION_TYPE_ZAEHLUNG,
+                zaehlung.zaehlstelleId,
+                zaehlung.id,
+                ""
+              )
             );
-          });
+          }
+        );
 
-          response.zaehlungenSuggests.forEach(
-              (zaehlung: SucheZaehlungSuggestDTO) => {
-                suggestions.value.push(
-                    new Suggest(
-                        zaehlung.text,
-                        SUGGESTION_TYPE_ZAEHLUNG,
-                        zaehlung.zaehlstelleId,
-                        zaehlung.id,
-                        ""
-                    )
-                );
-              }
-          );
+        response.zaehlstellenSuggests.forEach(
+          (zaehlstelle: SucheZaehlstelleSuggestDTO) => {
+            suggestions.value.push(
+              new Suggest(
+                zaehlstelle.text,
+                SUGGESTION_TYPE_ZAEHLSTELLE,
+                zaehlstelle.id,
+                "",
+                ""
+              )
+            );
+          }
+        );
 
-          response.zaehlstellenSuggests.forEach(
-              (zaehlstelle: SucheZaehlstelleSuggestDTO) => {
-                suggestions.value.push(
-                    new Suggest(
-                        zaehlstelle.text,
-                        SUGGESTION_TYPE_ZAEHLSTELLE,
-                        zaehlstelle.id,
-                        "",
-                        ""
-                    )
-                );
-              }
-          );
-
-          response.messstellenSuggests.forEach(
-              (messstelle: SucheMessstelleSuggestDTO) => {
-                suggestions.value.push(
-                    new Suggest(
-                        messstelle.text,
-                        SUGGESTION_TYPE_MESSSTELLE,
-                        "",
-                        "",
-                        messstelle.id
-                    )
-                );
-              }
-          );
-        })
-        .catch((error) => snackbarStore.showApiError(error));
-  } else if (
-      lastSuggestQuery.value !== "" &&
-      lastSuggestQuery.value != null
-  ) {
+        response.messstellenSuggests.forEach(
+          (messstelle: SucheMessstelleSuggestDTO) => {
+            suggestions.value.push(
+              new Suggest(
+                messstelle.text,
+                SUGGESTION_TYPE_MESSSTELLE,
+                "",
+                "",
+                messstelle.id
+              )
+            );
+          }
+        );
+      })
+      .catch((error) => snackbarStore.showApiError(error));
+  } else if (lastSuggestQuery.value !== "" && lastSuggestQuery.value != null) {
     lastSuggestQuery.value = query;
     suggestions.value = [];
   }
@@ -208,22 +197,22 @@ function search() {
   searchStore.setLastSearchQuery(searchQuery.value);
   const routeName = route.name;
   if (
-      (routeName === "zaehlstelle" ||
-          routeName === "messstelle" ||
-          routeName === "pdfreport" ||
-          routeName === "auswertung") &&
-      searchQuery.value !== ""
+    (routeName === "zaehlstelle" ||
+      routeName === "messstelle" ||
+      routeName === "pdfreport" ||
+      routeName === "auswertung") &&
+    searchQuery.value !== ""
   ) {
     router.push(`/`);
   }
 
   SucheService.searchErhebungsstelle(searchQuery.value)
-      .then((result) => {
-        searchStore.setSearchResult(result);
-      })
-      .catch((error) => {
-        snackbarStore.showApiError(error);
-      });
+    .then((result) => {
+      searchStore.setSearchResult(result);
+    })
+    .catch((error) => {
+      snackbarStore.showApiError(error);
+    });
 }
 
 function searchForSuggestion(query: string) {
@@ -262,11 +251,21 @@ function updateSearchQuery(itemIndex: number) {
 function iconOfSuggestion(type: string) {
   let icon = "";
   switch (type) {
-    case SUGGESTION_TYPE_SEARCH_TEXT: icon="mdi-format-text"; break;
-    case SUGGESTION_TYPE_VORSCHLAG: icon="mdi-magnify"; break;
-    case SUGGESTION_TYPE_ZAEHLSTELLE: icon="mdi-map-marker"; break;
-    case SUGGESTION_TYPE_ZAEHLUNG: icon="mdi-counter"; break;
-    case SUGGESTION_TYPE_MESSSTELLE: icon="mdi-cards-diamond"; break;
+    case SUGGESTION_TYPE_SEARCH_TEXT:
+      icon = "mdi-format-text";
+      break;
+    case SUGGESTION_TYPE_VORSCHLAG:
+      icon = "mdi-magnify";
+      break;
+    case SUGGESTION_TYPE_ZAEHLSTELLE:
+      icon = "mdi-map-marker";
+      break;
+    case SUGGESTION_TYPE_ZAEHLUNG:
+      icon = "mdi-counter";
+      break;
+    case SUGGESTION_TYPE_MESSSTELLE:
+      icon = "mdi-cards-diamond";
+      break;
   }
   return icon;
 }

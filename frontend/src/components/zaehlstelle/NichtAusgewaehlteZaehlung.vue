@@ -1,55 +1,53 @@
 <template>
   <v-row
-      no-gutters
-      style="background-color: #ef9a9a"
+    no-gutters
+    style="background-color: #ef9a9a"
   >
     <!-- red lighten-3 -->
     <v-col
-        v-if="sonderzaehlung"
-        cols="12"
-        md="1"
-        align-self="center"
-        :class="isLarge ? '' : 'px-1'"
+      v-if="sonderzaehlung"
+      cols="12"
+      md="1"
+      align-self="center"
+      :class="isLarge ? '' : 'px-1'"
     >
-      <sonderzaehlung-icon :large="isLarge"/>
+      <sonderzaehlung-icon :large="isLarge" />
     </v-col>
     <v-col
-        cols="12"
-        :md="getMaxCols"
+      cols="12"
+      :md="getMaxCols"
     >
       <v-sheet
-          width="100%"
-          :color="hover ? hoverColor : color"
-          class="px-4 py-2"
-          @mouseover="hover = true"
-          @mouseleave="hover = false"
-          :style="{ cursor: `${hover ? 'pointer' : 'default'}` }"
-          @click="openZaehlung"
+        width="100%"
+        :color="hover ? hoverColor : color"
+        class="px-4 py-2"
+        @mouseover="hover = true"
+        @mouseleave="hover = false"
+        :style="{ cursor: `${hover ? 'pointer' : 'default'}` }"
+        @click="openZaehlung"
       >
-                    <span
-                        class="text-body-2"
-                    >{{ $d(date, "short", "de-DE") }} |
-                        {{ projektName }}</span
-                    ><br/>
+        <span class="text-body-2"
+          >{{ $d(date, "short", "de-DE") }} | {{ projektName }}</span
+        ><br />
         <zaehlart-icon
-            dense
-            :zaehlart="zaehlart"
-            :color="iconColor"
+          dense
+          :zaehlart="zaehlart"
+          :color="iconColor"
         />
         <wetter-icon
-            dense
-            :wetter="wetter"
-            :color="iconColor"
+          dense
+          :wetter="wetter"
+          :color="iconColor"
         />
         <zaehldauer-icon
-            dense
-            :zaehldauer="zaehldauer"
-            :color="iconColor"
+          dense
+          :zaehldauer="zaehldauer"
+          :color="iconColor"
         />
         <quelle-icon
-            dense
-            :quelle="quelle"
-            :color="iconColor"
+          dense
+          :quelle="quelle"
+          :color="iconColor"
         />
       </v-sheet>
     </v-col>
@@ -57,14 +55,15 @@
 </template>
 <script setup lang="ts">
 // Komponenten
-import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
+import { computed, ref } from "vue";
+import { useDisplay } from "vuetify";
+
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
-import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
-import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
-import {computed, ref} from "vue";
-import {useZaehlstelleStore} from "@/store/zaehlstelle";
-import {useDisplay} from "vuetify";
+import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
+import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
+import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 interface Props {
   id: string;

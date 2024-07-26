@@ -1,71 +1,77 @@
 <template>
   <v-stepper-vertical
-      v-model="activeStep"
-      :editable="true"
-      flat
-      hide-actions
+    v-model="activeStep"
+    :editable="true"
+    flat
+    hide-actions
   >
     <template v-slot:default>
       <v-stepper-vertical-item
-          :complete="activeStep > 1 && isJahresintervallSelected()"
-          :value="1"
-          title="Zeitintervalle"
-          :subtitle="selectedJahresintervallAsSummary"
-          :error="!isJahresintervallSelected()"
+        :complete="activeStep > 1 && isJahresintervallSelected()"
+        :value="1"
+        title="Zeitintervalle"
+        :subtitle="selectedJahresintervallAsSummary"
+        :error="!isJahresintervallSelected()"
       >
-        <zeitintervall-step-content v-model="auswertungOptions"/>
+        <zeitintervall-step-content v-model="auswertungOptions" />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
-          :complete="activeStep > 2 && isJahreSelected()"
-          :value="2"
-          :error="!isJahreSelected()"
-          title="Jahre"
-          :subtitle="selectedYearsAsSummary"
+        :complete="activeStep > 2 && isJahreSelected()"
+        :value="2"
+        :error="!isJahreSelected()"
+        title="Jahre"
+        :subtitle="selectedYearsAsSummary"
       >
-        <jahre-step-content v-model="auswertungOptions"/>
+        <jahre-step-content v-model="auswertungOptions" />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
-          :complete="activeStep > 3 && isTagesTypSelected()"
-          :value="3"
-          :error="!isTagesTypSelected()"
-          title="Wochentag"
-          :subtitle="selectedTagesTypAsSummary"
+        :complete="activeStep > 3 && isTagesTypSelected()"
+        :value="3"
+        :error="!isTagesTypSelected()"
+        title="Wochentag"
+        :subtitle="selectedTagesTypAsSummary"
       >
-        <tages-typ-step-content v-model="auswertungOptions"/>
+        <tages-typ-step-content v-model="auswertungOptions" />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
-          :complete="activeStep > 4 && isOrtMessstelleSelected() && isOrtMessquerschnittSelected()"
-          :value="4"
-          :error="!(isOrtMessstelleSelected() && isOrtMessquerschnittSelected())"
-          title="Ort"
-          :subtitle="selectedOrtAsSummary"
+        :complete="
+          activeStep > 4 &&
+          isOrtMessstelleSelected() &&
+          isOrtMessquerschnittSelected()
+        "
+        :value="4"
+        :error="!(isOrtMessstelleSelected() && isOrtMessquerschnittSelected())"
+        title="Ort"
+        :subtitle="selectedOrtAsSummary"
       >
-        <ort-step-content v-model="auswertungOptions"/>
+        <ort-step-content v-model="auswertungOptions" />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
-          :complete="activeStep > 5 && isFahrzeugSelected()"
-          :value="5"
-          :error="!isFahrzeugSelected()"
-          title="Fahrzeuge"
-          :subtitle="selectedFahrzeugAsSummary"
+        :complete="activeStep > 5 && isFahrzeugSelected()"
+        :value="5"
+        :error="!isFahrzeugSelected()"
+        title="Fahrzeuge"
+        :subtitle="selectedFahrzeugAsSummary"
       >
-        <fahrzeuge-step-content v-model="auswertungOptions"/>
+        <fahrzeuge-step-content v-model="auswertungOptions" />
       </v-stepper-vertical-item>
     </template>
   </v-stepper-vertical>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue";
-import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue";
-import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
-import {tagesTypText} from "@/types/enum/TagesTyp";
-import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
+import type { VStepperVerticalItem } from "vuetify/labs/components";
+
+import { computed, ref } from "vue";
+
 import FahrzeugeStepContent from "@/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue";
-import type {VStepperVerticalItem} from "vuetify/labs/components";
+import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue";
+import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
+import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
+import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
 import { auswertungszeitraumToText } from "@/types/enum/AuswertungCategories";
+import { tagesTypText } from "@/types/enum/TagesTyp";
 
 interface Props {
   height: string;
@@ -73,7 +79,9 @@ interface Props {
 
 defineProps<Props>();
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({required: true});
+const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+  required: true,
+});
 
 const activeStep = ref(1);
 
@@ -86,18 +94,18 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-    let helper: Array<string> = [];
-    auswertungOptions.value.zeitraum.forEach((key) => {
-        const value = auswertungszeitraumToText.get(key);
-        if (value) {
-            helper.push(value.title);
-        }
-    });
-    let summary = helper.join(", ");
-    if (!isJahresintervallSelected()) {
-        summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
+  let helper: Array<string> = [];
+  auswertungOptions.value.zeitraum.forEach((key) => {
+    const value = auswertungszeitraumToText.get(key);
+    if (value) {
+      helper.push(value.title);
     }
-    return summary;
+  });
+  let summary = helper.join(", ");
+  if (!isJahresintervallSelected()) {
+    summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
+  }
+  return summary;
 });
 
 const selectedTagesTypAsSummary = computed(() => {
@@ -116,7 +124,7 @@ const selectedOrtAsSummary = computed(() => {
   if (mstIds.length === 1) {
     const mqIds = auswertungOptions.value.mqIds;
     summary = `Mst-Id: ${mstIds[0]}, MQ-Id${
-        mqIds.length > 1 ? "'s" : ""
+      mqIds.length > 1 ? "'s" : ""
     }: ${mqIds.join(", ")} `;
   }
   if (!isOrtMessstelleSelected()) {
@@ -129,56 +137,51 @@ const selectedOrtAsSummary = computed(() => {
 });
 
 function isJahreSelected(): boolean {
-  return !(
-      auswertungOptions.value.jahre.length === 0 && activeStep.value > 1
-  );
+  return !(auswertungOptions.value.jahre.length === 0 && activeStep.value > 1);
 }
 
 function isTagesTypSelected(): boolean {
   return !(
-      auswertungOptions.value.tagesTyp.length === 0 && activeStep.value > 2
+    auswertungOptions.value.tagesTyp.length === 0 && activeStep.value > 2
   );
 }
 
 function isJahresintervallSelected(): boolean {
   return !(
-      auswertungOptions.value.zeitraum.length === 0 &&
-      activeStep.value > 0
+    auswertungOptions.value.zeitraum.length === 0 && activeStep.value > 0
   );
 }
 
 function isOrtMessstelleSelected(): boolean {
-  return !(
-      auswertungOptions.value.mstIds.length === 0 && activeStep.value > 3
-  );
+  return !(auswertungOptions.value.mstIds.length === 0 && activeStep.value > 3);
 }
 
 function isOrtMessquerschnittSelected(): boolean {
   return !(
-      auswertungOptions.value.mstIds.length === 1 &&
-      auswertungOptions.value.mqIds.length === 0 &&
-      activeStep.value > 3
+    auswertungOptions.value.mstIds.length === 1 &&
+    auswertungOptions.value.mqIds.length === 0 &&
+    activeStep.value > 3
   );
 }
 
 function isFahrzeugSelected(): boolean {
   const fahrzeuge = auswertungOptions.value.fahrzeuge;
   return !(
-      !(
-          fahrzeuge.lieferwagen ||
-          fahrzeuge.busse ||
-          fahrzeuge.personenkraftwagen ||
-          fahrzeuge.kraftraeder ||
-          fahrzeuge.lastzuege ||
-          fahrzeuge.lastkraftwagen ||
-          fahrzeuge.fussverkehr ||
-          fahrzeuge.radverkehr ||
-          fahrzeuge.gueterverkehrsanteilProzent ||
-          fahrzeuge.schwerverkehrsanteilProzent ||
-          fahrzeuge.gueterverkehr ||
-          fahrzeuge.schwerverkehr ||
-          fahrzeuge.kraftfahrzeugverkehr
-      ) && activeStep.value > 4
+    !(
+      fahrzeuge.lieferwagen ||
+      fahrzeuge.busse ||
+      fahrzeuge.personenkraftwagen ||
+      fahrzeuge.kraftraeder ||
+      fahrzeuge.lastzuege ||
+      fahrzeuge.lastkraftwagen ||
+      fahrzeuge.fussverkehr ||
+      fahrzeuge.radverkehr ||
+      fahrzeuge.gueterverkehrsanteilProzent ||
+      fahrzeuge.schwerverkehrsanteilProzent ||
+      fahrzeuge.gueterverkehr ||
+      fahrzeuge.schwerverkehr ||
+      fahrzeuge.kraftfahrzeugverkehr
+    ) && activeStep.value > 4
   );
 }
 
@@ -229,7 +232,7 @@ const selectedFahrzeugAsSummary = computed(() => {
 
   if (!isFahrzeugSelected()) {
     summary =
-        "Es muss mindestens eine Fahrzeugkategorie oder Verkehrsart ausgewählt sein.";
+      "Es muss mindestens eine Fahrzeugkategorie oder Verkehrsart ausgewählt sein.";
   }
   return summary;
 });

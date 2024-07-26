@@ -1,3 +1,3 @@
 export default interface CsvDTO {
-    csvAsString: string;
+  csvAsString: string;
 }

@@ -1,7 +1,10 @@
-import {createApp} from "vue";
+import { createApp } from "vue";
+
 import App from "./App.vue";
+
 import "./plugins/leafletmaps";
-import {registerPlugins} from "@/plugins";
+
+import { registerPlugins } from "@/plugins";
 
 const app = createApp(App);
 

@@ -1,14 +1,14 @@
-import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
+import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
 
 export default interface LadeProcessedMessdatenDTO {
-    zaehldatenTable: LadeZaehldatenTableDTO;
+  zaehldatenTable: LadeZaehldatenTableDTO;
 
-    zaehldatenStepline: LadeZaehldatenSteplineDTO;
+  zaehldatenStepline: LadeZaehldatenSteplineDTO;
 
-    zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
+  zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
 
-    belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTO;
+  belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTO;
 }

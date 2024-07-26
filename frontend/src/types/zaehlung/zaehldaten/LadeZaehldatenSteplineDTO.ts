@@ -1,17 +1,17 @@
 import type StepLineSeriesEntryDTO from "@/types/zaehlung/zaehldaten/StepLineSeriesEntryDTO";
 
 export default interface LadeZaehldatenSteplineDTO {
-    legend: Array<string>;
+  legend: Array<string>;
 
-    rangeMax: number;
+  rangeMax: number;
 
-    rangeMaxPercent: number;
+  rangeMaxPercent: number;
 
-    xaxisDataFirstChart: Array<string>;
+  xaxisDataFirstChart: Array<string>;
 
-    xaxisDataSecondChart: Array<string> | null;
+  xaxisDataSecondChart: Array<string> | null;
 
-    seriesEntriesFirstChart: Array<StepLineSeriesEntryDTO>;
+  seriesEntriesFirstChart: Array<StepLineSeriesEntryDTO>;
 
-    seriesEntriesSecondChart: Array<StepLineSeriesEntryDTO> | null;
+  seriesEntriesSecondChart: Array<StepLineSeriesEntryDTO> | null;
 }

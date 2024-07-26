@@ -1,4 +1,4 @@
 export default interface KeyVal {
-    title: string;
-    value: string;
+  title: string;
+  value: string;
 }

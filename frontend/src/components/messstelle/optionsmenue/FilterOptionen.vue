@@ -1,199 +1,192 @@
 <template>
-    <v-sheet
-        width="100%"
-        min-height="50"
-        color="grey-darken-1"
-        class="px-4 py-3"
-    >
-        <v-row>
-            <v-col cols="1"/>
-            <v-col>
-              <h3 class="text-grey-lighten-1">
-                  Aktuelle Filtereinstellungen
-              </h3>
-            </v-col>
-        </v-row>
-        <v-row no-gutters>
-            <v-col
-                cols="1"
-                align-self="start"
-            >
-                <v-icon
-                    size="small"
-                    color="grey-lighten-1"
-                    icon="mdi-clock-time-four-outline"
-                    />
-            </v-col>
-            <v-col cols="10">
-                <span class="text-grey-lighten-1"
-                    >Zeit:
-                    <span class="font-weight-medium text-white"
-                        >{{ zeitblock }}
-                    </span>
-                    in
-                    <span class="font-weight-medium text-white"
-                        >{{ zeitintervall }}
-                    </span>
-                    Intervallen
-                    <span class="font-weight-medium text-white">{{
-                        zeitraum
-                    }}</span>
-                </span>
-            </v-col>
-        </v-row>
-        <v-row
-            v-if="wochentag"
-            no-gutters
-        >
-            <v-col
-                cols="1"
-                align-self="start"
-            >
-                <v-icon
-                    size="small"
-                    color="grey-lighten-1"
-                    icon="mdi-calendar-week-outline"
-                    />
-            </v-col>
-            <v-col cols="10">
-                <span class="text-grey-lighten-1"
-                    >Wochentag:
-                    <span class="font-weight-medium text-white"
-                        >{{ wochentag }}
-                    </span>
-                </span>
-            </v-col>
-        </v-row>
-        <v-row
-            v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
-            :key="index"
-            no-gutters
-            class="ma-0"
-        >
-            <v-col cols="1">
-                <v-icon
-                    v-if="index === 0"
-                    size="small"
-                    color="grey-lighten-1"
-                    icon="mdi-arrow-decision"
-                    />
-            </v-col>
-            <v-col cols="9">
-                <span :class="getStyleClass(messquerschnitt.mqId)"
-                    >{{ messquerschnitt.mqId }}
-                    {{ messquerschnitt.standort }}</span
-                >
-            </v-col>
-            <v-col cols="2">
-                <span :class="getStyleClass(messquerschnitt.mqId)">
-                    {{ getHimmelsrichtungAsText(messquerschnitt.fahrtrichtung) }}
-                </span>
-            </v-col>
-        </v-row>
-      <v-row
-          no-gutters
-          class="mt-2"
+  <v-sheet
+    width="100%"
+    min-height="50"
+    color="grey-darken-1"
+    class="px-4 py-3"
+  >
+    <v-row>
+      <v-col cols="1" />
+      <v-col>
+        <h3 class="text-grey-lighten-1">Aktuelle Filtereinstellungen</h3>
+      </v-col>
+    </v-row>
+    <v-row no-gutters>
+      <v-col
+        cols="1"
+        align-self="start"
       >
-        <v-spacer/>
-        <v-col>
-          <OptionsmenueMessstelle messstelle-id="messstelleId" />
-        </v-col>
-        <v-spacer/>
-      </v-row>
-    </v-sheet>
+        <v-icon
+          size="small"
+          color="grey-lighten-1"
+          icon="mdi-clock-time-four-outline"
+        />
+      </v-col>
+      <v-col cols="10">
+        <span class="text-grey-lighten-1"
+          >Zeit:
+          <span class="font-weight-medium text-white">{{ zeitblock }} </span>
+          in
+          <span class="font-weight-medium text-white"
+            >{{ zeitintervall }}
+          </span>
+          Intervallen
+          <span class="font-weight-medium text-white">{{ zeitraum }}</span>
+        </span>
+      </v-col>
+    </v-row>
+    <v-row
+      v-if="wochentag"
+      no-gutters
+    >
+      <v-col
+        cols="1"
+        align-self="start"
+      >
+        <v-icon
+          size="small"
+          color="grey-lighten-1"
+          icon="mdi-calendar-week-outline"
+        />
+      </v-col>
+      <v-col cols="10">
+        <span class="text-grey-lighten-1"
+          >Wochentag:
+          <span class="font-weight-medium text-white">{{ wochentag }} </span>
+        </span>
+      </v-col>
+    </v-row>
+    <v-row
+      v-for="(messquerschnitt, index) in messstelle.messquerschnitte"
+      :key="index"
+      no-gutters
+      class="ma-0"
+    >
+      <v-col cols="1">
+        <v-icon
+          v-if="index === 0"
+          size="small"
+          color="grey-lighten-1"
+          icon="mdi-arrow-decision"
+        />
+      </v-col>
+      <v-col cols="9">
+        <span :class="getStyleClass(messquerschnitt.mqId)"
+          >{{ messquerschnitt.mqId }} {{ messquerschnitt.standort }}</span
+        >
+      </v-col>
+      <v-col cols="2">
+        <span :class="getStyleClass(messquerschnitt.mqId)">
+          {{ getHimmelsrichtungAsText(messquerschnitt.fahrtrichtung) }}
+        </span>
+      </v-col>
+    </v-row>
+    <v-row
+      no-gutters
+      class="mt-2"
+    >
+      <v-spacer />
+      <v-col>
+        <OptionsmenueMessstelle messstelle-id="messstelleId" />
+      </v-col>
+      <v-spacer />
+    </v-row>
+  </v-sheet>
 </template>
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import {computed} from "vue";
-import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
-import {useDateUtils} from "@/util/DateUtils";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import {zeitblockInfo} from "@/types/enum/Zeitblock";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import {ZaehldatenIntervallToBeschreibung} from "@/types/enum/ZaehldatenIntervall";
+import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+
+import { computed } from "vue";
+import { useDisplay } from "vuetify";
+
+import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
+import { useMessstelleStore } from "@/store/messstelle";
 import Himmelsrichtungen, {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
 } from "@/types/enum/Himmelsrichtungen";
-import {zeitblockStuendlichInfo} from "@/types/enum/ZeitblockStuendlich";
-import {tagesTypText} from "@/types/enum/TagesTyp";
-import {useMessstelleStore} from "@/store/messstelle";
-import {useDisplay} from "vuetify";
+import { tagesTypText } from "@/types/enum/TagesTyp";
+import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useDateUtils } from "@/util/DateUtils";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
 const display = useDisplay();
 
 interface Props {
-    messstelle: MessstelleInfoDTO;
+  messstelle: MessstelleInfoDTO;
 }
 
 defineProps<Props>();
 
 const filterOptionsMessstelle = computed<MessstelleOptionsDTO>(() => {
-    return messstelleStore.getFilteroptions;
+  return messstelleStore.getFilteroptions;
 });
 
 const wochentag = computed<string | undefined>(() => {
-    return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
+  return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
 });
 
 const zeitraum = computed(() => {
-    const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
-    if (zeitraum.length == 1) {
-        return `am ${dateUtils.formatDate(zeitraum[0].toString())}`;
-    } else if (zeitraum.length == 2) {
-        const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
-        return `im Zeitraum ${dateUtils.formatDate(
-            sortedDates[1]
-        )} - ${dateUtils.formatDate(sortedDates[0])}`;
-    }
-    return "";
+  const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
+  if (zeitraum.length == 1) {
+    return `am ${dateUtils.formatDate(zeitraum[0].toString())}`;
+  } else if (zeitraum.length == 2) {
+    const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
+    return `im Zeitraum ${dateUtils.formatDate(
+      sortedDates[1]
+    )} - ${dateUtils.formatDate(sortedDates[0])}`;
+  }
+  return "";
 });
 
 const zeitblock = computed(() => {
-    let text = Zeitauswahl.TAGESWERT.valueOf();
-    const existsBlock = zeitblockInfo.get(
-        filterOptionsMessstelle.value.zeitblock
-    );
-    const existsStunde = zeitblockStuendlichInfo.get(
-        filterOptionsMessstelle.value.zeitblock
-    );
-    if (
-        Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
-        existsBlock
-    ) {
-        text = existsBlock.title;
-    } else if (
-        Zeitauswahl.STUNDE === filterOptionsMessstelle.value.zeitauswahl &&
-        existsStunde
-    ) {
-        text = existsStunde.title;
-    }
-    return text;
+  let text = Zeitauswahl.TAGESWERT.valueOf();
+  const existsBlock = zeitblockInfo.get(
+    filterOptionsMessstelle.value.zeitblock
+  );
+  const existsStunde = zeitblockStuendlichInfo.get(
+    filterOptionsMessstelle.value.zeitblock
+  );
+  if (
+    Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
+    existsBlock
+  ) {
+    text = existsBlock.title;
+  } else if (
+    Zeitauswahl.STUNDE === filterOptionsMessstelle.value.zeitauswahl &&
+    existsStunde
+  ) {
+    text = existsStunde.title;
+  }
+  return text;
 });
 
 const zeitintervall = computed(() => {
-    return ZaehldatenIntervallToBeschreibung.get(
-        filterOptionsMessstelle.value.intervall
-    );
+  return ZaehldatenIntervallToBeschreibung.get(
+    filterOptionsMessstelle.value.intervall
+  );
 });
 
 function getStyleClass(mqId: string): string {
-    let notIncluded = "text-caption text-grey-lighten-1";
-    let included = "text-caption font-weight-medium text-white";
-    return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
-        ? included
-        : notIncluded;
+  let notIncluded = "text-caption text-grey-lighten-1";
+  let included = "text-caption font-weight-medium text-white";
+  return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
+    ? included
+    : notIncluded;
 }
 
 function getHimmelsrichtungAsText(fahrtrichtung: Himmelsrichtungen) {
-  let text = display.xl.value? "unbekannt" : "?";
+  let text = display.xl.value ? "unbekannt" : "?";
   if (fahrtrichtung) {
     if (display.xl.value) {
       text = himmelsRichtungenTextLong.get(fahrtrichtung) ?? "?";
     } else {
-      text = himmelsRichtungenTextShort.get((fahrtrichtung)) ?? "?";
+      text = himmelsRichtungenTextShort.get(fahrtrichtung) ?? "?";
     }
   }
   return `[ ${text} ]`;

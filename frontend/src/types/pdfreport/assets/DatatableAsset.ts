@@ -1,16 +1,17 @@
-import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
-export default class DatatableAsset extends BaseAsset {
-    options?: OptionsDTO;
-    zaehlungId?: string;
-    text?: string;
+import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
+import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
 
-    constructor(options: OptionsDTO, zaehlungId: string, text: string) {
-        super(AssetTypesEnum.DATATABLE);
-        this.options = options;
-        this.zaehlungId = zaehlungId;
-        this.text = text;
-    }
+export default class DatatableAsset extends BaseAsset {
+  options?: OptionsDTO;
+  zaehlungId?: string;
+  text?: string;
+
+  constructor(options: OptionsDTO, zaehlungId: string, text: string) {
+    super(AssetTypesEnum.DATATABLE);
+    this.options = options;
+    this.zaehlungId = zaehlungId;
+    this.text = text;
+  }
 }

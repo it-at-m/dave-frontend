@@ -1,55 +1,63 @@
 <template>
-  <v-container class="ma-0" fluid>
+  <v-container
+    class="ma-0"
+    fluid
+  >
     <v-sheet
-        class="mx-10 mb-10 mt-14 pa-5 overflow-y-auto"
-        elevation="2"
-        width="80%"
+      class="mx-10 mb-10 mt-14 pa-5 overflow-y-auto"
+      elevation="2"
+      width="80%"
     >
       <v-list>
         <v-list-item
-            v-for="(asset, index) in assets"
-            :key="asset.id"
+          v-for="(asset, index) in assets"
+          :key="asset.id"
         >
           <v-card
-              class="ma-1"
-              elevation="0"
-              width="100%"
-              @mouseleave="setClickable(0)"
-              @mouseover="setClickable(asset.id)"
+            class="ma-1"
+            elevation="0"
+            width="100%"
+            @mouseleave="setClickable(0)"
+            @mouseover="setClickable(asset.id)"
           >
             <v-toolbar
-                color="transparent"
-                density="compact"
-                flat
+              color="transparent"
+              density="compact"
+              flat
             >
-              <v-icon color="grey-lighten-1" :icon="icon(asset)"/>
+              <v-icon
+                color="grey-lighten-1"
+                :icon="icon(asset)"
+              />
               <v-divider
-                  class="mx-4"
-                  vertical
+                class="mx-4"
+                vertical
               />
-              <span class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0">
-              {{ header(asset) }}
-            </span>
-              <v-spacer/>
+              <span
+                class="text-grey-lighten-1 text-body-1 font-weight-regular pl-0"
+              >
+                {{ header(asset) }}
+              </span>
+              <v-spacer />
               <v-btn
-                  v-show="clickable === asset.id && index > 0"
-                  icon="mdi-chevron-up"
-                  @click="moveAssetOnePositionUpNotAtFirstPosition(index)"
-              />
-              <v-btn
-                  v-show="clickable === asset.id && index < assets.length - 1"
-                  icon="mdi-chevron-down"
-                  @click="moveAssetOnePositionDownNotAtLastPosition(index)"
+                v-show="clickable === asset.id && index > 0"
+                icon="mdi-chevron-up"
+                @click="moveAssetOnePositionUpNotAtFirstPosition(index)"
               />
               <v-btn
-                  v-show="clickable === asset.id && isEditable(asset)"
-                  icon="mdi-lead-pencil"
-                  @click="edit(asset)"
+                v-show="clickable === asset.id && index < assets.length - 1"
+                icon="mdi-chevron-down"
+                @click="moveAssetOnePositionDownNotAtLastPosition(index)"
               />
               <v-btn
-                  v-show="clickable === asset.id"
-                  icon="mdi-trash-can"
-                  @click="deleteAsset(asset)"
+                v-show="clickable === asset.id && isEditable(asset)"
+                icon="mdi-lead-pencil"
+                @click="edit(asset)"
+              />
+              <v-btn
+                v-show="clickable === asset.id"
+                icon="mdi-trash-can"
+                @click="deleteAsset(asset)"
               />
             </v-toolbar>
             <v-card-text>
@@ -69,12 +77,12 @@
                 {{ getTextOfAsset(asset) }}
               </h5>
               <p
-                  v-if="isText(asset)"
-                  :style="{ fontSize: getSizeOfAsset(asset) }"
-                  v-html="getTextOfAsset(asset)"
+                v-if="isText(asset)"
+                :style="{ fontSize: getSizeOfAsset(asset) }"
+                v-html="getTextOfAsset(asset)"
               />
-              <v-divider v-if="isPageBreak(asset)"/>
-              <v-divider v-if="isNewline(asset)"/>
+              <v-divider v-if="isPageBreak(asset)" />
+              <v-divider v-if="isNewline(asset)" />
               <p v-if="isDatatable(asset)">
                 {{ getTextOfAsset(asset) }}
               </p>
@@ -85,10 +93,10 @@
                 {{ getTextOfAsset(asset) }}
               </p>
               <DisplayImageAsset
-                  v-if="isImage(asset)"
-                  :caption="getCaptionOfAsset(asset)"
-                  :image="getImageOfAsset(asset)"
-                  :width="`${getWidthOfAsset(asset)}%`"
+                v-if="isImage(asset)"
+                :caption="getCaptionOfAsset(asset)"
+                :image="getImageOfAsset(asset)"
+                :width="`${getWidthOfAsset(asset)}%`"
               />
             </v-card-text>
           </v-card>
@@ -96,156 +104,156 @@
       </v-list>
 
       <v-toolbar
-          color="transparent"
-          elevation="2"
+        color="transparent"
+        elevation="2"
       >
         <v-btn
-            v-tooltip:bottom="'Freitext'"
-            icon="mdi-text"
-            @click="createTextAsset"
+          v-tooltip:bottom="'Freitext'"
+          icon="mdi-text"
+          @click="createTextAsset"
         />
         <v-divider
-            class="mx-4"
-            vertical
+          class="mx-4"
+          vertical
         />
         <v-btn
-            v-tooltip:bottom="'Überschrift 1'"
-            icon="mdi-format-header-1"
-            @click="createHeadingAsset('h1')"
+          v-tooltip:bottom="'Überschrift 1'"
+          icon="mdi-format-header-1"
+          @click="createHeadingAsset('h1')"
         />
         <v-btn
-            v-tooltip:bottom="'Überschrift 2'"
-            icon="mdi-format-header-2"
-            @click="createHeadingAsset('h2')"
+          v-tooltip:bottom="'Überschrift 2'"
+          icon="mdi-format-header-2"
+          @click="createHeadingAsset('h2')"
         />
         <v-btn
-            v-tooltip:bottom="'Überschrift 3'"
-            icon="mdi-format-header-3"
-            @click="createHeadingAsset('h3')"
+          v-tooltip:bottom="'Überschrift 3'"
+          icon="mdi-format-header-3"
+          @click="createHeadingAsset('h3')"
         />
         <v-btn
-            v-tooltip:bottom="'Überschrift 4'"
-            icon="mdi-format-header-4"
-            @click="createHeadingAsset('h4')"
+          v-tooltip:bottom="'Überschrift 4'"
+          icon="mdi-format-header-4"
+          @click="createHeadingAsset('h4')"
         />
         <v-btn
-            v-tooltip:bottom="'Überschrift 5'"
-            icon="mdi-format-header-5"
-            @click="createHeadingAsset('h5')"
+          v-tooltip:bottom="'Überschrift 5'"
+          icon="mdi-format-header-5"
+          @click="createHeadingAsset('h5')"
         />
         <v-divider
-            class="mx-4"
-            vertical
+          class="mx-4"
+          vertical
         />
         <v-btn
-            v-tooltip:bottom="'Seitenumbruch'"
-            icon="mdi-format-page-break"
-            @click="createPagebreakAsset"
+          v-tooltip:bottom="'Seitenumbruch'"
+          icon="mdi-format-page-break"
+          @click="createPagebreakAsset"
         />
         <v-divider
-            class="mx-4"
-            vertical
+          class="mx-4"
+          vertical
         />
         <v-btn
-            v-tooltip:bottom="'Zeilenumbruch'"
-            icon="mdi-format-text-wrapping-wrap"
-            @click="createNewlineAsset"
+          v-tooltip:bottom="'Zeilenumbruch'"
+          icon="mdi-format-text-wrapping-wrap"
+          @click="createNewlineAsset"
         />
         <v-divider
-            class="mx-4"
-            vertical
+          class="mx-4"
+          vertical
         />
         <v-btn
-            v-tooltip:bottom="'Bild hinzufügen'"
-            icon="mdi-image"
-            @click="createImageAsset"
+          v-tooltip:bottom="'Bild hinzufügen'"
+          icon="mdi-image"
+          @click="createImageAsset"
         />
-        <v-spacer/>
+        <v-spacer />
       </v-toolbar>
     </v-sheet>
 
-        <v-btn
-            v-tooltip:left="'Report als PDF-Datei herunterladen'"
-            class="mr-4 mb-4"
-            color="secondary"
-            elevation="6"
-            icon="mdi-printer"
-            location="bottom end"
-            position="fixed"
-            size="large"
-            style="z-index: 400"
-            @click="generatePdf"
-        />
+    <v-btn
+      v-tooltip:left="'Report als PDF-Datei herunterladen'"
+      class="mr-4 mb-4"
+      color="secondary"
+      elevation="6"
+      icon="mdi-printer"
+      location="bottom end"
+      position="fixed"
+      size="large"
+      style="z-index: 400"
+      @click="generatePdf"
+    />
 
     <image-asset-form
-        v-model="editImage"
-        :image="imageAsset"
-        @cancelDialog="cancel()"
-        @save="save($event)"
+      v-model="editImage"
+      :image="imageAsset"
+      @cancelDialog="cancel()"
+      @save="save($event)"
     />
 
     <datatable-asset-form
-        v-model="editDatatable"
-        :datatable="datatableAsset"
-        @cancelDialog="cancel()"
-        @save="save($event)"
+      v-model="editDatatable"
+      :datatable="datatableAsset"
+      @cancelDialog="cancel()"
+      @save="save($event)"
     />
 
     <heading-asset-form
-        v-model="editHeading"
-        :heading="headingAsset"
-        @cancelDialog="cancel()"
-        @save="save($event)"
+      v-model="editHeading"
+      :heading="headingAsset"
+      @cancelDialog="cancel()"
+      @save="save($event)"
     />
 
     <text-asset-form
-        v-model="editText"
-        :text="textAsset"
-        @cancelDialog="cancel()"
-        @save="save($event)"
+      v-model="editText"
+      :text="textAsset"
+      @cancelDialog="cancel()"
+      @save="save($event)"
     />
 
     <delete-dialog
-        v-model="deleteDialog"
-        :asset-id="assetId"
-        @cancelDialog="cancel()"
-        @delete="deleteIt($event)"
+      v-model="deleteDialog"
+      :asset-id="assetId"
+      @cancelDialog="cancel()"
+      @delete="deleteIt($event)"
     />
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, ref, watch} from "vue";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
-// Components
-import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
-import ImageAssetForm from "@/components/pdfreport/assetforms/ImageAssetForm.vue";
-import HeadingAssetForm from "@/components/pdfreport/assetforms/HeadingAssetForm.vue";
-import TextAssetForm from "@/components/pdfreport/assetforms/TextAssetForm.vue";
+import _ from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
+
+import GeneratePdfService from "@/api/service/GeneratePdfService";
 import DatatableAssetForm from "@/components/pdfreport/assetforms/DatatableAssetForm.vue";
 import DeleteDialog from "@/components/pdfreport/assetforms/DeleteDialog.vue";
-
-/* eslint-disable no-unused-vars */
-import BaseAsset from "../types/pdfreport/assets/BaseAsset";
-import HeadingAsset from "../types/pdfreport/assets/HeadingAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import HeadingAssetForm from "@/components/pdfreport/assetforms/HeadingAssetForm.vue";
+import ImageAssetForm from "@/components/pdfreport/assetforms/ImageAssetForm.vue";
+import TextAssetForm from "@/components/pdfreport/assetforms/TextAssetForm.vue";
+// Components
+import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
+import { usePdfReportStore } from "@/store/pdfReport";
+import { useSnackbarStore } from "@/store/snackbar";
+import { useUserStore } from "@/store/user";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import PagebreakAsset from "@/types/pdfreport/assets/PagebreakAsset";
-import GeneratePdfService from "@/api/service/GeneratePdfService";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 /* eslint-enable no-unused-vars */
 // Utils
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
-import _ from "lodash";
-import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
-import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
+import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
-import {useDaveUtils} from "@/util/DaveUtils";
-import {useDateUtils} from "@/util/DateUtils";
-import {useSnackbarStore} from "@/store/snackbar";
-import {usePdfReportStore} from "@/store/pdfReport";
-import {useUserStore} from "@/store/user";
+import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
+import PagebreakAsset from "@/types/pdfreport/assets/PagebreakAsset";
+import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
+import { useDateUtils } from "@/util/DateUtils";
+import { useDaveUtils } from "@/util/DaveUtils";
+/* eslint-disable no-unused-vars */
+import BaseAsset from "../types/pdfreport/assets/BaseAsset";
+import HeadingAsset from "../types/pdfreport/assets/HeadingAsset";
 
 const clickable = ref(0);
 
@@ -257,11 +265,11 @@ const deleteDialog = ref(false);
 
 const imageAsset = ref<ImageAsset>(new ImageAsset("", ""));
 const headingAsset = ref<HeadingAsset>(
-    new HeadingAsset("", AssetTypesEnum.HEADING1)
+  new HeadingAsset("", AssetTypesEnum.HEADING1)
 );
 const textAsset = ref<TextAsset>(new TextAsset(""));
 const datatableAsset = ref<DatatableAsset>(
-    new DatatableAsset({} as OptionsDTO, "", "")
+  new DatatableAsset({} as OptionsDTO, "", "")
 );
 
 const assetId = ref(0);
@@ -308,10 +316,10 @@ function createFirstPage(): void {
   assets.value.push(new PagebreakAsset());
   // Datum
   save(
-      new HeadingAsset(
-          "erstellt am " + dateUtils.getShortVersionOfDate(new Date()),
-          AssetTypesEnum.HEADING3
-      )
+    new HeadingAsset(
+      "erstellt am " + dateUtils.getShortVersionOfDate(new Date()),
+      AssetTypesEnum.HEADING3
+    )
   );
   // Autor
   const name = userStore.getName;
@@ -364,11 +372,11 @@ function assetsFromStore(): BaseAsset[] {
 }
 
 watch(
-    assets,
-    () => {
-      pdfReportStore.setAssets(_.cloneDeep(assets.value));
-    },
-    {deep: true}
+  assets,
+  () => {
+    pdfReportStore.setAssets(_.cloneDeep(assets.value));
+  },
+  { deep: true }
 );
 
 function edit(asset: BaseAsset): void {
@@ -378,11 +386,11 @@ function edit(asset: BaseAsset): void {
   }
 
   if (
-      isHeading1(asset) ||
-      isHeading2(asset) ||
-      isHeading3(asset) ||
-      isHeading4(asset) ||
-      isHeading5(asset)
+    isHeading1(asset) ||
+    isHeading2(asset) ||
+    isHeading3(asset) ||
+    isHeading4(asset) ||
+    isHeading5(asset)
   ) {
     editHeading.value = true;
     headingAsset.value = asset;
@@ -409,10 +417,10 @@ function generatePdf() {
   loadingPdf.value = true;
 
   formData.append(
-      "assets",
-      new Blob([JSON.stringify(assets.value)], {
-        type: "application/json",
-      })
+    "assets",
+    new Blob([JSON.stringify(assets.value)], {
+      type: "application/json",
+    })
   );
 
   fetchPdf(formData);
@@ -421,14 +429,14 @@ function generatePdf() {
 function fetchPdf(formData: any) {
   formData.append("department", getDepartment.value);
   GeneratePdfService.postPdfCustomFetchReport(formData)
-      .then((res) => {
-        res.blob().then((blob) => {
-          pdfSourceAsBlob.value = blob;
-          downloadPdf();
-        });
-      })
-      .catch((error) => snackbarStore.showApiError(error))
-      .finally(() => (loadingPdf.value = false));
+    .then((res) => {
+      res.blob().then((blob) => {
+        pdfSourceAsBlob.value = blob;
+        downloadPdf();
+      });
+    })
+    .catch((error) => snackbarStore.showApiError(error))
+    .finally(() => (loadingPdf.value = false));
 }
 
 function createHeadingAsset(type: string): void {
@@ -505,9 +513,7 @@ function deleteAsset(asset: BaseAsset): void {
 }
 
 function deleteIt(id: number): void {
-  const filteredAssets = assets.value.filter(
-      (a) => a.id !== id
-  ) as BaseAsset[];
+  const filteredAssets = assets.value.filter((a) => a.id !== id) as BaseAsset[];
   assets.value = filteredAssets;
   deleteDialog.value = false;
 }
@@ -679,11 +685,11 @@ function setClickable(id: number): void {
 function getTextOfAsset(asset: BaseAsset): string | undefined {
   let result = undefined;
   if (
-      isHeading1(asset) ||
-      isHeading2(asset) ||
-      isHeading3(asset) ||
-      isHeading4(asset) ||
-      isHeading5(asset)
+    isHeading1(asset) ||
+    isHeading2(asset) ||
+    isHeading3(asset) ||
+    isHeading4(asset) ||
+    isHeading5(asset)
   ) {
     result = (asset as HeadingAsset).text;
   } else if (isDatatable(asset)) {

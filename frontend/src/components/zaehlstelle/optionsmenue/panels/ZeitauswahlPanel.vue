@@ -2,73 +2,76 @@
   <v-expansion-panel>
     <v-expansion-panel-title>
       <div>
-        <v-icon left icon="mdi-clock-time-four-outline"/>
+        <v-icon
+          left
+          icon="mdi-clock-time-four-outline"
+        />
         Zeitauswahl
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
       <panel-header
-          font-size="0.875rem"
-          font-weight="bold"
-          padding="10px 0 0 0"
-          header-text="Zeitauswahl"
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Zeitauswahl"
       />
 
       <v-row
-          align="start"
-          justify="center"
-          dense
-          no-gutters
+        align="start"
+        justify="center"
+        dense
+        no-gutters
       >
         <v-col cols="8">
           <v-radio-group
-              v-model="zeitauswahl"
-                    color="grey-darken-1"
-              density="compact"
-              @change="zeitauswahlChanged"
+            v-model="zeitauswahl"
+            color="grey-darken-1"
+            density="compact"
+            @change="zeitauswahlChanged"
           >
             <v-row>
               <v-col cols="6">
                 <v-radio
-                    label="Tageswert"
-                    :value="Zeitauswahl.TAGESWERT"
-                    @mouseover="hoverTageswert = true"
-                    @mouseleave="hoverTageswert = false"
+                  label="Tageswert"
+                  :value="Zeitauswahl.TAGESWERT"
+                  @mouseover="hoverTageswert = true"
+                  @mouseleave="hoverTageswert = false"
                 />
                 <v-radio
-                    label="Block"
-                    :value="Zeitauswahl.BLOCK"
-                    @mouseover="hoverBlock = true"
-                    @mouseleave="hoverBlock = false"
+                  label="Block"
+                  :value="Zeitauswahl.BLOCK"
+                  @mouseover="hoverBlock = true"
+                  @mouseleave="hoverBlock = false"
                 />
                 <v-radio
-                    label="Stunde"
-                    :value="Zeitauswahl.STUNDE"
-                    @mouseover="hoverStunde = true"
-                    @mouseleave="hoverStunde = false"
+                  label="Stunde"
+                  :value="Zeitauswahl.STUNDE"
+                  @mouseover="hoverStunde = true"
+                  @mouseleave="hoverStunde = false"
                 />
               </v-col>
               <v-col cols="6">
                 <v-radio
-                    label="Spitzenstunde KFZ"
-                    :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
-                    :disabled="isTypeDisabled('KFZ')"
-                    @mouseover="hoverSpitzenstundeKfz = true"
-                    @mouseleave="hoverSpitzenstundeKfz = false"
+                  label="Spitzenstunde KFZ"
+                  :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
+                  :disabled="isTypeDisabled('KFZ')"
+                  @mouseover="hoverSpitzenstundeKfz = true"
+                  @mouseleave="hoverSpitzenstundeKfz = false"
                 />
                 <v-radio
-                    label="Spitzenstunde Rad"
-                    :value="Zeitauswahl.SPITZENSTUNDE_RAD"
-                    :disabled="isTypeDisabled('RAD')"
-                    @mouseover="hoverSpitzenstundeRad = true"
-                    @mouseleave="hoverSpitzenstundeRad = false"
+                  label="Spitzenstunde Rad"
+                  :value="Zeitauswahl.SPITZENSTUNDE_RAD"
+                  :disabled="isTypeDisabled('RAD')"
+                  @mouseover="hoverSpitzenstundeRad = true"
+                  @mouseleave="hoverSpitzenstundeRad = false"
                 />
                 <v-radio
-                    label="Spitzenstunde Fuß"
-                    :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
-                    :disabled="isTypeDisabled('FUSS')"
-                    @mouseover="hoverSpitzenstundeFuss = true"
-                    @mouseleave="hoverSpitzenstundeFuss = false"
+                  label="Spitzenstunde Fuß"
+                  :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
+                  :disabled="isTypeDisabled('FUSS')"
+                  @mouseover="hoverSpitzenstundeFuss = true"
+                  @mouseleave="hoverSpitzenstundeFuss = false"
                 />
               </v-col>
             </v-row>
@@ -84,63 +87,63 @@
       <v-row no-gutters>
         <v-col cols="4">
           <v-select
-              v-if="isZeitauswahlSpitzenstundeOrBlock"
-              v-model="zeitblock"
-              label="Zeitblock"
-              :items="zeitblockValues"
-              variant="filled"
-              density="compact"
-              @mouseover="hoverSelectBlockOrSpitzenstunde = true"
-              @mouseleave="hoverSelectBlockOrSpitzenstunde = false"
+            v-if="isZeitauswahlSpitzenstundeOrBlock"
+            v-model="zeitblock"
+            label="Zeitblock"
+            :items="zeitblockValues"
+            variant="filled"
+            density="compact"
+            @mouseover="hoverSelectBlockOrSpitzenstunde = true"
+            @mouseleave="hoverSelectBlockOrSpitzenstunde = false"
           />
           <!-- Auszuwählende Stunden -->
           <v-select
-              v-if="isZeitauswahlStunde"
-              v-model="zeitblock"
-              label="Stunde"
-              :items="stuendlichValues"
-              variant="filled"
-              density="compact"
-              @mouseover="hoverSelectStunde = true"
-              @mouseleave="hoverSelectStunde = false"
+            v-if="isZeitauswahlStunde"
+            v-model="zeitblock"
+            label="Stunde"
+            :items="stuendlichValues"
+            variant="filled"
+            density="compact"
+            @mouseover="hoverSelectStunde = true"
+            @mouseleave="hoverSelectStunde = false"
           />
         </v-col>
-        <v-spacer/>
+        <v-spacer />
       </v-row>
 
-      <v-divider/>
+      <v-divider />
       <panel-header
-          font-size="0.875rem"
-          font-weight="bold"
-          padding="10px 0 0 0"
-          header-text="Zeitintervall"
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Zeitintervall"
       />
       <panel-header
-          font-size="small"
-          font-weight="normal"
-          padding="0 0 10px 0"
-          header-text="(außer Belastungsplan und Zeitreihe)"
+        font-size="small"
+        font-weight="normal"
+        padding="0 0 10px 0"
+        header-text="(außer Belastungsplan und Zeitreihe)"
       />
 
       <v-row
-          align="start"
-          justify="center"
-          dense
-          no-gutters
+        align="start"
+        justify="center"
+        dense
+        no-gutters
       >
         <v-col cols="4">
           <v-select
-              v-model="intervall"
-              :items="zaehldatenIntervalle"
-              label="Zeitintervall"
-              variant="filled"
-              density="compact"
-              :disabled="isZeitauswahlSpitzenstunde"
-              @mouseover="hoverSelectZeitintervall = true"
-              @mouseleave="hoverSelectZeitintervall = false"
+            v-model="intervall"
+            :items="zaehldatenIntervalle"
+            label="Zeitintervall"
+            variant="filled"
+            density="compact"
+            :disabled="isZeitauswahlSpitzenstunde"
+            @mouseover="hoverSelectZeitintervall = true"
+            @mouseleave="hoverSelectZeitintervall = false"
           />
         </v-col>
-        <v-spacer/>
+        <v-spacer />
         <v-col cols="4">
           <v-card flat>
             {{ helpTextZeitintervall }}
@@ -152,18 +155,24 @@
 </template>
 
 <script setup lang="ts">
+import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import ZaehldatenIntervall, {ZaehldatenIntervallToSelect,} from "@/types/enum/ZaehldatenIntervall";
-import Zeitblock, {zeitblockInfo} from "@/types/enum/Zeitblock";
-import type KeyVal from "@/types/common/KeyVal";
-import ZeitblockStuendlich, {zeitblockStuendlichInfo,} from "@/types/enum/ZeitblockStuendlich";
+
+import { computed, onMounted, ref, watch } from "vue";
+
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import ZaehldatenIntervall, {
+  ZaehldatenIntervallToSelect,
+} from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
-import {computed, onMounted, ref, watch} from "vue";
-import {useZaehlstelleUtils} from "@/util/ZaehlstelleUtils";
-import {useZaehlstelleStore} from "@/store/zaehlstelle";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import ZeitblockStuendlich, {
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockStuendlich";
+import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 interface Props {
   zaehlung?: LadeZaehlungDTO;
@@ -211,8 +220,7 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
   return (
-      zeitauswahl.value === Zeitauswahl.BLOCK ||
-      isZeitauswahlSpitzenstunde.value
+    zeitauswahl.value === Zeitauswahl.BLOCK || isZeitauswahlSpitzenstunde.value
   );
 });
 
@@ -222,9 +230,9 @@ const isZeitauswahlStunde = computed(() => {
 
 const isZeitauswahlSpitzenstunde = computed(() => {
   return (
-      zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-      zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_RAD ||
-      zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_FUSS
+    zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+    zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_FUSS
   );
 });
 
@@ -271,8 +279,7 @@ const helpTextZeitintervall = computed(() => {
 const zeitblockValues = computed<Array<KeyVal>>(() => {
   let result = new Array<KeyVal>();
   // die möglichen Blöcke aus der Zählung
-  const blocks: Zeitblock[] = props.zaehlung?.zeitauswahl
-      .blocks as Zeitblock[];
+  const blocks: Zeitblock[] = props.zaehlung?.zeitauswahl.blocks as Zeitblock[];
 
   if (blocks && Array.isArray(blocks)) {
     // Select Control mit den entsprechenden text/value Werten füllen
@@ -284,13 +291,11 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
     });
     // Block 0-24 bei Zeitauswahl Spitzenstunde hinzufügen falls kein Zeitblock ZB_06_19 oder ZB_06_22 existiert.
     if (
-        isZeitauswahlSpitzenstunde.value &&
-        !result.some(
-            (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_19)
-        ) &&
-        !result.some(
-            (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22)
-        )
+      isZeitauswahlSpitzenstunde.value &&
+      !result.some(
+        (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_19)
+      ) &&
+      !result.some((keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22))
     ) {
       if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
         const zeitBlockMaximal: KeyVal = {} as KeyVal;
@@ -351,7 +356,7 @@ function zeitauswahlChanged() {
   //Der erste Eintrag wird als ausgewählt gesetzt
   if (zeitauswahl.value === Zeitauswahl.STUNDE) {
     const zs = zeitblockStuendlichInfo.get(
-        stuendlichValues.value[0].value
+      stuendlichValues.value[0].value
     )?.value;
     if (zs) {
       zeitblock.value = zs;
@@ -363,14 +368,14 @@ function zeitauswahlChanged() {
 //  übergebenen Werten im Optionsobjekt
 function update(newOptions: OptionsDTO) {
   newOptions.zeitauswahl === null
-      ? (zeitauswahl.value = Zeitauswahl.TAGESWERT)
-      : (zeitauswahl.value = newOptions.zeitauswahl);
+    ? (zeitauswahl.value = Zeitauswahl.TAGESWERT)
+    : (zeitauswahl.value = newOptions.zeitauswahl);
   newOptions.zeitblock === null
-      ? (zeitblock.value = Zeitblock.ZB_00_24)
-      : (zeitblock.value = newOptions.zeitblock);
+    ? (zeitblock.value = Zeitblock.ZB_00_24)
+    : (zeitblock.value = newOptions.zeitblock);
   newOptions.intervall === null
-      ? (intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL)
-      : (intervall.value = newOptions.intervall);
+    ? (intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL)
+    : (intervall.value = newOptions.intervall);
 }
 
 /**

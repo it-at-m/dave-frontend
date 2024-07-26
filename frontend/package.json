@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "test:unit": "vitest run",
     "lint": "prettier . --check && eslint . && vue-tsc --noEmit --skipLibCheck",
-    "fix": "prettier . --write && eslint . --fix"
+    "fix": "prettier . --write"
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.8",

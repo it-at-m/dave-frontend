@@ -1,7 +1,7 @@
-import {createPinia, setActivePinia} from "pinia";
-import {beforeEach, describe, expect, it} from "vitest";
+import { createPinia, setActivePinia } from "pinia";
+import { beforeEach, describe, expect, it } from "vitest";
 
-import {useTimeUtils} from "@/util/TimeUtils";
+import { useTimeUtils } from "@/util/TimeUtils";
 
 describe("test", () => {
   beforeEach(() => {

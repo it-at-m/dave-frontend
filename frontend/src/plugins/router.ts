@@ -1,9 +1,10 @@
 // Composables
-import {createRouter, createWebHashHistory} from "vue-router";
-import HomeView from "@/views/HomeView.vue";
-import ZaehlstelleView from "@/views/ZaehlstelleView.vue";
-import MessstelleView from "@/views/MessstelleView.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
+
 import AuswertungView from "@/views/AuswertungView.vue";
+import HomeView from "@/views/HomeView.vue";
+import MessstelleView from "@/views/MessstelleView.vue";
+import ZaehlstelleView from "@/views/ZaehlstelleView.vue";
 
 const routes = [
   {
@@ -32,7 +33,7 @@ const routes = [
     component: () =>
       import(
         /* webpackChunkName: "pdfReportView"  */ "@/views/PdfReportView.vue"
-        ),
+      ),
   },
   { path: "/:catchAll(.*)*", redirect: "/" }, // CatchAll route
 ];

@@ -1,65 +1,67 @@
 <template>
-    <v-expansion-panel-text>
-        <panel-header
-            font-size="0.875rem"
-            font-weight="bold"
-            padding="10px 0 0 0"
-            header-text="Belastungsplan"
+  <v-expansion-panel-text>
+    <panel-header
+      font-size="0.875rem"
+      font-weight="bold"
+      padding="10px 0 0 0"
+      header-text="Belastungsplan"
+    />
+    <v-row
+      align="start"
+      justify="center"
+      dense
+      no-gutters
+    >
+      <v-col cols="4">
+        <v-checkbox
+          v-model="chosenOptionsCopy.werteHundertRunden"
+          :label="'Werte auf 100 Runden'"
+          hide-details
+          style="margin-bottom: 12px"
+          color="grey-darken-1"
+          density="compact"
+          @mouseover="hoverWerteHundertRunden = true"
+          @mouseleave="hoverWerteHundertRunden = false"
         />
-        <v-row
-            align="start"
-            justify="center"
-            dense
-            no-gutters
-        >
-            <v-col cols="4">
-                    <v-checkbox
-                        v-model="chosenOptionsCopy.werteHundertRunden"
-                        :label="'Werte auf 100 Runden'"
-                        hide-details
-                        style="margin-bottom: 12px"
-                        color="grey-darken-1"
-                        density="compact"
-                        @mouseover="hoverWerteHundertRunden = true"
-                        @mouseleave="hoverWerteHundertRunden = false"
-                    />
-                    <v-slider
-                        v-model="sizeBelastungsplan"
-                        label="Belastungsplangröße"
-                        :max="10"
-                        :min="1"
-                        @mouseover="hoverSizeBelastungsplan = true"
-                        @mouseleave="hoverSizeBelastungsplan = false"
-                    />
-            </v-col>
-            <v-col cols="4">
-                    <v-checkbox
-                        v-model="chosenOptionsCopy.blackPrintMode"
-                        :label="'schwarz-weiß Druckausgabe'"
-                        hide-details
-                        style="margin-bottom: 12px"
-                        color="grey-darken-1"
-                        density="compact"
-                        @mouseover="hoverBlackPrintMode = true"
-                        @mouseleave="hoverBlackPrintMode = false"
-                    />
-            </v-col>
-            <v-col cols="4">
-                <v-card flat>
-                    {{ helpTextBelastungsplan }}
-                </v-card>
-            </v-col>
-        </v-row>
-        <v-divider/>
-    </v-expansion-panel-text>
+        <v-slider
+          v-model="sizeBelastungsplan"
+          label="Belastungsplangröße"
+          :max="10"
+          :min="1"
+          @mouseover="hoverSizeBelastungsplan = true"
+          @mouseleave="hoverSizeBelastungsplan = false"
+        />
+      </v-col>
+      <v-col cols="4">
+        <v-checkbox
+          v-model="chosenOptionsCopy.blackPrintMode"
+          :label="'schwarz-weiß Druckausgabe'"
+          hide-details
+          style="margin-bottom: 12px"
+          color="grey-darken-1"
+          density="compact"
+          @mouseover="hoverBlackPrintMode = true"
+          @mouseleave="hoverBlackPrintMode = false"
+        />
+      </v-col>
+      <v-col cols="4">
+        <v-card flat>
+          {{ helpTextBelastungsplan }}
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-divider />
+  </v-expansion-panel-text>
 </template>
 
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import {computed, ref, watch} from "vue";
+
+import { computed, ref, watch } from "vue";
+
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import {useMessstelleStore} from "@/store/messstelle";
-import {useZaehlstelleStore} from "@/store/zaehlstelle";
+import { useMessstelleStore } from "@/store/messstelle";
+import { useZaehlstelleStore } from "@/store/zaehlstelle";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();
@@ -69,25 +71,25 @@ const hoverWerteHundertRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
 const hoverBlackPrintMode = ref(false);
 const sizeBelastungsplan = computed({
-    get: () => messstelleStore.getBelastungsplanChosenSize,
-    set: (payload: number) =>
-        messstelleStore.setBelastungsplanChosenSize(payload),
+  get: () => messstelleStore.getBelastungsplanChosenSize,
+  set: (payload: number) =>
+    messstelleStore.setBelastungsplanChosenSize(payload),
 });
 
 const helpTextBelastungsplan = computed(() => {
-    if (hoverWerteHundertRunden.value) {
-        return "";
-    }
-    if (hoverBlackPrintMode.value) {
-        return "";
-    }
-    if (hoverSizeBelastungsplan.value) {
-        return "";
-    }
+  if (hoverWerteHundertRunden.value) {
     return "";
+  }
+  if (hoverBlackPrintMode.value) {
+    return "";
+  }
+  if (hoverSizeBelastungsplan.value) {
+    return "";
+  }
+  return "";
 });
 
 watch(sizeBelastungsplan, () => {
-    zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
+  zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
 });
 </script>
