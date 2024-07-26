@@ -16,10 +16,6 @@ module.exports = {
     "plugin:vue/vue3-strongly-recommended",
     "plugin:vue/vue3-recommended",
 
-    // Vuetify
-    "plugin:vuetify/base",
-    "plugin:vuetify/recommended",
-
     // Vermeidung Kollision mit Prettier
     "@vue/eslint-config-prettier",
   ],

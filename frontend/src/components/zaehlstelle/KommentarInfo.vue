@@ -39,7 +39,7 @@
           <v-btn
             class="text-none"
             color="grey-lighten-1"
-            text="=Schließen"
+            text="Schließen"
             @click="showDialog = false"
           />
           <v-spacer />
