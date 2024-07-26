@@ -17,7 +17,7 @@
                 flat
             >
                 <v-card-title>
-                    <v-icon left>mdi-filter-outline</v-icon>
+                    <v-icon left icon="mdi-filter-outline"/>
                     Filtereinstellungen
                 </v-card-title>
 

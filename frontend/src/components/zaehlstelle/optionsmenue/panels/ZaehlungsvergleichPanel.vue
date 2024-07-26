@@ -2,7 +2,7 @@
     <v-expansion-panel>
         <v-expansion-panel-title>
             <div>
-                <v-icon left>mdi-compare-horizontal</v-icon>
+                <v-icon left icon="mdi-compare-horizontal"/>
                 Zählungsvergleich
             </div>
         </v-expansion-panel-title>

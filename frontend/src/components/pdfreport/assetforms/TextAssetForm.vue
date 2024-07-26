@@ -9,7 +9,7 @@
             <v-card-title
                 class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2"
             >
-                <v-icon class="mr-2">mdi-text</v-icon>
+                <v-icon class="mr-2" icon="mdi-text"/>
                 Text Abschnitt bearbeiten
             </v-card-title>
             <v-card-text>

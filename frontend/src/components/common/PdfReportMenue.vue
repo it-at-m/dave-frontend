@@ -9,7 +9,7 @@
                 variant="flat"
             >
                 <v-card-title>
-                    <v-icon left>mdi-file-chart</v-icon>
+                    <v-icon left icon="mdi-file-chart"/>
                     Auswahl zum PDF Report
                 </v-card-title>
 

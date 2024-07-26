@@ -2,7 +2,7 @@
   <v-expansion-panel>
     <v-expansion-panel-title>
       <div>
-        <v-icon left>mdi-clock-time-four-outline</v-icon>
+        <v-icon left icon="mdi-clock-time-four-outline"/>
         Zeitauswahl
       </div>
     </v-expansion-panel-title>

@@ -2,7 +2,7 @@
     <v-expansion-panel>
         <v-expansion-panel-title>
             <div>
-                <v-icon left>mdi-arrow-decision</v-icon>
+                <v-icon left icon="mdi-arrow-decision"/>
                 Fahrbeziehungen
             </div>
         </v-expansion-panel-title>

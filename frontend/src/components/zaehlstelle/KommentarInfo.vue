@@ -17,7 +17,7 @@
         >
             <v-card>
                 <v-card-title class="text-h5 grey-lighten-2">
-                    <v-icon left>mdi-comment-multiple</v-icon>
+                    <v-icon left icon="mdi-comment-multiple"/>
                     Informationen
                 </v-card-title>
                 <br />
