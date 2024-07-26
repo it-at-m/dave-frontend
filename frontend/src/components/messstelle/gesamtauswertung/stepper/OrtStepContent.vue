@@ -36,7 +36,7 @@
         :readonly="richtungValues.length === 1"
         persistent-hint
         :hint="directionHint"
-        @input="preassignMqIdsInOptions"
+        @update:modelValue="preassignMqIdsInOptions"
       />
 
       <v-autocomplete

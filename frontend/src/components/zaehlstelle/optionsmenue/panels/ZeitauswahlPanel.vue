@@ -28,7 +28,7 @@
             v-model="zeitauswahl"
             color="grey-darken-1"
             density="compact"
-            @change="zeitauswahlChanged"
+            @update:modelValue="zeitauswahlChanged"
           >
             <v-row>
               <v-col cols="6">

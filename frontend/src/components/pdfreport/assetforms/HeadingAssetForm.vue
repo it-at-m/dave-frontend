@@ -50,7 +50,7 @@
                   prepend-icon="mdi-format-header-pound"
                   variant="outlined"
                   density="compact"
-                  @change="setIconAndStyle(asset)"
+                  @update:modelValue="setIconAndStyle(asset)"
                 />
               </v-col>
             </v-row>

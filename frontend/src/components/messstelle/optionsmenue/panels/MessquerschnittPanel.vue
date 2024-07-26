@@ -23,7 +23,7 @@
             label="Richtung"
             :items="richtungValues"
             variant="filled"
-            @input="updateOptions"
+            @update:modelValue="updateOptions"
             density="compact"
             @mouseover="hoverDirection = true"
             @mouseleave="hoverDirection = false"
