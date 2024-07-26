@@ -3,7 +3,7 @@
     <v-expansion-panel-title>
       <div>
         <v-icon
-          left
+          start
           icon="mdi-arrow-decision"
         />
         Fahrbeziehungen

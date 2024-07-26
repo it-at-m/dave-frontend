@@ -10,7 +10,7 @@
     >
       <v-card-title>
         <v-icon
-          left
+          start
           icon="mdi-file-chart"
         />
         Auswahl zum PDF Report
