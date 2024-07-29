@@ -65,7 +65,7 @@
             :zaehldaten-stepline="zaehldatenSteplineDTO"
           />
         </v-sheet>
-        <progress-loader :value="chartDataLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
@@ -79,7 +79,7 @@
             :height="contentHeight"
           />
         </v-sheet>
-        <progress-loader :value="chartDataLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_HEATMAP">
         <banner-messtelle-tabs v-if="isBiggerThanFiveYears" />
@@ -94,7 +94,7 @@
             :zaehldaten-heatmap="zaehldatenHeatmapDTO"
           />
         </v-sheet>
-        <progress-loader :value="chartDataLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
     </v-tabs-window>
 

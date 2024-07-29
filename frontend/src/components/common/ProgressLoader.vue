@@ -1,7 +1,7 @@
 <template>
   <v-overlay
+    v-model="showLoader"
     absolute
-    :value="value"
   >
     <v-progress-circular
       :size="120"
@@ -15,9 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-interface Props {
-  value: boolean;
-}
 
-defineProps<Props>();
+const showLoader = defineModel<boolean>({ required: true });
+
 </script>

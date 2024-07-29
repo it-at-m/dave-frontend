@@ -100,7 +100,7 @@
             :zaehlung-id="zaehlungsId"
           />
         </v-sheet>
-        <progress-loader :value="belastungsplanLoading" />
+        <progress-loader v-model="belastungsplanLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
         <v-sheet
@@ -114,7 +114,7 @@
             :zaehldaten-stepline="zaehldatenSteplineDTO"
           />
         </v-sheet>
-        <progress-loader :value="chartDataLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
@@ -127,7 +127,7 @@
           >
           </zaehldaten-listenausgabe>
         </v-sheet>
-        <progress-loader :value="chartDataLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_HEATMAP">
         <v-sheet
@@ -140,7 +140,7 @@
             :zaehldaten-heatmap="zaehldatenHeatmap"
           />
         </v-sheet>
-        <progress-loader :value="chartDataLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_ZEITREIHE">
         <v-sheet
@@ -153,7 +153,7 @@
             :zaehldaten-zeitreihe="zaehldatenZeitreihe"
           />
         </v-sheet>
-        <progress-loader :value="zeitreiheLoading" />
+        <progress-loader v-model="zeitreiheLoading" />
       </v-tabs-window-item>
     </v-tabs-window>
 
