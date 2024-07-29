@@ -318,7 +318,7 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
 
   let alreadyExists = false;
   alleZielknotenarmeVon.forEach((value) => {
-    alreadyExists = alreadyExists || value.nummer === fahrbeziehung.von;
+    alreadyExists = alreadyExists || value.nummer === fahrbeziehung.nach;
   });
 
   if (!alreadyExists) {
