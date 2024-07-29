@@ -1,7 +1,8 @@
 <template>
   <v-overlay
     v-model="showLoader"
-    absolute
+    class="align-center justify-center"
+    contained
   >
     <v-progress-circular
       :size="120"
