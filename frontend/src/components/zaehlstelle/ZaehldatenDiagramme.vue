@@ -15,9 +15,9 @@
     negativen Z-Index verschwindet das Element hinter allen anderen Elementen der eigentlichen Anwendung.
     -->
     <v-overlay
-      value="true"
+      :model-value="true"
       opacity="0"
-      z-index="-99999999"
+      style="z-index: -99999999;"
     >
       <belastungsplan-kreuzung-svg-schematische-uebersicht
         :dimension="contentHeight"
