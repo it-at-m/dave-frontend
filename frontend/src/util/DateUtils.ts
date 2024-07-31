@@ -12,12 +12,18 @@ export function useDateUtils() {
     return `${day}.${month}.${year}`;
   }
 
-  function formatDateToISO(date: string): string {
+  function formatDateAsStringToISO(date: string): string {
     if (!date) {
       return "";
     }
     const [day, month, year] = date.split(".");
     return `${year}-${month}-${day}`;
+  }
+  function formatDateToISO(date: Date): string {
+    if (!date) {
+      return "";
+    }
+    return date.toISOString().slice(0,10);
   }
 
   function getTimeOfDate(date: Date): string {
@@ -100,5 +106,6 @@ export function useDateUtils() {
     isDateBetween,
     isDateBetweenAsStrings,
     sortDatesAscAsStrings,
+    formatDateAsStringToISO
   };
 }
