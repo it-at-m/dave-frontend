@@ -12,21 +12,19 @@
 </template>
 
 <script setup lang="ts">
-import type { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
+import type {ValidWochentageInPeriodDto} from "@/types/messstelle/ValidWochentageInPeriodDto";
 
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import {computed, onMounted, ref, watch} from "vue";
+import {useRoute} from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useSnackbarStore } from "@/store/snackbar";
+import {useMessstelleStore} from "@/store/messstelle";
+import {useSnackbarStore} from "@/store/snackbar";
 import TagesTyp from "@/types/enum/TagesTyp";
-import { useDateUtils } from "@/util/DateUtils";
 
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
 const numberValidWochentage = ref({} as ValidWochentageInPeriodDto);
-const dateUtils = useDateUtils();
 const route = useRoute();
 
 onMounted(() => {
@@ -46,22 +44,16 @@ const chosenOptionsTagesTyp = computed(() => {
 });
 
 const zeitraumRange = computed(() => {
-  const sortedDates = dateUtils.sortDatesDescAsStrings(
-    chosenOptions.value.zeitraum.slice()
-  );
-  const startDate = new Date(sortedDates[1]);
-  const endDate = new Date(sortedDates[0]);
+  const startDate = new Date(chosenOptionsZeitraum.value[0]);
+  const endDate = new Date(chosenOptionsZeitraum.value[1]);
   const differenceInMs = Math.abs(endDate.valueOf() - startDate.valueOf());
   return differenceInMs / (1000 * 60 * 60 * 24) + 1;
 });
 
 const validWochentageRequestDto = computed(() => {
-  const sortedDates = dateUtils.sortDatesDescAsStrings(
-    chosenOptions.value.zeitraum.slice()
-  );
   return {
-    startDate: sortedDates[1],
-    endDate: sortedDates[0],
+    startDate: chosenOptionsZeitraum.value[0],
+    endDate: chosenOptionsZeitraum.value[1],
     messstelleId: route.params.messstelleId as string,
     // TODO als prop injecten
   };

@@ -8,10 +8,11 @@
         id="datum"
         v-model="textFieldDate"
         variant="underlined"
-        validate-on="blur"
+        validate-on="input"
         :hint="displayFormat"
         :disabled="disabled"
         :required="required"
+        density="compact"
         :rules="[
             (toCheck) => validateTextDate(toCheck),
           ]"

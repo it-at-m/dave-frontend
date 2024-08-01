@@ -17,26 +17,36 @@
         header-text="Zeitraum"
       />
       <v-row
-        class="mt-3"
+        dense
       >
-        <v-col
-          cols="4"
-        >
-          <date-picker v-model="dateValueVon" :minDate="minDate" :maxDate="maxDate" label="von"/>
+        <v-col cols="8">
+          <v-row dense no-gutters class="mb-0 pb-0">
+            <v-col cols="6">
+              <v-switch v-model="needRange" label="Zeitraum" density="compact" @update:modelValue="resetDates">
+                <template v-slot:prepend>
+                  <v-label text="Zeitpunkt" class="pl-0"/>
+                </template>
+              </v-switch>
+            </v-col>
+            <v-spacer/>
+          </v-row>
+          <v-row dense class="mt-0 pt-0">
+            <v-col cols="6">
+              <date-picker v-model="dateVon" :minDate="minDate" :maxDate="maxDate" label="von"/>
+            </v-col>
+            <v-col cols="6">
+              <date-picker v-if="needRange" v-model="dateBis" :minDate="minDateRange" :maxDate="maxDate" label="bis"/>
+            </v-col>
+          </v-row>
+
         </v-col>
-        <v-col
-          cols="4"
-        >
-          <date-picker v-model="dateValueBis" :minDate="minDateRange" :maxDate="maxDate" label="bis"/>
-        </v-col>
-        <v-spacer/>
         <v-col cols="4">
-          <div v-if="isAnwender || isZeitraum">
+          <div v-if="isAnwender || needRange">
             <p>Hinweise:</p>
             <p v-if="isAnwender">
               Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
             </p>
-            <p v-if="isZeitraum">
+            <p v-if="needRange">
               Alle Auswertungen stellen Durchschnittswerte des ausgewählten
               Zeitraums dar.
             </p>
@@ -46,11 +56,11 @@
       <v-divider />
 
       <tages-typ-radiogroup
-        v-if="isZeitraum"
+        v-if="needRange"
         v-model="chosenOptionsCopy"
         :is-chosen-tages-typ-valid="isChosenTagesTypValid"
       />
-      <v-divider v-if="isZeitraum" />
+      <v-divider v-if="needRange" />
 
       <zeitauswahl-radiogroup
         v-model="chosenOptionsCopy"
@@ -98,8 +108,8 @@ const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
-// TODO Zeitraum via Checkbox steuern
 const needRange = ref(chosenOptionsCopy.value.zeitraum.length > 1);
+
 onMounted(() => {
   // TODO: via Prop injecten
   const messstelleId = route.params.messstelleId as string;
@@ -111,12 +121,6 @@ onMounted(() => {
 
 const messstelleInfo = computed<MessstelleInfoDTO>(() => {
   return messstelleStore.getMessstelleInfo;
-});
-
-const getSortedDateRange = computed(() => {
-  return dateUtils.sortDatesDescAsStrings(
-    chosenOptionsCopyZeitraum.value.slice()
-  );
 });
 
 const nichtPlausibleTage = ref<Array<string>>([]);
@@ -131,10 +135,6 @@ const chosenOptionsCopyWochentag = computed(() => {
   return chosenOptionsCopy.value.tagesTyp ?? "";
 });
 
-const isZeitraum = computed(() => {
-  return chosenOptionsCopyZeitraum.value.length == 2 && dateValueVon.value.valueOf() !== dateValueBis.value.valueOf();
-});
-
 const isAnwender = computed(() => {
   return userStore.hasAuthorities && userStore.isAnwender;
 });
@@ -146,28 +146,51 @@ const minDate = computed(() => {
 });
 
 const minDateRange = computed(() => {
-  return dateUtils.formatDateToISO(dateValueVon.value);
+  return dateUtils.formatDateToISO(nextDayOfVon.value);
+});
+
+const nextDayOfVon = computed(() => {
+  const nextDay = new Date(dateVon.value);
+  nextDay.setDate(dateVon.value.getDate() + 1);
+  return nextDay;
 })
 
 const maxDate = computed(() => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-    .toISOString()
-    .slice(0, 10);
+      .toISOString()
+      .slice(0, 10);
   return messstelleInfo.value.abbaudatum ?? yesterday;
 });
 
-const dateValueVon = ref<Date>(new Date(chosenOptionsCopy.value.zeitraum[0]));
-const dateValueBis = ref<Date>(chosenOptionsCopy.value.zeitraum.length === 2 ? new Date(chosenOptionsCopy.value.zeitraum[1]) : dateValueVon.value);
+const dateVon = computed({
+  get() {
+    return new Date(chosenOptionsCopy.value.zeitraum[0]);
+  },
+
+  set(value: Date) {
+    saveDateValueVon(value);
+  },
+});
+const dateBis = computed({
+  get() {
+    return chosenOptionsCopy.value.zeitraum.length === 2 ? new Date(chosenOptionsCopy.value.zeitraum[1]) : nextDayOfVon.value;
+  },
+
+  set(value: Date) {
+    saveDateValueBis(value);
+  },
+});
 
 watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
   if (
-    getSortedDateRange.value[0] &&
-    getSortedDateRange.value[1] &&
+    chosenOptionsCopyZeitraum.value.length === 2 &&
+    chosenOptionsCopyZeitraum.value[0] &&
+    chosenOptionsCopyZeitraum.value[1] &&
     chosenOptionsCopy.value.tagesTyp
   ) {
     const chosenTagesTypValidRequestDto = {
-      startDate: getSortedDateRange.value[1],
-      endDate: getSortedDateRange.value[0],
+      startDate: chosenOptionsCopyZeitraum.value[0],
+      endDate: chosenOptionsCopyZeitraum.value[1],
       tagesTyp: chosenOptionsCopy.value.tagesTyp,
     };
     MessstelleOptionsmenuService.isTagesTypValid(
@@ -181,32 +204,25 @@ watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
 watch(chosenOptionsCopyZeitraum, () => {
   calculateChoosableOptions();
 });
-watch(dateValueVon, () => {
-  if (dateValueVon.value) {
-    saveDateValueVon();
-    validateRange();
-  }
-});
-watch(dateValueBis, () => {
-  if (dateValueBis.value) {
-    saveDateValueBis();
-  }
-});
-
-function validateRange() {
-  if (dateValueVon.value.valueOf() > dateValueBis.value.valueOf()) {
-    dateValueBis.value = dateValueVon.value;
-  }
-}
 
 function calculateChoosableOptions(): void {
-  messstelleStore.calculateActiveMessfaehigkeit(
-    dateUtils.sortDatesAscAsStrings(chosenOptionsCopy.value.zeitraum)[0]
-  );
+  messstelleStore.calculateActiveMessfaehigkeit(chosenOptionsCopy.value.zeitraum[0]);
 }
 
-function saveDateValueVon() {
-  const dateToSave = dateUtils.formatDateToISO(dateValueVon.value);
+function resetDates() {
+  if(needRange.value) {
+    saveDateValueBis(dateBis.value);
+
+  } else {
+    if (chosenOptionsCopy.value.zeitraum.length === 2) {
+      chosenOptionsCopy.value.zeitraum.pop();
+    }
+    chosenOptionsCopy.value.tagesTyp = "";
+  }
+}
+
+function saveDateValueVon(toSave: Date) {
+  const dateToSave = dateUtils.formatDateToISO(toSave);
   if (chosenOptionsCopy.value.zeitraum.length === 0) {
     chosenOptionsCopy.value.zeitraum.push(dateToSave);
   } else {
@@ -214,8 +230,8 @@ function saveDateValueVon() {
   }
 }
 
-function saveDateValueBis() {
-  const dateToSave = dateUtils.formatDateToISO(dateValueBis.value);
+function saveDateValueBis(toSave: Date) {
+  const dateToSave = dateUtils.formatDateToISO(toSave);
   if (chosenOptionsCopy.value.zeitraum.length === 2) {
     chosenOptionsCopy.value.zeitraum[1] = dateToSave;
   } else {

@@ -80,6 +80,15 @@ export function useDateUtils() {
       dateToCheck.valueOf() <= dateAfter.valueOf()
     );
   }
+  
+  function isDateRangeAsStringValid(range:Array<string>) {
+    return isDateRangeValid(getDatumOfString(range[0]), getDatumOfString(range[1]));
+  }
+  
+  
+  function isDateRangeValid(dateValueVon:Date, dateValueBis:Date) {
+    return dateValueBis.valueOf() >= dateValueVon.valueOf();
+  }
 
   /**
    * es muss für i18n ein Datumsobjekt erzeugt werden.
@@ -106,6 +115,8 @@ export function useDateUtils() {
     isDateBetween,
     isDateBetweenAsStrings,
     sortDatesAscAsStrings,
-    formatDateAsStringToISO
+    formatDateAsStringToISO,
+    isDateRangeAsStringValid,
+    isDateRangeValid,
   };
 }

@@ -85,6 +85,7 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useTimeUtils } from "@/util/TimeUtils";
+import {useDateUtils} from "@/util/DateUtils";
 
 interface Props {
   messstelleId: string;
@@ -103,6 +104,7 @@ const chosenOptions = ref(
 
 const userStore = useUserStore();
 const timeUtils = useTimeUtils();
+const dateUtils = useDateUtils();
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
   return messstelleStore.getMessstelleInfo;
@@ -156,6 +158,13 @@ function areChosenOptionsValid(): boolean {
       errortext = "Es muss genau ein Messquerschnitt ausgewählt sein.";
     }
     snackbarStore.showError(errortext);
+  }
+  if (
+      chosenOptions.value.zeitraum.length === 2 && !dateUtils.isDateRangeAsStringValid(chosenOptions.value.zeitraum)
+
+  ) {
+    result = false;
+    snackbarStore.showError("Das Datum 'bis' muss nach 'von' liegen.");
   }
   if (
     chosenOptions.value.zeitraum.length === 2 &&

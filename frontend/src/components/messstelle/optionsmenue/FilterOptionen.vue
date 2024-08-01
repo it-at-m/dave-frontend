@@ -136,10 +136,9 @@ const zeitraum = computed(() => {
   if (zeitraum.length == 1) {
     return `am ${dateUtils.formatDate(zeitraum[0].toString())}`;
   } else if (zeitraum.length == 2) {
-    const sortedDates = dateUtils.sortDatesDescAsStrings(zeitraum);
     return `im Zeitraum ${dateUtils.formatDate(
-      sortedDates[1]
-    )} - ${dateUtils.formatDate(sortedDates[0])}`;
+      zeitraum[0]
+    )} - ${dateUtils.formatDate(zeitraum[1])}`;
   }
   return "";
 });
