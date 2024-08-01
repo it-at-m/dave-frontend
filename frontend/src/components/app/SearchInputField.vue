@@ -7,6 +7,7 @@
     density="compact"
     clearable
     flat
+    item-title="text"
     hide-details
     label="Suche"
     no-filter
@@ -27,8 +28,8 @@
       <v-list-item
         v-bind="props"
         density="compact"
-        :prepend-icon="iconOfSuggestion(item.value.type)"
-        :title="item.value.text"
+        :prepend-icon="iconOfSuggestion(item.raw.type)"
+        :title="item.raw.text"
         @click="searchOrShowSelectedSuggestion"
         @focus="updateSearchQuery(index)"
       />
@@ -268,11 +269,5 @@ function iconOfSuggestion(type: string) {
       break;
   }
   return icon;
-}
-
-function routeToMainViewWhenNotInMain(): void {
-  if (route.path !== "/") {
-    router.push("/");
-  }
 }
 </script>
