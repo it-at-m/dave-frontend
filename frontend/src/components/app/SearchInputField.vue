@@ -72,7 +72,7 @@ import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
 import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
 import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
-import { onMounted, ref } from "vue";
+import {onMounted, ref, watch} from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
@@ -270,4 +270,9 @@ function iconOfSuggestion(type: string) {
   }
   return icon;
 }
+
+watch(() => searchStore.getLastSearchQuery, () => {
+  searchQuery.value = searchStore.getLastSearchQuery;
+  search();
+});
 </script>

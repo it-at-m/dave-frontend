@@ -15,7 +15,6 @@
           <router-link
             to="/"
             style="text-decoration: none"
-            @click.native="clear"
           >
             <v-toolbar-title class="text-white font-weight-medium">
               <span class="font-weight-medium">DAVe</span>
@@ -123,10 +122,6 @@ function created() {
       backendVersion.value = "error";
     });
   window.addEventListener("keypress", shortCuts);
-}
-
-function clear(): void {
-  searchStore.setLastSearchQuery("");
 }
 
 function navigateToHandbuch() {
