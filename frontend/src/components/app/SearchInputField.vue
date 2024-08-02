@@ -58,7 +58,6 @@
           * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />
           * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
           * Messstellennummer / -name (4203,...)<br />
-          <!--            Es fehlt noch: Wetter, Schulzeit, (erweiterte) Zählsituation-->
         </span>
       </v-tooltip>
     </template>
