@@ -41,6 +41,7 @@ import { useSnackbarStore } from "@/store/snackbar";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import {useMapOptionsStore} from "@/store/mapoptions";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -123,9 +124,10 @@ function initMap(): void {
 }
 
 const zoomValue = computed(() => {
-  const zoom = route.query.zoom;
-  if (zoom != undefined) {
-    return parseFloat(zoom.toString());
+  if (props.latlng && props.latlng.length > 0) {
+    return props.zoom
+  } else if (mapOptionsStore.getMapOptions && mapOptionsStore.getMapOptions.zoom) {
+    return mapOptionsStore.getMapOptions.zoom;
   } else {
     return props.zoom;
   }
@@ -135,13 +137,10 @@ const zoomValue = computed(() => {
  * Die Methode setzt Koordinate auf welche Zentriert werden soll.
  */
 const center = computed<LatLng>(() => {
-  const lat = route.query.lat;
-  const lng = route.query.lng;
-
-  if (lat != undefined && lng != undefined) {
-    return createLatLngFromString(lat.toString(), lng.toString());
-  } else if (props.latlng && props.latlng.length > 0) {
+  if (props.latlng && props.latlng.length > 0) {
     return createLatLngFromString(props.latlng[0], props.latlng[1]);
+  } else if (mapOptionsStore.getMapOptions && mapOptionsStore.getMapOptions.latitude && mapOptionsStore.getMapOptions.longitude) {
+    return createLatLngFromString(mapOptionsStore.getMapOptions.latitude, mapOptionsStore.getMapOptions.longitude);
   } else {
     // Mitte von München
     return createLatLngFromString(
@@ -344,27 +343,25 @@ function getColorForZaehlartenMarker(zaehlart: string): string {
     return ICON_COLOR_SECONDARY;
   }
 }
+const mapOptionsStore = useMapOptionsStore();
 
-function saveMapPositionInUrl() {
+function saveMapPosition() {
   const mapCenter = map.getBounds().getCenter();
 
   const lat = mapCenter?.lat.toString();
   const lng = mapCenter?.lng.toString();
-  const zoom = map.getZoom().toString();
+  const zoom = map.getZoom();
 
-  router.replace({
-    path: route.path,
-    query: { lat: lat, lng: lng, zoom: zoom },
-  });
+  mapOptionsStore.setMapOptions({longitude: lng, latitude: lat, zoom: zoom});
 }
 
 function routeToZaehlstelle(id: string) {
-  saveMapPositionInUrl();
+  saveMapPosition();
   router.push("/zaehlstelle/" + id);
 }
 
 function routeToMessstelle(id: string) {
-  saveMapPositionInUrl();
+  saveMapPosition();
   router.push(`/messstelle/${id}`);
 }
 
