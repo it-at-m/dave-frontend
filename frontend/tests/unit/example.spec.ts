@@ -1,33 +1,38 @@
-import { createLocalVue, shallowMount } from "@vue/test-utils";
-import Vuetify from "vuetify";
-import Vue from "vue";
-import TheSnackbar from "@/components/common/TheSnackbar.vue";
-import { createPinia, Pinia, PiniaVuePlugin } from "pinia";
+import { shallowMount } from "@vue/test-utils";
+import { createPinia } from "pinia";
+import { beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 
-const localVue = createLocalVue();
+import TheSnackbar from "@/components/common/TheSnackbar.vue";
+
+const pinia = createPinia();
 
 describe("TheSnackbar.vue", () => {
-    let vuetify: any;
-    let pinia: Pinia;
+  let vuetify: ReturnType<typeof createVuetify>;
 
-    beforeAll(() => {
-        Vue.use(Vuetify);
-        Vue.use(PiniaVuePlugin);
+  beforeAll(() => {
+    createPinia();
+    createVuetify();
+  });
+
+  beforeEach(() => {
+    vuetify = createVuetify({
+      components,
+      directives,
+    });
+  });
+
+  it("renders props.message when passed", () => {
+    const message = "Hello_World";
+    const wrapper = shallowMount(TheSnackbar, {
+      global: {
+        plugins: [pinia, vuetify],
+      },
+      props: { message: message },
     });
 
-    beforeEach(() => {
-        vuetify = new Vuetify();
-        pinia = createPinia();
-    });
-
-    it("renders props.message when passed", () => {
-        const message = "Hello_World";
-        const wrapper = shallowMount(TheSnackbar, {
-            localVue,
-            vuetify,
-            pinia,
-            propsData: { message: message },
-        });
-        expect(wrapper.html()).toContain(message);
-    });
+    expect(wrapper.html()).toContain(message);
+  });
 });

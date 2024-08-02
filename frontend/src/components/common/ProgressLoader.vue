@@ -1,24 +1,22 @@
 <template>
-    <v-overlay
-        absolute
-        :value="value"
+  <v-overlay
+    v-model="showLoader"
+    class="align-center justify-center"
+    contained
+  >
+    <v-progress-circular
+      :size="120"
+      :width="10"
+      color="grey-lighten-3"
+      indeterminate
     >
-        <v-progress-circular
-            :size="120"
-            :width="10"
-            value="30"
-            color="grey lighten-3"
-            indeterminate
-        >
-            laden
-        </v-progress-circular>
-    </v-overlay>
+      <template v-slot:default> laden </template>
+    </v-progress-circular>
+  </v-overlay>
 </template>
 
 <script lang="ts" setup>
-interface Props {
-    value: boolean;
-}
 
-defineProps<Props>();
+const showLoader = defineModel<boolean>({ required: true });
+
 </script>

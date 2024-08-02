@@ -1,7 +1,7 @@
 export interface ValidWochentageInPeriodRequestDto {
-    startDate: string;
+  startDate: string;
 
-    endDate: string;
+  endDate: string;
 
-    messstelleId: string;
+  messstelleId: string;
 }

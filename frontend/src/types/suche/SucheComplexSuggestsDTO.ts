@@ -1,11 +1,11 @@
-import SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
-import SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
-import SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
-import SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
+import type SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
+import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
+import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
+import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
 export default interface SucheComplexSuggestsDTO {
-    wordSuggests: SucheWordSuggestDTO[];
-    zaehlstellenSuggests: SucheZaehlstelleSuggestDTO[];
-    zaehlungenSuggests: SucheZaehlungSuggestDTO[];
-    messstellenSuggests: SucheMessstelleSuggestDTO[];
+  wordSuggests: SucheWordSuggestDTO[];
+  zaehlstellenSuggests: SucheZaehlstelleSuggestDTO[];
+  zaehlungenSuggests: SucheZaehlungSuggestDTO[];
+  messstellenSuggests: SucheMessstelleSuggestDTO[];
 }

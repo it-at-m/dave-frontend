@@ -1,7 +1,7 @@
 export default interface ZaehlartenKarteDTO {
-    longitude: string;
+  longitude: string;
 
-    latitude: string;
+  latitude: string;
 
-    zaehlarten: Array<string>;
+  zaehlarten: Array<string>;
 }
