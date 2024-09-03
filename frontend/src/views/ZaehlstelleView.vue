@@ -55,7 +55,6 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 
 import { computed, onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 
 import ZaehlstellenService from "@/api/service/ZaehlstellenService";
@@ -75,7 +74,12 @@ const hasZaehlungen = ref(true);
 const externalQuery = ref("");
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
-const route = useRoute();
+
+interface Props {
+  zaehlstelleId: string;
+}
+
+const props = defineProps<Props>();
 
 // =============
 // Höhenberechnungen
@@ -183,7 +187,7 @@ const timelineHeightVh = computed(() => {
 
 onMounted(() => {
   // Die Informationen zur Zählstelle werden geladen
-  ZaehlstellenService.getById(zaehlstelleId.value).then((loadedZaehlstelle) => {
+  ZaehlstellenService.getById(props.zaehlstelleId).then((loadedZaehlstelle) => {
     const zaehlungen = new Array<LadeZaehlungDTO>();
     Object.assign(zaehlungen, loadedZaehlstelle.zaehlungen);
     // Die Zählungen und id der aktiven Zählung werden an den Store übergeben.
@@ -201,14 +205,6 @@ onMounted(() => {
       zaehlstelleStore.resetFilteroptions();
     }
   });
-});
-
-const zaehlstelleId = computed(() => {
-  const zaehlstelleId: string = route.params.zaehlstelleId as string;
-  if (!zaehlstelleId) {
-    return "";
-  }
-  return zaehlstelleId;
 });
 
 const kreuzungsname = computed(() => {

@@ -50,7 +50,6 @@
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import { computed, onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 
 import { ApiError } from "@/api/error";
@@ -73,7 +72,12 @@ const messstelle = ref<MessstelleInfoDTO>(
 const display = useDisplay();
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
-const route = useRoute();
+
+interface Props {
+  messstelleId: string;
+}
+
+const props = defineProps<Props>();
 
 onMounted(() => {
   loadMessstelle();
@@ -118,15 +122,6 @@ const rightContentHeightVh = computed(() => {
   return height + "vh";
 });
 
-const messstelleId = computed(() => {
-  // TODO als Prop injecten
-  const messstelleId = route.params.messstelleId as string;
-  if (!messstelleId) {
-    return "";
-  }
-  return messstelleId;
-});
-
 const latlng = computed(() => {
   if (messstelle.value.latitude && messstelle.value.longitude) {
     return [messstelle.value.latitude, messstelle.value.longitude];
@@ -135,7 +130,7 @@ const latlng = computed(() => {
 });
 
 function loadMessstelle() {
-  MessstelleService.getMessstelleById(messstelleId.value)
+  MessstelleService.getMessstelleById(props.messstelleId)
     .then((messstelleDTO) => {
       messstelle.value = messstelleDTO;
       messstelleStore.setMessstelleInfo(messstelle.value);
