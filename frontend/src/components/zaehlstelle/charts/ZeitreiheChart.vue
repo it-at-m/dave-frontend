@@ -30,7 +30,6 @@ import { useDisplay } from "vuetify";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
 import ChartUtils from "@/util/ChartUtils";
 import { useDaveUtils } from "@/util/DaveUtils";
-import { useVuetify } from "@/util/useVuetify";
 
 use([
   CanvasRenderer,

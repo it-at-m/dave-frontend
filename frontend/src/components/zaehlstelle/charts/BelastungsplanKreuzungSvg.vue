@@ -32,7 +32,6 @@ import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
-import { useVuetify } from "@/util/useVuetify";
 
 interface Props {
   data: LadeBelastungsplanDTO;
