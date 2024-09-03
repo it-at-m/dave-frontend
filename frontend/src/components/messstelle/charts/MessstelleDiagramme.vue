@@ -147,7 +147,7 @@ import { useUserStore } from "@/store/user";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useDaveUtils } from "@/util/DaveUtils";
-import { useReportTools } from "@/util/reportTools";
+import { useReportTools } from "@/util/ReportTools";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
