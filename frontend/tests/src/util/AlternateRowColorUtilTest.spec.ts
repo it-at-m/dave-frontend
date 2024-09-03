@@ -3,9 +3,9 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
-import { useAlternateRowColor } from "@/util/alternateRowColorComposable";
+import { useAlternateRowColor } from "@/util/AlternateRowColorUtil";
 
-describe("alternateRowColorComposable.ts", () => {
+describe("AlternateRowColorUtil.ts", () => {
   let vuetify: ReturnType<typeof createVuetify>;
 
   const { calcRowColor } = useAlternateRowColor();

@@ -42,7 +42,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import FahrstreifenIcon from "@/components/messstelle/icons/FahrspurenIcon.vue";
 import FahrtrichtungIcon from "@/components/messstelle/icons/FahrtrichtungIcon.vue";
-import { useAlternateRowColor } from "@/util/alternateRowColorComposable";
+import { useAlternateRowColor } from "@/util/AlternateRowColorUtil";
 
 interface Props {
   messstelle: MessstelleInfoDTO;
