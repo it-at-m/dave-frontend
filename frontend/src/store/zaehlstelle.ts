@@ -15,7 +15,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const route = useRoute();
-  // ref()s become state properties
+
   const zaehlstelleHeader = ref<ZaehlstelleHeaderDTO>(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
   );
@@ -43,7 +43,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const startEndeUhrzeitIntervalls = ref<StartEndeUhrzeitIntervalls>(
     DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
   );
-  // computed()s become getters
+
   const getZaehlstelleHeader = computed(() => zaehlstelleHeader.value);
   const getActiveTab = computed(() => activeTab.value);
   const getFilteroptions = computed(() => filteroptions.value);
@@ -84,7 +84,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const getStartEndeUhrzeitIntervalls = computed(
     () => startEndeUhrzeitIntervalls.value
   );
-  // function()s become actions
+
   function setZaehlstelleHeader(payload: ZaehlstelleHeaderDTO) {
     payload.zaehlungen = [];
     zaehlstelleHeader.value = payload;

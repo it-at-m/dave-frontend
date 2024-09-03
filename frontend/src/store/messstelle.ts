@@ -12,7 +12,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 export const useMessstelleStore = defineStore("messstelleStore", () => {
   const dateUtils = useDateUtils();
-  // ref()s become state properties
+
   const messstelleInfo = ref<MessstelleInfoDTO>({} as MessstelleInfoDTO);
   const activeTab = ref(0);
   const filterOptions = ref<MessstelleOptionsDTO>(
@@ -26,7 +26,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const activeMessfaehigkeit = ref<MessfaehigkeitDTO>(
     DefaultObjectCreator.createDefaultMessfaehigkeitDTO()
   );
-  // computed()s become getters
+
   const getMessstelleInfo = computed(() => messstelleInfo.value);
   const getActiveTab = computed(() => activeTab.value);
   const isKfzMessstelle = computed(
@@ -43,7 +43,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     () => belastungsplanChosenSize.value
   );
   const getActiveMessfaehigkeit = computed(() => activeMessfaehigkeit.value);
-  // function()s become actions
+
   function setActiveTab(payload: number) {
     activeTab.value = payload;
   }

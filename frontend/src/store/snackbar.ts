@@ -4,17 +4,17 @@ import { computed, ref } from "vue";
 import { ApiError, Levels } from "@/api/error";
 
 export const useSnackbarStore = defineStore("snackbar", () => {
-  // ref()s become state properties
+
   const snackbarTextPart1 = ref<string | undefined>(undefined);
   const snackbarTextPart2 = ref<string | undefined>(undefined);
   const snackbarLevel = ref<Levels>(Levels.INFO);
   const displayTrigger = ref(false);
-  // computed()s become getters
+
   const trigger = computed(() => displayTrigger.value);
   const getTextPart1 = computed(() => snackbarTextPart1.value);
   const getTextPart2 = computed(() => snackbarTextPart2.value);
   const getLevel = computed(() => snackbarLevel.value);
-  // function()s become actions
+
   function showInfo(textPart1: string, textPart2?: string) {
     showToast(Levels.INFO, textPart1, textPart2);
   }

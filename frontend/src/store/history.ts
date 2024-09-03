@@ -5,11 +5,10 @@ import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 import HistoryItemComperator from "@/types/history/HistoryItemComperator";
 
 export const useHistoryStore = defineStore("historyStore", () => {
-  // ref()s become state properties
   const items = ref<Array<AbstractHistoryItem>>([]);
-  // computed()s become getters
+
   const historyItems = computed(() => items.value);
-  // function()s become actions
+
   function addHistoryItem(payload: AbstractHistoryItem) {
     // Einträge nach Datum sortieren
     const oldItems = items.value.sort(HistoryItemComperator.sortByTimeAbstract);

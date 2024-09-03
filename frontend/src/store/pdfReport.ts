@@ -8,13 +8,12 @@ import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
  * dann in der Queue selbst. Der Store muss nach jedem Sortiervorgang, hinzufügen, löschen etc. wieder geupdated werden.
  */
 export const usePdfReportStore = defineStore("pdfReportStore", () => {
-  // ref()s become state properties
   const assets = ref<Array<BaseAsset>>([]);
   const hasTitlePage = ref(false);
-  // computed()s become getters
+
   const getAssets = computed(() => assets.value);
   const getHasTitlePage = computed(() => hasTitlePage.value);
-  // function()s become actions
+
   function addAsset(payload: BaseAsset) {
     assets.value.push(payload);
   }

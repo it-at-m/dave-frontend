@@ -12,11 +12,11 @@ const rolePoweruser = "ROLE_POWERUSER";
  * der Oberfläche nur für bestimmte Rollen sichtbar sein sollen.
  */
 export const useUserStore = defineStore("userStore", () => {
-  // ref()s become state properties
+
   const ssoUserInfoResponse = ref<SsoUserInfoResponse>(
     {} as SsoUserInfoResponse
   );
-  // computed()s become getters
+
   const getName = computed(() => ssoUserInfoResponse.value.name);
   const getDepartment = computed(() => ssoUserInfoResponse.value.department);
   const isAnwender = computed(() => {
@@ -31,7 +31,7 @@ export const useUserStore = defineStore("userStore", () => {
       ssoUserInfoResponse.value.authorities.length > 0
     );
   });
-  // function()s become actions
+
   function setSsoUserInfoResponse(payload: SsoUserInfoResponse) {
     ssoUserInfoResponse.value = payload;
   }
