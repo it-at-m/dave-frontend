@@ -210,7 +210,7 @@ import { useUserStore } from "@/store/user";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
-import { useDaveUtils } from "@/util/DaveUtils";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useReportTools } from "@/util/ReportTools";
 
@@ -278,7 +278,7 @@ const userStore = useUserStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
-const daveUtils = useDaveUtils();
+const downloadUtils = useDownloadUtils();
 
 const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
@@ -738,7 +738,7 @@ function fetchPdf(formData: FormData, type: string) {
           typeForFilename,
           [selectedZaehlung.value.datum]
         )}.pdf`;
-        daveUtils.downloadFile(blob, filename);
+        downloadUtils.downloadFile(blob, filename);
       });
     })
     .catch((error) => snackbarStore.showApiError(error))
@@ -759,7 +759,7 @@ function generateCsv() {
         [selectedZaehlung.value.datum]
       )}.csv`;
 
-      daveUtils.downloadCsv(result.csvAsString, filename);
+      downloadUtils.downloadCsv(result.csvAsString, filename);
     })
     .catch((error) => {
       snackbarStore.showApiError(error);

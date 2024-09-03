@@ -29,7 +29,7 @@ import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
 import ChartUtils from "@/util/ChartUtils";
-import { useDaveUtils } from "@/util/DaveUtils";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 
 use([
   CanvasRenderer,
@@ -70,7 +70,7 @@ defineEmits<{
 
 const display = useDisplay();
 const zaehlstelleStore = useZaehlstelleStore();
-const daveUtils = useDaveUtils();
+const downloadUtils = useDownloadUtils();
 const seriesEntriesChart = ref<Array<unknown>>([]);
 
 const zeitreiheHeightAndWidth = computed(() => {
@@ -410,7 +410,7 @@ function downloadCsv() {
     );
     rows.push(row);
   }
-  daveUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
+  downloadUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
 }
 
 /**

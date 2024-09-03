@@ -63,11 +63,11 @@ import { usePdfReportStore } from "@/store/pdfReport";
 import { useSearchStore } from "@/store/search";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import { useDaveUtils } from "@/util/DaveUtils";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
-const daveUtils = useDaveUtils();
+const downloadUtils = useDownloadUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
@@ -159,7 +159,7 @@ function printMessstellenOfSearchResult(
     elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
-  daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+  downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 function printZaehlstellenOfSearchResult(
@@ -194,7 +194,7 @@ function printZaehlstellenOfSearchResult(
     elementAsCsvString.push(tooltip.datumLetzteZaehlung);
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
-  daveUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
+  downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
 const getSearchQuery = computed(() => {

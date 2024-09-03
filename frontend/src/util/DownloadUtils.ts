@@ -1,4 +1,4 @@
-export function useDaveUtils() {
+export function useDownloadUtils() {
   function download(data: string, filename: string) {
     const link = document.createElement("a");
     link.href = data;

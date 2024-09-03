@@ -146,7 +146,7 @@ import { useSnackbarStore } from "@/store/snackbar";
 import { useUserStore } from "@/store/user";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
-import { useDaveUtils } from "@/util/DaveUtils";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useReportTools } from "@/util/ReportTools";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
@@ -202,7 +202,7 @@ const snackbarStore = useSnackbarStore();
 const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
-const daveUtils = useDaveUtils();
+const downloadUtils = useDownloadUtils();
 
 const messstelleId = computed(() => {
   // TODO via Props injecten
@@ -401,7 +401,7 @@ function generateCsv() {
         "Listenausgabe",
         options.value.zeitraum
       )}.csv`;
-      daveUtils.downloadCsv(result.csvAsString, filename);
+      downloadUtils.downloadCsv(result.csvAsString, filename);
     })
     .catch((error) => {
       snackbarStore.showApiError(error);
@@ -512,7 +512,7 @@ function fetchPdf(formData: FormData, type: string) {
           typeForFilename,
           options.value.zeitraum
         )}.pdf`;
-        daveUtils.downloadFile(blob, filename);
+        downloadUtils.downloadFile(blob, filename);
       });
     })
     .catch((error) => snackbarStore.showApiError(error))

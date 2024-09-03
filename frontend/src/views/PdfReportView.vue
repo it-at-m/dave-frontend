@@ -250,7 +250,7 @@ import PagebreakAsset from "@/types/pdfreport/assets/PagebreakAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import { useDateUtils } from "@/util/DateUtils";
-import { useDaveUtils } from "@/util/DaveUtils";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 /* eslint-disable no-unused-vars */
 import BaseAsset from "../types/pdfreport/assets/BaseAsset";
 import HeadingAsset from "../types/pdfreport/assets/HeadingAsset";
@@ -706,7 +706,7 @@ function getTextOfAsset(asset: BaseAsset): string | undefined {
 
 function downloadPdf() {
   let filename = `report_${Date.now()}.pdf`;
-  useDaveUtils().downloadFile(pdfSourceAsBlob.value, filename);
+  useDownloadUtils().downloadFile(pdfSourceAsBlob.value, filename);
 }
 
 function moveAssetOnePositionUpNotAtFirstPosition(index: number) {
