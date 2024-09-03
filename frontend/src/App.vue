@@ -78,7 +78,6 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
-import { useSearchStore } from "@/store/search";
 import { useSnackbarStore } from "@/store/snackbar";
 import { useUserStore } from "@/store/user";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
@@ -91,7 +90,6 @@ const loggedInUser = ref("no-security");
 const backendVersion = ref("");
 const frontendVersion = ref("");
 
-const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 
