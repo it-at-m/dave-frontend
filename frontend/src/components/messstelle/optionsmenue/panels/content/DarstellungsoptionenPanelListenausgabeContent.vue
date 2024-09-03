@@ -24,9 +24,9 @@
         />
         <v-checkbox
           v-model="chosenOptionsCopy.blocksumme"
+          class="mb-3"
           :label="'Blocksumme'"
           hide-details
-          style="margin-bottom: 12px"
           color="grey-darken-1"
           density="compact"
           @mouseover="hoverBlocksumme = true"
@@ -45,9 +45,9 @@
         />
         <v-checkbox
           v-model="chosenOptionsCopy.spitzenstunde"
+          class="mb-3"
           :label="'Spitzenstunde'"
           hide-details
-          style="margin-bottom: 12px"
           color="grey-darken-1"
           density="compact"
           @mouseover="hoverSpitzenstunde = true"

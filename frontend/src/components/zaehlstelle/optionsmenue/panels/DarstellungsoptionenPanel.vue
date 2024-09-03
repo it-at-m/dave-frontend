@@ -25,9 +25,9 @@
         <v-col cols="4">
           <v-checkbox
             v-model="werteHundertRunden"
+            class="mb-3"
             :label="'Werte auf 100 Runden'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             @mouseover="hoverWerteHundertRunden = true"
@@ -45,9 +45,9 @@
         <v-col cols="4">
           <v-checkbox
             v-model="blackPrintMode"
+            class="mb-3"
             :label="'schwarz-weiß Druckausgabe'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             @mouseover="hoverBlackPrintMode = true"
@@ -135,9 +135,9 @@
           />
           <v-checkbox
             v-model="blocksumme"
+            class="mb-3"
             :label="'Blocksumme'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             @mouseover="hoverBlocksumme = true"
@@ -156,9 +156,9 @@
           />
           <v-checkbox
             v-model="spitzenstunde"
+            class="mb-3"
             :label="'Spitzenstunde'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             @mouseover="hoverSpitzenstunde = true"
@@ -191,27 +191,27 @@
         <v-col cols="4">
           <v-checkbox
             v-model="spitzenstundeKfz"
+            class="mb-3"
             :label="'Spitzenstunde KFZ'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             :disabled="isTypeKfzDisabled()"
           />
           <v-checkbox
             v-model="spitzenstundeRad"
+            class="mb-3"
             :label="'Spitzenstunde Rad'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             :disabled="isTypeRadDisabled()"
           />
           <v-checkbox
             v-model="spitzenstundeFuss"
+            class="mb-3"
             :label="'Spitzenstunde Fuß'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             :disabled="isTypeFussDisabled()"
@@ -240,9 +240,9 @@
         <v-col cols="4">
           <v-checkbox
             v-model="zeitreiheGesamt"
+            class="mb-3"
             :label="'Summe alle Verkehrsarten anzeigen'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             @mouseover="hoverZeitreiheGesamt = true"
