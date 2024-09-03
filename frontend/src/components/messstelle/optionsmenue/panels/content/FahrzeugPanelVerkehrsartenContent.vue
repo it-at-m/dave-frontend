@@ -352,53 +352,51 @@ const isRadInBelastungsplan = computed(() => {
  * ein abwählen, sonst ein auswählen.
  */
 function calculateSelectOrDeselectVerkehrsarten(): void {
-  let counter = 0;
-  let maxSelectable = 0;
+  let selectedItems = 0;
+  let maxSelectableItems = 0;
   if (isTypeEnabled(Fahrzeug.KFZ)) {
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
   if (isTypeEnabled(Fahrzeug.SV)) {
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
   if (isTypeEnabled(Fahrzeug.GV)) {
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
   if (isTypeEnabled(Fahrzeug.SV_P)) {
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
   if (isTypeEnabled(Fahrzeug.GV_P)) {
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
   if (isTypeEnabled(Fahrzeug.RAD)) {
     if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
   if (isTypeEnabled(Fahrzeug.FUSS)) {
     if (chosenOptionsCopyFahrzeuge.value.fussverkehr) {
-      counter++;
+      selectedItems++;
     }
-    maxSelectable++;
+    maxSelectableItems++;
   }
-  // counter > maxSelectable/2 => abwählen
-  // sonst => auswählen
-  selectOrDeselectAllVerkehrsartenVmodel.value = counter > maxSelectable / 2;
+  selectOrDeselectAllVerkehrsartenVmodel.value = selectedItems > maxSelectableItems / 2;
 }
 
 /**
