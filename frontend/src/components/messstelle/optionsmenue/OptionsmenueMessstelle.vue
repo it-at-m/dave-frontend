@@ -4,7 +4,7 @@
       class="text-none"
       color="secondary"
       prepend-icon="mdi-filter-outline"
-      :text="buttonText"
+      text="Filtereinstellungen"
       @click="dialog = true"
     />
     <v-dialog
@@ -115,14 +115,6 @@ const getContentSheetHeight = computed(() => {
     return "650px";
   }
   return "400px";
-});
-
-const buttonText = computed(() => {
-  let text = "Filtereinstellungen";
-  if (display.xl.value) {
-    text = "Filtereinstellungen bearbeiten";
-  }
-  return text;
 });
 
 const isAnwender = computed(() => {
