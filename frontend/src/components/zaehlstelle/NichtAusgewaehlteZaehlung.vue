@@ -62,7 +62,7 @@ import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIco
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 
 interface Props {
   id: string;

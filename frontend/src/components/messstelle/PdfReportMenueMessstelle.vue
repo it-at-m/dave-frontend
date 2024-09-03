@@ -80,9 +80,9 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref } from "vue";
 
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
-import { useMessstelleStore } from "@/store/messstelle";
-import { usePdfReportStore } from "@/store/pdfReport";
-import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { usePdfReportStore } from "@/store/PdfReportStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import { tagesTypText } from "@/types/enum/TagesTyp";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import BaseAsset from "@/types/pdfreport/assets/BaseAsset";

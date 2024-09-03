@@ -64,7 +64,7 @@ import ZaehldatenDiagramme from "@/components/zaehlstelle/ZaehldatenDiagramme.vu
 import ZaehlstelleInfo from "@/components/zaehlstelle/ZaehlstelleInfo.vue";
 import ZaehlungenTimeline from "@/components/zaehlstelle/ZaehlungenTimeline.vue";
 import ZaehlungInfo from "@/components/zaehlstelle/ZaehlungInfo.vue";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const zaehlstelle = ref(

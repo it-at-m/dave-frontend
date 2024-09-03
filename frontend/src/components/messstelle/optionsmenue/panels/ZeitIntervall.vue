@@ -43,7 +43,7 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import ZaehldatenIntervall, {
   ZaehldatenIntervallToSelect,

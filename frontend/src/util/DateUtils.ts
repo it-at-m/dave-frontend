@@ -1,5 +1,5 @@
 import i18n from "@/plugins/i18n";
-import { useSnackbarStore } from "@/store/snackbar";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 
 export function useDateUtils() {
   const snackbarStore = useSnackbarStore();

@@ -18,7 +18,7 @@ import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDT
 
 import { computed, watch } from "vue";
 
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import DataManipulatorUtil from "@/util/DataManipulatorUtil";
 
 const messstelleStore = useMessstelleStore();

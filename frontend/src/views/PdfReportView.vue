@@ -236,9 +236,9 @@ import ImageAssetForm from "@/components/pdfreport/assetforms/ImageAssetForm.vue
 import TextAssetForm from "@/components/pdfreport/assetforms/TextAssetForm.vue";
 // Components
 import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
-import { usePdfReportStore } from "@/store/pdfReport";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useUserStore } from "@/store/user";
+import { usePdfReportStore } from "@/store/PdfReportStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useUserStore } from "@/store/UserStore";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 /* eslint-enable no-unused-vars */
 // Utils

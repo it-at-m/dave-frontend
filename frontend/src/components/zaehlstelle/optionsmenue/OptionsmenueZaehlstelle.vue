@@ -120,7 +120,7 @@ import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/Fahrzeug
 import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";

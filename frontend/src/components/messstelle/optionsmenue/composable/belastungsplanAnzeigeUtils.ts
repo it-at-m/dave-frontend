@@ -1,6 +1,6 @@
 import { computed } from "vue";
 
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 
 export function belastungsplanAnzeigeUtils() {
   const messstelleStore = useMessstelleStore();

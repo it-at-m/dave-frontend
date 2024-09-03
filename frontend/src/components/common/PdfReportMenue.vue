@@ -85,9 +85,9 @@ import _ from "lodash";
 import { ref } from "vue";
 
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
-import { usePdfReportStore } from "@/store/pdfReport";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { usePdfReportStore } from "@/store/PdfReportStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { quelleText } from "@/types/enum/Quelle";
 import { wetterText } from "@/types/enum/Wetter";
 import { zaehlartText } from "@/types/enum/Zaehlart";

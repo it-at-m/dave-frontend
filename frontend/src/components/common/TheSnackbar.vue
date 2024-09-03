@@ -29,7 +29,7 @@
 import { ref, watch } from "vue";
 
 import { Levels } from "@/api/error";
-import { useSnackbarStore } from "@/store/snackbar";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 
 const defaultTimeout = 6000;
 

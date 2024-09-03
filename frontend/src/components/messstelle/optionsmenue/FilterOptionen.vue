@@ -101,7 +101,7 @@ import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import Himmelsrichtungen, {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,

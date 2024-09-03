@@ -27,7 +27,7 @@ import { computed, provide, ref, watch } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 

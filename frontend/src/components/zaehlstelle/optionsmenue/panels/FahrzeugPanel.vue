@@ -347,7 +347,7 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";

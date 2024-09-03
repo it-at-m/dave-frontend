@@ -18,8 +18,8 @@ import {computed, onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import {useMessstelleStore} from "@/store/messstelle";
-import {useSnackbarStore} from "@/store/snackbar";
+import {useMessstelleStore} from "@/store/MessstelleStore";
+import {useSnackbarStore} from "@/store/SnackbarStore";
 import TagesTyp from "@/types/enum/TagesTyp";
 
 const messstelleStore = useMessstelleStore();

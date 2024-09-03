@@ -76,7 +76,7 @@
 import { computed, ref, watch } from "vue";
 
 import NichtAusgewaehlteZaehlung from "@/components/zaehlstelle/NichtAusgewaehlteZaehlung.vue";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 
 interface Props {

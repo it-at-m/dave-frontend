@@ -78,7 +78,7 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useSnackbarStore } from "@/store/snackbar";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";

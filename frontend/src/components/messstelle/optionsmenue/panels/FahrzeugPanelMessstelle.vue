@@ -27,7 +27,7 @@ import { computed } from "vue";
 
 import FahrzeugPanelFahrzeugkategorienContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue";
 import FahrzeugPanelVerkehrsartenContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelVerkehrsartenContent.vue";
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 

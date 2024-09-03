@@ -162,7 +162,7 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import ZaehldatenIntervall, {
   ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";

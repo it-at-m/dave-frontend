@@ -7,10 +7,10 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import _ from "lodash";
 import { computed } from "vue";
 
-import { useMessstelleStore } from "@/store/messstelle";
-import { usePdfReportStore } from "@/store/pdfReport";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { usePdfReportStore } from "@/store/PdfReportStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";

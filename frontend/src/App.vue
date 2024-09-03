@@ -78,8 +78,8 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useUserStore } from "@/store/user";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useUserStore } from "@/store/UserStore";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 

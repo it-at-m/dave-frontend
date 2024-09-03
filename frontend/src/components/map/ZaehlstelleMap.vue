@@ -36,12 +36,12 @@ import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconRed from "@/assets/marker-icon-red.png";
-import { useSearchStore } from "@/store/search";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSearchStore } from "@/store/SearchStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useMapOptionsStore} from "@/store/mapoptions";
+import {useMapOptionsStore} from "@/store/MapOptionsStore";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;

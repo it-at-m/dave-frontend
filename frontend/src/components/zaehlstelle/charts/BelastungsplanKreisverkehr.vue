@@ -24,8 +24,8 @@ import { computed, provide, ref, watch } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
-import { useSnackbarStore } from "@/store/snackbar";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 
 /**
  * Die Berechnung der Koordinaten für die einzelnen Fahrbeziehungen erfolgt anhand einer Drehmatrix.

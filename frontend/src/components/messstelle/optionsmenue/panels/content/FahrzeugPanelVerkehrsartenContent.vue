@@ -178,7 +178,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useFahrzeugPanelTools } from "@/components/messstelle/optionsmenue/composable/fahrzeugPanelTools";
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 

@@ -1,6 +1,6 @@
 import { computed } from "vue";
 
-import { useMessstelleStore } from "@/store/messstelle";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 

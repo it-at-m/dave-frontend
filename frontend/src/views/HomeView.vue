@@ -59,8 +59,8 @@ import domtoimage from "dom-to-image-more";
 import { computed, onMounted, ref } from "vue";
 
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
-import { usePdfReportStore } from "@/store/pdfReport";
-import { useSearchStore } from "@/store/search";
+import { usePdfReportStore } from "@/store/PdfReportStore";
+import { useSearchStore } from "@/store/SearchStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { useDownloadUtils } from "@/util/DownloadUtils";

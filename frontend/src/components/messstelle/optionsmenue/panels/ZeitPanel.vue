@@ -94,8 +94,8 @@ import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/Tage
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
-import {useMessstelleStore} from "@/store/messstelle";
-import {useUserStore} from "@/store/user";
+import {useMessstelleStore} from "@/store/MessstelleStore";
+import {useUserStore} from "@/store/UserStore";
 import {useDateUtils} from "@/util/DateUtils";
 import {useOptionsmenuUtils} from "@/util/OptionsmenuUtils";
 import DatePicker from "@/components/common/DatePicker.vue";

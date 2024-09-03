@@ -17,7 +17,7 @@ import * as SVG from "@svgdotjs/svg.js";
 import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrtrichtungsarten from "@/types/enum/Fahrtrichtungsarten";
 import BelastungsplanFahrbeziehung from "@/types/zaehlung/BelastungsplanFahrbeziehung";
 import BelastungsplanFahrbeziehungComperator from "@/types/zaehlung/BelastungsplanFahrbeziehungComperator";

@@ -63,8 +63,8 @@ import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.v
 import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useSnackbarStore } from "@/store/snackbar";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const messstelle = ref<MessstelleInfoDTO>(

@@ -30,9 +30,9 @@ import _ from "lodash";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 
-import { useHistoryStore } from "@/store/history";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import { useHistoryStore } from "@/store/HistoryStore";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";

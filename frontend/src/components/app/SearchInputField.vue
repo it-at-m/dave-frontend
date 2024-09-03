@@ -75,8 +75,8 @@ import {onMounted, ref, watch} from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
-import { useSearchStore } from "@/store/search";
-import { useSnackbarStore } from "@/store/snackbar";
+import { useSearchStore } from "@/store/SearchStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import Suggest from "@/types/suche/Suggest";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import {isEmpty, isNil} from "lodash";

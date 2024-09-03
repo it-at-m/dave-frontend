@@ -74,9 +74,9 @@ import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/options
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useSnackbarStore } from "@/store/snackbar";
-import { useUserStore } from "@/store/user";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useUserStore } from "@/store/UserStore";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import TagesTyp from "@/types/enum/TagesTyp";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";

@@ -8,7 +8,7 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
-import { useUserStore } from "@/store/user";
+import { useUserStore } from "@/store/UserStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import LadeZaehlungComperator from "@/types/zaehlung/LadeZaehlungComperator";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
