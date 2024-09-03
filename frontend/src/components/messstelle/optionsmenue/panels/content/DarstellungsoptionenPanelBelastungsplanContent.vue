@@ -15,9 +15,9 @@
       <v-col cols="4">
         <v-checkbox
           v-model="chosenOptionsCopy.werteHundertRunden"
+          class="mb-3"
           :label="'Werte auf 100 Runden'"
           hide-details
-          style="margin-bottom: 12px"
           color="grey-darken-1"
           density="compact"
           @mouseover="hoverWerteHundertRunden = true"
@@ -35,9 +35,9 @@
       <v-col cols="4">
         <v-checkbox
           v-model="chosenOptionsCopy.blackPrintMode"
+          class="mb-3"
           :label="'schwarz-weiß Druckausgabe'"
           hide-details
-          style="margin-bottom: 12px"
           color="grey-darken-1"
           density="compact"
           @mouseover="hoverBlackPrintMode = true"
@@ -45,9 +45,7 @@
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat>
-          {{ helpTextBelastungsplan }}
-        </v-card>
+        <v-card flat />
       </v-col>
     </v-row>
     <v-divider />
@@ -57,11 +55,11 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { computed, ref, watch } from "vue";
+import {computed, ref, watch} from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useMessstelleStore } from "@/store/messstelle";
-import { useZaehlstelleStore } from "@/store/zaehlstelle";
+import {useMessstelleStore} from "@/store/messstelle";
+import {useZaehlstelleStore} from "@/store/zaehlstelle";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();
@@ -74,19 +72,6 @@ const sizeBelastungsplan = computed({
   get: () => messstelleStore.getBelastungsplanChosenSize,
   set: (payload: number) =>
     messstelleStore.setBelastungsplanChosenSize(payload),
-});
-
-const helpTextBelastungsplan = computed(() => {
-  if (hoverWerteHundertRunden.value) {
-    return "";
-  }
-  if (hoverBlackPrintMode.value) {
-    return "";
-  }
-  if (hoverSizeBelastungsplan.value) {
-    return "";
-  }
-  return "";
 });
 
 watch(sizeBelastungsplan, () => {

@@ -48,9 +48,9 @@
           <v-checkbox
             v-if="beideRichtungenAnzeigen"
             v-model="beideRichtungen"
+            class="mb-3"
             :label="'Zulaufend/Ablaufend'"
             hide-details
-            style="margin-bottom: 12px"
             color="grey-darken-1"
             density="compact"
             :disabled="!beideRichtungenAnzeigen"
