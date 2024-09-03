@@ -4,7 +4,7 @@ import {computed} from "vue";
 
 export function useOptionsmenuUtils(chosenOptionsCopy: MessstelleOptionsDTO) {
   const isDateBiggerFiveYears = computed(() => {
-    if (chosenOptionsCopy.zeitraum.length == 2) {
+    if (chosenOptionsCopy.zeitraum.length === 2) {
       const zeitraum = chosenOptionsCopy.zeitraum.slice();
       const timeDifferenceInMilliseconds =
         new Date(zeitraum[1]).valueOf() - new Date(zeitraum[0]).valueOf();
