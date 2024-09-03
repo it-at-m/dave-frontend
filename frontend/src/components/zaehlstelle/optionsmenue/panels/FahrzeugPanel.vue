@@ -499,7 +499,7 @@ const helpTextFahrzeugkategorien = computed(() => {
  * Dies ist nur der Fall, wenn KFZ, SV oder SV aktiviert sind und inklusive SV_P nicht
  * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
  */
-const isSv_pInBelastungsPlan = computed(() => {
+const isSvpInBelastungsPlan = computed(() => {
   let actualNumberOfSelectedKfzSvAndGv = 0;
   fahrzeugOptions.value.kraftfahrzeugverkehr
     ? actualNumberOfSelectedKfzSvAndGv++
@@ -520,7 +520,7 @@ const isSv_pInBelastungsPlan = computed(() => {
  * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
  * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
  */
-const isGv_pInBelastungsPlan = computed(() => {
+const isGvpInBelastungsPlan = computed(() => {
   let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
   fahrzeugOptions.value.kraftfahrzeugverkehr
     ? actualNumberOfSelectedKfzSvGvAndSV_P++
@@ -708,13 +708,13 @@ function getCheckboxColor(type: string): string {
   let color = "primary";
   switch (type) {
     case "SV_P": {
-      if (!isSv_pInBelastungsPlan.value) {
+      if (!isSvpInBelastungsPlan.value) {
         color = "grey-darken-1";
       }
       break;
     }
     case "GV_P": {
-      if (!isGv_pInBelastungsPlan.value) {
+      if (!isGvpInBelastungsPlan.value) {
         color = "grey-darken-1";
       }
       break;
@@ -769,14 +769,14 @@ function getIcon(type: string): string {
     }
     case "SV_P": {
       // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV < 3
-      if (isSv_pInBelastungsPlan.value) {
+      if (isSvpInBelastungsPlan.value) {
         icon = `mdi-arrow-decision`;
       }
       break;
     }
     case "GV_P": {
       // Angezeigt, wenn (KFZ || SV || GV) && KFZ + SV + GV + SV% < 3
-      if (isGv_pInBelastungsPlan.value) {
+      if (isGvpInBelastungsPlan.value) {
         icon = `mdi-arrow-decision`;
       }
       break;

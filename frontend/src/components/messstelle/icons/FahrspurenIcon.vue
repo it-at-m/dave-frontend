@@ -16,6 +16,7 @@ import { computed } from "vue";
 
 import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
+import {isNil} from "lodash";
 
 interface Props {
   small?: boolean;
@@ -33,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
  */
 const icon = computed<IconTooltip>(() => {
   let result = fahrspurenIcons().get(props.fahrspuren);
-  if (result === undefined) {
+  if (isNil(result)) {
     result = new IconTooltip(
       "mdi-help",
       "Keine Information zur Fahrstreifenanzahl"

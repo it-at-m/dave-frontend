@@ -86,7 +86,7 @@ const getChosenWochentageNumber = computed(() => {
 });
 
 const getChosenWochentageNumberText = computed(() => {
-  if (getChosenWochentageNumber.value == 1) {
+  if (getChosenWochentageNumber.value === 1) {
     return "ist 1 Tag";
   } else {
     return `sind ${getChosenWochentageNumber.value} Tage`;

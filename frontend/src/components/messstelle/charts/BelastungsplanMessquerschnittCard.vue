@@ -48,7 +48,7 @@ const farben = new Map<string, string>([
 
 const startX = ref(0);
 const startY = ref(0);
-const { isSv_pInBelastungsPlan, isGv_pInBelastungsPlan } =
+const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
   belastungsplanAnzeigeUtils();
 const props = defineProps<Props>();
 
@@ -98,7 +98,7 @@ watch(
  */
 function draw() {
   querschnittGroup.value = canvas.value.group();
-  let groupedByDirection = _.chain(
+  const groupedByDirection = _.chain(
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
   )
     .groupBy("direction")
@@ -123,8 +123,8 @@ function drawArrowsPointingSouth(
     direction: string;
   }[]
 ) {
-  let arrayOfDataForDirectionSouth = groupedByDirection.find(
-    (obj) => obj.direction == "S" || obj.direction == "O"
+  const arrayOfDataForDirectionSouth = groupedByDirection.find(
+    (obj) => obj.direction === "S" || obj.direction === "O"
   );
   arrayOfDataForDirectionSouth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -256,8 +256,8 @@ function drawArrowsPointingNorth(
     direction: string;
   }[]
 ) {
-  let arrayOfDataForDirectionNorth = groupedByDirection.find(
-    (obj) => obj.direction == "N" || obj.direction == "W"
+  const arrayOfDataForDirectionNorth = groupedByDirection.find(
+    (obj) => obj.direction === "N" || obj.direction === "W"
   );
   arrayOfDataForDirectionNorth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -387,7 +387,7 @@ function addTextSouthSide(
     addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
     startPointY += 85;
   }
-  if (isGv_pInBelastungsPlan.value) {
+  if (isGvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentGv}%`, textposition),
       startPointX,
@@ -396,7 +396,7 @@ function addTextSouthSide(
     startPointY += 85;
     textposition -= 1;
   }
-  if (isSv_pInBelastungsPlan.value) {
+  if (isSvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentSv}%`, textposition),
       startPointX,
@@ -461,7 +461,7 @@ function addTextNorthSide(
     startPointY -= 85;
     textposition += 1;
   }
-  if (isSv_pInBelastungsPlan.value) {
+  if (isSvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentSv}%`, textposition),
       startPointX,
@@ -470,7 +470,7 @@ function addTextNorthSide(
     startPointY -= 85;
     textposition += 1;
   }
-  if (isGv_pInBelastungsPlan.value) {
+  if (isGvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentGv}%`, textposition),
       startPointX,
@@ -543,10 +543,10 @@ function drawLegende() {
   if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
     chosenFahrzeugartAsTextArray.push("GV");
   }
-  if (isSv_pInBelastungsPlan.value) {
+  if (isSvpInBelastungsPlan.value) {
     chosenFahrzeugartAsTextArray.push("SV%");
   }
-  if (isGv_pInBelastungsPlan.value) {
+  if (isGvpInBelastungsPlan.value) {
     chosenFahrzeugartAsTextArray.push("GV%");
   }
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
@@ -629,14 +629,14 @@ function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
   }
   if (
     chosenOptionsCopyFahrzeuge.value.schwerverkehr ||
-    isSv_pInBelastungsPlan
+    isSvpInBelastungsPlan
   ) {
     totalVerkehrMq += mq.sumSv;
     totalVerkehr += props.belastungsplanData.totalSv;
   }
   if (
     chosenOptionsCopyFahrzeuge.value.gueterverkehr ||
-    isGv_pInBelastungsPlan
+    isGvpInBelastungsPlan
   ) {
     totalVerkehrMq += mq.sumGv;
     totalVerkehr += props.belastungsplanData.totalGv;
@@ -656,7 +656,7 @@ function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
 const numberOfChosenFahrzeugOptions = computed(() => {
   const number = Object.values(chosenOptionsCopyFahrzeuge.value).reduce(
     (accumulator: number, currentObject) =>
-      accumulator + (currentObject == true ? 1 : 0),
+      accumulator + (currentObject === true ? 1 : 0),
     0
   );
   return number > 3 ? 3 : number;
@@ -691,5 +691,3 @@ function addBracketsDependingOnPostition(
   return position == 1 ? `(${text})` : text;
 }
 </script>
-
-<style scoped></style>

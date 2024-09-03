@@ -103,13 +103,13 @@ const durchschnitt = computed(() => {
 
 function isTypeDisabled(type: string): boolean {
   return (
-    type != props.messstelleDetektierteFahrzeugart ||
-    chosenOptionsCopy.value.messquerschnittIds.length != 1
+    type !== props.messstelleDetektierteFahrzeugart ||
+    chosenOptionsCopy.value.messquerschnittIds.length !== 1
   );
 }
 
 const helperText = computed(() => {
-  if (chosenOptionsCopy.value.messquerschnittIds.length != 1) {
+  if (chosenOptionsCopy.value.messquerschnittIds.length !== 1) {
     return "Spitzenstunde kann nur für einen einzelnen Messquerschnitt ausgegeben werden";
   }
   return "";
@@ -136,7 +136,7 @@ watch(
   () => {
     if (
       isDateBiggerFiveYears.value &&
-      chosenOptionsCopy.value.zeitauswahl != Zeitauswahl.TAGESWERT
+      chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.TAGESWERT
     ) {
       chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.TAGESWERT;
       snackbarStore.showInfo("Zeitauswahl wurde auf Tageswert gesetzt");

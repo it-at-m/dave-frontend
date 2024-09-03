@@ -83,12 +83,12 @@ const stuendlichValues = computed(() => {
 });
 
 const isZeitauswahlStunde = computed(() => {
-  return chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE;
+  return chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE;
 });
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
   return (
-    chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK ||
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK ||
     isZeitauswahlSpitzenstunde.value
   );
 });

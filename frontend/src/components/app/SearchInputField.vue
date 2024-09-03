@@ -79,6 +79,7 @@ import { useSearchStore } from "@/store/search";
 import { useSnackbarStore } from "@/store/snackbar";
 import Suggest from "@/types/suche/Suggest";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import {isEmpty, isNil} from "lodash";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
@@ -88,7 +89,7 @@ const SUGGESTION_TYPE_MESSSTELLE = "messstelle";
 
 const searchQuery = ref<string>("");
 const suggestions = ref<Array<Suggest>>([]);
-const selectedSuggestion = ref<Suggest | null>(null);
+const selectedSuggestion = ref<Suggest | undefined>(undefined);
 const lastSuggestQuery = ref("");
 const showtooltip = ref(false);
 
@@ -102,7 +103,7 @@ onMounted(() => {
 });
 
 function suggest(query: string) {
-  if (query !== "" && query != null) {
+  if (!isEmpty(query)) {
     lastSuggestQuery.value = query;
     SucheService.getSuggestions(query)
       .then((response: SucheComplexSuggestsDTO) => {
@@ -161,7 +162,7 @@ function suggest(query: string) {
         );
       })
       .catch((error) => snackbarStore.showApiError(error));
-  } else if (lastSuggestQuery.value !== "" && lastSuggestQuery.value != null) {
+  } else if (!isEmpty(lastSuggestQuery.value)) {
     lastSuggestQuery.value = query;
     suggestions.value = [];
   }
@@ -169,13 +170,13 @@ function suggest(query: string) {
 
 function clearSearch(): void {
   searchQuery.value = "";
-  selectedSuggestion.value = null;
+  selectedSuggestion.value = undefined;
   searchStore.setLastSearchQuery(searchQuery.value);
   search();
 }
 
 function searchOrShowSelectedSuggestion() {
-  if (selectedSuggestion.value == null) {
+  if (isNil(selectedSuggestion.value)) {
     search();
   } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_VORSCHLAG) {
     searchForSuggestion(selectedSuggestion.value.text);
@@ -191,7 +192,7 @@ function searchOrShowSelectedSuggestion() {
 }
 
 function search() {
-  if (searchQuery.value == null) {
+  if (isNil(searchQuery.value)) {
     searchQuery.value = "";
   }
   searchStore.setLastSearchQuery(searchQuery.value);
@@ -201,7 +202,7 @@ function search() {
       routeName === "messstelle" ||
       routeName === "pdfreport" ||
       routeName === "auswertung") &&
-    searchQuery.value !== ""
+      searchQuery.value !== ""
   ) {
     router.push(`/`);
   }
@@ -236,7 +237,7 @@ function showMessstelle(item: Suggest) {
 }
 
 function deleteChar() {
-  if (selectedSuggestion.value != null) {
+  if (!isNil(selectedSuggestion.value)) {
     selectedSuggestion.value.type = "";
   }
   suggest(searchQuery.value);
