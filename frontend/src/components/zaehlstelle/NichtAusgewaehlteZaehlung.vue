@@ -54,7 +54,6 @@
   </v-row>
 </template>
 <script setup lang="ts">
-// Komponenten
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 

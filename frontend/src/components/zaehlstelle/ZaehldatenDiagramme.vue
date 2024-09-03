@@ -182,21 +182,17 @@ import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadePro
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-// Typen
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
-import _ from "lodash";
+import {isEmpty, first, last} from "lodash";
 import { computed, ref, watch } from "vue";
 
-// Util
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
-// API Services
 import LadeZaehldatenService from "@/api/service/LadeZaehldatenService";
 import PdfReportMenue from "@/components/common/PdfReportMenue.vue";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
-// Komponenenten
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
@@ -214,7 +210,6 @@ import { useDownloadUtils } from "@/util/DownloadUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useReportTools } from "@/util/ReportTools";
 
-// Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {
   height?: string;
   contentHeight?: string;
@@ -446,12 +441,12 @@ function storeStartAndEndeUhrzeitOfIntervalls(
 ): void {
   const intervalls: Array<LadeZaehldatumDTO> = listenausgabeData.filter(
     (zaehldatum) => {
-      return _.isEmpty(zaehldatum.type);
+      return isEmpty(zaehldatum.type);
     }
   );
-  const firstIntervall: LadeZaehldatumDTO | undefined = _.first(intervalls);
-  const lastIntervall: LadeZaehldatumDTO | undefined = _.last(intervalls);
-  if (!_.isEmpty(firstIntervall) && !_.isEmpty(lastIntervall)) {
+  const firstIntervall: LadeZaehldatumDTO | undefined = first(intervalls);
+  const lastIntervall: LadeZaehldatumDTO | undefined = last(intervalls);
+  if (!isEmpty(firstIntervall) && !isEmpty(lastIntervall)) {
     const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls = {
       startUhrzeitIntervalls: firstIntervall?.startUhrzeit,
       endeUhrzeitIntervalls: lastIntervall?.endeUhrzeit,
