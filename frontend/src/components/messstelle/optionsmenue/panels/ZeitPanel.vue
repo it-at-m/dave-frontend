@@ -111,7 +111,6 @@ const isChosenTagesTypValid = ref(true);
 const needRange = ref(chosenOptionsCopy.value.zeitraum.length > 1);
 
 onMounted(() => {
-  // TODO: via Prop injecten
   const messstelleId = route.params.messstelleId as string;
   MessstelleOptionsmenuService.getNichtPlausibleTage(messstelleId).then(
     (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
