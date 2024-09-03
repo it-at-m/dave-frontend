@@ -28,7 +28,6 @@ import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
 import ChartUtils from "@/util/ChartUtils";
-import { useVuetify } from "@/util/useVuetify";
 
 use([
   CanvasRenderer,

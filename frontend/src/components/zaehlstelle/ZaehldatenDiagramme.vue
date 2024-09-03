@@ -212,7 +212,7 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import { useDaveUtils } from "@/util/DaveUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useReportTools } from "@/util/reportTools";
+import { useReportTools } from "@/util/ReportTools";
 
 // Refactoring: Synergieeffekt mit MessstelleDiagramme nutzen
 interface Props {

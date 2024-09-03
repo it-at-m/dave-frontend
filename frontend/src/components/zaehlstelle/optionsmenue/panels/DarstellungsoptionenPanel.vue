@@ -269,7 +269,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/zaehlstelle";
-import { useRules } from "@/util/rules";
+import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 const SPITZENSTUNDE = "Spitzenstunde";
@@ -278,7 +278,7 @@ const MAX_VALUE_EXCLUDE = 101;
 
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
-const rules = useRules();
+const rules = useValidationRules();
 
 const emits = defineEmits<{
   (e: "werteHundertRunden", v: boolean): void;
