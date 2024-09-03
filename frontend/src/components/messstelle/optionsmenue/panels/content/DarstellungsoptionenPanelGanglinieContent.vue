@@ -57,10 +57,10 @@ import _ from "lodash";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useRules } from "@/util/rules";
+import { useValidationRules } from "@/util/ValidationRules";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
-const rules = useRules();
+const rules = useValidationRules();
 
 const hoverYAchse1 = ref(false);
 const hoverYAchse2 = ref(false);
