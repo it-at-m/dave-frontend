@@ -13,7 +13,7 @@
         :disabled="disabled"
         :required="required"
         density="compact"
-        :rules="[(toCheck) => validateTextDate(toCheck)]"
+        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
         @blur="blur"
       >
         <template #label>
