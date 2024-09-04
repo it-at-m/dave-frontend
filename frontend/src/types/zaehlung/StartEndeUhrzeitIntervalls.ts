@@ -1,4 +1,4 @@
 export interface StartEndeUhrzeitIntervalls {
-    startUhrzeitIntervalls: string;
-    endeUhrzeitIntervalls: string;
+  startUhrzeitIntervalls: string;
+  endeUhrzeitIntervalls: string;
 }
