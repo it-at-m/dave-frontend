@@ -16,7 +16,8 @@
           v-model="chosenOptionsCopy.ganglinieYAchse1MaxValue"
           :label="'Y-Achse 1'"
           :rules="[
-            (toCheck: string) => rules.onlyPositivNumbersBiggerThan(toCheck, MIN_VALUE),
+            (toCheck: string) =>
+              rules.onlyPositivNumbersBiggerThan(toCheck, MIN_VALUE),
           ]"
           clearable
           density="compact"
