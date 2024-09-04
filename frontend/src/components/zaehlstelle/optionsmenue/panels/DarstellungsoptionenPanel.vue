@@ -79,7 +79,7 @@
             v-model="ganglinieYAchse1MaxValue"
             :label="'Y-Achse 1'"
             :rules="[
-              (toCheck) =>
+              (toCheck: string) =>
                 rules.onlyPositivNumbersBiggerThan(toCheck, MIN_VALUE),
             ]"
             type="number"
@@ -95,7 +95,7 @@
             :label="'Y-Achse 2 (%)'"
             type="number"
             :rules="[
-              (toCheck) =>
+              (toCheck: string) =>
                 rules.onlyNumbersInRange(toCheck, MIN_VALUE, MAX_VALUE_EXCLUDE),
             ]"
             density="compact"
