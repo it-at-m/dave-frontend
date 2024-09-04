@@ -240,7 +240,6 @@ function initFahrbeziehungen(): void {
     });
 
     // Nachfolgend werden die eingehenden bzw. ausgehenden Beziehungen bei Auswahl von "alle" gesetzt.
-    let kv: KnotenarmVerbindungen;
     if (isZaehlungForKreuzung()) {
       const kv = {
         knotenarm: alle,
@@ -264,7 +263,7 @@ function initFahrbeziehungen(): void {
       moeglicheBeziehungenVon.value.set(alle.nummer, kv);
     }
     // Kreuzung und Kreisverkehr
-    kv = {
+    const kv: KnotenarmVerbindungen = {
       knotenarm: alle,
       moeglicheVerbindungen: _.union(
         [alle],

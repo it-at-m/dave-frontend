@@ -147,7 +147,7 @@ const headers = computed(() => {
     activeFahrzeugklassen.value
   );
   const widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-  const headers: Array<Object> = [
+  const headers: Array<any> = [
     // Zeit
     {
       title: "Zeit",

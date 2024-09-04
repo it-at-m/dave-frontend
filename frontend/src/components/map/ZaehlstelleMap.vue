@@ -29,7 +29,7 @@ import {
   ref,
   watch,
 } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
 import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
@@ -77,7 +77,6 @@ const zaehlstelleStore = useZaehlstelleStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
-const route = useRoute();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 

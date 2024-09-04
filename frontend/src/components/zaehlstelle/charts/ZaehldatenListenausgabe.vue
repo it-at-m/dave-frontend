@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
   <v-data-table
     :headers="headers"
     :items="listenausgabeData"
@@ -131,7 +131,7 @@ const headers = computed(() => {
     activeFahrzeugklassen.value
   );
   const widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-  const headers: Array<Object> = [
+  const headers: Array<any> = [
     // Zeit
     {
       title: "Zeit",

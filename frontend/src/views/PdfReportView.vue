@@ -214,7 +214,7 @@
     />
 
     <delete-dialog
-      v-model="deleteDialog"
+      v-model="openDeleteDialog"
       :asset-id="assetId"
       @cancel-dialog="cancel()"
       @delete="deleteIt($event)"
@@ -261,7 +261,7 @@ const editImage = ref(false);
 const editHeading = ref(false);
 const editText = ref(false);
 const editDatatable = ref(false);
-const deleteDialog = ref(false);
+const openDeleteDialog = ref(false);
 
 const imageAsset = ref<ImageAsset>(new ImageAsset("", ""));
 const headingAsset = ref<HeadingAsset>(
@@ -341,7 +341,7 @@ function cancel() {
   editHeading.value = false;
   editText.value = false;
   editDatatable.value = false;
-  deleteDialog.value = false;
+  openDeleteDialog.value = false;
 }
 
 function save(asset: BaseAsset) {
@@ -509,13 +509,13 @@ function isEditable(asset: BaseAsset): boolean {
 
 function deleteAsset(asset: BaseAsset): void {
   assetId.value = asset.id;
-  deleteDialog.value = true;
+  openDeleteDialog.value = true;
 }
 
 function deleteIt(id: number): void {
   const filteredAssets = assets.value.filter((a) => a.id !== id) as BaseAsset[];
   assets.value = filteredAssets;
-  deleteDialog.value = false;
+  openDeleteDialog.value = false;
 }
 
 function createImageAsset(): void {
