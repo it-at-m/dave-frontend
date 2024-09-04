@@ -28,9 +28,9 @@
                 v-model="needRange"
                 label="Zeitraum"
                 density="compact"
-                @update:modelValue="resetDates"
+                @update:model-value="resetDates"
               >
-                <template v-slot:prepend>
+                <template #prepend>
                   <v-label
                     text="Zeitpunkt"
                     class="pl-0"
@@ -47,8 +47,8 @@
             <v-col cols="6">
               <date-picker
                 v-model="dateVon"
-                :minDate="minDate"
-                :maxDate="maxDate"
+                :min-date="minDate"
+                :max-date="maxDate"
                 label="von"
               />
             </v-col>
@@ -56,8 +56,8 @@
               <date-picker
                 v-if="needRange"
                 v-model="dateBis"
-                :minDate="minDateRange"
-                :maxDate="maxDate"
+                :min-date="minDateRange"
+                :max-date="maxDate"
                 label="bis"
               />
             </v-col>

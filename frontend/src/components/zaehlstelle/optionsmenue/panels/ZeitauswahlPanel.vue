@@ -28,7 +28,7 @@
             v-model="zeitauswahl"
             color="grey-darken-1"
             density="compact"
-            @update:modelValue="zeitauswahlChanged"
+            @update:model-value="zeitauswahlChanged"
           >
             <v-row>
               <v-col cols="6">
@@ -277,7 +277,7 @@ const helpTextZeitintervall = computed(() => {
  * den Array der Zeitblöcke angehangen.
  */
 const zeitblockValues = computed<Array<KeyVal>>(() => {
-  let result = new Array<KeyVal>();
+  const result = new Array<KeyVal>();
   // die möglichen Blöcke aus der Zählung
   const blocks: Zeitblock[] = props.zaehlung?.zeitauswahl.blocks as Zeitblock[];
 
@@ -314,7 +314,7 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
  * Lädt - abhängig von der aktuellen Zählung - die Labels und Werte für das Stunden Select Control
  */
 const stuendlichValues = computed<Array<KeyVal>>(() => {
-  let result = new Array<KeyVal>();
+  const result = new Array<KeyVal>();
   // die möglichen Stunden aus der Zählung
   const hrs = props.zaehlung?.zeitauswahl.hours as ZeitblockStuendlich[];
 

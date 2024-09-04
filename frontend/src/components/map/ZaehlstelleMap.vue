@@ -382,7 +382,7 @@ function createLatLng(anzeigeKarte: AnzeigeKarteDTO): LatLng {
 function createMarkerForZaehlstelle(
   zaehlstelleKarte: ZaehlstelleKarteDTO
 ): Marker {
-  let marker: Marker = new Marker(
+  const marker: Marker = new Marker(
     createLatLng(zaehlstelleKarte),
     markerOptionsZaehlstelle(zaehlstelleKarte)
   );
@@ -402,7 +402,7 @@ function createMarkerForZaehlstelle(
 function createMarkerForMessstelle(
   messstelleKarteDto: MessstelleKarteDTO
 ): Marker {
-  let marker: Marker = new Marker(
+  const marker: Marker = new Marker(
     createLatLng(messstelleKarteDto),
     markerOptionsMessstelle(messstelleKarteDto)
   );
@@ -421,7 +421,7 @@ function createMarkerForZaehlart(
   zaehlart: string,
   index: number
 ): Marker {
-  let marker: Marker = new Marker(
+  const marker: Marker = new Marker(
     createLatLngFromString(
       zaehlartenKarteDto.latitude,
       zaehlartenKarteDto.longitude
@@ -536,7 +536,7 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
 function markerOptionsZaehlstelle(zaehlstelleKarte: ZaehlstelleKarteDTO) {
   if (props.zId) {
     if (props.zId === zaehlstelleKarte.id) {
-      let defaultIcon = new Icon.Default();
+      const defaultIcon = new Icon.Default();
       defaultIcon.options.iconUrl = markerIconRed;
       return { opacity: 1.0, icon: defaultIcon };
     } else {
@@ -549,7 +549,7 @@ function markerOptionsZaehlstelle(zaehlstelleKarte: ZaehlstelleKarteDTO) {
  * Setzt die Optionen bezüglich verwendetes Icon für den Messstellenmarker.
  */
 function markerOptionsMessstelle(messstelleKarte: MessstelleKarteDTO) {
-  let defaultIcon = new Icon({
+  const defaultIcon = new Icon({
     iconUrl: markerIconDiamondViolet,
     shadowUrl: markerIconDiamondShadow,
     shadowAnchor: [8, 45],
@@ -601,11 +601,11 @@ function markerOptionsZaehlart(zaehlart: string, index: number) {
 function calculateIconAnchorCoordinatesForZaehlartMarker(
   index: number
 ): L.Point {
-  let xCoordinate: number =
+  const xCoordinate: number =
     ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER +
     (index % NUMBER_OF_COLUMNS_ZAEHLART_MARKER) *
       ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER;
-  let yCoordinate: number =
+  const yCoordinate: number =
     ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER +
     Math.floor(index / NUMBER_OF_COLUMNS_ZAEHLART_MARKER) *
       ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER;

@@ -166,7 +166,7 @@ function createMessstelleInfo(): void {
     `Stadtbezirk: ${messstelle.value.stadtbezirk} (${messstelle.value.stadtbezirkNummer})`
   );
   assets.push(stadtbezirk);
-  let kommentar = new TextAsset(
+  const kommentar = new TextAsset(
     `Messstellenkommentar: ${messstelle.value.kommentar ?? "---"}`
   );
   assets.push(kommentar);

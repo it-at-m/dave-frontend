@@ -15,6 +15,7 @@
       <template #activator="{ props: activatorProps }">
         <v-btn
           v-bind="activatorProps"
+          key="speedDial"
           :color="speedDialColor"
           :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-plus-thick'"
           size="large"
@@ -25,20 +26,19 @@
           style="z-index: 400"
           :data-x="activatorProps"
           :loading="creatingPicture || printingSearchResult"
-          key="speedDial"
         />
       </template>
       <v-btn
-        v-tooltip:start="'Suchergebnis als CSV herunterladen'"
         key="printSearchResult"
+        v-tooltip:start="'Suchergebnis als CSV herunterladen'"
         icon="mdi-file-delimited"
         color="secondary"
         size="small"
         @click="printSearchResult"
       />
       <v-btn
-        v-tooltip:start="'Karte dem PDF Report hinzufügen'"
         key="takePicture"
+        v-tooltip:start="'Karte dem PDF Report hinzufügen'"
         icon="mdi-camera"
         color="secondary"
         size="small"

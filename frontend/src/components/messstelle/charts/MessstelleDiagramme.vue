@@ -31,7 +31,7 @@
     <v-tabs-window
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:modelValue="changeTab"
+      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
@@ -103,11 +103,11 @@
       :is-listenausgabe="isTabListenausgabe"
       :is-not-heatmap="isNotTabHeatmap"
       :loading-file="loadingFile"
-      @addChartToPdfReport="addChartToPdfReport"
-      @saveGraphAsImage="saveGraphAsImage"
-      @openPdfReportDialog="openPdfReportDialog"
-      @generateCsv="generateCsv"
-      @generatePdf="generatePdf"
+      @add-chart-to-pdf-report="addChartToPdfReport"
+      @save-graph-as-image="saveGraphAsImage"
+      @open-pdf-report-dialog="openPdfReportDialog"
+      @generate-csv="generateCsv"
+      @generate-pdf="generatePdf"
     />
     <pdf-report-menue-messstelle
       v-model="pdfReportDialog"
@@ -221,7 +221,7 @@ const isNotTabHeatmap = computed<boolean>(() => {
 });
 
 const isBiggerThanFiveYears = computed(() => {
-  let zeitraum = options.value.zeitraum;
+  const zeitraum = options.value.zeitraum;
   const differenceInMs = Math.abs(
     new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
   );
@@ -231,7 +231,7 @@ const isBiggerThanFiveYears = computed(() => {
 });
 
 watch(isBiggerThanFiveYears, () => {
-  if (isBiggerThanFiveYears) {
+  if (isBiggerThanFiveYears.value) {
     activeTab.value = TAB_BELASTUNGSPLAN;
   }
 });
@@ -291,7 +291,7 @@ function loadProcessedChartData() {
 }
 
 function setMaxRangeYAchse() {
-  let ganglinieYAchse1MaxValue: number | null =
+  const ganglinieYAchse1MaxValue: number | null =
     options.value.ganglinieYAchse1MaxValue;
   if (
     ganglinieYAchse1MaxValue !== undefined &&
@@ -301,7 +301,7 @@ function setMaxRangeYAchse() {
     zaehldatenSteplineDTO.value.rangeMax = ganglinieYAchse1MaxValue;
   }
 
-  let ganglinieYAchse2MaxValue: number | null =
+  const ganglinieYAchse2MaxValue: number | null =
     options.value.ganglinieYAchse2MaxValue;
   if (
     ganglinieYAchse2MaxValue !== undefined &&
@@ -444,7 +444,7 @@ function closePdfReportDialog(): void {
 }
 
 function generatePdf(): void {
-  let formData = new FormData();
+  const formData = new FormData();
   let type = "";
   loadingFile.value = true;
 

@@ -1,24 +1,13 @@
-import { beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import { useAlternateRowColor } from "@/util/AlternateRowColorUtil";
 
 describe("AlternateRowColorUtil.ts", () => {
-  let vuetify: ReturnType<typeof createVuetify>;
-
   const { calcRowColor } = useAlternateRowColor();
 
   beforeAll(() => {
     createVuetify();
-  });
-
-  beforeEach(() => {
-    vuetify = createVuetify({
-      components,
-      directives,
-    });
   });
 
   it("returns 'grey-lighten-4' when index is odd", () => {

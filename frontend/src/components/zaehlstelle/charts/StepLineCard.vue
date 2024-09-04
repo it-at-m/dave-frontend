@@ -5,7 +5,7 @@
   >
     <step-line-chart
       :zaehldaten-stepline="zaehldatenStepline"
-      @charttypeChanged="charttypeChanged"
+      @charttype-changed="charttypeChanged"
     />
     <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
@@ -37,7 +37,7 @@ defineExpose({
 });
 onMounted(() => {
   // Der steplineForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
-  let chartOptions = {} as ResizeOpts;
+  const chartOptions = {} as ResizeOpts;
   chartOptions.width = 900;
   chartOptions.height = 430;
   chartOptions.silent = true;

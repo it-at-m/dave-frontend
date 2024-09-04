@@ -33,7 +33,7 @@ defineExpose({
 });
 onMounted(() => {
   // Die Heatmap soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
-  let chartOptions = {} as ResizeOpts;
+  const chartOptions = {} as ResizeOpts;
   chartOptions.width = 1350;
   chartOptions.height = 500;
   chartOptions.silent = true;

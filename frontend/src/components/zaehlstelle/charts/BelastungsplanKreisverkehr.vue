@@ -1464,7 +1464,7 @@ function calculateLineWidthVorbei(node: number): number {
 
 /** Berechnet die Breite der einzelnen Linien anhand der maximalen Anzahl der Autos */
 function calculateLineWidth(cars: number): number {
-  let step = maxNumberOfCarsForWidth.value / 5;
+  const step = maxNumberOfCarsForWidth.value / 5;
   let lineWidth = 0;
   // BEARBEITUNG: wenn du alle Linien sehen willst, einfach folgende Zeile einkommentieren
   // Das löst allerdings Warnung in Typescript/eslint aus (unreachable/unused Code)
@@ -1585,7 +1585,7 @@ function getDataToShow() {
     return props.data.value3.values;
   }
   // mit 0 gefülltes Array zurückgeben
-  let emptyArray: Array<number> = [0, 0, 0, 0, 0, 0, 0, 0];
+  const emptyArray: Array<number> = [0, 0, 0, 0, 0, 0, 0, 0];
   return [
     emptyArray,
     emptyArray,
@@ -1780,7 +1780,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
   if (existsTriangle(node)) {
     switch (node) {
       case 0: {
-        let zoomlvl1: Array<number> = zoomLvlTriangleLabel(0);
+        const zoomlvl1: Array<number> = zoomLvlTriangleLabel(0);
         position = [67 * zoomlvl1[0], 186 * zoomlvl1[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [25 * zoomlvl1[2], 165 * zoomlvl1[3]]; // Dreiecke da, xl & lg
@@ -1788,7 +1788,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 1: {
-        let zoomlvl2: Array<number> = zoomLvlTriangleLabel(1);
+        const zoomlvl2: Array<number> = zoomLvlTriangleLabel(1);
         position = [-171 * zoomlvl2[0], 67 * zoomlvl2[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-150 * zoomlvl2[2], 25 * zoomlvl2[3]]; // Dreiecke da, xl & lg
@@ -1796,7 +1796,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 2: {
-        let zoomlvl3: Array<number> = zoomLvlTriangleLabel(2);
+        const zoomlvl3: Array<number> = zoomLvlTriangleLabel(2);
         position = [-255 * zoomlvl3[0], 15 * zoomlvl3[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-125 * zoomlvl3[2], 110 * zoomlvl3[3]]; // Dreiecke da, xl & lg
@@ -1804,7 +1804,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 3: {
-        let zoomlvl4: Array<number> = zoomLvlTriangleLabel(3);
+        const zoomlvl4: Array<number> = zoomLvlTriangleLabel(3);
         position = [2 * zoomlvl4[0], -255 * zoomlvl4[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-95 * zoomlvl4[2], -125 * zoomlvl4[3]]; // Dreiecke da, xl & lg
@@ -1812,7 +1812,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 4: {
-        let zoomlvl5: Array<number> = zoomLvlTriangleLabel(4);
+        const zoomlvl5: Array<number> = zoomLvlTriangleLabel(4);
         position = [-75 * zoomlvl5[0], 180 * zoomlvl5[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           // zwischen 5 und 2
@@ -1821,7 +1821,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 5: {
-        let zoomlvl6: Array<number> = zoomLvlTriangleLabel(5);
+        const zoomlvl6: Array<number> = zoomLvlTriangleLabel(5);
         position = [-168 * zoomlvl6[0], 218 * zoomlvl6[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-100 * zoomlvl6[2], -90 * zoomlvl6[3]]; // Dreiecke da, xl & lg
@@ -1829,7 +1829,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 6: {
-        let zoomlvl7: Array<number> = zoomLvlTriangleLabel(6);
+        const zoomlvl7: Array<number> = zoomLvlTriangleLabel(6);
         position = [-180 * zoomlvl7[0], -168 * zoomlvl7[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-155 * zoomlvl7[2], -10 * zoomlvl7[3]]; // Dreiecke da, xl & lg
@@ -1837,7 +1837,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 7: {
-        let zoomlvl8: Array<number> = zoomLvlTriangleLabel(7);
+        const zoomlvl8: Array<number> = zoomLvlTriangleLabel(7);
         position = [180 * zoomlvl8[0], 112 * zoomlvl8[1]]; // Dreiecke da, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [50 * zoomlvl8[2], -155 * zoomlvl8[3]]; // Dreiecke da, xl & lg
@@ -1848,7 +1848,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
   } else {
     switch (node) {
       case 0: {
-        let zoomlvl1: Array<number> = zoomLvlTriangleLabel(0);
+        const zoomlvl1: Array<number> = zoomLvlTriangleLabel(0);
         position = [45 * zoomlvl1[0], 180 * zoomlvl1[1]]; // Dreieck weg xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [6 * zoomlvl1[2], 157 * zoomlvl1[3]]; // Dreiecke weg, xl & lg
@@ -1856,7 +1856,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 1: {
-        let zoomlvl2: Array<number> = zoomLvlTriangleLabel(1);
+        const zoomlvl2: Array<number> = zoomLvlTriangleLabel(1);
         position = [-180 * zoomlvl2[0], 45 * zoomlvl2[1]]; // Dreieck weg xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-159 * zoomlvl2[2], 6 * zoomlvl2[3]]; // Dreiecke weg, xl & lg
@@ -1864,7 +1864,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 2: {
-        let zoomlvl3: Array<number> = zoomLvlTriangleLabel(2);
+        const zoomlvl3: Array<number> = zoomLvlTriangleLabel(2);
         position = [-274 * zoomlvl3[0], 9 * zoomlvl3[1]]; // Dreieck weg, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-144 * zoomlvl3[2], 101 * zoomlvl3[3]]; //  // Dreiecke weg, xl & lg
@@ -1872,7 +1872,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 3: {
-        let zoomlvl4: Array<number> = zoomLvlTriangleLabel(3);
+        const zoomlvl4: Array<number> = zoomLvlTriangleLabel(3);
         position = [-5 * zoomlvl4[0], -275 * zoomlvl4[1]]; // Dreieck weg, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-104 * zoomlvl4[2], -144 * zoomlvl4[3]]; // Dreiecke weg, xl & lg
@@ -1880,7 +1880,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 4: {
-        let zoomlvl5: Array<number> = zoomLvlTriangleLabel(4);
+        const zoomlvl5: Array<number> = zoomLvlTriangleLabel(4);
         position = [-92 * zoomlvl5[0], 160 * zoomlvl5[1]]; // Dreieck weg, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-104 * zoomlvl5[2], 116 * zoomlvl5[3]]; // Dreiecke weg, xl & lg
@@ -1888,7 +1888,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 5: {
-        let zoomlvl6: Array<number> = zoomLvlTriangleLabel(5);
+        const zoomlvl6: Array<number> = zoomLvlTriangleLabel(5);
         position = [-190 * zoomlvl6[0], 200 * zoomlvl6[1]]; // Dreieck weg, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-119 * zoomlvl6[2], -109 * zoomlvl6[3]]; // Dreiecke weg, xl & lg
@@ -1896,7 +1896,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 6: {
-        let zoomlvl7: Array<number> = zoomLvlTriangleLabel(6);
+        const zoomlvl7: Array<number> = zoomLvlTriangleLabel(6);
         position = [-200 * zoomlvl7[0], -190 * zoomlvl7[1]]; // Dreieck weg, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [-174 * zoomlvl7[2], -29 * zoomlvl7[3]]; // Dreiecke weg, xl & lg
@@ -1904,7 +1904,7 @@ function calculatePositionLabelTriangle(node: number): Array<number> {
         break;
       }
       case 7: {
-        let zoomlvl8: Array<number> = zoomLvlTriangleLabel(7);
+        const zoomlvl8: Array<number> = zoomLvlTriangleLabel(7);
         position = [160 * zoomlvl8[0], 92 * zoomlvl8[1]]; // Dreieck weg, xl & lg
         if (props.visibleNodes[previousNodeindex(node)]) {
           position = [31 * zoomlvl8[2], -174 * zoomlvl8[3]]; // Dreiecke weg, xl & lg
@@ -1983,9 +1983,9 @@ function formatLabelNode(node: number) {
   let dataAvailableRaus = false;
   if (props.data.value1.filled) {
     // Textbausteine mit Daten befüllen
-    let kreisReinKfz: number = props.data.value1.values[node][0];
-    let kreisRausKfz: number = props.data.value1.values[node][2];
-    let combinedKfz: number = parseFloat(
+    const kreisReinKfz: number = props.data.value1.values[node][0];
+    const kreisRausKfz: number = props.data.value1.values[node][2];
+    const combinedKfz: number = parseFloat(
       props.data.value1.sum[node].toFixed(1)
     );
     dataAvailableRein = dataAvailableRein || kreisReinKfz > 0;
@@ -1999,9 +1999,11 @@ function formatLabelNode(node: number) {
   }
   if (props.data.value2.filled) {
     // Textbausteine mit Daten befüllen
-    let kreisReinSv: number = props.data.value2.values[node][0];
-    let kreisRausSv: number = props.data.value2.values[node][2];
-    let combinedSv: number = parseFloat(props.data.value2.sum[node].toFixed(1));
+    const kreisReinSv: number = props.data.value2.values[node][0];
+    const kreisRausSv: number = props.data.value2.values[node][2];
+    const combinedSv: number = parseFloat(
+      props.data.value2.sum[node].toFixed(1)
+    );
     dataAvailableRein = dataAvailableRein || kreisReinSv > 0;
     dataAvailableRaus = dataAvailableRaus || kreisRausSv > 0;
     if (props.data.value2.percent) {
@@ -2034,9 +2036,11 @@ function formatLabelNode(node: number) {
   }
   if (props.data.value3.filled) {
     // Textbausteine mit Daten befüllen
-    let kreisReinGv: number = props.data.value3.values[node][0];
-    let kreisRausGv: number = props.data.value3.values[node][2];
-    let combinedGv: number = parseFloat(props.data.value3.sum[node].toFixed(1));
+    const kreisReinGv: number = props.data.value3.values[node][0];
+    const kreisRausGv: number = props.data.value3.values[node][2];
+    const combinedGv: number = parseFloat(
+      props.data.value3.sum[node].toFixed(1)
+    );
     dataAvailableRein = dataAvailableRein || kreisReinGv > 0;
     dataAvailableRaus = dataAvailableRaus || kreisRausGv > 0;
     if (props.data.value3.percent) {
@@ -2069,7 +2073,7 @@ function formatLabelNode(node: number) {
   }
 
   // Summe aus Rein und Raus, muss immer am größten sein
-  let maxLineLength = lineCombined.trim().length;
+  const maxLineLength = lineCombined.trim().length;
   lineRein = `${padStringAtStart(lineRein.trim(), maxLineLength)}`;
   lineCombined = `${padStringAtStart(lineCombined.trim(), maxLineLength)}`;
   lineRaus = `${padStringAtStart(lineRaus.trim(), maxLineLength)}`;

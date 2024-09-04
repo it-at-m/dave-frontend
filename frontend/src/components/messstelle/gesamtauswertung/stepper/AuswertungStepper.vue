@@ -5,7 +5,7 @@
     flat
     hide-actions
   >
-    <template v-slot:default>
+    <template #default>
       <v-stepper-vertical-item
         :complete="activeStep > 1 && isJahresintervallSelected()"
         :value="1"
@@ -94,7 +94,7 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-  let helper: Array<string> = [];
+  const helper: Array<string> = [];
   auswertungOptions.value.zeitraum.forEach((key) => {
     const value = auswertungszeitraumToText.get(key);
     if (value) {

@@ -35,7 +35,7 @@ defineExpose({
 });
 
 const visibleNodes = computed(() => {
-  let nodes: boolean[] = [];
+  const nodes: boolean[] = [];
   for (
     let index = 0;
     index < props.belastungsplanData.streets.length;

@@ -100,7 +100,7 @@ const maxAnteil = computed(() => {
 const yAxisMax = computed(() => {
   if (maxAnteil.value) {
     // Verdoppeln
-    let maxSvAnteilDoubled: number = _.multiply(maxAnteil.value, 2);
+    const maxSvAnteilDoubled: number = _.multiply(maxAnteil.value, 2);
     if (maxSvAnteilDoubled <= 10) {
       return 10;
     } else if (maxSvAnteilDoubled <= 20) {
@@ -136,7 +136,7 @@ const xAxis = computed(() => {
 });
 
 const options = computed(() => {
-  let options = {
+  const options = {
     tooltip: {
       trigger: "axis",
       formatter: function (params: any[]) {
@@ -180,8 +180,8 @@ const options = computed(() => {
           readOnly: true,
           lang: ["Datenansicht", "zurück", "refresh"],
           optionToContent: function (opt: any) {
-            let axisData = opt.xAxis[0].data;
-            let series = opt.series;
+            const axisData = opt.xAxis[0].data;
+            const series = opt.series;
 
             // Header der Tabelle
             let table =
@@ -285,7 +285,7 @@ const secondYAxis = computed(() => {
  * Kraftfahrzeugverkehr, Schwerverkehr, Güterverkehr, Radverkehr, Fußverkehr, Schwerverkehr Anteil in Prozent, Gesamt
  **/
 function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
-  let series: Array<unknown> = [];
+  const series: Array<unknown> = [];
 
   if (filterOptions.value.kraftfahrzeugverkehr) {
     series.push({

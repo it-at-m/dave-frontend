@@ -17,7 +17,7 @@
           v-model="chosenOptionsCopy.zeitauswahl"
           class="full-width"
           density="compact"
-          @update:modelValue="zeitauswahlChanged"
+          @update:model-value="zeitauswahlChanged"
         >
           <v-row
             align="start"

@@ -56,16 +56,16 @@
             </v-row>
             <v-row no-gutters>
               <span class="text-truncate align-end">
-                <DetektierteFahrzeugartIcon
+                <detektierte-fahrzeugart-icon
                   :detektierte-fahrzeugart="detektierteVerkehrsart"
                   color="primary"
                 />
-                <FahrzeugklassenIcon
+                <fahrzeugklassen-icon
                   :fahrzeugklasse="fahrzeugKlasse"
                   color="primary"
                   small
                 />
-                <MessstelleKommentar :kommentar="messstelle.kommentar" />
+                <messstelle-kommentar :kommentar="messstelle.kommentar" />
               </span>
             </v-row>
           </v-col>

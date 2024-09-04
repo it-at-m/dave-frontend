@@ -10,7 +10,7 @@
       color="grey-lighten-3"
       indeterminate
     >
-      <template v-slot:default> laden </template>
+      <template #default> laden </template>
     </v-progress-circular>
   </v-overlay>
 </template>

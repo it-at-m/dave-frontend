@@ -43,7 +43,7 @@ const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleUtils = useMessstelleUtils();
 
 const zeitblockValues = computed(() => {
-  let result = new Array<KeyVal>();
+  const result = new Array<KeyVal>();
   result.push(zeitblockInfo.get(Zeitblock.ZB_00_06)!);
   result.push(zeitblockInfo.get(Zeitblock.ZB_06_10)!);
   result.push(zeitblockInfo.get(Zeitblock.ZB_10_15)!);
@@ -54,7 +54,7 @@ const zeitblockValues = computed(() => {
 });
 
 const stuendlichValues = computed(() => {
-  let result = new Array<KeyVal>();
+  const result = new Array<KeyVal>();
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_00_01)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_01_02)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_02_03)!);

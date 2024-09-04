@@ -1,6 +1,6 @@
 <template>
   <v-list-item>
-    <template v-slot:prepend>
+    <template #prepend>
       <v-checkbox v-model="checkbox" />
     </template>
     <v-list-item-title>{{ title }}</v-list-item-title>

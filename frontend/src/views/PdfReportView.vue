@@ -92,7 +92,7 @@
               <p v-if="isZaehlungskenngroesse(asset)">
                 {{ getTextOfAsset(asset) }}
               </p>
-              <DisplayImageAsset
+              <display-image-asset
                 v-if="isImage(asset)"
                 :caption="getCaptionOfAsset(asset)"
                 :image="getImageOfAsset(asset)"
@@ -188,35 +188,35 @@
     <image-asset-form
       v-model="editImage"
       :image="imageAsset"
-      @cancelDialog="cancel()"
+      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <datatable-asset-form
       v-model="editDatatable"
       :datatable="datatableAsset"
-      @cancelDialog="cancel()"
+      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <heading-asset-form
       v-model="editHeading"
       :heading="headingAsset"
-      @cancelDialog="cancel()"
+      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <text-asset-form
       v-model="editText"
       :text="textAsset"
-      @cancelDialog="cancel()"
+      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <delete-dialog
       v-model="deleteDialog"
       :asset-id="assetId"
-      @cancelDialog="cancel()"
+      @cancel-dialog="cancel()"
       @delete="deleteIt($event)"
     />
   </v-container>
@@ -413,7 +413,7 @@ function edit(asset: BaseAsset): void {
 }
 
 function generatePdf() {
-  let formData = new FormData();
+  const formData = new FormData();
   loadingPdf.value = true;
 
   formData.append(
@@ -705,7 +705,7 @@ function getTextOfAsset(asset: BaseAsset): string | undefined {
 }
 
 function downloadPdf() {
-  let filename = `report_${Date.now()}.pdf`;
+  const filename = `report_${Date.now()}.pdf`;
   useDownloadUtils().downloadFile(pdfSourceAsBlob.value, filename);
 }
 

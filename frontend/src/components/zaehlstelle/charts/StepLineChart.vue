@@ -268,7 +268,7 @@ function checkTwoChartsNeeded(
 function createSeriesDataForChart(
   seriesEntriesChart: Array<StepLineSeriesEntryDTO>
 ): Array<unknown> {
-  let seriesEntries: Array<unknown> = [];
+  const seriesEntries: Array<unknown> = [];
   seriesEntriesChart.forEach((seriesEntryChart) => {
     if (
       seriesEntryChart.name === ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT ||

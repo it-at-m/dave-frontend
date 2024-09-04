@@ -109,7 +109,7 @@ const icon = computed(() => {
 
 // Zusammenbauen der Kommentare in ein Array. Hier wird auch die Anzeigereihenfolge bestimmt.
 const kommentarArray = computed(() => {
-  let kommArr: KeyVal[] = [] as KeyVal[];
+  const kommArr: KeyVal[] = [] as KeyVal[];
   addToArrayIfNotEmpty(
     kommArr,
     "Kommentar zur Zählstelle",

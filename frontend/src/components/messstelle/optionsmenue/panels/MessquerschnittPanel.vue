@@ -23,8 +23,8 @@
             label="Richtung"
             :items="richtungValues"
             variant="filled"
-            @update:modelValue="updateOptions"
             density="compact"
+            @update:model-value="updateOptions"
             @mouseover="hoverDirection = true"
             @mouseleave="hoverDirection = false"
           />
@@ -46,9 +46,9 @@
             variant="filled"
             multiple
             :rules="[REQUIRED]"
-            @update:modelValue="updateLage"
-            @blur="resetSpitzenstundeErrorText"
             density="compact"
+            @update:model-value="updateLage"
+            @blur="resetSpitzenstundeErrorText"
             @mouseover="hoverLage = true"
             @mouseleave="hoverLage = false"
           />
@@ -112,7 +112,7 @@ const direction = computed({
 });
 
 const richtungValues = computed<Array<KeyVal>>(() => {
-  let result: Array<KeyVal> = [];
+  const result: Array<KeyVal> = [];
   if (
     messstelle.value.messquerschnitte.length > 1 &&
     !isZeitauswahlSpitzenstunde.value
@@ -144,7 +144,7 @@ const richtungValues = computed<Array<KeyVal>>(() => {
 });
 
 const lageValues = computed<Array<KeyVal>>(() => {
-  let result: Array<KeyVal> = [];
+  const result: Array<KeyVal> = [];
   if (messstelle.value.messquerschnitte) {
     messstelle.value.messquerschnitte.forEach(
       (querschnitt: MessquerschnittInfoDTO) => {

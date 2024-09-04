@@ -87,7 +87,7 @@
     >
       <v-spacer />
       <v-col>
-        <OptionsmenueMessstelle messstelle-id="messstelleId" />
+        <optionsmenue-messstelle messstelle-id="messstelleId" />
       </v-col>
       <v-spacer />
     </v-row>
@@ -172,8 +172,8 @@ const zeitintervall = computed(() => {
 });
 
 function getStyleClass(mqId: string): string {
-  let notIncluded = "text-caption text-grey-lighten-1";
-  let included = "text-caption font-weight-medium text-white";
+  const notIncluded = "text-caption text-grey-lighten-1";
+  const included = "text-caption font-weight-medium text-white";
   return filterOptionsMessstelle.value.messquerschnittIds.includes(mqId)
     ? included
     : notIncluded;

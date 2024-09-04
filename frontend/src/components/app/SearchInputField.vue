@@ -40,7 +40,7 @@
         location="bottom start"
         :open-on-hover="false"
       >
-        <template v-slot:activator="{ props }">
+        <template #activator="{ props }">
           <v-btn
             v-bind="props"
             icon="mdi-information"

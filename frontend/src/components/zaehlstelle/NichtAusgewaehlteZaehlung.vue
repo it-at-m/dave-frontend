@@ -21,9 +21,9 @@
         width="100%"
         :color="hover ? hoverColor : color"
         class="px-4 py-2"
+        :style="{ cursor: `${hover ? 'pointer' : 'default'}` }"
         @mouseover="hover = true"
         @mouseleave="hover = false"
-        :style="{ cursor: `${hover ? 'pointer' : 'default'}` }"
         @click="openZaehlung"
       >
         <span class="text-body-2"

@@ -10,7 +10,7 @@
           class="d-flex flex-column"
         >
           <!-- Basisinformation zur Messstelle -->
-          <MessstelleHeaderInfo
+          <messstelle-header-info
             :mst-id="messstelle.mstId"
             :stadtbezirk-nummer="messstelle.stadtbezirkNummer"
             :stadtbezirk="messstelle.stadtbezirk"
@@ -19,14 +19,14 @@
             :height="headerHeightVh"
             :minheight="headerHeightVh"
           />
-          <MessstelleInfo :messstelle="messstelle" />
-          <FilterOptionen
+          <messstelle-info :messstelle="messstelle" />
+          <filter-optionen
             class="px-0"
             :messstelle="messstelle"
           />
-          <ValidWochentage v-if="chosenOptions.zeitraum.length > 1" />
-          <MessquerschnittAnzahlInfo :messstelle="messstelle" />
-          <MessquerschnittInfo :messstelle="messstelle" />
+          <valid-wochentage v-if="chosenOptions.zeitraum.length > 1" />
+          <messquerschnitt-anzahl-info :messstelle="messstelle" />
+          <messquerschnitt-info :messstelle="messstelle" />
         </v-sheet>
       </v-col>
       <v-col cols="9">

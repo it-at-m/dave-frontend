@@ -68,7 +68,7 @@ watch(
  */
 const activeFahrzeugtypen = computed(() => {
   let activeFahrzeugtypen = 0;
-  let fahrzeugOptions = optionen.value.fahrzeuge;
+  const fahrzeugOptions = optionen.value.fahrzeuge;
   if (fahrzeugOptions.personenkraftwagen) {
     activeFahrzeugtypen++;
   }
@@ -103,7 +103,7 @@ const activeFahrzeugtypen = computed(() => {
  */
 const activeFahrzeugklassen = computed(() => {
   let activeFahrzeugklassen = 0;
-  let fahrzeugOptions = optionen.value.fahrzeuge;
+  const fahrzeugOptions = optionen.value.fahrzeuge;
   if (fahrzeugOptions.kraftfahrzeugverkehr) {
     activeFahrzeugklassen++;
   }
@@ -123,7 +123,7 @@ const activeFahrzeugklassen = computed(() => {
  */
 const activeAnteil = computed(() => {
   let activeAnteil = 0;
-  let fahrzeugOptions = optionen.value.fahrzeuge;
+  const fahrzeugOptions = optionen.value.fahrzeuge;
   if (fahrzeugOptions.schwerverkehrsanteilProzent) {
     activeAnteil++;
   }
@@ -137,17 +137,17 @@ const activeAnteil = computed(() => {
  * Baut den Listenheader dynamisch anhand der ausgewaehlten Felder im Optionsmenue auf
  */
 const headers = computed(() => {
-  let fahrzeugOptions = optionen.value.fahrzeuge;
-  let widthFahrzeugtypen: string = calculateColumnWidth(
+  const fahrzeugOptions = optionen.value.fahrzeuge;
+  const widthFahrzeugtypen: string = calculateColumnWidth(
     42,
     activeFahrzeugtypen.value
   );
-  let widthFahrzeugklassen: string = calculateColumnWidth(
+  const widthFahrzeugklassen: string = calculateColumnWidth(
     21,
     activeFahrzeugklassen.value
   );
-  let widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-  let headers: Array<Object> = [
+  const widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
+  const headers: Array<Object> = [
     // Zeit
     {
       title: "Zeit",

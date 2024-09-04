@@ -47,39 +47,43 @@
                 :is-differenzdatenvergleich-active="
                   chosenOptions.differenzdatenDarstellen
                 "
-                @fahrzeugOptions="updateOptions($event)"
+                @fahrzeug-options="updateOptions($event)"
               />
 
               <geometrie-panel
                 :zaehlung="zaehlung"
                 @von="setVon($event)"
                 @nach="setNach($event)"
-                @beideRichtungen="setBeideRichtungen($event)"
+                @beide-richtungen="setBeideRichtungen($event)"
               />
 
               <zaehlungsvergleich-panel
                 :zaehlung="zaehlung"
-                @vergleichszaehlungsId="setVergleichszaehlungsId($event)"
-                @differenzdatenDarstellen="setDifferenzdatenDarstellen($event)"
-                @idVergleichszaehlungZeitreihe="
+                @vergleichszaehlungs-id="setVergleichszaehlungsId($event)"
+                @differenzdaten-darstellen="setDifferenzdatenDarstellen($event)"
+                @id-vergleichszaehlung-zeitreihe="
                   setIdVergleichszaehlungZeitreihe($event)
                 "
               />
 
               <darstellungsoptionen-panel
-                @werteHundertRunden="setWerteHundertRunden($event)"
-                @blackPrintMode="setBlackPrintMode($event)"
+                @werte-hundert-runden="setWerteHundertRunden($event)"
+                @black-print-mode="setBlackPrintMode($event)"
                 @mittelwert="setMittelwert($event)"
                 @stundensumme="setStundensumme($event)"
                 @blocksumme="setBlocksumme($event)"
                 @tagessumme="setTagessumme($event)"
                 @spitzenstunde="setSpitzenstunde($event)"
-                @spitzenstundeKfz="setSpitzenstundeKfz($event)"
-                @spitzenstundeRad="setSpitzenstundeRad($event)"
-                @spitzenstundeFuss="setSpitzenstundeFuss($event)"
-                @ganglinieYAchse1MaxValue="setGanglinieYAchse1MaxValue($event)"
-                @ganglinieYAchse2MaxValue="setGanglinieYAchse2MaxValue($event)"
-                @zeitreiheGesamt="setZeitreiheGesamt($event)"
+                @spitzenstunde-kfz="setSpitzenstundeKfz($event)"
+                @spitzenstunde-rad="setSpitzenstundeRad($event)"
+                @spitzenstunde-fuss="setSpitzenstundeFuss($event)"
+                @ganglinie-y-achse1-max-value="
+                  setGanglinieYAchse1MaxValue($event)
+                "
+                @ganglinie-y-achse2-max-value="
+                  setGanglinieYAchse2MaxValue($event)
+                "
+                @zeitreihe-gesamt="setZeitreiheGesamt($event)"
               />
             </v-expansion-panels>
           </v-sheet>
@@ -163,7 +167,7 @@ const getContentSheetHeight = computed(() => {
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
-  let optionsCopy = {} as OptionsDTO;
+  const optionsCopy = {} as OptionsDTO;
   Object.assign(optionsCopy, options.value);
 
   if (
@@ -418,7 +422,7 @@ function resetSizeBelastungsplan() {
  * nicht mag.
  */
 watch(options, (newOptions: OptionsDTO) => {
-  let options = {} as OptionsDTO;
+  const options = {} as OptionsDTO;
   Object.assign(options, newOptions);
   chosenOptions.value = options;
 });

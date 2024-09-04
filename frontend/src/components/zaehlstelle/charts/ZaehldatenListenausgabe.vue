@@ -122,16 +122,16 @@ const optionen = computed<OptionsDTO>(() => {
  */
 const headers = computed(() => {
   const options = optionen.value;
-  let widthFahrzeugtypen: string = calculateColumnWidth(
+  const widthFahrzeugtypen: string = calculateColumnWidth(
     42,
     activeFahrzeugtypen.value
   );
-  let widthFahrzeugklassen: string = calculateColumnWidth(
+  const widthFahrzeugklassen: string = calculateColumnWidth(
     21,
     activeFahrzeugklassen.value
   );
-  let widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-  let headers: Array<Object> = [
+  const widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
+  const headers: Array<Object> = [
     // Zeit
     {
       title: "Zeit",

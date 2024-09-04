@@ -1,13 +1,13 @@
 <template>
   <span v-if="kommentar">
     <v-btn
+      v-tooltip:bottom="'Kommentar anzeigen'"
       color="secondary"
       icon="mdi-comment-text"
       size="small"
       height="20px"
       class="ml-n2"
       variant="text"
-      v-tooltip:bottom="'Kommentar anzeigen'"
       @click="showDialog = true"
     />
     <v-dialog

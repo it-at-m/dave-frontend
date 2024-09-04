@@ -155,7 +155,7 @@ function createZaehlstelleInfo() {
   const stadtbezirk = new TextAsset(
     `Stadtbezirk: ${zs.stadtbezirk} (${zs.stadtbezirkNummer})`
   );
-  let kommentar = new TextAsset(
+  const kommentar = new TextAsset(
     `Zählstellenkommentar: ${checkForNull(zs.kommentar)}`
   );
   pdfReportStore.addAssets([headline, platz, stadtbezirk, kommentar]);

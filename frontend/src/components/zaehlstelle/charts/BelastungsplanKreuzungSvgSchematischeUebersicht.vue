@@ -241,12 +241,12 @@ function draw() {
     .fill({ color: "white", opacity: props.docMode ? 0.3 : 0.0 });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
-  let knotenarme = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  const knotenarme = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
   if (knotenarme) {
     let ks = Object.assign(new Array<LadeKnotenarmDTO>(), knotenarme);
     ks = ks.sort(LadeKnotenarmComperator.sortByNumber).reverse();
     ks.forEach((k) => {
-      let r = calcRotation(k.nummer);
+      const r = calcRotation(k.nummer);
       const g = fahrtrichtungVon(k.nummer).rotate(r) as SVG.G;
       cleanseMap.set(k.nummer, g);
       // Wenn der Knotenarm ausgewählt wurde, dann merken wir uns die
@@ -449,7 +449,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
 
     // Die Sortierung ist wichtig, weil sie vorgibt, in welcher Reihenfolge die Fahrbeziehungen auf der
     // Fahrtrichtung angeordnet werden.
-    let fbts = fahrbeziehungsTypen.value
+    const fbts = fahrbeziehungsTypen.value
       .get(knotenarmnummer)
       ?.sort(
         BelastungsplanFahrbeziehungComperator.sortByFahrtrichtungsart
@@ -464,7 +464,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         .findFahrbeziehungVonPosition(fbt.fahrbeziehungsTyp);
 
       // Die Position der Fahrbeziehung in der Fahrtrichtung "nach"
-      let nachPosition = knotenarme.value
+      const nachPosition = knotenarme.value
         .get(fbt.nach)!
         .findFahrbeziehungsNachPosition(fbt.fahrbeziehungsTyp);
 
@@ -797,7 +797,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
       props.lineGap -
       ausgleich;
-    let xc1 = chartPosition.value + seite.value + colWidth;
+    const xc1 = chartPosition.value + seite.value + colWidth;
     let xc3 = chartPosition.value + seite.value + colWidth * 3;
     let xD1 = xc1 - colWidth + props.lineGap;
     let xD2 = xD1 + 50;
@@ -1268,7 +1268,7 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
           new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
         );
       }
-      let knotenarmVon = knotenarme.value.get(fb.von);
+      const knotenarmVon = knotenarme.value.get(fb.von);
       anzeigeWerte(knotenarmVon, data);
       // "nach" checken und ggf. anlegen
       if (!knotenarme.value.has(fb.nach)) {
@@ -1277,15 +1277,15 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
           new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
         );
       }
-      let knotenarmNach: BelastungsplanKnotenarm | undefined =
+      const knotenarmNach: BelastungsplanKnotenarm | undefined =
         knotenarme.value.get(fb.nach);
       anzeigeWerte(knotenarmNach, data);
 
       // Fahrbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
-      let belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
+      const belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
         fb.von
       ) as BelastungsplanFahrbeziehung[];
-      let belastungsplanFahrbeziehung = new BelastungsplanFahrbeziehung(
+      const belastungsplanFahrbeziehung = new BelastungsplanFahrbeziehung(
         calcFahrbeziehungstype(fb.von, fb.nach),
         fb.nach
       ) as BelastungsplanFahrbeziehung;

@@ -174,19 +174,19 @@ function addSumSouthIfNecessary(
     arrayOfDataForDirectionSouth &&
     arrayOfDataForDirectionSouth.data.length > 1
   ) {
-    let sumMqKfz = arrayOfDataForDirectionSouth?.data.reduce(
+    const sumMqKfz = arrayOfDataForDirectionSouth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumKfz,
       0
     );
-    let sumMqSv = arrayOfDataForDirectionSouth?.data.reduce(
+    const sumMqSv = arrayOfDataForDirectionSouth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumSv,
       0
     );
-    let sumMqGv = arrayOfDataForDirectionSouth?.data.reduce(
+    const sumMqGv = arrayOfDataForDirectionSouth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumGv,
       0
     );
-    let sumMqRad = arrayOfDataForDirectionSouth?.data.reduce(
+    const sumMqRad = arrayOfDataForDirectionSouth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumRad,
       0
     );
@@ -307,19 +307,19 @@ function addSumNorthIfNecessary(
     arrayOfDataForDirectionNorth != undefined &&
     arrayOfDataForDirectionNorth?.data.length > 1
   ) {
-    let sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
+    const sumMqKfz = arrayOfDataForDirectionNorth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumKfz,
       0
     );
-    let sumMqSv = arrayOfDataForDirectionNorth?.data.reduce(
+    const sumMqSv = arrayOfDataForDirectionNorth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumSv,
       0
     );
-    let sumMqGv = arrayOfDataForDirectionNorth?.data.reduce(
+    const sumMqGv = arrayOfDataForDirectionNorth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumGv,
       0
     );
-    let sumMqRad = arrayOfDataForDirectionNorth?.data.reduce(
+    const sumMqRad = arrayOfDataForDirectionNorth?.data.reduce(
       (accumulator, currentValue) => accumulator + currentValue.sumRad,
       0
     );
@@ -533,7 +533,7 @@ function drawLegende() {
   formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
   formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
   formeln.set("Rad", "");
-  let chosenFahrzeugartAsTextArray: string[] = [];
+  const chosenFahrzeugartAsTextArray: string[] = [];
   if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
     chosenFahrzeugartAsTextArray.push("KFZ");
   }
@@ -640,7 +640,7 @@ function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
     totalVerkehr += props.belastungsplanData.totalRad;
   }
   const percentageMqComparedToTotal = totalVerkehrMq / totalVerkehr;
-  let result = percentageMqComparedToTotal * maxLineWidth;
+  const result = percentageMqComparedToTotal * maxLineWidth;
   return result > 1 ? result : 1;
 }
 

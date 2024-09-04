@@ -73,7 +73,7 @@
       v-if="hasZaehlungen"
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:modelValue="changeTab"
+      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
@@ -161,11 +161,11 @@
       :is-listenausgabe="isTabListenausgabe"
       :is-not-heatmap="isNotTabHeatmap"
       :loading-file="loadingFile"
-      @addChartToPdfReport="addChartToPdfReport"
-      @saveGraphAsImage="saveGraphAsImage"
-      @openPdfReportDialog="openPdfReportDialog"
-      @generateCsv="generateCsv"
-      @generatePdf="generatePdf"
+      @add-chart-to-pdf-report="addChartToPdfReport"
+      @save-graph-as-image="saveGraphAsImage"
+      @open-pdf-report-dialog="openPdfReportDialog"
+      @generate-csv="generateCsv"
+      @generate-pdf="generatePdf"
     />
 
     <pdf-report-menue v-model="pdfReportDialog" />
@@ -465,7 +465,7 @@ function resetStartEndeUhrzeitIntervallsInStore(): void {
 }
 
 function setMaxRangeYAchse() {
-  let ganglinieYAchse1MaxValue: number | null =
+  const ganglinieYAchse1MaxValue: number | null =
     options.value.ganglinieYAchse1MaxValue;
   if (
     ganglinieYAchse1MaxValue !== undefined &&
@@ -475,7 +475,7 @@ function setMaxRangeYAchse() {
     zaehldatenSteplineDTO.value.rangeMax = ganglinieYAchse1MaxValue;
   }
 
-  let ganglinieYAchse2MaxValue: number | null =
+  const ganglinieYAchse2MaxValue: number | null =
     options.value.ganglinieYAchse2MaxValue;
   if (
     ganglinieYAchse2MaxValue !== undefined &&
@@ -639,7 +639,7 @@ function getZeitreiheBase64(): string | undefined {
 
 // PDF
 function generatePdf() {
-  let formData = new FormData();
+  const formData = new FormData();
   loadingFile.value = true;
 
   const o = Object.assign({}, options.value) as OptionsDTO;

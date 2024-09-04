@@ -7,6 +7,7 @@
     <template #activator="{ props: activatorProps }">
       <v-btn
         v-bind="activatorProps"
+        key="speedDial"
         :color="speedDialColor"
         :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-file'"
         size="large"
@@ -17,13 +18,12 @@
         style="z-index: 400"
         :data-x="activatorProps"
         :loading="loadingFile"
-        key="speedDial"
       />
     </template>
     <v-btn
       v-if="isNotHeatmap"
-      v-tooltip:start="generatePdfTooltip"
       key="generatePdfButton"
+      v-tooltip:start="generatePdfTooltip"
       size="small"
       color="secondary"
       icon="mdi-file-pdf-box"
@@ -31,24 +31,24 @@
     />
     <v-btn
       v-if="isListenausgabe"
-      v-tooltip:start="'CSV'"
       key="generatecsvButton"
+      v-tooltip:start="'CSV'"
       size="small"
       color="secondary"
       icon="mdi-file-delimited"
       @click="$emit('generateCsv')"
     />
     <v-btn
-      v-tooltip:start="'PDF Report Menü öffnen'"
       key="openPdfReportDialogButton"
+      v-tooltip:start="'PDF Report Menü öffnen'"
       size="small"
       color="secondary"
       icon="mdi-file-chart"
       @click="$emit('openPdfReportDialog')"
     />
     <v-btn
-      v-tooltip:start="addChartToReportTooltip"
       key="addChartToPdfReportButton"
+      v-tooltip:start="addChartToReportTooltip"
       size="small"
       color="secondary"
       icon="mdi-chart-box-plus-outline"
@@ -56,8 +56,8 @@
     />
     <v-btn
       v-if="!isListenausgabe"
-      v-tooltip:start="'Graph herunterladen'"
       key="saveGraphAsImageButton"
+      v-tooltip:start="'Graph herunterladen'"
       size="small"
       color="secondary"
       icon="mdi-download"

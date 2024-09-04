@@ -36,7 +36,7 @@
         :readonly="richtungValues.length === 1"
         persistent-hint
         :hint="directionHint"
-        @update:modelValue="preassignMqIdsInOptions"
+        @update:model-value="preassignMqIdsInOptions"
       />
 
       <v-autocomplete
@@ -100,9 +100,9 @@ const messstellen = computed<Array<KeyVal>>(() => {
 });
 
 const richtungValues = computed<Array<KeyVal>>(() => {
-  let result: Array<KeyVal> = [];
+  const result: Array<KeyVal> = [];
   if (auswertungOptions.value.mstIds.length === 1) {
-    for (let messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of allVisibleMessstellen.value) {
       if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
         if (messstelle.messquerschnitte.length > 1) {
           result.push({
@@ -131,9 +131,9 @@ const richtungValues = computed<Array<KeyVal>>(() => {
 });
 
 const lageValues = computed<Array<KeyVal>>(() => {
-  let result: Array<KeyVal> = [];
+  const result: Array<KeyVal> = [];
   if (auswertungOptions.value.mstIds.length === 1) {
-    for (let messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of allVisibleMessstellen.value) {
       if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
         messstelle.messquerschnitte.forEach(
           (querschnitt: MessquerschnittAuswertungDTO) => {
@@ -214,7 +214,7 @@ function loadAllVisibleMessstellen(): void {
 function setDefaultDirection(): void {
   resetMqsIfNecessary();
   if (auswertungOptions.value.mstIds.length === 1) {
-    for (let messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of allVisibleMessstellen.value) {
       if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
         if (messstelle.messquerschnitte.length === 1) {
           direction.value = messstelle.messquerschnitte[0].fahrtrichtung;
@@ -230,7 +230,7 @@ function setDefaultDirection(): void {
 function setVerfuegbareVerkehrsarten() {
   auswertungOptions.value.verfuegbareVerkehrsarten = [];
   if (auswertungOptions.value.mstIds.length > 0) {
-    for (let messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of allVisibleMessstellen.value) {
       if (
         auswertungOptions.value.mstIds.includes(messstelle.mstId) &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(

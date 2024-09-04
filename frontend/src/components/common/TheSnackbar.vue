@@ -7,12 +7,12 @@
     vertical
     location="bottom left"
   >
-    <template v-slot:text>
+    <template #text>
       <div class="text-subtitle-1 pb-2">{{ snackbarTextPart1 }}</div>
       <p>{{ snackbarTextPart2 }}</p>
     </template>
 
-    <template v-slot:actions>
+    <template #actions>
       <v-btn
         v-if="color === 'error'"
         class="text-none"

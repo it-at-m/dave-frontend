@@ -209,7 +209,7 @@ onMounted(() => {
 
 const kreuzungsname = computed(() => {
   let kreuzungsname = "";
-  let aktiveZaehlung: LadeZaehlungDTO = zaehlstelleStore.getAktiveZaehlung;
+  const aktiveZaehlung: LadeZaehlungDTO = zaehlstelleStore.getAktiveZaehlung;
   if (aktiveZaehlung) {
     kreuzungsname = aktiveZaehlung.kreuzungsname;
   }
