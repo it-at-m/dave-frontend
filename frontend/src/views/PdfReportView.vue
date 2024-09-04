@@ -426,7 +426,7 @@ function generatePdf() {
   fetchPdf(formData);
 }
 
-function fetchPdf(formData: any) {
+function fetchPdf(formData: FormData) {
   formData.append("department", getDepartment.value);
   GeneratePdfService.postPdfCustomFetchReport(formData)
     .then((res) => {

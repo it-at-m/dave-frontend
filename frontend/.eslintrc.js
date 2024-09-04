@@ -21,6 +21,7 @@ module.exports = {
   ],
   rules: {
     "no-console": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "vue/component-name-in-template-casing": ["error", "kebab-case"],
   },
 };
