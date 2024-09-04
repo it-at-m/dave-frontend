@@ -8,7 +8,7 @@
     density="compact"
     fixed-header
     :height="height"
-    :row-props="(item) => rowClasses(item.item)"
+    :row-props="(item: any) => rowClasses(item.item)"
   />
 </template>
 
