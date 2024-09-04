@@ -12,6 +12,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { computed, onMounted, ref, watch } from "vue";
@@ -117,11 +118,13 @@ const lowestFahrbeziehungsValue = ref(1000000);
 
 const fahrbeziehungsTypen = ref<Map<number, BelastungsplanFahrbeziehung[]>>(
   new Map<number, BelastungsplanFahrbeziehung[]>()
-);
+) as Ref<Map<number, BelastungsplanFahrbeziehung[]>>;
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
   new Map<number, BelastungsplanKnotenarm>()
-);
-const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
+) as Ref<Map<number, BelastungsplanKnotenarm>>;
+const prozentWerte = ref<Map<number, boolean>>(
+  new Map<number, boolean>()
+) as Ref<Map<number, boolean>>;
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
@@ -1356,7 +1359,7 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
     // wichtig, weil daran die anderen Fahrbeziehungen ausgerichtet werden. D.h. auf der "nach"
     // Seite muss ich wissen, auf welcher Position die gerade Fahrbeziehung im "von" plaziert ist, um die
     //  anderen eingehenden Fahrbeziehungen danach ausrichten zu können.
-    knotenarme.value.forEach((k) => {
+    knotenarme.value.forEach((k: BelastungsplanKnotenarm) => {
       let gegenueber = 0;
       if ([5, 2, 6, 1].includes(k.knotenarmNummer)) {
         gegenueber = k.knotenarmNummer + 2;
