@@ -40,3 +40,4 @@ $(pwd)
 
 # do not check in local application profile yml
 apigateway/**/application-local.yml
+apigateway/**/application-unittest.yml
