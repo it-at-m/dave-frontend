@@ -1,17 +1,17 @@
 export default interface LadeBelastungsplanMessqueschnittDataDTO {
-    mqId: string;
+  mqId: string;
 
-    sumKfz: number;
+  sumKfz: number;
 
-    sumSv: number;
+  sumSv: number;
 
-    sumGv: number;
+  sumGv: number;
 
-    sumRad: number;
+  sumRad: number;
 
-    direction: string;
+  direction: string;
 
-    percentSv: number;
+  percentSv: number;
 
-    percentGV: number;
+  percentGV: number;
 }

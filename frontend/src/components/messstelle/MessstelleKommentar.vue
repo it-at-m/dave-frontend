@@ -1,56 +1,53 @@
 <template>
-    <span v-if="kommentar">
-        <v-tooltip bottom>
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    v-bind="attrs"
-                    color="secondary"
-                    icon
-                    height="20px"
-                    class="ml-n2"
-                    v-on="on"
-                    @click="showDialog = true"
-                >
-                    <v-icon small>mdi-comment-text</v-icon>
-                </v-btn>
-            </template>
-            <span>Kommentar anzeigen</span>
-        </v-tooltip>
-        <v-dialog
-            v-model="showDialog"
-            max-width="600px"
-        >
-            <v-card class="rounded-0">
-                <v-card-title class="text-h5 grey lighten-2">
-                    <v-icon left>mdi-comment-multiple</v-icon>
-                    Informationen
-                </v-card-title>
-                <br />
-                <v-card-text> {{ kommentar }} </v-card-text>
-            </v-card>
+  <span v-if="kommentar">
+    <v-btn
+      v-tooltip:bottom="'Kommentar anzeigen'"
+      color="secondary"
+      icon="mdi-comment-text"
+      size="small"
+      height="20px"
+      class="ml-n2"
+      variant="text"
+      @click="showDialog = true"
+    />
+    <v-dialog
+      v-model="showDialog"
+      max-width="600px"
+    >
+      <v-card class="rounded-0">
+        <v-card-title class="text-h5 grey-lighten-2">
+          <v-icon
+            start
+            icon="mdi-comment-multiple"
+          />
+          Informationen
+        </v-card-title>
+        <br />
+        <v-card-text> {{ kommentar }} </v-card-text>
+      </v-card>
 
-            <v-footer>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="grey lighten-1"
-                    @click="showDialog = false"
-                >
-                    Schließen
-                </v-btn>
-                <v-spacer></v-spacer>
-            </v-footer>
-        </v-dialog>
-    </span>
+      <v-footer>
+        <v-spacer />
+        <v-btn
+          class="text-none"
+          color="grey-lighten-1"
+          text="Schließen"
+          @click="showDialog = false"
+        />
+        <v-spacer />
+      </v-footer>
+    </v-dialog>
+  </span>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+
 interface Props {
-    kommentar?: string;
+  kommentar?: string;
 }
 
 defineProps<Props>();
 
 const showDialog = ref(false);
 </script>
-

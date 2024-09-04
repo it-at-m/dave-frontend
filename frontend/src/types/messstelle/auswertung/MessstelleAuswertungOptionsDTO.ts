@@ -1,15 +1,16 @@
-import FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+
+import { AuswertungsZeitraum } from "@/types/enum/AuswertungCategories";
 import TagesTyp from "@/types/enum/TagesTyp";
-import {AuswertungsZeitraum} from "@/types/enum/AuswertungCategories";
 
 export default interface MessstelleAuswertungOptionsDTO {
-    jahre: Array<string>;
-    tagesTyp: TagesTyp;
-    zeitraum: Array<AuswertungsZeitraum>;
-    mstIds: Array<string>;
-    mqIds: Array<string>;
-    fahrzeuge: FahrzeugOptions;
+  jahre: Array<string>;
+  tagesTyp: TagesTyp;
+  zeitraum: Array<AuswertungsZeitraum>;
+  mstIds: Array<string>;
+  mqIds: Array<string>;
+  fahrzeuge: FahrzeugOptions;
 
-    // Nicht fuer das Backend
-    verfuegbareVerkehrsarten: Array<string>;
+  // Nicht fuer das Backend
+  verfuegbareVerkehrsarten: Array<string>;
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
+ * der Landeshauptstadt München, 2022
  */
 package de.muenchen.dave.filter;
 
@@ -19,7 +19,6 @@ import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)
-
 class CsrfTokenAppendingHelperFilterTest {
 
     @Autowired
@@ -28,9 +27,11 @@ class CsrfTokenAppendingHelperFilterTest {
     @Test
     @WithMockUser
     void csrfCookieAppendition() {
-        webTestClient.get().uri("/").exchange()
+        webTestClient
+                .get()
+                .uri("/")
+                .exchange()
                 .expectHeader()
                 .valueMatches("set-cookie", "XSRF-TOKEN=[a-f\\d]{8}(-[a-f\\d]{4}){3}-[a-f\\d]{12}?;\\sPath=/");
     }
-
 }
