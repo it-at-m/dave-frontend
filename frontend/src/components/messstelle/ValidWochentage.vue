@@ -12,14 +12,14 @@
 </template>
 
 <script setup lang="ts">
-import type {ValidWochentageInPeriodDto} from "@/types/messstelle/ValidWochentageInPeriodDto";
+import type { ValidWochentageInPeriodDto } from "@/types/messstelle/ValidWochentageInPeriodDto";
 
-import {computed, onMounted, ref, watch} from "vue";
-import {useRoute} from "vue-router";
+import { computed, onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import {useMessstelleStore} from "@/store/MessstelleStore";
-import {useSnackbarStore} from "@/store/SnackbarStore";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import TagesTyp from "@/types/enum/TagesTyp";
 
 const messstelleStore = useMessstelleStore();

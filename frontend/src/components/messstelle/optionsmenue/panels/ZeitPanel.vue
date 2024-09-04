@@ -16,29 +16,52 @@
         padding="10px 0 0 0"
         header-text="Zeitraum"
       />
-      <v-row
-        dense
-      >
+      <v-row dense>
         <v-col cols="8">
-          <v-row dense no-gutters class="mb-0 pb-0">
+          <v-row
+            dense
+            no-gutters
+            class="mb-0 pb-0"
+          >
             <v-col cols="6">
-              <v-switch v-model="needRange" label="Zeitraum" density="compact" @update:modelValue="resetDates">
+              <v-switch
+                v-model="needRange"
+                label="Zeitraum"
+                density="compact"
+                @update:modelValue="resetDates"
+              >
                 <template v-slot:prepend>
-                  <v-label text="Zeitpunkt" class="pl-0"/>
+                  <v-label
+                    text="Zeitpunkt"
+                    class="pl-0"
+                  />
                 </template>
               </v-switch>
             </v-col>
-            <v-spacer/>
+            <v-spacer />
           </v-row>
-          <v-row dense class="mt-0 pt-0">
+          <v-row
+            dense
+            class="mt-0 pt-0"
+          >
             <v-col cols="6">
-              <date-picker v-model="dateVon" :minDate="minDate" :maxDate="maxDate" label="von"/>
+              <date-picker
+                v-model="dateVon"
+                :minDate="minDate"
+                :maxDate="maxDate"
+                label="von"
+              />
             </v-col>
             <v-col cols="6">
-              <date-picker v-if="needRange" v-model="dateBis" :minDate="minDateRange" :maxDate="maxDate" label="bis"/>
+              <date-picker
+                v-if="needRange"
+                v-model="dateBis"
+                :minDate="minDateRange"
+                :maxDate="maxDate"
+                label="bis"
+              />
             </v-col>
           </v-row>
-
         </v-col>
         <v-col cols="4">
           <div v-if="isAnwender || needRange">
@@ -85,20 +108,20 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
-import {computed, onMounted, ref, watch} from "vue";
-import {useRoute} from "vue-router";
+import { computed, onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
+import DatePicker from "@/components/common/DatePicker.vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
-import {useMessstelleStore} from "@/store/MessstelleStore";
-import {useUserStore} from "@/store/UserStore";
-import {useDateUtils} from "@/util/DateUtils";
-import {useOptionsmenuUtils} from "@/util/OptionsmenuUtils";
-import DatePicker from "@/components/common/DatePicker.vue";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useUserStore } from "@/store/UserStore";
+import { useDateUtils } from "@/util/DateUtils";
+import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
 const route = useRoute();
 
@@ -152,12 +175,12 @@ const nextDayOfVon = computed(() => {
   const nextDay = new Date(dateVon.value);
   nextDay.setDate(dateVon.value.getDate() + 1);
   return nextDay;
-})
+});
 
 const maxDate = computed(() => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-      .toISOString()
-      .slice(0, 10);
+    .toISOString()
+    .slice(0, 10);
   return messstelleInfo.value.abbaudatum ?? yesterday;
 });
 
@@ -172,7 +195,9 @@ const dateVon = computed({
 });
 const dateBis = computed({
   get() {
-    return chosenOptionsCopy.value.zeitraum.length === 2 ? new Date(chosenOptionsCopy.value.zeitraum[1]) : nextDayOfVon.value;
+    return chosenOptionsCopy.value.zeitraum.length === 2
+      ? new Date(chosenOptionsCopy.value.zeitraum[1])
+      : nextDayOfVon.value;
   },
 
   set(value: Date) {
@@ -205,13 +230,14 @@ watch(chosenOptionsCopyZeitraum, () => {
 });
 
 function calculateChoosableOptions(): void {
-  messstelleStore.calculateActiveMessfaehigkeit(chosenOptionsCopy.value.zeitraum[0]);
+  messstelleStore.calculateActiveMessfaehigkeit(
+    chosenOptionsCopy.value.zeitraum[0]
+  );
 }
 
 function resetDates() {
-  if(needRange.value) {
+  if (needRange.value) {
     saveDateValueBis(dateBis.value);
-
   } else {
     if (chosenOptionsCopy.value.zeitraum.length === 2) {
       chosenOptionsCopy.value.zeitraum.pop();

@@ -4,7 +4,6 @@ import { computed, ref } from "vue";
 import { ApiError, Levels } from "@/api/error";
 
 export const useSnackbarStore = defineStore("snackbar", () => {
-
   const snackbarTextPart1 = ref<string | undefined>(undefined);
   const snackbarTextPart2 = ref<string | undefined>(undefined);
   const snackbarLevel = ref<Levels>(Levels.INFO);

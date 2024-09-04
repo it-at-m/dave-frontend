@@ -15,11 +15,11 @@ import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
@@ -627,17 +627,11 @@ function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
     totalVerkehrMq += mq.sumKfz;
     totalVerkehr += props.belastungsplanData.totalKfz;
   }
-  if (
-    chosenOptionsCopyFahrzeuge.value.schwerverkehr ||
-    isSvpInBelastungsPlan
-  ) {
+  if (chosenOptionsCopyFahrzeuge.value.schwerverkehr || isSvpInBelastungsPlan) {
     totalVerkehrMq += mq.sumSv;
     totalVerkehr += props.belastungsplanData.totalSv;
   }
-  if (
-    chosenOptionsCopyFahrzeuge.value.gueterverkehr ||
-    isGvpInBelastungsPlan
-  ) {
+  if (chosenOptionsCopyFahrzeuge.value.gueterverkehr || isGvpInBelastungsPlan) {
     totalVerkehrMq += mq.sumGv;
     totalVerkehr += props.belastungsplanData.totalGv;
   }

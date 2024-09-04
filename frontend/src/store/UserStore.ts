@@ -12,7 +12,6 @@ const rolePoweruser = "ROLE_POWERUSER";
  * der Oberfläche nur für bestimmte Rollen sichtbar sein sollen.
  */
 export const useUserStore = defineStore("userStore", () => {
-
   const ssoUserInfoResponse = ref<SsoUserInfoResponse>(
     {} as SsoUserInfoResponse
   );

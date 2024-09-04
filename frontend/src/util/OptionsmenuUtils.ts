@@ -1,6 +1,6 @@
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import {computed} from "vue";
+import { computed } from "vue";
 
 export function useOptionsmenuUtils(chosenOptionsCopy: MessstelleOptionsDTO) {
   const isDateBiggerFiveYears = computed(() => {

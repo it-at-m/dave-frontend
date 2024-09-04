@@ -71,7 +71,8 @@ import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
 import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
 import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
-import {onMounted, ref, watch} from "vue";
+import { isEmpty, isNil } from "lodash";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
@@ -79,7 +80,6 @@ import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import Suggest from "@/types/suche/Suggest";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {isEmpty, isNil} from "lodash";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
@@ -202,7 +202,7 @@ function search() {
       routeName === "messstelle" ||
       routeName === "pdfreport" ||
       routeName === "auswertung") &&
-      searchQuery.value !== ""
+    searchQuery.value !== ""
   ) {
     router.push(`/`);
   }
@@ -271,8 +271,11 @@ function iconOfSuggestion(type: string) {
   return icon;
 }
 
-watch(() => searchStore.getLastSearchQuery, () => {
-  searchQuery.value = searchStore.getLastSearchQuery;
-  search();
-});
+watch(
+  () => searchStore.getLastSearchQuery,
+  () => {
+    searchQuery.value = searchStore.getLastSearchQuery;
+    search();
+  }
+);
 </script>

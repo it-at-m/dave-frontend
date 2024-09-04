@@ -11,12 +11,12 @@
   </span>
 </template>
 <script setup lang="ts">
+import { isNil } from "lodash";
 import { computed } from "vue";
 
 import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 import IconTooltip from "@/types/util/IconTooltip";
-import {isNil} from "lodash";
 
 interface Props {
   small?: boolean;

@@ -16,7 +16,5 @@
 </template>
 
 <script lang="ts" setup>
-
 const showLoader = defineModel<boolean>({ required: true });
-
 </script>

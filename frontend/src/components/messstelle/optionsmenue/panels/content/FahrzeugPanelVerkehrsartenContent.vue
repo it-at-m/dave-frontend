@@ -177,10 +177,10 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
@@ -396,7 +396,8 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
     }
     maxSelectableItems++;
   }
-  selectOrDeselectAllVerkehrsartenVmodel.value = selectedItems > maxSelectableItems / 2;
+  selectOrDeselectAllVerkehrsartenVmodel.value =
+    selectedItems > maxSelectableItems / 2;
 }
 
 /**

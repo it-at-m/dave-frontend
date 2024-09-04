@@ -36,12 +36,12 @@ import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconRed from "@/assets/marker-icon-red.png";
+import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useMapOptionsStore} from "@/store/MapOptionsStore";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -125,8 +125,11 @@ function initMap(): void {
 
 const zoomValue = computed(() => {
   if (props.latlng && props.latlng.length > 0) {
-    return props.zoom
-  } else if (mapOptionsStore.getMapOptions && mapOptionsStore.getMapOptions.zoom) {
+    return props.zoom;
+  } else if (
+    mapOptionsStore.getMapOptions &&
+    mapOptionsStore.getMapOptions.zoom
+  ) {
     return mapOptionsStore.getMapOptions.zoom;
   } else {
     return props.zoom;
@@ -139,8 +142,15 @@ const zoomValue = computed(() => {
 const center = computed<LatLng>(() => {
   if (props.latlng && props.latlng.length > 0) {
     return createLatLngFromString(props.latlng[0], props.latlng[1]);
-  } else if (mapOptionsStore.getMapOptions && mapOptionsStore.getMapOptions.latitude && mapOptionsStore.getMapOptions.longitude) {
-    return createLatLngFromString(mapOptionsStore.getMapOptions.latitude, mapOptionsStore.getMapOptions.longitude);
+  } else if (
+    mapOptionsStore.getMapOptions &&
+    mapOptionsStore.getMapOptions.latitude &&
+    mapOptionsStore.getMapOptions.longitude
+  ) {
+    return createLatLngFromString(
+      mapOptionsStore.getMapOptions.latitude,
+      mapOptionsStore.getMapOptions.longitude
+    );
   } else {
     // Mitte von München
     return createLatLngFromString(
@@ -352,7 +362,7 @@ function saveMapPosition() {
   const lng = mapCenter?.lng.toString();
   const zoom = map.getZoom();
 
-  mapOptionsStore.setMapOptions({longitude: lng, latitude: lat, zoom: zoom});
+  mapOptionsStore.setMapOptions({ longitude: lng, latitude: lat, zoom: zoom });
 }
 
 function routeToZaehlstelle(id: string) {

@@ -13,9 +13,7 @@
         :disabled="disabled"
         :required="required"
         density="compact"
-        :rules="[
-            (toCheck) => validateTextDate(toCheck),
-          ]"
+        :rules="[(toCheck) => validateTextDate(toCheck)]"
         @blur="blur"
       >
         <template #label>
@@ -47,10 +45,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import moment from "moment";
 import _ from "lodash";
-import {useDateUtils} from "@/util/DateUtils";
+import moment from "moment";
+import { computed, ref } from "vue";
+
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -66,7 +65,11 @@ interface Emits {
 
 const ISO_FORMAT = "YYYY-MM-DD";
 const DISPLAY_FORMAT = "DD.MM.YYYY";
-const props = withDefaults(defineProps<Props>(), { label: "", required: false, disabled: false});
+const props = withDefaults(defineProps<Props>(), {
+  label: "",
+  required: false,
+  disabled: false,
+});
 const emit = defineEmits<Emits>();
 const date = defineModel<Date | undefined>();
 const datePickerActive = ref(false);
@@ -129,6 +132,12 @@ function blur(): void {
 
 const dateUtils = useDateUtils();
 function validateTextDate(toCheck: string) {
-  return dateUtils.isDateBetweenAsStrings(dateUtils.formatDateAsStringToISO(toCheck), props.minDate, props.maxDate) || "Das eingegebene Datum liegt außerhalb des gültigen Bereichs.";
+  return (
+    dateUtils.isDateBetweenAsStrings(
+      dateUtils.formatDateAsStringToISO(toCheck),
+      props.minDate,
+      props.maxDate
+    ) || "Das eingegebene Datum liegt außerhalb des gültigen Bereichs."
+  );
 }
 </script>

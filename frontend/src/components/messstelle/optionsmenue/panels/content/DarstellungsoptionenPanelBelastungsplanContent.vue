@@ -55,11 +55,11 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import {computed, ref, watch} from "vue";
+import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import {useMessstelleStore} from "@/store/MessstelleStore";
-import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();

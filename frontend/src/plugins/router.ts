@@ -16,13 +16,13 @@ const routes = [
     path: "/zaehlstelle/:zaehlstelleId/:zaehlungId?",
     name: "zaehlstelle",
     component: ZaehlstelleView,
-    props: true
+    props: true,
   },
   {
     path: "/messstelle/:messstelleId",
     name: "messstelle",
     component: MessstelleView,
-    props: true
+    props: true,
   },
   {
     path: "/auswertung",

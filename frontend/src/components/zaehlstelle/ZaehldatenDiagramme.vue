@@ -17,7 +17,7 @@
     <v-overlay
       :model-value="true"
       opacity="0"
-      style="z-index: -99999999;"
+      style="z-index: -99999999"
     >
       <belastungsplan-kreuzung-svg-schematische-uebersicht
         :dimension="contentHeight"
@@ -184,7 +184,7 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
-import {isEmpty, first, last} from "lodash";
+import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
 
 import GenerateCsvService from "@/api/service/GenerateCsvService";
@@ -206,8 +206,8 @@ import { useUserStore } from "@/store/UserStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
-import { useDownloadUtils } from "@/util/DownloadUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useReportTools } from "@/util/ReportTools";
 
 interface Props {

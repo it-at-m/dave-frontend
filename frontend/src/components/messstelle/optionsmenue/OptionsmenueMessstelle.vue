@@ -82,10 +82,10 @@ import TagesTyp from "@/types/enum/TagesTyp";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
+import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useTimeUtils } from "@/util/TimeUtils";
-import {useDateUtils} from "@/util/DateUtils";
 
 interface Props {
   messstelleId: string;
@@ -152,8 +152,8 @@ function areChosenOptionsValid(): boolean {
     snackbarStore.showError(errortext);
   }
   if (
-      chosenOptions.value.zeitraum.length === 2 && !dateUtils.isDateRangeAsStringValid(chosenOptions.value.zeitraum)
-
+    chosenOptions.value.zeitraum.length === 2 &&
+    !dateUtils.isDateRangeAsStringValid(chosenOptions.value.zeitraum)
   ) {
     result = false;
     snackbarStore.showError("Das Datum 'bis' muss nach 'von' liegen.");

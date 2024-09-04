@@ -4,7 +4,6 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 export const useSearchStore = defineStore("searchStore", () => {
-
   const searchResult = ref<Array<AnzeigeKarteDTO>>([]);
   const lastSearchQuery = ref("");
 

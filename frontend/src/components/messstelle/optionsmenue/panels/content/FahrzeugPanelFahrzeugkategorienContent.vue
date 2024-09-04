@@ -121,8 +121,8 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
 import Fahrzeug from "@/types/enum/Fahrzeug";
+import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const fahrzeugPanelTools = useFahrzeugPanelTools();

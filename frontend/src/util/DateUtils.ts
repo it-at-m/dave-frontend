@@ -23,7 +23,7 @@ export function useDateUtils() {
     if (!date) {
       return "";
     }
-    return date.toISOString().slice(0,10);
+    return date.toISOString().slice(0, 10);
   }
 
   function getTimeOfDate(date: Date): string {
@@ -80,13 +80,15 @@ export function useDateUtils() {
       dateToCheck.valueOf() <= dateAfter.valueOf()
     );
   }
-  
-  function isDateRangeAsStringValid(range:Array<string>) {
-    return isDateRangeValid(getDatumOfString(range[0]), getDatumOfString(range[1]));
+
+  function isDateRangeAsStringValid(range: Array<string>) {
+    return isDateRangeValid(
+      getDatumOfString(range[0]),
+      getDatumOfString(range[1])
+    );
   }
-  
-  
-  function isDateRangeValid(dateValueVon:Date, dateValueBis:Date) {
+
+  function isDateRangeValid(dateValueVon: Date, dateValueBis: Date) {
     return dateValueBis.valueOf() >= dateValueVon.valueOf();
   }
 

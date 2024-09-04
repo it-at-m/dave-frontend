@@ -1,7 +1,6 @@
 import _ from "lodash";
 
 export function useValidationRules() {
-
   function onlyPositivNumbersBiggerThan(
     toCheck: string,
     minValue: number
