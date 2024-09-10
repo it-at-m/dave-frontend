@@ -11,7 +11,7 @@
     closable-chips
     variant="outlined"
   >
-    <template #append-item>
+    <template #prepend-item>
       <v-btn
         class="text-none"
         width="100%"
