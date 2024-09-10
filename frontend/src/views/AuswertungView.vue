@@ -3,7 +3,7 @@
     <v-row dense>
       <v-col cols="4">
         <v-card
-          class="d-flex flex-column"
+          class="d-flex flex-column overflow-y-auto"
           :height="cardHeight"
           flat
         >
