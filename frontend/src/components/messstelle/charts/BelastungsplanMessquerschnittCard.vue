@@ -40,9 +40,9 @@ const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const defaultFontSize = 20;
 
 const farben = new Map<string, string>([
-  ["N", "#000000"],
+  ["N", "#4CAF50"],
   ["O", "#F44336"],
-  ["S", "#4CAF50"],
+  ["S", "#000000"],
   ["W", "#2196F3"],
 ]);
 
