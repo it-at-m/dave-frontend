@@ -353,7 +353,7 @@ function rotateArrowsIfNecessary() {
   const direction =
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
       .direction;
-  if (direction == "S" || direction == "W") {
+  if (direction == "O" || direction == "W") {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
