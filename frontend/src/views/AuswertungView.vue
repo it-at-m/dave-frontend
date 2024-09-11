@@ -1,7 +1,10 @@
 <template>
   <v-sheet class="dave-default">
     <v-row dense>
-      <v-col cols="4" class="overflow-x-auto">
+      <v-col
+        cols="4"
+        class="overflow-x-auto"
+      >
         <v-card
           class="d-flex flex-column overflow-y-auto"
           :height="cardHeight"
