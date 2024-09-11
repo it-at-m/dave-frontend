@@ -2,7 +2,7 @@ name: build image and push to ghcr.io
 
 on: 
   push:
-    branches: [main-ls2]
+    branches: ["main-ls2", "sprint"]
 
 env:
   REGISTRY: ghcr.io
