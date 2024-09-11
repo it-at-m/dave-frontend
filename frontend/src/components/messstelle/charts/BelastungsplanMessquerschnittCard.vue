@@ -16,6 +16,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
@@ -40,10 +41,10 @@ const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const defaultFontSize = 20;
 
 const farben = new Map<string, string>([
-  ["N", "#4CAF50"],
-  ["O", "#F44336"],
-  ["S", "#000000"],
-  ["W", "#2196F3"],
+  [Himmelsrichtungen.NORD, "#4CAF50"],
+  [Himmelsrichtungen.OST, "#F44336"],
+  [Himmelsrichtungen.SUED, "#000000"],
+  [Himmelsrichtungen.WEST, "#2196F3"],
 ]);
 
 const startX = ref(0);
@@ -124,7 +125,9 @@ function drawArrowsPointingSouth(
   }[]
 ) {
   const arrayOfDataForDirectionSouth = groupedByDirection.find(
-    (obj) => obj.direction === "S" || obj.direction === "O"
+    (obj) =>
+      obj.direction === Himmelsrichtungen.SUED ||
+      obj.direction === Himmelsrichtungen.OST
   );
   arrayOfDataForDirectionSouth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -257,7 +260,9 @@ function drawArrowsPointingNorth(
   }[]
 ) {
   const arrayOfDataForDirectionNorth = groupedByDirection.find(
-    (obj) => obj.direction === "N" || obj.direction === "W"
+    (obj) =>
+      obj.direction === Himmelsrichtungen.NORD ||
+      obj.direction === Himmelsrichtungen.WEST
   );
   arrayOfDataForDirectionNorth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -353,7 +358,10 @@ function rotateArrowsIfNecessary() {
   const direction =
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
       .direction;
-  if (direction == "O" || direction == "W") {
+  if (
+    direction === Himmelsrichtungen.OST ||
+    direction === Himmelsrichtungen.WEST
+  ) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
