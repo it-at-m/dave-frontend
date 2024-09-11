@@ -143,9 +143,9 @@ function drawArrowsPointingSouth(
     querschnittGroup.value.add(
       SVG.SVG()
         .polygon(
-          `${startX.value + 20},${startY.value + 851} ${
-            startX.value
-          },${startY.value + 851} ${startX.value + 10} ${startY.value + 860}`
+          `${startX.value + 25},${startY.value + 853} ${
+            startX.value - 5
+          },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
         )
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none")
@@ -276,9 +276,9 @@ function drawArrowsPointingNorth(
     querschnittGroup.value.add(
       SVG.SVG()
         .polygon(
-          `${startX.value + 20},${startY.value - 1} ${startX.value},${
-            startY.value - 1
-          } ${startX.value + 10} ${startY.value - 10}`
+          `${startX.value + 25},${startY.value - 3} ${startX.value - 5},${
+            startY.value - 3
+          } ${startX.value + 10} ${startY.value - 22}`
         )
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none")
@@ -620,7 +620,7 @@ const getZeitblockText = computed(() => {
 });
 
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
-  const maxLineWidth = 20;
+  const maxLineWidth = 40;
   let totalVerkehr = 0;
   let totalVerkehrMq = 0;
   if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
