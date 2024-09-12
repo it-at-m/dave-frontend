@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import type LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
+import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
@@ -47,6 +48,9 @@ const farben = new Map<string, string>([
   [Himmelsrichtungen.WEST, "#2196F3"],
 ]);
 
+const maxVerhiclesPerMq = ref(0);
+const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
+
 const startX = ref(0);
 const startY = ref(0);
 const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
@@ -62,6 +66,7 @@ const svgHeight = computed(() => {
 });
 
 onMounted(() => {
+  calcLineWidth();
   drawingConfig();
 });
 
@@ -627,29 +632,49 @@ const getZeitblockText = computed(() => {
   }
 });
 
+function calcLineWidth() {
+  // reset
+  maxVerhiclesPerMq.value = 0;
+  vehiclesPerMq.value = new Map<string, number>();
+  props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList.forEach(
+    (mq) => {
+      let totalVerkehrMq = 0;
+      if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        totalVerkehrMq += mq.sumKfz;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.schwerverkehr ||
+        isSvpInBelastungsPlan
+      ) {
+        totalVerkehrMq += mq.sumSv;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.gueterverkehr ||
+        isGvpInBelastungsPlan
+      ) {
+        totalVerkehrMq += mq.sumGv;
+      }
+      if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        totalVerkehrMq += mq.sumRad;
+      }
+      maxVerhiclesPerMq.value =
+        totalVerkehrMq > maxVerhiclesPerMq.value
+          ? totalVerkehrMq
+          : maxVerhiclesPerMq.value;
+      vehiclesPerMq.value.set(mq.mqId, totalVerkehrMq);
+    }
+  );
+}
+
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
-  const maxLineWidth = 40;
-  let totalVerkehr = 0;
-  let totalVerkehrMq = 0;
-  if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-    totalVerkehrMq += mq.sumKfz;
-    totalVerkehr += props.belastungsplanData.totalKfz;
+  const maxLineWidth = 20;
+  const mqData = vehiclesPerMq.value.get(mq.mqId);
+
+  if (mqData) {
+    const percentage = mqData / maxVerhiclesPerMq.value;
+    return maxLineWidth * percentage;
   }
-  if (chosenOptionsCopyFahrzeuge.value.schwerverkehr || isSvpInBelastungsPlan) {
-    totalVerkehrMq += mq.sumSv;
-    totalVerkehr += props.belastungsplanData.totalSv;
-  }
-  if (chosenOptionsCopyFahrzeuge.value.gueterverkehr || isGvpInBelastungsPlan) {
-    totalVerkehrMq += mq.sumGv;
-    totalVerkehr += props.belastungsplanData.totalGv;
-  }
-  if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
-    totalVerkehrMq += mq.sumRad;
-    totalVerkehr += props.belastungsplanData.totalRad;
-  }
-  const percentageMqComparedToTotal = totalVerkehrMq / totalVerkehr;
-  const result = percentageMqComparedToTotal * maxLineWidth;
-  return result > 1 ? result : 1;
+  return 1;
 }
 
 /**
