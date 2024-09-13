@@ -124,6 +124,7 @@ import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/Fahrzeug
 import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
@@ -147,6 +148,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
+const snackbarStore = useSnackbarStore();
 const display = useDisplay();
 
 const dialog = ref(false);
@@ -387,9 +389,42 @@ function setZeitreiheGesamt(event: boolean) {
  * @private
  */
 function setOptions() {
-  saveOptions();
-  dialog.value = false;
+  if (hasSelectedFahrzeug()) {
+    saveOptions();
+    dialog.value = false;
+  } else {
+    snackbarStore.showError(
+      "Es muss mindestens eine Verkehrsart oder Fahrzeugkategorie ausgewählt sein."
+    );
+  }
 }
+
+function hasSelectedFahrzeug() {
+  return hasSelectedVerkehrsarten.value || hasSelectedFahrzeugkategorie.value;
+}
+
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return (
+    chosenOptions.value.kraftfahrzeugverkehr ||
+    chosenOptions.value.schwerverkehr ||
+    chosenOptions.value.gueterverkehr ||
+    chosenOptions.value.schwerverkehrsanteilProzent ||
+    chosenOptions.value.gueterverkehrsanteilProzent ||
+    chosenOptions.value.radverkehr ||
+    chosenOptions.value.fussverkehr
+  );
+});
+
+const hasSelectedFahrzeugkategorie = computed<boolean>(() => {
+  return (
+    chosenOptions.value.pkwEinheiten ||
+    chosenOptions.value.kraftraeder ||
+    chosenOptions.value.lastzuege ||
+    chosenOptions.value.lastkraftwagen ||
+    chosenOptions.value.busse ||
+    chosenOptions.value.personenkraftwagen
+  );
+});
 
 /**
  * Speichert die aktuell gewählten Anzeigeoptionen im Vuex Store.

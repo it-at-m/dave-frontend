@@ -214,6 +214,13 @@
           </v-row>
         </v-col>
         <v-col cols="4">
+          <p
+            v-if="!hasSelectedVerkehrsarten"
+            class="text-red"
+          >
+            Wenn keine Verkehrsart ausgewählt wird, kann der Belastungsplan
+            nicht angezeigt werden.
+          </p>
           {{ helpTextVerkehrsarten }}
         </v-col>
       </v-row>
@@ -422,6 +429,14 @@ const isAnyKFZselected = computed(() => {
     fahrzeugOptions.value.gueterverkehr ||
     fahrzeugOptions.value.schwerverkehrsanteilProzent ||
     fahrzeugOptions.value.gueterverkehrsanteilProzent
+  );
+});
+
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return (
+    isAnyKFZselected.value ||
+    fahrzeugOptions.value.radverkehr ||
+    fahrzeugOptions.value.fussverkehr
   );
 });
 

@@ -82,23 +82,36 @@
           width="100%"
           class="overflow-y-auto"
         >
-          <belastungsplan-kreuzung-svg
-            v-show="!belastungsplanDTO.kreisverkehr"
-            :dimension="contentHeight"
-            :data="belastungsplanDTO"
-            :doc-mode="false"
-            :geometrie-mode="true"
-            @print="storeSvg($event)"
-          />
+          <div v-if="hasSelectedVerkehrsarten">
+            <belastungsplan-kreuzung-svg
+              v-show="!belastungsplanDTO.kreisverkehr"
+              :dimension="contentHeight"
+              :data="belastungsplanDTO"
+              :doc-mode="false"
+              :geometrie-mode="true"
+              @print="storeSvg($event)"
+            />
 
-          <belastungsplan-card
-            v-show="belastungsplanDTO.kreisverkehr"
-            ref="belastungsplanCard"
-            :dimension="contentHeight"
-            :belastungsplan-data="belastungsplanDTO"
-            :loaded="false"
-            :zaehlung-id="zaehlungsId"
-          />
+            <belastungsplan-card
+              v-show="belastungsplanDTO.kreisverkehr"
+              ref="belastungsplanCard"
+              :dimension="contentHeight"
+              :belastungsplan-data="belastungsplanDTO"
+              :loaded="false"
+              :zaehlung-id="zaehlungsId"
+            />
+          </div>
+          <v-banner v-else>
+            <v-icon
+              color="error"
+              size="36"
+              icon="mdi-alert-decagram-outline"
+            />
+            <p class="ml-2">
+              Der Belastungsplan wird nicht angezeigt, da keine Verkehrsarten
+              ausgewählt wurden.
+            </p>
+          </v-banner>
         </v-sheet>
         <progress-loader v-model="belastungsplanLoading" />
       </v-tabs-window-item>
@@ -277,6 +290,17 @@ const downloadUtils = useDownloadUtils();
 
 const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return (
+    options.value.kraftfahrzeugverkehr ||
+    options.value.schwerverkehr ||
+    options.value.gueterverkehr ||
+    options.value.schwerverkehrsanteilProzent ||
+    options.value.gueterverkehrsanteilProzent ||
+    options.value.radverkehr ||
+    options.value.fussverkehr
+  );
 });
 
 const zaehlungsId = computed(() => {
