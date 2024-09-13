@@ -165,6 +165,13 @@
         </v-row>
       </v-col>
       <v-col cols="4">
+        <p
+          v-if="!hasSelectedVerkehrsarten"
+          class="text-red"
+        >
+          Wenn keine Verkehrsart ausgewählt wird, kann der Belastungsplan nicht
+          angezeigt werden.
+        </p>
         {{ helpTextVerkehrsarten }}
       </v-col>
     </v-row>
@@ -181,11 +188,13 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
 const fahrzeugPanelTools = useFahrzeugPanelTools();
 const messstelleStore = useMessstelleStore();
+const messstelleUtils = useMessstelleUtils();
 
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
 const hoverSelectOrDeselectAllVerkehrsarten = ref(false);
@@ -217,6 +226,12 @@ const labelSelectOrDeselectAllVerkehrsarten = computed(() => {
   return selectOrDeselectAllVerkehrsartenVmodel.value
     ? "Alles abwählen"
     : "Alles auswählen";
+});
+
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return messstelleUtils.hasSelectedVerkehrsarten(
+    chosenOptionsCopyFahrzeuge.value
+  );
 });
 
 /**

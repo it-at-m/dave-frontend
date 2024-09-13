@@ -108,7 +108,7 @@
               icon="mdi-alert-decagram-outline"
             />
             <p class="ml-2">
-              Der Belastungsplan wird nicht angezeigt, da keine Verkehrsarten
+              Der Belastungsplan wird nicht angezeigt, da keine Verkehrsart
               ausgewählt wurden.
             </p>
           </v-banner>
