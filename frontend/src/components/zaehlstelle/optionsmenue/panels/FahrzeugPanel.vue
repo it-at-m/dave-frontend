@@ -433,11 +433,7 @@ const isAnyKFZselected = computed(() => {
 });
 
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
-  return (
-    isAnyKFZselected.value ||
-    fahrzeugOptions.value.radverkehr ||
-    fahrzeugOptions.value.fussverkehr
-  );
+  return zaehlstelleUtils.hasSelectedVerkehrsarten(fahrzeugOptions.value);
 });
 
 /**

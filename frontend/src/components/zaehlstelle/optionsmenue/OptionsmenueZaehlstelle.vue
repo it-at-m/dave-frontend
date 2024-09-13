@@ -132,6 +132,7 @@ import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
+import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 /**
  * Beschreibung Optionsmenü
@@ -148,6 +149,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
+const zaehlstelleUtils = useZaehlstelleUtils();
 const snackbarStore = useSnackbarStore();
 const display = useDisplay();
 
@@ -389,7 +391,10 @@ function setZeitreiheGesamt(event: boolean) {
  * @private
  */
 function setOptions() {
-  if (hasSelectedFahrzeug()) {
+  if (
+    zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) ||
+    zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
+  ) {
     saveOptions();
     dialog.value = false;
   } else {
@@ -398,33 +403,6 @@ function setOptions() {
     );
   }
 }
-
-function hasSelectedFahrzeug() {
-  return hasSelectedVerkehrsarten.value || hasSelectedFahrzeugkategorie.value;
-}
-
-const hasSelectedVerkehrsarten = computed<boolean>(() => {
-  return (
-    chosenOptions.value.kraftfahrzeugverkehr ||
-    chosenOptions.value.schwerverkehr ||
-    chosenOptions.value.gueterverkehr ||
-    chosenOptions.value.schwerverkehrsanteilProzent ||
-    chosenOptions.value.gueterverkehrsanteilProzent ||
-    chosenOptions.value.radverkehr ||
-    chosenOptions.value.fussverkehr
-  );
-});
-
-const hasSelectedFahrzeugkategorie = computed<boolean>(() => {
-  return (
-    chosenOptions.value.pkwEinheiten ||
-    chosenOptions.value.kraftraeder ||
-    chosenOptions.value.lastzuege ||
-    chosenOptions.value.lastkraftwagen ||
-    chosenOptions.value.busse ||
-    chosenOptions.value.personenkraftwagen
-  );
-});
 
 /**
  * Speichert die aktuell gewählten Anzeigeoptionen im Vuex Store.
