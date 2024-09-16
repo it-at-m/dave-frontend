@@ -183,6 +183,7 @@
       size="large"
       style="z-index: 400"
       @click="generatePdf"
+      :loading="loadingPdf"
     />
 
     <image-asset-form
@@ -234,14 +235,11 @@ import DeleteDialog from "@/components/pdfreport/assetforms/DeleteDialog.vue";
 import HeadingAssetForm from "@/components/pdfreport/assetforms/HeadingAssetForm.vue";
 import ImageAssetForm from "@/components/pdfreport/assetforms/ImageAssetForm.vue";
 import TextAssetForm from "@/components/pdfreport/assetforms/TextAssetForm.vue";
-// Components
 import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.vue";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-/* eslint-enable no-unused-vars */
-// Utils
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
@@ -251,7 +249,6 @@ import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import { useDateUtils } from "@/util/DateUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-/* eslint-disable no-unused-vars */
 import BaseAsset from "../types/pdfreport/assets/BaseAsset";
 import HeadingAsset from "../types/pdfreport/assets/HeadingAsset";
 
