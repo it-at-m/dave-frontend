@@ -30,22 +30,18 @@
           >{{ $d(date, "short", "de-DE") }} | {{ projektName }}</span
         ><br />
         <zaehlart-icon
-          dense
           :zaehlart="zaehlart"
           :color="iconColor"
         />
         <wetter-icon
-          dense
           :wetter="wetter"
           :color="iconColor"
         />
         <zaehldauer-icon
-          dense
           :zaehldauer="zaehldauer"
           :color="iconColor"
         />
         <quelle-icon
-          dense
           :quelle="quelle"
           :color="iconColor"
         />

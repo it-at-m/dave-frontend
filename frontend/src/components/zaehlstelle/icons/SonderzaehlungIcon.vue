@@ -1,7 +1,6 @@
 <template>
   <tooltip-with-icon
-    :x-large="large"
-    :dense="dense"
+    :size="large ? 'x-large' : 'default'"
     :color="color"
     :icon="icon.iconPath"
     :tooltip="icon.tooltip"
@@ -13,13 +12,11 @@ import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
   large?: boolean;
-  dense?: boolean;
   color?: string;
 }
 
 withDefaults(defineProps<Props>(), {
   large: false,
-  dense: false,
   color: "white",
 });
 

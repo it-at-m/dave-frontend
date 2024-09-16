@@ -1,7 +1,6 @@
 <template>
   <base-icon
-    :small="small"
-    :dense="dense"
+    :size="size"
     :color="color"
     :icon="icon.iconPath"
     :tooltip="icon.tooltip"
@@ -15,15 +14,12 @@ import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
-  small?: boolean;
-  dense?: boolean;
+  size?: string;
   color?: string;
   fahrzeugklasse: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  small: false,
-  dense: false,
   color: "black",
 });
 

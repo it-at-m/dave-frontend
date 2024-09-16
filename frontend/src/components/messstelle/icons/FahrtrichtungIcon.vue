@@ -1,8 +1,7 @@
 <template>
   <span class="text-caption">
     <base-icon
-      :small="small"
-      :dense="dense"
+      :size="size"
       color="black"
       :icon="icon.iconPath"
       :tooltip="icon.tooltip"
@@ -19,15 +18,11 @@ import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
-  small?: boolean;
-  dense?: boolean;
+  size?: string;
   fahrtrichtung: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  small: false,
-  dense: false,
-});
+const props = defineProps<Props>();
 
 /**
  * Lädt das richtige MDI Icon aus der Liste.
