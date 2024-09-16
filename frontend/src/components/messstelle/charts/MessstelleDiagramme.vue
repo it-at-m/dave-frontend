@@ -36,14 +36,24 @@
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
         <v-sheet
-          v-if="
-            belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
-          "
           :max-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
         >
+          <v-banner v-if="!hasSelectedVerkehrsarten">
+            <v-icon
+              color="error"
+              size="36"
+              icon="mdi-alert-decagram-outline"
+            />
+            <p class="ml-2">
+              {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
+            </p>
+          </v-banner>
           <belastungsplan-messquerschnitt-card
+            v-else-if="
+              belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
+            "
             ref="belastungsplanCard"
             :belastungsplan-data="belastungsplanDataDTO"
             :dimension="contentHeight"
@@ -147,6 +157,8 @@ import { useUserStore } from "@/store/UserStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useReportTools } from "@/util/ReportTools";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
@@ -197,20 +209,25 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 
 const messstelleStore = useMessstelleStore();
+const messstelleUtils = useMessstelleUtils();
 const userStore = useUserStore();
 const snackbarStore = useSnackbarStore();
 const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const messstelleId = computed(() => {
-  // TODO via Props injecten
   return route.params.messstelleId as string;
 });
 
 const options = computed<MessstelleOptionsDTO>(() => {
   return messstelleStore.getFilteroptions;
+});
+
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return messstelleUtils.hasSelectedVerkehrsarten(options.value.fahrzeuge);
 });
 
 const isTabListenausgabe = computed<boolean>(() => {

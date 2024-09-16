@@ -55,7 +55,6 @@ const validWochentageRequestDto = computed(() => {
     startDate: chosenOptionsZeitraum.value[0],
     endDate: chosenOptionsZeitraum.value[1],
     messstelleId: route.params.messstelleId as string,
-    // TODO als prop injecten
   };
 });
 

@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import type LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
+import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
@@ -16,6 +17,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
@@ -40,11 +42,14 @@ const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const defaultFontSize = 20;
 
 const farben = new Map<string, string>([
-  ["N", "#000000"],
-  ["O", "#F44336"],
-  ["S", "#4CAF50"],
-  ["W", "#2196F3"],
+  [Himmelsrichtungen.NORD, "#4CAF50"],
+  [Himmelsrichtungen.OST, "#F44336"],
+  [Himmelsrichtungen.SUED, "#000000"],
+  [Himmelsrichtungen.WEST, "#2196F3"],
 ]);
+
+const maxVerhiclesPerMq = ref(0);
+const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 
 const startX = ref(0);
 const startY = ref(0);
@@ -61,6 +66,7 @@ const svgHeight = computed(() => {
 });
 
 onMounted(() => {
+  calcLineWidth();
   drawingConfig();
 });
 
@@ -124,7 +130,9 @@ function drawArrowsPointingSouth(
   }[]
 ) {
   const arrayOfDataForDirectionSouth = groupedByDirection.find(
-    (obj) => obj.direction === "S" || obj.direction === "O"
+    (obj) =>
+      obj.direction === Himmelsrichtungen.SUED ||
+      obj.direction === Himmelsrichtungen.OST
   );
   arrayOfDataForDirectionSouth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -143,9 +151,9 @@ function drawArrowsPointingSouth(
     querschnittGroup.value.add(
       SVG.SVG()
         .polygon(
-          `${startX.value + 20},${startY.value + 851} ${
-            startX.value
-          },${startY.value + 851} ${startX.value + 10} ${startY.value + 860}`
+          `${startX.value + 25},${startY.value + 853} ${
+            startX.value - 5
+          },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
         )
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none")
@@ -257,7 +265,9 @@ function drawArrowsPointingNorth(
   }[]
 ) {
   const arrayOfDataForDirectionNorth = groupedByDirection.find(
-    (obj) => obj.direction === "N" || obj.direction === "W"
+    (obj) =>
+      obj.direction === Himmelsrichtungen.NORD ||
+      obj.direction === Himmelsrichtungen.WEST
   );
   arrayOfDataForDirectionNorth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -276,9 +286,9 @@ function drawArrowsPointingNorth(
     querschnittGroup.value.add(
       SVG.SVG()
         .polygon(
-          `${startX.value + 20},${startY.value - 1} ${startX.value},${
-            startY.value - 1
-          } ${startX.value + 10} ${startY.value - 10}`
+          `${startX.value + 25},${startY.value - 3} ${startX.value - 5},${
+            startY.value - 3
+          } ${startX.value + 10} ${startY.value - 22}`
         )
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none")
@@ -353,7 +363,10 @@ function rotateArrowsIfNecessary() {
   const direction =
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
       .direction;
-  if (direction == "S" || direction == "W") {
+  if (
+    direction === Himmelsrichtungen.OST ||
+    direction === Himmelsrichtungen.WEST
+  ) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
@@ -619,29 +632,49 @@ const getZeitblockText = computed(() => {
   }
 });
 
+function calcLineWidth() {
+  // reset
+  maxVerhiclesPerMq.value = 0;
+  vehiclesPerMq.value = new Map<string, number>();
+  props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList.forEach(
+    (mq) => {
+      let totalVerkehrMq = 0;
+      if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+        totalVerkehrMq += mq.sumKfz;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.schwerverkehr ||
+        isSvpInBelastungsPlan
+      ) {
+        totalVerkehrMq += mq.sumSv;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.gueterverkehr ||
+        isGvpInBelastungsPlan
+      ) {
+        totalVerkehrMq += mq.sumGv;
+      }
+      if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+        totalVerkehrMq += mq.sumRad;
+      }
+      maxVerhiclesPerMq.value =
+        totalVerkehrMq > maxVerhiclesPerMq.value
+          ? totalVerkehrMq
+          : maxVerhiclesPerMq.value;
+      vehiclesPerMq.value.set(mq.mqId, totalVerkehrMq);
+    }
+  );
+}
+
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
   const maxLineWidth = 20;
-  let totalVerkehr = 0;
-  let totalVerkehrMq = 0;
-  if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-    totalVerkehrMq += mq.sumKfz;
-    totalVerkehr += props.belastungsplanData.totalKfz;
+  const mqData = vehiclesPerMq.value.get(mq.mqId);
+
+  if (mqData) {
+    const percentage = mqData / maxVerhiclesPerMq.value;
+    return maxLineWidth * percentage;
   }
-  if (chosenOptionsCopyFahrzeuge.value.schwerverkehr || isSvpInBelastungsPlan) {
-    totalVerkehrMq += mq.sumSv;
-    totalVerkehr += props.belastungsplanData.totalSv;
-  }
-  if (chosenOptionsCopyFahrzeuge.value.gueterverkehr || isGvpInBelastungsPlan) {
-    totalVerkehrMq += mq.sumGv;
-    totalVerkehr += props.belastungsplanData.totalGv;
-  }
-  if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
-    totalVerkehrMq += mq.sumRad;
-    totalVerkehr += props.belastungsplanData.totalRad;
-  }
-  const percentageMqComparedToTotal = totalVerkehrMq / totalVerkehr;
-  const result = percentageMqComparedToTotal * maxLineWidth;
-  return result > 1 ? result : 1;
+  return 1;
 }
 
 /**

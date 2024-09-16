@@ -214,6 +214,12 @@
           </v-row>
         </v-col>
         <v-col cols="4">
+          <p
+            v-if="!hasSelectedVerkehrsarten"
+            class="text-red"
+          >
+            {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
+          </p>
           {{ helpTextVerkehrsarten }}
         </v-col>
       </v-row>
@@ -351,6 +357,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 interface Props {
@@ -361,6 +368,7 @@ interface Props {
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const emits = defineEmits<{
   (e: "fahrzeugOptions", v: OptionsDTO): void;
@@ -423,6 +431,10 @@ const isAnyKFZselected = computed(() => {
     fahrzeugOptions.value.schwerverkehrsanteilProzent ||
     fahrzeugOptions.value.gueterverkehrsanteilProzent
   );
+});
+
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return zaehlstelleUtils.hasSelectedVerkehrsarten(fahrzeugOptions.value);
 });
 
 /**

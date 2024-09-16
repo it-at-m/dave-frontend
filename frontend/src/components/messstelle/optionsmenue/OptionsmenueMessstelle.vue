@@ -172,6 +172,19 @@ function areChosenOptionsValid(): boolean {
     result = false;
     snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
   }
+  if (
+    !(
+      messstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value.fahrzeuge) ||
+      messstelleUtils.hasSelectedFahrzeugkategorie(
+        chosenOptions.value.fahrzeuge
+      )
+    )
+  ) {
+    result = false;
+    snackbarStore.showError(
+      "Es muss mindestens eine Verkehrsart oder Fahrzeugkategorie ausgewählt sein."
+    );
+  }
   return result;
 }
 
