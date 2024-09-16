@@ -218,7 +218,6 @@ const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 
 const messstelleId = computed(() => {
-  // TODO via Props injecten
   return route.params.messstelleId as string;
 });
 
