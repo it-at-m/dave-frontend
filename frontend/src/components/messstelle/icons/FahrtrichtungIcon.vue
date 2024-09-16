@@ -1,6 +1,6 @@
 <template>
   <span class="text-caption">
-    <base-icon
+    <tooltip-with-icon
       :size="size"
       color="black"
       :icon="icon.iconPath"
@@ -13,7 +13,7 @@
 import { isNil } from "lodash";
 import { computed } from "vue";
 
-import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
+import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
 import IconTooltip from "@/types/util/IconTooltip";
 

@@ -1,5 +1,5 @@
 <template>
-  <base-icon
+  <tooltip-with-icon
     :size="size"
     :color="color"
     :icon="icon.iconPath"
@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import BaseIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
+import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import Wetter from "@/types/enum/Wetter";
 import IconTooltip from "@/types/util/IconTooltip";
 
