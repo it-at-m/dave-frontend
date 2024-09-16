@@ -1,10 +1,14 @@
 <template>
   <v-sheet class="dave-default">
     <v-row dense>
-      <v-col cols="4">
+      <v-col
+        cols="4"
+        class="overflow-x-auto"
+      >
         <v-card
-          class="d-flex flex-column"
+          class="d-flex flex-column overflow-y-auto"
           :height="cardHeight"
+          :min-width="minWidth"
           flat
         >
           <auswertung-stepper
@@ -46,6 +50,8 @@ import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungServi
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
+const minWidth = 600;
+
 const display = useDisplay();
 
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
@@ -57,7 +63,8 @@ const appBarHeight = computed(() => {
 });
 
 const cardHeight = computed(() => {
-  return 100 - appBarHeight.value + "vh";
+  const overflowX = display.width.value / 3 <= minWidth;
+  return 100 - (overflowX ? 3 : 0) - appBarHeight.value + "vh";
 });
 
 const cardActionsHeight = computed(() => {

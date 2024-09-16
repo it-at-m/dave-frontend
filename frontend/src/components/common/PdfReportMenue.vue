@@ -65,6 +65,7 @@
           class="text-none"
           color="secondary"
           text="Aktualisiere PDF Report"
+          :disabled="!somethingToAdd"
           @click="saveItems"
         />
         <v-spacer />
@@ -82,7 +83,7 @@
 
 <script setup lang="ts">
 import _ from "lodash";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
 import { usePdfReportStore } from "@/store/PdfReportStore";
@@ -110,6 +111,15 @@ const zaehlungsinfo = ref(false);
 const legende = ref(false);
 const zaehlungskenngroessen = ref(false);
 
+const somethingToAdd = computed(() => {
+  return (
+    zaehlstelleinfo.value ||
+    zaehlungsinfo.value ||
+    zaehlungskenngroessen.value ||
+    legende.value
+  );
+});
+
 function closeDialog(): void {
   dialog.value = false;
   resetData();
@@ -135,9 +145,11 @@ function saveItems(): void {
     createLegende();
   }
 
-  snackbarStore.showSuccess(
-    `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
-  );
+  if (somethingToAdd.value) {
+    snackbarStore.showSuccess(
+      `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
+    );
+  }
   closeDialog();
 }
 

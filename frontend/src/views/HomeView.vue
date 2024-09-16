@@ -61,12 +61,14 @@ import { computed, onMounted, ref } from "vue";
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
+const snackbarStore = useSnackbarStore();
 const downloadUtils = useDownloadUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
@@ -86,6 +88,14 @@ function takePicture() {
         const image = new ImageAsset("Hauptkarte", dataUrl);
         image.width = 100;
         pdfReportStore.addAsset(image);
+        snackbarStore.showSuccess(
+          `Die Karte wurden dem PDF Report hinzugefügt.`
+        );
+      })
+      .catch(() => {
+        snackbarStore.showError(
+          `Die Karte konnte dem PDF Report nicht hinzugefügt.`
+        );
       })
       .finally(() => {
         creatingPicture.value = false;
