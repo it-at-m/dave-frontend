@@ -58,6 +58,7 @@
           class="text-none"
           color="secondary"
           text="Aktualisiere PDF Report"
+          :disabled="!somethingToAdd"
           @click="saveItems"
         />
         <v-spacer />
@@ -109,6 +110,10 @@ const options = computed<MessstelleOptionsDTO>(() => {
   return messstelleStore.getFilteroptions;
 });
 
+const somethingToAdd = computed(() => {
+  return messstelleninfo.value || messinfo.value || legende.value;
+});
+
 function closeDialog(): void {
   dialog.value = false;
   resetCheckboxes();
@@ -133,9 +138,11 @@ function saveItems(): void {
     createLegende();
   }
 
-  snackbarStore.showSuccess(
-    `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
-  );
+  if (somethingToAdd.value) {
+    snackbarStore.showSuccess(
+      `Die ausgewählten Informationen wurden dem PDF Report hinzugefügt.`
+    );
+  }
   closeDialog();
 }
 
