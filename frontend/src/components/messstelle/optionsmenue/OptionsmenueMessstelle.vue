@@ -234,29 +234,6 @@ function resetOptions(): void {
   setDefaultOptionsForMessstelle();
 }
 
-const hasSelectedVerkehrsarten = computed<boolean>(() => {
-  return (
-    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr ||
-    chosenOptions.value.fahrzeuge.schwerverkehr ||
-    chosenOptions.value.fahrzeuge.gueterverkehr ||
-    chosenOptions.value.fahrzeuge.schwerverkehrsanteilProzent ||
-    chosenOptions.value.fahrzeuge.gueterverkehrsanteilProzent ||
-    chosenOptions.value.fahrzeuge.radverkehr ||
-    chosenOptions.value.fahrzeuge.fussverkehr
-  );
-});
-
-const hasSelectedFahrzeugkategorie = computed<boolean>(() => {
-  return (
-    chosenOptions.value.fahrzeuge.kraftraeder ||
-    chosenOptions.value.fahrzeuge.lastzuege ||
-    chosenOptions.value.fahrzeuge.lastkraftwagen ||
-    chosenOptions.value.fahrzeuge.busse ||
-    chosenOptions.value.fahrzeuge.lieferwagen ||
-    chosenOptions.value.fahrzeuge.personenkraftwagen
-  );
-});
-
 watch(
   () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
   () => {
