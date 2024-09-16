@@ -182,8 +182,8 @@
       position="fixed"
       size="large"
       style="z-index: 400"
-      @click="generatePdf"
       :loading="loadingPdf"
+      @click="generatePdf"
     />
 
     <image-asset-form

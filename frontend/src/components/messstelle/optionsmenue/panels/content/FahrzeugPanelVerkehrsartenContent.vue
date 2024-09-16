@@ -169,8 +169,7 @@
           v-if="!hasSelectedVerkehrsarten"
           class="text-red"
         >
-          Wenn keine Verkehrsart ausgewählt wird, kann der Belastungsplan nicht
-          angezeigt werden.
+          {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
         </p>
         {{ helpTextVerkehrsarten }}
       </v-col>
@@ -188,6 +187,7 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
@@ -195,6 +195,7 @@ const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const fahrzeugPanelTools = useFahrzeugPanelTools();
 const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
 const hoverSelectOrDeselectAllVerkehrsarten = ref(false);

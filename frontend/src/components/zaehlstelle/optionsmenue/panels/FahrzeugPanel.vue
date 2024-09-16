@@ -218,8 +218,7 @@
             v-if="!hasSelectedVerkehrsarten"
             class="text-red"
           >
-            Wenn keine Verkehrsart ausgewählt wird, kann der Belastungsplan
-            nicht angezeigt werden.
+            {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
           </p>
           {{ helpTextVerkehrsarten }}
         </v-col>
@@ -358,6 +357,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 interface Props {
@@ -368,6 +368,7 @@ interface Props {
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const emits = defineEmits<{
   (e: "fahrzeugOptions", v: OptionsDTO): void;

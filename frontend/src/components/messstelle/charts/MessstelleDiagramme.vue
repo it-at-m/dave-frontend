@@ -47,8 +47,7 @@
               icon="mdi-alert-decagram-outline"
             />
             <p class="ml-2">
-              Der Belastungsplan wird nicht angezeigt, da keine Verkehrsart
-              ausgewählt wurden.
+              {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
             </p>
           </v-banner>
           <belastungsplan-messquerschnitt-card
@@ -158,6 +157,7 @@ import { useUserStore } from "@/store/UserStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useReportTools } from "@/util/ReportTools";
 
@@ -216,6 +216,7 @@ const historyStore = useHistoryStore();
 const route = useRoute();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const messstelleId = computed(() => {
   return route.params.messstelleId as string;

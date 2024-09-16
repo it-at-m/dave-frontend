@@ -108,8 +108,7 @@
               icon="mdi-alert-decagram-outline"
             />
             <p class="ml-2">
-              Der Belastungsplan wird nicht angezeigt, da keine Verkehrsart
-              ausgewählt wurden.
+              {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
             </p>
           </v-banner>
         </v-sheet>
@@ -221,6 +220,7 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
@@ -287,6 +287,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
