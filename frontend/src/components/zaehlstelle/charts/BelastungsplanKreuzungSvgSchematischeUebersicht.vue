@@ -122,9 +122,6 @@ const fahrbeziehungsTypen = ref<Map<number, BelastungsplanFahrbeziehung[]>>(
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
   new Map<number, BelastungsplanKnotenarm>()
 ) as Ref<Map<number, BelastungsplanKnotenarm>>;
-const prozentWerte = ref<Map<number, boolean>>(
-  new Map<number, boolean>()
-) as Ref<Map<number, boolean>>;
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
@@ -874,36 +871,6 @@ function isGegenueber(von: number, nach: number): boolean {
 }
 
 /**
- * Füllt die Marker, welche Werte überhaupt angezeigt werden.
- *
- * @param knotenarm   Knotenarm
- * @param data        Belastungsplandaten
- */
-function anzeigeWerte(
-  knotenarm: BelastungsplanKnotenarm | undefined,
-  data: LadeBelastungsplanDTO
-) {
-  if (knotenarm) {
-    knotenarm.is1Filled = data.value1.filled;
-    knotenarm.is2Filled = data.value2.filled;
-    knotenarm.is3Filled = data.value3.filled;
-  }
-}
-
-/**
- * Wandelt eine negative Zahl in eine positive um. Das ist bei der Differenzdatendarstellung notwendig,
- * da eine Linie mit -200 genauso breit dargestellt werden muss, wie eine Linie mit +200.
- *
- * @param num   Anzahl der Fahrzeuge
- */
-function positiveNumber(num: number): number {
-  if (num < 0) {
-    return num * -1;
-  }
-  return num;
-}
-
-/**
  * Die Fahrbeziehungen sollen so ausgerichtet werden, dass keine Lücken entstehen. Das passiert
  * immer dann, wenn es eine gerade Fahrbeziehung zwischen zwei Knotenarmen gibt und links oder rechts von der
  * Geraden unterschiedlich viele Fahrbeziehung plaziert sind.
@@ -1225,19 +1192,13 @@ function calcFahrbeziehungstype(von: number, nach: number): number {
  * Hier werden alle Daten gesammelt bzw. aufbereitet, die zur Anzeige des Diagramms notwendig sind. Diese
  * Methode wird aufgerufen, wenn über das Property "data" die Daten zur Darstellung des Belastungsplanes
  * erneuert werden.
- *
- * @param data  Die Anzeigedaten des Belastungsplanes.
  */
-function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
+function calcFahrbeziehungen() {
   // alte Daten ggf. leeren
   knotenarme.value.clear();
   fahrbeziehungsTypen.value.clear();
   highestFahrbeziehungsValue.value = 0;
   lowestFahrbeziehungsValue.value = 0;
-  // Die Datentypen der Werteblöcke werden extrahiert
-  prozentWerte.value.set(0, data.value1?.percent);
-  prozentWerte.value.set(1, data.value2?.percent);
-  prozentWerte.value.set(2, data.value3?.percent);
   // Aus der aktuellen Zählung (diese ist im $store) werden die Fahrbeziehungen geladen.
   const fbs = zaehlung.value.fahrbeziehungen as LadeFahrbeziehungDTO[];
   if (fbs && Array.isArray(fbs)) {
@@ -1268,22 +1229,17 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       if (!knotenarme.value.has(fb.von)) {
         knotenarme.value.set(
           fb.von,
-          new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
+          // new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
+          new BelastungsplanKnotenarm("", fb.von)
         );
       }
-      const knotenarmVon = knotenarme.value.get(fb.von);
-      anzeigeWerte(knotenarmVon, data);
-      // "nach" checken und ggf. anlegen
       if (!knotenarme.value.has(fb.nach)) {
         knotenarme.value.set(
           fb.nach,
-          new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
+          // new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
+          new BelastungsplanKnotenarm("", fb.nach)
         );
       }
-      const knotenarmNach: BelastungsplanKnotenarm | undefined =
-        knotenarme.value.get(fb.nach);
-      anzeigeWerte(knotenarmNach, data);
-
       // Fahrbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
       const belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
         fb.von
@@ -1294,65 +1250,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       ) as BelastungsplanFahrbeziehung;
       belastungsplanFahrbeziehungen.push(belastungsplanFahrbeziehung);
 
-      const v = fb.von - 1;
-      const n = fb.nach - 1;
-
       // Fahrwerte zu den einzelnen Fahrbeziehungen zuordnen
-      belastungsplanFahrbeziehung.value1 = data.value1.values[v][n];
-      if (data.value2.filled) {
-        belastungsplanFahrbeziehung.value2 = data.value2.values[v][n];
-      }
-      if (data.value3.filled) {
-        belastungsplanFahrbeziehung.value3 = data.value3.values[v][n];
-      }
-
-      if (knotenarmVon) {
-        // von Zähler hoch setzen
-        knotenarmVon.plusFahrbeziehungenVon();
-        if (
-          positiveNumber(knotenarmVon.anzahlVonFahrbeziehungen) >
-          vonMaxValue.value
-        )
-          vonMaxValue.value = positiveNumber(
-            knotenarmVon.anzahlVonFahrbeziehungen
-          );
-        // den höchsten und niedrigsten Wert einer Fahrbeziehung ermitteln
-        // (gilt hier nur der KFZ Verkehr?)
-        if (
-          positiveNumber(data.value1.values[v][n]) >
-          highestFahrbeziehungsValue.value
-        )
-          highestFahrbeziehungsValue.value = positiveNumber(
-            data.value1.values[v][n]
-          );
-        if (
-          positiveNumber(data.value1.values[v][n]) <
-          lowestFahrbeziehungsValue.value
-        )
-          lowestFahrbeziehungsValue.value = positiveNumber(
-            data.value1.values[v][n]
-          );
-        // Fahrbeziehungstyp wird gesetzt um später die Position der Linien berrechnen zu können
-        knotenarmVon.addVonFahrbeziehungsType(
-          belastungsplanFahrbeziehung.fahrbeziehungsTyp
-        );
-      }
-
-      if (knotenarmNach) {
-        // nach Zähler hoch setzen
-        knotenarmNach.plusFahrbeziehungenNach();
-        if (
-          positiveNumber(knotenarmNach.anzahlNachFahrbeziehungen) >
-          nachMaxValue.value
-        )
-          nachMaxValue.value = positiveNumber(
-            knotenarmNach.anzahlNachFahrbeziehungen
-          );
-        // den Typ der eingehenden Verbindung speichern
-        knotenarmNach.addNachFahrbeziehungsTyp(
-          belastungsplanFahrbeziehung.fahrbeziehungsTyp
-        );
-      }
+      belastungsplanFahrbeziehung.value1 = 1;
     });
 
     // Im Nachgang werden die Positionen der "geradeaus" Fahrbeziehungen ermittelt. Diese sind
@@ -1373,22 +1272,9 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       }
 
       // Es werden die Summen in die Knotenarem geschrieben
-      const knummer = k.knotenarmNummer - 1;
-      k.vonTotalValue1 = data.value1.sumIn[knummer];
-      k.nachTotalValue1 = data.value1.sumOut[knummer];
-      k.totalValue1 = data.value1.sum[knummer];
-      // Soll Wert 2 dargestellt werden?
-      if (data.value2.filled) {
-        k.vonTotalValue2 = data.value2.sumIn[knummer];
-        k.nachTotalValue2 = data.value2.sumOut[knummer];
-        k.totalValue2 = data.value2.sum[knummer];
-      }
-      // Soll Wert 3 dargestellt werden?
-      if (data.value3.filled) {
-        k.vonTotalValue3 = data.value3.sumIn[knummer];
-        k.nachTotalValue3 = data.value3.sumOut[knummer];
-        k.totalValue3 = data.value3.sum[knummer];
-      }
+      k.vonTotalValue1 = 1;
+      k.nachTotalValue1 = 1;
+      k.totalValue1 = 1;
     });
 
     // maximale Linien Dicke berrechnen
@@ -1406,7 +1292,7 @@ watch(
   () => props.data,
   (data: LadeBelastungsplanDTO) => {
     if (!data.kreisverkehr) {
-      calcFahrbeziehungen(data);
+      calcFahrbeziehungen();
     }
   }
 );

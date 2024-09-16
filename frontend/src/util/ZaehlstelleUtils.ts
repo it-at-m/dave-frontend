@@ -1,4 +1,5 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 export function useZaehlstelleUtils() {
   /**
@@ -12,7 +13,32 @@ export function useZaehlstelleUtils() {
     return !zaehlung.kategorien.includes(type);
   }
 
+  function hasSelectedVerkehrsarten(options: OptionsDTO) {
+    return (
+      options.kraftfahrzeugverkehr ||
+      options.schwerverkehr ||
+      options.gueterverkehr ||
+      options.schwerverkehrsanteilProzent ||
+      options.gueterverkehrsanteilProzent ||
+      options.radverkehr ||
+      options.fussverkehr
+    );
+  }
+
+  function hasSelectedFahrzeugkategorie(options: OptionsDTO) {
+    return (
+      options.pkwEinheiten ||
+      options.kraftraeder ||
+      options.lastzuege ||
+      options.lastkraftwagen ||
+      options.busse ||
+      options.personenkraftwagen
+    );
+  }
+
   return {
     isTypeDisabled,
+    hasSelectedFahrzeugkategorie,
+    hasSelectedVerkehrsarten,
   };
 }

@@ -168,6 +168,10 @@ const beideRichtungenAnzeigen = computed(() => {
   return von.value > 0 || nach.value > 0;
 });
 
+watch(options, (newOptions) => {
+  reset(newOptions);
+});
+
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
 function reset(fo: OptionsDTO) {

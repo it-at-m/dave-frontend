@@ -82,23 +82,35 @@
           width="100%"
           class="overflow-y-auto"
         >
-          <belastungsplan-kreuzung-svg
-            v-show="!belastungsplanDTO.kreisverkehr"
-            :dimension="contentHeight"
-            :data="belastungsplanDTO"
-            :doc-mode="false"
-            :geometrie-mode="true"
-            @print="storeSvg($event)"
-          />
+          <div v-if="hasSelectedVerkehrsarten">
+            <belastungsplan-kreuzung-svg
+              v-show="!belastungsplanDTO.kreisverkehr"
+              :dimension="contentHeight"
+              :data="belastungsplanDTO"
+              :doc-mode="false"
+              :geometrie-mode="true"
+              @print="storeSvg($event)"
+            />
 
-          <belastungsplan-card
-            v-show="belastungsplanDTO.kreisverkehr"
-            ref="belastungsplanCard"
-            :dimension="contentHeight"
-            :belastungsplan-data="belastungsplanDTO"
-            :loaded="false"
-            :zaehlung-id="zaehlungsId"
-          />
+            <belastungsplan-card
+              v-show="belastungsplanDTO.kreisverkehr"
+              ref="belastungsplanCard"
+              :dimension="contentHeight"
+              :belastungsplan-data="belastungsplanDTO"
+              :loaded="false"
+              :zaehlung-id="zaehlungsId"
+            />
+          </div>
+          <v-banner v-else>
+            <v-icon
+              color="error"
+              size="36"
+              icon="mdi-alert-decagram-outline"
+            />
+            <p class="ml-2">
+              {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
+            </p>
+          </v-banner>
         </v-sheet>
         <progress-loader v-model="belastungsplanLoading" />
       </v-tabs-window-item>
@@ -208,6 +220,7 @@ import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
@@ -274,9 +287,21 @@ const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
+const globalInfoMessage = useGlobalInfoMessage();
 
 const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+const hasSelectedVerkehrsarten = computed<boolean>(() => {
+  return (
+    options.value.kraftfahrzeugverkehr ||
+    options.value.schwerverkehr ||
+    options.value.gueterverkehr ||
+    options.value.schwerverkehrsanteilProzent ||
+    options.value.gueterverkehrsanteilProzent ||
+    options.value.radverkehr ||
+    options.value.fussverkehr
+  );
 });
 
 const zaehlungsId = computed(() => {
