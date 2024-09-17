@@ -1,57 +1,54 @@
 <template>
-    <v-card
-        elevation="0"
-        class="pt-5"
-    >
-        <step-line
-            :zaehldaten-stepline="zaehldatenStepline"
-            @charttypeChanged="charttypeChanged"
-        />
-        <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
+  <v-card
+    elevation="0"
+    class="pt-5"
+  >
+    <step-line-chart
+      :zaehldaten-stepline="zaehldatenStepline"
+      @charttype-changed="charttypeChanged"
+    />
+    <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
-        <step-line
-            ref="steplineForPdf"
-            style="display: none"
-            :zaehldaten-stepline="zaehldatenStepline"
-        />
-    </v-card>
+    <step-line-chart
+      ref="steplineForPdf"
+      style="display: none"
+      :zaehldaten-stepline="zaehldatenStepline"
+    />
+  </v-card>
 </template>
-<script lang="ts">
-import Vue from "vue";
-import { Component, Prop, Ref } from "vue-property-decorator";
+<script setup lang="ts">
+import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type { SeriesOption } from "echarts";
+import type { ResizeOpts } from "echarts/core";
 
-import StepLine from "@/components/zaehlstelle/charts/StepLine.vue";
-// eslint-disable-next-line no-unused-vars
-import LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import { onMounted, ref } from "vue";
 
-@Component({
-    components: {
-        StepLine,
-    },
-})
-export default class StepLineCard extends Vue {
-    @Prop()
-    zaehldatenStepline!: LadeZaehldatenSteplineDTO;
+import StepLineChart from "@/components/zaehlstelle/charts/StepLineChart.vue";
 
-    @Ref("steplineForPdf") readonly steplineForPdf!: StepLine;
+interface Props {
+  zaehldatenStepline: LadeZaehldatenSteplineDTO;
+}
 
-    mounted(): void {
-        // Der steplineForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
-        let chartOptions: any = {} as {
-            width?: number | string;
-            height?: number | string;
-            silent?: boolean;
-        };
-        chartOptions.width = 900;
-        chartOptions.height = 430;
-        chartOptions.silent = true;
-        this.steplineForPdf.chart.resize(chartOptions);
+defineProps<Props>();
+
+const steplineForPdf = ref<InstanceType<typeof StepLineChart> | null>();
+defineExpose({
+  steplineForPdf,
+});
+onMounted(() => {
+  // Der steplineForPdf Graph soll immer gleich gross sein, damit er im PDF gut aussieht und nicht abgeschnitten wird
+  const chartOptions = {} as ResizeOpts;
+  chartOptions.width = 900;
+  chartOptions.height = 430;
+  chartOptions.silent = true;
+  steplineForPdf?.value?.chart?.resize(chartOptions);
+});
+
+function charttypeChanged(newChartType: "line" | "bar") {
+  (steplineForPdf?.value?.chart?.option?.series as Array<SeriesOption>).forEach(
+    (series: SeriesOption) => {
+      series.type = newChartType;
     }
-
-    charttypeChanged(newChartType: string) {
-        this.steplineForPdf.chart.option.series.forEach((series: any) => {
-            series.type = newChartType;
-        });
-    }
+  );
 }
 </script>

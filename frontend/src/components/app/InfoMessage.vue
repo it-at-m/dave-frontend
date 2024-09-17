@@ -1,109 +1,89 @@
 <template>
-    <v-menu offset-y>
-        <template #activator="{ on: dialog }">
-            <v-tooltip bottom>
-                <template #activator="{ on: tooltip }">
-                    <v-btn
-                        icon
-                        small
-                        :disabled="!hasInfoMessage"
-                        class="ml-2"
-                        v-on="{ ...tooltip, ...dialog }"
-                        @click="openDialogAndLoadData"
-                    >
-                        <v-icon>mdi-message-text-outline</v-icon>
-                    </v-btn>
-                </template>
-                Infonachricht
-            </v-tooltip>
-        </template>
+  <v-btn
+    v-tooltip:bottom="'Infonachricht'"
+    icon="mdi-message-text-outline"
+    :disabled="!hasInfoMessage"
+    @click="openDialogAndLoadData"
+  />
+  <v-dialog
+    v-model="showDialog"
+    max-width="600px"
+    persistent
+  >
+    <v-card
+      width="100%"
+      height="420px"
+      flat
+    >
+      <v-card-title class="d-flex justify-space-between align-center">
+        <div>
+          <v-icon
+            color="grey"
+            icon="mdi-email"
+          />
+          Information der Administratoren
+        </div>
+        <v-btn
+          icon="mdi-close"
+          variant="text"
+          @click="closeDialog"
+        />
+      </v-card-title>
+      <v-card-text>
+        <v-sheet class="d-flex flex-column">
+          <p style="white-space: pre-line">
+            {{ infomessage.content }}
+          </p>
+        </v-sheet>
+      </v-card-text>
 
-        <v-dialog
-            v-model="showDialog"
-            max-width="600px"
-            height="300px"
-            persistent
-        >
-            <v-card
-                width="100%"
-                flat
-            >
-                <v-card-title>
-                    <v-icon left>mdi-email</v-icon>
-                    Information der Administratoren
-                    <v-spacer />
-                    <v-btn
-                        icon
-                        @click="closeDialog"
-                    >
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </v-card-title>
-
-                <v-card-text>
-                    <v-sheet
-                        width="100%"
-                        height="338px"
-                        class="d-flex flex-column"
-                    >
-                        <p style="white-space: pre-line">
-                            {{ infomessage.content }}
-                        </p>
-                    </v-sheet>
-                </v-card-text>
-
-                <v-card-actions style="position: absolute; bottom: 0; right: 0">
-                    <v-btn
-                        color="secondary"
-                        @click="closeDialog()"
-                    >
-                        Schließen
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-menu>
+      <v-card-actions style="position: absolute; bottom: 0; right: 0">
+        <v-btn
+          color="secondary"
+          class="text-none"
+          variant="flat"
+          text="Schließen"
+          @click="closeDialog()"
+        />
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-/* eslint-disable no-unused-vars */
-import InfoMessageDTO from "@/types/InfoMessageDTO";
+<script lang="ts" setup>
+import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
+
+import { computed, onMounted, ref } from "vue";
+
 import InfoMessageService from "@/api/service/InfoMessageService";
-/* eslint-enable no-unused-vars */
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
-@Component
-export default class InfoMessage extends Vue {
-    infomessage: InfoMessageDTO = {} as InfoMessageDTO;
+const infomessage = ref<InfoMessageDTO>(
+  DefaultObjectCreator.createDefaultInfoMessageDto()
+);
 
-    showDialog = false;
+const showDialog = ref(false);
 
-    mounted() {
-        this.loadInfoMessage();
-    }
+onMounted(() => {
+  loadInfoMessage();
+});
 
-    private loadInfoMessage(): void {
-        InfoMessageService.getActiveInfoMessage().then(
-            (message: InfoMessageDTO) => {
-                this.infomessage = message;
-            }
-        );
-    }
+function loadInfoMessage(): void {
+  InfoMessageService.getActiveInfoMessage().then((message: InfoMessageDTO) => {
+    infomessage.value = message;
+  });
+}
 
-    /**
-     * Gibt ein Boolean zurück, ob es eine Infonachricht gibt
-     */
-    get hasInfoMessage(): boolean {
-        return this.infomessage.gueltig;
-    }
+const hasInfoMessage = computed(() => {
+  return infomessage.value.gueltig;
+});
 
-    closeDialog() {
-        this.showDialog = false;
-    }
+function closeDialog() {
+  showDialog.value = false;
+}
 
-    openDialogAndLoadData(): void {
-        this.loadInfoMessage();
-        this.showDialog = true;
-    }
+function openDialogAndLoadData(): void {
+  loadInfoMessage();
+  showDialog.value = true;
 }
 </script>

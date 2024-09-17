@@ -1,61 +1,66 @@
 <template>
-    <v-dialog
-        v-model="open"
-        width="25vh"
-        height="25vh"
-        @click:outside="cancel"
-    >
-        <v-card>
-            <v-card-title
-                class="text-h6 grey--text text--lighten-1 grey lighten-2 mb-3"
-            >
-                <v-icon
-                    color="grey lighten-1"
-                    class="mr-2"
-                    >mdi-trash-can</v-icon
-                >
-                Element entfernen
-            </v-card-title>
-            <v-card-text>
-                <p>
-                    Wollen Sie das Element wirklich aus dem PDF Report
-                    entfernen?
-                </p>
-            </v-card-text>
-            <v-divider></v-divider>
+  <v-dialog
+    v-model="openDialog"
+    width="100vh"
+    height="60vh"
+    @click:outside="cancelDialog"
+  >
+    <v-card>
+      <v-card-title class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2">
+        <v-icon
+          class="mr-2"
+          icon="mdi-trash-can"
+        />
+        Element entfernen
+      </v-card-title>
+      <v-card-text class="text-body-1">
+        <p>Wollen Sie das Element wirklich aus dem PDF Report entfernen?</p>
+      </v-card-text>
+      <v-divider />
 
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="error"
-                    text
-                    @click="deleteAsset"
-                >
-                    <v-icon left> mdi-alarm-light-outline </v-icon>
-                    Löschen
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn
+          class="text-none"
+          color="error"
+          append-icon="mdi-alarm-light-outline"
+          text="Löschen"
+          @click="deleteAsset"
+        />
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script setup lang="ts">
+import { computed } from "vue";
 
-@Component
-export default class DeleteDialog extends Vue {
-    @Prop({ default: false }) open: boolean | undefined;
-    @Prop() assetId!: number;
+interface Props {
+  assetId: number;
+}
 
-    deleteAsset(): void {
-        this.$emit("delete", this.assetId);
-    }
+const props = defineProps<Props>();
+const openDeleteDialog = defineModel<boolean>({ required: true });
 
-    /**
-     * Verläßt das Formular ohne zu speichern.
-     */
-    cancel(): void {
-        this.$emit("cancel");
-    }
+const emits = defineEmits<{
+  (e: "delete", v: number): void;
+  (e: "cancelDialog"): void;
+  (e: "input", v: boolean): void;
+}>();
+
+const openDialog = computed({
+  get: () => openDeleteDialog.value,
+  set: (payload: boolean) => emits("input", payload),
+});
+
+function deleteAsset(): void {
+  emits("delete", props.assetId);
+}
+
+/**
+ * Verläßt das Formular ohne zu speichern.
+ */
+function cancelDialog(): void {
+  emits("cancelDialog");
 }
 </script>

@@ -1,74 +1,74 @@
 <template>
-    <v-snackbar
-        id="snackbar"
-        v-model="show"
-        :color="color"
-        :timeout="timeout"
-        left
-        bottom
-        vertical
-    >
-        <div style="font-size: medium">
-            {{ snackbarTextPart1 }}
-        </div>
-        <div style="font-size: small">
-            {{ snackbarTextPart2 }}
-        </div>
-        <v-btn
-            v-if="color === 'error'"
-            color="primary"
-            text
-            @click="show = false"
-        >
-            Schließen
-        </v-btn>
-    </v-snackbar>
+  <v-snackbar
+    id="snackbar"
+    v-model="show"
+    :color="color"
+    :timeout="timeout"
+    vertical
+    location="bottom left"
+  >
+    <template #text>
+      <div class="text-subtitle-1 pb-2">{{ snackbarTextPart1 }}</div>
+      <p>{{ snackbarTextPart2 }}</p>
+    </template>
+
+    <template #actions>
+      <v-btn
+        v-if="color === 'error'"
+        class="text-none"
+        color="primary"
+        text="Schließen"
+        variant="text"
+        @click="show = false"
+      />
+    </template>
+  </v-snackbar>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+<script lang="ts" setup>
+import { ref, watch } from "vue";
+
 import { Levels } from "@/api/error";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 
-@Component
-export default class TheSnackbar extends Vue {
-    private static defaultTimeout = 6000;
+const defaultTimeout = 6000;
 
-    show = false;
-    timeout: number = TheSnackbar.defaultTimeout;
-    snackbarTextPart1 = "";
-    snackbarTextPart2 = "";
-    color = "info";
+const show = ref(false);
+const timeout = ref(defaultTimeout);
+const snackbarTextPart1 = ref<string | undefined>("");
+const snackbarTextPart2 = ref<string | undefined>("");
+const color = ref(Levels.INFO);
 
-    @Watch("$store.state.snackbar.switch")
-    setToast(): void {
-        this.show = false;
-        setTimeout(() => {
-            this.snackbarTextPart1 =
-                this.$store.state.snackbar.snackbarTextPart1;
-            this.snackbarTextPart2 =
-                this.$store.state.snackbar.snackbarTextPart2;
-            this.color = this.$store.state.snackbar.level;
-            switch (this.color) {
-                case Levels.ERROR: {
-                    this.timeout = 0;
-                    break;
-                }
-                case Levels.WARNING: {
-                    this.timeout = 8000;
-                    break;
-                }
-                case Levels.SUCCESS: {
-                    this.timeout = 4000;
-                    break;
-                }
-                default: {
-                    this.timeout = 6000;
-                    break;
-                }
-            }
-            this.show = true;
-        }, 100);
-    }
-}
+const snackbarStore = useSnackbarStore();
+
+watch(
+  () => snackbarStore.trigger,
+  () => {
+    show.value = false;
+    setTimeout(() => {
+      snackbarTextPart1.value = snackbarStore.getTextPart1;
+      snackbarTextPart2.value = snackbarStore.getTextPart2;
+      color.value = snackbarStore.getLevel;
+      switch (color.value) {
+        case Levels.ERROR: {
+          timeout.value = -1;
+          break;
+        }
+        case Levels.WARNING: {
+          timeout.value = 8000;
+          break;
+        }
+        case Levels.SUCCESS: {
+          timeout.value = 4000;
+          break;
+        }
+        default: {
+          timeout.value = defaultTimeout;
+          break;
+        }
+      }
+      show.value = true;
+    }, 100);
+  }
+);
 </script>
-
