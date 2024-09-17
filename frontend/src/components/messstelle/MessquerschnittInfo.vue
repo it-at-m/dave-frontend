@@ -17,15 +17,13 @@
         <span class="text-body-2">
           ID MQ: {{ messquerschnitt.mqId }} |
           <fahrtrichtung-icon
-            small
-            dense
+            size="small"
             :fahrtrichtung="messquerschnitt.fahrtrichtung"
           />
         </span>
         <br />
-        <fahrstreifen-icon
-          small
-          dense
+        <fahrspuren-icon
+          size="small"
           :fahrspuren="messquerschnitt.anzahlFahrspuren"
         />
         <br />
@@ -40,7 +38,7 @@
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
-import FahrstreifenIcon from "@/components/messstelle/icons/FahrspurenIcon.vue";
+import FahrspurenIcon from "@/components/messstelle/icons/FahrspurenIcon.vue";
 import FahrtrichtungIcon from "@/components/messstelle/icons/FahrtrichtungIcon.vue";
 import { useAlternateRowColor } from "@/util/AlternateRowColorUtil";
 

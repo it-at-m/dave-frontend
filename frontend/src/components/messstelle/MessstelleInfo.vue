@@ -63,7 +63,7 @@
                 <fahrzeugklassen-icon
                   :fahrzeugklasse="fahrzeugKlasse"
                   color="primary"
-                  small
+                  size="small"
                 />
                 <messstelle-kommentar :kommentar="messstelle.kommentar" />
               </span>
