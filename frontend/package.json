@@ -19,7 +19,7 @@
     "sass": "^1.77.6",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0",
-    "vuetify": "^3.6.11"
+    "vuetify": "^3.7.1"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",
