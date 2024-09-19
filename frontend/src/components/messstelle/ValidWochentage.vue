@@ -1,9 +1,9 @@
 <template>
-  <v-sheet>
-    <v-icon
-      class="pr-3"
-      icon="mdi-chart-line"
-    />
+  <v-sheet
+    class="px-4"
+    color="white"
+  >
+    <v-icon icon="mdi-chart-line" />
     <span>
       Von den ausgewählten {{ zeitraumRange }} Tagen
       {{ getChosenWochentageNumberText }} in die Auswertung eingeflossen
