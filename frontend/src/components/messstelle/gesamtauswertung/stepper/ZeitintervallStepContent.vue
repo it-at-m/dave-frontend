@@ -182,6 +182,7 @@ function selectAll() {
         AuswertungsZeitraum.JANUAR,
         AuswertungsZeitraum.FEBRUAR,
         AuswertungsZeitraum.MAERZ,
+        AuswertungsZeitraum.APRIL,
         AuswertungsZeitraum.MAI,
         AuswertungsZeitraum.JUNI,
         AuswertungsZeitraum.JULI,
