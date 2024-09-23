@@ -56,7 +56,7 @@ import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 
-import domtoimage from "dom-to-image-more";
+import html2canvas from "html2canvas";
 import { computed, onMounted, ref } from "vue";
 
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
@@ -83,10 +83,12 @@ onMounted(() => {
 function takePicture() {
   if (map.value != null) {
     creatingPicture.value = true;
-    domtoimage
-      .toJpeg(map.value.$el, { quality: 0.95, cacheBust: true })
-      .then((dataUrl: string) => {
-        const image = new ImageAsset("Hauptkarte", dataUrl);
+    html2canvas(map.value.$el, { useCORS: true })
+      .then((canvas) => {
+        const image = new ImageAsset(
+          "Hauptkarte",
+          canvas.toDataURL("image/jpeg")
+        );
         image.width = 100;
         pdfReportStore.addAsset(image);
         snackbarStore.showSuccess(
@@ -95,7 +97,7 @@ function takePicture() {
       })
       .catch(() => {
         snackbarStore.showError(
-          `Die Karte konnte dem PDF Report nicht hinzugefügt.`
+          `Die Karte konnte dem PDF Report nicht hinzugefügt werden.`
         );
       })
       .finally(() => {
