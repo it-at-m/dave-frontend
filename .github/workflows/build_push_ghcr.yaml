@@ -2,7 +2,7 @@ name: build image and push to ghcr.io
 
 on: 
   push:
-    branches: [main-ls2]
+    branches: ["main-ls2", "sprint"]
 
 env:
   REGISTRY: ghcr.io
@@ -48,15 +48,13 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=main-ls2
           labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
       
       - name: Install Java and Maven
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 21
           distribution: "temurin"
           cache: "maven"
 

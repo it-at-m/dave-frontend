@@ -1,150 +1,106 @@
 <template>
-    <v-speed-dial
-        v-model="fab"
-        absolute
-        bottom
-        right
-        open-on-hover
-    >
-        <template #activator>
-            <v-btn
-                v-model="fab"
-                dark
-                fab
-                :color="fabColor"
-                :loading="loadingFile"
-            >
-                <v-icon v-if="fab"> mdi-close-thick </v-icon>
-                <v-icon v-else> mdi-file </v-icon>
-            </v-btn>
-        </template>
-
-        <v-tooltip
-            v-if="isNotHeatmap"
-            left
-        >
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    fab
-                    dark
-                    small
-                    color="secondary"
-                    v-bind="attrs"
-                    @click="$emit('generatePdf')"
-                    v-on="on"
-                >
-                    <v-icon>mdi-file-pdf-box</v-icon>
-                </v-btn>
-            </template>
-            <span>{{ generatePdfTooltip }}</span>
-        </v-tooltip>
-        <v-tooltip
-            v-if="isListenausgabe"
-            left
-        >
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    fab
-                    dark
-                    small
-                    color="secondary"
-                    v-bind="attrs"
-                    @click="$emit('generateCsv')"
-                    v-on="on"
-                >
-                    <v-icon>mdi-file-delimited</v-icon>
-                </v-btn>
-            </template>
-            <span>CSV</span>
-        </v-tooltip>
-        <v-tooltip left>
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    fab
-                    dark
-                    small
-                    color="secondary"
-                    v-bind="attrs"
-                    @click="$emit('openPdfReportDialog')"
-                    v-on="on"
-                >
-                    <v-icon>mdi-file-chart</v-icon>
-                </v-btn>
-            </template>
-            <span>PDF Report Menü öffnen</span>
-        </v-tooltip>
-        <v-tooltip left>
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    fab
-                    dark
-                    small
-                    color="secondary"
-                    v-bind="attrs"
-                    @click="$emit('addChartToPdfReport')"
-                    v-on="on"
-                >
-                    <v-icon>mdi-chart-box-plus-outline</v-icon>
-                </v-btn>
-            </template>
-            <span>{{ addChartToReportTooltip }}</span>
-        </v-tooltip>
-        <v-tooltip
-            v-if="!isListenausgabe"
-            left
-        >
-            <template #activator="{ on, attrs }">
-                <v-btn
-                    fab
-                    dark
-                    small
-                    color="secondary"
-                    v-bind="attrs"
-                    @click="$emit('saveGraphAsImage')"
-                    v-on="on"
-                >
-                    <v-icon>mdi-download</v-icon>
-                </v-btn>
-            </template>
-            <span>Graph herunterladen</span>
-        </v-tooltip>
-    </v-speed-dial>
+  <v-speed-dial
+    v-model="speedDialOpen"
+    location="top"
+    open-on-hover
+    open-delay="150"
+  >
+    <template #activator="{ props: activatorProps }">
+      <v-btn
+        v-bind="activatorProps"
+        key="speedDial"
+        :color="speedDialColor"
+        :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-file'"
+        size="large"
+        elevation="6"
+        location="bottom end"
+        position="absolute"
+        class="mr-4 mb-4"
+        style="z-index: 400"
+        :data-x="activatorProps"
+        :loading="loadingFile"
+      />
+    </template>
+    <v-btn
+      v-if="isNotHeatmap"
+      key="generatePdfButton"
+      v-tooltip:start="generatePdfTooltip"
+      size="small"
+      color="secondary"
+      icon="mdi-file-pdf-box"
+      @click="$emit('generatePdf')"
+    />
+    <v-btn
+      v-if="isListenausgabe"
+      key="generatecsvButton"
+      v-tooltip:start="'CSV'"
+      size="small"
+      color="secondary"
+      icon="mdi-file-delimited"
+      @click="$emit('generateCsv')"
+    />
+    <v-btn
+      key="openPdfReportDialogButton"
+      v-tooltip:start="'PDF Report Menü öffnen'"
+      size="small"
+      color="secondary"
+      icon="mdi-file-chart"
+      @click="$emit('openPdfReportDialog')"
+    />
+    <v-btn
+      key="addChartToPdfReportButton"
+      v-tooltip:start="addChartToReportTooltip"
+      size="small"
+      color="secondary"
+      icon="mdi-chart-box-plus-outline"
+      @click="$emit('addChartToPdfReport')"
+    />
+    <v-btn
+      v-if="!isListenausgabe"
+      key="saveGraphAsImageButton"
+      v-tooltip:start="'Graph herunterladen'"
+      size="small"
+      color="secondary"
+      icon="mdi-download"
+      @click="$emit('saveGraphAsImage')"
+    />
+  </v-speed-dial>
 </template>
 <script setup lang="ts">
-import { computed, ComputedRef, ref, Ref } from "vue";
+import { computed, ref } from "vue";
 
 interface Props {
-    isListenausgabe: boolean;
-    isNotHeatmap: boolean;
-    loadingFile: boolean;
+  isListenausgabe: boolean;
+  isNotHeatmap: boolean;
+  loadingFile: boolean;
 }
 
 const props = defineProps<Props>();
 
 defineEmits<{
-    (e: "generatePdf"): void;
-    (e: "openPdfReportDialog"): void;
-    (e: "generateCsv"): void;
-    (e: "addChartToPdfReport"): void;
-    (e: "saveGraphAsImage"): void;
+  (e: "generatePdf"): void;
+  (e: "openPdfReportDialog"): void;
+  (e: "generateCsv"): void;
+  (e: "addChartToPdfReport"): void;
+  (e: "saveGraphAsImage"): void;
 }>();
 
 // Fab
-const fab: Ref<boolean> = ref(false);
+const speedDialOpen = ref(false);
 
-const fabColor: ComputedRef<string> = computed(() => {
-    return fab.value ? "grey darken-1" : "secondary";
+const speedDialColor = computed(() => {
+  return speedDialOpen.value ? "grey-darken-1" : "secondary";
 });
 
-const generatePdfTooltip: ComputedRef<string> = computed(() => {
-    return props.isListenausgabe ? "PDF" : "Chart als PDF drucken";
+const generatePdfTooltip = computed(() => {
+  return props.isListenausgabe ? "PDF" : "Chart als PDF drucken";
 });
 
-const addChartToReportTooltip: ComputedRef<string> = computed(() => {
-    let type = "Diagramm";
-    if (props.isListenausgabe) {
-        type = "Tabelle";
-    }
-    return `${type} dem PDF Report hinzufügen`;
+const addChartToReportTooltip = computed(() => {
+  let type = "Diagramm";
+  if (props.isListenausgabe) {
+    type = "Tabelle";
+  }
+  return `${type} dem PDF Report hinzufügen`;
 });
 </script>

@@ -1,296 +1,286 @@
 <template>
-    <div>
-        <v-autocomplete
-            v-model="auswertungOptions.mstIds"
-            :items="messstellen"
-            class="mt-4"
-            outlined
-            dense
-            chips
-            small-chips
-            label="Messstellen"
-            multiple
-            clearable
-            deletable-chips
-            :disabled="disableMessstelle"
-            persistent-hint
-            :hint="messstelleHint"
-            @input="mstIdsHaveChanged"
-        >
-            <template #append-item>
-                <v-btn
-                    v-if="showSelectAllButton"
-                    width="100%"
-                    text
-                    @click="selectAllMessstellen"
-                    >Alle auswählen</v-btn
-                >
-                <v-btn
-                    v-else
-                    width="100%"
-                    text
-                    @click="deselectAllMessstellen"
-                    >Alle abwählen</v-btn
-                >
-            </template>
-        </v-autocomplete>
+  <div>
+    <v-autocomplete
+      v-model="auswertungOptions.mstIds"
+      :items="messstellen"
+      class="mt-4"
+      density="compact"
+      chips
+      label="Messstellen"
+      multiple
+      clearable
+      :disabled="disableMessstelle"
+      persistent-hint
+      variant="outlined"
+      closable-chips
+      :hint="messstelleHint"
+    >
+      <template #prepend-item>
+        <v-btn
+          class="text-none"
+          width="100%"
+          variant="flat"
+          :text="buttonText"
+          @click="buttonClick"
+        />
+      </template>
+    </v-autocomplete>
 
-        <div v-if="auswertungOptions.mstIds.length === 1">
-            <v-autocomplete
-                v-model="direction"
-                label="Richtung"
-                :items="richtungValues"
-                filled
-                dense
-                :readonly="richtungValues.length === 1"
-                persistent-hint
-                :hint="directionHint"
-                @input="preassignMqIdsInOptions"
-            />
+    <div v-if="auswertungOptions.mstIds.length === 1">
+      <v-autocomplete
+        v-model="direction"
+        label="Richtung"
+        :items="richtungValues"
+        variant="filled"
+        density="compact"
+        :readonly="richtungValues.length === 1"
+        persistent-hint
+        :hint="directionHint"
+        @update:model-value="preassignMqIdsInOptions"
+      />
 
-            <v-autocomplete
-                v-model="auswertungOptions.mqIds"
-                label="Lage"
-                :items="lageValues"
-                :readonly="isLageReadonly"
-                filled
-                dense
-                multiple
-                :rules="[REQUIRED]"
-            />
-        </div>
+      <v-autocomplete
+        v-model="auswertungOptions.mqIds"
+        label="Lage"
+        :items="lageValues"
+        :readonly="isLageReadonly"
+        variant="filled"
+        density="compact"
+        multiple
+        :rules="[REQUIRED]"
+      />
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, ref, Ref, watch } from "vue";
-import KeyVal from "@/types/common/KeyVal";
-import MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type KeyVal from "@/types/common/KeyVal";
+import type MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
+import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+
+import { computed, onMounted, ref, watch } from "vue";
+
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
-import MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
 
-interface Props {
-    value: MessstelleAuswertungOptionsDTO;
-}
-
-const props = defineProps<Props>();
-
-const emits = defineEmits<{
-    (e: "input", v: MessstelleAuswertungOptionsDTO): void;
-}>();
+const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+  required: true,
+});
 
 const messstelleUtils = useMessstelleUtils();
 
-loadAllVisibleMessstellen();
-
-const allVisibleMessstellen: Ref<Array<MessstelleAuswertungDTO>> = ref([]);
-const direction: Ref<string> = ref("");
-
-const auswertungOptions = computed({
-    get: () => props.value,
-    set: (payload: MessstelleAuswertungOptionsDTO) => emits("input", payload),
+onMounted(() => {
+  loadAllVisibleMessstellen();
 });
 
-watch(direction, () => {
-    if (direction.value == null) {
-        setDefaultDirection();
-    }
-});
+const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
+const direction = ref(messstelleUtils.alleRichtungen);
 
-const messstellen: ComputedRef<Array<KeyVal>> = computed(() => {
-    const result: Array<KeyVal> = [];
-    allVisibleMessstellen.value.forEach((mst) => {
-        result.push({
-            text: `${mst.mstId}-${mst.standort ?? ""} (${
-                mst.detektierteVerkehrsarten ?? ""
-            })`,
-            value: mst.mstId,
-        });
+watch(
+  () => auswertungOptions.value.mstIds,
+  () => {
+    setDefaultDirection();
+    setVerfuegbareVerkehrsarten();
+  }
+);
+
+const messstellen = computed<Array<KeyVal>>(() => {
+  const result: Array<KeyVal> = [];
+  allVisibleMessstellen.value.forEach((mst) => {
+    result.push({
+      title: `${mst.mstId}-${mst.standort ?? ""} (${
+        mst.detektierteVerkehrsarten ?? ""
+      })`,
+      value: mst.mstId,
     });
-    return result;
+  });
+  return result;
 });
 
-const richtungValues: ComputedRef<Array<KeyVal>> = computed(() => {
-    let result: Array<KeyVal> = [];
-    if (auswertungOptions.value.mstIds.length === 1) {
-        for (let messstelle of allVisibleMessstellen.value) {
-            if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
-                if (messstelle.messquerschnitte.length > 1) {
-                    result.push({
-                        text: messstelleUtils.alleRichtungen,
-                        value: messstelleUtils.alleRichtungen,
-                    });
-                }
-                messstelle.messquerschnitte.forEach(
-                    (querschnitt: MessquerschnittAuswertungDTO) => {
-                        const keyVal: KeyVal = {
-                            text:
-                                himmelsRichtungenTextLong.get(
-                                    querschnitt.fahrtrichtung
-                                ) ??
-                                "Fehler bei der Bestimmung der Himmelsrichtung.",
-                            value: querschnitt.fahrtrichtung,
-                        };
-                        if (!result.includes(keyVal)) {
-                            result.push(keyVal);
-                        }
-                    }
-                );
-                break;
-            }
+const richtungValues = computed<Array<KeyVal>>(() => {
+  const result: Array<KeyVal> = [];
+  if (auswertungOptions.value.mstIds.length === 1) {
+    for (const messstelle of allVisibleMessstellen.value) {
+      if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+        if (messstelle.messquerschnitte.length > 1) {
+          result.push({
+            title: messstelleUtils.alleRichtungen,
+            value: messstelleUtils.alleRichtungen,
+          });
         }
-    }
-    return result;
-});
-
-const lageValues: ComputedRef<Array<KeyVal>> = computed(() => {
-    let result: Array<KeyVal> = [];
-    if (auswertungOptions.value.mstIds.length === 1) {
-        for (let messstelle of allVisibleMessstellen.value) {
-            if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
-                messstelle.messquerschnitte.forEach(
-                    (querschnitt: MessquerschnittAuswertungDTO) => {
-                        if (
-                            querschnitt.fahrtrichtung === direction.value ||
-                            direction.value === messstelleUtils.alleRichtungen
-                        ) {
-                            result.push({
-                                text: `${querschnitt.mqId} - ${querschnitt.standort}`,
-                                value: querschnitt.mqId,
-                            });
-                        }
-                    }
-                );
-                break;
+        messstelle.messquerschnitte.forEach(
+          (querschnitt: MessquerschnittAuswertungDTO) => {
+            const keyVal: KeyVal = {
+              title:
+                himmelsRichtungenTextLong.get(querschnitt.fahrtrichtung) ??
+                "Fehler bei der Bestimmung der Himmelsrichtung.",
+              value: querschnitt.fahrtrichtung,
+            };
+            if (!result.includes(keyVal)) {
+              result.push(keyVal);
             }
-        }
+          }
+        );
+        break;
+      }
     }
-    return result;
+  }
+  return result;
 });
 
-const isLageReadonly: ComputedRef<boolean> = computed(() => {
-    return (
-        direction.value === messstelleUtils.alleRichtungen ||
-        lageValues.value.length === 1
-    );
-});
-
-const showSelectAllButton: ComputedRef<boolean> = computed(() => {
-    return (
-        auswertungOptions.value.mstIds.length <=
-        allVisibleMessstellen.value.length / 2
-    );
-});
-
-const directionHint: ComputedRef<string> = computed(() => {
-    let hint = "";
-    if (auswertungOptions.value.mstIds.length > 1) {
-        hint =
-            "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
+const lageValues = computed<Array<KeyVal>>(() => {
+  const result: Array<KeyVal> = [];
+  if (auswertungOptions.value.mstIds.length === 1) {
+    for (const messstelle of allVisibleMessstellen.value) {
+      if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+        messstelle.messquerschnitte.forEach(
+          (querschnitt: MessquerschnittAuswertungDTO) => {
+            if (
+              querschnitt.fahrtrichtung === direction.value ||
+              direction.value === messstelleUtils.alleRichtungen
+            ) {
+              result.push({
+                title: `${querschnitt.mqId} - ${querschnitt.standort}`,
+                value: querschnitt.mqId,
+              });
+            }
+          }
+        );
+        break;
+      }
     }
-    return hint;
+  }
+  return result;
 });
 
-const messstelleHint: ComputedRef<string> = computed(() => {
-    let hint = "";
-    if (auswertungOptions.value.mstIds.length > 1) {
-        hint =
-            "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
-    } else if (disableMessstelle.value) {
-        hint =
-            "Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden.";
-    }
-    return hint;
+const isLageReadonly = computed(() => {
+  return (
+    direction.value === messstelleUtils.alleRichtungen ||
+    lageValues.value.length === 1
+  );
 });
 
-const disableMessstelle: ComputedRef<boolean> = computed(() => {
-    return (
-        auswertungOptions.value.mqIds.length !== 0 &&
-        direction.value !== messstelleUtils.alleRichtungen &&
-        auswertungOptions.value.mqIds.length > 0 &&
-        richtungValues.value.length > 1
-    );
+const showSelectAllButton = computed(() => {
+  return (
+    auswertungOptions.value.mstIds.length <=
+    allVisibleMessstellen.value.length / 2
+  );
+});
+
+const directionHint = computed(() => {
+  let hint = "";
+  if (auswertungOptions.value.mstIds.length > 1) {
+    hint =
+      "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
+  }
+  return hint;
+});
+
+const messstelleHint = computed(() => {
+  let hint = "";
+  if (auswertungOptions.value.mstIds.length > 1) {
+    hint =
+      "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
+  } else if (disableMessstelle.value) {
+    hint =
+      "Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden.";
+  }
+  return hint;
+});
+
+const disableMessstelle = computed(() => {
+  return (
+    auswertungOptions.value.mqIds.length !== 0 &&
+    direction.value !== messstelleUtils.alleRichtungen &&
+    auswertungOptions.value.mqIds.length > 0 &&
+    richtungValues.value.length > 1
+  );
+});
+
+const buttonText = computed(() => {
+  return showSelectAllButton.value ? "Alle auswählen" : "Alle abwählen";
 });
 
 function loadAllVisibleMessstellen(): void {
-    MessstelleAuswertungService.getAllVisibleMessstellen().then(
-        (messstellen: Array<MessstelleAuswertungDTO>) => {
-            allVisibleMessstellen.value = messstellen;
-        }
-    );
-}
-
-function mstIdsHaveChanged() {
-    setDefaultDirection();
-    setVerfuegbareVerkehrsarten();
+  MessstelleAuswertungService.getAllVisibleMessstellen().then(
+    (messstellen: Array<MessstelleAuswertungDTO>) => {
+      allVisibleMessstellen.value = messstellen;
+    }
+  );
 }
 
 function setDefaultDirection(): void {
-    resetMqsIfNecessary();
-    if (auswertungOptions.value.mstIds.length === 1) {
-        for (let messstelle of allVisibleMessstellen.value) {
-            if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
-                if (messstelle.messquerschnitte.length === 1) {
-                    direction.value =
-                        messstelle.messquerschnitte[0].fahrtrichtung;
-                } else if (messstelle.messquerschnitte.length > 1) {
-                    direction.value = messstelleUtils.alleRichtungen;
-                }
-            }
+  resetMqsIfNecessary();
+  if (auswertungOptions.value.mstIds.length === 1) {
+    for (const messstelle of allVisibleMessstellen.value) {
+      if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+        if (messstelle.messquerschnitte.length === 1) {
+          direction.value = messstelle.messquerschnitte[0].fahrtrichtung;
+        } else if (messstelle.messquerschnitte.length > 1) {
+          direction.value = messstelleUtils.alleRichtungen;
         }
-        preassignMqIdsInOptions();
+      }
     }
+    preassignMqIdsInOptions();
+  }
 }
 
 function setVerfuegbareVerkehrsarten() {
-    auswertungOptions.value.verfuegbareVerkehrsarten = [];
-    if (auswertungOptions.value.mstIds.length > 0) {
-        for (let messstelle of allVisibleMessstellen.value) {
-            if (
-                auswertungOptions.value.mstIds.includes(messstelle.mstId) &&
-                !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
-                    messstelle.detektierteVerkehrsarten
-                )
-            ) {
-                auswertungOptions.value.verfuegbareVerkehrsarten.push(
-                    messstelle.detektierteVerkehrsarten
-                );
-            }
-            if (auswertungOptions.value.verfuegbareVerkehrsarten.length === 2) {
-                break;
-            }
-        }
+  auswertungOptions.value.verfuegbareVerkehrsarten = [];
+  if (auswertungOptions.value.mstIds.length > 0) {
+    for (const messstelle of allVisibleMessstellen.value) {
+      if (
+        auswertungOptions.value.mstIds.includes(messstelle.mstId) &&
+        !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
+          messstelle.detektierteVerkehrsarten
+        )
+      ) {
+        auswertungOptions.value.verfuegbareVerkehrsarten.push(
+          messstelle.detektierteVerkehrsarten
+        );
+      }
+      if (auswertungOptions.value.verfuegbareVerkehrsarten.length === 2) {
+        break;
+      }
     }
+  }
 }
 
 function preassignMqIdsInOptions() {
-    auswertungOptions.value.mqIds = [];
-    lageValues.value.forEach((value) =>
-        auswertungOptions.value.mqIds.push(value.value)
-    );
+  auswertungOptions.value.mqIds = [];
+  lageValues.value.forEach((value) =>
+    auswertungOptions.value.mqIds.push(value.value)
+  );
+}
+
+function buttonClick() {
+  if (showSelectAllButton.value) {
+    selectAllMessstellen();
+  } else {
+    deselectAllMessstellen();
+  }
 }
 
 function selectAllMessstellen() {
-    auswertungOptions.value.mstIds = [];
-    allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
-        auswertungOptions.value.mstIds.push(mst.mstId);
-    });
+  auswertungOptions.value.mstIds = [];
+  allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
+    auswertungOptions.value.mstIds.push(mst.mstId);
+  });
 }
 
 function deselectAllMessstellen() {
-    auswertungOptions.value.mstIds = [];
+  auswertungOptions.value.mstIds = [];
 }
 
 function resetMqsIfNecessary() {
-    if (auswertungOptions.value.mstIds.length > 1)
-        auswertungOptions.value.mqIds = [];
+  if (auswertungOptions.value.mstIds.length > 1)
+    auswertungOptions.value.mqIds = [];
 }
 
 function REQUIRED(v: Array<string>) {
-    if (v.length > 0) return true;
-    return "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
+  if (v.length > 0) return true;
+  return "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
 }
 </script>
