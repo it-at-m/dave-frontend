@@ -63,7 +63,7 @@
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type { VStepperVerticalItem } from "vuetify/labs/components";
 
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import FahrzeugeStepContent from "@/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue";
 import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/JahreStepContent.vue";
@@ -71,6 +71,7 @@ import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/Ort
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
 import { auswertungszeitraumToText } from "@/types/enum/AuswertungCategories";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 import { tagesTypText } from "@/types/enum/TagesTyp";
 
 interface Props {
@@ -236,4 +237,47 @@ const selectedFahrzeugAsSummary = computed(() => {
   }
   return summary;
 });
+
+watch(
+  () => auswertungOptions.value.verfuegbareVerkehrsarten,
+  (newVerkehrsarten, oldVerkehrsarten) => {
+    const rad = newVerkehrsarten.includes(Fahrzeug.RAD);
+    const removeRad =
+      oldVerkehrsarten.includes(Fahrzeug.RAD) &&
+      !newVerkehrsarten.includes(Fahrzeug.RAD);
+
+    const kfz = newVerkehrsarten.includes(Fahrzeug.KFZ);
+    const removeKfz =
+      oldVerkehrsarten.includes(Fahrzeug.KFZ) &&
+      !newVerkehrsarten.includes(Fahrzeug.KFZ);
+
+    if (removeKfz || (rad && kfz)) {
+      resetFahrzeuge();
+    }
+    if (removeRad || (rad && kfz)) {
+      auswertungOptions.value.fahrzeuge.radverkehr = false;
+    }
+    if (rad && !kfz) {
+      auswertungOptions.value.fahrzeuge.radverkehr = true;
+    } else if (!rad && kfz) {
+      auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = true;
+    }
+  }
+);
+
+function resetFahrzeuge() {
+  auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = false;
+  auswertungOptions.value.fahrzeuge.schwerverkehr = false;
+  auswertungOptions.value.fahrzeuge.gueterverkehr = false;
+  auswertungOptions.value.fahrzeuge.schwerverkehrsanteilProzent = false;
+  auswertungOptions.value.fahrzeuge.gueterverkehrsanteilProzent = false;
+  auswertungOptions.value.fahrzeuge.radverkehr = false;
+  auswertungOptions.value.fahrzeuge.fussverkehr = false;
+  auswertungOptions.value.fahrzeuge.lastkraftwagen = false;
+  auswertungOptions.value.fahrzeuge.lastzuege = false;
+  auswertungOptions.value.fahrzeuge.busse = false;
+  auswertungOptions.value.fahrzeuge.kraftraeder = false;
+  auswertungOptions.value.fahrzeuge.personenkraftwagen = false;
+  auswertungOptions.value.fahrzeuge.lieferwagen = false;
+}
 </script>

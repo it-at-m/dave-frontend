@@ -225,61 +225,21 @@
 <script setup lang="ts">
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import Fahrzeug from "@/types/enum/Fahrzeug";
 
 const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
+
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
 const selectOrDeselectAllVmodel = ref(false);
-
-const verkehrsartenWatch = computed(() => {
-  return auswertungOptions.value.verfuegbareVerkehrsarten;
-});
 
 onMounted(() => {
   calculateSelectOrDeselectVerkehrsarten();
   calculateSelectOrDeselect();
 });
-
-watch(verkehrsartenWatch, () => {
-  preassignFahrzeuge();
-});
-
-function preassignFahrzeuge() {
-  const rad = auswertungOptions.value.verfuegbareVerkehrsarten.includes(
-    Fahrzeug.RAD
-  );
-  const kfz = auswertungOptions.value.verfuegbareVerkehrsarten.includes(
-    Fahrzeug.KFZ
-  );
-  resetFahrzeuge();
-  if (rad && !kfz) {
-    auswertungOptions.value.fahrzeuge.radverkehr = true;
-  } else if (!rad && kfz) {
-    auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = true;
-  }
-  calculateSelectOrDeselectVerkehrsarten();
-  calculateSelectOrDeselect();
-}
-
-function resetFahrzeuge() {
-  auswertungOptions.value.fahrzeuge.kraftfahrzeugverkehr = false;
-  auswertungOptions.value.fahrzeuge.schwerverkehr = false;
-  auswertungOptions.value.fahrzeuge.gueterverkehr = false;
-  auswertungOptions.value.fahrzeuge.schwerverkehrsanteilProzent = false;
-  auswertungOptions.value.fahrzeuge.gueterverkehrsanteilProzent = false;
-  auswertungOptions.value.fahrzeuge.radverkehr = false;
-  auswertungOptions.value.fahrzeuge.fussverkehr = false;
-  auswertungOptions.value.fahrzeuge.lastkraftwagen = false;
-  auswertungOptions.value.fahrzeuge.lastzuege = false;
-  auswertungOptions.value.fahrzeuge.busse = false;
-  auswertungOptions.value.fahrzeuge.kraftraeder = false;
-  auswertungOptions.value.fahrzeuge.personenkraftwagen = false;
-  auswertungOptions.value.fahrzeuge.lieferwagen = false;
-}
 
 const labelSelectOrDeselectAllVerkehrsarten = computed(() => {
   return selectOrDeselectAllVerkehrsartenVmodel.value
