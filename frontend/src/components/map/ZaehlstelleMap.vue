@@ -576,10 +576,7 @@ function markerOptionsZaehlart(zaehlart: string, index: number) {
     iconAnchor: calculateIconAnchorCoordinatesForZaehlartMarker(index),
     iconSize: [30, 30],
     className: `zaehlart-circle-${getColorForZaehlartenMarker(zaehlart)}`,
-    html:
-      '<span class="white--text text-Button font-weight-bold">' +
-      zaehlart +
-      "</span>",
+    html: '<span class="text-white font-weight-bold">' + zaehlart + "</span>",
   });
 
   return { opacity: 1.0, icon: divIcon };
@@ -636,7 +633,7 @@ wurden die Farbe auf schwarz gesetzt */
   width: 30px;
   line-height: 30px;
   border-radius: 50%;
-  background: red;
+  background: #f44336;
   text-align: center;
 }
 .zaehlart-circle-secondary {
