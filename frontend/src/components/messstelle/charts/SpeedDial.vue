@@ -2,7 +2,6 @@
   <v-speed-dial
     v-model="speedDialOpen"
     location="top"
-    open-on-hover
   >
     <template #activator="{ props: activatorProps }">
       <v-btn
