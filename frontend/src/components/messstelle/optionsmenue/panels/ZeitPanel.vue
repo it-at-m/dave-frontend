@@ -122,6 +122,7 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useUserStore } from "@/store/UserStore";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
+import TagesTyp from "@/types/enum/TagesTyp";
 
 const route = useRoute();
 
@@ -242,7 +243,7 @@ function resetDates() {
     if (chosenOptionsCopy.value.zeitraum.length === 2) {
       chosenOptionsCopy.value.zeitraum.pop();
     }
-    chosenOptionsCopy.value.tagesTyp = "";
+    chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
   }
 }
 

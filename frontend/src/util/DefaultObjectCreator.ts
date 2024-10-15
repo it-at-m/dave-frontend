@@ -112,7 +112,7 @@ export default class DefaultObjectCreator {
       fahrzeuge: this.createDefaultFahrzeugOptions(),
       intervall: "" as ZaehldatenIntervall,
       messquerschnittIds: [],
-      tagesTyp: "" as TagesTyp,
+      tagesTyp: TagesTyp.UNSPECIFIED,
       zeitauswahl: "",
       zeitblock: "",
       zeitraum: [],
