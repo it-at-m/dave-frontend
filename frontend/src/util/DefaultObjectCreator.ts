@@ -2,6 +2,7 @@ import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -11,6 +12,8 @@ import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
@@ -261,5 +264,44 @@ export default class DefaultObjectCreator {
       gueltigBis: "",
       intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,
     } as MessfaehigkeitDTO;
+  }
+
+  public static createDefaultBelastungsplanMessquerschnitteDTO(): BelastungsplanMessquerschnitteDTO {
+    return {
+      ladeBelastungsplanMessquerschnittDataDTOList: [],
+      strassenname: "",
+      stadtbezirkNummer: "",
+      mstId: "",
+      totalKfz: 0,
+      totalSv: 0,
+      totalGv: 0,
+      totalRad: 0,
+      totalPercentSv: 0,
+      totalPercentGv: 0,
+    } as BelastungsplanMessquerschnitteDTO;
+  }
+
+  public static createDefaultLadeZaehldatenSteplineDTO(): LadeZaehldatenSteplineDTO {
+    return {
+      legend: [],
+      rangeMax: 0,
+      rangeMaxPercent: 0,
+      xaxisDataFirstChart: [],
+      xaxisDataSecondChart: null,
+      seriesEntriesFirstChart: [],
+      seriesEntriesSecondChart: null,
+    } as LadeZaehldatenSteplineDTO;
+  }
+
+  public static createDefaultLadeZaehldatenHeatmapDTO(): LadeZaehldatenHeatmapDTO {
+    return {
+      legend: [],
+      rangeMin: 0,
+      rangeMax: 0,
+      xaxisDataFirstChart: [],
+      seriesEntriesFirstChart: [],
+      xaxisDataSecondChart: null,
+      seriesEntriesSecondChart: null,
+    } as LadeZaehldatenHeatmapDTO;
   }
 }
