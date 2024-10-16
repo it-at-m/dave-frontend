@@ -58,7 +58,7 @@
 
     <router-view
       v-slot="{ Component }"
-      :key="$route.fullPath"
+      :key="route.fullPath"
     >
       <v-fade-transition mode="out-in">
         <component :is="Component" />
@@ -69,6 +69,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
@@ -92,6 +93,7 @@ const frontendVersion = ref("");
 
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
+const route = useRoute();
 
 created();
 
