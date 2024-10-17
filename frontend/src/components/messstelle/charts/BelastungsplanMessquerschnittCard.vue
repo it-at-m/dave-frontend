@@ -512,7 +512,7 @@ function drawNorthSymbol() {
     })
     .font({
       family: fontfamily,
-      size: 20,
+      size: defaultFontSize,
       anchor: "middle",
       fill: "#757575",
     });
