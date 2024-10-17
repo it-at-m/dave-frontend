@@ -216,7 +216,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
   chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
   chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
-  chosenOptions.value.tagesTyp = "" as TagesTyp;
+  chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
   chosenOptions.value.blackPrintMode = false;
   chosenOptions.value.werteHundertRunden = false;
   chosenOptions.value.blocksumme = true;

@@ -26,6 +26,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const activeMessfaehigkeit = ref<MessfaehigkeitDTO>(
     DefaultObjectCreator.createDefaultMessfaehigkeitDTO()
   );
+  const includedMeasuringDays = ref(0);
+  const requestedMeasuringDays = ref(0);
 
   const getMessstelleInfo = computed(() => messstelleInfo.value);
   const getActiveTab = computed(() => activeTab.value);
@@ -43,6 +45,10 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     () => belastungsplanChosenSize.value
   );
   const getActiveMessfaehigkeit = computed(() => activeMessfaehigkeit.value);
+  const getIncludedMeasuringDays = computed(() => includedMeasuringDays.value);
+  const getRequestedMeasuringDays = computed(
+    () => requestedMeasuringDays.value
+  );
 
   function setActiveTab(payload: number) {
     activeTab.value = payload;
@@ -88,6 +94,12 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
       }
     );
   }
+  function setIncludedMeasuringDays(payload: number) {
+    includedMeasuringDays.value = payload;
+  }
+  function setRequestedMeasuringDays(payload: number) {
+    requestedMeasuringDays.value = payload;
+  }
 
   return {
     getMessstelleInfo,
@@ -100,6 +112,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     getBelastungsplanMaxSize,
     getBelastungsplanChosenSize,
     getActiveMessfaehigkeit,
+    getIncludedMeasuringDays,
+    getRequestedMeasuringDays,
     setActiveTab,
     setMessstelleInfo,
     setFilteroptions,
@@ -110,5 +124,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     setBelastungsplanMaxSize,
     setBelastungsplanChosenSize,
     calculateActiveMessfaehigkeit,
+    setIncludedMeasuringDays,
+    setRequestedMeasuringDays,
   };
 });

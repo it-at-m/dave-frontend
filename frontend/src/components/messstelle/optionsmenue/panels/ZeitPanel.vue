@@ -120,6 +120,7 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useUserStore } from "@/store/UserStore";
+import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
@@ -242,7 +243,7 @@ function resetDates() {
     if (chosenOptionsCopy.value.zeitraum.length === 2) {
       chosenOptionsCopy.value.zeitraum.pop();
     }
-    chosenOptionsCopy.value.tagesTyp = "";
+    chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
   }
 }
 
