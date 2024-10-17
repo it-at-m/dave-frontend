@@ -377,7 +377,13 @@ function addTextToQuerschnittGroup(
   y: number
 ) {
   querschnittGroup.value.add(
-    SVG.SVG().text(`${text}`).rotate(270, x, y).move(x, y)
+    SVG.SVG()
+      .text(`${text}`)
+      .font({
+        weight: "bold",
+      })
+      .rotate(270, x, y)
+      .move(x, y)
   );
 }
 
