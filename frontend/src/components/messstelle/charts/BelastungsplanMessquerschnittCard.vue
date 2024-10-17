@@ -503,10 +503,19 @@ function addTextNorthSide(
 
 function drawNorthSymbol() {
   canvas.value
-    .path("M 45 10 L 20 80 L 70 80 L 45 10")
+    .path("M 93 93 L 121 93 L 107 32 z")
     .stroke({ width: 1, color: "black" })
     .attr("fill", "none");
-  canvas.value.text("N").move(37.5, 45).font({ size: 20 });
+  canvas.value
+    .text((add) => {
+      add.tspan("N").x(107).dy(83);
+    })
+    .font({
+      family: fontfamily,
+      size: 20,
+      anchor: "middle",
+      fill: "#757575",
+    });
 }
 
 function drawMessstelleInfo() {
