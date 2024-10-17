@@ -123,11 +123,39 @@ function zeitauswahlChanged() {
   } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
     chosenOptionsCopy.value.zeitblock = ZeitblockStuendlich.ZB_00_01;
   } else if (
-    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ
+  ) {
+    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    resetFahrzeuge();
+    chosenOptionsCopy.value.fahrzeuge.kraftfahrzeugverkehr = true;
+  } else if (
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD
+  ) {
+    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    resetFahrzeuge();
+    chosenOptionsCopy.value.fahrzeuge.radverkehr = true;
+  } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
     chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    resetFahrzeuge();
+    chosenOptionsCopy.value.fahrzeuge.fussverkehr = true;
+  }
+
+  function resetFahrzeuge() {
+    chosenOptionsCopy.value.fahrzeuge.kraftfahrzeugverkehr = false;
+    chosenOptionsCopy.value.fahrzeuge.schwerverkehr = false;
+    chosenOptionsCopy.value.fahrzeuge.gueterverkehr = false;
+    chosenOptionsCopy.value.fahrzeuge.schwerverkehrsanteilProzent = false;
+    chosenOptionsCopy.value.fahrzeuge.gueterverkehrsanteilProzent = false;
+    chosenOptionsCopy.value.fahrzeuge.radverkehr = false;
+    chosenOptionsCopy.value.fahrzeuge.fussverkehr = false;
+    chosenOptionsCopy.value.fahrzeuge.lastkraftwagen = false;
+    chosenOptionsCopy.value.fahrzeuge.lastzuege = false;
+    chosenOptionsCopy.value.fahrzeuge.busse = false;
+    chosenOptionsCopy.value.fahrzeuge.kraftraeder = false;
+    chosenOptionsCopy.value.fahrzeuge.personenkraftwagen = false;
+    chosenOptionsCopy.value.fahrzeuge.lieferwagen = false;
   }
 }
 
