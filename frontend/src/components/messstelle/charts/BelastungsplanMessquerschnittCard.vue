@@ -145,7 +145,7 @@ function drawArrowsPointingSouth(
         )
         .stroke({
           width: calcStrokeSize(mq),
-          color: getLineColor(mq.direction),
+          color: getLineColor(mq.mqId, mq.direction),
         })
     );
     querschnittGroup.value.add(
@@ -280,7 +280,7 @@ function drawArrowsPointingNorth(
         )
         .stroke({
           width: calcStrokeSize(mq),
-          color: getLineColor(mq.direction),
+          color: getLineColor(mq.mqId, mq.direction),
         })
     );
     querschnittGroup.value.add(
@@ -697,10 +697,14 @@ function storeImageForPrinting() {
   emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
 }
 
-function getLineColor(direction: string) {
-  return chosenOptionsCopy.value.blackPrintMode
-    ? "#000000"
-    : farben.get(direction);
+function getLineColor(mqId: string, direction: string) {
+  if (chosenOptionsCopy.value.messquerschnittIds.includes(mqId)) {
+    return chosenOptionsCopy.value.blackPrintMode
+      ? "#000000"
+      : farben.get(direction);
+  } else {
+    return "#E0E0E0";
+  }
 }
 
 const getSizeInPx = computed(() => {
