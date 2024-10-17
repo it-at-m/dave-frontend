@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
@@ -134,4 +134,17 @@ const helpTextZeitintervall = computed(() => {
   }
   return "";
 });
+
+watch(
+  () => chosenOptionsCopy.value.zeitauswahl,
+  () => {
+    if (isIntervallChangingLocked.value) {
+      let intervall = messstelleStore.getActiveMessfaehigkeit.intervall;
+      if (intervall === ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT) {
+        intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+      }
+      chosenOptionsCopy.value.intervall = intervall;
+    }
+  }
+);
 </script>
