@@ -12,8 +12,8 @@ export default class MessstelleAuswertungService {
       "Beim Laden der Messstellen ist ein Fehler aufgetreten."
     );
   }
-  static generate(options: MessstelleAuswertungOptionsDTO): Promise<void> {
-    return FetchService.postData(
+  static generate(options: MessstelleAuswertungOptionsDTO): Promise<Blob> {
+    return FetchService.postForBlob(
       options,
       `${this.ENDPOINT}`,
       "Beim Laden der Auswertung ist ein Fehler aufgetreten."

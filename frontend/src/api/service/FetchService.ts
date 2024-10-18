@@ -11,7 +11,7 @@ export default class FetchService {
   static getData(endpoint: string, errorMessage: string): Promise<any> {
     const url = `${this.BASE}/${endpoint}`;
     const request = FetchUtils.getGETConfig();
-    return FetchService.sendRequest(url, request, errorMessage);
+    return FetchService.sendRequestForJson(url, request, errorMessage);
   }
 
   static postData(
@@ -21,7 +21,27 @@ export default class FetchService {
   ): Promise<any> {
     const url = `${this.BASE}/${endpoint}`;
     const request = FetchUtils.getPOSTConfig(dataToSave);
-    return FetchService.sendRequest(url, request, errorMessage);
+    return FetchService.sendRequestForJson(url, request, errorMessage);
+  }
+
+  static postForPdf(
+    dataToSave: any,
+    endpoint: string,
+    errorMessage: string
+  ): Promise<Blob> {
+    const url = `${this.BASE}/${endpoint}`;
+    const request = FetchUtils.getPdfPOSTConfig(dataToSave);
+    return FetchService.sendRequestForBlob(url, request, errorMessage);
+  }
+
+  static postForBlob(
+    dataToSave: any,
+    endpoint: string,
+    errorMessage: string
+  ): Promise<Blob> {
+    const url = `${this.BASE}/${endpoint}`;
+    const request = FetchUtils.getPOSTConfig(dataToSave);
+    return FetchService.sendRequestForBlob(url, request, errorMessage);
   }
 
   static patchData(
@@ -31,7 +51,7 @@ export default class FetchService {
   ): Promise<any> {
     const url = `${this.BASE}/${endpoint}`;
     const request = FetchUtils.getPATCHConfig(dataToSave);
-    return FetchService.sendRequest(url, request, errorMessage);
+    return FetchService.sendRequestForJson(url, request, errorMessage);
   }
 
   static putData(
@@ -41,14 +61,34 @@ export default class FetchService {
   ): Promise<any> {
     const url = `${this.BASE}/${endpoint}`;
     const request = FetchUtils.getPUTConfig(dataToSave);
-    return FetchService.sendRequest(url, request, errorMessage);
+    return FetchService.sendRequestForJson(url, request, errorMessage);
+  }
+
+  private static sendRequestForJson(
+    url: string,
+    request: RequestInit,
+    errorMessage: string
+  ): Promise<any> {
+    return this.sendRequest(url, request, errorMessage).then((response) => {
+      return response.json();
+    });
+  }
+
+  private static sendRequestForBlob(
+    url: string,
+    request: RequestInit,
+    errorMessage: string
+  ): Promise<Blob> {
+    return this.sendRequest(url, request, errorMessage).then((response) => {
+      return response.blob();
+    });
   }
 
   private static sendRequest(
     url: string,
     request: RequestInit,
     errorMessage: string
-  ): Promise<any> {
+  ): Promise<Response> {
     return fetch(url, request)
       .catch((error) => {
         throw new ApiError(
@@ -87,41 +127,6 @@ export default class FetchService {
           ) {
             location.reload();
           }
-          throw new ApiError(
-            Levels.ERROR,
-            errorMessage,
-            `Fehler: ${response.status} ${response.statusText}`
-          );
-        }
-        return response.json();
-      });
-  }
-
-  static postForPdf(
-    dataToSave: any,
-    endpoint: string,
-    errorMessage: string
-  ): Promise<any> {
-    const url = `${this.BASE}/${endpoint}`;
-    const request = FetchUtils.getPdfPOSTConfig(dataToSave);
-    return FetchService.sendRequestForPDF(url, request, errorMessage);
-  }
-
-  private static sendRequestForPDF(
-    url: string,
-    request: RequestInit,
-    errorMessage: string
-  ): Promise<any> {
-    return fetch(url, request)
-      .catch((error) => {
-        throw new ApiError(
-          Levels.ERROR,
-          `Die Verbindung zum Service konnte nicht aufgebaut werden.`,
-          error
-        );
-      })
-      .then((response) => {
-        if (!response.ok) {
           throw new ApiError(
             Levels.ERROR,
             errorMessage,

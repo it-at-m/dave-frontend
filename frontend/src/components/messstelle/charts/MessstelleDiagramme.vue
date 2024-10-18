@@ -549,20 +549,18 @@ function fetchPdf(formData: FormData, type: string) {
     messstelleId.value,
     formData
   )
-    .then((res) => {
-      res.blob().then((blob) => {
-        // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
-        const typeForFilename: string =
-          type.charAt(0).toUpperCase() + type.slice(1);
+    .then((blob) => {
+      // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
+      const typeForFilename: string =
+        type.charAt(0).toUpperCase() + type.slice(1);
 
-        // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
-        const filename = `${reportTools.getFileName(
-          Erhebungsstelle.MESSSTELLE,
-          typeForFilename,
-          options.value.zeitraum
-        )}.pdf`;
-        downloadUtils.downloadFile(blob, filename);
-      });
+      // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
+      const filename = `${reportTools.getFileName(
+        Erhebungsstelle.MESSSTELLE,
+        typeForFilename,
+        options.value.zeitraum
+      )}.pdf`;
+      downloadUtils.downloadFile(blob, filename);
     })
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => (loadingFile.value = false));
