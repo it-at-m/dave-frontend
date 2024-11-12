@@ -72,6 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits<Emits>();
 const date = defineModel<Date | undefined>();
+const choosenDate = ref<string | undefined>(undefined);
 const datePickerActive = ref(false);
 const displayFormat = ref(DISPLAY_FORMAT);
 
@@ -79,7 +80,7 @@ const datePickerDate = computed({
   get() {
     if (!_.isNil(date.value)) {
       const parsedValue = moment.utc(date.value);
-      if (!parsedValue.isSame(0)) {
+      if (parsedValue.isValid() && !parsedValue.isSame(0)) {
         return moment(parsedValue.format(ISO_FORMAT)).toDate();
       }
     }
