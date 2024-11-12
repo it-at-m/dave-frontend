@@ -1,55 +1,17 @@
 <template>
-  <v-dialog
-    v-model="datePickerActive"
-    width="290px"
-  >
-    <template #activator="{ props: activatorProps }">
-      <v-text-field
-        id="datum"
-        v-model="textFieldDate"
-        variant="underlined"
-        validate-on="blur"
-        :hint="displayFormat"
-        :disabled="disabled"
-        :required="required"
-        density="compact"
-        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
-        @blur="blur"
-      >
-        <template #label>
-          {{ label }}
-          <span
-            v-if="required"
-            class="text-secondary"
-          >
-            *
-          </span>
-        </template>
-        <template #append-inner>
-          <v-icon v-bind="activatorProps">mdi-calendar</v-icon>
-        </template>
-      </v-text-field>
-    </template>
-    <!-- Picker für die tagesgenaue Auswahl -->
-    <v-date-picker
-      id="datum_datePicker"
-      v-model="datePickerDate"
-      :disabled="disabled"
-      :min="minDate"
-      :max="maxDate"
-      :weekdays="[1, 2, 3, 4, 5, 6, 0]"
-      color="primary"
-      @update:model-value="deactivateDatePicker"
-    />
-  </v-dialog>
+  <vue-date-picker
+      v-model="date"
+      placeholder="Datum eingeben ..."
+      :text-input="TEXT_INPUT_OPTIONS"
+      :format="format"
+      :enable-time-picker="false"
+  />
 </template>
 
 <script setup lang="ts">
-import _ from "lodash";
-import moment from "moment";
-import { computed, ref } from "vue";
-
-import { useDateUtils } from "@/util/DateUtils";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import {useDateUtils} from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -59,12 +21,17 @@ interface Props {
   maxDate: string; // Ob das Datumsfeld deaktiviert sein soll
 }
 
+const dateUtils = useDateUtils();
+
 interface Emits {
   (event: "blur", value: Date | undefined): void;
 }
 
-const ISO_FORMAT = "YYYY-MM-DD";
+const TEXT_INPUT_OPTIONS = {
+  format: 'dd.MM.yyyy',
+};
 const DISPLAY_FORMAT = "DD.MM.YYYY";
+
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
@@ -72,74 +39,22 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits<Emits>();
 const date = defineModel<Date | undefined>();
-const datePickerActive = ref(false);
-const displayFormat = ref(DISPLAY_FORMAT);
 
-const datePickerDate = computed({
-  get() {
-    if (!_.isNil(date.value)) {
-      const parsedValue = moment.utc(date.value);
-      if (parsedValue.isValid() && !parsedValue.isSame(0)) {
-        return moment(parsedValue.format(ISO_FORMAT)).toDate();
-      }
-    }
-
-    /* undefined, null und der Unix Timestamp 0 gelten als "leere" Werte
-    und werden deshalb als heutiges Datum dargestellt. */
-    return new Date();
-  },
-
-  set(value: Date) {
-    const parsedValue = moment.utc(date.value);
-    if (parsedValue.isValid() && !parsedValue.isSame(0)) {
-      // Hack damit die Zeit korrekt umgerechnet wird.
-      value.setHours(5);
-      date.value = value;
-    }
-
-  },
-});
-
-const textFieldDate = computed({
-  get() {
-    if (!_.isNil(date.value)) {
-      const parsedValue = moment.utc(date.value);
-      if (parsedValue.isValid() && !parsedValue.isSame(0)) {
-        return parsedValue.local().format(displayFormat.value);
-      }
-    }
-
-    /* undefined, null und der Unix Timestamp 0 gelten als "leere" Werte
-    und werden deshalb als leerer String dargestellt. */
-    return "";
-  },
-
-  set(value: string) {
-    /* Hier wird das Datum im "strict mode" geparsed, um den Nutzer-Input
-    möglichst strikt zu validieren (https://momentjs.com/docs/#/parsing/is-valid/). */
-    const parsedValue = moment.utc(value, displayFormat.value, true);
-    if (parsedValue.isValid() && !parsedValue.isSame(0)) {
-      date.value = parsedValue.toDate();
-    }
-  },
-});
-
-function deactivateDatePicker(): void {
-  datePickerActive.value = false;
-}
-
-function blur(): void {
-  emit("blur", date.value);
-}
-
-const dateUtils = useDateUtils();
+const format = (date: Date) => {
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  } as Intl.DateTimeFormatOptions;
+  return date.toLocaleDateString('de-DE', options);
+};
 function validateTextDate(toCheck: string) {
   return (
-    dateUtils.isDateBetweenAsStrings(
-      dateUtils.formatDateAsStringToISO(toCheck),
-      props.minDate,
-      props.maxDate
-    ) || "Das eingegebene Datum liegt außerhalb des gültigen Bereichs."
+      dateUtils.isDateBetweenAsStrings(
+          dateUtils.formatDateAsStringToISO(toCheck),
+          props.minDate,
+          props.maxDate
+      ) || "Das eingegebene Datum liegt außerhalb des gültigen Bereichs."
   );
-}
+};
 </script>
