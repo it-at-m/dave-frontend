@@ -131,7 +131,7 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="100%"
+          width="99%"
         >
           <zaehldaten-listenausgabe
             :listenausgabe-data="listenausgabeDTO"
