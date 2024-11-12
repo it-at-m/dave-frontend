@@ -1,6 +1,11 @@
 <template>
-  <v-row class="mb-1">
-    <v-col cols="12">
+  <v-row class="pl-1 ma-0">
+    <v-field-label>
+      {{ props.label }}
+    </v-field-label>
+  </v-row>
+  <v-row class="mb-3">
+    <v-col class="my-0" cols="12">
       <!-- https://vue3datepicker.com/ -->
       <vue-date-picker
           v-model="date"
@@ -39,7 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
 const date = defineModel<Date | undefined>();
 
 // https://vue3datepicker.com/props/modes-configuration/#text-input-configuration
-const TEXT_INPUT_OPTIONS = {
+const TEXT_INPUT_OPTIONS: any = {
   enterSubmit: true,
   tabSubmit: true,
   openMenu: 'toggle',
@@ -47,7 +52,7 @@ const TEXT_INPUT_OPTIONS = {
 };
 
 // https://vue3datepicker.com/props/general-configuration/#config
-const GENERAL_DATE_PICKER_CONFIG = {
+const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
   setDateOnMenuClose: true,
 }
 
