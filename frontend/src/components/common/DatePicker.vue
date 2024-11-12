@@ -72,7 +72,6 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits<Emits>();
 const date = defineModel<Date | undefined>();
-const choosenDate = ref<string | undefined>(undefined);
 const datePickerActive = ref(false);
 const displayFormat = ref(DISPLAY_FORMAT);
 
@@ -91,9 +90,13 @@ const datePickerDate = computed({
   },
 
   set(value: Date) {
-    // Hack damit die Zeit korrekt umgerechnet wird.
-    value.setHours(5);
-    date.value = value;
+    const parsedValue = moment.utc(date.value);
+    if (parsedValue.isValid() && !parsedValue.isSame(0)) {
+      // Hack damit die Zeit korrekt umgerechnet wird.
+      value.setHours(5);
+      date.value = value;
+    }
+
   },
 });
 
@@ -101,7 +104,7 @@ const textFieldDate = computed({
   get() {
     if (!_.isNil(date.value)) {
       const parsedValue = moment.utc(date.value);
-      if (!parsedValue.isSame(0)) {
+      if (parsedValue.isValid() && !parsedValue.isSame(0)) {
         return parsedValue.local().format(displayFormat.value);
       }
     }
@@ -115,10 +118,8 @@ const textFieldDate = computed({
     /* Hier wird das Datum im "strict mode" geparsed, um den Nutzer-Input
     möglichst strikt zu validieren (https://momentjs.com/docs/#/parsing/is-valid/). */
     const parsedValue = moment.utc(value, displayFormat.value, true);
-    if (parsedValue.isValid()) {
+    if (parsedValue.isValid() && !parsedValue.isSame(0)) {
       date.value = parsedValue.toDate();
-    } else {
-      date.value = undefined;
     }
   },
 });
