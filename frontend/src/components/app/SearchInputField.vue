@@ -9,7 +9,7 @@
     flat
     item-title="text"
     hide-details
-    label="Suche"
+    placeholder="Suche"
     no-filter
     prepend-inner-icon="mdi-magnify"
     return-object
