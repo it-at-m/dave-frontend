@@ -12,6 +12,7 @@
     :enable-time-picker="true"
     :disabled="props.disabled"
     :required="props.required"
+    :clearable="false"
     auto-apply
   >
     <template
@@ -33,6 +34,7 @@
         :model-value="value"
         variant="underlined"
         :rules="[(toCheck: string) => validateTextDate(toCheck)]"
+        clearable
         @blur="onBlur"
         @input="onInput"
         @click:clear="onClear"
