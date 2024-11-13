@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-autocomplete
-      v-model="auswertungOptions.mstIds"
+      v-model="auswertungOptions.messstelleAuswertungIds"
       :items="messstellen"
       class="mt-4"
       density="compact"
@@ -26,7 +26,7 @@
       </template>
     </v-autocomplete>
 
-    <div v-if="auswertungOptions.mstIds.length === 1">
+    <div v-if="auswertungOptions.messstelleAuswertungIds.length === 1">
       <v-autocomplete
         v-model="direction"
         label="Richtung"
@@ -40,7 +40,7 @@
       />
 
       <v-autocomplete
-        v-model="auswertungOptions.mqIds"
+        v-model="auswertungOptions.messstelleAuswertungIds[0].mqIds"
         label="Lage"
         :items="lageValues"
         :readonly="isLageReadonly"
@@ -55,8 +55,10 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
+import type KeyValObject from "@/types/common/KeyValObject";
 import type MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import { computed, onMounted, ref, watch } from "vue";
@@ -79,21 +81,28 @@ const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 const direction = ref(messstelleUtils.alleRichtungen);
 
 watch(
-  () => auswertungOptions.value.mstIds,
+  () => auswertungOptions.value.messstelleAuswertungIds,
   () => {
     setDefaultDirection();
     setVerfuegbareVerkehrsarten();
   }
 );
 
-const messstellen = computed<Array<KeyVal>>(() => {
-  const result: Array<KeyVal> = [];
+const messstellen = computed<Array<KeyValObject>>(() => {
+  const result: Array<KeyValObject> = [];
   allVisibleMessstellen.value.forEach((mst) => {
+    const item = {
+      mstId: mst.mstId,
+      mqIds: [],
+    } as MessstelleAuswertungIdDTO;
+    mst.messquerschnitte.forEach((mq) => {
+      item.mqIds.push(mq.mqId);
+    });
     result.push({
       title: `${mst.mstId}-${mst.standort ?? ""} (${
         mst.detektierteVerkehrsarten ?? ""
       })`,
-      value: mst.mstId,
+      value: item,
     });
   });
   return result;
@@ -101,9 +110,12 @@ const messstellen = computed<Array<KeyVal>>(() => {
 
 const richtungValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
-  if (auswertungOptions.value.mstIds.length === 1) {
+  if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
     for (const messstelle of allVisibleMessstellen.value) {
-      if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+      if (
+        messstelle.mstId ===
+        auswertungOptions.value.messstelleAuswertungIds[0].mstId
+      ) {
         if (messstelle.messquerschnitte.length > 1) {
           result.push({
             title: messstelleUtils.alleRichtungen,
@@ -118,7 +130,11 @@ const richtungValues = computed<Array<KeyVal>>(() => {
                 "Fehler bei der Bestimmung der Himmelsrichtung.",
               value: querschnitt.fahrtrichtung,
             };
-            if (!result.includes(keyVal)) {
+            if (
+              result.filter((entry) => {
+                return entry.title === keyVal.title;
+              }).length === 0
+            ) {
               result.push(keyVal);
             }
           }
@@ -132,9 +148,12 @@ const richtungValues = computed<Array<KeyVal>>(() => {
 
 const lageValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
-  if (auswertungOptions.value.mstIds.length === 1) {
+  if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
     for (const messstelle of allVisibleMessstellen.value) {
-      if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+      if (
+        messstelle.mstId ===
+        auswertungOptions.value.messstelleAuswertungIds[0].mstId
+      ) {
         messstelle.messquerschnitte.forEach(
           (querschnitt: MessquerschnittAuswertungDTO) => {
             if (
@@ -164,14 +183,14 @@ const isLageReadonly = computed(() => {
 
 const showSelectAllButton = computed(() => {
   return (
-    auswertungOptions.value.mstIds.length <=
+    auswertungOptions.value.messstelleAuswertungIds.length <=
     allVisibleMessstellen.value.length / 2
   );
 });
 
 const directionHint = computed(() => {
   let hint = "";
-  if (auswertungOptions.value.mstIds.length > 1) {
+  if (auswertungOptions.value.messstelleAuswertungIds.length > 1) {
     hint =
       "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
   }
@@ -180,7 +199,7 @@ const directionHint = computed(() => {
 
 const messstelleHint = computed(() => {
   let hint = "";
-  if (auswertungOptions.value.mstIds.length > 1) {
+  if (auswertungOptions.value.messstelleAuswertungIds.length > 1) {
     hint =
       "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
   } else if (disableMessstelle.value) {
@@ -192,9 +211,10 @@ const messstelleHint = computed(() => {
 
 const disableMessstelle = computed(() => {
   return (
-    auswertungOptions.value.mqIds.length !== 0 &&
+    auswertungOptions.value.messstelleAuswertungIds.length > 0 &&
+    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length !== 0 &&
     direction.value !== messstelleUtils.alleRichtungen &&
-    auswertungOptions.value.mqIds.length > 0 &&
+    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length > 0 &&
     richtungValues.value.length > 1
   );
 });
@@ -212,10 +232,12 @@ function loadAllVisibleMessstellen(): void {
 }
 
 function setDefaultDirection(): void {
-  resetMqsIfNecessary();
-  if (auswertungOptions.value.mstIds.length === 1) {
+  if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
     for (const messstelle of allVisibleMessstellen.value) {
-      if (messstelle.mstId === auswertungOptions.value.mstIds[0]) {
+      if (
+        messstelle.mstId ===
+        auswertungOptions.value.messstelleAuswertungIds[0].mstId
+      ) {
         if (messstelle.messquerschnitte.length === 1) {
           direction.value = messstelle.messquerschnitte[0].fahrtrichtung;
         } else if (messstelle.messquerschnitte.length > 1) {
@@ -229,10 +251,12 @@ function setDefaultDirection(): void {
 
 function setVerfuegbareVerkehrsarten() {
   auswertungOptions.value.verfuegbareVerkehrsarten = [];
-  if (auswertungOptions.value.mstIds.length > 0) {
+  if (auswertungOptions.value.messstelleAuswertungIds.length > 0) {
     for (const messstelle of allVisibleMessstellen.value) {
       if (
-        auswertungOptions.value.mstIds.includes(messstelle.mstId) &&
+        auswertungOptions.value.messstelleAuswertungIds.find(
+          (value) => value.mstId === messstelle.mstId
+        ) &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
           messstelle.detektierteVerkehrsarten
         )
@@ -249,9 +273,9 @@ function setVerfuegbareVerkehrsarten() {
 }
 
 function preassignMqIdsInOptions() {
-  auswertungOptions.value.mqIds = [];
+  auswertungOptions.value.messstelleAuswertungIds[0].mqIds = [];
   lageValues.value.forEach((value) =>
-    auswertungOptions.value.mqIds.push(value.value)
+    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.push(value.value)
   );
 }
 
@@ -264,19 +288,18 @@ function buttonClick() {
 }
 
 function selectAllMessstellen() {
-  auswertungOptions.value.mstIds = [];
+  auswertungOptions.value.messstelleAuswertungIds = [];
   allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
-    auswertungOptions.value.mstIds.push(mst.mstId);
+    const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
+    mst.messquerschnitte.forEach((mq) => {
+      item.mqIds.push(mq.mqId);
+    });
+    auswertungOptions.value.messstelleAuswertungIds.push(item);
   });
 }
 
 function deselectAllMessstellen() {
-  auswertungOptions.value.mstIds = [];
-}
-
-function resetMqsIfNecessary() {
-  if (auswertungOptions.value.mstIds.length > 1)
-    auswertungOptions.value.mqIds = [];
+  auswertungOptions.value.messstelleAuswertungIds = [];
 }
 
 function REQUIRED(v: Array<string>) {

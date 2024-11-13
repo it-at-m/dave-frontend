@@ -81,17 +81,8 @@ const isEverythingValid = computed(() => {
     auswertungsOptions.value.zeitraum.length > 0 &&
     auswertungsOptions.value.tagesTyp.length > 0 &&
     auswertungsOptions.value.jahre.length > 0 &&
-    areMstAndMqValid.value &&
+    auswertungsOptions.value.messstelleAuswertungIds.length > 0 &&
     areFahrzeugeValid.value
-  );
-});
-
-const areMstAndMqValid = computed(() => {
-  return (
-    (auswertungsOptions.value.mstIds.length > 1 &&
-      auswertungsOptions.value.mqIds.length === 0) ||
-    (auswertungsOptions.value.mstIds.length === 1 &&
-      auswertungsOptions.value.mqIds.length > 0)
   );
 });
 

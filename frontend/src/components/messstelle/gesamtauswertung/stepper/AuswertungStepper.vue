@@ -117,14 +117,19 @@ const selectedTagesTypAsSummary = computed(() => {
   return summary;
 });
 const selectedOrtAsSummary = computed(() => {
-  const mstIds = auswertungOptions.value.mstIds;
+  const messstelleAuswertungIds =
+    auswertungOptions.value.messstelleAuswertungIds;
   let summary = ``;
-  if (mstIds.length > 1) {
-    summary = `Mst-Id's': ${mstIds.join(", ")}`;
+  if (messstelleAuswertungIds.length > 1) {
+    const allMstIds: Array<string> = [];
+    messstelleAuswertungIds.forEach((messstelleAuswertungId) => {
+      allMstIds.push(messstelleAuswertungId.mstId);
+    });
+    summary = `Mst-Id's': ${allMstIds.join(", ")}`;
   }
-  if (mstIds.length === 1) {
-    const mqIds = auswertungOptions.value.mqIds;
-    summary = `Mst-Id: ${mstIds[0]}, MQ-Id${
+  if (messstelleAuswertungIds.length === 1) {
+    const mqIds = messstelleAuswertungIds[0].mqIds;
+    summary = `Mst-Id: ${messstelleAuswertungIds[0].mstId}, MQ-Id${
       mqIds.length > 1 ? "'s" : ""
     }: ${mqIds.join(", ")} `;
   }
@@ -154,13 +159,16 @@ function isJahresintervallSelected(): boolean {
 }
 
 function isOrtMessstelleSelected(): boolean {
-  return !(auswertungOptions.value.mstIds.length === 0 && activeStep.value > 3);
+  return !(
+    auswertungOptions.value.messstelleAuswertungIds.length === 0 &&
+    activeStep.value > 3
+  );
 }
 
 function isOrtMessquerschnittSelected(): boolean {
   return !(
-    auswertungOptions.value.mstIds.length === 1 &&
-    auswertungOptions.value.mqIds.length === 0 &&
+    auswertungOptions.value.messstelleAuswertungIds.length === 1 &&
+    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length === 0 &&
     activeStep.value > 3
   );
 }
