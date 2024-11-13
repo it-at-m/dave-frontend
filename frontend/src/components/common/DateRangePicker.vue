@@ -35,6 +35,7 @@
         density="compact"
         :model-value="value"
         variant="underlined"
+        validate-on="blur"
         :rules="[(toCheck: string) => validateTextDate(toCheck)]"
         clearable
         @blur="onBlur"
