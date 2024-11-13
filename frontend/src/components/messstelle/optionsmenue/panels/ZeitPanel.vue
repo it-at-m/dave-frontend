@@ -20,47 +20,17 @@
         <v-col cols="8">
           <v-row
             dense
-            no-gutters
-            class="mb-0 pb-0"
-          >
-            <v-col cols="6">
-              <v-switch
-                v-model="needRange"
-                label="Zeitraum"
-                density="compact"
-                @update:model-value="resetDates"
-              >
-                <template #prepend>
-                  <v-label
-                    text="Zeitpunkt"
-                    class="pl-0"
-                  />
-                </template>
-              </v-switch>
-            </v-col>
-            <v-spacer />
-          </v-row>
-          <v-row
-            dense
             class="mt-0 pt-0"
           >
             <v-col cols="6">
-              <date-picker
-                v-model="dateVon"
+              <date-range-picker
+                v-model="zeitraum"
                 :min-date="minDate"
                 :max-date="maxDate"
-                label="von"
+                label="Datumsauswahl"
               />
             </v-col>
-            <v-col cols="6">
-              <date-picker
-                v-if="needRange"
-                v-model="dateBis"
-                :min-date="minDateRange"
-                :max-date="maxDate"
-                label="bis"
-              />
-            </v-col>
+            <v-col cols="6"/>
           </v-row>
         </v-col>
         <v-col cols="4">
@@ -112,7 +82,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import DatePicker from "@/components/common/DatePicker.vue";
+import DateRangePicker from "@/components/common/DateRangePicker.vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
@@ -120,9 +90,9 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useUserStore } from "@/store/UserStore";
-import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
+import _ from "lodash";
 
 const route = useRoute();
 
@@ -168,16 +138,6 @@ const minDate = computed(() => {
   else return "2006-01-01";
 });
 
-const minDateRange = computed(() => {
-  return dateUtils.formatDateToISO(nextDayOfVon.value);
-});
-
-const nextDayOfVon = computed(() => {
-  const nextDay = new Date(dateVon.value);
-  nextDay.setDate(dateVon.value.getDate() + 1);
-  return nextDay;
-});
-
 const maxDate = computed(() => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
     .toISOString()
@@ -185,26 +145,17 @@ const maxDate = computed(() => {
   return messstelleInfo.value.abbaudatum ?? yesterday;
 });
 
-const dateVon = computed({
+const zeitraum = computed({
   get() {
-    return new Date(chosenOptionsCopy.value.zeitraum[0]);
+    return _.toArray(chosenOptionsCopy.value.zeitraum).map(date => new Date(date));
   },
 
-  set(value: Date) {
-    saveDateValueVon(value);
-  },
+  set(dates: Array<Date> | undefined) {
+    const newZeitraum = _.toArray(dates).map(date => dateUtils.formatDateToISO(date))
+    chosenOptionsCopy.value.zeitraum = newZeitraum;
+  }
 });
-const dateBis = computed({
-  get() {
-    return chosenOptionsCopy.value.zeitraum.length === 2
-      ? new Date(chosenOptionsCopy.value.zeitraum[1])
-      : nextDayOfVon.value;
-  },
 
-  set(value: Date) {
-    saveDateValueBis(value);
-  },
-});
 
 watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
   if (
@@ -234,34 +185,5 @@ function calculateChoosableOptions(): void {
   messstelleStore.calculateActiveMessfaehigkeit(
     chosenOptionsCopy.value.zeitraum[0]
   );
-}
-
-function resetDates() {
-  if (needRange.value) {
-    saveDateValueBis(dateBis.value);
-  } else {
-    if (chosenOptionsCopy.value.zeitraum.length === 2) {
-      chosenOptionsCopy.value.zeitraum.pop();
-    }
-    chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
-  }
-}
-
-function saveDateValueVon(toSave: Date) {
-  const dateToSave = dateUtils.formatDateToISO(toSave);
-  if (chosenOptionsCopy.value.zeitraum.length === 0) {
-    chosenOptionsCopy.value.zeitraum.push(dateToSave);
-  } else {
-    chosenOptionsCopy.value.zeitraum[0] = dateToSave;
-  }
-}
-
-function saveDateValueBis(toSave: Date) {
-  const dateToSave = dateUtils.formatDateToISO(toSave);
-  if (chosenOptionsCopy.value.zeitraum.length === 2) {
-    chosenOptionsCopy.value.zeitraum[1] = dateToSave;
-  } else {
-    chosenOptionsCopy.value.zeitraum.push(dateToSave);
-  }
 }
 </script>
