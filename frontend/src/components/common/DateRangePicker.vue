@@ -18,6 +18,8 @@
         :clearable="false"
         :min-date="minDateProp"
         :max-date="maxDateProp"
+        :week-numbers="WEEN_NUMBER_OPTIONS"
+        :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
         cancel-text="Abbrechen"
         select-text="Datum Auswählen"
     >
@@ -59,9 +61,8 @@
 import type {GeneralConfig} from "@vuepic/vue-datepicker";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import {useDateUtils} from "@/util/DateUtils";
 import _ from "lodash";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -112,6 +113,14 @@ const choosenDates = computed({
     });
   }
 });
+
+// https://vue3datepicker.com/props/look-and-feel/#six-weeks
+const SIX_WEEK_CALENDAR_OPTIONS: any = 'center';
+
+// https://vue3datepicker.com/props/calendar-configuration/#week-numbers
+const WEEN_NUMBER_OPTIONS: any = {
+  type: "iso",
+}
 
 // https://vue3datepicker.com/props/modes-configuration/#multi-calendars-configuration
 const MULTI_CALENDAR_OPTIONS: any = {
