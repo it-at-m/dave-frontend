@@ -166,11 +166,11 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   if (startDateText != "unbekannt" && !_.isEmpty(startDateText) && !isNaN(startDate.valueOf())) {
     if (startDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
-      return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`
+      return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
     }
     if (startDate > maxDateProp.value) {
       const maxDatePropText = maxDateProp.value.toLocaleDateString("de-DE", options);
-      return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`
+      return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
     }
   }
 
@@ -180,11 +180,11 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   if (endDateText != "unbekannt" && !_.isEmpty(endDateText) && !isNaN(endDate.valueOf())) {
     if (endDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
-      return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`
+      return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
     }
     if (endDate > maxDateProp.value) {
       const maxDatePropText = maxDateProp.value.toLocaleDateString("de-DE", options);
-      return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`
+      return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
     }
   }
 
