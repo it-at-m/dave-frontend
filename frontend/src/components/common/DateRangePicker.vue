@@ -114,6 +114,7 @@ const choosenDates = computed({
   }
 });
 
+// https://vue3datepicker.com/props/localization/#locale
 const LOCAL_OPTIONS: string = "de-DE";
 
 // https://vue3datepicker.com/props/look-and-feel/#six-weeks
