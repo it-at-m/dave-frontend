@@ -16,6 +16,8 @@
         :disabled="props.disabled"
         :required="props.required"
         :clearable="false"
+        :min-date="minDateProp"
+        :max-date="maxDateProp"
         cancel-text="Abbrechen"
         select-text="Datum Auswählen"
     >
@@ -38,7 +40,6 @@
             :model-value="value"
             variant="underlined"
             validate-on="blur"
-            :rules="[(toCheck: string) => validateTextDate(toCheck)]"
             clearable
             @blur="onBlur"
             @input="onInput"
@@ -66,8 +67,8 @@ interface Props {
   label?: string; // Bezeichnung des Datumsfelds
   required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
   disabled?: boolean; // Ob das Datumsfeld deaktiviert sein soll
-  minDate: string; // Ob das Datumsfeld deaktiviert sein soll
-  maxDate: string; // Ob das Datumsfeld deaktiviert sein soll
+  minDate: Date; // Ob das Datumsfeld deaktiviert sein soll
+  maxDate: Date; // Ob das Datumsfeld deaktiviert sein soll
 }
 
 const options: Intl.DateTimeFormatOptions = {
@@ -81,6 +82,16 @@ const props = withDefaults(defineProps<Props>(), {
   required: false,
   disabled: false,
 });
+
+const minDateProp = computed(() => {
+  props.minDate.setHours(5);
+  return props.minDate;
+})
+
+const maxDateProp = computed(() => {
+  props.maxDate.setHours(5);
+  return props.maxDate;
+})
 
 const dateRange = defineModel<Array<Date> | undefined>();
 
@@ -102,6 +113,7 @@ const choosenDates = computed({
   }
 });
 
+// https://vue3datepicker.com/props/modes-configuration/#multi-calendars-configuration
 const MULTI_CALENDAR_OPTIONS: any = {
   solo: true,
 }
@@ -130,35 +142,4 @@ const format = (dateRange: Array<Date>) => {
   }
   return dateRangeText;
 };
-
-const dateUtils = useDateUtils();
-
-function validateTextDate(dateRangeToCheck: string) {
-  if (!dateRangeToCheck) {
-    return true;
-  }
-  const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
-  const startDate = _.head(startAndEndDate);
-  let validationResult: boolean | string = true;
-  if (!_.isNil(startDate)) {
-    validationResult = (
-        dateUtils.isDateBetweenAsStrings(
-            dateUtils.formatDateAsStringToISO(startDate),
-            props.minDate,
-            props.maxDate
-        ) || "Das Startdatum liegt außerhalb des gültigen Bereichs."
-    );
-  }
-  const endDate = _.head(startAndEndDate);
-  if (!_.isNil(endDate)) {
-    validationResult = (
-        dateUtils.isDateBetweenAsStrings(
-            dateUtils.formatDateAsStringToISO(endDate),
-            props.minDate,
-            props.maxDate
-        ) || "Das Enddatum liegt außerhalb des gültigen Bereichs."
-    );
-  }
-  return validationResult;
-}
 </script>

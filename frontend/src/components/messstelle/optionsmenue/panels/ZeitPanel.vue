@@ -133,16 +133,18 @@ const isAnwender = computed(() => {
 });
 
 const minDate = computed(() => {
-  if (messstelleInfo.value.realisierungsdatum >= "2006-01-01")
-    return messstelleInfo.value.realisierungsdatum;
-  else return "2006-01-01";
+  const startdatum = new Date("2006-01-01");
+  const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
+  if (!_.isNil(messstelleInfo.value.realisierungsdatum) && realisierungsdatum >= startdatum)
+    return realisierungsdatum;
+  else return startdatum;
 });
 
 const maxDate = computed(() => {
-  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-    .toISOString()
-    .slice(0, 10);
-  return messstelleInfo.value.abbaudatum ?? yesterday;
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  return _.isNil(messstelleInfo.value.abbaudatum)
+      ? yesterday
+      : new Date(messstelleInfo.value.abbaudatum);
 });
 
 const zeitraum = computed({
