@@ -16,7 +16,8 @@
         :disabled="props.disabled"
         :required="props.required"
         :clearable="false"
-
+        :min-date="minDateProp"
+        :max-date="maxDateProp"
         :week-numbers="WEEN_NUMBER_OPTIONS"
         :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
         cancel-text="Abbrechen"
@@ -40,7 +41,6 @@
             density="compact"
             :model-value="value"
             variant="underlined"
-            validate-on="blur"
             clearable
             @blur="onBlur"
             @input="onInput"
