@@ -10,7 +10,7 @@
         placeholder="Datum eingeben ..."
         :config="GENERAL_DATE_PICKER_CONFIG"
         :text-input="TEXT_INPUT_OPTIONS"
-        :locale="'de-DE'"
+        :locale="LOCAL_OPTIONS"
         :format="format"
         :enable-time-picker="false"
         :disabled="props.disabled"
@@ -114,6 +114,8 @@ const choosenDates = computed({
   }
 });
 
+const LOCAL_OPTIONS: string = "de-DE";
+
 // https://vue3datepicker.com/props/look-and-feel/#six-weeks
 const SIX_WEEK_CALENDAR_OPTIONS: any = 'center';
 
@@ -144,9 +146,9 @@ const format = (dateRange: Array<Date>) => {
   let dateRangeText = "";
   if (!_.isEmpty(dateRange)) {
     const firstDate = _.head(dateRange);
-    const firstDateText = _.isNil(firstDate) ? "" : firstDate.toLocaleDateString("de-DE", options);
+    const firstDateText = _.isNil(firstDate) ? "" : firstDate.toLocaleDateString(LOCAL_OPTIONS, options);
     const lastDate = _.last(dateRange);
-    const lastDateText = _.isNil(lastDate) ? "" : lastDate.toLocaleDateString("de-DE", options);
+    const lastDateText = _.isNil(lastDate) ? "" : lastDate.toLocaleDateString(LOCAL_OPTIONS, options);
     dateRangeText = `${firstDateText}  -  ${lastDateText}`;
   }
   return dateRangeText;
