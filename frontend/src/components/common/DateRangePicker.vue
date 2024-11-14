@@ -1,10 +1,9 @@
 <template>
   <!-- https://vue3datepicker.com/ -->
-  <v-row class="mt-2 mb-3">
+  <v-row class="ml-1 mt-2 mb-3">
     <vue-date-picker
-        v-model="dateRange"
+        v-model="choosenDates"
         range
-        utc
         position="left"
         :multi-calendars="MULTI_CALENDAR_OPTIONS"
         class="mb-3"
@@ -17,6 +16,8 @@
         :disabled="props.disabled"
         :required="props.required"
         :clearable="false"
+        cancel-text="Abbrechen"
+        select-text="Datum Auswählen"
     >
       <template
           #dp-input="{
@@ -59,6 +60,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import {useDateUtils} from "@/util/DateUtils";
 import _ from "lodash";
+import {computed} from "vue";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -81,6 +83,24 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const dateRange = defineModel<Array<Date> | undefined>();
+
+const choosenDates = computed({
+  get() {
+    return _.isNil(dateRange.value)
+        ? undefined
+        : dateRange.value.map(date => {
+          date.setHours(5);
+          return date;
+        });
+  },
+
+  set(dates: Array<Date> | undefined) {
+    dateRange.value = _.toArray(dates).map(date => {
+      date.setHours(5);
+      return date;
+    });
+  }
+});
 
 const MULTI_CALENDAR_OPTIONS: any = {
   solo: true,
