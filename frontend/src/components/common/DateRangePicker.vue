@@ -1,24 +1,25 @@
 <template>
   <!-- https://vue3datepicker.com/ -->
-  <vue-date-picker
-    v-model="dateRange"
-    range
-    position="left"
-    :multi-calendars="MULTI_CALENDAR_OPTIONS"
-    class="mb-3"
-    placeholder="Datum eingeben ..."
-    :config="GENERAL_DATE_PICKER_CONFIG"
-    :text-input="TEXT_INPUT_OPTIONS"
-    :locale="'de-DE'"
-    :format="format"
-    :enable-time-picker="false"
-    :disabled="props.disabled"
-    :required="props.required"
-    :clearable="false"
-    auto-apply
-  >
-    <template
-      #dp-input="{
+  <v-row class="mt-2 mb-3">
+    <vue-date-picker
+        v-model="dateRange"
+        range
+        utc
+        position="left"
+        :multi-calendars="MULTI_CALENDAR_OPTIONS"
+        class="mb-3"
+        placeholder="Datum eingeben ..."
+        :config="GENERAL_DATE_PICKER_CONFIG"
+        :text-input="TEXT_INPUT_OPTIONS"
+        :locale="'de-DE'"
+        :format="format"
+        :enable-time-picker="false"
+        :disabled="props.disabled"
+        :required="props.required"
+        :clearable="false"
+    >
+      <template
+          #dp-input="{
         value,
         onInput,
         onEnter,
@@ -29,33 +30,34 @@
         onPaste,
         onFocus,
       }"
-    >
-      <v-text-field
-        :label="label"
-        density="compact"
-        :model-value="value"
-        variant="underlined"
-        validate-on="blur"
-        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
-        clearable
-        @blur="onBlur"
-        @input="onInput"
-        @click:clear="onClear"
-        @keyup.enter="onEnter"
-        @keyup.tab="onTab"
-        @keyup="onKeypress"
-        @paste="onPaste"
-        @focus="onFocus"
-      />
-    </template>
-  </vue-date-picker>
+      >
+        <v-text-field
+            :label="label"
+            density="compact"
+            :model-value="value"
+            variant="underlined"
+            validate-on="blur"
+            :rules="[(toCheck: string) => validateTextDate(toCheck)]"
+            clearable
+            @blur="onBlur"
+            @input="onInput"
+            @click:clear="onClear"
+            @keyup.enter="onEnter"
+            @keyup.tab="onTab"
+            @keyup="onKeypress"
+            @paste="onPaste"
+            @focus="onFocus"
+        />
+      </template>
+    </vue-date-picker>
+  </v-row>
 </template>
 
 <script setup lang="ts">
-import type { GeneralConfig } from "@vuepic/vue-datepicker";
+import type {GeneralConfig} from "@vuepic/vue-datepicker";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { useDateUtils } from "@/util/DateUtils";
+import {useDateUtils} from "@/util/DateUtils";
 import _ from "lodash";
 
 interface Props {
@@ -88,7 +90,6 @@ const MULTI_CALENDAR_OPTIONS: any = {
 const TEXT_INPUT_OPTIONS: any = {
   enterSubmit: true,
   tabSubmit: true,
-  openMenu: "toggle",
   format: "dd.MM.yyyy",
 };
 
@@ -111,16 +112,33 @@ const format = (dateRange: Array<Date>) => {
 };
 
 const dateUtils = useDateUtils();
-function validateTextDate(toCheck: string) {
-  if (!toCheck) {
+
+function validateTextDate(dateRangeToCheck: string) {
+  if (!dateRangeToCheck) {
     return true;
   }
-  return (
-    dateUtils.isDateBetweenAsStrings(
-      dateUtils.formatDateAsStringToISO(toCheck),
-      props.minDate,
-      props.maxDate
-    ) || "Das eingegebene Datum liegt außerhalb des gültigen Bereichs."
-  );
+  const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
+  const startDate = _.head(startAndEndDate);
+  let validationResult: boolean | string = true;
+  if (!_.isNil(startDate)) {
+    validationResult = (
+        dateUtils.isDateBetweenAsStrings(
+            dateUtils.formatDateAsStringToISO(startDate),
+            props.minDate,
+            props.maxDate
+        ) || "Das Startdatum liegt außerhalb des gültigen Bereichs."
+    );
+  }
+  const endDate = _.head(startAndEndDate);
+  if (!_.isNil(endDate)) {
+    validationResult = (
+        dateUtils.isDateBetweenAsStrings(
+            dateUtils.formatDateAsStringToISO(endDate),
+            props.minDate,
+            props.maxDate
+        ) || "Das Enddatum liegt außerhalb des gültigen Bereichs."
+    );
+  }
+  return validationResult;
 }
 </script>
