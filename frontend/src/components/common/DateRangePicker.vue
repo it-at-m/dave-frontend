@@ -16,8 +16,7 @@
         :disabled="props.disabled"
         :required="props.required"
         :clearable="false"
-        :min-date="minDateProp"
-        :max-date="maxDateProp"
+
         :week-numbers="WEEN_NUMBER_OPTIONS"
         :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
         cancel-text="Abbrechen"
@@ -64,6 +63,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import _ from "lodash";
 import {computed, ref} from "vue";
+import {useDateUtils} from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -156,12 +156,14 @@ const format = (dateRange: Array<Date>) => {
   return dateRangeText;
 };
 
+const dateUtils = useDateUtils();
 function validateTextDate(dateRangeToCheck: string): string | boolean {
   const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
 
-  const startDateText =  _.toString(_.head(startAndEndDate));
+  let startDateText =  _.toString(_.head(startAndEndDate));
+  startDateText = dateUtils.formatDateAsStringToISO(startDateText);
   const startDate = new Date(startDateText);
-  if (!_.isEmpty(startDate) && !isNaN(startDate.valueOf())) {
+  if (startDateText != "unbekannt" && !_.isEmpty(startDateText) && !isNaN(startDate.valueOf())) {
     if (startDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
       return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`
@@ -172,9 +174,10 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
     }
   }
 
-  const endDateText = _.toString(_.last(startAndEndDate));
+  let endDateText = _.toString(_.last(startAndEndDate));
+  endDateText = dateUtils.formatDateAsStringToISO(endDateText);
   const endDate = new Date(endDateText);
-  if (!_.isEmpty(endDateText) && !isNaN(endDate.valueOf())) {
+  if (endDateText != "unbekannt" && !_.isEmpty(endDateText) && !isNaN(endDate.valueOf())) {
     if (endDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
       return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`
