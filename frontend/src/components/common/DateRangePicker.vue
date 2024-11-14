@@ -45,6 +45,7 @@
             clearable
             @blur="onBlur"
             @input="onInput"
+            :rules="[(toCheck: string) => validateTextDate(toCheck)]"
             @click:clear="onClear"
             @keyup.enter="onEnter"
             @keyup.tab="onTab"
@@ -154,4 +155,36 @@ const format = (dateRange: Array<Date>) => {
   }
   return dateRangeText;
 };
+
+function validateTextDate(dateRangeToCheck: string): string | boolean {
+  const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
+
+  const startDateText =  _.toString(_.head(startAndEndDate));
+  const startDate = new Date(startDateText);
+  if (!_.isEmpty(startDate) && !isNaN(startDate.valueOf())) {
+    if (startDate < minDateProp.value) {
+      const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
+      return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`
+    }
+    if (startDate > maxDateProp.value) {
+      const maxDatePropText = maxDateProp.value.toLocaleDateString("de-DE", options);
+      return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`
+    }
+  }
+
+  const endDateText = _.toString(_.last(startAndEndDate));
+  const endDate = new Date(endDateText);
+  if (!_.isEmpty(endDateText) && !isNaN(endDate.valueOf())) {
+    if (endDate < minDateProp.value) {
+      const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
+      return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`
+    }
+    if (endDate > maxDateProp.value) {
+      const maxDatePropText = maxDateProp.value.toLocaleDateString("de-DE", options);
+      return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`
+    }
+  }
+
+  return true;
+}
 </script>
