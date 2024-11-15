@@ -30,7 +30,7 @@
                 label="Datumsauswahl"
               />
             </v-col>
-            <v-col cols="6"/>
+            <v-col cols="6" />
           </v-row>
         </v-col>
         <v-col cols="4">
@@ -78,6 +78,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
+import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -92,7 +93,6 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useUserStore } from "@/store/UserStore";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
-import _ from "lodash";
 
 const route = useRoute();
 
@@ -135,7 +135,10 @@ const isAnwender = computed(() => {
 const minDate = computed(() => {
   const startdatum = new Date("2006-01-01");
   const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
-  if (!_.isNil(messstelleInfo.value.realisierungsdatum) && realisierungsdatum >= startdatum)
+  if (
+    !_.isNil(messstelleInfo.value.realisierungsdatum) &&
+    realisierungsdatum >= startdatum
+  )
     return realisierungsdatum;
   else return startdatum;
 });
@@ -143,21 +146,24 @@ const minDate = computed(() => {
 const maxDate = computed(() => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
   return _.isNil(messstelleInfo.value.abbaudatum)
-      ? yesterday
-      : new Date(messstelleInfo.value.abbaudatum);
+    ? yesterday
+    : new Date(messstelleInfo.value.abbaudatum);
 });
 
 const zeitraum = computed({
   get() {
-    return _.toArray(chosenOptionsCopy.value.zeitraum).map(date => new Date(date));
+    return _.toArray(chosenOptionsCopy.value.zeitraum).map(
+      (date) => new Date(date)
+    );
   },
 
   set(dates: Array<Date> | undefined) {
-    const newZeitraum = _.toArray(dates).map(date => dateUtils.formatDateToISO(date))
+    const newZeitraum = _.toArray(dates).map((date) =>
+      dateUtils.formatDateToISO(date)
+    );
     chosenOptionsCopy.value.zeitraum = newZeitraum;
-  }
+  },
 });
-
 
 watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
   if (

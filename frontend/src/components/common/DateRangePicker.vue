@@ -25,16 +25,16 @@
     >
       <template
         #dp-input="{
-        value,
-        onInput,
-        onEnter,
-        onTab,
-        onClear,
-        onBlur,
-        onKeypress,
-        onPaste,
-        onFocus,
-      }"
+          value,
+          onInput,
+          onEnter,
+          onTab,
+          onClear,
+          onBlur,
+          onKeypress,
+          onPaste,
+          onFocus,
+        }"
       >
         <v-text-field
           :label="label"
@@ -59,11 +59,14 @@
 
 <script setup lang="ts">
 import type { GeneralConfig } from "@vuepic/vue-datepicker";
+
 import VueDatePicker from "@vuepic/vue-datepicker";
+
 import "@vuepic/vue-datepicker/dist/main.css";
+
 import _ from "lodash";
-import { computed } from "vue";
 import moment from "moment";
+import { computed } from "vue";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -76,13 +79,13 @@ interface Props {
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "2-digit",
-  day: "2-digit"
+  day: "2-digit",
 };
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
-  disabled: false
+  disabled: false,
 });
 
 const minDateProp = computed(() => {
@@ -101,18 +104,18 @@ const choosenDates = computed({
   get() {
     return _.isNil(dateRange.value)
       ? undefined
-      : dateRange.value.map(date => {
-        date.setHours(5);
-        return date;
-      });
+      : dateRange.value.map((date) => {
+          date.setHours(5);
+          return date;
+        });
   },
 
   set(dates: Array<Date> | undefined) {
-    dateRange.value = _.toArray(dates).map(date => {
+    dateRange.value = _.toArray(dates).map((date) => {
       date.setHours(5);
       return date;
     });
-  }
+  },
 });
 
 // https://vue3datepicker.com/props/localization/#locale
@@ -123,24 +126,24 @@ const SIX_WEEK_CALENDAR_OPTIONS: any = "center";
 
 // https://vue3datepicker.com/props/calendar-configuration/#week-numbers
 const WEEN_NUMBER_OPTIONS: any = {
-  type: "iso"
+  type: "iso",
 };
 
 // https://vue3datepicker.com/props/modes-configuration/#multi-calendars-configuration
 const MULTI_CALENDAR_OPTIONS: any = {
-  solo: true
+  solo: true,
 };
 
 // https://vue3datepicker.com/props/modes-configuration/#text-input-configuration
 const TEXT_INPUT_OPTIONS: any = {
   enterSubmit: true,
   tabSubmit: true,
-  format: "dd.MM.yyyy"
+  format: "dd.MM.yyyy",
 };
 
 // https://vue3datepicker.com/props/general-configuration/#config
 const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
-  setDateOnMenuClose: true
+  setDateOnMenuClose: true,
 };
 
 // https://vue3datepicker.com/props/formatting/#format
@@ -148,27 +151,39 @@ const format = (dateRange: Array<Date>) => {
   let dateRangeText = "";
   if (!_.isEmpty(dateRange)) {
     const firstDate = _.head(dateRange);
-    const firstDateText = _.isNil(firstDate) ? "" : firstDate.toLocaleDateString(LOCAL_OPTIONS, options);
+    const firstDateText = _.isNil(firstDate)
+      ? ""
+      : firstDate.toLocaleDateString(LOCAL_OPTIONS, options);
     const lastDate = _.last(dateRange);
-    const lastDateText = _.isNil(lastDate) ? "" : lastDate.toLocaleDateString(LOCAL_OPTIONS, options);
+    const lastDateText = _.isNil(lastDate)
+      ? ""
+      : lastDate.toLocaleDateString(LOCAL_OPTIONS, options);
     dateRangeText = `${firstDateText}  -  ${lastDateText}`;
   }
   return dateRangeText;
 };
 
 function validateTextDate(dateRangeToCheck: string): string | boolean {
-  const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
+  const startAndEndDate = _.split(dateRangeToCheck, "-").map((date) =>
+    date.trim()
+  );
 
   const startDateText = _.toString(_.head(startAndEndDate));
   const isStartDateValid = moment(startDateText, "DD.MM.YYYY", true).isValid();
   const startDate = new Date(startDateText);
   if (isStartDateValid) {
     if (startDate < minDateProp.value) {
-      const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
+      const minDatePropText = minDateProp.value.toLocaleDateString(
+        "de-DE",
+        options
+      );
       return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
     }
     if (startDate > maxDateProp.value) {
-      const maxDatePropText = maxDateProp.value.toLocaleDateString("de-DE", options);
+      const maxDatePropText = maxDateProp.value.toLocaleDateString(
+        "de-DE",
+        options
+      );
       return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
     }
   }
@@ -178,11 +193,17 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   const endDate = new Date(endDateText);
   if (isEndDateValid) {
     if (endDate < minDateProp.value) {
-      const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
+      const minDatePropText = minDateProp.value.toLocaleDateString(
+        "de-DE",
+        options
+      );
       return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
     }
     if (endDate > maxDateProp.value) {
-      const maxDatePropText = maxDateProp.value.toLocaleDateString("de-DE", options);
+      const maxDatePropText = maxDateProp.value.toLocaleDateString(
+        "de-DE",
+        options
+      );
       return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
     }
   }
