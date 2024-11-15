@@ -63,7 +63,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import _ from "lodash";
 import { computed } from "vue";
-import { useDateUtils } from "@/util/DateUtils";
+import moment from "moment";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -159,10 +159,10 @@ const format = (dateRange: Array<Date>) => {
 function validateTextDate(dateRangeToCheck: string): string | boolean {
   const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
 
-  let startDateText = _.toString(_.head(startAndEndDate));
-  startDateText = useDateUtils().formatDateAsStringToISO(startDateText);
+  const startDateText = _.toString(_.head(startAndEndDate));
+  const isStartDateValid = moment(startDateText, "DD.MM.YYYY", true).isValid();
   const startDate = new Date(startDateText);
-  if (startDateText != "unbekannt" && !_.isEmpty(startDateText) && !isNaN(startDate.valueOf())) {
+  if (isStartDateValid) {
     if (startDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
       return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
@@ -173,10 +173,10 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
     }
   }
 
-  let endDateText = _.toString(_.last(startAndEndDate));
-  endDateText = useDateUtils().formatDateAsStringToISO(endDateText);
+  const endDateText = _.toString(_.last(startAndEndDate));
+  const isEndDateValid = moment(endDateText, "DD.MM.YYYY", true).isValid();
   const endDate = new Date(endDateText);
-  if (endDateText != "unbekannt" && !_.isEmpty(endDateText) && !isNaN(endDate.valueOf())) {
+  if (isEndDateValid) {
     if (endDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString("de-DE", options);
       return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
