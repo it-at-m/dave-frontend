@@ -79,6 +79,7 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
 import _ from "lodash";
+import moment from "moment/moment";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -102,7 +103,14 @@ const messstelleStore = useMessstelleStore();
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
-const needRange = ref(chosenOptionsCopy.value.zeitraum.length > 1);
+
+const needRange = computed(() => {
+  const startDate = _.head(chosenOptionsCopy.value.zeitraum);
+  const isValidStartDate = moment(startDate, "YYYY-MM-DD", true).isValid();
+  const endDate = _.last(chosenOptionsCopy.value.zeitraum);
+  const isValidEndDate = moment(endDate, "YYYY-MM-DD", true).isValid();
+  return isValidStartDate && isValidEndDate && !_.isEqual(startDate, endDate);
+});
 
 onMounted(() => {
   const messstelleId = route.params.messstelleId as string;
