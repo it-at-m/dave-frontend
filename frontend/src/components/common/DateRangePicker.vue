@@ -2,29 +2,29 @@
   <!-- https://vue3datepicker.com/ -->
   <v-row class="ml-1 mt-2 mb-3">
     <vue-date-picker
-        v-model="choosenDates"
-        range
-        position="left"
-        :multi-calendars="MULTI_CALENDAR_OPTIONS"
-        class="mb-3"
-        placeholder="Datum eingeben ..."
-        :config="GENERAL_DATE_PICKER_CONFIG"
-        :text-input="TEXT_INPUT_OPTIONS"
-        :locale="LOCAL_OPTIONS"
-        :format="format"
-        :enable-time-picker="false"
-        :disabled="props.disabled"
-        :required="props.required"
-        :clearable="false"
-        :min-date="minDateProp"
-        :max-date="maxDateProp"
-        :week-numbers="WEEN_NUMBER_OPTIONS"
-        :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
-        cancel-text="Abbrechen"
-        select-text="Datum Auswählen"
+      v-model="choosenDates"
+      range
+      position="left"
+      :multi-calendars="MULTI_CALENDAR_OPTIONS"
+      class="mb-3"
+      placeholder="Datum eingeben ..."
+      :config="GENERAL_DATE_PICKER_CONFIG"
+      :text-input="TEXT_INPUT_OPTIONS"
+      :locale="LOCAL_OPTIONS"
+      :format="format"
+      :enable-time-picker="false"
+      :disabled="props.disabled"
+      :required="props.required"
+      :clearable="false"
+      :min-date="minDateProp"
+      :max-date="maxDateProp"
+      :week-numbers="WEEN_NUMBER_OPTIONS"
+      :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
+      cancel-text="Abbrechen"
+      select-text="Datum Auswählen"
     >
       <template
-          #dp-input="{
+        #dp-input="{
         value,
         onInput,
         onEnter,
@@ -37,20 +37,20 @@
       }"
       >
         <v-text-field
-            :label="label"
-            density="compact"
-            :model-value="value"
-            variant="underlined"
-            clearable
-            @blur="onBlur"
-            @input="onInput"
-            :rules="[(toCheck: string) => validateTextDate(toCheck)]"
-            @click:clear="onClear"
-            @keyup.enter="onEnter"
-            @keyup.tab="onTab"
-            @keyup="onKeypress"
-            @paste="onPaste"
-            @focus="onFocus"
+          :label="label"
+          density="compact"
+          :model-value="value"
+          variant="underlined"
+          clearable
+          @blur="onBlur"
+          @input="onInput"
+          :rules="[(toCheck: string) => validateTextDate(toCheck)]"
+          @click:clear="onClear"
+          @keyup.enter="onEnter"
+          @keyup.tab="onTab"
+          @keyup="onKeypress"
+          @paste="onPaste"
+          @focus="onFocus"
         />
       </template>
     </vue-date-picker>
@@ -58,12 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import type {GeneralConfig} from "@vuepic/vue-datepicker";
+import type { GeneralConfig } from "@vuepic/vue-datepicker";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import _ from "lodash";
-import {computed, ref} from "vue";
-import {useDateUtils} from "@/util/DateUtils";
+import { computed } from "vue";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -76,35 +76,35 @@ interface Props {
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "2-digit",
-  day: "2-digit",
+  day: "2-digit"
 };
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
-  disabled: false,
+  disabled: false
 });
 
 const minDateProp = computed(() => {
   props.minDate.setHours(5);
   return props.minDate;
-})
+});
 
 const maxDateProp = computed(() => {
   props.maxDate.setHours(5);
   return props.maxDate;
-})
+});
 
 const dateRange = defineModel<Array<Date> | undefined>();
 
 const choosenDates = computed({
   get() {
     return _.isNil(dateRange.value)
-        ? undefined
-        : dateRange.value.map(date => {
-          date.setHours(5);
-          return date;
-        });
+      ? undefined
+      : dateRange.value.map(date => {
+        date.setHours(5);
+        return date;
+      });
   },
 
   set(dates: Array<Date> | undefined) {
@@ -119,28 +119,28 @@ const choosenDates = computed({
 const LOCAL_OPTIONS: string = "de-DE";
 
 // https://vue3datepicker.com/props/look-and-feel/#six-weeks
-const SIX_WEEK_CALENDAR_OPTIONS: any = 'center';
+const SIX_WEEK_CALENDAR_OPTIONS: any = "center";
 
 // https://vue3datepicker.com/props/calendar-configuration/#week-numbers
 const WEEN_NUMBER_OPTIONS: any = {
-  type: "iso",
-}
+  type: "iso"
+};
 
 // https://vue3datepicker.com/props/modes-configuration/#multi-calendars-configuration
 const MULTI_CALENDAR_OPTIONS: any = {
-  solo: true,
-}
+  solo: true
+};
 
 // https://vue3datepicker.com/props/modes-configuration/#text-input-configuration
 const TEXT_INPUT_OPTIONS: any = {
   enterSubmit: true,
   tabSubmit: true,
-  format: "dd.MM.yyyy",
+  format: "dd.MM.yyyy"
 };
 
 // https://vue3datepicker.com/props/general-configuration/#config
 const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
-  setDateOnMenuClose: true,
+  setDateOnMenuClose: true
 };
 
 // https://vue3datepicker.com/props/formatting/#format
@@ -156,12 +156,11 @@ const format = (dateRange: Array<Date>) => {
   return dateRangeText;
 };
 
-const dateUtils = useDateUtils();
 function validateTextDate(dateRangeToCheck: string): string | boolean {
   const startAndEndDate = _.split(dateRangeToCheck, "-").map(date => date.trim());
 
-  let startDateText =  _.toString(_.head(startAndEndDate));
-  startDateText = dateUtils.formatDateAsStringToISO(startDateText);
+  let startDateText = _.toString(_.head(startAndEndDate));
+  startDateText = useDateUtils().formatDateAsStringToISO(startDateText);
   const startDate = new Date(startDateText);
   if (startDateText != "unbekannt" && !_.isEmpty(startDateText) && !isNaN(startDate.valueOf())) {
     if (startDate < minDateProp.value) {
@@ -175,7 +174,7 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   }
 
   let endDateText = _.toString(_.last(startAndEndDate));
-  endDateText = dateUtils.formatDateAsStringToISO(endDateText);
+  endDateText = useDateUtils().formatDateAsStringToISO(endDateText);
   const endDate = new Date(endDateText);
   if (endDateText != "unbekannt" && !_.isEmpty(endDateText) && !isNaN(endDate.valueOf())) {
     if (endDate < minDateProp.value) {
