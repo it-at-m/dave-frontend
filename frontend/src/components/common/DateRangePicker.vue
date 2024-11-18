@@ -1,60 +1,58 @@
 <template>
   <!-- https://vue3datepicker.com/ -->
-  <v-row class="ml-1 mt-2 mb-3">
-    <vue-date-picker
-      v-model="choosenDates"
-      range
-      position="left"
-      :multi-calendars="MULTI_CALENDAR_OPTIONS"
-      class="mb-3"
-      placeholder="Datum eingeben ..."
-      :config="GENERAL_DATE_PICKER_CONFIG"
-      :text-input="TEXT_INPUT_OPTIONS"
-      :locale="LOCAL_OPTIONS"
-      :format="format"
-      :enable-time-picker="false"
-      :disabled="props.disabled"
-      :required="props.required"
-      :clearable="false"
-      :min-date="minDateProp"
-      :max-date="maxDateProp"
-      :week-numbers="WEEK_NUMBER_OPTIONS"
-      :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
-      cancel-text="Abbrechen"
-      select-text="Datum Auswählen"
+  <vue-date-picker
+    class="ml-1 mt-2 mb-3"
+    v-model="choosenDates"
+    range
+    position="left"
+    :multi-calendars="MULTI_CALENDAR_OPTIONS"
+    placeholder="Datum eingeben ..."
+    :config="GENERAL_DATE_PICKER_CONFIG"
+    :text-input="TEXT_INPUT_OPTIONS"
+    :locale="LOCAL_OPTIONS"
+    :format="format"
+    :enable-time-picker="false"
+    :disabled="props.disabled"
+    :required="props.required"
+    :clearable="false"
+    :min-date="minDateProp"
+    :max-date="maxDateProp"
+    :week-numbers="WEEK_NUMBER_OPTIONS"
+    :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
+    cancel-text="Abbrechen"
+    select-text="Datum Auswählen"
+  >
+    <template
+      #dp-input="{
+        value,
+        onInput,
+        onEnter,
+        onTab,
+        onClear,
+        onBlur,
+        onKeypress,
+        onPaste,
+        onFocus,
+      }"
     >
-      <template
-        #dp-input="{
-          value,
-          onInput,
-          onEnter,
-          onTab,
-          onClear,
-          onBlur,
-          onKeypress,
-          onPaste,
-          onFocus,
-        }"
-      >
-        <v-text-field
-          :label="label"
-          density="compact"
-          :model-value="value"
-          variant="underlined"
-          clearable
-          @blur="onBlur"
-          @input="onInput"
-          :rules="[(toCheck: string) => validateTextDate(toCheck)]"
-          @click:clear="onClear"
-          @keyup.enter="onEnter"
-          @keyup.tab="onTab"
-          @keyup="onKeypress"
-          @paste="onPaste"
-          @focus="onFocus"
-        />
-      </template>
-    </vue-date-picker>
-  </v-row>
+      <v-text-field
+        :label="label"
+        density="compact"
+        :model-value="value"
+        variant="underlined"
+        clearable
+        @blur="onBlur"
+        @input="onInput"
+        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
+        @click:clear="onClear"
+        @keyup.enter="onEnter"
+        @keyup.tab="onTab"
+        @keyup="onKeypress"
+        @paste="onPaste"
+        @focus="onFocus"
+      />
+    </template>
+  </vue-date-picker>
 </template>
 
 <script setup lang="ts">
