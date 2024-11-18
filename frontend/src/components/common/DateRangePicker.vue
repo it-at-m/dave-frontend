@@ -175,9 +175,9 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   );
 
   const startDateText = _.toString(_.head(startAndEndDate));
-  const isStartDateValid = moment(startDateText, "DD.MM.YYYY", true).isValid();
-  const startDate = new Date(startDateText);
+  const isStartDateValid = isDateValid(startDateText);
   if (isStartDateValid) {
+    const startDate = new Date(startDateText);
     if (startDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString(
         LOCAL_OPTIONS,
@@ -195,9 +195,9 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   }
 
   const endDateText = _.toString(_.last(startAndEndDate));
-  const isEndDateValid = moment(endDateText, "DD.MM.YYYY", true).isValid();
-  const endDate = new Date(endDateText);
+  const isEndDateValid = isDateValid(endDateText);
   if (isEndDateValid) {
+    const endDate = new Date(endDateText);
     if (endDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString(
         LOCAL_OPTIONS,
@@ -215,5 +215,9 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   }
 
   return true;
+}
+
+function isDateValid(date: string): boolean {
+  return moment(date, "DD.MM.YYYY", true).isValid();
 }
 </script>
