@@ -78,7 +78,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
-import _ from "lodash";
+import { head, isEqual, isNil, last, toArray } from "lodash";
 import moment from "moment/moment";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -105,11 +105,11 @@ const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
 
 const isDateRange = computed(() => {
-  const startDate = _.head(chosenOptionsCopy.value.zeitraum);
+  const startDate = head(chosenOptionsCopy.value.zeitraum);
   const isValidStartDate = moment(startDate, "YYYY-MM-DD", true).isValid();
-  const endDate = _.last(chosenOptionsCopy.value.zeitraum);
+  const endDate = last(chosenOptionsCopy.value.zeitraum);
   const isValidEndDate = moment(endDate, "YYYY-MM-DD", true).isValid();
-  return isValidStartDate && isValidEndDate && !_.isEqual(startDate, endDate);
+  return isValidStartDate && isValidEndDate && !isEqual(startDate, endDate);
 });
 
 onMounted(() => {
@@ -144,7 +144,7 @@ const minDate = computed(() => {
   const startdatum = new Date("2006-01-01");
   const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
   if (
-    !_.isNil(messstelleInfo.value.realisierungsdatum) &&
+    !isNil(messstelleInfo.value.realisierungsdatum) &&
     realisierungsdatum >= startdatum
   )
     return realisierungsdatum;
@@ -153,20 +153,20 @@ const minDate = computed(() => {
 
 const maxDate = computed(() => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-  return _.isNil(messstelleInfo.value.abbaudatum)
+  return isNil(messstelleInfo.value.abbaudatum)
     ? yesterday
     : new Date(messstelleInfo.value.abbaudatum);
 });
 
 const zeitraum = computed({
   get() {
-    return _.toArray(chosenOptionsCopy.value.zeitraum).map(
+    return toArray(chosenOptionsCopy.value.zeitraum).map(
       (date) => new Date(date)
     );
   },
 
   set(dates: Array<Date> | undefined) {
-    const newZeitraum = _.toArray(dates).map((date) =>
+    const newZeitraum = toArray(dates).map((date) =>
       dateUtils.formatDateToISO(date)
     );
     chosenOptionsCopy.value.zeitraum = newZeitraum;
