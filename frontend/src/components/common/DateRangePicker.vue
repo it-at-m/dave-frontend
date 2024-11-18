@@ -61,6 +61,7 @@
 import type { GeneralConfig } from "@vuepic/vue-datepicker";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
+
 import "@vuepic/vue-datepicker/dist/main.css";
 
 import _ from "lodash";
@@ -88,12 +89,16 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const minDateProp = computed(() => {
-  props.minDate.setHours(5);
+  if (!_.isNil(props.minDate)) {
+    props.minDate.setHours(5);
+  }
   return props.minDate;
 });
 
 const maxDateProp = computed(() => {
-  props.maxDate.setHours(5);
+  if (!_.isNil(props.maxDate)) {
+    props.maxDate.setHours(5);
+  }
   return props.maxDate;
 });
 
@@ -104,14 +109,18 @@ const choosenDates = computed({
     return _.isNil(dateRange.value)
       ? undefined
       : dateRange.value.map((date) => {
-          date.setHours(5);
+          if (!_.isNil(date)) {
+            date.setHours(5);
+          }
           return date;
         });
   },
 
   set(dates: Array<Date> | undefined) {
     dateRange.value = _.toArray(dates).map((date) => {
-      date.setHours(5);
+      if (!_.isNil(date)) {
+        date.setHours(5);
+      }
       return date;
     });
   },
