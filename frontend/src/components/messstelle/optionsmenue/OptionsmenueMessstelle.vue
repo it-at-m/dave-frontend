@@ -112,9 +112,9 @@ const messstelle = computed<MessstelleInfoDTO>(() => {
 
 const getContentSheetHeight = computed(() => {
   if (display.xl.value) {
-    return "850px";
+    return "750";
   }
-  return "600px";
+  return "500";
 });
 
 const isAnwender = computed(() => {
