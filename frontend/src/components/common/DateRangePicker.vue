@@ -62,7 +62,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import _ from "lodash";
+import { head, isEmpty, isNil, last, split, toArray, toString } from "lodash";
 import moment from "moment";
 import { computed } from "vue";
 
@@ -87,14 +87,14 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const minDateProp = computed(() => {
-  if (!_.isNil(props.minDate)) {
+  if (!isNil(props.minDate)) {
     props.minDate.setHours(5);
   }
   return props.minDate;
 });
 
 const maxDateProp = computed(() => {
-  if (!_.isNil(props.maxDate)) {
+  if (!isNil(props.maxDate)) {
     props.maxDate.setHours(5);
   }
   return props.maxDate;
@@ -104,10 +104,10 @@ const dateRange = defineModel<Array<Date> | undefined>();
 
 const choosenDates = computed({
   get() {
-    return _.isNil(dateRange.value)
+    return isNil(dateRange.value)
       ? undefined
       : dateRange.value.map((date) => {
-          if (!_.isNil(date)) {
+          if (!isNil(date)) {
             date.setHours(5);
           }
           return date;
@@ -115,8 +115,8 @@ const choosenDates = computed({
   },
 
   set(dates: Array<Date> | undefined) {
-    dateRange.value = _.toArray(dates).map((date) => {
-      if (!_.isNil(date)) {
+    dateRange.value = toArray(dates).map((date) => {
+      if (!isNil(date)) {
         date.setHours(5);
       }
       return date;
@@ -155,13 +155,13 @@ const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
 // https://vue3datepicker.com/props/formatting/#format
 const format = (dateRange: Array<Date>) => {
   let dateRangeText = "";
-  if (!_.isEmpty(dateRange)) {
-    const firstDate = _.head(dateRange);
-    const firstDateText = _.isNil(firstDate)
+  if (!isEmpty(dateRange)) {
+    const firstDate = head(dateRange);
+    const firstDateText = isNil(firstDate)
       ? ""
       : firstDate.toLocaleDateString(LOCAL_OPTIONS, options);
-    const lastDate = _.last(dateRange);
-    const lastDateText = _.isNil(lastDate)
+    const lastDate = last(dateRange);
+    const lastDateText = isNil(lastDate)
       ? ""
       : lastDate.toLocaleDateString(LOCAL_OPTIONS, options);
     dateRangeText = `${firstDateText}  -  ${lastDateText}`;
@@ -170,11 +170,11 @@ const format = (dateRange: Array<Date>) => {
 };
 
 function validateTextDate(dateRangeToCheck: string): string | boolean {
-  const startAndEndDate = _.split(dateRangeToCheck, "-").map((date) =>
+  const startAndEndDate = split(dateRangeToCheck, "-").map((date) =>
     date.trim()
   );
 
-  const startDateText = _.toString(_.head(startAndEndDate));
+  const startDateText = toString(head(startAndEndDate));
   const isStartDateValid = isDateValid(startDateText);
   if (isStartDateValid) {
     const startDate = new Date(startDateText);
@@ -194,7 +194,7 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
     }
   }
 
-  const endDateText = _.toString(_.last(startAndEndDate));
+  const endDateText = toString(last(startAndEndDate));
   const isEndDateValid = isDateValid(endDateText);
   if (isEndDateValid) {
     const endDate = new Date(endDateText);
