@@ -34,12 +34,12 @@
           </v-row>
         </v-col>
         <v-col cols="4">
-          <div v-if="isAnwender || needRange">
+          <div v-if="isAnwender || isDateRange">
             <p>Hinweise:</p>
             <p v-if="isAnwender">
               Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
             </p>
-            <p v-if="needRange">
+            <p v-if="isDateRange">
               Alle Auswertungen stellen Durchschnittswerte des ausgewählten
               Zeitraums dar.
             </p>
@@ -49,11 +49,11 @@
       <v-divider />
 
       <tages-typ-radiogroup
-        v-if="needRange"
+        v-if="isDateRange"
         v-model="chosenOptionsCopy"
         :is-chosen-tages-typ-valid="isChosenTagesTypValid"
       />
-      <v-divider v-if="needRange" />
+      <v-divider v-if="isDateRange" />
 
       <zeitauswahl-radiogroup
         v-model="chosenOptionsCopy"
@@ -104,7 +104,7 @@ const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
 
-const needRange = computed(() => {
+const isDateRange = computed(() => {
   const startDate = _.head(chosenOptionsCopy.value.zeitraum);
   const isValidStartDate = moment(startDate, "YYYY-MM-DD", true).isValid();
   const endDate = _.last(chosenOptionsCopy.value.zeitraum);
