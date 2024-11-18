@@ -7,6 +7,7 @@
       <v-btn
         v-bind="activatorProps"
         key="speedDial"
+        v-tooltip:start="'Exportfunktionen'"
         :color="speedDialColor"
         :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-file'"
         size="large"
