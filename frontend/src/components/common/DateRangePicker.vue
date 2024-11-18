@@ -18,7 +18,7 @@
       :clearable="false"
       :min-date="minDateProp"
       :max-date="maxDateProp"
-      :week-numbers="WEEN_NUMBER_OPTIONS"
+      :week-numbers="WEEK_NUMBER_OPTIONS"
       :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
       cancel-text="Abbrechen"
       select-text="Datum Auswählen"
@@ -124,7 +124,7 @@ const LOCAL_OPTIONS: string = "de-DE";
 const SIX_WEEK_CALENDAR_OPTIONS: any = "center";
 
 // https://vue3datepicker.com/props/calendar-configuration/#week-numbers
-const WEEN_NUMBER_OPTIONS: any = {
+const WEEK_NUMBER_OPTIONS: any = {
   type: "iso",
 };
 
