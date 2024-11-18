@@ -173,14 +173,14 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   if (isStartDateValid) {
     if (startDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString(
-        "de-DE",
+        LOCAL_OPTIONS,
         options
       );
       return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
     }
     if (startDate > maxDateProp.value) {
       const maxDatePropText = maxDateProp.value.toLocaleDateString(
-        "de-DE",
+        LOCAL_OPTIONS,
         options
       );
       return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
@@ -193,14 +193,14 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   if (isEndDateValid) {
     if (endDate < minDateProp.value) {
       const minDatePropText = minDateProp.value.toLocaleDateString(
-        "de-DE",
+        LOCAL_OPTIONS,
         options
       );
       return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
     }
     if (endDate > maxDateProp.value) {
       const maxDatePropText = maxDateProp.value.toLocaleDateString(
-        "de-DE",
+        LOCAL_OPTIONS,
         options
       );
       return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
