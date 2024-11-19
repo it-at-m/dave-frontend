@@ -90,20 +90,19 @@ watch(
 );
 
 const messstellen = computed<Array<KeyValObject>>(() => {
-  const result: Array<KeyValObject> = [];
-  allVisibleMessstellen.value.forEach((mst) => {
+  const result: Array<KeyValObject> = allVisibleMessstellen.value.map((mst) => {
     const item = {
       mstId: mst.mstId,
       mqIds: [],
     } as MessstelleAuswertungIdDTO;
 
     item.mqIds = toArray(mst.messquerschnitte).map((mq) => mq.mqId);
-    result.push({
+    return {
       title: `${mst.mstId}-${mst.standort ?? ""} (${
         mst.detektierteVerkehrsarten ?? ""
       })`,
       value: item,
-    });
+    };
   });
   return result;
 });
@@ -276,10 +275,8 @@ function existsMstIdInAuswertungIds(mstId: string) {
 }
 
 function preassignMqIdsInOptions() {
-  auswertungOptions.value.messstelleAuswertungIds[0].mqIds = [];
-  lageValues.value.forEach((value) =>
-    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.push(value.value)
-  );
+  auswertungOptions.value.messstelleAuswertungIds[0].mqIds =
+    lageValues.value.map((value) => value.value);
 }
 
 function buttonClick() {
@@ -291,20 +288,14 @@ function buttonClick() {
 }
 
 function selectAllMessstellen() {
-  auswertungOptions.value.messstelleAuswertungIds = [];
-  allVisibleMessstellen.value.map((mst) => {
-    const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
-    mst.messquerschnitte.map((mq) => {
-      item.mqIds.push(mq.mqId);
+  auswertungOptions.value.messstelleAuswertungIds =
+    allVisibleMessstellen.value.map((mst) => {
+      const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
+      mst.messquerschnitte.map((mq) => {
+        item.mqIds.push(mq.mqId);
+      });
+      return item;
     });
-    auswertungOptions.value.messstelleAuswertungIds.push(item);
-  });
-
-  allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
-    const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
-    item.mqIds = toArray(mst.messquerschnitte).map((mq) => mq.mqId);
-    auswertungOptions.value.messstelleAuswertungIds.push(item);
-  });
 }
 
 function deselectAllMessstellen() {
