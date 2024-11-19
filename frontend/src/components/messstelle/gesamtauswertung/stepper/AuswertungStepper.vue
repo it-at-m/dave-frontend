@@ -63,6 +63,7 @@
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type { VStepperVerticalItem } from "vuetify/labs/components";
 
+import { head, isEmpty, toArray } from "lodash";
 import { computed, ref, watch } from "vue";
 
 import FahrzeugeStepContent from "@/components/messstelle/gesamtauswertung/stepper/FahrzeugeStepContent.vue";
@@ -117,21 +118,20 @@ const selectedTagesTypAsSummary = computed(() => {
   return summary;
 });
 const selectedOrtAsSummary = computed(() => {
-  const messstelleAuswertungIds =
-    auswertungOptions.value.messstelleAuswertungIds;
+  const messstelleAuswertungIds = toArray(
+    auswertungOptions.value.messstelleAuswertungIds
+  );
   let summary = ``;
-  if (messstelleAuswertungIds.length > 1) {
-    const allMstIds: Array<string> = [];
-    messstelleAuswertungIds.forEach((messstelleAuswertungId) => {
-      allMstIds.push(messstelleAuswertungId.mstId);
-    });
-    summary = `Mst-Id's': ${allMstIds.join(", ")}`;
-  }
-  if (messstelleAuswertungIds.length === 1) {
-    const mqIds = messstelleAuswertungIds[0].mqIds;
-    summary = `Mst-Id: ${messstelleAuswertungIds[0].mstId}, MQ-Id${
-      mqIds.length > 1 ? "'s" : ""
-    }: ${mqIds.join(", ")} `;
+  const allMstIds: Array<string> = messstelleAuswertungIds.map(
+    (value) => value.mstId
+  );
+  if (!isEmpty(messstelleAuswertungIds)) {
+    summary = `Mst-Id${allMstIds.length > 1 ? "'s" : ""}: ${allMstIds.join(", ")}`;
+    if (messstelleAuswertungIds.length === 1) {
+      const firstMessstelleAuswertungIdDTO = head(messstelleAuswertungIds)!;
+      const mqIds = toArray(firstMessstelleAuswertungIdDTO.mqIds);
+      summary = `${summary}, MQ-Id${mqIds.length > 1 ? "'s" : ""}: ${mqIds.join(", ")} `;
+    }
   }
   if (!isOrtMessstelleSelected()) {
     summary = "Es muss mindestens eine Messstelle ausgewählt sein.";
@@ -143,7 +143,7 @@ const selectedOrtAsSummary = computed(() => {
 });
 
 function isJahreSelected(): boolean {
-  return !(auswertungOptions.value.jahre.length === 0 && activeStep.value > 1);
+  return !(isEmpty(auswertungOptions.value.jahre) && activeStep.value > 1);
 }
 
 function isTagesTypSelected(): boolean {
@@ -153,22 +153,23 @@ function isTagesTypSelected(): boolean {
 }
 
 function isJahresintervallSelected(): boolean {
-  return !(
-    auswertungOptions.value.zeitraum.length === 0 && activeStep.value > 0
-  );
+  return !(isEmpty(auswertungOptions.value.zeitraum) && activeStep.value > 0);
 }
 
 function isOrtMessstelleSelected(): boolean {
   return !(
-    auswertungOptions.value.messstelleAuswertungIds.length === 0 &&
+    isEmpty(auswertungOptions.value.messstelleAuswertungIds) &&
     activeStep.value > 3
   );
 }
 
 function isOrtMessquerschnittSelected(): boolean {
+  const messstelleAuswertungIdDTOS = toArray(
+    auswertungOptions.value.messstelleAuswertungIds
+  );
   return !(
-    auswertungOptions.value.messstelleAuswertungIds.length === 1 &&
-    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length === 0 &&
+    messstelleAuswertungIdDTOS.length === 1 &&
+    head(messstelleAuswertungIdDTOS)!.mqIds.length === 0 &&
     activeStep.value > 3
   );
 }
