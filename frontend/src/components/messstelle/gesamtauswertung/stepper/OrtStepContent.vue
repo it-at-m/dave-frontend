@@ -61,6 +61,7 @@ import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/Messstel
 import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
+import { toArray } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -95,9 +96,8 @@ const messstellen = computed<Array<KeyValObject>>(() => {
       mstId: mst.mstId,
       mqIds: [],
     } as MessstelleAuswertungIdDTO;
-    mst.messquerschnitte.forEach((mq) => {
-      item.mqIds.push(mq.mqId);
-    });
+
+    item.mqIds = toArray(mst.messquerschnitte).map((mq) => mq.mqId);
     result.push({
       title: `${mst.mstId}-${mst.standort ?? ""} (${
         mst.detektierteVerkehrsarten ?? ""
@@ -212,9 +212,8 @@ const messstelleHint = computed(() => {
 const disableMessstelle = computed(() => {
   return (
     auswertungOptions.value.messstelleAuswertungIds.length > 0 &&
-    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length !== 0 &&
-    direction.value !== messstelleUtils.alleRichtungen &&
     auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length > 0 &&
+    direction.value !== messstelleUtils.alleRichtungen &&
     richtungValues.value.length > 1
   );
 });
@@ -254,9 +253,7 @@ function setVerfuegbareVerkehrsarten() {
   if (auswertungOptions.value.messstelleAuswertungIds.length > 0) {
     for (const messstelle of allVisibleMessstellen.value) {
       if (
-        auswertungOptions.value.messstelleAuswertungIds.find(
-          (value) => value.mstId === messstelle.mstId
-        ) &&
+        existsMstIdInAuswertungIds(messstelle.mstId) &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
           messstelle.detektierteVerkehrsarten
         )
@@ -270,6 +267,12 @@ function setVerfuegbareVerkehrsarten() {
       }
     }
   }
+}
+
+function existsMstIdInAuswertungIds(mstId: string) {
+  return auswertungOptions.value.messstelleAuswertungIds.find(
+    (value) => value.mstId === mstId
+  );
 }
 
 function preassignMqIdsInOptions() {
@@ -289,11 +292,17 @@ function buttonClick() {
 
 function selectAllMessstellen() {
   auswertungOptions.value.messstelleAuswertungIds = [];
-  allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
+  allVisibleMessstellen.value.map((mst) => {
     const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
-    mst.messquerschnitte.forEach((mq) => {
+    mst.messquerschnitte.map((mq) => {
       item.mqIds.push(mq.mqId);
     });
+    auswertungOptions.value.messstelleAuswertungIds.push(item);
+  });
+
+  allVisibleMessstellen.value.forEach((mst: MessstelleAuswertungDTO) => {
+    const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
+    item.mqIds = toArray(mst.messquerschnitte).map((mq) => mq.mqId);
     auswertungOptions.value.messstelleAuswertungIds.push(item);
   });
 }
