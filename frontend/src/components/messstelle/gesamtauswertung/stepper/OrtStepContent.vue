@@ -291,9 +291,7 @@ function selectAllMessstellen() {
   auswertungOptions.value.messstelleAuswertungIds =
     allVisibleMessstellen.value.map((mst) => {
       const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
-      mst.messquerschnitte.map((mq) => {
-        item.mqIds.push(mq.mqId);
-      });
+      item.mqIds = mst.messquerschnitte.map((mq) => mq.mqId);
       return item;
     });
 }
