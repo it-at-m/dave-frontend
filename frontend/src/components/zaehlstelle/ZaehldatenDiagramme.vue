@@ -131,7 +131,7 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="100%"
+          width="99%"
         >
           <zaehldaten-listenausgabe
             :listenausgabe-data="listenausgabeDTO"
@@ -748,18 +748,16 @@ function fetchPdf(formData: FormData, type: string) {
     selectedZaehlung.value.id,
     formData
   )
-    .then((res) => {
-      res.blob().then((blob) => {
-        // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
-        const typeForFilename: string =
-          type.charAt(0).toUpperCase() + type.slice(1);
-        const filename = `${reportTools.getFileName(
-          Erhebungsstelle.ZAEHLSTELLE,
-          typeForFilename,
-          [selectedZaehlung.value.datum]
-        )}.pdf`;
-        downloadUtils.downloadFile(blob, filename);
-      });
+    .then((blob) => {
+      // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
+      const typeForFilename: string =
+        type.charAt(0).toUpperCase() + type.slice(1);
+      const filename = `${reportTools.getFileName(
+        Erhebungsstelle.ZAEHLSTELLE,
+        typeForFilename,
+        [selectedZaehlung.value.datum]
+      )}.pdf`;
+      downloadUtils.downloadFile(blob, filename);
     })
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => (loadingFile.value = false));

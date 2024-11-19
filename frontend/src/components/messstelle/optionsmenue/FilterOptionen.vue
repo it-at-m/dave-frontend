@@ -36,7 +36,7 @@
       </v-col>
     </v-row>
     <v-row
-      v-if="wochentag"
+      v-if="showWochentag"
       no-gutters
     >
       <v-col
@@ -106,7 +106,7 @@ import Himmelsrichtungen, {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
 } from "@/types/enum/Himmelsrichtungen";
-import { tagesTypText } from "@/types/enum/TagesTyp";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -129,6 +129,13 @@ const filterOptionsMessstelle = computed<MessstelleOptionsDTO>(() => {
 
 const wochentag = computed<string | undefined>(() => {
   return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
+});
+
+const showWochentag = computed<boolean>(() => {
+  return (
+    filterOptionsMessstelle.value.zeitraum.length === 2 &&
+    filterOptionsMessstelle.value.tagesTyp !== TagesTyp.UNSPECIFIED
+  );
 });
 
 const zeitraum = computed(() => {

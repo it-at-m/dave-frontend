@@ -6,18 +6,26 @@ export function useDateUtils() {
 
   function formatDate(date: string): string {
     if (!date) {
-      return "";
+      return "unbekannt";
     }
-    const [year, month, day] = date.split("-");
-    return `${day}.${month}.${year}`;
+    if (date.includes("-")) {
+      const [year, month, day] = date.split("-");
+      return `${day}.${month}.${year}`;
+    } else {
+      return date;
+    }
   }
 
   function formatDateAsStringToISO(date: string): string {
     if (!date) {
-      return "";
+      return "unbekannt";
     }
-    const [day, month, year] = date.split(".");
-    return `${year}-${month}-${day}`;
+    if (date.includes(".")) {
+      const [day, month, year] = date.split(".");
+      return `${year}-${month}-${day}`;
+    } else {
+      return date;
+    }
   }
   function formatDateToISO(date: Date): string {
     if (!date) {

@@ -112,9 +112,9 @@ const messstelle = computed<MessstelleInfoDTO>(() => {
 
 const getContentSheetHeight = computed(() => {
   if (display.xl.value) {
-    return "650px";
+    return "750px";
   }
-  return "400px";
+  return "500px";
 });
 
 const isAnwender = computed(() => {
@@ -216,7 +216,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
   chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
   chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
-  chosenOptions.value.tagesTyp = "" as TagesTyp;
+  chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
   chosenOptions.value.blackPrintMode = false;
   chosenOptions.value.werteHundertRunden = false;
   chosenOptions.value.blocksumme = true;

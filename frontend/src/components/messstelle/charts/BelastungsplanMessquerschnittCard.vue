@@ -145,7 +145,7 @@ function drawArrowsPointingSouth(
         )
         .stroke({
           width: calcStrokeSize(mq),
-          color: getLineColor(mq.direction),
+          color: getLineColor(mq.mqId, mq.direction),
         })
     );
     querschnittGroup.value.add(
@@ -280,7 +280,7 @@ function drawArrowsPointingNorth(
         )
         .stroke({
           width: calcStrokeSize(mq),
-          color: getLineColor(mq.direction),
+          color: getLineColor(mq.mqId, mq.direction),
         })
     );
     querschnittGroup.value.add(
@@ -377,7 +377,13 @@ function addTextToQuerschnittGroup(
   y: number
 ) {
   querschnittGroup.value.add(
-    SVG.SVG().text(`${text}`).rotate(270, x, y).move(x, y)
+    SVG.SVG()
+      .text(`${text}`)
+      .font({
+        weight: "bold",
+      })
+      .rotate(270, x, y)
+      .move(x, y)
   );
 }
 
@@ -497,10 +503,19 @@ function addTextNorthSide(
 
 function drawNorthSymbol() {
   canvas.value
-    .path("M 45 10 L 20 80 L 70 80 L 45 10")
+    .path("M 93 93 L 121 93 L 107 32 z")
     .stroke({ width: 1, color: "black" })
     .attr("fill", "none");
-  canvas.value.text("N").move(37.5, 45).font({ size: 20 });
+  canvas.value
+    .text((add) => {
+      add.tspan("N").x(107).dy(83);
+    })
+    .font({
+      family: fontfamily,
+      size: defaultFontSize,
+      anchor: "middle",
+      fill: "#757575",
+    });
 }
 
 function drawMessstelleInfo() {
@@ -697,10 +712,14 @@ function storeImageForPrinting() {
   emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
 }
 
-function getLineColor(direction: string) {
-  return chosenOptionsCopy.value.blackPrintMode
-    ? "#000000"
-    : farben.get(direction);
+function getLineColor(mqId: string, direction: string) {
+  if (chosenOptionsCopy.value.messquerschnittIds.includes(mqId)) {
+    return chosenOptionsCopy.value.blackPrintMode
+      ? "#000000"
+      : farben.get(direction);
+  } else {
+    return "#E0E0E0";
+  }
 }
 
 const getSizeInPx = computed(() => {
