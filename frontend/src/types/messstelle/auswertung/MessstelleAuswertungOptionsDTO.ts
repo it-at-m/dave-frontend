@@ -1,3 +1,4 @@
+import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 import { AuswertungsZeitraum } from "@/types/enum/AuswertungCategories";
@@ -7,8 +8,7 @@ export default interface MessstelleAuswertungOptionsDTO {
   jahre: Array<string>;
   tagesTyp: TagesTyp;
   zeitraum: Array<AuswertungsZeitraum>;
-  mstIds: Array<string>;
-  mqIds: Array<string>;
+  messstelleAuswertungIds: Array<MessstelleAuswertungIdDTO>;
   fahrzeuge: FahrzeugOptions;
 
   // Nicht fuer das Backend

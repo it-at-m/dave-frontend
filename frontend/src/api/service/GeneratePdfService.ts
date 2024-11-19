@@ -8,7 +8,7 @@ export default class GeneratePdfService {
     charttype: string,
     zaehlungId: string,
     data: FormData
-  ): Promise<Response> {
+  ): Promise<Blob> {
     return this.postPdfCustomFetchTemplate(
       "zaehlung",
       charttype,
@@ -21,7 +21,7 @@ export default class GeneratePdfService {
     charttype: string,
     messstelleId: string,
     data: FormData
-  ): Promise<Response> {
+  ): Promise<Blob> {
     return this.postPdfCustomFetchTemplate(
       "messstelle",
       charttype,
@@ -35,7 +35,7 @@ export default class GeneratePdfService {
     charttype: string,
     fachId: string,
     data: FormData
-  ): Promise<Response> {
+  ): Promise<Blob> {
     return FetchService.postForPdf(
       data,
       `${this.ENDPOINT}/${type}?charttype=${charttype}&fach_id=${fachId}`,
@@ -43,7 +43,7 @@ export default class GeneratePdfService {
     );
   }
 
-  static postPdfCustomFetchReport(data: FormData): Promise<Response> {
+  static postPdfCustomFetchReport(data: FormData): Promise<Blob> {
     return FetchService.postForPdf(
       data,
       `${this.ENDPOINT}/report`,

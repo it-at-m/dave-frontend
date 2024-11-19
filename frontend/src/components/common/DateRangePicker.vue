@@ -1,8 +1,8 @@
 <template>
   <!-- https://vue3datepicker.com/ -->
   <vue-date-picker
-    class="ml-1 mt-2 mb-3"
     v-model="choosenDates"
+    class="ml-1 mt-2 mb-3"
     range
     position="left"
     :multi-calendars="MULTI_CALENDAR_OPTIONS"
@@ -37,13 +37,13 @@
     >
       <v-text-field
         :label="label"
-        density="compact"
         :model-value="value"
+        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
+        density="compact"
         variant="underlined"
         clearable
         @blur="onBlur"
         @input="onInput"
-        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
         @click:clear="onClear"
         @keyup.enter="onEnter"
         @keyup.tab="onTab"

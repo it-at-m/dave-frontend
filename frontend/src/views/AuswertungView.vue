@@ -49,6 +49,7 @@ import { useDisplay } from "vuetify";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const minWidth = 600;
 
@@ -80,17 +81,8 @@ const isEverythingValid = computed(() => {
     auswertungsOptions.value.zeitraum.length > 0 &&
     auswertungsOptions.value.tagesTyp.length > 0 &&
     auswertungsOptions.value.jahre.length > 0 &&
-    areMstAndMqValid.value &&
+    auswertungsOptions.value.messstelleAuswertungIds.length > 0 &&
     areFahrzeugeValid.value
-  );
-});
-
-const areMstAndMqValid = computed(() => {
-  return (
-    (auswertungsOptions.value.mstIds.length > 1 &&
-      auswertungsOptions.value.mqIds.length === 0) ||
-    (auswertungsOptions.value.mstIds.length === 1 &&
-      auswertungsOptions.value.mqIds.length > 0)
   );
 });
 
@@ -118,6 +110,12 @@ function resetAuswertungsOptions() {
 }
 
 function auswertungStarten() {
-  MessstelleAuswertungService.generate(auswertungsOptions.value);
+  MessstelleAuswertungService.generate(auswertungsOptions.value).then(
+    (blob) => {
+      // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
+      const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
+      useDownloadUtils().downloadFile(blob, filename);
+    }
+  );
 }
 </script>

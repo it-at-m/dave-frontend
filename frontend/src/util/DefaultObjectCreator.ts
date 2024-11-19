@@ -127,8 +127,7 @@ export default class DefaultObjectCreator {
       jahre: [],
       tagesTyp: "" as TagesTyp,
       zeitraum: [],
-      mstIds: [],
-      mqIds: [],
+      messstelleAuswertungIds: [],
       fahrzeuge: {
         kraftfahrzeugverkehr: false,
         schwerverkehr: false,
