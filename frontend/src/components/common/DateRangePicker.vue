@@ -65,6 +65,8 @@ import { head, isEmpty, isNil, last, split, toArray, toString } from "lodash";
 import moment from "moment";
 import { computed } from "vue";
 
+import { useDateUtils } from "@/util/DateUtils";
+
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
   required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
@@ -174,7 +176,7 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   );
 
   const startDateText = toString(head(startAndEndDate));
-  const isStartDateValid = isDateValid(startDateText);
+  const isStartDateValid = useDateUtils().isDateValid(startDateText);
   if (isStartDateValid) {
     const startDate = new Date(startDateText);
     if (!isNil(minDateProp.value) && startDate < minDateProp.value) {
@@ -194,7 +196,7 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   }
 
   const endDateText = toString(last(startAndEndDate));
-  const isEndDateValid = isDateValid(endDateText);
+  const isEndDateValid = useDateUtils().isDateValid(endDateText);
   if (isEndDateValid) {
     const endDate = new Date(endDateText);
     if (!isNil(minDateProp.value) && endDate < minDateProp.value) {
@@ -214,9 +216,5 @@ function validateTextDate(dateRangeToCheck: string): string | boolean {
   }
 
   return true;
-}
-
-function isDateValid(date: string): boolean {
-  return moment(date, "DD.MM.YYYY", true).isValid();
 }
 </script>

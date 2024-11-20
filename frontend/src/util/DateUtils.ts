@@ -122,10 +122,24 @@ export function useDateUtils() {
    */
   function isDateRange(dates: string[] | undefined) {
     const startDate = head(toArray(dates));
-    const isValidStartDate = moment(startDate, "YYYY-MM-DD", true).isValid();
+    const isValidStartDate = isValidIsoDate(startDate);
     const endDate = last(toArray(dates));
-    const isValidEndDate = moment(endDate, "YYYY-MM-DD", true).isValid();
+    const isValidEndDate = isValidIsoDate(endDate);
     return isValidStartDate && isValidEndDate && !isEqual(startDate, endDate);
+  }
+
+  /**
+   * Prüft ab es sich um ein gültiges Datum im Format "DD.MM.YYYY" handelt.
+   */
+  function isValidDate(date: string | undefined): boolean {
+    return moment(date, "DD.MM.YYYY", true).isValid();
+  }
+
+  /**
+   * Prüft ab es sich um ein gültiges Datum im ISO-Format "YYYY-MM-DD" handelt.
+   */
+  function isValidIsoDate(date: string | undefined): boolean {
+    return moment(date, "YYYY-MM-DD", true).isValid();
   }
 
   return {
@@ -143,5 +157,6 @@ export function useDateUtils() {
     isDateRangeAsStringValid,
     isDateRangeValid,
     isDateRange,
+    isDateValid: isValidDate,
   };
 }
