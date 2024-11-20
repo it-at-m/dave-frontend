@@ -138,12 +138,10 @@ const isAnwender = computed(() => {
 const minDate = computed(() => {
   const startdatum = new Date("2006-01-01");
   const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
-  if (
-    dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
+  return dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
     realisierungsdatum >= startdatum
-  )
-    return realisierungsdatum;
-  else return startdatum;
+    ? realisierungsdatum
+    : startdatum;
 });
 
 const maxDate = computed(() => {
