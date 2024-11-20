@@ -78,8 +78,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
-import { head, isEqual, isNil, last, toArray } from "lodash";
-import moment from "moment/moment";
+import { toArray } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -140,7 +139,7 @@ const minDate = computed(() => {
   const startdatum = new Date("2006-01-01");
   const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
   if (
-    !isNil(messstelleInfo.value.realisierungsdatum) &&
+    dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
     realisierungsdatum >= startdatum
   )
     return realisierungsdatum;
@@ -149,9 +148,9 @@ const minDate = computed(() => {
 
 const maxDate = computed(() => {
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-  return isNil(messstelleInfo.value.abbaudatum)
-    ? yesterday
-    : new Date(messstelleInfo.value.abbaudatum);
+  return dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum)
+    ? new Date(messstelleInfo.value.abbaudatum)
+    : yesterday;
 });
 
 const zeitraum = computed({

@@ -157,6 +157,7 @@ export function useDateUtils() {
     isDateRangeAsStringValid,
     isDateRangeValid,
     isDateRange,
-    isDateValid: isValidDate,
+    isValidDate,
+    isValidIsoDate,
   };
 }
