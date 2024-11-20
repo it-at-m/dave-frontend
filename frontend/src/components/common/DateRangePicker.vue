@@ -62,7 +62,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
 import { head, isEmpty, isNil, last, split, toArray, toString } from "lodash";
-import moment from "moment";
 import { computed } from "vue";
 
 import { useDateUtils } from "@/util/DateUtils";
@@ -169,52 +168,4 @@ const format = (dateRange: Array<Date>) => {
   }
   return dateRangeText;
 };
-
-function validateTextDate(dateRangeToCheck: string): string | boolean {
-  const startAndEndDate = split(dateRangeToCheck, "-").map((date) =>
-    date.trim()
-  );
-
-  const startDateText = toString(head(startAndEndDate));
-  const isStartDateValid = useDateUtils().isDateValid(startDateText);
-  if (isStartDateValid) {
-    const startDate = new Date(startDateText);
-    if (!isNil(minDateProp.value) && startDate < minDateProp.value) {
-      const minDatePropText = minDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
-    }
-    if (!isNil(maxDateProp.value) && startDate > maxDateProp.value) {
-      const maxDatePropText = maxDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
-    }
-  }
-
-  const endDateText = toString(last(startAndEndDate));
-  const isEndDateValid = useDateUtils().isDateValid(endDateText);
-  if (isEndDateValid) {
-    const endDate = new Date(endDateText);
-    if (!isNil(minDateProp.value) && endDate < minDateProp.value) {
-      const minDatePropText = minDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
-    }
-    if (!isNil(maxDateProp.value) && endDate > maxDateProp.value) {
-      const maxDatePropText = maxDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
-    }
-  }
-
-  return true;
-}
 </script>
