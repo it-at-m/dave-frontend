@@ -50,6 +50,7 @@ import { computed } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   isChosenTagesTypValid: boolean;
@@ -66,7 +67,7 @@ function getTagesTypText(key: string): string | undefined {
 const helperText = computed(() => {
   let helpText = "";
   if (
-    chosenOptionsCopy.value.zeitraum.length === 2 &&
+    useDateUtils().isDateRange(chosenOptionsCopy.value.zeitraum) &&
     chosenOptionsCopy.value.tagesTyp === ""
   ) {
     helpText = "Bei einem Zeitraum muss ein Wochentag ausgewählt werden.";

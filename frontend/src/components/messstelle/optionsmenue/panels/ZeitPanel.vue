@@ -105,11 +105,7 @@ const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
 
 const isDateRange = computed(() => {
-  const startDate = head(chosenOptionsCopy.value.zeitraum);
-  const isValidStartDate = moment(startDate, "YYYY-MM-DD", true).isValid();
-  const endDate = last(chosenOptionsCopy.value.zeitraum);
-  const isValidEndDate = moment(endDate, "YYYY-MM-DD", true).isValid();
-  return isValidStartDate && isValidEndDate && !isEqual(startDate, endDate);
+  return dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum);
 });
 
 onMounted(() => {

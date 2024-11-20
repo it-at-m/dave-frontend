@@ -1,3 +1,6 @@
+import { head, isEqual, last, toArray } from "lodash";
+import moment from "moment";
+
 import i18n from "@/plugins/i18n";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 
@@ -114,6 +117,17 @@ export function useDateUtils() {
     return new Date();
   }
 
+  /**
+   * Prüft ob es sich um unterschiedliche kalendarische Datumswerte handelt.
+   */
+  function isDateRange(dates: string[] | undefined) {
+    const startDate = head(toArray(dates));
+    const isValidStartDate = moment(startDate, "YYYY-MM-DD", true).isValid();
+    const endDate = last(toArray(dates));
+    const isValidEndDate = moment(endDate, "YYYY-MM-DD", true).isValid();
+    return isValidStartDate && isValidEndDate && !isEqual(startDate, endDate);
+  }
+
   return {
     sortDatesDescAsStrings,
     formatDate,
@@ -128,5 +142,6 @@ export function useDateUtils() {
     formatDateAsStringToISO,
     isDateRangeAsStringValid,
     isDateRangeValid,
+    isDateRange,
   };
 }
