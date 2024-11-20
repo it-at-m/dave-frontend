@@ -61,10 +61,8 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import { head, isEmpty, isNil, last, split, toArray, toString } from "lodash";
+import { head, isEmpty, isNil, last, toArray } from "lodash";
 import { computed } from "vue";
-
-import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
