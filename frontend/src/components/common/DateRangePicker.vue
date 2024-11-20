@@ -38,7 +38,6 @@
       <v-text-field
         :label="label"
         :model-value="value"
-        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
         density="compact"
         variant="underlined"
         clearable
