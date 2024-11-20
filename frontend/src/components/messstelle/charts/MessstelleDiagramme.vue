@@ -88,7 +88,7 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="100%"
+          width="97%"
         >
           <banner-messtelle-tabs
             v-if="isBiggerThanFiveYears"
