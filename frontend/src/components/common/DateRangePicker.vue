@@ -38,7 +38,6 @@
       <v-text-field
         :label="label"
         :model-value="value"
-        :rules="[(toCheck: string) => validateTextDate(toCheck)]"
         density="compact"
         variant="underlined"
         clearable
@@ -62,8 +61,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import { head, isEmpty, isNil, last, split, toArray, toString } from "lodash";
-import moment from "moment";
+import { head, isEmpty, isNil, last, toArray } from "lodash";
 import { computed } from "vue";
 
 interface Props {
@@ -168,56 +166,4 @@ const format = (dateRange: Array<Date>) => {
   }
   return dateRangeText;
 };
-
-function validateTextDate(dateRangeToCheck: string): string | boolean {
-  const startAndEndDate = split(dateRangeToCheck, "-").map((date) =>
-    date.trim()
-  );
-
-  const startDateText = toString(head(startAndEndDate));
-  const isStartDateValid = isDateValid(startDateText);
-  if (isStartDateValid) {
-    const startDate = new Date(startDateText);
-    if (!isNil(minDateProp.value) && startDate < minDateProp.value) {
-      const minDatePropText = minDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Startdatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
-    }
-    if (!isNil(maxDateProp.value) && startDate > maxDateProp.value) {
-      const maxDatePropText = maxDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Startdatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
-    }
-  }
-
-  const endDateText = toString(last(startAndEndDate));
-  const isEndDateValid = isDateValid(endDateText);
-  if (isEndDateValid) {
-    const endDate = new Date(endDateText);
-    if (!isNil(minDateProp.value) && endDate < minDateProp.value) {
-      const minDatePropText = minDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Enddatum ist vor dem kleinstmöglichen Startdatum ${minDatePropText}`;
-    }
-    if (!isNil(maxDateProp.value) && endDate > maxDateProp.value) {
-      const maxDatePropText = maxDateProp.value.toLocaleDateString(
-        LOCAL_OPTIONS,
-        options
-      );
-      return `Das gewählte Enddatum ist nach dem höchstmöglichen Enddatum ${maxDatePropText}`;
-    }
-  }
-
-  return true;
-}
-
-function isDateValid(date: string): boolean {
-  return moment(date, "DD.MM.YYYY", true).isValid();
-}
 </script>

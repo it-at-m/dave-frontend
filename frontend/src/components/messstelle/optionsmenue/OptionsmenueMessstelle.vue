@@ -159,7 +159,7 @@ function areChosenOptionsValid(): boolean {
     snackbarStore.showError("Das Datum 'bis' muss nach 'von' liegen.");
   }
   if (
-    chosenOptions.value.zeitraum.length === 2 &&
+    dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
     !chosenOptions.value.tagesTyp
   ) {
     result = false;
