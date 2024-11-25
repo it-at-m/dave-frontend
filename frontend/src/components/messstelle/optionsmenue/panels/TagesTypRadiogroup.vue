@@ -60,6 +60,8 @@ const props = defineProps<Props>();
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
+const dateUtils = useDateUtils();
+
 function getTagesTypText(key: string): string | undefined {
   return tagesTypText.get(key);
 }
@@ -67,7 +69,7 @@ function getTagesTypText(key: string): string | undefined {
 const helperText = computed(() => {
   let helpText = "";
   if (
-    useDateUtils().isDateRange(chosenOptionsCopy.value.zeitraum) &&
+    dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) &&
     chosenOptionsCopy.value.tagesTyp === ""
   ) {
     helpText = "Bei einem Zeitraum muss ein Wochentag ausgewählt werden.";
