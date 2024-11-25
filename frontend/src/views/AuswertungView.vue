@@ -50,10 +50,12 @@ import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungServi
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 
 const minWidth = 600;
 
 const display = useDisplay();
+const downloadUtils = useDownloadUtils();
 
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
@@ -111,11 +113,10 @@ function resetAuswertungsOptions() {
 
 function auswertungStarten() {
   MessstelleAuswertungService.generate(auswertungsOptions.value).then(
-    (blob) => {
-      // Beispiel: 251101K_15-11-2020_Belastungsplan.pdf
+    (result: AuswertungMessstelleWithFileDTO) => {
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
-      useDownloadUtils().downloadFile(blob, filename);
+      downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
     }
-  );
+);
 }
 </script>
