@@ -36,7 +36,12 @@
         </v-card>
       </v-col>
       <v-divider vertical />
-      <v-col cols="8" />
+      <v-col cols="8" >
+        <step-line-card
+            ref="steplineCard"
+            :zaehldaten-stepline="zaehldatenMessstellen"
+        />
+      </v-col>
     </v-row>
   </v-sheet>
 </template>
@@ -51,11 +56,18 @@ import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungServi
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
+import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import { isNil } from "lodash";
 
 const minWidth = 600;
 
 const display = useDisplay();
 const downloadUtils = useDownloadUtils();
+
+const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
+    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
+);
 
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
@@ -114,6 +126,9 @@ function resetAuswertungsOptions() {
 function auswertungStarten() {
   MessstelleAuswertungService.generate(auswertungsOptions.value).then(
     (result: AuswertungMessstelleWithFileDTO) => {
+      zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
+          ? DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
+          : result.zaehldatenMessstellen;
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
     }
