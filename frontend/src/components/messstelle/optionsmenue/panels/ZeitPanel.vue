@@ -145,10 +145,16 @@ const minDate = computed(() => {
 });
 
 const maxDate = computed(() => {
-  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-  return dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum)
-    ? new Date(messstelleInfo.value.abbaudatum)
-    : yesterday;
+  if (
+    dateUtils.isValidIsoDate(messstelleInfo.value.datumLetztePlausibleMessung)
+  ) {
+    return new Date(messstelleInfo.value.datumLetztePlausibleMessung);
+  } else if (dateUtils.isValidIsoDate(messstelleInfo.value.abbaudatum)) {
+    return new Date(messstelleInfo.value.abbaudatum);
+  } else {
+    // Yesterday
+    return new Date(new Date().setDate(new Date().getDate() - 1));
+  }
 });
 
 const zeitraum = computed({
