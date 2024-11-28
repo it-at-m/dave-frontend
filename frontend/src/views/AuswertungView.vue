@@ -41,6 +41,7 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
+import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import { computed, ref } from "vue";
@@ -50,7 +51,6 @@ import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungServi
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 
 const minWidth = 600;
 
@@ -117,6 +117,6 @@ function auswertungStarten() {
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
     }
-);
+  );
 }
 </script>

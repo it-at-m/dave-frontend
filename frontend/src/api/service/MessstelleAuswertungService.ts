@@ -1,8 +1,8 @@
+import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import FetchService from "@/api/service/FetchService";
-import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 
 export default class MessstelleAuswertungService {
   private static readonly ENDPOINT: string =
@@ -13,7 +13,9 @@ export default class MessstelleAuswertungService {
       "Beim Laden der Messstellen ist ein Fehler aufgetreten."
     );
   }
-  static generate(options: MessstelleAuswertungOptionsDTO): Promise<AuswertungMessstelleWithFileDTO> {
+  static generate(
+    options: MessstelleAuswertungOptionsDTO
+  ): Promise<AuswertungMessstelleWithFileDTO> {
     return FetchService.postData(
       options,
       `${this.ENDPOINT}`,
