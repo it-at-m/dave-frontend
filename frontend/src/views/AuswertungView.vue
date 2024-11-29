@@ -39,7 +39,7 @@
       <v-col cols="8" >
         <step-line-card
             ref="steplineCard"
-            :zaehldaten-stepline="zaehldatenForStepline"
+            :zaehldaten-stepline="zaehldatenMessstellen"
         />
       </v-col>
     </v-row>
@@ -72,10 +72,6 @@ const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
 );
-
-const zaehldatenForStepline = computed(() => {
-  return zaehldatenMessstellen.value;
-});
 
 const appBarHeight = computed(() => {
   return 50 / (display.height.value / 100);
