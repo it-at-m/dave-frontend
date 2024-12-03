@@ -38,8 +38,13 @@
       <v-divider vertical />
       <v-col cols="8" >
         <step-line-card
+            v-if="showDiagram"
             ref="steplineCard"
             :zaehldaten-stepline="zaehldatenMessstellen"
+        />
+        <banner-messtelle-tabs
+            v-else
+            :message="textForNonShownDiagram"
         />
       </v-col>
     </v-row>
@@ -58,7 +63,10 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import { isNil } from "lodash";
+import { isNil, toArray, valuesIn } from "lodash";
+import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
+
+const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 
 const minWidth = 600;
 
@@ -72,6 +80,36 @@ const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
 );
+
+const textForNonShownDiagram = computed(() => {
+  let text = "";
+  if (!numberOfXaxisElementsWithinSizeToShow.value || !chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value) {
+    text = "Es ist keine grafische Darstellung der Gesamtauswertung möglich.";
+    if (!numberOfXaxisElementsWithinSizeToShow.value) {
+      text += `\nDie Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}.`;
+    }
+    if (!chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value) {
+      text += "\nEs ist eine Mehrfachauswahl bei Messtellen sowie bei Fahrzeugen getroffen worden.";
+    }
+  }
+  return text;
+})
+
+const showDiagram = computed(() => {
+  return chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value && numberOfXaxisElementsWithinSizeToShow.value;
+});
+
+const numberOfXaxisElementsWithinSizeToShow = computed(() => {
+  const numerOfChosenXaxisElements = toArray(auswertungsOptions.value.zeitraum).length * toArray(auswertungsOptions.value.jahre).length;
+  return numerOfChosenXaxisElements <= NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW;
+})
+
+const chosenMstIdsAndFahrzeugoptionsWithinSizeToShow = computed(() => {
+  const numberOfChosenFahrzeugoptions = valuesIn(auswertungsOptions.value.fahrzeuge)
+      .filter(option => option)
+      .length;
+  return toArray(auswertungsOptions.value.messstelleAuswertungIds).length < 2 || numberOfChosenFahrzeugoptions < 2;
+})
 
 const appBarHeight = computed(() => {
   return 50 / (display.height.value / 100);

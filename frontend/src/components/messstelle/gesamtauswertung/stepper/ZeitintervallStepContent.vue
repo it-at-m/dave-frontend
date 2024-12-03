@@ -132,6 +132,7 @@ watch(selectedCategory, () => {
     auswertungOptions.value.zeitraum = [AuswertungsZeitraum.JAHRE];
   }
   previuosSelectedCategory.value = selectedCategory.value;
+  auswertungOptions.value.zeitraumCategorie = selectedCategory.value;
 });
 
 function preSetSelectedCategory() {
