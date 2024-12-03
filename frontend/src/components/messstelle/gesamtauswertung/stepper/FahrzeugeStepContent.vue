@@ -423,6 +423,7 @@ function isTypeEnabled(type: string): boolean {
 
 <style>
 .v-checkbox .v-label {
+  /* default is 1rem */
   font-size: 0.9rem;
 }
 </style>
