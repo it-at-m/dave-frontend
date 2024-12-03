@@ -54,7 +54,7 @@
 import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
-import { computed, ref } from "vue";
+import {computed, ref, watch} from "vue";
 import { useDisplay } from "vuetify";
 
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -161,6 +161,14 @@ const areFahrzeugeValid = computed(() => {
     auswertungsOptions.value.fahrzeuge.lieferwagen
   );
 });
+
+watch(
+    auswertungsOptions,
+    () => {
+      zaehldatenMessstellen.value = DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+    },
+    { deep: true }
+);
 
 function resetAuswertungsOptions() {
   auswertungsOptions.value =
