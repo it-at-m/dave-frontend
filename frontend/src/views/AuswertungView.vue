@@ -7,7 +7,7 @@
       >
         <v-sheet
           class="d-flex flex-column overflow-y-auto"
-          :height="cardHeight"
+          :height="stepperSheetHeight"
           width="100%"
         >
           <auswertung-stepper
@@ -132,17 +132,17 @@ const appBarHeight = computed(() => {
   return 50 / (display.height.value / 100);
 });
 
-const cardHeight = computed(() => {
+const stepperSheetHeight = computed(() => {
   const overflowX = display.width.value / 3 <= minWidth;
   return 100 - (overflowX ? 3 : 0) - appBarHeight.value + "vh";
 });
 
-const cardActionsHeight = computed(() => {
+const stepperSheetActionsHeight = computed(() => {
   return 60 / (display.height.value / 100);
 });
 
 const stepperHeightVh = computed(() => {
-  return 100 - appBarHeight.value - cardActionsHeight.value + "vh";
+  return 100 - appBarHeight.value - stepperSheetActionsHeight.value + "vh";
 });
 
 const isEverythingValid = computed(() => {
