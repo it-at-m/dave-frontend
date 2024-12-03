@@ -84,14 +84,20 @@ const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
 const textForNonShownDiagram = computed(() => {
   let text = "";
   if (!numberOfXaxisElementsWithinSizeToShow.value || !chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value) {
-    text = "Es ist keine grafische Darstellung der Gesamtauswertung möglich.";
+    text = "Es ist keine grafische Darstellung der Gesamtauswertung möglich. ";
     if (!numberOfXaxisElementsWithinSizeToShow.value) {
-      text += ` Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}.`;
+      text += `Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}`;
     }
     if (!chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value) {
-      text += " Es ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden.";
+      if (!numberOfXaxisElementsWithinSizeToShow.value) {
+        text += " und es";
+      } else {
+        text += "Es";
+      }
+      text += " ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden";
     }
   }
+  text += ".";
   return text;
 })
 
