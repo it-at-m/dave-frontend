@@ -5,11 +5,10 @@
         cols="4"
         class="overflow-x-auto"
       >
-        <v-card
+        <v-sheet
           class="d-flex flex-column overflow-y-auto"
           :height="cardHeight"
-          :min-width="minWidth"
-          flat
+          width="100%"
         >
           <auswertung-stepper
             v-model="auswertungsOptions"
@@ -33,7 +32,7 @@
               @click="resetAuswertungsOptions()"
             />
           </v-card-actions>
-        </v-card>
+        </v-sheet>
       </v-col>
       <v-divider vertical />
       <v-col cols="8" >
