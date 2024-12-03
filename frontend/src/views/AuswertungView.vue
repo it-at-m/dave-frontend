@@ -35,15 +35,15 @@
         </v-sheet>
       </v-col>
       <v-divider vertical />
-      <v-col cols="8" >
+      <v-col cols="8">
         <step-line-card
-            v-if="showDiagram"
-            ref="steplineCard"
-            :zaehldaten-stepline="zaehldatenMessstellen"
+          v-if="showDiagram"
+          ref="steplineCard"
+          :zaehldaten-stepline="zaehldatenMessstellen"
         />
         <banner-messtelle-tabs
-            v-else
-            :message="textForNonShownDiagram"
+          v-else
+          :message="textForNonShownDiagram"
         />
       </v-col>
     </v-row>
@@ -52,18 +52,18 @@
 <script setup lang="ts">
 import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import {computed, ref, watch} from "vue";
+import { isNil, toArray, valuesIn } from "lodash";
+import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
+import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
+import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import { isNil, toArray, valuesIn } from "lodash";
-import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 
@@ -73,7 +73,7 @@ const display = useDisplay();
 const downloadUtils = useDownloadUtils();
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
-    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
+  DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
 );
 
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
@@ -82,39 +82,51 @@ const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
 
 const textForNonShownDiagram = computed(() => {
   let text = "";
-  if (!numberOfXaxisElementsWithinSizeToShow.value || !chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value) {
+  if (
+    !isNumberOfXaxisElementsShowable.value ||
+    !isChosenMstIdsAndFahrzeugoptionsShowable.value
+  ) {
     text = "Es ist keine grafische Darstellung der Gesamtauswertung möglich. ";
-    if (!numberOfXaxisElementsWithinSizeToShow.value) {
+    if (!isNumberOfXaxisElementsShowable.value) {
       text += `Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}`;
     }
-    if (!chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value) {
-      if (!numberOfXaxisElementsWithinSizeToShow.value) {
+    if (!isChosenMstIdsAndFahrzeugoptionsShowable.value) {
+      if (!isNumberOfXaxisElementsShowable.value) {
         text += " und es";
       } else {
         text += "Es";
       }
-      text += " ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden";
+      text +=
+        " ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden";
     }
   }
   text += ".";
   return text;
-})
-
-const showDiagram = computed(() => {
-  return chosenMstIdsAndFahrzeugoptionsWithinSizeToShow.value && numberOfXaxisElementsWithinSizeToShow.value;
 });
 
-const numberOfXaxisElementsWithinSizeToShow = computed(() => {
-  const numerOfChosenXaxisElements = toArray(auswertungsOptions.value.zeitraum).length * toArray(auswertungsOptions.value.jahre).length;
-  return numerOfChosenXaxisElements <= NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW;
-})
+const showDiagram = computed(() => {
+  return (
+    isChosenMstIdsAndFahrzeugoptionsShowable.value &&
+    isNumberOfXaxisElementsShowable.value
+  );
+});
 
-const chosenMstIdsAndFahrzeugoptionsWithinSizeToShow = computed(() => {
-  const numberOfChosenFahrzeugoptions = valuesIn(auswertungsOptions.value.fahrzeuge)
-      .filter(option => option)
-      .length;
-  return toArray(auswertungsOptions.value.messstelleAuswertungIds).length < 2 || numberOfChosenFahrzeugoptions < 2;
-})
+const isNumberOfXaxisElementsShowable = computed(() => {
+  const numerOfChosenXaxisElements =
+    toArray(auswertungsOptions.value.zeitraum).length *
+    toArray(auswertungsOptions.value.jahre).length;
+  return numerOfChosenXaxisElements <= NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW;
+});
+
+const isChosenMstIdsAndFahrzeugoptionsShowable = computed(() => {
+  const numberOfChosenFahrzeugoptions = valuesIn(
+    auswertungsOptions.value.fahrzeuge
+  ).filter((option) => option).length;
+  return (
+    toArray(auswertungsOptions.value.messstelleAuswertungIds).length < 2 ||
+    numberOfChosenFahrzeugoptions < 2
+  );
+});
 
 const appBarHeight = computed(() => {
   return 50 / (display.height.value / 100);
@@ -162,11 +174,12 @@ const areFahrzeugeValid = computed(() => {
 });
 
 watch(
-    auswertungsOptions,
-    () => {
-      zaehldatenMessstellen.value = DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
-    },
-    { deep: true }
+  auswertungsOptions,
+  () => {
+    zaehldatenMessstellen.value =
+      DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+  },
+  { deep: true }
 );
 
 function resetAuswertungsOptions() {
@@ -178,8 +191,8 @@ function auswertungStarten() {
   MessstelleAuswertungService.generate(auswertungsOptions.value).then(
     (result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
-          ? DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
-          : result.zaehldatenMessstellen;
+        ? DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
+        : result.zaehldatenMessstellen;
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
     }
