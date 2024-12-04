@@ -55,7 +55,7 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
 import { isNil, toArray, valuesIn } from "lodash";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
