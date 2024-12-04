@@ -182,7 +182,9 @@ function auswertungStarten() {
   MessstelleAuswertungService.generate(auswertungsOptions.value).then(
     (result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
-        ? cloneDeep(DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO())
+        ? cloneDeep(
+            DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
+          )
         : cloneDeep(result.zaehldatenMessstellen);
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
