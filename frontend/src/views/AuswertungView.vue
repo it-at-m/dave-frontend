@@ -45,6 +45,10 @@
           v-else
           :message="textForNonShownDiagram"
         />
+        <v-btn
+          text="PDF"
+          @click="createPdf"
+        />
       </v-col>
     </v-row>
   </v-sheet>
@@ -58,10 +62,13 @@ import { cloneDeep, isNil, toArray, valuesIn } from "lodash";
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 
+import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useUserStore } from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
@@ -190,5 +197,47 @@ function auswertungStarten() {
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
     }
   );
+}
+
+// TODO richtig einsortieren
+const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
+/**
+ * Base 64 String der Ganglinie
+ */
+function getGanglinieBase64(): string | undefined {
+  return steplineCard?.value?.steplineForPdf?.chart?.getDataURL({
+    pixelRatio: 2,
+    backgroundColor: "#fff",
+    excludeComponents: ["toolbox"],
+  });
+}
+
+function createPdf() {
+  const formData = new FormData();
+  formData.append(
+    "options",
+    new Blob([JSON.stringify(auswertungsOptions.value)], {
+      type: "application/json",
+    })
+  );
+  formData.append(
+    "chartAsBase64Png",
+    new Blob([getGanglinieBase64() ?? ""], {
+      type: "image/png",
+    })
+  );
+  formData.append(
+    "auswertung",
+    new Blob([JSON.stringify(zaehldatenMessstellen.value)], {
+      type: "application/json",
+    })
+  );
+  formData.append("department", useUserStore().getDepartment);
+
+  GeneratePdfService.postPdfCustomFetchTemplateGesamtauswertung(formData)
+    .then((blob) => {
+      downloadUtils.downloadFile(blob, "Gesamtauswertung_test.pdf");
+    })
+    .catch((error) => useSnackbarStore().showApiError(error));
 }
 </script>
