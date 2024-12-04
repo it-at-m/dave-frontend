@@ -54,7 +54,7 @@ import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { isNil, toArray, valuesIn } from "lodash";
+import { cloneDeep, isNil, toArray, valuesIn } from "lodash";
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -182,8 +182,8 @@ function auswertungStarten() {
   MessstelleAuswertungService.generate(auswertungsOptions.value).then(
     (result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
-        ? DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
-        : result.zaehldatenMessstellen;
+        ? cloneDeep(DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO())
+        : cloneDeep(result.zaehldatenMessstellen);
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
     }
