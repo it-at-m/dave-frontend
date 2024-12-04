@@ -23,10 +23,10 @@ import {
 // chart
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
+import { isNil } from "lodash";
 import { computed, provide, ref, watch } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
-import { isNil } from "lodash"
 
 import ChartUtils from "@/util/ChartUtils";
 
