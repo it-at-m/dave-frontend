@@ -173,15 +173,6 @@ const areFahrzeugeValid = computed(() => {
   );
 });
 
-watch(
-  auswertungsOptions,
-  () => {
-    zaehldatenMessstellen.value =
-      DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
-  },
-  { deep: true }
-);
-
 function resetAuswertungsOptions() {
   auswertungsOptions.value =
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions();
