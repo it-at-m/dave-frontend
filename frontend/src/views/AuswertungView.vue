@@ -50,6 +50,17 @@
           @click="createPdf"
         />
       </v-col>
+      <v-col cols="8">
+        <step-line-card
+          v-if="showDiagram"
+          ref="steplineCard"
+          :zaehldaten-stepline="zaehldatenMessstellen"
+        />
+        <banner-messtelle-tabs
+          v-else
+          :message="textForNonShownDiagram"
+        />
+      </v-col>
     </v-row>
   </v-sheet>
 </template>

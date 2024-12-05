@@ -1,4 +1,4 @@
-import { head, isEqual, last, toArray } from "lodash";
+import { head, isEmpty, isEqual, last, toArray } from "lodash";
 import moment from "moment";
 
 import i18n from "@/plugins/i18n";
@@ -111,9 +111,11 @@ export function useDateUtils() {
     if (Date.parse(d)) {
       return new Date(d);
     }
-    snackbarStore.showError(
-      `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
-    );
+    if (!isEmpty(datum)) {
+      snackbarStore.showError(
+        `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
+      );
+    }
     return new Date();
   }
 
