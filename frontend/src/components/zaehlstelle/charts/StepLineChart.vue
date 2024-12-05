@@ -23,6 +23,7 @@ import {
 // chart
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
+import { isNil } from "lodash";
 import { computed, provide, ref, watch } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
@@ -317,14 +318,15 @@ function formatYAxisLabel(params: Array<any>): string {
     text += `${params[0].name} <br/>`;
   }
   params.forEach((value) => {
+    const data = isNil(value.data) ? "" : value.data.toLocaleString();
     if (value.seriesName.trim().endsWith("%")) {
       text += `<span style="color:${value.color}">\u25CF</span> ${
         value.seriesName
-      }: ${value.data.toLocaleString()}%<br/>`;
+      }: ${data.toLocaleString()}%<br/>`;
     } else {
       text += `<span style="color:${value.color}">\u25CF</span> ${
         value.seriesName
-      }: ${value.data.toLocaleString()}<br/>`;
+      }: ${data.toLocaleString()}<br/>`;
     }
   });
   return text;

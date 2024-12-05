@@ -127,6 +127,7 @@ const buttonText = computed(() => {
 watch(selectedCategory, () => {
   if (previuosSelectedCategory.value !== selectedCategory.value) {
     auswertungOptions.value.zeitraum = [];
+    auswertungOptions.value.zeitraumCategorie = selectedCategory.value;
   }
   if (selectedCategory.value === ZeitintervallCategories.JAHRE) {
     auswertungOptions.value.zeitraum = [AuswertungsZeitraum.JAHRE];

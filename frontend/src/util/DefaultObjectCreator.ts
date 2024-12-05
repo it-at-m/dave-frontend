@@ -126,6 +126,7 @@ export default class DefaultObjectCreator {
     return {
       jahre: [],
       tagesTyp: "" as TagesTyp,
+      zeitraumCategorie: "",
       zeitraum: [],
       messstelleAuswertungIds: [],
       fahrzeuge: {
