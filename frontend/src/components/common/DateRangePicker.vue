@@ -17,6 +17,8 @@
     :clearable="false"
     :min-date="minDateProp"
     :max-date="maxDateProp"
+    ignore-time-validation
+    :teleport="true"
     :week-numbers="WEEK_NUMBER_OPTIONS"
     :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
     cancel-text="Abbrechen"
