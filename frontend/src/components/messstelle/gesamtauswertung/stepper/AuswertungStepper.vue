@@ -61,7 +61,6 @@
 
 <script setup lang="ts">
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type { VStepperVerticalItem } from "vuetify/labs/components";
 
 import { head, isEmpty, toArray } from "lodash";
 import { computed, ref, watch } from "vue";

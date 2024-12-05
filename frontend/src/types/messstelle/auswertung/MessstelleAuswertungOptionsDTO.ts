@@ -7,6 +7,7 @@ import TagesTyp from "@/types/enum/TagesTyp";
 export default interface MessstelleAuswertungOptionsDTO {
   jahre: Array<string>;
   tagesTyp: TagesTyp;
+  zeitraumCategorie: string;
   zeitraum: Array<AuswertungsZeitraum>;
   messstelleAuswertungIds: Array<MessstelleAuswertungIdDTO>;
   fahrzeuge: FahrzeugOptions;
