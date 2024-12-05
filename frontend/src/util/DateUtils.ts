@@ -111,9 +111,6 @@ export function useDateUtils() {
     if (Date.parse(d)) {
       return new Date(d);
     }
-    snackbarStore.showError(
-      `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
-    );
     return new Date();
   }
 
