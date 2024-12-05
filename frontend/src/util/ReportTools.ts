@@ -210,7 +210,14 @@ export function useReportTools() {
     base64: string
   ): void {
     const filename = getFileName(erhebungsstelle, type, zeitraum);
+    downloadImage(filename, base64);
+  }
 
+  function saveGesamtauswertungAsImage(filename: string, base64: string): void {
+    downloadImage(filename, base64);
+  }
+
+  function downloadImage(filename: string, base64: string): void {
     if (base64) {
       const link = document.createElement("a");
       link.setAttribute("href", base64);
@@ -224,6 +231,7 @@ export function useReportTools() {
     addChartToPdfReport,
     addDatatableToPdfReport,
     saveGraphAsImage,
+    saveGesamtauswertungAsImage,
     getFileName,
   };
 }

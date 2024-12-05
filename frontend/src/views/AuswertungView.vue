@@ -45,20 +45,18 @@
           v-else
           :message="textForNonShownDiagram"
         />
+        <speed-dial
+          :is-listenausgabe="false"
+          :is-not-heatmap="true"
+          :loading-file="loadingFile"
+          :open-pdf-report-dialog="false"
+          @add-chart-to-pdf-report="addChartToPdfReport"
+          @save-graph-as-image="saveGraphAsImage"
+          @generate-pdf="createPdf"
+        />
         <v-btn
           text="PDF"
           @click="createPdf"
-        />
-      </v-col>
-      <v-col cols="8">
-        <step-line-card
-          v-if="showDiagram"
-          ref="steplineCard"
-          :zaehldaten-stepline="zaehldatenMessstellen"
-        />
-        <banner-messtelle-tabs
-          v-else
-          :message="textForNonShownDiagram"
         />
       </v-col>
     </v-row>
@@ -76,12 +74,14 @@ import { useDisplay } from "vuetify";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
+import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useReportTools } from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 
@@ -89,6 +89,8 @@ const minWidth = 600;
 
 const display = useDisplay();
 const downloadUtils = useDownloadUtils();
+
+const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -210,8 +212,6 @@ function auswertungStarten() {
   );
 }
 
-// TODO richtig einsortieren
-const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 /**
  * Base 64 String der Ganglinie
  */
@@ -250,5 +250,37 @@ function createPdf() {
       downloadUtils.downloadFile(blob, "Gesamtauswertung_test.pdf");
     })
     .catch((error) => useSnackbarStore().showApiError(error));
+}
+
+// TODO einsortieren
+const loadingFile = ref(false);
+let reportTools = useReportTools();
+
+/**
+ * Speichert das aktuell offene Diagramm als Png bzw SVG (Kreuzung-Belastungsplan)
+ */
+function saveGraphAsImage(): void {
+  loadingFile.value = true;
+  const encodedUri = getGanglinieBase64();
+  // TODO Filename generieren anhand der Auswahl
+  const filename = "Zeitreihe";
+  if (encodedUri && filename) {
+    reportTools.saveGesamtauswertungAsImage(filename, encodedUri);
+  }
+  loadingFile.value = false;
+}
+
+/**
+ * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
+ */
+function addChartToPdfReport(): void {
+  // TODO umbauen, damit auch Gesamtauswertungen hinzugefuegt werden können
+  // reportTools.addChartToPdfReport(
+  //     Erhebungsstelle.MESSSTELLE,
+  //     "Die",
+  //     "Zeitreihe",
+  //     getGanglinieBase64(),
+  //     true
+  // );
 }
 </script>
