@@ -17,7 +17,7 @@
           <v-spacer />
           <v-card-actions>
             <v-btn
-              :disabled="isEverythingValid"
+              :disabled="!isEverythingValid"
               class="mr-2 text-none"
               color="secondary"
               text="Auswerten"
@@ -46,6 +46,7 @@
           :message="textForNonShownDiagram"
         />
         <speed-dial
+          v-if="showSpeeddial"
           :is-listenausgabe="false"
           :is-not-heatmap="true"
           :loading-file="loadingFile"
@@ -53,10 +54,6 @@
           @add-chart-to-pdf-report="addChartToPdfReport"
           @save-graph-as-image="saveGraphAsImage"
           @generate-pdf="createPdf"
-        />
-        <v-btn
-          text="PDF"
-          @click="createPdf"
         />
       </v-col>
     </v-row>
@@ -81,15 +78,21 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useReportTools } from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 
 const minWidth = 600;
 
+const reportTools = useReportTools();
 const display = useDisplay();
 const downloadUtils = useDownloadUtils();
+const snackbarStore = useSnackbarStore();
+const messstelleUtils = useMessstelleUtils();
 
+const loadingFile = ref(false);
+const auswertungLoaded = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
@@ -131,6 +134,10 @@ const showDiagram = computed(() => {
   );
 });
 
+const showSpeeddial = computed(() => {
+  return showDiagram.value && isEverythingValid.value && auswertungLoaded.value;
+});
+
 const isNumberOfXaxisElementsShowable = computed(() => {
   const numerOfChosenXaxisElements =
     toArray(auswertungsOptions.value.zeitraum).length *
@@ -166,7 +173,7 @@ const stepperHeightVh = computed(() => {
 });
 
 const isEverythingValid = computed(() => {
-  return !(
+  return (
     auswertungsOptions.value.zeitraum.length > 0 &&
     auswertungsOptions.value.tagesTyp.length > 0 &&
     auswertungsOptions.value.jahre.length > 0 &&
@@ -199,8 +206,8 @@ function resetAuswertungsOptions() {
 }
 
 function auswertungStarten() {
-  MessstelleAuswertungService.generate(auswertungsOptions.value).then(
-    (result: AuswertungMessstelleWithFileDTO) => {
+  MessstelleAuswertungService.generate(auswertungsOptions.value)
+    .then((result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
         ? cloneDeep(
             DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -208,8 +215,12 @@ function auswertungStarten() {
         : cloneDeep(result.zaehldatenMessstellen);
       const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
       downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
-    }
-  );
+      auswertungLoaded.value = true;
+    })
+    .catch((error) => {
+      snackbarStore.showApiError(error);
+      auswertungLoaded.value = false;
+    });
 }
 
 /**
@@ -247,14 +258,10 @@ function createPdf() {
 
   GeneratePdfService.postPdfCustomFetchTemplateGesamtauswertung(formData)
     .then((blob) => {
-      downloadUtils.downloadFile(blob, "Gesamtauswertung_test.pdf");
+      downloadUtils.downloadFile(blob, getFilename(".pdf"));
     })
     .catch((error) => useSnackbarStore().showApiError(error));
 }
-
-// TODO einsortieren
-const loadingFile = ref(false);
-let reportTools = useReportTools();
 
 /**
  * Speichert das aktuell offene Diagramm als Png bzw SVG (Kreuzung-Belastungsplan)
@@ -262,10 +269,8 @@ let reportTools = useReportTools();
 function saveGraphAsImage(): void {
   loadingFile.value = true;
   const encodedUri = getGanglinieBase64();
-  // TODO Filename generieren anhand der Auswahl
-  const filename = "Zeitreihe";
-  if (encodedUri && filename) {
-    reportTools.saveGesamtauswertungAsImage(filename, encodedUri);
+  if (encodedUri) {
+    reportTools.saveGesamtauswertungAsImage(getFilename(".png"), encodedUri);
   }
   loadingFile.value = false;
 }
@@ -274,13 +279,25 @@ function saveGraphAsImage(): void {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
-  // TODO umbauen, damit auch Gesamtauswertungen hinzugefuegt werden können
-  // reportTools.addChartToPdfReport(
-  //     Erhebungsstelle.MESSSTELLE,
-  //     "Die",
-  //     "Zeitreihe",
-  //     getGanglinieBase64(),
-  //     true
-  // );
+  let caption = getFilename("");
+  caption = caption.replaceAll("_", " ");
+  reportTools.addGesamtauswertungToPdfReport(
+    "Die Auswertung",
+    caption,
+    getGanglinieBase64()
+  );
+}
+
+function getFilename(ending: string) {
+  let filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}`;
+  if (auswertungsOptions.value.messstelleAuswertungIds.length === 1) {
+    const firstMessstelle =
+      auswertungsOptions.value.messstelleAuswertungIds.at(0);
+    filename = `Zeitreihe_zur_Messstelle_${firstMessstelle ? firstMessstelle.mstId : "unbekannt"}`;
+  }
+  if (auswertungsOptions.value.messstelleAuswertungIds.length > 1) {
+    filename = `Zeitreihe_zur_Messung_${messstelleUtils.getSelectedVerkehrsartAsText(auswertungsOptions.value.fahrzeuge)}`;
+  }
+  return `${filename}${ending}`;
 }
 </script>

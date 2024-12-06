@@ -177,6 +177,21 @@ export function useReportTools() {
     );
   }
 
+  function addGesamtauswertungToPdfReport(
+    type: string,
+    caption: string,
+    base64: string | undefined
+  ): void {
+    if (base64) {
+      addImageToReport(base64, caption);
+      snackbarStore.showSuccess(`${type} wurde dem PDF Report hinzugefügt.`);
+    } else {
+      snackbarStore.showError(
+        `${type} konnte dem PDF Report nicht hinzugefügt.`
+      );
+    }
+  }
+
   function getFileName(
     erhebungsstelle: Erhebungsstelle,
     type: string,
@@ -230,6 +245,7 @@ export function useReportTools() {
   return {
     addChartToPdfReport,
     addDatatableToPdfReport,
+    addGesamtauswertungToPdfReport,
     saveGraphAsImage,
     saveGesamtauswertungAsImage,
     getFileName,
