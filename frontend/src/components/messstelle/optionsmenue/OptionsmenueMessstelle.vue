@@ -112,9 +112,9 @@ const messstelle = computed<MessstelleInfoDTO>(() => {
 
 const getContentSheetHeight = computed(() => {
   if (display.xl.value) {
-    return "650px";
+    return "750px";
   }
-  return "400px";
+  return "500px";
 });
 
 const isAnwender = computed(() => {
@@ -159,7 +159,7 @@ function areChosenOptionsValid(): boolean {
     snackbarStore.showError("Das Datum 'bis' muss nach 'von' liegen.");
   }
   if (
-    chosenOptions.value.zeitraum.length === 2 &&
+    dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
     !chosenOptions.value.tagesTyp
   ) {
     result = false;
@@ -216,7 +216,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
   chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
   chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
-  chosenOptions.value.tagesTyp = "" as TagesTyp;
+  chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
   chosenOptions.value.blackPrintMode = false;
   chosenOptions.value.werteHundertRunden = false;
   chosenOptions.value.blocksumme = true;

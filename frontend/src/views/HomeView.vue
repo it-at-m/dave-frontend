@@ -10,13 +10,12 @@
     <v-speed-dial
       v-model="speedDialOpen"
       location="top"
-      open-on-hover
-      open-delay="150"
     >
       <template #activator="{ props: activatorProps }">
         <v-btn
           v-bind="activatorProps"
           key="speedDial"
+          v-tooltip:start="'Exportfunktionen'"
           :color="speedDialColor"
           :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-plus-thick'"
           size="large"

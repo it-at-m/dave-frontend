@@ -36,7 +36,7 @@
                     class="mb-1 mr-1"
                     :icon="aufbauIcon.iconPath"
                   />
-                  {{ formatDate(messstelle.realisierungsdatum) }}
+                  {{ dateUtils.formatDate(messstelle.realisierungsdatum) }}
                 </span>
 
                 <span
@@ -50,7 +50,7 @@
                     class="mb-1 mx-1"
                     :icon="abbauIcon.iconPath"
                   />
-                  {{ formatDate(messstelle.abbaudatum) }}
+                  {{ dateUtils.formatDate(messstelle.abbaudatum) }}
                 </span>
               </span>
             </v-row>
@@ -103,6 +103,7 @@ import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIc
 import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
 import IconTooltip from "@/types/util/IconTooltip";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   messstelle: MessstelleInfoDTO;
@@ -110,20 +111,14 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const dateUtils = useDateUtils();
+
 const aufbauIcon = new IconTooltip("mdi-elevator-up", "Aufbaudatum");
 const abbauIcon = new IconTooltip("mdi-elevator-down", "Abbaudatum");
 
 const datumLetztePlausibleMessung = computed(() => {
-  return formatDate(props.messstelle.datumLetztePlausibleMessung.toString());
+  return dateUtils.formatDate(props.messstelle.datumLetztePlausibleMessung);
 });
-
-function formatDate(date: string): string {
-  if (!date) {
-    return "";
-  }
-  const [year, month, day] = date.split("-");
-  return `${day}.${month}.${year}`;
-}
 
 const fahrzeugKlasse = computed(() => {
   if (props.messstelle.messquerschnitte.length > 0) {

@@ -426,11 +426,9 @@ function generatePdf() {
 function fetchPdf(formData: FormData) {
   formData.append("department", getDepartment.value);
   GeneratePdfService.postPdfCustomFetchReport(formData)
-    .then((res) => {
-      res.blob().then((blob) => {
-        pdfSourceAsBlob.value = blob;
-        downloadPdf();
-      });
+    .then((blob) => {
+      pdfSourceAsBlob.value = blob;
+      downloadPdf();
     })
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => (loadingPdf.value = false));

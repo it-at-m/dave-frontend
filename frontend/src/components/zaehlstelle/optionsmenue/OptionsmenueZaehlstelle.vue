@@ -162,9 +162,9 @@ const options = computed<OptionsDTO>(() => {
 
 const getContentSheetHeight = computed(() => {
   if (display.xl.value) {
-    return "650px";
+    return "750px";
   }
-  return "400px";
+  return "500px";
 });
 
 /**

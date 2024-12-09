@@ -77,6 +77,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
+const dateUtils = useDateUtils();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
@@ -510,17 +511,17 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
     tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
   }
   if (tooltipDto.realisierungsdatum) {
-    tooltip = `${tooltip} Aufbau: ${useDateUtils().formatDate(
+    tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
       tooltipDto.realisierungsdatum
     )}<br/>`;
   }
   if (tooltipDto.abbaudatum) {
-    tooltip = `${tooltip}Abbau: ${useDateUtils().formatDate(
+    tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
       tooltipDto.abbaudatum
     )}<br/>`;
   }
   if (tooltipDto.datumLetztePlausibleMessung) {
-    tooltip = `${tooltip}Letzte plausible Messung: ${useDateUtils().formatDate(
+    tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
       tooltipDto.datumLetztePlausibleMessung
     )}<br/>`;
   }
@@ -576,10 +577,7 @@ function markerOptionsZaehlart(zaehlart: string, index: number) {
     iconAnchor: calculateIconAnchorCoordinatesForZaehlartMarker(index),
     iconSize: [30, 30],
     className: `zaehlart-circle-${getColorForZaehlartenMarker(zaehlart)}`,
-    html:
-      '<span class="white--text text-Button font-weight-bold">' +
-      zaehlart +
-      "</span>",
+    html: '<span class="text-white font-weight-bold">' + zaehlart + "</span>",
   });
 
   return { opacity: 1.0, icon: divIcon };
@@ -636,7 +634,7 @@ wurden die Farbe auf schwarz gesetzt */
   width: 30px;
   line-height: 30px;
   border-radius: 50%;
-  background: red;
+  background: #f44336;
   text-align: center;
 }
 .zaehlart-circle-secondary {

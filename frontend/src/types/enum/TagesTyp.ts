@@ -5,6 +5,7 @@ enum TagesTyp {
   SONNTAG_FEIERTAG = "SONNTAG_FEIERTAG",
   WERKTAG_FERIEN = "WERKTAG_FERIEN",
   MO_SO = "MO_SO",
+  UNSPECIFIED = "UNSPECIFIED",
 }
 
 export const tagesTypText = new Map<string, string>([
@@ -14,6 +15,7 @@ export const tagesTypText = new Map<string, string>([
   [TagesTyp.SONNTAG_FEIERTAG, "Sonntag/Feiertag in/außerhalb Ferien"],
   [TagesTyp.WERKTAG_FERIEN, "Mo-Fr Ferien"],
   [TagesTyp.MO_SO, "DTV (MO - SO)"],
+  [TagesTyp.UNSPECIFIED, "unspecified"],
 ]);
 
 export default TagesTyp;

@@ -20,7 +20,8 @@ server:
 
 management:
   endpoints:
-    enabled-by-default: false
+    access:
+      default: none
     web:
       cors:
         allowedOrigins:
@@ -36,13 +37,13 @@ management:
         prometheus: metrics
   endpoint:
     health:
-      enabled: on
+      access: read_only
       probes:
         enabled: true
     info:
-      enabled: on
+      access: read_only
     prometheus:
-      enabled: on
+      access: read_only
   info:
     env:
       enabled: true

@@ -139,7 +139,11 @@ watch(
   () => chosenOptionsCopy.value.zeitauswahl,
   () => {
     if (isIntervallChangingLocked.value) {
-      chosenOptionsCopy.value.intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+      let intervall = messstelleStore.getActiveMessfaehigkeit.intervall;
+      if (intervall === ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT) {
+        intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
+      }
+      chosenOptionsCopy.value.intervall = intervall;
     }
   }
 );

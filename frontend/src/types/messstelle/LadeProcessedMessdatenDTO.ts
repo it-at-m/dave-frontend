@@ -11,4 +11,7 @@ export default interface LadeProcessedMessdatenDTO {
   zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
 
   belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTO;
+
+  requestedMeasuringDays: number;
+  includedMeasuringDays: number;
 }
