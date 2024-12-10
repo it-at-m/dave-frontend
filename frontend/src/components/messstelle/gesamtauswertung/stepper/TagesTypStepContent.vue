@@ -15,7 +15,7 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 
 import { computed } from "vue";
 
-import { tagesTypText } from "@/types/enum/TagesTyp";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 
 const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
@@ -24,10 +24,12 @@ const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
 const selectableTagesTypen = computed(() => {
   const tagestypen: Array<KeyVal> = [];
   tagesTypText.forEach((value, key) => {
-    tagestypen.push({
-      title: value,
-      value: key,
-    });
+    if (key !== TagesTyp.UNSPECIFIED) {
+      tagestypen.push({
+        title: value,
+        value: key,
+      });
+    }
   });
   return tagestypen;
 });
