@@ -29,6 +29,15 @@ export default class GeneratePdfService {
       data
     );
   }
+  static postPdfCustomFetchTemplateGesamtauswertung(
+    data: FormData
+  ): Promise<Blob> {
+    return FetchService.postForPdf(
+      data,
+      `${this.ENDPOINT}/auswertung`,
+      "Beim Generieren der PDF ist ein Fehler aufgetreten."
+    );
+  }
 
   private static postPdfCustomFetchTemplate(
     type: string,

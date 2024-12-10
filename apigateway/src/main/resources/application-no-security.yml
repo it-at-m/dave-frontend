@@ -1,7 +1,6 @@
 spring:
   autoconfigure:
     exclude:
-      - org.springframework.cloud.security.oauth2.gateway.TokenRelayAutoConfiguration
       - org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration
   cloud:
     gateway:

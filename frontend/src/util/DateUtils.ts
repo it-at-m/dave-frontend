@@ -1,3 +1,6 @@
+import { head, isEmpty, isEqual, last, toArray } from "lodash";
+import moment from "moment";
+
 import i18n from "@/plugins/i18n";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 
@@ -108,10 +111,37 @@ export function useDateUtils() {
     if (Date.parse(d)) {
       return new Date(d);
     }
-    snackbarStore.showError(
-      `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
-    );
+    if (!isEmpty(datum)) {
+      snackbarStore.showError(
+        `Der angegebene Wert ${datum} kann nicht in ein Datum umgewandelt werden.`
+      );
+    }
     return new Date();
+  }
+
+  /**
+   * Prüft ob es sich um unterschiedliche kalendarische Datumswerte handelt.
+   */
+  function isDateRange(dates: string[] | undefined) {
+    const startDate = head(toArray(dates));
+    const isValidStartDate = isValidIsoDate(startDate);
+    const endDate = last(toArray(dates));
+    const isValidEndDate = isValidIsoDate(endDate);
+    return isValidStartDate && isValidEndDate && !isEqual(startDate, endDate);
+  }
+
+  /**
+   * Prüft ab es sich um ein gültiges Datum im Format "DD.MM.YYYY" handelt.
+   */
+  function isValidDate(date: string | undefined): boolean {
+    return moment(date, "DD.MM.YYYY", true).isValid();
+  }
+
+  /**
+   * Prüft ab es sich um ein gültiges Datum im ISO-Format "YYYY-MM-DD" handelt.
+   */
+  function isValidIsoDate(date: string | undefined): boolean {
+    return moment(date, "YYYY-MM-DD", true).isValid();
   }
 
   return {
@@ -128,5 +158,8 @@ export function useDateUtils() {
     formatDateAsStringToISO,
     isDateRangeAsStringValid,
     isDateRangeValid,
+    isDateRange,
+    isValidDate,
+    isValidIsoDate,
   };
 }
