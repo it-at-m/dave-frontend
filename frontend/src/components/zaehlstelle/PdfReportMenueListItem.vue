@@ -1,7 +1,10 @@
 <template>
   <v-list-item>
     <template #prepend>
-      <v-checkbox v-model="checkbox" />
+      <v-checkbox
+        v-model="checkbox"
+        color="primary"
+      />
     </template>
     <v-list-item-title>{{ title }}</v-list-item-title>
     <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
