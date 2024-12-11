@@ -132,6 +132,9 @@ const optionsDefault = computed(() => {
             return value.toLocaleString();
           },
         },
+        axisLine: {
+          show: true,
+        },
       },
       {
         type: "value",
@@ -143,6 +146,9 @@ const optionsDefault = computed(() => {
           formatter: function (value: number) {
             return `${value.toLocaleString()} %`;
           },
+        },
+        axisLine: {
+          show: true,
         },
       },
     ],
@@ -214,6 +220,9 @@ const options2x4 = computed(() => {
             return value.toLocaleString();
           },
         },
+        axisLine: {
+          show: true,
+        },
       },
       {
         type: "value",
@@ -226,6 +235,9 @@ const options2x4 = computed(() => {
             return `${value.toLocaleString()} %`;
           },
         },
+        axisLine: {
+          show: true,
+        },
       },
       {
         name: "Fahrzeuge",
@@ -236,6 +248,9 @@ const options2x4 = computed(() => {
           formatter: function (value: number) {
             return value.toLocaleString();
           },
+        },
+        axisLine: {
+          show: true,
         },
         gridIndex: 1,
       },
@@ -249,6 +264,9 @@ const options2x4 = computed(() => {
           formatter: function (value: number) {
             return `${value.toLocaleString()} %`;
           },
+        },
+        axisLine: {
+          show: true,
         },
         gridIndex: 1,
       },
