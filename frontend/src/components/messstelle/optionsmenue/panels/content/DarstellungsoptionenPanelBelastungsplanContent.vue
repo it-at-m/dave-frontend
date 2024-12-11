@@ -28,6 +28,10 @@
           label="Belastungsplangröße"
           :max="10"
           :min="1"
+          color="primary"
+          density="compact"
+          track-size="2"
+          thumb-size="12"
           @mouseover="hoverSizeBelastungsplan = true"
           @mouseleave="hoverSizeBelastungsplan = false"
         />
