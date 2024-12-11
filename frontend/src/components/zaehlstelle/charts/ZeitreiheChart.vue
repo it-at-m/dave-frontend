@@ -244,6 +244,9 @@ const options = computed(() => {
             return value.toLocaleString();
           },
         },
+        axisLine: {
+          show: true,
+        },
       },
       // Zweite Achse wird ggf. weiter unten gesetzt
     ],
@@ -272,6 +275,9 @@ const secondYAxis = computed(() => {
         formatter: function (value: number) {
           return `${value.toLocaleString()}%`;
         },
+      },
+      axisLine: {
+        show: true,
       },
     };
   } else {
