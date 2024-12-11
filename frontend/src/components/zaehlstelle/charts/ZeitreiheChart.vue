@@ -136,7 +136,7 @@ const xAxis = computed(() => {
 });
 
 const options = computed(() => {
-  const options = {
+  return {
     tooltip: {
       trigger: "axis",
       formatter: function (params: any[]) {
@@ -248,41 +248,32 @@ const options = computed(() => {
           show: true,
         },
       },
-      // Zweite Achse wird ggf. weiter unten gesetzt
+      {
+        type: "value",
+        name: "in Prozent",
+        show: showSecondYAxis.value,
+        min: 0,
+        max: yAxisMax.value,
+        interval: yAxisInterval.value,
+        axisLabel: {
+          formatter: function (value: number) {
+            return `${value.toLocaleString()}%`;
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+      },
     ],
     series: seriesEntriesChart.value,
   };
-
-  if (secondYAxis.value) {
-    options.yAxis[1] = secondYAxis.value;
-  }
-
-  return options;
 });
 
-const secondYAxis = computed(() => {
-  if (
+const showSecondYAxis = computed(() => {
+  return (
     filterOptions.value.schwerverkehrsanteilProzent ||
     filterOptions.value.gueterverkehrsanteilProzent
-  ) {
-    return {
-      type: "value",
-      name: "in Prozent",
-      min: 0,
-      max: yAxisMax.value,
-      interval: yAxisInterval.value,
-      axisLabel: {
-        formatter: function (value: number) {
-          return `${value.toLocaleString()}%`;
-        },
-      },
-      axisLine: {
-        show: true,
-      },
-    };
-  } else {
-    return undefined;
-  }
+  );
 });
 
 /**
