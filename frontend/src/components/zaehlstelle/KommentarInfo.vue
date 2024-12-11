@@ -26,7 +26,7 @@
           <span style="font-size: x-large">Informationen</span>
         </v-card-title>
 
-        <v-card-text class="grey-lighten-2">
+        <v-card-text>
           <div
             v-for="(item, index) in kommentarArray"
             :key="index"
