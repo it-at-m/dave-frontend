@@ -35,6 +35,10 @@
           />
           <v-slider
             v-model="sizeBelastungsplan"
+            color="primary"
+            density="compact"
+            track-size="2"
+            thumb-size="12"
             label="Belastungsplangröße"
             :max="maxSizeBelastungsplanSvg"
             :min="minSizeBelastungsplanSvg"
