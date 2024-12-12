@@ -46,7 +46,7 @@
       >
         <ort-step-content
           v-model="auswertungOptions"
-          :allVisibleMessstellen="allVisibleMessstellen"
+          :all-visible-messstellen="allVisibleMessstellen"
         />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item

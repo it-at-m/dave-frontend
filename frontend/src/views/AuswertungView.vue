@@ -13,7 +13,7 @@
           <auswertung-stepper
             v-model="auswertungsOptions"
             :height="stepperHeightVh"
-            :allVisibleMessstellen="allVisibleMessstellen"
+            :all-visible-messstellen="allVisibleMessstellen"
           />
           <v-spacer />
           <v-card-actions>
@@ -63,12 +63,13 @@
 <script setup lang="ts">
 import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import {cloneDeep, head, isNil, toArray, valuesIn} from "lodash";
-import {computed, onMounted, ref} from "vue";
-import {useDisplay} from "vuetify";
+import { cloneDeep, head, isNil, toArray, valuesIn } from "lodash";
+import { computed, onMounted, ref } from "vue";
+import { useDisplay } from "vuetify";
 
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -76,12 +77,12 @@ import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleT
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
-import {useSnackbarStore} from "@/store/SnackbarStore";
-import {useUserStore} from "@/store/UserStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useUserStore } from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useDownloadUtils} from "@/util/DownloadUtils";
-import {useMessstelleUtils} from "@/util/MessstelleUtils";
-import {useReportTools} from "@/util/ReportTools";
+import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import { useReportTools } from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 
@@ -265,7 +266,7 @@ function createPdf() {
 
   GeneratePdfService.postPdfCustomFetchTemplateGesamtauswertung(formData)
     .then((blob) => {
-      downloadUtils.downloadFile(blob, getFilename(".pdf"));
+      downloadUtils.downloadFile(blob, getFilenameWithEnding("pdf", false));
     })
     .catch((error) => useSnackbarStore().showApiError(error));
 }
@@ -277,7 +278,10 @@ function saveGraphAsImage(): void {
   loadingFile.value = true;
   const encodedUri = getGanglinieBase64();
   if (encodedUri) {
-    reportTools.saveGesamtauswertungAsImage(getFilename(".png"), encodedUri);
+    reportTools.saveGesamtauswertungAsImage(
+      getFilenameWithEnding("png", true),
+      encodedUri
+    );
   }
   loadingFile.value = false;
 }
@@ -286,41 +290,67 @@ function saveGraphAsImage(): void {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
-  let caption = getFilename("");
-  caption = caption.replaceAll("_", " ");
   reportTools.addGesamtauswertungToPdfReport(
     "Die Auswertung",
-    caption,
+    getCaption(),
     getGanglinieBase64()
   );
 }
 
-function getFilename(ending: string) {
+function getFilenameWithEnding(ending: string, withMq: boolean) {
+  return `${getFilename(withMq)}.${ending}`;
+}
+
+function getCaption() {
+  return getFilename(true).replaceAll("_", " ");
+}
+
+function getFilename(withMq: boolean) {
   let filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}`;
   if (auswertungsOptions.value.messstelleAuswertungIds.length === 1) {
-    const filenamePart1 = "Zeitreihe_zur_Messstelle_";
-    let filenamePart2 = "unbekannt";
-    const firstMessstelle = head(
-      auswertungsOptions.value.messstelleAuswertungIds
-    );
-    if (firstMessstelle) {
-      const messstelle = allVisibleMessstellen.value.find(
-        (value) => value.mstId === firstMessstelle.mstId
+    if (withMq) {
+      filename = getFilenameSingleMessstelleAndMessquerschnitte(
+        head(auswertungsOptions.value.messstelleAuswertungIds)
       );
-      filenamePart2 = firstMessstelle.mstId;
-      if (
-        messstelle &&
-        firstMessstelle.mqIds.length < messstelle.messquerschnitte.length
-      ) {
-        filenamePart2 = `${filenamePart2}_${firstMessstelle.mqIds.length > 1 ? "Messquerschnitte" : "Messquerschnitt"}_${firstMessstelle.mqIds.join("_")}`;
-      }
+    } else {
+      filename = getFilenameSingleMessstelle(
+        head(auswertungsOptions.value.messstelleAuswertungIds)
+      );
     }
-    filename = `${filenamePart1}${filenamePart2}`;
   }
   if (auswertungsOptions.value.messstelleAuswertungIds.length > 1) {
     filename = `Zeitreihe_zur_Messung_${messstelleUtils.getSelectedVerkehrsartAsText(auswertungsOptions.value.fahrzeuge)}`;
   }
-  return `${filename}${ending}`;
+  return filename;
+}
+
+function getFilenameSingleMessstelle(
+  messstelleAuswertungId: MessstelleAuswertungIdDTO | undefined
+) {
+  const filenamePart1 = "Zeitreihe_zur_Messstelle";
+  let filenamePart2 = "unbekannt";
+  if (messstelleAuswertungId) {
+    filenamePart2 = messstelleAuswertungId.mstId;
+  }
+  return `${filenamePart1}_${filenamePart2}`;
+}
+
+function getFilenameSingleMessstelleAndMessquerschnitte(
+  messstelleAuswertungId: MessstelleAuswertungIdDTO | undefined
+) {
+  const filenamePart1 = getFilenameSingleMessstelle(messstelleAuswertungId);
+  if (messstelleAuswertungId) {
+    const messstelle = allVisibleMessstellen.value.find(
+      (value) => value.mstId === messstelleAuswertungId.mstId
+    );
+    if (
+      messstelle &&
+      messstelleAuswertungId.mqIds.length < messstelle.messquerschnitte.length
+    ) {
+      return `${filenamePart1}_${messstelleAuswertungId.mqIds.length > 1 ? "Messquerschnitte" : "Messquerschnitt"}_${messstelleAuswertungId.mqIds.join("_")}`;
+    }
+  }
+  return filenamePart1;
 }
 
 function loadAllVisibleMessstellen(): void {
