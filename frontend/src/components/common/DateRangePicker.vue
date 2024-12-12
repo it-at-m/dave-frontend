@@ -10,7 +10,7 @@
       <v-col cols="8">
         <v-row
             dense
-            class="mt-0 pt-0"
+            class="mr-3 mt-0 pt-0"
         >
           <v-col cols="6">
             <date-picker
@@ -31,12 +31,12 @@
         </v-row>
       </v-col>
       <v-col cols="4">
-        <div v-if="isAnwender || isDateRange">
+        <div v-if="isAnwender || isDateRange || isStartDateOutOfRange || isEndDateOutOfRange">
           <p>Hinweise:</p>
-          <p v-if="messageStartDateOutOfRange.length > 0">
+          <p v-if="isStartDateOutOfRange">
             {{ messageStartDateOutOfRange }}
           </p>
-          <p v-if="messageEndDateOutOfRange.length > 0">
+          <p v-if="isEndDateOutOfRange">
             {{ messageEndDateOutOfRange }}
           </p>
           <p v-if="isAnwender">
@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import {isEqual, gt, lt, isNil} from "lodash";
+import {isEqual, gt, lt, isNil, isEmpty} from "lodash";
 import {computed, ref, watch} from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import DatePicker from "@/components/common/DatePicker.vue";
@@ -87,21 +87,29 @@ const endDate = ref<Date | undefined>();
 
 const dateRange = defineModel<Array<Date> | undefined>();
 
+const isStartDateOutOfRange = computed(() => {
+  return !isEmpty(messageStartDateOutOfRange.value.length);
+})
+
 const messageStartDateOutOfRange = computed<string>(() => {
   let message = "";
-  if (lt(startDate.value, props.minDate)) {
+  if (!isNil(startDate.value) && lt(startDate.value, props.minDate)) {
     message = `Das Startdatum ist vor dem ${props.minDateDescription}.`
-  } else if (gt(startDate.value, props.maxDate)) {
+  } else if (!isNil(startDate.value) && gt(startDate.value, props.maxDate)) {
     message = `Das Startdatum ist nach dem ${props.maxDateDescription}.`
   }
   return message;
 })
 
+const isEndDateOutOfRange = computed(() => {
+  return !isEmpty(messageEndDateOutOfRange.value.length);
+})
+
 const messageEndDateOutOfRange = computed<string>(() => {
   let message = "";
-  if (lt(endDate.value, props.minDate)) {
+  if (!isNil(endDate.value) && lt(endDate.value, props.minDate)) {
     message = `Das Enddatum ist vor dem ${props.minDateDescription}.`
-  } else if (gt(endDate.value, props.maxDate)) {
+  } else if (!isNil(endDate.value) && gt(endDate.value, props.maxDate)) {
     message = `Das Enddatum ist nach dem ${props.maxDateDescription}.`
   }
   return message;
