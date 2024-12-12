@@ -37,8 +37,8 @@
         :model-value="value"
         :disabled="props.disabled"
         :required="props.required"
+        variant="filled"
         density="compact"
-        variant="underlined"
         clearable
         @blur="onBlur"
         @input="onInput"
