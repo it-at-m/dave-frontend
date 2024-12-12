@@ -786,12 +786,6 @@ function generateCsv() {
     })
     .finally(() => (loadingFile.value = false));
 }
-
-function activeTabColor(tab: number) {
-  console.log(tab);
-  console.log(activeTab.value);
-  return tab === activeTab.value ? "white" : "red";
-}
 </script>
 
 <style scoped lang="scss">
