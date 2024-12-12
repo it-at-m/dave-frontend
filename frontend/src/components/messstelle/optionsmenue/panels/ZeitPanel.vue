@@ -109,38 +109,57 @@ const isAnwender = computed(() => {
 
 const minDateDescription = ref<string>("");
 
-const minDate = computed(() => {
-  const startdatum = new Date("2006-01-01");
-  const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
-  if (
-    dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
-    realisierungsdatum >= startdatum
-  ) {
-    minDateDescription.value = "Realisierungsdatum";
-    return realisierungsdatum;
-  } else {
-    minDateDescription.value = "frühestmöglichen Datum";
-    return startdatum;
-  }
-});
+const minDate = ref<Date>();
+
+watch(
+  () => [messstelleInfo.value.realisierungsdatum],
+  () => {
+    const startdatum = new Date("2006-01-01");
+    const realisierungsdatum = new Date(
+      messstelleInfo.value.realisierungsdatum
+    );
+    if (
+      dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
+      realisierungsdatum >= startdatum
+    ) {
+      minDateDescription.value = "Realisierungsdatum";
+      minDate.value = realisierungsdatum;
+    } else {
+      minDateDescription.value = "frühestmöglichen Datum";
+      minDate.value = startdatum;
+    }
+  },
+  { immediate: true }
+);
 
 const maxDateDescription = ref<string>("");
 
-const maxDate = computed(() => {
-  if (
-    dateUtils.isValidIsoDate(messstelleInfo.value.datumLetztePlausibleMessung)
-  ) {
-    maxDateDescription.value = "Datum der letzten plausiblen Messung";
-    return new Date(messstelleInfo.value.datumLetztePlausibleMessung);
-  } else if (dateUtils.isValidIsoDate(messstelleInfo.value.abbaudatum)) {
-    maxDateDescription.value = "Abbaudatum";
-    return new Date(messstelleInfo.value.abbaudatum);
-  } else {
-    // Yesterday
-    maxDateDescription.value = "gestrigen Datum";
-    return new Date(new Date().setDate(new Date().getDate() - 1));
-  }
-});
+const maxDate = ref<Date>();
+
+watch(
+  () => [
+    messstelleInfo.value.datumLetztePlausibleMessung,
+    messstelleInfo.value.abbaudatum,
+  ],
+  () => {
+    if (
+      dateUtils.isValidIsoDate(messstelleInfo.value.datumLetztePlausibleMessung)
+    ) {
+      maxDateDescription.value = "Datum der letzten plausiblen Messung";
+      maxDate.value = new Date(
+        messstelleInfo.value.datumLetztePlausibleMessung
+      );
+    } else if (dateUtils.isValidIsoDate(messstelleInfo.value.abbaudatum)) {
+      maxDateDescription.value = "Abbaudatum";
+      maxDate.value = new Date(messstelleInfo.value.abbaudatum);
+    } else {
+      // Yesterday
+      maxDateDescription.value = "gestrigen Datum";
+      maxDate.value = new Date(new Date().setDate(new Date().getDate() - 1));
+    }
+  },
+  { immediate: true }
+);
 
 const zeitraum = computed({
   get() {

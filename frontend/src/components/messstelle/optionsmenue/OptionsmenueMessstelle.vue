@@ -156,7 +156,9 @@ function areChosenOptionsValid(): boolean {
     !dateUtils.isDateRangeAsStringValid(chosenOptions.value.zeitraum)
   ) {
     result = false;
-    snackbarStore.showError("Das Datum 'bis' muss nach 'von' liegen.");
+    snackbarStore.showError(
+      "Das 'Startdatum' muss nach dem 'Enddatum' liegen."
+    );
   }
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&

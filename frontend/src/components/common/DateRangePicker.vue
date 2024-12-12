@@ -77,10 +77,10 @@ interface Props {
   label?: string; // Bezeichnung des Datumsfelds
   required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
   disabled?: boolean; // Ob das Datumsfeld deaktiviert sein soll
-  minDate: Date; // Ob das Datumsfeld deaktiviert sein soll
-  minDateDescription: string;
-  maxDate: Date; // Ob das Datumsfeld deaktiviert sein soll
-  maxDateDescription: string;
+  minDate?: Date; // Ob das Datumsfeld deaktiviert sein soll
+  minDateDescription?: string;
+  maxDate?: Date; // Ob das Datumsfeld deaktiviert sein soll
+  maxDateDescription?: string;
   isAnwender?: boolean; // Handelt es sich beim User um einen Anwender
 }
 
@@ -116,7 +116,7 @@ const messageEndDateBeforeStartDate = computed(() => {
 });
 
 const isStartDateOutOfRange = computed(() => {
-  return !isEmpty(messageStartDateOutOfRange.value.length);
+  return !isEmpty(messageStartDateOutOfRange.value);
 });
 
 const messageStartDateOutOfRange = computed<string>(() => {
@@ -130,7 +130,7 @@ const messageStartDateOutOfRange = computed<string>(() => {
 });
 
 const isEndDateOutOfRange = computed(() => {
-  return !isEmpty(messageEndDateOutOfRange.value.length);
+  return !isEmpty(messageEndDateOutOfRange.value);
 });
 
 const messageEndDateOutOfRange = computed<string>(() => {
