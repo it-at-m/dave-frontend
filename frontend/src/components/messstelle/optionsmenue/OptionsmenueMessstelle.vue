@@ -223,7 +223,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;
   chosenOptions.value.spitzenstunde = true;
-  messstelleStore.calculateActiveMessfaehigkeit(
+  messstelleStore.calculateActualMessfaehigkeit(
     messstelle.value.datumLetztePlausibleMessung.toString()
   );
   messstelleStore.setBelastungsplanChosenSize(1);
@@ -235,7 +235,7 @@ function resetOptions(): void {
 }
 
 watch(
-  () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
+  () => messstelleStore.getActualMessfaehigkeit.fahrzeugklassen, // TODO: why not watch actualMf.interval?
   () => {
     chosenOptions.value.fahrzeuge =
       DefaultObjectCreator.createDefaultFahrzeugOptions();
@@ -245,7 +245,7 @@ watch(
       !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
     snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
+      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.' // TODO: move to watch:zeitraum
     );
   }
 );
