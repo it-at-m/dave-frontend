@@ -31,8 +31,11 @@
         </v-row>
       </v-col>
       <v-col cols="4">
-        <div v-if="isAnwender || isDateRange || isStartDateOutOfRange || isEndDateOutOfRange">
+        <div v-if="isAnwender || isDateRange || isStartDateOutOfRange || isEndDateOutOfRange || endDateBeforeStartDate">
           <p>Hinweise:</p>
+          <p v-if="endDateBeforeStartDate">
+            {{ messageEndDateBeforeStartDate }}
+          </p>
           <p v-if="isStartDateOutOfRange">
             {{ messageStartDateOutOfRange }}
           </p>
@@ -86,6 +89,20 @@ const startDate = ref<Date | undefined>();
 const endDate = ref<Date | undefined>();
 
 const dateRange = defineModel<Array<Date> | undefined>();
+
+const endDateBeforeStartDate = computed(() => {
+  return !isNil(startDate.value)
+      && !isNil(endDate.value)
+      && lt(endDate.value, startDate.value);
+})
+
+const messageEndDateBeforeStartDate = computed(() => {
+  let message = "";
+  if (endDateBeforeStartDate.value) {
+    message = "Das Enddatum ist vor dem Startdatum."
+  }
+  return message;
+});
 
 const isStartDateOutOfRange = computed(() => {
   return !isEmpty(messageStartDateOutOfRange.value.length);
