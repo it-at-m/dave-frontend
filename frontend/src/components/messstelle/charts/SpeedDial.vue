@@ -39,6 +39,7 @@
       @click="$emit('generateCsv')"
     />
     <v-btn
+      v-if="openPdfReportDialog"
       key="openPdfReportDialogButton"
       v-tooltip:start="'PDF Report Menü öffnen'"
       size="small"
@@ -72,9 +73,12 @@ interface Props {
   isListenausgabe: boolean;
   isNotHeatmap: boolean;
   loadingFile: boolean;
+  openPdfReportDialog?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  openPdfReportDialog: true,
+});
 
 defineEmits<{
   (e: "generatePdf"): void;
