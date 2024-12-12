@@ -36,10 +36,43 @@ export function useMessstelleUtils() {
     );
   }
 
+  function getSelectedVerkehrsartAsText(fahrzeugOptions: FahrzeugOptions) {
+    let selectedVerkehrsartAsText = "unbekannt";
+    if (fahrzeugOptions.busse) {
+      selectedVerkehrsartAsText = "Bus";
+    } else if (fahrzeugOptions.fussverkehr) {
+      selectedVerkehrsartAsText = "Fuß";
+    } else if (fahrzeugOptions.gueterverkehr) {
+      selectedVerkehrsartAsText = "GV";
+    } else if (fahrzeugOptions.kraftraeder) {
+      selectedVerkehrsartAsText = "Krad";
+    } else if (fahrzeugOptions.lastzuege) {
+      selectedVerkehrsartAsText = "Lz";
+    } else if (fahrzeugOptions.gueterverkehrsanteilProzent) {
+      selectedVerkehrsartAsText = "GV_Anteil";
+    } else if (fahrzeugOptions.kraftfahrzeugverkehr) {
+      selectedVerkehrsartAsText = "Kfz";
+    } else if (fahrzeugOptions.lastkraftwagen) {
+      selectedVerkehrsartAsText = "Lkw";
+    } else if (fahrzeugOptions.lieferwagen) {
+      selectedVerkehrsartAsText = "Lfw";
+    } else if (fahrzeugOptions.personenkraftwagen) {
+      selectedVerkehrsartAsText = "Pkw";
+    } else if (fahrzeugOptions.radverkehr) {
+      selectedVerkehrsartAsText = "Rad";
+    } else if (fahrzeugOptions.schwerverkehr) {
+      selectedVerkehrsartAsText = "SV";
+    } else if (fahrzeugOptions.schwerverkehrsanteilProzent) {
+      selectedVerkehrsartAsText = "SV_Anteil";
+    }
+    return selectedVerkehrsartAsText;
+  }
+
   return {
     alleRichtungen,
     isZeitauswahlSpitzenstunde,
     hasSelectedFahrzeugkategorie,
     hasSelectedVerkehrsarten,
+    getSelectedVerkehrsartAsText,
   };
 }

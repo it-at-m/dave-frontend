@@ -4,8 +4,8 @@
       v-tooltip:bottom="icon.tooltip"
       color="secondary"
       :icon="icon.iconPath"
-      size="small"
-      height="20px"
+      size="default"
+      height="25px"
       class="ml-n1"
       variant="text"
       @click="showDialog = true"
@@ -16,34 +16,37 @@
       max-width="600px"
     >
       <v-card>
-        <v-card-title class="text-h5 grey-lighten-2">
+        <v-card-title class="bg-grey-lighten-2">
           <v-icon
             start
+            size="small"
+            color="grey-darken-2"
             icon="mdi-comment-multiple"
           />
-          Informationen
+          <span style="font-size: x-large">Informationen</span>
         </v-card-title>
-        <br />
+
         <v-card-text>
           <div
             v-for="(item, index) in kommentarArray"
             :key="index"
+            class="text-grey-darken-2"
           >
             <strong class="text-subtitle-2">{{ item.title }}</strong>
-            <p>{{ item.value }}</p>
+            <div style="font-size: small">{{ item.value }}</div>
+            <br v-if="index + 1 < kommentarArray.length" />
           </div>
         </v-card-text>
 
-        <v-footer>
+        <v-card-actions class="bg-grey-lighten-4">
           <v-spacer />
           <v-btn
-            class="text-none"
-            color="grey-lighten-1"
+            class="text-none bg-grey-lighten-1"
             text="Schließen"
             @click="showDialog = false"
           />
           <v-spacer />
-        </v-footer>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
