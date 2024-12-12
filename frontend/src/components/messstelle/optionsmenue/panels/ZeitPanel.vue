@@ -10,42 +10,15 @@
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
-      <panel-header
-        font-size="0.875rem"
-        font-weight="bold"
-        padding="10px 0 0 0"
-        header-text="Zeitraum"
+      <date-range-picker
+          v-model="zeitraum"
+          :min-date="minDate"
+          :min-date-description="minDateDescription"
+          :max-date="maxDate"
+          :max-date-description="maxDateDescription"
+          :is-anwender="isAnwender"
       />
-      <v-row dense>
-        <v-col cols="8">
-          <v-row
-            dense
-            class="mt-0 pt-0"
-          >
-            <v-col cols="6">
-              <date-range-picker
-                v-model="zeitraum"
-                :min-date="minDate"
-                :max-date="maxDate"
-                label="Datumsauswahl"
-              />
-            </v-col>
-            <v-col cols="6" />
-          </v-row>
-        </v-col>
-        <v-col cols="4">
-          <div v-if="isAnwender || isDateRange">
-            <p>Hinweise:</p>
-            <p v-if="isAnwender">
-              Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
-            </p>
-            <p v-if="isDateRange">
-              Alle Auswertungen stellen Durchschnittswerte des ausgewählten
-              Zeitraums dar.
-            </p>
-          </div>
-        </v-col>
-      </v-row>
+
       <v-divider />
 
       <tages-typ-radiogroup
@@ -84,7 +57,6 @@ import { useRoute } from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DateRangePicker from "@/components/common/DateRangePicker.vue";
-import PanelHeader from "@/components/common/PanelHeader.vue";
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
 import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/ZeitauswahlRadiogroup.vue";
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
@@ -135,24 +107,34 @@ const isAnwender = computed(() => {
   return userStore.hasAuthorities && userStore.isAnwender;
 });
 
+const minDateDescription = ref<string>("");
+
 const minDate = computed(() => {
   const startdatum = new Date("2006-01-01");
   const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
-  return dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
-    realisierungsdatum >= startdatum
-    ? realisierungsdatum
-    : startdatum;
+  if (dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) && realisierungsdatum >= startdatum) {
+    minDateDescription.value = "Realisierungsdatum";
+    return realisierungsdatum;
+  } else {
+    minDateDescription.value = "frühestmöglichen Datum";
+    return startdatum;
+  }
 });
+
+const maxDateDescription = ref<string>("");
 
 const maxDate = computed(() => {
   if (
     dateUtils.isValidIsoDate(messstelleInfo.value.datumLetztePlausibleMessung)
   ) {
+    maxDateDescription.value = "Datum der letzten plausiblen Messung";
     return new Date(messstelleInfo.value.datumLetztePlausibleMessung);
   } else if (dateUtils.isValidIsoDate(messstelleInfo.value.abbaudatum)) {
+    maxDateDescription.value = "Abbaudatum";
     return new Date(messstelleInfo.value.abbaudatum);
   } else {
     // Yesterday
+    maxDateDescription.value = "gestrigen Datum";
     return new Date(new Date().setDate(new Date().getDate() - 1));
   }
 });

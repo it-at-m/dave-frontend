@@ -1,171 +1,135 @@
 <template>
-  <!-- https://vue3datepicker.com/ -->
-  <vue-date-picker
-    v-model="choosenDates"
-    class="ml-1 mt-2 mb-3"
-    range
-    position="left"
-    :multi-calendars="MULTI_CALENDAR_OPTIONS"
-    placeholder="Datum eingeben ..."
-    :config="GENERAL_DATE_PICKER_CONFIG"
-    :text-input="TEXT_INPUT_OPTIONS"
-    :locale="LOCAL_OPTIONS"
-    :format="format"
-    :enable-time-picker="false"
-    :disabled="props.disabled"
-    :required="props.required"
-    :clearable="false"
-    :min-date="minDateProp"
-    :max-date="maxDateProp"
-    ignore-time-validation
-    :teleport="true"
-    :week-numbers="WEEK_NUMBER_OPTIONS"
-    :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
-    cancel-text="Abbrechen"
-    select-text="Datum Auswählen"
-  >
-    <template
-      #dp-input="{
-        value,
-        onInput,
-        onEnter,
-        onTab,
-        onClear,
-        onBlur,
-        onKeypress,
-        onPaste,
-        onFocus,
-      }"
-    >
-      <v-text-field
-        :label="label"
-        :model-value="value"
-        density="compact"
-        variant="underlined"
-        clearable
-        @blur="onBlur"
-        @input="onInput"
-        @click:clear="onClear"
-        @keyup.enter="onEnter"
-        @keyup.tab="onTab"
-        @keyup="onKeypress"
-        @paste="onPaste"
-        @focus="onFocus"
-      />
-    </template>
-  </vue-date-picker>
+  <div>
+    <panel-header
+        font-size="0.875rem"
+        font-weight="bold"
+        padding="10px 0 0 0"
+        header-text="Zeitraum"
+    />
+    <v-row dense>
+      <v-col cols="8">
+        <v-row
+            dense
+            class="mt-0 pt-0"
+        >
+          <v-col cols="6">
+            <date-picker
+                v-model="startDate"
+                label="Startdatum"
+                :disabled="props.disabled"
+                :required="props.required"
+            />
+          </v-col>
+          <v-col cols="6">
+            <date-picker
+                v-model="endDate"
+                label="Enddatum"
+                :disabled="props.disabled"
+                :required="props.required"
+            />
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="4">
+        <div v-if="isAnwender || isDateRange">
+          <p>Hinweise:</p>
+          <p v-if="messageStartDateOutOfRange.length > 0">
+            {{ messageStartDateOutOfRange }}
+          </p>
+          <p v-if="messageEndDateOutOfRange.length > 0">
+            {{ messageEndDateOutOfRange }}
+          </p>
+          <p v-if="isAnwender">
+            Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
+          </p>
+          <p v-if="isDateRange">
+            Alle Auswertungen stellen Durchschnittswerte des ausgewählten
+            Zeitraums dar.
+          </p>
+        </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script setup lang="ts">
-import type { GeneralConfig } from "@vuepic/vue-datepicker";
-
-import VueDatePicker from "@vuepic/vue-datepicker";
-
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import { head, isEmpty, isNil, last, toArray } from "lodash";
-import { computed } from "vue";
+import {isEqual, gt, lt, isNil} from "lodash";
+import {computed, ref, watch} from "vue";
+import PanelHeader from "@/components/common/PanelHeader.vue";
+import DatePicker from "@/components/common/DatePicker.vue";
+import {useDateUtils} from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
   required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
   disabled?: boolean; // Ob das Datumsfeld deaktiviert sein soll
   minDate: Date; // Ob das Datumsfeld deaktiviert sein soll
+  minDateDescription: string;
   maxDate: Date; // Ob das Datumsfeld deaktiviert sein soll
+  maxDateDescription: string;
+  isAnwender?: boolean // Handelt es sich beim User um einen Anwender
 }
-
-const options: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-};
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
   disabled: false,
+  isAnwender: false,
 });
 
-const minDateProp = computed(() => {
-  if (!isNil(props.minDate)) {
-    props.minDate.setHours(5);
-  }
-  return props.minDate;
-});
+const dateUtils = useDateUtils();
 
-const maxDateProp = computed(() => {
-  if (!isNil(props.maxDate)) {
-    props.maxDate.setHours(5);
-  }
-  return props.maxDate;
-});
+const startDate = ref<Date | undefined>();
+
+const endDate = ref<Date | undefined>();
 
 const dateRange = defineModel<Array<Date> | undefined>();
 
-const choosenDates = computed({
-  get() {
-    return isNil(dateRange.value)
-      ? undefined
-      : dateRange.value.map((date) => {
-          if (!isNil(date)) {
-            date.setHours(5);
-          }
-          return date;
-        });
-  },
+const messageStartDateOutOfRange = computed<string>(() => {
+  let message = "";
+  if (lt(startDate.value, props.minDate)) {
+    message = `Das Startdatum ist vor dem ${props.minDateDescription}.`
+  } else if (gt(startDate.value, props.maxDate)) {
+    message = `Das Startdatum ist nach dem ${props.maxDateDescription}.`
+  }
+  return message;
+})
 
-  set(dates: Array<Date> | undefined) {
-    dateRange.value = toArray(dates).map((date) => {
-      if (!isNil(date)) {
-        date.setHours(5);
-      }
-      return date;
-    });
-  },
+const messageEndDateOutOfRange = computed<string>(() => {
+  let message = "";
+  if (lt(endDate.value, props.minDate)) {
+    message = `Das Enddatum ist vor dem ${props.minDateDescription}.`
+  } else if (gt(endDate.value, props.maxDate)) {
+    message = `Das Enddatum ist nach dem ${props.maxDateDescription}.`
+  }
+  return message;
+})
+
+const isDateRange = computed(() => {
+  let isRange = false;
+  if (!isNil(startDate.value) && !isNil(endDate.value)) {
+    const startDateIso =   dateUtils.formatDateToISO(startDate.value);
+    const endDateIso =   dateUtils.formatDateToISO(endDate.value);
+    isRange = !isEqual(startDateIso, endDateIso);
+  }
+  return isRange;
 });
 
-// https://vue3datepicker.com/props/localization/#locale
-const LOCAL_OPTIONS: string = "de-DE";
-
-// https://vue3datepicker.com/props/look-and-feel/#six-weeks
-const SIX_WEEK_CALENDAR_OPTIONS: any = "center";
-
-// https://vue3datepicker.com/props/calendar-configuration/#week-numbers
-const WEEK_NUMBER_OPTIONS: any = {
-  type: "iso",
-};
-
-// https://vue3datepicker.com/props/modes-configuration/#multi-calendars-configuration
-const MULTI_CALENDAR_OPTIONS: any = {
-  solo: true,
-};
-
-// https://vue3datepicker.com/props/modes-configuration/#text-input-configuration
-const TEXT_INPUT_OPTIONS: any = {
-  enterSubmit: true,
-  tabSubmit: true,
-  format: "dd.MM.yyyy",
-};
-
-// https://vue3datepicker.com/props/general-configuration/#config
-const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
-  setDateOnMenuClose: true,
-};
-
-// https://vue3datepicker.com/props/formatting/#format
-const format = (dateRange: Array<Date>) => {
-  let dateRangeText = "";
-  if (!isEmpty(dateRange)) {
-    const firstDate = head(dateRange);
-    const firstDateText = isNil(firstDate)
-      ? ""
-      : firstDate.toLocaleDateString(LOCAL_OPTIONS, options);
-    const lastDate = last(dateRange);
-    const lastDateText = isNil(lastDate)
-      ? ""
-      : lastDate.toLocaleDateString(LOCAL_OPTIONS, options);
-    dateRangeText = `${firstDateText}  -  ${lastDateText}`;
-  }
-  return dateRangeText;
-};
+watch(
+    () => [startDate.value, endDate.value],
+    () => {
+      if (isNil(startDate.value) && isNil(endDate.value)) {
+        dateRange.value = [];
+      } else if (!isNil(startDate.value) && isNil(endDate.value)) {
+        dateRange.value = [startDate.value, startDate.value];
+      } else if (isNil(startDate.value) && !isNil(endDate.value)) {
+        dateRange.value = [endDate.value, endDate.value];
+      } else if (!isNil(startDate.value) && !isNil(endDate.value)) {
+        dateRange.value = [startDate.value, endDate.value];
+      }
+    },
+    { immediate: true }
+)
 </script>
