@@ -54,19 +54,20 @@
                 </span>
               </span>
             </v-row>
-            <v-row no-gutters>
-              <span class="text-truncate align-end">
-                <detektierte-fahrzeugart-icon
-                  :detektierte-fahrzeugart="detektierteVerkehrsart"
-                  color="primary"
-                />
-                <fahrzeugklassen-icon
-                  :fahrzeugklasse="fahrzeugKlasse"
-                  color="primary"
-                  size="small"
-                />
-                <messstelle-kommentar :kommentar="messstelle.kommentar" />
-              </span>
+            <v-row
+              no-gutters
+              class="ma-0"
+            >
+              <detektierte-fahrzeugart-icon
+                :detektierte-fahrzeugart="detektierteVerkehrsart"
+                color="primary"
+              />
+              <fahrzeugklassen-icon
+                :fahrzeugklasse="fahrzeugKlasse"
+                color="primary"
+                size="small"
+              />
+              <messstelle-kommentar :kommentar="messstelle.kommentar" />
             </v-row>
           </v-col>
           <v-col

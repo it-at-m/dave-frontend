@@ -46,6 +46,8 @@
       bg-color="grey-darken-1"
       slider-color="grey-lighten-1"
       stacked
+      color="white"
+      class="text-grey-lighten-1"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -783,6 +785,12 @@ function generateCsv() {
       snackbarStore.showApiError(error);
     })
     .finally(() => (loadingFile.value = false));
+}
+
+function activeTabColor(tab: number) {
+  console.log(tab);
+  console.log(activeTab.value);
+  return tab === activeTab.value ? "white" : "red";
 }
 </script>
 
