@@ -81,6 +81,16 @@ export function useDateUtils() {
       getDatumOfString(dateAfter)
     );
   }
+
+  function intersectsRange(
+      date1From: string,
+      date1To: string,
+      date2From: string,
+      date2To: string
+  ): boolean {
+    return getDatumOfString(date1From) <= getDatumOfString(date2To) && getDatumOfString(date2From) <= getDatumOfString(date1To);
+  }
+
   function isDateBetween(
     dateToCheck: Date,
     dateBefore: Date,
@@ -161,5 +171,6 @@ export function useDateUtils() {
     isDateRange,
     isValidDate,
     isValidIsoDate,
+    intersectsRange
   };
 }
