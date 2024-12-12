@@ -62,9 +62,8 @@ import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/Messst
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import { toArray } from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
-import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
@@ -72,13 +71,14 @@ const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
 
+interface Props {
+  allVisibleMessstellen: Array<MessstelleAuswertungDTO>;
+}
+
+const props = defineProps<Props>();
+
 const messstelleUtils = useMessstelleUtils();
 
-onMounted(() => {
-  loadAllVisibleMessstellen();
-});
-
-const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 const direction = ref(messstelleUtils.alleRichtungen);
 
 watch(
@@ -90,7 +90,7 @@ watch(
 );
 
 const messstellen = computed<Array<KeyValObject>>(() => {
-  const result: Array<KeyValObject> = allVisibleMessstellen.value.map((mst) => {
+  const result: Array<KeyValObject> = props.allVisibleMessstellen.map((mst) => {
     const item = {
       mstId: mst.mstId,
       mqIds: [],
@@ -110,7 +110,7 @@ const messstellen = computed<Array<KeyValObject>>(() => {
 const richtungValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
   if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
-    for (const messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of props.allVisibleMessstellen) {
       if (
         messstelle.mstId ===
         auswertungOptions.value.messstelleAuswertungIds[0].mstId
@@ -148,7 +148,7 @@ const richtungValues = computed<Array<KeyVal>>(() => {
 const lageValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
   if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
-    for (const messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of props.allVisibleMessstellen) {
       if (
         messstelle.mstId ===
         auswertungOptions.value.messstelleAuswertungIds[0].mstId
@@ -183,7 +183,7 @@ const isLageReadonly = computed(() => {
 const showSelectAllButton = computed(() => {
   return (
     auswertungOptions.value.messstelleAuswertungIds.length <=
-    allVisibleMessstellen.value.length / 2
+    props.allVisibleMessstellen.length / 2
   );
 });
 
@@ -221,17 +221,17 @@ const buttonText = computed(() => {
   return showSelectAllButton.value ? "Alle auswählen" : "Alle abwählen";
 });
 
-function loadAllVisibleMessstellen(): void {
-  MessstelleAuswertungService.getAllVisibleMessstellen().then(
-    (messstellen: Array<MessstelleAuswertungDTO>) => {
-      allVisibleMessstellen.value = messstellen;
-    }
-  );
-}
+// function loadAllVisibleMessstellen(): void {
+//   MessstelleAuswertungService.getAllVisibleMessstellen().then(
+//     (messstellen: Array<MessstelleAuswertungDTO>) => {
+//       allVisibleMessstellen.value = messstellen;
+//     }
+//   );
+// }
 
 function setDefaultDirection(): void {
   if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
-    for (const messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of props.allVisibleMessstellen) {
       if (
         messstelle.mstId ===
         auswertungOptions.value.messstelleAuswertungIds[0].mstId
@@ -250,7 +250,7 @@ function setDefaultDirection(): void {
 function setVerfuegbareVerkehrsarten() {
   auswertungOptions.value.verfuegbareVerkehrsarten = [];
   if (auswertungOptions.value.messstelleAuswertungIds.length > 0) {
-    for (const messstelle of allVisibleMessstellen.value) {
+    for (const messstelle of props.allVisibleMessstellen) {
       if (
         existsMstIdInAuswertungIds(messstelle.mstId) &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
@@ -289,7 +289,7 @@ function buttonClick() {
 
 function selectAllMessstellen() {
   auswertungOptions.value.messstelleAuswertungIds =
-    allVisibleMessstellen.value.map((mst) => {
+    props.allVisibleMessstellen.map((mst) => {
       const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
       item.mqIds = mst.messquerschnitte.map((mq) => mq.mqId);
       return item;

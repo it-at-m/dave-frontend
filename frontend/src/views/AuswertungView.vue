@@ -13,6 +13,7 @@
           <auswertung-stepper
             v-model="auswertungsOptions"
             :height="stepperHeightVh"
+            :allVisibleMessstellen="allVisibleMessstellen"
           />
           <v-spacer />
           <v-card-actions>
@@ -61,12 +62,13 @@
 </template>
 <script setup lang="ts">
 import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
+import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { cloneDeep, isNil, toArray, valuesIn } from "lodash";
-import { computed, ref } from "vue";
-import { useDisplay } from "vuetify";
+import {cloneDeep, head, isNil, toArray, valuesIn} from "lodash";
+import {computed, onMounted, ref} from "vue";
+import {useDisplay} from "vuetify";
 
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -74,12 +76,12 @@ import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleT
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
-import { useSnackbarStore } from "@/store/SnackbarStore";
-import { useUserStore } from "@/store/UserStore";
+import {useSnackbarStore} from "@/store/SnackbarStore";
+import {useUserStore} from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useDownloadUtils } from "@/util/DownloadUtils";
-import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { useReportTools } from "@/util/ReportTools";
+import {useDownloadUtils} from "@/util/DownloadUtils";
+import {useMessstelleUtils} from "@/util/MessstelleUtils";
+import {useReportTools} from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 
@@ -94,6 +96,7 @@ const messstelleUtils = useMessstelleUtils();
 const loadingFile = ref(false);
 const auswertungLoaded = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
+const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -102,6 +105,10 @@ const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
 );
+
+onMounted(() => {
+  loadAllVisibleMessstellen();
+});
 
 const textForNonShownDiagram = computed(() => {
   let text = "";
@@ -291,13 +298,36 @@ function addChartToPdfReport(): void {
 function getFilename(ending: string) {
   let filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}`;
   if (auswertungsOptions.value.messstelleAuswertungIds.length === 1) {
-    const firstMessstelle =
-      auswertungsOptions.value.messstelleAuswertungIds.at(0);
-    filename = `Zeitreihe_zur_Messstelle_${firstMessstelle ? firstMessstelle.mstId : "unbekannt"}`;
+    const filenamePart1 = "Zeitreihe_zur_Messstelle_";
+    let filenamePart2 = "unbekannt";
+    const firstMessstelle = head(
+      auswertungsOptions.value.messstelleAuswertungIds
+    );
+    if (firstMessstelle) {
+      const messstelle = allVisibleMessstellen.value.find(
+        (value) => value.mstId === firstMessstelle.mstId
+      );
+      filenamePart2 = firstMessstelle.mstId;
+      if (
+        messstelle &&
+        firstMessstelle.mqIds.length < messstelle.messquerschnitte.length
+      ) {
+        filenamePart2 = `${filenamePart2}_${firstMessstelle.mqIds.length > 1 ? "Messquerschnitte" : "Messquerschnitt"}_${firstMessstelle.mqIds.join("_")}`;
+      }
+    }
+    filename = `${filenamePart1}${filenamePart2}`;
   }
   if (auswertungsOptions.value.messstelleAuswertungIds.length > 1) {
     filename = `Zeitreihe_zur_Messung_${messstelleUtils.getSelectedVerkehrsartAsText(auswertungsOptions.value.fahrzeuge)}`;
   }
   return `${filename}${ending}`;
+}
+
+function loadAllVisibleMessstellen(): void {
+  MessstelleAuswertungService.getAllVisibleMessstellen().then(
+    (messstellen: Array<MessstelleAuswertungDTO>) => {
+      allVisibleMessstellen.value = messstellen;
+    }
+  );
 }
 </script>
