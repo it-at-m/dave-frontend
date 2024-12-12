@@ -1,37 +1,45 @@
 <template>
   <div>
     <panel-header
-        font-size="0.875rem"
-        font-weight="bold"
-        padding="10px 0 0 0"
-        header-text="Zeitraum"
+      font-size="0.875rem"
+      font-weight="bold"
+      padding="10px 0 0 0"
+      header-text="Zeitraum"
     />
     <v-row dense>
       <v-col cols="8">
         <v-row
-            dense
-            class="mr-3 mt-0 pt-0"
+          dense
+          class="mr-3 mt-0 pt-0"
         >
           <v-col cols="6">
             <date-picker
-                v-model="startDate"
-                label="Startdatum"
-                :disabled="props.disabled"
-                :required="props.required"
+              v-model="startDate"
+              label="Startdatum"
+              :disabled="props.disabled"
+              :required="props.required"
             />
           </v-col>
           <v-col cols="6">
             <date-picker
-                v-model="endDate"
-                label="Enddatum"
-                :disabled="props.disabled"
-                :required="props.required"
+              v-model="endDate"
+              label="Enddatum"
+              :disabled="props.disabled"
+              :required="props.required"
             />
           </v-col>
         </v-row>
       </v-col>
       <v-col cols="4">
-        <div v-if="isAnwender || isDateRange || isStartDateOutOfRange || isEndDateOutOfRange || endDateBeforeStartDate">
+        <div
+          v-if="
+            isAnwender ||
+            isDateRange ||
+            isStartDateOutOfRange ||
+            isEndDateOutOfRange ||
+            endDateBeforeStartDate
+          "
+        >
           <p>Hinweise:</p>
           <p v-if="endDateBeforeStartDate">
             {{ messageEndDateBeforeStartDate }}
@@ -58,11 +66,12 @@
 <script setup lang="ts">
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import {isEqual, gt, lt, isNil, isEmpty} from "lodash";
-import {computed, ref, watch} from "vue";
-import PanelHeader from "@/components/common/PanelHeader.vue";
+import { gt, isEmpty, isEqual, isNil, lt } from "lodash";
+import { computed, ref, watch } from "vue";
+
 import DatePicker from "@/components/common/DatePicker.vue";
-import {useDateUtils} from "@/util/DateUtils";
+import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   label?: string; // Bezeichnung des Datumsfelds
@@ -72,7 +81,7 @@ interface Props {
   minDateDescription: string;
   maxDate: Date; // Ob das Datumsfeld deaktiviert sein soll
   maxDateDescription: string;
-  isAnwender?: boolean // Handelt es sich beim User um einen Anwender
+  isAnwender?: boolean; // Handelt es sich beim User um einen Anwender
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -91,70 +100,72 @@ const endDate = ref<Date | undefined>();
 const dateRange = defineModel<Array<Date> | undefined>();
 
 const endDateBeforeStartDate = computed(() => {
-  return !isNil(startDate.value)
-      && !isNil(endDate.value)
-      && lt(endDate.value, startDate.value);
-})
+  return (
+    !isNil(startDate.value) &&
+    !isNil(endDate.value) &&
+    lt(endDate.value, startDate.value)
+  );
+});
 
 const messageEndDateBeforeStartDate = computed(() => {
   let message = "";
   if (endDateBeforeStartDate.value) {
-    message = "Das Enddatum ist vor dem Startdatum."
+    message = "Das Enddatum ist vor dem Startdatum.";
   }
   return message;
 });
 
 const isStartDateOutOfRange = computed(() => {
   return !isEmpty(messageStartDateOutOfRange.value.length);
-})
+});
 
 const messageStartDateOutOfRange = computed<string>(() => {
   let message = "";
   if (!isNil(startDate.value) && lt(startDate.value, props.minDate)) {
-    message = `Das Startdatum ist vor dem ${props.minDateDescription}.`
+    message = `Das Startdatum ist vor dem ${props.minDateDescription}.`;
   } else if (!isNil(startDate.value) && gt(startDate.value, props.maxDate)) {
-    message = `Das Startdatum ist nach dem ${props.maxDateDescription}.`
+    message = `Das Startdatum ist nach dem ${props.maxDateDescription}.`;
   }
   return message;
-})
+});
 
 const isEndDateOutOfRange = computed(() => {
   return !isEmpty(messageEndDateOutOfRange.value.length);
-})
+});
 
 const messageEndDateOutOfRange = computed<string>(() => {
   let message = "";
   if (!isNil(endDate.value) && lt(endDate.value, props.minDate)) {
-    message = `Das Enddatum ist vor dem ${props.minDateDescription}.`
+    message = `Das Enddatum ist vor dem ${props.minDateDescription}.`;
   } else if (!isNil(endDate.value) && gt(endDate.value, props.maxDate)) {
-    message = `Das Enddatum ist nach dem ${props.maxDateDescription}.`
+    message = `Das Enddatum ist nach dem ${props.maxDateDescription}.`;
   }
   return message;
-})
+});
 
 const isDateRange = computed(() => {
   let isRange = false;
   if (!isNil(startDate.value) && !isNil(endDate.value)) {
-    const startDateIso =   dateUtils.formatDateToISO(startDate.value);
-    const endDateIso =   dateUtils.formatDateToISO(endDate.value);
+    const startDateIso = dateUtils.formatDateToISO(startDate.value);
+    const endDateIso = dateUtils.formatDateToISO(endDate.value);
     isRange = !isEqual(startDateIso, endDateIso);
   }
   return isRange;
 });
 
 watch(
-    () => [startDate.value, endDate.value],
-    () => {
-      if (isNil(startDate.value) && isNil(endDate.value)) {
-        dateRange.value = [];
-      } else if (!isNil(startDate.value) && isNil(endDate.value)) {
-        dateRange.value = [startDate.value, startDate.value];
-      } else if (isNil(startDate.value) && !isNil(endDate.value)) {
-        dateRange.value = [endDate.value, endDate.value];
-      } else if (!isNil(startDate.value) && !isNil(endDate.value)) {
-        dateRange.value = [startDate.value, endDate.value];
-      }
-    },
-    { immediate: true }
-)
+  () => [startDate.value, endDate.value],
+  () => {
+    if (isNil(startDate.value) && isNil(endDate.value)) {
+      dateRange.value = [];
+    } else if (!isNil(startDate.value) && isNil(endDate.value)) {
+      dateRange.value = [startDate.value, startDate.value];
+    } else if (isNil(startDate.value) && !isNil(endDate.value)) {
+      dateRange.value = [endDate.value, endDate.value];
+    } else if (!isNil(startDate.value) && !isNil(endDate.value)) {
+      dateRange.value = [startDate.value, endDate.value];
+    }
+  },
+  { immediate: true }
+);
 </script>

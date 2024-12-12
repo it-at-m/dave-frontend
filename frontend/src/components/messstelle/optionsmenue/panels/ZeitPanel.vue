@@ -11,12 +11,12 @@
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
       <date-range-picker
-          v-model="zeitraum"
-          :min-date="minDate"
-          :min-date-description="minDateDescription"
-          :max-date="maxDate"
-          :max-date-description="maxDateDescription"
-          :is-anwender="isAnwender"
+        v-model="zeitraum"
+        :min-date="minDate"
+        :min-date-description="minDateDescription"
+        :max-date="maxDate"
+        :max-date-description="maxDateDescription"
+        :is-anwender="isAnwender"
       />
 
       <v-divider />
@@ -112,7 +112,10 @@ const minDateDescription = ref<string>("");
 const minDate = computed(() => {
   const startdatum = new Date("2006-01-01");
   const realisierungsdatum = new Date(messstelleInfo.value.realisierungsdatum);
-  if (dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) && realisierungsdatum >= startdatum) {
+  if (
+    dateUtils.isValidIsoDate(messstelleInfo.value.realisierungsdatum) &&
+    realisierungsdatum >= startdatum
+  ) {
     minDateDescription.value = "Realisierungsdatum";
     return realisierungsdatum;
   } else {
