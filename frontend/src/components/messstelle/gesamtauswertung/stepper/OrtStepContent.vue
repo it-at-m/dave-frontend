@@ -221,14 +221,6 @@ const buttonText = computed(() => {
   return showSelectAllButton.value ? "Alle auswählen" : "Alle abwählen";
 });
 
-// function loadAllVisibleMessstellen(): void {
-//   MessstelleAuswertungService.getAllVisibleMessstellen().then(
-//     (messstellen: Array<MessstelleAuswertungDTO>) => {
-//       allVisibleMessstellen.value = messstellen;
-//     }
-//   );
-// }
-
 function setDefaultDirection(): void {
   if (auswertungOptions.value.messstelleAuswertungIds.length === 1) {
     for (const messstelle of props.allVisibleMessstellen) {
