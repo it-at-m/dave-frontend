@@ -266,7 +266,10 @@ function createPdf() {
 
   GeneratePdfService.postPdfCustomFetchTemplateGesamtauswertung(formData)
     .then((blob) => {
-      downloadUtils.downloadFile(blob, getFilenameWithEnding("pdf", false));
+      downloadUtils.downloadFile(
+        blob,
+        getFilenameWithEndingAndOptionalMq("pdf", false)
+      );
     })
     .catch((error) => useSnackbarStore().showApiError(error));
 }
@@ -279,7 +282,7 @@ function saveGraphAsImage(): void {
   const encodedUri = getGanglinieBase64();
   if (encodedUri) {
     reportTools.saveGesamtauswertungAsImage(
-      getFilenameWithEnding("png", true),
+      getFilenameWithEndingAndOptionalMq("png", true),
       encodedUri
     );
   }
@@ -297,15 +300,15 @@ function addChartToPdfReport(): void {
   );
 }
 
-function getFilenameWithEnding(ending: string, withMq: boolean) {
-  return `${getFilename(withMq)}.${ending}`;
+function getFilenameWithEndingAndOptionalMq(ending: string, withMq: boolean) {
+  return `${getFilenameWithOptionalMq(withMq)}.${ending}`;
 }
 
 function getCaption() {
-  return getFilename(true).replaceAll("_", " ");
+  return getFilenameWithOptionalMq(true).replaceAll("_", " ");
 }
 
-function getFilename(withMq: boolean) {
+function getFilenameWithOptionalMq(withMq: boolean) {
   let filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}`;
   if (auswertungsOptions.value.messstelleAuswertungIds.length === 1) {
     if (withMq) {
