@@ -235,7 +235,7 @@ function resetOptions(): void {
 }
 
 watch(
-  () => messstelleStore.getActualMessfaehigkeit.fahrzeugklassen, // TODO: why not watch actualMf.interval?
+  () => messstelleStore.getActualMessfaehigkeit.fahrzeugklassen,
   () => {
     chosenOptions.value.fahrzeuge =
       DefaultObjectCreator.createDefaultFahrzeugOptions();
