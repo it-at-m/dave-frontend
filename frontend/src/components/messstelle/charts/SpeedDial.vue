@@ -73,7 +73,7 @@ interface Props {
   isListenausgabe: boolean;
   isNotHeatmap: boolean;
   loadingFile: boolean;
-  openPdfReportDialog: boolean;
+  openPdfReportDialog?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
