@@ -66,8 +66,8 @@
 <script setup lang="ts">
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import { gt, isEmpty, isEqual, isNil, lt } from "lodash";
-import { computed, ref, watch } from "vue";
+import { gt, head, isEmpty, isEqual, isNil, last, lt } from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
 
 import DatePicker from "@/components/common/DatePicker.vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -98,6 +98,15 @@ const startDate = ref<Date | undefined>();
 const endDate = ref<Date | undefined>();
 
 const dateRange = defineModel<Array<Date> | undefined>();
+
+onMounted(() => {
+  if (!isNil(dateRange.value) && dateRange.value.length === 1) {
+    startDate.value = head(dateRange.value);
+  } else if (!isNil(dateRange.value) && dateRange.value.length > 1) {
+    startDate.value = head(dateRange.value);
+    endDate.value = last(dateRange.value);
+  }
+});
 
 const endDateBeforeStartDate = computed(() => {
   return (
