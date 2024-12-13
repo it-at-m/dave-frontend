@@ -192,13 +192,14 @@ watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
   }
 });
 
-watch(chosenOptionsCopyZeitraum, () => {
+watch(chosenOptionsCopyZeitraum, () => { // TODO: hier warnung für zurücksetzen
   calculateChoosableOptions();
 });
 
 function calculateChoosableOptions(): void {
-  messstelleStore.calculateActiveMessfaehigkeit(
-    chosenOptionsCopy.value.zeitraum[0]
+  messstelleStore.calculateActualMessfaehigkeit(
+    chosenOptionsCopy.value.zeitraum[0],
+    chosenOptionsCopy.value.zeitraum[1]
   );
 }
 </script>

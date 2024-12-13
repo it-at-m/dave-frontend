@@ -565,7 +565,7 @@ function isTypeDisabled(type: string): boolean {
     ((chosenOptionsCopy.value.intervall ===
       ZaehldatenIntervall.STUNDE_VIERTEL ||
       chosenOptionsCopy.value.intervall === ZaehldatenIntervall.STUNDE_HALB) &&
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
+      messstelleStore.getActualMessfaehigkeit.intervall ===
         ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
       Fahrzeug.KFZ !== type)
   );

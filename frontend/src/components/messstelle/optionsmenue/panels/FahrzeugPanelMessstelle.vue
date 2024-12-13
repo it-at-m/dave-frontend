@@ -38,7 +38,7 @@ const messstelleStore = useMessstelleStore();
 const showFahrzeugkategorien = computed(() => {
   return (
     messstelleStore.isKfzMessstelle &&
-    messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen ===
+    messstelleStore.getActualMessfaehigkeit.fahrzeugklassen ===
       Fahrzeugklasse.ACHT_PLUS_EINS &&
     !(
       chosenOptionsCopy.value.intervall ===

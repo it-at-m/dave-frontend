@@ -11,8 +11,8 @@ export function useFahrzeugPanelTools() {
     return messstelleStore.isKfzMessstelle;
   });
 
-  const activeFahrzeugklasse = computed(() => {
-    return messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen;
+  const actualFahrzeugklasse = computed(() => {
+    return messstelleStore.getActualMessfaehigkeit.fahrzeugklassen;
   });
 
   /**
@@ -25,7 +25,7 @@ export function useFahrzeugPanelTools() {
     }
     if (isKfzMessstelle.value) {
       let result = true;
-      switch (activeFahrzeugklasse.value) {
+      switch (actualFahrzeugklasse.value) {
         case Fahrzeugklasse.ACHT_PLUS_EINS:
           result = Fahrzeug.RAD.toUpperCase() === type.toUpperCase();
           break;

@@ -7,11 +7,15 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { useMessfaehigkeitRanking } from "@/util/MessfaehigkeitRanking";
 
 export const useMessstelleStore = defineStore("messstelleStore", () => {
   const dateUtils = useDateUtils();
+  const messfaehigkeitRanking = useMessfaehigkeitRanking();
 
   const messstelleInfo = ref<MessstelleInfoDTO>({} as MessstelleInfoDTO);
   const activeTab = ref(0);
@@ -23,7 +27,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const belastungsplanMinSize = ref(0);
   const belastungsplanMaxSize = ref("");
   const belastungsplanChosenSize = ref(1);
-  const activeMessfaehigkeit = ref<MessfaehigkeitDTO>(
+  // Actual calculated values of Messfähigkeit for the selected day or time range
+  const actualMessfaehigkeit = ref<MessfaehigkeitDTO>(
     DefaultObjectCreator.createDefaultMessfaehigkeitDTO()
   );
   const includedMeasuringDays = ref(0);
@@ -44,7 +49,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const getBelastungsplanChosenSize = computed(
     () => belastungsplanChosenSize.value
   );
-  const getActiveMessfaehigkeit = computed(() => activeMessfaehigkeit.value);
+  const getActualMessfaehigkeit = computed(() => actualMessfaehigkeit.value);
   const getIncludedMeasuringDays = computed(() => includedMeasuringDays.value);
   const getRequestedMeasuringDays = computed(
     () => requestedMeasuringDays.value
@@ -79,17 +84,56 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   function setBelastungsplanChosenSize(payload: number) {
     belastungsplanChosenSize.value = payload;
   }
-  function calculateActiveMessfaehigkeit(selectedDate: string): void {
+  function calculateActualMessfaehigkeit(
+    selectedAb: string,
+    selectedBis?: string
+  ): void {
+    actualMessfaehigkeit.value.gueltigAb = selectedAb;
+    actualMessfaehigkeit.value.gueltigBis = selectedBis
+      ? selectedBis
+      : selectedAb;
+    let minFahrzeugklassen: Fahrzeugklasse | null = null;
+    let minIntervall: ZaehldatenIntervall | null = null;
+
     messstelleInfo.value.messfaehigkeiten.forEach(
       (faehigkeit: MessfaehigkeitDTO) => {
-        if (
-          dateUtils.isDateBetweenAsStrings(
-            selectedDate,
-            faehigkeit.gueltigAb,
-            faehigkeit.gueltigBis
-          )
-        ) {
-          activeMessfaehigkeit.value = faehigkeit;
+        if (selectedBis) {
+          if (
+            dateUtils.intersectsRange(
+              selectedAb,
+              selectedBis,
+              faehigkeit.gueltigAb,
+              faehigkeit.gueltigBis
+            )
+          ) {
+            minFahrzeugklassen = messfaehigkeitRanking.getMinFahrzeugklassen(
+              faehigkeit.fahrzeugklassen,
+              minFahrzeugklassen
+            );
+            minIntervall = messfaehigkeitRanking.getMinIntervall(
+              faehigkeit.intervall,
+              minIntervall
+            );
+          }
+          actualMessfaehigkeit.value.fahrzeugklassen = minFahrzeugklassen
+            ? minFahrzeugklassen
+            : Fahrzeugklasse.SUMME_KFZ;
+          actualMessfaehigkeit.value.intervall = minIntervall
+            ? minIntervall
+            : ZaehldatenIntervall.STUNDE_KOMPLETT;
+        } else {
+          // single day selected
+          if (
+            dateUtils.isDateBetweenAsStrings(
+              selectedAb,
+              faehigkeit.gueltigAb,
+              faehigkeit.gueltigBis
+            )
+          ) {
+            actualMessfaehigkeit.value.fahrzeugklassen =
+              faehigkeit.fahrzeugklassen;
+            actualMessfaehigkeit.value.intervall = faehigkeit.intervall;
+          }
         }
       }
     );
@@ -111,7 +155,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     getBelastungsplanMinSize,
     getBelastungsplanMaxSize,
     getBelastungsplanChosenSize,
-    getActiveMessfaehigkeit,
+    getActualMessfaehigkeit,
     getIncludedMeasuringDays,
     getRequestedMeasuringDays,
     setActiveTab,
@@ -123,7 +167,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     setBelastungsplanMinSize,
     setBelastungsplanMaxSize,
     setBelastungsplanChosenSize,
-    calculateActiveMessfaehigkeit,
+    calculateActualMessfaehigkeit,
     setIncludedMeasuringDays,
     setRequestedMeasuringDays,
   };

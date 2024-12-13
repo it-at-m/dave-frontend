@@ -57,9 +57,9 @@ const messstelleStore = useMessstelleStore();
 
 const messdatenIntervalle = computed(() => {
   if (
-    messstelleStore.getActiveMessfaehigkeit.intervall ===
+    messstelleStore.getActualMessfaehigkeit.intervall ===
       ZaehldatenIntervall.STUNDE_KOMPLETT ||
-    (messstelleStore.getActiveMessfaehigkeit.intervall ===
+    (messstelleStore.getActualMessfaehigkeit.intervall ===
       ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
       notOnlyKfzSelected.value)
   ) {
@@ -113,20 +113,20 @@ const isZeitauswahlSpitzenstunde = computed(() => {
 const helpTextZeitintervall = computed(() => {
   if (hoverZeitintervall.value) {
     if (
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
+      messstelleStore.getActualMessfaehigkeit.intervall ===
         ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
       notOnlyKfzSelected.value
     ) {
       return `Es sind Verkehrsarten und / oder Fahrzeugkategorien ausgewählt für die nur 60 Minuten Intervalle vorliegen.`;
     }
     if (
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
+      messstelleStore.getActualMessfaehigkeit.intervall ===
       ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT
     ) {
       return `Nur für die Fahrzeugkategorie ${Fahrzeug.KFZ} liegen 15 und 30 Minuten Intervalle vor.`;
     }
     if (
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
+      messstelleStore.getActualMessfaehigkeit.intervall ===
       ZaehldatenIntervall.STUNDE_KOMPLETT
     ) {
       return `Auf Grund der Messfähigkeit der Messstelle können nur 60 Minuten als Intervallgröße ausgewählt werden.`;
@@ -139,7 +139,7 @@ watch(
   () => chosenOptionsCopy.value.zeitauswahl,
   () => {
     if (isIntervallChangingLocked.value) {
-      let intervall = messstelleStore.getActiveMessfaehigkeit.intervall;
+      let intervall = messstelleStore.getActualMessfaehigkeit.intervall;
       if (intervall === ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT) {
         intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
       }
