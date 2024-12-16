@@ -1,10 +1,8 @@
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import Fahrzeugklasse,{RankingFahrzeugklassen} from "@/types/enum/Fahrzeugklasse";
+import ZaehldatenIntervall,{RankingIntervall} from "@/types/enum/ZaehldatenIntervall";
 
 export function useMessfaehigkeitRanking() {
 
-    let rankingFahrzeugklassen: Fahrzeugklasse[] = [Fahrzeugklasse.SUMME_KFZ, Fahrzeugklasse.ZWEI_PLUS_EINS, Fahrzeugklasse.ACHT_PLUS_EINS];
-    let rankingIntervall: ZaehldatenIntervall[] = [ZaehldatenIntervall.STUNDE_KOMPLETT, ZaehldatenIntervall.STUNDE_HALB, ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT, ZaehldatenIntervall.STUNDE_VIERTEL];
 
     function getMinFahrzeugklassen(fahrzeugklassen1: Fahrzeugklasse | null, fahrzeugklassen2: Fahrzeugklasse | null): Fahrzeugklasse {
         if (!fahrzeugklassen1 && !fahrzeugklassen2) {
@@ -19,7 +17,7 @@ export function useMessfaehigkeitRanking() {
         if (fahrzeugklassen1 === Fahrzeugklasse.RAD || fahrzeugklassen2 === Fahrzeugklasse.RAD){
             return Fahrzeugklasse.RAD;
         }
-        return rankingFahrzeugklassen.findIndex(fzklassen => fzklassen === fahrzeugklassen1) < rankingFahrzeugklassen.findIndex(fzklassen => fzklassen === fahrzeugklassen2) ? fahrzeugklassen1 : fahrzeugklassen2;
+        return RankingFahrzeugklassen.findIndex(fzklassen => fzklassen === fahrzeugklassen1) < RankingFahrzeugklassen.findIndex(fzklassen => fzklassen === fahrzeugklassen2) ? fahrzeugklassen1 : fahrzeugklassen2;
     }
 
     function getMinIntervall(intervall1: ZaehldatenIntervall | null, intervall2: ZaehldatenIntervall | null) : ZaehldatenIntervall{
@@ -32,7 +30,7 @@ export function useMessfaehigkeitRanking() {
         if (!intervall2) {
             return intervall1 as ZaehldatenIntervall;
         }
-        return rankingIntervall.findIndex(interv => interv === intervall1) < rankingIntervall.findIndex(interv => interv === intervall2) ? intervall1 : intervall2;
+        return RankingIntervall.findIndex(interv => interv === intervall1) < RankingIntervall.findIndex(interv => interv === intervall2) ? intervall1 : intervall2;
     }
 
     return {

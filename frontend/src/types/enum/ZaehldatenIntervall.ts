@@ -21,4 +21,6 @@ export const BeschreibungToZaehldatenIntervall = new Map(
   [...ZaehldatenIntervallToBeschreibung].reverse()
 );
 
+export const RankingIntervall: ZaehldatenIntervall[] = [ZaehldatenIntervall.STUNDE_KOMPLETT, ZaehldatenIntervall.STUNDE_HALB, ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT, ZaehldatenIntervall.STUNDE_VIERTEL];
+
 export default ZaehldatenIntervall;
