@@ -13,6 +13,7 @@
           <auswertung-stepper
             v-model="auswertungsOptions"
             :height="stepperHeightVh"
+            :all-visible-messstellen="allVisibleMessstellen"
           />
           <v-spacer />
           <v-card-actions>
@@ -61,11 +62,13 @@
 </template>
 <script setup lang="ts">
 import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
+import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { cloneDeep, isNil, toArray, valuesIn } from "lodash";
-import { computed, ref } from "vue";
+import { cloneDeep, head, isNil, toArray, valuesIn } from "lodash";
+import { computed, onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
 
 import GeneratePdfService from "@/api/service/GeneratePdfService";
@@ -94,6 +97,7 @@ const messstelleUtils = useMessstelleUtils();
 const loadingFile = ref(false);
 const auswertungLoaded = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
+const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -102,6 +106,10 @@ const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
 const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
 );
+
+onMounted(() => {
+  loadAllVisibleMessstellen();
+});
 
 const textForNonShownDiagram = computed(() => {
   let text = "";
@@ -258,7 +266,10 @@ function createPdf() {
 
   GeneratePdfService.postPdfCustomFetchTemplateGesamtauswertung(formData)
     .then((blob) => {
-      downloadUtils.downloadFile(blob, getFilename(".pdf"));
+      downloadUtils.downloadFile(
+        blob,
+        getFilenameWithEndingAndOptionalMq("pdf", false)
+      );
     })
     .catch((error) => useSnackbarStore().showApiError(error));
 }
@@ -270,7 +281,10 @@ function saveGraphAsImage(): void {
   loadingFile.value = true;
   const encodedUri = getGanglinieBase64();
   if (encodedUri) {
-    reportTools.saveGesamtauswertungAsImage(getFilename(".png"), encodedUri);
+    reportTools.saveGesamtauswertungAsImage(
+      getFilenameWithEndingAndOptionalMq("png", true),
+      encodedUri
+    );
   }
   loadingFile.value = false;
 }
@@ -279,25 +293,74 @@ function saveGraphAsImage(): void {
  * Fügt dem PDF Report das aktuell angezeigte Chart hinzu.
  */
 function addChartToPdfReport(): void {
-  let caption = getFilename("");
-  caption = caption.replaceAll("_", " ");
   reportTools.addGesamtauswertungToPdfReport(
     "Die Auswertung",
-    caption,
+    getCaption(),
     getGanglinieBase64()
   );
 }
 
-function getFilename(ending: string) {
+function getFilenameWithEndingAndOptionalMq(ending: string, withMq: boolean) {
+  return `${getFilenameWithOptionalMq(withMq)}.${ending}`;
+}
+
+function getCaption() {
+  return getFilenameWithOptionalMq(true).replaceAll("_", " ");
+}
+
+function getFilenameWithOptionalMq(withMq: boolean) {
   let filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}`;
   if (auswertungsOptions.value.messstelleAuswertungIds.length === 1) {
-    const firstMessstelle =
-      auswertungsOptions.value.messstelleAuswertungIds.at(0);
-    filename = `Zeitreihe_zur_Messstelle_${firstMessstelle ? firstMessstelle.mstId : "unbekannt"}`;
+    if (withMq) {
+      filename = getFilenameSingleMessstelleAndMessquerschnitte(
+        head(auswertungsOptions.value.messstelleAuswertungIds)
+      );
+    } else {
+      filename = getFilenameSingleMessstelle(
+        head(auswertungsOptions.value.messstelleAuswertungIds)
+      );
+    }
   }
   if (auswertungsOptions.value.messstelleAuswertungIds.length > 1) {
     filename = `Zeitreihe_zur_Messung_${messstelleUtils.getSelectedVerkehrsartAsText(auswertungsOptions.value.fahrzeuge)}`;
   }
-  return `${filename}${ending}`;
+  return filename;
+}
+
+function getFilenameSingleMessstelle(
+  messstelleAuswertungId: MessstelleAuswertungIdDTO | undefined
+) {
+  const filenamePart1 = "Zeitreihe_zur_Messstelle";
+  let filenamePart2 = "unbekannt";
+  if (messstelleAuswertungId) {
+    filenamePart2 = messstelleAuswertungId.mstId;
+  }
+  return `${filenamePart1}_${filenamePart2}`;
+}
+
+function getFilenameSingleMessstelleAndMessquerschnitte(
+  messstelleAuswertungId: MessstelleAuswertungIdDTO | undefined
+) {
+  const filenamePart1 = getFilenameSingleMessstelle(messstelleAuswertungId);
+  if (messstelleAuswertungId) {
+    const messstelle = allVisibleMessstellen.value.find(
+      (value) => value.mstId === messstelleAuswertungId.mstId
+    );
+    if (
+      messstelle &&
+      messstelleAuswertungId.mqIds.length < messstelle.messquerschnitte.length
+    ) {
+      return `${filenamePart1}_${messstelleAuswertungId.mqIds.length > 1 ? "Messquerschnitte" : "Messquerschnitt"}_${messstelleAuswertungId.mqIds.join("_")}`;
+    }
+  }
+  return filenamePart1;
+}
+
+function loadAllVisibleMessstellen(): void {
+  MessstelleAuswertungService.getAllVisibleMessstellen().then(
+    (messstellen: Array<MessstelleAuswertungDTO>) => {
+      allVisibleMessstellen.value = messstellen;
+    }
+  );
 }
 </script>
