@@ -48,14 +48,24 @@
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.kraftfahrzeugverkehr"
               label="Kraftfahrzeugverkehr (KFZ)"
-              :prepend-icon="getIcon('KFZ')"
               :color="getCheckboxColor('KFZ')"
               :disabled="isTypeDisabled('KFZ')"
               hide-details
               density="compact"
               @mouseover="hoverKfz = true"
               @mouseleave="hoverKfz = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('KFZ')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('KFZ')"
+                  :icon="getIcon('KFZ')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
           <v-spacer />
         </v-row>
@@ -69,27 +79,47 @@
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.schwerverkehr"
               label="Schwerverkehr (SV)"
-              :prepend-icon="getIcon('SV')"
               :color="getCheckboxColor('SV')"
               :disabled="isTypeDisabled('SV')"
               hide-details
               density="compact"
               @mouseover="hoverSv = true"
               @mouseleave="hoverSv = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('SV')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('SV')"
+                  :icon="getIcon('SV')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
           <v-col cols="6">
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.schwerverkehrsanteilProzent"
               label="Schwerverkehrsanteil [%]"
-              :prepend-icon="getIcon('SV_P')"
               :color="getCheckboxColor('SV_P')"
               :disabled="isTypeDisabled('SV_P')"
               hide-details
               density="compact"
               @mouseover="hoverSv_p = true"
               @mouseleave="hoverSv_p = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('SV_P')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('SV_P')"
+                  :icon="getIcon('SV_P')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
         </v-row>
         <v-row
@@ -102,27 +132,47 @@
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.gueterverkehr"
               label="Güterverkehr (GV)"
-              :prepend-icon="getIcon('GV')"
               :color="getCheckboxColor('GV')"
               :disabled="isTypeDisabled('GV')"
               hide-details
               density="compact"
               @mouseover="hoverGv = true"
               @mouseleave="hoverGv = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('GV')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('GV')"
+                  :icon="getIcon('GV')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
           <v-col cols="6">
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent"
               label="Güterverkehrsanteil [%]"
-              :prepend-icon="getIcon('GV_P')"
               :color="getCheckboxColor('GV_P')"
               :disabled="isTypeDisabled('GV_P')"
               hide-details
               density="compact"
               @mouseover="hoverGv_p = true"
               @mouseleave="hoverGv_p = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('GV_P')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('GV_P')"
+                  :icon="getIcon('GV_P')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
         </v-row>
         <v-row
@@ -135,21 +185,30 @@
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.radverkehr"
               label="Radverkehr (Rad)"
-              :prepend-icon="getIcon('RAD')"
               :color="getCheckboxColor('RAD')"
               :disabled="isTypeDisabled('RAD')"
               hide-details
               density="compact"
               @mouseover="hoverRad = true"
               @mouseleave="hoverRad = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('RAD')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('RAD')"
+                  :icon="getIcon('RAD')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
 
           <v-col cols="6">
             <v-checkbox
               v-model="chosenOptionsCopyFahrzeuge.fussverkehr"
               label="Fußgänger (Fuß)"
-              :prepend-icon="getIcon('FUSS')"
               :color="getCheckboxColor('FUSS')"
               :persistent-hint="
                 chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent ||
@@ -160,7 +219,18 @@
               density="compact"
               @mouseover="hoverFuss = true"
               @mouseleave="hoverFuss = false"
-            />
+            >
+              <template
+                v-slot:prepend
+                v-if="getIcon('FUSS')"
+              >
+                <v-icon
+                  :color="getCheckboxColor('FUSS')"
+                  :icon="getIcon('FUSS')"
+                  class="opacity-100"
+                />
+              </template>
+            </v-checkbox>
           </v-col>
         </v-row>
       </v-col>
