@@ -12,8 +12,8 @@
     "fix:eslint": "eslint . --fix"
   },
   "dependencies": {
-    "@fontsource/roboto": "^4.5.8",
-    "@mdi/font": "7.3.67",
+    "@fontsource/roboto": "5.1.0",
+    "@mdi/font": "7.4.47",
     "@vuepic/vue-datepicker": "^10.0.0",
     "moment": "^2.29.4",
     "pinia": "^2.1.7",
