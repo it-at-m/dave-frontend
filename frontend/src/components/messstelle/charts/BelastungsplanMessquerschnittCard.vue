@@ -111,10 +111,10 @@ function draw() {
     .map((value, key) => ({ direction: key, data: value }))
     .value();
   drawArrowsPointingSouth(groupedByDirection);
-  startX.value += 50;
+  startX.value += 85;
   drawStreetName();
   drawTotal();
-  startX.value += 90;
+  startX.value += 130;
   drawArrowsPointingNorth(groupedByDirection);
   rotateArrowsIfNecessary();
   drawMessstelleInfo();
