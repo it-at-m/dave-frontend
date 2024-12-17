@@ -203,7 +203,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.fahrzeuge.radverkehr =
     !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
-  chosenOptions.value.zeitraum = [messstelle.value.datumLetztePlausibleMessung];
+  chosenOptions.value.zeitraum = [];
   chosenOptions.value.messquerschnittIds = [];
   messstelle.value.messquerschnitte.forEach((q) =>
     chosenOptions.value.messquerschnittIds.push(q.mqId)

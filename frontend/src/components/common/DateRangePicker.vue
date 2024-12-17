@@ -100,10 +100,8 @@ const endDate = ref<Date | undefined>();
 const dateRange = defineModel<Array<Date> | undefined>();
 
 onMounted(() => {
-  if (!isNil(props.maxDate)) {
-    startDate.value = cloneDeep(props.maxDate);
-    endDate.value = cloneDeep(props.maxDate);
-  }
+  startDate.value = cloneDeep(props.maxDate);
+  endDate.value = cloneDeep(props.maxDate);
 });
 
 const endDateBeforeStartDate = computed(() => {
@@ -182,5 +180,16 @@ watch(
     }
   },
   { immediate: true }
+);
+
+watch(
+    () => [dateRange.value],
+    () => {
+      if (isEmpty(dateRange.value)) {
+        startDate.value = cloneDeep(props.maxDate);
+        endDate.value = cloneDeep(props.maxDate);
+      }
+    },
+    { immediate: true }
 );
 </script>
