@@ -127,21 +127,9 @@ const isStartDateOutOfRange = computed(() => {
 });
 
 const messageStartDateOutOfRange = computed<string>(() => {
-  const startDateWithoutTimeInformation = cloneDeep(startDate.value);
-  startDateWithoutTimeInformation?.setHours(0);
-  startDateWithoutTimeInformation?.setMinutes(0);
-  startDateWithoutTimeInformation?.setSeconds(0);
-  startDateWithoutTimeInformation?.setMilliseconds(0);
-  const minDateWithoutTimeInformation = cloneDeep(props.minDate);
-  minDateWithoutTimeInformation?.setHours(0);
-  minDateWithoutTimeInformation?.setMinutes(0);
-  minDateWithoutTimeInformation?.setSeconds(0);
-  minDateWithoutTimeInformation?.setMilliseconds(0);
-  const maxDateWithoutTimeInformation = cloneDeep(props.maxDate);
-  maxDateWithoutTimeInformation?.setHours(0);
-  maxDateWithoutTimeInformation?.setMinutes(0);
-  maxDateWithoutTimeInformation?.setSeconds(0);
-  maxDateWithoutTimeInformation?.setMilliseconds(0);
+  const startDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(startDate.value));
+  const minDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.minDate));
+  const maxDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.maxDate));
 
   let message = "";
   if (!isNil(startDateWithoutTimeInformation) && lt(startDateWithoutTimeInformation, minDateWithoutTimeInformation)) {
@@ -157,21 +145,9 @@ const isEndDateOutOfRange = computed(() => {
 });
 
 const messageEndDateOutOfRange = computed<string>(() => {
-  const endDateWithoutTimeInformation = cloneDeep(endDate.value);
-  endDateWithoutTimeInformation?.setHours(0);
-  endDateWithoutTimeInformation?.setMinutes(0);
-  endDateWithoutTimeInformation?.setSeconds(0);
-  endDateWithoutTimeInformation?.setMilliseconds(0);
-  const minDateWithoutTimeInformation = cloneDeep(props.minDate);
-  minDateWithoutTimeInformation?.setHours(0);
-  minDateWithoutTimeInformation?.setMinutes(0);
-  minDateWithoutTimeInformation?.setSeconds(0);
-  minDateWithoutTimeInformation?.setMilliseconds(0);
-  const maxDateWithoutTimeInformation = cloneDeep(props.maxDate);
-  maxDateWithoutTimeInformation?.setHours(0);
-  maxDateWithoutTimeInformation?.setMinutes(0);
-  maxDateWithoutTimeInformation?.setSeconds(0);
-  maxDateWithoutTimeInformation?.setMilliseconds(0);
+  const endDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(endDate.value));
+  const minDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.minDate));
+  const maxDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.maxDate));
 
   let message = "";
   if (!isNil(endDateWithoutTimeInformation) && lt(endDateWithoutTimeInformation, minDateWithoutTimeInformation)) {

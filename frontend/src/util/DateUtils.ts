@@ -144,6 +144,14 @@ export function useDateUtils() {
     return moment(date, "YYYY-MM-DD", true).isValid();
   }
 
+  function setTimeToZeroForGivenDate(date: Date | undefined): Date | undefined {
+    date?.setHours(0);
+    date?.setMinutes(0);
+    date?.setSeconds(0);
+    date?.setMilliseconds(0);
+    return date;
+  }
+
   return {
     sortDatesDescAsStrings,
     formatDate,
@@ -161,5 +169,6 @@ export function useDateUtils() {
     isDateRange,
     isValidDate,
     isValidIsoDate,
+    setTimeToZeroForGivenDate,
   };
 }
