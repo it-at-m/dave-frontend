@@ -56,8 +56,8 @@
               @mouseleave="hoverKfz = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('KFZ')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('KFZ')"
@@ -87,8 +87,8 @@
               @mouseleave="hoverSv = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('SV')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('SV')"
@@ -110,8 +110,8 @@
               @mouseleave="hoverSv_p = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('SV_P')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('SV_P')"
@@ -140,8 +140,8 @@
               @mouseleave="hoverGv = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('GV')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('GV')"
@@ -163,8 +163,8 @@
               @mouseleave="hoverGv_p = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('GV_P')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('GV_P')"
@@ -193,8 +193,8 @@
               @mouseleave="hoverRad = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('RAD')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('RAD')"
@@ -221,8 +221,8 @@
               @mouseleave="hoverFuss = false"
             >
               <template
-                v-slot:prepend
                 v-if="getIcon('FUSS')"
+                #prepend
               >
                 <v-icon
                   :color="getCheckboxColor('FUSS')"
