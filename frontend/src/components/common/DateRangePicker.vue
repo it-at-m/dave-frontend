@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import { gt, head, isEmpty, isEqual, isNil, last, lt } from "lodash";
+import {cloneDeep, gt, isEmpty, isEqual, isNil, lt} from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import DatePicker from "@/components/common/DatePicker.vue";
@@ -74,12 +74,12 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-  label?: string; // Bezeichnung des Datumsfelds
-  required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
-  disabled?: boolean; // Ob das Datumsfeld deaktiviert sein soll
-  minDate?: Date; // Ob das Datumsfeld deaktiviert sein soll
+  label?: string;
+  required?: boolean;
+  disabled?: boolean;
+  minDate?: Date;
   minDateDescription?: string;
-  maxDate?: Date; // Ob das Datumsfeld deaktiviert sein soll
+  maxDate?: Date;
   maxDateDescription?: string;
   isAnwender?: boolean; // Handelt es sich beim User um einen Anwender
 }
@@ -100,11 +100,9 @@ const endDate = ref<Date | undefined>();
 const dateRange = defineModel<Array<Date> | undefined>();
 
 onMounted(() => {
-  if (!isNil(dateRange.value) && dateRange.value.length === 1) {
-    startDate.value = head(dateRange.value);
-  } else if (!isNil(dateRange.value) && dateRange.value.length > 1) {
-    startDate.value = head(dateRange.value);
-    endDate.value = last(dateRange.value);
+  if (!isNil(props.maxDate)) {
+    startDate.value = cloneDeep(props.maxDate);
+    endDate.value = cloneDeep(props.maxDate);
   }
 });
 
