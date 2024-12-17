@@ -105,10 +105,12 @@ onMounted(() => {
 });
 
 const endDateBeforeStartDate = computed(() => {
+  const startDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(startDate.value));
+  const endDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(endDate.value));
   return (
-    !isNil(startDate.value) &&
-    !isNil(endDate.value) &&
-    lt(endDate.value, startDate.value)
+    !isNil(startDateWithoutTimeInformation) &&
+    !isNil(endDateWithoutTimeInformation) &&
+    lt(endDateWithoutTimeInformation, startDateWithoutTimeInformation)
   );
 });
 
