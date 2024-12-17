@@ -183,15 +183,4 @@ watch(
   },
   { immediate: true }
 );
-
-watch(
-    () => [dateRange.value],
-    () => {
-      if (isEmpty(dateRange.value)) {
-        startDate.value = cloneDeep(props.maxDate);
-        endDate.value = cloneDeep(props.maxDate);
-      }
-    },
-    { immediate: true }
-);
 </script>
