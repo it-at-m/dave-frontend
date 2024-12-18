@@ -220,7 +220,8 @@ function addSumSouthIfNecessary(
       sumMqSv,
       sumMqRad,
       percentageMqGv,
-      percentageMqSv
+      percentageMqSv,
+      true
     );
   }
 }
@@ -244,7 +245,8 @@ function drawTotal() {
     props.belastungsplanData.totalSv,
     props.belastungsplanData.totalRad,
     props.belastungsplanData.totalPercentGv,
-    props.belastungsplanData.totalPercentSv
+    props.belastungsplanData.totalPercentSv,
+    true
   );
   addTextSouthSide(
     startX.value,
@@ -254,7 +256,8 @@ function drawTotal() {
     props.belastungsplanData.totalSv,
     props.belastungsplanData.totalRad,
     props.belastungsplanData.totalPercentGv,
-    props.belastungsplanData.totalPercentSv
+    props.belastungsplanData.totalPercentSv,
+    true
   );
 }
 
@@ -354,7 +357,8 @@ function addSumNorthIfNecessary(
       sumMqSv,
       sumMqRad,
       percentageMqGv,
-      percentageMqSv
+      percentageMqSv,
+      true
     );
   }
 }
@@ -374,13 +378,14 @@ function rotateArrowsIfNecessary() {
 function addTextToQuerschnittGroup(
   text: number | string,
   x: number,
-  y: number
+  y: number,
+  bold: boolean
 ) {
   querschnittGroup.value.add(
     SVG.SVG()
       .text(`${text}`)
       .font({
-        weight: "bold",
+        weight: bold ? "bold" : "normal",
       })
       .rotate(270, x, y)
       .move(x, y)
@@ -399,18 +404,20 @@ function addTextSouthSide(
   sv: number,
   rad: number,
   percentGv: number | string,
-  percentSv: number | string
+  percentSv: number | string,
+  bold: boolean = false
 ) {
   let textposition = 2;
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
-    addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
+    addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
     startPointY += 85;
   }
   if (isGvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentGv}%`, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY += 85;
     textposition -= 1;
@@ -419,7 +426,8 @@ function addTextSouthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentSv}%`, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY += 85;
     textposition -= 1;
@@ -428,7 +436,8 @@ function addTextSouthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(gv, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY += 85;
     textposition -= 1;
@@ -437,12 +446,13 @@ function addTextSouthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${sv}`, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY += 85;
   }
   if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-    addTextToQuerschnittGroup(kfz, startPointX, startPointY);
+    addTextToQuerschnittGroup(kfz, startPointX, startPointY, bold);
   }
 }
 
@@ -454,11 +464,12 @@ function addTextNorthSide(
   sv: number,
   rad: number,
   percentGv: number | string,
-  percentSv: number | string
+  percentSv: number | string,
+  bold: boolean = false
 ) {
   let textposition = 0;
   if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-    addTextToQuerschnittGroup(kfz, startPointX, startPointY);
+    addTextToQuerschnittGroup(kfz, startPointX, startPointY, bold);
     startPointY -= 85;
     textposition += 1;
   }
@@ -466,7 +477,8 @@ function addTextNorthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(sv, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY -= 85;
     textposition += 1;
@@ -475,7 +487,8 @@ function addTextNorthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(gv, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY -= 85;
     textposition += 1;
@@ -484,7 +497,8 @@ function addTextNorthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentSv}%`, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
     startPointY -= 85;
     textposition += 1;
@@ -493,11 +507,12 @@ function addTextNorthSide(
     addTextToQuerschnittGroup(
       addBracketsDependingOnPostition(`${percentGv}%`, textposition),
       startPointX,
-      startPointY
+      startPointY,
+      bold
     );
   }
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
-    addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY);
+    addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
   }
 }
 
