@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
-import _, { isNil } from "lodash";
+import { cloneDeep, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -139,8 +139,9 @@ function setChosenOptions(): void {
     const isoEndDate = dateUtils.formatDateToISO(
       chosenOptions.value.zeitraumStartAndEndDate.endDate
     );
-    const zeitraum = [isoStartDate, isoEndDate];
-    chosenOptions.value.zeitraum = zeitraum;
+    chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
+      (date) => !isEmpty(date)
+    );
   }
   if (areChosenOptionsValid()) {
     saveChosenOptions();
@@ -202,7 +203,7 @@ function areChosenOptionsValid(): boolean {
 }
 
 function saveChosenOptions(): void {
-  messstelleStore.setFilteroptions(_.cloneDeep(chosenOptions.value));
+  messstelleStore.setFilteroptions(cloneDeep(chosenOptions.value));
 }
 
 function setDefaultOptionsForMessstelle(): void {
@@ -225,7 +226,9 @@ function setDefaultOptionsForMessstelle(): void {
   const isoEndDate = dateUtils.formatDateToISO(
     chosenOptions.value.zeitraumStartAndEndDate.endDate
   );
-  chosenOptions.value.zeitraum = [isoStartDate, isoEndDate];
+  chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
+    (date) => !isEmpty(date)
+  );
   chosenOptions.value.messquerschnittIds = [];
   messstelle.value.messquerschnitte.forEach((q) =>
     chosenOptions.value.messquerschnittIds.push(q.mqId)
