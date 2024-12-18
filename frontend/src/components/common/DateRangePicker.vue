@@ -66,11 +66,12 @@
 <script setup lang="ts">
 import "@vuepic/vue-datepicker/dist/main.css";
 
-import {cloneDeep, gt, isEmpty, isEqual, isNil, lt} from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import { cloneDeep, gt, isEmpty, isEqual, isNil, lt } from "lodash";
+import { computed } from "vue";
 
 import DatePicker from "@/components/common/DatePicker.vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
@@ -93,20 +94,39 @@ const props = withDefaults(defineProps<Props>(), {
 
 const dateUtils = useDateUtils();
 
-const startDate = ref<Date | undefined>();
+const dateRange = defineModel<StartAndEndDate>({});
 
-const endDate = ref<Date | undefined>();
+const startDate = computed({
+  get() {
+    return dateRange.value?.startDate;
+  },
 
-const dateRange = defineModel<Array<Date> | undefined>();
+  set(date: Date | undefined) {
+    if (!isNil(dateRange.value)) {
+      dateRange.value.startDate = date;
+    }
+  },
+});
 
-onMounted(() => {
-  startDate.value = cloneDeep(props.maxDate);
-  endDate.value = cloneDeep(props.maxDate);
+const endDate = computed({
+  get() {
+    return dateRange.value?.endDate;
+  },
+
+  set(date: Date | undefined) {
+    if (!isNil(dateRange.value)) {
+      dateRange.value.endDate = date;
+    }
+  },
 });
 
 const endDateBeforeStartDate = computed(() => {
-  const startDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(startDate.value));
-  const endDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(endDate.value));
+  const startDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(startDate.value)
+  );
+  const endDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(endDate.value)
+  );
   return (
     !isNil(startDateWithoutTimeInformation) &&
     !isNil(endDateWithoutTimeInformation) &&
@@ -127,14 +147,26 @@ const isStartDateOutOfRange = computed(() => {
 });
 
 const messageStartDateOutOfRange = computed<string>(() => {
-  const startDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(startDate.value));
-  const minDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.minDate));
-  const maxDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.maxDate));
+  const startDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(startDate.value)
+  );
+  const minDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(props.minDate)
+  );
+  const maxDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(props.maxDate)
+  );
 
   let message = "";
-  if (!isNil(startDateWithoutTimeInformation) && lt(startDateWithoutTimeInformation, minDateWithoutTimeInformation)) {
+  if (
+    !isNil(startDateWithoutTimeInformation) &&
+    lt(startDateWithoutTimeInformation, minDateWithoutTimeInformation)
+  ) {
     message = `Das Startdatum ist vor dem ${props.minDateDescription}.`;
-  } else if (!isNil(startDateWithoutTimeInformation) && gt(startDateWithoutTimeInformation, maxDateWithoutTimeInformation)) {
+  } else if (
+    !isNil(startDateWithoutTimeInformation) &&
+    gt(startDateWithoutTimeInformation, maxDateWithoutTimeInformation)
+  ) {
     message = `Das Startdatum ist nach dem ${props.maxDateDescription}.`;
   }
   return message;
@@ -145,14 +177,26 @@ const isEndDateOutOfRange = computed(() => {
 });
 
 const messageEndDateOutOfRange = computed<string>(() => {
-  const endDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(endDate.value));
-  const minDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.minDate));
-  const maxDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(cloneDeep(props.maxDate));
+  const endDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(endDate.value)
+  );
+  const minDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(props.minDate)
+  );
+  const maxDateWithoutTimeInformation = dateUtils.setTimeToZeroForGivenDate(
+    cloneDeep(props.maxDate)
+  );
 
   let message = "";
-  if (!isNil(endDateWithoutTimeInformation) && lt(endDateWithoutTimeInformation, minDateWithoutTimeInformation)) {
+  if (
+    !isNil(endDateWithoutTimeInformation) &&
+    lt(endDateWithoutTimeInformation, minDateWithoutTimeInformation)
+  ) {
     message = `Das Enddatum ist vor dem ${props.minDateDescription}.`;
-  } else if (!isNil(endDateWithoutTimeInformation) && gt(endDateWithoutTimeInformation, maxDateWithoutTimeInformation)) {
+  } else if (
+    !isNil(endDateWithoutTimeInformation) &&
+    gt(endDateWithoutTimeInformation, maxDateWithoutTimeInformation)
+  ) {
     message = `Das Enddatum ist nach dem ${props.maxDateDescription}.`;
   }
   return message;
@@ -167,20 +211,4 @@ const isDateRange = computed(() => {
   }
   return isRange;
 });
-
-watch(
-  () => [startDate.value, endDate.value],
-  () => {
-    if (isNil(startDate.value) && isNil(endDate.value)) {
-      dateRange.value = [];
-    } else if (!isNil(startDate.value) && isNil(endDate.value)) {
-      dateRange.value = [startDate.value, startDate.value];
-    } else if (isNil(startDate.value) && !isNil(endDate.value)) {
-      dateRange.value = [endDate.value, endDate.value];
-    } else if (!isNil(startDate.value) && !isNil(endDate.value)) {
-      dateRange.value = [startDate.value, endDate.value];
-    }
-  },
-  { immediate: true }
-);
 </script>

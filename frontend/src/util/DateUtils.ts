@@ -30,7 +30,8 @@ export function useDateUtils() {
       return date;
     }
   }
-  function formatDateToISO(date: Date): string {
+
+  function formatDateToISO(date: Date | undefined): string {
     if (!date) {
       return "";
     }

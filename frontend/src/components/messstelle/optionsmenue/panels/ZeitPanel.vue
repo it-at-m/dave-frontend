@@ -11,7 +11,7 @@
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
       <date-range-picker
-        v-model="zeitraum"
+        v-model="chosenOptionsCopy.zeitraumStartAndEndDate"
         :min-date="minDate"
         :min-date-description="minDateDescription"
         :max-date="maxDate"
@@ -51,7 +51,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
-import { toArray } from "lodash";
+import { defaults, isNil } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -63,6 +63,7 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useUserStore } from "@/store/UserStore";
+import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
@@ -76,7 +77,15 @@ const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
 
 const isDateRange = computed(() => {
-  return dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum);
+  const chosenDates = [
+    dateUtils.formatDateToISO(
+      chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
+    ),
+    dateUtils.formatDateToISO(
+      chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+    ),
+  ];
+  return dateUtils.isDateRange(chosenDates);
 });
 
 onMounted(() => {
@@ -95,16 +104,19 @@ const nichtPlausibleTage = ref<Array<string>>([]);
 
 const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
 
-const chosenOptionsCopyZeitraum = computed(() => {
-  return chosenOptionsCopy.value.zeitraum ?? [];
-});
-
-const chosenOptionsCopyWochentag = computed(() => {
-  return chosenOptionsCopy.value.tagesTyp ?? "";
-});
-
 const isAnwender = computed(() => {
   return userStore.hasAuthorities && userStore.isAnwender;
+});
+
+const chosenOptionsCopyStartAndEndDatum = computed(() => {
+  return (
+    chosenOptionsCopy.value.zeitraumStartAndEndDate ??
+    new StartAndEndDate(undefined, undefined)
+  );
+});
+
+const chosenOptionsCopyTagesTyp = computed(() => {
+  return chosenOptionsCopy.value.tagesTyp ?? "";
 });
 
 const minDateDescription = ref<string>("");
@@ -161,48 +173,42 @@ watch(
   { immediate: true }
 );
 
-const zeitraum = computed({
-  get() {
-    return toArray(chosenOptionsCopy.value.zeitraum).map(
-      (date) => new Date(date)
-    );
+watch(
+  [chosenOptionsCopyTagesTyp, chosenOptionsCopyStartAndEndDatum],
+  () => {
+    if (
+      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate) &&
+      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate) &&
+      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate) &&
+      chosenOptionsCopy.value.tagesTyp
+    ) {
+      const chosenTagesTypValidRequestDto = {
+        startDate: dateUtils.formatDateToISO(
+          chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
+        ),
+        endDate: dateUtils.formatDateToISO(
+          chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+        ),
+        tagesTyp: defaults(chosenOptionsCopy.value.tagesTyp, ""),
+      };
+      MessstelleOptionsmenuService.isTagesTypValid(
+        chosenTagesTypValidRequestDto
+      ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
+        isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
+      });
+    }
   },
+  { deep: true }
+);
 
-  set(dates: Array<Date> | undefined) {
-    const newZeitraum = toArray(dates).map((date) =>
-      dateUtils.formatDateToISO(date)
+watch(
+  chosenOptionsCopyStartAndEndDatum,
+  () => {
+    const isoDate = dateUtils.formatDateToISO(
+      chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
     );
-    chosenOptionsCopy.value.zeitraum = newZeitraum;
+    messstelleStore.calculateActiveMessfaehigkeit(isoDate);
   },
-});
-
-watch([chosenOptionsCopyWochentag, chosenOptionsCopyZeitraum], () => {
-  if (
-    chosenOptionsCopyZeitraum.value.length === 2 &&
-    chosenOptionsCopyZeitraum.value[0] &&
-    chosenOptionsCopyZeitraum.value[1] &&
-    chosenOptionsCopy.value.tagesTyp
-  ) {
-    const chosenTagesTypValidRequestDto = {
-      startDate: chosenOptionsCopyZeitraum.value[0],
-      endDate: chosenOptionsCopyZeitraum.value[1],
-      tagesTyp: chosenOptionsCopy.value.tagesTyp,
-    };
-    MessstelleOptionsmenuService.isTagesTypValid(
-      chosenTagesTypValidRequestDto
-    ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
-      isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
-    });
-  }
-});
-
-watch(chosenOptionsCopyZeitraum, () => {
-  calculateChoosableOptions();
-});
-
-function calculateChoosableOptions(): void {
-  messstelleStore.calculateActiveMessfaehigkeit(
-    chosenOptionsCopy.value.zeitraum[0]
-  );
-}
+  { deep: true }
+);
 </script>

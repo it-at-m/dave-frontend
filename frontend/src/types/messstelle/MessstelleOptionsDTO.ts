@@ -1,8 +1,10 @@
+import type StartAndEndDate from "@/types/common/StartAndEndDate";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 export default interface MessstelleOptionsDTO {
+  zeitraumStartAndEndDate: StartAndEndDate;
   zeitraum: string[];
   fahrzeuge: FahrzeugOptions;
   zeitauswahl: string;

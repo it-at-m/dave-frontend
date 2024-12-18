@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
-import _ from "lodash";
+import _, { isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -77,6 +77,7 @@ import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
+import StartAndEndDate from "@/types/common/StartAndEndDate";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import TagesTyp from "@/types/enum/TagesTyp";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
@@ -131,6 +132,16 @@ watch(messstelle, () => {
 });
 
 function setChosenOptions(): void {
+  if (!isNil(chosenOptions.value.zeitraumStartAndEndDate)) {
+    const isoStartDate = dateUtils.formatDateToISO(
+      chosenOptions.value.zeitraumStartAndEndDate.startDate
+    );
+    const isoEndDate = dateUtils.formatDateToISO(
+      chosenOptions.value.zeitraumStartAndEndDate.endDate
+    );
+    const zeitraum = [isoStartDate, isoEndDate];
+    chosenOptions.value.zeitraum = zeitraum;
+  }
   if (areChosenOptionsValid()) {
     saveChosenOptions();
     dialog.value = false;
@@ -203,6 +214,11 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.fahrzeuge.radverkehr =
     !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
+  const defaultDate = messstelleStore.getMaxPossibleDateForMessstelle;
+  chosenOptions.value.zeitraumStartAndEndDate = new StartAndEndDate(
+    defaultDate,
+    defaultDate
+  );
   chosenOptions.value.zeitraum = [];
   chosenOptions.value.messquerschnittIds = [];
   messstelle.value.messquerschnitte.forEach((q) =>
