@@ -219,7 +219,13 @@ function setDefaultOptionsForMessstelle(): void {
     defaultDate,
     defaultDate
   );
-  chosenOptions.value.zeitraum = [];
+  const isoStartDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.startDate
+  );
+  const isoEndDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.endDate
+  );
+  chosenOptions.value.zeitraum = [isoStartDate, isoEndDate];
   chosenOptions.value.messquerschnittIds = [];
   messstelle.value.messquerschnitte.forEach((q) =>
     chosenOptions.value.messquerschnittIds.push(q.mqId)
