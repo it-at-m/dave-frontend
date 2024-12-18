@@ -220,10 +220,10 @@ function setDefaultOptionsForMessstelle(): void {
     defaultDate
   );
   const isoStartDate = dateUtils.formatDateToISO(
-        chosenOptions.value.zeitraumStartAndEndDate.startDate
+    chosenOptions.value.zeitraumStartAndEndDate.startDate
   );
   const isoEndDate = dateUtils.formatDateToISO(
-        chosenOptions.value.zeitraumStartAndEndDate.endDate
+    chosenOptions.value.zeitraumStartAndEndDate.endDate
   );
   chosenOptions.value.zeitraum = [isoStartDate, isoEndDate];
   chosenOptions.value.messquerschnittIds = [];
