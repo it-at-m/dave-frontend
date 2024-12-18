@@ -27,7 +27,7 @@
         @click="openZaehlung"
       >
         <span class="text-body-2"
-          >{{ $d(date, "short", "de-DE") }} | {{ projektName }}</span
+          >{{ dateUtils.getShortVersionOfDate(date) }} | {{ projektName }}</span
         ><br />
         <zaehlart-icon
           :zaehlart="zaehlart"
@@ -59,6 +59,7 @@ import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   id: string;
@@ -78,6 +79,7 @@ const props = defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
+const dateUtils = useDateUtils();
 
 const hover = ref(false);
 
