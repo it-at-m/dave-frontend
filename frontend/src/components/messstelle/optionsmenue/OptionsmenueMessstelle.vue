@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
-import _ from "lodash";
+import { cloneDeep, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -77,6 +77,7 @@ import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
+import StartAndEndDate from "@/types/common/StartAndEndDate";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import TagesTyp from "@/types/enum/TagesTyp";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
@@ -131,6 +132,17 @@ watch(messstelle, () => {
 });
 
 function setChosenOptions(): void {
+  if (!isNil(chosenOptions.value.zeitraumStartAndEndDate)) {
+    const isoStartDate = dateUtils.formatDateToISO(
+      chosenOptions.value.zeitraumStartAndEndDate.startDate
+    );
+    const isoEndDate = dateUtils.formatDateToISO(
+      chosenOptions.value.zeitraumStartAndEndDate.endDate
+    );
+    chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
+      (date) => !isEmpty(date)
+    );
+  }
   if (areChosenOptionsValid()) {
     saveChosenOptions();
     dialog.value = false;
@@ -156,7 +168,9 @@ function areChosenOptionsValid(): boolean {
     !dateUtils.isDateRangeAsStringValid(chosenOptions.value.zeitraum)
   ) {
     result = false;
-    snackbarStore.showError("Das Datum 'bis' muss nach 'von' liegen.");
+    snackbarStore.showError(
+      "Das 'Startdatum' muss nach dem 'Enddatum' liegen."
+    );
   }
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
@@ -189,7 +203,7 @@ function areChosenOptionsValid(): boolean {
 }
 
 function saveChosenOptions(): void {
-  messstelleStore.setFilteroptions(_.cloneDeep(chosenOptions.value));
+  messstelleStore.setFilteroptions(cloneDeep(chosenOptions.value));
 }
 
 function setDefaultOptionsForMessstelle(): void {
@@ -201,7 +215,20 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.fahrzeuge.radverkehr =
     !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
-  chosenOptions.value.zeitraum = [messstelle.value.datumLetztePlausibleMessung];
+  const defaultDate = messstelleStore.getMaxPossibleDateForMessstelle;
+  chosenOptions.value.zeitraumStartAndEndDate = new StartAndEndDate(
+    defaultDate,
+    defaultDate
+  );
+  const isoStartDate = dateUtils.formatDateToISO(
+    chosenOptions.value.zeitraumStartAndEndDate.startDate
+  );
+  const isoEndDate = dateUtils.formatDateToISO(
+    chosenOptions.value.zeitraumStartAndEndDate.endDate
+  );
+  chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
+    (date) => !isEmpty(date)
+  );
   chosenOptions.value.messquerschnittIds = [];
   messstelle.value.messquerschnitte.forEach((q) =>
     chosenOptions.value.messquerschnittIds.push(q.mqId)

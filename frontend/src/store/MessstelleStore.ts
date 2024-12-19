@@ -35,6 +35,20 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const requestedMeasuringDays = ref(0);
 
   const getMessstelleInfo = computed(() => messstelleInfo.value);
+  const getMaxPossibleDateForMessstelle = computed(() => {
+    let maxDate: Date;
+    if (
+      dateUtils.isValidIsoDate(messstelleInfo.value.datumLetztePlausibleMessung)
+    ) {
+      maxDate = new Date(messstelleInfo.value.datumLetztePlausibleMessung);
+    } else if (dateUtils.isValidIsoDate(messstelleInfo.value.abbaudatum)) {
+      maxDate = new Date(messstelleInfo.value.abbaudatum);
+    } else {
+      // Yesterday
+      maxDate = new Date(new Date().setDate(new Date().getDate() - 1));
+    }
+    return maxDate;
+  });
   const getActiveTab = computed(() => activeTab.value);
   const isKfzMessstelle = computed(
     () =>
@@ -160,6 +174,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     getRequestedMeasuringDays,
     setActiveTab,
     setMessstelleInfo,
+    getMaxPossibleDateForMessstelle,
     setFilteroptions,
     setFilteroptionsHistory,
     setDirection,

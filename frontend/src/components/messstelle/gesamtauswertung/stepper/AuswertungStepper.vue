@@ -44,7 +44,10 @@
         title="Ort"
         :subtitle="selectedOrtAsSummary"
       >
-        <ort-step-content v-model="auswertungOptions" />
+        <ort-step-content
+          v-model="auswertungOptions"
+          :all-visible-messstellen="allVisibleMessstellen"
+        />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
         :complete="activeStep > 5 && isFahrzeugSelected()"
@@ -60,6 +63,7 @@
 </template>
 
 <script setup lang="ts">
+import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import { head, isEmpty, toArray } from "lodash";
@@ -76,6 +80,7 @@ import { tagesTypText } from "@/types/enum/TagesTyp";
 
 interface Props {
   height: string;
+  allVisibleMessstellen: Array<MessstelleAuswertungDTO>;
 }
 
 defineProps<Props>();

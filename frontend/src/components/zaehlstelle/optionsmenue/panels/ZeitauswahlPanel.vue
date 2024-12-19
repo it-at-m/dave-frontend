@@ -26,6 +26,7 @@
         <v-col cols="8">
           <v-radio-group
             v-model="zeitauswahl"
+            class="mt-3"
             color="grey-darken-1"
             density="compact"
             @update:model-value="zeitauswahlChanged"

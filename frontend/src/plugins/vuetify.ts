@@ -95,4 +95,9 @@ export default createVuetify({
     VStepperVertical,
     VStepperVerticalItem,
   },
+  defaults: {
+    VSelect: {
+      itemColor: "primary",
+    },
+  },
 });
