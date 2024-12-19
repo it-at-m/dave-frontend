@@ -16,7 +16,6 @@
         :min-date-description="minDateDescription"
         :max-date="maxDate"
         :max-date-description="maxDateDescription"
-        :is-anwender="isAnwender"
       />
 
       <v-divider />
@@ -62,7 +61,6 @@ import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/Z
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
@@ -72,7 +70,6 @@ const route = useRoute();
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
 const messstelleStore = useMessstelleStore();
-const userStore = useUserStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
 
@@ -103,10 +100,6 @@ const messstelleInfo = computed<MessstelleInfoDTO>(() => {
 const nichtPlausibleTage = ref<Array<string>>([]);
 
 const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
-
-const isAnwender = computed(() => {
-  return userStore.hasAuthorities && userStore.isAnwender;
-});
 
 const chosenOptionsCopyStartAndEndDatum = computed(() => {
   return (

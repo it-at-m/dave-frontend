@@ -71,6 +71,7 @@ import { computed } from "vue";
 
 import DatePicker from "@/components/common/DatePicker.vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
 
@@ -82,17 +83,17 @@ interface Props {
   minDateDescription?: string;
   maxDate?: Date;
   maxDateDescription?: string;
-  isAnwender?: boolean; // Handelt es sich beim User um einen Anwender
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
   disabled: false,
-  isAnwender: false,
 });
 
 const dateUtils = useDateUtils();
+
+const userStore = useUserStore();
 
 const dateRange = defineModel<StartAndEndDate>({});
 
@@ -210,5 +211,9 @@ const isDateRange = computed(() => {
     isRange = !isEqual(startDateIso, endDateIso);
   }
   return isRange;
+});
+
+const isAnwender = computed(() => {
+  return userStore.hasAuthorities && userStore.isAnwender;
 });
 </script>
