@@ -311,6 +311,8 @@ function setMarkerToMap() {
     // Zaehlartenmarker erzeugen
     setZaehlartenmarkerToMap();
     map.setView(center.value, zoomValue.value);
+  } else {
+    map.setView(center.value, zoomValue.value);
   }
 }
 
