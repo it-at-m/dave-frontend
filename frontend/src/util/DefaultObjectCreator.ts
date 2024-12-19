@@ -16,6 +16,7 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
+import StartAndEndDate from "@/types/common/StartAndEndDate";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
@@ -118,6 +119,7 @@ export default class DefaultObjectCreator {
       tagesTyp: TagesTyp.UNSPECIFIED,
       zeitauswahl: "",
       zeitblock: "",
+      zeitraumStartAndEndDate: new StartAndEndDate(undefined, undefined),
       zeitraum: [],
     };
   }
