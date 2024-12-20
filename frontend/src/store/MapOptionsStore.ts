@@ -8,12 +8,17 @@ export const useMapOptionsStore = defineStore("mapOptionsStore", () => {
 
   const getMapOptions = computed(() => mapOptions.value);
 
-  function setMapOptions(payload: MapOptions) {
+  function setMapOptions(payload: MapOptions | undefined) {
     mapOptions.value = payload;
+  }
+
+  function resetMapOptions() {
+    mapOptions.value = undefined;
   }
 
   return {
     getMapOptions,
     setMapOptions,
+    resetMapOptions,
   };
 });
