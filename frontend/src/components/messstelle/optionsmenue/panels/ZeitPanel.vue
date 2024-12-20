@@ -61,6 +61,7 @@ import ZeitauswahlRadiogroup from "@/components/messstelle/optionsmenue/panels/Z
 import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panels/ZeitauswahlStundeOrBlock.vue";
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
 import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
@@ -72,6 +73,7 @@ const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
 const isChosenTagesTypValid = ref(true);
+const snackbarStore = useSnackbarStore();
 
 const isDateRange = computed(() => {
   const chosenDates = [
@@ -194,16 +196,20 @@ watch(
   { deep: true }
 );
 
-watch( // TODO: hier warnung für zurücksetzen
+watch(
   chosenOptionsCopyStartAndEndDatum,
   () => {
     const isoStartDate = dateUtils.formatDateToISO(
       chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
     );
     const isoEndDate = dateUtils.formatDateToISO(
-        chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+      chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
     );
-    messstelleStore.calculateActiveMessfaehigkeit(isoStartDate, isoEndDate);
+    messstelleStore.calculateActualMessfaehigkeit(isoStartDate, isoEndDate);
+
+    snackbarStore.showWarning(
+      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
+    );
   },
   { deep: true }
 );

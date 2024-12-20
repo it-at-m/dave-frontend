@@ -271,9 +271,6 @@ watch(
     chosenOptions.value.fahrzeuge.radverkehr =
       !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 
-    snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.' // TODO: move to watch:zeitraum
-    );
   }
 );
 </script>
