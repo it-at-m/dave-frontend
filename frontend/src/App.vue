@@ -35,6 +35,7 @@
           class="d-flex align-center justify-end"
         >
           <v-btn
+            v-if="showGesamtauswertung"
             v-tooltip:bottom="'Gesamtauswertungen'"
             icon="mdi-clipboard-pulse-outline"
             to="/auswertung"
@@ -68,11 +69,14 @@
 </template>
 
 <script setup lang="ts">
+import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
+import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
 import InfoMessage from "@/components/app/InfoMessage.vue";
@@ -90,6 +94,7 @@ const URL_HANDBUCH_LINK =
 const loggedInUser = ref("no-security");
 const backendVersion = ref("");
 const frontendVersion = ref("");
+const showGesamtauswertung = ref(false);
 
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
@@ -121,6 +126,11 @@ function created() {
     .catch(() => {
       backendVersion.value = "error";
     });
+  MessstelleAuswertungService.getAllVisibleMessstellen().then(
+    (messstellen: Array<MessstelleAuswertungDTO>) => {
+      showGesamtauswertung.value = messstellen.length > 0;
+    }
+  );
   window.addEventListener("keypress", shortCuts);
 }
 
