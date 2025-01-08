@@ -317,7 +317,7 @@ function setMarkerToMap() {
 }
 
 watch(
-  () => searchStore.getTriggerSearch,
+  () => searchStore.triggerSearch,
   () => {
     mapOptionsStore.resetMapOptions();
     map.setView(center.value, zoomValue.value);

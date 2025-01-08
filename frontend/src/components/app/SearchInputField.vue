@@ -267,7 +267,7 @@ function iconOfSuggestion(type: string) {
 }
 
 watch(
-  () => searchStore.getTriggerSearch,
+  () => searchStore.triggerSearch,
   () => {
     searchQuery.value = searchStore.getLastSearchQuery;
     selectedSuggestion.value = undefined;

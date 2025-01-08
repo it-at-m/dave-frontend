@@ -6,11 +6,11 @@ import { computed, ref } from "vue";
 export const useSearchStore = defineStore("searchStore", () => {
   const searchResult = ref<Array<AnzeigeKarteDTO>>([]);
   const lastSearchQuery = ref("");
-  const triggerSearch = ref(false);
+  const isSearchTriggered = ref(false);
 
   const getSearchResult = computed(() => searchResult.value);
   const getLastSearchQuery = computed(() => lastSearchQuery.value);
-  const getTriggerSearch = computed(() => triggerSearch.value);
+  const triggerSearch = computed(() => isSearchTriggered.value);
 
   function setSearchResult(payload: Array<AnzeigeKarteDTO>) {
     searchResult.value = payload;
@@ -21,13 +21,13 @@ export const useSearchStore = defineStore("searchStore", () => {
   function resetAndTriggerSearch() {
     setSearchResult([]);
     setLastSearchQuery("");
-    triggerSearch.value = !triggerSearch.value;
+    isSearchTriggered.value = !isSearchTriggered.value;
   }
 
   return {
     getSearchResult,
     getLastSearchQuery,
-    getTriggerSearch,
+    triggerSearch,
     setSearchResult,
     setLastSearchQuery,
     resetAndTriggerSearch,
