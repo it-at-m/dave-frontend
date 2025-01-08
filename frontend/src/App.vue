@@ -15,6 +15,7 @@
           <router-link
             to="/"
             style="text-decoration: none"
+            @click="resetSearch"
           >
             <v-toolbar-title class="text-white font-weight-medium">
               <span class="font-weight-medium">DAVe</span>
@@ -83,6 +84,7 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
+import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
@@ -98,6 +100,7 @@ const showGesamtauswertung = ref(false);
 
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
+const searchStore = useSearchStore();
 const route = useRoute();
 
 created();
@@ -166,6 +169,10 @@ function shortCuts(event: KeyboardEvent) {
       easterEgg.value = [];
     }
   }
+}
+
+function resetSearch() {
+  searchStore.resetAndTriggerSearch();
 }
 </script>
 

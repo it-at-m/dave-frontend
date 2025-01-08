@@ -72,7 +72,7 @@ import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSugge
 import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
 import { isEmpty, isNil } from "lodash";
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
@@ -97,10 +97,6 @@ const route = useRoute();
 const router = useRouter();
 const snackbarStore = useSnackbarStore();
 const searchStore = useSearchStore();
-
-onMounted(() => {
-  clearSearch();
-});
 
 function suggest(query: string) {
   if (!isEmpty(query)) {
@@ -171,8 +167,7 @@ function suggest(query: string) {
 function clearSearch(): void {
   searchQuery.value = "";
   selectedSuggestion.value = undefined;
-  searchStore.setLastSearchQuery(searchQuery.value);
-  search();
+  searchStore.resetAndTriggerSearch();
 }
 
 function searchOrShowSelectedSuggestion() {
@@ -272,9 +267,10 @@ function iconOfSuggestion(type: string) {
 }
 
 watch(
-  () => searchStore.getLastSearchQuery,
+  () => searchStore.triggerSearch,
   () => {
     searchQuery.value = searchStore.getLastSearchQuery;
+    selectedSuggestion.value = undefined;
     search();
   }
 );
