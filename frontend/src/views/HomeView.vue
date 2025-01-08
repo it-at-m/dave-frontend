@@ -91,7 +91,7 @@ function takePicture() {
         image.width = 100;
         pdfReportStore.addAsset(image);
         snackbarStore.showSuccess(
-          `Die Karte wurden dem PDF Report hinzugefügt.`
+          `Die Karte wurde dem PDF Report hinzugefügt.`
         );
       })
       .catch(() => {
