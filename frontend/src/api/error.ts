@@ -8,7 +8,7 @@ export const enum Levels {
 export class ApiError extends Error {
   level: Levels;
 
-  constructor(level?: Levels, message?: string, error?: string) {
+  constructor(level?: Levels, message?: string, reason?: string) {
     // Übergibt die verbleibenden Parameter (einschließlich Vendor spezifischer Parameter) dem Error Konstruktor
     super(message);
 
@@ -24,6 +24,6 @@ export class ApiError extends Error {
         "Ein unbekannter Fehler ist aufgetreten, bitte den Administrator informieren.";
     }
     this.level = level;
-    this.message = `${message}µ${error}`;
+    this.message = `${message}µ${reason}`;
   }
 }
