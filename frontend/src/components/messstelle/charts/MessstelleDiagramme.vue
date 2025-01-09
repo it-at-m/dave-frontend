@@ -53,15 +53,29 @@
             v-else-if="!hasSelectedVerkehrsarten"
             :message="globalInfoMessage.NO_BELASTUNGSPLAN"
           />
-          <belastungsplan-messquerschnitt-card
-            v-else-if="
+          <div v-else-if="
               belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
-            "
-            ref="belastungsplanCard"
-            :belastungsplan-data="belastungsplanDataDTO"
-            :dimension="contentHeight"
-            @print="storeSvg($event)"
-          />
+            ">
+            <belastungsplan-messquerschnitt-card
+                ref="belastungsplanCard"
+                :belastungsplan-data="belastungsplanDataDTO"
+                :dimension="contentHeight"
+                @print="storeSvg($event)"
+            />
+            <v-overlay
+                :model-value="true"
+                opacity="0"
+                style="z-index: -99999999"
+            >
+              <belastungsplan-messquerschnitt-card
+                  ref="belastungsplanSchematischeUebersichtCard"
+                  :belastungsplan-data="belastungsplanDataDTO"
+                  :dimension="contentHeight"
+                  :is-schematische-uebersicht="true"
+                  @print="storeSvgSchematischeUebersicht($event)"
+              />
+            </v-overlay>
+          </div>
         </v-sheet>
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
@@ -159,8 +173,8 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
 import _ from "lodash";
-import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import {computed, ref, watch} from "vue";
+import {useRoute} from "vue-router";
 
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
@@ -173,17 +187,17 @@ import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
-import { useHistoryStore } from "@/store/HistoryStore";
-import { useMessstelleStore } from "@/store/MessstelleStore";
-import { useSnackbarStore } from "@/store/SnackbarStore";
-import { useUserStore } from "@/store/UserStore";
+import {useHistoryStore} from "@/store/HistoryStore";
+import {useMessstelleStore} from "@/store/MessstelleStore";
+import {useSnackbarStore} from "@/store/SnackbarStore";
+import {useUserStore} from "@/store/UserStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import { useDownloadUtils } from "@/util/DownloadUtils";
-import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
-import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { useReportTools } from "@/util/ReportTools";
+import {useDownloadUtils} from "@/util/DownloadUtils";
+import {useGlobalInfoMessage} from "@/util/GlobalInfoMessage";
+import {useMessstelleUtils} from "@/util/MessstelleUtils";
+import {useReportTools} from "@/util/ReportTools";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -229,10 +243,13 @@ const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
 const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
+const belastungsplanSchematischeUebersichtCard = ref<typeof BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
+const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
+const belastungsplanSchematischeUebersichtPngBase64 = ref("");
 
 const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
@@ -302,6 +319,24 @@ watch(belastungsplanSvg, () => {
       }
     };
     image.src = URL.createObjectURL(belastungsplanSvg.value);
+  }
+});
+watch(belastungsplanSchematischeUebersichtSvg, () => {
+  if (belastungsplanSchematischeUebersichtSvg.value) {
+    const image = new Image();
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const dimension = BELASTUNGSPLAN_PNG_DIMENSION;
+      canvas.width = dimension;
+      canvas.height = dimension;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(image, 0, 0, dimension, dimension);
+        // Image Asset erstellen und in Variable speichern
+        belastungsplanSchematischeUebersichtPngBase64.value = canvas.toDataURL("image/jpg");
+      }
+    };
+    image.src = URL.createObjectURL(belastungsplanSchematischeUebersichtSvg.value);
   }
 });
 
@@ -486,6 +521,10 @@ function storeSvg(svg: Blob): void {
   belastungsplanSvg.value = svg;
 }
 
+function storeSvgSchematischeUebersicht(svg: Blob): void {
+  belastungsplanSchematischeUebersichtSvg.value = svg;
+}
+
 function openPdfReportDialog(): void {
   pdfReportDialog.value = true;
 }
@@ -524,19 +563,19 @@ function generatePdf(): void {
           type: "image/png",
         })
       );
-      if (belastungsplanSvg.value) {
+      if (belastungsplanSchematischeUebersichtSvg.value) {
         formData.append(
           REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-          belastungsplanPngBase64.value
+          belastungsplanSchematischeUebersichtPngBase64.value
         );
       }
       break;
     case TAB_LISTENAUSGABE:
       type = "datentabelle";
-      if (belastungsplanSvg.value) {
+      if (belastungsplanSchematischeUebersichtSvg.value) {
         formData.append(
           REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-          belastungsplanPngBase64.value
+          belastungsplanSchematischeUebersichtPngBase64.value
         );
       }
       break;

@@ -27,7 +27,12 @@ import { useDateUtils } from "@/util/DateUtils";
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
   dimension?: string;
+  isSchematischeUebersicht?: boolean;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  isSchematischeUebersicht: false,
+});
 const emits = defineEmits<{
   (e: "print", v: Blob): void;
 }>();
@@ -55,7 +60,6 @@ const startX = ref(0);
 const startY = ref(0);
 const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
   belastungsplanAnzeigeUtils();
-const props = defineProps<Props>();
 
 const svgHeight = computed(() => {
   return (
@@ -89,6 +93,10 @@ const chosenOptionsCopyFahrzeuge = computed(() => {
   return chosenOptionsCopy.value.fahrzeuge;
 });
 
+const isNotSchematischeUebersicht = computed(() => {
+  return !props.isSchematischeUebersicht;
+});
+
 watch(
   () => props.belastungsplanData,
   () => {
@@ -112,14 +120,18 @@ function draw() {
     .value();
   drawArrowsPointingSouth(groupedByDirection);
   startX.value += 85;
-  drawStreetName();
-  drawTotal();
+  if (isNotSchematischeUebersicht.value) {
+    drawStreetName();
+    drawTotal();
+  }
   startX.value += 130;
   drawArrowsPointingNorth(groupedByDirection);
   rotateArrowsIfNecessary();
-  drawMessstelleInfo();
-  drawNorthSymbol();
-  drawLegende();
+  if (isNotSchematischeUebersicht.value) {
+    drawMessstelleInfo();
+    drawNorthSymbol();
+    drawLegende();
+  }
   storeImageForPrinting();
 }
 
@@ -156,21 +168,25 @@ function drawArrowsPointingSouth(
           },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
         )
         .stroke({ width: 1, color: "black" })
-        .attr("fill", "none")
+        .attr("fill", isNotSchematischeUebersicht.value ? "none" : getLineColor(mq.mqId, mq.direction))
     );
-    addTextNorthSide(
-      startX.value,
-      startY.value - 10,
-      mq.sumKfz,
-      mq.sumGv,
-      mq.sumSv,
-      mq.sumRad,
-      mq.percentGV,
-      mq.percentSv
-    );
+    if (isNotSchematischeUebersicht.value) {
+      addTextNorthSide(
+        startX.value,
+        startY.value - 10,
+        mq.sumKfz,
+        mq.sumGv,
+        mq.sumSv,
+        mq.sumRad,
+        mq.percentGV,
+        mq.percentSv
+      );
+    }
     startX.value += 50;
   });
-  addSumSouthIfNecessary(arrayOfDataForDirectionSouth);
+  if (isNotSchematischeUebersicht.value) {
+    addSumSouthIfNecessary(arrayOfDataForDirectionSouth);
+  }
 }
 
 function addSumSouthIfNecessary(
@@ -294,21 +310,25 @@ function drawArrowsPointingNorth(
           } ${startX.value + 10} ${startY.value - 22}`
         )
         .stroke({ width: 1, color: "black" })
-        .attr("fill", "none")
+          .attr("fill", isNotSchematischeUebersicht.value ? "none" : getLineColor(mq.mqId, mq.direction))
     );
-    addTextSouthSide(
-      startX.value,
-      startY.value + 910,
-      mq.sumKfz,
-      mq.sumGv,
-      mq.sumSv,
-      mq.sumRad,
-      mq.percentGV,
-      mq.percentSv
-    );
+    if (isNotSchematischeUebersicht.value) {
+      addTextSouthSide(
+        startX.value,
+        startY.value + 910,
+        mq.sumKfz,
+        mq.sumGv,
+        mq.sumSv,
+        mq.sumRad,
+        mq.percentGV,
+        mq.percentSv
+      );
+    }
     startX.value += 50;
   });
-  addSumNorthIfNecessary(arrayOfDataForDirectionNorth);
+  if (isNotSchematischeUebersicht.value) {
+    addSumNorthIfNecessary(arrayOfDataForDirectionNorth);
+  }
 }
 
 function addSumNorthIfNecessary(
@@ -697,6 +717,10 @@ function calcLineWidth() {
 }
 
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
+  if (props.isSchematischeUebersicht) {
+    return 20;
+  }
+
   const maxLineWidth = 20;
   const mqData = vehiclesPerMq.value.get(mq.mqId);
 
@@ -728,6 +752,9 @@ function storeImageForPrinting() {
 }
 
 function getLineColor(mqId: string, direction: string) {
+  if (props.isSchematischeUebersicht) {
+    return chosenOptionsCopy.value.messquerschnittIds.includes(mqId) ? "#000000" : "#E0E0E0";
+  }
   if (chosenOptionsCopy.value.messquerschnittIds.includes(mqId)) {
     return chosenOptionsCopy.value.blackPrintMode
       ? "#000000"
