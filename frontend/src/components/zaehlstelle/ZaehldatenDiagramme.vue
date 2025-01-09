@@ -46,6 +46,8 @@
       bg-color="grey-darken-1"
       slider-color="grey-lighten-1"
       stacked
+      color="white"
+      class="text-grey-lighten-1"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">

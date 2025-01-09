@@ -39,7 +39,7 @@
             >
               <v-row no-gutters
                 ><span class="pb-0 text-truncate"
-                  >{{ $d(datum, "short", "de-DE") }} |
+                  >{{ dateUtils.getShortVersionOfDate(datum) }} |
                   {{ zaehlung.projektName }}</span
                 >
               </v-row>
@@ -226,6 +226,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   kommentarZaehlstelle?: string;
@@ -237,6 +238,7 @@ withDefaults(defineProps<Props>(), {
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
+const dateUtils = useDateUtils();
 
 const showSpitzenstundeInfo = ref(false);
 const startUhrzeitIntervalls = ref("");

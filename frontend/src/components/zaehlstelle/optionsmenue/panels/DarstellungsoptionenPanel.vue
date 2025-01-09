@@ -35,6 +35,10 @@
           />
           <v-slider
             v-model="sizeBelastungsplan"
+            color="primary"
+            density="compact"
+            track-size="2"
+            thumb-size="12"
             label="Belastungsplangröße"
             :max="maxSizeBelastungsplanSvg"
             :min="minSizeBelastungsplanSvg"
@@ -122,6 +126,7 @@
         align="start"
         justify="center"
         dense
+        no-gutters
       >
         <v-col cols="4">
           <v-checkbox
@@ -184,6 +189,7 @@
         align="start"
         justify="center"
         dense
+        no-gutters
         @mouseover="hoverSpitzenstundeDetailauswahl = true"
         @mouseleave="hoverSpitzenstundeDetailauswahl = false"
       >
@@ -191,7 +197,6 @@
         <v-col cols="4">
           <v-checkbox
             v-model="spitzenstundeKfz"
-            class="mb-3"
             :label="'Spitzenstunde KFZ'"
             hide-details
             color="grey-darken-1"
@@ -200,7 +205,6 @@
           />
           <v-checkbox
             v-model="spitzenstundeRad"
-            class="mb-3"
             :label="'Spitzenstunde Rad'"
             hide-details
             color="grey-darken-1"
@@ -209,7 +213,6 @@
           />
           <v-checkbox
             v-model="spitzenstundeFuss"
-            class="mb-3"
             :label="'Spitzenstunde Fuß'"
             hide-details
             color="grey-darken-1"

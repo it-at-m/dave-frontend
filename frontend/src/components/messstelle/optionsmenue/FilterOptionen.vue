@@ -3,7 +3,7 @@
     width="100%"
     min-height="50"
     color="grey-darken-1"
-    class="px-4 py-3"
+    class="px-4 py-3 overflow-y-auto"
   >
     <v-row>
       <v-col cols="1" />
