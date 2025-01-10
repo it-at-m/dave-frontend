@@ -316,14 +316,6 @@ function setMarkerToMap() {
   }
 }
 
-watch(
-  () => searchStore.triggerSearch,
-  () => {
-    mapOptionsStore.resetMapOptions();
-    map.setView(center.value, zoomValue.value);
-  }
-);
-
 function setZaehlartenmarkerToMap() {
   const markers: Array<Marker> = [];
   const zaehlartenKarte = selectedZaehlstelleKarte.value.zaehlartenKarte;
