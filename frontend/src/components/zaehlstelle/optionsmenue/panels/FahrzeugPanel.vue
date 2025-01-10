@@ -383,7 +383,7 @@
           />
           <v-checkbox
             v-model="fahrzeugOptions.busse"
-            :label="'Bus'"
+            :label="'Busse'"
             :hint="getHintToDisplay('BUS')"
             :persistent-hint="isTypeDisabled('BUS')"
             :disabled="isTypeDisabled('BUS')"
