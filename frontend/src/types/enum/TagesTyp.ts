@@ -14,7 +14,7 @@ export const tagesTypText = new Map<string, string>([
   [TagesTyp.SAMSTAG, "Samstag in/außerhalb Ferien"],
   [TagesTyp.SONNTAG_FEIERTAG, "Sonntag/Feiertag in/außerhalb Ferien"],
   [TagesTyp.WERKTAG_FERIEN, "Mo-Fr Ferien"],
-  [TagesTyp.MO_SO, "DTV (MO - SO)"],
+  [TagesTyp.MO_SO, "DTV (Mo - So)"],
   [TagesTyp.UNSPECIFIED, "unspecified"],
 ]);
 
