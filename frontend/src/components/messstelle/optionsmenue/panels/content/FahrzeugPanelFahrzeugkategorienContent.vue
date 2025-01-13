@@ -84,17 +84,6 @@
           @mouseleave="hoverKrad = false"
         />
         <v-checkbox
-          v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
-          label="Lieferwagen (Lfw)"
-          :persistent-hint="isTypeDisabled('LFW')"
-          :disabled="isTypeDisabled('LFW')"
-          color="grey-darken-1"
-          hide-details
-          density="compact"
-          @mouseover="hoverLfw = true"
-          @mouseleave="hoverLfw = false"
-        />
-        <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.busse"
           label="Bus"
           :persistent-hint="isTypeDisabled('BUS')"
@@ -104,6 +93,17 @@
           density="compact"
           @mouseover="hoverBus = true"
           @mouseleave="hoverBus = false"
+        />
+        <v-checkbox
+          v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
+          label="Lieferwagen (Lfw)"
+          :persistent-hint="isTypeDisabled('LFW')"
+          :disabled="isTypeDisabled('LFW')"
+          color="grey-darken-1"
+          hide-details
+          density="compact"
+          @mouseover="hoverLfw = true"
+          @mouseleave="hoverLfw = false"
         />
       </v-col>
       <v-col cols="4">
