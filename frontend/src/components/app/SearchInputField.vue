@@ -76,11 +76,11 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
+import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import Suggest from "@/types/suche/Suggest";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useMapOptionsStore} from "@/store/MapOptionsStore";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
