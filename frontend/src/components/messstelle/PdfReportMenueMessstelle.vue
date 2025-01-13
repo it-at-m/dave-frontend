@@ -30,7 +30,7 @@
           v-model="messstelleninfo"
           title="Messstelleninformationen"
           subtitle="Folgende Informationen werden im PDF Report
-                                eingetragen: Messstelle-ID, ID & Standort der
+                                eingetragen: Messstellen-ID, ID & Standort der
                                 Messquerschnitte, Stadtbezirk,
                                 Messstellenkommentar."
         />
