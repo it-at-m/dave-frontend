@@ -78,6 +78,7 @@ const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
+const mapOptionsStore = useMapOptionsStore();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
@@ -316,14 +317,6 @@ function setMarkerToMap() {
   }
 }
 
-watch(
-  () => searchStore.triggerSearch,
-  () => {
-    mapOptionsStore.resetMapOptions();
-    map.setView(center.value, zoomValue.value);
-  }
-);
-
 function setZaehlartenmarkerToMap() {
   const markers: Array<Marker> = [];
   const zaehlartenKarte = selectedZaehlstelleKarte.value.zaehlartenKarte;
@@ -363,7 +356,6 @@ function getColorForZaehlartenMarker(zaehlart: string): string {
     return ICON_COLOR_SECONDARY;
   }
 }
-const mapOptionsStore = useMapOptionsStore();
 
 function saveMapPosition() {
   const mapCenter = map.getBounds().getCenter();

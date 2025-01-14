@@ -76,6 +76,7 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
+import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import Suggest from "@/types/suche/Suggest";
@@ -97,6 +98,7 @@ const route = useRoute();
 const router = useRouter();
 const snackbarStore = useSnackbarStore();
 const searchStore = useSearchStore();
+const mapOptionsStore = useMapOptionsStore();
 
 function suggest(query: string) {
   if (!isEmpty(query)) {
@@ -171,6 +173,7 @@ function clearSearch(): void {
 }
 
 function searchOrShowSelectedSuggestion() {
+  mapOptionsStore.resetMapOptions();
   if (isNil(selectedSuggestion.value)) {
     search();
   } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_VORSCHLAG) {
