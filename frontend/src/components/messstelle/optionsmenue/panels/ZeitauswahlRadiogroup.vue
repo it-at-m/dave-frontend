@@ -75,6 +75,7 @@
 <script lang="ts" setup>
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
+import { head, last } from "lodash";
 import { computed, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -95,7 +96,8 @@ const snackbarStore = useSnackbarStore();
 const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
 
 const durchschnitt = computed(() => {
-  if (chosenOptionsCopy.value.zeitraum.length === 2) {
+  const zeitraum = chosenOptionsCopy.value.zeitraum;
+  if (zeitraum && zeitraum.length === 2 && head(zeitraum) !== last(zeitraum)) {
     return " (Durchschnitt)";
   }
   return "";
