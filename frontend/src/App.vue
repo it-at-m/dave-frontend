@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";
@@ -78,12 +79,14 @@ import { useRoute } from "vue-router";
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
+import OptionsmenueSettingsService from "@/api/service/OptionsmenueSettingsService";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
 import InfoMessage from "@/components/app/InfoMessage.vue";
 import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
@@ -101,6 +104,7 @@ const showGesamtauswertung = ref(false);
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const searchStore = useSearchStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const route = useRoute();
 
 created();
@@ -129,6 +133,13 @@ function created() {
     .catch(() => {
       backendVersion.value = "error";
     });
+  OptionsmenueSettingsService.getAllOptionsmenueSettings().then(
+    (optionsmenueSettings: Array<OptionsmenueSettingsDTO>) => {
+      optionsmenueSettingsStore.setOptionsmenueSettingsByIntervallAndFahrzeugklasse(
+        optionsmenueSettings
+      );
+    }
+  );
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
       showGesamtauswertung.value = messstellen.length > 0;

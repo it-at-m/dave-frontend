@@ -66,7 +66,8 @@ export const useOptionsmenueSettingsStore = defineStore(
     }
 
     return {
-      DEFAULT_KEY,
+      setOptionsmenueSettingsByIntervallAndFahrzeugklasse,
+      getOptionsmenueSettingsByIntervallAndFahrzeugklasse,
     };
   }
 );
