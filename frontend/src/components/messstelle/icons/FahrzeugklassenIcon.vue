@@ -11,8 +11,8 @@
 import { computed } from "vue";
 
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import IconTooltip from "@/types/util/IconTooltip";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
+import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
   size?: string;
@@ -43,9 +43,18 @@ const icon = computed<IconTooltip>(() => {
  */
 function fahrzeugklassenIcons(): Map<string, IconTooltip> {
   return new Map([
-    [Fahrzeugklasse.ACHT_PLUS_EINS, new IconTooltip("$achtUndEins", "Fahrzeugklasse: 8+1")],
-    [Fahrzeugklasse.SUMME_KFZ, new IconTooltip("$qkfz", "Fahrzeugklasse: Summe KFZ")],
-    [Fahrzeugklasse.ZWEI_PLUS_EINS, new IconTooltip("$qpkwLkw", "Fahrzeugklasse: 2+1")],
+    [
+      Fahrzeugklasse.ACHT_PLUS_EINS,
+      new IconTooltip("$achtUndEins", "Fahrzeugklasse: 8+1"),
+    ],
+    [
+      Fahrzeugklasse.SUMME_KFZ,
+      new IconTooltip("$qkfz", "Fahrzeugklasse: Summe KFZ"),
+    ],
+    [
+      Fahrzeugklasse.ZWEI_PLUS_EINS,
+      new IconTooltip("$qpkwLkw", "Fahrzeugklasse: 2+1"),
+    ],
     [Fahrzeugklasse.RAD, new IconTooltip("mdi-bicycle", "Fahrzeugklasse: Rad")],
   ]);
 }
