@@ -48,7 +48,7 @@
       stacked
       color="white"
       class="text-grey-lighten-1"
-      @update:modelValue="changeTab"
+      @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
