@@ -48,6 +48,7 @@
       stacked
       color="white"
       class="text-grey-lighten-1"
+      @update:modelValue="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -75,7 +76,6 @@
       v-if="hasZaehlungen"
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
