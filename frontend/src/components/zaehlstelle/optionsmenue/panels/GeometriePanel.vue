@@ -240,12 +240,21 @@ function initFahrbeziehungen(): void {
             ),
           });
         }
+        if (fahrbeziehung.knotenarm != null && fahrbeziehung.heraus) {
+          alleZielknotenarmeVon.add({
+            nummer: fahrbeziehung.knotenarm,
+            strassenname: getKnotenarmBezeichnung(
+              fahrbeziehung.knotenarm,
+              knotenarme
+            ),
+          });
+        }
       }
     });
 
     // Nachfolgend werden die eingehenden bzw. ausgehenden Beziehungen bei Auswahl von "alle" gesetzt.
     if (isZaehlungForKreuzung()) {
-      const kv = {
+      const kv: KnotenarmVerbindungen = {
         knotenarm: alle,
         moeglicheVerbindungen: _.union(
           [alle],
@@ -262,7 +271,10 @@ function initFahrbeziehungen(): void {
       const kv = {
         knotenarm: alle,
         moeglicheVerbindungen: [alle],
-        moeglicheVerbindungenIds: [alle.nummer],
+        moeglicheVerbindungenIds: _.union(
+          [alle],
+          Array.from(alleZielknotenarmeVon.values())
+        ).map((knotenarm) => knotenarm.nummer),
       };
       moeglicheBeziehungenVon.value.set(alle.nummer, kv);
     }

@@ -50,12 +50,12 @@
                 @fahrzeug-options="updateOptions($event)"
               />
 
-              <!--              <geometrie-panel-->
-              <!--                :zaehlung="zaehlung"-->
-              <!--                @von="setVon($event)"-->
-              <!--                @nach="setNach($event)"-->
-              <!--                @beide-richtungen="setBeideRichtungen($event)"-->
-              <!--              />-->
+              <geometrie-panel
+                :zaehlung="zaehlung"
+                @von="setVon($event)"
+                @nach="setNach($event)"
+                @beide-richtungen="setBeideRichtungen($event)"
+              />
 
               <zaehlungsvergleich-panel
                 :zaehlung="zaehlung"
@@ -121,6 +121,7 @@ import { useDisplay } from "vuetify";
 
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
+import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -262,33 +263,33 @@ function updateOptions(event: OptionsDTO) {
 }
 
 // Event-Methoden für die Geometrie Komponente
-// function setVon(event: Array<number>) {
-//   if (Array.isArray(event)) {
-//     if (event.length > 1) {
-//       chosenOptions.value.vonKnotenarm = null;
-//     } else {
-//       chosenOptions.value.vonKnotenarm = event[0];
-//     }
-//     chosenOptions.value.vonIds = event.filter((value) => value !== 0);
-//   }
-// }
-//
-// function setNach(event: Array<number>) {
-//   if (Array.isArray(event)) {
-//     if (event.length > 1) {
-//       chosenOptions.value.nachKnotenarm = null;
-//     } else {
-//       chosenOptions.value.nachKnotenarm = event[0];
-//     }
-//     chosenOptions.value.nachIds = event.filter((value) => value !== 0);
-//   }
-// }
-//
-// function setBeideRichtungen(event: boolean) {
-//   if (event !== undefined) {
-//     chosenOptions.value.beideRichtungen = event;
-//   }
-// }
+function setVon(event: Array<number>) {
+  if (Array.isArray(event)) {
+    if (event.length > 1) {
+      chosenOptions.value.vonKnotenarm = null;
+    } else {
+      chosenOptions.value.vonKnotenarm = event[0];
+    }
+    chosenOptions.value.vonIds = event.filter((value) => value !== 0);
+  }
+}
+
+function setNach(event: Array<number>) {
+  if (Array.isArray(event)) {
+    if (event.length > 1) {
+      chosenOptions.value.nachKnotenarm = null;
+    } else {
+      chosenOptions.value.nachKnotenarm = event[0];
+    }
+    chosenOptions.value.nachIds = event.filter((value) => value !== 0);
+  }
+}
+
+function setBeideRichtungen(event: boolean) {
+  if (event !== undefined) {
+    chosenOptions.value.beideRichtungen = event;
+  }
+}
 
 // Event-Methoden für die Vergleichs Komponente
 function setVergleichszaehlungsId(event: string) {
