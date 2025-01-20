@@ -80,7 +80,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
-import _ from "lodash";
+import _, { isNil } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -231,23 +231,25 @@ function initFahrbeziehungen(): void {
         );
       } else {
         // Kreisverkehr
-        if (fahrbeziehung.knotenarm != null && fahrbeziehung.hinein) {
-          alleEingehendeKnotenarmeNach.add({
-            nummer: fahrbeziehung.knotenarm,
-            strassenname: getKnotenarmBezeichnung(
-              fahrbeziehung.knotenarm,
-              knotenarme
-            ),
-          });
-        }
-        if (fahrbeziehung.knotenarm != null && fahrbeziehung.heraus) {
-          alleZielknotenarmeVon.add({
-            nummer: fahrbeziehung.knotenarm,
-            strassenname: getKnotenarmBezeichnung(
-              fahrbeziehung.knotenarm,
-              knotenarme
-            ),
-          });
+        if (!isNil(fahrbeziehung.knotenarm)) {
+          if (fahrbeziehung.hinein) {
+            alleEingehendeKnotenarmeNach.add({
+              nummer: fahrbeziehung.knotenarm,
+              strassenname: getKnotenarmBezeichnung(
+                fahrbeziehung.knotenarm,
+                knotenarme
+              ),
+            });
+          }
+          if (fahrbeziehung.heraus) {
+            alleZielknotenarmeVon.add({
+              nummer: fahrbeziehung.knotenarm,
+              strassenname: getKnotenarmBezeichnung(
+                fahrbeziehung.knotenarm,
+                knotenarme
+              ),
+            });
+          }
         }
       }
     });
