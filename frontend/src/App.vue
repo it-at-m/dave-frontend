@@ -15,7 +15,7 @@
           <router-link
             to="/"
             style="text-decoration: none"
-            @click="resetSearch"
+            @click="resetMapAndSearch"
           >
             <v-toolbar-title class="text-white font-weight-medium">
               <span class="font-weight-medium">DAVe</span>
@@ -89,6 +89,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
+import {useMapOptionsStore} from "@/store/MapOptionsStore";
 
 const URL_HANDBUCH_LINK =
   "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
@@ -101,6 +102,7 @@ const showGesamtauswertung = ref(false);
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const searchStore = useSearchStore();
+const mapOptionsStore = useMapOptionsStore();
 const route = useRoute();
 
 created();
@@ -171,8 +173,10 @@ function shortCuts(event: KeyboardEvent) {
   }
 }
 
-function resetSearch() {
+function resetMapAndSearch() {
+  mapOptionsStore.resetMapOptions();
   searchStore.resetAndTriggerSearch();
+
 }
 </script>
 
