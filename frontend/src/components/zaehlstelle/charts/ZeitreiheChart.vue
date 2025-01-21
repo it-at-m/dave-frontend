@@ -160,6 +160,10 @@ const options = computed(() => {
         });
         return text;
       },
+      backgroundColor: 'rgba(50,50,50,0.7)',
+      textStyle: {
+        color: 'rgba(255,255,255,1)',
+      },
     },
     toolbox: {
       showTitle: true,

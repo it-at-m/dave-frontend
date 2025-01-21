@@ -108,6 +108,10 @@ const optionsDefault = computed(() => {
       formatter: function (params: Array<unknown>) {
         return formatYAxisLabel(params);
       },
+      backgroundColor: 'rgba(50,50,50,0.7)',
+      textStyle: {
+        color: 'rgba(255,255,255,1)',
+      },
     },
     legend: {
       data: chartLegend.value,
@@ -176,6 +180,10 @@ const options2x4 = computed(() => {
       trigger: "axis",
       formatter: function (params: Array<unknown>) {
         return formatYAxisLabel(params);
+      },
+      backgroundColor: 'rgba(50,50,50,0.7)',
+      textStyle: {
+        color: 'rgba(255,255,255,1)',
       },
     },
     legend: {
