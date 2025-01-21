@@ -112,6 +112,7 @@ const optionsDefault = computed(() => {
       textStyle: {
         color: 'rgba(255,255,255,1)',
       },
+      confine: true,
     },
     legend: {
       data: chartLegend.value,
@@ -185,6 +186,7 @@ const options2x4 = computed(() => {
       textStyle: {
         color: 'rgba(255,255,255,1)',
       },
+      confine: true,
     },
     legend: {
       data: chartLegend.value,
