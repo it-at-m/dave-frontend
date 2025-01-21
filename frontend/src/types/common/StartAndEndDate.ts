@@ -9,8 +9,7 @@ export default class StartAndEndDate {
   public endDate: Date | undefined;
 
   public isRange(): boolean {
-    if (!(this.endDate && this.startDate))
-      return false;
+    if (!(this.endDate && this.startDate)) return false;
     return this.endDate.getTime() - this.startDate.getTime() > 0;
   }
 }

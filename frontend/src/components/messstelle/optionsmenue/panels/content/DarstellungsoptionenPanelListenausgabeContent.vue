@@ -94,6 +94,8 @@ const helpTextListenausgabe = computed(() => {
 });
 
 const headerText = computed(() => {
-  return chosenOptionsCopy.value.zeitraumStartAndEndDate.isRange() ? "Listenausgabe (Durchschnittswerte)" : "Listenausgabe";
+  return chosenOptionsCopy.value.zeitraumStartAndEndDate.isRange()
+    ? "Listenausgabe (Durchschnittswerte)"
+    : "Listenausgabe";
 });
 </script>

@@ -8,7 +8,7 @@
         color="white"
         width="100%"
         class="px-4 py-2 text-primary"
-        style="font-size: 0.875rem;"
+        style="font-size: 0.875rem"
         height="72px"
       >
         <v-row
@@ -21,10 +21,12 @@
           >
             <v-row no-gutters>
               <v-col cols="8">
-              <span class="text--body-1" v-tooltip:bottom="'Datum letzte plausible Messung'"
-                >letzter Messtag:
-                {{ datumLetztePlausibleMessung }}
-              </span>
+                <span
+                  class="text--body-1"
+                  v-tooltip:bottom="'Datum letzte plausible Messung'"
+                  >letzter Messtag:
+                  {{ datumLetztePlausibleMessung }}
+                </span>
               </v-col>
               <v-col cols="4">
                 <div class="d-flex flex-row-reverse">
@@ -35,8 +37,8 @@
                     size="small"
                   />
                   <detektierte-fahrzeugart-icon
-                      :detektierte-fahrzeugart="detektierteVerkehrsart"
-                      color="primary"
+                    :detektierte-fahrzeugart="detektierteVerkehrsart"
+                    color="primary"
                   />
                 </div>
               </v-col>
@@ -75,7 +77,6 @@
               no-gutters
               class="ma-0"
             >
-
             </v-row>
           </v-col>
           <v-col
@@ -84,7 +85,8 @@
           >
             <v-spacer />
           </v-col>
-          <v-col cols="2"
+          <v-col
+            cols="2"
             class="hidden-md-and-down"
           >
             <messstelle-geometrie
