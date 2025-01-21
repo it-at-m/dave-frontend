@@ -160,9 +160,9 @@ const options = computed(() => {
         });
         return text;
       },
-      backgroundColor: 'rgba(50,50,50,0.7)',
+      backgroundColor: "rgba(50,50,50,0.7)",
       textStyle: {
-        color: 'rgba(255,255,255,1)',
+        color: "rgba(255,255,255,1)",
       },
       confine: true,
     },
