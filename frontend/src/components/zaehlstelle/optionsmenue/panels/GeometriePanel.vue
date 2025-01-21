@@ -111,11 +111,11 @@ const moeglicheBeziehungenNach = ref(new Map<number, KnotenarmVerbindungen>());
 /**
  * Der gewählte von-Knotenarm
  */
-const von = ref(-1);
+const von = ref(0);
 /**
  * Der gewählte nach-Knotenarm
  */
-const nach = ref(-1);
+const nach = ref(0);
 
 const alle = { nummer: 0, strassenname: "Alle Knotenarme" };
 
@@ -195,10 +195,6 @@ function reset(fo: OptionsDTO) {
  * und "hinein" vorhält.
  */
 function initFahrbeziehungen(): void {
-  // Init default Knotenarmauswahl
-  von.value = 0;
-  nach.value = 0;
-
   // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
   const knotenarme: Map<number, string> = new Map<number, string>(
     props.zaehlung.knotenarme.map((knotenarm) => [
