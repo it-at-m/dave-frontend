@@ -19,11 +19,12 @@
       opacity="0"
       style="z-index: -99999999"
     >
-      <belastungsplan-kreuzung-svg-schematische-uebersicht
+      <belastungsplan-kreuzung-svg-schema
         :dimension="contentHeight"
         :data="belastungsplanDTO"
         :doc-mode="false"
         :geometrie-mode="true"
+        :schema="true"
         @print="storeSvgSchematischeUebersicht($event)"
       />
     </v-overlay>
@@ -85,12 +86,13 @@
           class="overflow-y-auto"
         >
           <div v-if="hasSelectedVerkehrsarten">
-            <belastungsplan-kreuzung-svg
+            <belastungsplan-kreuzung-svg-schema
               v-show="!belastungsplanDTO.kreisverkehr"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               :doc-mode="false"
               :geometrie-mode="true"
+              :schema="false"
               @print="storeSvg($event)"
             />
 
@@ -209,6 +211,7 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
+import BelastungsplanKreuzungSvgSchema from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchema.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
