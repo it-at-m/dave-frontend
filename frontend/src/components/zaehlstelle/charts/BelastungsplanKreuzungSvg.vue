@@ -1,6 +1,13 @@
 <template>
   <v-sheet
-    id="belastungsplan"
+    v-if="schema"
+    id="belastungsplan-schema"
+    :height="dimension"
+    :width="dimension"
+  />
+  <v-sheet
+    v-else
+    id="belastungsplan-default"
     :height="dimension"
     :width="dimension"
   />
@@ -52,6 +59,7 @@ interface Props {
   // Soll die Geometrieauswahl im Belastungsplan gezeigt werden
   geometrieMode?: boolean;
   inaktivColor?: string;
+  schema?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -68,6 +76,7 @@ const props = withDefaults(defineProps<Props>(), {
   gleichValueColor: "#000000",
   geometrieMode: false,
   inaktivColor: "#E0E0E0",
+  schema: false,
 });
 
 const emits = defineEmits<(e: "print", v: Blob) => void>();
@@ -150,8 +159,9 @@ const canvas = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
 
 onMounted(() => {
+  const addTo = `#belastungsplan-${props.schema ? "schema" : "default"}`;
   canvas.value = SVG.SVG()
-    .addTo("#belastungsplan")
+    .addTo(addTo)
     .size(props.dimension, props.dimension)
     .viewbox(0, 0, viewbox, viewbox);
   zaehlstelleStore.setSizeBelastungsplanSvg(
@@ -363,10 +373,12 @@ function draw() {
   }
 
   // Legende erstellen
-  legendeNordPfeil();
-  legendeLinienStaerke();
-  legendeSpalten();
-  legendeZaehlstellenInfo();
+  if (!props.schema) {
+    legendeNordPfeil();
+    legendeLinienStaerke();
+    legendeSpalten();
+    legendeZaehlstellenInfo();
+  }
 
   // Druckdatei an übergeordnete Komponente übergeben. Die kann dann gedruckt werden oder auch nicht.
   // Die Datei wird automatisch ersetzt, sobald sich etwas am Chart verändert.
@@ -497,7 +509,7 @@ function lineColor(
 
   // Wenn der schwarz weiß Modus angeschaltet ist, dann werden alle aktiven Fahrbeziehungen
   // schwarz gedruckt.
-  if (isBlackPrintMode.value) {
+  if (isBlackPrintMode.value && !props.schema) {
     return "#000000";
   }
 
@@ -521,6 +533,16 @@ function lineColor(
       }
     }
   }
+  if (props.schema) {
+    if (
+      vonIds.value.includes(vonKnotenarm) &&
+      nachIds.value.includes(nachKnotenarm)
+    ) {
+      color = "#000000";
+    } else {
+      color = props.inaktivColor;
+    }
+  }
 
   return color;
 }
@@ -534,13 +556,6 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
   // Es wird alles gruppiert, damit wir es später einfach so drehen können, dass der Knotenarm richtig sitzt.
   const knotenarmGroup = canvas.value.group() as SVG.G;
 
-  // TODO hilfs rechteck einfügen um das Achteck darstellen zu können -- löschen
-  const a = seite.value / (1 + Math.sqrt(2));
-  knotenarmGroup
-    .rect(seite.value, a)
-    .fill({ color: "red", opacity: 0.0 })
-    .x(chartPosition.value)
-    .y(viewbox / 2 - a / 2);
   // Knotenarm Infos
   const knotenarm = knotenarme.value.get(knotenarmnummer);
 
@@ -859,24 +874,28 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     if (!r) {
       r = 0;
     }
+    const factor = props.schema ? 4 : 1.5;
+    const knotenarmnummerSize = props.schema ? 80 : lineWidth.value;
+    const knotenarmnummerCx =
+      chartPosition.value + ecke.value - spalt.value * factor;
     knotenarmGroup
       .text((add) => {
         add.tspan(knotenarmnummer + "");
       })
       .font({
-        size: lineWidth.value,
+        size: knotenarmnummerSize,
         family: fontfamily,
         anchor: "middle",
       })
       .attr("alignment-baseline", "central")
-      .cx(chartPosition.value + ecke.value - spalt.value * 1.5) // Radius des Kreises
+      .cx(knotenarmnummerCx) // Radius des Kreises
       .cy(viewbox / 2) // Einrückungstiefe der Nummer
       .rotate(r);
     knotenarmGroup
-      .circle(lineWidth.value + 4)
+      .circle(knotenarmnummerSize + 4)
       .stroke({ width: 2, color: "black" })
       .fill("none")
-      .cx(chartPosition.value + ecke.value - spalt.value * 1.5)
+      .cx(knotenarmnummerCx)
       .cy(viewbox / 2);
 
     // Labels
@@ -987,25 +1006,29 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     }
 
     // Knotenarmname
-    createKnotenarmname(
-      fahrbeziehungenLabelRotationGroup,
-      knotenarm,
-      xText,
-      yKnotenarm
-    );
+    if (!props.schema) {
+      createKnotenarmname(
+        fahrbeziehungenLabelRotationGroup,
+        knotenarm,
+        xText,
+        yKnotenarm
+      );
+    }
 
     // Knotenarmsumme
-    labelZeileErstellen(
-      fahrbeziehungenLabelRotationGroup,
-      yKnotenarm,
-      fillValueArray(knotenarm, [
-        knotenarm.totalValue1,
-        knotenarm.totalValue2,
-        knotenarm.totalValue3,
-      ]),
-      calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-      "bold"
-    );
+    if (!props.schema) {
+      labelZeileErstellen(
+        fahrbeziehungenLabelRotationGroup,
+        yKnotenarm,
+        fillValueArray(knotenarm, [
+          knotenarm.totalValue1,
+          knotenarm.totalValue2,
+          knotenarm.totalValue3,
+        ]),
+        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+        "bold"
+      );
+    }
 
     // ========
     // NACH Labels
@@ -1021,73 +1044,81 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         .attr("fill", "none");
 
       // Die Werte für die "nach" Fahrbeziehungen des Knotenarmes werden ausgegeben
-      labelZeileErstellen(
-        fahrbeziehungenLabelRotationGroup,
-        yNach,
-        fillValueArray(knotenarm, [
-          knotenarm.nachTotalValue1,
-          knotenarm.nachTotalValue2,
-          knotenarm.nachTotalValue3,
-        ]),
-        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-        "bold"
-      );
+      if (!props.schema) {
+        labelZeileErstellen(
+          fahrbeziehungenLabelRotationGroup,
+          yNach,
+          fillValueArray(knotenarm, [
+            knotenarm.nachTotalValue1,
+            knotenarm.nachTotalValue2,
+            knotenarm.nachTotalValue3,
+          ]),
+          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+          "bold"
+        );
+      }
     }
 
     // ========
     // VON Labels
     // ========
-    let vonLine = 0;
-    if ([3, 4, 7, 8].includes(knotenarmnummer)) {
-      vonLine = knotenarm.anzahlVonFahrbeziehungen - 1;
-    }
-
-    fbts.forEach((fbt) => {
-      const y = yVon - lineWidth.value / 2 + line.value * vonLine;
-      labelZeileErstellen(
-        fahrbeziehungenLabelRotationGroup,
-        y,
-        fillValueArray(knotenarm, [fbt.value1, fbt.value2, fbt.value3]),
-        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links)
-      );
-
+    if (!props.schema) {
+      let vonLine = 0;
       if ([3, 4, 7, 8].includes(knotenarmnummer)) {
-        vonLine--;
-      } else {
-        vonLine++;
+        vonLine = knotenarm.anzahlVonFahrbeziehungen - 1;
       }
-    });
 
-    // "Von" Summen
-    if (knotenarm.anzahlVonFahrbeziehungen > 0) {
-      labelZeileErstellen(
-        fahrbeziehungenLabelRotationGroup,
-        yVonSumme,
-        fillValueArray(knotenarm, [
-          knotenarm.vonTotalValue1,
-          knotenarm.vonTotalValue2,
-          knotenarm.vonTotalValue3,
-        ]),
-        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-        "bold"
-      );
-      // Summenlinie
-      let faktorRechts = 2;
-      // Die Länge der Summenlinie wird nach der Anzahl der angezeigten Werte ausgerichtet
-      if (!links) {
-        if (!knotenarm.is2Filled) faktorRechts--;
-        if (!knotenarm.is3Filled) faktorRechts--;
+      fbts.forEach((fbt) => {
+        const y = yVon - lineWidth.value / 2 + line.value * vonLine;
+        labelZeileErstellen(
+          fahrbeziehungenLabelRotationGroup,
+          y,
+          fillValueArray(knotenarm, [fbt.value1, fbt.value2, fbt.value3]),
+          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links)
+        );
+
+        if ([3, 4, 7, 8].includes(knotenarmnummer)) {
+          vonLine--;
+        } else {
+          vonLine++;
+        }
+      });
+
+      // "Von" Summen
+      if (knotenarm.anzahlVonFahrbeziehungen > 0) {
+        labelZeileErstellen(
+          fahrbeziehungenLabelRotationGroup,
+          yVonSumme,
+          fillValueArray(knotenarm, [
+            knotenarm.vonTotalValue1,
+            knotenarm.vonTotalValue2,
+            knotenarm.vonTotalValue3,
+          ]),
+          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+          "bold"
+        );
+        // Summenlinie
+        let faktorRechts = 2;
+        // Die Länge der Summenlinie wird nach der Anzahl der angezeigten Werte ausgerichtet
+        if (!links) {
+          if (!knotenarm.is2Filled) faktorRechts--;
+          if (!knotenarm.is3Filled) faktorRechts--;
+        }
+        let linieStartX = xc1 - colWidth + 10;
+        if (links) {
+          if (!knotenarm.is2Filled) linieStartX = xc1;
+          if (!knotenarm.is3Filled) linieStartX = xc2;
+        }
+        fahrbeziehungenLabelRotationGroup
+          .line(
+            linieStartX,
+            yVonSumme,
+            xc1 + colWidth * faktorRechts,
+            yVonSumme
+          )
+          .stroke({ width: 1, color: "black" });
       }
-      let linieStartX = xc1 - colWidth + 10;
-      if (links) {
-        if (!knotenarm.is2Filled) linieStartX = xc1;
-        if (!knotenarm.is3Filled) linieStartX = xc2;
-      }
-      fahrbeziehungenLabelRotationGroup
-        .line(linieStartX, yVonSumme, xc1 + colWidth * faktorRechts, yVonSumme)
-        .stroke({ width: 1, color: "black" });
     }
-
     // fahrbeziehungenLabelRotationGroup.add(fahrbeziehungenLabelGroup)
     fahrbeziehungenLabelRotationGroup.rotate(
       calcLabelRotation(knotenarmnummer)
@@ -1889,6 +1920,9 @@ function calcMaxLineWidth() {
  * @param counts    Die Anzahl der Fahrbeziehungen.
  */
 function calcLineWidth(counts: number): number {
+  if (props.schema) {
+    return lineWidth.value * 0.8;
+  }
   if (counts === 0) {
     return 1.0;
   }
