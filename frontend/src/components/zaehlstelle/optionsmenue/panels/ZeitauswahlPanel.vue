@@ -89,7 +89,7 @@
       <v-row no-gutters>
         <v-col cols="4">
           <v-select
-            v-if="isZeitauswahlSpitzenstundeOrBlock"
+            v-if="isZeitauswahlSpitzenstundeOrBlock && !isZeitblockValuesEmpty"
             v-model="zeitblock"
             label="Zeitblock"
             :items="zeitblockValues"
