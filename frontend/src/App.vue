@@ -15,7 +15,7 @@
           <router-link
             to="/"
             style="text-decoration: none"
-            @click="resetSearch"
+            @click="resetMapAndSearch"
           >
             <v-toolbar-title class="text-white font-weight-medium">
               <span class="font-weight-medium">DAVe</span>
@@ -84,6 +84,7 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
+import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
@@ -101,6 +102,7 @@ const showGesamtauswertung = ref(false);
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const searchStore = useSearchStore();
+const mapOptionsStore = useMapOptionsStore();
 const route = useRoute();
 
 created();
@@ -171,7 +173,8 @@ function shortCuts(event: KeyboardEvent) {
   }
 }
 
-function resetSearch() {
+function resetMapAndSearch() {
+  mapOptionsStore.resetMapOptions();
   searchStore.resetAndTriggerSearch();
 }
 </script>

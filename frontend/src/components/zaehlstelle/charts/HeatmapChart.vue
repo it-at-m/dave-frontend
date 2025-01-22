@@ -114,6 +114,11 @@ const optionsDefault = computed(() => {
       formatter: function (value: unknown) {
         return formatYAxisLabel(value);
       },
+      backgroundColor: "rgba(50,50,50,0.7)",
+      textStyle: {
+        color: "rgba(255,255,255,1)",
+      },
+      confine: true,
     },
     animation: false,
     grid: {
@@ -172,6 +177,11 @@ const options2x4 = computed(() => {
       formatter: function (value: unknown) {
         return formatYAxisLabel(value);
       },
+      backgroundColor: "rgba(50,50,50,0.7)",
+      textStyle: {
+        color: "rgba(255,255,255,1)",
+      },
+      confine: true,
     },
     animation: false,
     grid: [
