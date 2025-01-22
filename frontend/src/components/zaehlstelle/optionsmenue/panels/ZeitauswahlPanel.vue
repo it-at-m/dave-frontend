@@ -42,6 +42,7 @@
                 <v-radio
                   label="Block"
                   :value="Zeitauswahl.BLOCK"
+                  :disabled="isZeitblockValuesEmpty"
                   @mouseover="hoverBlock = true"
                   @mouseleave="hoverBlock = false"
                 />
@@ -88,9 +89,7 @@
       <v-row no-gutters>
         <v-col cols="4">
           <v-select
-            v-if="
-              isZeitauswahlSpitzenstundeOrBlock && areZeitblockValuesAvailable
-            "
+            v-if="isZeitauswahlSpitzenstundeOrBlock"
             v-model="zeitblock"
             label="Zeitblock"
             :items="zeitblockValues"
@@ -314,8 +313,8 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
   return result;
 });
 
-const areZeitblockValuesAvailable = computed<boolean>(() => {
-  return !isEmpty(zeitblockValues.value);
+const isZeitblockValuesEmpty = computed<boolean>(() => {
+  return isEmpty(zeitblockValues.value);
 });
 
 /**
