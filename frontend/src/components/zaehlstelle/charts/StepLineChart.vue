@@ -125,6 +125,9 @@ const optionsDefault = computed(() => {
       splitArea: {
         show: true,
       },
+      axisTick: {
+        alignWithLabel: true,
+      },
     },
     yAxis: [
       {
@@ -214,6 +217,9 @@ const options2x4 = computed(() => {
         splitArea: {
           show: true,
         },
+        axisTick: {
+          alignWithLabel: true,
+        },
       },
       {
         type: "category",
@@ -221,6 +227,9 @@ const options2x4 = computed(() => {
         boundaryGap: true,
         splitArea: {
           show: true,
+        },
+        axisTick: {
+          alignWithLabel: true,
         },
         gridIndex: 1,
       },
