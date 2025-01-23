@@ -875,7 +875,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       r = 0;
     }
     const factor = props.schema ? 4 : 1.5;
-    const knotenarmnummerSize = props.schema ? 70 : lineWidth.value;
+    const knotenarmnummerSize = props.schema ? 60 : lineWidth.value;
     const knotenarmnummerCx =
       chartPosition.value + ecke.value - spalt.value * factor;
     knotenarmGroup
