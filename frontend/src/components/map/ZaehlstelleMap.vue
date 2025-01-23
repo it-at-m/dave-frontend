@@ -21,14 +21,7 @@ import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
-import {
-  computed,
-  nextTick,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-} from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
@@ -253,6 +246,15 @@ watch(searchResult, () => {
   resetMarker();
 });
 
+watch(
+  () => zaehlstelleStore.getAktiveZaehlung.id,
+  () => {
+    zaehlartenLayer.clearLayers();
+    zaehlartenLayer.removeFrom(map);
+    setZaehlartenmarkerToMap();
+  }
+);
+
 function resetMarker(): void {
   mapMarkerClusterGroup.removeFrom(map);
   mapMarkerClusterGroup.clearLayers();
@@ -433,10 +435,6 @@ function createMarkerForZaehlart(
 
   marker.on("click", () => {
     choosenZaehlartIconToZaehlstelleHeader(zaehlart);
-    nextTick(() => {
-      zaehlartenLayer.removeFrom(map);
-      setZaehlartenmarkerToMap();
-    });
   });
   return marker;
 }

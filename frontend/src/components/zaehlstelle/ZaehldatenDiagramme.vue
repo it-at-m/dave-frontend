@@ -48,6 +48,7 @@
       stacked
       color="white"
       class="text-grey-lighten-1"
+      @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -75,7 +76,6 @@
       v-if="hasZaehlungen"
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
@@ -403,6 +403,7 @@ function loadZeitreihe(options: OptionsDTO): void {
     .then((dto: LadeZaehldatenZeitreiheDTO) => {
       zaehldatenZeitreihe.value = dto;
     })
+    .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       zeitreiheLoading.value = false;
     });
@@ -415,6 +416,7 @@ function loadBelastungsplan(options: OptionsDTO) {
       belastungsplanDTO.value = dto;
       belastungsplanLoaded.value = true;
     })
+    .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       belastungsplanLoading.value = false;
     });
@@ -433,6 +435,7 @@ function loadProcessedChartData(options: OptionsDTO) {
       zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
       setMaxRangeYAchse();
     })
+    .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       chartDataLoading.value = false;
       storeStartAndEndeUhrzeitOfIntervalls(listenausgabeDTO.value);
