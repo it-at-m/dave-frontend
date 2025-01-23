@@ -116,6 +116,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
+import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -192,6 +193,17 @@ function setDefaultOptionsForZaehlung() {
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
     }
     // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
+  } else {
+    const zeitblockAvailable = !isEmpty(props.zaehlung.zeitauswahl?.blocks);
+    if (
+      zeitblockAvailable &&
+      props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
+    ) {
+      const firstZeitblock = head(props.zaehlung.zeitauswahl?.blocks);
+      if (!isNil(firstZeitblock)) {
+        optionsCopy.zeitblock = firstZeitblock;
+      }
+    }
   }
 
   props.zaehlung.kategorien.forEach((fahr) => {
