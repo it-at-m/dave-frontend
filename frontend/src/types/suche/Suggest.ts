@@ -4,6 +4,7 @@ export default class Suggest {
   zaehlstelleId: string;
   zaehlungId: string;
   mstId: string;
+  props: unknown;
 
   constructor(
     text: string,
@@ -17,5 +18,8 @@ export default class Suggest {
     this.zaehlstelleId = zaehlstelleId;
     this.zaehlungId = zaehlungId;
     this.mstId = mstId;
+    this.props = {
+      value: `${text}-${type}-${zaehlstelleId}-${zaehlungId}-${mstId}`,
+    };
   }
 }
