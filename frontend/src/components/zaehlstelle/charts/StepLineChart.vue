@@ -125,6 +125,9 @@ const optionsDefault = computed(() => {
       splitArea: {
         show: true,
       },
+      axisTick: {
+        alignWithLabel: true,
+      },
     },
     yAxis: [
       {
@@ -140,6 +143,9 @@ const optionsDefault = computed(() => {
         axisLine: {
           show: true,
         },
+        axisTick: {
+          show: true,
+        },
       },
       {
         type: "value",
@@ -153,6 +159,9 @@ const optionsDefault = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },
@@ -208,6 +217,9 @@ const options2x4 = computed(() => {
         splitArea: {
           show: true,
         },
+        axisTick: {
+          alignWithLabel: true,
+        },
       },
       {
         type: "category",
@@ -215,6 +227,9 @@ const options2x4 = computed(() => {
         boundaryGap: true,
         splitArea: {
           show: true,
+        },
+        axisTick: {
+          alignWithLabel: true,
         },
         gridIndex: 1,
       },
@@ -233,6 +248,9 @@ const options2x4 = computed(() => {
         axisLine: {
           show: true,
         },
+        axisTick: {
+          show: true,
+        },
       },
       {
         type: "value",
@@ -246,6 +264,9 @@ const options2x4 = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },
@@ -262,6 +283,9 @@ const options2x4 = computed(() => {
         axisLine: {
           show: true,
         },
+        axisTick: {
+          show: true,
+        },
         gridIndex: 1,
       },
       {
@@ -276,6 +300,9 @@ const options2x4 = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
         gridIndex: 1,

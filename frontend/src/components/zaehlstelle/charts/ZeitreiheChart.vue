@@ -238,6 +238,9 @@ const options = computed(() => {
       splitArea: {
         show: true,
       },
+      axisTick: {
+        alignWithLabel: true,
+      },
     },
     yAxis: [
       {
@@ -250,6 +253,9 @@ const options = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },
@@ -266,6 +272,9 @@ const options = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },
