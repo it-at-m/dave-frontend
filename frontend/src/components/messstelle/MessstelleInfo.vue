@@ -7,7 +7,8 @@
       <v-sheet
         color="white"
         width="100%"
-        class="px-4 py-2 text-primary text-caption"
+        class="px-4 py-2 text-primary"
+        style="font-size: 0.875rem"
         height="72px"
       >
         <v-row
@@ -16,13 +17,31 @@
         >
           <v-col
             cols="12"
-            lg="8"
+            lg="10"
           >
             <v-row no-gutters>
-              <span v-tooltip:bottom="'Datum letzte plausible Messung'"
-                >letzter Messtag:
-                {{ datumLetztePlausibleMessung }}
-              </span>
+              <v-col cols="8">
+                <span
+                  class="text--body-1"
+                  v-tooltip:bottom="'Datum letzte plausible Messung'"
+                  >letzter Messtag:
+                  {{ datumLetztePlausibleMessung }}
+                </span>
+              </v-col>
+              <v-col cols="4">
+                <div class="d-flex flex-row-reverse">
+                  <messstelle-kommentar kommentar="messstelle.kommentar" />
+                  <fahrzeugklassen-icon
+                    :fahrzeugklasse="fahrzeugKlasse"
+                    color="primary"
+                    size="small"
+                  />
+                  <detektierte-fahrzeugart-icon
+                    :detektierte-fahrzeugart="detektierteVerkehrsart"
+                    color="primary"
+                  />
+                </div>
+              </v-col>
             </v-row>
             <v-row no-gutters>
               <span class="text-truncate">
@@ -58,16 +77,6 @@
               no-gutters
               class="ma-0"
             >
-              <detektierte-fahrzeugart-icon
-                :detektierte-fahrzeugart="detektierteVerkehrsart"
-                color="primary"
-              />
-              <fahrzeugklassen-icon
-                :fahrzeugklasse="fahrzeugKlasse"
-                color="primary"
-                size="small"
-              />
-              <messstelle-kommentar :kommentar="messstelle.kommentar" />
             </v-row>
           </v-col>
           <v-col
@@ -77,7 +86,7 @@
             <v-spacer />
           </v-col>
           <v-col
-            lg
+            cols="2"
             class="hidden-md-and-down"
           >
             <messstelle-geometrie

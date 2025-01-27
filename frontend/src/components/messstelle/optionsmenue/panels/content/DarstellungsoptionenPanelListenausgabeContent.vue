@@ -4,7 +4,7 @@
       font-size="0.875rem"
       font-weight="bold"
       padding="10px 0 0 0"
-      header-text="Listenausgabe"
+      :header-text="headerText"
     />
     <v-row
       align="start"
@@ -91,5 +91,11 @@ const helpTextListenausgabe = computed(() => {
     return "Ausgaben der Summe für die Spitzenstunde(n) als Zeile.";
   }
   return "";
+});
+
+const headerText = computed(() => {
+  return chosenOptionsCopy.value.zeitraumStartAndEndDate.isRange()
+    ? "Listenausgabe (Durchschnittswerte)"
+    : "Listenausgabe";
 });
 </script>

@@ -10,7 +10,7 @@ export default class ChartUtils {
   public static readonly LEGEND_ENTRY_LKW: string = "Lkw";
   public static readonly LEGEND_ENTRY_LFW: string = "Lfw";
   public static readonly LEGEND_ENTRY_LZ: string = "Lz";
-  public static readonly LEGEND_ENTRY_BUSSE: string = "Busse";
+  public static readonly LEGEND_ENTRY_BUS: string = "Bus";
   public static readonly LEGEND_ENTRY_KRAD: string = "Krad";
   public static readonly LEGEND_ENTRY_PKW_EINHEITEN: string = "Pkw-Einheiten";
 
@@ -30,7 +30,7 @@ export default class ChartUtils {
     [ChartUtils.LEGEND_ENTRY_LKW, "rect"],
     [ChartUtils.LEGEND_ENTRY_LFW, "rect"],
     [ChartUtils.LEGEND_ENTRY_LZ, "rect"],
-    [ChartUtils.LEGEND_ENTRY_BUSSE, "rect"],
+    [ChartUtils.LEGEND_ENTRY_BUS, "rect"],
     [ChartUtils.LEGEND_ENTRY_KRAD, "rect"],
 
     [ChartUtils.LEGEND_ENTRY_PKW_EINHEITEN, "arrow"],
@@ -52,7 +52,7 @@ export default class ChartUtils {
     [ChartUtils.LEGEND_ENTRY_LKW, "#BF360C"], // deep-orange darken-4
     [ChartUtils.LEGEND_ENTRY_LFW, "#CDDC39"], // lime
     [ChartUtils.LEGEND_ENTRY_LZ, "#FF9E80"], // deep-orange accent-1
-    [ChartUtils.LEGEND_ENTRY_BUSSE, "#FFC107"], // amber
+    [ChartUtils.LEGEND_ENTRY_BUS, "#FFC107"], // amber
     [ChartUtils.LEGEND_ENTRY_KRAD, "#0097A7"], // cyan darken-2
 
     [ChartUtils.LEGEND_ENTRY_PKW_EINHEITEN, "#000000"], // black
