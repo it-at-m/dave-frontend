@@ -80,7 +80,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
-import _ from "lodash";
+import _, { isNil } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -111,11 +111,11 @@ const moeglicheBeziehungenNach = ref(new Map<number, KnotenarmVerbindungen>());
 /**
  * Der gewählte von-Knotenarm
  */
-const von = ref(-1);
+const von = ref(0);
 /**
  * Der gewählte nach-Knotenarm
  */
-const nach = ref(-1);
+const nach = ref(0);
 
 const alle = { nummer: 0, strassenname: "Alle Knotenarme" };
 
@@ -195,10 +195,6 @@ function reset(fo: OptionsDTO) {
  * und "hinein" vorhält.
  */
 function initFahrbeziehungen(): void {
-  // Init default Knotenarmauswahl
-  von.value = 0;
-  nach.value = 0;
-
   // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
   const knotenarme: Map<number, string> = new Map<number, string>(
     props.zaehlung.knotenarme.map((knotenarm) => [
@@ -231,21 +227,32 @@ function initFahrbeziehungen(): void {
         );
       } else {
         // Kreisverkehr
-        if (fahrbeziehung.knotenarm != null && fahrbeziehung.hinein) {
-          alleEingehendeKnotenarmeNach.add({
-            nummer: fahrbeziehung.knotenarm,
-            strassenname: getKnotenarmBezeichnung(
-              fahrbeziehung.knotenarm,
-              knotenarme
-            ),
-          });
+        if (!isNil(fahrbeziehung.knotenarm)) {
+          if (fahrbeziehung.hinein) {
+            alleEingehendeKnotenarmeNach.add({
+              nummer: fahrbeziehung.knotenarm,
+              strassenname: getKnotenarmBezeichnung(
+                fahrbeziehung.knotenarm,
+                knotenarme
+              ),
+            });
+          }
+          if (fahrbeziehung.heraus) {
+            alleZielknotenarmeVon.add({
+              nummer: fahrbeziehung.knotenarm,
+              strassenname: getKnotenarmBezeichnung(
+                fahrbeziehung.knotenarm,
+                knotenarme
+              ),
+            });
+          }
         }
       }
     });
 
     // Nachfolgend werden die eingehenden bzw. ausgehenden Beziehungen bei Auswahl von "alle" gesetzt.
     if (isZaehlungForKreuzung()) {
-      const kv = {
+      const kv: KnotenarmVerbindungen = {
         knotenarm: alle,
         moeglicheVerbindungen: _.union(
           [alle],
@@ -262,7 +269,10 @@ function initFahrbeziehungen(): void {
       const kv = {
         knotenarm: alle,
         moeglicheVerbindungen: [alle],
-        moeglicheVerbindungenIds: [alle.nummer],
+        moeglicheVerbindungenIds: _.union(
+          [alle],
+          Array.from(alleZielknotenarmeVon.values())
+        ).map((knotenarm) => knotenarm.nummer),
       };
       moeglicheBeziehungenVon.value.set(alle.nummer, kv);
     }

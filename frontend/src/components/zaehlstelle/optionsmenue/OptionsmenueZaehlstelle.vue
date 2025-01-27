@@ -264,21 +264,25 @@ function updateOptions(event: OptionsDTO) {
 
 // Event-Methoden für die Geometrie Komponente
 function setVon(event: Array<number>) {
-  if (Array.isArray(event) && event.length > 1) {
-    chosenOptions.value.vonKnotenarm = null;
-  } else {
-    chosenOptions.value.vonKnotenarm = event[0];
+  if (Array.isArray(event)) {
+    if (event.length > 1) {
+      chosenOptions.value.vonKnotenarm = null;
+    } else {
+      chosenOptions.value.vonKnotenarm = event[0];
+    }
+    chosenOptions.value.vonIds = event.filter((value) => value !== 0);
   }
-  chosenOptions.value.vonIds = event;
 }
 
 function setNach(event: Array<number>) {
-  if (Array.isArray(event) && event.length > 1) {
-    chosenOptions.value.nachKnotenarm = null;
-  } else {
-    chosenOptions.value.nachKnotenarm = event[0];
+  if (Array.isArray(event)) {
+    if (event.length > 1) {
+      chosenOptions.value.nachKnotenarm = null;
+    } else {
+      chosenOptions.value.nachKnotenarm = event[0];
+    }
+    chosenOptions.value.nachIds = event.filter((value) => value !== 0);
   }
-  chosenOptions.value.nachIds = event;
 }
 
 function setBeideRichtungen(event: boolean) {
