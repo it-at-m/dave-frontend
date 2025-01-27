@@ -370,18 +370,6 @@
         </v-col>
         <v-col cols="4">
           <v-checkbox
-            v-model="fahrzeugOptions.kraftraeder"
-            :label="'Krafträder (Krad )'"
-            :hint="getHintToDisplay('KRAD')"
-            :persistent-hint="isTypeDisabled('KRAD')"
-            :disabled="isTypeDisabled('KRAD')"
-            color="grey-darken-1"
-            hide-details
-            density="compact"
-            @mouseover="hoverKrad = true"
-            @mouseleave="hoverKrad = false"
-          />
-          <v-checkbox
             v-model="fahrzeugOptions.busse"
             :label="'Busse'"
             :hint="getHintToDisplay('BUS')"
@@ -392,6 +380,18 @@
             density="compact"
             @mouseover="hoverBus = true"
             @mouseleave="hoverBus = false"
+          />
+          <v-checkbox
+            v-model="fahrzeugOptions.kraftraeder"
+            :label="'Krafträder (Krad )'"
+            :hint="getHintToDisplay('KRAD')"
+            :persistent-hint="isTypeDisabled('KRAD')"
+            :disabled="isTypeDisabled('KRAD')"
+            color="grey-darken-1"
+            hide-details
+            density="compact"
+            @mouseover="hoverKrad = true"
+            @mouseleave="hoverKrad = false"
           />
           <v-checkbox
             v-model="fahrzeugOptions.pkwEinheiten"

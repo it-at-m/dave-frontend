@@ -88,6 +88,7 @@
             ]"
             type="number"
             density="compact"
+            clearable
             @blur="checkRangeYAchse1"
             @mouseover="hoverYAchse1 = true"
             @mouseleave="hoverYAchse1 = false"
@@ -103,6 +104,7 @@
                 rules.onlyNumbersInRange(toCheck, MIN_VALUE, MAX_VALUE_EXCLUDE),
             ]"
             density="compact"
+            clearable
             @blur="checkRangeYAchse2"
             @mouseover="hoverYAchse2 = true"
             @mouseleave="hoverYAchse2 = false"
