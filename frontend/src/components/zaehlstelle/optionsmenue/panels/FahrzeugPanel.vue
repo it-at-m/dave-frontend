@@ -371,7 +371,7 @@
         <v-col cols="4">
           <v-checkbox
             v-model="fahrzeugOptions.busse"
-            :label="'Busse'"
+            :label="'Bus'"
             :hint="getHintToDisplay('BUS')"
             :persistent-hint="isTypeDisabled('BUS')"
             :disabled="isTypeDisabled('BUS')"

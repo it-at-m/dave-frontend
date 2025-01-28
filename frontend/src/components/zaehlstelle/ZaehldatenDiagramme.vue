@@ -19,11 +19,12 @@
       opacity="0"
       style="z-index: -99999999"
     >
-      <belastungsplan-kreuzung-svg-schematische-uebersicht
+      <belastungsplan-kreuzung-svg
         :dimension="contentHeight"
         :data="belastungsplanDTO"
         :doc-mode="false"
         :geometrie-mode="true"
+        :schema="true"
         @print="storeSvgSchematischeUebersicht($event)"
       />
     </v-overlay>
@@ -133,9 +134,10 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="97%"
+          width="94%"
         >
           <zaehldaten-listenausgabe
+            class="mx-10 border-thin"
             :listenausgabe-data="listenausgabeDTO"
             :height="contentHeight"
           >
@@ -209,7 +211,6 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
-import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
