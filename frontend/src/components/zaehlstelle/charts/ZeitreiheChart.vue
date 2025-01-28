@@ -238,9 +238,6 @@ const options = computed(() => {
       splitArea: {
         show: true,
       },
-      axisTick: {
-        alignWithLabel: true,
-      },
     },
     yAxis: [
       {
