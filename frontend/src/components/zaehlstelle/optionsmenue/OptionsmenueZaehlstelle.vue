@@ -31,6 +31,7 @@
             class="overflow-y-auto"
           >
             <v-expansion-panels
+              v-model="activePanel"
               variant="accordion"
               focusable
               elevation="0"
@@ -155,6 +156,7 @@ const snackbarStore = useSnackbarStore();
 const display = useDisplay();
 
 const dialog = ref(false);
+const activePanel = ref(-1);
 const chosenOptions = ref({} as OptionsDTO);
 
 const options = computed<OptionsDTO>(() => {
