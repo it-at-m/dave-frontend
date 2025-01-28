@@ -252,6 +252,9 @@ const options = computed(() => {
         axisLine: {
           show: true,
         },
+        axisTick: {
+          show: true,
+        },
       },
       {
         type: "value",
@@ -266,6 +269,9 @@ const options = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },

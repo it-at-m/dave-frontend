@@ -309,6 +309,8 @@ function setMarkerToMap() {
      * umfasst das Suchergebnis somit nur eine Zaehlstelle.
      * Auf diese eine mit einem Icon angezeigte Zaehlstelle muss dann zentriert werden.
      */
+    // Zaehlartenmarker erzeugen
+    setZaehlartenmarkerToMap();
     map.setView(createLatLng(zaehlstellenKarte[0]), 18);
   } else if (props.zId && props.latlng && props.latlng.length > 0) {
     // Zaehlartenmarker erzeugen
@@ -330,8 +332,10 @@ function setZaehlartenmarkerToMap() {
       );
     });
   });
-  zaehlartenLayer = L.layerGroup(markers);
-  zaehlartenLayer.addTo(map);
+  if (markers.length > 0) {
+    zaehlartenLayer = L.layerGroup(markers);
+    zaehlartenLayer.addTo(map);
+  }
 }
 
 const selectedZaehlstelleKarte = ref(

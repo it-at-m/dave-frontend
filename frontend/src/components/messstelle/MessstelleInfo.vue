@@ -22,8 +22,8 @@
             <v-row no-gutters>
               <v-col cols="8">
                 <span
-                  class="text--body-1"
                   v-tooltip:bottom="'Datum letzte plausible Messung'"
+                  class="text--body-1"
                   >letzter Messtag:
                   {{ datumLetztePlausibleMessung }}
                 </span>

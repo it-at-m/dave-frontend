@@ -11,7 +11,7 @@ export const useHistoryStore = defineStore("historyStore", () => {
 
   function addHistoryItem(payload: AbstractHistoryItem) {
     // Einträge nach Datum sortieren
-    const oldItems = items.value.sort(HistoryItemComperator.sortByTimeAbstract);
+    const oldItems = items.value.sort(HistoryItemComperator.sortByTimeDesc);
     const newItems = new Array<AbstractHistoryItem>();
     newItems.push(payload);
     // Der Eintrag sollte nicht doppelt vorkommen
@@ -21,7 +21,7 @@ export const useHistoryStore = defineStore("historyStore", () => {
       }
     });
     // Die neu Liste wird gesetzt
-    items.value = newItems.sort(HistoryItemComperator.sortByTimeAbstract);
+    items.value = newItems.sort(HistoryItemComperator.sortByTimeAsc);
   }
 
   return { historyItems, addHistoryItem };

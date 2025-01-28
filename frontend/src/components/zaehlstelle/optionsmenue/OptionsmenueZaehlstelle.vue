@@ -31,6 +31,7 @@
             class="overflow-y-auto"
           >
             <v-expansion-panels
+              v-model="activePanel"
               variant="accordion"
               focusable
               elevation="0"
@@ -116,6 +117,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
+import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -154,6 +156,7 @@ const snackbarStore = useSnackbarStore();
 const display = useDisplay();
 
 const dialog = ref(false);
+const activePanel = ref(-1);
 const chosenOptions = ref({} as OptionsDTO);
 
 const options = computed<OptionsDTO>(() => {
@@ -192,6 +195,17 @@ function setDefaultOptionsForZaehlung() {
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
     }
     // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
+  } else {
+    const zeitblockAvailable = !isEmpty(props.zaehlung.zeitauswahl?.blocks);
+    if (
+      zeitblockAvailable &&
+      props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
+    ) {
+      const firstZeitblock = head(props.zaehlung.zeitauswahl?.blocks);
+      if (!isNil(firstZeitblock)) {
+        optionsCopy.zeitblock = firstZeitblock;
+      }
+    }
   }
 
   props.zaehlung.kategorien.forEach((fahr) => {
