@@ -21,6 +21,7 @@
           ]"
           clearable
           density="compact"
+          :disabled="isGreaterThanFiveYears"
           @mouseover="hoverYAchse1 = true"
           @mouseleave="hoverYAchse1 = false"
           @blur="checkRangeYAchse1"
@@ -36,6 +37,7 @@
           ]"
           clearable
           density="compact"
+          :disabled="isGreaterThanFiveYears"
           @mouseover="hoverYAchse2 = true"
           @mouseleave="hoverYAchse2 = false"
           @blur="checkRangeYAchse2"
@@ -58,6 +60,7 @@ import _ from "lodash";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useDateUtils } from "@/util/DateUtils";
 import { useValidationRules } from "@/util/ValidationRules";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
@@ -68,6 +71,12 @@ const hoverYAchse2 = ref(false);
 
 const MIN_VALUE = 0;
 const MAX_VALUE_EXCLUDE = 101;
+
+const dateUtils = useDateUtils();
+
+const isGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(chosenOptionsCopy.value.zeitraum);
+});
 
 const helpTextGanglinie = computed(() => {
   if (hoverYAchse1.value) {

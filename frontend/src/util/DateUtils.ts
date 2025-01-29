@@ -157,7 +157,7 @@ export function useDateUtils() {
     let isGreaterThanFiveYears = false;
     if (toArray(zeitraum).length > 1) {
       const differenceInMs = Math.abs(
-          new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
+        new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
       );
       const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
       const differenceInYears = Math.floor(differenceInDays / 365);
