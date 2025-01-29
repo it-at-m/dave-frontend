@@ -72,7 +72,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isBiggerThanFiveYears"
+            v-if="isGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -93,7 +93,7 @@
           width="97%"
         >
           <banner-messtelle-tabs
-            v-if="isBiggerThanFiveYears"
+            v-if="isGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -115,7 +115,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isBiggerThanFiveYears"
+            v-if="isGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -184,6 +184,7 @@ import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useReportTools } from "@/util/ReportTools";
+import {useDateUtils} from "@/util/DateUtils";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -243,6 +244,7 @@ const route = useRoute();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
+const dateUtils = useDateUtils();
 
 const messstelleId = computed(() => {
   return route.params.messstelleId as string;
@@ -263,18 +265,12 @@ const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
 });
 
-const isBiggerThanFiveYears = computed(() => {
-  const zeitraum = options.value.zeitraum;
-  const differenceInMs = Math.abs(
-    new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
-  );
-  const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
-  const differenceInYears = Math.floor(differenceInDays / 365);
-  return differenceInYears >= 5;
+const isGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(options.value.zeitraum);
 });
 
-watch(isBiggerThanFiveYears, () => {
-  if (isBiggerThanFiveYears.value) {
+watch(isGreaterThanFiveYears, () => {
+  if (isGreaterThanFiveYears.value) {
     activeTab.value = TAB_BELASTUNGSPLAN;
   }
 });
