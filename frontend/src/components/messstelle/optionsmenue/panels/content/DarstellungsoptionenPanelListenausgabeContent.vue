@@ -73,7 +73,7 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import {useDateUtils} from "@/util/DateUtils";
+import { useDateUtils } from "@/util/DateUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
