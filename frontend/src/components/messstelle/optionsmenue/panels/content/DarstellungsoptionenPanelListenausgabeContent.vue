@@ -85,7 +85,10 @@ const hoverSpitzenstunde = ref(false);
 const dateUtils = useDateUtils();
 
 const isGreaterThanFiveYears = computed(() => {
-  return dateUtils.isGreaterThanFiveYears(chosenOptionsCopy.value.zeitraum);
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
 });
 
 const helpTextListenausgabe = computed(() => {

@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import _ from "lodash";
+import { inRange } from "lodash";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -75,7 +75,10 @@ const MAX_VALUE_EXCLUDE = 101;
 const dateUtils = useDateUtils();
 
 const isGreaterThanFiveYears = computed(() => {
-  return dateUtils.isGreaterThanFiveYears(chosenOptionsCopy.value.zeitraum);
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
 });
 
 const helpTextGanglinie = computed(() => {
@@ -91,7 +94,7 @@ const helpTextGanglinie = computed(() => {
 function checkRangeYAchse2() {
   if (chosenOptionsCopy.value.ganglinieYAchse2MaxValue) {
     if (
-      !_.inRange(
+      !inRange(
         chosenOptionsCopy.value.ganglinieYAchse2MaxValue,
         MIN_VALUE,
         MAX_VALUE_EXCLUDE

@@ -153,12 +153,13 @@ export function useDateUtils() {
     return date;
   }
 
-  function isGreaterThanFiveYears(zeitraum: string[]) {
+  function isGreaterThanFiveYears(
+    start: Date | undefined,
+    end: Date | undefined
+  ) {
     let isGreaterThanFiveYears = false;
-    if (toArray(zeitraum).length > 1) {
-      const differenceInMs = Math.abs(
-        new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
-      );
+    if (start && end) {
+      const differenceInMs = Math.abs(start.valueOf() - end.valueOf());
       const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
       const differenceInYears = Math.floor(differenceInDays / 365);
       isGreaterThanFiveYears = differenceInYears >= 5;
