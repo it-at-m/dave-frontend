@@ -158,7 +158,7 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
-import _ from "lodash";
+import _, { isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -266,7 +266,10 @@ const isNotTabHeatmap = computed<boolean>(() => {
 });
 
 const isGreaterThanFiveYears = computed(() => {
-  return dateUtils.isGreaterThanFiveYears(options.value.zeitraum);
+  return dateUtils.isGreaterThanFiveYears(
+    options.value.zeitraumStartAndEndDate.startDate,
+    options.value.zeitraumStartAndEndDate.endDate
+  );
 });
 
 watch(isGreaterThanFiveYears, () => {
