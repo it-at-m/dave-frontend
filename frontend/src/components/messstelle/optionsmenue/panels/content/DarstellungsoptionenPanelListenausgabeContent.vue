@@ -21,7 +21,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
-          :disabled="isGreaterThanFiveYears"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverStundensumme = true"
           @mouseleave="hoverStundensumme = false"
         />
@@ -32,7 +32,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
-          :disabled="isGreaterThanFiveYears"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverBlocksumme = true"
           @mouseleave="hoverBlocksumme = false"
         />
@@ -44,7 +44,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
-          :disabled="isGreaterThanFiveYears"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverTagessumme = true"
           @mouseleave="hoverTagessumme = false"
         />
@@ -55,7 +55,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
-          :disabled="isGreaterThanFiveYears"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverSpitzenstunde = true"
           @mouseleave="hoverSpitzenstunde = false"
         />
@@ -88,7 +88,7 @@ const hoverSpitzenstunde = ref(false);
 
 const dateUtils = useDateUtils();
 
-const isGreaterThanFiveYears = computed(() => {
+const isZeitraumGreaterThanFiveYears = computed(() => {
   return dateUtils.isGreaterThanFiveYears(
     chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
     chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
@@ -96,7 +96,7 @@ const isGreaterThanFiveYears = computed(() => {
 });
 
 const helpTextListenausgabe = computed(() => {
-  if (isHoveringOverInputFields.value && isGreaterThanFiveYears.value) {
+  if (isHoveringOverInputFields.value && isZeitraumGreaterThanFiveYears.value) {
     return "Der gewählte Zeitraum umfasst mehr als fünf Jahre.";
   }
   if (hoverStundensumme.value) {
