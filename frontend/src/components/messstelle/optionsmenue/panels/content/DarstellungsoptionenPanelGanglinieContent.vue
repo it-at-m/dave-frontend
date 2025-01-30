@@ -10,6 +10,8 @@
       align="start"
       justify="center"
       dense
+      @mouseover="isHoveringOverInputFields = true"
+      @mouseleave="isHoveringOverInputFields = false"
     >
       <v-col cols="4">
         <v-text-field
@@ -81,7 +83,12 @@ const isGreaterThanFiveYears = computed(() => {
   );
 });
 
+const isHoveringOverInputFields = ref<boolean>(false);
+
 const helpTextGanglinie = computed(() => {
+  if (isHoveringOverInputFields.value && isGreaterThanFiveYears.value) {
+    return "Der gewählte Zeitraum umfasst mehr als fünf Jahre.";
+  }
   if (hoverYAchse1.value) {
     return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 ist.";
   }

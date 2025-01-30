@@ -11,6 +11,8 @@
       justify="center"
       dense
       no-gutters
+      @mouseover="isHoveringOverInputFields = true"
+      @mouseleave="isHoveringOverInputFields = false"
     >
       <v-col cols="4">
         <v-checkbox
@@ -77,6 +79,8 @@ import { useDateUtils } from "@/util/DateUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
+const isHoveringOverInputFields = ref<boolean>(false);
+
 const hoverStundensumme = ref(false);
 const hoverBlocksumme = ref(false);
 const hoverTagessumme = ref(false);
@@ -92,6 +96,9 @@ const isGreaterThanFiveYears = computed(() => {
 });
 
 const helpTextListenausgabe = computed(() => {
+  if (isHoveringOverInputFields.value && isGreaterThanFiveYears.value) {
+    return "Der gewählte Zeitraum umfasst mehr als fünf Jahre.";
+  }
   if (hoverStundensumme.value) {
     return "Ausgabe der Summen für jede Stunde als Zeile.";
   }
