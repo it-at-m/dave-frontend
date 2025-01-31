@@ -1,16 +1,17 @@
 <template>
-  <v-sheet
-    v-if="schema"
-    id="belastungsplan-schema"
-    :height="dimension"
-    :width="dimension"
-  />
-  <v-sheet
-    v-else
-    id="belastungsplan-default"
-    :height="dimension"
-    :width="dimension"
-  />
+  <div>
+    <v-sheet
+      id="belastungsplan-default"
+      :height="dimension"
+      :width="dimension"
+    />
+    <v-sheet
+      id="belastungsplan-schema"
+      :height="dimension"
+      :width="dimension"
+      :style="schemaStyle"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +25,7 @@ import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastun
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -59,7 +60,6 @@ interface Props {
   // Soll die Geometrieauswahl im Belastungsplan gezeigt werden
   geometrieMode?: boolean;
   inaktivColor?: string;
-  schema?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -76,10 +76,12 @@ const props = withDefaults(defineProps<Props>(), {
   gleichValueColor: "#000000",
   geometrieMode: false,
   inaktivColor: "#E0E0E0",
-  schema: false,
 });
 
-const emits = defineEmits<(e: "print", v: Blob) => void>();
+const emits = defineEmits<{
+  (e: "print", v: Blob): void;
+  (e: "printSchema", v: Blob): void;
+}>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
@@ -89,6 +91,8 @@ const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 
 // die Basis Werte zum Errechnen der Positionen
 const viewbox = 1400;
+
+const drawSchema = ref(true);
 
 // Prozentwerte um die Strecken zu errechnen
 const prozentDiagram = 0.6;
@@ -156,19 +160,34 @@ const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
 const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
+const canvasSchema = ref<SVG.Svg>(SVG.SVG());
+const canvasDefault = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
 
 onMounted(() => {
-  const addTo = `#belastungsplan-${props.schema ? "schema" : "default"}`;
-  canvas.value = SVG.SVG()
-    .addTo(addTo)
+  canvasSchema.value = SVG.SVG()
+    .addTo(`#belastungsplan-schema`)
     .size(props.dimension, props.dimension)
     .viewbox(0, 0, viewbox, viewbox);
+  canvasDefault.value = SVG.SVG()
+    .addTo(`#belastungsplan-default`)
+    .size(props.dimension, props.dimension)
+    .viewbox(0, 0, viewbox, viewbox);
+
   zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
   );
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
+  resetSchema();
+});
+
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!drawSchema.value) {
+    style = `display: none`;
+  }
+  return style;
 });
 
 const zaehlung = computed<LadeZaehlungDTO>(() => {
@@ -317,6 +336,7 @@ const beideRichtungen = computed(() => {
  */
 function draw() {
   const cleanseMap = new Map<number, SVG.G>();
+  initCanvas();
   canvas.value.clear();
   // ausgewählter Knotenarm bei Geometrieauswahl
   let selectedKnotenarm = 0;
@@ -373,7 +393,7 @@ function draw() {
   }
 
   // Legende erstellen
-  if (!props.schema) {
+  if (!drawSchema.value) {
     legendeNordPfeil();
     legendeLinienStaerke();
     legendeSpalten();
@@ -389,7 +409,16 @@ function draw() {
     .flatten(canvas.value)
     .size(size, size)
     .svg() as string;
-  emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+  if (drawSchema.value) {
+    emits(
+      "printSchema",
+      new Blob([ex], { type: "image/svg+xml;charset=utf-8" })
+    );
+    drawSchema.value = false;
+    draw();
+  } else {
+    emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+  }
 }
 
 /**
@@ -509,7 +538,7 @@ function lineColor(
 
   // Wenn der schwarz weiß Modus angeschaltet ist, dann werden alle aktiven Fahrbeziehungen
   // schwarz gedruckt.
-  if (isBlackPrintMode.value && !props.schema) {
+  if (isBlackPrintMode.value && !drawSchema.value) {
     return "#000000";
   }
 
@@ -533,7 +562,7 @@ function lineColor(
       }
     }
   }
-  if (props.schema) {
+  if (drawSchema.value) {
     if (
       vonIds.value.includes(vonKnotenarm) &&
       nachIds.value.includes(nachKnotenarm)
@@ -874,8 +903,8 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     if (!r) {
       r = 0;
     }
-    const factor = props.schema ? 4 : 1.5;
-    const knotenarmnummerSize = props.schema ? 60 : lineWidth.value;
+    const factor = drawSchema.value ? 4 : 1.5;
+    const knotenarmnummerSize = drawSchema.value ? 60 : lineWidth.value;
     const knotenarmnummerCx =
       chartPosition.value + ecke.value - spalt.value * factor;
     knotenarmGroup
@@ -1006,7 +1035,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     }
 
     // Knotenarmname
-    if (!props.schema) {
+    if (!drawSchema.value) {
       createKnotenarmname(
         fahrbeziehungenLabelRotationGroup,
         knotenarm,
@@ -1016,7 +1045,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     }
 
     // Knotenarmsumme
-    if (!props.schema) {
+    if (!drawSchema.value) {
       labelZeileErstellen(
         fahrbeziehungenLabelRotationGroup,
         yKnotenarm,
@@ -1044,7 +1073,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         .attr("fill", "none");
 
       // Die Werte für die "nach" Fahrbeziehungen des Knotenarmes werden ausgegeben
-      if (!props.schema) {
+      if (!drawSchema.value) {
         labelZeileErstellen(
           fahrbeziehungenLabelRotationGroup,
           yNach,
@@ -1062,7 +1091,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     // ========
     // VON Labels
     // ========
-    if (!props.schema) {
+    if (!drawSchema.value) {
       let vonLine = 0;
       if ([3, 4, 7, 8].includes(knotenarmnummer)) {
         vonLine = knotenarm.anzahlVonFahrbeziehungen - 1;
@@ -1767,7 +1796,7 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       }
     });
 
-    // maximale Linien Dicke berrechnen
+    // maximale Linien Dicke berechnen
     calcMaxLineWidth();
 
     // Belastungsplan ausgeben
@@ -1920,7 +1949,7 @@ function calcMaxLineWidth() {
  * @param counts    Die Anzahl der Fahrbeziehungen.
  */
 function calcLineWidth(counts: number): number {
-  if (props.schema) {
+  if (drawSchema.value) {
     return lineWidth.value * 0.8;
   }
   if (counts === 0) {
@@ -2221,15 +2250,32 @@ function getStreetnames(
   return [firstLine, secondLine];
 }
 
+function initCanvas() {
+  if (drawSchema.value) {
+    canvas.value = canvasSchema.value;
+  } else {
+    canvas.value = canvasDefault.value;
+  }
+}
+
+function resetSchema() {
+  drawSchema.value = true;
+}
+
+function redraw() {
+  resetSchema();
+  nextTick(() => {
+    calcFahrbeziehungen(props.data);
+  });
+}
+
 /**
  * Diese Methode zeichnet den Balastungsplan immer dann, wenn von einem anderen Tab auf
  * den Belastungsplan Tab gewechselt wird.
  */
 watch(activeTab, (tab: number) => {
   if (tab === 0 && !props.data.kreisverkehr) {
-    setTimeout(() => {
-      calcFahrbeziehungen(props.data);
-    }, 350);
+    redraw();
   }
 });
 /**
@@ -2240,7 +2286,7 @@ watch(
   () => props.data,
   (data: LadeBelastungsplanDTO) => {
     if (activeTab.value === 0 && !data.kreisverkehr) {
-      calcFahrbeziehungen(data);
+      redraw();
     }
   }
 );
