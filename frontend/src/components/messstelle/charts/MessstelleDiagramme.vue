@@ -158,7 +158,7 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
-import _, { isNil } from "lodash";
+import { cloneDeep } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -334,7 +334,7 @@ function loadProcessedChartData() {
           messstelle.id,
           messstelle.mstId,
           messstelle.standort,
-          _.cloneDeep(options.value)
+          cloneDeep(options.value)
         )
       );
     });
@@ -442,7 +442,7 @@ function saveGraphAsImage(): void {
 
 function generateCsv() {
   loadingFile.value = true;
-  const optionsDTO = _.cloneDeep(options.value);
+  const optionsDTO = cloneDeep(options.value);
 
   GenerateCsvService.generateCsvMst(messstelleId.value, optionsDTO)
     .then((result: CsvDTO) => {
