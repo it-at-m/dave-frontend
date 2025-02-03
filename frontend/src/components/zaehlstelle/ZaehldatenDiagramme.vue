@@ -3,31 +3,6 @@
     ref="sheet"
     :min-height="height"
   >
-    <!--
-    Dieses Overlay wird benötigt, da sich das SVG (aus welchen Gründen auch immer) nur zeichnet wenn der Benutzer es "sehen" kann.
-    Wenn das Element bspw. im Belastungsplan Tab wäre würde man nach Änderung der Filteroptionen immer erst auf den
-    Belastungsplan Tab wechseln müssen bevor das SVG richtig gezeichnet würde.
-
-    Das Element belastungsplan-kreuzung-svg-schematische-uebersicht wird benötigt für die schematische Übersicht in den
-    PDFs der Ganglinie, Listenausgabe und Zeitreihe und muss dementsprechend auch in diesen Tabs immer aktuell gezeichnet sein.
-
-    Der z-index wurde gewählt, da der Benutzer dieses Element nie zu selbst zu Gesicht bekommen soll. Durch den hohen
-    negativen Z-Index verschwindet das Element hinter allen anderen Elementen der eigentlichen Anwendung.
-    -->
-    <v-overlay
-      :model-value="true"
-      opacity="0"
-      style="z-index: -99999999"
-    >
-      <belastungsplan-kreuzung-svg
-        :dimension="contentHeight"
-        :data="belastungsplanDTO"
-        :doc-mode="false"
-        :geometrie-mode="true"
-        :schema="true"
-        @print="storeSvgSchematischeUebersicht($event)"
-      />
-    </v-overlay>
     <v-banner
       v-if="!hasZaehlungen"
       single-line
@@ -93,6 +68,7 @@
               :doc-mode="false"
               :geometrie-mode="true"
               @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card
@@ -140,8 +116,7 @@
             class="mx-10 border-thin"
             :listenausgabe-data="listenausgabeDTO"
             :height="contentHeight"
-          >
-          </zaehldaten-listenausgabe>
+          />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
