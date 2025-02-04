@@ -185,9 +185,9 @@
       </v-col>
       <v-col cols="6">
         <v-checkbox
-          v-model="auswertungOptions.fahrzeuge.lieferwagen"
-          label="Lieferwagen (Lfw)"
-          :disabled="isTypeDisabled(Fahrzeug.LFW)"
+          v-model="auswertungOptions.fahrzeuge.busse"
+          label="Bus"
+          :disabled="isTypeDisabled(Fahrzeug.BUS)"
           hide-details
           density="compact"
         />
@@ -211,9 +211,9 @@
       </v-col>
       <v-col cols="6">
         <v-checkbox
-          v-model="auswertungOptions.fahrzeuge.busse"
-          label="Bus"
-          :disabled="isTypeDisabled(Fahrzeug.BUS)"
+          v-model="auswertungOptions.fahrzeuge.lieferwagen"
+          label="Lieferwagen (Lfw)"
+          :disabled="isTypeDisabled(Fahrzeug.LFW)"
           hide-details
           density="compact"
         />

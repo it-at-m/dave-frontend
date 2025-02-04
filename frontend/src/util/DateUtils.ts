@@ -153,6 +153,20 @@ export function useDateUtils() {
     return date;
   }
 
+  function isGreaterThanFiveYears(
+    start: Date | undefined,
+    end: Date | undefined
+  ) {
+    let isGreaterThanFiveYears = false;
+    if (start && end) {
+      const differenceInMs = Math.abs(start.valueOf() - end.valueOf());
+      const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+      const differenceInYears = Math.floor(differenceInDays / 365);
+      isGreaterThanFiveYears = differenceInYears >= 5;
+    }
+    return isGreaterThanFiveYears;
+  }
+
   return {
     sortDatesDescAsStrings,
     formatDate,
@@ -171,5 +185,6 @@ export function useDateUtils() {
     isValidDate,
     isValidIsoDate,
     setTimeToZeroForGivenDate,
+    isGreaterThanFiveYears,
   };
 }

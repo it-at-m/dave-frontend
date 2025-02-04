@@ -70,7 +70,8 @@ const helperText = computed(() => {
   let helpText = "";
   if (
     dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) &&
-    chosenOptionsCopy.value.tagesTyp === ""
+    (!chosenOptionsCopy.value.tagesTyp ||
+      chosenOptionsCopy.value.tagesTyp === TagesTyp.UNSPECIFIED)
   ) {
     helpText = "Bei einem Zeitraum muss ein Wochentag ausgewählt werden.";
   } else if (!props.isChosenTagesTypValid) {

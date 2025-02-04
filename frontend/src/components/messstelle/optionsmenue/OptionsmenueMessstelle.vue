@@ -176,7 +176,8 @@ function areChosenOptionsValid(): boolean {
   }
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
-    !chosenOptions.value.tagesTyp
+    (!chosenOptions.value.tagesTyp ||
+      chosenOptions.value.tagesTyp === TagesTyp.UNSPECIFIED)
   ) {
     result = false;
     snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
