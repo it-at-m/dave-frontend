@@ -11,6 +11,7 @@
       stacked
       color="white"
       class="text-grey-lighten-1"
+      @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -33,7 +34,6 @@
     <v-tabs-window
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
@@ -53,29 +53,16 @@
             v-else-if="!hasSelectedVerkehrsarten"
             :message="globalInfoMessage.NO_BELASTUNGSPLAN"
           />
-          <div v-else-if="
+          <belastungsplan-messquerschnitt-card
+            v-else-if="
               belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
-            ">
-            <belastungsplan-messquerschnitt-card
-                ref="belastungsplanCard"
-                :belastungsplan-data="belastungsplanDataDTO"
-                :dimension="contentHeight"
-                @print="storeSvg($event)"
-            />
-            <v-overlay
-                :model-value="true"
-                opacity="0"
-                style="z-index: -99999999"
-            >
-              <belastungsplan-messquerschnitt-card
-                  ref="belastungsplanSchematischeUebersichtCard"
-                  :belastungsplan-data="belastungsplanDataDTO"
-                  :dimension="contentHeight"
-                  :is-schematische-uebersicht="true"
-                  @print="storeSvgSchematischeUebersicht($event)"
-              />
-            </v-overlay>
-          </div>
+            "
+            ref="belastungsplanCard"
+            :belastungsplan-data="belastungsplanDataDTO"
+            :dimension="contentHeight"
+            @print="storeSvg($event)"
+            @print-schema="storeSvgSchematischeUebersicht($event)"
+          />
         </v-sheet>
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
@@ -174,8 +161,8 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
 import _ from "lodash";
-import {computed, ref, watch} from "vue";
-import {useRoute} from "vue-router";
+import { computed, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
@@ -188,17 +175,17 @@ import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
-import {useHistoryStore} from "@/store/HistoryStore";
-import {useMessstelleStore} from "@/store/MessstelleStore";
-import {useSnackbarStore} from "@/store/SnackbarStore";
-import {useUserStore} from "@/store/UserStore";
+import { useHistoryStore } from "@/store/HistoryStore";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useUserStore } from "@/store/UserStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useDownloadUtils} from "@/util/DownloadUtils";
-import {useGlobalInfoMessage} from "@/util/GlobalInfoMessage";
-import {useMessstelleUtils} from "@/util/MessstelleUtils";
-import {useReportTools} from "@/util/ReportTools";
+import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
+import { useMessstelleUtils } from "@/util/MessstelleUtils";
+import { useReportTools } from "@/util/ReportTools";
 
 // Refactoring: Synergieeffekt mit ZaehldatenDiagramme nutzen
 
@@ -244,7 +231,8 @@ const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
 const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
-const belastungsplanSchematischeUebersichtCard = ref<typeof BelastungsplanMessquerschnittCard>();
+const belastungsplanSchematischeUebersichtCard =
+  ref<typeof BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
@@ -334,10 +322,13 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
       if (context) {
         context.drawImage(image, 0, 0, dimension, dimension);
         // Image Asset erstellen und in Variable speichern
-        belastungsplanSchematischeUebersichtPngBase64.value = canvas.toDataURL("image/jpg");
+        belastungsplanSchematischeUebersichtPngBase64.value =
+          canvas.toDataURL("image/jpg");
       }
     };
-    image.src = URL.createObjectURL(belastungsplanSchematischeUebersichtSvg.value);
+    image.src = URL.createObjectURL(
+      belastungsplanSchematischeUebersichtSvg.value
+    );
   }
 });
 

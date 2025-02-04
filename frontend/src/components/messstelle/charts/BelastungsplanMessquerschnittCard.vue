@@ -1,9 +1,23 @@
 <template>
-  <v-sheet
-    id="drawingMessquerschnittBelastungsplan"
-    :width="props.dimension"
-    :height="props.dimension"
-  />
+  <div>
+    <v-sheet
+      id="belastungsplan-default"
+      :height="dimension"
+      :width="dimension"
+    />
+    <v-sheet
+      id="belastungsplan-schema"
+      :height="dimension"
+      :width="dimension"
+      :style="schemaStyle"
+    />
+  </div>
+  <!--  -->
+  <!--  <v-sheet-->
+  <!--    id="drawingMessquerschnittBelastungsplan"-->
+  <!--    :width="props.dimension"-->
+  <!--    :height="props.dimension"-->
+  <!--  />-->
 </template>
 <script setup lang="ts">
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
@@ -13,7 +27,7 @@ import type { Ref } from "vue";
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
@@ -27,20 +41,22 @@ import { useDateUtils } from "@/util/DateUtils";
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
   dimension?: string;
-  isSchematischeUebersicht?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  isSchematischeUebersicht: false,
+  dimension: "600vh",
 });
 const emits = defineEmits<{
   (e: "print", v: Blob): void;
+  (e: "printSchema", v: Blob): void;
 }>();
 
 const messstelleStore = useMessstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const canvas = ref<Svg>(SVG.SVG());
+const canvasSchema = ref<Svg>(SVG.SVG());
+const canvasDefault = ref<Svg>(SVG.SVG());
 const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
@@ -52,7 +68,7 @@ const farben = new Map<string, string>([
   [Himmelsrichtungen.SUED, "#000000"],
   [Himmelsrichtungen.WEST, "#2196F3"],
 ]);
-
+const drawSchema = ref(true);
 const maxVerhiclesPerMq = ref(0);
 const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 
@@ -69,19 +85,31 @@ const svgHeight = computed(() => {
   );
 });
 
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!drawSchema.value) {
+    style = `display: none`;
+  }
+  return style;
+});
+
 onMounted(() => {
+  resetSchema();
   calcLineWidth();
   drawingConfig();
 });
 
 function drawingConfig() {
-  canvas.value
-    .addTo("#drawingMessquerschnittBelastungsplan")
+  canvasSchema.value = SVG.SVG()
+    .addTo(`#belastungsplan-schema`)
     .size(svgHeight.value, svgHeight.value)
     .font({ size: defaultFontSize, family: fontfamily })
     .viewbox(0, 0, viewbox.value, viewbox.value);
-  startX.value = 450;
-  startY.value = 250;
+  canvasDefault.value = SVG.SVG()
+    .addTo(`#belastungsplan-default`)
+    .size(svgHeight.value, svgHeight.value)
+    .font({ size: defaultFontSize, family: fontfamily })
+    .viewbox(0, 0, viewbox.value, viewbox.value);
   draw();
 }
 
@@ -93,17 +121,46 @@ const chosenOptionsCopyFahrzeuge = computed(() => {
   return chosenOptionsCopy.value.fahrzeuge;
 });
 
-const isNotSchematischeUebersicht = computed(() => {
-  return !props.isSchematischeUebersicht;
-});
-
 watch(
   () => props.belastungsplanData,
   () => {
-    canvas.value.clear();
-    drawingConfig();
+    redraw();
   }
 );
+
+/**
+ * Wenn der Nutzer auf den Tabs navigiert, dann bekommt die Belastungsplan
+ * Komponente das als Event mit. Dies ist notwendig, da es Probleme gibt,
+ * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
+ */
+const activeTab = computed(() => {
+  return messstelleStore.getActiveTab;
+});
+
+/**
+ * Diese Methode zeichnet den Balastungsplan immer dann, wenn von einem anderen Tab auf
+ * den Belastungsplan Tab gewechselt wird.
+ */
+watch(activeTab, (tab: number) => {
+  if (tab === 0) {
+    redraw();
+  }
+});
+
+function initCanvas() {
+  if (drawSchema.value) {
+    canvas.value = canvasSchema.value;
+  } else {
+    canvas.value = canvasDefault.value;
+  }
+}
+
+function redraw() {
+  resetSchema();
+  nextTick(() => {
+    draw();
+  });
+}
 
 /**
  * Die Pfeile werden immer zuerst nach Norden und Süden gezeichnet,
@@ -111,6 +168,10 @@ watch(
  * handelt wird die Zeichnung im anschluss gedreht und in die richtige position geschoben
  */
 function draw() {
+  startX.value = 450;
+  startY.value = 250;
+  initCanvas();
+  canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
   const groupedByDirection = _.chain(
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
@@ -120,14 +181,14 @@ function draw() {
     .value();
   drawArrowsPointingSouth(groupedByDirection);
   startX.value += 85;
-  if (isNotSchematischeUebersicht.value) {
+  if (!drawSchema.value) {
     drawStreetName();
     drawTotal();
   }
   startX.value += 130;
   drawArrowsPointingNorth(groupedByDirection);
   rotateArrowsIfNecessary();
-  if (isNotSchematischeUebersicht.value) {
+  if (!drawSchema.value) {
     drawMessstelleInfo();
     drawNorthSymbol();
     drawLegende();
@@ -168,9 +229,12 @@ function drawArrowsPointingSouth(
           },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
         )
         .stroke({ width: 1, color: "black" })
-        .attr("fill", isNotSchematischeUebersicht.value ? "none" : getLineColor(mq.mqId, mq.direction))
+        .attr(
+          "fill",
+          !drawSchema.value ? "none" : getLineColor(mq.mqId, mq.direction)
+        )
     );
-    if (isNotSchematischeUebersicht.value) {
+    if (!drawSchema.value) {
       addTextNorthSide(
         startX.value,
         startY.value - 10,
@@ -184,7 +248,7 @@ function drawArrowsPointingSouth(
     }
     startX.value += 50;
   });
-  if (isNotSchematischeUebersicht.value) {
+  if (!drawSchema.value) {
     addSumSouthIfNecessary(arrayOfDataForDirectionSouth);
   }
 }
@@ -310,9 +374,12 @@ function drawArrowsPointingNorth(
           } ${startX.value + 10} ${startY.value - 22}`
         )
         .stroke({ width: 1, color: "black" })
-          .attr("fill", isNotSchematischeUebersicht.value ? "none" : getLineColor(mq.mqId, mq.direction))
+        .attr(
+          "fill",
+          !drawSchema.value ? "none" : getLineColor(mq.mqId, mq.direction)
+        )
     );
-    if (isNotSchematischeUebersicht.value) {
+    if (!drawSchema.value) {
       addTextSouthSide(
         startX.value,
         startY.value + 910,
@@ -326,7 +393,7 @@ function drawArrowsPointingNorth(
     }
     startX.value += 50;
   });
-  if (isNotSchematischeUebersicht.value) {
+  if (!drawSchema.value) {
     addSumNorthIfNecessary(arrayOfDataForDirectionNorth);
   }
 }
@@ -717,7 +784,7 @@ function calcLineWidth() {
 }
 
 function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
-  if (props.isSchematischeUebersicht) {
+  if (drawSchema.value) {
     return 20;
   }
 
@@ -748,12 +815,27 @@ function storeImageForPrinting() {
     .flatten(canvas.value)
     .size(getSizeInPx.value + "px", getSizeInPx.value + "px")
     .svg() as string;
-  emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+  if (drawSchema.value) {
+    emits(
+      "printSchema",
+      new Blob([ex], { type: "image/svg+xml;charset=utf-8" })
+    );
+    drawSchema.value = false;
+    draw();
+  } else {
+    emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+  }
+}
+
+function resetSchema() {
+  drawSchema.value = true;
 }
 
 function getLineColor(mqId: string, direction: string) {
-  if (props.isSchematischeUebersicht) {
-    return chosenOptionsCopy.value.messquerschnittIds.includes(mqId) ? "#000000" : "#E0E0E0";
+  if (drawSchema.value) {
+    return chosenOptionsCopy.value.messquerschnittIds.includes(mqId)
+      ? "#000000"
+      : "#E0E0E0";
   }
   if (chosenOptionsCopy.value.messquerschnittIds.includes(mqId)) {
     return chosenOptionsCopy.value.blackPrintMode
