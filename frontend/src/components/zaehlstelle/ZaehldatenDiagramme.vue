@@ -1,30 +1,30 @@
 <template>
   <v-sheet
-      ref="sheet"
-      :min-height="height"
+    ref="sheet"
+    :min-height="height"
   >
     <v-banner
-        v-if="!hasZaehlungen"
-        single-line
+      v-if="!hasZaehlungen"
+      single-line
     >
       <v-icon
-          color="error"
-          size="36"
-          icon="mdi-alert-decagram-outline"
+        color="error"
+        size="36"
+        icon="mdi-alert-decagram-outline"
       />
       Zu dieser Zählstelle sind aktuell noch keine Zählungen im System
       vorhanden.
     </v-banner>
     <v-tabs
-        v-if="hasZaehlungen"
-        v-model="activeTab"
-        fixed-tabs
-        bg-color="grey-darken-1"
-        slider-color="grey-lighten-1"
-        stacked
-        color="white"
-        class="text-grey-lighten-1"
-        @update:model-value="changeTab"
+      v-if="hasZaehlungen"
+      v-model="activeTab"
+      fixed-tabs
+      bg-color="grey-darken-1"
+      slider-color="grey-lighten-1"
+      stacked
+      color="white"
+      class="text-grey-lighten-1"
+      @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -49,42 +49,42 @@
       </v-tab>
     </v-tabs>
     <v-tabs-window
-        v-if="hasZaehlungen"
-        v-model="activeTab"
-        class="d-flex flex-column align-stretch"
+      v-if="hasZaehlungen"
+      v-model="activeTab"
+      class="d-flex flex-column align-stretch"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
         <v-sheet
-            :max-height="contentHeight"
-            width="100%"
-            class="overflow-y-auto"
+          :max-height="contentHeight"
+          width="100%"
+          class="overflow-y-auto"
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-                v-show="!belastungsplanDTO.kreisverkehr"
-                :dimension="contentHeight"
-                :data="belastungsplanDTO"
-                :doc-mode="false"
-                :geometrie-mode="true"
-                @print="storeSvg($event)"
-                @print-schema="storeSvgSchematischeUebersicht($event)"
+              v-show="!belastungsplanDTO.kreisverkehr"
+              :dimension="contentHeight"
+              :data="belastungsplanDTO"
+              :doc-mode="false"
+              :geometrie-mode="true"
+              @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card
-                v-show="belastungsplanDTO.kreisverkehr"
-                ref="belastungsplanCard"
-                :dimension="contentHeight"
-                :belastungsplan-data="belastungsplanDTO"
-                :loaded="false"
-                :zaehlung-id="zaehlungsId"
+              v-show="belastungsplanDTO.kreisverkehr"
+              ref="belastungsplanCard"
+              :dimension="contentHeight"
+              :belastungsplan-data="belastungsplanDTO"
+              :loaded="false"
+              :zaehlung-id="zaehlungsId"
             />
           </div>
           <v-banner v-else>
             <v-icon
-                color="error"
-                size="36"
-                icon="mdi-alert-decagram-outline"
+              color="error"
+              size="36"
+              icon="mdi-alert-decagram-outline"
             />
             <p class="ml-2">
               {{ globalInfoMessage.NO_BELASTUNGSPLAN }}
@@ -95,53 +95,53 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
         <v-sheet
-            :min-height="contentHeight"
-            :max-height="contentHeight"
-            width="100%"
-            class="overflow-y-auto"
+          :min-height="contentHeight"
+          :max-height="contentHeight"
+          width="100%"
+          class="overflow-y-auto"
         >
           <step-line-card
-              ref="steplineCard"
-              :zaehldaten-stepline="zaehldatenSteplineDTO"
+            ref="steplineCard"
+            :zaehldaten-stepline="zaehldatenSteplineDTO"
           />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
-            :max-height="contentHeight"
-            width="94%"
+          :max-height="contentHeight"
+          width="94%"
         >
           <zaehldaten-listenausgabe
-              class="mx-10 border-thin"
-              :listenausgabe-data="listenausgabeDTO"
-              :height="contentHeight"
+            class="mx-10 border-thin"
+            :listenausgabe-data="listenausgabeDTO"
+            :height="contentHeight"
           />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_HEATMAP">
         <v-sheet
-            :max-height="contentHeight"
-            width="100%"
-            class="overflow-y-auto"
+          :max-height="contentHeight"
+          width="100%"
+          class="overflow-y-auto"
         >
           <heatmap-card
-              ref="heatmapCard"
-              :zaehldaten-heatmap="zaehldatenHeatmap"
+            ref="heatmapCard"
+            :zaehldaten-heatmap="zaehldatenHeatmap"
           />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_ZEITREIHE">
         <v-sheet
-            :max-height="contentHeight"
-            width="100%"
-            class="overflow-y-auto"
+          :max-height="contentHeight"
+          width="100%"
+          class="overflow-y-auto"
         >
           <zeitreihe-card
-              ref="zeitreiheCard"
-              :zaehldaten-zeitreihe="zaehldatenZeitreihe"
+            ref="zeitreiheCard"
+            :zaehldaten-zeitreihe="zaehldatenZeitreihe"
           />
         </v-sheet>
         <progress-loader v-model="zeitreiheLoading" />
@@ -149,14 +149,14 @@
     </v-tabs-window>
 
     <speed-dial
-        :is-listenausgabe="isTabListenausgabe"
-        :is-not-heatmap="isNotTabHeatmap"
-        :loading-file="loadingFile"
-        @add-chart-to-pdf-report="addChartToPdfReport"
-        @save-graph-as-image="saveGraphAsImage"
-        @open-pdf-report-dialog="openPdfReportDialog"
-        @generate-csv="generateCsv"
-        @generate-pdf="generatePdf"
+      :is-listenausgabe="isTabListenausgabe"
+      :is-not-heatmap="isNotTabHeatmap"
+      :loading-file="loadingFile"
+      @add-chart-to-pdf-report="addChartToPdfReport"
+      @save-graph-as-image="saveGraphAsImage"
+      @open-pdf-report-dialog="openPdfReportDialog"
+      @generate-csv="generateCsv"
+      @generate-pdf="generatePdf"
     />
 
     <pdf-report-menue v-model="pdfReportDialog" />
@@ -221,7 +221,7 @@ const BELASTUNGSPLAN_PNG_DIMENSION = 1400;
 const BELASTUNGSPLAN_SCHEMATISCHE_UEBERSICHT_PNG_DIMENSION = 1400;
 const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
 const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
-    "schematischeUebersichtAsBase64Png";
+  "schematischeUebersichtAsBase64Png";
 
 const belastungsplanLoading = ref(false);
 const chartDataLoading = ref(false);
@@ -229,7 +229,7 @@ const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
 const belastungsplanDTO = ref<LadeBelastungsplanDTO>(
-    {} as LadeBelastungsplanDTO
+  {} as LadeBelastungsplanDTO
 );
 const belastungsplanLoaded = ref(false);
 const belastungsplanSvg = ref<Blob>();
@@ -238,14 +238,14 @@ const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
 const belastungsplanSchematischeUebersichtPngBase64 = ref("");
 
 const zaehldatenSteplineDTO = ref<LadeZaehldatenSteplineDTO>(
-    {} as LadeZaehldatenSteplineDTO
+  {} as LadeZaehldatenSteplineDTO
 );
 const listenausgabeDTO = ref<Array<LadeZaehldatumDTO>>([]);
 const zaehldatenHeatmap = ref<LadeZaehldatenHeatmapDTO>(
-    {} as LadeZaehldatenHeatmapDTO
+  {} as LadeZaehldatenHeatmapDTO
 );
 const zaehldatenZeitreihe = ref<LadeZaehldatenZeitreiheDTO>(
-    {} as LadeZaehldatenZeitreiheDTO
+  {} as LadeZaehldatenZeitreiheDTO
 );
 const zeitreiheLoading = ref(false);
 
@@ -253,7 +253,7 @@ const activeTab = ref(0);
 const loadingFile = ref(false);
 
 const belastungsplanCard = ref<InstanceType<
-    typeof BelastungsplanCard
+  typeof BelastungsplanCard
 > | null>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
@@ -272,13 +272,13 @@ const options = computed<OptionsDTO>(() => {
 });
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
   return (
-      options.value.kraftfahrzeugverkehr ||
-      options.value.schwerverkehr ||
-      options.value.gueterverkehr ||
-      options.value.schwerverkehrsanteilProzent ||
-      options.value.gueterverkehrsanteilProzent ||
-      options.value.radverkehr ||
-      options.value.fussverkehr
+    options.value.kraftfahrzeugverkehr ||
+    options.value.schwerverkehr ||
+    options.value.gueterverkehr ||
+    options.value.schwerverkehrsanteilProzent ||
+    options.value.gueterverkehrsanteilProzent ||
+    options.value.radverkehr ||
+    options.value.fussverkehr
   );
 });
 
@@ -339,11 +339,11 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
         context.drawImage(image, 0, 0, dimension, dimension);
         // Image Asset erstellen und in Variable speichern
         belastungsplanSchematischeUebersichtPngBase64.value =
-            canvas.toDataURL("image/jpg");
+          canvas.toDataURL("image/jpg");
       }
     };
     image.src = URL.createObjectURL(
-        belastungsplanSchematischeUebersichtSvg.value
+      belastungsplanSchematischeUebersichtSvg.value
     );
   }
 });
@@ -358,64 +358,64 @@ function loadData(): void {
 
   // Save HistoryItem
   historyStore.addHistoryItem(
-      new ZaehlstelleHistoryItem(
-          selectedZaehlung.value.id,
-          selectedZaehlung.value.datum,
-          selectedZaehlung.value.projektName,
-          zaehlstelle.value.nummer,
-          zaehlstelle.value.id,
-          Object.assign({}, options.value)
-      )
+    new ZaehlstelleHistoryItem(
+      selectedZaehlung.value.id,
+      selectedZaehlung.value.datum,
+      selectedZaehlung.value.projektName,
+      zaehlstelle.value.nummer,
+      zaehlstelle.value.id,
+      Object.assign({}, options.value)
+    )
   );
 }
 
 function loadZeitreihe(options: OptionsDTO): void {
   zeitreiheLoading.value = true;
   LadeZaehldatenService.ladeZeitreihe(
-      zaehlstelle.value.id,
-      selectedZaehlung.value.id,
-      options
+    zaehlstelle.value.id,
+    selectedZaehlung.value.id,
+    options
   )
-      .then((dto: LadeZaehldatenZeitreiheDTO) => {
-        zaehldatenZeitreihe.value = dto;
-      })
-      .catch((error) => snackbarStore.showApiError(error))
-      .finally(() => {
-        zeitreiheLoading.value = false;
-      });
+    .then((dto: LadeZaehldatenZeitreiheDTO) => {
+      zaehldatenZeitreihe.value = dto;
+    })
+    .catch((error) => snackbarStore.showApiError(error))
+    .finally(() => {
+      zeitreiheLoading.value = false;
+    });
 }
 
 function loadBelastungsplan(options: OptionsDTO) {
   belastungsplanLoading.value = true;
   LadeZaehldatenService.ladeBelastungsplan(selectedZaehlung.value.id, options)
-      .then((dto: LadeBelastungsplanDTO) => {
-        belastungsplanDTO.value = dto;
-        belastungsplanLoaded.value = true;
-      })
-      .catch((error) => snackbarStore.showApiError(error))
-      .finally(() => {
-        belastungsplanLoading.value = false;
-      });
+    .then((dto: LadeBelastungsplanDTO) => {
+      belastungsplanDTO.value = dto;
+      belastungsplanLoaded.value = true;
+    })
+    .catch((error) => snackbarStore.showApiError(error))
+    .finally(() => {
+      belastungsplanLoading.value = false;
+    });
 }
 
 function loadProcessedChartData(options: OptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
   LadeZaehldatenService.ladeZaehldatenProcessed(
-      selectedZaehlung.value.id,
-      options
+    selectedZaehlung.value.id,
+    options
   )
-      .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
-        listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
-        zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
-        zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
-        setMaxRangeYAchse();
-      })
-      .catch((error) => snackbarStore.showApiError(error))
-      .finally(() => {
-        chartDataLoading.value = false;
-        storeStartAndEndeUhrzeitOfIntervalls(listenausgabeDTO.value);
-      });
+    .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+      listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
+      zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
+      zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
+      setMaxRangeYAchse();
+    })
+    .catch((error) => snackbarStore.showApiError(error))
+    .finally(() => {
+      chartDataLoading.value = false;
+      storeStartAndEndeUhrzeitOfIntervalls(listenausgabeDTO.value);
+    });
 }
 
 function openPdfReportDialog(): void {
@@ -443,12 +443,12 @@ function storeSvgSchematischeUebersicht(svg: Blob) {
  * @param listenausgabeData
  */
 function storeStartAndEndeUhrzeitOfIntervalls(
-    listenausgabeData: Array<LadeZaehldatumDTO>
+  listenausgabeData: Array<LadeZaehldatumDTO>
 ): void {
   const intervalls: Array<LadeZaehldatumDTO> = listenausgabeData.filter(
-      (zaehldatum) => {
-        return isEmpty(zaehldatum.type);
-      }
+    (zaehldatum) => {
+      return isEmpty(zaehldatum.type);
+    }
   );
   const firstIntervall: LadeZaehldatumDTO | undefined = first(intervalls);
   const lastIntervall: LadeZaehldatumDTO | undefined = last(intervalls);
@@ -466,27 +466,27 @@ function storeStartAndEndeUhrzeitOfIntervalls(
  */
 function resetStartEndeUhrzeitIntervallsInStore(): void {
   zaehlstelleStore.setStartEndeUhrzeitIntervalls(
-      DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
+    DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
   );
 }
 
 function setMaxRangeYAchse() {
   const ganglinieYAchse1MaxValue: number | null =
-      options.value.ganglinieYAchse1MaxValue;
+    options.value.ganglinieYAchse1MaxValue;
   if (
-      ganglinieYAchse1MaxValue !== undefined &&
-      ganglinieYAchse1MaxValue !== null &&
-      ganglinieYAchse1MaxValue > 0
+    ganglinieYAchse1MaxValue !== undefined &&
+    ganglinieYAchse1MaxValue !== null &&
+    ganglinieYAchse1MaxValue > 0
   ) {
     zaehldatenSteplineDTO.value.rangeMax = ganglinieYAchse1MaxValue;
   }
 
   const ganglinieYAchse2MaxValue: number | null =
-      options.value.ganglinieYAchse2MaxValue;
+    options.value.ganglinieYAchse2MaxValue;
   if (
-      ganglinieYAchse2MaxValue !== undefined &&
-      ganglinieYAchse2MaxValue !== null &&
-      ganglinieYAchse2MaxValue > 0
+    ganglinieYAchse2MaxValue !== undefined &&
+    ganglinieYAchse2MaxValue !== null &&
+    ganglinieYAchse2MaxValue > 0
   ) {
     zaehldatenSteplineDTO.value.rangeMaxPercent = ganglinieYAchse2MaxValue;
   }
@@ -500,54 +500,54 @@ function addChartToPdfReport(): void {
     case TAB_BELASTUNGSPLAN:
       if (belastungsplanDTO.value.kreisverkehr) {
         reportTools.addChartToPdfReport(
-            Erhebungsstelle.ZAEHLSTELLE,
-            "Der",
-            "Belastungsplan",
-            getKreisverkehrBase64(),
-            false
+          Erhebungsstelle.ZAEHLSTELLE,
+          "Der",
+          "Belastungsplan",
+          getKreisverkehrBase64(),
+          false
         );
       } else {
         reportTools.addChartToPdfReport(
-            Erhebungsstelle.ZAEHLSTELLE,
-            "Der",
-            "Belastungsplan",
-            belastungsplanPngBase64.value,
-            false
+          Erhebungsstelle.ZAEHLSTELLE,
+          "Der",
+          "Belastungsplan",
+          belastungsplanPngBase64.value,
+          false
         );
       }
       break;
     case TAB_GANGLINIE:
       reportTools.addChartToPdfReport(
-          Erhebungsstelle.ZAEHLSTELLE,
-          "Die",
-          "Ganglinie",
-          getGanglinieBase64(),
-          true
+        Erhebungsstelle.ZAEHLSTELLE,
+        "Die",
+        "Ganglinie",
+        getGanglinieBase64(),
+        true
       );
       break;
     case TAB_HEATMAP:
       reportTools.addChartToPdfReport(
-          Erhebungsstelle.ZAEHLSTELLE,
-          "Die",
-          "Heatmap",
-          getHeatmapBase64(),
-          true
+        Erhebungsstelle.ZAEHLSTELLE,
+        "Die",
+        "Heatmap",
+        getHeatmapBase64(),
+        true
       );
       break;
     case TAB_ZEITREIHE:
       reportTools.addChartToPdfReport(
-          Erhebungsstelle.ZAEHLSTELLE,
-          "Die",
-          "Zeitreihe",
-          getZeitreiheBase64(),
-          true
+        Erhebungsstelle.ZAEHLSTELLE,
+        "Die",
+        "Zeitreihe",
+        getZeitreiheBase64(),
+        true
       );
       break;
     case TAB_LISTENAUSGABE:
       reportTools.addDatatableToPdfReport(
-          Erhebungsstelle.ZAEHLSTELLE,
-          "Die",
-          "Datentabelle"
+        Erhebungsstelle.ZAEHLSTELLE,
+        "Die",
+        "Datentabelle"
       );
       break;
   }
@@ -588,10 +588,10 @@ function saveGraphAsImage(): void {
 
   if (encodedUri && type) {
     reportTools.saveGraphAsImage(
-        Erhebungsstelle.ZAEHLSTELLE,
-        type,
-        [selectedZaehlung.value.datum],
-        encodedUri
+      Erhebungsstelle.ZAEHLSTELLE,
+      type,
+      [selectedZaehlung.value.datum],
+      encodedUri
     );
   }
   loadingFile.value = false;
@@ -602,11 +602,11 @@ function saveGraphAsImage(): void {
  */
 function getKreisverkehrBase64(): string | undefined {
   return belastungsplanCard?.value?.belastungsplanKreisverkehr?.chart?.getDataURL(
-      {
-        pixelRatio: 2,
-        backgroundColor: "#fff",
-        excludeComponents: ["toolbox"],
-      }
+    {
+      pixelRatio: 2,
+      backgroundColor: "#fff",
+      excludeComponents: ["toolbox"],
+    }
   );
 }
 
@@ -652,10 +652,10 @@ function generatePdf() {
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   formData.append(
-      "options",
-      new Blob([JSON.stringify(o)], {
-        type: "application/json",
-      })
+    "options",
+    new Blob([JSON.stringify(o)], {
+      type: "application/json",
+    })
   );
 
   // Belastungsplan
@@ -664,16 +664,16 @@ function generatePdf() {
     const kreisverkehrBase64 = getKreisverkehrBase64();
     if (belastungsplanDTO.value.kreisverkehr && kreisverkehrBase64) {
       formData.append(
-          REQUEST_PART_CHART_AS_BASE64_PNG,
-          new Blob([kreisverkehrBase64], {
-            type: "image/png",
-          })
+        REQUEST_PART_CHART_AS_BASE64_PNG,
+        new Blob([kreisverkehrBase64], {
+          type: "image/png",
+        })
       );
     } else {
       // Kreuzung
       formData.append(
-          REQUEST_PART_CHART_AS_BASE64_PNG,
-          belastungsplanPngBase64.value
+        REQUEST_PART_CHART_AS_BASE64_PNG,
+        belastungsplanPngBase64.value
       );
     }
     fetchPdf(formData, "belastungsplan");
@@ -683,22 +683,22 @@ function generatePdf() {
     const ganglinieBase64 = getGanglinieBase64();
     if (ganglinieBase64) {
       formData.append(
-          REQUEST_PART_CHART_AS_BASE64_PNG,
-          new Blob([ganglinieBase64], {
-            type: "image/png",
-          })
+        REQUEST_PART_CHART_AS_BASE64_PNG,
+        new Blob([ganglinieBase64], {
+          type: "image/png",
+        })
       );
     }
     formData.append(
-        REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-        belastungsplanSchematischeUebersichtPngBase64.value
+      REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+      belastungsplanSchematischeUebersichtPngBase64.value
     );
     fetchPdf(formData, "ganglinie");
     // Listenausgabe
   } else if (activeTab.value === TAB_LISTENAUSGABE) {
     formData.append(
-        REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-        belastungsplanSchematischeUebersichtPngBase64.value
+      REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+      belastungsplanSchematischeUebersichtPngBase64.value
     );
     fetchPdf(formData, "datentabelle");
     // Zeitreihe
@@ -706,15 +706,15 @@ function generatePdf() {
     const zeitreiheBase64 = getZeitreiheBase64();
     if (zeitreiheBase64) {
       formData.append(
-          REQUEST_PART_CHART_AS_BASE64_PNG,
-          new Blob([zeitreiheBase64], {
-            type: "image/png",
-          })
+        REQUEST_PART_CHART_AS_BASE64_PNG,
+        new Blob([zeitreiheBase64], {
+          type: "image/png",
+        })
       );
     }
     formData.append(
-        REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-        belastungsplanSchematischeUebersichtPngBase64.value
+      REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
+      belastungsplanSchematischeUebersichtPngBase64.value
     );
     fetchPdf(formData, "zeitreihe");
   } else {
@@ -725,23 +725,23 @@ function generatePdf() {
 function fetchPdf(formData: FormData, type: string) {
   formData.append("department", userStore.getDepartment);
   GeneratePdfService.postPdfCustomFetchTemplateZaehlung(
-      type,
-      selectedZaehlung.value.id,
-      formData
+    type,
+    selectedZaehlung.value.id,
+    formData
   )
-      .then((blob) => {
-        // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
-        const typeForFilename: string =
-            type.charAt(0).toUpperCase() + type.slice(1);
-        const filename = `${reportTools.getFileName(
-            Erhebungsstelle.ZAEHLSTELLE,
-            typeForFilename,
-            [selectedZaehlung.value.datum]
-        )}.pdf`;
-        downloadUtils.downloadFile(blob, filename);
-      })
-      .catch((error) => snackbarStore.showApiError(error))
-      .finally(() => (loadingFile.value = false));
+    .then((blob) => {
+      // Erster Buchstabe soll im Dateinamen groß geschrieben sein, also z. B. Ganglinie statt ganglinie.
+      const typeForFilename: string =
+        type.charAt(0).toUpperCase() + type.slice(1);
+      const filename = `${reportTools.getFileName(
+        Erhebungsstelle.ZAEHLSTELLE,
+        typeForFilename,
+        [selectedZaehlung.value.datum]
+      )}.pdf`;
+      downloadUtils.downloadFile(blob, filename);
+    })
+    .catch((error) => snackbarStore.showApiError(error))
+    .finally(() => (loadingFile.value = false));
 }
 
 function generateCsv() {
@@ -750,20 +750,20 @@ function generateCsv() {
   optionsDTO.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)
-      .then((result: CsvDTO) => {
-        // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
-        const filename = `${reportTools.getFileName(
-            Erhebungsstelle.ZAEHLSTELLE,
-            "Listenausgabe",
-            [selectedZaehlung.value.datum]
-        )}.csv`;
+    .then((result: CsvDTO) => {
+      // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
+      const filename = `${reportTools.getFileName(
+        Erhebungsstelle.ZAEHLSTELLE,
+        "Listenausgabe",
+        [selectedZaehlung.value.datum]
+      )}.csv`;
 
-        downloadUtils.downloadCsv(result.csvAsString, filename);
-      })
-      .catch((error) => {
-        snackbarStore.showApiError(error);
-      })
-      .finally(() => (loadingFile.value = false));
+      downloadUtils.downloadCsv(result.csvAsString, filename);
+    })
+    .catch((error) => {
+      snackbarStore.showApiError(error);
+    })
+    .finally(() => (loadingFile.value = false));
 }
 </script>
 
