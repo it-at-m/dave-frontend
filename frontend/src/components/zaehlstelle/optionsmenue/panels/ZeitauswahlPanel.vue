@@ -42,6 +42,7 @@
                 <v-radio
                   label="Block"
                   :value="Zeitauswahl.BLOCK"
+                  :disabled="isZeitblockValuesEmpty"
                   @mouseover="hoverBlock = true"
                   @mouseleave="hoverBlock = false"
                 />
@@ -88,7 +89,7 @@
       <v-row no-gutters>
         <v-col cols="4">
           <v-select
-            v-if="isZeitauswahlSpitzenstundeOrBlock"
+            v-if="isZeitauswahlSpitzenstundeOrBlock && !isZeitblockValuesEmpty"
             v-model="zeitblock"
             label="Zeitblock"
             :items="zeitblockValues"
@@ -160,6 +161,7 @@ import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
+import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -309,6 +311,10 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
     }
   }
   return result;
+});
+
+const isZeitblockValuesEmpty = computed<boolean>(() => {
+  return isEmpty(zeitblockValues.value);
 });
 
 /**

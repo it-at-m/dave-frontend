@@ -104,7 +104,7 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="97%"
+          width="94%"
         >
           <banner-messtelle-tabs
             v-if="isBiggerThanFiveYears"
@@ -116,6 +116,7 @@
           />
           <messwerte-listenausgabe
             v-else
+            class="mx-10 border-thin"
             :listenausgabe-data="listenausgabeDTO"
             :height="contentHeight"
           />

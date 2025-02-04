@@ -160,6 +160,11 @@ const options = computed(() => {
         });
         return text;
       },
+      backgroundColor: "rgba(50,50,50,0.7)",
+      textStyle: {
+        color: "rgba(255,255,255,1)",
+      },
+      confine: true,
     },
     toolbox: {
       showTitle: true,
@@ -233,6 +238,9 @@ const options = computed(() => {
       splitArea: {
         show: true,
       },
+      axisTick: {
+        alignWithLabel: true,
+      },
     },
     yAxis: [
       {
@@ -245,6 +253,9 @@ const options = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },
@@ -261,6 +272,9 @@ const options = computed(() => {
           },
         },
         axisLine: {
+          show: true,
+        },
+        axisTick: {
           show: true,
         },
       },

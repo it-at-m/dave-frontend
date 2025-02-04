@@ -50,6 +50,7 @@ export default class DefaultObjectCreator {
       zaehlstelleId: "",
       zaehlungId: "",
       mstId: "",
+      props: {},
     };
   }
 

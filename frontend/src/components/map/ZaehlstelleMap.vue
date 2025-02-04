@@ -21,14 +21,7 @@ import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
-import {
-  computed,
-  nextTick,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-} from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
@@ -78,6 +71,7 @@ const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
+const mapOptionsStore = useMapOptionsStore();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
@@ -252,6 +246,15 @@ watch(searchResult, () => {
   resetMarker();
 });
 
+watch(
+  () => zaehlstelleStore.getAktiveZaehlung.id,
+  () => {
+    zaehlartenLayer.clearLayers();
+    zaehlartenLayer.removeFrom(map);
+    setZaehlartenmarkerToMap();
+  }
+);
+
 function resetMarker(): void {
   mapMarkerClusterGroup.removeFrom(map);
   mapMarkerClusterGroup.clearLayers();
@@ -306,6 +309,8 @@ function setMarkerToMap() {
      * umfasst das Suchergebnis somit nur eine Zaehlstelle.
      * Auf diese eine mit einem Icon angezeigte Zaehlstelle muss dann zentriert werden.
      */
+    // Zaehlartenmarker erzeugen
+    setZaehlartenmarkerToMap();
     map.setView(createLatLng(zaehlstellenKarte[0]), 18);
   } else if (props.zId && props.latlng && props.latlng.length > 0) {
     // Zaehlartenmarker erzeugen
@@ -315,14 +320,6 @@ function setMarkerToMap() {
     map.setView(center.value, zoomValue.value);
   }
 }
-
-watch(
-  () => searchStore.triggerSearch,
-  () => {
-    mapOptionsStore.resetMapOptions();
-    map.setView(center.value, zoomValue.value);
-  }
-);
 
 function setZaehlartenmarkerToMap() {
   const markers: Array<Marker> = [];
@@ -335,8 +332,10 @@ function setZaehlartenmarkerToMap() {
       );
     });
   });
-  zaehlartenLayer = L.layerGroup(markers);
-  zaehlartenLayer.addTo(map);
+  if (markers.length > 0) {
+    zaehlartenLayer = L.layerGroup(markers);
+    zaehlartenLayer.addTo(map);
+  }
 }
 
 const selectedZaehlstelleKarte = ref(
@@ -363,7 +362,6 @@ function getColorForZaehlartenMarker(zaehlart: string): string {
     return ICON_COLOR_SECONDARY;
   }
 }
-const mapOptionsStore = useMapOptionsStore();
 
 function saveMapPosition() {
   const mapCenter = map.getBounds().getCenter();
@@ -441,10 +439,6 @@ function createMarkerForZaehlart(
 
   marker.on("click", () => {
     choosenZaehlartIconToZaehlstelleHeader(zaehlart);
-    nextTick(() => {
-      zaehlartenLayer.removeFrom(map);
-      setZaehlartenmarkerToMap();
-    });
   });
   return marker;
 }
