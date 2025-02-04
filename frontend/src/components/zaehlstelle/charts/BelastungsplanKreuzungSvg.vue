@@ -1,16 +1,17 @@
 <template>
-  <v-sheet
-    v-if="schema"
-    id="belastungsplan-schema"
-    :height="dimension"
-    :width="dimension"
-  />
-  <v-sheet
-    v-else
-    id="belastungsplan-default"
-    :height="dimension"
-    :width="dimension"
-  />
+  <div>
+    <v-sheet
+        id="belastungsplan-default"
+        :height="dimension"
+        :width="dimension"
+    />
+    <v-sheet
+        id="belastungsplan-schema"
+        :height="dimension"
+        :width="dimension"
+        :style="schemaStyle"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +25,7 @@ import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastun
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -59,7 +60,6 @@ interface Props {
   // Soll die Geometrieauswahl im Belastungsplan gezeigt werden
   geometrieMode?: boolean;
   inaktivColor?: string;
-  schema?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -76,10 +76,12 @@ const props = withDefaults(defineProps<Props>(), {
   gleichValueColor: "#000000",
   geometrieMode: false,
   inaktivColor: "#E0E0E0",
-  schema: false,
 });
 
-const emits = defineEmits<(e: "print", v: Blob) => void>();
+const emits = defineEmits<{
+  (e: "print", v: Blob): void;
+  (e: "printSchema", v: Blob): void;
+}>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
@@ -89,6 +91,8 @@ const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 
 // die Basis Werte zum Errechnen der Positionen
 const viewbox = 1400;
+
+const drawSchema = ref(true);
 
 // Prozentwerte um die Strecken zu errechnen
 const prozentDiagram = 0.6;
@@ -148,27 +152,42 @@ const highestFahrbeziehungsValue = ref(0);
 const lowestFahrbeziehungsValue = ref(1000000);
 
 const fahrbeziehungsTypen = ref<Map<number, BelastungsplanFahrbeziehung[]>>(
-  new Map<number, BelastungsplanFahrbeziehung[]>()
+    new Map<number, BelastungsplanFahrbeziehung[]>()
 ) as Ref<Map<number, BelastungsplanFahrbeziehung[]>>;
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
-  new Map<number, BelastungsplanKnotenarm>()
+    new Map<number, BelastungsplanKnotenarm>()
 ) as Ref<Map<number, BelastungsplanKnotenarm>>;
 const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
+const canvasSchema = ref<SVG.Svg>(SVG.SVG());
+const canvasDefault = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
 
 onMounted(() => {
-  const addTo = `#belastungsplan-${props.schema ? "schema" : "default"}`;
-  canvas.value = SVG.SVG()
-    .addTo(addTo)
-    .size(props.dimension, props.dimension)
-    .viewbox(0, 0, viewbox, viewbox);
+  canvasSchema.value = SVG.SVG()
+      .addTo(`#belastungsplan-schema`)
+      .size(props.dimension, props.dimension)
+      .viewbox(0, 0, viewbox, viewbox);
+  canvasDefault.value = SVG.SVG()
+      .addTo(`#belastungsplan-default`)
+      .size(props.dimension, props.dimension)
+      .viewbox(0, 0, viewbox, viewbox);
+
   zaehlstelleStore.setSizeBelastungsplanSvg(
-    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
+      Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
   );
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
+  resetSchema();
+});
+
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!drawSchema.value) {
+    style = `display: none`;
+  }
+  return style;
 });
 
 const zaehlung = computed<LadeZaehlungDTO>(() => {
@@ -237,16 +256,16 @@ const sizeBelastungsplan = computed(() => {
 
 const minSizeBelastungsplan = computed(() => {
   return (
-    (parseInt(props.dimension.trim().replace("vh", "")) *
-      display.height.value) /
-    100
+      (parseInt(props.dimension.trim().replace("vh", "")) *
+          display.height.value) /
+      100
   );
 });
 
 const maxSizeBelastungsplan = computed(() => {
   return (
-    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
-    100
+      (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
+      100
   );
 });
 
@@ -258,10 +277,10 @@ const maxSizeBelastungsplan = computed(() => {
 const getLegendLineWidth = computed(() => {
   // Wenn alles gefüllt ist, dann die maxLineWidth
   if (
-    props.data &&
-    props.data.value1.filled &&
-    props.data.value2.filled &&
-    props.data.value3.filled
+      props.data &&
+      props.data.value1.filled &&
+      props.data.value2.filled &&
+      props.data.value3.filled
   ) {
     return props.maxlineWidth;
   } else {
@@ -286,11 +305,11 @@ const isDifferenzdatendarstellung = computed(() => {
  */
 const vergleichsZaehlung = computed(() => {
   if (
-    isDifferenzdatendarstellung.value &&
-    optionen.value.vergleichszaehlungsId
+      isDifferenzdatendarstellung.value &&
+      optionen.value.vergleichszaehlungsId
   ) {
     return zaehlstelleStore.getZaehlungById(
-      optionen.value.vergleichszaehlungsId
+        optionen.value.vergleichszaehlungsId
     );
   }
   return undefined;
@@ -317,6 +336,7 @@ const beideRichtungen = computed(() => {
  */
 function draw() {
   const cleanseMap = new Map<number, SVG.G>();
+  initCanvas();
   canvas.value.clear();
   // ausgewählter Knotenarm bei Geometrieauswahl
   let selectedKnotenarm = 0;
@@ -324,8 +344,8 @@ function draw() {
   // diese wird im Anschluss wieder gelöscht
   documentationGroup.value = canvas.value.group();
   documentationGroup.value
-    .rect(viewbox, viewbox)
-    .fill({ color: "white", opacity: props.docMode ? 0.3 : 0.0 });
+      .rect(viewbox, viewbox)
+      .fill({ color: "white", opacity: props.docMode ? 0.3 : 0.0 });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
   const knotenarme = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
@@ -348,12 +368,12 @@ function draw() {
     cleanseMap.forEach((group, knotenarmnummer) => {
       const matrix = group.transform();
       const m = new BerechnungsMatrix(
-        matrix.a,
-        matrix.b,
-        matrix.c,
-        matrix.d,
-        matrix.e,
-        matrix.f
+          matrix.a,
+          matrix.b,
+          matrix.c,
+          matrix.d,
+          matrix.e,
+          matrix.f
       );
       const cleanGroup = cleansePaths(group, m) as SVG.G;
       cleanseMap.set(knotenarmnummer, cleanGroup);
@@ -373,7 +393,7 @@ function draw() {
   }
 
   // Legende erstellen
-  if (!props.schema) {
+  if (!drawSchema.value) {
     legendeNordPfeil();
     legendeLinienStaerke();
     legendeSpalten();
@@ -386,10 +406,19 @@ function draw() {
   // Um den Belastungsplan in ein Bitmap umwandeln zu können, muss hier eine absolute Größe gesetzt werden.
   const size = sizeBelastungsplan.value;
   const ex = canvas.value
-    .flatten(canvas.value)
-    .size(size, size)
-    .svg() as string;
-  emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+      .flatten(canvas.value)
+      .size(size, size)
+      .svg() as string;
+  if (drawSchema.value) {
+    emits(
+        "printSchema",
+        new Blob([ex], { type: "image/svg+xml;charset=utf-8" })
+    );
+    drawSchema.value = false;
+    draw();
+  } else {
+    emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
+  }
 }
 
 /**
@@ -399,9 +428,9 @@ function draw() {
  */
 function isSelectedKnotenarm(knotenarmnummer: number): boolean {
   return (
-    props.geometrieMode &&
-    vonIds.value.length === 1 &&
-    vonIds.value.includes(knotenarmnummer)
+      props.geometrieMode &&
+      vonIds.value.length === 1 &&
+      vonIds.value.includes(knotenarmnummer)
   );
 }
 
@@ -445,8 +474,8 @@ function cleansePaths(source: SVG.G, matrix: BerechnungsMatrix): SVG.G {
  * @param pathArray   der alte Pfad als Path Array
  */
 function recreatePath(
-  svgMatrix: BerechnungsMatrix,
-  pathArray: SVG.PathArray
+    svgMatrix: BerechnungsMatrix,
+    pathArray: SVG.PathArray
 ): string {
   let path = "";
   // Jeden Eintrag des Path Arrays auslesen, umrechnen und an den neuen Pfadstring
@@ -490,9 +519,9 @@ function matrix(matrix: BerechnungsMatrix, x: number, y: number): number[] {
  * @param vonWert         der Wert, den die Fahrbeziehung repräsentiert
  */
 function lineColor(
-  vonKnotenarm: number,
-  nachKnotenarm: number,
-  vonWert: number
+    vonKnotenarm: number,
+    nachKnotenarm: number,
+    vonWert: number
 ): string {
   // Die Standardfarbe des Knotenarms
   let color = farben.get(vonKnotenarm)!;
@@ -509,7 +538,7 @@ function lineColor(
 
   // Wenn der schwarz weiß Modus angeschaltet ist, dann werden alle aktiven Fahrbeziehungen
   // schwarz gedruckt.
-  if (isBlackPrintMode.value && !props.schema) {
+  if (isBlackPrintMode.value && !drawSchema.value) {
     return "#000000";
   }
 
@@ -517,26 +546,26 @@ function lineColor(
   // Dann werden inaktive Fahrbeziehungen anders eingefärbt, als die aktive Fahrbeziehung.
   if (props.geometrieMode && vonIds.value.length > 0) {
     if (
-      !(
-        vonIds.value.includes(vonKnotenarm) &&
-        nachIds.value.includes(nachKnotenarm)
-      )
+        !(
+            vonIds.value.includes(vonKnotenarm) &&
+            nachIds.value.includes(nachKnotenarm)
+        )
     ) {
       if (
-        !(
-          beideRichtungen.value &&
-          vonIds.value.includes(nachKnotenarm) &&
-          nachIds.value.includes(vonKnotenarm)
-        )
+          !(
+              beideRichtungen.value &&
+              vonIds.value.includes(nachKnotenarm) &&
+              nachIds.value.includes(vonKnotenarm)
+          )
       ) {
         color = props.inaktivColor;
       }
     }
   }
-  if (props.schema) {
+  if (drawSchema.value) {
     if (
-      vonIds.value.includes(vonKnotenarm) &&
-      nachIds.value.includes(nachKnotenarm)
+        vonIds.value.includes(vonKnotenarm) &&
+        nachIds.value.includes(nachKnotenarm)
     ) {
       color = "#000000";
     } else {
@@ -567,35 +596,35 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     // Gruppe für alle Fahrbeziehungen eines Knotenarms
     const fahrbeziehungsGroup = canvas.value.group() as SVG.G;
     fahrbeziehungsGroup
-      .rect(viewbox, viewbox)
-      .fill({ color: "white", opacity: opacity });
+        .rect(viewbox, viewbox)
+        .fill({ color: "white", opacity: opacity });
     // hier werden die Schattenlinien der Fahrbeziehungen je Knotenarm gesammelt
     const shadowGroup = canvas.value.group() as SVG.G;
     shadowGroup
-      .rect(viewbox, viewbox)
-      .fill({ color: "white", opacity: opacity });
+        .rect(viewbox, viewbox)
+        .fill({ color: "white", opacity: opacity });
     shadowGroup.back();
 
     // Die Sortierung ist wichtig, weil sie vorgibt, in welcher Reihenfolge die Fahrbeziehungen auf der
     // Fahrtrichtung angeordnet werden.
     const fbts = fahrbeziehungsTypen.value
-      .get(knotenarmnummer)
-      ?.sort(
-        BelastungsplanFahrbeziehungComperator.sortByFahrtrichtungsart
-      ) as BelastungsplanFahrbeziehung[];
+        .get(knotenarmnummer)
+        ?.sort(
+            BelastungsplanFahrbeziehungComperator.sortByFahrtrichtungsart
+        ) as BelastungsplanFahrbeziehung[];
 
     // Jede Fahrbeziehung des Knotenarms wird durchiteriert. Je nach Fahrbeziehungstyp (Rechtsabbieger 90°,
     // geradeaus, usw.) wird die Linie gezeichnet. Je Fahrbeziehung hat genau einen Fahrbeziehungstypen.
     fbts.forEach((fbt) => {
       // Die Position der Fahrbeziehung in der Fahrtrichtung "von"
       const vonPosition = knotenarme.value
-        .get(knotenarmnummer)!
-        .findFahrbeziehungVonPosition(fbt.fahrbeziehungsTyp);
+          .get(knotenarmnummer)!
+          .findFahrbeziehungVonPosition(fbt.fahrbeziehungsTyp);
 
       // Die Position der Fahrbeziehung in der Fahrtrichtung "nach"
       const nachPosition = knotenarme.value
-        .get(fbt.nach)!
-        .findFahrbeziehungsNachPosition(fbt.fahrbeziehungsTyp);
+          .get(fbt.nach)!
+          .findFahrbeziehungsNachPosition(fbt.fahrbeziehungsTyp);
 
       // Der Startpunkt
       const startX = chartPosition.value;
@@ -605,105 +634,105 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.RECHTS45) {
         const start = new SVG.Point(startX, startY);
         const achteck1 = new SVG.Point(
-          chartPosition.value,
-          chartPosition.value + ecke.value + calcA()
+            chartPosition.value,
+            chartPosition.value + ecke.value + calcA()
         );
         const achteck2 = new SVG.Point(
-          chartPosition.value + ecke.value + calcA(),
-          chartPosition.value
+            chartPosition.value + ecke.value + calcA(),
+            chartPosition.value
         );
         const path = zielPunkt(
-          achteck1,
-          new SVG.Point(achteck1.x + ecke.value, achteck1.y + ecke.value),
-          achteck2,
-          new SVG.Point(achteck2.x + ecke.value, achteck2.y + ecke.value),
-          start,
-          nachPosition,
-          ecke.value / 4,
-          true
+            achteck1,
+            new SVG.Point(achteck1.x + ecke.value, achteck1.y + ecke.value),
+            achteck2,
+            new SVG.Point(achteck2.x + ecke.value, achteck2.y + ecke.value),
+            start,
+            nachPosition,
+            ecke.value / 4,
+            true
         );
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
 
       // rechts 90°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.RECHTS90) {
         const zielX =
-          startX + ecke.value + spalt.value + nachPosition * line.value;
+            startX + ecke.value + spalt.value + nachPosition * line.value;
         const zielY = viewbox - chartPosition.value;
         const path = `M${startX} ${startY}
                         L${
-                          startX + ecke.value + nachPosition * line.value
-                        } ${startY}
+            startX + ecke.value + nachPosition * line.value
+        } ${startY}
                         Q${zielX} ${startY}
                          ${zielX} ${startY + spalt.value}
                         L${zielX} ${zielY}`;
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
 
       // rechts 135°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.RECHTS135) {
         const start = new SVG.Point(startX, startY);
         const achteck1 = new SVG.Point(
-          chartPosition.value + ecke.value + calcA(),
-          chartPosition.value + seite.value
+            chartPosition.value + ecke.value + calcA(),
+            chartPosition.value + seite.value
         );
         const achteck2 = new SVG.Point(
-          chartPosition.value,
-          chartPosition.value + ecke.value
+            chartPosition.value,
+            chartPosition.value + ecke.value
         );
         const path = zielPunkt(
-          achteck1,
-          new SVG.Point(achteck1.x + ecke.value, achteck1.y - ecke.value),
-          achteck2,
-          new SVG.Point(achteck2.x + ecke.value, achteck2.y - ecke.value),
-          start,
-          nachPosition,
-          ecke.value + spalt.value,
-          false
+            achteck1,
+            new SVG.Point(achteck1.x + ecke.value, achteck1.y - ecke.value),
+            achteck2,
+            new SVG.Point(achteck2.x + ecke.value, achteck2.y - ecke.value),
+            start,
+            nachPosition,
+            ecke.value + spalt.value,
+            false
         );
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
 
       // geradeaus
@@ -724,108 +753,108 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.LINKS45) {
         const start = new SVG.Point(startX, startY);
         const achteck1 = new SVG.Point(
-          chartPosition.value + ecke.value,
-          chartPosition.value
+            chartPosition.value + ecke.value,
+            chartPosition.value
         );
         const achteck2 = new SVG.Point(
-          chartPosition.value + seite.value,
-          chartPosition.value + ecke.value + calcA()
+            chartPosition.value + seite.value,
+            chartPosition.value + ecke.value + calcA()
         );
         const path = zielPunkt(
-          achteck1,
-          new SVG.Point(achteck1.x - ecke.value, achteck1.y + ecke.value),
-          achteck2,
-          new SVG.Point(achteck2.x - ecke.value, achteck2.y + ecke.value),
-          start,
-          nachPosition,
-          ecke.value - spalt.value,
-          false
+            achteck1,
+            new SVG.Point(achteck1.x - ecke.value, achteck1.y + ecke.value),
+            achteck2,
+            new SVG.Point(achteck2.x - ecke.value, achteck2.y + ecke.value),
+            start,
+            nachPosition,
+            ecke.value - spalt.value,
+            false
         );
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
 
       // links 90°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.LINKS90) {
         const zielX =
-          startX +
-          seite.value -
-          ecke.value -
-          spalt.value -
-          nachPosition * line.value;
+            startX +
+            seite.value -
+            ecke.value -
+            spalt.value -
+            nachPosition * line.value;
         const path = `M${startX} ${startY}
                         L${
-                          startX + seite.value / 2 - seite.value * 0.07
-                        } ${startY}
+            startX + seite.value / 2 - seite.value * 0.07
+        } ${startY}
                         Q${zielX} ${startY}
                          ${zielX} ${startY - mitte.value / 2}
                         L${zielX} ${chartPosition.value}`;
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
 
       // links 135°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.LINKS135) {
         const start = new SVG.Point(startX, startY);
         const achteck1 = new SVG.Point(
-          chartPosition.value + seite.value,
-          chartPosition.value + ecke.value
+            chartPosition.value + seite.value,
+            chartPosition.value + ecke.value
         );
         const achteck2 = new SVG.Point(
-          chartPosition.value + ecke.value,
-          chartPosition.value + seite.value
+            chartPosition.value + ecke.value,
+            chartPosition.value + seite.value
         );
         const path = zielPunkt(
-          achteck1,
-          new SVG.Point(achteck1.x - ecke.value, achteck1.y - ecke.value),
-          achteck2,
-          new SVG.Point(achteck2.x - ecke.value, achteck2.y - ecke.value),
-          start,
-          nachPosition,
-          seite.value / 2 - spalt.value,
-          false
+            achteck1,
+            new SVG.Point(achteck1.x - ecke.value, achteck1.y - ecke.value),
+            achteck2,
+            new SVG.Point(achteck2.x - ecke.value, achteck2.y - ecke.value),
+            start,
+            nachPosition,
+            seite.value / 2 - spalt.value,
+            false
         );
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
 
       // Uturn
@@ -833,10 +862,10 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         const wendeX = startX + ecke.value * 0.75;
         const querX = wendeX + spalt.value;
         const zielY =
-          chartPosition.value +
-          ecke.value +
-          spalt.value +
-          nachPosition * line.value;
+            chartPosition.value +
+            ecke.value +
+            spalt.value +
+            nachPosition * line.value;
         const path = `M${startX} ${startY}
                         L${wendeX} ${startY}
                         Q${querX} ${startY}
@@ -846,20 +875,20 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
                          ${wendeX} ${zielY}
                         L${startX} ${zielY}`;
         fahrbeziehungsGroup
-          .path(path)
-          .stroke({
-            width: calcLineWidth(fbt.total),
-            color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: calcLineWidth(fbt.total),
+              color: lineColor(knotenarmnummer, fbt.nach, fbt.total),
+            })
+            .attr("fill", "none");
         shadowGroup
-          .path(path)
-          .stroke({
-            width: lineWidth.value,
-            color: props.shadowColor,
-            opacity: props.shadowOpacity,
-          })
-          .attr("fill", "none");
+            .path(path)
+            .stroke({
+              width: lineWidth.value,
+              color: props.shadowColor,
+              opacity: props.shadowOpacity,
+            })
+            .attr("fill", "none");
       }
     });
 
@@ -874,42 +903,42 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     if (!r) {
       r = 0;
     }
-    const factor = props.schema ? 4 : 1.5;
-    const knotenarmnummerSize = props.schema ? 60 : lineWidth.value;
+    const factor = drawSchema.value ? 4 : 1.5;
+    const knotenarmnummerSize = drawSchema.value ? 60 : lineWidth.value;
     const knotenarmnummerCx =
-      chartPosition.value + ecke.value - spalt.value * factor;
+        chartPosition.value + ecke.value - spalt.value * factor;
     knotenarmGroup
-      .text((add) => {
-        add.tspan(knotenarmnummer + "");
-      })
-      .font({
-        size: knotenarmnummerSize,
-        family: fontfamily,
-        anchor: "middle",
-      })
-      .attr("alignment-baseline", "central")
-      .cx(knotenarmnummerCx) // Radius des Kreises
-      .cy(viewbox / 2) // Einrückungstiefe der Nummer
-      .rotate(r);
+        .text((add) => {
+          add.tspan(knotenarmnummer + "");
+        })
+        .font({
+          size: knotenarmnummerSize,
+          family: fontfamily,
+          anchor: "middle",
+        })
+        .attr("alignment-baseline", "central")
+        .cx(knotenarmnummerCx) // Radius des Kreises
+        .cy(viewbox / 2) // Einrückungstiefe der Nummer
+        .rotate(r);
     knotenarmGroup
-      .circle(knotenarmnummerSize + 4)
-      .stroke({ width: 2, color: "black" })
-      .fill("none")
-      .cx(knotenarmnummerCx)
-      .cy(viewbox / 2);
+        .circle(knotenarmnummerSize + 4)
+        .stroke({ width: 2, color: "black" })
+        .fill("none")
+        .cx(knotenarmnummerCx)
+        .cy(viewbox / 2);
 
     // Labels
     // Spaltenbreite
     const colWidth = Math.ceil(
-      (chartPosition.value - props.lineGap * 5 - 15) / 3
+        (chartPosition.value - props.lineGap * 5 - 15) / 3
     );
 
     // Für die Beschriftung der Fahrbeziehungen wird eine eigene Gruppe erzeugt
     const fahrbeziehungenLabelRotationGroup = canvas.value.group();
     // Ein Rechteck, so groß wie der Viewport, um einen Drehpunkt um die Mitte zu haben
     fahrbeziehungenLabelRotationGroup
-      .rect(viewbox, viewbox)
-      .fill({ color: "white", opacity: opacity });
+        .rect(viewbox, viewbox)
+        .fill({ color: "white", opacity: opacity });
 
     // ========
     // Nach Labels
@@ -918,41 +947,41 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     // Die Fahrbeziehungen 1, 2, 5, 6 werden rechts beschriftet und dann gedreht
     const ausgleich = knotenarm.ausgleich * line.value;
     let yNach =
-      chartPosition.value +
-      ecke.value +
-      spalt.value +
-      basis.value -
-      (knotenarm.anzahlNachFahrbeziehungen * lineWidth.value) / 2 -
-      props.lineGap -
-      ausgleich;
+        chartPosition.value +
+        ecke.value +
+        spalt.value +
+        basis.value -
+        (knotenarm.anzahlNachFahrbeziehungen * lineWidth.value) / 2 -
+        props.lineGap -
+        ausgleich;
     let yD1 =
-      chartPosition.value +
-      ecke.value +
-      spalt.value +
-      basis.value +
-      line.value / 2 -
-      ausgleich;
+        chartPosition.value +
+        ecke.value +
+        spalt.value +
+        basis.value +
+        line.value / 2 -
+        ausgleich;
     let yD2 =
-      chartPosition.value +
-      ecke.value +
-      spalt.value +
-      basis.value -
-      knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
-      props.lineGap -
-      ausgleich;
+        chartPosition.value +
+        ecke.value +
+        spalt.value +
+        basis.value -
+        knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
+        props.lineGap -
+        ausgleich;
     let yVonSumme =
-      chartPosition.value +
-      ecke.value +
-      spalt.value +
-      knotenarm.anzahlVonFahrbeziehungen * line.value -
-      props.lineGap * 2;
+        chartPosition.value +
+        ecke.value +
+        spalt.value +
+        knotenarm.anzahlVonFahrbeziehungen * line.value -
+        props.lineGap * 2;
     let yVon = chartPosition.value + ecke.value + spalt.value;
     const yKnotenarm = chartPosition.value + seite.value / 2 - line.value / 2;
     let xText =
-      chartPosition.value +
-      seite.value -
-      (ecke.value - spalt.value * 1.5) / 2 +
-      5;
+        chartPosition.value +
+        seite.value -
+        (ecke.value - spalt.value * 1.5) / 2 +
+        5;
     let xc1 = chartPosition.value + seite.value + colWidth;
     let xc2 = chartPosition.value + seite.value + colWidth * 2;
     let xc3 = chartPosition.value + seite.value + colWidth * 3;
@@ -963,39 +992,39 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     // Die Fahrbeziehungen 3, 4, 7, 8 werden links beschriftet und dann gedreht
     if ([3, 4, 7, 8].includes(knotenarmnummer)) {
       yNach =
-        chartPosition.value +
-        ecke.value +
-        spalt.value +
-        (knotenarm.anzahlNachFahrbeziehungen * lineWidth.value) / 2 -
-        lineWidth.value +
-        props.lineGap +
-        ausgleich;
+          chartPosition.value +
+          ecke.value +
+          spalt.value +
+          (knotenarm.anzahlNachFahrbeziehungen * lineWidth.value) / 2 -
+          lineWidth.value +
+          props.lineGap +
+          ausgleich;
       yD1 =
-        chartPosition.value +
-        ecke.value +
-        spalt.value -
-        lineWidth.value / 2 +
-        ausgleich;
+          chartPosition.value +
+          ecke.value +
+          spalt.value -
+          lineWidth.value / 2 +
+          ausgleich;
       yD2 =
-        chartPosition.value +
-        ecke.value +
-        spalt.value +
-        knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
-        ausgleich;
+          chartPosition.value +
+          ecke.value +
+          spalt.value +
+          knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
+          ausgleich;
       yVonSumme =
-        chartPosition.value +
-        ecke.value +
-        spalt.value +
-        basis.value +
-        lineWidth.value / 2 +
-        props.lineGap;
+          chartPosition.value +
+          ecke.value +
+          spalt.value +
+          basis.value +
+          lineWidth.value / 2 +
+          props.lineGap;
       yVon =
-        chartPosition.value +
-        ecke.value +
-        spalt.value +
-        basis.value -
-        knotenarm.anzahlVonFahrbeziehungen * line.value +
-        line.value;
+          chartPosition.value +
+          ecke.value +
+          spalt.value +
+          basis.value -
+          knotenarm.anzahlVonFahrbeziehungen * line.value +
+          line.value;
       xc1 = colWidth;
       xc2 = colWidth * 2;
       xc3 = colWidth * 3;
@@ -1006,27 +1035,27 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     }
 
     // Knotenarmname
-    if (!props.schema) {
+    if (!drawSchema.value) {
       createKnotenarmname(
-        fahrbeziehungenLabelRotationGroup,
-        knotenarm,
-        xText,
-        yKnotenarm
+          fahrbeziehungenLabelRotationGroup,
+          knotenarm,
+          xText,
+          yKnotenarm
       );
     }
 
     // Knotenarmsumme
-    if (!props.schema) {
+    if (!drawSchema.value) {
       labelZeileErstellen(
-        fahrbeziehungenLabelRotationGroup,
-        yKnotenarm,
-        fillValueArray(knotenarm, [
-          knotenarm.totalValue1,
-          knotenarm.totalValue2,
-          knotenarm.totalValue3,
-        ]),
-        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-        "bold"
+          fahrbeziehungenLabelRotationGroup,
+          yKnotenarm,
+          fillValueArray(knotenarm, [
+            knotenarm.totalValue1,
+            knotenarm.totalValue2,
+            knotenarm.totalValue3,
+          ]),
+          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+          "bold"
       );
     }
 
@@ -1036,25 +1065,25 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     if (knotenarm.anzahlNachFahrbeziehungen > 0) {
       // Dreieck
       const dreieck = `M${xD1} ${yD1} L${xD2} ${
-        yNach + line.value / 2
+          yNach + line.value / 2
       } L${xD1} ${yD2} z`;
       fahrbeziehungenLabelRotationGroup
-        .path(dreieck)
-        .stroke({ width: 2, color: "black" })
-        .attr("fill", "none");
+          .path(dreieck)
+          .stroke({ width: 2, color: "black" })
+          .attr("fill", "none");
 
       // Die Werte für die "nach" Fahrbeziehungen des Knotenarmes werden ausgegeben
-      if (!props.schema) {
+      if (!drawSchema.value) {
         labelZeileErstellen(
-          fahrbeziehungenLabelRotationGroup,
-          yNach,
-          fillValueArray(knotenarm, [
-            knotenarm.nachTotalValue1,
-            knotenarm.nachTotalValue2,
-            knotenarm.nachTotalValue3,
-          ]),
-          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-          "bold"
+            fahrbeziehungenLabelRotationGroup,
+            yNach,
+            fillValueArray(knotenarm, [
+              knotenarm.nachTotalValue1,
+              knotenarm.nachTotalValue2,
+              knotenarm.nachTotalValue3,
+            ]),
+            calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+            "bold"
         );
       }
     }
@@ -1062,7 +1091,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     // ========
     // VON Labels
     // ========
-    if (!props.schema) {
+    if (!drawSchema.value) {
       let vonLine = 0;
       if ([3, 4, 7, 8].includes(knotenarmnummer)) {
         vonLine = knotenarm.anzahlVonFahrbeziehungen - 1;
@@ -1071,10 +1100,10 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       fbts.forEach((fbt) => {
         const y = yVon - lineWidth.value / 2 + line.value * vonLine;
         labelZeileErstellen(
-          fahrbeziehungenLabelRotationGroup,
-          y,
-          fillValueArray(knotenarm, [fbt.value1, fbt.value2, fbt.value3]),
-          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links)
+            fahrbeziehungenLabelRotationGroup,
+            y,
+            fillValueArray(knotenarm, [fbt.value1, fbt.value2, fbt.value3]),
+            calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links)
         );
 
         if ([3, 4, 7, 8].includes(knotenarmnummer)) {
@@ -1087,15 +1116,15 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       // "Von" Summen
       if (knotenarm.anzahlVonFahrbeziehungen > 0) {
         labelZeileErstellen(
-          fahrbeziehungenLabelRotationGroup,
-          yVonSumme,
-          fillValueArray(knotenarm, [
-            knotenarm.vonTotalValue1,
-            knotenarm.vonTotalValue2,
-            knotenarm.vonTotalValue3,
-          ]),
-          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-          "bold"
+            fahrbeziehungenLabelRotationGroup,
+            yVonSumme,
+            fillValueArray(knotenarm, [
+              knotenarm.vonTotalValue1,
+              knotenarm.vonTotalValue2,
+              knotenarm.vonTotalValue3,
+            ]),
+            calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+            "bold"
         );
         // Summenlinie
         let faktorRechts = 2;
@@ -1110,27 +1139,27 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
           if (!knotenarm.is3Filled) linieStartX = xc2;
         }
         fahrbeziehungenLabelRotationGroup
-          .line(
-            linieStartX,
-            yVonSumme,
-            xc1 + colWidth * faktorRechts,
-            yVonSumme
-          )
-          .stroke({ width: 1, color: "black" });
+            .line(
+                linieStartX,
+                yVonSumme,
+                xc1 + colWidth * faktorRechts,
+                yVonSumme
+            )
+            .stroke({ width: 1, color: "black" });
       }
     }
     // fahrbeziehungenLabelRotationGroup.add(fahrbeziehungenLabelGroup)
     fahrbeziehungenLabelRotationGroup.rotate(
-      calcLabelRotation(knotenarmnummer)
+        calcLabelRotation(knotenarmnummer)
     );
   }
   return knotenarmGroup;
 }
 
 function calculateLabelPosition(
-  knotenarm: BelastungsplanKnotenarm,
-  werte: number[],
-  links: boolean
+    knotenarm: BelastungsplanKnotenarm,
+    werte: number[],
+    links: boolean
 ): number[] {
   if (links) {
     // es ist nur bei den links ausgerichteten Labels notwendig,
@@ -1165,8 +1194,8 @@ function calculateLabelPosition(
  * @param werte       Ein Array mit den Anzeigewerten.
  */
 function fillValueArray(
-  knotenarm: BelastungsplanKnotenarm,
-  werte: number[]
+    knotenarm: BelastungsplanKnotenarm,
+    werte: number[]
 ): number[] {
   const result = [werte[0]];
   if (knotenarm.is2Filled) result[1] = werte[1];
@@ -1184,10 +1213,10 @@ function fillValueArray(
  * @param y           Y-Position
  */
 function createKnotenarmname(
-  group: SVG.G,
-  knotenarm: BelastungsplanKnotenarm,
-  x: number,
-  y: number
+    group: SVG.G,
+    knotenarm: BelastungsplanKnotenarm,
+    x: number,
+    y: number
 ) {
   // Der Knotenarmname wird umgebrochen, wenn er zu lang ist. Als
   // Merkmal werden hier vorerst nur die Bindestriche genommen.
@@ -1229,22 +1258,22 @@ function createKnotenarmname(
     zweiteZeile = line.value / 2;
   }
   group
-    .text((add) => {
-      if (pieces.length > 1) {
-        const firstAndSecondLineOfStreetnames: Array<string> =
-          getFirstAndSecondLineOfStreetname(trenner, pieces);
-        add.tspan(firstAndSecondLineOfStreetnames[0]).x(x).dy(line.value);
-        add.tspan(firstAndSecondLineOfStreetnames[1]).x(x).dy(line.value);
-      } else {
-        add.tspan(strasse).x(x);
-      }
-    })
-    .font({
-      size: lineWidth.value,
-      family: fontfamily,
-      anchor: "middle",
-    })
-    .y(y - zweiteZeile);
+      .text((add) => {
+        if (pieces.length > 1) {
+          const firstAndSecondLineOfStreetnames: Array<string> =
+              getFirstAndSecondLineOfStreetname(trenner, pieces);
+          add.tspan(firstAndSecondLineOfStreetnames[0]).x(x).dy(line.value);
+          add.tspan(firstAndSecondLineOfStreetnames[1]).x(x).dy(line.value);
+        } else {
+          add.tspan(strasse).x(x);
+        }
+      })
+      .font({
+        size: lineWidth.value,
+        family: fontfamily,
+        anchor: "middle",
+      })
+      .y(y - zweiteZeile);
 }
 
 /**
@@ -1259,23 +1288,23 @@ function legendeNordPfeil() {
                   L${startX + spalt.value / 3} ${startY - spalt.value * 1.5}
                   z`;
   nord
-    .path(path)
-    .stroke({ width: 2, color: props.legendColor })
-    .attr("fill", "none");
+      .path(path)
+      .stroke({ width: 2, color: props.legendColor })
+      .attr("fill", "none");
 
   nord
-    .text((add) => {
-      add
-        .tspan("N")
-        .x(startX + spalt.value / 3)
-        .dy(startY - props.maxlineWidth / 2);
-    })
-    .font({
-      family: fontfamily,
-      size: props.maxlineWidth,
-      anchor: "middle",
-      fill: props.legendColor,
-    });
+      .text((add) => {
+        add
+            .tspan("N")
+            .x(startX + spalt.value / 3)
+            .dy(startY - props.maxlineWidth / 2);
+      })
+      .font({
+        family: fontfamily,
+        size: props.maxlineWidth,
+        anchor: "middle",
+        fill: props.legendColor,
+      });
 }
 
 /**
@@ -1287,31 +1316,31 @@ function legendeZaehlstellenInfo() {
   const startY = chartPosition.value / 7;
 
   info
-    .text((add) => {
-      add.tspan(`Zählstelle ${zaehlstelle.value.nummer}`).font({
-        weight: "bold",
-      });
-      add.tspan(`Stadtbezirk ${zaehlstelle.value.stadtbezirkNummer}`).newLine();
-      add
-        .tspan(
-          `Zähldatum: ${dateUtils.getShortVersionOfDate(
-            new Date(zaehlung.value.datum)
-          )}`
-        )
-        .newLine();
-      if (isDifferenzdatendarstellung.value && vergleichsZaehlung.value) {
-        const localdate = dateUtils.getShortVersionOfDate(
-          new Date(vergleichsZaehlung.value.datum)
-        );
-        add.tspan(`Vergleichszählung: ${localdate}`).newLine();
-      }
-    })
-    .font({
-      family: fontfamily,
-      size: props.maxlineWidth,
-    })
-    .x(startX)
-    .y(startY);
+      .text((add) => {
+        add.tspan(`Zählstelle ${zaehlstelle.value.nummer}`).font({
+          weight: "bold",
+        });
+        add.tspan(`Stadtbezirk ${zaehlstelle.value.stadtbezirkNummer}`).newLine();
+        add
+            .tspan(
+                `Zähldatum: ${dateUtils.getShortVersionOfDate(
+                    new Date(zaehlung.value.datum)
+                )}`
+            )
+            .newLine();
+        if (isDifferenzdatendarstellung.value && vergleichsZaehlung.value) {
+          const localdate = dateUtils.getShortVersionOfDate(
+              new Date(vergleichsZaehlung.value.datum)
+          );
+          add.tspan(`Vergleichszählung: ${localdate}`).newLine();
+        }
+      })
+      .font({
+        family: fontfamily,
+        size: props.maxlineWidth,
+      })
+      .x(startX)
+      .y(startY);
 }
 
 /**
@@ -1330,8 +1359,8 @@ function legendeSpalten() {
     formeln.set("GV%", "kein GV% beim Vergleich");
     formeln.set("RAD", "RAD = RAD (Basis) - RAD (Vergleich)");
     formeln.set(
-      "RAD (KI-Hochrechnung)",
-      "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
+        "RAD (KI-Hochrechnung)",
+        "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
     );
     formeln.set("FUSS", "FUSS = KFZ (Basis) - FUSS (Vergleich)");
   } else {
@@ -1351,81 +1380,81 @@ function legendeSpalten() {
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
-      zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
-        ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
-        : "hochgerechnet"
+        zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
+            ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+            : "hochgerechnet"
     }`;
   } else if (zeitauswahl === Zeitauswahl.BLOCK) {
     zaehlzeitSecondLine = `${
-      zeitblockInfo.get(optionen.value.zeitblock)?.title
+        zeitblockInfo.get(optionen.value.zeitblock)?.title
     }`;
   } else if (zeitauswahl === Zeitauswahl.STUNDE) {
     zaehlzeitSecondLine = `${
-      zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
+        zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
     }`;
   } else if (
-    zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-    zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-    zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
     const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
-      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+        zaehlstelleStore.getStartEndeUhrzeitIntervalls;
     zaehlzeitSecondLine = `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
 
   spalten
-    .text((add) => {
-      add.tspan(`${zaehlzeitFirstLine}`).font({ weight: "bold" }).x(startX);
-      add.tspan(`${zaehlzeitSecondLine}`).newLine().x(startX);
-      add.tspan(``).newLine().x(startX);
+      .text((add) => {
+        add.tspan(`${zaehlzeitFirstLine}`).font({ weight: "bold" }).x(startX);
+        add.tspan(`${zaehlzeitSecondLine}`).newLine().x(startX);
+        add.tspan(``).newLine().x(startX);
 
-      // Spaltenüberschriften
-      add
-        .tspan(`${props.data.value1.label}`)
-        .font({ weight: "bold" })
-        .newLine()
-        .x(startX);
-      // Datenblock 2 gefüllt?
-      if (props.data.value2.filled) {
+        // Spaltenüberschriften
         add
-          .tspan(`(${props.data.value2.label})`)
-          .font({ weight: "bold" })
-          .x(startX + 60);
-      }
-      // Datenblock 3 gefüllt?
-      if (props.data.value3.filled) {
-        add
-          .tspan(`${props.data.value3.label}`)
-          .font({ weight: "bold" })
-          .x(startX + 120);
-      }
+            .tspan(`${props.data.value1.label}`)
+            .font({ weight: "bold" })
+            .newLine()
+            .x(startX);
+        // Datenblock 2 gefüllt?
+        if (props.data.value2.filled) {
+          add
+              .tspan(`(${props.data.value2.label})`)
+              .font({ weight: "bold" })
+              .x(startX + 60);
+        }
+        // Datenblock 3 gefüllt?
+        if (props.data.value3.filled) {
+          add
+              .tspan(`${props.data.value3.label}`)
+              .font({ weight: "bold" })
+              .x(startX + 120);
+        }
 
-      // Formeln
-      add
-        .tspan(`${formeln.get(props.data.value1.label)}`)
-        .newLine()
-        .x(startX);
-      // Datenblock 2 gefüllt?
-      if (props.data.value2.filled) {
+        // Formeln
         add
-          .tspan(`${formeln.get(props.data.value2.label)}`)
-          .newLine()
-          .x(startX);
-      }
-      // Datenblock 3 gefüllt?
-      if (props.data.value3.filled) {
-        add
-          .tspan(`${formeln.get(props.data.value3.label)}`)
-          .newLine()
-          .x(startX);
-      }
-    })
-    .font({
-      family: fontfamily,
-      size: getLegendLineWidth.value,
-    })
-    .x(startX)
-    .y(startY);
+            .tspan(`${formeln.get(props.data.value1.label)}`)
+            .newLine()
+            .x(startX);
+        // Datenblock 2 gefüllt?
+        if (props.data.value2.filled) {
+          add
+              .tspan(`${formeln.get(props.data.value2.label)}`)
+              .newLine()
+              .x(startX);
+        }
+        // Datenblock 3 gefüllt?
+        if (props.data.value3.filled) {
+          add
+              .tspan(`${formeln.get(props.data.value3.label)}`)
+              .newLine()
+              .x(startX);
+        }
+      })
+      .font({
+        family: fontfamily,
+        size: getLegendLineWidth.value,
+      })
+      .x(startX)
+      .y(startY);
 }
 
 /**
@@ -1444,83 +1473,83 @@ function legendeLinienStaerke() {
   // grün = Abnahme
   if (isDifferenzdatendarstellung.value) {
     size
-      .rect(lineWidth.value, lineWidth.value)
-      .fill(props.zunahmeValueColor)
-      .x(startX)
-      .y(startY + 35);
+        .rect(lineWidth.value, lineWidth.value)
+        .fill(props.zunahmeValueColor)
+        .x(startX)
+        .y(startY + 35);
     size
-      .rect(lineWidth.value, lineWidth.value)
-      .fill(props.abnahmeValueColor)
-      .x(startX)
-      .y(startY + 35 + 5 + lineWidth.value);
+        .rect(lineWidth.value, lineWidth.value)
+        .fill(props.abnahmeValueColor)
+        .x(startX)
+        .y(startY + 35 + 5 + lineWidth.value);
 
     size
-      .text((add) => {
-        add
-          .tspan("Zunahme")
-          .x(startX + 28)
-          .dy(startY + 35 + lineWidth.value);
-      })
-      .font({
-        family: fontfamily,
-        size: props.maxlineWidth,
-      });
+        .text((add) => {
+          add
+              .tspan("Zunahme")
+              .x(startX + 28)
+              .dy(startY + 35 + lineWidth.value);
+        })
+        .font({
+          family: fontfamily,
+          size: props.maxlineWidth,
+        });
 
     size
-      .text((add) => {
-        add
-          .tspan("Abnahme")
-          .x(startX + 28)
-          .dy(startY + 35 + 5 + lineWidth.value * 2);
-      })
-      .font({
-        family: fontfamily,
-        size: props.maxlineWidth,
-      });
+        .text((add) => {
+          add
+              .tspan("Abnahme")
+              .x(startX + 28)
+              .dy(startY + 35 + 5 + lineWidth.value * 2);
+        })
+        .font({
+          family: fontfamily,
+          size: props.maxlineWidth,
+        });
   }
 
   size
-    .path(path)
-    .stroke({ width: 2, color: props.legendColor })
-    .attr("fill", "none");
+      .path(path)
+      .stroke({ width: 2, color: props.legendColor })
+      .attr("fill", "none");
 
   const path2 = `M${startX + 1.5 * spalt.value} ${startY}
                    L${startX + 1.5 * spalt.value} ${
-                     startY - props.maxlineWidth / 2
-                   }`;
+      startY - props.maxlineWidth / 2
+  }`;
   size
-    .path(path2)
-    .stroke({ width: 2, color: props.legendColor })
-    .attr("fill", "none");
+      .path(path2)
+      .stroke({ width: 2, color: props.legendColor })
+      .attr("fill", "none");
 
   const high =
-    highestFahrbeziehungsValue.value +
-    (100 - (highestFahrbeziehungsValue.value % 1000));
+      highestFahrbeziehungsValue.value +
+      (100 - (highestFahrbeziehungsValue.value % 1000));
   size
-    .text((add) => {
-      add
-        .tspan(`${high}`)
-        .x(startX + 3 * spalt.value)
-        .dy(startY + props.maxlineWidth);
-    })
-    .font({
-      family: fontfamily,
-      size: props.maxlineWidth,
-      anchor: "middle",
-    });
+      .text((add) => {
+        add
+            .tspan(`${high}`)
+            .x(startX + 3 * spalt.value)
+            .dy(startY + props.maxlineWidth);
+      })
+      .font({
+        family: fontfamily,
+        size: props.maxlineWidth,
+        anchor: "middle",
+      });
 
   size
-    .text((add) => {
-      add
-        .tspan(`${high / 2}`)
-        .x(startX + 1.5 * spalt.value)
-        .dy(startY + props.maxlineWidth);
-    })
-    .font({
-      family: fontfamily,
-      size: props.maxlineWidth,
-      anchor: "middle",
-    });
+      .text((add) => {
+        add
+            .tspan(`${high / 2}`)
+            .x(startX + 1.5 * spalt.value)
+            .dy(startY + props.maxlineWidth);
+      })
+      .font({
+        family: fontfamily,
+        size: props.maxlineWidth,
+        anchor: "middle",
+      });
 }
 
 /**
@@ -1528,14 +1557,14 @@ function legendeLinienStaerke() {
  */
 function isGegenueber(von: number, nach: number): boolean {
   return (
-    (von === 1 && nach === 3) ||
-    (von === 5 && nach === 7) ||
-    (von === 2 && nach === 4) ||
-    (von === 6 && nach === 8) ||
-    (von === 3 && nach === 1) ||
-    (von === 7 && nach === 5) ||
-    (von === 4 && nach === 2) ||
-    (von === 8 && nach === 6)
+      (von === 1 && nach === 3) ||
+      (von === 5 && nach === 7) ||
+      (von === 2 && nach === 4) ||
+      (von === 6 && nach === 8) ||
+      (von === 3 && nach === 1) ||
+      (von === 7 && nach === 5) ||
+      (von === 4 && nach === 2) ||
+      (von === 8 && nach === 6)
   );
 }
 
@@ -1549,11 +1578,11 @@ function isGegenueber(von: number, nach: number): boolean {
  * @param weight  Optional kann die Schriftstärke angegeben werden.
  */
 function labelZeileErstellen(
-  group: SVG.G,
-  y: number,
-  vs: number[],
-  xs: number[],
-  weight?: string
+    group: SVG.G,
+    y: number,
+    vs: number[],
+    xs: number[],
+    weight?: string
 ) {
   // default font weight ist "normal"
   if (!weight) {
@@ -1573,22 +1602,22 @@ function labelZeileErstellen(
       }
     }
     group
-      .text((add) => {
-        if (i === 1) {
-          // die zweite Spalte wird durch Klammern gekennzeichnet
-          add.tspan(`(${v})`).x(xs[i]);
-        } else {
-          add.tspan(`${v}`).x(xs[i]);
-        }
-      })
-      .font({
-        family: fontfamily,
-        size: lineWidth.value,
-        weight: weight,
-        anchor: "end",
-      })
-      .x(0)
-      .y(y);
+        .text((add) => {
+          if (i === 1) {
+            // die zweite Spalte wird durch Klammern gekennzeichnet
+            add.tspan(`(${v})`).x(xs[i]);
+          } else {
+            add.tspan(`${v}`).x(xs[i]);
+          }
+        })
+        .font({
+          family: fontfamily,
+          size: lineWidth.value,
+          weight: weight,
+          anchor: "end",
+        })
+        .x(0)
+        .y(y);
   }
 }
 
@@ -1618,16 +1647,16 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       // dann muss dieser angelegt werden.
       if (!fahrbeziehungsTypen.value.has(fb.von)) {
         fahrbeziehungsTypen.value.set(
-          fb.von,
-          new Array<BelastungsplanFahrbeziehung>()
+            fb.von,
+            new Array<BelastungsplanFahrbeziehung>()
         );
       }
 
       // Für Knotenarme, die nur eingehende Fahrbeziehungen haben.
       if (!fahrbeziehungsTypen.value.has(fb.nach)) {
         fahrbeziehungsTypen.value.set(
-          fb.nach,
-          new Array<BelastungsplanFahrbeziehung>()
+            fb.nach,
+            new Array<BelastungsplanFahrbeziehung>()
         );
       }
 
@@ -1638,8 +1667,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       // "von" checken und ggf. anlegen
       if (!knotenarme.value.has(fb.von)) {
         knotenarme.value.set(
-          fb.von,
-          new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
+            fb.von,
+            new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
         );
       }
       const knotenarmVon = knotenarme.value.get(fb.von);
@@ -1647,8 +1676,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       // "nach" checken und ggf. anlegen
       if (!knotenarme.value.has(fb.nach)) {
         knotenarme.value.set(
-          fb.nach,
-          new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
+            fb.nach,
+            new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
         );
       }
       const knotenarmNach = knotenarme.value.get(fb.nach);
@@ -1656,11 +1685,11 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
 
       // Fahrbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
       const belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
-        fb.von
+          fb.von
       ) as BelastungsplanFahrbeziehung[];
       const belastungsplanFahrbeziehung = new BelastungsplanFahrbeziehung(
-        calcFahrbeziehungstype(fb.von, fb.nach),
-        fb.nach
+          calcFahrbeziehungstype(fb.von, fb.nach),
+          fb.nach
       ) as BelastungsplanFahrbeziehung;
       belastungsplanFahrbeziehungen.push(belastungsplanFahrbeziehung);
 
@@ -1680,31 +1709,31 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
         // von Zähler hoch setzen
         knotenarmVon.plusFahrbeziehungenVon();
         if (
-          positiveNumber(knotenarmVon.anzahlVonFahrbeziehungen) >
-          vonMaxValue.value
+            positiveNumber(knotenarmVon.anzahlVonFahrbeziehungen) >
+            vonMaxValue.value
         )
           vonMaxValue.value = positiveNumber(
-            knotenarmVon.anzahlVonFahrbeziehungen
+              knotenarmVon.anzahlVonFahrbeziehungen
           );
         // den höchsten und niedrigsten Wert einer Fahrbeziehung ermitteln
         // (gilt hier nur der KFZ Verkehr?)
         if (
-          positiveNumber(data.value1.values[v][n]) >
-          highestFahrbeziehungsValue.value
+            positiveNumber(data.value1.values[v][n]) >
+            highestFahrbeziehungsValue.value
         )
           highestFahrbeziehungsValue.value = positiveNumber(
-            data.value1.values[v][n]
+              data.value1.values[v][n]
           );
         if (
-          positiveNumber(data.value1.values[v][n]) <
-          lowestFahrbeziehungsValue.value
+            positiveNumber(data.value1.values[v][n]) <
+            lowestFahrbeziehungsValue.value
         )
           lowestFahrbeziehungsValue.value = positiveNumber(
-            data.value1.values[v][n]
+              data.value1.values[v][n]
           );
         // Fahrbeziehungstyp wird gesetzt um später die Position der Linien berrechnen zu können
         knotenarmVon.addVonFahrbeziehungsType(
-          belastungsplanFahrbeziehung.fahrbeziehungsTyp
+            belastungsplanFahrbeziehung.fahrbeziehungsTyp
         );
       }
 
@@ -1712,15 +1741,15 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
         // nach Zähler hoch setzen
         knotenarmNach.plusFahrbeziehungenNach();
         if (
-          positiveNumber(knotenarmNach.anzahlNachFahrbeziehungen) >
-          nachMaxValue.value
+            positiveNumber(knotenarmNach.anzahlNachFahrbeziehungen) >
+            nachMaxValue.value
         )
           nachMaxValue.value = positiveNumber(
-            knotenarmNach.anzahlNachFahrbeziehungen
+              knotenarmNach.anzahlNachFahrbeziehungen
           );
         // den Typ der eingehenden Verbindung speichern
         knotenarmNach.addNachFahrbeziehungsTyp(
-          belastungsplanFahrbeziehung.fahrbeziehungsTyp
+            belastungsplanFahrbeziehung.fahrbeziehungsTyp
         );
       }
     });
@@ -1749,8 +1778,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       k.totalValue1 = data.value1.sum[knummer];
       // Soll Wert 2 dargestellt werden?
       if (
-        data.value2.filled &&
-        !(isDifferenzdatendarstellung.value && data.value2.percent)
+          data.value2.filled &&
+          !(isDifferenzdatendarstellung.value && data.value2.percent)
       ) {
         k.vonTotalValue2 = data.value2.sumIn[knummer];
         k.nachTotalValue2 = data.value2.sumOut[knummer];
@@ -1758,8 +1787,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       }
       // Soll Wert 3 dargestellt werden?
       if (
-        data.value3.filled &&
-        !(isDifferenzdatendarstellung.value && data.value3.percent)
+          data.value3.filled &&
+          !(isDifferenzdatendarstellung.value && data.value3.percent)
       ) {
         k.vonTotalValue3 = data.value3.sumIn[knummer];
         k.nachTotalValue3 = data.value3.sumOut[knummer];
@@ -1767,7 +1796,7 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       }
     });
 
-    // maximale Linien Dicke berrechnen
+    // maximale Linien Dicke berechnen
     calcMaxLineWidth();
 
     // Belastungsplan ausgeben
@@ -1782,8 +1811,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
  * @param data        Belastungsplandaten
  */
 function anzeigeWerte(
-  knotenarm: BelastungsplanKnotenarm | undefined,
-  data: LadeBelastungsplanDTO
+    knotenarm: BelastungsplanKnotenarm | undefined,
+    data: LadeBelastungsplanDTO
 ) {
   if (knotenarm) {
     knotenarm.is1Filled = data.value1.filled;
@@ -1814,12 +1843,12 @@ function positiveNumber(num: number): number {
  * @param nach  "nach" Knotenarm
  */
 function fahrbeziehungenAusrichten(
-  von: BelastungsplanKnotenarm,
-  nach: BelastungsplanKnotenarm
+    von: BelastungsplanKnotenarm,
+    nach: BelastungsplanKnotenarm
 ) {
   if (
-    nach.nachFahrbeziehungsTypen.includes(Fahrtrichtungsarten.GERADE) &&
-    isGegenueber(von.knotenarmNummer, nach.knotenarmNummer)
+      nach.nachFahrbeziehungsTypen.includes(Fahrtrichtungsarten.GERADE) &&
+      isGegenueber(von.knotenarmNummer, nach.knotenarmNummer)
   ) {
     // Muss für beide Seiten ein Ausgleich erzeugt werden
     ausgleichBerechnen(von, nach);
@@ -1837,15 +1866,15 @@ function fahrbeziehungenAusrichten(
  * @param nach  "nach" Knotenarm
  */
 function ausgleichBerechnen(
-  von: BelastungsplanKnotenarm,
-  nach: BelastungsplanKnotenarm
+    von: BelastungsplanKnotenarm,
+    nach: BelastungsplanKnotenarm
 ) {
   // Der Index der Geraden Fahrbeziehung muss voneinander abweichen, um ein Problem zu sein.
   const indexVon = von.vonFahrbeziehungsTypen
-    .sort()
-    .indexOf(Fahrtrichtungsarten.GERADE);
+      .sort()
+      .indexOf(Fahrtrichtungsarten.GERADE);
   const indexNach = nach.findFahrbeziehungsNachPosition(
-    Fahrtrichtungsarten.GERADE
+      Fahrtrichtungsarten.GERADE
   );
   if (indexVon != indexNach) {
     // Ein Problem in der Anzeige tritt aber erst dann auf, wenn auf den gegenüber liegenden Knotenarmen
@@ -1903,7 +1932,7 @@ function calcMaxLineWidth() {
     // der maximalen linien geteilt werden. Die Breite der Linie wird abgerundet,
     // damit wir einen glatten Wert für die Textgröße haben.
     lineWidth.value = Math.ceil(
-      (maxFahrtrichtungWidth.value - mv * props.lineGap) / mv
+        (maxFahrtrichtungWidth.value - mv * props.lineGap) / mv
     );
     fahrtrichtungWidth.value = maxFahrtrichtungWidth.value;
   } else {
@@ -1920,7 +1949,7 @@ function calcMaxLineWidth() {
  * @param counts    Die Anzahl der Fahrbeziehungen.
  */
 function calcLineWidth(counts: number): number {
-  if (props.schema) {
+  if (drawSchema.value) {
     return lineWidth.value * 0.8;
   }
   if (counts === 0) {
@@ -1955,61 +1984,61 @@ function calcFahrbeziehungstype(von: number, nach: number): number {
 
   // rechts 45°
   if (
-    ([2, 3, 4].includes(von) && von + 3 === nach) ||
-    ([5, 6, 7, 8].includes(von) && von - 4 === nach) ||
-    (von === 1 && nach === 8)
+      ([2, 3, 4].includes(von) && von + 3 === nach) ||
+      ([5, 6, 7, 8].includes(von) && von - 4 === nach) ||
+      (von === 1 && nach === 8)
   ) {
     return Fahrtrichtungsarten.RECHTS45;
   }
 
   // rechts 90°
   if (
-    ([4, 3, 2, 6, 7, 8].includes(von) && von - 1 === nach) ||
-    (von === 1 && nach === 4) ||
-    (von === 5 && nach === 8)
+      ([4, 3, 2, 6, 7, 8].includes(von) && von - 1 === nach) ||
+      (von === 1 && nach === 4) ||
+      (von === 5 && nach === 8)
   ) {
     return Fahrtrichtungsarten.RECHTS90;
   }
 
   // rechts 135°
   if (
-    (von === 1 && nach === 7) ||
-    (von === 2 && nach === 8) ||
-    (von === 3 && nach === 5) ||
-    (von === 4 && nach === 6) ||
-    (von === 5 && nach === 4) ||
-    (von === 6 && nach === 1) ||
-    (von === 7 && nach === 2) ||
-    (von === 8 && nach === 3)
+      (von === 1 && nach === 7) ||
+      (von === 2 && nach === 8) ||
+      (von === 3 && nach === 5) ||
+      (von === 4 && nach === 6) ||
+      (von === 5 && nach === 4) ||
+      (von === 6 && nach === 1) ||
+      (von === 7 && nach === 2) ||
+      (von === 8 && nach === 3)
   ) {
     return Fahrtrichtungsarten.RECHTS135;
   }
 
   // links 45°
   if (
-    ([1, 2, 3, 4].includes(von) && von + 4 === nach) ||
-    ([5, 6, 7].includes(von) && von - 3 === nach) ||
-    (von === 8 && nach === 1)
+      ([1, 2, 3, 4].includes(von) && von + 4 === nach) ||
+      ([5, 6, 7].includes(von) && von - 3 === nach) ||
+      (von === 8 && nach === 1)
   ) {
     return Fahrtrichtungsarten.LINKS45;
   }
 
   // links 90°
   if (
-    ([1, 2, 3, 5, 6, 7].includes(von) && von + 1 === nach) ||
-    (von === 4 && nach === 1) ||
-    (von === 8 && nach === 5)
+      ([1, 2, 3, 5, 6, 7].includes(von) && von + 1 === nach) ||
+      (von === 4 && nach === 1) ||
+      (von === 8 && nach === 5)
   ) {
     return Fahrtrichtungsarten.LINKS90;
   }
 
   // links 135°
   if (
-    ([1, 2, 3].includes(von) && von + 5 === nach) ||
-    (von === 4 && nach === 5) ||
-    ([5, 6].includes(von) && nach === von - 2) ||
-    (von === 7 && nach === 1) ||
-    (von === 8 && nach === 2)
+      ([1, 2, 3].includes(von) && von + 5 === nach) ||
+      (von === 4 && nach === 5) ||
+      ([5, 6].includes(von) && nach === von - 2) ||
+      (von === 7 && nach === 1) ||
+      (von === 8 && nach === 2)
   ) {
     return Fahrtrichtungsarten.LINKS135;
   }
@@ -2048,14 +2077,14 @@ function calcFahrbeziehungstype(von: number, nach: number): number {
  * @param doc           Soll die Berechnung der Punkte grafisch dargestellt werden?
  */
 function zielPunkt(
-  achteck1: SVG.Point,
-  achteck2: SVG.Point,
-  achteck3: SVG.Point,
-  achteck4: SVG.Point,
-  startPunkt: SVG.Point,
-  positionNach: number,
-  distanz: number,
-  doc: boolean
+    achteck1: SVG.Point,
+    achteck2: SVG.Point,
+    achteck3: SVG.Point,
+    achteck4: SVG.Point,
+    startPunkt: SVG.Point,
+    positionNach: number,
+    distanz: number,
+    doc: boolean
 ): string {
   const positionZielpunkt = spalt.value + positionNach * line.value;
   // Linie am Zielpunkt
@@ -2114,33 +2143,33 @@ function zielPunkt(
     aZielNach.stroke({ width: 2, color: "black" }).attr("fill", "none");
     pathZiel.stroke({ width: 1, color: "black" }).attr("fill", "none");
     documentationGroup.value
-      .circle(10)
-      .fill({ color: "green" })
-      .move(point1.x - 5, point1.y - 5);
+        .circle(10)
+        .fill({ color: "green" })
+        .move(point1.x - 5, point1.y - 5);
     documentationGroup.value
-      .circle(10)
-      .fill({ color: "green" })
-      .move(startX1 - 5, startY1 - 5);
+        .circle(10)
+        .fill({ color: "green" })
+        .move(startX1 - 5, startY1 - 5);
     documentationGroup.value
-      .circle(6)
-      .fill({ color: "#f06" })
-      .move(point2.x - 3, point2.y - 3);
+        .circle(6)
+        .fill({ color: "#f06" })
+        .move(point2.x - 3, point2.y - 3);
     documentationGroup.value
-      .circle(6)
-      .fill({ color: "#f06" })
-      .move(startX2 - 3, startY2 - 3);
+        .circle(6)
+        .fill({ color: "#f06" })
+        .move(startX2 - 3, startY2 - 3);
     documentationGroup.value
-      .circle(10)
-      .fill({ color: "green" })
-      .move(sx - 5, sy - 5);
+        .circle(10)
+        .fill({ color: "green" })
+        .move(sx - 5, sy - 5);
     documentationGroup.value
-      .circle(10)
-      .fill({ color: "green" })
-      .move(startKurvenPunkt.x - 5, startKurvenPunkt.y - 5);
+        .circle(10)
+        .fill({ color: "green" })
+        .move(startKurvenPunkt.x - 5, startKurvenPunkt.y - 5);
     documentationGroup.value
-      .circle(10)
-      .fill({ color: "green" })
-      .move(zielKurvenPunkt.x - 5, zielKurvenPunkt.y - 5);
+        .circle(10)
+        .fill({ color: "green" })
+        .move(zielKurvenPunkt.x - 5, zielKurvenPunkt.y - 5);
   }
   return path;
 }
@@ -2161,8 +2190,8 @@ function calcA(): number {
  * @return [firsLine, SecondLine]
  */
 function getFirstAndSecondLineOfStreetname(
-  trenner: string,
-  pieces: Array<string>
+    trenner: string,
+    pieces: Array<string>
 ): Array<string> {
   let firstLine: string;
   let secondLine: string;
@@ -2200,9 +2229,9 @@ function getFirstAndSecondLineOfStreetname(
 // Verteilt die Teile (pieces) der Straßennamen auf die first and second Line
 // Der index gibt dabei vor, wieviele Teile wohin gehören
 function getStreetnames(
-  index: number,
-  trenner: string,
-  pieces: Array<string>
+    index: number,
+    trenner: string,
+    pieces: Array<string>
 ): Array<string> {
   let firstLine = "";
   let secondLine = "";
@@ -2221,15 +2250,32 @@ function getStreetnames(
   return [firstLine, secondLine];
 }
 
+function initCanvas() {
+  if (drawSchema.value) {
+    canvas.value = canvasSchema.value;
+  } else {
+    canvas.value = canvasDefault.value;
+  }
+}
+
+function resetSchema() {
+  drawSchema.value = true;
+}
+
+function redraw() {
+  resetSchema();
+  nextTick(() => {
+    calcFahrbeziehungen(props.data);
+  });
+}
+
 /**
  * Diese Methode zeichnet den Balastungsplan immer dann, wenn von einem anderen Tab auf
  * den Belastungsplan Tab gewechselt wird.
  */
 watch(activeTab, (tab: number) => {
   if (tab === 0 && !props.data.kreisverkehr) {
-    setTimeout(() => {
-      calcFahrbeziehungen(props.data);
-    }, 350);
+    redraw();
   }
 });
 /**
@@ -2237,11 +2283,11 @@ watch(activeTab, (tab: number) => {
  * aktiv und damit auch sichtbar ist.
  */
 watch(
-  () => props.data,
-  (data: LadeBelastungsplanDTO) => {
-    if (activeTab.value === 0 && !data.kreisverkehr) {
-      calcFahrbeziehungen(data);
+    () => props.data,
+    (data: LadeBelastungsplanDTO) => {
+      if (activeTab.value === 0 && !data.kreisverkehr) {
+        redraw();
+      }
     }
-  }
 );
 </script>
