@@ -11,6 +11,8 @@
       justify="center"
       dense
       no-gutters
+      @mouseover="isHoveringOverInputFields = true"
+      @mouseleave="isHoveringOverInputFields = false"
     >
       <v-col cols="4">
         <v-checkbox
@@ -19,6 +21,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverStundensumme = true"
           @mouseleave="hoverStundensumme = false"
         />
@@ -29,6 +32,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverBlocksumme = true"
           @mouseleave="hoverBlocksumme = false"
         />
@@ -40,6 +44,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverTagessumme = true"
           @mouseleave="hoverTagessumme = false"
         />
@@ -50,6 +55,7 @@
           hide-details
           color="grey-darken-1"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverSpitzenstunde = true"
           @mouseleave="hoverSpitzenstunde = false"
         />
@@ -69,15 +75,30 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useDateUtils } from "@/util/DateUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+
+const isHoveringOverInputFields = ref<boolean>(false);
 
 const hoverStundensumme = ref(false);
 const hoverBlocksumme = ref(false);
 const hoverTagessumme = ref(false);
 const hoverSpitzenstunde = ref(false);
 
+const dateUtils = useDateUtils();
+
+const isZeitraumGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
+});
+
 const helpTextListenausgabe = computed(() => {
+  if (isHoveringOverInputFields.value && isZeitraumGreaterThanFiveYears.value) {
+    return "Der gewählte Zeitraum umfasst mehr als fünf Jahre.";
+  }
   if (hoverStundensumme.value) {
     return "Ausgabe der Summen für jede Stunde als Zeile.";
   }

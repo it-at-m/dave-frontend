@@ -30,7 +30,7 @@
           v-model="messstelleninfo"
           title="Messstelleninformationen"
           subtitle="Folgende Informationen werden im PDF Report
-                                eingetragen: Messstelle-ID, ID & Standort der
+                                eingetragen: Messstellen-ID, ID & Standort der
                                 Messquerschnitte, Stadtbezirk,
                                 Messstellenkommentar."
         />
@@ -84,7 +84,7 @@ import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListI
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
-import { tagesTypText } from "@/types/enum/TagesTyp";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
@@ -185,13 +185,16 @@ function createMessInfo(): void {
 
   const zeitraum = options.value.zeitraum;
   let header = `Info zur Messung vom ${dateUtils.formatDate(zeitraum[0])}`;
-  if (zeitraum.length === 2) {
+  if (dateUtils.isDateRange(options.value.zeitraum)) {
     header += ` bis ${dateUtils.formatDate(zeitraum[1])}`;
   }
   header += ` (Mst-Id ${messstelle.value.mstId})`;
   assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
 
-  if (options.value.tagesTyp) {
+  if (
+    dateUtils.isDateRange(options.value.zeitraum) &&
+    options.value.tagesTyp !== TagesTyp.UNSPECIFIED
+  ) {
     const wochentag = new TextAsset(
       `Wochentag (Tagestyp): ${tagesTypText.get(options.value.tagesTyp)}`
     );

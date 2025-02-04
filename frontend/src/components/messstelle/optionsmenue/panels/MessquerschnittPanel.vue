@@ -79,7 +79,9 @@ import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import Himmelsrichtungen, {
+  himmelsRichtungenTextLong,
+} from "@/types/enum/Himmelsrichtungen";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
@@ -113,6 +115,7 @@ const direction = computed({
 
 const richtungValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
+  const exisitingDirection: Array<Himmelsrichtungen> = [];
   if (
     messstelle.value.messquerschnitte.length > 1 &&
     !isZeitauswahlSpitzenstunde.value
@@ -131,12 +134,13 @@ const richtungValues = computed<Array<KeyVal>>(() => {
         himmelsrichtungAsText =
           "Fehler bei der Bestimmung der Himmelsrichtung.";
       }
-      const keyVal: KeyVal = {
-        title: himmelsrichtungAsText,
-        value: querschnitt.fahrtrichtung,
-      };
-      if (!result.includes(keyVal)) {
+      if (!exisitingDirection.includes(querschnitt.fahrtrichtung)) {
+        const keyVal: KeyVal = {
+          title: himmelsrichtungAsText,
+          value: querschnitt.fahrtrichtung,
+        };
         result.push(keyVal);
+        exisitingDirection.push(querschnitt.fahrtrichtung);
       }
     }
   );
