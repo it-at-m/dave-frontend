@@ -180,16 +180,16 @@ function setDefaultOptionsForZaehlung() {
   if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-  } else if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
-    optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    optionsCopy.zeitblock = Zeitblock.ZB_06_22;
   }
 
   if (
     props.zaehlung.zaehlart === Zaehlart.R ||
     props.zaehlung.zaehlart === Zaehlart.QR
   ) {
-    if (
+    if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
+      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
+      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
+    } else if (
       props.zaehlung.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
       props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
     ) {
