@@ -15,13 +15,14 @@ export function useValidationRules() {
   function onlyNumbersInRange(
     toCheck: string,
     minvalue: number,
-    maxValue: number
+    maxValueExcluded: number
   ): boolean | string {
     if (toCheck === null || toCheck === undefined) return true;
     if (!toCheck.trim()) return true;
     const parsed = parseFloat(toCheck);
-    if (!isNaN(parsed) && _.inRange(parsed, minvalue, maxValue)) return true;
-    return `Das Feld darf nur positive Zahlen kleiner gleich ${maxValue} enthalten`;
+    if (!isNaN(parsed) && _.inRange(parsed, minvalue, maxValueExcluded))
+      return true;
+    return `Das Feld darf nur positive Zahlen kleiner gleich ${maxValueExcluded - 1} enthalten`;
   }
 
   return {

@@ -114,6 +114,11 @@ const optionsDefault = computed(() => {
       formatter: function (value: unknown) {
         return formatYAxisLabel(value);
       },
+      backgroundColor: "rgba(50,50,50,0.7)",
+      textStyle: {
+        color: "rgba(255,255,255,1)",
+      },
+      confine: true,
     },
     animation: false,
     grid: {
@@ -124,8 +129,12 @@ const optionsDefault = computed(() => {
     xAxis: {
       type: "category",
       data: xAxisDataFirstChart.value,
+      boundaryGap: true,
       splitArea: {
         show: true,
+      },
+      axisTick: {
+        alignWithLabel: true,
       },
     },
     yAxis: {
@@ -133,6 +142,9 @@ const optionsDefault = computed(() => {
       data: chartLegend.value,
       splitArea: {
         show: true,
+      },
+      axisTick: {
+        alignWithLabel: true,
       },
     },
     visualMap: {
@@ -172,6 +184,11 @@ const options2x4 = computed(() => {
       formatter: function (value: unknown) {
         return formatYAxisLabel(value);
       },
+      backgroundColor: "rgba(50,50,50,0.7)",
+      textStyle: {
+        color: "rgba(255,255,255,1)",
+      },
+      confine: true,
     },
     animation: false,
     grid: [
@@ -191,16 +208,24 @@ const options2x4 = computed(() => {
         type: "category",
         data: xAxisDataFirstChart.value,
         gridIndex: 0,
+        boundaryGap: true,
         splitArea: {
           show: true,
+        },
+        axisTick: {
+          alignWithLabel: true,
         },
       },
       {
         type: "category",
         data: xAxisDataSecondChart.value,
         gridIndex: 1,
+        boundaryGap: true,
         splitArea: {
           show: true,
+        },
+        axisTick: {
+          alignWithLabel: true,
         },
       },
     ],
@@ -212,6 +237,9 @@ const options2x4 = computed(() => {
         splitArea: {
           show: true,
         },
+        axisTick: {
+          alignWithLabel: true,
+        },
       },
       {
         type: "category",
@@ -219,6 +247,9 @@ const options2x4 = computed(() => {
         gridIndex: 1,
         splitArea: {
           show: true,
+        },
+        axisTick: {
+          alignWithLabel: true,
         },
       },
     ],
