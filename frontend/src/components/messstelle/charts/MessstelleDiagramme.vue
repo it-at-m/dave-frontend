@@ -191,7 +191,7 @@ import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
   height?: string;
-  contentHeight?: string;
+  contentHeight: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -230,9 +230,6 @@ const TAB_GANGLINIE = 1;
 const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
-const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
-const belastungsplanSchematischeUebersichtCard =
-  ref<typeof BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
