@@ -56,17 +56,15 @@ export const useOptionsmenueSettingsStore = defineStore(
       fahrzeugklasse: Fahrzeugklasse | undefined,
       intervall: ZaehldatenIntervall | undefined
     ): string {
-      let key;
       if (isNil(fahrzeugklasse) && isNil(intervall)) {
-        key = DEFAULT_KEY + "-" + DEFAULT_KEY;
+        return DEFAULT_KEY + "-" + DEFAULT_KEY;
       } else if (isNil(fahrzeugklasse) && !isNil(intervall)) {
-        key = DEFAULT_KEY + "-" + intervall;
+        return DEFAULT_KEY + "-" + intervall;
       } else if (!isNil(fahrzeugklasse) && isNil(intervall)) {
-        key = fahrzeugklasse + "-" + DEFAULT_KEY;
+        return fahrzeugklasse + "-" + DEFAULT_KEY;
       } else {
-        key = fahrzeugklasse + "-" + intervall;
+        return fahrzeugklasse + "-" + intervall;
       }
-      return key;
     }
 
     return {
