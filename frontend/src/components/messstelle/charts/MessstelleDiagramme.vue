@@ -57,11 +57,10 @@
             v-else-if="
               belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
             "
-            ref="belastungsplanCard"
+            :is-schematische-uebersicht="false"
             :belastungsplan-data="belastungsplanDataDTO"
             :dimension="contentHeight"
             @print="storeSvg($event)"
-            @print-schema="storeSvgSchematischeUebersicht($event)"
           />
         </v-sheet>
       </v-tabs-window-item>
@@ -150,6 +149,14 @@
       @close="closePdfReportDialog"
     />
   </v-sheet>
+
+  <belastungsplan-mq-schematische-uebersicht
+    v-if="drawSchematischeUebersicht"
+    :belastungsplan-data="belastungsplanDataDTO"
+    :dimension="contentHeight"
+    :style="schemaStyle"
+    @print="storeSvgSchematischeUebersicht($event)"
+  />
 </template>
 <script setup lang="ts">
 import type CsvDTO from "@/types/common/CsvDTO";
@@ -170,6 +177,7 @@ import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
+import BelastungsplanMqSchematischeUebersicht from "@/components/messstelle/charts/BelastungsplanMqSchematischeUebersicht.vue";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
@@ -247,6 +255,15 @@ const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
+const drawSchematischeUebersicht = computed(() => {
+  return (
+    belastungsplanDataDTO.value &&
+    belastungsplanDataDTO.value.ladeBelastungsplanMessquerschnittDataDTOList &&
+    belastungsplanDataDTO.value.ladeBelastungsplanMessquerschnittDataDTOList
+      .length > 0
+  );
+});
+
 const messstelleId = computed(() => {
   return route.params.messstelleId as string;
 });
@@ -287,6 +304,7 @@ function changeTab() {
 }
 
 watch(options, () => {
+  displaySchema.value = true;
   loadProcessedChartData();
 });
 watch(belastungsplanSvg, () => {
@@ -512,6 +530,7 @@ function storeSvg(svg: Blob): void {
 
 function storeSvgSchematischeUebersicht(svg: Blob): void {
   belastungsplanSchematischeUebersichtSvg.value = svg;
+  displaySchema.value = false;
 }
 
 function openPdfReportDialog(): void {
@@ -595,6 +614,15 @@ function fetchPdf(formData: FormData, type: string) {
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => (loadingFile.value = false));
 }
+
+const displaySchema = ref(true);
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!displaySchema.value) {
+    style = `display: none`;
+  }
+  return style;
+});
 </script>
 
 <style scoped lang="scss">
