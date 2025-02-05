@@ -65,10 +65,7 @@
               v-show="!belastungsplanDTO.kreisverkehr"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
-              :doc-mode="false"
-              :geometrie-mode="true"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card
@@ -160,6 +157,14 @@
     />
 
     <pdf-report-menue v-model="pdfReportDialog" />
+
+    <belastungsplan-kreuzung-svg-schematische-uebersicht
+      v-if="drawSchematischeUebersicht"
+      :dimension="contentHeight"
+      :data="belastungsplanDTO"
+      :style="schemaStyle"
+      @print="storeSvgSchematischeUebersicht($event)"
+    />
   </v-sheet>
 </template>
 <script setup lang="ts">
@@ -186,6 +191,7 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
+import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -300,6 +306,7 @@ const isNotTabHeatmap = computed<boolean>(() => {
 });
 
 watch(options, () => {
+  displaySchema.value = true;
   loadData();
 });
 
@@ -434,6 +441,7 @@ function storeSvg(svg: Blob) {
 
 function storeSvgSchematischeUebersicht(svg: Blob) {
   belastungsplanSchematischeUebersichtSvg.value = svg;
+  displaySchema.value = false;
 }
 
 /**
@@ -765,6 +773,24 @@ function generateCsv() {
     })
     .finally(() => (loadingFile.value = false));
 }
+const displaySchema = ref(true);
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!displaySchema.value) {
+    style = `display: none`;
+  }
+  return style;
+});
+
+const drawSchematischeUebersicht = computed(() => {
+  return (
+    hasSelectedVerkehrsarten.value &&
+    belastungsplanDTO.value &&
+    belastungsplanDTO.value.value1 &&
+    belastungsplanDTO.value.value1.values &&
+    belastungsplanDTO.value.value1.values.length > 0
+  );
+});
 </script>
 
 <style scoped lang="scss">
