@@ -65,8 +65,6 @@
               v-show="!belastungsplanDTO.kreisverkehr"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
-              :doc-mode="false"
-              :geometrie-mode="true"
               @print="storeSvg($event)"
             />
 
@@ -164,8 +162,6 @@
       v-if="drawSchematischeUebersicht"
       :dimension="contentHeight"
       :data="belastungsplanDTO"
-      :doc-mode="false"
-      :geometrie-mode="true"
       :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
