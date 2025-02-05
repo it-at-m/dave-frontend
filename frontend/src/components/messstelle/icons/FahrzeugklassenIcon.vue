@@ -8,17 +8,17 @@
 </template>
 
 <script setup lang="ts">
+import { isNil } from "lodash";
 import { computed } from "vue";
 
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import IconTooltip from "@/types/util/IconTooltip";
-import { isNil } from "lodash";
 
 interface Props {
   size?: string;
   color?: string;
-  fahrzeugklasse: string | undefined;
+  fahrzeugklasse: Fahrzeugklasse | string | undefined;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,12 +30,12 @@ const props = withDefaults(defineProps<Props>(), {
  */
 const icon = computed<IconTooltip>(() => {
   let result = isNil(props.fahrzeugklasse)
-      ? undefined
-      : fahrzeugklassenIcons().get(props.fahrzeugklasse);
+    ? undefined
+    : fahrzeugklassenIcons().get(props.fahrzeugklasse);
   if (isNil(result)) {
     result = new IconTooltip(
       "mdi-help",
-      "Keine Information zu den Fahrzeugklassen"
+      "Keine Information zu Fahrzeugklassen vorhanden"
     );
   }
   return result;
@@ -44,7 +44,7 @@ const icon = computed<IconTooltip>(() => {
 /**
  * Alle Fahrzeugklasse Icons zu den Schlüsseln.
  */
-function fahrzeugklassenIcons(): Map<string, IconTooltip> {
+function fahrzeugklassenIcons(): Map<Fahrzeugklasse | string, IconTooltip> {
   return new Map([
     [
       Fahrzeugklasse.ACHT_PLUS_EINS,
