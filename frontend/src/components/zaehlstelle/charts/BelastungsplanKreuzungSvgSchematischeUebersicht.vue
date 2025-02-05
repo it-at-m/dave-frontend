@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    id="belastungsplanSchematischeUebersicht"
+    :id="sheetId"
     :height="dimension"
     :width="dimension"
   />
@@ -15,7 +15,7 @@ import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastun
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -29,38 +29,48 @@ import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 interface Props {
   data: LadeBelastungsplanDTO;
   dimension?: string;
+  maxlineWidth?: number;
+  maxLegendLineWidth?: number;
+  lineGap?: number;
   shadowColor?: string;
   legendColor?: string;
-  maxlineWidth?: number;
-  lineGap?: number;
+  shadowOpacity?: number;
+  // Grafischer Modus, um zu dokumentieren, wie die Winkelverbindungen
+  // 45° / 135° errechnet werden.
+  docMode?: boolean;
+  // Farben Differenzdatendarstellung
   zunahmeValueColor?: string;
   abnahmeValueColor?: string;
   gleichValueColor?: string;
-  inaktivColor?: string;
-  shadowOpacity?: number;
-  docMode?: boolean;
+  // Soll die Geometrieauswahl im Belastungsplan gezeigt werden
   geometrieMode?: boolean;
+  inaktivColor?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   dimension: "600vh",
+  maxlineWidth: 20,
+  maxLegendLineWidth: 25,
+  lineGap: 3,
   shadowColor: "#E0E0E0",
   legendColor: "#757575",
-  maxlineWidth: 20,
-  lineGap: 3,
+  shadowOpacity: 0.5,
+  docMode: false,
   zunahmeValueColor: "#F44336",
   abnahmeValueColor: "#4CAF50",
   gleichValueColor: "#000000",
-  inaktivColor: "#E0E0E0",
-  shadowOpacity: 0.5,
-  docMode: false,
   geometrieMode: false,
+  inaktivColor: "#E0E0E0",
 });
 
-const emits = defineEmits<(e: "print", v: Blob) => void>();
+const emits = defineEmits<{
+  (e: "print", v: Blob): void;
+}>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
+
+const sheetId = "belastungsplan-zaehlstelle-schema";
 
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 
@@ -68,14 +78,11 @@ const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const viewbox = 1400;
 
 // Prozentwerte um die Strecken zu errechnen
-const prozentDiagram = 0.9;
+const prozentDiagram = 0.6;
 const prozentSpalt = 0.05;
 const prozentMaxFahrtrichtungWidth = 0.12;
 
-// Wert, um wie viel die Knotenarmnummer vergößert werden soll
-const knotenarmnummerVergroesserung = 110;
-
-const rotation: Map<number, number> = new Map<number, number>([
+const rotation = new Map<number, number>([
   [1, 90],
   [2, 180],
   [3, 270],
@@ -86,7 +93,7 @@ const rotation: Map<number, number> = new Map<number, number>([
   [8, 45],
 ]);
 
-const rotationLabel: Map<number, number> = new Map<number, number>([
+const rotationLabel = new Map<number, number>([
   [1, 270],
   [2, 0],
   [3, 270],
@@ -97,7 +104,7 @@ const rotationLabel: Map<number, number> = new Map<number, number>([
   [8, 45],
 ]);
 
-const rotationNumber: Map<number, number> = new Map<number, number>([
+const rotationNumber = new Map<number, number>([
   [1, 270],
   [2, 180],
   [3, 90],
@@ -122,40 +129,30 @@ const fahrbeziehungsTypen = ref<Map<number, BelastungsplanFahrbeziehung[]>>(
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
   new Map<number, BelastungsplanKnotenarm>()
 ) as Ref<Map<number, BelastungsplanKnotenarm>>;
+const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
 
 onMounted(() => {
   canvas.value = SVG.SVG()
-    .addTo("#belastungsplanSchematischeUebersicht")
+    .addTo(`#${sheetId}`)
     .size(props.dimension, props.dimension)
     .viewbox(0, 0, viewbox, viewbox);
-  zaehlstelleStore.setSizeBelastungsplanSvgSchematischeUebersicht(
+
+  zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
   );
-  zaehlstelleStore.setMaxSizeBelastungsplanSvgSchematischeUebersicht(
-    maxSizeBelastungsplan.value
-  );
-  zaehlstelleStore.setMinSizeBelastungsplanSvgSchematischeUebersicht(
-    minSizeBelastungsplan.value
-  );
-});
-
-const optionen = computed<OptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
-});
-
-const vonIds = computed(() => {
-  return optionen.value.vonIds;
-});
-
-const nachIds = computed(() => {
-  return optionen.value.nachIds;
+  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 });
 
 const zaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
+});
+
+const optionen = computed<OptionsDTO>(() => {
+  return zaehlstelleStore.getFilteroptions;
 });
 
 const maxFahrtrichtungWidth = computed(() => {
@@ -182,7 +179,7 @@ const spalt = computed(() => {
 });
 
 const basis = computed(() => {
-  return mitte.value - spalt.value * 2;
+  return calcA() - spalt.value * 2;
 });
 
 const chartPosition = computed(() => {
@@ -193,9 +190,17 @@ const line = computed(() => {
   return lineWidth.value + props.lineGap;
 });
 
+/**
+ * Wenn der Nutzer auf den Tabs navigiert, dann bekommt die Belastungsplan
+ * Komponente das als Event mit. Dies ist notwendig, da es Probleme gibt,
+ * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
+ */
+const activeTab = computed(() => {
+  return zaehlstelleStore.getActiveTab;
+});
+
 const sizeBelastungsplan = computed(() => {
-  let sizeBelastungsplanSvg: number =
-    zaehlstelleStore.getSizeBelastungsplanSvgSchematischeUebersicht;
+  let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
   if (sizeBelastungsplanSvg === 0) {
     sizeBelastungsplanSvg = minSizeBelastungsplan.value;
   }
@@ -217,25 +222,29 @@ const maxSizeBelastungsplan = computed(() => {
   );
 });
 
-/**
- * Berechnet die Seitenlänge einer der 8 Seiten des Achteecks A.
- */
-function calcA(): number {
-  return seite.value / (1 + Math.sqrt(2));
-}
+const isDifferenzdatendarstellung = computed(() => {
+  return zaehlstelleStore.isDifferenzdatenDarstellung;
+});
+
+const vonIds = computed(() => {
+  return optionen.value.vonIds;
+});
+
+const nachIds = computed(() => {
+  return optionen.value.nachIds;
+});
 
 /**
  * Diese Methode zeichnet den Belastungsplan
  */
 function draw() {
-  const myCanvas = canvas.value;
   const cleanseMap = new Map<number, SVG.G>();
-  myCanvas.clear();
+  canvas.value.clear();
   // ausgewählter Knotenarm bei Geometrieauswahl
   let selectedKnotenarm = 0;
   // Es wird eine Hilfs-Gruppe erstellt, mit der die Positionen der Fahrbeziehungen im Raum ermittelt werden können.
   // diese wird im Anschluss wieder gelöscht
-  documentationGroup.value = myCanvas.group();
+  documentationGroup.value = canvas.value.group();
   documentationGroup.value
     .rect(viewbox, viewbox)
     .fill({ color: "white", opacity: props.docMode ? 0.3 : 0.0 });
@@ -289,10 +298,10 @@ function draw() {
   // Die Datei wird automatisch ersetzt, sobald sich etwas am Chart verändert.
   //
   // Um den Belastungsplan in ein Bitmap umwandeln zu können, muss hier eine absolute Größe gesetzt werden.
-  const size = sizeBelastungsplan;
+  const size = sizeBelastungsplan.value;
   const ex = canvas.value
     .flatten(canvas.value)
-    .size(size.value, size.value)
+    .size(size, size)
     .svg() as string;
   emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
 }
@@ -374,7 +383,7 @@ function recreatePath(
 
 /**
  * Berechnet die Lage der neuen Punkte anhand der SVG Berechnungs Matrix und den
- * alten Koordinaten.
+ * alten Koordinanten.
  *
  * @param matrix  SVG Berechnungsmatrix
  * @param x       alter X Wert
@@ -387,25 +396,21 @@ function matrix(matrix: BerechnungsMatrix, x: number, y: number): number[] {
 }
 
 /**
- * Ermittelt die Farbe der Fahrbeziehung. Die ausgewählte Fahrbeziehung soll schwarz sein, alle anderen inaktiv.
+ * Ermittelt die Farbe der Fahrbeziehung. Diese hängt vom Knotenarm ab, aber auch von der
+ * Anzeige Auswahl, die der Nutzer im Optionsmenü getroffen hat.
  *
  * @param vonKnotenarm
  * @param nachKnotenarm
  */
 function lineColor(vonKnotenarm: number, nachKnotenarm: number): string {
-  let color = "#000000";
-
-  if (props.geometrieMode && vonIds.value.length > 0) {
-    if (
-      !(
-        vonIds.value.includes(vonKnotenarm) &&
-        nachIds.value.includes(nachKnotenarm)
-      )
-    ) {
-      color = props.inaktivColor;
-    }
+  // Die Standardfarbe des Knotenarms
+  let color = props.inaktivColor;
+  if (
+    vonIds.value.includes(vonKnotenarm) &&
+    nachIds.value.includes(nachKnotenarm)
+  ) {
+    color = "#000000";
   }
-
   return color;
 }
 
@@ -418,21 +423,12 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
   // Es wird alles gruppiert, damit wir es später einfach so drehen können, dass der Knotenarm richtig sitzt.
   const knotenarmGroup = canvas.value.group() as SVG.G;
 
-  // TODO hilfs rechteck einfügen um das Achteck darstellen zu können -- löschen
-  const a = seite.value / (1 + Math.sqrt(2));
-  knotenarmGroup
-    .rect(seite.value, a)
-    .fill({ color: "red", opacity: 0.0 })
-    .x(chartPosition.value)
-    .y(viewbox / 2 - a / 2);
   // Knotenarm Infos
   const knotenarm = knotenarme.value.get(knotenarmnummer);
 
   // Einstellungen
   // die Transparenz der Hilfsquadrate. Sollte in der Regel 0.0 sein
   const opacity = 0.0;
-  // maximale Breite der Linie + die Lücke zwischen den Linien
-  const line = lineWidth.value + props.lineGap;
 
   if (fahrbeziehungsTypen.value.has(knotenarmnummer) && knotenarm) {
     // Gruppe für alle Fahrbeziehungen eines Knotenarms
@@ -470,7 +466,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
 
       // Der Startpunkt
       const startX = chartPosition.value;
-      const startY = viewbox / 2 + basis.value / 2 - vonPosition * line;
+      const startY = viewbox / 2 + basis.value / 2 - vonPosition * line.value;
 
       // rechts 45°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.RECHTS45) {
@@ -496,7 +492,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -512,17 +508,20 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
 
       // rechts 90°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.RECHTS90) {
-        const zielX = startX + ecke.value + spalt.value + nachPosition * line;
+        const zielX =
+          startX + ecke.value + spalt.value + nachPosition * line.value;
         const zielY = viewbox - chartPosition.value;
         const path = `M${startX} ${startY}
-                        L${startX + ecke.value + nachPosition * line} ${startY}
+                        L${
+                          startX + ecke.value + nachPosition * line.value
+                        } ${startY}
                         Q${zielX} ${startY}
                          ${zielX} ${startY + spalt.value}
                         L${zielX} ${zielY}`;
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -560,7 +559,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -578,7 +577,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.GERADE) {
         const path = `M${startX} ${startY} L${startX + seite.value} ${startY}`;
         fahrbeziehungsGroup.path(path).stroke({
-          width: lineWidth.value,
+          width: calcLineWidth(),
           color: lineColor(knotenarmnummer, fbt.nach),
         });
         shadowGroup.path(path).stroke({
@@ -612,7 +611,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -629,7 +628,11 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       // links 90°
       if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.LINKS90) {
         const zielX =
-          startX + seite.value - ecke.value - spalt.value - nachPosition * line;
+          startX +
+          seite.value -
+          ecke.value -
+          spalt.value -
+          nachPosition * line.value;
         const path = `M${startX} ${startY}
                         L${
                           startX + seite.value / 2 - seite.value * 0.07
@@ -640,7 +643,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -678,7 +681,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -697,7 +700,10 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         const wendeX = startX + ecke.value * 0.75;
         const querX = wendeX + spalt.value;
         const zielY =
-          chartPosition.value + ecke.value + spalt.value + nachPosition * line;
+          chartPosition.value +
+          ecke.value +
+          spalt.value +
+          nachPosition * line.value;
         const path = `M${startX} ${startY}
                         L${wendeX} ${startY}
                         Q${querX} ${startY}
@@ -709,7 +715,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         fahrbeziehungsGroup
           .path(path)
           .stroke({
-            width: lineWidth.value,
+            width: calcLineWidth(),
             color: lineColor(knotenarmnummer, fbt.nach),
           })
           .attr("fill", "none");
@@ -735,45 +741,48 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     if (!r) {
       r = 0;
     }
+    const knotenarmnummerSize = 60;
+    const knotenarmnummerCx =
+      chartPosition.value + ecke.value - spalt.value * 4;
     knotenarmGroup
       .text((add) => {
         add.tspan(knotenarmnummer + "");
       })
       .font({
-        size: lineWidth.value + knotenarmnummerVergroesserung,
+        size: knotenarmnummerSize,
         family: fontfamily,
         anchor: "middle",
       })
       .attr("alignment-baseline", "central")
-      .cx(chartPosition.value + ecke.value - spalt.value * 4) // Radius des Kreises
+      .cx(knotenarmnummerCx) // Radius des Kreises
       .cy(viewbox / 2) // Einrückungstiefe der Nummer
       .rotate(r);
     knotenarmGroup
-      .circle(lineWidth.value + knotenarmnummerVergroesserung)
-      .stroke({ width: 10, color: "black" })
+      .circle(knotenarmnummerSize + 4)
+      .stroke({ width: 2, color: "black" })
       .fill("none")
-      .cx(chartPosition.value + ecke.value - spalt.value * 4)
+      .cx(knotenarmnummerCx)
       .cy(viewbox / 2);
-    //
+
     // Labels
     // Spaltenbreite
     const colWidth = Math.ceil(
       (chartPosition.value - props.lineGap * 5 - 15) / 3
     );
-    //
+
     // Für die Beschriftung der Fahrbeziehungen wird eine eigene Gruppe erzeugt
     const fahrbeziehungenLabelRotationGroup = canvas.value.group();
     // Ein Rechteck, so groß wie der Viewport, um einen Drehpunkt um die Mitte zu haben
     fahrbeziehungenLabelRotationGroup
       .rect(viewbox, viewbox)
       .fill({ color: "white", opacity: opacity });
-    //
+
     // ========
     // Nach Labels
     // ========
 
     // Die Fahrbeziehungen 1, 2, 5, 6 werden rechts beschriftet und dann gedreht
-    const ausgleich = knotenarm.ausgleich * line;
+    const ausgleich = knotenarm.ausgleich * line.value;
     let yNach =
       chartPosition.value +
       ecke.value +
@@ -787,7 +796,7 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       ecke.value +
       spalt.value +
       basis.value +
-      line / 2 -
+      line.value / 2 -
       ausgleich;
     let yD2 =
       chartPosition.value +
@@ -797,10 +806,10 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
       props.lineGap -
       ausgleich;
-    const xc1 = chartPosition.value + seite.value + colWidth;
+    let xc1 = chartPosition.value + seite.value + colWidth;
     let xc3 = chartPosition.value + seite.value + colWidth * 3;
     let xD1 = xc1 - colWidth + props.lineGap;
-    let xD2 = xD1 + 50;
+    let xD2 = xD1 + 20;
 
     // Die Fahrbeziehungen 3, 4, 7, 8 werden links beschriftet und dann gedreht
     if ([3, 4, 7, 8].includes(knotenarmnummer)) {
@@ -824,29 +833,30 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         spalt.value +
         knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
         ausgleich;
+      props.lineGap;
+      xc1 = colWidth;
       xc3 = colWidth * 3;
       xD1 = xc3 + chartPosition.value - colWidth * 3 - props.lineGap;
-      xD2 = xD1 - 50;
+      xD2 = xD1 - 20;
     }
 
     // ========
-    // Dreieck
+    // NACH Labels
     // ========
-    if (props.geometrieMode && nachIds.value.length > 0) {
-      if (nachIds.value.includes(knotenarmnummer)) {
-        if (knotenarm.anzahlNachFahrbeziehungen > 0) {
-          // Dreieck
-          const dreieck = `M${xD1} ${yD1} L${xD2} ${
-            yNach + line / 2
-          } L${xD1} ${yD2} z`;
-          fahrbeziehungenLabelRotationGroup
-            .path(dreieck)
-            .stroke({ width: 2, color: "black" })
-            .attr("fill", "black");
-        }
-      }
+    if (knotenarm.anzahlNachFahrbeziehungen > 0) {
+      // Dreieck
+      const dreieck = `M${xD1} ${yD1} L${xD2} ${
+        yNach + line.value / 2
+      } L${xD1} ${yD2} z`;
+      fahrbeziehungenLabelRotationGroup
+        .path(dreieck)
+        .stroke({ width: 2, color: "black" })
+        .attr("fill", "none");
     }
 
+    // ========
+    // VON Labels
+    // ========
     fahrbeziehungenLabelRotationGroup.rotate(
       calcLabelRotation(knotenarmnummer)
     );
@@ -868,6 +878,219 @@ function isGegenueber(von: number, nach: number): boolean {
     (von === 4 && nach === 2) ||
     (von === 8 && nach === 6)
   );
+}
+
+/**
+ * Hier werden alle Daten gesammelt bzw. aufbereitet, die zur Anzeige des Diagramms notwendig sind. Diese
+ * Methode wird aufgerufen, wenn über das Property "data" die Daten zur Darstellung des Belastungsplanes
+ * erneuert werden.
+ *
+ * @param data  Die Anzeigedaten des Belastungsplanes.
+ */
+function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
+  // alte Daten ggf. leeren
+  knotenarme.value.clear();
+  fahrbeziehungsTypen.value.clear();
+  highestFahrbeziehungsValue.value = 0;
+  lowestFahrbeziehungsValue.value = 0;
+  // Die Datentypen der Werteblöcke werden extrahiert
+  prozentWerte.value.set(0, data.value1.percent);
+  prozentWerte.value.set(1, data.value2.percent);
+  prozentWerte.value.set(2, data.value3.percent);
+  // Aus der aktuellen Zählung (diese ist im $store) werden die Fahrbeziehungen geladen.
+  const fbs = zaehlung.value.fahrbeziehungen as LadeFahrbeziehungDTO[];
+  if (fbs && Array.isArray(fbs)) {
+    // Für jede Fahrbeziehung werden die Daten aufbereitet
+    fbs.forEach((fb) => {
+      // Wenn es für den Knotenarm noch keinen Eintrag für die Fahrbeziehungstypen gibt,
+      // dann muss dieser angelegt werden.
+      if (!fahrbeziehungsTypen.value.has(fb.von)) {
+        fahrbeziehungsTypen.value.set(
+          fb.von,
+          new Array<BelastungsplanFahrbeziehung>()
+        );
+      }
+
+      // Für Knotenarme, die nur eingehende Fahrbeziehungen haben.
+      if (!fahrbeziehungsTypen.value.has(fb.nach)) {
+        fahrbeziehungsTypen.value.set(
+          fb.nach,
+          new Array<BelastungsplanFahrbeziehung>()
+        );
+      }
+
+      // Wenn es für den Knotenarm noch keinen Eintrag in den Knotenarmen gibt,
+      // dann muss dieser angelegt werden. Das muss sowohl für "von" als auch für
+      // "nach" gemacht werden.
+
+      // "von" checken und ggf. anlegen
+      if (!knotenarme.value.has(fb.von)) {
+        knotenarme.value.set(
+          fb.von,
+          new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
+        );
+      }
+      const knotenarmVon = knotenarme.value.get(fb.von);
+      anzeigeWerte(knotenarmVon, data);
+      // "nach" checken und ggf. anlegen
+      if (!knotenarme.value.has(fb.nach)) {
+        knotenarme.value.set(
+          fb.nach,
+          new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
+        );
+      }
+      const knotenarmNach = knotenarme.value.get(fb.nach);
+      anzeigeWerte(knotenarmNach, data);
+
+      // Fahrbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
+      const belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
+        fb.von
+      ) as BelastungsplanFahrbeziehung[];
+      const belastungsplanFahrbeziehung = new BelastungsplanFahrbeziehung(
+        calcFahrbeziehungstype(fb.von, fb.nach),
+        fb.nach
+      ) as BelastungsplanFahrbeziehung;
+      belastungsplanFahrbeziehungen.push(belastungsplanFahrbeziehung);
+
+      const v = fb.von - 1;
+      const n = fb.nach - 1;
+
+      // Fahrwerte zu den einzelnen Fahrbeziehungen zuordnen
+      belastungsplanFahrbeziehung.value1 = data.value1.values[v][n];
+      if (data.value2.filled) {
+        belastungsplanFahrbeziehung.value2 = data.value2.values[v][n];
+      }
+      if (data.value3.filled) {
+        belastungsplanFahrbeziehung.value3 = data.value3.values[v][n];
+      }
+
+      if (knotenarmVon) {
+        // von Zähler hoch setzen
+        knotenarmVon.plusFahrbeziehungenVon();
+        if (
+          positiveNumber(knotenarmVon.anzahlVonFahrbeziehungen) >
+          vonMaxValue.value
+        )
+          vonMaxValue.value = positiveNumber(
+            knotenarmVon.anzahlVonFahrbeziehungen
+          );
+        // den höchsten und niedrigsten Wert einer Fahrbeziehung ermitteln
+        // (gilt hier nur der KFZ Verkehr?)
+        if (
+          positiveNumber(data.value1.values[v][n]) >
+          highestFahrbeziehungsValue.value
+        )
+          highestFahrbeziehungsValue.value = positiveNumber(
+            data.value1.values[v][n]
+          );
+        if (
+          positiveNumber(data.value1.values[v][n]) <
+          lowestFahrbeziehungsValue.value
+        )
+          lowestFahrbeziehungsValue.value = positiveNumber(
+            data.value1.values[v][n]
+          );
+        // Fahrbeziehungstyp wird gesetzt um später die Position der Linien berrechnen zu können
+        knotenarmVon.addVonFahrbeziehungsType(
+          belastungsplanFahrbeziehung.fahrbeziehungsTyp
+        );
+      }
+
+      if (knotenarmNach) {
+        // nach Zähler hoch setzen
+        knotenarmNach.plusFahrbeziehungenNach();
+        if (
+          positiveNumber(knotenarmNach.anzahlNachFahrbeziehungen) >
+          nachMaxValue.value
+        )
+          nachMaxValue.value = positiveNumber(
+            knotenarmNach.anzahlNachFahrbeziehungen
+          );
+        // den Typ der eingehenden Verbindung speichern
+        knotenarmNach.addNachFahrbeziehungsTyp(
+          belastungsplanFahrbeziehung.fahrbeziehungsTyp
+        );
+      }
+    });
+
+    // Im Nachgang werden die Positionen der "geradeaus" Fahrbeziehungen ermittelt. Diese sind
+    // wichtig, weil daran die anderen Fahrbeziehungen ausgerichtet werden. D.h. auf der "nach"
+    // Seite muss ich wissen, auf welcher Position die gerade Fahrbeziehung im "von" plaziert ist, um die
+    //  anderen eingehenden Fahrbeziehungen danach ausrichten zu können.
+    knotenarme.value.forEach((k) => {
+      let gegenueber = 0;
+      if ([5, 2, 6, 1].includes(k.knotenarmNummer)) {
+        gegenueber = k.knotenarmNummer + 2;
+      }
+
+      if ([8, 4, 7, 3].includes(k.knotenarmNummer)) {
+        gegenueber = k.knotenarmNummer - 2;
+      }
+      if (knotenarme.value.has(gegenueber)) {
+        fahrbeziehungenAusrichten(k, knotenarme.value.get(gegenueber)!);
+      }
+
+      // Es werden die Summen in die Knotenarem geschrieben
+      const knummer = k.knotenarmNummer - 1;
+      k.vonTotalValue1 = data.value1.sumIn[knummer];
+      k.nachTotalValue1 = data.value1.sumOut[knummer];
+      k.totalValue1 = data.value1.sum[knummer];
+      // Soll Wert 2 dargestellt werden?
+      if (
+        data.value2.filled &&
+        !(isDifferenzdatendarstellung.value && data.value2.percent)
+      ) {
+        k.vonTotalValue2 = data.value2.sumIn[knummer];
+        k.nachTotalValue2 = data.value2.sumOut[knummer];
+        k.totalValue2 = data.value2.sum[knummer];
+      }
+      // Soll Wert 3 dargestellt werden?
+      if (
+        data.value3.filled &&
+        !(isDifferenzdatendarstellung.value && data.value3.percent)
+      ) {
+        k.vonTotalValue3 = data.value3.sumIn[knummer];
+        k.nachTotalValue3 = data.value3.sumOut[knummer];
+        k.totalValue3 = data.value3.sum[knummer];
+      }
+    });
+
+    // maximale Linien Dicke berechnen
+    calcMaxLineWidth();
+
+    // Belastungsplan ausgeben
+    draw();
+  }
+}
+
+/**
+ * Füllt die Marker, welche Werte überhaupt angezeigt werden.
+ *
+ * @param knotenarm   Knotenarm
+ * @param data        Belastungsplandaten
+ */
+function anzeigeWerte(
+  knotenarm: BelastungsplanKnotenarm | undefined,
+  data: LadeBelastungsplanDTO
+) {
+  if (knotenarm) {
+    knotenarm.is1Filled = data.value1.filled;
+    knotenarm.is2Filled = data.value2.filled;
+    knotenarm.is3Filled = data.value3.filled;
+  }
+}
+
+/**
+ * Wandelt eine negative Zahl in eine positive um. Das ist bei der Differenzdatendarstellung notwendig,
+ * da eine Linie mit -200 genauso breit dargestellt werden muss, wie eine Linie mit +200.
+ *
+ * @param num   Anzahl der Fahrzeuge
+ */
+function positiveNumber(num: number): number {
+  if (num < 0) {
+    return num * -1;
+  }
+  return num;
 }
 
 /**
@@ -955,7 +1178,7 @@ function calcLabelRotation(knotenarmnummer: number): number {
  */
 function calcMaxLineWidth() {
   const mw = props.maxlineWidth + props.lineGap;
-  let mv;
+  let mv: number;
   if (vonMaxValue.value > nachMaxValue.value) {
     mv = vonMaxValue.value;
   } else {
@@ -976,6 +1199,97 @@ function calcMaxLineWidth() {
     fahrtrichtungWidth.value = mv * mw;
     lineWidth.value = props.maxlineWidth;
   }
+}
+
+/**
+ * Die Linienstärke der jeweiligen Fahrbeziehung wird im Verhältnis zur
+ * Fahrbeziehung mit der höchsten Anzahl an KFZ berrechnet.
+ *
+ */
+function calcLineWidth(): number {
+  return lineWidth.value * 0.8;
+}
+
+/**
+ * Typen der ausgehenden Fahrbeziehungen je Knotenarm werden ermittelt. Dies passiert, indem abgefragt wird, wie
+ * welche knotenarme miteinander verbunden sind.
+ *
+ * @param von     "von" Knotenarmnummer
+ * @param nach    "nach" Knotenarmnummer
+ */
+function calcFahrbeziehungstype(von: number, nach: number): number {
+  // Uturn
+  if (von === nach) {
+    return Fahrtrichtungsarten.UTURN;
+  }
+
+  // gerade aus
+  if (isGegenueber(von, nach)) {
+    return Fahrtrichtungsarten.GERADE;
+  }
+
+  // rechts 45°
+  if (
+    ([2, 3, 4].includes(von) && von + 3 === nach) ||
+    ([5, 6, 7, 8].includes(von) && von - 4 === nach) ||
+    (von === 1 && nach === 8)
+  ) {
+    return Fahrtrichtungsarten.RECHTS45;
+  }
+
+  // rechts 90°
+  if (
+    ([4, 3, 2, 6, 7, 8].includes(von) && von - 1 === nach) ||
+    (von === 1 && nach === 4) ||
+    (von === 5 && nach === 8)
+  ) {
+    return Fahrtrichtungsarten.RECHTS90;
+  }
+
+  // rechts 135°
+  if (
+    (von === 1 && nach === 7) ||
+    (von === 2 && nach === 8) ||
+    (von === 3 && nach === 5) ||
+    (von === 4 && nach === 6) ||
+    (von === 5 && nach === 4) ||
+    (von === 6 && nach === 1) ||
+    (von === 7 && nach === 2) ||
+    (von === 8 && nach === 3)
+  ) {
+    return Fahrtrichtungsarten.RECHTS135;
+  }
+
+  // links 45°
+  if (
+    ([1, 2, 3, 4].includes(von) && von + 4 === nach) ||
+    ([5, 6, 7].includes(von) && von - 3 === nach) ||
+    (von === 8 && nach === 1)
+  ) {
+    return Fahrtrichtungsarten.LINKS45;
+  }
+
+  // links 90°
+  if (
+    ([1, 2, 3, 5, 6, 7].includes(von) && von + 1 === nach) ||
+    (von === 4 && nach === 1) ||
+    (von === 8 && nach === 5)
+  ) {
+    return Fahrtrichtungsarten.LINKS90;
+  }
+
+  // links 135°
+  if (
+    ([1, 2, 3].includes(von) && von + 5 === nach) ||
+    (von === 4 && nach === 5) ||
+    ([5, 6].includes(von) && nach === von - 2) ||
+    (von === 7 && nach === 1) ||
+    (von === 8 && nach === 2)
+  ) {
+    return Fahrtrichtungsarten.LINKS135;
+  }
+
+  return -1;
 }
 
 /**
@@ -1107,192 +1421,27 @@ function zielPunkt(
 }
 
 /**
- * Typen der ausgehenden Fahrbeziehungen je Knotenarm werden ermittelt. Dies passiert, indem abgefragt wird, wie
- * welche knotenarme miteinander verbunden sind.
- *
- * @param von     "von" Knotenarmnummer
- * @param nach    "nach" Knotenarmnummer
+ * Berechnet die Seitenlänge einer der 8 Seiten des Achteecks A.
  */
-function calcFahrbeziehungstype(von: number, nach: number): number {
-  // Uturn
-  if (von === nach) {
-    return Fahrtrichtungsarten.UTURN;
-  }
+function calcA(): number {
+  return seite.value / (1 + Math.sqrt(2));
+}
 
-  // gerade aus
-  if (isGegenueber(von, nach)) {
-    return Fahrtrichtungsarten.GERADE;
-  }
-
-  // rechts 45°
-  if (
-    ([2, 3, 4].includes(von) && von + 3 === nach) ||
-    ([5, 6, 7, 8].includes(von) && von - 4 === nach) ||
-    (von === 1 && nach === 8)
-  ) {
-    return Fahrtrichtungsarten.RECHTS45;
-  }
-
-  // rechts 90°
-  if (
-    ([4, 3, 2, 6, 7, 8].includes(von) && von - 1 === nach) ||
-    (von === 1 && nach === 4) ||
-    (von === 5 && nach === 8)
-  ) {
-    return Fahrtrichtungsarten.RECHTS90;
-  }
-
-  // rechts 135°
-  if (
-    (von === 1 && nach === 7) ||
-    (von === 2 && nach === 8) ||
-    (von === 3 && nach === 5) ||
-    (von === 4 && nach === 6) ||
-    (von === 5 && nach === 4) ||
-    (von === 6 && nach === 1) ||
-    (von === 7 && nach === 2) ||
-    (von === 8 && nach === 3)
-  ) {
-    return Fahrtrichtungsarten.RECHTS135;
-  }
-
-  // links 45°
-  if (
-    ([1, 2, 3, 4].includes(von) && von + 4 === nach) ||
-    ([5, 6, 7].includes(von) && von - 3 === nach) ||
-    (von === 8 && nach === 1)
-  ) {
-    return Fahrtrichtungsarten.LINKS45;
-  }
-
-  // links 90°
-  if (
-    ([1, 2, 3, 5, 6, 7].includes(von) && von + 1 === nach) ||
-    (von === 4 && nach === 1) ||
-    (von === 8 && nach === 5)
-  ) {
-    return Fahrtrichtungsarten.LINKS90;
-  }
-
-  // links 135°
-  if (
-    ([1, 2, 3].includes(von) && von + 5 === nach) ||
-    (von === 4 && nach === 5) ||
-    ([5, 6].includes(von) && nach === von - 2) ||
-    (von === 7 && nach === 1) ||
-    (von === 8 && nach === 2)
-  ) {
-    return Fahrtrichtungsarten.LINKS135;
-  }
-
-  return -1;
+function redraw() {
+  nextTick(() => {
+    calcFahrbeziehungen(props.data);
+  });
 }
 
 /**
- * Hier werden alle Daten gesammelt bzw. aufbereitet, die zur Anzeige des Diagramms notwendig sind. Diese
- * Methode wird aufgerufen, wenn über das Property "data" die Daten zur Darstellung des Belastungsplanes
- * erneuert werden.
- */
-function calcFahrbeziehungen() {
-  // alte Daten ggf. leeren
-  knotenarme.value.clear();
-  fahrbeziehungsTypen.value.clear();
-  highestFahrbeziehungsValue.value = 0;
-  lowestFahrbeziehungsValue.value = 0;
-  // Aus der aktuellen Zählung (diese ist im $store) werden die Fahrbeziehungen geladen.
-  const fbs = zaehlung.value.fahrbeziehungen as LadeFahrbeziehungDTO[];
-  if (fbs && Array.isArray(fbs)) {
-    // Für jede Fahrbeziehung werden die Daten aufbereitet
-    fbs.forEach((fb) => {
-      // Wenn es für den Knotenarm noch keinen Eintrag für die Fahrbeziehungstypen gibt,
-      // dann muss dieser angelegt werden.
-      if (!fahrbeziehungsTypen.value.has(fb.von)) {
-        fahrbeziehungsTypen.value.set(
-          fb.von,
-          new Array<BelastungsplanFahrbeziehung>()
-        );
-      }
-
-      // Für Knotenarme, die nur eingehende Fahrbeziehungen haben.
-      if (!fahrbeziehungsTypen.value.has(fb.nach)) {
-        fahrbeziehungsTypen.value.set(
-          fb.nach,
-          new Array<BelastungsplanFahrbeziehung>()
-        );
-      }
-
-      // Wenn es für den Knotenarm noch keinen Eintrag in den Knotenarmen gibt,
-      // dann muss dieser angelegt werden. Das muss sowohl für "von" als auch für
-      // "nach" gemacht werden.
-
-      // "von" checken und ggf. anlegen
-      if (!knotenarme.value.has(fb.von)) {
-        knotenarme.value.set(
-          fb.von,
-          // new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
-          new BelastungsplanKnotenarm("", fb.von)
-        );
-      }
-      if (!knotenarme.value.has(fb.nach)) {
-        knotenarme.value.set(
-          fb.nach,
-          // new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
-          new BelastungsplanKnotenarm("", fb.nach)
-        );
-      }
-      // Fahrbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
-      const belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
-        fb.von
-      ) as BelastungsplanFahrbeziehung[];
-      const belastungsplanFahrbeziehung = new BelastungsplanFahrbeziehung(
-        calcFahrbeziehungstype(fb.von, fb.nach),
-        fb.nach
-      ) as BelastungsplanFahrbeziehung;
-      belastungsplanFahrbeziehungen.push(belastungsplanFahrbeziehung);
-
-      // Fahrwerte zu den einzelnen Fahrbeziehungen zuordnen
-      belastungsplanFahrbeziehung.value1 = 1;
-    });
-
-    // Im Nachgang werden die Positionen der "geradeaus" Fahrbeziehungen ermittelt. Diese sind
-    // wichtig, weil daran die anderen Fahrbeziehungen ausgerichtet werden. D.h. auf der "nach"
-    // Seite muss ich wissen, auf welcher Position die gerade Fahrbeziehung im "von" plaziert ist, um die
-    //  anderen eingehenden Fahrbeziehungen danach ausrichten zu können.
-    knotenarme.value.forEach((k: BelastungsplanKnotenarm) => {
-      let gegenueber = 0;
-      if ([5, 2, 6, 1].includes(k.knotenarmNummer)) {
-        gegenueber = k.knotenarmNummer + 2;
-      }
-
-      if ([8, 4, 7, 3].includes(k.knotenarmNummer)) {
-        gegenueber = k.knotenarmNummer - 2;
-      }
-      if (knotenarme.value.has(gegenueber)) {
-        fahrbeziehungenAusrichten(k, knotenarme.value.get(gegenueber)!);
-      }
-
-      // Es werden die Summen in die Knotenarem geschrieben
-      k.vonTotalValue1 = 1;
-      k.nachTotalValue1 = 1;
-      k.totalValue1 = 1;
-    });
-
-    // maximale Linien Dicke berrechnen
-    calcMaxLineWidth();
-
-    // Belastungsplan ausgeben
-    draw();
-  }
-}
-
-/**
- * Diese Methode zeichnet die schematische Übersicht des Belastungsplans immer, wenn sich die Daten ändern und kein Kreisverkehr ausgewählt ist.
+ * Diese Methode zeichnet den Belastungsplan, wenn er in den Tabs angezeigt wird. Also Tab0
+ * aktiv und damit auch sichtbar ist.
  */
 watch(
   () => props.data,
   (data: LadeBelastungsplanDTO) => {
     if (!data.kreisverkehr) {
-      calcFahrbeziehungen();
+      redraw();
     }
   }
 );

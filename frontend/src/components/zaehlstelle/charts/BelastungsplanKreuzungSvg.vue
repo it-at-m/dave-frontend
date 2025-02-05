@@ -1,17 +1,9 @@
 <template>
-  <div>
-    <v-sheet
-      id="belastungsplan-default"
-      :height="dimension"
-      :width="dimension"
-    />
-    <v-sheet
-      id="belastungsplan-schema"
-      :height="dimension"
-      :width="dimension"
-      :style="schemaStyle"
-    />
-  </div>
+  <v-sheet
+    :id="sheetId"
+    :height="dimension"
+    :width="dimension"
+  />
 </template>
 
 <script setup lang="ts">
@@ -80,19 +72,18 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<{
   (e: "print", v: Blob): void;
-  (e: "printSchema", v: Blob): void;
 }>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 
+const sheetId = "belastungsplan-zaehlstelle";
+
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 
 // die Basis Werte zum Errechnen der Positionen
 const viewbox = 1400;
-
-const drawSchema = ref(true);
 
 // Prozentwerte um die Strecken zu errechnen
 const prozentDiagram = 0.6;
@@ -160,17 +151,11 @@ const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
 const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
 
 const canvas = ref<SVG.Svg>(SVG.SVG());
-const canvasSchema = ref<SVG.Svg>(SVG.SVG());
-const canvasDefault = ref<SVG.Svg>(SVG.SVG());
 const documentationGroup = ref<SVG.G>(canvas.value.group());
 
 onMounted(() => {
-  canvasSchema.value = SVG.SVG()
-    .addTo(`#belastungsplan-schema`)
-    .size(props.dimension, props.dimension)
-    .viewbox(0, 0, viewbox, viewbox);
-  canvasDefault.value = SVG.SVG()
-    .addTo(`#belastungsplan-default`)
+  canvas.value = SVG.SVG()
+    .addTo(`#${sheetId}`)
     .size(props.dimension, props.dimension)
     .viewbox(0, 0, viewbox, viewbox);
 
@@ -179,15 +164,6 @@ onMounted(() => {
   );
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
-  resetSchema();
-});
-
-const schemaStyle = computed(() => {
-  let style = ``;
-  if (!drawSchema.value) {
-    style = `display: none`;
-  }
-  return style;
 });
 
 const zaehlung = computed<LadeZaehlungDTO>(() => {
@@ -336,7 +312,6 @@ const beideRichtungen = computed(() => {
  */
 function draw() {
   const cleanseMap = new Map<number, SVG.G>();
-  initCanvas();
   canvas.value.clear();
   // ausgewählter Knotenarm bei Geometrieauswahl
   let selectedKnotenarm = 0;
@@ -393,12 +368,10 @@ function draw() {
   }
 
   // Legende erstellen
-  if (!drawSchema.value) {
-    legendeNordPfeil();
-    legendeLinienStaerke();
-    legendeSpalten();
-    legendeZaehlstellenInfo();
-  }
+  legendeNordPfeil();
+  legendeLinienStaerke();
+  legendeSpalten();
+  legendeZaehlstellenInfo();
 
   // Druckdatei an übergeordnete Komponente übergeben. Die kann dann gedruckt werden oder auch nicht.
   // Die Datei wird automatisch ersetzt, sobald sich etwas am Chart verändert.
@@ -409,16 +382,7 @@ function draw() {
     .flatten(canvas.value)
     .size(size, size)
     .svg() as string;
-  if (drawSchema.value) {
-    emits(
-      "printSchema",
-      new Blob([ex], { type: "image/svg+xml;charset=utf-8" })
-    );
-    drawSchema.value = false;
-    draw();
-  } else {
-    emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
-  }
+  emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
 }
 
 /**
@@ -538,7 +502,7 @@ function lineColor(
 
   // Wenn der schwarz weiß Modus angeschaltet ist, dann werden alle aktiven Fahrbeziehungen
   // schwarz gedruckt.
-  if (isBlackPrintMode.value && !drawSchema.value) {
+  if (isBlackPrintMode.value) {
     return "#000000";
   }
 
@@ -560,16 +524,6 @@ function lineColor(
       ) {
         color = props.inaktivColor;
       }
-    }
-  }
-  if (drawSchema.value) {
-    if (
-      vonIds.value.includes(vonKnotenarm) &&
-      nachIds.value.includes(nachKnotenarm)
-    ) {
-      color = "#000000";
-    } else {
-      color = props.inaktivColor;
     }
   }
 
@@ -903,28 +857,24 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     if (!r) {
       r = 0;
     }
-    const factor = drawSchema.value ? 4 : 1.5;
-    const knotenarmnummerSize = drawSchema.value ? 60 : lineWidth.value;
-    const knotenarmnummerCx =
-      chartPosition.value + ecke.value - spalt.value * factor;
     knotenarmGroup
       .text((add) => {
         add.tspan(knotenarmnummer + "");
       })
       .font({
-        size: knotenarmnummerSize,
+        size: lineWidth.value,
         family: fontfamily,
         anchor: "middle",
       })
       .attr("alignment-baseline", "central")
-      .cx(knotenarmnummerCx) // Radius des Kreises
+      .cx(chartPosition.value + ecke.value - spalt.value * 1.5) // Radius des Kreises
       .cy(viewbox / 2) // Einrückungstiefe der Nummer
       .rotate(r);
     knotenarmGroup
-      .circle(knotenarmnummerSize + 4)
+      .circle(lineWidth.value + 4)
       .stroke({ width: 2, color: "black" })
       .fill("none")
-      .cx(knotenarmnummerCx)
+      .cx(chartPosition.value + ecke.value - spalt.value * 1.5)
       .cy(viewbox / 2);
 
     // Labels
@@ -1035,29 +985,25 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
     }
 
     // Knotenarmname
-    if (!drawSchema.value) {
-      createKnotenarmname(
-        fahrbeziehungenLabelRotationGroup,
-        knotenarm,
-        xText,
-        yKnotenarm
-      );
-    }
+    createKnotenarmname(
+      fahrbeziehungenLabelRotationGroup,
+      knotenarm,
+      xText,
+      yKnotenarm
+    );
 
     // Knotenarmsumme
-    if (!drawSchema.value) {
-      labelZeileErstellen(
-        fahrbeziehungenLabelRotationGroup,
-        yKnotenarm,
-        fillValueArray(knotenarm, [
-          knotenarm.totalValue1,
-          knotenarm.totalValue2,
-          knotenarm.totalValue3,
-        ]),
-        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-        "bold"
-      );
-    }
+    labelZeileErstellen(
+      fahrbeziehungenLabelRotationGroup,
+      yKnotenarm,
+      fillValueArray(knotenarm, [
+        knotenarm.totalValue1,
+        knotenarm.totalValue2,
+        knotenarm.totalValue3,
+      ]),
+      calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+      "bold"
+    );
 
     // ========
     // NACH Labels
@@ -1073,81 +1019,73 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         .attr("fill", "none");
 
       // Die Werte für die "nach" Fahrbeziehungen des Knotenarmes werden ausgegeben
-      if (!drawSchema.value) {
-        labelZeileErstellen(
-          fahrbeziehungenLabelRotationGroup,
-          yNach,
-          fillValueArray(knotenarm, [
-            knotenarm.nachTotalValue1,
-            knotenarm.nachTotalValue2,
-            knotenarm.nachTotalValue3,
-          ]),
-          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-          "bold"
-        );
-      }
+      labelZeileErstellen(
+        fahrbeziehungenLabelRotationGroup,
+        yNach,
+        fillValueArray(knotenarm, [
+          knotenarm.nachTotalValue1,
+          knotenarm.nachTotalValue2,
+          knotenarm.nachTotalValue3,
+        ]),
+        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+        "bold"
+      );
     }
 
     // ========
     // VON Labels
     // ========
-    if (!drawSchema.value) {
-      let vonLine = 0;
-      if ([3, 4, 7, 8].includes(knotenarmnummer)) {
-        vonLine = knotenarm.anzahlVonFahrbeziehungen - 1;
-      }
-
-      fbts.forEach((fbt) => {
-        const y = yVon - lineWidth.value / 2 + line.value * vonLine;
-        labelZeileErstellen(
-          fahrbeziehungenLabelRotationGroup,
-          y,
-          fillValueArray(knotenarm, [fbt.value1, fbt.value2, fbt.value3]),
-          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links)
-        );
-
-        if ([3, 4, 7, 8].includes(knotenarmnummer)) {
-          vonLine--;
-        } else {
-          vonLine++;
-        }
-      });
-
-      // "Von" Summen
-      if (knotenarm.anzahlVonFahrbeziehungen > 0) {
-        labelZeileErstellen(
-          fahrbeziehungenLabelRotationGroup,
-          yVonSumme,
-          fillValueArray(knotenarm, [
-            knotenarm.vonTotalValue1,
-            knotenarm.vonTotalValue2,
-            knotenarm.vonTotalValue3,
-          ]),
-          calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
-          "bold"
-        );
-        // Summenlinie
-        let faktorRechts = 2;
-        // Die Länge der Summenlinie wird nach der Anzahl der angezeigten Werte ausgerichtet
-        if (!links) {
-          if (!knotenarm.is2Filled) faktorRechts--;
-          if (!knotenarm.is3Filled) faktorRechts--;
-        }
-        let linieStartX = xc1 - colWidth + 10;
-        if (links) {
-          if (!knotenarm.is2Filled) linieStartX = xc1;
-          if (!knotenarm.is3Filled) linieStartX = xc2;
-        }
-        fahrbeziehungenLabelRotationGroup
-          .line(
-            linieStartX,
-            yVonSumme,
-            xc1 + colWidth * faktorRechts,
-            yVonSumme
-          )
-          .stroke({ width: 1, color: "black" });
-      }
+    let vonLine = 0;
+    if ([3, 4, 7, 8].includes(knotenarmnummer)) {
+      vonLine = knotenarm.anzahlVonFahrbeziehungen - 1;
     }
+
+    fbts.forEach((fbt) => {
+      const y = yVon - lineWidth.value / 2 + line.value * vonLine;
+      labelZeileErstellen(
+        fahrbeziehungenLabelRotationGroup,
+        y,
+        fillValueArray(knotenarm, [fbt.value1, fbt.value2, fbt.value3]),
+        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links)
+      );
+
+      if ([3, 4, 7, 8].includes(knotenarmnummer)) {
+        vonLine--;
+      } else {
+        vonLine++;
+      }
+    });
+
+    // "Von" Summen
+    if (knotenarm.anzahlVonFahrbeziehungen > 0) {
+      labelZeileErstellen(
+        fahrbeziehungenLabelRotationGroup,
+        yVonSumme,
+        fillValueArray(knotenarm, [
+          knotenarm.vonTotalValue1,
+          knotenarm.vonTotalValue2,
+          knotenarm.vonTotalValue3,
+        ]),
+        calculateLabelPosition(knotenarm, [xc1, xc2, xc3], links),
+        "bold"
+      );
+      // Summenlinie
+      let faktorRechts = 2;
+      // Die Länge der Summenlinie wird nach der Anzahl der angezeigten Werte ausgerichtet
+      if (!links) {
+        if (!knotenarm.is2Filled) faktorRechts--;
+        if (!knotenarm.is3Filled) faktorRechts--;
+      }
+      let linieStartX = xc1 - colWidth + 10;
+      if (links) {
+        if (!knotenarm.is2Filled) linieStartX = xc1;
+        if (!knotenarm.is3Filled) linieStartX = xc2;
+      }
+      fahrbeziehungenLabelRotationGroup
+        .line(linieStartX, yVonSumme, xc1 + colWidth * faktorRechts, yVonSumme)
+        .stroke({ width: 1, color: "black" });
+    }
+
     // fahrbeziehungenLabelRotationGroup.add(fahrbeziehungenLabelGroup)
     fahrbeziehungenLabelRotationGroup.rotate(
       calcLabelRotation(knotenarmnummer)
@@ -1949,9 +1887,6 @@ function calcMaxLineWidth() {
  * @param counts    Die Anzahl der Fahrbeziehungen.
  */
 function calcLineWidth(counts: number): number {
-  if (drawSchema.value) {
-    return lineWidth.value * 0.8;
-  }
   if (counts === 0) {
     return 1.0;
   }
@@ -2250,20 +2185,7 @@ function getStreetnames(
   return [firstLine, secondLine];
 }
 
-function initCanvas() {
-  if (drawSchema.value) {
-    canvas.value = canvasSchema.value;
-  } else {
-    canvas.value = canvasDefault.value;
-  }
-}
-
-function resetSchema() {
-  drawSchema.value = true;
-}
-
 function redraw() {
-  resetSchema();
   nextTick(() => {
     calcFahrbeziehungen(props.data);
   });
