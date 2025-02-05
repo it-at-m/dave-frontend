@@ -190,15 +190,6 @@ const line = computed(() => {
   return lineWidth.value + props.lineGap;
 });
 
-/**
- * Wenn der Nutzer auf den Tabs navigiert, dann bekommt die Belastungsplan
- * Komponente das als Event mit. Dies ist notwendig, da es Probleme gibt,
- * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
- */
-const activeTab = computed(() => {
-  return zaehlstelleStore.getActiveTab;
-});
-
 const sizeBelastungsplan = computed(() => {
   let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
   if (sizeBelastungsplanSvg === 0) {
@@ -806,9 +797,8 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
       knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
       props.lineGap -
       ausgleich;
-    let xc1 = chartPosition.value + seite.value + colWidth;
     let xc3 = chartPosition.value + seite.value + colWidth * 3;
-    let xD1 = xc1 - colWidth + props.lineGap;
+    let xD1 = chartPosition.value + seite.value + props.lineGap;
     let xD2 = xD1 + 20;
 
     // Die Fahrbeziehungen 3, 4, 7, 8 werden links beschriftet und dann gedreht
@@ -834,7 +824,6 @@ function fahrtrichtungVon(knotenarmnummer: number): SVG.G {
         knotenarm.anzahlNachFahrbeziehungen * lineWidth.value +
         ausgleich;
       props.lineGap;
-      xc1 = colWidth;
       xc3 = colWidth * 3;
       xD1 = xc3 + chartPosition.value - colWidth * 3 - props.lineGap;
       xD2 = xD1 - 20;

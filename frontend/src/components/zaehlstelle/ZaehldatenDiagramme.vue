@@ -170,7 +170,6 @@
       @print="storeSvgSchematischeUebersicht($event)"
     />
   </v-sheet>
-
 </template>
 <script setup lang="ts">
 import type CsvDTO from "@/types/common/CsvDTO";
