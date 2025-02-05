@@ -14,6 +14,75 @@ import BelastungsplanFahrbeziehungComperator from "@/types/zaehlung/Belastungspl
 export function useBelastungsplanMethods() {
   const zaehlstelleStore = useZaehlstelleStore();
 
+  const rotation = new Map<number, number>([
+    [1, 90],
+    [2, 180],
+    [3, 270],
+    [4, 0],
+    [5, 135],
+    [6, 225],
+    [7, 315],
+    [8, 45],
+  ]);
+
+  const farben = new Map<number, string>([
+    [1, "#000000"],
+    [2, "#F44336"],
+    [3, "#4CAF50"],
+    [4, "#2196F3"],
+    [5, "#CDDC39"],
+    [6, "#9C27B0"],
+    [7, "#FF9800"],
+    [8, "#795548"],
+  ]);
+
+  const rotationLabel = new Map<number, number>([
+    [1, 270],
+    [2, 0],
+    [3, 270],
+    [4, 0],
+    [5, 315],
+    [6, 45],
+    [7, 315],
+    [8, 45],
+  ]);
+
+  const rotationNumber = new Map<number, number>([
+    [1, 270],
+    [2, 180],
+    [3, 90],
+    [4, 0],
+    [5, 225],
+    [6, 135],
+    [7, 45],
+    [8, 315],
+  ]);
+
+  // Soll die Geometrieauswahl im Belastungsplan gezeigt werden
+  const geometrieMode: boolean = true;
+  const shadowOpacity = 0.5;
+  // Exported Functions and Constants
+  // die Basis Werte zum Errechnen der Positionen
+  const viewbox = 1400;
+  const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
+  // Grafischer Modus, um zu dokumentieren, wie die Winkelverbindungen
+  // 45° / 135° errechnet werden.
+  const docMode: boolean = false;
+  const lineGap = 3;
+  const maxlineWidth = 20;
+  const maxLegendLineWidth = 25;
+  // Farben Differenzdatendarstellung
+  const zunahmeValueColor: string = "#F44336";
+  const abnahmeValueColor: string = "#4CAF50";
+  const gleichValueColor: string = "#000000";
+  const shadowColor = "#E0E0E0";
+  const legendColor = "#757575";
+  const inaktivColor = "#E0E0E0";
+  // Prozentwerte um die Strecken zu errechnen
+  const prozentDiagram = 0.6;
+  const prozentSpalt = 0.05;
+  const prozentMaxFahrtrichtungWidth = 0.12;
+
   const optionen = computed<OptionsDTO>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
@@ -38,56 +107,6 @@ export function useBelastungsplanMethods() {
     return zaehlstelleStore.isDifferenzdatenDarstellung;
   });
 
-  const rotation = new Map<number, number>([
-    [1, 90],
-    [2, 180],
-    [3, 270],
-    [4, 0],
-    [5, 135],
-    [6, 225],
-    [7, 315],
-    [8, 45],
-  ]);
-
-  // Grafischer Modus, um zu dokumentieren, wie die Winkelverbindungen
-  // 45° / 135° errechnet werden.
-  const docMode: boolean = false;
-  // Soll die Geometrieauswahl im Belastungsplan gezeigt werden
-  const geometrieMode: boolean = true;
-  const maxlineWidth = 20;
-  const maxLegendLineWidth = 25;
-  const lineGap = 3;
-  const shadowOpacity = 0.5;
-
-  // Farben Differenzdatendarstellung
-  const zunahmeValueColor: string = "#F44336";
-  const abnahmeValueColor: string = "#4CAF50";
-  const gleichValueColor: string = "#000000";
-  const shadowColor = "#E0E0E0";
-  const legendColor = "#757575";
-  const inaktivColor = "#E0E0E0";
-
-  const farben = new Map<number, string>([
-    [1, "#000000"],
-    [2, "#F44336"],
-    [3, "#4CAF50"],
-    [4, "#2196F3"],
-    [5, "#CDDC39"],
-    [6, "#9C27B0"],
-    [7, "#FF9800"],
-    [8, "#795548"],
-  ]);
-
-  const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
-
-  // die Basis Werte zum Errechnen der Positionen
-  const viewbox = 1400;
-
-  // Prozentwerte um die Strecken zu errechnen
-  const prozentDiagram = 0.6;
-  const prozentSpalt = 0.05;
-  const prozentMaxFahrtrichtungWidth = 0.12;
-
   const seite = computed(() => {
     return viewbox * prozentDiagram;
   });
@@ -100,7 +119,7 @@ export function useBelastungsplanMethods() {
    * Die "Mitte" ist immer die Seite des regelmäßigen Achteckes.
    */
   const mitte = computed(() => {
-    return calcA();
+    return seite.value / (1 + Math.sqrt(2));
   });
 
   const ecke = computed(() => {
@@ -108,7 +127,7 @@ export function useBelastungsplanMethods() {
   });
 
   const basis = computed(() => {
-    return calcA() - spalt.value * 2;
+    return mitte.value - spalt.value * 2;
   });
 
   const chartPosition = computed(() => {
@@ -118,35 +137,6 @@ export function useBelastungsplanMethods() {
   const spalt = computed(() => {
     return seite.value * prozentSpalt;
   });
-
-  /**
-   * Berechnet die Seitenlänge einer der 8 Seiten des Achteecks A.
-   */
-  function calcA(): number {
-    return seite.value / (1 + Math.sqrt(2));
-  }
-
-  const rotationLabel = new Map<number, number>([
-    [1, 270],
-    [2, 0],
-    [3, 270],
-    [4, 0],
-    [5, 315],
-    [6, 45],
-    [7, 315],
-    [8, 45],
-  ]);
-
-  const rotationNumber = new Map<number, number>([
-    [1, 270],
-    [2, 180],
-    [3, 90],
-    [4, 0],
-    [5, 225],
-    [6, 135],
-    [7, 45],
-    [8, 315],
-  ]);
 
   /**
    * Prüft, ob sich zwei Knotenarme gegenüber liegen.
@@ -241,8 +231,6 @@ export function useBelastungsplanMethods() {
    * Säubert die Pfade so, dass sie keine Transformationen mehr benötigen. Das hat beim PDF
    * Druck zu Problemen geführt.
    *
-   * @param source  Knotenarm Gruppe
-   * @param matrix  Berechnungsmatrix für die Gruppe
    */
   function cleansePaths(
     source: SVG.G,
@@ -495,10 +483,10 @@ export function useBelastungsplanMethods() {
           const start = new SVG.Point(startX, startY);
           const achteck1 = new SVG.Point(
             chartPosition.value,
-            chartPosition.value + ecke.value + calcA()
+            chartPosition.value + ecke.value + mitte.value
           );
           const achteck2 = new SVG.Point(
-            chartPosition.value + ecke.value + calcA(),
+            chartPosition.value + ecke.value + mitte.value,
             chartPosition.value
           );
           const path = zielPunkt(
@@ -560,7 +548,7 @@ export function useBelastungsplanMethods() {
         if (fbt.fahrbeziehungsTyp === Fahrtrichtungsarten.RECHTS135) {
           const start = new SVG.Point(startX, startY);
           const achteck1 = new SVG.Point(
-            chartPosition.value + ecke.value + calcA(),
+            chartPosition.value + ecke.value + mitte.value,
             chartPosition.value + seite.value
           );
           const achteck2 = new SVG.Point(
@@ -619,7 +607,7 @@ export function useBelastungsplanMethods() {
           );
           const achteck2 = new SVG.Point(
             chartPosition.value + seite.value,
-            chartPosition.value + ecke.value + calcA()
+            chartPosition.value + ecke.value + mitte.value
           );
           const path = zielPunkt(
             achteck1,
@@ -1036,6 +1024,8 @@ export function useBelastungsplanMethods() {
    * @param y       Der y Wert zum Ausrichten der Zeile.
    * @param vs      Die Werte der Knotenarme als Array (wichtig - richtige Reihenfolge!).
    * @param xs      Die x Werte der einzelnen Spalten als Array.
+   * @param prozentWerte  Prozentwerte pro Knotenarm.
+   * @param lineWidth   LineWisth
    * @param weight  Optional kann die Schriftstärke angegeben werden.
    */
   function labelZeileErstellen(
@@ -1139,6 +1129,8 @@ export function useBelastungsplanMethods() {
    * @param knotenarm   Der zu bearbeitende Knotenarm.
    * @param x           X-Position
    * @param y           Y-Position
+   * @param lineWidth   lineWidth
+   * @param line        Line
    */
   function createKnotenarmname(
     group: SVG.G,
@@ -1304,6 +1296,8 @@ export function useBelastungsplanMethods() {
    * @param positionNach  Die Position, die die aktuelle Fahrbezihungen unter allen "NACH" Fahrbeziehungen des "NACH" Knotenarms einnimmt.
    * @param distanz       Die Entfernung zwischen Start / Ziel Punkt und dem Start der quadratischen Kurve.
    * @param doc           Soll die Berechnung der Punkte grafisch dargestellt werden?
+   * @param line          Line
+   * @param documentationGroup Gruppe fuer die Dokumentation
    */
   function zielPunkt(
     achteck1: SVG.Point,
@@ -1412,6 +1406,7 @@ export function useBelastungsplanMethods() {
    * @param vonKnotenarm
    * @param nachKnotenarm
    * @param vonWert         der Wert, den die Fahrbeziehung repräsentiert
+   * @param schema Soll das Schema gezeichnet werden?
    */
   function lineColor(
     vonKnotenarm: number,
@@ -1477,6 +1472,9 @@ export function useBelastungsplanMethods() {
    * Fahrbeziehung mit der höchsten Anzahl an KFZ berrechnet.
    *
    * @param counts    Die Anzahl der Fahrbeziehungen.
+   * @param lineFactor
+   * @param schema
+   * @param lineWidth
    */
   function calcLineWidth(
     counts: number,
