@@ -44,6 +44,7 @@ import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import ZaehldatenIntervall, {
   ZaehldatenIntervallToSelect,
@@ -54,21 +55,14 @@ const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const hoverZeitintervall = ref(false);
 
 const messstelleStore = useMessstelleStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
 const messdatenIntervalle = computed(() => {
-  if (
-    messstelleStore.getActiveMessfaehigkeit.intervall ===
-      ZaehldatenIntervall.STUNDE_KOMPLETT ||
-    (messstelleStore.getActiveMessfaehigkeit.intervall ===
-      ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
-      notOnlyKfzSelected.value)
-  ) {
-    return ZaehldatenIntervallToSelect.filter((value) => {
-      return value.value === ZaehldatenIntervall.STUNDE_KOMPLETT;
-    });
-  } else {
-    return ZaehldatenIntervallToSelect;
-  }
+  return ZaehldatenIntervallToSelect.filter((zaehldatenIntervall) =>
+    optionsmenueSettingsStore.intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten.includes(
+      zaehldatenIntervall.value
+    )
+  );
 });
 
 const notOnlyKfzSelected = computed(() => {

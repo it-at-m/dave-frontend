@@ -76,6 +76,7 @@ import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugP
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
@@ -97,6 +98,7 @@ defineProps<Props>();
 
 const display = useDisplay();
 const messstelleStore = useMessstelleStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
@@ -278,5 +280,20 @@ watch(
       'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
     );
   }
+);
+
+watch(
+  () => chosenOptions.value.zeitraumStartAndEndDate,
+  () => {
+    const messfaehigkeiten =
+      messstelleStore.getMessfaehigkeitenForGivenZeitraum(
+        chosenOptions.value.zeitraumStartAndEndDate.startDate,
+        chosenOptions.value.zeitraumStartAndEndDate.endDate
+      );
+    optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
+      messfaehigkeiten
+    );
+  },
+  { deep: true, immediate: true }
 );
 </script>

@@ -2,7 +2,8 @@ import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import _ from "lodash";
+import _, { isNil, toArray } from "lodash";
+import moment from "moment";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -108,6 +109,44 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
       }
     );
   }
+  function getMessfaehigkeitenForGivenZeitraum(
+    start: Date | undefined,
+    end: Date | undefined
+  ): Array<MessfaehigkeitDTO> {
+    return toArray(messstelleInfo.value.messfaehigkeiten).filter(
+      (messfaehigkeit) => {
+        const gueltigAb = isNil(messfaehigkeit.gueltigAb)
+          ? undefined
+          : moment(messfaehigkeit.gueltigAb);
+        const gueltigBis = isNil(messfaehigkeit.gueltigBis)
+          ? undefined
+          : moment(messfaehigkeit.gueltigBis);
+
+        const startDate = isNil(start) ? undefined : moment(start);
+        const endDate = isNil(end) ? undefined : moment(end);
+
+        let isStartDateBetween = startDate?.isBetween(
+          gueltigAb,
+          gueltigBis,
+          "day",
+          "[]"
+        );
+        let isEndDateBetween = endDate?.isBetween(
+          gueltigAb,
+          gueltigBis,
+          "day",
+          "[]"
+        );
+
+        isStartDateBetween = isNil(isStartDateBetween)
+          ? false
+          : isStartDateBetween;
+        isEndDateBetween = isNil(isEndDateBetween) ? false : isEndDateBetween;
+
+        return isStartDateBetween || isEndDateBetween;
+      }
+    );
+  }
   function setIncludedMeasuringDays(payload: number) {
     includedMeasuringDays.value = payload;
   }
@@ -139,6 +178,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     setBelastungsplanMaxSize,
     setBelastungsplanChosenSize,
     calculateActiveMessfaehigkeit,
+    getMessfaehigkeitenForGivenZeitraum,
     setIncludedMeasuringDays,
     setRequestedMeasuringDays,
   };
