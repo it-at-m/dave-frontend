@@ -231,6 +231,11 @@ const options = computed(() => {
         GUETERVERKEHRSANTEIL,
       ],
       selectedMode: false,
+      width: "95%",
+    },
+
+    grid: {
+      top: 80,
     },
     xAxis: {
       type: "category",
