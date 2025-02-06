@@ -136,16 +136,15 @@ export const useOptionsmenueSettingsStore = defineStore(
       }
 
       // Aggregation der gefundenen Settings mittels Schnittmengenbildung der Intervalle.
-      const initialSettings = {
-        intervall: ZaehldatenIntervall.STUNDE_HALB,
-        fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
-      } as OptionsmenueSettingsDTO;
+      const initialSettings = getOptionsmenueSettingsWithAllOptions();
       optionsmenueSettingsByMessfaehigkeiten.value =
         optionsmenueSettings.reduce(
           (
             previousSettings: OptionsmenueSettingsDTO,
             currentSettings: OptionsmenueSettingsDTO
           ) => {
+            currentSettings.fahrzeugklasse =  previousSettings.fahrzeugklasse;
+            currentSettings.intervall =  previousSettings.intervall;
             currentSettings.kraftfahrzeugverkehrChoosableIntervals =
               intersection(
                 toArray(
