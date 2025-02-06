@@ -143,8 +143,8 @@ export const useOptionsmenueSettingsStore = defineStore(
             previousSettings: OptionsmenueSettingsDTO,
             currentSettings: OptionsmenueSettingsDTO
           ) => {
-            currentSettings.fahrzeugklasse =  previousSettings.fahrzeugklasse;
-            currentSettings.intervall =  previousSettings.intervall;
+            currentSettings.fahrzeugklasse = previousSettings.fahrzeugklasse;
+            currentSettings.intervall = previousSettings.intervall;
             currentSettings.kraftfahrzeugverkehrChoosableIntervals =
               intersection(
                 toArray(

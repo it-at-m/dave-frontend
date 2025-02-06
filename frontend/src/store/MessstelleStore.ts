@@ -125,25 +125,27 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
         const startDate = isNil(start) ? undefined : moment(start);
         const endDate = isNil(end) ? undefined : moment(end);
 
-        let isStartDateBetween = startDate?.isBetween(
-          gueltigAb,
-          gueltigBis,
+        let isGueltigAbBetween = gueltigAb?.isBetween(
+          startDate,
+          endDate,
           "day",
           "[]"
         );
-        let isEndDateBetween = endDate?.isBetween(
-          gueltigAb,
-          gueltigBis,
+        let isGueltigBisBetween = gueltigBis?.isBetween(
+          startDate,
+          endDate,
           "day",
           "[]"
         );
 
-        isStartDateBetween = isNil(isStartDateBetween)
+        isGueltigAbBetween = isNil(isGueltigAbBetween)
           ? false
-          : isStartDateBetween;
-        isEndDateBetween = isNil(isEndDateBetween) ? false : isEndDateBetween;
+          : isGueltigAbBetween;
+        isGueltigBisBetween = isNil(isGueltigBisBetween)
+          ? false
+          : isGueltigBisBetween;
 
-        return isStartDateBetween || isEndDateBetween;
+        return isGueltigAbBetween || isGueltigBisBetween;
       }
     );
   }
