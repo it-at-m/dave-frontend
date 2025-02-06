@@ -119,6 +119,7 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_HEATMAP">
         <v-sheet
+          :min-height="contentHeight"
           :max-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
@@ -132,6 +133,7 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_ZEITREIHE">
         <v-sheet
+          :min-height="contentHeight"
           :max-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
