@@ -3,30 +3,6 @@
     ref="sheet"
     :min-height="height"
   >
-    <!--
-    Dieses Overlay wird benötigt, da sich das SVG (aus welchen Gründen auch immer) nur zeichnet wenn der Benutzer es "sehen" kann.
-    Wenn das Element bspw. im Belastungsplan Tab wäre würde man nach Änderung der Filteroptionen immer erst auf den
-    Belastungsplan Tab wechseln müssen bevor das SVG richtig gezeichnet würde.
-
-    Das Element belastungsplan-kreuzung-svg-schematische-uebersicht wird benötigt für die schematische Übersicht in den
-    PDFs der Ganglinie, Listenausgabe und Zeitreihe und muss dementsprechend auch in diesen Tabs immer aktuell gezeichnet sein.
-
-    Der z-index wurde gewählt, da der Benutzer dieses Element nie zu selbst zu Gesicht bekommen soll. Durch den hohen
-    negativen Z-Index verschwindet das Element hinter allen anderen Elementen der eigentlichen Anwendung.
-    -->
-    <v-overlay
-      :model-value="true"
-      opacity="0"
-      style="z-index: -99999999"
-    >
-      <belastungsplan-kreuzung-svg-schematische-uebersicht
-        :dimension="contentHeight"
-        :data="belastungsplanDTO"
-        :doc-mode="false"
-        :geometrie-mode="true"
-        @print="storeSvgSchematischeUebersicht($event)"
-      />
-    </v-overlay>
     <v-banner
       v-if="!hasZaehlungen"
       single-line
@@ -48,6 +24,7 @@
       stacked
       color="white"
       class="text-grey-lighten-1"
+      @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -75,7 +52,6 @@
       v-if="hasZaehlungen"
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
@@ -92,6 +68,7 @@
               :doc-mode="false"
               :geometrie-mode="true"
               @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card
@@ -133,13 +110,13 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="97%"
+          width="94%"
         >
           <zaehldaten-listenausgabe
+            class="mx-10 border-thin"
             :listenausgabe-data="listenausgabeDTO"
             :height="contentHeight"
-          >
-          </zaehldaten-listenausgabe>
+          />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
@@ -209,7 +186,6 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
-import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -403,6 +379,7 @@ function loadZeitreihe(options: OptionsDTO): void {
     .then((dto: LadeZaehldatenZeitreiheDTO) => {
       zaehldatenZeitreihe.value = dto;
     })
+    .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       zeitreiheLoading.value = false;
     });
@@ -415,6 +392,7 @@ function loadBelastungsplan(options: OptionsDTO) {
       belastungsplanDTO.value = dto;
       belastungsplanLoaded.value = true;
     })
+    .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       belastungsplanLoading.value = false;
     });
@@ -433,6 +411,7 @@ function loadProcessedChartData(options: OptionsDTO) {
       zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
       setMaxRangeYAchse();
     })
+    .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       chartDataLoading.value = false;
       storeStartAndEndeUhrzeitOfIntervalls(listenausgabeDTO.value);

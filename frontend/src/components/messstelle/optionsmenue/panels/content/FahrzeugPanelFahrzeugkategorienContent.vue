@@ -73,17 +73,6 @@
       </v-col>
       <v-col cols="4">
         <v-checkbox
-          v-model="chosenOptionsCopyFahrzeuge.kraftraeder"
-          label="Krafträder (Krad)"
-          :persistent-hint="isTypeDisabled('KRAD')"
-          :disabled="isTypeDisabled('KRAD')"
-          color="grey-darken-1"
-          hide-details
-          density="compact"
-          @mouseover="hoverKrad = true"
-          @mouseleave="hoverKrad = false"
-        />
-        <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.busse"
           label="Bus"
           :persistent-hint="isTypeDisabled('BUS')"
@@ -93,6 +82,17 @@
           density="compact"
           @mouseover="hoverBus = true"
           @mouseleave="hoverBus = false"
+        />
+        <v-checkbox
+          v-model="chosenOptionsCopyFahrzeuge.kraftraeder"
+          label="Krafträder (Krad)"
+          :persistent-hint="isTypeDisabled('KRAD')"
+          :disabled="isTypeDisabled('KRAD')"
+          color="grey-darken-1"
+          hide-details
+          density="compact"
+          @mouseover="hoverKrad = true"
+          @mouseleave="hoverKrad = false"
         />
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.lieferwagen"

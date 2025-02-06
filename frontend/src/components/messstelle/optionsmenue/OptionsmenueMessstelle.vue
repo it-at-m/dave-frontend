@@ -29,6 +29,7 @@
             class="overflow-y-auto"
           >
             <v-expansion-panels
+              v-model="activePanel"
               variant="accordion"
               focusable
               elevation="0"
@@ -99,6 +100,7 @@ const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
+const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultMessstelleOptions()
 );

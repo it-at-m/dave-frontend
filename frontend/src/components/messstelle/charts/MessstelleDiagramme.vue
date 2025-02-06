@@ -72,7 +72,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isGreaterThanFiveYears"
+            v-if="isZeitraumGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -90,10 +90,10 @@
       <v-tabs-window-item :value="TAB_LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
-          width="97%"
+          width="94%"
         >
           <banner-messtelle-tabs
-            v-if="isGreaterThanFiveYears"
+            v-if="isZeitraumGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -102,6 +102,7 @@
           />
           <messwerte-listenausgabe
             v-else
+            class="mx-10 border-thin"
             :listenausgabe-data="listenausgabeDTO"
             :height="contentHeight"
           />
@@ -115,7 +116,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isGreaterThanFiveYears"
+            v-if="isZeitraumGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -265,15 +266,15 @@ const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
 });
 
-const isGreaterThanFiveYears = computed(() => {
+const isZeitraumGreaterThanFiveYears = computed(() => {
   return dateUtils.isGreaterThanFiveYears(
     options.value.zeitraumStartAndEndDate.startDate,
     options.value.zeitraumStartAndEndDate.endDate
   );
 });
 
-watch(isGreaterThanFiveYears, () => {
-  if (isGreaterThanFiveYears.value) {
+watch(isZeitraumGreaterThanFiveYears, () => {
+  if (isZeitraumGreaterThanFiveYears.value) {
     activeTab.value = TAB_BELASTUNGSPLAN;
   }
 });

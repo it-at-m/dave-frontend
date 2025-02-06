@@ -31,7 +31,7 @@ const icon = computed<IconTooltip>(() => {
   if (result === undefined) {
     result = new IconTooltip(
       "mdi-help",
-      "Keine Information zu den Fahrzeugklasse"
+      "Keine Information zu den Fahrzeugklassen"
     );
   }
   return result;
