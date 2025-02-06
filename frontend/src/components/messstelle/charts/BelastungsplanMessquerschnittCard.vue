@@ -545,7 +545,7 @@ function drawMessstelleInfo() {
         .tspan(`Stadtbezirk: ${props.belastungsplanData.stadtbezirkNummer}`)
         .font({ size: defaultFontSize, family: fontfamily })
         .newLine();
-      if (chosenOptionsCopy.value.zeitraum.length == 2) {
+      if (dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum)) {
         add
           .tspan(
             `Messzeitraum:  ${dateUtils.formatDate(
