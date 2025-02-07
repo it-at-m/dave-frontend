@@ -275,6 +275,7 @@ watch(
 watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
+    // Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
     const messfaehigkeiten =
       messstelleStore.getMessfaehigkeitenForGivenZeitraum(
         chosenOptions.value.zeitraumStartAndEndDate.startDate,
@@ -284,6 +285,7 @@ watch(
       messfaehigkeiten
     );
 
+    // Zurücksetzen auf Standardeinstellung
     chosenOptions.value.fahrzeuge =
       DefaultObjectCreator.createDefaultFahrzeugOptions();
     chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
