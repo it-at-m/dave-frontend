@@ -22,9 +22,6 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 import FahrzeugPanelFahrzeugkategorienContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelFahrzeugkategorienContent.vue";
 import FahrzeugPanelVerkehrsartenContent from "@/components/messstelle/optionsmenue/panels/content/FahrzeugPanelVerkehrsartenContent.vue";
-import { useMessstelleStore } from "@/store/MessstelleStore";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
-
-const messstelleStore = useMessstelleStore();
 </script>
