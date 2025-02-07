@@ -351,17 +351,4 @@ const isLieferwagenDisabled = computed(() => {
     ).includes(chosenOptionsCopy.value.intervall)
   );
 });
-
-watch(
-  () => chosenOptionsCopy.value.intervall,
-  () => {
-    chosenOptionsCopyFahrzeuge.value.personenkraftwagen = false;
-    chosenOptionsCopyFahrzeuge.value.lastkraftwagen = false;
-    chosenOptionsCopyFahrzeuge.value.lastzuege = false;
-    chosenOptionsCopyFahrzeuge.value.busse = false;
-    chosenOptionsCopyFahrzeuge.value.kraftraeder = false;
-    chosenOptionsCopyFahrzeuge.value.lieferwagen = false;
-  },
-  { deep: true, immediate: true }
-);
 </script>

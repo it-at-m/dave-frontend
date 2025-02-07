@@ -264,19 +264,12 @@ function resetOptions(): void {
 }
 
 watch(
-  () => chosenOptions.value.zeitraumStartAndEndDate,
+  () => chosenOptions.value.intervall,
   () => {
     chosenOptions.value.fahrzeuge =
       DefaultObjectCreator.createDefaultFahrzeugOptions();
-    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-      messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-    chosenOptions.value.fahrzeuge.radverkehr =
-      !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
-
-    snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
-    );
-  }
+  },
+  { deep: true, immediate: true }
 );
 
 watch(
@@ -289,6 +282,17 @@ watch(
       );
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
       messfaehigkeiten
+    );
+
+    chosenOptions.value.fahrzeuge =
+      DefaultObjectCreator.createDefaultFahrzeugOptions();
+    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+      messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
+    chosenOptions.value.fahrzeuge.radverkehr =
+      !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+
+    snackbarStore.showWarning(
+      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
     );
   },
   { deep: true, immediate: true }
