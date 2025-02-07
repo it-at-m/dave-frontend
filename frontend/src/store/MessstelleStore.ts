@@ -24,9 +24,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const belastungsplanMinSize = ref(0);
   const belastungsplanMaxSize = ref("");
   const belastungsplanChosenSize = ref(1);
-  const activeMessfaehigkeit = ref<MessfaehigkeitDTO>(
-    DefaultObjectCreator.createDefaultMessfaehigkeitDTO()
-  );
   const includedMeasuringDays = ref(0);
   const requestedMeasuringDays = ref(0);
 
@@ -59,7 +56,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const getBelastungsplanChosenSize = computed(
     () => belastungsplanChosenSize.value
   );
-  const getActiveMessfaehigkeit = computed(() => activeMessfaehigkeit.value);
   const getIncludedMeasuringDays = computed(() => includedMeasuringDays.value);
   const getRequestedMeasuringDays = computed(
     () => requestedMeasuringDays.value
@@ -93,21 +89,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   }
   function setBelastungsplanChosenSize(payload: number) {
     belastungsplanChosenSize.value = payload;
-  }
-  function calculateActiveMessfaehigkeit(selectedDate: string): void {
-    messstelleInfo.value.messfaehigkeiten.forEach(
-      (faehigkeit: MessfaehigkeitDTO) => {
-        if (
-          dateUtils.isDateBetweenAsStrings(
-            selectedDate,
-            faehigkeit.gueltigAb,
-            faehigkeit.gueltigBis
-          )
-        ) {
-          activeMessfaehigkeit.value = faehigkeit;
-        }
-      }
-    );
   }
   function getMessfaehigkeitenForGivenZeitraum(
     start: Date | undefined,
@@ -163,7 +144,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     getBelastungsplanMinSize,
     getBelastungsplanMaxSize,
     getBelastungsplanChosenSize,
-    getActiveMessfaehigkeit,
     getIncludedMeasuringDays,
     getRequestedMeasuringDays,
     setActiveTab,
@@ -176,7 +156,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     setBelastungsplanMinSize,
     setBelastungsplanMaxSize,
     setBelastungsplanChosenSize,
-    calculateActiveMessfaehigkeit,
     getMessfaehigkeitenForGivenZeitraum,
     setIncludedMeasuringDays,
     setRequestedMeasuringDays,

@@ -255,9 +255,6 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;
   chosenOptions.value.spitzenstunde = true;
-  messstelleStore.calculateActiveMessfaehigkeit(
-    messstelle.value.datumLetztePlausibleMessung.toString()
-  );
   messstelleStore.setBelastungsplanChosenSize(1);
   saveChosenOptions();
 }
@@ -267,7 +264,7 @@ function resetOptions(): void {
 }
 
 watch(
-  () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
+  () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
     chosenOptions.value.fahrzeuge =
       DefaultObjectCreator.createDefaultFahrzeugOptions();

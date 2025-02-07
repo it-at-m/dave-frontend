@@ -25,15 +25,7 @@
           @mouseleave="hoverZeitintervall = false"
         />
       </v-col>
-      <v-col cols="4">
-        <v-row
-          align="start"
-          justify="center"
-          dense
-        >
-          {{ helpTextZeitintervall }}
-        </v-row>
-      </v-col>
+      <v-col cols="4"/>
     </v-row>
   </div>
 </template>
@@ -45,8 +37,7 @@ import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import Fahrzeug from "@/types/enum/Fahrzeug";
-import ZaehldatenIntervall, {
+import {
   ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -62,24 +53,6 @@ const messdatenIntervalle = computed(() => {
     optionsmenueSettingsStore.intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten.includes(
       zaehldatenIntervall.value
     )
-  );
-});
-
-const notOnlyKfzSelected = computed(() => {
-  const fahrzeuge = chosenOptionsCopy.value.fahrzeuge;
-  return (
-    fahrzeuge.busse ||
-    fahrzeuge.fussverkehr ||
-    fahrzeuge.gueterverkehr ||
-    fahrzeuge.schwerverkehr ||
-    fahrzeuge.gueterverkehrsanteilProzent ||
-    fahrzeuge.schwerverkehrsanteilProzent ||
-    fahrzeuge.kraftraeder ||
-    fahrzeuge.lastkraftwagen ||
-    fahrzeuge.lastzuege ||
-    fahrzeuge.lieferwagen ||
-    fahrzeuge.personenkraftwagen ||
-    fahrzeuge.radverkehr
   );
 });
 
@@ -103,42 +76,4 @@ const isZeitauswahlSpitzenstunde = computed(() => {
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   );
 });
-
-const helpTextZeitintervall = computed(() => {
-  if (hoverZeitintervall.value) {
-    if (
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
-        ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
-      notOnlyKfzSelected.value
-    ) {
-      return `Es sind Verkehrsarten und / oder Fahrzeugkategorien ausgewählt für die nur 60 Minuten Intervalle vorliegen.`;
-    }
-    if (
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
-      ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT
-    ) {
-      return `Nur für die Fahrzeugkategorie ${Fahrzeug.KFZ} liegen 15 und 30 Minuten Intervalle vor.`;
-    }
-    if (
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
-      ZaehldatenIntervall.STUNDE_KOMPLETT
-    ) {
-      return `Auf Grund der Messfähigkeit der Messstelle können nur 60 Minuten als Intervallgröße ausgewählt werden.`;
-    }
-  }
-  return "";
-});
-
-watch(
-  () => chosenOptionsCopy.value.zeitauswahl,
-  () => {
-    if (isIntervallChangingLocked.value) {
-      let intervall = messstelleStore.getActiveMessfaehigkeit.intervall;
-      if (intervall === ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT) {
-        intervall = ZaehldatenIntervall.STUNDE_VIERTEL;
-      }
-      chosenOptionsCopy.value.intervall = intervall;
-    }
-  }
-);
 </script>

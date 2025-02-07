@@ -197,15 +197,4 @@ watch(
   },
   { deep: true }
 );
-
-watch(
-  chosenOptionsCopyStartAndEndDatum,
-  () => {
-    const isoDate = dateUtils.formatDateToISO(
-      chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
-    );
-    messstelleStore.calculateActiveMessfaehigkeit(isoDate);
-  },
-  { deep: true }
-);
 </script>
