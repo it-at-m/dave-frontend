@@ -13,9 +13,7 @@
       v-model="chosenOptionsCopy"
       class="mt-1"
     />
-    <fahrzeug-panel-fahrzeugkategorien-content
-      v-model="chosenOptionsCopy"
-    />
+    <fahrzeug-panel-fahrzeugkategorien-content v-model="chosenOptionsCopy" />
   </v-expansion-panel>
 </template>
 

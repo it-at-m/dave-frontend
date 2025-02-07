@@ -25,7 +25,7 @@
           @mouseleave="hoverZeitintervall = false"
         />
       </v-col>
-      <v-col cols="4"/>
+      <v-col cols="4" />
     </v-row>
   </div>
 </template>
@@ -37,9 +37,7 @@ import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import {
-  ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
