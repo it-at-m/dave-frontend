@@ -118,7 +118,7 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { isEmpty } from "lodash";
+import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -273,44 +273,80 @@ function calculateSelectOrDeselect() {
 }
 
 const isPersonenkraftwagenDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .personenkraftwagenChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .personenkraftwagenChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .personenkraftwagenChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isLastkraftwagenDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .lastkraftwagenChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .lastkraftwagenChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .lastkraftwagenChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isLastzuegeDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .lastzuegeChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .lastzuegeChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .lastzuegeChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isBusseDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .busseChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .busseChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .busseChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isKraftraederDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .kraftraederChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .kraftraederChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .kraftraederChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isLieferwagenDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .kraftraederChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .lieferwagenChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .lieferwagenChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 </script>

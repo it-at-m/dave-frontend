@@ -250,7 +250,7 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { isEmpty } from "lodash";
+import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -624,51 +624,93 @@ function getIcon(type: string): string {
 }
 
 const isKraftfahrzeugverkehrDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .kraftfahrzeugverkehrChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .kraftfahrzeugverkehrChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .kraftfahrzeugverkehrChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isSchwerverkehrDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .schwerverkehrChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .schwerverkehrChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .schwerverkehrChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isSchwerverkehrsanteilProzentDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .schwerverkehrsanteilProzentChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .schwerverkehrsanteilProzentChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .schwerverkehrsanteilProzentChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isGueterverkehrDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .gueterverkehrChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .gueterverkehrChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .gueterverkehrChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isGueterverkehrsanteilProzentDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .gueterverkehrsanteilProzentChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .gueterverkehrsanteilProzentChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .gueterverkehrsanteilProzentChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isRadverkehrDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .radverkehrChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .radverkehrChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .radverkehrChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 
 const isFussverkehrDisabled = computed(() => {
-  return isEmpty(
-    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-      .fussverkehrChoosableIntervals
+  return (
+    isEmpty(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .fussverkehrChoosableIntervals
+    ) ||
+    !toArray(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+        .fussverkehrChoosableIntervals
+    ).includes(chosenOptionsCopy.value.intervall)
   );
 });
 </script>

@@ -139,7 +139,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
         );
 
         isGueltigAbBetween = !isNil(isGueltigAbBetween) && isGueltigAbBetween;
-        isGueltigBisBetween = !isNil(isGueltigBisBetween) && isGueltigBisBetween;
+        isGueltigBisBetween =
+          !isNil(isGueltigBisBetween) && isGueltigBisBetween;
 
         return isGueltigAbBetween || isGueltigBisBetween;
       }
