@@ -116,15 +116,15 @@
 </template>
 
 <script setup lang="ts">
+import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import {defaults, isEmpty, isNil, toArray} from "lodash";
+import { defaults, isEmpty, isNil, toArray } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
+import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
-import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
@@ -353,15 +353,15 @@ const isLieferwagenDisabled = computed(() => {
 });
 
 watch(
-    () => chosenOptionsCopy.value.intervall,
-    () => {
-      chosenOptionsCopyFahrzeuge.value.personenkraftwagen = false;
-      chosenOptionsCopyFahrzeuge.value.lastkraftwagen = false;
-      chosenOptionsCopyFahrzeuge.value.lastzuege = false;
-      chosenOptionsCopyFahrzeuge.value.busse = false;
-      chosenOptionsCopyFahrzeuge.value.kraftraeder = false;
-      chosenOptionsCopyFahrzeuge.value.lieferwagen = false;
-    },
-    { deep: true , immediate: true}
+  () => chosenOptionsCopy.value.intervall,
+  () => {
+    chosenOptionsCopyFahrzeuge.value.personenkraftwagen = false;
+    chosenOptionsCopyFahrzeuge.value.lastkraftwagen = false;
+    chosenOptionsCopyFahrzeuge.value.lastzuege = false;
+    chosenOptionsCopyFahrzeuge.value.busse = false;
+    chosenOptionsCopyFahrzeuge.value.kraftraeder = false;
+    chosenOptionsCopyFahrzeuge.value.lieferwagen = false;
+  },
+  { deep: true, immediate: true }
 );
 </script>

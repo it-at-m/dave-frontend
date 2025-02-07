@@ -715,16 +715,16 @@ const isFussverkehrDisabled = computed(() => {
 });
 
 watch(
-    () => chosenOptionsCopy.value.intervall,
-    () => {
-      chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr = false;
-      chosenOptionsCopyFahrzeuge.value.schwerverkehr = false;
-      chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent = false;
-      chosenOptionsCopyFahrzeuge.value.gueterverkehr = false;
-      chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent = false;
-      chosenOptionsCopyFahrzeuge.value.radverkehr = false;
-      chosenOptionsCopyFahrzeuge.value.fussverkehr = false;
-    },
-    { deep: true , immediate: true}
+  () => chosenOptionsCopy.value.intervall,
+  () => {
+    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr = false;
+    chosenOptionsCopyFahrzeuge.value.schwerverkehr = false;
+    chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent = false;
+    chosenOptionsCopyFahrzeuge.value.gueterverkehr = false;
+    chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent = false;
+    chosenOptionsCopyFahrzeuge.value.radverkehr = false;
+    chosenOptionsCopyFahrzeuge.value.fussverkehr = false;
+  },
+  { deep: true, immediate: true }
 );
 </script>
