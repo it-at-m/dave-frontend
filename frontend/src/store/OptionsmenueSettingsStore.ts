@@ -136,84 +136,92 @@ export const useOptionsmenueSettingsStore = defineStore(
       }
 
       // Aggregation der gefundenen Settings mittels Schnittmengenbildung der Intervalle.
-      const initialSettings = getOptionsmenueSettingsWithAllOptions();
       optionsmenueSettingsByMessfaehigkeiten.value =
-        optionsmenueSettings.reduce(
-          (
-            previousSettings: OptionsmenueSettingsDTO,
-            currentSettings: OptionsmenueSettingsDTO
-          ) => {
-            currentSettings.fahrzeugklasse = previousSettings.fahrzeugklasse;
-            currentSettings.intervall = previousSettings.intervall;
-            currentSettings.kraftfahrzeugverkehrChoosableIntervals =
-              intersection(
-                toArray(
-                  previousSettings.kraftfahrzeugverkehrChoosableIntervals
-                ),
-                toArray(currentSettings.kraftfahrzeugverkehrChoosableIntervals)
-              );
-            currentSettings.schwerverkehrChoosableIntervals = intersection(
-              toArray(previousSettings.schwerverkehrChoosableIntervals),
-              toArray(currentSettings.schwerverkehrChoosableIntervals)
+        getSmallestCommonDenominator(optionsmenueSettings);
+    }
+
+    /**
+     *  Die Methode aggregiert die im Parameter gegebenen Settings mittels
+     *  Schnittmengenbildung der Intervalle je Fahrzeugkategorie und Fahrzeugart.
+     *  @param optionsmenueSettings
+     */
+    function getSmallestCommonDenominator(
+      optionsmenueSettings: Array<OptionsmenueSettingsDTO> | undefined
+    ): OptionsmenueSettingsDTO {
+      const initialSettings = getOptionsmenueSettingsWithAllOptions();
+      return toArray(optionsmenueSettings).reduce(
+        (
+          previousSettings: OptionsmenueSettingsDTO,
+          currentSettings: OptionsmenueSettingsDTO
+        ) => {
+          currentSettings.fahrzeugklasse = previousSettings.fahrzeugklasse;
+          currentSettings.intervall = previousSettings.intervall;
+          currentSettings.kraftfahrzeugverkehrChoosableIntervals = intersection(
+            toArray(previousSettings.kraftfahrzeugverkehrChoosableIntervals),
+            toArray(currentSettings.kraftfahrzeugverkehrChoosableIntervals)
+          );
+          currentSettings.schwerverkehrChoosableIntervals = intersection(
+            toArray(previousSettings.schwerverkehrChoosableIntervals),
+            toArray(currentSettings.schwerverkehrChoosableIntervals)
+          );
+          currentSettings.gueterverkehrChoosableIntervals = intersection(
+            toArray(previousSettings.gueterverkehrChoosableIntervals),
+            toArray(currentSettings.gueterverkehrChoosableIntervals)
+          );
+          currentSettings.schwerverkehrsanteilProzentChoosableIntervals =
+            intersection(
+              toArray(
+                previousSettings.schwerverkehrsanteilProzentChoosableIntervals
+              ),
+              toArray(
+                currentSettings.schwerverkehrsanteilProzentChoosableIntervals
+              )
             );
-            currentSettings.gueterverkehrChoosableIntervals = intersection(
-              toArray(previousSettings.gueterverkehrChoosableIntervals),
-              toArray(currentSettings.gueterverkehrChoosableIntervals)
+          currentSettings.gueterverkehrsanteilProzentChoosableIntervals =
+            intersection(
+              toArray(
+                previousSettings.gueterverkehrsanteilProzentChoosableIntervals
+              ),
+              toArray(
+                currentSettings.gueterverkehrsanteilProzentChoosableIntervals
+              )
             );
-            currentSettings.schwerverkehrsanteilProzentChoosableIntervals =
-              intersection(
-                toArray(
-                  previousSettings.schwerverkehrsanteilProzentChoosableIntervals
-                ),
-                toArray(
-                  currentSettings.schwerverkehrsanteilProzentChoosableIntervals
-                )
-              );
-            currentSettings.gueterverkehrsanteilProzentChoosableIntervals =
-              intersection(
-                toArray(
-                  previousSettings.gueterverkehrsanteilProzentChoosableIntervals
-                ),
-                toArray(
-                  currentSettings.gueterverkehrsanteilProzentChoosableIntervals
-                )
-              );
-            currentSettings.radverkehrChoosableIntervals = intersection(
-              toArray(previousSettings.radverkehrChoosableIntervals),
-              toArray(currentSettings.radverkehrChoosableIntervals)
-            );
-            currentSettings.fussverkehrChoosableIntervals = intersection(
-              toArray(previousSettings.fussverkehrChoosableIntervals),
-              toArray(currentSettings.fussverkehrChoosableIntervals)
-            );
-            currentSettings.lastkraftwagenChoosableIntervals = intersection(
-              toArray(previousSettings.lastkraftwagenChoosableIntervals),
-              toArray(currentSettings.lastkraftwagenChoosableIntervals)
-            );
-            currentSettings.lastzuegeChoosableIntervals = intersection(
-              toArray(previousSettings.lastzuegeChoosableIntervals),
-              toArray(currentSettings.lastzuegeChoosableIntervals)
-            );
-            currentSettings.busseChoosableIntervals = intersection(
-              toArray(previousSettings.busseChoosableIntervals),
-              toArray(currentSettings.busseChoosableIntervals)
-            );
-            currentSettings.kraftraederChoosableIntervals = intersection(
-              toArray(previousSettings.kraftraederChoosableIntervals),
-              toArray(currentSettings.kraftraederChoosableIntervals)
-            );
-            currentSettings.personenkraftwagenChoosableIntervals = intersection(
-              toArray(previousSettings.personenkraftwagenChoosableIntervals),
-              toArray(currentSettings.personenkraftwagenChoosableIntervals)
-            );
-            currentSettings.lieferwagenChoosableIntervals = intersection(
-              toArray(previousSettings.lieferwagenChoosableIntervals),
-              toArray(currentSettings.lieferwagenChoosableIntervals)
-            );
-            return currentSettings;
-          },
-          initialSettings
-        );
+          currentSettings.radverkehrChoosableIntervals = intersection(
+            toArray(previousSettings.radverkehrChoosableIntervals),
+            toArray(currentSettings.radverkehrChoosableIntervals)
+          );
+          currentSettings.fussverkehrChoosableIntervals = intersection(
+            toArray(previousSettings.fussverkehrChoosableIntervals),
+            toArray(currentSettings.fussverkehrChoosableIntervals)
+          );
+          currentSettings.lastkraftwagenChoosableIntervals = intersection(
+            toArray(previousSettings.lastkraftwagenChoosableIntervals),
+            toArray(currentSettings.lastkraftwagenChoosableIntervals)
+          );
+          currentSettings.lastzuegeChoosableIntervals = intersection(
+            toArray(previousSettings.lastzuegeChoosableIntervals),
+            toArray(currentSettings.lastzuegeChoosableIntervals)
+          );
+          currentSettings.busseChoosableIntervals = intersection(
+            toArray(previousSettings.busseChoosableIntervals),
+            toArray(currentSettings.busseChoosableIntervals)
+          );
+          currentSettings.kraftraederChoosableIntervals = intersection(
+            toArray(previousSettings.kraftraederChoosableIntervals),
+            toArray(currentSettings.kraftraederChoosableIntervals)
+          );
+          currentSettings.personenkraftwagenChoosableIntervals = intersection(
+            toArray(previousSettings.personenkraftwagenChoosableIntervals),
+            toArray(currentSettings.personenkraftwagenChoosableIntervals)
+          );
+          currentSettings.lieferwagenChoosableIntervals = intersection(
+            toArray(previousSettings.lieferwagenChoosableIntervals),
+            toArray(currentSettings.lieferwagenChoosableIntervals)
+          );
+          return currentSettings;
+        },
+        initialSettings
+      );
     }
 
     function getOptionsmenueSettingsWithAllOptions(): OptionsmenueSettingsDTO {
