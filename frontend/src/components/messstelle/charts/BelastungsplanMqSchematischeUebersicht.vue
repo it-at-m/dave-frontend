@@ -131,10 +131,21 @@ function draw() {
     .value();
   drawArrowsPointingSouth(groupedByDirection);
   startX.value += 85;
+  drawStreetName();
   startX.value += 130;
   drawArrowsPointingNorth(groupedByDirection);
   rotateArrowsIfNecessary();
   storeImageForPrinting();
+}
+
+function drawStreetName() {
+  querschnittGroup.value.add(
+    SVG.SVG()
+      .text(`${props.belastungsplanData.strassenname}`)
+      .move(startX.value, startY.value + 425)
+      .font({ anchor: "middle", size: 30 })
+      .rotate(270, startX.value, startY.value + 425)
+  );
 }
 
 function drawArrowsPointingSouth(
