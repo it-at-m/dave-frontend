@@ -272,6 +272,9 @@ watch(
   { deep: true, immediate: true }
 );
 
+
+
+
 watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
@@ -292,10 +295,6 @@ watch(
       messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
     chosenOptions.value.fahrzeuge.radverkehr =
       !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
-
-    snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
-    );
   },
   { deep: true, immediate: true }
 );
