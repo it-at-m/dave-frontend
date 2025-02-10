@@ -137,7 +137,7 @@ export const useOptionsmenueSettingsStore = defineStore(
 
       // Aggregation der gefundenen Settings mittels Schnittmengenbildung der Intervalle.
       optionsmenueSettingsByMessfaehigkeiten.value =
-        getSmallestCommonDenominator(optionsmenueSettings);
+          getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart(optionsmenueSettings);
     }
 
     /**
@@ -145,7 +145,7 @@ export const useOptionsmenueSettingsStore = defineStore(
      *  Schnittmengenbildung der Intervalle je Fahrzeugkategorie und Fahrzeugart.
      *  @param optionsmenueSettings
      */
-    function getSmallestCommonDenominator(
+    function getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart(
       optionsmenueSettings: Array<OptionsmenueSettingsDTO> | undefined
     ): OptionsmenueSettingsDTO {
       const initialSettings = getOptionsmenueSettingsWithAllOptions();
@@ -252,6 +252,8 @@ export const useOptionsmenueSettingsStore = defineStore(
     return {
       intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten,
       getOptionsmenueSettingsByMessfaehigkeiten,
+      getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart,
+      getOptionsmenueSettingsWithAllOptions,
       setOptionsmenueSettingsByMessfaehigkeiten,
       setOptionsmenueSettingsByIntervallAndFahrzeugklasse,
     };
