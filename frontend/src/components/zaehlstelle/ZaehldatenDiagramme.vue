@@ -88,7 +88,7 @@
             </p>
           </v-banner>
         </v-sheet>
-        <progress-loader v-model="belastungsplanLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
         <v-sheet
@@ -143,7 +143,7 @@
             :zaehldaten-zeitreihe="zaehldatenZeitreihe"
           />
         </v-sheet>
-        <progress-loader v-model="zeitreiheLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
     </v-tabs-window>
 
@@ -231,7 +231,6 @@ const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
 const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
   "schematischeUebersichtAsBase64Png";
 
-const belastungsplanLoading = ref(false);
 const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
@@ -239,7 +238,6 @@ const pdfReportDialog = ref(false);
 const belastungsplanDTO = ref<LadeBelastungsplanDTO>(
   {} as LadeBelastungsplanDTO
 );
-const belastungsplanLoaded = ref(false);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
@@ -255,7 +253,6 @@ const zaehldatenHeatmap = ref<LadeZaehldatenHeatmapDTO>(
 const zaehldatenZeitreihe = ref<LadeZaehldatenZeitreiheDTO>(
   {} as LadeZaehldatenZeitreiheDTO
 );
-const zeitreiheLoading = ref(false);
 
 const activeTab = ref(0);
 const loadingFile = ref(false);
@@ -361,9 +358,7 @@ function loadData(): void {
   const o = Object.assign({}, options.value) as OptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
   // requests abschicken
-  loadBelastungsplan(o);
   loadProcessedChartData(o);
-  loadZeitreihe(o);
 
   // Save HistoryItem
   historyStore.addHistoryItem(
@@ -378,35 +373,6 @@ function loadData(): void {
   );
 }
 
-function loadZeitreihe(options: OptionsDTO): void {
-  zeitreiheLoading.value = true;
-  LadeZaehldatenService.ladeZeitreihe(
-    zaehlstelle.value.id,
-    selectedZaehlung.value.id,
-    options
-  )
-    .then((dto: LadeZaehldatenZeitreiheDTO) => {
-      zaehldatenZeitreihe.value = dto;
-    })
-    .catch((error) => snackbarStore.showApiError(error))
-    .finally(() => {
-      zeitreiheLoading.value = false;
-    });
-}
-
-function loadBelastungsplan(options: OptionsDTO) {
-  belastungsplanLoading.value = true;
-  LadeZaehldatenService.ladeBelastungsplan(selectedZaehlung.value.id, options)
-    .then((dto: LadeBelastungsplanDTO) => {
-      belastungsplanDTO.value = dto;
-      belastungsplanLoaded.value = true;
-    })
-    .catch((error) => snackbarStore.showApiError(error))
-    .finally(() => {
-      belastungsplanLoading.value = false;
-    });
-}
-
 function loadProcessedChartData(options: OptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
@@ -415,15 +381,19 @@ function loadProcessedChartData(options: OptionsDTO) {
     options
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+      storeStartAndEndeUhrzeitOfIntervalls(
+        processedZaehldaten.zaehldatenTable.zaehldaten
+      );
       listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
       zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
       zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
+      zaehldatenZeitreihe.value = processedZaehldaten.zaehldatenZeitreihe;
+      belastungsplanDTO.value = processedZaehldaten.zaehldatenBelastungsplan;
       setMaxRangeYAchse();
     })
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       chartDataLoading.value = false;
-      storeStartAndEndeUhrzeitOfIntervalls(listenausgabeDTO.value);
     });
 }
 
