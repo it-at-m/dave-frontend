@@ -74,7 +74,7 @@
       <v-col cols="4">
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.busse"
-          label="Bus"
+          label="Busse"
           :persistent-hint="isBusseDisabled"
           :disabled="isBusseDisabled"
           color="grey-darken-1"
