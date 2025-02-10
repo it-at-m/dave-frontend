@@ -326,11 +326,16 @@ function setZaehlartenmarkerToMap() {
   const markers: Array<Marker> = [];
   const zaehlartenKarte = selectedZaehlstelleKarte.value.zaehlartenKarte;
 
+  const zaehlarten: Array<string> = [];
+
   zaehlartenKarte.forEach((zaehlartenKarteDto: ZaehlartenKarteDTO) => {
     zaehlartenKarteDto.zaehlarten.forEach((zaehlart: string, index: number) => {
-      markers.push(
-        createMarkerForZaehlart(zaehlartenKarteDto, zaehlart, index)
-      );
+      if (!zaehlarten.includes(zaehlart)) {
+        markers.push(
+          createMarkerForZaehlart(zaehlartenKarteDto, zaehlart, index)
+        );
+        zaehlarten.push(zaehlart);
+      }
     });
   });
   if (markers.length > 0) {
