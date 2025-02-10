@@ -254,6 +254,7 @@ export const useOptionsmenueSettingsStore = defineStore(
     return {
       intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten,
       getOptionsmenueSettingsByMessfaehigkeiten,
+      getMapKeyOfIntervallAndFahrzeugklasse,
       getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart,
       getOptionsmenueSettingsByIntervallAndFahrzeugklasse,
       getOptionsmenueSettingsWithAllOptions,

@@ -222,4 +222,37 @@ describe("OptionsmenueSettingsStore.ts", () => {
       );
     expect(expected).eq(undefined);
   });
+
+  it("getMapKeyOfIntervallAndFahrzeugklasse", () => {
+    const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
+
+    let result =
+      optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
+        undefined,
+        undefined
+      );
+    let expected = "default-default";
+    expect(expected).eq(result);
+
+    result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
+      undefined,
+      ZaehldatenIntervall.STUNDE_HALB
+    );
+    expected = "default-STUNDE_HALB";
+    expect(expected).eq(result);
+
+    result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
+      Fahrzeugklasse.SUMME_KFZ,
+      undefined
+    );
+    expected = "SUMME_KFZ-default";
+    expect(expected).eq(result);
+
+    result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
+      Fahrzeugklasse.SUMME_KFZ,
+      ZaehldatenIntervall.STUNDE_HALB
+    );
+    expected = "SUMME_KFZ-STUNDE_HALB";
+    expect(expected).eq(result);
+  });
 });
