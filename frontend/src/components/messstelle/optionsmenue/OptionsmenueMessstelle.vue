@@ -272,9 +272,6 @@ watch(
   { deep: true, immediate: true }
 );
 
-
-
-
 watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
