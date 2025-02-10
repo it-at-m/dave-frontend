@@ -110,7 +110,7 @@ export const useOptionsmenueSettingsStore = defineStore(
 
     function setOptionsmenueSettingsByMessfaehigkeiten(
       messfaehigkeiten: Array<MessfaehigkeitDTO> | undefined
-    ) {
+    ): void {
       let optionsmenueSettings = toArray(messfaehigkeiten)
         .map((messfaehigkeit) => {
           return getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
@@ -137,7 +137,9 @@ export const useOptionsmenueSettingsStore = defineStore(
 
       // Aggregation der gefundenen Settings mittels Schnittmengenbildung der Intervalle.
       optionsmenueSettingsByMessfaehigkeiten.value =
-          getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart(optionsmenueSettings);
+        getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart(
+          optionsmenueSettings
+        );
     }
 
     /**
@@ -253,6 +255,7 @@ export const useOptionsmenueSettingsStore = defineStore(
       intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten,
       getOptionsmenueSettingsByMessfaehigkeiten,
       getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart,
+      getOptionsmenueSettingsByIntervallAndFahrzeugklasse,
       getOptionsmenueSettingsWithAllOptions,
       setOptionsmenueSettingsByMessfaehigkeiten,
       setOptionsmenueSettingsByIntervallAndFahrzeugklasse,
