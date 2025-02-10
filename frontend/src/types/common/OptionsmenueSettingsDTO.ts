@@ -2,9 +2,9 @@ import Fahrzeugklasse from "../enum/Fahrzeugklasse";
 import ZaehldatenIntervall from "../enum/ZaehldatenIntervall";
 
 export default interface OptionsmenueSettingsDTO {
-  fahrzeugklasse: Fahrzeugklasse;
+  fahrzeugklasse: Fahrzeugklasse | undefined;
 
-  intervall: ZaehldatenIntervall;
+  intervall: ZaehldatenIntervall | undefined;
 
   kraftfahrzeugverkehrChoosableIntervals:
     | Array<ZaehldatenIntervall>
