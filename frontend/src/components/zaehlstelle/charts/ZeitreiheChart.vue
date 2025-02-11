@@ -397,7 +397,7 @@ function downloadCsv() {
 
   for (
     let index = 0;
-    index < props.zeitreiheDaten.svAnteilInProzent.length;
+    index < props.zeitreiheDaten.datum.length;
     index++
   ) {
     let row = "";
