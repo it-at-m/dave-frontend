@@ -91,6 +91,12 @@ describe("OptionsmenueSettingsStore.ts", () => {
     expected = [messfaehigkeit1, messfaehigkeit2];
     expect(result).toStrictEqual(expected);
 
+    start = new Date(2025, 0, 1);
+    end = new Date(2025, 11, 31);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [messfaehigkeit1, messfaehigkeit2];
+    expect(result).toStrictEqual(expected);
+
     start = new Date(2025, 1, 6);
     end = new Date(2025, 1, 8);
     result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
