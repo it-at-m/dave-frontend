@@ -43,6 +43,18 @@ describe("OptionsmenueSettingsStore.ts", () => {
     let expected = [messfaehigkeit1];
     expect(result).toStrictEqual(expected);
 
+    start = new Date(2025, 0, 1);
+    end = new Date(2025, 0, 31);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [];
+    expect(result).toStrictEqual(expected);
+
+    start = new Date(2025, 0, 31);
+    end = new Date(2025, 0, 31);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [];
+    expect(result).toStrictEqual(expected);
+
     start = new Date(2025, 1, 3);
     end = new Date(2025, 1, 3);
     result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
@@ -89,6 +101,30 @@ describe("OptionsmenueSettingsStore.ts", () => {
     end = new Date(2025, 1, 7);
     result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
     expected = [messfaehigkeit2];
+    expect(result).toStrictEqual(expected);
+
+    start = new Date(2025, 1, 8);
+    end = new Date(2025, 1, 8);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [messfaehigkeit2];
+    expect(result).toStrictEqual(expected);
+
+    start = new Date(2025, 1, 8);
+    end = new Date(2025, 1, 9);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [messfaehigkeit2];
+    expect(result).toStrictEqual(expected);
+
+    start = new Date(2025, 1, 9);
+    end = new Date(2025, 1, 9);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [];
+    expect(result).toStrictEqual(expected);
+
+    start = new Date(2025, 1, 9);
+    end = new Date(2025, 1, 20);
+    result = messstelleStore.getMessfaehigkeitenForGivenZeitraum(start, end);
+    expected = [];
     expect(result).toStrictEqual(expected);
   });
 });
