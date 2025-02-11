@@ -395,11 +395,7 @@ function downloadCsv() {
 
   rows.push(header);
 
-  for (
-    let index = 0;
-    index < props.zeitreiheDaten.datum.length;
-    index++
-  ) {
+  for (let index = 0; index < props.zeitreiheDaten.datum.length; index++) {
     let row = "";
     row += `${props.zeitreiheDaten.datum[index]}`;
     row += fillCsvRow(
