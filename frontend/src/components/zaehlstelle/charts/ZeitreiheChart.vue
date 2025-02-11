@@ -30,6 +30,7 @@ import { useDisplay } from "vuetify";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
@@ -491,8 +492,13 @@ function getMetaData(): Array<string> {
   data.push(filterOptions.value.zeitauswahl);
   if (isNotTagesWert.value) {
     const zeitblock = zeitblockInfo.get(filterOptions.value.zeitblock);
+    const zeitblockStuendlich = zeitblockStuendlichInfo.get(
+      filterOptions.value.zeitblock
+    );
     if (zeitblock) {
       data.push(zeitblock.title);
+    } else if (zeitblockStuendlich) {
+      data.push(zeitblockStuendlich.title);
     } else {
       data.push("unbekannt");
     }
