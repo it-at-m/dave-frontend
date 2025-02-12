@@ -49,7 +49,9 @@ const zeitblockValues = computed(() => {
   result.push(zeitblockInfo.get(Zeitblock.ZB_10_15)!);
   result.push(zeitblockInfo.get(Zeitblock.ZB_15_19)!);
   result.push(zeitblockInfo.get(Zeitblock.ZB_19_24)!);
-  result.push(zeitblockInfo.get(Zeitblock.ZB_00_24)!);
+  if (isZeitauswahlSpitzenstunde.value) {
+    result.push(zeitblockInfo.get(Zeitblock.ZB_00_24)!);
+  }
   return result;
 });
 
