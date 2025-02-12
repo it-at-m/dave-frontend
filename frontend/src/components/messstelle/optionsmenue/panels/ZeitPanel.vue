@@ -62,6 +62,7 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
+import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 
 const route = useRoute();
@@ -193,6 +194,16 @@ watch(
       ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
         isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
       });
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  chosenOptionsCopyStartAndEndDatum,
+  () => {
+    if (!isDateRange.value) {
+      chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
     }
   },
   { deep: true }

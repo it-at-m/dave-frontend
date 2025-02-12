@@ -1,8 +1,8 @@
 <template>
   <v-sheet
-    id="drawingMessquerschnittBelastungsplan"
-    :width="props.dimension"
-    :height="props.dimension"
+    :id="sheetId"
+    :width="dimension"
+    :height="dimension"
   />
 </template>
 <script setup lang="ts">
@@ -13,7 +13,7 @@ import type { Ref } from "vue";
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
@@ -40,6 +40,7 @@ const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const defaultFontSize = 20;
+const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
   [Himmelsrichtungen.NORD, "#4CAF50"],
@@ -72,12 +73,10 @@ onMounted(() => {
 
 function drawingConfig() {
   canvas.value
-    .addTo("#drawingMessquerschnittBelastungsplan")
+    .addTo(`#${sheetId}`)
     .size(svgHeight.value, svgHeight.value)
     .font({ size: defaultFontSize, family: fontfamily })
     .viewbox(0, 0, viewbox.value, viewbox.value);
-  startX.value = 450;
-  startY.value = 250;
   draw();
 }
 
@@ -92,10 +91,34 @@ const chosenOptionsCopyFahrzeuge = computed(() => {
 watch(
   () => props.belastungsplanData,
   () => {
-    canvas.value.clear();
-    drawingConfig();
+    redraw();
   }
 );
+
+/**
+ * Wenn der Nutzer auf den Tabs navigiert, dann bekommt die Belastungsplan
+ * Komponente das als Event mit. Dies ist notwendig, da es Probleme gibt,
+ * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
+ */
+const activeTab = computed(() => {
+  return messstelleStore.getActiveTab;
+});
+
+/**
+ * Diese Methode zeichnet den Balastungsplan immer dann, wenn von einem anderen Tab auf
+ * den Belastungsplan Tab gewechselt wird.
+ */
+watch(activeTab, (tab: number) => {
+  if (tab === 0) {
+    redraw();
+  }
+});
+
+function redraw() {
+  nextTick(() => {
+    draw();
+  });
+}
 
 /**
  * Die Pfeile werden immer zuerst nach Norden und Süden gezeichnet,
@@ -103,6 +126,9 @@ watch(
  * handelt wird die Zeichnung im anschluss gedreht und in die richtige position geschoben
  */
 function draw() {
+  startX.value = 450;
+  startY.value = 250;
+  canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
   const groupedByDirection = _.chain(
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
