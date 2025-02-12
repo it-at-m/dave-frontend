@@ -65,8 +65,6 @@
               v-show="!belastungsplanDTO.kreisverkehr"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
-              :doc-mode="false"
-              :geometrie-mode="true"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -91,7 +89,7 @@
             </p>
           </v-banner>
         </v-sheet>
-        <progress-loader v-model="belastungsplanLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
         <v-sheet
@@ -122,6 +120,7 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_HEATMAP">
         <v-sheet
+          :min-height="contentHeight"
           :max-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
@@ -135,6 +134,7 @@
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_ZEITREIHE">
         <v-sheet
+          :min-height="contentHeight"
           :max-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
@@ -144,7 +144,7 @@
             :zaehldaten-zeitreihe="zaehldatenZeitreihe"
           />
         </v-sheet>
-        <progress-loader v-model="zeitreiheLoading" />
+        <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
     </v-tabs-window>
 
@@ -160,6 +160,14 @@
     />
 
     <pdf-report-menue v-model="pdfReportDialog" />
+
+    <belastungsplan-kreuzung-svg-schematische-uebersicht
+      v-if="drawSchematischeUebersicht"
+      :dimension="contentHeight"
+      :data="belastungsplanDTO"
+      :style="schemaStyle"
+      @print="storeSvgSchematischeUebersicht($event)"
+    />
   </v-sheet>
 </template>
 <script setup lang="ts">
@@ -186,6 +194,7 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
+import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -223,7 +232,6 @@ const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
 const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
   "schematischeUebersichtAsBase64Png";
 
-const belastungsplanLoading = ref(false);
 const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
@@ -231,7 +239,6 @@ const pdfReportDialog = ref(false);
 const belastungsplanDTO = ref<LadeBelastungsplanDTO>(
   {} as LadeBelastungsplanDTO
 );
-const belastungsplanLoaded = ref(false);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
@@ -247,7 +254,6 @@ const zaehldatenHeatmap = ref<LadeZaehldatenHeatmapDTO>(
 const zaehldatenZeitreihe = ref<LadeZaehldatenZeitreiheDTO>(
   {} as LadeZaehldatenZeitreiheDTO
 );
-const zeitreiheLoading = ref(false);
 
 const activeTab = ref(0);
 const loadingFile = ref(false);
@@ -300,6 +306,7 @@ const isNotTabHeatmap = computed<boolean>(() => {
 });
 
 watch(options, () => {
+  displaySchema.value = true;
   loadData();
 });
 
@@ -352,9 +359,7 @@ function loadData(): void {
   const o = Object.assign({}, options.value) as OptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
   // requests abschicken
-  loadBelastungsplan(o);
   loadProcessedChartData(o);
-  loadZeitreihe(o);
 
   // Save HistoryItem
   historyStore.addHistoryItem(
@@ -369,35 +374,6 @@ function loadData(): void {
   );
 }
 
-function loadZeitreihe(options: OptionsDTO): void {
-  zeitreiheLoading.value = true;
-  LadeZaehldatenService.ladeZeitreihe(
-    zaehlstelle.value.id,
-    selectedZaehlung.value.id,
-    options
-  )
-    .then((dto: LadeZaehldatenZeitreiheDTO) => {
-      zaehldatenZeitreihe.value = dto;
-    })
-    .catch((error) => snackbarStore.showApiError(error))
-    .finally(() => {
-      zeitreiheLoading.value = false;
-    });
-}
-
-function loadBelastungsplan(options: OptionsDTO) {
-  belastungsplanLoading.value = true;
-  LadeZaehldatenService.ladeBelastungsplan(selectedZaehlung.value.id, options)
-    .then((dto: LadeBelastungsplanDTO) => {
-      belastungsplanDTO.value = dto;
-      belastungsplanLoaded.value = true;
-    })
-    .catch((error) => snackbarStore.showApiError(error))
-    .finally(() => {
-      belastungsplanLoading.value = false;
-    });
-}
-
 function loadProcessedChartData(options: OptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
@@ -406,15 +382,19 @@ function loadProcessedChartData(options: OptionsDTO) {
     options
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+      storeStartAndEndeUhrzeitOfIntervalls(
+        processedZaehldaten.zaehldatenTable.zaehldaten
+      );
       listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
       zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
       zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
+      zaehldatenZeitreihe.value = processedZaehldaten.zaehldatenZeitreihe;
+      belastungsplanDTO.value = processedZaehldaten.zaehldatenBelastungsplan;
       setMaxRangeYAchse();
     })
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => {
       chartDataLoading.value = false;
-      storeStartAndEndeUhrzeitOfIntervalls(listenausgabeDTO.value);
     });
 }
 
@@ -434,6 +414,7 @@ function storeSvg(svg: Blob) {
 
 function storeSvgSchematischeUebersicht(svg: Blob) {
   belastungsplanSchematischeUebersichtSvg.value = svg;
+  displaySchema.value = false;
 }
 
 /**
@@ -765,6 +746,24 @@ function generateCsv() {
     })
     .finally(() => (loadingFile.value = false));
 }
+const displaySchema = ref(true);
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!displaySchema.value) {
+    style = `display: none`;
+  }
+  return style;
+});
+
+const drawSchematischeUebersicht = computed(() => {
+  return (
+    hasSelectedVerkehrsarten.value &&
+    belastungsplanDTO.value &&
+    belastungsplanDTO.value.value1 &&
+    belastungsplanDTO.value.value1.values &&
+    belastungsplanDTO.value.value1.values.length > 0
+  );
+});
 </script>
 
 <style scoped lang="scss">

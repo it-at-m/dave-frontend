@@ -116,13 +116,11 @@
 </template>
 
 <script setup lang="ts">
-import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { defaults, isEmpty, isNil, toArray } from "lodash";
+import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
-import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 

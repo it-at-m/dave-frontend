@@ -185,17 +185,18 @@ function createBaseLayers(): L.Control.LayersObject {
     }
   );
 
-  const osm = L.tileLayer.wms("https://ows.terrestris.de/osm/service?", {
-    layers: "OSM-WMS",
-    className: "OpenStreetMaps",
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> by terrestris',
-  });
+  const osm = L.tileLayer.wms(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }
+  );
 
   return {
     Stadtkarte: stadtkarteGesamt,
     Luftbild: luftbild,
-    OpenStreetMaps: osm,
+    OpenStreetMap: osm,
   };
 }
 
@@ -325,11 +326,16 @@ function setZaehlartenmarkerToMap() {
   const markers: Array<Marker> = [];
   const zaehlartenKarte = selectedZaehlstelleKarte.value.zaehlartenKarte;
 
+  const zaehlarten: Array<string> = [];
+
   zaehlartenKarte.forEach((zaehlartenKarteDto: ZaehlartenKarteDTO) => {
     zaehlartenKarteDto.zaehlarten.forEach((zaehlart: string, index: number) => {
-      markers.push(
-        createMarkerForZaehlart(zaehlartenKarteDto, zaehlart, index)
-      );
+      if (!zaehlarten.includes(zaehlart)) {
+        markers.push(
+          createMarkerForZaehlart(zaehlartenKarteDto, zaehlart, index)
+        );
+        zaehlarten.push(zaehlart);
+      }
     });
   });
   if (markers.length > 0) {
