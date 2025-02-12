@@ -11,6 +11,7 @@
       stacked
       color="white"
       class="text-grey-lighten-1"
+      @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
       <v-tab :value="TAB_BELASTUNGSPLAN">
@@ -33,7 +34,6 @@
     <v-tabs-window
       v-model="activeTab"
       class="d-flex flex-column align-stretch"
-      @update:model-value="changeTab"
     >
       <!-- Inhalte -->
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
@@ -57,7 +57,7 @@
             v-else-if="
               belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
             "
-            ref="belastungsplanCard"
+            :is-schematische-uebersicht="false"
             :belastungsplan-data="belastungsplanDataDTO"
             :dimension="contentHeight"
             @print="storeSvg($event)"
@@ -149,6 +149,14 @@
       @close="closePdfReportDialog"
     />
   </v-sheet>
+
+  <belastungsplan-mq-schematische-uebersicht
+    v-if="drawSchematischeUebersicht"
+    :belastungsplan-data="belastungsplanDataDTO"
+    :dimension="contentHeight"
+    :style="schemaStyle"
+    @print="storeSvgSchematischeUebersicht($event)"
+  />
 </template>
 <script setup lang="ts">
 import type CsvDTO from "@/types/common/CsvDTO";
@@ -169,6 +177,7 @@ import LadeMessdatenService from "@/api/service/LadeMessdatenService";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import BelastungsplanMessquerschnittCard from "@/components/messstelle/charts/BelastungsplanMessquerschnittCard.vue";
+import BelastungsplanMqSchematischeUebersicht from "@/components/messstelle/charts/BelastungsplanMqSchematischeUebersicht.vue";
 import MesswerteListenausgabe from "@/components/messstelle/charts/MesswerteListenausgabe.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import PdfReportMenueMessstelle from "@/components/messstelle/PdfReportMenueMessstelle.vue";
@@ -191,7 +200,7 @@ import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
   height?: string;
-  contentHeight?: string;
+  contentHeight: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -230,11 +239,13 @@ const TAB_GANGLINIE = 1;
 const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 
-const belastungsplanCard = ref<typeof BelastungsplanMessquerschnittCard>();
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const heatmapCard = ref<InstanceType<typeof HeatmapCard> | null>();
 const belastungsplanSvg = ref<Blob>();
+const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
+const belastungsplanSchematischeUebersichtPngBase64 = ref("");
+const displaySchema = ref(true);
 
 const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
@@ -246,6 +257,15 @@ const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 const dateUtils = useDateUtils();
+
+const drawSchematischeUebersicht = computed(() => {
+  return (
+    belastungsplanDataDTO.value &&
+    belastungsplanDataDTO.value.ladeBelastungsplanMessquerschnittDataDTOList &&
+    belastungsplanDataDTO.value.ladeBelastungsplanMessquerschnittDataDTOList
+      .length > 0
+  );
+});
 
 const messstelleId = computed(() => {
   return route.params.messstelleId as string;
@@ -284,6 +304,7 @@ function changeTab() {
 }
 
 watch(options, () => {
+  displaySchema.value = true;
   loadProcessedChartData();
 });
 watch(belastungsplanSvg, () => {
@@ -302,6 +323,27 @@ watch(belastungsplanSvg, () => {
       }
     };
     image.src = URL.createObjectURL(belastungsplanSvg.value);
+  }
+});
+watch(belastungsplanSchematischeUebersichtSvg, () => {
+  if (belastungsplanSchematischeUebersichtSvg.value) {
+    const image = new Image();
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const dimension = BELASTUNGSPLAN_PNG_DIMENSION;
+      canvas.width = dimension;
+      canvas.height = dimension;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(image, 0, 0, dimension, dimension);
+        // Image Asset erstellen und in Variable speichern
+        belastungsplanSchematischeUebersichtPngBase64.value =
+          canvas.toDataURL("image/jpg");
+      }
+    };
+    image.src = URL.createObjectURL(
+      belastungsplanSchematischeUebersichtSvg.value
+    );
   }
 });
 
@@ -486,6 +528,11 @@ function storeSvg(svg: Blob): void {
   belastungsplanSvg.value = svg;
 }
 
+function storeSvgSchematischeUebersicht(svg: Blob): void {
+  belastungsplanSchematischeUebersichtSvg.value = svg;
+  displaySchema.value = false;
+}
+
 function openPdfReportDialog(): void {
   pdfReportDialog.value = true;
 }
@@ -524,19 +571,19 @@ function generatePdf(): void {
           type: "image/png",
         })
       );
-      if (belastungsplanSvg.value) {
+      if (belastungsplanSchematischeUebersichtSvg.value) {
         formData.append(
           REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-          belastungsplanPngBase64.value
+          belastungsplanSchematischeUebersichtPngBase64.value
         );
       }
       break;
     case TAB_LISTENAUSGABE:
       type = "datentabelle";
-      if (belastungsplanSvg.value) {
+      if (belastungsplanSchematischeUebersichtSvg.value) {
         formData.append(
           REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
-          belastungsplanPngBase64.value
+          belastungsplanSchematischeUebersichtPngBase64.value
         );
       }
       break;
@@ -567,6 +614,14 @@ function fetchPdf(formData: FormData, type: string) {
     .catch((error) => snackbarStore.showApiError(error))
     .finally(() => (loadingFile.value = false));
 }
+
+const schemaStyle = computed(() => {
+  let style = ``;
+  if (!displaySchema.value) {
+    style = `display: none`;
+  }
+  return style;
+});
 </script>
 
 <style scoped lang="scss">
