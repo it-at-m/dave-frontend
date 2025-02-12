@@ -159,10 +159,15 @@ export function useDateUtils() {
   ) {
     let isGreaterThanFiveYears = false;
     if (start && end) {
-      const differenceInMs = Math.abs(start.valueOf() - end.valueOf());
-      const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
-      const differenceInYears = Math.floor(differenceInDays / 365);
-      isGreaterThanFiveYears = differenceInYears >= 5;
+      const startDate = moment(start);
+      const endDate = moment(end);
+      const yearFiveYearsEarlier = endDate.year() - 5;
+      const endDateFiveYearsEarlier = moment(end);
+      endDateFiveYearsEarlier.year(yearFiveYearsEarlier);
+      isGreaterThanFiveYears = startDate.isSameOrBefore(
+        endDateFiveYearsEarlier,
+        "day"
+      );
     }
     return isGreaterThanFiveYears;
   }
