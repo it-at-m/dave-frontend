@@ -245,6 +245,7 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtPngBase64 = ref("");
+const displaySchema = ref(true);
 
 const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
@@ -614,7 +615,6 @@ function fetchPdf(formData: FormData, type: string) {
     .finally(() => (loadingFile.value = false));
 }
 
-const displaySchema = ref(true);
 const schemaStyle = computed(() => {
   let style = ``;
   if (!displaySchema.value) {
