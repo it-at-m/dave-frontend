@@ -37,6 +37,7 @@
       </v-col>
       <v-divider vertical />
       <v-col cols="8">
+        <progress-loader v-model="chartDataLoading" />
         <step-line-card
           v-if="showDiagram"
           ref="steplineCard"
@@ -73,6 +74,7 @@ import { useDisplay } from "vuetify";
 
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
+import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
@@ -96,6 +98,7 @@ const messstelleUtils = useMessstelleUtils();
 
 const loadingFile = ref(false);
 const auswertungLoaded = ref(false);
+const chartDataLoading = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 
@@ -214,6 +217,7 @@ function resetAuswertungsOptions() {
 }
 
 function auswertungStarten() {
+  chartDataLoading.value = true;
   MessstelleAuswertungService.generate(auswertungsOptions.value)
     .then((result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
@@ -228,6 +232,9 @@ function auswertungStarten() {
     .catch((error) => {
       snackbarStore.showApiError(error);
       auswertungLoaded.value = false;
+    })
+    .finally(() => {
+      chartDataLoading.value = false;
     });
 }
 
