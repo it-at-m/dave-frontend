@@ -108,8 +108,15 @@ const isZeitraumGreaterThanFiveYears = computed(() => {
 });
 
 const durchschnitt = computed(() => {
-  const zeitraum = chosenOptionsCopy.value.zeitraum;
-  if (zeitraum && zeitraum.length === 2 && head(zeitraum) !== last(zeitraum)) {
+  const chosenDates = [
+    dateUtils.formatDateToISO(
+      chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
+    ),
+    dateUtils.formatDateToISO(
+      chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+    ),
+  ];
+  if (dateUtils.isDateRange(chosenDates)) {
     return " (Durchschnitt)";
   }
   return "";
