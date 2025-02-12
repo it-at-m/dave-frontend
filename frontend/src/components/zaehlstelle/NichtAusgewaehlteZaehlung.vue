@@ -6,17 +6,12 @@
     <!-- red lighten-3 -->
     <v-col
       v-if="sonderzaehlung"
-      cols="12"
-      md="1"
+      cols="1"
       align-self="center"
-      :class="isLarge ? '' : 'px-1'"
     >
       <sonderzaehlung-icon :large="isLarge" />
     </v-col>
-    <v-col
-      cols="12"
-      :md="getMaxCols"
-    >
+    <v-col :cols="getMaxCols">
       <v-sheet
         width="100%"
         :color="hover ? hoverColor : color"
@@ -95,7 +90,7 @@ const getMaxCols = computed(() => {
 });
 
 const isLarge = computed(() => {
-  return display.xl.value;
+  return display.xlAndUp.value;
 });
 
 /**

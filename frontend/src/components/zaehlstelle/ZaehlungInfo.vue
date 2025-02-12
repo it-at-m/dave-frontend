@@ -10,18 +10,13 @@
       <!-- red lighten-3 -->
       <v-col
         v-if="zaehlung.sonderzaehlung"
-        cols="12"
-        lg="1"
+        cols="1"
         align-self="center"
-        :class="isLarge ? '' : 'px-1'"
       >
         <sonderzaehlung-icon :large="isLarge" />
       </v-col>
 
-      <v-col
-        cols="12"
-        :lg="getMaxCols"
-      >
+      <v-col :cols="getMaxCols">
         <!-- Informationen über die ausgewählte Zählung -->
         <v-sheet
           width="100%"
@@ -338,7 +333,7 @@ const startEndeUhrzeitIntervalls = computed(() => {
 });
 
 const isLarge = computed(() => {
-  return display.xl.value;
+  return display.xlAndUp.value;
 });
 
 const getMaxCols = computed(() => {
