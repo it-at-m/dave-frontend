@@ -32,29 +32,35 @@
               <v-radio
                 :label="`Block${durchschnitt}`"
                 :value="Zeitauswahl.BLOCK"
-                :disabled="isDateBiggerFiveYears"
+                :disabled="isZeitraumGreaterThanFiveYears"
               />
               <v-radio
                 :label="`Stunde${durchschnitt}`"
                 :value="Zeitauswahl.STUNDE"
-                :disabled="isDateBiggerFiveYears"
+                :disabled="isZeitraumGreaterThanFiveYears"
               />
             </v-col>
             <v-col cols="6">
               <v-radio
                 :label="`Spitzenstunde Kfz${durchschnitt}`"
                 :value="Zeitauswahl.SPITZENSTUNDE_KFZ"
-                :disabled="isTypeDisabled('KFZ') || isDateBiggerFiveYears"
+                :disabled="
+                  isTypeDisabled('KFZ') || isZeitraumGreaterThanFiveYears
+                "
               />
               <v-radio
                 :label="`Spitzenstunde Rad${durchschnitt}`"
                 :value="Zeitauswahl.SPITZENSTUNDE_RAD"
-                :disabled="isTypeDisabled('RAD') || isDateBiggerFiveYears"
+                :disabled="
+                  isTypeDisabled('RAD') || isZeitraumGreaterThanFiveYears
+                "
               />
               <v-radio
                 :label="`Spitzenstunde Fuß${durchschnitt}`"
                 :value="Zeitauswahl.SPITZENSTUNDE_FUSS"
-                :disabled="isTypeDisabled('FUSS') || isDateBiggerFiveYears"
+                :disabled="
+                  isTypeDisabled('FUSS') || isZeitraumGreaterThanFiveYears
+                "
               />
             </v-col>
           </v-row>
@@ -75,6 +81,7 @@
 <script lang="ts" setup>
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
+import { head, last } from "lodash";
 import { computed, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -82,7 +89,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
-import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
+import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
   messstelleDetektierteFahrzeugart: string;
@@ -91,11 +98,18 @@ interface Props {
 const props = defineProps<Props>();
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const snackbarStore = useSnackbarStore();
+const dateUtils = useDateUtils();
 
-const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
+const isZeitraumGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
+});
 
 const durchschnitt = computed(() => {
-  if (chosenOptionsCopy.value.zeitraum.length === 2) {
+  const zeitraum = chosenOptionsCopy.value.zeitraum;
+  if (zeitraum && zeitraum.length === 2 && head(zeitraum) !== last(zeitraum)) {
     return " (Durchschnitt)";
   }
   return "";
@@ -163,7 +177,7 @@ watch(
   () => chosenOptionsCopy.value.zeitraum,
   () => {
     if (
-      isDateBiggerFiveYears.value &&
+      isZeitraumGreaterThanFiveYears.value &&
       chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.TAGESWERT
     ) {
       chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.TAGESWERT;

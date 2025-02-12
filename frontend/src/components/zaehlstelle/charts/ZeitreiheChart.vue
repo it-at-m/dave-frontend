@@ -28,6 +28,9 @@ import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
@@ -190,13 +193,16 @@ const options = computed(() => {
 
             // Header der Tabelle
             let table =
-              '<table style="width:100%;text-align:center"><tbody><tr>' +
-              "<td>Zähldatum</td>";
+              '<table style="width:100%;text-align:center">' +
+              getMetaHeaderAndData() +
+              "<thead>" +
+              "<tr>" +
+              "<th>Zähldatum</th>";
             series.forEach((data: any) => {
-              table += "<td>" + data.name + "</td>";
+              table += "<th>" + data.name + "</th>";
             });
-            table += "</tr>";
-
+            table += "</tr></thead>";
+            table += "<tbody>";
             // Daten der Tabelle
             for (let i = 0, l = axisData.length; i < l; i++) {
               table += "<tr>" + "<td>" + axisData[i] + "</td>";
@@ -231,6 +237,11 @@ const options = computed(() => {
         GUETERVERKEHRSANTEIL,
       ],
       selectedMode: false,
+      width: "95%",
+    },
+
+    grid: {
+      top: 80,
     },
     xAxis: {
       type: "category",
@@ -378,13 +389,13 @@ function downloadCsv() {
     "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fussverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
   const rows = [];
 
+  rows.push(getMetaHeader().join(";"));
+  rows.push(getMetaData().join(";"));
+  rows.push("");
+
   rows.push(header);
 
-  for (
-    let index = 0;
-    index < props.zeitreiheDaten.svAnteilInProzent.length;
-    index++
-  ) {
+  for (let index = 0; index < props.zeitreiheDaten.datum.length; index++) {
     let row = "";
     row += `${props.zeitreiheDaten.datum[index]}`;
     row += fillCsvRow(
@@ -439,6 +450,70 @@ function fillCsvRow(isWanted: boolean, data: number) {
   }
   return row;
 }
+
+function getMetaHeaderAndData(): string {
+  const data: Array<string> = [];
+  data.push(`<thead>`);
+  data.push(`<tr>`);
+  getMetaHeader().forEach((header) => {
+    data.push(`<th>${header}</th>`);
+  });
+  data.push(`</tr>`);
+  data.push(`</thead>`);
+  data.push(`<tbody>`);
+  data.push(`<tr>`);
+  getMetaData().forEach((metaData) => {
+    data.push(`<td>${metaData}</td>`);
+  });
+  data.push(`</tr>`);
+  data.push(`<tr><td>&nbsp;</td></tr>`);
+  data.push(`</tbody>`);
+  return data.join("");
+}
+
+function getMetaHeader(): Array<string> {
+  const data: Array<string> = [];
+  data.push(`Zählstellennummer`);
+  data.push(`Zeitauswahl`);
+  if (isNotTagesWert.value) {
+    data.push(`Stunde / Block`);
+  }
+  data.push(`Fahrbeziehung`);
+  return data;
+}
+
+function getMetaData(): Array<string> {
+  const data: Array<string> = [];
+  data.push(zaehlstelleStore.getZaehlstelleHeader.nummer);
+  data.push(filterOptions.value.zeitauswahl);
+  if (isNotTagesWert.value) {
+    const zeitblock = zeitblockInfo.get(filterOptions.value.zeitblock);
+    const zeitblockStuendlich = zeitblockStuendlichInfo.get(
+      filterOptions.value.zeitblock
+    );
+    if (zeitblock) {
+      data.push(zeitblock.title);
+    } else if (zeitblockStuendlich) {
+      data.push(zeitblockStuendlich.title);
+    } else {
+      data.push("unbekannt");
+    }
+  }
+  const fahrbeziehung: Array<string> = [];
+  fahrbeziehung.push(
+    `Von: ${filterOptions.value.vonKnotenarm ? filterOptions.value.vonKnotenarm : "Alle"}`
+  );
+  fahrbeziehung.push(` - `);
+  fahrbeziehung.push(
+    `Nach: ${filterOptions.value.nachKnotenarm ? filterOptions.value.nachKnotenarm : "Alle"}`
+  );
+  data.push(fahrbeziehung.join(""));
+  return data;
+}
+
+const isNotTagesWert = computed(() => {
+  return filterOptions.value.zeitauswahl !== Zeitauswahl.TAGESWERT;
+});
 
 watch(
   () => props.zeitreiheDaten,

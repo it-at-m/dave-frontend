@@ -59,7 +59,6 @@ const stuendlichValues = computed(() => {
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_01_02)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_02_03)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_03_04)!);
-  result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_03_04)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_04_05)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_05_06)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_06_07)!);
@@ -76,6 +75,7 @@ const stuendlichValues = computed(() => {
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_17_18)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_18_19)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_19_20)!);
+  result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_20_21)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_21_22)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_22_23)!);
   result.push(zeitblockStuendlichInfo.get(ZeitblockStuendlich.ZB_23_24)!);

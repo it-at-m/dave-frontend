@@ -117,6 +117,10 @@ const optionsDefault = computed(() => {
     legend: {
       data: chartLegend.value,
       selectedMode: false,
+      width: "95%",
+    },
+    grid: {
+      top: 80,
     },
     xAxis: {
       type: "category",
@@ -200,13 +204,16 @@ const options2x4 = computed(() => {
     legend: {
       data: chartLegend.value,
       selectedMode: false,
+      width: "95%",
     },
     grid: [
       {
         right: "55%",
+        top: 80,
       },
       {
         left: "55%",
+        top: 80,
       },
     ],
     xAxis: [

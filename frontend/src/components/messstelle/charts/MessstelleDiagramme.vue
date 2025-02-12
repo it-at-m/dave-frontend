@@ -72,7 +72,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isBiggerThanFiveYears"
+            v-if="isZeitraumGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -93,7 +93,7 @@
           width="94%"
         >
           <banner-messtelle-tabs
-            v-if="isBiggerThanFiveYears"
+            v-if="isZeitraumGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -116,7 +116,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isBiggerThanFiveYears"
+            v-if="isZeitraumGreaterThanFiveYears"
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
@@ -167,7 +167,7 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
-import _ from "lodash";
+import { cloneDeep } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -189,6 +189,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
+import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
@@ -254,6 +255,7 @@ const route = useRoute();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
+const dateUtils = useDateUtils();
 
 const drawSchematischeUebersicht = computed(() => {
   return (
@@ -283,18 +285,15 @@ const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
 });
 
-const isBiggerThanFiveYears = computed(() => {
-  const zeitraum = options.value.zeitraum;
-  const differenceInMs = Math.abs(
-    new Date(zeitraum[0]).valueOf() - new Date(zeitraum[1]).valueOf()
+const isZeitraumGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(
+    options.value.zeitraumStartAndEndDate.startDate,
+    options.value.zeitraumStartAndEndDate.endDate
   );
-  const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
-  const differenceInYears = Math.floor(differenceInDays / 365);
-  return differenceInYears >= 5;
 });
 
-watch(isBiggerThanFiveYears, () => {
-  if (isBiggerThanFiveYears.value) {
+watch(isZeitraumGreaterThanFiveYears, () => {
+  if (isZeitraumGreaterThanFiveYears.value) {
     activeTab.value = TAB_BELASTUNGSPLAN;
   }
 });
@@ -377,7 +376,7 @@ function loadProcessedChartData() {
           messstelle.id,
           messstelle.mstId,
           messstelle.standort,
-          _.cloneDeep(options.value)
+          cloneDeep(options.value)
         )
       );
     });
@@ -485,7 +484,7 @@ function saveGraphAsImage(): void {
 
 function generateCsv() {
   loadingFile.value = true;
-  const optionsDTO = _.cloneDeep(options.value);
+  const optionsDTO = cloneDeep(options.value);
 
   GenerateCsvService.generateCsvMst(messstelleId.value, optionsDTO)
     .then((result: CsvDTO) => {

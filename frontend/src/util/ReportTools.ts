@@ -202,7 +202,7 @@ export function useReportTools() {
       .toISOString()
       .split("T")[0];
 
-    if (zeitraum.length === 2) {
+    if (dateUtils.isDateRange(zeitraum)) {
       dateForFilename = `${dateForFilename}_bis_${
         new Date(zeitraum[1]).toISOString().split("T")[0]
       }`;

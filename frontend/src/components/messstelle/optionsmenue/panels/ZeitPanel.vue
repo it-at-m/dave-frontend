@@ -35,9 +35,9 @@
       />
       <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />
       <v-spacer />
-      <v-divider v-if="!isDateBiggerFiveYears" />
+      <v-divider v-if="!isZeitraumGreaterThanFiveYears" />
       <zeit-intervall
-        v-if="!isDateBiggerFiveYears"
+        v-if="!isZeitraumGreaterThanFiveYears"
         v-model="chosenOptionsCopy"
       />
     </v-expansion-panel-text>
@@ -63,7 +63,6 @@ import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitInter
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
-import { useOptionsmenuUtils } from "@/util/OptionsmenuUtils";
 
 const route = useRoute();
 
@@ -99,7 +98,12 @@ const messstelleInfo = computed<MessstelleInfoDTO>(() => {
 
 const nichtPlausibleTage = ref<Array<string>>([]);
 
-const { isDateBiggerFiveYears } = useOptionsmenuUtils(chosenOptionsCopy.value);
+const isZeitraumGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
+});
 
 const chosenOptionsCopyStartAndEndDatum = computed(() => {
   return (
