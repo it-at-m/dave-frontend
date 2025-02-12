@@ -81,7 +81,6 @@
 <script lang="ts" setup>
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { head, last } from "lodash";
 import { computed, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
