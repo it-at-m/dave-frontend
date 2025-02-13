@@ -41,6 +41,7 @@
         <step-line-card
           v-if="showDiagram"
           ref="steplineCard"
+          :is-chart-type-bar="true"
           :zaehldaten-stepline="zaehldatenMessstellen"
         />
         <banner-messtelle-tabs

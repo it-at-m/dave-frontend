@@ -5,6 +5,7 @@
   >
     <step-line-chart
       :zaehldaten-stepline="zaehldatenStepline"
+      :is-chart-type-bar="isChartTypeBar"
       @charttype-changed="charttypeChanged"
     />
     <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
@@ -13,6 +14,7 @@
       ref="steplineForPdf"
       style="display: none"
       :zaehldaten-stepline="zaehldatenStepline"
+      :is-chart-type-bar="isChartTypeBar"
     />
   </v-card>
 </template>
@@ -27,9 +29,12 @@ import StepLineChart from "@/components/zaehlstelle/charts/StepLineChart.vue";
 
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
+  isChartTypeBar: boolean;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  isChartTypeBar: false,
+});
 
 const steplineForPdf = ref<InstanceType<typeof StepLineChart> | null>();
 defineExpose({

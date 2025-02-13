@@ -42,15 +42,17 @@ use([
 ]);
 
 const CHART_STEP_X_AXIS = "middle";
-const CHART_TYPE_X_AXIS = "line";
 const SYMBOL_SIZE = 5;
 
 provide(THEME_KEY, "default");
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
+  isChartTypeBar: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  isChartTypeBar: false,
+});
 const chart = ref<InstanceType<typeof VChart> | null>();
 defineExpose({
   chart,
@@ -85,6 +87,10 @@ const optionsStepline = computed(() => {
   } else {
     return optionsDefault.value;
   }
+});
+
+const chartType = computed(() => {
+  return props.isChartTypeBar ? "bar" : "line";
 });
 
 const optionsDefault = computed(() => {
@@ -339,7 +345,7 @@ function createSeriesDataForChart(
     ) {
       seriesEntries.push({
         name: seriesEntryChart.name,
-        type: CHART_TYPE_X_AXIS,
+        type: chartType.value,
         data: seriesEntryChart.yaxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
@@ -350,7 +356,7 @@ function createSeriesDataForChart(
     } else {
       seriesEntries.push({
         name: seriesEntryChart.name,
-        type: CHART_TYPE_X_AXIS,
+        type: chartType.value,
         step: CHART_STEP_X_AXIS,
         data: seriesEntryChart.yaxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
