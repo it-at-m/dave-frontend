@@ -20,7 +20,7 @@
     "sass": "^1.77.6",
     "vue": "^3.4.31",
     "vue-router": "^4.4.5",
-    "vuetify": "^3.7.1"
+    "vuetify": "^3.7.12"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",
