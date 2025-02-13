@@ -15,7 +15,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <exec.maven.plugin>3.4.1</exec.maven.plugin>
+        <exec.maven.plugin>3.5.0</exec.maven.plugin>
         <maven.clean.plugin>3.4.0</maven.clean.plugin>
         <sonar.sources>src,public</sonar.sources>
         <sonar.coverage.exclusions>src,public</sonar.coverage.exclusions>
