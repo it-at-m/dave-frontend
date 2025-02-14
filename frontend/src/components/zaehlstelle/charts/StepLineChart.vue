@@ -47,11 +47,11 @@ const SYMBOL_SIZE = 5;
 provide(THEME_KEY, "default");
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
-  isChartTypeBar: boolean;
+  isGesamtAuswertung: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  isChartTypeBar: false,
+  isGesamtAuswertung: false,
 });
 const chart = ref<InstanceType<typeof VChart> | null>();
 defineExpose({
@@ -90,7 +90,7 @@ const optionsStepline = computed(() => {
 });
 
 const chartType = computed(() => {
-  return props.isChartTypeBar ? "bar" : "line";
+  return props.isGesamtAuswertung ? "bar" : "line";
 });
 
 const optionsDefault = computed(() => {
@@ -338,7 +338,7 @@ function createSeriesDataForChart(
   seriesEntriesChart: Array<StepLineSeriesEntryDTO>
 ): Array<unknown> {
   const seriesEntries: Array<unknown> = [];
-  seriesEntriesChart.forEach((seriesEntryChart) => {
+  seriesEntriesChart.forEach((seriesEntryChart, index) => {
     if (
       seriesEntryChart.name === ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT ||
       seriesEntryChart.name === ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT
@@ -351,7 +351,7 @@ function createSeriesDataForChart(
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
         symbolSize: SYMBOL_SIZE,
-        color: ChartUtils.CHART_COLOR.get(seriesEntryChart.name),
+        color: getColor(seriesEntryChart.name, index),
       });
     } else {
       seriesEntries.push({
@@ -363,11 +363,17 @@ function createSeriesDataForChart(
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
         symbolSize: SYMBOL_SIZE,
-        color: ChartUtils.CHART_COLOR.get(seriesEntryChart.name),
+        color: getColor(seriesEntryChart.name, index),
       });
     }
   });
   return seriesEntries;
+}
+
+function getColor(name: string, index: number) {
+  return props.isGesamtAuswertung
+    ? ChartUtils.CHART_COLOR_GESAMT_AUSWERTUNG.get(index)
+    : ChartUtils.CHART_COLOR.get(name);
 }
 
 function resetData(): void {

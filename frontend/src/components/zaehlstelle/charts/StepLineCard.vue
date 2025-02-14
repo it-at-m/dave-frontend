@@ -5,7 +5,7 @@
   >
     <step-line-chart
       :zaehldaten-stepline="zaehldatenStepline"
-      :is-chart-type-bar="isChartTypeBar"
+      :is-gesamt-auswertung="isGesamtAuswertung"
       @charttype-changed="charttypeChanged"
     />
     <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
@@ -14,7 +14,7 @@
       ref="steplineForPdf"
       style="display: none"
       :zaehldaten-stepline="zaehldatenStepline"
-      :is-chart-type-bar="isChartTypeBar"
+      :is-gesamt-auswertung="isGesamtAuswertung"
     />
   </v-card>
 </template>
@@ -29,11 +29,11 @@ import StepLineChart from "@/components/zaehlstelle/charts/StepLineChart.vue";
 
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
-  isChartTypeBar: boolean;
+  isGesamtAuswertung: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
-  isChartTypeBar: false,
+  isGesamtAuswertung: false,
 });
 
 const steplineForPdf = ref<InstanceType<typeof StepLineChart> | null>();
