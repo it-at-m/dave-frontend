@@ -47,7 +47,7 @@ const SYMBOL_SIZE = 5;
 provide(THEME_KEY, "default");
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
-  isGesamtAuswertung: boolean;
+  isGesamtAuswertung?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -371,9 +371,11 @@ function createSeriesDataForChart(
 }
 
 function getColor(name: string, index: number) {
-  return props.isGesamtAuswertung
-    ? ChartUtils.CHART_COLOR_GESAMT_AUSWERTUNG.get(index)
-    : ChartUtils.CHART_COLOR.get(name);
+  let color = ChartUtils.CHART_COLOR.get(name);
+  if (!color) {
+    color = ChartUtils.CHART_COLOR_GESAMT_AUSWERTUNG.get(index);
+  }
+  return color;
 }
 
 function resetData(): void {

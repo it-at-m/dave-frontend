@@ -29,7 +29,7 @@ import StepLineChart from "@/components/zaehlstelle/charts/StepLineChart.vue";
 
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
-  isGesamtAuswertung: boolean;
+  isGesamtAuswertung?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
