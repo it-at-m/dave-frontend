@@ -230,7 +230,7 @@ const selectedFahrzeugAsSummary = computed(() => {
     selectedValues.push(`Lfw`);
   }
   if (fahrzeuge.busse) {
-    selectedValues.push(`Bus`);
+    selectedValues.push(`Busse`);
   }
   if (fahrzeuge.kraftraeder) {
     selectedValues.push(`Krad`);
