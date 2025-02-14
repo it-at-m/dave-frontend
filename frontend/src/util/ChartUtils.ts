@@ -10,7 +10,7 @@ export default class ChartUtils {
   public static readonly LEGEND_ENTRY_LKW: string = "Lkw";
   public static readonly LEGEND_ENTRY_LFW: string = "Lfw";
   public static readonly LEGEND_ENTRY_LZ: string = "Lz";
-  public static readonly LEGEND_ENTRY_BUS: string = "Bus";
+  public static readonly LEGEND_ENTRY_BUS: string = "Busse";
   public static readonly LEGEND_ENTRY_KRAD: string = "Krad";
   public static readonly LEGEND_ENTRY_PKW_EINHEITEN: string = "Pkw-Einheiten";
 
