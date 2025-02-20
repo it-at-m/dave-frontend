@@ -16,7 +16,7 @@
           variant="accordion"
         >
           <search-panel v-model="searchAndFilterOptions" />
-          <filter-panel v-model="searchAndFilterOptions" />
+          <zaehlstelle-filter-panel v-model="searchAndFilterOptions" />
         </v-expansion-panels>
       </v-sheet>
     </v-card-text>
@@ -50,8 +50,8 @@ import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptions
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 
-import FilterPanel from "@/components/search/filter/FilterPanel.vue";
 import SearchPanel from "@/components/search/filter/SearchPanel.vue";
+import ZaehlstelleFilterPanel from "@/components/search/filter/ZaehlstelleFilterPanel.vue";
 
 interface Emits {
   (event: "adopt-search-and-filter-options", value: void): void;

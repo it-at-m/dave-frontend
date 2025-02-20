@@ -1,12 +1,12 @@
 <template>
-  <v-expansion-panel>
+  <v-expansion-panel :disabled="!searchAndFilterOptions.searchInZaehlstellen">
     <v-expansion-panel-title>
       <div>
         <v-icon
           start
           icon="mdi-filter-outline"
         />
-        Filtereinstellungen
+        Filtereinstellungen der Zählstellen
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text>

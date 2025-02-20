@@ -14,7 +14,7 @@
         font-size="0.875rem"
         font-weight="bold"
         padding="10px 0 0 0"
-        header-text="Erhebungsstellen"
+        header-text="Welche Erhebungsstellen sollen durchsucht werden?"
       />
       <v-row
         align="start"
