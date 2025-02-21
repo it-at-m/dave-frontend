@@ -43,5 +43,20 @@ describe("DateUtilsTest", () => {
     endDate = new Date(2025, 1, 25);
     result = useDateUtils().isGreaterThanFiveYears(startDate, endDate);
     expect(result).toBe(false);
+
+    startDate = new Date(2020, 2, 17);
+    endDate = new Date(2025, 2, 16);
+    result = useDateUtils().isGreaterThanFiveYears(startDate, endDate);
+    expect(result).toBe(false);
+
+    startDate = new Date(2020, 2, 17);
+    endDate = new Date(2025, 2, 17);
+    result = useDateUtils().isGreaterThanFiveYears(startDate, endDate);
+    expect(result).toBe(true);
+
+    startDate = new Date(2020, 2, 17);
+    endDate = new Date(2025, 2, 18);
+    result = useDateUtils().isGreaterThanFiveYears(startDate, endDate);
+    expect(result).toBe(true);
   });
 });

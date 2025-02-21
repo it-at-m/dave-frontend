@@ -153,6 +153,16 @@ export function useDateUtils() {
     return date;
   }
 
+  function isGreaterThanFiveYearsForZeitraum(zeitraum: string[]) {
+    if (zeitraum.length === 2) {
+      const sortedDates = sortDatesDescAsStrings(zeitraum);
+      const endDate = new Date(sortedDates[0]);
+      const startDate = new Date(sortedDates[1]);
+      return isGreaterThanFiveYears(startDate, endDate);
+    }
+    return false;
+  }
+
   function isGreaterThanFiveYears(
     start: Date | undefined,
     end: Date | undefined
@@ -191,5 +201,6 @@ export function useDateUtils() {
     isValidIsoDate,
     setTimeToZeroForGivenDate,
     isGreaterThanFiveYears,
+    isGreaterThanFiveYearsForZeitraum,
   };
 }
