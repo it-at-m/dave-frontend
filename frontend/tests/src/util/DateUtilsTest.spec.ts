@@ -8,6 +8,48 @@ describe("DateUtilsTest", () => {
     setActivePinia(createPinia());
   });
 
+  it("isGreaterThanFiveYearsForZeitraum", () => {
+    let zeitraum: string[] | undefined = undefined;
+    let result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(false);
+
+    zeitraum = [];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(false);
+
+    zeitraum = ["2020-01-24"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(false);
+
+    zeitraum = ["2020-01-24", "2025-01-25"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(true);
+
+    zeitraum = ["2020-01-25", "2025-01-25"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(true);
+
+    zeitraum = ["2020-01-26", "2025-01-25"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(false);
+
+    zeitraum = ["2020-01-27", "2025-01-25"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(false);
+
+    zeitraum = ["2020-02-17", "2025-02-16"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(false);
+
+    zeitraum = ["2020-02-17", "2025-02-17"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(true);
+
+    zeitraum = ["2020-02-17", "2025-02-18"];
+    result = useDateUtils().isGreaterThanFiveYearsForZeitraum(zeitraum);
+    expect(result).toBe(true);
+  });
+
   it("isGreaterThanFiveYears", () => {
     let startDate: Date | undefined = undefined;
     let endDate: Date | undefined = undefined;

@@ -1,4 +1,4 @@
-import { head, isEmpty, isEqual, last, toArray } from "lodash";
+import { head, isEmpty, isEqual, isNil, last, toArray } from "lodash";
 import moment from "moment";
 
 import i18n from "@/plugins/i18n";
@@ -153,8 +153,8 @@ export function useDateUtils() {
     return date;
   }
 
-  function isGreaterThanFiveYearsForZeitraum(zeitraum: string[]) {
-    if (zeitraum.length === 2) {
+  function isGreaterThanFiveYearsForZeitraum(zeitraum: string[] | undefined) {
+    if (!isNil(zeitraum) && zeitraum.length === 2) {
       const sortedDates = sortDatesDescAsStrings(zeitraum);
       const endDate = new Date(sortedDates[0]);
       const startDate = new Date(sortedDates[1]);
