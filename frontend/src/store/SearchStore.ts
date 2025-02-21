@@ -1,6 +1,7 @@
 import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 
+import { isEqual } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -20,6 +21,12 @@ export const useSearchStore = defineStore("searchStore", () => {
   const getSearchAndFilterOptions = computed(
     () => searchAndFilterOptions.value
   );
+  const areSearchAndFilterOptionsDirty = computed(() => {
+    return !isEqual(
+      searchAndFilterOptions.value,
+      DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO()
+    );
+  });
 
   function setSearchResult(payload: Array<AnzeigeKarteDTO>) {
     searchResult.value = payload;
@@ -45,6 +52,7 @@ export const useSearchStore = defineStore("searchStore", () => {
     getLastSearchQuery,
     triggerSearch,
     getSearchAndFilterOptions,
+    areSearchAndFilterOptionsDirty,
     setSearchResult,
     setLastSearchQuery,
     setSearchAndFilterOptions,
