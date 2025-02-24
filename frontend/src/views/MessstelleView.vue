@@ -18,6 +18,7 @@
             :name="messstelle.name"
             :height="headerHeightVh"
             :minheight="headerHeightVh"
+            :lageplan-vorhanden="messstelle.lageplanVorhanden"
           />
           <messstelle-info :messstelle="messstelle" />
           <filter-optionen

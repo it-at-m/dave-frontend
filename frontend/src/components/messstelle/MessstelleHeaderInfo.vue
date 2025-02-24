@@ -6,7 +6,23 @@
     :min-height="minheight"
     :height="height"
   >
-    <span class="text-caption">Messstelle</span>
+    <span class="text-caption">
+      Messstelle
+      <v-tooltip
+        :text="lageplanVorhanden ? 'Lageplan' : 'Kein Lageplan vorhanden'"
+      >
+        <template v-slot:activator="{ props }">
+          <span v-bind="props">
+            <v-btn
+              icon="mdi-map-outline"
+              variant="plain"
+              :disabled="!lageplanVorhanden"
+              @click="loadLageplan"
+            ></v-btn>
+          </span>
+        </template>
+      </v-tooltip>
+    </span>
     <br />
     <span class="text-h5">{{ mstId }}</span>
     <br />
@@ -18,6 +34,11 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
+import { ref } from "vue";
+import type LageplanDTO from "@/types/messstelle/lageplan/LageplanDTO";
+import LageplanService from "@/api/service/LageplanService";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+
 interface Props {
   mstId: string;
   stadtbezirkNummer: number;
@@ -25,6 +46,24 @@ interface Props {
   standort?: string;
   height: string;
   minheight: string;
+  lageplanVorhanden: boolean;
 }
-defineProps<Props>();
+
+const props = defineProps<Props>();
+const snackbarStore = useSnackbarStore();
+const lageplanLoading = ref(false);
+
+function loadLageplan() {
+  lageplanLoading.value = true;
+  LageplanService.loadLageplan(props.mstId)
+    .then((result: LageplanDTO) => {
+      window.open(result.url, "_blank");
+    })
+    .catch((error) => {
+      snackbarStore.showApiError(error);
+    })
+    .finally(() => {
+      lageplanLoading.value = false;
+    });
+}
 </script>
