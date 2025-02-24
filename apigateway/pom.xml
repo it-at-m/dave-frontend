@@ -23,7 +23,7 @@
         <logstash.encoder.version>8.0</logstash.encoder.version>
         <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
-        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
     </properties>
 
