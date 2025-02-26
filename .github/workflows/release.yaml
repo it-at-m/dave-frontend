@@ -21,6 +21,10 @@ jobs:
     env:
       TZ: Europe/Berlin # timezone
     steps:
+      - name: Set up Node 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18         
       - id: maven-release-step
         uses: it-at-m/.github/.github/actions/action-maven-release@main
         with:
