@@ -89,8 +89,6 @@ const messstelleUtils = useMessstelleUtils();
 
 const MIND_EIN_MESSQUERSCHNITT =
   "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
-const GENAU_EIN_MESSQUERSCHNITT =
-  "Es muss genau ein Messquerschnitt ausgewählt sein.";
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
   return messstelleStore.getMessstelleInfo;
