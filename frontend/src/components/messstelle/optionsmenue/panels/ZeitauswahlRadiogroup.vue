@@ -177,7 +177,7 @@ function zeitauswahlChanged() {
 }
 
 watch(
-  () => chosenOptionsCopy.value.zeitraum,
+  () => isZeitraumGreaterThanFiveYears.value,
   () => {
     if (
       isZeitraumGreaterThanFiveYears.value &&
