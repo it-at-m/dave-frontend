@@ -114,7 +114,7 @@ export const useOptionsmenueSettingsStore = defineStore(
       let optionsmenueSettings = toArray(messfaehigkeiten)
         .map((messfaehigkeit) => {
           return getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
-            messfaehigkeit.fahrzeugklassen,
+            messfaehigkeit.fahrzeugklasse,
             messfaehigkeit.intervall
           );
         })
@@ -233,8 +233,8 @@ export const useOptionsmenueSettingsStore = defineStore(
         ZaehldatenIntervall.STUNDE_KOMPLETT,
       ];
       return {
-        intervall: ZaehldatenIntervall.STUNDE_HALB,
-        fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+        intervall: undefined,
+        fahrzeugklasse: undefined,
         kraftfahrzeugverkehrChoosableIntervals: defaultIntervals,
         schwerverkehrChoosableIntervals: defaultIntervals,
         gueterverkehrChoosableIntervals: defaultIntervals,

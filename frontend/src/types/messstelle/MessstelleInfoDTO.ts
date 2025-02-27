@@ -14,7 +14,7 @@ export default interface MessstelleInfoDTO extends BaseEntity {
   latitude: string;
   longitude: string;
   kommentar: string;
-  fahrzeugKlassen: Fahrzeugklasse | string;
+  fahrzeugklasse: Fahrzeugklasse | string;
   detektierteVerkehrsarten: DetektierteFahrzeugart;
   hersteller: string;
   sichtbarDatenportal: boolean;

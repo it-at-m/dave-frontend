@@ -2,7 +2,7 @@ import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import _, { isNil, toArray } from "lodash";
+import { cloneDeep, isNil, toArray } from "lodash";
 import moment from "moment";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -79,7 +79,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     direction.value = payload;
   }
   function reloadFilteroptions() {
-    filterOptions.value = _.cloneDeep(filterOptions.value);
+    filterOptions.value = cloneDeep(filterOptions.value);
   }
   function setBelastungsplanMinSize(payload: number) {
     belastungsplanMinSize.value = payload;

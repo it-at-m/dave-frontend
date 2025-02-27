@@ -85,13 +85,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
@@ -102,8 +102,8 @@ describe("OptionsmenueSettingsStore.ts", () => {
       optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten;
 
     const expected = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: undefined,
+      fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: [],
       schwerverkehrChoosableIntervals: [
         ZaehldatenIntervall.STUNDE_VIERTEL,
@@ -156,13 +156,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
@@ -182,13 +182,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
@@ -204,8 +204,8 @@ describe("OptionsmenueSettingsStore.ts", () => {
       ZaehldatenIntervall.STUNDE_KOMPLETT,
     ];
     const expected = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: undefined,
+      fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: defaultIntervals,
       schwerverkehrChoosableIntervals: defaultIntervals,
       gueterverkehrChoosableIntervals: defaultIntervals,
@@ -236,8 +236,8 @@ describe("OptionsmenueSettingsStore.ts", () => {
       ZaehldatenIntervall.STUNDE_KOMPLETT,
     ];
     const expected = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: undefined,
+      fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: defaultIntervals,
       schwerverkehrChoosableIntervals: defaultIntervals,
       gueterverkehrChoosableIntervals: defaultIntervals,
@@ -324,8 +324,8 @@ describe("OptionsmenueSettingsStore.ts", () => {
       );
 
     const expected = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: undefined,
+      fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: [
         ZaehldatenIntervall.STUNDE_VIERTEL,
       ],

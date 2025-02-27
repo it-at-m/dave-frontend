@@ -49,15 +49,15 @@
           @mouseleave="hoverPkw = false"
         />
         <v-checkbox
-            v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
-            label="Lieferwagen (Lfw)"
-            :persistent-hint="isLieferwagenDisabled"
-            :disabled="isLieferwagenDisabled"
-            color="grey-darken-1"
-            hide-details
-            density="compact"
-            @mouseover="hoverLfw = true"
-            @mouseleave="hoverLfw = false"
+          v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
+          label="Lieferwagen (Lfw)"
+          :persistent-hint="isLieferwagenDisabled"
+          :disabled="isLieferwagenDisabled"
+          color="grey-darken-1"
+          hide-details
+          density="compact"
+          @mouseover="hoverLfw = true"
+          @mouseleave="hoverLfw = false"
         />
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.lastkraftwagen"

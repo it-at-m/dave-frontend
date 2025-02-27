@@ -1,8 +1,8 @@
 <template>
   <v-sheet
-      :id="sheetId"
-      :height="dimension"
-      :width="dimension"
+    :id="sheetId"
+    :height="dimension"
+    :width="dimension"
   />
 </template>
 
@@ -61,10 +61,10 @@ const highestFahrbeziehungsValue = ref(0);
 const lowestFahrbeziehungsValue = ref(1000000);
 
 const fahrbeziehungsTypen = ref<Map<number, BelastungsplanFahrbeziehung[]>>(
-    new Map<number, BelastungsplanFahrbeziehung[]>()
+  new Map<number, BelastungsplanFahrbeziehung[]>()
 ) as Ref<Map<number, BelastungsplanFahrbeziehung[]>>;
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
-    new Map<number, BelastungsplanKnotenarm>()
+  new Map<number, BelastungsplanKnotenarm>()
 ) as Ref<Map<number, BelastungsplanKnotenarm>>;
 const prozentWerte = ref<Map<number, boolean>>(new Map<number, boolean>());
 
@@ -73,17 +73,17 @@ const documentationGroup = ref<SVG.G>(canvas.value.group());
 
 onMounted(() => {
   canvas.value = SVG.SVG()
-      .addTo(`#${sheetId}`)
-      .size(props.dimension, props.dimension)
-      .viewbox(
-          0,
-          0,
-          belastungsplanMethods.viewbox,
-          belastungsplanMethods.viewbox
-      );
+    .addTo(`#${sheetId}`)
+    .size(props.dimension, props.dimension)
+    .viewbox(
+      0,
+      0,
+      belastungsplanMethods.viewbox,
+      belastungsplanMethods.viewbox
+    );
 
   zaehlstelleStore.setSizeBelastungsplanSvg(
-      Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
+    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
   );
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
@@ -124,16 +124,16 @@ const sizeBelastungsplan = computed(() => {
 
 const minSizeBelastungsplan = computed(() => {
   return (
-      (parseInt(props.dimension.trim().replace("vh", "")) *
-          display.height.value) /
-      100
+    (parseInt(props.dimension.trim().replace("vh", "")) *
+      display.height.value) /
+    100
   );
 });
 
 const maxSizeBelastungsplan = computed(() => {
   return (
-      (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
-      100
+    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
+    100
   );
 });
 
@@ -145,10 +145,10 @@ const maxSizeBelastungsplan = computed(() => {
 const getLegendLineWidth = computed(() => {
   // Wenn alles gefüllt ist, dann die maxLineWidth
   if (
-      props.data &&
-      props.data.value1.filled &&
-      props.data.value2.filled &&
-      props.data.value3.filled
+    props.data &&
+    props.data.value1.filled &&
+    props.data.value2.filled &&
+    props.data.value3.filled
   ) {
     return belastungsplanMethods.maxlineWidth;
   } else {
@@ -173,11 +173,11 @@ const isDifferenzdatendarstellung = computed(() => {
  */
 const vergleichsZaehlung = computed(() => {
   if (
-      isDifferenzdatendarstellung.value &&
-      optionen.value.vergleichszaehlungsId
+    isDifferenzdatendarstellung.value &&
+    optionen.value.vergleichszaehlungsId
   ) {
     return zaehlstelleStore.getZaehlungById(
-        optionen.value.vergleichszaehlungsId
+      optionen.value.vergleichszaehlungsId
     );
   }
   return undefined;
@@ -195,11 +195,11 @@ function draw() {
   // diese wird im Anschluss wieder gelöscht
   documentationGroup.value = canvas.value.group();
   documentationGroup.value
-      .rect(belastungsplanMethods.viewbox, belastungsplanMethods.viewbox)
-      .fill({
-        color: "white",
-        opacity: belastungsplanMethods.docMode ? 0.3 : 0.0,
-      });
+    .rect(belastungsplanMethods.viewbox, belastungsplanMethods.viewbox)
+    .fill({
+      color: "white",
+      opacity: belastungsplanMethods.docMode ? 0.3 : 0.0,
+    });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
   const knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
@@ -209,19 +209,19 @@ function draw() {
     ks.forEach((k) => {
       const r = belastungsplanMethods.calcRotation(k.nummer);
       const g = belastungsplanMethods
-          .fahrtrichtungVon(
-              k.nummer,
-              canvas.value,
-              knotenarme.value,
-              fahrbeziehungsTypen.value,
-              prozentWerte.value,
-              lineWidth.value,
-              line.value,
-              documentationGroup.value,
-              lineFactor.value,
-              false
-          )
-          .rotate(r) as SVG.G;
+        .fahrtrichtungVon(
+          k.nummer,
+          canvas.value,
+          knotenarme.value,
+          fahrbeziehungsTypen.value,
+          prozentWerte.value,
+          lineWidth.value,
+          line.value,
+          documentationGroup.value,
+          lineFactor.value,
+          false
+        )
+        .rotate(r) as SVG.G;
       cleanseMap.set(k.nummer, g);
       // Wenn der Knotenarm ausgewählt wurde, dann merken wir uns die
       // Nummer, um ihn später nach oben setzen zu können.
@@ -235,17 +235,17 @@ function draw() {
     cleanseMap.forEach((group, knotenarmnummer) => {
       const matrix = group.transform();
       const m = new BerechnungsMatrix(
-          matrix.a,
-          matrix.b,
-          matrix.c,
-          matrix.d,
-          matrix.e,
-          matrix.f
+        matrix.a,
+        matrix.b,
+        matrix.c,
+        matrix.d,
+        matrix.e,
+        matrix.f
       );
       const cleanGroup = belastungsplanMethods.cleansePaths(
-          group,
-          m,
-          canvas.value
+        group,
+        m,
+        canvas.value
       ) as SVG.G;
       cleanseMap.set(knotenarmnummer, cleanGroup);
     });
@@ -275,9 +275,9 @@ function draw() {
   // Um den Belastungsplan in ein Bitmap umwandeln zu können, muss hier eine absolute Größe gesetzt werden.
   const size = sizeBelastungsplan.value;
   const ex = canvas.value
-      .flatten(canvas.value)
-      .size(size, size)
-      .svg() as string;
+    .flatten(canvas.value)
+    .size(size, size)
+    .svg() as string;
   emits("print", new Blob([ex], { type: "image/svg+xml;charset=utf-8" }));
 }
 
@@ -293,23 +293,23 @@ function legendeNordPfeil() {
                   L${startX + belastungsplanMethods.spalt.value / 3} ${startY - belastungsplanMethods.spalt.value * 1.5}
                   z`;
   nord
-      .path(path)
-      .stroke({ width: 2, color: belastungsplanMethods.legendColor })
-      .attr("fill", "none");
+    .path(path)
+    .stroke({ width: 2, color: belastungsplanMethods.legendColor })
+    .attr("fill", "none");
 
   nord
-      .text((add) => {
-        add
-            .tspan("N")
-            .x(startX + belastungsplanMethods.spalt.value / 3)
-            .dy(startY - belastungsplanMethods.maxlineWidth / 2);
-      })
-      .font({
-        family: belastungsplanMethods.fontfamily,
-        size: belastungsplanMethods.maxlineWidth,
-        anchor: "middle",
-        fill: belastungsplanMethods.legendColor,
-      });
+    .text((add) => {
+      add
+        .tspan("N")
+        .x(startX + belastungsplanMethods.spalt.value / 3)
+        .dy(startY - belastungsplanMethods.maxlineWidth / 2);
+    })
+    .font({
+      family: belastungsplanMethods.fontfamily,
+      size: belastungsplanMethods.maxlineWidth,
+      anchor: "middle",
+      fill: belastungsplanMethods.legendColor,
+    });
 }
 
 /**
@@ -318,37 +318,37 @@ function legendeNordPfeil() {
 function legendeZaehlstellenInfo() {
   const info = canvas.value.group();
   const startX =
-      belastungsplanMethods.viewbox -
-      belastungsplanMethods.ecke.value -
-      belastungsplanMethods.spalt.value;
+    belastungsplanMethods.viewbox -
+    belastungsplanMethods.ecke.value -
+    belastungsplanMethods.spalt.value;
   const startY = belastungsplanMethods.chartPosition.value / 7;
 
   info
-      .text((add) => {
-        add.tspan(`Zählstelle ${zaehlstelle.value.nummer}`).font({
-          weight: "bold",
-        });
-        add.tspan(`Stadtbezirk ${zaehlstelle.value.stadtbezirkNummer}`).newLine();
-        add
-            .tspan(
-                `Zähldatum: ${dateUtils.getShortVersionOfDate(
-                    new Date(zaehlung.value.datum)
-                )}`
-            )
-            .newLine();
-        if (isDifferenzdatendarstellung.value && vergleichsZaehlung.value) {
-          const localdate = dateUtils.getShortVersionOfDate(
-              new Date(vergleichsZaehlung.value.datum)
-          );
-          add.tspan(`Vergleichszählung: ${localdate}`).newLine();
-        }
-      })
-      .font({
-        family: belastungsplanMethods.fontfamily,
-        size: belastungsplanMethods.maxlineWidth,
-      })
-      .x(startX)
-      .y(startY);
+    .text((add) => {
+      add.tspan(`Zählstelle ${zaehlstelle.value.nummer}`).font({
+        weight: "bold",
+      });
+      add.tspan(`Stadtbezirk ${zaehlstelle.value.stadtbezirkNummer}`).newLine();
+      add
+        .tspan(
+          `Zähldatum: ${dateUtils.getShortVersionOfDate(
+            new Date(zaehlung.value.datum)
+          )}`
+        )
+        .newLine();
+      if (isDifferenzdatendarstellung.value && vergleichsZaehlung.value) {
+        const localdate = dateUtils.getShortVersionOfDate(
+          new Date(vergleichsZaehlung.value.datum)
+        );
+        add.tspan(`Vergleichszählung: ${localdate}`).newLine();
+      }
+    })
+    .font({
+      family: belastungsplanMethods.fontfamily,
+      size: belastungsplanMethods.maxlineWidth,
+    })
+    .x(startX)
+    .y(startY);
 }
 
 /**
@@ -358,7 +358,7 @@ function legendeSpalten() {
   const spalten = canvas.value.group();
   const startX = belastungsplanMethods.chartPosition.value / 5;
   const startY =
-      belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 4.5;
+    belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 4.5;
   const formeln = new Map<string, string>();
   if (isDifferenzdatendarstellung.value) {
     formeln.set("KFZ", "KFZ = KFZ (Basis) - KFZ (Vergleich)");
@@ -368,8 +368,8 @@ function legendeSpalten() {
     formeln.set("GV%", "kein GV% beim Vergleich");
     formeln.set("RAD", "RAD = RAD (Basis) - RAD (Vergleich)");
     formeln.set(
-        "RAD (KI-Hochrechnung)",
-        "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
+      "RAD (KI-Hochrechnung)",
+      "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
     );
     formeln.set("FUSS", "FUSS = KFZ (Basis) - FUSS (Vergleich)");
   } else {
@@ -389,81 +389,81 @@ function legendeSpalten() {
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
-        zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
-            ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
-            : "hochgerechnet"
+      zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
+        ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+        : "hochgerechnet"
     }`;
   } else if (zeitauswahl === Zeitauswahl.BLOCK) {
     zaehlzeitSecondLine = `${
-        zeitblockInfo.get(optionen.value.zeitblock)?.title
+      zeitblockInfo.get(optionen.value.zeitblock)?.title
     }`;
   } else if (zeitauswahl === Zeitauswahl.STUNDE) {
     zaehlzeitSecondLine = `${
-        zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
+      zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
     }`;
   } else if (
-      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+    zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
     const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
-        zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
     zaehlzeitSecondLine = `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
 
   spalten
-      .text((add) => {
-        add.tspan(`${zaehlzeitFirstLine}`).font({ weight: "bold" }).x(startX);
-        add.tspan(`${zaehlzeitSecondLine}`).newLine().x(startX);
-        add.tspan(``).newLine().x(startX);
+    .text((add) => {
+      add.tspan(`${zaehlzeitFirstLine}`).font({ weight: "bold" }).x(startX);
+      add.tspan(`${zaehlzeitSecondLine}`).newLine().x(startX);
+      add.tspan(``).newLine().x(startX);
 
-        // Spaltenüberschriften
+      // Spaltenüberschriften
+      add
+        .tspan(`${props.data.value1.label}`)
+        .font({ weight: "bold" })
+        .newLine()
+        .x(startX);
+      // Datenblock 2 gefüllt?
+      if (props.data.value2.filled) {
         add
-            .tspan(`${props.data.value1.label}`)
-            .font({ weight: "bold" })
-            .newLine()
-            .x(startX);
-        // Datenblock 2 gefüllt?
-        if (props.data.value2.filled) {
-          add
-              .tspan(`(${props.data.value2.label})`)
-              .font({ weight: "bold" })
-              .x(startX + 60);
-        }
-        // Datenblock 3 gefüllt?
-        if (props.data.value3.filled) {
-          add
-              .tspan(`${props.data.value3.label}`)
-              .font({ weight: "bold" })
-              .x(startX + 120);
-        }
+          .tspan(`(${props.data.value2.label})`)
+          .font({ weight: "bold" })
+          .x(startX + 60);
+      }
+      // Datenblock 3 gefüllt?
+      if (props.data.value3.filled) {
+        add
+          .tspan(`${props.data.value3.label}`)
+          .font({ weight: "bold" })
+          .x(startX + 120);
+      }
 
-        // Formeln
+      // Formeln
+      add
+        .tspan(`${formeln.get(props.data.value1.label)}`)
+        .newLine()
+        .x(startX);
+      // Datenblock 2 gefüllt?
+      if (props.data.value2.filled) {
         add
-            .tspan(`${formeln.get(props.data.value1.label)}`)
-            .newLine()
-            .x(startX);
-        // Datenblock 2 gefüllt?
-        if (props.data.value2.filled) {
-          add
-              .tspan(`${formeln.get(props.data.value2.label)}`)
-              .newLine()
-              .x(startX);
-        }
-        // Datenblock 3 gefüllt?
-        if (props.data.value3.filled) {
-          add
-              .tspan(`${formeln.get(props.data.value3.label)}`)
-              .newLine()
-              .x(startX);
-        }
-      })
-      .font({
-        family: belastungsplanMethods.fontfamily,
-        size: getLegendLineWidth.value,
-      })
-      .x(startX)
-      .y(startY);
+          .tspan(`${formeln.get(props.data.value2.label)}`)
+          .newLine()
+          .x(startX);
+      }
+      // Datenblock 3 gefüllt?
+      if (props.data.value3.filled) {
+        add
+          .tspan(`${formeln.get(props.data.value3.label)}`)
+          .newLine()
+          .x(startX);
+      }
+    })
+    .font({
+      family: belastungsplanMethods.fontfamily,
+      size: getLegendLineWidth.value,
+    })
+    .x(startX)
+    .y(startY);
 }
 
 /**
@@ -472,9 +472,9 @@ function legendeSpalten() {
 function legendeLinienStaerke() {
   const size = canvas.value.group();
   const startX =
-      belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 5;
+    belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 5;
   const startY =
-      belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 2.5;
+    belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 2.5;
   const path = `M${startX} ${startY}
                   L${startX + 3 * belastungsplanMethods.spalt.value} ${startY}
                   L${startX + 3 * belastungsplanMethods.spalt.value} ${startY - belastungsplanMethods.maxlineWidth}
@@ -484,83 +484,83 @@ function legendeLinienStaerke() {
   // grün = Abnahme
   if (isDifferenzdatendarstellung.value) {
     size
-        .rect(lineWidth.value, lineWidth.value)
-        .fill(belastungsplanMethods.zunahmeValueColor)
-        .x(startX)
-        .y(startY + 35);
+      .rect(lineWidth.value, lineWidth.value)
+      .fill(belastungsplanMethods.zunahmeValueColor)
+      .x(startX)
+      .y(startY + 35);
     size
-        .rect(lineWidth.value, lineWidth.value)
-        .fill(belastungsplanMethods.abnahmeValueColor)
-        .x(startX)
-        .y(startY + 35 + 5 + lineWidth.value);
+      .rect(lineWidth.value, lineWidth.value)
+      .fill(belastungsplanMethods.abnahmeValueColor)
+      .x(startX)
+      .y(startY + 35 + 5 + lineWidth.value);
 
     size
-        .text((add) => {
-          add
-              .tspan("Zunahme")
-              .x(startX + 28)
-              .dy(startY + 35 + lineWidth.value);
-        })
-        .font({
-          family: belastungsplanMethods.fontfamily,
-          size: belastungsplanMethods.maxlineWidth,
-        });
+      .text((add) => {
+        add
+          .tspan("Zunahme")
+          .x(startX + 28)
+          .dy(startY + 35 + lineWidth.value);
+      })
+      .font({
+        family: belastungsplanMethods.fontfamily,
+        size: belastungsplanMethods.maxlineWidth,
+      });
 
     size
-        .text((add) => {
-          add
-              .tspan("Abnahme")
-              .x(startX + 28)
-              .dy(startY + 35 + 5 + lineWidth.value * 2);
-        })
-        .font({
-          family: belastungsplanMethods.fontfamily,
-          size: belastungsplanMethods.maxlineWidth,
-        });
+      .text((add) => {
+        add
+          .tspan("Abnahme")
+          .x(startX + 28)
+          .dy(startY + 35 + 5 + lineWidth.value * 2);
+      })
+      .font({
+        family: belastungsplanMethods.fontfamily,
+        size: belastungsplanMethods.maxlineWidth,
+      });
   }
 
   size
-      .path(path)
-      .stroke({ width: 2, color: belastungsplanMethods.legendColor })
-      .attr("fill", "none");
+    .path(path)
+    .stroke({ width: 2, color: belastungsplanMethods.legendColor })
+    .attr("fill", "none");
 
   const path2 = `M${startX + 1.5 * belastungsplanMethods.spalt.value} ${startY}
                    L${startX + 1.5 * belastungsplanMethods.spalt.value} ${
-      startY - belastungsplanMethods.maxlineWidth / 2
-  }`;
+                     startY - belastungsplanMethods.maxlineWidth / 2
+                   }`;
   size
-      .path(path2)
-      .stroke({ width: 2, color: belastungsplanMethods.legendColor })
-      .attr("fill", "none");
+    .path(path2)
+    .stroke({ width: 2, color: belastungsplanMethods.legendColor })
+    .attr("fill", "none");
 
   const high =
-      highestFahrbeziehungsValue.value +
-      (100 - (highestFahrbeziehungsValue.value % 1000));
+    highestFahrbeziehungsValue.value +
+    (100 - (highestFahrbeziehungsValue.value % 1000));
   size
-      .text((add) => {
-        add
-            .tspan(`${high}`)
-            .x(startX + 3 * belastungsplanMethods.spalt.value)
-            .dy(startY + belastungsplanMethods.maxlineWidth);
-      })
-      .font({
-        family: belastungsplanMethods.fontfamily,
-        size: belastungsplanMethods.maxlineWidth,
-        anchor: "middle",
-      });
+    .text((add) => {
+      add
+        .tspan(`${high}`)
+        .x(startX + 3 * belastungsplanMethods.spalt.value)
+        .dy(startY + belastungsplanMethods.maxlineWidth);
+    })
+    .font({
+      family: belastungsplanMethods.fontfamily,
+      size: belastungsplanMethods.maxlineWidth,
+      anchor: "middle",
+    });
 
   size
-      .text((add) => {
-        add
-            .tspan(`${high / 2}`)
-            .x(startX + 1.5 * belastungsplanMethods.spalt.value)
-            .dy(startY + belastungsplanMethods.maxlineWidth);
-      })
-      .font({
-        family: belastungsplanMethods.fontfamily,
-        size: belastungsplanMethods.maxlineWidth,
-        anchor: "middle",
-      });
+    .text((add) => {
+      add
+        .tspan(`${high / 2}`)
+        .x(startX + 1.5 * belastungsplanMethods.spalt.value)
+        .dy(startY + belastungsplanMethods.maxlineWidth);
+    })
+    .font({
+      family: belastungsplanMethods.fontfamily,
+      size: belastungsplanMethods.maxlineWidth,
+      anchor: "middle",
+    });
 }
 
 /**
@@ -589,16 +589,16 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       // dann muss dieser angelegt werden.
       if (!fahrbeziehungsTypen.value.has(fb.von)) {
         fahrbeziehungsTypen.value.set(
-            fb.von,
-            new Array<BelastungsplanFahrbeziehung>()
+          fb.von,
+          new Array<BelastungsplanFahrbeziehung>()
         );
       }
 
       // Für Knotenarme, die nur eingehende Fahrbeziehungen haben.
       if (!fahrbeziehungsTypen.value.has(fb.nach)) {
         fahrbeziehungsTypen.value.set(
-            fb.nach,
-            new Array<BelastungsplanFahrbeziehung>()
+          fb.nach,
+          new Array<BelastungsplanFahrbeziehung>()
         );
       }
 
@@ -609,8 +609,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       // "von" checken und ggf. anlegen
       if (!knotenarme.value.has(fb.von)) {
         knotenarme.value.set(
-            fb.von,
-            new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
+          fb.von,
+          new BelastungsplanKnotenarm(data.streets[fb.von - 1], fb.von)
         );
       }
       const knotenarmVon = knotenarme.value.get(fb.von);
@@ -618,8 +618,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       // "nach" checken und ggf. anlegen
       if (!knotenarme.value.has(fb.nach)) {
         knotenarme.value.set(
-            fb.nach,
-            new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
+          fb.nach,
+          new BelastungsplanKnotenarm(data.streets[fb.nach - 1], fb.nach)
         );
       }
       const knotenarmNach = knotenarme.value.get(fb.nach);
@@ -627,11 +627,11 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
 
       // Fahrbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
       const belastungsplanFahrbeziehungen = fahrbeziehungsTypen.value.get(
-          fb.von
+        fb.von
       ) as BelastungsplanFahrbeziehung[];
       const belastungsplanFahrbeziehung = new BelastungsplanFahrbeziehung(
-          belastungsplanMethods.calcFahrbeziehungstype(fb.von, fb.nach),
-          fb.nach
+        belastungsplanMethods.calcFahrbeziehungstype(fb.von, fb.nach),
+        fb.nach
       ) as BelastungsplanFahrbeziehung;
       belastungsplanFahrbeziehungen.push(belastungsplanFahrbeziehung);
 
@@ -651,30 +651,30 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
         // von Zähler hoch setzen
         knotenarmVon.plusFahrbeziehungenVon();
         if (
-            belastungsplanMethods.positiveNumber(
-                knotenarmVon.anzahlVonFahrbeziehungen
-            ) > vonMaxValue.value
+          belastungsplanMethods.positiveNumber(
+            knotenarmVon.anzahlVonFahrbeziehungen
+          ) > vonMaxValue.value
         )
           vonMaxValue.value = belastungsplanMethods.positiveNumber(
-              knotenarmVon.anzahlVonFahrbeziehungen
+            knotenarmVon.anzahlVonFahrbeziehungen
           );
         // den höchsten und niedrigsten Wert einer Fahrbeziehung ermitteln
         // (gilt hier nur der KFZ Verkehr?)
         if (
-            belastungsplanMethods.positiveNumber(data.value1.values[v][n]) >
-            highestFahrbeziehungsValue.value
+          belastungsplanMethods.positiveNumber(data.value1.values[v][n]) >
+          highestFahrbeziehungsValue.value
         )
           highestFahrbeziehungsValue.value =
-              belastungsplanMethods.positiveNumber(data.value1.values[v][n]);
+            belastungsplanMethods.positiveNumber(data.value1.values[v][n]);
         if (
-            belastungsplanMethods.positiveNumber(data.value1.values[v][n]) <
-            lowestFahrbeziehungsValue.value
+          belastungsplanMethods.positiveNumber(data.value1.values[v][n]) <
+          lowestFahrbeziehungsValue.value
         )
           lowestFahrbeziehungsValue.value =
-              belastungsplanMethods.positiveNumber(data.value1.values[v][n]);
+            belastungsplanMethods.positiveNumber(data.value1.values[v][n]);
         // Fahrbeziehungstyp wird gesetzt um später die Position der Linien berrechnen zu können
         knotenarmVon.addVonFahrbeziehungsType(
-            belastungsplanFahrbeziehung.fahrbeziehungsTyp
+          belastungsplanFahrbeziehung.fahrbeziehungsTyp
         );
       }
 
@@ -682,16 +682,16 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
         // nach Zähler hoch setzen
         knotenarmNach.plusFahrbeziehungenNach();
         if (
-            belastungsplanMethods.positiveNumber(
-                knotenarmNach.anzahlNachFahrbeziehungen
-            ) > nachMaxValue.value
+          belastungsplanMethods.positiveNumber(
+            knotenarmNach.anzahlNachFahrbeziehungen
+          ) > nachMaxValue.value
         )
           nachMaxValue.value = belastungsplanMethods.positiveNumber(
-              knotenarmNach.anzahlNachFahrbeziehungen
+            knotenarmNach.anzahlNachFahrbeziehungen
           );
         // den Typ der eingehenden Verbindung speichern
         knotenarmNach.addNachFahrbeziehungsTyp(
-            belastungsplanFahrbeziehung.fahrbeziehungsTyp
+          belastungsplanFahrbeziehung.fahrbeziehungsTyp
         );
       }
     });
@@ -711,8 +711,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       }
       if (knotenarme.value.has(gegenueber)) {
         belastungsplanMethods.fahrbeziehungenAusrichten(
-            k,
-            knotenarme.value.get(gegenueber)!
+          k,
+          knotenarme.value.get(gegenueber)!
         );
       }
 
@@ -723,8 +723,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       k.totalValue1 = data.value1.sum[knummer];
       // Soll Wert 2 dargestellt werden?
       if (
-          data.value2.filled &&
-          !(isDifferenzdatendarstellung.value && data.value2.percent)
+        data.value2.filled &&
+        !(isDifferenzdatendarstellung.value && data.value2.percent)
       ) {
         k.vonTotalValue2 = data.value2.sumIn[knummer];
         k.nachTotalValue2 = data.value2.sumOut[knummer];
@@ -732,8 +732,8 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
       }
       // Soll Wert 3 dargestellt werden?
       if (
-          data.value3.filled &&
-          !(isDifferenzdatendarstellung.value && data.value3.percent)
+        data.value3.filled &&
+        !(isDifferenzdatendarstellung.value && data.value3.percent)
       ) {
         k.vonTotalValue3 = data.value3.sumIn[knummer];
         k.nachTotalValue3 = data.value3.sumOut[knummer];
@@ -772,12 +772,12 @@ function calcMaxLineWidth() {
     // der maximalen linien geteilt werden. Die Breite der Linie wird abgerundet,
     // damit wir einen glatten Wert für die Textgröße haben.
     lineWidth.value = Math.ceil(
-        (belastungsplanMethods.maxFahrtrichtungWidth.value -
-            mv * belastungsplanMethods.lineGap) /
+      (belastungsplanMethods.maxFahrtrichtungWidth.value -
+        mv * belastungsplanMethods.lineGap) /
         mv
     );
     fahrtrichtungWidth.value =
-        belastungsplanMethods.maxFahrtrichtungWidth.value;
+      belastungsplanMethods.maxFahrtrichtungWidth.value;
   } else {
     // die maximale Breite der Linien kann so bleiben
     fahrtrichtungWidth.value = mv * mw;
@@ -805,11 +805,11 @@ watch(activeTab, (tab: number) => {
  * aktiv und damit auch sichtbar ist.
  */
 watch(
-    () => props.data,
-    (data: LadeBelastungsplanDTO) => {
-      if (activeTab.value === 0 && !data.kreisverkehr) {
-        redraw();
-      }
+  () => props.data,
+  (data: LadeBelastungsplanDTO) => {
+    if (activeTab.value === 0 && !data.kreisverkehr) {
+      redraw();
     }
+  }
 );
 </script>

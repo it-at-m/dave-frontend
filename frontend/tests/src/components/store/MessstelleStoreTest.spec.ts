@@ -22,13 +22,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
     } as MessfaehigkeitDTO;
 
     messstelleInfo.messfaehigkeiten = [messfaehigkeit1, messfaehigkeit2];
