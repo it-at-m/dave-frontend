@@ -70,7 +70,7 @@ import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoD
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import _ from "lodash";
+import { cloneDeep } from "lodash";
 import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -206,7 +206,7 @@ function updateOptions() {
     chosenOptionsCopy.value.messquerschnittIds.push(value.value)
   );
 
-  previousSelectedStructures.value = _.cloneDeep(
+  previousSelectedStructures.value = cloneDeep(
     chosenOptionsCopy.value.messquerschnittIds
   );
 }
