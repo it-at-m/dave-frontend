@@ -2,7 +2,7 @@
   <v-card flat>
     <v-card-title>
       <v-icon start>mdi-filter-outline</v-icon>
-      Such- und Filtereinstellungen
+      Sucheinstellungen
     </v-card-title>
 
     <v-card-text>
