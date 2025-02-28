@@ -22,4 +22,5 @@ export default interface MessstelleInfoDTO extends BaseEntity {
   abbaudatum: string;
   realisierungsdatum: string;
   messfaehigkeiten: Array<MessfaehigkeitDTO>;
+  lageplanVorhanden: boolean;
 }
