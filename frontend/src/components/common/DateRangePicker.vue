@@ -49,7 +49,7 @@
           <p v-if="isEndDateOutOfRange">
             {{ messageEndDateOutOfRange }}
           </p>
-          <p v-if="isAnwender && !isSearchFilter">
+          <p v-if="isAnwender && isDateRangeGreaterThanFiveYears && !isSearchFilter">
             Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
           </p>
           <p v-if="isDateRange && !isSearchFilter">
@@ -212,6 +212,10 @@ const isDateRange = computed(() => {
     isRange = !isEqual(startDateIso, endDateIso);
   }
   return isRange;
+});
+
+const isDateRangeGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(startDate.value, endDate.value);
 });
 
 const isAnwender = computed(() => {
