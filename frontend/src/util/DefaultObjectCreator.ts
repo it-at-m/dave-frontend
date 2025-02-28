@@ -313,7 +313,6 @@ export default class DefaultObjectCreator {
     return {
       searchInMessstellen: true,
       searchInZaehlstellen: true,
-      zeitraum: new StartAndEndDate(undefined, undefined),
     } as SearchAndFilterOptionsDTO;
   }
 }

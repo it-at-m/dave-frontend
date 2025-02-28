@@ -56,7 +56,6 @@ import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 
 import html2canvas from "html2canvas";
-import { isEmpty } from "lodash";
 import { computed, onMounted, ref } from "vue";
 
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
@@ -65,14 +64,12 @@ import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import { useDateUtils } from "@/util/DateUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const downloadUtils = useDownloadUtils();
-const dateUtils = useDateUtils();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
@@ -189,26 +186,6 @@ function printZaehlstellenOfSearchResult(
   const searchResultAsCsvString: Array<string> = [];
   // Suchbegriff hinzufügen
   searchResultAsCsvString.push(`Suchbegriff: ${searchQuery}`);
-  if (searchStore.areSearchAndFilterOptionsDirty) {
-    const zeitraum = searchStore.getSearchAndFilterOptions.zeitraum;
-    let searchFilterAsText: string = "";
-    if (zeitraum) {
-      if (zeitraum.startDate && zeitraum.endDate) {
-        // Wenn Zeitraum, dann von <Datum> bis <Datum>
-        searchFilterAsText = `von ${dateUtils.formatDateToISO(zeitraum.startDate)} bis ${dateUtils.formatDateToISO(zeitraum.endDate)}`;
-      } else if (zeitraum.startDate) {
-        // Wenn nur Startdate, dann ab <Datum>
-        searchFilterAsText = `ab ${dateUtils.formatDateToISO(zeitraum.startDate)}`;
-      } else if (zeitraum.endDate) {
-        // Wenn nur Enddate, dann bis <Datum>
-        searchFilterAsText = `bis ${dateUtils.formatDateToISO(zeitraum.endDate)}`;
-      }
-    }
-    if (!isEmpty(searchFilterAsText)) {
-      searchResultAsCsvString.push(`Suchfilter: ${searchFilterAsText}`);
-      filenamePrefix = `${filenamePrefix}_${searchFilterAsText.replace(/\s/g, "_")}`;
-    }
-  }
   // Headerzeile hinzufügen
   searchResultAsCsvString.push(
     "Zählstellennummer;Längengrad;Breitengrad;Stadtbezirksnummer;Stadtbezirk;Kreuzungsname;Anzahl der Zählungen;Datum der letzten Zählung"
