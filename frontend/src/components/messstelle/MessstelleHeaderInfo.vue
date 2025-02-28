@@ -57,7 +57,7 @@ function loadLageplan() {
   lageplanLoading.value = true;
   LageplanService.loadLageplan(props.mstId)
     .then((result: LageplanDTO) => {
-      window.open(result.url, "_blank");
+      window.open(result.url);
     })
     .catch((error) => {
       snackbarStore.showApiError(error);
