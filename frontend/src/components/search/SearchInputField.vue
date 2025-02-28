@@ -74,6 +74,7 @@
           * Jahreszeit (Frühling, Sommer, ...)<br />
           * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019, ...)<br />
           * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />
+          * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
           * Messstellennummer / -name (4203,...)<br />
         </span>
       </v-tooltip>
