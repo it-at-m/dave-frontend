@@ -47,8 +47,8 @@
         v-model="searchAndFilterDialogOpen"
         max-width="800px"
       >
-        <search-and-filter-options
-          v-model="searchAndFilterOptionsDTO"
+        <search-and-filter-options-card
+          v-model="searchAndFilterOptions"
           @adopt-search-and-filter-options="handleAdoptSearchAndFilterOptions"
           @reset-search-and-filter-options="handleResetSearchAndFilterOptions"
         />
@@ -95,7 +95,7 @@ import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
-import SearchAndFilterOptions from "@/components/search/filter/SearchAndFilterOptions.vue";
+import SearchAndFilterOptionsCard from "@/components/search/filter/SearchAndFilterOptionsCard.vue";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -113,6 +113,10 @@ const suggestions = ref<Array<Suggest>>([]);
 const selectedSuggestion = ref<Suggest | undefined>(undefined);
 const lastSuggestQuery = ref("");
 const showtooltip = ref(false);
+const searchAndFilterDialogOpen = ref(false);
+const searchAndFilterOptions = ref(
+  DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO()
+);
 
 const route = useRoute();
 const router = useRouter();
@@ -304,7 +308,7 @@ function iconOfSuggestion(type: string) {
 function hasFilterChanged(): boolean {
   return isEqual(
     searchAndFilterOptionsStore.value,
-    searchAndFilterOptionsDTO.value
+    searchAndFilterOptions.value
   );
 }
 
@@ -313,12 +317,12 @@ const isDefaultFilter = computed(() => {
 });
 
 function openSearchAndFilterDialog(): void {
-  searchAndFilterOptionsDTO.value = searchAndFilterOptionsStore.value;
+  searchAndFilterOptions.value = searchAndFilterOptionsStore.value;
   searchAndFilterDialogOpen.value = true;
 }
 
 function handleAdoptSearchAndFilterOptions(): void {
-  searchAndFilterOptionsStore.value = searchAndFilterOptionsDTO.value;
+  searchAndFilterOptionsStore.value = searchAndFilterOptions.value;
   searchAndFilterDialogOpen.value = false;
   if (hasFilterChanged()) {
     search();
@@ -326,15 +330,10 @@ function handleAdoptSearchAndFilterOptions(): void {
 }
 
 function handleResetSearchAndFilterOptions(): void {
-  searchAndFilterOptionsDTO.value =
+  searchAndFilterOptions.value =
     DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO();
   handleAdoptSearchAndFilterOptions();
 }
-
-const searchAndFilterDialogOpen = ref(false);
-const searchAndFilterOptionsDTO = ref(
-  DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO()
-);
 
 const searchAndFilterOptionsStore = computed({
   get() {
