@@ -7,6 +7,7 @@ import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
@@ -307,5 +308,12 @@ export default class DefaultObjectCreator {
       xaxisDataSecondChart: null,
       seriesEntriesSecondChart: null,
     } as LadeZaehldatenHeatmapDTO;
+  }
+
+  public static createDefaultSearchAndFilterOptionsDTO(): SearchAndFilterOptionsDTO {
+    return {
+      searchInMessstellen: true,
+      searchInZaehlstellen: true,
+    } as SearchAndFilterOptionsDTO;
   }
 }

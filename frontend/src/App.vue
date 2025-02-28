@@ -81,9 +81,9 @@ import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungServi
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
 import InfoMessage from "@/components/app/InfoMessage.vue";
-import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
+import SearchInputField from "@/components/search/SearchInputField.vue";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -175,6 +175,7 @@ function shortCuts(event: KeyboardEvent) {
 
 function resetMapAndSearch() {
   mapOptionsStore.resetMapOptions();
+  searchStore.resetSearchAndFilterOptions();
   searchStore.resetAndTriggerSearch();
 }
 </script>
