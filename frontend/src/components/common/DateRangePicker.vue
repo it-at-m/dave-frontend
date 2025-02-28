@@ -33,7 +33,8 @@
       <v-col cols="4">
         <div
           v-if="
-            ((isAnwender || isDateRange) && !isSearchFilter) ||
+            isAnwender ||
+            isDateRange ||
             isStartDateOutOfRange ||
             isEndDateOutOfRange ||
             endDateBeforeStartDate
@@ -49,14 +50,10 @@
           <p v-if="isEndDateOutOfRange">
             {{ messageEndDateOutOfRange }}
           </p>
-          <p
-            v-if="
-              isAnwender && isDateRangeGreaterThanFiveYears && !isSearchFilter
-            "
-          >
+          <p v-if="isAnwender && isDateRangeGreaterThanFiveYears">
             Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
           </p>
-          <p v-if="isDateRange && !isSearchFilter">
+          <p v-if="isDateRange">
             Alle Auswertungen stellen Durchschnittswerte des ausgewählten
             Zeitraums dar.
           </p>
@@ -86,14 +83,12 @@ interface Props {
   minDateDescription?: string;
   maxDate?: Date;
   maxDateDescription?: string;
-  isSearchFilter?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
   disabled: false,
-  isSearchFilter: false,
 });
 
 const dateUtils = useDateUtils();
