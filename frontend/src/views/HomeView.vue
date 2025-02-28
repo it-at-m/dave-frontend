@@ -182,6 +182,7 @@ function printZaehlstellenOfSearchResult(
   if (searchQuery && searchQuery.trim() !== "") {
     filenamePrefix = `Zaehlstellen_${searchQuery.replace(/\s/g, "_")}`;
   }
+  const filename = `${filenamePrefix}_Suchergebnis.csv`;
 
   const searchResultAsCsvString: Array<string> = [];
   // Suchbegriff hinzufügen
@@ -205,7 +206,6 @@ function printZaehlstellenOfSearchResult(
     elementAsCsvString.push(tooltip.datumLetzteZaehlung);
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
-  const filename = `${filenamePrefix}_Suchergebnis.csv`;
   downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
 }
 
