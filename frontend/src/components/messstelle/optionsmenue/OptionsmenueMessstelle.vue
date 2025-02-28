@@ -88,7 +88,6 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { useTimeUtils } from "@/util/TimeUtils";
 
 interface Props {
   messstelleId: string;
@@ -108,7 +107,6 @@ const chosenOptions = ref(
 );
 
 const userStore = useUserStore();
-const timeUtils = useTimeUtils();
 const dateUtils = useDateUtils();
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
@@ -186,7 +184,9 @@ function areChosenOptionsValid(): boolean {
   }
   if (
     isAnwender.value &&
-    timeUtils.isDateRangeBiggerFiveYears(chosenOptions.value.zeitraum.slice())
+    dateUtils.isGreaterThanFiveYearsForZeitraum(
+      chosenOptions.value.zeitraum.slice()
+    )
   ) {
     result = false;
     snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");

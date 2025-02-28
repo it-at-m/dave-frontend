@@ -159,9 +159,35 @@
       </v-col>
       <v-col cols="6">
         <v-checkbox
-          v-model="auswertungOptions.fahrzeuge.kraftraeder"
-          label="Krafträder (Krad)"
-          :disabled="isTypeDisabled(Fahrzeug.KRAD)"
+          v-model="auswertungOptions.fahrzeuge.lastzuege"
+          label="Lastzüge (Lz)"
+          :disabled="isTypeDisabled(Fahrzeug.LZ)"
+          hide-details
+          density="compact"
+        />
+      </v-col>
+    </v-row>
+    <v-row
+      align="start"
+      justify="center"
+      dense
+      class="my-0"
+      no-gutters
+    >
+      <v-col cols="6">
+        <v-checkbox
+          v-model="auswertungOptions.fahrzeuge.lieferwagen"
+          label="Lieferwagen (Lfw)"
+          :disabled="isTypeDisabled(Fahrzeug.LFW)"
+          hide-details
+          density="compact"
+        />
+      </v-col>
+      <v-col cols="6">
+        <v-checkbox
+          v-model="auswertungOptions.fahrzeuge.busse"
+          label="Busse"
+          :disabled="isTypeDisabled(Fahrzeug.BUS)"
           hide-details
           density="compact"
         />
@@ -185,35 +211,9 @@
       </v-col>
       <v-col cols="6">
         <v-checkbox
-          v-model="auswertungOptions.fahrzeuge.busse"
-          label="Bus"
-          :disabled="isTypeDisabled(Fahrzeug.BUS)"
-          hide-details
-          density="compact"
-        />
-      </v-col>
-    </v-row>
-    <v-row
-      align="start"
-      justify="center"
-      dense
-      class="my-0"
-      no-gutters
-    >
-      <v-col cols="6">
-        <v-checkbox
-          v-model="auswertungOptions.fahrzeuge.lastzuege"
-          label="Lastzüge (Lz)"
-          :disabled="isTypeDisabled(Fahrzeug.LZ)"
-          hide-details
-          density="compact"
-        />
-      </v-col>
-      <v-col cols="6">
-        <v-checkbox
-          v-model="auswertungOptions.fahrzeuge.lieferwagen"
-          label="Lieferwagen (Lfw)"
-          :disabled="isTypeDisabled(Fahrzeug.LFW)"
+          v-model="auswertungOptions.fahrzeuge.kraftraeder"
+          label="Krafträder (Krad)"
+          :disabled="isTypeDisabled(Fahrzeug.KRAD)"
           hide-details
           density="compact"
         />
