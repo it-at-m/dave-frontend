@@ -14,14 +14,7 @@ export default class SucheService {
     );
   }
 
-  static searchErhebungsstelle(query: string): Promise<Array<AnzeigeKarteDTO>> {
-    return FetchService.getData(
-      `${this.ENDPOINT}/search-datenportal?query=${query}`,
-      "Beim Suchen von Zähl-/Messstellen ist ein Fehler aufgetreten."
-    );
-  }
-
-  static searchErhebungsstelle2(
+  static searchErhebungsstelle(
     query: string,
     searchAndFilterOptions: SearchAndFilterOptionsDTO
   ): Promise<Array<AnzeigeKarteDTO>> {

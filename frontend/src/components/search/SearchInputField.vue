@@ -233,7 +233,7 @@ function search() {
     router.push(`/`);
   }
 
-  SucheService.searchErhebungsstelle2(
+  SucheService.searchErhebungsstelle(
     searchQuery.value,
     searchAndFilterOptionsStore.value
   )
