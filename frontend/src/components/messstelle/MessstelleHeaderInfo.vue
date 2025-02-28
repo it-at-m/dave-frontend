@@ -34,8 +34,10 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
 import type LageplanDTO from "@/types/messstelle/lageplan/LageplanDTO";
+
+import { ref } from "vue";
+
 import LageplanService from "@/api/service/LageplanService";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 
