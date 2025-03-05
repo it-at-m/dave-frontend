@@ -53,10 +53,14 @@
           :is-listenausgabe="false"
           :is-not-heatmap="true"
           :loading-file="loadingFile"
-          :open-pdf-report-dialog="false"
           @add-chart-to-pdf-report="addChartToPdfReport"
           @save-graph-as-image="saveGraphAsImage"
           @generate-pdf="createPdf"
+          @open-pdf-report-dialog="openPdfReportDialog"
+        />
+        <pdf-report-menue-auswertung
+          v-model="pdfReportDialog"
+          @close="closePdfReportDialog"
         />
       </v-col>
     </v-row>
@@ -78,8 +82,10 @@ import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungServi
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
+import PdfReportMenueAuswertung from "@/components/messstelle/gesamtauswertung/PdfReportMenueAuswertung.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
+import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
@@ -96,6 +102,7 @@ const display = useDisplay();
 const downloadUtils = useDownloadUtils();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
+const gesamtauswertungStore = useGesamtauswertungStore();
 
 const loadingFile = ref(false);
 const auswertungLoaded = ref(false);
@@ -215,10 +222,16 @@ const areFahrzeugeValid = computed(() => {
 function resetAuswertungsOptions() {
   auswertungsOptions.value =
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions();
+  gesamtauswertungStore.setAuswertungMessstelleOptions(
+    auswertungsOptions.value
+  );
 }
 
 function auswertungStarten() {
   chartDataLoading.value = true;
+  gesamtauswertungStore.setAuswertungMessstelleOptions(
+    auswertungsOptions.value
+  );
   MessstelleAuswertungService.generate(auswertungsOptions.value)
     .then((result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
@@ -370,5 +383,14 @@ function loadAllVisibleMessstellen(): void {
       allVisibleMessstellen.value = messstellen;
     }
   );
+}
+// TODO einsorieren
+const pdfReportDialog = ref(false);
+function openPdfReportDialog(): void {
+  pdfReportDialog.value = true;
+}
+
+function closePdfReportDialog(): void {
+  pdfReportDialog.value = false;
 }
 </script>
