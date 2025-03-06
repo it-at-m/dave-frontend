@@ -74,7 +74,6 @@ import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/J
 import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
-import { auswertungszeitraumToText } from "@/types/enum/AuswertungCategories";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import { tagesTypText } from "@/types/enum/TagesTyp";
 import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
@@ -105,14 +104,17 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-  const helper: Array<string> = [];
-  auswertungOptions.value.zeitraum.forEach((key) => {
-    const value = auswertungszeitraumToText.get(key);
-    if (value) {
-      helper.push(value.title);
-    }
-  });
-  let summary = helper.join(", ");
+  // const helper: Array<string> = [];
+  // auswertungOptions.value.zeitraum.forEach((key) => {
+  //   const value = auswertungszeitraumToText.get(key);
+  //   if (value) {
+  //     helper.push(value.title);
+  //   }
+  // });
+  // let summary = helper.join(", ");
+  let summary = gesamtauswertungUtils.getZeitraumAsTextSorted(
+    auswertungOptions.value.zeitraum
+  );
   if (!isJahresintervallSelected()) {
     summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
   }
@@ -205,7 +207,7 @@ function isFahrzeugSelected(): boolean {
 }
 
 const selectedFahrzeugAsSummary = computed(() => {
-  let summary = gesamtauswertungUtils.getSelectedVerkehrsartenAsText(
+  let summary = gesamtauswertungUtils.getFahrzeugOptionsAsText(
     auswertungOptions.value.fahrzeuge
   );
 

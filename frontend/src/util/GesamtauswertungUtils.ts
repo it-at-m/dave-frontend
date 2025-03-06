@@ -1,3 +1,4 @@
+import type KeyValSortable from "@/types/common/KeyValSortable";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 import {
@@ -6,7 +7,7 @@ import {
 } from "@/types/enum/AuswertungCategories";
 
 export function useGesamtauswertungUtils() {
-  function getSelectedVerkehrsartenAsText(fahrzeuge: FahrzeugOptions) {
+  function getFahrzeugOptionsAsText(fahrzeuge: FahrzeugOptions) {
     const selectedValues: Array<string> = [];
     if (fahrzeuge.kraftfahrzeugverkehr) {
       selectedValues.push(`KFZ`);
@@ -50,29 +51,20 @@ export function useGesamtauswertungUtils() {
     return selectedValues.join(", ");
   }
 
-  function getSelectedJahresintervallAsText(
-    zeitraum: Array<AuswertungsZeitraum>
-  ) {
-    const helper: Array<string> = [];
-    zeitraum.forEach((key) => {
-      const value = auswertungszeitraumToText.get(key);
-      if (value) {
-        helper.push(value.title);
-      }
-    });
-    return helper.join(", ");
-  }
-
   function getZeitraumAsTextSorted(zeitraum: Array<AuswertungsZeitraum>) {
-    const helper: Array<string> = [];
+    const helper: Array<KeyValSortable> = [];
     zeitraum.forEach((key) => {
       const value = auswertungszeitraumToText.get(key);
       if (value) {
-        helper.push(value.title);
+        helper.push(value);
       }
     });
-    // TODO ggfs sortieren
-    return helper.join(", ");
+    return helper
+      .sort((a, b) => a.sortingIndex - b.sortingIndex)
+      .flatMap((value) => {
+        return value.title;
+      })
+      .join(", ");
   }
 
   function getYearsAsTextSorted(years: Array<string>): string {
@@ -80,8 +72,7 @@ export function useGesamtauswertungUtils() {
   }
 
   return {
-    getSelectedVerkehrsartenAsText,
-    getSelectedJahresintervallAsText,
+    getFahrzeugOptionsAsText,
     getYearsAsTextSorted,
     getZeitraumAsTextSorted,
   };

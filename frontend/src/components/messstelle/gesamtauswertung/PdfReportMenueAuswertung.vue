@@ -219,7 +219,7 @@ function createMessInfo(): void {
     assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
 
     const verkehrsarten = new TextAsset(
-      `Verkehrsarten: ${gesamtauswertungUtils.getSelectedVerkehrsartenAsText(options.value.fahrzeuge)}`
+      `Verkehrsarten: ${gesamtauswertungUtils.getFahrzeugOptionsAsText(options.value.fahrzeuge)}`
     );
     assets.push(verkehrsarten);
 
@@ -228,7 +228,7 @@ function createMessInfo(): void {
     );
     assets.push(messzeitraum);
     const zeitintervall = new TextAsset(
-      `Zeitintervall: ${gesamtauswertungUtils.getSelectedJahresintervallAsText(options.value.zeitraum)}`
+      `Zeitintervall: ${gesamtauswertungUtils.getZeitraumAsTextSorted(options.value.zeitraum)}`
     );
     assets.push(zeitintervall);
 
