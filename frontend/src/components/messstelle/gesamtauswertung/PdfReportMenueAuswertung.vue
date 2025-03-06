@@ -43,7 +43,6 @@
                                 Wochentag"
         />
         <pdf-report-menue-list-item
-          v-if="isSingeleMessstelleSelected"
           v-model="legende"
           title="Legende"
           subtitle="Die Legende enthält Kurzbeschreibungen der
@@ -226,8 +225,17 @@ function createMessInfo(): void {
   if (selectedMessstelle.value) {
     const assets: Array<BaseAsset> = [];
 
-    // TODO Klären mit FB ob so ok
-    const header = `Info zur Messung an der Messstelle ${selectedMessstelle.value.mstId}`;
+    let header;
+    if (isSingeleMessstelleSelected.value) {
+      header = `Info zur Messung an der Messstelle ${selectedMessstelle.value.mstId}`;
+    } else {
+      const mstIds = options.value.messstelleAuswertungIds
+        .flatMap((value) => {
+          return value.mstId;
+        })
+        .join(", ");
+      header = `Info zur Messung an den Messstellen ${mstIds}`;
+    }
     assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
 
     const verkehrsarten = new TextAsset(
