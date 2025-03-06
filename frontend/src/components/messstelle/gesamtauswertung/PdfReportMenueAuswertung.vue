@@ -27,6 +27,7 @@
         density="compact"
       >
         <pdf-report-menue-list-item
+          v-if="isSingeleMessstelleSelected"
           v-model="messstelleninfo"
           title="Messstelleninformationen"
           subtitle="Folgende Informationen werden im PDF Report
@@ -105,11 +106,14 @@ const gesamtauswertungUtils = useGesamtauswertungUtils();
 const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
+const selectedMessstelle = ref<MessstelleInfoDTO | undefined>(undefined);
 
+const isSingeleMessstelleSelected = computed(() => {
+  return options.value.messstelleAuswertungIds.length === 1;
+});
 const somethingToAdd = computed(() => {
   return messstelleninfo.value || messinfo.value || legende.value;
 });
-
 const options = computed<MessstelleAuswertungOptionsDTO>(() => {
   return gesamtauswertungStore.getAuswertungMessstelleOptions;
 });
@@ -157,8 +161,6 @@ function saveItems(): void {
     }
   }
 }
-
-const selectedMessstelle = ref<MessstelleInfoDTO | undefined>(undefined);
 
 function loadMessstelleInfo(
   selectedAuswertungId: MessstelleAuswertungIdDTO

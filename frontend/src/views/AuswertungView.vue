@@ -109,6 +109,7 @@ const auswertungLoaded = ref(false);
 const chartDataLoading = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
+const pdfReportDialog = ref(false);
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -384,8 +385,6 @@ function loadAllVisibleMessstellen(): void {
     }
   );
 }
-// TODO einsorieren
-const pdfReportDialog = ref(false);
 function openPdfReportDialog(): void {
   pdfReportDialog.value = true;
 }
