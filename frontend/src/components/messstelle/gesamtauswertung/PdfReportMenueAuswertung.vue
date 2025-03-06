@@ -35,22 +35,27 @@
                                 Messquerschnitte, Stadtbezirk,
                                 Messstellenkommentar."
         />
-
         <pdf-report-menue-list-item
           v-model="messinfo"
           title="Messinformationen"
           subtitle="Folgende Informationen werden im PDF Report
-                                eingetragen: Zeitraum von ... bis / Einzeltag,
-                                Wochentag, Statistik zur Auswertung (Anzahl
-                                plausible Wochentage)"
+                                eingetragen: Messzeitraum,
+                                Wochentag"
         />
-
         <pdf-report-menue-list-item
+          v-if="isSingeleMessstelleSelected"
           v-model="legende"
           title="Legende"
           subtitle="Die Legende enthält Kurzbeschreibungen der
                                 einzelnen Zählattribute, z.B. für den
                                 Kraftfahrzeugverkehr, Schwerverkehr etc."
+        />
+        <pdf-report-menue-list-item
+          v-model="statistik"
+          title="Statistik zur Auswertung"
+          subtitle="Folgende Informationen werden im PDF Report
+                                eingetragen: Statistik zur Auswertung (Anzahl
+                                plausible Wochentage)"
         />
       </v-list>
       <v-footer>
@@ -106,13 +111,16 @@ const gesamtauswertungUtils = useGesamtauswertungUtils();
 const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
+const statistik = ref(false);
 const selectedMessstelle = ref<MessstelleInfoDTO | undefined>(undefined);
 
 const isSingeleMessstelleSelected = computed(() => {
   return options.value.messstelleAuswertungIds.length === 1;
 });
 const somethingToAdd = computed(() => {
-  return messstelleninfo.value || messinfo.value || legende.value;
+  return (
+    messstelleninfo.value || messinfo.value || legende.value || statistik.value
+  );
 });
 const options = computed<MessstelleAuswertungOptionsDTO>(() => {
   return gesamtauswertungStore.getAuswertungMessstelleOptions;
@@ -137,6 +145,7 @@ function resetCheckboxes(): void {
   messstelleninfo.value = false;
   messinfo.value = false;
   legende.value = false;
+  statistik.value = false;
 }
 
 function saveItems(): void {
@@ -145,13 +154,14 @@ function saveItems(): void {
     if (messstelleninfo.value) {
       createMessstelleInfo(selectedAuswertungId);
     }
-
     if (messinfo.value) {
       createMessInfo();
     }
-
     if (legende.value) {
       createLegende();
+    }
+    if (statistik.value) {
+      createStatistik();
     }
     if (somethingToAdd.value) {
       snackbarStore.showSuccess(
@@ -239,11 +249,6 @@ function createMessInfo(): void {
     );
     assets.push(wochentag);
 
-    const statistikAuswertung = new TextAsset(
-      `Auswertungsstatistik: Exisitiert noch nicht.`
-    );
-    assets.push(statistikAuswertung);
-
     pdfReportStore.addAssets(assets);
   }
 }
@@ -260,5 +265,12 @@ function createLegende(): void {
       "<p>- <b>Schwer- und Güterverkehrsanteil</b>: Anteil des Schwer- bzw. Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].</p>"
   );
   pdfReportStore.addAssets([ueberschrift, legende]);
+}
+
+function createStatistik(): void {
+  const statistikAuswertung = new TextAsset(
+    `Auswertungsstatistik: Exisitiert noch nicht.`
+  );
+  pdfReportStore.addAsset(statistikAuswertung);
 }
 </script>
