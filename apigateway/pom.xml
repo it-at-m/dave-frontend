@@ -5,7 +5,7 @@
 
     <groupId>de.muenchen.dave.apigateway</groupId>
     <artifactId>dave-frontend-apigateway</artifactId>
-    <version>1.17.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
     <name>dave_frontend_apigateway</name>
 
@@ -141,7 +141,7 @@
         <!-- Frontend Lib -->
         <dependency>
             <groupId>de.muenchen.dave.frontend</groupId>
-            <version>1.17.1-SNAPSHOT</version>
+            <version>2.0.1</version>
             <artifactId>dave-frontend-frontend</artifactId>
             <scope>runtime</scope>
         </dependency>
@@ -216,8 +216,8 @@
                         <eclipse>
                             <file>itm-java-codeformat/java_codestyle_formatter.xml</file>
                         </eclipse>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                     </java>
                 </configuration>
                 <executions>
