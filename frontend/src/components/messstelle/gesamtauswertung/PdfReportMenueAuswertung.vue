@@ -223,9 +223,8 @@ function createMessInfo(): void {
     );
     assets.push(verkehrsarten);
 
-    // TODO ggfs sortieren
     const messzeitraum = new TextAsset(
-      `Messzeitraum: ${options.value.jahre.join(", ")}`
+      `Messzeitraum: ${gesamtauswertungUtils.getYearsAsTextSorted(options.value.jahre)}`
     );
     assets.push(messzeitraum);
     const zeitintervall = new TextAsset(

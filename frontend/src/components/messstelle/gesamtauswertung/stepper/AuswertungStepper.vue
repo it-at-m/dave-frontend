@@ -95,7 +95,9 @@ const gesamtauswertungUtils = useGesamtauswertungUtils();
 const activeStep = ref(1);
 
 const selectedYearsAsSummary = computed(() => {
-  let summary = auswertungOptions.value.jahre.join(", ");
+  let summary = gesamtauswertungUtils.getYearsAsTextSorted(
+    auswertungOptions.value.jahre
+  );
   if (!isJahreSelected()) {
     summary = "Es muss mindestens ein Jahr ausgewählt sein.";
   }

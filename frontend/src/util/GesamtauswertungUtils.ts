@@ -60,12 +60,29 @@ export function useGesamtauswertungUtils() {
         helper.push(value.title);
       }
     });
+    return helper.join(", ");
+  }
+
+  function getZeitraumAsTextSorted(zeitraum: Array<AuswertungsZeitraum>) {
+    const helper: Array<string> = [];
+    zeitraum.forEach((key) => {
+      const value = auswertungszeitraumToText.get(key);
+      if (value) {
+        helper.push(value.title);
+      }
+    });
     // TODO ggfs sortieren
     return helper.join(", ");
+  }
+
+  function getYearsAsTextSorted(years: Array<string>): string {
+    return years.sort().join(", ");
   }
 
   return {
     getSelectedVerkehrsartenAsText,
     getSelectedJahresintervallAsText,
+    getYearsAsTextSorted,
+    getZeitraumAsTextSorted,
   };
 }
