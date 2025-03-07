@@ -104,14 +104,6 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-  // const helper: Array<string> = [];
-  // auswertungOptions.value.zeitraum.forEach((key) => {
-  //   const value = auswertungszeitraumToText.get(key);
-  //   if (value) {
-  //     helper.push(value.title);
-  //   }
-  // });
-  // let summary = helper.join(", ");
   let summary = gesamtauswertungUtils.getZeitraumAsTextSorted(
     auswertungOptions.value.zeitraum
   );

@@ -175,8 +175,8 @@ function loadMessstelleInfo(
   selectedAuswertungId: MessstelleAuswertungIdDTO
 ): void {
   MessstelleService.getMessstelleByMstId(selectedAuswertungId.mstId)
-    .then((messstelleDTO) => {
-      selectedMessstelle.value = messstelleDTO;
+    .then((messstelle) => {
+      selectedMessstelle.value = messstelle;
     })
     .catch((error: ApiError) => {
       snackbarStore.showApiError(error);
@@ -194,13 +194,13 @@ function createMessstelleInfo(
     );
     assets.push(headline);
 
-    const messquerschnittInfoDTOS =
+    const messquerschnitteInfo =
       selectedMessstelle.value.messquerschnitte.filter((value) =>
         selectedAuswertungId.mqIds.includes(value.mqId)
       );
-    if (messquerschnittInfoDTOS.length > 0) {
+    if (messquerschnitteInfo.length > 0) {
       let text = "Messquerschnitt(e):<br/>";
-      messquerschnittInfoDTOS.forEach((value) => {
+      messquerschnitteInfo.forEach((value) => {
         text += `- ${value.mqId}`;
         if (value.standort) {
           text += ` - ${value.standort}`;
