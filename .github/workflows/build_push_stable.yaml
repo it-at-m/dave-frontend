@@ -2,30 +2,14 @@ name: build image and push to ghcr.io
 
 on: 
   push:
-    branches: ["main-ls2", "sprint"]
+    branches: ["main-ng", "sprint"]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  compliance:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Advance Security Policy as Code
-        uses: advanced-security/policy-as-code@v2.4.1
-        with:
-          policy: it-at-m/policy-as-code
-          policy-path: default.yaml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          argvs: "--disable-dependabot --disable-secret-scanning --disable-code-scanning --display"
-
   build-and-push-image:
-    needs: compliance
     runs-on: ubuntu-latest
 
     permissions:
@@ -48,6 +32,11 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            # set latest tag for sprint branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'sprint') }}
+            # set stable tag for main-ls2 branch
+            type=raw,value=stable,enable=${{ github.ref == format('refs/heads/{0}', 'main-ng') }}
           labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
       
@@ -58,13 +47,13 @@ jobs:
           distribution: "temurin"
           cache: "maven"
 
-      - name: Set up Node 16
-        uses: actions/setup-node@v3
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Build with Maven
-        run: mvn -B verify "-Dspring-boot.run.jvmArguments=-Dfile.encoding=UTF-8" -DskipTests=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+        run: mvn -B verify -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
 
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
@@ -73,3 +62,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
