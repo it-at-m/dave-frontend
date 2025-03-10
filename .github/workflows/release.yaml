@@ -20,9 +20,10 @@ jobs:
       ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
     env:
       TZ: Europe/Berlin # timezone
+      MAVEN_ARGS: -Dmaven.test.skip
     steps:
       - id: maven-release-step
-        uses: it-at-m/.github/.github/actions/action-maven-release@main
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@v1.0.0
         with:
           app-path: ""
           releaseVersion: "${{ github.event.inputs.releaseVersion }}"
@@ -35,7 +36,7 @@ jobs:
     steps:
       - name: Create GitHub Release
         id: create_release
-        uses: it-at-m/.github/.github/actions/action-create-github-release@main
+        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@v1.0.0
         with:
           artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
           tag-name: ${{ needs.release-maven.outputs.MVN_ARTIFACT_ID }}-${{ github.event.inputs.releaseVersion }}

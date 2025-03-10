@@ -11,12 +11,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Advance Security Policy as Code
-        uses: advanced-security/policy-as-code@v2.4.1
+        uses: advanced-security/policy-as-code@v2.5.0
         with:
-          policy: it-at-m/policy-as-code
-          policy-path: default.yaml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          argvs: "--disable-dependabot --disable-secret-scanning --disable-code-scanning --display"
+          policy: GeekMasher/security-queries
+          policy-path: $GITHUB_WORKSPACE/policies/default.yml
+
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+          argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
 
   build-maven:
     needs: compliance
@@ -34,10 +36,10 @@ jobs:
           distribution: "temurin"
           cache: "maven"
 
-      - name: Set up Node 16
-        uses: actions/setup-node@v3
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Build with Maven
-        run: mvn -B verify "-Dspring-boot.run.jvmArguments=-Dfile.encoding=UTF-8" -DskipTests=true
+        run: mvn -B verify -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dmaven.test.skip
