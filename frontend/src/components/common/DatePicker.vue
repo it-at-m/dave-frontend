@@ -123,14 +123,6 @@ const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
   keepActionRow: false,
 };
 
-function getMarker(datum: string) {
-  return {
-    date: datum,
-    type: "line",
-    tooltip: [{ text: "auffälliger Tag", color: "red" }],
-  } as DatePickerMarker;
-}
-
 // https://vue3datepicker.com/props/general-configuration/#markers
 const markers = computed(() => {
   const markers: Array<DatePickerMarker> = [];
@@ -141,4 +133,12 @@ const markers = computed(() => {
   }
   return markers;
 });
+
+function getMarker(datum: string) {
+  return {
+    date: datum,
+    type: "line",
+    tooltip: [{ text: "unplausibler Messtag", color: "red" }],
+  } as DatePickerMarker;
+}
 </script>
