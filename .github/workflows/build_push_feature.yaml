@@ -1,33 +1,20 @@
-name: build image and push to ghcr.io
+name: Build feature branch
 
-on: 
-  push:
-    branches: ["main-ls2", "sprint"]
-
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'What should the image be tagged as?'
+        required: false
+        default: 'dev'
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
+  
 jobs:
-  compliance:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Advance Security Policy as Code
-        uses: advanced-security/policy-as-code@v2.4.1
-        with:
-          policy: it-at-m/policy-as-code
-          policy-path: default.yaml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          argvs: "--disable-dependabot --disable-secret-scanning --disable-code-scanning --display"
-
   build-and-push-image:
-    needs: compliance
     runs-on: ubuntu-latest
-
+    
     permissions:
       contents: read
       packages: write
@@ -48,23 +35,26 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            # use tag from input
+            type=raw,value=${{ github.event.inputs.tag }},enable=true
           labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
-      
+
       - name: Install Java and Maven
         uses: actions/setup-java@v3
         with:
-          java-version: 21
+          java-version: "21"
           distribution: "temurin"
           cache: "maven"
 
-      - name: Set up Node 16
-        uses: actions/setup-node@v3
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Build with Maven
-        run: mvn -B verify "-Dspring-boot.run.jvmArguments=-Dfile.encoding=UTF-8" -DskipTests=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+        run: mvn -B verify -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dmaven.test.skip
 
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
