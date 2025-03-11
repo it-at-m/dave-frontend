@@ -16,6 +16,7 @@
         :min-date-description="minDateDescription"
         :max-date="maxDate"
         :max-date-description="maxDateDescription"
+        :auffaellige-tage="auffaelligeTage"
       />
 
       <v-divider />
@@ -45,14 +46,13 @@
 </template>
 
 <script setup lang="ts">
+import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
 import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
 import { defaults, isNil } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DateRangePicker from "@/components/common/DateRangePicker.vue";
@@ -64,8 +64,6 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
-
-const route = useRoute();
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
@@ -86,10 +84,11 @@ const isDateRange = computed(() => {
 });
 
 onMounted(() => {
-  const messstelleId = route.params.messstelleId as string;
-  MessstelleOptionsmenuService.getNichtPlausibleTage(messstelleId).then(
-    (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
-      (nichtPlausibleTage.value = nichtPlausibleTageDTO.nichtPlausibleTage)
+  MessstelleOptionsmenuService.getAuffaelligeTage(
+    messstelleInfo.value.mstId
+  ).then(
+    (response: AuffaelligeTageDTO) =>
+      (auffaelligeTage.value = response.auffaelligeTage)
   );
 });
 
@@ -97,7 +96,7 @@ const messstelleInfo = computed<MessstelleInfoDTO>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
-const nichtPlausibleTage = ref<Array<string>>([]);
+const auffaelligeTage = ref<Array<string>>([]);
 
 const isZeitraumGreaterThanFiveYears = computed(() => {
   return dateUtils.isGreaterThanFiveYears(

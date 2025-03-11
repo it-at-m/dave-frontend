@@ -18,7 +18,9 @@
     :teleport="true"
     :week-numbers="WEEK_NUMBER_OPTIONS"
     :six-weeks="SIX_WEEK_CALENDAR_OPTIONS"
+    :markers="markers"
   >
+    <!--    https://vue3datepicker.com/props/look-and-feel/#day-class-->
     <template
       #dp-input="{
         value,
@@ -54,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GeneralConfig } from "@vuepic/vue-datepicker";
+import type { DatePickerMarker, GeneralConfig } from "@vuepic/vue-datepicker";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
 
@@ -67,12 +69,14 @@ interface Props {
   label?: string; // Bezeichnung des Datumsfelds
   required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
   disabled?: boolean; // Ob das Datumsfeld deaktiviert sein soll
+  auffaelligeTage?: Array<string>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
   disabled: false,
+  auffaelligeTage: undefined,
 });
 
 const theDate = defineModel<Date | undefined>();
@@ -118,4 +122,23 @@ const GENERAL_DATE_PICKER_CONFIG: GeneralConfig = {
   setDateOnMenuClose: true,
   keepActionRow: false,
 };
+
+// https://vue3datepicker.com/props/general-configuration/#markers
+const markers = computed(() => {
+  const markers: Array<DatePickerMarker> = [];
+  if (props.auffaelligeTage) {
+    props.auffaelligeTage.forEach((value) => {
+      markers.push(getMarker(value));
+    });
+  }
+  return markers;
+});
+
+function getMarker(datum: string) {
+  return {
+    date: datum,
+    type: "line",
+    tooltip: [{ text: "unplausibler Messtag", color: "red" }],
+  } as DatePickerMarker;
+}
 </script>
