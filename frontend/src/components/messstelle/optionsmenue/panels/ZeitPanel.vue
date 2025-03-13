@@ -24,7 +24,7 @@
       <tages-typ-radiogroup
         v-if="isDateRange"
         v-model="chosenOptionsCopy"
-        :is-chosen-tages-typ-valid="isChosenTagesTypValid"
+        :is-zeitraum-and-tagestyp-valid="isZeitraumAndTagestypValid"
       />
       <v-divider v-if="isDateRange" />
 
@@ -47,11 +47,9 @@
 
 <script setup lang="ts">
 import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
-import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { defaults, isNil } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
@@ -67,9 +65,13 @@ import { useDateUtils } from "@/util/DateUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
+interface Props {
+  isZeitraumAndTagestypValid: boolean;
+}
+defineProps<Props>();
+
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
-const isChosenTagesTypValid = ref(true);
 
 const isDateRange = computed(() => {
   const chosenDates = [
@@ -112,9 +114,9 @@ const chosenOptionsCopyStartAndEndDatum = computed(() => {
   );
 });
 
-const chosenOptionsCopyTagesTyp = computed(() => {
-  return chosenOptionsCopy.value.tagesTyp ?? "";
-});
+// const chosenOptionsCopyTagesTyp = computed(() => {
+//   return chosenOptionsCopy.value.tagesTyp ?? "";
+// });
 
 const minDateDescription = ref<string>("");
 
@@ -170,33 +172,30 @@ watch(
   { immediate: true }
 );
 
-watch(
-  [chosenOptionsCopyTagesTyp, chosenOptionsCopyStartAndEndDatum],
-  () => {
-    if (
-      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate) &&
-      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate) &&
-      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate) &&
-      chosenOptionsCopy.value.tagesTyp
-    ) {
-      const chosenTagesTypValidRequestDto = {
-        startDate: dateUtils.formatDateToISO(
-          chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
-        ),
-        endDate: dateUtils.formatDateToISO(
-          chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
-        ),
-        tagesTyp: defaults(chosenOptionsCopy.value.tagesTyp, ""),
-      };
-      MessstelleOptionsmenuService.isTagesTypValid(
-        chosenTagesTypValidRequestDto
-      ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
-        isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
-      });
-    }
-  },
-  { deep: true }
-);
+// watch(
+//   [chosenOptionsCopyTagesTyp, chosenOptionsCopyStartAndEndDatum],
+//   () => {
+//     if (
+//       !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate) &&
+//       !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate) &&
+//       !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate) &&
+//       chosenOptionsCopy.value.tagesTyp !== TagesTyp.UNSPECIFIED
+//     ) {
+//       const request = {
+//         zeitraum: [chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate.toString(), chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate.toString()],
+//         mstId: 123,
+//         tagesTyp: chosenOptionsCopyTagesTyp.value
+//
+//       } as ValidateZeitraumAndTagestypForMessstelleDTO;
+//       MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)
+//       .then((response: ValidatedZeitraumAndTagestypDTO) => {
+//         isChosenTagesTypValid.value = response.isValid;
+//       })
+//       .catch((error) => useSnackbarStore().showApiError(error));
+//     }
+//   },
+//   { deep: true }
+// );
 
 watch(
   chosenOptionsCopyStartAndEndDatum,

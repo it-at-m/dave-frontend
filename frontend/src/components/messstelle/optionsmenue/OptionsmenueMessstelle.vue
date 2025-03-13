@@ -34,7 +34,10 @@
               focusable
               elevation="0"
             >
-              <zeit-panel v-model="chosenOptions" />
+              <zeit-panel
+                v-model="chosenOptions"
+                :is-zeitraum-and-tagestyp-valid="isZeitraumAndTagestypValid"
+              />
               <fahrzeug-panel v-model="chosenOptions" />
               <messquerschnitt-panel v-model="chosenOptions" />
               <darstellungsoptionen-panel-messstelle v-model="chosenOptions" />
@@ -66,11 +69,14 @@
 </template>
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
+import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
 import { cloneDeep, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
@@ -103,6 +109,7 @@ const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultMessstelleOptions()
 );
+const isZeitraumAndTagestypValid = ref(false);
 
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
@@ -150,7 +157,7 @@ function setChosenOptions(): void {
 }
 
 function areChosenOptionsValid(): boolean {
-  let result = true;
+  let result = isZeitraumAndTagestypValid.value;
   if (chosenOptions.value.messquerschnittIds.length === 0) {
     result = false;
     let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
@@ -278,5 +285,39 @@ watch(
       'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
     );
   }
+);
+
+watch(
+  [
+    () => chosenOptions.value.tagesTyp,
+    () => chosenOptions.value.zeitraumStartAndEndDate,
+  ],
+  () => {
+    if (
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate) &&
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate.startDate) &&
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate.endDate) &&
+      chosenOptions.value.tagesTyp !== TagesTyp.UNSPECIFIED
+    ) {
+      const isoStartDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.startDate
+      );
+      const isoEndDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.endDate
+      );
+      const request = {
+        zeitraum: [isoStartDate, isoEndDate],
+        mstId: messstelle.value.mstId,
+        tagesTyp: chosenOptions.value.tagesTyp,
+      } as ValidateZeitraumAndTagestypForMessstelleDTO;
+
+      MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)
+        .then((response: ValidatedZeitraumAndTagestypDTO) => {
+          isZeitraumAndTagestypValid.value = response.isValid;
+        })
+        .catch((error) => useSnackbarStore().showApiError(error));
+    }
+  },
+  { deep: true }
 );
 </script>
