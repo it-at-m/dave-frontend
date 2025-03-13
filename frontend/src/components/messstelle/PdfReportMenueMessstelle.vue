@@ -196,7 +196,7 @@ function createMessInfo(): void {
     options.value.tagesTyp !== TagesTyp.UNSPECIFIED
   ) {
     const wochentag = new TextAsset(
-      `Wochentag (Tagestyp): ${tagesTypText.get(options.value.tagesTyp)}`
+      `Wochentag: ${tagesTypText.get(options.value.tagesTyp)}`
     );
     assets.push(wochentag);
   }
