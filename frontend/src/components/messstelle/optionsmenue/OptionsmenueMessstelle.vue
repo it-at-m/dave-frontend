@@ -157,7 +157,7 @@ function setChosenOptions(): void {
 }
 
 function areChosenOptionsValid(): boolean {
-  let result = isZeitraumAndTagestypValid.value;
+  let result = true;
   if (chosenOptions.value.messquerschnittIds.length === 0) {
     result = false;
     let errortext = "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
@@ -186,6 +186,15 @@ function areChosenOptionsValid(): boolean {
   ) {
     result = false;
     snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
+  }
+  if (
+    dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
+    !isZeitraumAndTagestypValid.value
+  ) {
+    result = false;
+    snackbarStore.showError(
+      "Der ausgewählte Zeitraum ist zu kurz. Es liegen nicht genügen plausible Daten vor."
+    );
   }
   if (
     isAnwender.value &&
@@ -316,6 +325,8 @@ watch(
           isZeitraumAndTagestypValid.value = response.isValid;
         })
         .catch((error) => useSnackbarStore().showApiError(error));
+    } else {
+      isZeitraumAndTagestypValid.value = true;
     }
   },
   { deep: true }
