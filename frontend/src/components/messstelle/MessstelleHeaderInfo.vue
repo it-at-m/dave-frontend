@@ -11,7 +11,7 @@
       <v-tooltip
         :text="lageplanVorhanden ? 'Lageplan' : 'Kein Lageplan vorhanden'"
       >
-        <template v-slot:activator="{ props }">
+        <template #activator="{ props }">
           <span v-bind="props">
             <v-btn
               icon="mdi-map-outline"
