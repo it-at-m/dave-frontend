@@ -114,10 +114,6 @@ const chosenOptionsCopyStartAndEndDatum = computed(() => {
   );
 });
 
-// const chosenOptionsCopyTagesTyp = computed(() => {
-//   return chosenOptionsCopy.value.tagesTyp ?? "";
-// });
-
 const minDateDescription = ref<string>("");
 
 const minDate = ref<Date>();
@@ -171,31 +167,6 @@ watch(
   },
   { immediate: true }
 );
-
-// watch(
-//   [chosenOptionsCopyTagesTyp, chosenOptionsCopyStartAndEndDatum],
-//   () => {
-//     if (
-//       !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate) &&
-//       !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate) &&
-//       !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate) &&
-//       chosenOptionsCopy.value.tagesTyp !== TagesTyp.UNSPECIFIED
-//     ) {
-//       const request = {
-//         zeitraum: [chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate.toString(), chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate.toString()],
-//         mstId: 123,
-//         tagesTyp: chosenOptionsCopyTagesTyp.value
-//
-//       } as ValidateZeitraumAndTagestypForMessstelleDTO;
-//       MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)
-//       .then((response: ValidatedZeitraumAndTagestypDTO) => {
-//         isChosenTagesTypValid.value = response.isValid;
-//       })
-//       .catch((error) => useSnackbarStore().showApiError(error));
-//     }
-//   },
-//   { deep: true }
-// );
 
 watch(
   chosenOptionsCopyStartAndEndDatum,
