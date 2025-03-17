@@ -200,13 +200,23 @@ function createMessInfo(): void {
     );
     assets.push(wochentag);
   }
-  const statistikAuswertung = new TextAsset(
-    `Auswertungsstatistik: Exisitiert noch nicht.`
-  );
-  assets.push(statistikAuswertung);
+  if (dateUtils.isDateRange(options.value.zeitraum)) {
+    const statistikAuswertung = new TextAsset(
+      `Auswertungsstatistik: Von den ausgewählten ${messstelleStore.getRequestedMeasuringDays} Tagen ${getChosenWochentageNumberText.value} in die Auswertung eingeflossen.`
+    );
+    assets.push(statistikAuswertung);
+  }
 
   pdfReportStore.addAssets(assets);
 }
+
+const getChosenWochentageNumberText = computed(() => {
+  if (messstelleStore.getIncludedMeasuringDays === 1) {
+    return "ist 1 Tag";
+  } else {
+    return `sind ${messstelleStore.getIncludedMeasuringDays} Tage`;
+  }
+});
 
 function createLegende(): void {
   const ueberschrift = new HeadingAsset(
