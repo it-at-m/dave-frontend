@@ -13,11 +13,15 @@
       >
         <template #activator="{ props }">
           <span v-bind="props">
-            <v-btn class="ma-0 pa-0" min-width="0"
-              variant="plain"
-              :disabled="!lageplanVorhanden"
-              @click="loadLageplan"
-            ><v-icon size="x-large" color="secondary">mdi-map</v-icon></v-btn>
+            <v-btn :disabled="!lageplanVorhanden" class="ma-0 pa-0"
+                   color="secondary"
+                   min-width="0"
+                   variant="text"
+                   @click="loadLageplan">
+              <template v-slot:default>
+                <v-icon size="x-large">mdi-map</v-icon>
+              </template>
+            </v-btn>
           </span>
         </template>
       </v-tooltip>
