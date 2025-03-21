@@ -1,0 +1,51 @@
+wiremock:
+  server:
+    port: 0
+    https-port: -1
+  reset-mappings-after-each-test: true
+
+spring:
+
+  # Define the sso test realm here
+  realm: dave
+
+  # spring cloud gateway config
+  cloud:
+    gateway:
+      actuator:
+        verbose:
+          enabled: false
+      routes:
+        - id: sso
+          uri: https://sso.example.com/
+          predicates:
+            - Path=/api/sso/userinfo
+          filters:
+            - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
+        - id: backend
+          uri: http://localhost:${wiremock.server.port}/
+          predicates:
+            - Path=/api/dave-backend-service/**
+          filters:
+            - RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
+            - RemoveResponseHeader=WWW-Authenticate
+      default-filters:
+        - RemoveResponseHeader=Expires
+        - RemoveRequestHeader=cookie
+        - RemoveRequestHeader=x-xsrf-token
+        - TokenRelay=
+
+  # security config
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: https://sso.example.com/auth/realms/${spring.realm}
+        registration:
+          keycloak:
+            client-id: dave
+            client-secret: 11111111-1111-1111-1111-111111111111
+
+  mvc:
+    log-request-details: on
