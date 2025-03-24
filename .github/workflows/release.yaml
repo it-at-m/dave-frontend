@@ -20,7 +20,6 @@ jobs:
       ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
     env:
       TZ: Europe/Berlin # timezone
-      MAVEN_ARGS: -Dmaven.test.skip
     steps:
       - id: maven-release-step
         uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@v1.0.0
