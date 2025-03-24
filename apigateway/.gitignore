@@ -29,4 +29,5 @@ dist/
 nbdist/
 .nb-gradle/
 
-
+# do not check in application profile yml
+/src/main/**/application-*.yml
