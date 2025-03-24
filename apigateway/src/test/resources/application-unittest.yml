@@ -35,17 +35,5 @@ spring:
         - RemoveRequestHeader=x-xsrf-token
         - TokenRelay=
 
-  # security config
-  security:
-    oauth2:
-      client:
-        provider:
-          keycloak:
-            issuer-uri: https://sso.example.com/auth/realms/${spring.realm}
-        registration:
-          keycloak:
-            client-id: dave
-            client-secret: 11111111-1111-1111-1111-111111111111
-
   mvc:
     log-request-details: on
