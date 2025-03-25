@@ -18,6 +18,7 @@
               label="Startdatum"
               :disabled="props.disabled"
               :required="props.required"
+              :auffaellige-tage="props.auffaelligeTage"
             />
           </v-col>
           <v-col cols="6">
@@ -26,6 +27,7 @@
               label="Enddatum"
               :disabled="props.disabled"
               :required="props.required"
+              :auffaellige-tage="props.auffaelligeTage"
             />
           </v-col>
         </v-row>
@@ -83,12 +85,18 @@ interface Props {
   minDateDescription?: string;
   maxDate?: Date;
   maxDateDescription?: string;
+  auffaelligeTage?: Array<string>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
   disabled: false,
+  minDate: undefined,
+  minDateDescription: undefined,
+  maxDate: undefined,
+  maxDateDescription: undefined,
+  auffaelligeTage: undefined,
 });
 
 const dateUtils = useDateUtils();

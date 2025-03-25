@@ -16,6 +16,7 @@
         :min-date-description="minDateDescription"
         :max-date="maxDate"
         :max-date-description="maxDateDescription"
+        :auffaellige-tage="auffaelligeTage"
       />
 
       <v-divider />
@@ -23,7 +24,7 @@
       <tages-typ-radiogroup
         v-if="isDateRange"
         v-model="chosenOptionsCopy"
-        :is-chosen-tages-typ-valid="isChosenTagesTypValid"
+        :is-zeitraum-and-tagestyp-valid="isZeitraumAndTagestypValid"
       />
       <v-divider v-if="isDateRange" />
 
@@ -45,14 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
+import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
 
-import { defaults, isNil } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
 
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DateRangePicker from "@/components/common/DateRangePicker.vue";
@@ -65,13 +63,15 @@ import StartAndEndDate from "@/types/common/StartAndEndDate";
 import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 
-const route = useRoute();
-
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+
+interface Props {
+  isZeitraumAndTagestypValid: boolean;
+}
+defineProps<Props>();
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
-const isChosenTagesTypValid = ref(true);
 
 const isDateRange = computed(() => {
   const chosenDates = [
@@ -86,10 +86,11 @@ const isDateRange = computed(() => {
 });
 
 onMounted(() => {
-  const messstelleId = route.params.messstelleId as string;
-  MessstelleOptionsmenuService.getNichtPlausibleTage(messstelleId).then(
-    (nichtPlausibleTageDTO: NichtPlausibleTageDTO) =>
-      (nichtPlausibleTage.value = nichtPlausibleTageDTO.nichtPlausibleTage)
+  MessstelleOptionsmenuService.getAuffaelligeTage(
+    messstelleInfo.value.mstId
+  ).then(
+    (response: AuffaelligeTageDTO) =>
+      (auffaelligeTage.value = response.auffaelligeTage)
   );
 });
 
@@ -97,7 +98,7 @@ const messstelleInfo = computed<MessstelleInfoDTO>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
-const nichtPlausibleTage = ref<Array<string>>([]);
+const auffaelligeTage = ref<Array<string>>([]);
 
 const isZeitraumGreaterThanFiveYears = computed(() => {
   return dateUtils.isGreaterThanFiveYears(
@@ -111,10 +112,6 @@ const chosenOptionsCopyStartAndEndDatum = computed(() => {
     chosenOptionsCopy.value.zeitraumStartAndEndDate ??
     new StartAndEndDate(undefined, undefined)
   );
-});
-
-const chosenOptionsCopyTagesTyp = computed(() => {
-  return chosenOptionsCopy.value.tagesTyp ?? "";
 });
 
 const minDateDescription = ref<string>("");
@@ -169,34 +166,6 @@ watch(
     }
   },
   { immediate: true }
-);
-
-watch(
-  [chosenOptionsCopyTagesTyp, chosenOptionsCopyStartAndEndDatum],
-  () => {
-    if (
-      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate) &&
-      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate) &&
-      !isNil(chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate) &&
-      chosenOptionsCopy.value.tagesTyp
-    ) {
-      const chosenTagesTypValidRequestDto = {
-        startDate: dateUtils.formatDateToISO(
-          chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
-        ),
-        endDate: dateUtils.formatDateToISO(
-          chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
-        ),
-        tagesTyp: defaults(chosenOptionsCopy.value.tagesTyp, ""),
-      };
-      MessstelleOptionsmenuService.isTagesTypValid(
-        chosenTagesTypValidRequestDto
-      ).then((chosenTagesTypValidDto: ChosenTagesTypValidDTO) => {
-        isChosenTagesTypValid.value = chosenTagesTypValidDto.isValid;
-      });
-    }
-  },
-  { deep: true }
 );
 
 watch(

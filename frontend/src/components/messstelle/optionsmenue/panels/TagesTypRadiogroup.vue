@@ -53,7 +53,7 @@ import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-  isChosenTagesTypValid: boolean;
+  isZeitraumAndTagestypValid: boolean;
 }
 
 const props = defineProps<Props>();
@@ -74,7 +74,7 @@ const helperText = computed(() => {
       chosenOptionsCopy.value.tagesTyp === TagesTyp.UNSPECIFIED)
   ) {
     helpText = "Bei einem Zeitraum muss ein Wochentag ausgewählt werden.";
-  } else if (!props.isChosenTagesTypValid) {
+  } else if (!props.isZeitraumAndTagestypValid) {
     switch (chosenOptionsCopy.value.tagesTyp) {
       case TagesTyp.WERKTAG_DI_MI_DO:
         helpText =
@@ -82,7 +82,7 @@ const helperText = computed(() => {
         break;
       case TagesTyp.WERKTAG_MO_FR:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 5 Tage (Mo,Di,Mi,Do,Fr) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr) mit plausiblen Daten nötig.";
         break;
       case TagesTyp.SAMSTAG:
         helpText =
