@@ -349,7 +349,10 @@ const selectedZaehlstelleKarte = ref(
 );
 
 function searchErhebungsstelle() {
-  SucheService.searchErhebungsstelle(searchStore.getLastSearchQuery)
+  SucheService.searchErhebungsstelle(
+    searchStore.getLastSearchQuery,
+    searchStore.getSearchAndFilterOptions
+  )
     .then((result) => {
       searchStore.setSearchResult(result);
     })
