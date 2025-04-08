@@ -1,8 +1,8 @@
 <template>
   <v-sheet
-    id="drawingMessquerschnittBelastungsplan"
-    :width="props.dimension"
-    :height="props.dimension"
+    :id="sheetId"
+    :width="dimension"
+    :height="dimension"
   />
 </template>
 <script setup lang="ts">
@@ -13,7 +13,7 @@ import type { Ref } from "vue";
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import _ from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
@@ -40,6 +40,7 @@ const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const defaultFontSize = 20;
+const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
   [Himmelsrichtungen.NORD, "#4CAF50"],
@@ -72,12 +73,10 @@ onMounted(() => {
 
 function drawingConfig() {
   canvas.value
-    .addTo("#drawingMessquerschnittBelastungsplan")
+    .addTo(`#${sheetId}`)
     .size(svgHeight.value, svgHeight.value)
     .font({ size: defaultFontSize, family: fontfamily })
     .viewbox(0, 0, viewbox.value, viewbox.value);
-  startX.value = 450;
-  startY.value = 250;
   draw();
 }
 
@@ -92,10 +91,34 @@ const chosenOptionsCopyFahrzeuge = computed(() => {
 watch(
   () => props.belastungsplanData,
   () => {
-    canvas.value.clear();
-    drawingConfig();
+    redraw();
   }
 );
+
+/**
+ * Wenn der Nutzer auf den Tabs navigiert, dann bekommt die Belastungsplan
+ * Komponente das als Event mit. Dies ist notwendig, da es Probleme gibt,
+ * das SVG zu zeichen, wenn der Tab mit dem Diagramm nicht sichtbar ist.
+ */
+const activeTab = computed(() => {
+  return messstelleStore.getActiveTab;
+});
+
+/**
+ * Diese Methode zeichnet den Balastungsplan immer dann, wenn von einem anderen Tab auf
+ * den Belastungsplan Tab gewechselt wird.
+ */
+watch(activeTab, (tab: number) => {
+  if (tab === 0) {
+    redraw();
+  }
+});
+
+function redraw() {
+  nextTick(() => {
+    draw();
+  });
+}
 
 /**
  * Die Pfeile werden immer zuerst nach Norden und Süden gezeichnet,
@@ -103,6 +126,9 @@ watch(
  * handelt wird die Zeichnung im anschluss gedreht und in die richtige position geschoben
  */
 function draw() {
+  startX.value = 450;
+  startY.value = 250;
+  canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
   const groupedByDirection = _.chain(
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList
@@ -120,6 +146,7 @@ function draw() {
   drawMessstelleInfo();
   drawNorthSymbol();
   drawLegende();
+  drawLinienStaerke();
   storeImageForPrinting();
 }
 
@@ -545,7 +572,7 @@ function drawMessstelleInfo() {
         .tspan(`Stadtbezirk: ${props.belastungsplanData.stadtbezirkNummer}`)
         .font({ size: defaultFontSize, family: fontfamily })
         .newLine();
-      if (chosenOptionsCopy.value.zeitraum.length == 2) {
+      if (dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum)) {
         add
           .tspan(
             `Messzeitraum:  ${dateUtils.formatDate(
@@ -570,7 +597,7 @@ function drawMessstelleInfo() {
 
 function drawLegende() {
   const formeln = new Map<string, string>();
-  formeln.set("KFZ", "KFZ = Pkw + Lkw + Lz + Lfw + Bus + Krad");
+  formeln.set("KFZ", "KFZ = Pkw + Lfw + Lkw + Lz + Bus + Krad");
   formeln.set("SV", "SV = Lkw + Lz + Bus");
   formeln.set("GV", "GV = Lkw + Lz");
   formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
@@ -641,6 +668,81 @@ function drawLegende() {
       }
     })
     .move(50, startY.value + 950);
+}
+
+function calculateHighestValue(): number {
+  let highestValue = 0;
+  props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList.forEach(
+    (entry) => {
+      if (
+        chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr &&
+        entry.sumKfz > highestValue
+      ) {
+        highestValue = entry.sumKfz;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.schwerverkehr &&
+        entry.sumSv > highestValue
+      ) {
+        highestValue = entry.sumSv;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.gueterverkehr &&
+        entry.sumGv > highestValue
+      ) {
+        highestValue = entry.sumGv;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.radverkehr &&
+        entry.sumRad > highestValue
+      ) {
+        highestValue = entry.sumRad;
+      }
+    }
+  );
+  // Round to next 1000
+  return highestValue + (1000 - (highestValue % 1000));
+}
+
+function drawLinienStaerke() {
+  const path1 = SVG.SVG()
+    .path("M1190 1295 L1316 1295 L1316 1275 z")
+    .stroke({ width: 1, color: "black" })
+    .attr("fill", "none");
+  const path2 = SVG.SVG()
+    .path("M1253 1295 L1253 1285 z")
+    .stroke({ width: 1, color: "black" })
+    .attr("fill", "none");
+  const groupPath = canvas.value
+    .group()
+    .add(path1)
+    .add(path2)
+    .move(1000, startY.value + 1000);
+
+  const high = calculateHighestValue();
+
+  const text1 = SVG.SVG()
+    .text((add) => {
+      add.tspan(`${high / 2}`).font({
+        size: defaultFontSize,
+        family: fontfamily,
+        anchor: "middle",
+      });
+    })
+    .x(1030)
+    .dy(startY.value + 1040);
+  const text2 = SVG.SVG()
+    .text((add) => {
+      add.tspan(`${high}`).font({
+        size: defaultFontSize,
+        family: fontfamily,
+        anchor: "middle",
+      });
+    })
+    .x(1095)
+    .dy(startY.value + 1040);
+
+  canvas.value.add(groupPath).add(text1).add(text2);
 }
 
 const getZeitblockText = computed(() => {

@@ -34,7 +34,10 @@
               focusable
               elevation="0"
             >
-              <zeit-panel v-model="chosenOptions" />
+              <zeit-panel
+                v-model="chosenOptions"
+                :is-zeitraum-and-tagestyp-valid="isZeitraumAndTagestypValid"
+              />
               <fahrzeug-panel v-model="chosenOptions" />
               <messquerschnitt-panel v-model="chosenOptions" />
               <darstellungsoptionen-panel-messstelle v-model="chosenOptions" />
@@ -66,11 +69,14 @@
 </template>
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
+import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
 import { cloneDeep, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
@@ -87,7 +93,6 @@ import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { useTimeUtils } from "@/util/TimeUtils";
 
 interface Props {
   messstelleId: string;
@@ -104,9 +109,9 @@ const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultMessstelleOptions()
 );
+const isZeitraumAndTagestypValid = ref(false);
 
 const userStore = useUserStore();
-const timeUtils = useTimeUtils();
 const dateUtils = useDateUtils();
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
@@ -176,14 +181,26 @@ function areChosenOptionsValid(): boolean {
   }
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
-    !chosenOptions.value.tagesTyp
+    (!chosenOptions.value.tagesTyp ||
+      chosenOptions.value.tagesTyp === TagesTyp.UNSPECIFIED)
   ) {
     result = false;
     snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
   }
   if (
+    dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
+    !isZeitraumAndTagestypValid.value
+  ) {
+    result = false;
+    snackbarStore.showError(
+      "Der ausgewählte Zeitraum ist zu kurz. Es liegen nicht genügen plausible Daten vor."
+    );
+  }
+  if (
     isAnwender.value &&
-    timeUtils.isDateRangeBiggerFiveYears(chosenOptions.value.zeitraum.slice())
+    dateUtils.isGreaterThanFiveYearsForZeitraum(
+      chosenOptions.value.zeitraum.slice()
+    )
   ) {
     result = false;
     snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
@@ -277,5 +294,41 @@ watch(
       'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
     );
   }
+);
+
+watch(
+  [
+    () => chosenOptions.value.tagesTyp,
+    () => chosenOptions.value.zeitraumStartAndEndDate,
+  ],
+  () => {
+    if (
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate) &&
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate.startDate) &&
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate.endDate) &&
+      chosenOptions.value.tagesTyp !== TagesTyp.UNSPECIFIED
+    ) {
+      const isoStartDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.startDate
+      );
+      const isoEndDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.endDate
+      );
+      const request = {
+        zeitraum: [isoStartDate, isoEndDate],
+        mstId: messstelle.value.mstId,
+        tagesTyp: chosenOptions.value.tagesTyp,
+      } as ValidateZeitraumAndTagestypForMessstelleDTO;
+
+      MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)
+        .then((response: ValidatedZeitraumAndTagestypDTO) => {
+          isZeitraumAndTagestypValid.value = response.isValid;
+        })
+        .catch((error) => useSnackbarStore().showApiError(error));
+    } else {
+      isZeitraumAndTagestypValid.value = true;
+    }
+  },
+  { deep: true }
 );
 </script>

@@ -35,6 +35,25 @@
       />
     </template>
     <template #append>
+      <v-icon
+        v-tooltip:bottom="'Such- und Filtereinstellungen'"
+        :color="isDefaultFilter ? '' : 'secondary'"
+        style="opacity: 1"
+        @click="openSearchAndFilterDialog"
+      >
+        {{ isDefaultFilter ? "mdi-filter-outline" : "mdi-filter" }}
+      </v-icon>
+
+      <v-dialog
+        v-model="searchAndFilterDialogOpen"
+        max-width="800px"
+      >
+        <search-and-filter-options-card
+          v-model="searchAndFilterOptions"
+          @adopt-search-and-filter-options="handleAdoptSearchAndFilterOptions"
+          @reset-search-and-filter-options="handleResetSearchAndFilterOptions"
+        />
+      </v-dialog>
       <v-tooltip
         v-model="showtooltip"
         location="bottom start"
@@ -65,17 +84,19 @@
 </template>
 
 <script setup lang="ts">
+import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
 import type SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
 import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
 import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
-import { isEmpty, isNil } from "lodash";
-import { ref, watch } from "vue";
+import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
+import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
+import SearchAndFilterOptionsCard from "@/components/search/filter/SearchAndFilterOptionsCard.vue";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -93,6 +114,10 @@ const suggestions = ref<Array<Suggest>>([]);
 const selectedSuggestion = ref<Suggest | undefined>(undefined);
 const lastSuggestQuery = ref("");
 const showtooltip = ref(false);
+const searchAndFilterDialogOpen = ref(false);
+const searchAndFilterOptions = ref(
+  DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO()
+);
 
 const route = useRoute();
 const router = useRouter();
@@ -175,6 +200,7 @@ function clearSearch(): void {
 function searchOrShowSelectedSuggestion() {
   mapOptionsStore.resetMapOptions();
   if (isNil(selectedSuggestion.value)) {
+    selectSuggestionTypeSearchText();
     search();
   } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_VORSCHLAG) {
     searchForSuggestion(selectedSuggestion.value.text);
@@ -185,8 +211,16 @@ function searchOrShowSelectedSuggestion() {
   } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_MESSSTELLE) {
     showMessstelle(selectedSuggestion.value);
   } else {
+    selectSuggestionTypeSearchText();
     search();
   }
+}
+
+function selectSuggestionTypeSearchText() {
+  // Es wurde keine Suggestion ausgewählt, also wird zur Anzeige der Suggestion-Type Text genutzt
+  selectedSuggestion.value = suggestions.value.filter(
+    (value) => value.type === SUGGESTION_TYPE_SEARCH_TEXT
+  )[0];
 }
 
 function search() {
@@ -205,7 +239,10 @@ function search() {
     router.push(`/`);
   }
 
-  SucheService.searchErhebungsstelle(searchQuery.value)
+  SucheService.searchErhebungsstelle(
+    searchQuery.value,
+    searchAndFilterOptionsStore.value
+  )
     .then((result) => {
       searchStore.setSearchResult(result);
     })
@@ -268,6 +305,45 @@ function iconOfSuggestion(type: string) {
   }
   return icon;
 }
+
+function hasFilterChanged(): boolean {
+  return isEqual(
+    searchAndFilterOptionsStore.value,
+    searchAndFilterOptions.value
+  );
+}
+
+const isDefaultFilter = computed(() => {
+  return !searchStore.areSearchAndFilterOptionsDirty;
+});
+
+function openSearchAndFilterDialog(): void {
+  searchAndFilterOptions.value = searchAndFilterOptionsStore.value;
+  searchAndFilterDialogOpen.value = true;
+}
+
+function handleAdoptSearchAndFilterOptions(): void {
+  searchAndFilterOptionsStore.value = searchAndFilterOptions.value;
+  searchAndFilterDialogOpen.value = false;
+  if (hasFilterChanged()) {
+    search();
+  }
+}
+
+function handleResetSearchAndFilterOptions(): void {
+  searchAndFilterOptions.value =
+    DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO();
+  handleAdoptSearchAndFilterOptions();
+}
+
+const searchAndFilterOptionsStore = computed({
+  get() {
+    return cloneDeep(searchStore.getSearchAndFilterOptions);
+  },
+  set(payload: SearchAndFilterOptionsDTO) {
+    searchStore.setSearchAndFilterOptions(cloneDeep(payload));
+  },
+});
 
 watch(
   () => searchStore.triggerSearch,

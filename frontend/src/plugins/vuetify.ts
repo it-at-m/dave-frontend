@@ -17,8 +17,8 @@ import { de } from "vuetify/locale";
 import achtUndEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtUndEinsIcon.vue";
 import qKFZIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QKFZIcon.vue";
 import qpkwLkwIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QpkwLkwIcon.vue";
-import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
 // Zaehlart
+import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
 import artN from "@/components/zaehlstelle/icons/ArtIcons/ArtN.vue";
 import artQ from "@/components/zaehlstelle/icons/ArtIcons/ArtQ.vue";
 import artQB from "@/components/zaehlstelle/icons/ArtIcons/ArtQB.vue";
