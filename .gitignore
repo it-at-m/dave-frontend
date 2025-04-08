@@ -37,7 +37,3 @@ $(pwd)
 
 # helps local on dev computer to manage different java-versions (see more: https://www.jenv.be/)
 .java-version
-
-# do not check in local application profile yml
-apigateway/**/application-local.yml
-apigateway/**/application-unittest.yml

@@ -7,6 +7,7 @@ import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
@@ -84,6 +85,7 @@ export default class DefaultObjectCreator {
       datumLetztePlausibleMessung: "",
       abbaudatum: "",
       realisierungsdatum: "",
+      lageplanVorhanden: false,
     };
   }
 
@@ -309,11 +311,17 @@ export default class DefaultObjectCreator {
     } as LadeZaehldatenHeatmapDTO;
   }
 
-  public static createDefaultInitDto(): InitDTO {
+  public static createDefaultSearchAndFilterOptionsDTO(): SearchAndFilterOptionsDTO {
     return {
-      lat: "48.137227",
-      lng: "11.575517"
-    };
+      searchInMessstellen: true,
+      searchInZaehlstellen: true,
+    } as SearchAndFilterOptionsDTO;
   }
 
+    public static createDefaultInitDto(): InitDTO {
+        return {
+            lat: "48.137227",
+            lng: "11.575517"
+        };
+    }
 }

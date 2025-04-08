@@ -66,6 +66,7 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card

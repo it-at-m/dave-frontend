@@ -535,7 +535,7 @@ function legendeLinienStaerke() {
 
   const high =
     highestFahrbeziehungsValue.value +
-    (100 - (highestFahrbeziehungsValue.value % 1000));
+    (1000 - (highestFahrbeziehungsValue.value % 1000));
   size
     .text((add) => {
       add
