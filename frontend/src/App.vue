@@ -91,7 +91,7 @@ import { useUserStore } from "@/store/UserStore";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 import MapConfigService from "@/api/service/MapConfigService";
-import type MapConfigDTO from "@/types/init/MapConfigDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 
 const URL_HANDBUCH_LINK =
   "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
@@ -135,11 +135,12 @@ function created() {
     });
   MapConfigService.getMapConfig()
       .then((res : MapConfigDTO) => {
-        const mapOptions = {latitude: res.lat, longitude: res.lng, zoom: res.zoom};
+        const mapOptions = {
+          latitude: res.lat,
+          longitude: res.lng,
+          zoom: res.zoom
+        };
         mapOptionsStore.setMapOptions(mapOptions)
-  })
-  .catch(() => {
-    console.log("error"); // TODO
   });
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {

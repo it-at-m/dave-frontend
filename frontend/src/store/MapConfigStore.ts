@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import type MapConfigDTO from "@/types/init/MapConfigDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 
-export const useMapConfigStore = defineStore("mapOptionsStore", () => {
+export const useMapConfigStore = defineStore("mapConfigStore", () => {
   const mapConfig = ref<MapConfigDTO>(
-      DefaultObjectCreator.createMapConfig()
+      DefaultObjectCreator.createDefaultMapConfigDTO()
   );
 
   const getMapConfig = computed(() => mapConfig.value);

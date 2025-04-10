@@ -4,7 +4,7 @@
       ref="map"
       height="100%"
       width="100%"
-      :zoom="12"
+      :zoom="mapConfigStore.getMapConfig.zoom"
     />
 
     <v-speed-dial
@@ -65,11 +65,13 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import {useMapConfigStore} from "@/store/MapConfigStore";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const downloadUtils = useDownloadUtils();
+const mapConfigStore = useMapConfigStore();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);

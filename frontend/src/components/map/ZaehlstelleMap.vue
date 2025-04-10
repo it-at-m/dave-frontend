@@ -40,8 +40,6 @@ import {useMapConfigStore} from "@/store/MapConfigStore";
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
 const NUMBER_OF_COLUMNS_ZAEHLART_MARKER = 2;
-//const MUNICH_CENTER_LATITUDE = "48.137227";
-//const MUNICH_CENTER_LONGITUDE = "11.575517";
 const ICON_COLOR_SECONDARY = "secondary";
 const ICON_COLOR_RED = "red";
 
@@ -128,7 +126,7 @@ const zoomValue = computed(() => {
   ) {
     return mapOptionsStore.getMapOptions.zoom;
   } else {
-    return mapConfigStore.getMapConfig.zoom;
+    return props.zoom;
   }
 });
 
@@ -149,7 +147,8 @@ const center = computed<LatLng>(() => {
     );
   } else {
     return createLatLngFromString(
-        mapConfigStore.getMapConfig.lat, mapConfigStore.getMapConfig.lng
+        mapConfigStore.getMapConfig.lat,
+        mapConfigStore.getMapConfig.lng
     );
   }
 });

@@ -28,7 +28,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
-import type MapConfigDTO from "@/types/init/MapConfigDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 
 export default class DefaultObjectCreator {
   public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -318,11 +318,12 @@ export default class DefaultObjectCreator {
     } as SearchAndFilterOptionsDTO;
   }
 
-  public static createMapConfig(): MapConfigDTO {
+  public static createDefaultMapConfigDTO(): MapConfigDTO {
     return {
+      // München Zentrum
       lat: "48.137227",
       lng: "11.575517",
-      zoom: 8
+      zoom: 12
     }
   }
 }

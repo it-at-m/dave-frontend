@@ -1,5 +1,5 @@
 import FetchService from "@/api/service/FetchService";
-import type MapConfigDTO from "@/types/init/MapConfigDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 
 export default class MapConfigService {
   private static readonly ENDPOINT: string =
@@ -8,7 +8,7 @@ export default class MapConfigService {
   static getMapConfig(): Promise<MapConfigDTO> {
     return FetchService.getData(
         `${this.ENDPOINT}`,
-        "Beim Laden des Init ist ein Fehler aufgetreten."
+        "Beim Laden der Kartenkonfiguration ist ein Fehler aufgetreten."
     );
   }
 }
