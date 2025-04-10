@@ -3,7 +3,7 @@ import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 
 export default class MapConfigService {
   private static readonly ENDPOINT: string =
-      "api/dave-backend-service/map";
+      "api/dave-backend-service/mapconfig";
 
   static getMapConfig(): Promise<MapConfigDTO> {
     return FetchService.getData(
