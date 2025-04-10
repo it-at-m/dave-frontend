@@ -5,7 +5,7 @@
       height="100%"
       width="100%"
       :latlng="[init.lat, init.lng]"
-      :zoom="12"
+      :zoom="init.zoom"
     />
 
     <v-speed-dial
@@ -68,8 +68,8 @@ import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import InfoMessageService from "@/api/service/InfoMessageService";
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
-import type InitDTO from "@/types/init/InitDTO";
-import InitService from "@/api/service/InitService";
+import type MapConfigDTO from "@/types/init/MapConfigDTO";
+import MapConfigService from "@/api/service/MapConfigService";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const pdfReportStore = usePdfReportStore();
@@ -80,22 +80,14 @@ const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
-const init = ref<InitDTO>(
+const init = ref<MapConfigDTO>(
     DefaultObjectCreator.createDefaultInitDto()
 );
 
 
 onMounted(() => {
   window.scrollTo(0, 0);
-  loadInit();
 });
-
-function loadInit(): void {
-  console.log("loadInit");
-  InitService.getInit().then((dto: InitDTO) => {
-    init.value = dto;
-  });
-}
 
 function takePicture() {
   if (map.value != null) {

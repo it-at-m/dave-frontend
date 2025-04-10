@@ -50,11 +50,11 @@ const mapAttribution =
 interface Props {
   minheight?: string;
   zId?: string;
-  latlng?: Array<string>;
+  // latlng?: Array<string>;
   height?: string;
   width?: string;
   showMarker?: boolean;
-  zoom?: number;
+  // zoom?: number;
   reload?: boolean;
 }
 
@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<Props>(), {
   height: "15vh",
   width: "100%",
   showMarker: false,
-  zoom: 12,
+  // zoom: 12,
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
@@ -89,8 +89,8 @@ onBeforeUnmount(() => {
 
 function initMap(): void {
   map = L.map(mapRef.value as HTMLElement, {
-    zoom: zoomValue.value,
-    minZoom: 10,
+    zoom: mapOptionsStore.getMapOptions.zoom,
+    minZoom: 8,
     maxZoom: 18,
     preferCanvas: false,
     attributionControl: false,
@@ -109,7 +109,7 @@ function initMap(): void {
           prefix: "Leaflet",
         })
       );
-      map.setZoom(zoomValue.value);
+      map.setZoom(mapOptionsStore.getMapOptions.zoom);
       createLayersAndAddToMap();
       mapMarkerClusterGroup.addTo(map);
       searchErhebungsstelle();
@@ -117,41 +117,27 @@ function initMap(): void {
   });
 }
 
-const zoomValue = computed(() => {
-  if (props.latlng && props.latlng.length > 0) {
-    return props.zoom;
-  } else if (
-    mapOptionsStore.getMapOptions &&
-    mapOptionsStore.getMapOptions.zoom
-  ) {
-    return mapOptionsStore.getMapOptions.zoom;
-  } else {
-    return props.zoom;
-  }
-});
+// const zoomValue = computed(() => {
+//   if (props.latlng && props.latlng.length > 0) {
+//     return props.zoom;
+//   } else if (
+//     mapOptionsStore.getMapOptions &&
+//     mapOptionsStore.getMapOptions.zoom
+//   ) {
+//     return mapOptionsStore.getMapOptions.zoom;
+//   } else {
+//     return props.zoom;
+//   }
+// });
 
 /**
  * Die Methode setzt Koordinate auf welche Zentriert werden soll.
  */
 const center = computed<LatLng>(() => {
-  if (props.latlng && props.latlng.length > 0) {
-    return createLatLngFromString(props.latlng[0], props.latlng[1]);
-  } else if (
-    mapOptionsStore.getMapOptions &&
-    mapOptionsStore.getMapOptions.latitude &&
-    mapOptionsStore.getMapOptions.longitude
-  ) {
     return createLatLngFromString(
       mapOptionsStore.getMapOptions.latitude,
       mapOptionsStore.getMapOptions.longitude
-    );
-  } else {
-    // Mitte von München
-    return createLatLngFromString(
-      MUNICH_CENTER_LATITUDE,
-      MUNICH_CENTER_LONGITUDE
-    );
-  }
+    )
 });
 
 function createLatLngFromString(lat: string, lng: string): LatLng {
@@ -313,12 +299,12 @@ function setMarkerToMap() {
     // Zaehlartenmarker erzeugen
     setZaehlartenmarkerToMap();
     map.setView(createLatLng(zaehlstellenKarte[0]), 18);
-  } else if (props.zId && props.latlng && props.latlng.length > 0) {
+  } else if (props.zId) {
     // Zaehlartenmarker erzeugen
     setZaehlartenmarkerToMap();
-    map.setView(center.value, zoomValue.value);
+    map.setView(center.value, mapOptionsStore.getMapOptions.zoom);
   } else {
-    map.setView(center.value, zoomValue.value);
+    map.setView(center.value, mapOptionsStore.getMapOptions.zoom);
   }
 }
 

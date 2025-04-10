@@ -1,11 +1,11 @@
 import FetchService from "@/api/service/FetchService";
-import type InitDTO from "@/types/init/InitDTO";
+import type MapConfigDTO from "@/types/init/MapConfigDTO";
 
-export default class InitService {
+export default class MapConfigService {
   private static readonly ENDPOINT: string =
-      "api/dave-backend-service/init";
+      "api/dave-backend-service/map";
 
-  static getInit(): Promise<InitDTO> {
+  static getMapConfig(): Promise<MapConfigDTO> {
     return FetchService.getData(
         `${this.ENDPOINT}`,
         "Beim Laden des Init ist ein Fehler aufgetreten."

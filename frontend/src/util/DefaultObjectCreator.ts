@@ -28,7 +28,8 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
-import type InitDTO from "@/types/init/InitDTO";
+import type MapConfigDTO from "@/types/init/MapConfigDTO";
+import type MapOptions from "@/types/karte/MapOptions";
 
 export default class DefaultObjectCreator {
   public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -318,10 +319,18 @@ export default class DefaultObjectCreator {
     } as SearchAndFilterOptionsDTO;
   }
 
-    public static createDefaultInitDto(): InitDTO {
-        return {
-            lat: "48.137227",
-            lng: "11.575517"
-        };
+    // public static createMapOptions(): MapOptions {
+    //   return {
+    //     latitude: "48.137227",
+    //     longitude: "11.575517",
+    //     zoom: 8
+    //   }
+    // }
+  public static createMapConfig(): MapConfigDTO {
+    return {
+      lat: "48.137227",
+      lng: "11.575517",
+      zoom: 8
     }
+  }
 }
