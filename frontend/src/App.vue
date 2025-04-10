@@ -139,7 +139,7 @@ function created() {
         mapOptionsStore.setMapOptions(mapOptions)
   })
   .catch(() => {
-    console.log("error");
+    console.log("error"); // TODO
   });
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {

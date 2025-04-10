@@ -2,21 +2,18 @@ import type MapOptions from "@/types/karte/MapOptions";
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 export const useMapOptionsStore = defineStore("mapOptionsStore", () => {
-  const mapOptions = ref<MapOptions>(
-      DefaultObjectCreator.createMapOptions()
-  );
+  const mapOptions = ref<MapOptions | undefined>(undefined);
 
   const getMapOptions = computed(() => mapOptions.value);
 
-  function setMapOptions(payload: MapOptions) {
+  function setMapOptions(payload: MapOptions | undefined) {
     mapOptions.value = payload;
   }
 
   function resetMapOptions() {
-    mapOptions.value = DefaultObjectCreator.createMapOptions();
+    mapOptions.value = undefined;
   }
 
   return {

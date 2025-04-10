@@ -4,8 +4,7 @@
       ref="map"
       height="100%"
       width="100%"
-      :latlng="[init.lat, init.lng]"
-      :zoom="init.zoom"
+      :zoom="12"
     />
 
     <v-speed-dial
@@ -66,11 +65,6 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-import InfoMessageService from "@/api/service/InfoMessageService";
-import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
-import type MapConfigDTO from "@/types/init/MapConfigDTO";
-import MapConfigService from "@/api/service/MapConfigService";
-import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
@@ -80,10 +74,6 @@ const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
-const init = ref<MapConfigDTO>(
-    DefaultObjectCreator.createDefaultInitDto()
-);
-
 
 onMounted(() => {
   window.scrollTo(0, 0);

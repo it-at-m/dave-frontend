@@ -35,6 +35,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import {useMapConfigStore} from "@/store/MapConfigStore";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -50,11 +51,11 @@ const mapAttribution =
 interface Props {
   minheight?: string;
   zId?: string;
-  // latlng?: Array<string>;
+  latlng?: Array<string>;
   height?: string;
   width?: string;
   showMarker?: boolean;
-  // zoom?: number;
+  zoom?: number;
   reload?: boolean;
 }
 
@@ -63,7 +64,7 @@ const props = withDefaults(defineProps<Props>(), {
   height: "15vh",
   width: "100%",
   showMarker: false,
-  // zoom: 12,
+  zoom: 12,
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
@@ -72,6 +73,7 @@ const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
 const mapOptionsStore = useMapOptionsStore();
+const mapConfigStore = useMapConfigStore();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
@@ -89,7 +91,7 @@ onBeforeUnmount(() => {
 
 function initMap(): void {
   map = L.map(mapRef.value as HTMLElement, {
-    zoom: mapOptionsStore.getMapOptions.zoom,
+    zoom: zoomValue.value,
     minZoom: 8,
     maxZoom: 18,
     preferCanvas: false,
@@ -109,7 +111,7 @@ function initMap(): void {
           prefix: "Leaflet",
         })
       );
-      map.setZoom(mapOptionsStore.getMapOptions.zoom);
+      map.setZoom(zoomValue.value);
       createLayersAndAddToMap();
       mapMarkerClusterGroup.addTo(map);
       searchErhebungsstelle();
@@ -117,27 +119,39 @@ function initMap(): void {
   });
 }
 
-// const zoomValue = computed(() => {
-//   if (props.latlng && props.latlng.length > 0) {
-//     return props.zoom;
-//   } else if (
-//     mapOptionsStore.getMapOptions &&
-//     mapOptionsStore.getMapOptions.zoom
-//   ) {
-//     return mapOptionsStore.getMapOptions.zoom;
-//   } else {
-//     return props.zoom;
-//   }
-// });
+const zoomValue = computed(() => {
+  if (props.latlng && props.latlng.length > 0) {
+    return props.zoom;
+  } else if (
+    mapOptionsStore.getMapOptions &&
+    mapOptionsStore.getMapOptions.zoom
+  ) {
+    return mapOptionsStore.getMapOptions.zoom;
+  } else {
+    return mapConfigStore.getMapConfig.zoom;
+  }
+});
 
 /**
  * Die Methode setzt Koordinate auf welche Zentriert werden soll.
  */
 const center = computed<LatLng>(() => {
+  if (props.latlng && props.latlng.length > 0) {
+    return createLatLngFromString(props.latlng[0], props.latlng[1]);
+  } else if (
+    mapOptionsStore.getMapOptions &&
+    mapOptionsStore.getMapOptions.latitude &&
+    mapOptionsStore.getMapOptions.longitude
+  ) {
     return createLatLngFromString(
       mapOptionsStore.getMapOptions.latitude,
       mapOptionsStore.getMapOptions.longitude
-    )
+    );
+  } else {
+    return createLatLngFromString(
+        mapConfigStore.getMapConfig.lat, mapConfigStore.getMapConfig.lng
+    );
+  }
 });
 
 function createLatLngFromString(lat: string, lng: string): LatLng {
@@ -299,12 +313,12 @@ function setMarkerToMap() {
     // Zaehlartenmarker erzeugen
     setZaehlartenmarkerToMap();
     map.setView(createLatLng(zaehlstellenKarte[0]), 18);
-  } else if (props.zId) {
+  } else if (props.zId && props.latlng && props.latlng.length > 0) {
     // Zaehlartenmarker erzeugen
     setZaehlartenmarkerToMap();
-    map.setView(center.value, mapOptionsStore.getMapOptions.zoom);
+    map.setView(center.value, zoomValue.value);
   } else {
-    map.setView(center.value, mapOptionsStore.getMapOptions.zoom);
+    map.setView(center.value, zoomValue.value);
   }
 }
 
