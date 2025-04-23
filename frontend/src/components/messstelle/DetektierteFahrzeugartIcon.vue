@@ -15,7 +15,7 @@ import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import IconOptions from "@/types/util/IconOptions";
 
 interface Props {
-  detektierteFahrzeugart?: DetektierteFahrzeugart;
+  detektierteFahrzeugart: DetektierteFahrzeugart;
   color?: string;
 }
 
