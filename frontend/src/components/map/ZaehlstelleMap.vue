@@ -64,6 +64,8 @@ const props = withDefaults(defineProps<Props>(), {
   width: "100%",
   showMarker: false,
   zoom: 12,
+  latlng: undefined,
+  zId: undefined,
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
