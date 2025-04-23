@@ -1,5 +1,6 @@
 import XsrfTokenExtractor from "@/api/util/XsrfTokenExtractor";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export default class FetchUtils {
   /**
    * Liefert eine default GET-Config für fetch
