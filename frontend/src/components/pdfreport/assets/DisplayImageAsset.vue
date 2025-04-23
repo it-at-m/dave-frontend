@@ -29,5 +29,7 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   width: "100%",
+  caption: "",
+  image: "",
 });
 </script>
