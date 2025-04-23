@@ -21,7 +21,7 @@
               variant="text"
               @click="loadLageplan"
             >
-              <template v-slot:default>
+              <template #default>
                 <v-icon size="x-large">mdi-map</v-icon>
               </template>
             </v-btn>
@@ -57,7 +57,7 @@ interface Props {
   lageplanVorhanden: boolean;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 const snackbarStore = useSnackbarStore();
 const lageplanLoading = ref(false);
 
