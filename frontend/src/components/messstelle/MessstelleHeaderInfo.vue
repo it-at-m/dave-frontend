@@ -57,13 +57,13 @@ interface Props {
   lageplanVorhanden: boolean;
 }
 
-defineProps<Props>();
+const properties = defineProps<Props>();
 const snackbarStore = useSnackbarStore();
 const lageplanLoading = ref(false);
 
 function loadLageplan() {
   lageplanLoading.value = true;
-  LageplanService.loadLageplan(props.mstId)
+  LageplanService.loadLageplan(properties.mstId)
     .then((result: LageplanDTO) => {
       window.open(result.url);
     })
