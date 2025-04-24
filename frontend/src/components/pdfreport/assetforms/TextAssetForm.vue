@@ -1,9 +1,8 @@
 <template>
   <v-dialog
-    v-model="openDialog"
+    v-model="openEditTextDialog"
     width="100vh"
     height="60vh"
-    @click:outside="cancelDialog"
   >
     <v-card>
       <v-card-title class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2">
@@ -132,7 +131,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
 
@@ -145,16 +144,9 @@ const openEditTextDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
-  (e: "cancelDialog"): void;
-  (e: "input", v: boolean): void;
 }>();
 
 const asset = ref(new TextAsset(""));
-
-const openDialog = computed({
-  get: () => openEditTextDialog.value,
-  set: (payload: boolean) => emits("input", payload),
-});
 
 /**
  * Um den Text im Array zu "speichern", wird es als Event an die View geschickt.
@@ -163,16 +155,9 @@ function save(): void {
   if (asset.value.text && asset.value.text.length > 0) {
     emits("save", Object.assign({}, asset.value));
   } else {
-    cancelDialog();
+    asset.value = new TextAsset("");
+    openEditTextDialog.value = false;
   }
-}
-
-/**
- * Verläßt das Formular ohne zu speichern.
- */
-function cancelDialog(): void {
-  asset.value = new TextAsset("");
-  emits("cancelDialog");
 }
 
 function addBoldText() {
@@ -193,7 +178,7 @@ function changeTextSize(size: string): void {
   }
 }
 
-watch(openDialog, () => {
+watch(openEditTextDialog, () => {
   if (props.text) {
     asset.value = Object.assign({}, props.text);
   }
