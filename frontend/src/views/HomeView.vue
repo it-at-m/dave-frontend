@@ -59,13 +59,13 @@ import html2canvas from "html2canvas";
 import { computed, onMounted, ref } from "vue";
 
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
+import { useMapConfigStore } from "@/store/MapConfigStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-import {useMapConfigStore} from "@/store/MapConfigStore";
 
 const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();

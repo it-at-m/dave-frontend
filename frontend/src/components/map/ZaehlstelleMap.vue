@@ -29,13 +29,13 @@ import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconRed from "@/assets/marker-icon-red.png";
+import { useMapConfigStore } from "@/store/MapConfigStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import {useMapConfigStore} from "@/store/MapConfigStore";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -147,8 +147,8 @@ const center = computed<LatLng>(() => {
     );
   } else {
     return createLatLngFromString(
-        mapConfigStore.getMapConfig.lat,
-        mapConfigStore.getMapConfig.lng
+      mapConfigStore.getMapConfig.lat,
+      mapConfigStore.getMapConfig.lng
     );
   }
 });
