@@ -1,7 +1,12 @@
 export default class VersionInfoResponse {
-  public application: any;
+  public application: Application;
 
-  constructor(application: any) {
+  constructor(application: Application) {
     this.application = application;
   }
+}
+
+export interface Application {
+  name: string;
+  version: string;
 }

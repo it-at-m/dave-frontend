@@ -84,7 +84,7 @@ interface Props {
   externalQuery: string;
 }
 
-const props = defineProps<Props>();
+const properties = defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 
@@ -96,7 +96,7 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 };
 
 watch(
-  () => props.externalQuery,
+  () => properties.externalQuery,
   (newQuery) => {
     updateQuery(newQuery);
   }
@@ -129,14 +129,14 @@ const filteredZaehlungen = computed(() => {
   let filteredZs = zaehlstelleStore.getInaktiveZaehlungen;
   if (query.value.length > 0) {
     if (
-      !props.externalQuery &&
-      (query.value === props.externalQuery ||
-        query.value == zaehlartText.get(props.externalQuery))
+      !properties.externalQuery &&
+      (query.value === properties.externalQuery ||
+        query.value == zaehlartText.get(properties.externalQuery))
     ) {
       filteredZs = filteredZs.filter(
         (z) =>
           z.zaehlart.toLowerCase() ===
-            props.externalQuery.trim().toLowerCase() &&
+            properties.externalQuery.trim().toLowerCase() &&
           // Suche nach einem Zählartbuchstaben ist manchaml schwierig,
           // deshalb kann hier nach dem ganzen Text gesucht werden
           zaehlartText
