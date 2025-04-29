@@ -27,7 +27,7 @@ services:
   
   elasticsearch:
     container_name: dave-elasticsearch
-    image: bitnami/elasticsearch:7.17.14
+    image: bitnami/elasticsearch:7.17.26
     environment:
       - discovery.type=single-node
       - path.data=%USERPROFILE%/dave/data/mydatafile
