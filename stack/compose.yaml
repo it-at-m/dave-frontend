@@ -38,7 +38,7 @@ services:
       
   kibana:
     container_name: dave-kibana
-    image: bitnami/kibana:7.17.14
+    image: bitnami/kibana:7.17.26
     ports:
       - 5601:5601
       
