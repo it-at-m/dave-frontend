@@ -226,7 +226,7 @@ interface Props {
   width?: string;
   activeColor: string;
   passiveColor?: string;
-  knotenarme?: Array<LadeKnotenarmDTO>;
+  knotenarme: Array<LadeKnotenarmDTO>;
 }
 
 const props = withDefaults(defineProps<Props>(), {

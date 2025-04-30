@@ -1,28 +1,27 @@
-import type ChosenTagesTypValidDTO from "@/types/messstelle/ChosenTagesTypValidDTO";
-import type ChosenTagesTypValidRequestDTO from "@/types/messstelle/ChosenTagesTypValidRequestDTO";
-import type NichtPlausibleTageDTO from "@/types/messstelle/NichtPlausibleTageDTO";
+import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
+import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
+import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
 import FetchService from "@/api/service/FetchService";
 
 export default class MessstelleOptionsmenuService {
-  private static readonly ENDPOINT: string = "api/dave-backend-service";
+  private static readonly ENDPOINT: string =
+    "api/dave-backend-service/messstelle-optionsmenu";
 
-  static getNichtPlausibleTage(
-    messquerschnittId: string
-  ): Promise<NichtPlausibleTageDTO> {
+  static getAuffaelligeTage(mstId: string): Promise<AuffaelligeTageDTO> {
     return FetchService.getData(
-      `${this.ENDPOINT}/messstelleOptionsmenu/nichtPlausibleTage?messstelle_id=${messquerschnittId}`,
-      "Beim Lesen der nicht plausiblen Tage ist ein Fehler aufgetreten."
+      `${this.ENDPOINT}/auffaellige-tage?mst_id=${mstId}`,
+      "Beim Laden der auffälligen Tage ist ein Fehler aufgetreten."
     );
   }
 
-  static isTagesTypValid(
-    chosenTagesTypValidRequestDto: ChosenTagesTypValidRequestDTO
-  ): Promise<ChosenTagesTypValidDTO> {
+  static validateZeitraumAndTagestyp(
+    data: ValidateZeitraumAndTagestypForMessstelleDTO
+  ): Promise<ValidatedZeitraumAndTagestypDTO> {
     return FetchService.postData(
-      chosenTagesTypValidRequestDto,
-      `${this.ENDPOINT}/messstelleOptionsmenu/validateTagesTyp`,
-      "Beim Lesen ob der Tagestyp valide ist, ist ein Fehler aufgetreten."
+      data,
+      `${this.ENDPOINT}/validate-zeitraum-and-tagestyp`,
+      "Beim Validieren des Zeitraums und Tagestyps ist ein Fehler aufgetreten."
     );
   }
 }

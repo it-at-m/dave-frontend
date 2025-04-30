@@ -1,9 +1,8 @@
 <template>
   <v-dialog
-    v-model="openDialog"
+    v-model="openEditDatatableDialog"
     width="100vh"
     height="60vh"
-    @click:outside="cancelDialog"
   >
     <v-card>
       <v-card-title class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2">
@@ -62,7 +61,7 @@
 <script setup lang="ts">
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
@@ -76,16 +75,9 @@ const openEditDatatableDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
-  (e: "cancelDialog"): void;
-  (e: "input", v: boolean): void;
 }>();
 
 const asset = ref(new DatatableAsset({} as OptionsDTO, "", ""));
-
-const openDialog = computed({
-  get: () => openEditDatatableDialog.value,
-  set: (payload: boolean) => emits("input", payload),
-});
 
 /**
  * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.
@@ -94,14 +86,7 @@ function save(): void {
   emits("save", Object.assign({}, asset.value));
 }
 
-/**
- * Verläßt das Formular ohne zu speichern.
- */
-function cancelDialog(): void {
-  emits("cancelDialog");
-}
-
-watch(openDialog, () => {
+watch(openEditDatatableDialog, () => {
   if (props.datatable) {
     asset.value = Object.assign({}, props.datatable);
   }

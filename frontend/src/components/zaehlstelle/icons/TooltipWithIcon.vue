@@ -18,5 +18,7 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   color: "black",
   size: "default",
+  icon: undefined,
+  tooltip: undefined,
 });
 </script>

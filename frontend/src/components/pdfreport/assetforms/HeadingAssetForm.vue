@@ -1,9 +1,8 @@
 <template>
   <v-dialog
-    v-model="openDialog"
+    v-model="openEditHeadingDialog"
     width="100vh"
     height="60vh"
-    @click:outside="cancelDialog"
   >
     <v-card>
       <v-card-title class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2">
@@ -73,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
@@ -88,8 +87,6 @@ const openEditHeadingDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
-  (e: "cancelDialog"): void;
-  (e: "input", v: boolean): void;
 }>();
 
 const asset = ref(new HeadingAsset("", AssetTypesEnum.HEADING1));
@@ -103,11 +100,6 @@ const items: Array<string> = [
   AssetTypesEnum.HEADING4,
   AssetTypesEnum.HEADING5,
 ];
-
-const openDialog = computed({
-  get: () => openEditHeadingDialog.value,
-  set: (payload: boolean) => emits("input", payload),
-});
 
 function setIconAndStyle(headingAsset: HeadingAsset): void {
   // Icons und Style sind abhängig von der Überschriftsgröße
@@ -144,19 +136,12 @@ function save(): void {
   if (asset.value.text && asset.value.text.length > 0) {
     emits("save", Object.assign({}, asset.value));
   } else {
-    cancelDialog();
+    asset.value = new HeadingAsset("", AssetTypesEnum.HEADING1);
+    openEditHeadingDialog.value = false;
   }
 }
 
-/**
- * Verläßt das Formular ohne zu speichern.
- */
-function cancelDialog(): void {
-  asset.value = new HeadingAsset("", AssetTypesEnum.HEADING1);
-  emits("cancelDialog");
-}
-
-watch(openDialog, () => {
+watch(openEditHeadingDialog, () => {
   if (props.heading) {
     asset.value = Object.assign({}, props.heading);
   }

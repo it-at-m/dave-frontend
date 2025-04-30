@@ -142,7 +142,9 @@ const options = computed(() => {
   return {
     tooltip: {
       trigger: "axis",
-      formatter: function (params: any[]) {
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
+      formatter: function (params: Array<any>) {
+        /* eslint-enable  @typescript-eslint/no-explicit-any */
         let text = "";
         if (params.length > 0) {
           text += `${params[0].name} <br/>`;
@@ -187,7 +189,9 @@ const options = computed(() => {
           show: true,
           readOnly: true,
           lang: ["Datenansicht", "zurück", "refresh"],
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
           optionToContent: function (opt: any) {
+            /* eslint-enable  @typescript-eslint/no-explicit-any */
             const axisData = opt.xAxis[0].data;
             const series = opt.series;
 
@@ -198,7 +202,9 @@ const options = computed(() => {
               "<thead>" +
               "<tr>" +
               "<th>Zähldatum</th>";
+            /* eslint-disable  @typescript-eslint/no-explicit-any */
             series.forEach((data: any) => {
+              /* eslint-enable  @typescript-eslint/no-explicit-any */
               table += "<th>" + data.name + "</th>";
             });
             table += "</tr></thead>";
@@ -206,7 +212,9 @@ const options = computed(() => {
             // Daten der Tabelle
             for (let i = 0, l = axisData.length; i < l; i++) {
               table += "<tr>" + "<td>" + axisData[i] + "</td>";
+              /* eslint-disable  @typescript-eslint/no-explicit-any */
               series.forEach((data: any) => {
+                /* eslint-enable  @typescript-eslint/no-explicit-any */
                 table += "<td>" + data.data[i] + "</td>";
               });
               table += "</tr>";

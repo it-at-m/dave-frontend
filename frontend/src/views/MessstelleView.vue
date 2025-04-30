@@ -18,13 +18,14 @@
             :name="messstelle.name"
             :height="headerHeightVh"
             :minheight="headerHeightVh"
+            :lageplan-vorhanden="messstelle.lageplanVorhanden"
           />
           <messstelle-info :messstelle="messstelle" />
           <filter-optionen
             class="px-0"
             :messstelle="messstelle"
           />
-          <valid-wochentage v-if="chosenOptions.zeitraum.length > 1" />
+          <valid-wochentage v-if="isDateRange" />
           <messquerschnitt-anzahl-info :messstelle="messstelle" />
           <messquerschnitt-info :messstelle="messstelle" />
         </v-sheet>
@@ -64,6 +65,7 @@ import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const messstelle = ref<MessstelleInfoDTO>(
@@ -72,6 +74,7 @@ const messstelle = ref<MessstelleInfoDTO>(
 const display = useDisplay();
 const messstelleStore = useMessstelleStore();
 const snackbarStore = useSnackbarStore();
+const dateUtils = useDateUtils();
 
 interface Props {
   messstelleId: string;
@@ -127,6 +130,10 @@ const latlng = computed(() => {
     return [messstelle.value.latitude, messstelle.value.longitude];
   }
   return [];
+});
+
+const isDateRange = computed(() => {
+  return dateUtils.isDateRange(chosenOptions.value.zeitraum);
 });
 
 function loadMessstelle() {

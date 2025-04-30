@@ -64,6 +64,8 @@ const props = withDefaults(defineProps<Props>(), {
   width: "100%",
   showMarker: false,
   zoom: 12,
+  latlng: undefined,
+  zId: undefined,
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
@@ -349,7 +351,10 @@ const selectedZaehlstelleKarte = ref(
 );
 
 function searchErhebungsstelle() {
-  SucheService.searchErhebungsstelle(searchStore.getLastSearchQuery)
+  SucheService.searchErhebungsstelle(
+    searchStore.getLastSearchQuery,
+    searchStore.getSearchAndFilterOptions
+  )
     .then((result) => {
       searchStore.setSearchResult(result);
     })

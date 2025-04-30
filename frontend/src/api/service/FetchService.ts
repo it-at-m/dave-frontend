@@ -2,6 +2,7 @@ import { ApiError, Levels } from "@/api/error";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 import FetchUtils from "@/api/util/FetchUtils";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export default class FetchService {
   private static readonly RESPONSE_TYPE_OPAQUE_REDIRECT: string =
     "opaqueredirect";

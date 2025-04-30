@@ -146,6 +146,7 @@ function draw() {
   drawMessstelleInfo();
   drawNorthSymbol();
   drawLegende();
+  drawLinienStaerke();
   storeImageForPrinting();
 }
 
@@ -596,7 +597,7 @@ function drawMessstelleInfo() {
 
 function drawLegende() {
   const formeln = new Map<string, string>();
-  formeln.set("KFZ", "KFZ = Pkw + Lkw + Lz + Lfw + Bus + Krad");
+  formeln.set("KFZ", "KFZ = Pkw + Lfw + Lkw + Lz + Bus + Krad");
   formeln.set("SV", "SV = Lkw + Lz + Bus");
   formeln.set("GV", "GV = Lkw + Lz");
   formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
@@ -667,6 +668,81 @@ function drawLegende() {
       }
     })
     .move(50, startY.value + 950);
+}
+
+function calculateHighestValue(): number {
+  let highestValue = 0;
+  props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList.forEach(
+    (entry) => {
+      if (
+        chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr &&
+        entry.sumKfz > highestValue
+      ) {
+        highestValue = entry.sumKfz;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.schwerverkehr &&
+        entry.sumSv > highestValue
+      ) {
+        highestValue = entry.sumSv;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.gueterverkehr &&
+        entry.sumGv > highestValue
+      ) {
+        highestValue = entry.sumGv;
+      }
+      if (
+        chosenOptionsCopyFahrzeuge.value.radverkehr &&
+        entry.sumRad > highestValue
+      ) {
+        highestValue = entry.sumRad;
+      }
+    }
+  );
+  // Round to next 1000
+  return highestValue + (1000 - (highestValue % 1000));
+}
+
+function drawLinienStaerke() {
+  const path1 = SVG.SVG()
+    .path("M1190 1295 L1316 1295 L1316 1275 z")
+    .stroke({ width: 1, color: "black" })
+    .attr("fill", "none");
+  const path2 = SVG.SVG()
+    .path("M1253 1295 L1253 1285 z")
+    .stroke({ width: 1, color: "black" })
+    .attr("fill", "none");
+  const groupPath = canvas.value
+    .group()
+    .add(path1)
+    .add(path2)
+    .move(1000, startY.value + 1000);
+
+  const high = calculateHighestValue();
+
+  const text1 = SVG.SVG()
+    .text((add) => {
+      add.tspan(`${high / 2}`).font({
+        size: defaultFontSize,
+        family: fontfamily,
+        anchor: "middle",
+      });
+    })
+    .x(1030)
+    .dy(startY.value + 1040);
+  const text2 = SVG.SVG()
+    .text((add) => {
+      add.tspan(`${high}`).font({
+        size: defaultFontSize,
+        family: fontfamily,
+        anchor: "middle",
+      });
+    })
+    .x(1095)
+    .dy(startY.value + 1040);
+
+  canvas.value.add(groupPath).add(text1).add(text2);
 }
 
 const getZeitblockText = computed(() => {

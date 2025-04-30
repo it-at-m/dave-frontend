@@ -21,6 +21,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   color: "black",
+  detektierteFahrzeugart: undefined,
 });
 
 const iconOptions = computed(() => {
