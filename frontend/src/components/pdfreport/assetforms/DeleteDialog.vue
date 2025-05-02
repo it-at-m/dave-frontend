@@ -1,9 +1,8 @@
 <template>
   <v-dialog
-    v-model="openDialog"
+    v-model="openDeleteDialog"
     width="100vh"
     height="60vh"
-    @click:outside="cancelDialog"
   >
     <v-card>
       <v-card-title class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2">
@@ -33,8 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 interface Props {
   assetId: number;
 }
@@ -44,23 +41,9 @@ const openDeleteDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
   (e: "delete", v: number): void;
-  (e: "cancelDialog"): void;
-  (e: "input", v: boolean): void;
 }>();
-
-const openDialog = computed({
-  get: () => openDeleteDialog.value,
-  set: (payload: boolean) => emits("input", payload),
-});
 
 function deleteAsset(): void {
   emits("delete", props.assetId);
-}
-
-/**
- * Verläßt das Formular ohne zu speichern.
- */
-function cancelDialog(): void {
-  emits("cancelDialog");
 }
 </script>

@@ -388,7 +388,9 @@ function resetData(): void {
   seriesEntriesChart.value = [];
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function formatYAxisLabel(params: Array<any>): string {
+  /* eslint-enable  @typescript-eslint/no-explicit-any */
   let text = "";
   if (params.length > 0) {
     text += `${params[0].name} <br/>`;

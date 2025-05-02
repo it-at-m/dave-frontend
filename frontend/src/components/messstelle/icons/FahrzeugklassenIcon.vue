@@ -23,6 +23,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   color: "black",
+  size: "default",
 });
 
 /**

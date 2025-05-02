@@ -15,6 +15,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   fontSize: "medium",
   fontWeight: "normal",
+  padding: "0",
 });
 
 const headerStyle = computed(() => {
