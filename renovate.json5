@@ -3,4 +3,31 @@
   extends: [
     "github>it-at-m/refarch//refarch-tools/refarch-renovate/refarch-renovate-config.json5",
   ],
+  "packageRules": [
+    {
+      "description": "Only allow major standard upgrades for github actions. All other types are disabled.",
+      "matchDepNames": [
+        "actions/checkout",
+        "actions/setup-java",
+        "actions/setup-node",
+        "docker/metadata-action",
+        "docker/build-push-action",
+        "docker/login-action",
+        "docker/metadata-action",
+        "rlespinasse/github-slug-action"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "pinDigest",
+        "digest",
+        "lockFileMaintenance",
+        "rollback",
+        "bump",
+        "replacement"
+      ],
+      "enabled": false
+    }
+  ]
 }
