@@ -21,7 +21,7 @@
               variant="text"
               @click="loadLageplan"
             >
-              <template v-slot:default>
+              <template #default>
                 <v-icon size="x-large">mdi-map</v-icon>
               </template>
             </v-btn>
@@ -57,13 +57,13 @@ interface Props {
   lageplanVorhanden: boolean;
 }
 
-const props = defineProps<Props>();
+const properties = defineProps<Props>();
 const snackbarStore = useSnackbarStore();
 const lageplanLoading = ref(false);
 
 function loadLageplan() {
   lageplanLoading.value = true;
-  LageplanService.loadLageplan(props.mstId)
+  LageplanService.loadLageplan(properties.mstId)
     .then((result: LageplanDTO) => {
       window.open(result.url);
     })

@@ -25,6 +25,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   dimension: "1000px",
+  zaehlungId: undefined,
 });
 
 const belastungsplanKreisverkehr = ref<InstanceType<
