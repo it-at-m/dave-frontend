@@ -6,17 +6,17 @@ const i18n = createI18n({
     "de-DE": {
       short: {
         year: "numeric",
-        month: "numeric",
-        day: "numeric",
+        month: "2-digit",
+        day: "2-digit",
       },
       long: {
         year: "numeric",
         month: "short",
-        day: "numeric",
+        day: "2-digit",
       },
       time: {
-        hour: "numeric",
-        minute: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       },
     },
   },

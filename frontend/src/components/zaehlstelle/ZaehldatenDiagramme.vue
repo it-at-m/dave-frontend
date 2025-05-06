@@ -212,7 +212,7 @@ import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
   height?: string;
-  contentHeight?: string;
+  contentHeight: string;
   hasZaehlungen?: boolean;
 }
 

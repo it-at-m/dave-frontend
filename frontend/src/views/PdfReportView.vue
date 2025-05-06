@@ -189,35 +189,30 @@
     <image-asset-form
       v-model="editImage"
       :image="imageAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <datatable-asset-form
       v-model="editDatatable"
       :datatable="datatableAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <heading-asset-form
       v-model="editHeading"
       :heading="headingAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <text-asset-form
       v-model="editText"
       :text="textAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <delete-dialog
       v-model="openDeleteDialog"
       :asset-id="assetId"
-      @cancel-dialog="cancel()"
       @delete="deleteIt($event)"
     />
   </v-container>
@@ -332,19 +327,7 @@ function createFirstPage(): void {
   pdfReportStore.setHasTitlePage();
 }
 
-function cancel() {
-  //  Dialog(e) schließen
-  editImage.value = false;
-  editHeading.value = false;
-  editText.value = false;
-  editDatatable.value = false;
-  openDeleteDialog.value = false;
-}
-
 function save(asset: BaseAsset) {
-  //  Dialog schließen
-  cancel();
-
   // In Array speichern
   const a = assets.value.filter((a) => a.id === asset.id) as BaseAsset[];
   // Wenn was gefunden wurde, dann muss das geupdatet werden
@@ -508,8 +491,7 @@ function deleteAsset(asset: BaseAsset): void {
 }
 
 function deleteIt(id: number): void {
-  const filteredAssets = assets.value.filter((a) => a.id !== id) as BaseAsset[];
-  assets.value = filteredAssets;
+  assets.value = assets.value.filter((a) => a.id !== id) as BaseAsset[];
   openDeleteDialog.value = false;
 }
 

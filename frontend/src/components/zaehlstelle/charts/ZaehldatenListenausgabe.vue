@@ -1,6 +1,6 @@
 <template>
   <v-data-table
-    :headers="headers"
+    :headers="headers as Array<any>"
     :items="listenausgabeData"
     item-key="name"
     items-per-page="-1"
@@ -131,7 +131,7 @@ const headers = computed(() => {
     activeFahrzeugklassen.value
   );
   const widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-  const headers: Array<any> = [
+  const headers = [
     // Zeit
     {
       title: "Zeit",
@@ -371,6 +371,7 @@ const headers = computed(() => {
       title: "",
       key: "empty_pkwEinheiten",
       align: "center",
+      lastFixed: false,
       children: [
         {
           title: "PKW-Einheiten",

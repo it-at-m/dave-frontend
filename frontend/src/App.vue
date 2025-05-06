@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";
@@ -77,6 +78,7 @@ import { useRoute } from "vue-router";
 
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
+import MapConfigService from "@/api/service/MapConfigService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
@@ -84,6 +86,7 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
 import SearchInputField from "@/components/search/SearchInputField.vue";
+import { useMapConfigStore } from "@/store/MapConfigStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -92,7 +95,7 @@ import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 
 const URL_HANDBUCH_LINK =
-  "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
+  "https://github.com/it-at-m/dave/blob/main/2025_DAVe_Anwenderhandbuch_Datenportal_v1.1.pdf";
 
 const loggedInUser = ref("no-security");
 const backendVersion = ref("");
@@ -103,6 +106,7 @@ const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const searchStore = useSearchStore();
 const mapOptionsStore = useMapOptionsStore();
+const mapConfigStore = useMapConfigStore();
 const route = useRoute();
 
 created();
@@ -131,6 +135,9 @@ function created() {
     .catch(() => {
       backendVersion.value = "error";
     });
+  MapConfigService.getMapConfig().then((res: MapConfigDTO) => {
+    mapConfigStore.setMapConfig(res);
+  });
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
       showGesamtauswertung.value = messstellen.length > 0;
