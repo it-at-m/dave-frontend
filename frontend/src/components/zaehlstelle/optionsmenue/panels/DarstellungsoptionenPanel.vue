@@ -28,7 +28,7 @@
             class="mb-3"
             :label="'Werte auf 100 Runden'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverWerteHundertRunden = true"
             @mouseleave="hoverWerteHundertRunden = false"
@@ -52,7 +52,7 @@
             class="mb-3"
             :label="'schwarz-weiß Druckausgabe'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverBlackPrintMode = true"
             @mouseleave="hoverBlackPrintMode = false"
@@ -135,7 +135,7 @@
             v-model="stundensumme"
             :label="'Stundensumme'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverStundensumme = true"
             @mouseleave="hoverStundensumme = false"
@@ -145,7 +145,7 @@
             class="mb-3"
             :label="'Blocksumme'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverBlocksumme = true"
             @mouseleave="hoverBlocksumme = false"
@@ -156,7 +156,7 @@
             v-model="tagessumme"
             :label="'Tagessumme'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverTagessumme = true"
             @mouseleave="hoverTagessumme = false"
@@ -166,7 +166,7 @@
             class="mb-3"
             :label="'Spitzenstunde'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverSpitzenstunde = true"
             @mouseleave="hoverSpitzenstunde = false"
@@ -201,7 +201,7 @@
             v-model="spitzenstundeKfz"
             :label="'Spitzenstunde KFZ'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             :disabled="isTypeKfzDisabled()"
           />
@@ -209,7 +209,7 @@
             v-model="spitzenstundeRad"
             :label="'Spitzenstunde Rad'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             :disabled="isTypeRadDisabled()"
           />
@@ -217,7 +217,7 @@
             v-model="spitzenstundeFuss"
             :label="'Spitzenstunde Fuß'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             :disabled="isTypeFussDisabled()"
           />
@@ -248,7 +248,7 @@
             class="mb-3"
             :label="'Summe alle Verkehrsarten anzeigen'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @mouseover="hoverZeitreiheGesamt = true"
             @mouseleave="hoverZeitreiheGesamt = false"

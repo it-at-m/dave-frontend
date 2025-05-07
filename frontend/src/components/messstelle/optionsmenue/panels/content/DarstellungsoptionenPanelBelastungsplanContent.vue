@@ -18,7 +18,7 @@
           class="mb-3"
           :label="'Werte auf 100 Runden'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
           @mouseover="hoverWerteHundertRunden = true"
           @mouseleave="hoverWerteHundertRunden = false"
@@ -42,7 +42,7 @@
           class="mb-3"
           :label="'schwarz-weiß Druckausgabe'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
           @mouseover="hoverBlackPrintMode = true"
           @mouseleave="hoverBlackPrintMode = false"

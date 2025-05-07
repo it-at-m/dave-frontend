@@ -535,19 +535,19 @@ function getCheckboxColor(type: string): string {
   switch (type) {
     case Fahrzeug.SV_P: {
       if (!isSvpInBelastungsPlan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
     case Fahrzeug.GV_P: {
       if (!isGvpInBelastungsPlan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
     case Fahrzeug.RAD: {
       if (!isRadInBelastungsplan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
@@ -556,7 +556,7 @@ function getCheckboxColor(type: string): string {
         chosenOptionsCopyFahrzeuge.value.fussverkehr &&
         actualNumberOfSelectedVerkehrsarten.value > 1
       ) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }

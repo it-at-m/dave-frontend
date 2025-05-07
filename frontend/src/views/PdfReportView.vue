@@ -26,7 +26,7 @@
               flat
             >
               <v-icon
-                color="grey-lighten-1"
+                color="tertiary"
                 :icon="icon(asset)"
               />
               <v-divider

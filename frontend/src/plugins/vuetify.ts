@@ -44,6 +44,8 @@ const theme = {
       colors: {
         primary: colors.blue.darken3,
         secondary: colors.orange.darken2,
+        tertiary: colors.grey.lighten1,
+        quaternary: colors.grey.darken1,
         accent: colors.blue.darken4,
         success: colors.green.lighten2,
         error: colors.red.lighten2,

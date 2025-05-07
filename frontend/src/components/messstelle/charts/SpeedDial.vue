@@ -92,7 +92,7 @@ defineEmits<{
 const speedDialOpen = ref(false);
 
 const speedDialColor = computed(() => {
-  return speedDialOpen.value ? "grey-darken-1" : "secondary";
+  return speedDialOpen.value ? "quaternary" : "secondary";
 });
 
 const generatePdfTooltip = computed(() => {

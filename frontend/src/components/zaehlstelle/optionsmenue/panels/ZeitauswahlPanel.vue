@@ -27,7 +27,7 @@
           <v-radio-group
             v-model="zeitauswahl"
             class="mt-3"
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             @update:model-value="zeitauswahlChanged"
           >

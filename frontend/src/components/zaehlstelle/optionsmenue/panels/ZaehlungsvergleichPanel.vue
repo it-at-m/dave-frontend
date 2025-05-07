@@ -42,7 +42,7 @@
           />
           <v-checkbox
             v-model="differenzdatenDarstellen"
-            color="grey-darken-1"
+            color="quaternary"
             :label="'Differenzdaten darstellen'"
             @mouseover="hoverCheckbox = true"
             @mouseleave="hoverCheckbox = false"

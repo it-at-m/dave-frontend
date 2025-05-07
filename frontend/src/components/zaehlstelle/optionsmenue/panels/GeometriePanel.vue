@@ -51,7 +51,7 @@
             class="mb-3"
             :label="'Zulaufend/Ablaufend'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             :disabled="!beideRichtungenAnzeigen"
             @mouseover="hoverBeideRichtungen = true"

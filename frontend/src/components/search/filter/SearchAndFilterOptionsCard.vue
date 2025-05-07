@@ -31,7 +31,7 @@
       </v-btn>
       <v-spacer />
       <v-btn
-        color="primary"
+        color="tertiary"
         style="width: 200px"
         variant="flat"
         @click="resetSearchAndFilterOptions"
