@@ -238,11 +238,6 @@ function createMessInfo(): void {
     }
     assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
 
-    const verkehrsarten = new TextAsset(
-      `Verkehrsarten: ${gesamtauswertungUtils.getFahrzeugOptionsAsText(options.value.fahrzeuge)}`
-    );
-    assets.push(verkehrsarten);
-
     const messzeitraum = new TextAsset(
       `Messzeitraum: ${gesamtauswertungUtils.getYearsAsTextSorted(options.value.jahre)}`
     );
@@ -276,9 +271,11 @@ function createLegende(): void {
 }
 
 function createStatistik(): void {
-  const statistikAuswertung = new TextAsset(
-    `Auswertungsstatistik: Exisitiert noch nicht.`
+  const ueberschrift = new HeadingAsset(
+    "Auswertungsstatistik",
+    AssetTypesEnum.HEADING3
   );
-  pdfReportStore.addAsset(statistikAuswertung);
+  const statistikAuswertung = new TextAsset(`Exisitiert noch nicht.`);
+  pdfReportStore.addAssets([ueberschrift, statistikAuswertung]);
 }
 </script>
