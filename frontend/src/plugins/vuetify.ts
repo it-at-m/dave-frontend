@@ -101,5 +101,21 @@ export default createVuetify({
     VSelect: {
       itemColor: "primary",
     },
+    VBtn: {
+      class: "text-none",
+      variant: "elevated",
+      density: "compact",
+    },
+    VTextField: {
+      density: "compact",
+      variant: "outlined",
+    },
+    VAutocomplete: {
+      density: "compact",
+      variant: "outlined",
+    },
+    VCheckbox: {
+      density: "compact",
+    },
   },
 });
