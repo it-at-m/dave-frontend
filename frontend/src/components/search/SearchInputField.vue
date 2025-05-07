@@ -128,7 +128,7 @@ const mapOptionsStore = useMapOptionsStore();
 function suggest(query: string) {
   if (!isEmpty(query)) {
     lastSuggestQuery.value = query;
-    SucheService.getSuggestions(query)
+    SucheService.getSuggestions(query, searchStore.getSearchAndFilterOptions)
       .then((response: SucheComplexSuggestsDTO) => {
         suggestions.value = [];
 
