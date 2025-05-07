@@ -407,7 +407,7 @@
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextFahrzeugkategorien }}
           </v-card>
         </v-col>

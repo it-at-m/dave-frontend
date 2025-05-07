@@ -49,7 +49,7 @@
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat />
+        <v-card variant="flat" />
       </v-col>
     </v-row>
     <v-divider />

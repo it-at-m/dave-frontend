@@ -60,7 +60,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             <div
               :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
             >

@@ -80,7 +80,7 @@
           </v-radio-group>
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextZeitauswahl }}
           </v-card>
         </v-col>
@@ -147,7 +147,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextZeitintervall }}
           </v-card>
         </v-col>

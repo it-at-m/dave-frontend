@@ -81,7 +81,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextDifferenzdatenBelastungsplan }}
           </v-card>
         </v-col>

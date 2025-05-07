@@ -14,7 +14,7 @@
     >
       <v-card
         width="900px"
-        flat
+        variant="flat"
       >
         <v-card-title>
           <v-icon

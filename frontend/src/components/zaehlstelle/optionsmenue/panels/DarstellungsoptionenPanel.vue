@@ -59,7 +59,7 @@
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextBelastungsplan }}
           </v-card>
         </v-col>
@@ -111,7 +111,7 @@
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextGanglinie }}
           </v-card>
         </v-col>
@@ -173,7 +173,7 @@
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextListenausgabe }}
           </v-card>
         </v-col>
@@ -223,7 +223,7 @@
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextDetailauswahlListenausgabe }}
           </v-card>
         </v-col>
@@ -256,7 +256,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextZeitreihe }}
           </v-card>
         </v-col>
