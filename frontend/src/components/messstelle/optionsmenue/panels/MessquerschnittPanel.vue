@@ -22,6 +22,7 @@
             v-model="direction"
             label="Richtung"
             :items="richtungValues"
+            :disabled="richtungValues.length === 1"
             variant="filled"
             density="compact"
             @update:model-value="updateOptions"
@@ -31,7 +32,10 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card
+            variant="flat"
+            height="72px"
+          >
             {{ helpTextDirection }}
           </v-card>
         </v-col>
@@ -42,7 +46,7 @@
             v-model="chosenOptionsCopy.messquerschnittIds"
             label="Lage"
             :items="lageValues"
-            :readonly="isLageReadonly"
+            :disabled="isLageReadonly"
             variant="filled"
             multiple
             :rules="[REQUIRED]"
