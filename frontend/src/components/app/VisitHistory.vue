@@ -2,6 +2,7 @@
   <v-btn
     id="menu-activator"
     v-tooltip:bottom="'Historie'"
+    class="mr-3"
     icon="mdi-history"
     :disabled="!isHistory"
   />

@@ -42,7 +42,7 @@
           label="Personenkraftwagen (Pkw)"
           :persistent-hint="isTypeDisabled('PKW')"
           :disabled="isTypeDisabled('PKW')"
-          color="grey-darken-1"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverPkw = true"
@@ -53,7 +53,7 @@
           label="Lieferwagen (Lfw)"
           :persistent-hint="isTypeDisabled('LFW')"
           :disabled="isTypeDisabled('LFW')"
-          color="grey-darken-1"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverLfw = true"
@@ -64,7 +64,7 @@
           label="Lastkraftwagen (Lkw)"
           :persistent-hint="isTypeDisabled('LKW')"
           :disabled="isTypeDisabled('LKW')"
-          color="grey-darken-1"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverLkw = true"
@@ -77,7 +77,7 @@
           label="Lastzüge (Lz)"
           :persistent-hint="isTypeDisabled('LZ')"
           :disabled="isTypeDisabled('LZ')"
-          color="grey-darken-1"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverLz = true"
@@ -88,7 +88,7 @@
           label="Busse"
           :persistent-hint="isTypeDisabled('BUS')"
           :disabled="isTypeDisabled('BUS')"
-          color="grey-darken-1"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverBus = true"
@@ -99,7 +99,7 @@
           label="Krafträder (Krad)"
           :persistent-hint="isTypeDisabled('KRAD')"
           :disabled="isTypeDisabled('KRAD')"
-          color="grey-darken-1"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverKrad = true"
@@ -107,7 +107,7 @@
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat>
+        <v-card variant="flat">
           {{ helpTextFahrzeugkategorien }}
         </v-card>
       </v-col>

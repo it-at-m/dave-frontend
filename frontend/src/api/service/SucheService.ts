@@ -7,8 +7,12 @@ import FetchService from "@/api/service/FetchService";
 export default class SucheService {
   private static readonly ENDPOINT: string = "api/dave-backend-service";
 
-  static getSuggestions(query: string): Promise<SucheComplexSuggestsDTO> {
-    return FetchService.getData(
+  static getSuggestions(
+    query: string,
+    searchAndFilterOptions: SearchAndFilterOptionsDTO
+  ): Promise<SucheComplexSuggestsDTO> {
+    return FetchService.postData(
+      searchAndFilterOptions,
       `${this.ENDPOINT}/suggest-datenportal?query=${query}`,
       "Beim Lesen der Vorschläge ist ein Fehler aufgetreten."
     );

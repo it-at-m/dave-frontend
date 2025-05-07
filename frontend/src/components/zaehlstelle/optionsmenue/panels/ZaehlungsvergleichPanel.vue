@@ -42,7 +42,7 @@
           />
           <v-checkbox
             v-model="differenzdatenDarstellen"
-            color="grey-darken-1"
+            color="quaternary"
             :label="'Differenzdaten darstellen'"
             @mouseover="hoverCheckbox = true"
             @mouseleave="hoverCheckbox = false"
@@ -81,7 +81,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextDifferenzdatenBelastungsplan }}
           </v-card>
         </v-col>

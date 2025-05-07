@@ -22,14 +22,13 @@
               class="mr-2 text-none"
               color="secondary"
               text="Auswerten"
-              variant="elevated"
               @click="auswertungStarten"
             />
             <v-spacer />
             <v-btn
               class="mr-2 text-none"
+              color="tertiary"
               text="Zurücksetzen"
-              variant="outlined"
               @click="resetAuswertungsOptions()"
             />
           </v-card-actions>
@@ -226,6 +225,8 @@ function resetAuswertungsOptions() {
   gesamtauswertungStore.setAuswertungMessstelleOptions(
     auswertungsOptions.value
   );
+  zaehldatenMessstellen.value =
+    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
 }
 
 function auswertungStarten() {

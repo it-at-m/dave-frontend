@@ -20,7 +20,7 @@
       <template #activator="{ props }">
         <v-text-field
           v-model="query"
-          color="grey-darken-1"
+          color="quaternary"
           label="Zählung suchen"
           density="compact"
           variant="outlined"
@@ -65,7 +65,7 @@
         :quelle="z.quelle"
         :sonderzaehlung="z.sonderzaehlung"
         :color="calcRowColor(index)"
-        hover-color="grey-lighten-1"
+        hover-color="tertiary"
         icon-color="black"
       >
       </nicht-ausgewaehlte-zaehlung>

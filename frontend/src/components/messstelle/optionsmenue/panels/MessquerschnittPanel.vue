@@ -58,7 +58,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             <div v-if="hoverLage">{{ helpTextLageHover }}</div>
             <div>{{ helpTextLage }}</div>
           </v-card>

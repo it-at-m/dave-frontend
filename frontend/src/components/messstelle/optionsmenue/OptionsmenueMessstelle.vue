@@ -13,7 +13,7 @@
     >
       <v-card
         width="900px"
-        flat
+        variant="flat"
       >
         <v-card-title>
           <v-icon
@@ -56,7 +56,7 @@
           <v-spacer />
           <v-btn
             class="text-none"
-            color="grey-lighten-1"
+            color="tertiary"
             text="Zurücksetzen"
             variant="elevated"
             @click="resetOptions"
