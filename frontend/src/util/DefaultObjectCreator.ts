@@ -1,4 +1,5 @@
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
@@ -315,5 +316,14 @@ export default class DefaultObjectCreator {
       searchInMessstellen: true,
       searchInZaehlstellen: true,
     } as SearchAndFilterOptionsDTO;
+  }
+
+  public static createDefaultMapConfigDTO(): MapConfigDTO {
+    return {
+      // München Zentrum
+      lat: "48.137227",
+      lng: "11.575517",
+      zoom: 12,
+    };
   }
 }
