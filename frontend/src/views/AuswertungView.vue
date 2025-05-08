@@ -22,6 +22,7 @@
               class="mr-2 text-none"
               color="secondary"
               text="Auswerten"
+              variant="elevated"
               @click="auswertungStarten"
             />
             <v-spacer />
@@ -29,6 +30,7 @@
               class="mr-2 text-none"
               color="tertiary"
               text="Zurücksetzen"
+              variant="elevated"
               @click="resetAuswertungsOptions()"
             />
           </v-card-actions>
@@ -251,6 +253,10 @@ function auswertungStarten() {
     })
     .finally(() => {
       chartDataLoading.value = false;
+      if (!showDiagram.value) {
+        zaehldatenMessstellen.value =
+          DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+      }
     });
 }
 
