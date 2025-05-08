@@ -4,7 +4,7 @@ import FetchService from "@/api/service/FetchService";
 
 export default class OptionsmenueSettingsService {
   private static readonly ENDPOINT: string =
-    "api/dave-backend-service/settings-optionsmenue/all";
+    "api/dave-backend-service/settings-optionsmenue/messstelle/all";
 
   static getAllOptionsmenueSettings(): Promise<Array<OptionsmenueSettingsDTO>> {
     return FetchService.getData(
