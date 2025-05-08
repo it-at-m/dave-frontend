@@ -19,7 +19,7 @@
           v-model="chosenOptionsCopy.stundensumme"
           :label="'Stundensumme'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
           :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverStundensumme = true"
@@ -30,7 +30,7 @@
           class="mb-3"
           :label="'Blocksumme'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
           :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverBlocksumme = true"
@@ -42,7 +42,7 @@
           v-model="chosenOptionsCopy.tagessumme"
           :label="'Tagessumme'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
           :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverTagessumme = true"
@@ -53,7 +53,7 @@
           class="mb-3"
           :label="'Spitzenstunde'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
           :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverSpitzenstunde = true"
@@ -61,7 +61,7 @@
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat>
+        <v-card variant="flat">
           {{ helpTextListenausgabe }}
         </v-card>
       </v-col>

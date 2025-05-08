@@ -8,6 +8,7 @@
       height="20px"
       class="ml-n2 mb-1"
       variant="text"
+      density="default"
       @click="showDialog = true"
     />
     <v-dialog

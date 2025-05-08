@@ -51,7 +51,7 @@
             class="mb-3"
             :label="'Zulaufend/Ablaufend'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
             :disabled="!beideRichtungenAnzeigen"
             @mouseover="hoverBeideRichtungen = true"
@@ -60,7 +60,7 @@
         </v-col>
         <v-spacer />
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             <div
               :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
             >

@@ -39,10 +39,12 @@
             v-if="showGesamtauswertung"
             v-tooltip:bottom="'Gesamtauswertungen'"
             icon="mdi-clipboard-pulse-outline"
+            class="mr-3"
             to="/auswertung"
           />
           <v-btn
             v-tooltip:bottom="'PDF-Report'"
+            class="mr-3"
             icon="mdi-file-chart"
             to="/pdfreport"
           />
@@ -50,6 +52,7 @@
           <info-message />
           <v-btn
             v-tooltip:bottom="'Anwenderhandbuch'"
+            class="mr-3"
             icon="mdi-clippy"
             @click="navigateToHandbuch"
           />

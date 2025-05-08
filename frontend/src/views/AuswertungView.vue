@@ -28,8 +28,9 @@
             <v-spacer />
             <v-btn
               class="mr-2 text-none"
+              color="tertiary"
               text="Zurücksetzen"
-              variant="outlined"
+              variant="elevated"
               @click="resetAuswertungsOptions()"
             />
           </v-card-actions>
@@ -226,6 +227,8 @@ function resetAuswertungsOptions() {
   gesamtauswertungStore.setAuswertungMessstelleOptions(
     auswertungsOptions.value
   );
+  zaehldatenMessstellen.value =
+    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
 }
 
 function auswertungStarten() {
@@ -250,6 +253,10 @@ function auswertungStarten() {
     })
     .finally(() => {
       chartDataLoading.value = false;
+      if (!showDiagram.value) {
+        zaehldatenMessstellen.value =
+          DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+      }
     });
 }
 
