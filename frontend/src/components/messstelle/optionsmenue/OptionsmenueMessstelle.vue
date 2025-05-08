@@ -4,6 +4,7 @@
       class="text-none"
       color="secondary"
       prepend-icon="mdi-filter-outline"
+      density="default"
       text="Filtereinstellungen"
       @click="dialog = true"
     />
