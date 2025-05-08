@@ -40,9 +40,10 @@
           title="Messinformationen"
           subtitle="Folgende Informationen werden im PDF Report
                                 eingetragen: Messzeitraum,
-                                Wochentag"
+                                Wochentag, Verkehrsart"
         />
         <pdf-report-menue-list-item
+          v-if="isSingeleMessstelleSelected"
           v-model="legende"
           title="Legende"
           subtitle="Die Legende enthält Kurzbeschreibungen der
@@ -237,6 +238,12 @@ function createMessInfo(): void {
       header = `Info zur Messung an den Messstellen ${mstIds}`;
     }
     assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
+
+    // TODO nur wenn mehrere MS, abklären ob wirklich nötig
+    const verkehrsarten = new TextAsset(
+      `Verkehrsarten: ${gesamtauswertungUtils.getFahrzeugOptionsAsText(options.value.fahrzeuge)}`
+    );
+    assets.push(verkehrsarten);
 
     const messzeitraum = new TextAsset(
       `Messzeitraum: ${gesamtauswertungUtils.getYearsAsTextSorted(options.value.jahre)}`
