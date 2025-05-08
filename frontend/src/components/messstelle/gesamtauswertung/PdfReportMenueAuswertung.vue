@@ -239,7 +239,6 @@ function createMessInfo(): void {
     }
     assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
 
-    // TODO nur wenn mehrere MS, abklären ob wirklich nötig
     const verkehrsarten = new TextAsset(
       `Verkehrsarten: ${gesamtauswertungUtils.getFahrzeugOptionsAsText(options.value.fahrzeuge)}`
     );
