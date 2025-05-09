@@ -44,9 +44,9 @@ const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
   [Himmelsrichtungen.NORD, "#4CAF50"],
-  [Himmelsrichtungen.OST, "#F44336"],
+  [Himmelsrichtungen.OST, "#2196F3"],
   [Himmelsrichtungen.SUED, "#000000"],
-  [Himmelsrichtungen.WEST, "#2196F3"],
+  [Himmelsrichtungen.WEST, "#F44336"],
 ]);
 
 const maxVerhiclesPerMq = ref(0);
