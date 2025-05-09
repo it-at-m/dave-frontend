@@ -301,14 +301,6 @@ watch(
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
       messfaehigkeiten
     );
-
-    // Zurücksetzen auf Standardeinstellung
-    chosenOptions.value.fahrzeuge =
-      DefaultObjectCreator.createDefaultFahrzeugOptions();
-    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-      messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-    chosenOptions.value.fahrzeuge.radverkehr =
-      !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
   },
   { deep: true, immediate: true }
 );
