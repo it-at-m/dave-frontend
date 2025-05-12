@@ -284,6 +284,20 @@ function resetFahrzeugOptions(): void {
       DefaultObjectCreator.createDefaultFahrzeugOptions();
 }
 
+/**
+ * Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
+ */
+function setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum(): void {
+  const messfaehigkeiten =
+      messstelleStore.getMessfaehigkeitenForGivenZeitraum(
+          chosenOptions.value.zeitraumStartAndEndDate.startDate,
+          chosenOptions.value.zeitraumStartAndEndDate.endDate
+      );
+  optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
+      messfaehigkeiten
+  );
+}
+
 watch(
   () => chosenOptions.value.intervall,
   () => {
@@ -296,15 +310,7 @@ watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
     resetFahrzeugOptions();
-    // Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
-    const messfaehigkeiten =
-      messstelleStore.getMessfaehigkeitenForGivenZeitraum(
-        chosenOptions.value.zeitraumStartAndEndDate.startDate,
-        chosenOptions.value.zeitraumStartAndEndDate.endDate
-      );
-    optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
-      messfaehigkeiten
-    );
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
   },
   { deep: true, immediate: true }
 );
