@@ -52,7 +52,7 @@
     "save-svg-as-png": "1.4.17",
     "typescript": "^5.2.2",
     "unplugin-fonts": "^1.0.3",
-    "vite": "6.3.4",
+    "vite": "6.3.5",
     "vite-plugin-vuetify": "2.1.1",
     "vitest": "3.1.2",
     "vue-echarts": "^6.6.1",
