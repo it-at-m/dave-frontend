@@ -1,4 +1,5 @@
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
+import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 import { intersection, isEmpty, isNil, toArray, union } from "lodash";
@@ -226,6 +227,62 @@ export const useOptionsmenueSettingsStore = defineStore(
       );
     }
 
+    function getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+      optionsmenueSettings: OptionsmenueSettingsDTO,
+      fahrzeugOptions: FahrzeugOptions
+    ): Array<ZaehldatenIntervall> {
+      const defaultIntervals = [
+        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ];
+      return intersection(
+        fahrzeugOptions.kraftfahrzeugverkehr
+          ? toArray(optionsmenueSettings.kraftfahrzeugverkehrChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.schwerverkehr
+          ? toArray(optionsmenueSettings.schwerverkehrChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.gueterverkehr
+          ? toArray(optionsmenueSettings.gueterverkehrChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.schwerverkehrsanteilProzent
+          ? toArray(
+              optionsmenueSettings.schwerverkehrsanteilProzentChoosableIntervals
+            )
+          : defaultIntervals,
+        fahrzeugOptions.gueterverkehrsanteilProzent
+          ? toArray(
+              optionsmenueSettings.gueterverkehrsanteilProzentChoosableIntervals
+            )
+          : defaultIntervals,
+        fahrzeugOptions.radverkehr
+          ? toArray(optionsmenueSettings.radverkehrChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.fussverkehr
+          ? toArray(optionsmenueSettings.fussverkehrChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.lastkraftwagen
+          ? toArray(optionsmenueSettings.lastkraftwagenChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.lastzuege
+          ? toArray(optionsmenueSettings.lastzuegeChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.busse
+          ? toArray(optionsmenueSettings.busseChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.kraftraeder
+          ? toArray(optionsmenueSettings.kraftraederChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.personenkraftwagen
+          ? toArray(optionsmenueSettings.personenkraftwagenChoosableIntervals)
+          : defaultIntervals,
+        fahrzeugOptions.lieferwagen
+          ? toArray(optionsmenueSettings.lieferwagenChoosableIntervals)
+          : defaultIntervals
+      );
+    }
+
     function getOptionsmenueSettingsWithAllOptions(): OptionsmenueSettingsDTO {
       const defaultIntervals = [
         ZaehldatenIntervall.STUNDE_VIERTEL,
@@ -255,6 +312,7 @@ export const useOptionsmenueSettingsStore = defineStore(
       intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten,
       getOptionsmenueSettingsByMessfaehigkeiten,
       getMapKeyOfIntervallAndFahrzeugklasse,
+      getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions,
       getSmallestCommonDenominatorOfIntervallsForEachFahrzeugkategorieAndFahrzeugart,
       getOptionsmenueSettingsByIntervallAndFahrzeugklasse,
       getOptionsmenueSettingsWithAllOptions,

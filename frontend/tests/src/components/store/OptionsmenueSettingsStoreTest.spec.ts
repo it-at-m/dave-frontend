@@ -1,4 +1,5 @@
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
+import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 import { createPinia, setActivePinia } from "pinia";
@@ -222,6 +223,188 @@ describe("OptionsmenueSettingsStore.ts", () => {
     } as OptionsmenueSettingsDTO;
 
     expect(expected).toStrictEqual(result);
+  });
+
+  it("getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions_WithAllIntervalsSetToAllOptions", () => {
+    const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
+
+    const fahrzeugOptions = {
+      kraftfahrzeugverkehr: true,
+      schwerverkehr: true,
+      gueterverkehr: true,
+      schwerverkehrsanteilProzent: true,
+      gueterverkehrsanteilProzent: true,
+      radverkehr: true,
+      fussverkehr: true,
+      lastkraftwagen: true,
+      lastzuege: true,
+      busse: true,
+      kraftraeder: true,
+      personenkraftwagen: true,
+      lieferwagen: true,
+    } as FahrzeugOptions;
+
+    const defaultIntervals = [
+      ZaehldatenIntervall.STUNDE_VIERTEL,
+      ZaehldatenIntervall.STUNDE_HALB,
+      ZaehldatenIntervall.STUNDE_KOMPLETT,
+    ];
+
+    const optionsmenueSettings = {
+      intervall: undefined,
+      fahrzeugklasse: undefined,
+      kraftfahrzeugverkehrChoosableIntervals: defaultIntervals,
+      schwerverkehrChoosableIntervals: defaultIntervals,
+      gueterverkehrChoosableIntervals: defaultIntervals,
+      schwerverkehrsanteilProzentChoosableIntervals: defaultIntervals,
+      gueterverkehrsanteilProzentChoosableIntervals: defaultIntervals,
+      radverkehrChoosableIntervals: defaultIntervals,
+      fussverkehrChoosableIntervals: defaultIntervals,
+      lastkraftwagenChoosableIntervals: defaultIntervals,
+      lastzuegeChoosableIntervals: defaultIntervals,
+      busseChoosableIntervals: defaultIntervals,
+      kraftraederChoosableIntervals: defaultIntervals,
+      personenkraftwagenChoosableIntervals: defaultIntervals,
+      lieferwagenChoosableIntervals: defaultIntervals,
+    } as OptionsmenueSettingsDTO;
+
+    const result =
+      optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+        optionsmenueSettings,
+        fahrzeugOptions
+      );
+
+    const expected = [
+      ZaehldatenIntervall.STUNDE_VIERTEL,
+      ZaehldatenIntervall.STUNDE_HALB,
+      ZaehldatenIntervall.STUNDE_KOMPLETT,
+    ] as Array<ZaehldatenIntervall>;
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  it("getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions_WithSomeIntervalsSetToAllOptions", () => {
+    const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
+
+    const fahrzeugOptions = {
+      kraftfahrzeugverkehr: true,
+      schwerverkehr: true,
+      gueterverkehr: true,
+      schwerverkehrsanteilProzent: true,
+      gueterverkehrsanteilProzent: true,
+      radverkehr: true,
+      fussverkehr: true,
+      lastkraftwagen: true,
+      lastzuege: true,
+      busse: true,
+      kraftraeder: true,
+      personenkraftwagen: true,
+      lieferwagen: true,
+    } as FahrzeugOptions;
+
+    const defaultIntervals = [
+      ZaehldatenIntervall.STUNDE_VIERTEL,
+      ZaehldatenIntervall.STUNDE_HALB,
+      ZaehldatenIntervall.STUNDE_KOMPLETT,
+    ];
+
+    const optionsmenueSettings = {
+      intervall: undefined,
+      fahrzeugklasse: undefined,
+      kraftfahrzeugverkehrChoosableIntervals: defaultIntervals,
+      schwerverkehrChoosableIntervals: defaultIntervals,
+      gueterverkehrChoosableIntervals: defaultIntervals,
+      schwerverkehrsanteilProzentChoosableIntervals: [
+        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ],
+      gueterverkehrsanteilProzentChoosableIntervals: defaultIntervals,
+      radverkehrChoosableIntervals: defaultIntervals,
+      fussverkehrChoosableIntervals: defaultIntervals,
+      lastkraftwagenChoosableIntervals: defaultIntervals,
+      lastzuegeChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      busseChoosableIntervals: defaultIntervals,
+      kraftraederChoosableIntervals: [
+        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ],
+      personenkraftwagenChoosableIntervals: defaultIntervals,
+      lieferwagenChoosableIntervals: defaultIntervals,
+    } as OptionsmenueSettingsDTO;
+
+    const result =
+      optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+        optionsmenueSettings,
+        fahrzeugOptions
+      );
+
+    const expected = [
+      ZaehldatenIntervall.STUNDE_VIERTEL,
+    ] as Array<ZaehldatenIntervall>;
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  it("getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions_WithSomeIntervalsSetToSomeOptions", () => {
+    const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
+
+    const fahrzeugOptions = {
+      kraftfahrzeugverkehr: true,
+      schwerverkehr: false,
+      gueterverkehr: false,
+      schwerverkehrsanteilProzent: true,
+      gueterverkehrsanteilProzent: false,
+      radverkehr: false,
+      fussverkehr: false,
+      lastkraftwagen: false,
+      lastzuege: false,
+      busse: false,
+      kraftraeder: true,
+      personenkraftwagen: false,
+      lieferwagen: false,
+    } as FahrzeugOptions;
+
+    const optionsmenueSettings = {
+      intervall: undefined,
+      fahrzeugklasse: undefined,
+      kraftfahrzeugverkehrChoosableIntervals: [
+        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ],
+      schwerverkehrChoosableIntervals: undefined,
+      gueterverkehrChoosableIntervals: undefined,
+      schwerverkehrsanteilProzentChoosableIntervals: [
+        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ],
+      gueterverkehrsanteilProzentChoosableIntervals: undefined,
+      radverkehrChoosableIntervals: undefined,
+      fussverkehrChoosableIntervals: undefined,
+      lastkraftwagenChoosableIntervals: undefined,
+      lastzuegeChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      busseChoosableIntervals: undefined,
+      kraftraederChoosableIntervals: [
+        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ],
+      personenkraftwagenChoosableIntervals: undefined,
+      lieferwagenChoosableIntervals: undefined,
+    } as OptionsmenueSettingsDTO;
+
+    const result =
+      optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+        optionsmenueSettings,
+        fahrzeugOptions
+      );
+
+    const expected = [
+      ZaehldatenIntervall.STUNDE_VIERTEL,
+      ZaehldatenIntervall.STUNDE_KOMPLETT,
+    ] as Array<ZaehldatenIntervall>;
+
+    expect(result).toStrictEqual(expected);
   });
 
   it("getOptionsmenueSettingsWithAllOptions", () => {
