@@ -302,6 +302,7 @@ watch(
   () => chosenOptions.value.intervall,
   () => {
     resetFahrzeugOptions();
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
   },
   { deep: true, immediate: true }
 );
