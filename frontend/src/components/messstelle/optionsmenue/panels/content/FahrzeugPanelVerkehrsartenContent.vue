@@ -623,94 +623,52 @@ function getIcon(type: string): string {
   return icon;
 }
 
-const isKraftfahrzeugverkehrDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .kraftfahrzeugverkehrChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .kraftfahrzeugverkehrChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isKraftfahrzeugverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .kraftfahrzeugverkehrChoosableIntervals
+  )
+);
 
-const isSchwerverkehrDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .schwerverkehrChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .schwerverkehrChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isSchwerverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .schwerverkehrChoosableIntervals
+  )
+);
 
-const isSchwerverkehrsanteilProzentDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .schwerverkehrsanteilProzentChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .schwerverkehrsanteilProzentChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isSchwerverkehrsanteilProzentDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .schwerverkehrsanteilProzentChoosableIntervals
+  )
+);
 
-const isGueterverkehrDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .gueterverkehrChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .gueterverkehrChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isGueterverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .gueterverkehrChoosableIntervals
+  )
+);
 
-const isGueterverkehrsanteilProzentDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .gueterverkehrsanteilProzentChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .gueterverkehrsanteilProzentChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isGueterverkehrsanteilProzentDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .gueterverkehrsanteilProzentChoosableIntervals
+  )
+);
 
-const isRadverkehrDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .radverkehrChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .radverkehrChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isRadverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .radverkehrChoosableIntervals
+  )
+);
 
-const isFussverkehrDisabled = computed(() => {
-  return (
-    isEmpty(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .fussverkehrChoosableIntervals
-    ) ||
-    !toArray(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
-        .fussverkehrChoosableIntervals
-    ).includes(chosenOptionsCopy.value.intervall)
-  );
-});
+const isFussverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .fussverkehrChoosableIntervals
+  )
+);
 </script>

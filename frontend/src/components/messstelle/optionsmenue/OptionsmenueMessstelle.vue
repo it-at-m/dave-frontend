@@ -281,20 +281,19 @@ function resetOptionsForMessstelle(): void {
 
 function resetFahrzeugOptions(): void {
   chosenOptions.value.fahrzeuge =
-      DefaultObjectCreator.createDefaultFahrzeugOptions();
+    DefaultObjectCreator.createDefaultFahrzeugOptions();
 }
 
 /**
  * Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
  */
 function setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum(): void {
-  const messfaehigkeiten =
-      messstelleStore.getMessfaehigkeitenForGivenZeitraum(
-          chosenOptions.value.zeitraumStartAndEndDate.startDate,
-          chosenOptions.value.zeitraumStartAndEndDate.endDate
-      );
+  const messfaehigkeiten = messstelleStore.getMessfaehigkeitenForGivenZeitraum(
+    chosenOptions.value.zeitraumStartAndEndDate.startDate,
+    chosenOptions.value.zeitraumStartAndEndDate.endDate
+  );
   optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
-      messfaehigkeiten
+    messfaehigkeiten
   );
 }
 
