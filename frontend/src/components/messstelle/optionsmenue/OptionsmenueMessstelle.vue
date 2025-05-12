@@ -60,7 +60,7 @@
             color="tertiary"
             text="Zurücksetzen"
             variant="elevated"
-            @click="resetOptions"
+            @click="resetOptionsForMessstelle"
           />
           <v-spacer />
         </v-card-actions>
@@ -137,7 +137,7 @@ watch(messstelle, () => {
     chosenOptions.value = messstelleStore.getFilteroptions;
     messstelleStore.reloadFilteroptions();
   } else {
-    resetOptions();
+    resetOptionsForMessstelle();
   }
 });
 
@@ -229,8 +229,7 @@ function saveChosenOptions(): void {
 }
 
 function setDefaultOptionsForMessstelle(): void {
-  chosenOptions.value.fahrzeuge =
-    DefaultObjectCreator.createDefaultFahrzeugOptions();
+  resetFahrzeugOptions();
 
   chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
     messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
@@ -276,15 +275,19 @@ function setDefaultOptionsForMessstelle(): void {
   saveChosenOptions();
 }
 
-function resetOptions(): void {
+function resetOptionsForMessstelle(): void {
   setDefaultOptionsForMessstelle();
+}
+
+function resetFahrzeugOptions(): void {
+  chosenOptions.value.fahrzeuge =
+      DefaultObjectCreator.createDefaultFahrzeugOptions();
 }
 
 watch(
   () => chosenOptions.value.intervall,
   () => {
-    chosenOptions.value.fahrzeuge =
-      DefaultObjectCreator.createDefaultFahrzeugOptions();
+    resetFahrzeugOptions();
   },
   { deep: true, immediate: true }
 );
@@ -292,6 +295,7 @@ watch(
 watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
+    resetFahrzeugOptions();
     // Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
     const messfaehigkeiten =
       messstelleStore.getMessfaehigkeitenForGivenZeitraum(
