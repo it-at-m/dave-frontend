@@ -22,37 +22,6 @@ export const useOptionsmenueSettingsStore = defineStore(
       getOptionsmenueSettingsWithAllOptions()
     );
 
-    const intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten = computed(
-      () =>
-        union(
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .kraftfahrzeugverkehrChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .schwerverkehrChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .gueterverkehrChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .schwerverkehrsanteilProzentChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .gueterverkehrsanteilProzentChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .radverkehrChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .fussverkehrChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .lastkraftwagenChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .lastzuegeChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value.busseChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .kraftraederChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .personenkraftwagenChoosableIntervals,
-          optionsmenueSettingsByMessfaehigkeiten.value
-            .lieferwagenChoosableIntervals
-        )
-    );
-
     const getOptionsmenueSettingsByMessfaehigkeiten = computed(
       () => optionsmenueSettingsByMessfaehigkeiten.value
     );
@@ -309,7 +278,6 @@ export const useOptionsmenueSettingsStore = defineStore(
     }
 
     return {
-      intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten,
       getOptionsmenueSettingsByMessfaehigkeiten,
       getMapKeyOfIntervallAndFahrzeugklasse,
       getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions,

@@ -45,10 +45,13 @@ const hoverZeitintervall = ref(false);
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
 const messdatenIntervalle = computed(() => {
+  const intervals =
+    optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
+      chosenOptionsCopy.value.fahrzeuge
+    );
   return ZaehldatenIntervallToSelect.filter((zaehldatenIntervall) =>
-    optionsmenueSettingsStore.intervalleByOptionsmenueSettingsAccordingMessfaehigkeiten.includes(
-      zaehldatenIntervall.value
-    )
+    intervals.includes(zaehldatenIntervall.value)
   );
 });
 
