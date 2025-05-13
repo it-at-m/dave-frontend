@@ -30,7 +30,7 @@
               </v-col>
               <v-col cols="4">
                 <div class="d-flex flex-row-reverse">
-                  <messstelle-kommentar kommentar="messstelle.kommentar" />
+                  <messstelle-kommentar :kommentar="messstelle.kommentar" />
                   <fahrzeugklassen-icon
                     :fahrzeugklasse="fahrzeugklasse"
                     color="primary"
