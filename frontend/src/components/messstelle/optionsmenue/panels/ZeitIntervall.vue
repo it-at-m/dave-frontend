@@ -32,11 +32,15 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
+import { findLast, includes, isNil } from "lodash";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
+import {
+  ZaehldatenIntervall,
+  ZaehldatenIntervallToSelect,
+} from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
@@ -50,9 +54,17 @@ const messdatenIntervalle = computed(() => {
       optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
       chosenOptionsCopy.value.fahrzeuge
     );
-  return ZaehldatenIntervallToSelect.filter((zaehldatenIntervall) =>
-    intervals.includes(zaehldatenIntervall.value)
+  const intervallsForSelectionField = ZaehldatenIntervallToSelect.filter(
+    (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
   );
+  if (!includes(intervals, chosenOptionsCopy.value.intervall)) {
+    const intervallToSet =
+      intervallsForSelectionField[intervallsForSelectionField.length - 1].value;
+    chosenOptionsCopy.value.intervall = isNil(intervallToSet)
+      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      : intervallToSet;
+  }
+  return intervallsForSelectionField;
 });
 
 const isIntervallChangingLocked = computed(() => {
