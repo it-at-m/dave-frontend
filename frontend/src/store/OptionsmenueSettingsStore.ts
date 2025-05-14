@@ -2,7 +2,14 @@ import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
-import { intersection, isEmpty, isNil, toArray, union } from "lodash";
+import {
+  cloneDeep,
+  intersection,
+  isEmpty,
+  isNil,
+  toArray,
+  union,
+} from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -53,7 +60,9 @@ export const useOptionsmenueSettingsStore = defineStore(
         fahrzeugklasse,
         intervall
       );
-      return optionsmenueSettingsByIntervallAndFahrzeugklasse.value.get(key);
+      return cloneDeep(
+        optionsmenueSettingsByIntervallAndFahrzeugklasse.value.get(key)
+      );
     }
 
     /**
