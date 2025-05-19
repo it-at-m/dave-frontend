@@ -142,7 +142,7 @@ function created() {
     .catch(() => {
       backendVersion.value = "error";
     });
-  OptionsmenueSettingsService.getAllOptionsmenueSettings().then(
+  OptionsmenueSettingsService.getAllOptionsmenueSettingsForMessstellen().then(
     (optionsmenueSettings: Array<OptionsmenueSettingsDTO>) => {
       optionsmenueSettingsStore.setOptionsmenueSettingsByIntervallAndFahrzeugklasse(
         optionsmenueSettings

@@ -6,7 +6,9 @@ export default class OptionsmenueSettingsService {
   private static readonly ENDPOINT: string =
     "api/dave-backend-service/settings-optionsmenue/messstelle/all";
 
-  static getAllOptionsmenueSettings(): Promise<Array<OptionsmenueSettingsDTO>> {
+  static getAllOptionsmenueSettingsForMessstellen(): Promise<
+    Array<OptionsmenueSettingsDTO>
+  > {
     return FetchService.getData(
       this.ENDPOINT,
       "Beim Holen der Einstellungen des Optionsmenüs ist ein Fehler aufgetreten."
