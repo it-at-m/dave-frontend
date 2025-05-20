@@ -231,11 +231,6 @@ function saveChosenOptions(): void {
 function setDefaultOptionsForMessstelle(): void {
   resetFahrzeugOptions();
 
-  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-  chosenOptions.value.fahrzeuge.radverkehr =
-    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
-
   const defaultDate = messstelleStore.getMaxPossibleDateForMessstelle;
   chosenOptions.value.zeitraumStartAndEndDate = new StartAndEndDate(
     defaultDate,
@@ -282,6 +277,11 @@ function resetOptionsForMessstelle(): void {
 function resetFahrzeugOptions(): void {
   chosenOptions.value.fahrzeuge =
     DefaultObjectCreator.createDefaultFahrzeugOptions();
+
+  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
+  chosenOptions.value.fahrzeuge.radverkehr =
+    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
 }
 
 /**
