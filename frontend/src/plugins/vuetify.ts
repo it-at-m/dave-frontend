@@ -14,9 +14,9 @@ import {
 import { de } from "vuetify/locale";
 
 //Fahrzeugklasse
-import achtUndEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtUndEinsIcon.vue";
-import qKFZIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QKFZIcon.vue";
-import qpkwLkwIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QpkwLkwIcon.vue";
+import achtPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtPlusEinsIcon.vue";
+import summeKfz from "@/components/messstelle/icons/FahrzeugklasseIcons/SummeKfzIcon.vue";
+import zweiPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/ZweiPlusEinsIcon.vue";
 // Zaehlart
 import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
 import artN from "@/components/zaehlstelle/icons/ArtIcons/ArtN.vue";
@@ -84,9 +84,9 @@ export default createVuetify({
       artT,
       artTK,
       //Fahrzeugklasse
-      achtUndEins,
-      qKFZIcon,
-      qpkwLkwIcon,
+      achtPlusEins,
+      summeKfz,
+      zweiPlusEins,
     },
   },
   locale: {

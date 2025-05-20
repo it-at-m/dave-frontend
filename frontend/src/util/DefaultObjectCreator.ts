@@ -67,7 +67,7 @@ export default class DefaultObjectCreator {
     return {
       messfaehigkeiten: [],
       detektierteVerkehrsarten: DetektierteFahrzeugart.KFZ,
-      fahrzeugKlassen: "",
+      fahrzeugklasse: "",
       hersteller: "",
       id: "",
       entityVersion: 0,
@@ -265,7 +265,7 @@ export default class DefaultObjectCreator {
 
   public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
     return {
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
       gueltigAb: "",
       gueltigBis: "",
       intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,

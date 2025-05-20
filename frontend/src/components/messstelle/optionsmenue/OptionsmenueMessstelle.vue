@@ -60,7 +60,7 @@
             color="tertiary"
             text="Zurücksetzen"
             variant="elevated"
-            @click="resetOptions"
+            @click="resetOptionsForMessstelle"
           />
           <v-spacer />
         </v-card-actions>
@@ -83,6 +83,7 @@ import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugP
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
@@ -103,6 +104,7 @@ defineProps<Props>();
 
 const display = useDisplay();
 const messstelleStore = useMessstelleStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
@@ -135,7 +137,7 @@ watch(messstelle, () => {
     chosenOptions.value = messstelleStore.getFilteroptions;
     messstelleStore.reloadFilteroptions();
   } else {
-    resetOptions();
+    resetOptionsForMessstelle();
   }
 });
 
@@ -227,13 +229,7 @@ function saveChosenOptions(): void {
 }
 
 function setDefaultOptionsForMessstelle(): void {
-  chosenOptions.value.fahrzeuge =
-    DefaultObjectCreator.createDefaultFahrzeugOptions();
-
-  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-  chosenOptions.value.fahrzeuge.radverkehr =
-    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+  resetFahrzeugOptions();
 
   const defaultDate = messstelleStore.getMaxPossibleDateForMessstelle;
   chosenOptions.value.zeitraumStartAndEndDate = new StartAndEndDate(
@@ -270,31 +266,52 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;
   chosenOptions.value.spitzenstunde = true;
-  messstelleStore.calculateActiveMessfaehigkeit(
-    messstelle.value.datumLetztePlausibleMessung.toString()
-  );
   messstelleStore.setBelastungsplanChosenSize(1);
   saveChosenOptions();
 }
 
-function resetOptions(): void {
+function resetOptionsForMessstelle(): void {
   setDefaultOptionsForMessstelle();
 }
 
-watch(
-  () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
-  () => {
-    chosenOptions.value.fahrzeuge =
-      DefaultObjectCreator.createDefaultFahrzeugOptions();
-    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-      messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-    chosenOptions.value.fahrzeuge.radverkehr =
-      !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+function resetFahrzeugOptions(): void {
+  chosenOptions.value.fahrzeuge =
+    DefaultObjectCreator.createDefaultFahrzeugOptions();
 
-    snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
-    );
-  }
+  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
+  chosenOptions.value.fahrzeuge.radverkehr =
+    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+}
+
+/**
+ * Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
+ */
+function setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum(): void {
+  const messfaehigkeiten = messstelleStore.getMessfaehigkeitenForGivenZeitraum(
+    chosenOptions.value.zeitraumStartAndEndDate.startDate,
+    chosenOptions.value.zeitraumStartAndEndDate.endDate
+  );
+  optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
+    messfaehigkeiten
+  );
+}
+
+watch(
+  () => chosenOptions.value.intervall,
+  () => {
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+  },
+  { deep: true, immediate: true }
+);
+
+watch(
+  () => chosenOptions.value.zeitraumStartAndEndDate,
+  () => {
+    resetFahrzeugOptions();
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+  },
+  { deep: true, immediate: true }
 );
 
 watch(

@@ -171,10 +171,6 @@ watch(
 watch(
   chosenOptionsCopyStartAndEndDatum,
   () => {
-    const isoDate = dateUtils.formatDateToISO(
-      chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate
-    );
-    messstelleStore.calculateActiveMessfaehigkeit(isoDate);
     if (!isDateRange.value) {
       chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
     }
