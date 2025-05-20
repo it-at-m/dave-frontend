@@ -2,7 +2,7 @@ name: build maven and image
 
 on:
   push:
-    branches: ["main-ng", "sprint"]
+    branches: ["main-ng", "sprint", "main", "dev"]
   workflow_dispatch:
     inputs:
       tag:
@@ -50,5 +50,9 @@ jobs:
             type=raw,value=stable,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'main-ng') }}
             # set internal deployment tag for main-ng branch
             type=raw,value=demo-ng,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'main-ng') }}
+            # set internal deployment tag for main branch
+            type=raw,value=demo,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'main') }}
+            # set internal deployment tag for dev branch
+            type=raw,value=test,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'dev') }}
           image-labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
