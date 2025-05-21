@@ -2,13 +2,7 @@ import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
-import {
-  cloneDeep,
-  intersection,
-  isEmpty,
-  isNil,
-  toArray,
-} from "lodash";
+import { cloneDeep, intersection, isEmpty, isNil, toArray } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
