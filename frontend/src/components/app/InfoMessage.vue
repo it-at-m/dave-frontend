@@ -2,6 +2,7 @@
   <v-btn
     v-tooltip:bottom="'Infonachricht'"
     class="mr-3"
+    density="compact"
     icon="mdi-message-text-outline"
     :disabled="!hasInfoMessage"
     @click="openDialogAndLoadData"
