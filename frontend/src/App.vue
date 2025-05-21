@@ -38,12 +38,14 @@
           <v-btn
             v-if="showGesamtauswertung"
             v-tooltip:bottom="'Gesamtauswertungen'"
+            density="compact"
             icon="mdi-clipboard-pulse-outline"
             class="mr-3"
             to="/auswertung"
           />
           <v-btn
             v-tooltip:bottom="'PDF-Report'"
+            density="compact"
             class="mr-3"
             icon="mdi-file-chart"
             to="/pdfreport"
@@ -53,6 +55,7 @@
           <v-btn
             v-tooltip:bottom="'Anwenderhandbuch'"
             class="mr-3"
+            density="compact"
             icon="mdi-clippy"
             @click="navigateToHandbuch"
           />

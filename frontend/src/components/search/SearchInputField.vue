@@ -63,6 +63,7 @@
         <template #activator="{ props }">
           <v-btn
             v-bind="props"
+            density="compact"
             icon="mdi-information"
             @click="showtooltip = !showtooltip"
           >
