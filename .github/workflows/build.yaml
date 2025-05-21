@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.6.0
 
       - name: Advance Security Policy as Code
         uses: advanced-security/policy-as-code@v2.9.1
@@ -24,7 +24,7 @@ jobs:
     needs: compliance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.6.0
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
