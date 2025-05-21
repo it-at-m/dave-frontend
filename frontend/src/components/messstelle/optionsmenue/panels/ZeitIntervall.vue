@@ -57,9 +57,11 @@ const messdatenIntervalle = computed(() => {
   const intervallsForSelectionField = ZaehldatenIntervallToSelect.filter(
     (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
   );
+  // vue/no-side-effects-in-computed-properties
   if (!includes(intervals, chosenOptionsCopy.value.intervall)) {
     const intervallToSet =
       intervallsForSelectionField[intervallsForSelectionField.length - 1].value;
+    // vue/no-side-effects-in-computed-properties
     chosenOptionsCopy.value.intervall = isNil(intervallToSet)
       ? ZaehldatenIntervall.STUNDE_KOMPLETT
       : intervallToSet;

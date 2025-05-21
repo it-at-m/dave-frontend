@@ -8,7 +8,6 @@ import {
   isEmpty,
   isNil,
   toArray,
-  union,
 } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
