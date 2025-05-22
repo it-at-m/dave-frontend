@@ -281,7 +281,7 @@ function resetFahrzeugOptions(): void {
   chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
     messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
   chosenOptions.value.fahrzeuge.radverkehr =
-    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.RAD;
 }
 
 /**
