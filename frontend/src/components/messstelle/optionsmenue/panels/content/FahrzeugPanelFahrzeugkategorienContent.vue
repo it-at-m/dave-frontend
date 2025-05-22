@@ -118,7 +118,7 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { isEmpty, toArray } from "lodash";
+import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";

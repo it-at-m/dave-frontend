@@ -33,7 +33,7 @@
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 import { includes, isNil } from "lodash";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
@@ -48,24 +48,41 @@ const hoverZeitintervall = ref(false);
 
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
-const messdatenIntervalle = computed(() => {
-  const intervals =
-    optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+const smallestCommonDenominatorOfIntervallForChosenFahrzeugOptions = computed(
+  () => {
+    return optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
       optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
       chosenOptionsCopy.value.fahrzeuge
     );
-  const intervallsForSelectionField = ZaehldatenIntervallToSelect.filter(
-    (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
-  );
-  if (!includes(intervals, chosenOptionsCopy.value.intervall)) {
-    const intervallToSet =
-      intervallsForSelectionField[intervallsForSelectionField.length - 1].value;
-    chosenOptionsCopy.value.intervall = isNil(intervallToSet)
-      ? ZaehldatenIntervall.STUNDE_KOMPLETT
-      : intervallToSet;
   }
-  return intervallsForSelectionField;
+);
+
+const messdatenIntervalle = computed(() => {
+  const intervals =
+    smallestCommonDenominatorOfIntervallForChosenFahrzeugOptions.value;
+  return ZaehldatenIntervallToSelect.filter((zaehldatenIntervall) =>
+    intervals.includes(zaehldatenIntervall.value)
+  );
 });
+
+watch(
+  () => messdatenIntervalle.value,
+  () => {
+    if (
+      !includes(
+        smallestCommonDenominatorOfIntervallForChosenFahrzeugOptions.value,
+        chosenOptionsCopy.value.intervall
+      )
+    ) {
+      const intervallToSet =
+        messdatenIntervalle.value[messdatenIntervalle.value.length - 1].value;
+      chosenOptionsCopy.value.intervall = isNil(intervallToSet)
+        ? ZaehldatenIntervall.STUNDE_KOMPLETT
+        : intervallToSet;
+    }
+  },
+  { deep: true, immediate: true }
+);
 
 const isIntervallChangingLocked = computed(() => {
   return (
