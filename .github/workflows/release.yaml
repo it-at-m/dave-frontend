@@ -4,17 +4,25 @@ on:
   workflow_dispatch:
     inputs:
       releaseVersion:
-        description: "Default version to use when preparing a release."
+        description: "Version to use when preparing a release (e.g., 1.2.3)"
         required: true
-        default: "2.0.0"
+        default: "2.1.0"
       developmentVersion:
-        description: "Default version to use for new local working copy."
+        description: "Version to use for new local working copy (e.g., 1.2.4-SNAPSHOT)"
         required: true
-        default: "2.0.1-SNAPSHOT"
+        default: "2.2.0-SNAPSHOT"
+      use-pr:
+        description: "Use PR for version bump instead of direct push"
+        default: "true"
+
+env:
+  IMAGE_NAME: "dave-frontend"
 
 jobs:
   release-maven:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       MVN_ARTIFACT_ID: ${{ steps.maven-release-step.outputs.MVN_ARTIFACT_ID }}
       ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
@@ -22,20 +30,38 @@ jobs:
       TZ: Europe/Berlin # timezone
     steps:
       - id: maven-release-step
-        uses: it-at-m/.github/.github/actions/action-maven-release@main
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@b2b49a8b4344e3b5ac90dd1ee9a0c59860c41383 # v1.0.16
         with:
           app-path: ""
-          releaseVersion: "${{ github.event.inputs.releaseVersion }}"
-          developmentVersion: "${{ github.event.inputs.developmentVersion }}"
-          java-version: 21
+          releaseVersion: ${{ github.event.inputs.releaseVersion }}
+          developmentVersion: ${{ github.event.inputs.developmentVersion }}
+
+  build-image:
+    runs-on: ubuntu-latest
+    needs: release-maven
+    permissions:
+      packages: write
+    steps:
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@b2b49a8b4344e3b5ac90dd1ee9a0c59860c41383 # v1.0.16
+        with:
+          path: .
+          image-name: ${{ env.IMAGE_NAME }}
+          artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-tags: |
+            type=semver,pattern={{version}},value=${{ github.event.inputs.releaseVersion }}
+          image-labels: |
+            maintainer=it@m, Landeshauptstadt Muenchen (LHM)
 
   create-github-release:
-    needs: release-maven
+    needs: ["release-maven", "build-image"]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Create GitHub Release
-        id: create_release
-        uses: it-at-m/.github/.github/actions/action-create-github-release@main
+        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@b2b49a8b4344e3b5ac90dd1ee9a0c59860c41383 # v1.0.16
         with:
           artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
           tag-name: ${{ needs.release-maven.outputs.MVN_ARTIFACT_ID }}-${{ github.event.inputs.releaseVersion }}
