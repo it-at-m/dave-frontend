@@ -4,6 +4,8 @@
  */
 package de.muenchen.dave.filter;
 
+import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
+
 import de.muenchen.dave.ApiGatewayApplication;
 import de.muenchen.dave.OAuthSecurityMockConfiguration;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
 
 @SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)

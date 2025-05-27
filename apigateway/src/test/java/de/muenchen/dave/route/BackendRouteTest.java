@@ -4,6 +4,9 @@
  */
 package de.muenchen.dave.route;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
+
 import com.github.tomakehurst.wiremock.http.HttpHeader;
 import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import com.github.tomakehurst.wiremock.matching.EqualToPattern;
@@ -19,9 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
 
 @SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)
