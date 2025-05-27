@@ -29,11 +29,6 @@
         <!-- Linting & Formatting -->
         <spotless-maven-plugin.version>2.44.4</spotless-maven-plugin.version>
         <itm-java-codeformat.version>1.0.10</itm-java-codeformat.version>
-        <spotbugs-maven-plugin.version>4.9.3.0</spotbugs-maven-plugin.version>
-        <!-- must match the patch version of spotbugs-maven-plugin -->
-        <spotbugs-annotations.version>4.9.3</spotbugs-annotations.version>
-        <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
-        <refarch-tools.version>1.1.0</refarch-tools.version>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
         <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
