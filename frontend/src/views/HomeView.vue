@@ -19,6 +19,7 @@
           :color="speedDialColor"
           :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-plus-thick'"
           size="large"
+          density="default"
           elevation="6"
           location="bottom end"
           position="absolute"
@@ -34,6 +35,7 @@
         icon="mdi-file-delimited"
         color="secondary"
         size="small"
+        density="default"
         @click="printSearchResult"
       />
       <v-btn
@@ -42,6 +44,7 @@
         icon="mdi-camera"
         color="secondary"
         size="small"
+        density="default"
         @click="takePicture"
       />
     </v-speed-dial>
@@ -220,6 +223,6 @@ const getSearchResult = computed(() => {
 });
 
 const speedDialColor = computed(() => {
-  return speedDialOpen.value ? "grey-darken-1" : "secondary";
+  return speedDialOpen.value ? "quaternary" : "secondary";
 });
 </script>

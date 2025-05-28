@@ -14,9 +14,9 @@ import {
 import { de } from "vuetify/locale";
 
 //Fahrzeugklasse
-import achtUndEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtUndEinsIcon.vue";
-import qKFZIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QKFZIcon.vue";
-import qpkwLkwIcon from "@/components/messstelle/icons/FahrzeugklasseIcons/QpkwLkwIcon.vue";
+import achtPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtPlusEinsIcon.vue";
+import summeKfz from "@/components/messstelle/icons/FahrzeugklasseIcons/SummeKfzIcon.vue";
+import zweiPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/ZweiPlusEinsIcon.vue";
 // Zaehlart
 import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
 import artN from "@/components/zaehlstelle/icons/ArtIcons/ArtN.vue";
@@ -44,6 +44,8 @@ const theme = {
       colors: {
         primary: colors.blue.darken3,
         secondary: colors.orange.darken2,
+        tertiary: colors.grey.lighten1,
+        quaternary: colors.grey.darken1,
         accent: colors.blue.darken4,
         success: colors.green.lighten2,
         error: colors.red.lighten2,
@@ -82,9 +84,9 @@ export default createVuetify({
       artT,
       artTK,
       //Fahrzeugklasse
-      achtUndEins,
-      qKFZIcon,
-      qpkwLkwIcon,
+      achtPlusEins,
+      summeKfz,
+      zweiPlusEins,
     },
   },
   locale: {
@@ -98,6 +100,21 @@ export default createVuetify({
   defaults: {
     VSelect: {
       itemColor: "primary",
+    },
+    VBtn: {
+      class: "text-none",
+      variant: "elevated",
+    },
+    VTextField: {
+      density: "compact",
+      variant: "outlined",
+    },
+    VAutocomplete: {
+      density: "compact",
+      variant: "outlined",
+    },
+    VCheckbox: {
+      density: "compact",
     },
   },
 });

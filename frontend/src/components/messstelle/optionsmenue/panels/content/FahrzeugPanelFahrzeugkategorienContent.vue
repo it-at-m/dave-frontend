@@ -40,9 +40,9 @@
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.personenkraftwagen"
           label="Personenkraftwagen (Pkw)"
-          :persistent-hint="isTypeDisabled('PKW')"
-          :disabled="isTypeDisabled('PKW')"
-          color="grey-darken-1"
+          :persistent-hint="isPersonenkraftwagenDisabled"
+          :disabled="isPersonenkraftwagenDisabled"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverPkw = true"
@@ -51,9 +51,9 @@
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.lieferwagen"
           label="Lieferwagen (Lfw)"
-          :persistent-hint="isTypeDisabled('LFW')"
-          :disabled="isTypeDisabled('LFW')"
-          color="grey-darken-1"
+          :persistent-hint="isLieferwagenDisabled"
+          :disabled="isLieferwagenDisabled"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverLfw = true"
@@ -62,9 +62,9 @@
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.lastkraftwagen"
           label="Lastkraftwagen (Lkw)"
-          :persistent-hint="isTypeDisabled('LKW')"
-          :disabled="isTypeDisabled('LKW')"
-          color="grey-darken-1"
+          :persistent-hint="isLastkraftwagenDisabled"
+          :disabled="isLastkraftwagenDisabled"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverLkw = true"
@@ -75,9 +75,9 @@
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.lastzuege"
           label="Lastzüge (Lz)"
-          :persistent-hint="isTypeDisabled('LZ')"
-          :disabled="isTypeDisabled('LZ')"
-          color="grey-darken-1"
+          :persistent-hint="isLastzuegeDisabled"
+          :disabled="isLastzuegeDisabled"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverLz = true"
@@ -86,9 +86,9 @@
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.busse"
           label="Busse"
-          :persistent-hint="isTypeDisabled('BUS')"
-          :disabled="isTypeDisabled('BUS')"
-          color="grey-darken-1"
+          :persistent-hint="isBusseDisabled"
+          :disabled="isBusseDisabled"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverBus = true"
@@ -97,9 +97,9 @@
         <v-checkbox
           v-model="chosenOptionsCopyFahrzeuge.kraftraeder"
           label="Krafträder (Krad)"
-          :persistent-hint="isTypeDisabled('KRAD')"
-          :disabled="isTypeDisabled('KRAD')"
-          color="grey-darken-1"
+          :persistent-hint="isKraftraederDisabled"
+          :disabled="isKraftraederDisabled"
+          color="quaternary"
           hide-details
           density="compact"
           @mouseover="hoverKrad = true"
@@ -107,7 +107,7 @@
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat>
+        <v-card variant="flat">
           {{ helpTextFahrzeugkategorien }}
         </v-card>
       </v-col>
@@ -118,14 +118,14 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
+import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import Fahrzeug from "@/types/enum/Fahrzeug";
-import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
-const fahrzeugPanelTools = useFahrzeugPanelTools();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
 const selectOrDeselectAllVmodel = ref(false);
 const hoverSelectOrDeselectAll = ref(false);
@@ -196,26 +196,26 @@ const helpTextFahrzeugkategorien = computed(() => {
  */
 function selectOrDeselectAll(): void {
   selectOrDeselectAllVmodel.value = !selectOrDeselectAllVmodel.value;
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.PKW)) {
+  if (!isPersonenkraftwagenDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.personenkraftwagen =
       selectOrDeselectAllVmodel.value;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LKW)) {
+  if (!isLastkraftwagenDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.lastkraftwagen =
       selectOrDeselectAllVmodel.value;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LZ)) {
+  if (!isLastzuegeDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.lastzuege =
       selectOrDeselectAllVmodel.value;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.BUS)) {
+  if (!isBusseDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.busse = selectOrDeselectAllVmodel.value;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KRAD)) {
+  if (!isKraftraederDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.kraftraeder =
       selectOrDeselectAllVmodel.value;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LFW)) {
+  if (!isLieferwagenDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.lieferwagen =
       selectOrDeselectAllVmodel.value;
   }
@@ -231,37 +231,37 @@ function selectOrDeselectAll(): void {
 function calculateSelectOrDeselect() {
   let counter = 0;
   let maxSelectable = 0;
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.PKW)) {
+  if (!isPersonenkraftwagenDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.personenkraftwagen) {
       counter++;
     }
     maxSelectable++;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LKW)) {
+  if (!isLastkraftwagenDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.lastkraftwagen) {
       counter++;
     }
     maxSelectable++;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LZ)) {
+  if (!isLastzuegeDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.lastzuege) {
       counter++;
     }
     maxSelectable++;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.BUS)) {
+  if (!isBusseDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.busse) {
       counter++;
     }
     maxSelectable++;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.KRAD)) {
+  if (!isKraftraederDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.kraftraeder) {
       counter++;
     }
     maxSelectable++;
   }
-  if (fahrzeugPanelTools.isTypeEnabled(Fahrzeug.LFW)) {
+  if (!isLieferwagenDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.lieferwagen) {
       counter++;
     }
@@ -272,7 +272,45 @@ function calculateSelectOrDeselect() {
   selectOrDeselectAllVmodel.value = counter > maxSelectable / 2;
 }
 
-function isTypeDisabled(type: string): boolean {
-  return fahrzeugPanelTools.isTypeDisabled(type);
-}
+const isPersonenkraftwagenDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .personenkraftwagenChoosableIntervals
+  )
+);
+
+const isLastkraftwagenDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .lastkraftwagenChoosableIntervals
+  )
+);
+
+const isLastzuegeDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .lastzuegeChoosableIntervals
+  )
+);
+
+const isBusseDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .busseChoosableIntervals
+  )
+);
+
+const isKraftraederDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .kraftraederChoosableIntervals
+  )
+);
+
+const isLieferwagenDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .lieferwagenChoosableIntervals
+  )
+);
 </script>

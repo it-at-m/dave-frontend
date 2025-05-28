@@ -19,8 +19,8 @@
       v-if="hasZaehlungen"
       v-model="activeTab"
       fixed-tabs
-      bg-color="grey-darken-1"
-      slider-color="grey-lighten-1"
+      bg-color="quaternary"
+      slider-color="tertiary"
       stacked
       color="white"
       class="text-grey-lighten-1"

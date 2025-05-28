@@ -5,6 +5,7 @@
       color="secondary"
       :icon="icon.iconPath"
       size="default"
+      density="default"
       height="25px"
       class="ml-n1"
       variant="text"

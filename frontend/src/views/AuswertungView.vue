@@ -28,8 +28,9 @@
             <v-spacer />
             <v-btn
               class="mr-2 text-none"
+              color="tertiary"
               text="Zurücksetzen"
-              variant="outlined"
+              variant="elevated"
               @click="resetAuswertungsOptions()"
             />
           </v-card-actions>
@@ -44,10 +45,28 @@
           :is-gesamt-auswertung="true"
           :zaehldaten-stepline="zaehldatenMessstellen"
         />
-        <banner-messtelle-tabs
-          v-else
-          :message="textForNonShownDiagram"
-        />
+        <v-banner v-else>
+          <v-card variant="flat">
+            <v-card-title>
+              <v-icon
+                color="error"
+                size="36"
+                icon="mdi-alert-decagram-outline"
+                start
+              />
+              Es ist keine grafische Darstellung der Gesamtauswertung möglich.
+            </v-card-title>
+            <v-card-text class="ml-9">
+              <v-list-item
+                v-for="(message, index) in textForNonShownDiagram"
+                :key="index"
+              >
+                <v-list-item-title>{{ message }}</v-list-item-title>
+              </v-list-item>
+            </v-card-text>
+          </v-card>
+        </v-banner>
+
         <speed-dial
           v-if="showSpeeddial"
           :is-listenausgabe="false"
@@ -80,7 +99,6 @@ import { useDisplay } from "vuetify";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
-import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import PdfReportMenueAuswertung from "@/components/messstelle/gesamtauswertung/PdfReportMenueAuswertung.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
@@ -94,6 +112,7 @@ import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useReportTools } from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
+const NUMBER_OF_MAX_MST_TO_SHOW = 10;
 
 const minWidth = 600;
 
@@ -124,38 +143,42 @@ onMounted(() => {
 });
 
 const textForNonShownDiagram = computed(() => {
-  let text = "";
-  if (
-    !isNumberOfXaxisElementsShowable.value ||
-    !isChosenMstIdsAndFahrzeugoptionsShowable.value
-  ) {
-    text = "Es ist keine grafische Darstellung der Gesamtauswertung möglich. ";
-    if (!isNumberOfXaxisElementsShowable.value) {
-      text += `Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}`;
-    }
-    if (!isChosenMstIdsAndFahrzeugoptionsShowable.value) {
-      if (!isNumberOfXaxisElementsShowable.value) {
-        text += " und es";
-      } else {
-        text += "Es";
-      }
-      text +=
-        " ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden";
-    }
+  const text = [];
+  if (!isNumberOfChosenMstShowable.value) {
+    text.push(
+      `Die Anzahl der gewählten Messstellen beträgt mehr als ${NUMBER_OF_MAX_MST_TO_SHOW}.`
+    );
   }
-  text += ".";
+  if (!isNumberOfXaxisElementsShowable.value) {
+    text.push(
+      `Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}.`
+    );
+  }
+  if (!isChosenMstIdsAndFahrzeugoptionsShowable.value) {
+    text.push(
+      "Es ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden."
+    );
+  }
   return text;
 });
 
 const showDiagram = computed(() => {
   return (
     isChosenMstIdsAndFahrzeugoptionsShowable.value &&
-    isNumberOfXaxisElementsShowable.value
+    isNumberOfXaxisElementsShowable.value &&
+    isNumberOfChosenMstShowable.value
   );
 });
 
 const showSpeeddial = computed(() => {
   return showDiagram.value && isEverythingValid.value && auswertungLoaded.value;
+});
+
+const isNumberOfChosenMstShowable = computed(() => {
+  return (
+    toArray(auswertungsOptions.value.messstelleAuswertungIds).length <=
+    NUMBER_OF_MAX_MST_TO_SHOW
+  );
 });
 
 const isNumberOfXaxisElementsShowable = computed(() => {
@@ -226,6 +249,8 @@ function resetAuswertungsOptions() {
   gesamtauswertungStore.setAuswertungMessstelleOptions(
     auswertungsOptions.value
   );
+  zaehldatenMessstellen.value =
+    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
 }
 
 function auswertungStarten() {
@@ -250,6 +275,10 @@ function auswertungStarten() {
     })
     .finally(() => {
       chartDataLoading.value = false;
+      if (!showDiagram.value) {
+        zaehldatenMessstellen.value =
+          DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+      }
     });
 }
 

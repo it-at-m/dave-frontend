@@ -30,9 +30,9 @@
               </v-col>
               <v-col cols="4">
                 <div class="d-flex flex-row-reverse">
-                  <messstelle-kommentar kommentar="messstelle.kommentar" />
+                  <messstelle-kommentar :kommentar="messstelle.kommentar" />
                   <fahrzeugklassen-icon
-                    :fahrzeugklasse="fahrzeugKlasse"
+                    :fahrzeugklasse="fahrzeugklasse"
                     color="primary"
                     size="small"
                   />
@@ -130,9 +130,9 @@ const datumLetztePlausibleMessung = computed(() => {
   return dateUtils.formatDate(props.messstelle.datumLetztePlausibleMessung);
 });
 
-const fahrzeugKlasse = computed(() => {
+const fahrzeugklasse = computed(() => {
   if (props.messstelle.messquerschnitte.length > 0) {
-    return props.messstelle.fahrzeugKlassen;
+    return props.messstelle.fahrzeugklasse;
   } else {
     return "k.A.";
   }

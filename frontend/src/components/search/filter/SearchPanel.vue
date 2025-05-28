@@ -28,7 +28,7 @@
             class="mb-3"
             :label="'Messstellen'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
           />
         </v-col>
@@ -38,12 +38,12 @@
             class="mb-3"
             :label="'Zählstellen'"
             hide-details
-            color="grey-darken-1"
+            color="quaternary"
             density="compact"
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat />
+          <v-card variant="flat" />
         </v-col>
       </v-row>
     </v-expansion-panel-text>

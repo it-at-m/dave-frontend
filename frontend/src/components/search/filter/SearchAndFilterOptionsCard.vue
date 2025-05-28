@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card variant="flat">
     <v-card-title>
       <v-icon start>mdi-filter-outline</v-icon>
       Sucheinstellungen
@@ -25,19 +25,17 @@
         color="secondary"
         style="width: 200px"
         variant="flat"
+        text="Übernehmen"
         @click="adoptSearchAndFilterOptions"
-      >
-        Übernehmen
-      </v-btn>
+      />
       <v-spacer />
       <v-btn
-        color="primary"
+        color="tertiary"
         style="width: 200px"
         variant="flat"
+        text="Zurücksetzen"
         @click="resetSearchAndFilterOptions"
-      >
-        Zurücksetzen
-      </v-btn>
+      />
       <v-spacer />
     </v-card-actions>
   </v-card>

@@ -1,6 +1,8 @@
 <template>
   <v-btn
     v-tooltip:bottom="'Infonachricht'"
+    class="mr-3"
+    density="compact"
     icon="mdi-message-text-outline"
     :disabled="!hasInfoMessage"
     @click="openDialogAndLoadData"
@@ -13,7 +15,7 @@
     <v-card
       width="100%"
       height="420px"
-      flat
+      variant="flat"
     >
       <v-card-title class="d-flex justify-space-between align-center">
         <div>

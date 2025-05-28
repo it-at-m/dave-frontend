@@ -26,7 +26,7 @@
               flat
             >
               <v-icon
-                color="grey-lighten-1"
+                color="tertiary"
                 :icon="icon(asset)"
               />
               <v-divider
@@ -173,13 +173,14 @@
     </v-sheet>
 
     <v-btn
-      v-tooltip:left="'Report als PDF-Datei herunterladen'"
+      v-tooltip:start="'Report als PDF-Datei herunterladen'"
       class="mr-4 mb-4"
       color="secondary"
       elevation="6"
       icon="mdi-printer"
       location="bottom end"
-      position="fixed"
+      density="default"
+      position="absolute"
       size="large"
       style="z-index: 400"
       :loading="loadingPdf"

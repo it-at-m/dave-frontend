@@ -40,9 +40,10 @@
           title="Messinformationen"
           subtitle="Folgende Informationen werden im PDF Report
                                 eingetragen: Messzeitraum,
-                                Wochentag"
+                                Wochentag, Verkehrsart"
         />
         <pdf-report-menue-list-item
+          v-if="isSingeleMessstelleSelected"
           v-model="legende"
           title="Legende"
           subtitle="Die Legende enthält Kurzbeschreibungen der
@@ -69,7 +70,7 @@
         <v-spacer />
         <v-btn
           class="text-none"
-          color="grey-lighten-1"
+          color="tertiary"
           text="Abbrechen"
           @click="closeDialog"
         />
@@ -276,9 +277,11 @@ function createLegende(): void {
 }
 
 function createStatistik(): void {
-  const statistikAuswertung = new TextAsset(
-    `Auswertungsstatistik: Exisitiert noch nicht.`
+  const ueberschrift = new HeadingAsset(
+    "Auswertungsstatistik",
+    AssetTypesEnum.HEADING3
   );
-  pdfReportStore.addAsset(statistikAuswertung);
+  const statistikAuswertung = new TextAsset(`Exisitiert noch nicht.`);
+  pdfReportStore.addAssets([ueberschrift, statistikAuswertung]);
 }
 </script>

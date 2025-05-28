@@ -4,6 +4,7 @@
       class="text-none"
       color="secondary"
       prepend-icon="mdi-filter-outline"
+      density="default"
       text="Filtereinstellungen"
       @click="dialog = true"
     />
@@ -14,7 +15,7 @@
     >
       <v-card
         width="900px"
-        flat
+        variant="flat"
       >
         <v-card-title>
           <v-icon
@@ -101,7 +102,7 @@
           <v-spacer />
           <v-btn
             class="text-none"
-            color="grey-lighten-1"
+            color="tertiary"
             text="Zurücksetzen"
             variant="elevated"
             @click="resetOptionsmenu"

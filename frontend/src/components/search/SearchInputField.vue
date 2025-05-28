@@ -39,6 +39,7 @@
         v-tooltip:bottom="'Such- und Filtereinstellungen'"
         :color="isDefaultFilter ? '' : 'secondary'"
         style="opacity: 1"
+        class="mr-2"
         @click="openSearchAndFilterDialog"
       >
         {{ isDefaultFilter ? "mdi-filter-outline" : "mdi-filter" }}
@@ -62,6 +63,7 @@
         <template #activator="{ props }">
           <v-btn
             v-bind="props"
+            density="compact"
             icon="mdi-information"
             @click="showtooltip = !showtooltip"
           >
@@ -128,7 +130,7 @@ const mapOptionsStore = useMapOptionsStore();
 function suggest(query: string) {
   if (!isEmpty(query)) {
     lastSuggestQuery.value = query;
-    SucheService.getSuggestions(query)
+    SucheService.getSuggestions(query, searchStore.getSearchAndFilterOptions)
       .then((response: SucheComplexSuggestsDTO) => {
         suggestions.value = [];
 

@@ -64,7 +64,7 @@
         <v-spacer />
         <v-btn
           class="text-none"
-          color="grey-lighten-1"
+          color="tertiary"
           text="Abbrechen"
           @click="closeDialog"
         />

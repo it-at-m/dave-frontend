@@ -8,38 +8,22 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Advance Security Policy as Code
-        uses: advanced-security/policy-as-code@v2.9.1
+        uses: advanced-security/policy-as-code@v2.11.0
         with:
           policy: GeekMasher/security-queries
           policy-path: $GITHUB_WORKSPACE/policies/default.yml
-
           token: ${{ secrets.ACCESS_TOKEN }}
-
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
 
   build-maven:
     needs: compliance
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: "21"
-          distribution: "temurin"
-          cache: "maven"
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
       - name: Build with Maven
-        run: mvn -B verify -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+        id: maven
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.20

@@ -337,7 +337,7 @@
             :hint="getHintToDisplay('PKW')"
             :persistent-hint="isTypeDisabled('PKW')"
             :disabled="isTypeDisabled('PKW')"
-            color="grey-darken-1"
+            color="quaternary"
             hide-details
             density="compact"
             @mouseover="hoverPkw = true"
@@ -349,7 +349,7 @@
             :hint="getHintToDisplay('LKW')"
             :persistent-hint="isTypeDisabled('LKW')"
             :disabled="isTypeDisabled('LKW')"
-            color="grey-darken-1"
+            color="quaternary"
             hide-details
             density="compact"
             @mouseover="hoverLkw = true"
@@ -361,7 +361,7 @@
             :hint="getHintToDisplay('LZ')"
             :persistent-hint="isTypeDisabled('LZ')"
             :disabled="isTypeDisabled('LZ')"
-            color="grey-darken-1"
+            color="quaternary"
             hide-details
             density="compact"
             @mouseover="hoverLz = true"
@@ -375,7 +375,7 @@
             :hint="getHintToDisplay('BUS')"
             :persistent-hint="isTypeDisabled('BUS')"
             :disabled="isTypeDisabled('BUS')"
-            color="grey-darken-1"
+            color="quaternary"
             hide-details
             density="compact"
             @mouseover="hoverBus = true"
@@ -387,7 +387,7 @@
             :hint="getHintToDisplay('KRAD')"
             :persistent-hint="isTypeDisabled('KRAD')"
             :disabled="isTypeDisabled('KRAD')"
-            color="grey-darken-1"
+            color="quaternary"
             hide-details
             density="compact"
             @mouseover="hoverKrad = true"
@@ -399,7 +399,7 @@
             :hint="getHintToDisplay('PKW_EINHEIT')"
             :persistent-hint="isTypeDisabled('PKW_EINHEIT')"
             :disabled="isTypeDisabled('PKW_EINHEIT')"
-            color="grey-darken-1"
+            color="quaternary"
             hide-details
             density="compact"
             @mouseover="hoverPkweinheit = true"
@@ -407,7 +407,7 @@
           />
         </v-col>
         <v-col cols="4">
-          <v-card flat>
+          <v-card variant="flat">
             {{ helpTextFahrzeugkategorien }}
           </v-card>
         </v-col>
@@ -791,19 +791,19 @@ function getCheckboxColor(type: string): string {
   switch (type) {
     case "SV_P": {
       if (!isSvpInBelastungsPlan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
     case "GV_P": {
       if (!isGvpInBelastungsPlan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
     case "RAD": {
       if (!isRadInBelastungsplan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
@@ -812,10 +812,10 @@ function getCheckboxColor(type: string): string {
         fahrzeugOptions.value.fussverkehr &&
         actualNumberOfSelectedVerkehrsarten.value > 1
       ) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       if (isTageswertAndNot24h.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
