@@ -429,7 +429,7 @@ function loadAllVisibleMessstellen(): void {
     .catch((error) => {
       throw new ApiError(
         Levels.ERROR,
-        `Beim Laden alle auswählbaren Messstellen ist ein Fehler aufgetreten.`,
+        `Beim Laden aller auswählbaren Messstellen ist ein Fehler aufgetreten.`,
         error
       );
     });
