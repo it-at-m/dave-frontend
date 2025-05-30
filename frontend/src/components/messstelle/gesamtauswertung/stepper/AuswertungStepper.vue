@@ -13,7 +13,10 @@
         :subtitle="selectedJahresintervallAsSummary"
         :error="!isJahresintervallSelected()"
       >
-        <zeitintervall-step-content v-model="auswertungOptions" />
+        <zeitintervall-step-content
+          v-model="auswertungOptions"
+          :preset-data="presetData"
+        />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
         :complete="activeStep > 2 && isJahreSelected()"
@@ -81,6 +84,7 @@ import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
 interface Props {
   height: string;
   allVisibleMessstellen: Array<MessstelleAuswertungDTO>;
+  presetData: boolean;
 }
 
 defineProps<Props>();
