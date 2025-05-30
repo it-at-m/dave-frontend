@@ -14,6 +14,7 @@
             v-model="auswertungsOptions"
             :height="stepperHeightVh"
             :all-visible-messstellen="allVisibleMessstellen"
+            :preset-data="presetData"
           />
           <v-spacer />
           <v-card-actions>
@@ -92,10 +93,11 @@ import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/Messst
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { cloneDeep, head, isNil, toArray, valuesIn } from "lodash";
+import { cloneDeep, head, isEmpty, isNil, toArray, valuesIn } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
 
+import { ApiError, Levels } from "@/api/error";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
@@ -129,6 +131,7 @@ const chartDataLoading = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 const pdfReportDialog = ref(false);
+const presetData = ref(false);
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -140,6 +143,13 @@ const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
 
 onMounted(() => {
   loadAllVisibleMessstellen();
+  auswertungsOptions.value = cloneDeep(
+    gesamtauswertungStore.getAuswertungMessstelleOptions
+  );
+  zaehldatenMessstellen.value = cloneDeep(
+    gesamtauswertungStore.getZaehldatenMessstellen
+  );
+  presetData.value = !isEmpty(auswertungsOptions.value.zeitraum);
 });
 
 const textForNonShownDiagram = computed(() => {
@@ -251,6 +261,7 @@ function resetAuswertungsOptions() {
   );
   zaehldatenMessstellen.value =
     DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+  gesamtauswertungStore.setZaehldatenMessstellen(zaehldatenMessstellen.value);
 }
 
 function auswertungStarten() {
@@ -279,6 +290,9 @@ function auswertungStarten() {
         zaehldatenMessstellen.value =
           DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
       }
+      gesamtauswertungStore.setZaehldatenMessstellen(
+        zaehldatenMessstellen.value
+      );
     });
 }
 
@@ -408,11 +422,17 @@ function getFilenameSingleMessstelleAndMessquerschnitte(
 }
 
 function loadAllVisibleMessstellen(): void {
-  MessstelleAuswertungService.getAllVisibleMessstellen().then(
-    (messstellen: Array<MessstelleAuswertungDTO>) => {
+  MessstelleAuswertungService.getAllVisibleMessstellen()
+    .then((messstellen: Array<MessstelleAuswertungDTO>) => {
       allVisibleMessstellen.value = messstellen;
-    }
-  );
+    })
+    .catch((error) => {
+      throw new ApiError(
+        Levels.ERROR,
+        `Beim Laden alle auswählbaren Messstellen ist ein Fehler aufgetreten.`,
+        error
+      );
+    });
 }
 function openPdfReportDialog(): void {
   pdfReportDialog.value = true;
