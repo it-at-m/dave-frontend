@@ -7,10 +7,7 @@
 
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
 
-
-    <springProfile name="dev,kon,local,unittest,demo,hotfix,docker">
-
-        <!-- Log appender -->
+    <springProfile name="local | unittest | debugging">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
                 <pattern>
@@ -58,10 +55,7 @@
 
     </springProfile>
 
-
-    <springProfile name="prod">
-
-        <!-- Log appender -->
+    <springProfile name="!local &amp; !unittest &amp; !debugging">
         <appender name="JSON_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder class="net.logstash.logback.encoder.LogstashEncoder">
                 <throwableConverter
@@ -76,37 +70,11 @@
             </encoder>
         </appender>
 
-        <!-- Logger -->
-        <logger name="de.muenchen.dave"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
-        <logger name="de.muenchen.allgemein"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
-        <logger name="org.springframework.web"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
-        <logger name="org.springframework.cloud.gateway"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
         <!-- Logger usage -->
         <root level="info">
             <appender-ref ref="JSON_STDOUT" />
         </root>
 
     </springProfile>
-
 
 </configuration>
