@@ -4,7 +4,6 @@
      have priority over the log level maintained in this file.  -->
 <configuration>
 
-
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
 
     <springProfile name="local | unittest | debugging">
