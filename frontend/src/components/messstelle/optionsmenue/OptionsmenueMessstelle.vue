@@ -73,7 +73,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
 import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
-import { cloneDeep, isEmpty, isNil } from "lodash";
+import { cloneDeep, includes, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -89,7 +89,9 @@ import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import TagesTyp from "@/types/enum/TagesTyp";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import ZaehldatenIntervall, {
+  ZaehldatenIntervallToSelect,
+} from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
@@ -153,6 +155,23 @@ function setChosenOptions(): void {
       (date) => !isEmpty(date)
     );
   }
+
+  const intervals =
+    optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
+      chosenOptions.value.fahrzeuge
+    );
+
+  if (!includes(intervals, chosenOptions.value.intervall)) {
+    const intervallToSet = ZaehldatenIntervallToSelect.filter(
+      (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
+    ).pop();
+
+    chosenOptions.value.intervall = isNil(intervallToSet)
+      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      : intervallToSet.value;
+  }
+
   if (areChosenOptionsValid()) {
     saveChosenOptions();
     dialog.value = false;
