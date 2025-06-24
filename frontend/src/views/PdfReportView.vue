@@ -1,10 +1,7 @@
 <template>
-  <v-container
-    class="ma-0"
-    fluid
-  >
+  <v-sheet class="dave-default overflow-y-auto">
     <v-sheet
-      class="mx-10 mb-10 mt-14 pa-5 overflow-y-auto"
+      class="mx-10 mb-10 mt-14 pa-5"
       elevation="2"
       width="80%"
     >
@@ -180,7 +177,7 @@
       icon="mdi-printer"
       location="bottom end"
       density="default"
-      position="absolute"
+      position="fixed"
       size="large"
       style="z-index: 400"
       :loading="loadingPdf"
@@ -216,7 +213,7 @@
       :asset-id="assetId"
       @delete="deleteIt($event)"
     />
-  </v-container>
+  </v-sheet>
 </template>
 
 <script lang="ts" setup>
