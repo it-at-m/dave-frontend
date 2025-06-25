@@ -78,7 +78,7 @@
           * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019, ...)<br />
           * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />
           * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
-          * Messstellennummer / -name (4203,...)<br />
+          * Messstellennummer / -name (4000,...)<br />
         </span>
       </v-tooltip>
     </template>
