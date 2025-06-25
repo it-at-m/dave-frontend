@@ -22,8 +22,7 @@
           />
         </span>
         <br />
-        <fahrspuren-icon
-          size="small"
+        <fahrspuren-anzeige
           :fahrspuren="messquerschnitt.anzahlFahrspuren"
         />
         <br />
@@ -38,7 +37,7 @@
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
-import FahrspurenIcon from "@/components/messstelle/icons/FahrspurenIcon.vue";
+import FahrspurenAnzeige from "@/components/messstelle/FahrspurenAnzeige.vue";
 import FahrtrichtungIcon from "@/components/messstelle/icons/FahrtrichtungIcon.vue";
 import { useAlternateRowColor } from "@/util/AlternateRowColorUtil";
 
