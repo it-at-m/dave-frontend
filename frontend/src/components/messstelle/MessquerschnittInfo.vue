@@ -22,9 +22,7 @@
           />
         </span>
         <br />
-        <fahrspuren-anzeige
-          :fahrspuren="messquerschnitt.anzahlFahrspuren"
-        />
+        <fahrspuren-anzeige :fahrspuren="messquerschnitt.anzahlFahrspuren" />
         <br />
         <span class="text-caption">
           {{ messquerschnitt.standort }}
