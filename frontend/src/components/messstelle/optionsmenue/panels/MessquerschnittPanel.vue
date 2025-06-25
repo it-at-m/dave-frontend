@@ -40,8 +40,8 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
-        <v-col cols="4">
+      <v-row dense>
+        <v-col cols="8">
           <v-select
             v-model="chosenOptionsCopy.messquerschnittIds"
             label="Lage"
@@ -56,7 +56,6 @@
             @mouseleave="hoverLage = false"
           />
         </v-col>
-        <v-spacer />
         <v-col cols="4">
           <v-card variant="flat">
             <div v-if="hoverLage">{{ helpTextLageHover }}</div>
