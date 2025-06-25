@@ -290,7 +290,7 @@ function iconOfSuggestion(type: string) {
   let icon = "";
   switch (type) {
     case SUGGESTION_TYPE_SEARCH_TEXT:
-      icon = "mdi-format-text";
+      icon = "mdi-magnify";
       break;
     case SUGGESTION_TYPE_VORSCHLAG:
       icon = "mdi-magnify";
