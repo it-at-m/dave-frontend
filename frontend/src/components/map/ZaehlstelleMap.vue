@@ -524,11 +524,13 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
     }
     tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
   }
+  tooltip = `${tooltip} Aufbau: `;
   if (tooltipDto.realisierungsdatum) {
-    tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
+    tooltip = `${tooltip}${dateUtils.formatDate(
       tooltipDto.realisierungsdatum
-    )}<br/>`;
+    )}`;
   }
+  tooltip = `${tooltip}<br/>`;
   if (tooltipDto.abbaudatum) {
     tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
       tooltipDto.abbaudatum
