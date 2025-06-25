@@ -150,6 +150,7 @@ onMounted(() => {
     gesamtauswertungStore.getZaehldatenMessstellen
   );
   presetData.value = !isEmpty(auswertungsOptions.value.zeitraum);
+  auswertungLoaded.value = presetData.value;
 });
 
 const textForNonShownDiagram = computed(() => {
