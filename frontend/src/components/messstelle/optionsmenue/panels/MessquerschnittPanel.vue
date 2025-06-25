@@ -40,7 +40,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row denes>
+      <v-row dense>
         <v-col cols="8">
           <v-select
             v-model="chosenOptionsCopy.messquerschnittIds"
