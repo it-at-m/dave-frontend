@@ -180,6 +180,9 @@ const zeitblock = computed(() => {
   ) {
     text = existsStunde.title;
   }
+  if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
+    text = `\u00D8 ${text}`;
+  }
   return text;
 });
 
