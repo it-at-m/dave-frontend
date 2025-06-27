@@ -3,7 +3,7 @@
     :icon="iconOptions.icon"
     :tooltip="iconOptions.tooltip"
     :color="color"
-    size="small"
+    size="default"
   />
 </template>
 
