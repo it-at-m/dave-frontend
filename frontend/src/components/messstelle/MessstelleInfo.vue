@@ -14,10 +14,7 @@
           no-gutters
           class="pa-0 ma-0"
         >
-          <v-col
-            cols="12"
-            lg="10"
-          >
+          <v-col cols="10">
             <v-row no-gutters>
               <v-col cols="8">
                 <span
@@ -37,7 +34,7 @@
                   />
                   <detektierte-fahrzeugart-icon
                     :detektierte-fahrzeugart="detektierteVerkehrsart"
-                    color="primary"
+                    color="default"
                   />
                 </div>
               </v-col>
@@ -77,21 +74,16 @@
             </v-row>
           </v-col>
           <v-col
-            lg
-            class="hidden-md-and-down"
-          >
-            <v-spacer />
-          </v-col>
-          <v-col
             cols="2"
             class="hidden-md-and-down"
+            style="justify-items: center"
           >
             <messstelle-geometrie
               :height="60"
               :width="60"
               active-color="#1565C0"
               passive-color="#EEEEEE"
-              :knotenarme="messstelle.messquerschnitte"
+              :messquerschnitte="messstelle.messquerschnitte"
             />
           </v-col>
         </v-row>
