@@ -108,6 +108,7 @@
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
+import { isEmpty } from "lodash";
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -150,15 +151,17 @@ const showWochentag = computed<boolean>(() => {
 });
 
 const zeitraum = computed(() => {
-  const zeitraum = filterOptionsMessstelle.value.zeitraum.slice();
-  if (zeitraum.length == 1) {
-    return `am ${dateUtils.formatDate(zeitraum[0].toString())}`;
-  } else if (zeitraum.length == 2) {
+  const zeitraum = filterOptionsMessstelle.value.zeitraum;
+  if (isEmpty(zeitraum)) {
+    return "";
+  }
+  if (dateUtils.isDateRange(zeitraum)) {
     return `im Zeitraum ${dateUtils.formatDate(
       zeitraum[0]
     )} - ${dateUtils.formatDate(zeitraum[1])}`;
+  } else {
+    return `am ${dateUtils.formatDate(filterOptionsMessstelle.value.zeitraum[0].toString())}`;
   }
-  return "";
 });
 
 const zeitblock = computed(() => {
@@ -179,6 +182,9 @@ const zeitblock = computed(() => {
     existsStunde
   ) {
     text = existsStunde.title;
+  }
+  if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
+    text = `\u00D8 ${text}`;
   }
   return text;
 });
