@@ -17,6 +17,6 @@
 <script setup lang="ts"></script>
 <style lang="css">
 .svg-text {
-  font: 16px Arial;
+  font: bold 16px Arial;
 }
 </style>
