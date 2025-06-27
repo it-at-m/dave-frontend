@@ -1,16 +1,16 @@
 <template>
   <svg xmlns="http://www.w3.org/2000/svg"
-       width="96"
-       height="96"
-       viewBox="0 0 96 96"
+       width="32"
+       height="32"
+       viewBox="0 0 32 32"
        class="mt-n2">
-      <g fill="currentColor">
-        <g transform="translate(0, 0)">
-          <path
-              d="M0 45.26L0 9.47L4.74 9.47L4.74 27.22L22.51 9.47L28.93 9.47L13.92 23.97L29.59 45.26L23.34 45.26L10.60 27.15L4.74 32.86L4.74 45.26L0 45.26ZM33.79 45.26L33.79 9.47L57.93 9.47L57.93 13.70L38.53 13.70L38.53 24.78L55.32 24.78L55.32 29.00L38.53 29.00L38.53 45.26L33.79 45.26ZM61.23 45.26L61.23 40.87L79.57 17.94Q81.52 15.50 83.28 13.70L63.31 13.70L63.31 9.47L88.94 9.47L88.94 13.70L68.85 38.53L66.67 41.04L89.53 41.04L89.53 45.26L61.23 45.26Z"/>
-        </g>
-      </g>
+    <text y="16" class="svg-text" fill="currentColor">KFZ</text>
   </svg>
 </template>
 <script setup lang="ts">
 </script>
+<style lang="css">
+.svg-text {
+  font: 16px Arial;
+}
+</style>
