@@ -7,8 +7,7 @@
       <v-sheet
         color="white"
         width="100%"
-        class="px-4 py-2 text-primary"
-        style="font-size: 0.875rem"
+        class="px-4 py-2 text-primary font-weight-regular"
         height="72px"
       >
         <v-row
@@ -34,7 +33,7 @@
                   <fahrzeugklassen-icon
                     :fahrzeugklasse="fahrzeugklasse"
                     color="primary"
-                    size="small"
+                    size="default"
                   />
                   <detektierte-fahrzeugart-icon
                     :detektierte-fahrzeugart="detektierteVerkehrsart"
@@ -43,7 +42,10 @@
                 </div>
               </v-col>
             </v-row>
-            <v-row no-gutters>
+            <v-row
+              no-gutters
+              class="ma-0 mt-1"
+            >
               <span class="text-truncate">
                 <span
                   v-tooltip:bottom="aufbauIcon.tooltip"
@@ -72,11 +74,6 @@
                   {{ dateUtils.formatDate(messstelle.abbaudatum) }}
                 </span>
               </span>
-            </v-row>
-            <v-row
-              no-gutters
-              class="ma-0"
-            >
             </v-row>
           </v-col>
           <v-col

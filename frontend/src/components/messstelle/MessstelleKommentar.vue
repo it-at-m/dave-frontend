@@ -4,7 +4,7 @@
       v-tooltip:bottom="'Kommentar anzeigen'"
       color="secondary"
       icon="mdi-comment-text"
-      size="small"
+      size="default"
       height="20px"
       class="ml-n2 mb-1"
       variant="text"
