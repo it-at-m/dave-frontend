@@ -24,19 +24,26 @@
                   {{ datumLetztePlausibleMessung }}
                 </span>
               </v-col>
-              <v-col cols="4">
-                <div class="d-flex flex-row-reverse">
-                  <messstelle-kommentar :kommentar="messstelle.kommentar" />
-                  <fahrzeugklassen-icon
-                    :fahrzeugklasse="fahrzeugklasse"
-                    color="primary"
-                    size="default"
-                  />
-                  <detektierte-fahrzeugart-icon
-                    :detektierte-fahrzeugart="detektierteVerkehrsart"
-                    color="default"
-                  />
-                </div>
+              <v-spacer />
+              <v-col cols="1">
+                <detektierte-fahrzeugart-icon
+                  :detektierte-fahrzeugart="detektierteVerkehrsart"
+                  color="default"
+                />
+              </v-col>
+              <v-col cols="1">
+                <fahrzeugklassen-icon
+                  v-if="
+                    messstelle.detektierteVerkehrsarten !==
+                    DetektierteFahrzeugart.RAD
+                  "
+                  :fahrzeugklasse="fahrzeugklasse"
+                  color="primary"
+                  size="default"
+                />
+              </v-col>
+              <v-col cols="1">
+                <messstelle-kommentar :kommentar="messstelle.kommentar" />
               </v-col>
             </v-row>
             <v-row
@@ -101,6 +108,7 @@ import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrz
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import IconTooltip from "@/types/util/IconTooltip";
 import { useDateUtils } from "@/util/DateUtils";
 
