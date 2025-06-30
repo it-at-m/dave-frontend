@@ -84,7 +84,16 @@ function draw() {
   startY.value = 250;
   canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
+  const directions: Array<Himmelsrichtungen> = [];
   const groupedByDirection = chain(props.messquerschnitte)
+    .filter((messquerschnitt) => {
+      if (directions.includes(messquerschnitt.fahrtrichtung)) {
+        return false;
+      } else {
+        directions.push(messquerschnitt.fahrtrichtung);
+        return true;
+      }
+    })
     .groupBy("fahrtrichtung")
     .map((value, key) => ({ direction: key, data: value }))
     .value();
