@@ -1,111 +1,68 @@
 name: release
 
-# Run workflow on commits to the `main` branch
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - 'main'
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: "Version to use when preparing a release (e.g., 1.2.3)"
+        required: true
+        default: "2.1.0"
+      developmentVersion:
+        description: "Version to use for new local working copy (e.g., 1.2.4-SNAPSHOT)"
+        required: true
+        default: "2.2.0-SNAPSHOT"
+      use-pr:
+        description: "Use PR for version bump instead of direct push"
+        default: "true"
+
+env:
+  IMAGE_NAME: "dave-frontend"
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
+  release-maven:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      MVN_ARTIFACT_ID: ${{ steps.maven-release-step.outputs.MVN_ARTIFACT_ID }}
+      ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
+    env:
+      TZ: Europe/Berlin # timezone
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
+      - id: maven-release-step
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@b2b49a8b4344e3b5ac90dd1ee9a0c59860c41383 # v1.0.16
         with:
-          ssh-key: ${{ secrets.SECRET_KEY }}
+          app-path: ""
+          releaseVersion: ${{ github.event.inputs.releaseVersion }}
+          developmentVersion: ${{ github.event.inputs.developmentVersion }}
 
-      - name: Install Java and Maven
-        uses: actions/setup-java@v3
+  build-image:
+    runs-on: ubuntu-latest
+    needs: release-maven
+    permissions:
+      packages: write
+    steps:
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@b2b49a8b4344e3b5ac90dd1ee9a0c59860c41383 # v1.0.16
         with:
-          java-version: 21
-          distribution: "temurin"
-          cache: "maven"
-      - name: Set up Node 16
-        uses: actions/setup-node@v3
+          path: .
+          image-name: ${{ env.IMAGE_NAME }}
+          artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-tags: |
+            type=semver,pattern={{version}},value=${{ github.event.inputs.releaseVersion }}
+          image-labels: |
+            maintainer=it@m, Landeshauptstadt Muenchen (LHM)
+
+  create-github-release:
+    needs: ["release-maven", "build-image"]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create GitHub Release
+        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@b2b49a8b4344e3b5ac90dd1ee9a0c59860c41383 # v1.0.16
         with:
-          node-version: 16
-      - name: Clean Maven Project Version
-        id: set-version
-        run: |
-          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "Current version: $current_version"
-          new_version=$(echo $current_version | sed 's/-SNAPSHOT//')
-          echo "New version: $new_version"
-          mvn -B versions:set -DnewVersion=$new_version
-          mvn -B versions:set -DnewVersion=$new_version -DprocessAllModules
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add pom.xml
-          git add **/pom.xml
-          git commit -m "Bump main version to $new_version"
-          git push
-          echo "::set-output name=new_version::$new_version"
-      - name: Build with Maven
-        run: mvn -B verify "-Dspring-boot.run.jvmArguments=-Dfile.encoding=UTF-8" -DskipTests=true
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_KEY }}
-
-      - name: Build and push app
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: itatm/dave-frontend:${{ steps.set-version.outputs.new_version }},itatm/dave-frontend:latest
-
-      - name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_KEY }}
-          repository: itatm/dave-frontend
-          short-description: Das DAVe-Datenportal bietet einen Zugriff auf die Zählungen und ermöglicht Datenanalyse.
-
-#   github-release:
-#     needs: if_merged
-#     name: Create Release
-# #    if: github.event.inputs.snapshot-build == 'n'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       - name: Create tag
-#         uses: actions/github-script@v6
-#         with:
-#           script: |
-#             github.rest.git.createRef({
-#               owner: context.repo.owner,
-#               repo: context.repo.repo,
-#               ref: 'refs/tags/${{ github.event.inputs.release-tag }}',
-#               sha: context.sha
-#             })
-#       - name: Create GitHub Release
-#         id: create_release
-#         uses: softprops/action-gh-release@v1
-#         with:
-#           tag_name: ${{ github.event.inputs.release-tag }}
-#           draft: false
-#           prerelease: false
-#           generate_release_notes: true
-#       - name: Update Docker Hub Description
-#         uses: peter-evans/dockerhub-description@v3
-#         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_KEY }}
-#           repository: itatm/dave-frontend
-#           readme-filepath: ./IMAGE_README.md
-#           short-description: ${{ github.event.repository.description }}
+          artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
+          tag-name: ${{ needs.release-maven.outputs.MVN_ARTIFACT_ID }}-${{ github.event.inputs.releaseVersion }}
+          artifact-path: "./target/*.jar"
