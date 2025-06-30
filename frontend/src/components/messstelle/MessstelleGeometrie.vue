@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   activeColor: "#FFFFFF",
   passiveColor: "#757575",
 });
-const calcStrokeSize = 175;
+const strokeSize = 175;
 const canvas = ref<Svg>(SVG.SVG());
 const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
@@ -115,7 +115,7 @@ function drawArrowsPointingSouth(
           startY.value + 850
         )
         .stroke({
-          width: calcStrokeSize,
+          width: strokeSize,
           color: calculateColor(mq.fahrtrichtung),
         })
     );
@@ -127,7 +127,7 @@ function drawArrowsPointingSouth(
           },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
         )
         .stroke({
-          width: calcStrokeSize,
+          width: strokeSize,
           color: calculateColor(mq.fahrtrichtung),
         })
         .attr("fill", calculateColor(mq.fahrtrichtung))
@@ -157,7 +157,7 @@ function drawArrowsPointingNorth(
           startY.value + 850
         )
         .stroke({
-          width: calcStrokeSize,
+          width: strokeSize,
           color: calculateColor(mq.fahrtrichtung),
         })
     );
@@ -169,7 +169,7 @@ function drawArrowsPointingNorth(
           } ${startX.value + 10} ${startY.value - 22}`
         )
         .stroke({
-          width: calcStrokeSize,
+          width: strokeSize,
           color: calculateColor(mq.fahrtrichtung),
         })
         .attr("fill", calculateColor(mq.fahrtrichtung))
