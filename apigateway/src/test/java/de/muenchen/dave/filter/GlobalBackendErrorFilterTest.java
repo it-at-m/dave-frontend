@@ -7,12 +7,14 @@ package de.muenchen.dave.filter;
 import com.github.tomakehurst.wiremock.http.HttpHeader;
 import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import de.muenchen.dave.ApiGatewayApplication;
+import de.muenchen.dave.OAuthSecurityMockConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,6 +28,7 @@ import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
 @SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)
 @AutoConfigureWireMock
+@Import(OAuthSecurityMockConfiguration.class)
 class GlobalBackendErrorFilterTest {
 
     @Autowired
