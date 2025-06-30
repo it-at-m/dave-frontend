@@ -254,15 +254,19 @@ function addSumSouthIfNecessary(
 }
 
 function drawStreetName() {
-  if (props.belastungsplanData.strassenname) {
-    querschnittGroup.value.add(
-      SVG.SVG()
-        .text(`${props.belastungsplanData.strassenname}`)
-        .move(startX.value, startY.value + 425)
-        .font({ anchor: "middle", size: 30 })
-        .rotate(270, startX.value, startY.value + 425)
-    );
-  }
+  querschnittGroup.value.add(
+    SVG.SVG()
+      .text(`${getStreetnameOrDefalutIfEmpty()}`)
+      .move(startX.value, startY.value + 425)
+      .font({ anchor: "middle", size: 20 })
+      .rotate(270, startX.value, startY.value + 425)
+  );
+}
+
+function getStreetnameOrDefalutIfEmpty() {
+  return props.belastungsplanData.strassenname
+    ? props.belastungsplanData.strassenname
+    : "unbekannt";
 }
 
 function drawTotal() {
