@@ -7,18 +7,14 @@
       <v-sheet
         color="white"
         width="100%"
-        class="px-4 py-2 text-primary"
-        style="font-size: 0.875rem"
+        class="px-4 py-2 text-primary font-weight-regular"
         height="72px"
       >
         <v-row
           no-gutters
           class="pa-0 ma-0"
         >
-          <v-col
-            cols="12"
-            lg="10"
-          >
+          <v-col cols="10">
             <v-row no-gutters>
               <v-col cols="8">
                 <span
@@ -28,22 +24,32 @@
                   {{ datumLetztePlausibleMessung }}
                 </span>
               </v-col>
-              <v-col cols="4">
-                <div class="d-flex flex-row-reverse">
-                  <messstelle-kommentar :kommentar="messstelle.kommentar" />
-                  <fahrzeugklassen-icon
-                    :fahrzeugklasse="fahrzeugklasse"
-                    color="primary"
-                    size="small"
-                  />
-                  <detektierte-fahrzeugart-icon
-                    :detektierte-fahrzeugart="detektierteVerkehrsart"
-                    color="primary"
-                  />
-                </div>
+              <v-spacer />
+              <v-col cols="1">
+                <detektierte-fahrzeugart-icon
+                  :detektierte-fahrzeugart="detektierteVerkehrsart"
+                  color="default"
+                />
+              </v-col>
+              <v-col cols="1">
+                <fahrzeugklassen-icon
+                  v-if="
+                    messstelle.detektierteVerkehrsarten !==
+                    DetektierteFahrzeugart.RAD
+                  "
+                  :fahrzeugklasse="fahrzeugklasse"
+                  color="primary"
+                  size="default"
+                />
+              </v-col>
+              <v-col cols="1">
+                <messstelle-kommentar :kommentar="messstelle.kommentar" />
               </v-col>
             </v-row>
-            <v-row no-gutters>
+            <v-row
+              no-gutters
+              class="ma-0 mt-1"
+            >
               <span class="text-truncate">
                 <span
                   v-tooltip:bottom="aufbauIcon.tooltip"
@@ -73,28 +79,18 @@
                 </span>
               </span>
             </v-row>
-            <v-row
-              no-gutters
-              class="ma-0"
-            >
-            </v-row>
-          </v-col>
-          <v-col
-            lg
-            class="hidden-md-and-down"
-          >
-            <v-spacer />
           </v-col>
           <v-col
             cols="2"
             class="hidden-md-and-down"
+            style="justify-items: center"
           >
             <messstelle-geometrie
               :height="60"
               :width="60"
               active-color="#1565C0"
               passive-color="#EEEEEE"
-              :knotenarme="messstelle.messquerschnitte"
+              :messquerschnitte="messstelle.messquerschnitte"
             />
           </v-col>
         </v-row>
@@ -112,6 +108,7 @@ import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrz
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
+import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import IconTooltip from "@/types/util/IconTooltip";
 import { useDateUtils } from "@/util/DateUtils";
 

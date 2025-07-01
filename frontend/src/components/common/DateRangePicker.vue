@@ -43,16 +43,28 @@
           "
         >
           <p>Hinweise:</p>
-          <p v-if="endDateBeforeStartDate">
+          <p
+            v-if="endDateBeforeStartDate"
+            class="text-red"
+          >
             {{ messageEndDateBeforeStartDate }}
           </p>
-          <p v-if="isStartDateOutOfRange">
+          <p
+            v-if="isStartDateOutOfRange"
+            class="text-red"
+          >
             {{ messageStartDateOutOfRange }}
           </p>
-          <p v-if="isEndDateOutOfRange">
+          <p
+            v-if="isEndDateOutOfRange"
+            class="text-red"
+          >
             {{ messageEndDateOutOfRange }}
           </p>
-          <p v-if="isAnwender && isDateRangeGreaterThanFiveYears">
+          <p
+            v-if="isAnwender && isDateRangeGreaterThanFiveYears"
+            class="text-red"
+          >
             Als Anwender beträgt der maximal mögliche Auswahlzeitraum 5 Jahre.
           </p>
           <p v-if="isDateRange">

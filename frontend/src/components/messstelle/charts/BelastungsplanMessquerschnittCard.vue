@@ -256,11 +256,17 @@ function addSumSouthIfNecessary(
 function drawStreetName() {
   querschnittGroup.value.add(
     SVG.SVG()
-      .text(`${props.belastungsplanData.strassenname}`)
+      .text(`${getStreetnameOrDefalutIfEmpty()}`)
       .move(startX.value, startY.value + 425)
-      .font({ anchor: "middle", size: 30 })
+      .font({ anchor: "middle", size: 20 })
       .rotate(270, startX.value, startY.value + 425)
   );
+}
+
+function getStreetnameOrDefalutIfEmpty() {
+  return props.belastungsplanData.strassenname
+    ? props.belastungsplanData.strassenname
+    : "unbekannt";
 }
 
 function drawTotal() {
@@ -625,7 +631,7 @@ function drawLegende() {
 
   canvas.value
     .text(function (add) {
-      add.tspan(`${chosenOptionsCopy.value.zeitauswahl}`).font({
+      add.tspan(`${getZeitauswahlText.value}`).font({
         weight: "bold",
         size: defaultFontSize,
         family: fontfamily,
@@ -744,6 +750,10 @@ function drawLinienStaerke() {
 
   canvas.value.add(groupPath).add(text1).add(text2);
 }
+
+const getZeitauswahlText = computed(() => {
+  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${chosenOptionsCopy.value.zeitauswahl}`;
+});
 
 const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
