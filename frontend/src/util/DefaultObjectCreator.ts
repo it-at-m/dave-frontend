@@ -19,7 +19,7 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import DetektierteVerkehrsart from "@/types/enum/DetektierteVerkehrsart";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
 import TagesTyp from "@/types/enum/TagesTyp";
@@ -66,7 +66,7 @@ export default class DefaultObjectCreator {
   public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
     return {
       messfaehigkeiten: [],
-      detektierteVerkehrsarten: DetektierteFahrzeugart.KFZ,
+      detektierteVerkehrsart: DetektierteVerkehrsart.KFZ,
       fahrzeugklasse: "",
       hersteller: "",
       id: "",

@@ -99,7 +99,7 @@ const messstellen = computed<Array<KeyValObject>>(() => {
     item.mqIds = toArray(mst.messquerschnitte).map((mq) => mq.mqId);
     return {
       title: `${mst.mstId}-${mst.standort ?? ""} (${
-        mst.detektierteVerkehrsarten ?? ""
+        mst.detektierteVerkehrsart ?? ""
       })`,
       value: item,
     };
@@ -246,11 +246,11 @@ function setVerfuegbareVerkehrsarten() {
       if (
         existsMstIdInAuswertungIds(messstelle.mstId) &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
-          messstelle.detektierteVerkehrsarten
+          messstelle.detektierteVerkehrsart
         )
       ) {
         auswertungOptions.value.verfuegbareVerkehrsarten.push(
-          messstelle.detektierteVerkehrsarten
+          messstelle.detektierteVerkehrsart
         );
       }
       if (auswertungOptions.value.verfuegbareVerkehrsarten.length === 2) {

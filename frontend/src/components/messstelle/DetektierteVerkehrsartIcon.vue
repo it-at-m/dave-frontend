@@ -11,28 +11,28 @@
 import { computed } from "vue";
 
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import DetektierteVerkehrsart from "@/types/enum/DetektierteVerkehrsart";
 import IconOptions from "@/types/util/IconOptions";
 
 interface Props {
-  detektierteFahrzeugart?: DetektierteFahrzeugart;
+  detektierteVerkehrsart?: DetektierteVerkehrsart;
   color?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   color: "black",
-  detektierteFahrzeugart: undefined,
+  detektierteVerkehrsart: undefined,
 });
 
 const iconOptions = computed(() => {
-  if (props.detektierteFahrzeugart === DetektierteFahrzeugart.RAD) {
-    return new IconOptions("mdi-bicycle", "Fahrzeugart: Fahrrad");
-  } else if (props.detektierteFahrzeugart === DetektierteFahrzeugart.KFZ) {
-    return new IconOptions("mdi-car", "Fahrzeugart: KFZ");
+  if (props.detektierteVerkehrsart === DetektierteVerkehrsart.RAD) {
+    return new IconOptions("mdi-bicycle", "Verkehrsart: Fahrrad");
+  } else if (props.detektierteVerkehrsart === DetektierteVerkehrsart.KFZ) {
+    return new IconOptions("mdi-car", "Verkehrsart: KFZ");
   } else {
     return new IconOptions(
       "mdi-alert-circle",
-      "Fahrzeugart konnte nicht ermittelt werden"
+      "Verkehrsart konnte nicht ermittelt werden"
     );
   }
 });

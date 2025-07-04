@@ -26,16 +26,16 @@
               </v-col>
               <v-spacer />
               <v-col cols="1">
-                <detektierte-fahrzeugart-icon
-                  :detektierte-fahrzeugart="detektierteVerkehrsart"
+                <detektierte-verkehrsart-icon
+                  :detektierte-verkehrsart="detektierteVerkehrsart"
                   color="default"
                 />
               </v-col>
               <v-col cols="1">
                 <fahrzeugklassen-icon
                   v-if="
-                    messstelle.detektierteVerkehrsarten !==
-                    DetektierteFahrzeugart.RAD
+                    messstelle.detektierteVerkehrsart !==
+                    DetektierteVerkehrsart.RAD
                   "
                   :fahrzeugklasse="fahrzeugklasse"
                   color="primary"
@@ -104,11 +104,11 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import { computed } from "vue";
 
-import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
+import DetektierteVerkehrsartIcon from "@/components/messstelle/DetektierteVerkehrsartIcon.vue";
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import DetektierteVerkehrsart from "@/types/enum/DetektierteVerkehrsart";
 import IconTooltip from "@/types/util/IconTooltip";
 import { useDateUtils } from "@/util/DateUtils";
 
@@ -137,7 +137,7 @@ const fahrzeugklasse = computed(() => {
 
 const detektierteVerkehrsart = computed(() => {
   if (props.messstelle.messquerschnitte.length > 0) {
-    return props.messstelle.detektierteVerkehrsarten;
+    return props.messstelle.detektierteVerkehrsart;
   } else {
     return undefined;
   }

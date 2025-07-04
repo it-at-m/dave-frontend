@@ -506,8 +506,8 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
   let tooltip = "<div>";
   if (tooltipDto.mstId) {
     tooltip = `<b>${tooltip}Messstelle: ${tooltipDto.mstId}`;
-    if (tooltipDto.detektierteVerkehrsarten) {
-      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsarten})`;
+    if (tooltipDto.detektierteVerkehrsart) {
+      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsart})`;
     }
     tooltip = `${tooltip}</b><br/>`;
   }
