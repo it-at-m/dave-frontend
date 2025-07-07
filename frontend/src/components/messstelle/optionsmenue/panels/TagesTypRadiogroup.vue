@@ -102,7 +102,7 @@ const helperText = computed(() => {
         break;
       case TagesTyp.MO_SO:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Beliebige Wochentage) und mind. 50% der Tage mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (beliebige Wochentage) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
     }
   }
