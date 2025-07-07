@@ -7,7 +7,7 @@
       <v-sheet
         color="white"
         width="100%"
-        class="px-4 py-2 text-primary font-weight-regular"
+        class="px-4 py-2 text-primary font-weight-regular overflow-y-auto"
         height="72px"
       >
         <v-row
@@ -16,7 +16,7 @@
         >
           <v-col cols="10">
             <v-row no-gutters>
-              <v-col cols="8">
+              <v-col cols="7">
                 <span
                   v-tooltip:bottom="'Datum letzte plausible Messung'"
                   class="text--body-1"
@@ -25,13 +25,11 @@
                 </span>
               </v-col>
               <v-spacer />
-              <v-col cols="1">
+              <v-col cols="3">
                 <detektierte-fahrzeugart-icon
                   :detektierte-fahrzeugart="detektierteVerkehrsart"
-                  color="default"
+                  color="primary"
                 />
-              </v-col>
-              <v-col cols="1">
                 <fahrzeugklassen-icon
                   v-if="
                     messstelle.detektierteVerkehrsarten !==
@@ -41,9 +39,10 @@
                   color="primary"
                   size="default"
                 />
-              </v-col>
-              <v-col cols="1">
-                <messstelle-kommentar :kommentar="messstelle.kommentar" />
+                <messstelle-kommentar
+                  v-if="messstelle.kommentar"
+                  :kommentar="messstelle.kommentar"
+                />
               </v-col>
             </v-row>
             <v-row
@@ -86,7 +85,7 @@
             style="justify-items: center"
           >
             <messstelle-geometrie
-              :height="60"
+              :height="56"
               :width="60"
               active-color="#1565C0"
               passive-color="#EEEEEE"
