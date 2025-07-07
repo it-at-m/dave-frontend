@@ -39,6 +39,7 @@
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
         <v-sheet
           :max-height="contentHeight"
+          :min-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
         >
