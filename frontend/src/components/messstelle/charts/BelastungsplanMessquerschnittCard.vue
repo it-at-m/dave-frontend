@@ -258,7 +258,7 @@ function drawStreetName() {
     SVG.SVG()
       .text(`${getStreetnameOrDefalutIfEmpty()}`)
       .move(startX.value, startY.value + 425)
-      .font({ anchor: "middle", size: 20 })
+      .font({ anchor: "middle", size: defaultFontSize })
       .rotate(270, startX.value, startY.value + 425)
   );
 }
@@ -266,7 +266,7 @@ function drawStreetName() {
 function getStreetnameOrDefalutIfEmpty() {
   return props.belastungsplanData.strassenname
     ? props.belastungsplanData.strassenname
-    : "unbekannt";
+    : "nicht vorhanden";
 }
 
 function drawTotal() {
@@ -757,7 +757,7 @@ const getZeitauswahlText = computed(() => {
 
 const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
-    return "0-24 Uhr";
+    return "0 - 24 Uhr";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
     return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
