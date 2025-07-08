@@ -39,7 +39,7 @@ const canvas = ref<Svg>(SVG.SVG());
 const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
-const defaultFontSize = 20;
+const defaultFontSize = 24;
 const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
@@ -272,7 +272,7 @@ function getStreetnameOrDefalutIfEmpty() {
 function drawTotal() {
   addTextNorthSide(
     startX.value,
-    startY.value - 10,
+    startY.value - 20,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -283,7 +283,7 @@ function drawTotal() {
   );
   addTextSouthSide(
     startX.value,
-    startY.value + 910,
+    startY.value + 923,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -331,7 +331,7 @@ function drawArrowsPointingNorth(
     );
     addTextSouthSide(
       startX.value,
-      startY.value + 910,
+      startY.value + 923,
       mq.sumKfz,
       mq.sumGv,
       mq.sumSv,
@@ -384,7 +384,7 @@ function addSumNorthIfNecessary(
     );
     addTextSouthSide(
       startX.value - 20,
-      startY.value + 910,
+      startY.value + 923,
       sumMqKfz,
       sumMqGv,
       sumMqSv,
@@ -735,8 +735,8 @@ function drawLinienStaerke() {
         anchor: "middle",
       });
     })
-    .x(1030)
-    .dy(startY.value + 1040);
+    .x(1020)
+    .dy(startY.value + 1045);
   const text2 = SVG.SVG()
     .text((add) => {
       add.tspan(`${high}`).font({
@@ -745,8 +745,8 @@ function drawLinienStaerke() {
         anchor: "middle",
       });
     })
-    .x(1095)
-    .dy(startY.value + 1040);
+    .x(1100)
+    .dy(startY.value + 1045);
 
   canvas.value.add(groupPath).add(text1).add(text2);
 }
