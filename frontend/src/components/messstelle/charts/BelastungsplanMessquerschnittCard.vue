@@ -39,7 +39,7 @@ const canvas = ref<Svg>(SVG.SVG());
 const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
-const defaultFontSize = 24;
+const defaultFontSize = 20;
 const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
@@ -258,7 +258,7 @@ function drawStreetName() {
     SVG.SVG()
       .text(`${getStreetnameOrDefalutIfEmpty()}`)
       .move(startX.value, startY.value + 425)
-      .font({ anchor: "middle", size: defaultFontSize })
+      .font({ anchor: "middle", size: 20 })
       .rotate(270, startX.value, startY.value + 425)
   );
 }
@@ -266,13 +266,13 @@ function drawStreetName() {
 function getStreetnameOrDefalutIfEmpty() {
   return props.belastungsplanData.strassenname
     ? props.belastungsplanData.strassenname
-    : "nicht vorhanden";
+    : "unbekannt";
 }
 
 function drawTotal() {
   addTextNorthSide(
     startX.value,
-    startY.value - 20,
+    startY.value - 10,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -283,7 +283,7 @@ function drawTotal() {
   );
   addTextSouthSide(
     startX.value,
-    startY.value + 923,
+    startY.value + 910,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -331,7 +331,7 @@ function drawArrowsPointingNorth(
     );
     addTextSouthSide(
       startX.value,
-      startY.value + 923,
+      startY.value + 910,
       mq.sumKfz,
       mq.sumGv,
       mq.sumSv,
@@ -384,7 +384,7 @@ function addSumNorthIfNecessary(
     );
     addTextSouthSide(
       startX.value - 20,
-      startY.value + 923,
+      startY.value + 910,
       sumMqKfz,
       sumMqGv,
       sumMqSv,
@@ -735,8 +735,8 @@ function drawLinienStaerke() {
         anchor: "middle",
       });
     })
-    .x(1020)
-    .dy(startY.value + 1045);
+    .x(1030)
+    .dy(startY.value + 1040);
   const text2 = SVG.SVG()
     .text((add) => {
       add.tspan(`${high}`).font({
@@ -745,8 +745,8 @@ function drawLinienStaerke() {
         anchor: "middle",
       });
     })
-    .x(1100)
-    .dy(startY.value + 1045);
+    .x(1095)
+    .dy(startY.value + 1040);
 
   canvas.value.add(groupPath).add(text1).add(text2);
 }
@@ -757,7 +757,7 @@ const getZeitauswahlText = computed(() => {
 
 const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
-    return "0 - 24 Uhr";
+    return "0-24 Uhr";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
     return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {

@@ -16,7 +16,7 @@
         >
           <v-col cols="10">
             <v-row no-gutters>
-              <v-col cols="8">
+              <v-col cols="7">
                 <span
                   v-tooltip:bottom="'Datum letzte plausible Messung'"
                   class="text--body-1"
