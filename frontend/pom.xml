@@ -5,7 +5,7 @@
 
     <groupId>de.muenchen.dave.frontend</groupId>
     <artifactId>dave-frontend-frontend</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.1.1</version>
     <packaging>jar</packaging>
     <name>dave_frontend_frontend</name>
 
