@@ -127,7 +127,7 @@ function redraw() {
  */
 function draw() {
   startX.value = 450;
-  startY.value = 250;
+  startY.value = 300;
   canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
   const groupedByDirection = _.chain(
@@ -168,7 +168,7 @@ function drawArrowsPointingSouth(
           startX.value + 10,
           startY.value,
           startX.value + 10,
-          startY.value + 850
+          startY.value + 800
         )
         .stroke({
           width: calcStrokeSize(mq),
@@ -178,9 +178,9 @@ function drawArrowsPointingSouth(
     querschnittGroup.value.add(
       SVG.SVG()
         .polygon(
-          `${startX.value + 25},${startY.value + 853} ${
+          `${startX.value + 25},${startY.value + 803} ${
             startX.value - 5
-          },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
+          },${startY.value + 803} ${startX.value + 10} ${startY.value + 822}`
         )
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none")
@@ -272,7 +272,7 @@ function getStreetnameOrDefalutIfEmpty() {
 function drawTotal() {
   addTextNorthSide(
     startX.value,
-    startY.value - 20,
+    startY.value,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -283,7 +283,7 @@ function drawTotal() {
   );
   addTextSouthSide(
     startX.value,
-    startY.value + 923,
+    startY.value + 873,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -312,7 +312,7 @@ function drawArrowsPointingNorth(
           startX.value + 10,
           startY.value,
           startX.value + 10,
-          startY.value + 850
+          startY.value + 800
         )
         .stroke({
           width: calcStrokeSize(mq),
@@ -331,7 +331,7 @@ function drawArrowsPointingNorth(
     );
     addTextSouthSide(
       startX.value,
-      startY.value + 923,
+      startY.value + 873,
       mq.sumKfz,
       mq.sumGv,
       mq.sumSv,
@@ -376,7 +376,7 @@ function addSumNorthIfNecessary(
       SVG.SVG()
         .line(
           startX.value - 25,
-          startY.value + 860,
+          startY.value + 80,
           startX.value - 25,
           startY.value + (1080 - (3 - numberOfChosenFahrzeugOptions.value) * 65)
         )
@@ -673,7 +673,7 @@ function drawLegende() {
         });
       }
     })
-    .move(50, startY.value + 950);
+    .move(50, startY.value + 870);
 }
 
 function calculateHighestValue(): number {
@@ -723,7 +723,7 @@ function drawLinienStaerke() {
     .group()
     .add(path1)
     .add(path2)
-    .move(1000, startY.value + 1000);
+    .move(1000, startY.value + 950);
 
   const high = calculateHighestValue();
 
@@ -736,7 +736,7 @@ function drawLinienStaerke() {
       });
     })
     .x(1020)
-    .dy(startY.value + 1045);
+    .dy(startY.value + 995);
   const text2 = SVG.SVG()
     .text((add) => {
       add.tspan(`${high}`).font({
@@ -746,7 +746,7 @@ function drawLinienStaerke() {
       });
     })
     .x(1100)
-    .dy(startY.value + 1045);
+    .dy(startY.value + 995);
 
   canvas.value.add(groupPath).add(text1).add(text2);
 }
