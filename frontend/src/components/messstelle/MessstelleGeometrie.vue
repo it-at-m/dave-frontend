@@ -11,7 +11,6 @@ import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoD
 
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
-import { chain } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
@@ -84,107 +83,76 @@ function draw() {
   startY.value = 250;
   canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
-  const directions: Array<Himmelsrichtungen> = [];
-  const groupedByDirection = chain(props.messquerschnitte)
-    .filter((messquerschnitt) => {
-      if (directions.includes(messquerschnitt.fahrtrichtung)) {
-        return false;
-      } else {
-        directions.push(messquerschnitt.fahrtrichtung);
-        return true;
-      }
-    })
-    .groupBy("fahrtrichtung")
-    .map((value, key) => ({ direction: key, data: value }))
-    .value();
-  drawArrowsPointingSouth(groupedByDirection);
+  drawArrowsPointingSouth();
   startX.value += 500;
-  drawArrowsPointingNorth(groupedByDirection);
+  drawArrowsPointingNorth();
   rotateArrowsIfNecessary();
 }
 
-function drawArrowsPointingSouth(
-  groupedByDirection: {
-    data: MessquerschnittInfoDTO[];
-    direction: string;
-  }[]
-) {
-  const arrayOfDataForDirectionSouth = groupedByDirection.find(
-    (obj) =>
-      obj.direction === Himmelsrichtungen.SUED ||
-      obj.direction === Himmelsrichtungen.WEST
+function drawArrowsPointingSouth() {
+  querschnittGroup.value.add(
+    SVG.SVG()
+      .line(
+        startX.value + 10,
+        startY.value,
+        startX.value + 10,
+        startY.value + 850
+      )
+      .stroke({
+        width: strokeSize,
+        color: calculateColor(Himmelsrichtungen.SUED, Himmelsrichtungen.WEST),
+      })
   );
-  arrayOfDataForDirectionSouth?.data.forEach((mq) => {
-    querschnittGroup.value.add(
-      SVG.SVG()
-        .line(
-          startX.value + 10,
-          startY.value,
-          startX.value + 10,
-          startY.value + 850
-        )
-        .stroke({
-          width: strokeSize,
-          color: calculateColor(mq.fahrtrichtung),
-        })
-    );
-    querschnittGroup.value.add(
-      SVG.SVG()
-        .polygon(
-          `${startX.value + 25},${startY.value + 853} ${
-            startX.value - 5
-          },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
-        )
-        .stroke({
-          width: strokeSize,
-          color: calculateColor(mq.fahrtrichtung),
-        })
-        .attr("fill", calculateColor(mq.fahrtrichtung))
-    );
-    startX.value += 50;
-  });
+  querschnittGroup.value.add(
+    SVG.SVG()
+      .polygon(
+        `${startX.value + 25},${startY.value + 853} ${
+          startX.value - 5
+        },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
+      )
+      .stroke({
+        width: strokeSize,
+        color: calculateColor(Himmelsrichtungen.SUED, Himmelsrichtungen.WEST),
+      })
+      .attr(
+        "fill",
+        calculateColor(Himmelsrichtungen.SUED, Himmelsrichtungen.WEST)
+      )
+  );
+  startX.value += 50;
 }
 
-function drawArrowsPointingNorth(
-  groupedByDirection: {
-    data: MessquerschnittInfoDTO[];
-    direction: string;
-  }[]
-) {
-  const arrayOfDataForDirectionNorth = groupedByDirection.find(
-    (obj) =>
-      obj.direction === Himmelsrichtungen.NORD ||
-      obj.direction === Himmelsrichtungen.OST
+function drawArrowsPointingNorth() {
+  querschnittGroup.value.add(
+    SVG.SVG()
+      .line(
+        startX.value + 10,
+        startY.value,
+        startX.value + 10,
+        startY.value + 850
+      )
+      .stroke({
+        width: strokeSize,
+        color: calculateColor(Himmelsrichtungen.OST, Himmelsrichtungen.NORD),
+      })
   );
-  arrayOfDataForDirectionNorth?.data.forEach((mq) => {
-    querschnittGroup.value.add(
-      SVG.SVG()
-        .line(
-          startX.value + 10,
-          startY.value,
-          startX.value + 10,
-          startY.value + 850
-        )
-        .stroke({
-          width: strokeSize,
-          color: calculateColor(mq.fahrtrichtung),
-        })
-    );
-    querschnittGroup.value.add(
-      SVG.SVG()
-        .polygon(
-          `${startX.value + 25},${startY.value - 3} ${startX.value - 5},${
-            startY.value - 3
-          } ${startX.value + 10} ${startY.value - 22}`
-        )
-        .stroke({
-          width: strokeSize,
-          color: calculateColor(mq.fahrtrichtung),
-        })
-        .attr("fill", calculateColor(mq.fahrtrichtung))
-    );
-    startX.value += 50;
-  });
+  querschnittGroup.value.add(
+    SVG.SVG()
+      .polygon(
+        `${startX.value + 25},${startY.value - 3} ${startX.value - 5},${
+          startY.value - 3
+        } ${startX.value + 10} ${startY.value - 22}`
+      )
+      .stroke({
+        width: strokeSize,
+        color: calculateColor(Himmelsrichtungen.OST, Himmelsrichtungen.NORD),
+      })
+      .attr(
+        "fill",
+        calculateColor(Himmelsrichtungen.OST, Himmelsrichtungen.NORD)
+      )
+  );
+  startX.value += 50;
 }
 
 function rotateArrowsIfNecessary() {
@@ -197,21 +165,29 @@ function rotateArrowsIfNecessary() {
   }
 }
 
-/**
- * Wenn für der knotenarm im Array gefunden wurde, wird diese in der Grafik in der "activeColor" dargestellt,
- * ansonsten in der passiveColor.
- */
 function calculateColor(
-  himmelsrichtung: Himmelsrichtungen
+  himmelsrichtung1: Himmelsrichtungen,
+  himmelsrichtung2: Himmelsrichtungen
 ): string | undefined {
-  let color = props.passiveColor;
-
-  const gefilteterKnotenarm = selectedMessquerschnitte.value.filter(
-    (k) => k.fahrtrichtung === himmelsrichtung
+  // Wenn selected dann active
+  const selectedKnotenarm = selectedMessquerschnitte.value.filter(
+    (k) =>
+      k.fahrtrichtung === himmelsrichtung1 ||
+      k.fahrtrichtung === himmelsrichtung2
   )[0];
-  if (gefilteterKnotenarm) {
-    color = props.activeColor;
+  if (selectedKnotenarm) {
+    return props.activeColor;
   }
-  return color;
+  // Wenn nicht selected, aber vorhanden, dann passiv
+  const existingKnotenarm = props.messquerschnitte.filter(
+    (k) =>
+      k.fahrtrichtung === himmelsrichtung1 ||
+      k.fahrtrichtung === himmelsrichtung2
+  )[0];
+  if (existingKnotenarm) {
+    return props.passiveColor;
+  }
+  // wenn nicht selected und nicht vorhanden, dann transparent
+  return "transparent";
 }
 </script>
