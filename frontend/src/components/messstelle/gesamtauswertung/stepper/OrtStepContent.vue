@@ -152,7 +152,6 @@ function saveIds() {
     mqIds: toArray(selectedMqs.value).map((mq) => mq.mqId),
   } as MessstelleAuswertungIdDTO;
   auswertungOptions.value.messstelleAuswertungIds = [item];
-  // setVerfuegbareVerkehrsarten();
 }
 
 const messstellen = computed<Array<KeyValObject>>(() => {
