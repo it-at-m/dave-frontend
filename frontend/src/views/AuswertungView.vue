@@ -263,6 +263,8 @@ function resetAuswertungsOptions() {
   zaehldatenMessstellen.value =
     DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
   gesamtauswertungStore.setZaehldatenMessstellen(zaehldatenMessstellen.value);
+  presetData.value = false;
+  auswertungLoaded.value = false;
 }
 
 function auswertungStarten() {
