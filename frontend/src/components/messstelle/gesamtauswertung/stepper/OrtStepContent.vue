@@ -49,7 +49,7 @@
         density="compact"
         multiple
         :rules="[REQUIRED]"
-        @update:model-value="saveIds"
+        @update:model-value="saveSelectedMqIdsOfSelectedMst"
       />
     </div>
   </div>
@@ -63,7 +63,7 @@ import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/Messstel
 import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
-import { toArray } from "lodash";
+import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref } from "vue";
 
 import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
@@ -90,41 +90,44 @@ onMounted(() => {
   const selectedMstIds = auswertungOptions.value.messstelleAuswertungIds.map(
     (value) => value.mstId
   );
-  messstellen.value.forEach((messstelle) => {
-    if (
-      selectedMstIds.includes(
-        (messstelle.value as MessstelleAuswertungDTO).mstId
-      )
-    ) {
-      selectedMsts.value.push(messstelle.value as MessstelleAuswertungDTO);
-    }
-  });
-  const selectedMqIds = auswertungOptions.value.messstelleAuswertungIds.flatMap(
-    (value) => value.mqIds
-  );
-  if (selectedMsts.value.length === 1) {
-    selectedMqs.value = selectedMsts.value[0].messquerschnitte.filter(
-      (messquerschnitt) => selectedMqIds.includes(messquerschnitt.mqId)
-    );
-  } else if (selectedMsts.value.length > 1) {
-    selectedMqs.value = selectedMsts.value.flatMap(
-      (messstelle) => messstelle.messquerschnitte
-    );
-  }
-  if (selectedMqs.value.length === 1) {
-    direction.value = selectedMqs.value[0].fahrtrichtung;
-  } else if (selectedMqs.value.length > 1) {
-    const unique = [
-      ...new Set(
-        selectedMqs.value.map(
-          (messquerschnitt) => messquerschnitt.fahrtrichtung
+  if (!isEmpty(selectedMstIds)) {
+    messstellen.value.forEach((messstelle) => {
+      if (
+        selectedMstIds.includes(
+          (messstelle.value as MessstelleAuswertungDTO).mstId
         )
-      ),
-    ];
-    if (unique.length === 1) {
+      ) {
+        selectedMsts.value.push(messstelle.value as MessstelleAuswertungDTO);
+      }
+    });
+    const selectedMqIds =
+      auswertungOptions.value.messstelleAuswertungIds.flatMap(
+        (value) => value.mqIds
+      );
+    if (selectedMsts.value.length === 1) {
+      selectedMqs.value = selectedMsts.value[0].messquerschnitte.filter(
+        (messquerschnitt) => selectedMqIds.includes(messquerschnitt.mqId)
+      );
+    } else if (selectedMsts.value.length > 1) {
+      selectedMqs.value = selectedMsts.value.flatMap(
+        (messstelle) => messstelle.messquerschnitte
+      );
+    }
+    if (selectedMqs.value.length === 1) {
       direction.value = selectedMqs.value[0].fahrtrichtung;
-    } else {
-      direction.value = messstelleUtils.alleRichtungen;
+    } else if (selectedMqs.value.length > 1) {
+      const unique = [
+        ...new Set(
+          selectedMqs.value.map(
+            (messquerschnitt) => messquerschnitt.fahrtrichtung
+          )
+        ),
+      ];
+      if (unique.length === 1) {
+        direction.value = selectedMqs.value[0].fahrtrichtung;
+      } else {
+        direction.value = messstelleUtils.alleRichtungen;
+      }
     }
   }
 });
@@ -146,7 +149,7 @@ function selectMessstellen() {
   }
 }
 
-function saveIds() {
+function saveSelectedMqIdsOfSelectedMst() {
   const item = {
     mstId: selectedMsts.value[0].mstId,
     mqIds: toArray(selectedMqs.value).map((mq) => mq.mqId),
@@ -306,7 +309,7 @@ function preassignMqIdsInOptions() {
   selectedMqs.value = toArray(
     lageValues.value.map((value) => value.value as MessquerschnittAuswertungDTO)
   );
-  saveIds();
+  saveSelectedMqIdsOfSelectedMst();
 }
 
 function buttonClick() {
