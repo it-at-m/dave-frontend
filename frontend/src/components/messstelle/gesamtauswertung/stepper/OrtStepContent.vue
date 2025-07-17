@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-autocomplete
-      v-model="selectedMsts"
+      v-model="selectedMessstellen"
       :items="messstellen"
       class="mt-4"
       density="compact"
@@ -27,7 +27,7 @@
       </template>
     </v-autocomplete>
 
-    <div v-if="selectedMsts.length === 1">
+    <div v-if="selectedMessstellen.length === 1">
       <v-autocomplete
         v-model="direction"
         label="Richtung"
@@ -41,7 +41,7 @@
       />
 
       <v-autocomplete
-        v-model="selectedMqs"
+        v-model="selectedMessquerschnitte"
         label="Lage"
         :items="lageValues"
         :readonly="isLageReadonly"
@@ -83,48 +83,51 @@ const messstelleUtils = useMessstelleUtils();
 
 const direction = ref("");
 
-const selectedMsts = ref<Array<MessstelleAuswertungDTO>>([]);
-const selectedMqs = ref<Array<MessquerschnittAuswertungDTO>>([]);
+const selectedMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
+const selectedMessquerschnitte = ref<Array<MessquerschnittAuswertungDTO>>([]);
 
 onMounted(() => {
-  const selectedMstIds = auswertungOptions.value.messstelleAuswertungIds.map(
-    (value) => value.mstId
-  );
-  if (!isEmpty(selectedMstIds)) {
+  const selectedMessstellenIds =
+    auswertungOptions.value.messstelleAuswertungIds.map((value) => value.mstId);
+  if (!isEmpty(selectedMessstellenIds)) {
     messstellen.value.forEach((messstelle) => {
       if (
-        selectedMstIds.includes(
+        selectedMessstellenIds.includes(
           (messstelle.value as MessstelleAuswertungDTO).mstId
         )
       ) {
-        selectedMsts.value.push(messstelle.value as MessstelleAuswertungDTO);
+        selectedMessstellen.value.push(
+          messstelle.value as MessstelleAuswertungDTO
+        );
       }
     });
-    const selectedMqIds =
+    const selectedMessquerschnitteIds =
       auswertungOptions.value.messstelleAuswertungIds.flatMap(
         (value) => value.mqIds
       );
-    if (selectedMsts.value.length === 1) {
-      selectedMqs.value = selectedMsts.value[0].messquerschnitte.filter(
-        (messquerschnitt) => selectedMqIds.includes(messquerschnitt.mqId)
-      );
-    } else if (selectedMsts.value.length > 1) {
-      selectedMqs.value = selectedMsts.value.flatMap(
+    if (selectedMessstellen.value.length === 1) {
+      selectedMessquerschnitte.value =
+        selectedMessstellen.value[0].messquerschnitte.filter(
+          (messquerschnitt) =>
+            selectedMessquerschnitteIds.includes(messquerschnitt.mqId)
+        );
+    } else if (selectedMessstellen.value.length > 1) {
+      selectedMessquerschnitte.value = selectedMessstellen.value.flatMap(
         (messstelle) => messstelle.messquerschnitte
       );
     }
-    if (selectedMqs.value.length === 1) {
-      direction.value = selectedMqs.value[0].fahrtrichtung;
-    } else if (selectedMqs.value.length > 1) {
+    if (selectedMessquerschnitte.value.length === 1) {
+      direction.value = selectedMessquerschnitte.value[0].fahrtrichtung;
+    } else if (selectedMessquerschnitte.value.length > 1) {
       const unique = [
         ...new Set(
-          selectedMqs.value.map(
+          selectedMessquerschnitte.value.map(
             (messquerschnitt) => messquerschnitt.fahrtrichtung
           )
         ),
       ];
       if (unique.length === 1) {
-        direction.value = selectedMqs.value[0].fahrtrichtung;
+        direction.value = selectedMessquerschnitte.value[0].fahrtrichtung;
       } else {
         direction.value = messstelleUtils.alleRichtungen;
       }
@@ -134,9 +137,9 @@ onMounted(() => {
 
 function selectMessstellen() {
   setDefaultDirection();
-  if (selectedMsts.value.length >= 1) {
+  if (selectedMessstellen.value.length >= 1) {
     auswertungOptions.value.messstelleAuswertungIds = [];
-    selectedMsts.value.forEach((messstelleAuswertungId) => {
+    selectedMessstellen.value.forEach((messstelleAuswertungId) => {
       const item = {
         mstId: messstelleAuswertungId.mstId,
         mqIds: toArray(messstelleAuswertungId.messquerschnitte).map(
@@ -151,8 +154,8 @@ function selectMessstellen() {
 
 function saveSelectedMqIdsOfSelectedMst() {
   const item = {
-    mstId: selectedMsts.value[0].mstId,
-    mqIds: toArray(selectedMqs.value).map((mq) => mq.mqId),
+    mstId: selectedMessstellen.value[0].mstId,
+    mqIds: toArray(selectedMessquerschnitte.value).map((mq) => mq.mqId),
   } as MessstelleAuswertungIdDTO;
   auswertungOptions.value.messstelleAuswertungIds = [item];
 }
@@ -171,14 +174,14 @@ const messstellen = computed<Array<KeyValObject>>(() => {
 
 const richtungValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
-  if (selectedMsts.value.length === 1) {
-    if (selectedMsts.value[0].messquerschnitte.length > 1) {
+  if (selectedMessstellen.value.length === 1) {
+    if (selectedMessstellen.value[0].messquerschnitte.length > 1) {
       result.push({
         title: messstelleUtils.alleRichtungen,
         value: messstelleUtils.alleRichtungen,
       });
     }
-    selectedMsts.value[0].messquerschnitte.forEach(
+    selectedMessstellen.value[0].messquerschnitte.forEach(
       (querschnitt: MessquerschnittAuswertungDTO) => {
         const keyVal: KeyVal = {
           title:
@@ -201,8 +204,8 @@ const richtungValues = computed<Array<KeyVal>>(() => {
 
 const lageValues = computed<Array<KeyValObject>>(() => {
   const result: Array<KeyValObject> = [];
-  if (selectedMsts.value.length === 1) {
-    selectedMsts.value[0].messquerschnitte.forEach(
+  if (selectedMessstellen.value.length === 1) {
+    selectedMessstellen.value[0].messquerschnitte.forEach(
       (querschnitt: MessquerschnittAuswertungDTO) => {
         if (
           querschnitt.fahrtrichtung === direction.value ||
@@ -268,10 +271,11 @@ const buttonText = computed(() => {
 });
 
 function setDefaultDirection(): void {
-  if (selectedMsts.value.length === 1) {
-    if (selectedMsts.value[0].messquerschnitte.length === 1) {
-      direction.value = selectedMsts.value[0].messquerschnitte[0].fahrtrichtung;
-    } else if (selectedMsts.value[0].messquerschnitte.length > 1) {
+  if (selectedMessstellen.value.length === 1) {
+    if (selectedMessstellen.value[0].messquerschnitte.length === 1) {
+      direction.value =
+        selectedMessstellen.value[0].messquerschnitte[0].fahrtrichtung;
+    } else if (selectedMessstellen.value[0].messquerschnitte.length > 1) {
       direction.value = messstelleUtils.alleRichtungen;
     }
     preassignMqIdsInOptions();
@@ -306,7 +310,7 @@ function existsMstIdInAuswertungIds(mstId: string) {
 }
 
 function preassignMqIdsInOptions() {
-  selectedMqs.value = toArray(
+  selectedMessquerschnitte.value = toArray(
     lageValues.value.map((value) => value.value as MessquerschnittAuswertungDTO)
   );
   saveSelectedMqIdsOfSelectedMst();
