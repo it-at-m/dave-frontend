@@ -5,7 +5,7 @@
 
     <groupId>de.muenchen.dave</groupId>
     <artifactId>dave-frontend</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>dave_frontend</name>
 

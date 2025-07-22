@@ -9,7 +9,7 @@ export function useDateUtils() {
 
   function formatDate(date: string): string {
     if (!date) {
-      return "unbekannt";
+      return "nicht vorhanden";
     }
     if (date.includes("-")) {
       const [year, month, day] = date.split("-");
@@ -21,7 +21,7 @@ export function useDateUtils() {
 
   function formatDateAsStringToISO(date: string): string {
     if (!date) {
-      return "unbekannt";
+      return "nicht vorhanden";
     }
     if (date.includes(".")) {
       const [day, month, year] = date.split(".");

@@ -7,7 +7,7 @@
       <v-sheet
         color="white"
         width="100%"
-        class="px-4 py-2 text-primary font-weight-regular"
+        class="px-4 py-2 text-primary font-weight-regular overflow-y-auto"
         height="72px"
       >
         <v-row
@@ -25,22 +25,21 @@
                 </span>
               </v-col>
               <v-spacer />
-              <v-col cols="1">
+              <v-col cols="3">
                 <verkehrsart-icon
                   :detektierte-verkehrsart="detektierteVerkehrsart"
-                  color="default"
+                  color="primary"
                 />
-              </v-col>
-              <v-col cols="1">
                 <fahrzeugklassen-icon
                   v-if="messstelle.detektierteVerkehrsart !== Verkehrsart.RAD"
                   :fahrzeugklasse="fahrzeugklasse"
                   color="primary"
                   size="default"
                 />
-              </v-col>
-              <v-col cols="1">
-                <messstelle-kommentar :kommentar="messstelle.kommentar" />
+                <messstelle-kommentar
+                  v-if="messstelle.kommentar"
+                  :kommentar="messstelle.kommentar"
+                />
               </v-col>
             </v-row>
             <v-row
@@ -83,7 +82,7 @@
             style="justify-items: center"
           >
             <messstelle-geometrie
-              :height="60"
+              :height="56"
               :width="60"
               active-color="#1565C0"
               passive-color="#EEEEEE"
