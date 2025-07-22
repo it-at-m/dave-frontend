@@ -11,11 +11,11 @@
 import { computed } from "vue";
 
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import DetektierteVerkehrsart from "@/types/enum/DetektierteVerkehrsart";
+import Verkehrsart from "@/types/enum/Verkehrsart";
 import IconOptions from "@/types/util/IconOptions";
 
 interface Props {
-  detektierteVerkehrsart?: DetektierteVerkehrsart;
+  detektierteVerkehrsart?: Verkehrsart;
   color?: string;
 }
 
@@ -25,9 +25,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const iconOptions = computed(() => {
-  if (props.detektierteVerkehrsart === DetektierteVerkehrsart.RAD) {
+  if (props.detektierteVerkehrsart === Verkehrsart.RAD) {
     return new IconOptions("mdi-bicycle", "Verkehrsart: Fahrrad");
-  } else if (props.detektierteVerkehrsart === DetektierteVerkehrsart.KFZ) {
+  } else if (props.detektierteVerkehrsart === Verkehrsart.KFZ) {
     return new IconOptions("mdi-car", "Verkehrsart: KFZ");
   } else {
     return new IconOptions(
