@@ -13,7 +13,7 @@
       <panel-header
         font-size="0.875rem"
         font-weight="bold"
-        padding="10px 0 0 0"
+        padding="10 0 0 0"
         header-text="Welche Erhebungsstellen sollen durchsucht werden?"
       />
       <v-row
@@ -25,7 +25,6 @@
         <v-col cols="4">
           <v-checkbox
             v-model="searchAndFilterOptions.searchInMessstellen"
-            class="mb-3"
             :label="'Messstellen'"
             hide-details
             color="quaternary"
@@ -35,16 +34,13 @@
         <v-col cols="4">
           <v-checkbox
             v-model="searchAndFilterOptions.searchInZaehlstellen"
-            class="mb-3"
             :label="'Zählstellen'"
             hide-details
             color="quaternary"
             density="compact"
           />
         </v-col>
-        <v-col cols="4">
-          <v-card variant="flat" />
-        </v-col>
+        <v-spacer />
       </v-row>
     </v-expansion-panel-text>
   </v-expansion-panel>
