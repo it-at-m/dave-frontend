@@ -18,10 +18,12 @@
     >
       <v-col cols="6">
         <v-autocomplete
-          v-model="searchAndFilterOptions.verkehrsart"
+          v-model="searchAndFilterOptions.messstelleVerkehrsart"
           multiple
           :items="selectableVerkehrsarten"
           density="compact"
+          chips
+          closable-chips
         />
       </v-col>
       <v-spacer />
