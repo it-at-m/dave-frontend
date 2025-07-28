@@ -164,7 +164,7 @@ const messstellen = computed<Array<KeyValObject>>(() => {
   const result: Array<KeyValObject> = props.allVisibleMessstellen.map((mst) => {
     return {
       title: `${mst.mstId}-${mst.standort ?? ""} (${
-        mst.detektierteVerkehrsarten ?? ""
+        mst.detektierteVerkehrsart ?? ""
       })`,
       value: mst,
     };
@@ -289,11 +289,11 @@ function setVerfuegbareVerkehrsarten() {
       if (
         existsMstIdInAuswertungIds(messstelle.mstId) &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
-          messstelle.detektierteVerkehrsarten
+          messstelle.detektierteVerkehrsart
         )
       ) {
         auswertungOptions.value.verfuegbareVerkehrsarten.push(
-          messstelle.detektierteVerkehrsarten
+          messstelle.detektierteVerkehrsart
         );
       }
       if (auswertungOptions.value.verfuegbareVerkehrsarten.length === 2) {

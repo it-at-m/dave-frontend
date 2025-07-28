@@ -87,8 +87,8 @@ import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore"
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import TagesTyp from "@/types/enum/TagesTyp";
+import Verkehrsart from "@/types/enum/Verkehrsart";
 import ZaehldatenIntervall, {
   ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";
@@ -298,9 +298,9 @@ function resetFahrzeugOptions(): void {
     DefaultObjectCreator.createDefaultFahrzeugOptions();
 
   chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.KFZ;
   chosenOptions.value.fahrzeuge.radverkehr =
-    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.RAD;
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.RAD;
 }
 
 /**
