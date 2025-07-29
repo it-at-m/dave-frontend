@@ -17,6 +17,8 @@ import { de } from "vuetify/locale";
 import achtPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/AchtPlusEinsIcon.vue";
 import summeKfz from "@/components/messstelle/icons/FahrzeugklasseIcons/SummeKfzIcon.vue";
 import zweiPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/ZweiPlusEinsIcon.vue";
+// SearchAndFilter
+import searchAndFilter from "@/components/search/filter/SearchAndFilterIcon.vue";
 // Zaehlart
 import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
 import artN from "@/components/zaehlstelle/icons/ArtIcons/ArtN.vue";
@@ -87,6 +89,8 @@ export default createVuetify({
       achtPlusEins,
       summeKfz,
       zweiPlusEins,
+      // SearchAndFilter
+      searchAndFilter,
     },
   },
   locale: {

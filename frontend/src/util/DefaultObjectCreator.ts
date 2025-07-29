@@ -315,6 +315,7 @@ export default class DefaultObjectCreator {
     return {
       searchInMessstellen: true,
       searchInZaehlstellen: true,
+      messstelleVerkehrsart: [Verkehrsart.KFZ, Verkehrsart.RAD],
     } as SearchAndFilterOptionsDTO;
   }
 
