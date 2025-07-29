@@ -214,8 +214,7 @@ const appBarHeight = computed(() => {
 });
 
 const stepperSheetHeight = computed(() => {
-  const overflowX = display.width.value / 3 <= minWidth;
-  return 100 - (overflowX ? 3 : 0) - appBarHeight.value + "vh";
+  return 100 - appBarHeight.value + "vh";
 });
 
 const stepperSheetActionsHeight = computed(() => {
