@@ -7,6 +7,7 @@
       >
         <v-sheet
           class="d-flex flex-column overflow-y-auto"
+          style="border-right-color: lightgrey; border-right-style: solid; border-right-width: 1px"
           :height="stepperSheetHeight"
           width="100%"
         >
@@ -37,7 +38,6 @@
           </v-card-actions>
         </v-sheet>
       </v-col>
-      <v-divider vertical />
       <v-col cols="8">
         <progress-loader v-model="chartDataLoading" />
         <step-line-card
