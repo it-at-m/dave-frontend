@@ -9,7 +9,6 @@
       label="Messstellen"
       multiple
       clearable
-      :disabled="disableMessstelle"
       persistent-hint
       variant="outlined"
       closable-chips
@@ -250,20 +249,8 @@ const messstelleHint = computed(() => {
   if (auswertungOptions.value.messstelleAuswertungIds.length > 1) {
     hint =
       "Wenn mehrere Messstellen ausgewählt wurden, kann kein Messquerschnitt ausgewählt werden.";
-  } else if (disableMessstelle.value) {
-    hint =
-      "Wenn ein Messquerschnitt ausgewählt wurde, kann die Messstelle nicht mehr geändert werden.";
   }
   return hint;
-});
-
-const disableMessstelle = computed(() => {
-  return (
-    auswertungOptions.value.messstelleAuswertungIds.length > 0 &&
-    auswertungOptions.value.messstelleAuswertungIds[0].mqIds.length > 0 &&
-    direction.value !== messstelleUtils.alleRichtungen &&
-    richtungValues.value.length > 1
-  );
 });
 
 const buttonText = computed(() => {
