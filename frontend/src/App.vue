@@ -77,7 +77,6 @@
 
 <script setup lang="ts">
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
-import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";
@@ -85,7 +84,7 @@ import { useRoute } from "vue-router";
 
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
-import MapConfigService from "@/api/service/MapConfigService";
+import ConfigurationService from "@/api/service/ConfigurationService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import OptionsmenueSettingsService from "@/api/service/OptionsmenueSettingsService";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
@@ -102,6 +101,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
+import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 
 const URL_HANDBUCH_LINK =
   "https://github.com/it-at-m/dave/blob/main/2025_DAVe_Anwenderhandbuch_Datenportal_v1.1.pdf";
@@ -152,8 +152,8 @@ function created() {
       );
     }
   );
-  MapConfigService.getMapConfig().then((res: MapConfigDTO) => {
-    mapConfigStore.setMapConfig(res);
+  ConfigurationService.getConfiguration().then((configuration: ConfigurationDTO) => {
+    mapConfigStore.setMapConfig(configuration.map);
   });
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
