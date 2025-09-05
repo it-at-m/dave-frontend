@@ -1,3 +1,3 @@
 export default interface ZaehlstelleConfigurationDTO {
-    automaticNumberAssignment: boolean;
+  automaticNumberAssignment: boolean;
 }

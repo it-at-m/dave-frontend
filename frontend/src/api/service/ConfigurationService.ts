@@ -1,5 +1,6 @@
-import FetchService from "@/api/service/FetchService";
 import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
+
+import FetchService from "@/api/service/FetchService";
 
 export default class ConfigurationService {
   private static readonly ENDPOINT: string =

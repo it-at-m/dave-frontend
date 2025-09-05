@@ -1,5 +1,7 @@
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
+import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
+import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
@@ -29,8 +31,6 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
-import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 
 export default class DefaultObjectCreator {
   public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {

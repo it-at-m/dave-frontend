@@ -77,6 +77,7 @@
 
 <script setup lang="ts">
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
+import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";
@@ -101,7 +102,6 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 
 const URL_HANDBUCH_LINK =
   "https://github.com/it-at-m/dave/blob/main/2025_DAVe_Anwenderhandbuch_Datenportal_v1.1.pdf";
@@ -152,9 +152,11 @@ function created() {
       );
     }
   );
-  ConfigurationService.getConfiguration().then((configuration: ConfigurationDTO) => {
-    configurationStore.setConfiguration(configuration);
-  });
+  ConfigurationService.getConfiguration().then(
+    (configuration: ConfigurationDTO) => {
+      configurationStore.setConfiguration(configuration);
+    }
+  );
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
       showGesamtauswertung.value = messstellen.length > 0;
