@@ -93,7 +93,7 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
 import SearchInputField from "@/components/search/SearchInputField.vue";
-import { useMapConfigStore } from "@/store/MapConfigStore";
+import { useConfigurationStore } from "@/store/ConfigurationStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSearchStore } from "@/store/SearchStore";
@@ -116,7 +116,7 @@ const userStore = useUserStore();
 const searchStore = useSearchStore();
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const mapOptionsStore = useMapOptionsStore();
-const mapConfigStore = useMapConfigStore();
+const configurationStore = useConfigurationStore();
 const route = useRoute();
 
 created();
@@ -153,7 +153,7 @@ function created() {
     }
   );
   ConfigurationService.getConfiguration().then((configuration: ConfigurationDTO) => {
-    mapConfigStore.setMapConfig(configuration.map);
+    configurationStore.setConfiguration(configuration);
   });
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
