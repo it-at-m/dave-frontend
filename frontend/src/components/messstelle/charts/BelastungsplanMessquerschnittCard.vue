@@ -580,10 +580,14 @@ function drawMessstelleInfo() {
         .newLine();
       if (dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum)) {
         add
+          .tspan(`Messzeitraum:`)
+          .font({ size: defaultFontSize, family: fontfamily })
+          .newLine();
+        add
           .tspan(
-            `Messzeitraum:  ${dateUtils.formatDate(
+            `${dateUtils.formatDate(
               chosenOptionsCopy.value.zeitraum[0]
-            )} -  ${dateUtils.formatDate(chosenOptionsCopy.value.zeitraum[1])}`
+            )} - ${dateUtils.formatDate(chosenOptionsCopy.value.zeitraum[1])}`
           )
           .font({ size: defaultFontSize, family: fontfamily })
           .newLine();
