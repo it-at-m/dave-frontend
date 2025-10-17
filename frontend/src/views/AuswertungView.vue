@@ -20,6 +20,7 @@
             :height="stepperHeightVh"
             :all-visible-messstellen="allVisibleMessstellen"
             :preset-data="presetData"
+            @reset-chart="resetChart"
           />
           <v-spacer />
           <v-card-actions>
@@ -97,8 +98,16 @@ import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/Messst
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { cloneDeep, head, isEmpty, isNil, toArray, valuesIn } from "lodash";
-import { computed, onMounted, ref } from "vue";
+import {
+  cloneDeep,
+  head,
+  isEmpty,
+  isEqual,
+  isNil,
+  toArray,
+  valuesIn,
+} from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { ApiError, Levels } from "@/api/error";
@@ -119,8 +128,6 @@ import { useReportTools } from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 const NUMBER_OF_MAX_MST_TO_SHOW = 10;
-
-const minWidth = 600;
 
 const reportTools = useReportTools();
 const display = useDisplay();
@@ -156,6 +163,28 @@ onMounted(() => {
   presetData.value = !isEmpty(auswertungsOptions.value.zeitraum);
   auswertungLoaded.value = presetData.value;
 });
+
+watch(
+  auswertungsOptions,
+  () => {
+    resetChart();
+  },
+  { deep: true, immediate: true }
+);
+
+function resetChart() {
+  if (
+    auswertungLoaded.value &&
+    !isEqual(
+      auswertungsOptions.value,
+      gesamtauswertungStore.getAuswertungMessstelleOptions
+    )
+  ) {
+    zaehldatenMessstellen.value =
+      DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+    auswertungLoaded.value = false;
+  }
+}
 
 const textForNonShownDiagram = computed(() => {
   const text = [];
