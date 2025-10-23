@@ -11,4 +11,6 @@ export default interface BelastungsplanMessquerschnitteDTO {
   totalRad: number;
   totalPercentSv: number;
   totalPercentGv: number;
+  startUhrzeitSpitzenstunde: string;
+  endeUhrzeitSpitzenstunde: string;
 }

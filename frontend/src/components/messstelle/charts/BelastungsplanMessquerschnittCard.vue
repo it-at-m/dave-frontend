@@ -772,7 +772,7 @@ const getZeitblockText = computed(() => {
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
-    return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
+    return `${props.belastungsplanData.startUhrzeitSpitzenstunde} - ${props.belastungsplanData.endeUhrzeitSpitzenstunde} Uhr`;
   } else {
     return "";
   }

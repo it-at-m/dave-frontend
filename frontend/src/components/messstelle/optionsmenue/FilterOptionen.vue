@@ -182,6 +182,14 @@ const zeitblock = computed(() => {
     existsStunde
   ) {
     text = existsStunde.title;
+  } else if (
+    Zeitauswahl.SPITZENSTUNDE_KFZ ===
+      filterOptionsMessstelle.value.zeitauswahl ||
+    Zeitauswahl.SPITZENSTUNDE_RAD ===
+      filterOptionsMessstelle.value.zeitauswahl ||
+    Zeitauswahl.SPITZENSTUNDE_FUSS === filterOptionsMessstelle.value.zeitauswahl
+  ) {
+    text = filterOptionsMessstelle.value.zeitauswahl;
   }
   if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
     text = `\u00D8 ${text}`;
