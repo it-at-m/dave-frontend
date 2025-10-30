@@ -124,6 +124,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
+import type KeyVal from "@/types/common/KeyVal";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
@@ -166,7 +167,7 @@ const zeitraum = computed(() => {
 
 const zeitauswahl = computed(() => {
   let text = Zeitauswahl.TAGESWERT.valueOf();
-  const chosenBlock = zeitblockInfo.get(
+  const chosenBlock: KeyVal | undefined = zeitblockInfo.get(
     filterOptionsMessstelle.value.zeitblock
   );
   const chosenStunde = zeitblockStuendlichInfo.get(
@@ -189,7 +190,7 @@ const zeitauswahl = computed(() => {
       filterOptionsMessstelle.value.zeitauswahl ||
     Zeitauswahl.SPITZENSTUNDE_FUSS === filterOptionsMessstelle.value.zeitauswahl
   ) {
-    text = `${filterOptionsMessstelle.value.zeitauswahl} von ${chosenBlock}`;
+    text = `${filterOptionsMessstelle.value.zeitauswahl} von ${chosenBlock?.title}`;
   }
   if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
     text = `\u00D8 ${text}`;
