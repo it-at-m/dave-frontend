@@ -190,8 +190,8 @@ const zeitauswahl = computed(() => {
       filterOptionsMessstelle.value.zeitauswahl ||
     Zeitauswahl.SPITZENSTUNDE_FUSS === filterOptionsMessstelle.value.zeitauswahl
   ) {
-    const blockInfo = chosenBlock ? `von ${chosenBlock.title}` : ``;
-    text = filterOptionsMessstelle.value.zeitauswahl + blockInfo;
+    const blockInfo = chosenBlock ? ` von ${chosenBlock.title}` : ``;
+    text = `${filterOptionsMessstelle.value.zeitauswahl}${blockInfo}`;
   }
   if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
     text = `\u00D8 ${text}`;
