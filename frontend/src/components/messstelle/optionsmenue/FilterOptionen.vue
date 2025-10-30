@@ -105,6 +105,7 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import type KeyVal from "@/types/common/KeyVal";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
@@ -124,7 +125,6 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
-import type KeyVal from "@/types/common/KeyVal";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
@@ -190,7 +190,8 @@ const zeitauswahl = computed(() => {
       filterOptionsMessstelle.value.zeitauswahl ||
     Zeitauswahl.SPITZENSTUNDE_FUSS === filterOptionsMessstelle.value.zeitauswahl
   ) {
-    text = `${filterOptionsMessstelle.value.zeitauswahl} von ${chosenBlock?.title}`;
+    const blockInfo = chosenBlock ? `von ${chosenBlock.title}` : ``;
+    text = filterOptionsMessstelle.value.zeitauswahl + blockInfo;
   }
   if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
     text = `\u00D8 ${text}`;
