@@ -1,3 +1,4 @@
+import type TagesTyp from "@/types/enum/TagesTyp";
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -14,4 +15,6 @@ export default interface LadeProcessedMessdatenDTO {
 
   requestedMeasuringDays: number;
   includedMeasuringDays: number;
+
+  tagesTyp: TagesTyp;
 }

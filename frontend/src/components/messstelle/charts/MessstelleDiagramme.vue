@@ -173,9 +173,6 @@ import type CsvDTO from "@/types/common/CsvDTO";
 import type LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 
 import { cloneDeep } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -224,18 +221,8 @@ const REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG =
 
 const chartDataLoading = ref(false);
 
-const zaehldatenSteplineDTO = ref<LadeZaehldatenSteplineDTO>(
-  DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
-);
-
-const zaehldatenHeatmapDTO = ref<LadeZaehldatenHeatmapDTO>(
-  DefaultObjectCreator.createDefaultLadeZaehldatenHeatmapDTO()
-);
-
-const listenausgabeDTO = ref<Array<LadeZaehldatumDTO>>([]);
-
-const belastungsplanDataDTO = ref(
-  DefaultObjectCreator.createDefaultBelastungsplanMessquerschnitteDTO()
+const processedMessdatenDTO = ref(
+  DefaultObjectCreator.createDefaultLadeProcessedMessdatenDTO()
 );
 
 const pdfReportDialog = ref(false);
@@ -267,6 +254,19 @@ const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 const dateUtils = useDateUtils();
+
+const zaehldatenSteplineDTO = computed(() => {
+  return processedMessdatenDTO.value.zaehldatenStepline;
+});
+const listenausgabeDTO = computed(() => {
+  return processedMessdatenDTO.value.zaehldatenTable.zaehldaten;
+});
+const zaehldatenHeatmapDTO = computed(() => {
+  return processedMessdatenDTO.value.zaehldatenHeatmap;
+});
+const belastungsplanDataDTO = computed(() => {
+  return processedMessdatenDTO.value.belastungsplanMessquerschnitte;
+});
 
 const drawSchematischeUebersicht = computed(() => {
   return (
@@ -362,11 +362,7 @@ function loadProcessedChartData() {
   resetData();
   LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value, options.value)
     .then((processedZaehldaten: LadeProcessedMessdatenDTO) => {
-      zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
-      zaehldatenHeatmapDTO.value = processedZaehldaten.zaehldatenHeatmap;
-      listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
-      belastungsplanDataDTO.value =
-        processedZaehldaten.belastungsplanMessquerschnitte;
+      processedMessdatenDTO.value = processedZaehldaten;
       messstelleStore.setIncludedMeasuringDays(
         processedZaehldaten.includedMeasuringDays
       );
@@ -395,13 +391,8 @@ function loadProcessedChartData() {
 function resetData() {
   messstelleStore.setIncludedMeasuringDays(0);
   messstelleStore.setRequestedMeasuringDays(0);
-  zaehldatenSteplineDTO.value =
-    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
-  zaehldatenHeatmapDTO.value =
-    DefaultObjectCreator.createDefaultLadeZaehldatenHeatmapDTO();
-  listenausgabeDTO.value = [];
-  belastungsplanDataDTO.value =
-    DefaultObjectCreator.createDefaultBelastungsplanMessquerschnitteDTO();
+  processedMessdatenDTO.value =
+    DefaultObjectCreator.createDefaultLadeProcessedMessdatenDTO();
 }
 
 function setMaxRangeYAchse() {
@@ -570,6 +561,13 @@ function generatePdf(): void {
   formData.append(
     "options",
     new Blob([JSON.stringify(options.value)], {
+      type: "application/json",
+    })
+  );
+
+  formData.append(
+    "messswerte",
+    new Blob([JSON.stringify(processedMessdatenDTO.value)], {
       type: "application/json",
     })
   );
