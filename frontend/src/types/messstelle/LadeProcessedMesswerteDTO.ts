@@ -4,7 +4,7 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
 
-export default interface LadeProcessedMessdatenDTO {
+export default interface LadeProcessedMesswerteDTO {
   zaehldatenTable: LadeZaehldatenTableDTO;
 
   zaehldatenStepline: LadeZaehldatenSteplineDTO;

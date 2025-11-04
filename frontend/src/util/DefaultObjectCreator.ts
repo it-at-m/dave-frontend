@@ -5,7 +5,7 @@ import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
-import type LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
+import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
@@ -336,7 +336,7 @@ export default class DefaultObjectCreator {
     return { zaehldaten: [] } as LadeZaehldatenTableDTO;
   }
 
-  public static createDefaultLadeProcessedMessdatenDTO(): LadeProcessedMessdatenDTO {
+  public static createDefaultLadeProcessedMessdatenDTO(): LadeProcessedMesswerteDTO {
     return {
       zaehldatenTable: this.createDefaultLadeZaehldatenTableDTO(),
       zaehldatenStepline: this.createDefaultLadeZaehldatenSteplineDTO(),
@@ -346,6 +346,6 @@ export default class DefaultObjectCreator {
       requestedMeasuringDays: -1,
       includedMeasuringDays: -1,
       tagesTyp: TagesTyp.UNSPECIFIED,
-    } as LadeProcessedMessdatenDTO;
+    } as LadeProcessedMesswerteDTO;
   }
 }

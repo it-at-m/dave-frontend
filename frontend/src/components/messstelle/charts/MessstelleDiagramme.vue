@@ -170,7 +170,7 @@
 </template>
 <script setup lang="ts">
 import type CsvDTO from "@/types/common/CsvDTO";
-import type LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
+import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
@@ -361,7 +361,7 @@ function loadProcessedChartData() {
   chartDataLoading.value = true;
   resetData();
   LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value, options.value)
-    .then((processedZaehldaten: LadeProcessedMessdatenDTO) => {
+    .then((processedZaehldaten: LadeProcessedMesswerteDTO) => {
       processedMessdatenDTO.value = processedZaehldaten;
       messstelleStore.setIncludedMeasuringDays(
         processedZaehldaten.includedMeasuringDays
