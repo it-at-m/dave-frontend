@@ -5,6 +5,7 @@ import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
@@ -16,6 +17,7 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import StartAndEndDate from "@/types/common/StartAndEndDate";
@@ -284,6 +286,8 @@ export default class DefaultObjectCreator {
       totalRad: 0,
       totalPercentSv: 0,
       totalPercentGv: 0,
+      startUhrzeitSpitzenstunde: "",
+      endeUhrzeitSpitzenstunde: "",
     } as BelastungsplanMessquerschnitteDTO;
   }
 
@@ -326,5 +330,22 @@ export default class DefaultObjectCreator {
       lng: "11.575517",
       zoom: 12,
     };
+  }
+
+  public static createDefaultLadeZaehldatenTableDTO(): LadeZaehldatenTableDTO {
+    return { zaehldaten: [] } as LadeZaehldatenTableDTO;
+  }
+
+  public static createDefaultLadeProcessedMessdatenDTO(): LadeProcessedMesswerteDTO {
+    return {
+      zaehldatenTable: this.createDefaultLadeZaehldatenTableDTO(),
+      zaehldatenStepline: this.createDefaultLadeZaehldatenSteplineDTO(),
+      zaehldatenHeatmap: this.createDefaultLadeZaehldatenHeatmapDTO(),
+      belastungsplanMessquerschnitte:
+        this.createDefaultBelastungsplanMessquerschnitteDTO(),
+      requestedMeasuringDays: -1,
+      includedMeasuringDays: -1,
+      tagesTyp: TagesTyp.UNSPECIFIED,
+    } as LadeProcessedMesswerteDTO;
   }
 }
