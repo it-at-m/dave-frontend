@@ -76,11 +76,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isZeitraumGreaterThanFiveYears"
-            :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
-          />
-          <banner-messtelle-tabs
-            v-else-if="
+            v-if="
               !chartDataLoading &&
               zaehldatenSteplineDTO.xaxisDataFirstChart.length === 0
             "
@@ -100,11 +96,7 @@
           width="94%"
         >
           <banner-messtelle-tabs
-            v-if="isZeitraumGreaterThanFiveYears"
-            :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
-          />
-          <banner-messtelle-tabs
-            v-else-if="!chartDataLoading && listenausgabeDTO.length === 0"
+            v-if="!chartDataLoading && listenausgabeDTO.length === 0"
             :message="globalInfoMessage.NO_DATA_AVAILABLE"
           />
           <messwerte-listenausgabe
@@ -123,11 +115,7 @@
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
-            v-if="isZeitraumGreaterThanFiveYears"
-            :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
-          />
-          <banner-messtelle-tabs
-            v-else-if="
+            v-if="
               !chartDataLoading &&
               zaehldatenHeatmapDTO.xaxisDataFirstChart.length === 0
             "
@@ -196,7 +184,6 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import MessstelleHistoryItem from "@/types/history/MessstelleHistoryItem";
-import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
@@ -253,7 +240,6 @@ const route = useRoute();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
-const dateUtils = useDateUtils();
 
 const zaehldatenSteplineDTO = computed(() => {
   return processedMessdatenDTO.value.zaehldatenStepline;
@@ -294,19 +280,6 @@ const isTabListenausgabe = computed<boolean>(() => {
 });
 const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
-});
-
-const isZeitraumGreaterThanFiveYears = computed(() => {
-  return dateUtils.isGreaterThanFiveYears(
-    options.value.zeitraumStartAndEndDate.startDate,
-    options.value.zeitraumStartAndEndDate.endDate
-  );
-});
-
-watch(isZeitraumGreaterThanFiveYears, () => {
-  if (isZeitraumGreaterThanFiveYears.value) {
-    activeTab.value = TAB_BELASTUNGSPLAN;
-  }
 });
 
 function changeTab() {
