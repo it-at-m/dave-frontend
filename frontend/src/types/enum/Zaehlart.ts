@@ -21,6 +21,12 @@ enum Zaehlart {
   QR = "QR",
   // Radverkehrszählung
   R = "R",
+  // Querschnitt je Straßenseite
+  QJS = "QJS",
+  // Fuß & Rad je Straßenseite
+  FJS = "FJS",
+  // Querung
+  QU = "QU",
   // Tunnel / Unterführung / Tief
   T = "T",
   // Teilknoten
@@ -41,6 +47,9 @@ export const zaehlartText = new Map<string, string>([
   [Zaehlart.QT, "Querschnitt Tunnel/Unterführung/Tief"],
   [Zaehlart.QR, "Querschnitt Radverkehr"],
   [Zaehlart.R, "Radverkehrszählung"],
+  [Zaehlart.QJS, "Querschnitt je Straßenseite"],
+  [Zaehlart.FJS, "Fußverkehr/Radverkehr je Straßenseite"],
+  [Zaehlart.QU, "Querung"],
   [Zaehlart.T, "Tunnel / Unterführung / Tief"],
   [Zaehlart.TK, "Teilknoten"],
 ]);
