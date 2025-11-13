@@ -10,7 +10,7 @@
       textLength="100%"
       fill="currentColor"
     >
-      QU
+      Qu
     </text>
   </svg>
 </template>
