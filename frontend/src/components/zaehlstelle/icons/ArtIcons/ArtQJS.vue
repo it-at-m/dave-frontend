@@ -4,10 +4,10 @@
     viewBox="0 0 32 32"
   >
     <text
-      x="0"
+      x="16"
       y="26"
       class="svg-text"
-      textLength="100%"
+      text-anchor="middle"
       fill="currentColor"
     >
       QjS
@@ -17,5 +17,6 @@
 <style lang="css">
 .svg-text {
   font: bold 23px Arial;
+  font-stretch: condensed;
 }
 </style>

@@ -1,13 +1,22 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    width="32"
-    height="32"
     viewBox="0 0 32 32"
   >
-    <path
-      d="M9.486 6.741h3.476l5.959 10.75 1.957 4.061h0.117c-0.078-0.994-0.17-2.060-0.277-3.199s-0.161-2.245-0.161-3.316v-8.296h3.243v19.104h-3.476l-5.959-10.75-1.958-4.060h-0.116c0.077 1.012 0.17 2.074 0.277 3.184s0.16 2.2 0.16 3.271v8.354h-3.242v-19.104z"
-    />
+    <text
+      x="16"
+      y="26"
+      class="svg-text"
+      text-anchor="middle"
+      fill="currentColor"
+    >
+      N
+    </text>
   </svg>
 </template>
+<style lang="css">
+.svg-text {
+  font: bold 23px Arial;
+  font-stretch: condensed;
+}
+</style>
