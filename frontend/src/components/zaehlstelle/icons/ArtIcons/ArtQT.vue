@@ -1,22 +1,6 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 32 32"
-  >
-    <text
-      x="16"
-      y="26"
-      class="svg-text"
-      text-anchor="middle"
-      fill="currentColor"
-    >
-      QT
-    </text>
-  </svg>
+  <art-icon model-value="QT" />
 </template>
-<style lang="css">
-.svg-text {
-  font: bold 23px Arial;
-  font-stretch: condensed;
-}
-</style>
+<script setup lang="ts">
+import ArtIcon from "@/components/zaehlstelle/icons/ArtIcons/ArtIcon.vue";
+</script>
