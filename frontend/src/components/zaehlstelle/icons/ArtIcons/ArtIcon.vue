@@ -5,7 +5,7 @@
   >
     <text
       x="16"
-      y="26"
+      y="20"
       class="svg-text"
       text-anchor="middle"
       fill="currentColor"
