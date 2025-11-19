@@ -630,7 +630,7 @@ const emits = defineEmits<{
 }>();
 
 function choosenZaehlartIconToZaehlstelleHeader(zaehlart: string) {
-  emits("zeahlart-ausgewaehlt", zaehlart);
+  emits("zeahlart-ausgewaehlt", zaehlart.toUpperCase());
 }
 </script>
 
