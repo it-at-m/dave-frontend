@@ -15,31 +15,39 @@
       <v-sheet
         width="100%"
         :color="hover ? hoverColor : color"
-        class="px-4 py-2"
+        class="px-4 pt-2"
         :style="{ cursor: `${hover ? 'pointer' : 'default'}` }"
         @mouseover="hover = true"
         @mouseleave="hover = false"
         @click="openZaehlung"
       >
-        <span class="text-body-2"
-          >{{ dateUtils.getShortVersionOfDate(date) }} | {{ projektName }}</span
-        ><br />
-        <zaehlart-icon
-          :zaehlart="zaehlart"
-          :color="iconColor"
-        />
-        <wetter-icon
-          :wetter="wetter"
-          :color="iconColor"
-        />
-        <zaehldauer-icon
-          :zaehldauer="zaehldauer"
-          :color="iconColor"
-        />
-        <quelle-icon
-          :quelle="quelle"
-          :color="iconColor"
-        />
+        <v-row no-gutters>
+          <span class="text-body-2"
+            >{{ dateUtils.getShortVersionOfDate(date) }} |
+            {{ projektName }}</span
+          ><br />
+        </v-row>
+        <v-row
+          no-gutters
+          class="ma-0"
+        >
+          <zaehlart-icon
+            :zaehlart="zaehlart"
+            :color="iconColor"
+          />
+          <wetter-icon
+            :wetter="wetter"
+            :color="iconColor"
+          />
+          <zaehldauer-icon
+            :zaehldauer="zaehldauer"
+            :color="iconColor"
+          />
+          <quelle-icon
+            :quelle="quelle"
+            :color="iconColor"
+          />
+        </v-row>
       </v-sheet>
     </v-col>
   </v-row>

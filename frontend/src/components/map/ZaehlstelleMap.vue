@@ -21,6 +21,7 @@ import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
+import { defaultTo } from "lodash";
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
@@ -366,7 +367,12 @@ function searchErhebungsstelle() {
 }
 
 function getColorForZaehlartenMarker(zaehlart: string): string {
-  if (zaehlart == zaehlstelleStore.getAktiveZaehlung.zaehlart) {
+  const zaehlartUpperCase = defaultTo(zaehlart, "").toUpperCase();
+  const zaehlartFromZaehlungUpperCase = defaultTo(
+    zaehlstelleStore.getAktiveZaehlung.zaehlart,
+    ""
+  ).toUpperCase();
+  if (zaehlartUpperCase === zaehlartFromZaehlungUpperCase) {
     return ICON_COLOR_RED;
   } else {
     return ICON_COLOR_SECONDARY;
@@ -624,7 +630,7 @@ const emits = defineEmits<{
 }>();
 
 function choosenZaehlartIconToZaehlstelleHeader(zaehlart: string) {
-  emits("zeahlart-ausgewaehlt", zaehlart);
+  emits("zeahlart-ausgewaehlt", zaehlart.toUpperCase());
 }
 </script>
 
