@@ -1,0 +1,45 @@
+name: dave-sample-stack
+
+services:
+
+  dave-backend:
+    container_name: dave-backend
+    image: ghcr.io/it-at-m/dave-backend/dave-backend:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,no-security,debugging,sample
+      - elasticsearch.host=10.89.0.4
+      - SSO_BASE_URL=http://sso.de
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/dave-db
+      - spring.datasource.username=dave
+      - spring.datasource.password=1234
+      - elasticsearch.http-ca-certificate=${ELASTICSEARCH_CERT_FINGERPRINT}
+    ports:
+      - "39146:39146"
+    networks:
+      - dave-network
+    pull_policy: always
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -I http://localhost:39146/actuator/health | grep -q '\"status\":\"UP\"'",]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
+  dave-frontend:
+    container_name: dave-frontend
+    depends_on:
+      dave-backend:
+        condition: service_healthy
+    image: ghcr.io/it-at-m/dave-backend/dave-frontend:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,no-security
+      - SSO_BASE_URL=http://sso.de
+    ports:
+      - "8082:8082"
+    networks:
+      - dave-network
+    pull_policy: always
+
+networks:
+  dave-network:
+    external: true
