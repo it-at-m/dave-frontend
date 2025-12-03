@@ -2,7 +2,7 @@ name: build maven and image
 
 on:
   push:
-    branches: ["main-ng", "sprint", "main", "dev"]
+    branches: ["main", "demo", "sprint"]
   workflow_dispatch:
     inputs:
       tag:
@@ -42,17 +42,5 @@ jobs:
           image-tags: |
             # use tag from input only if triggered by workflow_dispatch
             type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event_name == 'workflow_dispatch' }}
-            # set latest tag for sprint branch
-            type=raw,value=latest,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'sprint') }}
-            # set internal deployment tag for sprint branch
-            type=raw,value=test-ng,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'sprint') }}
-            # set stable tag for main-ng branch
-            type=raw,value=stable,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'main-ng') }}
-            # set internal deployment tag for main-ng branch
-            type=raw,value=demo-ng,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'main-ng') }}
-            # set internal deployment tag for main branch
-            type=raw,value=demo,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'main') }}
-            # set internal deployment tag for dev branch
-            type=raw,value=test,enable=${{ github.event_name == 'push' && github.ref == format('refs/heads/{0}', 'dev') }}
           image-labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
