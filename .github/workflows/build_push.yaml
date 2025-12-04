@@ -1,8 +1,6 @@
 name: build maven and image
 
 on:
-  push:
-    branches: ["main", "demo", "sprint"]
   workflow_dispatch:
     inputs:
       tag:
