@@ -27,7 +27,7 @@
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
 
         <!-- Linting & Formatting -->
-        <spotless-maven-plugin.version>2.44.5</spotless-maven-plugin.version>
+        <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
         <itm-java-codeformat.version>1.0.10</itm-java-codeformat.version>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
