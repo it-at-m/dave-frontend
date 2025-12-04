@@ -4,6 +4,7 @@
       class="text-none"
       color="secondary"
       prepend-icon="mdi-filter-outline"
+      density="default"
       text="Filtereinstellungen"
       @click="dialog = true"
     />
@@ -13,7 +14,7 @@
     >
       <v-card
         width="900px"
-        flat
+        variant="flat"
       >
         <v-card-title>
           <v-icon
@@ -34,7 +35,10 @@
               focusable
               elevation="0"
             >
-              <zeit-panel v-model="chosenOptions" />
+              <zeit-panel
+                v-model="chosenOptions"
+                :is-zeitraum-and-tagestyp-valid="isZeitraumAndTagestypValid"
+              />
               <fahrzeug-panel v-model="chosenOptions" />
               <messquerschnitt-panel v-model="chosenOptions" />
               <darstellungsoptionen-panel-messstelle v-model="chosenOptions" />
@@ -53,10 +57,10 @@
           <v-spacer />
           <v-btn
             class="text-none"
-            color="grey-lighten-1"
+            color="tertiary"
             text="Zurücksetzen"
             variant="elevated"
-            @click="resetOptions"
+            @click="resetOptionsForMessstelle"
           />
           <v-spacer />
         </v-card-actions>
@@ -66,28 +70,33 @@
 </template>
 <script setup lang="ts">
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
+import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
-import { cloneDeep, isEmpty, isNil } from "lodash";
+import { cloneDeep, includes, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
 import MessquerschnittPanel from "@/components/messstelle/optionsmenue/panels/MessquerschnittPanel.vue";
 import ZeitPanel from "@/components/messstelle/optionsmenue/panels/ZeitPanel.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import TagesTyp from "@/types/enum/TagesTyp";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import Verkehrsart from "@/types/enum/Verkehrsart";
+import ZaehldatenIntervall, {
+  ZaehldatenIntervallToSelect,
+} from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
-import { useTimeUtils } from "@/util/TimeUtils";
 
 interface Props {
   messstelleId: string;
@@ -97,6 +106,7 @@ defineProps<Props>();
 
 const display = useDisplay();
 const messstelleStore = useMessstelleStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
 const dialog = ref(false);
@@ -104,9 +114,9 @@ const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultMessstelleOptions()
 );
+const isZeitraumAndTagestypValid = ref(false);
 
 const userStore = useUserStore();
-const timeUtils = useTimeUtils();
 const dateUtils = useDateUtils();
 
 const messstelle = computed<MessstelleInfoDTO>(() => {
@@ -129,7 +139,7 @@ watch(messstelle, () => {
     chosenOptions.value = messstelleStore.getFilteroptions;
     messstelleStore.reloadFilteroptions();
   } else {
-    resetOptions();
+    resetOptionsForMessstelle();
   }
 });
 
@@ -145,6 +155,23 @@ function setChosenOptions(): void {
       (date) => !isEmpty(date)
     );
   }
+
+  const intervals =
+    optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
+      chosenOptions.value.fahrzeuge
+    );
+
+  if (!includes(intervals, chosenOptions.value.intervall)) {
+    const intervallToSet = ZaehldatenIntervallToSelect.filter(
+      (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
+    ).pop();
+
+    chosenOptions.value.intervall = isNil(intervallToSet)
+      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      : intervallToSet.value;
+  }
+
   if (areChosenOptionsValid()) {
     saveChosenOptions();
     dialog.value = false;
@@ -176,14 +203,26 @@ function areChosenOptionsValid(): boolean {
   }
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
-    !chosenOptions.value.tagesTyp
+    (!chosenOptions.value.tagesTyp ||
+      chosenOptions.value.tagesTyp === TagesTyp.UNSPECIFIED)
   ) {
     result = false;
     snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
   }
   if (
+    dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
+    !isZeitraumAndTagestypValid.value
+  ) {
+    result = false;
+    snackbarStore.showError(
+      "Der ausgewählte Zeitraum ist zu kurz. Es liegen nicht genügen plausible Daten vor."
+    );
+  }
+  if (
     isAnwender.value &&
-    timeUtils.isDateRangeBiggerFiveYears(chosenOptions.value.zeitraum.slice())
+    dateUtils.isGreaterThanFiveYearsForZeitraum(
+      chosenOptions.value.zeitraum.slice()
+    )
   ) {
     result = false;
     snackbarStore.showError("Der Ausgewählte Zeitraum ist zu groß");
@@ -209,13 +248,7 @@ function saveChosenOptions(): void {
 }
 
 function setDefaultOptionsForMessstelle(): void {
-  chosenOptions.value.fahrzeuge =
-    DefaultObjectCreator.createDefaultFahrzeugOptions();
-
-  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-  chosenOptions.value.fahrzeuge.radverkehr =
-    !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+  resetFahrzeugOptions();
 
   const defaultDate = messstelleStore.getMaxPossibleDateForMessstelle;
   chosenOptions.value.zeitraumStartAndEndDate = new StartAndEndDate(
@@ -252,30 +285,87 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;
   chosenOptions.value.spitzenstunde = true;
-  messstelleStore.calculateActiveMessfaehigkeit(
-    messstelle.value.datumLetztePlausibleMessung.toString()
-  );
   messstelleStore.setBelastungsplanChosenSize(1);
   saveChosenOptions();
 }
 
-function resetOptions(): void {
+function resetOptionsForMessstelle(): void {
   setDefaultOptionsForMessstelle();
 }
 
-watch(
-  () => messstelleStore.getActiveMessfaehigkeit.fahrzeugklassen,
-  () => {
-    chosenOptions.value.fahrzeuge =
-      DefaultObjectCreator.createDefaultFahrzeugOptions();
-    chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-      messstelle.value.detektierteVerkehrsarten === DetektierteFahrzeugart.KFZ;
-    chosenOptions.value.fahrzeuge.radverkehr =
-      !chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr;
+function resetFahrzeugOptions(): void {
+  chosenOptions.value.fahrzeuge =
+    DefaultObjectCreator.createDefaultFahrzeugOptions();
 
-    snackbarStore.showWarning(
-      'Durch die Änderung des Zeitraums wurden die Kategorie "Fahrzeuge" zurückgesetzt.'
-    );
-  }
+  chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.KFZ;
+  chosenOptions.value.fahrzeuge.radverkehr =
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.RAD;
+}
+
+/**
+ * Ermittlung der möglichen Einstellungen im Optionsmenü auf Basis der Messfähigkeiten
+ */
+function setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum(): void {
+  const messfaehigkeiten = messstelleStore.getMessfaehigkeitenForGivenZeitraum(
+    chosenOptions.value.zeitraumStartAndEndDate.startDate,
+    chosenOptions.value.zeitraumStartAndEndDate.endDate
+  );
+  optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten(
+    messfaehigkeiten
+  );
+}
+
+watch(
+  () => chosenOptions.value.intervall,
+  () => {
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+  },
+  { deep: true, immediate: true }
+);
+
+watch(
+  () => chosenOptions.value.zeitraumStartAndEndDate,
+  () => {
+    resetFahrzeugOptions();
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+  },
+  { deep: true, immediate: true }
+);
+
+watch(
+  [
+    () => chosenOptions.value.tagesTyp,
+    () => chosenOptions.value.zeitraumStartAndEndDate,
+  ],
+  () => {
+    if (
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate) &&
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate.startDate) &&
+      !isNil(chosenOptions.value.zeitraumStartAndEndDate.endDate) &&
+      chosenOptions.value.tagesTyp !== TagesTyp.UNSPECIFIED
+    ) {
+      const isoStartDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.startDate
+      );
+      const isoEndDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.endDate
+      );
+      const request = {
+        zeitraum: [isoStartDate, isoEndDate],
+        mstId: messstelle.value.mstId,
+        tagesTyp: chosenOptions.value.tagesTyp,
+      } as ValidateZeitraumAndTagestypForMessstelleDTO;
+
+      MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)
+        .then((response: ValidatedZeitraumAndTagestypDTO) => {
+          isZeitraumAndTagestypValid.value = response.isValid;
+        })
+        .catch((error) => useSnackbarStore().showApiError(error));
+    } else {
+      isZeitraumAndTagestypValid.value = true;
+    }
+  },
+  { deep: true }
 );
 </script>

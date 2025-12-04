@@ -39,7 +39,11 @@
           />
         </v-radio-group>
       </v-col>
-      <v-col cols="4"> {{ helperText }}</v-col>
+      <v-col cols="4">
+        <p class="text-red">
+          {{ helperText }}
+        </p>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -53,7 +57,7 @@ import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-  isChosenTagesTypValid: boolean;
+  isZeitraumAndTagestypValid: boolean;
 }
 
 const props = defineProps<Props>();
@@ -70,34 +74,35 @@ const helperText = computed(() => {
   let helpText = "";
   if (
     dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) &&
-    chosenOptionsCopy.value.tagesTyp === ""
+    (!chosenOptionsCopy.value.tagesTyp ||
+      chosenOptionsCopy.value.tagesTyp === TagesTyp.UNSPECIFIED)
   ) {
     helpText = "Bei einem Zeitraum muss ein Wochentag ausgewählt werden.";
-  } else if (!props.isChosenTagesTypValid) {
+  } else if (!props.isZeitraumAndTagestypValid) {
     switch (chosenOptionsCopy.value.tagesTyp) {
       case TagesTyp.WERKTAG_DI_MI_DO:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Di,Mi,Do) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Di,Mi,Do) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
       case TagesTyp.WERKTAG_MO_FR:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 5 Tage (Mo,Di,Mi,Do,Fr) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
       case TagesTyp.SAMSTAG:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Sa) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Sa) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
       case TagesTyp.SONNTAG_FEIERTAG:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (So/Feiertag) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (So/Feiertag) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
       case TagesTyp.WERKTAG_FERIEN:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
       case TagesTyp.MO_SO:
         helpText =
-          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswerteberechnung sind mind. 2 Tage (Beliebige Wochentage) mit plausiblen Daten nötig.";
+          "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (beliebige Wochentage) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
     }
   }

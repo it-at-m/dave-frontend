@@ -1,3 +1,5 @@
+import type Verkehrsart from "@/types/enum/Verkehrsart";
+
 export default interface TooltipMessstelleDTO {
   mstId: string;
   standort: string;
@@ -6,5 +8,5 @@ export default interface TooltipMessstelleDTO {
   realisierungsdatum: string;
   abbaudatum: string;
   datumLetztePlausibleMessung: string;
-  detektierteVerkehrsarten: string;
+  detektierteVerkehrsart: Verkehrsart;
 }

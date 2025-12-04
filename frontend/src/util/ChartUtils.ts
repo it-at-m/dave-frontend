@@ -57,4 +57,18 @@ export default class ChartUtils {
 
     [ChartUtils.LEGEND_ENTRY_PKW_EINHEITEN, "#000000"], // black
   ]);
+
+  public static readonly CHART_COLOR_GESAMT_AUSWERTUNG: Map<number, string> =
+    new Map([
+      [0, "#F44336"], // red
+      [1, "#9C27B0"], // purple
+      [2, "#3F51B5"], // indigo
+      [3, "#03A9F4"], // light-blue
+      [4, "#009688"], // teal
+      [5, "#CDDC39"], // lime
+      [6, "#FFC107"], // amber
+      [7, "#795548"], // brown
+      [8, "#607D8B"], // blue-grey
+      [9, "#E91E63"], // pink
+    ]);
 }

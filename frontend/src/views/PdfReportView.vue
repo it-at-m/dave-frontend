@@ -1,10 +1,7 @@
 <template>
-  <v-container
-    class="ma-0"
-    fluid
-  >
+  <v-sheet class="dave-default overflow-y-auto">
     <v-sheet
-      class="mx-10 mb-10 mt-14 pa-5 overflow-y-auto"
+      class="mx-10 mb-10 mt-14 pa-5"
       elevation="2"
       width="80%"
     >
@@ -26,7 +23,7 @@
               flat
             >
               <v-icon
-                color="grey-lighten-1"
+                color="tertiary"
                 :icon="icon(asset)"
               />
               <v-divider
@@ -173,12 +170,13 @@
     </v-sheet>
 
     <v-btn
-      v-tooltip:left="'Report als PDF-Datei herunterladen'"
+      v-tooltip:start="'Report als PDF-Datei herunterladen'"
       class="mr-4 mb-4"
       color="secondary"
       elevation="6"
       icon="mdi-printer"
       location="bottom end"
+      density="default"
       position="fixed"
       size="large"
       style="z-index: 400"
@@ -189,38 +187,33 @@
     <image-asset-form
       v-model="editImage"
       :image="imageAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <datatable-asset-form
       v-model="editDatatable"
       :datatable="datatableAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <heading-asset-form
       v-model="editHeading"
       :heading="headingAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <text-asset-form
       v-model="editText"
       :text="textAsset"
-      @cancel-dialog="cancel()"
       @save="save($event)"
     />
 
     <delete-dialog
       v-model="openDeleteDialog"
       :asset-id="assetId"
-      @cancel-dialog="cancel()"
       @delete="deleteIt($event)"
     />
-  </v-container>
+  </v-sheet>
 </template>
 
 <script lang="ts" setup>
@@ -332,19 +325,7 @@ function createFirstPage(): void {
   pdfReportStore.setHasTitlePage();
 }
 
-function cancel() {
-  //  Dialog(e) schließen
-  editImage.value = false;
-  editHeading.value = false;
-  editText.value = false;
-  editDatatable.value = false;
-  openDeleteDialog.value = false;
-}
-
 function save(asset: BaseAsset) {
-  //  Dialog schließen
-  cancel();
-
   // In Array speichern
   const a = assets.value.filter((a) => a.id === asset.id) as BaseAsset[];
   // Wenn was gefunden wurde, dann muss das geupdatet werden
@@ -508,8 +489,7 @@ function deleteAsset(asset: BaseAsset): void {
 }
 
 function deleteIt(id: number): void {
-  const filteredAssets = assets.value.filter((a) => a.id !== id) as BaseAsset[];
-  assets.value = filteredAssets;
+  assets.value = assets.value.filter((a) => a.id !== id) as BaseAsset[];
   openDeleteDialog.value = false;
 }
 

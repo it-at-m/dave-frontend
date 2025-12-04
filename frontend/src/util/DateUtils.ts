@@ -1,4 +1,4 @@
-import { head, isEmpty, isEqual, last, toArray } from "lodash";
+import { head, isEmpty, isEqual, isNil, last, toArray } from "lodash";
 import moment from "moment";
 
 import i18n from "@/plugins/i18n";
@@ -9,7 +9,7 @@ export function useDateUtils() {
 
   function formatDate(date: string): string {
     if (!date) {
-      return "unbekannt";
+      return "nicht vorhanden";
     }
     if (date.includes("-")) {
       const [year, month, day] = date.split("-");
@@ -21,7 +21,7 @@ export function useDateUtils() {
 
   function formatDateAsStringToISO(date: string): string {
     if (!date) {
-      return "unbekannt";
+      return "nicht vorhanden";
     }
     if (date.includes(".")) {
       const [day, month, year] = date.split(".");
@@ -153,6 +153,35 @@ export function useDateUtils() {
     return date;
   }
 
+  function isGreaterThanFiveYearsForZeitraum(zeitraum: string[] | undefined) {
+    if (!isNil(zeitraum) && zeitraum.length === 2) {
+      const sortedDates = sortDatesDescAsStrings(zeitraum);
+      const endDate = new Date(sortedDates[0]);
+      const startDate = new Date(sortedDates[1]);
+      return isGreaterThanFiveYears(startDate, endDate);
+    }
+    return false;
+  }
+
+  function isGreaterThanFiveYears(
+    start: Date | undefined,
+    end: Date | undefined
+  ) {
+    let isGreaterThanFiveYears = false;
+    if (start && end) {
+      const startDate = moment(start);
+      const endDate = moment(end);
+      const yearFiveYearsEarlier = endDate.year() - 5;
+      const endDateFiveYearsEarlier = moment(end);
+      endDateFiveYearsEarlier.year(yearFiveYearsEarlier);
+      isGreaterThanFiveYears = startDate.isSameOrBefore(
+        endDateFiveYearsEarlier,
+        "day"
+      );
+    }
+    return isGreaterThanFiveYears;
+  }
+
   return {
     sortDatesDescAsStrings,
     formatDate,
@@ -171,5 +200,7 @@ export function useDateUtils() {
     isValidDate,
     isValidIsoDate,
     setTimeToZeroForGivenDate,
+    isGreaterThanFiveYears,
+    isGreaterThanFiveYearsForZeitraum,
   };
 }

@@ -60,7 +60,9 @@ const seriesEntriesSecondChart = ref<Array<Array<number>>>([]);
 const rangeMin = ref(0);
 const rangeMax = ref(0);
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function formatYAxisLabel(value: any): string {
+  /* eslint-enable  @typescript-eslint/no-explicit-any */
   return `<span style="color:${value.color}">\u25CF</span> ${
     value.name
   }: ${value.data[2].toLocaleString()}<br/>`;

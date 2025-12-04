@@ -10,6 +10,8 @@
       align="start"
       justify="center"
       dense
+      @mouseover="isHoveringOverInputFields = true"
+      @mouseleave="isHoveringOverInputFields = false"
     >
       <v-col cols="4">
         <v-text-field
@@ -21,6 +23,7 @@
           ]"
           clearable
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverYAchse1 = true"
           @mouseleave="hoverYAchse1 = false"
           @blur="checkRangeYAchse1"
@@ -36,13 +39,14 @@
           ]"
           clearable
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverYAchse2 = true"
           @mouseleave="hoverYAchse2 = false"
           @blur="checkRangeYAchse2"
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat>
+        <v-card variant="flat">
           {{ helpTextGanglinie }}
         </v-card>
       </v-col>
@@ -54,10 +58,11 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import _ from "lodash";
+import { inRange } from "lodash";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useDateUtils } from "@/util/DateUtils";
 import { useValidationRules } from "@/util/ValidationRules";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
@@ -69,7 +74,21 @@ const hoverYAchse2 = ref(false);
 const MIN_VALUE = 0;
 const MAX_VALUE_EXCLUDE = 101;
 
+const dateUtils = useDateUtils();
+
+const isZeitraumGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
+});
+
+const isHoveringOverInputFields = ref<boolean>(false);
+
 const helpTextGanglinie = computed(() => {
+  if (isHoveringOverInputFields.value && isZeitraumGreaterThanFiveYears.value) {
+    return "Der gewählte Zeitraum umfasst mehr als fünf Jahre.";
+  }
   if (hoverYAchse1.value) {
     return "Der Wert wird zurückgesetzt, wenn die Zahl < 0 ist.";
   }
@@ -82,7 +101,7 @@ const helpTextGanglinie = computed(() => {
 function checkRangeYAchse2() {
   if (chosenOptionsCopy.value.ganglinieYAchse2MaxValue) {
     if (
-      !_.inRange(
+      !inRange(
         chosenOptionsCopy.value.ganglinieYAchse2MaxValue,
         MIN_VALUE,
         MAX_VALUE_EXCLUDE

@@ -1,5 +1,6 @@
 package de.muenchen.dave.configuration;
 
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,8 +20,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.reactive.result.view.ViewResolver;
 import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
-
-import java.util.stream.Collectors;
 
 /**
  * Verwenden der {@link Order} entsprechend der Definition

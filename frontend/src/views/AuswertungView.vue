@@ -7,6 +7,11 @@
       >
         <v-sheet
           class="d-flex flex-column overflow-y-auto"
+          style="
+            border-right-color: lightgrey;
+            border-right-style: solid;
+            border-right-width: 1px;
+          "
           :height="stepperSheetHeight"
           width="100%"
         >
@@ -14,6 +19,8 @@
             v-model="auswertungsOptions"
             :height="stepperHeightVh"
             :all-visible-messstellen="allVisibleMessstellen"
+            :preset-data="presetData"
+            @reset-chart="resetChart"
           />
           <v-spacer />
           <v-card-actions>
@@ -28,33 +35,57 @@
             <v-spacer />
             <v-btn
               class="mr-2 text-none"
+              color="tertiary"
               text="Zurücksetzen"
-              variant="outlined"
+              variant="elevated"
               @click="resetAuswertungsOptions()"
             />
           </v-card-actions>
         </v-sheet>
       </v-col>
-      <v-divider vertical />
       <v-col cols="8">
+        <progress-loader v-model="chartDataLoading" />
         <step-line-card
           v-if="showDiagram"
           ref="steplineCard"
+          :is-gesamt-auswertung="true"
           :zaehldaten-stepline="zaehldatenMessstellen"
         />
-        <banner-messtelle-tabs
-          v-else
-          :message="textForNonShownDiagram"
-        />
+        <v-banner v-else>
+          <v-card variant="flat">
+            <v-card-title>
+              <v-icon
+                color="error"
+                size="36"
+                icon="mdi-alert-decagram-outline"
+                start
+              />
+              Es ist keine grafische Darstellung der Gesamtauswertung möglich.
+            </v-card-title>
+            <v-card-text class="ml-9">
+              <v-list-item
+                v-for="(message, index) in textForNonShownDiagram"
+                :key="index"
+              >
+                <v-list-item-title>{{ message }}</v-list-item-title>
+              </v-list-item>
+            </v-card-text>
+          </v-card>
+        </v-banner>
+
         <speed-dial
           v-if="showSpeeddial"
           :is-listenausgabe="false"
           :is-not-heatmap="true"
           :loading-file="loadingFile"
-          :open-pdf-report-dialog="false"
           @add-chart-to-pdf-report="addChartToPdfReport"
           @save-graph-as-image="saveGraphAsImage"
           @generate-pdf="createPdf"
+          @open-pdf-report-dialog="openPdfReportDialog"
+        />
+        <pdf-report-menue-auswertung
+          v-model="pdfReportDialog"
+          @close="closePdfReportDialog"
         />
       </v-col>
     </v-row>
@@ -67,16 +98,27 @@ import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/Messst
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { cloneDeep, head, isNil, toArray, valuesIn } from "lodash";
-import { computed, onMounted, ref } from "vue";
+import {
+  cloneDeep,
+  head,
+  isEmpty,
+  isEqual,
+  isNil,
+  toArray,
+  valuesIn,
+} from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { ApiError, Levels } from "@/api/error";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
-import BannerMesstelleTabs from "@/components/messstelle/charts/BannerMesstelleTabs.vue";
+import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
+import PdfReportMenueAuswertung from "@/components/messstelle/gesamtauswertung/PdfReportMenueAuswertung.vue";
 import AuswertungStepper from "@/components/messstelle/gesamtauswertung/stepper/AuswertungStepper.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
+import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
@@ -85,19 +127,22 @@ import { useMessstelleUtils } from "@/util/MessstelleUtils";
 import { useReportTools } from "@/util/ReportTools";
 
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
-
-const minWidth = 600;
+const NUMBER_OF_MAX_MST_TO_SHOW = 10;
 
 const reportTools = useReportTools();
 const display = useDisplay();
 const downloadUtils = useDownloadUtils();
 const snackbarStore = useSnackbarStore();
 const messstelleUtils = useMessstelleUtils();
+const gesamtauswertungStore = useGesamtauswertungStore();
 
 const loadingFile = ref(false);
 const auswertungLoaded = ref(false);
+const chartDataLoading = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
+const pdfReportDialog = ref(false);
+const presetData = ref(false);
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -109,41 +154,75 @@ const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
 
 onMounted(() => {
   loadAllVisibleMessstellen();
+  auswertungsOptions.value = cloneDeep(
+    gesamtauswertungStore.getAuswertungMessstelleOptions
+  );
+  zaehldatenMessstellen.value = cloneDeep(
+    gesamtauswertungStore.getZaehldatenMessstellen
+  );
+  presetData.value = !isEmpty(auswertungsOptions.value.zeitraum);
+  auswertungLoaded.value = presetData.value;
 });
 
-const textForNonShownDiagram = computed(() => {
-  let text = "";
+watch(
+  auswertungsOptions,
+  () => {
+    resetChart();
+  },
+  { deep: true, immediate: true }
+);
+
+function resetChart() {
   if (
-    !isNumberOfXaxisElementsShowable.value ||
-    !isChosenMstIdsAndFahrzeugoptionsShowable.value
+    auswertungLoaded.value &&
+    !isEqual(
+      auswertungsOptions.value,
+      gesamtauswertungStore.getAuswertungMessstelleOptions
+    )
   ) {
-    text = "Es ist keine grafische Darstellung der Gesamtauswertung möglich. ";
-    if (!isNumberOfXaxisElementsShowable.value) {
-      text += `Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}`;
-    }
-    if (!isChosenMstIdsAndFahrzeugoptionsShowable.value) {
-      if (!isNumberOfXaxisElementsShowable.value) {
-        text += " und es";
-      } else {
-        text += "Es";
-      }
-      text +=
-        " ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden";
-    }
+    zaehldatenMessstellen.value =
+      DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+    auswertungLoaded.value = false;
   }
-  text += ".";
+}
+
+const textForNonShownDiagram = computed(() => {
+  const text = [];
+  if (!isNumberOfChosenMstShowable.value) {
+    text.push(
+      `Die Anzahl der gewählten Messstellen beträgt mehr als ${NUMBER_OF_MAX_MST_TO_SHOW}.`
+    );
+  }
+  if (!isNumberOfXaxisElementsShowable.value) {
+    text.push(
+      `Die Anzahl der gewählten Zeitintervalle beträgt mehr als ${NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW} ${auswertungsOptions.value.zeitraumCategorie}.`
+    );
+  }
+  if (!isChosenMstIdsAndFahrzeugoptionsShowable.value) {
+    text.push(
+      "Es ist eine Mehrfachauswahl bei Messstellen sowie bei Fahrzeugen getroffen worden."
+    );
+  }
   return text;
 });
 
 const showDiagram = computed(() => {
   return (
     isChosenMstIdsAndFahrzeugoptionsShowable.value &&
-    isNumberOfXaxisElementsShowable.value
+    isNumberOfXaxisElementsShowable.value &&
+    isNumberOfChosenMstShowable.value
   );
 });
 
 const showSpeeddial = computed(() => {
   return showDiagram.value && isEverythingValid.value && auswertungLoaded.value;
+});
+
+const isNumberOfChosenMstShowable = computed(() => {
+  return (
+    toArray(auswertungsOptions.value.messstelleAuswertungIds).length <=
+    NUMBER_OF_MAX_MST_TO_SHOW
+  );
 });
 
 const isNumberOfXaxisElementsShowable = computed(() => {
@@ -168,8 +247,7 @@ const appBarHeight = computed(() => {
 });
 
 const stepperSheetHeight = computed(() => {
-  const overflowX = display.width.value / 3 <= minWidth;
-  return 100 - (overflowX ? 3 : 0) - appBarHeight.value + "vh";
+  return 100 - appBarHeight.value + "vh";
 });
 
 const stepperSheetActionsHeight = computed(() => {
@@ -211,9 +289,21 @@ const areFahrzeugeValid = computed(() => {
 function resetAuswertungsOptions() {
   auswertungsOptions.value =
     DefaultObjectCreator.createDefaultMessstelleAuswertungOptions();
+  gesamtauswertungStore.setAuswertungMessstelleOptions(
+    auswertungsOptions.value
+  );
+  zaehldatenMessstellen.value =
+    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+  gesamtauswertungStore.setZaehldatenMessstellen(zaehldatenMessstellen.value);
+  presetData.value = false;
+  auswertungLoaded.value = false;
 }
 
 function auswertungStarten() {
+  chartDataLoading.value = true;
+  gesamtauswertungStore.setAuswertungMessstelleOptions(
+    auswertungsOptions.value
+  );
   MessstelleAuswertungService.generate(auswertungsOptions.value)
     .then((result: AuswertungMessstelleWithFileDTO) => {
       zaehldatenMessstellen.value = isNil(result.zaehldatenMessstellen)
@@ -228,6 +318,16 @@ function auswertungStarten() {
     .catch((error) => {
       snackbarStore.showApiError(error);
       auswertungLoaded.value = false;
+    })
+    .finally(() => {
+      chartDataLoading.value = false;
+      if (!showDiagram.value) {
+        zaehldatenMessstellen.value =
+          DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+      }
+      gesamtauswertungStore.setZaehldatenMessstellen(
+        zaehldatenMessstellen.value
+      );
     });
 }
 
@@ -357,10 +457,23 @@ function getFilenameSingleMessstelleAndMessquerschnitte(
 }
 
 function loadAllVisibleMessstellen(): void {
-  MessstelleAuswertungService.getAllVisibleMessstellen().then(
-    (messstellen: Array<MessstelleAuswertungDTO>) => {
+  MessstelleAuswertungService.getAllVisibleMessstellen()
+    .then((messstellen: Array<MessstelleAuswertungDTO>) => {
       allVisibleMessstellen.value = messstellen;
-    }
-  );
+    })
+    .catch((error) => {
+      throw new ApiError(
+        Levels.ERROR,
+        `Beim Laden aller auswählbaren Messstellen ist ein Fehler aufgetreten.`,
+        error
+      );
+    });
+}
+function openPdfReportDialog(): void {
+  pdfReportDialog.value = true;
+}
+
+function closePdfReportDialog(): void {
+  pdfReportDialog.value = false;
 }
 </script>

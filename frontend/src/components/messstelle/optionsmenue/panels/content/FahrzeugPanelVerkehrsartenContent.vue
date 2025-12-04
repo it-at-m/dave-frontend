@@ -49,7 +49,7 @@
               v-model="chosenOptionsCopyFahrzeuge.kraftfahrzeugverkehr"
               label="Kraftfahrzeugverkehr (KFZ)"
               :color="getCheckboxColor('KFZ')"
-              :disabled="isTypeDisabled('KFZ')"
+              :disabled="isKraftfahrzeugverkehrDisabled"
               hide-details
               density="compact"
               @mouseover="hoverKfz = true"
@@ -80,7 +80,7 @@
               v-model="chosenOptionsCopyFahrzeuge.schwerverkehr"
               label="Schwerverkehr (SV)"
               :color="getCheckboxColor('SV')"
-              :disabled="isTypeDisabled('SV')"
+              :disabled="isSchwerverkehrDisabled"
               hide-details
               density="compact"
               @mouseover="hoverSv = true"
@@ -103,7 +103,7 @@
               v-model="chosenOptionsCopyFahrzeuge.schwerverkehrsanteilProzent"
               label="Schwerverkehrsanteil [%]"
               :color="getCheckboxColor('SV_P')"
-              :disabled="isTypeDisabled('SV_P')"
+              :disabled="isSchwerverkehrsanteilProzentDisabled"
               hide-details
               density="compact"
               @mouseover="hoverSv_p = true"
@@ -133,7 +133,7 @@
               v-model="chosenOptionsCopyFahrzeuge.gueterverkehr"
               label="Güterverkehr (GV)"
               :color="getCheckboxColor('GV')"
-              :disabled="isTypeDisabled('GV')"
+              :disabled="isGueterverkehrDisabled"
               hide-details
               density="compact"
               @mouseover="hoverGv = true"
@@ -156,7 +156,7 @@
               v-model="chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent"
               label="Güterverkehrsanteil [%]"
               :color="getCheckboxColor('GV_P')"
-              :disabled="isTypeDisabled('GV_P')"
+              :disabled="isGueterverkehrsanteilProzentDisabled"
               hide-details
               density="compact"
               @mouseover="hoverGv_p = true"
@@ -186,7 +186,7 @@
               v-model="chosenOptionsCopyFahrzeuge.radverkehr"
               label="Radverkehr (Rad)"
               :color="getCheckboxColor('RAD')"
-              :disabled="isTypeDisabled('RAD')"
+              :disabled="isRadverkehrDisabled"
               hide-details
               density="compact"
               @mouseover="hoverRad = true"
@@ -212,9 +212,9 @@
               :color="getCheckboxColor('FUSS')"
               :persistent-hint="
                 chosenOptionsCopyFahrzeuge.gueterverkehrsanteilProzent ||
-                isTypeDisabled('FUSS')
+                isFussverkehrDisabled
               "
-              :disabled="isTypeDisabled('FUSS')"
+              :disabled="isFussverkehrDisabled"
               :hide-details="!chosenOptionsCopyFahrzeuge.fussverkehr"
               density="compact"
               @mouseover="hoverFuss = true"
@@ -250,20 +250,18 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
+import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import { useFahrzeugPanelTools } from "@/util/FahrzeugPanelTools";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 
-const fahrzeugPanelTools = useFahrzeugPanelTools();
-const messstelleStore = useMessstelleStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const messstelleUtils = useMessstelleUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
@@ -440,43 +438,43 @@ const isRadInBelastungsplan = computed(() => {
 function calculateSelectOrDeselectVerkehrsarten(): void {
   let selectedItems = 0;
   let maxSelectableItems = 0;
-  if (isTypeEnabled(Fahrzeug.KFZ)) {
+  if (!isKraftfahrzeugverkehrDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
       selectedItems++;
     }
     maxSelectableItems++;
   }
-  if (isTypeEnabled(Fahrzeug.SV)) {
+  if (!isSchwerverkehrDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
       selectedItems++;
     }
     maxSelectableItems++;
   }
-  if (isTypeEnabled(Fahrzeug.GV)) {
+  if (!isGueterverkehrDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
       selectedItems++;
     }
     maxSelectableItems++;
   }
-  if (isTypeEnabled(Fahrzeug.SV_P)) {
+  if (!isSchwerverkehrsanteilProzentDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent) {
       selectedItems++;
     }
     maxSelectableItems++;
   }
-  if (isTypeEnabled(Fahrzeug.GV_P)) {
+  if (!isGueterverkehrsanteilProzentDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent) {
       selectedItems++;
     }
     maxSelectableItems++;
   }
-  if (isTypeEnabled(Fahrzeug.RAD)) {
+  if (!isRadverkehrDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
       selectedItems++;
     }
     maxSelectableItems++;
   }
-  if (isTypeEnabled(Fahrzeug.FUSS)) {
+  if (!isFussverkehrDisabled.value) {
     if (chosenOptionsCopyFahrzeuge.value.fussverkehr) {
       selectedItems++;
     }
@@ -494,31 +492,31 @@ function calculateSelectOrDeselectVerkehrsarten(): void {
 function selectOrDeselectAllVerkehrsarten(): void {
   selectOrDeselectAllVerkehrsartenVmodel.value =
     !selectOrDeselectAllVerkehrsartenVmodel.value;
-  if (isTypeEnabled(Fahrzeug.KFZ)) {
+  if (!isKraftfahrzeugverkehrDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
-  if (isTypeEnabled(Fahrzeug.SV)) {
+  if (!isSchwerverkehrDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.schwerverkehr =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
-  if (isTypeEnabled(Fahrzeug.GV)) {
+  if (!isGueterverkehrDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.gueterverkehr =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
-  if (isTypeEnabled(Fahrzeug.SV_P)) {
+  if (!isSchwerverkehrsanteilProzentDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.schwerverkehrsanteilProzent =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
-  if (isTypeEnabled(Fahrzeug.GV_P)) {
+  if (!isGueterverkehrsanteilProzentDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.gueterverkehrsanteilProzent =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
-  if (isTypeEnabled(Fahrzeug.RAD)) {
+  if (!isRadverkehrDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.radverkehr =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
-  if (isTypeEnabled(Fahrzeug.FUSS)) {
+  if (!isFussverkehrDisabled.value) {
     chosenOptionsCopyFahrzeuge.value.fussverkehr =
       selectOrDeselectAllVerkehrsartenVmodel.value;
   }
@@ -535,19 +533,19 @@ function getCheckboxColor(type: string): string {
   switch (type) {
     case Fahrzeug.SV_P: {
       if (!isSvpInBelastungsPlan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
     case Fahrzeug.GV_P: {
       if (!isGvpInBelastungsPlan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
     case Fahrzeug.RAD: {
       if (!isRadInBelastungsplan.value) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
@@ -556,7 +554,7 @@ function getCheckboxColor(type: string): string {
         chosenOptionsCopyFahrzeuge.value.fussverkehr &&
         actualNumberOfSelectedVerkehrsarten.value > 1
       ) {
-        color = "grey-darken-1";
+        color = "quaternary";
       }
       break;
     }
@@ -625,19 +623,52 @@ function getIcon(type: string): string {
   return icon;
 }
 
-function isTypeEnabled(type: string): boolean {
-  return !isTypeDisabled(type);
-}
+const isKraftfahrzeugverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .kraftfahrzeugverkehrChoosableIntervals
+  )
+);
 
-function isTypeDisabled(type: string): boolean {
-  return (
-    fahrzeugPanelTools.isTypeDisabled(type) ||
-    ((chosenOptionsCopy.value.intervall ===
-      ZaehldatenIntervall.STUNDE_VIERTEL ||
-      chosenOptionsCopy.value.intervall === ZaehldatenIntervall.STUNDE_HALB) &&
-      messstelleStore.getActiveMessfaehigkeit.intervall ===
-        ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT &&
-      Fahrzeug.KFZ !== type)
-  );
-}
+const isSchwerverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .schwerverkehrChoosableIntervals
+  )
+);
+
+const isSchwerverkehrsanteilProzentDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .schwerverkehrsanteilProzentChoosableIntervals
+  )
+);
+
+const isGueterverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .gueterverkehrChoosableIntervals
+  )
+);
+
+const isGueterverkehrsanteilProzentDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .gueterverkehrsanteilProzentChoosableIntervals
+  )
+);
+
+const isRadverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .radverkehrChoosableIntervals
+  )
+);
+
+const isFussverkehrDisabled = computed(() =>
+  isEmpty(
+    optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten
+      .fussverkehrChoosableIntervals
+  )
+);
 </script>

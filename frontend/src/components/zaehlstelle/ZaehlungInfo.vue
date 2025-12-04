@@ -40,7 +40,7 @@
               </v-row>
               <v-row
                 no-gutters
-                class="ma-0"
+                class="ma-0 mt-1"
               >
                 <zaehlart-icon
                   :zaehlart="zaehlung.zaehlart"
@@ -93,7 +93,7 @@
       <v-sheet
         width="100%"
         min-height="50"
-        color="grey-darken-1"
+        color="quaternary"
         class="px-4 py-3"
       >
         <v-row>
@@ -109,7 +109,7 @@
           >
             <v-icon
               size="small"
-              color="grey-lighten-1"
+              color="tertiary"
               icon="mdi-clock-time-four-outline"
             />
           </v-col>
@@ -135,7 +135,7 @@
           >
             <v-icon
               size="small"
-              color="grey-lighten-1"
+              color="tertiary"
               icon="mdi-summit"
             />
           </v-col>
@@ -158,7 +158,7 @@
             <v-icon
               v-if="index === 0"
               size="small"
-              color="grey-lighten-1"
+              color="tertiary"
               icon="mdi-arrow-decision"
             />
           </v-col>

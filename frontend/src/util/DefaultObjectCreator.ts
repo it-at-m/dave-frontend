@@ -1,4 +1,5 @@
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
@@ -7,6 +8,7 @@ import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
@@ -17,10 +19,10 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
 import TagesTyp from "@/types/enum/TagesTyp";
+import Verkehrsart from "@/types/enum/Verkehrsart";
 import Wetter from "@/types/enum/Wetter";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
@@ -64,8 +66,8 @@ export default class DefaultObjectCreator {
   public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
     return {
       messfaehigkeiten: [],
-      detektierteVerkehrsarten: DetektierteFahrzeugart.KFZ,
-      fahrzeugKlassen: "",
+      detektierteVerkehrsart: Verkehrsart.KFZ,
+      fahrzeugklasse: "",
       hersteller: "",
       id: "",
       entityVersion: 0,
@@ -83,6 +85,7 @@ export default class DefaultObjectCreator {
       datumLetztePlausibleMessung: "",
       abbaudatum: "",
       realisierungsdatum: "",
+      lageplanVorhanden: false,
     };
   }
 
@@ -262,7 +265,7 @@ export default class DefaultObjectCreator {
 
   public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
     return {
-      fahrzeugklassen: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
       gueltigAb: "",
       gueltigBis: "",
       intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,
@@ -306,5 +309,22 @@ export default class DefaultObjectCreator {
       xaxisDataSecondChart: null,
       seriesEntriesSecondChart: null,
     } as LadeZaehldatenHeatmapDTO;
+  }
+
+  public static createDefaultSearchAndFilterOptionsDTO(): SearchAndFilterOptionsDTO {
+    return {
+      searchInMessstellen: true,
+      searchInZaehlstellen: true,
+      messstelleVerkehrsart: [Verkehrsart.KFZ, Verkehrsart.RAD],
+    } as SearchAndFilterOptionsDTO;
+  }
+
+  public static createDefaultMapConfigDTO(): MapConfigDTO {
+    return {
+      // München Zentrum
+      lat: "48.137227",
+      lng: "11.575517",
+      zoom: 12,
+    };
   }
 }

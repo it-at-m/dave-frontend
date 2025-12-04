@@ -54,6 +54,12 @@ const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
 
+interface Props {
+  presetData: boolean;
+}
+
+const properties = defineProps<Props>();
+
 const categories = [
   ZeitintervallCategories.JAHRE,
   ZeitintervallCategories.HALBJAHRE,
@@ -134,6 +140,13 @@ watch(selectedCategory, () => {
   }
   previuosSelectedCategory.value = selectedCategory.value;
 });
+
+watch(
+  () => properties.presetData,
+  () => {
+    preSetSelectedCategory();
+  }
+);
 
 function preSetSelectedCategory() {
   const zeitintervalle = auswertungOptions.value.zeitraum;

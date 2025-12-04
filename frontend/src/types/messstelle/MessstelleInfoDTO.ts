@@ -2,7 +2,8 @@ import type BaseEntity from "@/types/common/BaseEntity";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
+import Verkehrsart from "@/types/enum/Verkehrsart";
 
 export default interface MessstelleInfoDTO extends BaseEntity {
   mstId: string;
@@ -13,8 +14,8 @@ export default interface MessstelleInfoDTO extends BaseEntity {
   latitude: string;
   longitude: string;
   kommentar: string;
-  fahrzeugKlassen: string;
-  detektierteVerkehrsarten: DetektierteFahrzeugart;
+  fahrzeugklasse: Fahrzeugklasse | string;
+  detektierteVerkehrsart: Verkehrsart;
   hersteller: string;
   sichtbarDatenportal: boolean;
   messquerschnitte: MessquerschnittInfoDTO[];
@@ -22,4 +23,5 @@ export default interface MessstelleInfoDTO extends BaseEntity {
   abbaudatum: string;
   realisierungsdatum: string;
   messfaehigkeiten: Array<MessfaehigkeitDTO>;
+  lageplanVorhanden: boolean;
 }

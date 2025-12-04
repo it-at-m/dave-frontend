@@ -2,11 +2,12 @@ import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import _ from "lodash";
+import { cloneDeep, isNil, toArray } from "lodash";
+import moment from "moment";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-import DetektierteFahrzeugart from "@/types/enum/DetektierteFahrzeugart";
+import Verkehrsart from "@/types/enum/Verkehrsart";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
@@ -23,9 +24,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const belastungsplanMinSize = ref(0);
   const belastungsplanMaxSize = ref("");
   const belastungsplanChosenSize = ref(1);
-  const activeMessfaehigkeit = ref<MessfaehigkeitDTO>(
-    DefaultObjectCreator.createDefaultMessfaehigkeitDTO()
-  );
   const includedMeasuringDays = ref(0);
   const requestedMeasuringDays = ref(0);
 
@@ -46,9 +44,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   });
   const getActiveTab = computed(() => activeTab.value);
   const isKfzMessstelle = computed(
-    () =>
-      messstelleInfo.value.detektierteVerkehrsarten ===
-      DetektierteFahrzeugart.KFZ
+    () => messstelleInfo.value.detektierteVerkehrsart === Verkehrsart.KFZ
   );
   const getFilteroptions = computed(() => filterOptions.value);
   const getDirection = computed(() => direction.value);
@@ -58,7 +54,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const getBelastungsplanChosenSize = computed(
     () => belastungsplanChosenSize.value
   );
-  const getActiveMessfaehigkeit = computed(() => activeMessfaehigkeit.value);
   const getIncludedMeasuringDays = computed(() => includedMeasuringDays.value);
   const getRequestedMeasuringDays = computed(
     () => requestedMeasuringDays.value
@@ -82,7 +77,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     direction.value = payload;
   }
   function reloadFilteroptions() {
-    filterOptions.value = _.cloneDeep(filterOptions.value);
+    filterOptions.value = cloneDeep(filterOptions.value);
   }
   function setBelastungsplanMinSize(payload: number) {
     belastungsplanMinSize.value = payload;
@@ -93,18 +88,58 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   function setBelastungsplanChosenSize(payload: number) {
     belastungsplanChosenSize.value = payload;
   }
-  function calculateActiveMessfaehigkeit(selectedDate: string): void {
-    messstelleInfo.value.messfaehigkeiten.forEach(
-      (faehigkeit: MessfaehigkeitDTO) => {
-        if (
-          dateUtils.isDateBetweenAsStrings(
-            selectedDate,
-            faehigkeit.gueltigAb,
-            faehigkeit.gueltigBis
-          )
-        ) {
-          activeMessfaehigkeit.value = faehigkeit;
-        }
+  function getMessfaehigkeitenForGivenZeitraum(
+    start: Date | undefined,
+    end: Date | undefined
+  ): Array<MessfaehigkeitDTO> {
+    return toArray(messstelleInfo.value.messfaehigkeiten).filter(
+      (messfaehigkeit) => {
+        const gueltigAb = isNil(messfaehigkeit.gueltigAb)
+          ? undefined
+          : moment(messfaehigkeit.gueltigAb);
+        const gueltigBis = isNil(messfaehigkeit.gueltigBis)
+          ? undefined
+          : moment(messfaehigkeit.gueltigBis);
+        const startDate = isNil(start) ? undefined : moment(start);
+        const endDate = isNil(end) ? undefined : moment(end);
+
+        let isGueltigAbBetween = gueltigAb?.isBetween(
+          startDate,
+          endDate,
+          "day",
+          "[]"
+        );
+        let isGueltigBisBetween = gueltigBis?.isBetween(
+          startDate,
+          endDate,
+          "day",
+          "[]"
+        );
+        let isStartDateBetween = startDate?.isBetween(
+          gueltigAb,
+          gueltigBis,
+          "day",
+          "[]"
+        );
+        let isEndDateBetween = endDate?.isBetween(
+          gueltigAb,
+          gueltigBis,
+          "day",
+          "[]"
+        );
+
+        isGueltigAbBetween = !isNil(isGueltigAbBetween) && isGueltigAbBetween;
+        isGueltigBisBetween =
+          !isNil(isGueltigBisBetween) && isGueltigBisBetween;
+        isStartDateBetween = !isNil(isStartDateBetween) && isStartDateBetween;
+        isEndDateBetween = !isNil(isEndDateBetween) && isEndDateBetween;
+
+        return (
+          isGueltigAbBetween ||
+          isGueltigBisBetween ||
+          isStartDateBetween ||
+          isEndDateBetween
+        );
       }
     );
   }
@@ -125,7 +160,6 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     getBelastungsplanMinSize,
     getBelastungsplanMaxSize,
     getBelastungsplanChosenSize,
-    getActiveMessfaehigkeit,
     getIncludedMeasuringDays,
     getRequestedMeasuringDays,
     setActiveTab,
@@ -138,7 +172,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     setBelastungsplanMinSize,
     setBelastungsplanMaxSize,
     setBelastungsplanChosenSize,
-    calculateActiveMessfaehigkeit,
+    getMessfaehigkeitenForGivenZeitraum,
     setIncludedMeasuringDays,
     setRequestedMeasuringDays,
   };

@@ -1,9 +1,8 @@
 <template>
   <v-dialog
-    v-model="openDialog"
+    v-model="openEditImageDialog"
     height="60vh"
     width="100vh"
-    @click:outside="cancelDialog"
   >
     <v-card>
       <v-card-title class="text-h6 text-grey-darken-2 mb-3 bg-grey-lighten-2">
@@ -88,7 +87,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
@@ -102,18 +101,11 @@ const openEditImageDialog = defineModel<boolean>({ required: true });
 
 const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
-  (e: "cancelDialog"): void;
-  (e: "input", v: boolean): void;
 }>();
 
 const asset = ref(new ImageAsset("", ""));
 
 const selectedFile = ref<File | undefined>(undefined);
-
-const openDialog = computed({
-  get: () => openEditImageDialog.value,
-  set: (payload: boolean) => emits("input", payload),
-});
 
 watch(
   selectedFile,
@@ -141,18 +133,11 @@ function save(): void {
   if (asset.value.image && asset.value.image?.length > 0) {
     emits("save", Object.assign({}, asset.value));
   } else {
-    cancelDialog();
+    openEditImageDialog.value = false;
   }
 }
 
-/**
- * Verläßt das Formular ohne zu speichern.
- */
-function cancelDialog(): void {
-  emits("cancelDialog");
-}
-
-watch(openDialog, () => {
+watch(openEditImageDialog, () => {
   if (props.image) {
     asset.value = Object.assign({}, props.image);
   }

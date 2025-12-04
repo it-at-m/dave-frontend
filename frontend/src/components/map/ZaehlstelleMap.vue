@@ -29,6 +29,7 @@ import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconRed from "@/assets/marker-icon-red.png";
+import { useMapConfigStore } from "@/store/MapConfigStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -39,8 +40,6 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
 const NUMBER_OF_COLUMNS_ZAEHLART_MARKER = 2;
-const MUNICH_CENTER_LATITUDE = "48.137227";
-const MUNICH_CENTER_LONGITUDE = "11.575517";
 const ICON_COLOR_SECONDARY = "secondary";
 const ICON_COLOR_RED = "red";
 
@@ -64,6 +63,8 @@ const props = withDefaults(defineProps<Props>(), {
   width: "100%",
   showMarker: false,
   zoom: 12,
+  latlng: undefined,
+  zId: undefined,
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
@@ -72,6 +73,7 @@ const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
 const mapOptionsStore = useMapOptionsStore();
+const mapConfigStore = useMapConfigStore();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
@@ -90,7 +92,7 @@ onBeforeUnmount(() => {
 function initMap(): void {
   map = L.map(mapRef.value as HTMLElement, {
     zoom: zoomValue.value,
-    minZoom: 10,
+    minZoom: 8,
     maxZoom: 18,
     preferCanvas: false,
     attributionControl: false,
@@ -146,10 +148,9 @@ const center = computed<LatLng>(() => {
       mapOptionsStore.getMapOptions.longitude
     );
   } else {
-    // Mitte von München
     return createLatLngFromString(
-      MUNICH_CENTER_LATITUDE,
-      MUNICH_CENTER_LONGITUDE
+      mapConfigStore.getMapConfig.lat,
+      mapConfigStore.getMapConfig.lng
     );
   }
 });
@@ -349,7 +350,10 @@ const selectedZaehlstelleKarte = ref(
 );
 
 function searchErhebungsstelle() {
-  SucheService.searchErhebungsstelle(searchStore.getLastSearchQuery)
+  SucheService.searchErhebungsstelle(
+    searchStore.getLastSearchQuery,
+    searchStore.getSearchAndFilterOptions
+  )
     .then((result) => {
       searchStore.setSearchResult(result);
     })
@@ -502,8 +506,8 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
   let tooltip = "<div>";
   if (tooltipDto.mstId) {
     tooltip = `<b>${tooltip}Messstelle: ${tooltipDto.mstId}`;
-    if (tooltipDto.detektierteVerkehrsarten) {
-      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsarten})`;
+    if (tooltipDto.detektierteVerkehrsart) {
+      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsart})`;
     }
     tooltip = `${tooltip}</b><br/>`;
   }
@@ -520,21 +524,17 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
     }
     tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
   }
-  if (tooltipDto.realisierungsdatum) {
-    tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
-      tooltipDto.realisierungsdatum
-    )}<br/>`;
-  }
+  tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
+    tooltipDto.realisierungsdatum
+  )}<br/>`;
   if (tooltipDto.abbaudatum) {
     tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
       tooltipDto.abbaudatum
     )}<br/>`;
   }
-  if (tooltipDto.datumLetztePlausibleMessung) {
-    tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
-      tooltipDto.datumLetztePlausibleMessung
-    )}<br/>`;
-  }
+  tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
+    tooltipDto.datumLetztePlausibleMessung
+  )}<br/>`;
 
   tooltip = `${tooltip}</div>`;
   return tooltip;

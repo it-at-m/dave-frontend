@@ -38,11 +38,15 @@
           <v-btn
             v-if="showGesamtauswertung"
             v-tooltip:bottom="'Gesamtauswertungen'"
+            density="compact"
             icon="mdi-clipboard-pulse-outline"
+            class="mr-3"
             to="/auswertung"
           />
           <v-btn
             v-tooltip:bottom="'PDF-Report'"
+            density="compact"
+            class="mr-3"
             icon="mdi-file-chart"
             to="/pdfreport"
           />
@@ -50,6 +54,8 @@
           <info-message />
           <v-btn
             v-tooltip:bottom="'Anwenderhandbuch'"
+            class="mr-3"
+            density="compact"
             icon="mdi-clippy"
             @click="navigateToHandbuch"
           />
@@ -70,6 +76,8 @@
 </template>
 
 <script setup lang="ts">
+import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
+import type MapConfigDTO from "@/types/karte/MapConfigDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";
@@ -77,14 +85,18 @@ import { useRoute } from "vue-router";
 
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
+import MapConfigService from "@/api/service/MapConfigService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
+import OptionsmenueSettingsService from "@/api/service/OptionsmenueSettingsService";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
 import VersionInfoService from "@/api/service/VersionInfoService";
 import InfoMessage from "@/components/app/InfoMessage.vue";
-import SearchInputField from "@/components/app/SearchInputField.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
+import SearchInputField from "@/components/search/SearchInputField.vue";
+import { useMapConfigStore } from "@/store/MapConfigStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
+import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
@@ -92,7 +104,7 @@ import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 
 const URL_HANDBUCH_LINK =
-  "https://wilma.muenchen.de/web/senders/af10dc2a-8da5-4d24-815a-b6a9df4c686b/documents/330c5be9-2ee3-4438-8623-6557755260d3";
+  "https://github.com/it-at-m/dave/blob/main/2025_DAVe_Anwenderhandbuch_Datenportal_v1.1.pdf";
 
 const loggedInUser = ref("no-security");
 const backendVersion = ref("");
@@ -102,7 +114,9 @@ const showGesamtauswertung = ref(false);
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const searchStore = useSearchStore();
+const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const mapOptionsStore = useMapOptionsStore();
+const mapConfigStore = useMapConfigStore();
 const route = useRoute();
 
 created();
@@ -131,6 +145,16 @@ function created() {
     .catch(() => {
       backendVersion.value = "error";
     });
+  OptionsmenueSettingsService.getAllOptionsmenueSettingsForMessstellen().then(
+    (optionsmenueSettings: Array<OptionsmenueSettingsDTO>) => {
+      optionsmenueSettingsStore.setOptionsmenueSettingsByIntervallAndFahrzeugklasse(
+        optionsmenueSettings
+      );
+    }
+  );
+  MapConfigService.getMapConfig().then((res: MapConfigDTO) => {
+    mapConfigStore.setMapConfig(res);
+  });
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
       showGesamtauswertung.value = messstellen.length > 0;
@@ -175,6 +199,7 @@ function shortCuts(event: KeyboardEvent) {
 
 function resetMapAndSearch() {
   mapOptionsStore.resetMapOptions();
+  searchStore.resetSearchAndFilterOptions();
   searchStore.resetAndTriggerSearch();
 }
 </script>

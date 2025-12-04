@@ -7,18 +7,14 @@
       <v-sheet
         color="white"
         width="100%"
-        class="px-4 py-2 text-primary"
-        style="font-size: 0.875rem"
+        class="px-4 py-2 text-primary font-weight-regular overflow-y-auto"
         height="72px"
       >
         <v-row
           no-gutters
           class="pa-0 ma-0"
         >
-          <v-col
-            cols="12"
-            lg="10"
-          >
+          <v-col cols="10">
             <v-row no-gutters>
               <v-col cols="8">
                 <span
@@ -28,22 +24,28 @@
                   {{ datumLetztePlausibleMessung }}
                 </span>
               </v-col>
-              <v-col cols="4">
-                <div class="d-flex flex-row-reverse">
-                  <messstelle-kommentar kommentar="messstelle.kommentar" />
-                  <fahrzeugklassen-icon
-                    :fahrzeugklasse="fahrzeugKlasse"
-                    color="primary"
-                    size="small"
-                  />
-                  <detektierte-fahrzeugart-icon
-                    :detektierte-fahrzeugart="detektierteVerkehrsart"
-                    color="primary"
-                  />
-                </div>
+              <v-spacer />
+              <v-col cols="3">
+                <verkehrsart-icon
+                  :detektierte-verkehrsart="detektierteVerkehrsart"
+                  color="primary"
+                />
+                <fahrzeugklassen-icon
+                  v-if="messstelle.detektierteVerkehrsart !== Verkehrsart.RAD"
+                  :fahrzeugklasse="fahrzeugklasse"
+                  color="primary"
+                  size="default"
+                />
+                <messstelle-kommentar
+                  v-if="messstelle.kommentar"
+                  :kommentar="messstelle.kommentar"
+                />
               </v-col>
             </v-row>
-            <v-row no-gutters>
+            <v-row
+              no-gutters
+              class="ma-0 mt-1"
+            >
               <span class="text-truncate">
                 <span
                   v-tooltip:bottom="aufbauIcon.tooltip"
@@ -73,28 +75,18 @@
                 </span>
               </span>
             </v-row>
-            <v-row
-              no-gutters
-              class="ma-0"
-            >
-            </v-row>
-          </v-col>
-          <v-col
-            lg
-            class="hidden-md-and-down"
-          >
-            <v-spacer />
           </v-col>
           <v-col
             cols="2"
             class="hidden-md-and-down"
+            style="justify-items: center"
           >
             <messstelle-geometrie
-              :height="60"
+              :height="56"
               :width="60"
               active-color="#1565C0"
               passive-color="#EEEEEE"
-              :knotenarme="messstelle.messquerschnitte"
+              :messquerschnitte="messstelle.messquerschnitte"
             />
           </v-col>
         </v-row>
@@ -108,10 +100,11 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import { computed } from "vue";
 
-import DetektierteFahrzeugartIcon from "@/components/messstelle/DetektierteFahrzeugartIcon.vue";
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
+import VerkehrsartIcon from "@/components/messstelle/VerkehrsartIcon.vue";
+import Verkehrsart from "@/types/enum/Verkehrsart";
 import IconTooltip from "@/types/util/IconTooltip";
 import { useDateUtils } from "@/util/DateUtils";
 
@@ -130,9 +123,9 @@ const datumLetztePlausibleMessung = computed(() => {
   return dateUtils.formatDate(props.messstelle.datumLetztePlausibleMessung);
 });
 
-const fahrzeugKlasse = computed(() => {
+const fahrzeugklasse = computed(() => {
   if (props.messstelle.messquerschnitte.length > 0) {
-    return props.messstelle.fahrzeugKlassen;
+    return props.messstelle.fahrzeugklasse;
   } else {
     return "k.A.";
   }
@@ -140,7 +133,7 @@ const fahrzeugKlasse = computed(() => {
 
 const detektierteVerkehrsart = computed(() => {
   if (props.messstelle.messquerschnitte.length > 0) {
-    return props.messstelle.detektierteVerkehrsarten;
+    return props.messstelle.detektierteVerkehrsart;
   } else {
     return undefined;
   }

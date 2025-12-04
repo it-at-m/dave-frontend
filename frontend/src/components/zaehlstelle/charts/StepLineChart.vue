@@ -42,15 +42,17 @@ use([
 ]);
 
 const CHART_STEP_X_AXIS = "middle";
-const CHART_TYPE_X_AXIS = "line";
 const SYMBOL_SIZE = 5;
 
 provide(THEME_KEY, "default");
 interface Props {
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
+  isGesamtAuswertung?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  isGesamtAuswertung: false,
+});
 const chart = ref<InstanceType<typeof VChart> | null>();
 defineExpose({
   chart,
@@ -85,6 +87,10 @@ const optionsStepline = computed(() => {
   } else {
     return optionsDefault.value;
   }
+});
+
+const chartType = computed(() => {
+  return props.isGesamtAuswertung ? "bar" : "line";
 });
 
 const optionsDefault = computed(() => {
@@ -332,36 +338,44 @@ function createSeriesDataForChart(
   seriesEntriesChart: Array<StepLineSeriesEntryDTO>
 ): Array<unknown> {
   const seriesEntries: Array<unknown> = [];
-  seriesEntriesChart.forEach((seriesEntryChart) => {
+  seriesEntriesChart.forEach((seriesEntryChart, index) => {
     if (
       seriesEntryChart.name === ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT ||
       seriesEntryChart.name === ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT
     ) {
       seriesEntries.push({
         name: seriesEntryChart.name,
-        type: CHART_TYPE_X_AXIS,
+        type: chartType.value,
         data: seriesEntryChart.yaxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
         symbolSize: SYMBOL_SIZE,
-        color: ChartUtils.CHART_COLOR.get(seriesEntryChart.name),
+        color: getColor(seriesEntryChart.name, index),
       });
     } else {
       seriesEntries.push({
         name: seriesEntryChart.name,
-        type: CHART_TYPE_X_AXIS,
+        type: chartType.value,
         step: CHART_STEP_X_AXIS,
         data: seriesEntryChart.yaxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
         symbolSize: SYMBOL_SIZE,
-        color: ChartUtils.CHART_COLOR.get(seriesEntryChart.name),
+        color: getColor(seriesEntryChart.name, index),
       });
     }
   });
   return seriesEntries;
+}
+
+function getColor(name: string, index: number) {
+  let color = ChartUtils.CHART_COLOR.get(name);
+  if (!color) {
+    color = ChartUtils.CHART_COLOR_GESAMT_AUSWERTUNG.get(index);
+  }
+  return color;
 }
 
 function resetData(): void {
@@ -374,7 +388,9 @@ function resetData(): void {
   seriesEntriesChart.value = [];
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function formatYAxisLabel(params: Array<any>): string {
+  /* eslint-enable  @typescript-eslint/no-explicit-any */
   let text = "";
   if (params.length > 0) {
     text += `${params[0].name} <br/>`;

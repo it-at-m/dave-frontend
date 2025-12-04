@@ -13,7 +13,10 @@
         :subtitle="selectedJahresintervallAsSummary"
         :error="!isJahresintervallSelected()"
       >
-        <zeitintervall-step-content v-model="auswertungOptions" />
+        <zeitintervall-step-content
+          v-model="auswertungOptions"
+          :preset-data="presetData"
+        />
       </v-stepper-vertical-item>
       <v-stepper-vertical-item
         :complete="activeStep > 2 && isJahreSelected()"
@@ -74,13 +77,14 @@ import JahreStepContent from "@/components/messstelle/gesamtauswertung/stepper/J
 import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/OrtStepContent.vue";
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
-import { auswertungszeitraumToText } from "@/types/enum/AuswertungCategories";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import { tagesTypText } from "@/types/enum/TagesTyp";
+import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
 
 interface Props {
   height: string;
   allVisibleMessstellen: Array<MessstelleAuswertungDTO>;
+  presetData: boolean;
 }
 
 defineProps<Props>();
@@ -89,10 +93,14 @@ const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
 
+const gesamtauswertungUtils = useGesamtauswertungUtils();
+
 const activeStep = ref(1);
 
 const selectedYearsAsSummary = computed(() => {
-  let summary = auswertungOptions.value.jahre.join(", ");
+  let summary = gesamtauswertungUtils.getYearsAsTextSorted(
+    auswertungOptions.value.jahre
+  );
   if (!isJahreSelected()) {
     summary = "Es muss mindestens ein Jahr ausgewählt sein.";
   }
@@ -100,14 +108,9 @@ const selectedYearsAsSummary = computed(() => {
 });
 
 const selectedJahresintervallAsSummary = computed(() => {
-  const helper: Array<string> = [];
-  auswertungOptions.value.zeitraum.forEach((key) => {
-    const value = auswertungszeitraumToText.get(key);
-    if (value) {
-      helper.push(value.title);
-    }
-  });
-  let summary = helper.join(", ");
+  let summary = gesamtauswertungUtils.getZeitraumAsTextSorted(
+    auswertungOptions.value.zeitraum
+  );
   if (!isJahresintervallSelected()) {
     summary = "Es muss mindestens ein Zeitintervall ausgewählt sein.";
   }
@@ -200,49 +203,9 @@ function isFahrzeugSelected(): boolean {
 }
 
 const selectedFahrzeugAsSummary = computed(() => {
-  const fahrzeuge = auswertungOptions.value.fahrzeuge;
-  const selectedValues: Array<string> = [];
-  if (fahrzeuge.kraftfahrzeugverkehr) {
-    selectedValues.push(`KFZ`);
-  }
-  if (fahrzeuge.schwerverkehr) {
-    selectedValues.push(`SV`);
-  }
-  if (fahrzeuge.gueterverkehr) {
-    selectedValues.push(`GV`);
-  }
-  if (fahrzeuge.schwerverkehrsanteilProzent) {
-    selectedValues.push(`SV %`);
-  }
-  if (fahrzeuge.gueterverkehrsanteilProzent) {
-    selectedValues.push(`GV %`);
-  }
-  if (fahrzeuge.personenkraftwagen) {
-    selectedValues.push(`Pkw`);
-  }
-  if (fahrzeuge.lastkraftwagen) {
-    selectedValues.push(`Lkw`);
-  }
-  if (fahrzeuge.lastzuege) {
-    selectedValues.push(`Lz`);
-  }
-  if (fahrzeuge.lieferwagen) {
-    selectedValues.push(`Lfw`);
-  }
-  if (fahrzeuge.busse) {
-    selectedValues.push(`Bus`);
-  }
-  if (fahrzeuge.kraftraeder) {
-    selectedValues.push(`Krad`);
-  }
-  if (fahrzeuge.radverkehr) {
-    selectedValues.push(`Rad`);
-  }
-  if (fahrzeuge.fussverkehr) {
-    selectedValues.push(`Fuß`);
-  }
-
-  let summary = selectedValues.join(", ");
+  let summary = gesamtauswertungUtils.getFahrzeugOptionsAsText(
+    auswertungOptions.value.fahrzeuge
+  );
 
   if (!isFahrzeugSelected()) {
     summary =

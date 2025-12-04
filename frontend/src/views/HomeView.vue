@@ -4,7 +4,7 @@
       ref="map"
       height="100%"
       width="100%"
-      :zoom="12"
+      :zoom="mapConfigStore.getMapConfig.zoom"
     />
 
     <v-speed-dial
@@ -19,6 +19,7 @@
           :color="speedDialColor"
           :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-plus-thick'"
           size="large"
+          density="default"
           elevation="6"
           location="bottom end"
           position="absolute"
@@ -34,6 +35,7 @@
         icon="mdi-file-delimited"
         color="secondary"
         size="small"
+        density="default"
         @click="printSearchResult"
       />
       <v-btn
@@ -42,6 +44,7 @@
         icon="mdi-camera"
         color="secondary"
         size="small"
+        density="default"
         @click="takePicture"
       />
     </v-speed-dial>
@@ -59,6 +62,7 @@ import html2canvas from "html2canvas";
 import { computed, onMounted, ref } from "vue";
 
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
+import { useMapConfigStore } from "@/store/MapConfigStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -70,6 +74,7 @@ const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const downloadUtils = useDownloadUtils();
+const mapConfigStore = useMapConfigStore();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
@@ -218,6 +223,6 @@ const getSearchResult = computed(() => {
 });
 
 const speedDialColor = computed(() => {
-  return speedDialOpen.value ? "grey-darken-1" : "secondary";
+  return speedDialOpen.value ? "quaternary" : "secondary";
 });
 </script>

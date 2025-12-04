@@ -1,6 +1,6 @@
 <template>
   <v-data-table
-    :headers="headers"
+    :headers="headers as Array<any>"
     :items="listenausgabeData"
     item-key="name"
     items-per-page="-1"
@@ -147,7 +147,7 @@ const headers = computed(() => {
     activeFahrzeugklassen.value
   );
   const widthAnteil: string = calculateColumnWidth(8, activeAnteil.value);
-  const headers: Array<any> = [
+  const headers = [
     // Zeit
     {
       title: "Zeit",
@@ -198,7 +198,26 @@ const headers = computed(() => {
           fahrzeugOptions.fussverkehr ||
           fahrzeugOptions.kraftraeder ||
           fahrzeugOptions.busse ||
-          fahrzeugOptions.lieferwagen ||
+          fahrzeugOptions.lastzuege ||
+          fahrzeugOptions.lastkraftwagen ||
+          fahrzeugOptions.lieferwagen
+        ),
+        sortable: false,
+        width: widthFahrzeugtypen,
+      });
+    }
+
+    if (fahrzeugOptions.lieferwagen) {
+      children.push({
+        title: "Lfw",
+        value: "lfw",
+        key: "lfw",
+        align: "center",
+        lastFixed: !(
+          fahrzeugOptions.radverkehr ||
+          fahrzeugOptions.fussverkehr ||
+          fahrzeugOptions.kraftraeder ||
+          fahrzeugOptions.busse ||
           fahrzeugOptions.lastzuege ||
           fahrzeugOptions.lastkraftwagen
         ),
@@ -218,7 +237,6 @@ const headers = computed(() => {
           fahrzeugOptions.fussverkehr ||
           fahrzeugOptions.kraftraeder ||
           fahrzeugOptions.busse ||
-          fahrzeugOptions.lieferwagen ||
           fahrzeugOptions.lastzuege
         ),
         sortable: false,
@@ -236,30 +254,13 @@ const headers = computed(() => {
           fahrzeugOptions.radverkehr ||
           fahrzeugOptions.fussverkehr ||
           fahrzeugOptions.kraftraeder ||
-          fahrzeugOptions.busse ||
-          fahrzeugOptions.lieferwagen
-        ),
-        sortable: false,
-        width: widthFahrzeugtypen,
-      });
-    }
-
-    if (fahrzeugOptions.lieferwagen) {
-      children.push({
-        title: "Lfw",
-        value: "lfw",
-        key: "lfw",
-        align: "center",
-        lastFixed: !(
-          fahrzeugOptions.radverkehr ||
-          fahrzeugOptions.fussverkehr ||
-          fahrzeugOptions.kraftraeder ||
           fahrzeugOptions.busse
         ),
         sortable: false,
         width: widthFahrzeugtypen,
       });
     }
+
     if (fahrzeugOptions.busse) {
       children.push({
         title: "Bus",

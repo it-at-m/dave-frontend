@@ -11,14 +11,17 @@
       justify="center"
       dense
       no-gutters
+      @mouseover="isHoveringOverInputFields = true"
+      @mouseleave="isHoveringOverInputFields = false"
     >
       <v-col cols="4">
         <v-checkbox
           v-model="chosenOptionsCopy.stundensumme"
           :label="'Stundensumme'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverStundensumme = true"
           @mouseleave="hoverStundensumme = false"
         />
@@ -27,8 +30,9 @@
           class="mb-3"
           :label="'Blocksumme'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverBlocksumme = true"
           @mouseleave="hoverBlocksumme = false"
         />
@@ -38,8 +42,9 @@
           v-model="chosenOptionsCopy.tagessumme"
           :label="'Tagessumme'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverTagessumme = true"
           @mouseleave="hoverTagessumme = false"
         />
@@ -48,14 +53,15 @@
           class="mb-3"
           :label="'Spitzenstunde'"
           hide-details
-          color="grey-darken-1"
+          color="quaternary"
           density="compact"
+          :disabled="isZeitraumGreaterThanFiveYears"
           @mouseover="hoverSpitzenstunde = true"
           @mouseleave="hoverSpitzenstunde = false"
         />
       </v-col>
       <v-col cols="4">
-        <v-card flat>
+        <v-card variant="flat">
           {{ helpTextListenausgabe }}
         </v-card>
       </v-col>
@@ -69,15 +75,30 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import { useDateUtils } from "@/util/DateUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+
+const isHoveringOverInputFields = ref<boolean>(false);
 
 const hoverStundensumme = ref(false);
 const hoverBlocksumme = ref(false);
 const hoverTagessumme = ref(false);
 const hoverSpitzenstunde = ref(false);
 
+const dateUtils = useDateUtils();
+
+const isZeitraumGreaterThanFiveYears = computed(() => {
+  return dateUtils.isGreaterThanFiveYears(
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.startDate,
+    chosenOptionsCopy.value.zeitraumStartAndEndDate.endDate
+  );
+});
+
 const helpTextListenausgabe = computed(() => {
+  if (isHoveringOverInputFields.value && isZeitraumGreaterThanFiveYears.value) {
+    return "Der gewählte Zeitraum umfasst mehr als fünf Jahre.";
+  }
   if (hoverStundensumme.value) {
     return "Ausgabe der Summen für jede Stunde als Zeile.";
   }

@@ -4,13 +4,9 @@
      have priority over the log level maintained in this file.  -->
 <configuration>
 
-
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
 
-
-    <springProfile name="dev,kon,local,unittest,demo,hotfix,docker">
-
-        <!-- Log appender -->
+    <springProfile name="local | unittest | debugging">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
                 <pattern>
@@ -58,61 +54,20 @@
 
     </springProfile>
 
-
-    <springProfile name="prod">
-
-        <!-- Log appender -->
+    <springProfile name="!local &amp; !unittest &amp; !debugging">
         <appender name="JSON_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                <providers>
-                    <!-- provides the fields in the configured pattern -->
-                    <pattern>
-                        <!-- the pattern that defines what to include -->
-                        <pattern>
-                            {
-                            "timestamp" : "%date{yyyy-MM-dd'T'HH:mm:ss.SSS}",
-                            "appName" : "${springAppName}",
-                            "TraceId" : "%mdc{traceId}",
-                            "SpanId" : "%mdc{spanId}",
-                            "thread" : "%thread",
-                            "level" : "%level",
-                            "logger": "%logger",
-                            "location" : {
-                            "fileName" : "%file",
-                            "line" : "%line"
-                            },
-                            "message": "%message"
-                            }
-                        </pattern>
-                    </pattern>
-                </providers>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <throwableConverter
+                        class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                    <!-- default max size of one log line in docker is 16kb - UTF8 ~ 1 Character = 1 Byte -->
+                    <!-- therefore limit stack_traces to a maximum of 8192 characters (to leave room for the rest of the message) -->
+                    <maxLength>8192</maxLength>
+                    <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                    <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                    <rootCauseFirst>true</rootCauseFirst>
+                </throwableConverter>
             </encoder>
         </appender>
-
-        <!-- Logger -->
-        <logger name="de.muenchen.dave"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
-        <logger name="de.muenchen.allgemein"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
-        <logger name="org.springframework.web"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
-
-        <logger name="org.springframework.cloud.gateway"
-                level="info"
-                additivity="false">
-            <appender-ref ref="JSON_STDOUT" />
-        </logger>
 
         <!-- Logger usage -->
         <root level="info">
@@ -120,6 +75,5 @@
         </root>
 
     </springProfile>
-
 
 </configuration>

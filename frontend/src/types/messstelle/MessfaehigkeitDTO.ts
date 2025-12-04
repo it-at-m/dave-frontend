@@ -5,5 +5,5 @@ export default interface MessfaehigkeitDTO {
   gueltigAb: string;
   gueltigBis: string;
   intervall: ZaehldatenIntervall;
-  fahrzeugklassen: Fahrzeugklasse;
+  fahrzeugklasse: Fahrzeugklasse;
 }

@@ -1,0 +1,44 @@
+name: build maven and image
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'What should the image be tagged as?'
+        required: false
+        default: 'dev'
+
+env:
+  IMAGE_NAME: "dave-frontend"
+
+jobs:
+  build-maven:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      ARTIFACT_NAME: ${{ steps.maven.outputs.artifact-name }}
+    steps:
+      - name: Build with Maven
+        id: maven
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.20
+
+  build-image:
+    runs-on: ubuntu-latest
+    needs: build-maven
+    permissions:
+      packages: write
+    steps:
+      - name: Build and push Docker image
+        uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.20
+        with:
+          path: .
+          image-name: ${{ env.IMAGE_NAME }}
+          artifact-name: ${{ needs.build-maven.outputs.ARTIFACT_NAME }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          image-tags: |
+            # use tag from input only if triggered by workflow_dispatch
+            type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event_name == 'workflow_dispatch' }}
+          image-labels: |
+            maintainer=it@m, Landeshauptstadt Muenchen (LHM)

@@ -1,9 +1,7 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2022
- */
 package de.muenchen.dave.util;
 
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +20,6 @@ import org.springframework.security.web.server.authentication.logout.ServerLogou
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Utility methods and constants which are used in multiple
