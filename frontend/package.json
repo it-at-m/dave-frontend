@@ -31,7 +31,7 @@
     "@types/leaflet": "1.9.17",
     "@types/leaflet.fullscreen": "3.0.2",
     "@types/leaflet.markercluster": "1.5.5",
-    "@types/lodash": "4.17.16",
+    "@types/lodash": "4.17.21",
     "@types/node": "22.15.3",
     "@vitejs/plugin-vue": "5.2.3",
     "@vue/eslint-config-prettier": "8.0.0",
