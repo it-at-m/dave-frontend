@@ -4,7 +4,7 @@ services:
 
   dave-backend:
     container_name: dave-backend
-    image: ghcr.io/it-at-m/dave-backend/dave-backend:FV-101 # TODO
+    image: ghcr.io/it-at-m/dave-backend/dave-backend:latest
     environment:
       - ELASTICSEARCH_HTTPCACERTIFICATE=${ELASTICSEARCH_CERT_FINGERPRINT}
       - SPRING_PROFILES_ACTIVE=docker,no-security,debugging,sample
@@ -26,7 +26,7 @@ services:
     depends_on:
       dave-backend:
         condition: service_healthy
-    image: ghcr.io/it-at-m/dave-frontend/dave-frontend:FV-101 # TODO
+    image: ghcr.io/it-at-m/dave-frontend/dave-frontend:latest
     environment:
       - SPRING_PROFILES_ACTIVE=docker,no-security
       - SSO_BASE_URL=http://sso.de

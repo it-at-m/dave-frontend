@@ -31,8 +31,13 @@ Alternatively, you can use [Podman](https://podman.io/) instead of Docker.
 docker compose up
 ```
 
-3. Get the elasticsearch certificate: Follow the instructions in [stack README](https://github.com/it-at-m/dave-backend/blob/sprint/stack/readme.md#erzeugen-des-fingerprints) on how to obtain the certificate fingerprint from elasticsearch
-   and add it as environment variable ELASTICSEARCH_HTTPCACERTIFICATE in the [.env-File](https://github.com/it-at-m/dave-frontend/blob/sprint/stack/.env).
+3. Get the elasticsearch certificate: Follow the instructions in [stack README](https://github.com/it-at-m/dave-backend/blob/sprint/stack/readme.md#erzeugen-des-fingerprints) 
+on how to obtain the certificate fingerprint from elasticsearch. 
+Then add it as environment variable ELASTICSEARCH_CERT_FINGERPRINT in the [.env-File](https://github.com/it-at-m/dave-frontend/blob/sprint/stack/.env)
+and source the file:
+```
+source stack/.env
+```
 
 4. Startup backend and frontend: Navigate to the frontend stack directory and run:
 ```
@@ -40,6 +45,7 @@ cd stack
 docker compose up
 ```
 
-5. Access the application: Once the containers are up and running, you can access it by navigating to http://localhost:8082 in your web browser.
+5. Access the application: Once the containers are up and running, you can access DAVe 
+by navigating to http://localhost:8082 in your web browser.
 
-That's it! You have successfully installed and started the application stack for DAVe Frontend.
+That's it! You have successfully installed and started the application stack for DAVe.
