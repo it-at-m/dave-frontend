@@ -4,23 +4,85 @@ services:
 
   dave-backend:
     container_name: dave-backend
-    image: ghcr.io/it-at-m/dave-backend/dave-backend:latest
+    image: ghcr.io/it-at-m/dave-backend/dave-backend:FV-101
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,no-security,debugging,sample
-      - elasticsearch.host=10.89.0.4
+      - SERVER_PORT=50001
+      - DB_SCHEMA=dave_ng
+      - SPRING_FLYWAY_ENABLED=true
+      - SPRING_FLYWAY_SCHEMAS=dave_ng
+      - SPRING_FLYWAY_DEFAULTSCHEMA=dave_ng
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/dave-db
+      - SPRING_DATASOURCE_USERNAME=dave
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_HIKARI_MAXIMUMPOOLSIZE=20
+      - SPRING_DATASOURCE_HIKARI_CONNECTIONTIMEOUT=600000
+      - SPRING_JPA_DATABASE=postgresql
+      - SPRING_JPA_HIBERNATE_DDLAUTO=validate
+      - SPRING_JPA_HIBERNATE_NAMING_PHYSICALSTRATEGY=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      - SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      - SPRING_JPA_SHOWSQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA=dave_ng
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_SECURITY_LOGGING_REQUESTS=all
+      - SPRING_SECURITY_OAUTH2_RESOURCE_USERINFOURI=https://ssodev.muenchen.de/auth/realms/Dave/protocol/openid-connect/userinfo
+      - SPRING_SECURITY_OAUTH2_RESOURCE_SERVER_JWT_ISSUERURI=https://ssodev.muenchen.de/auth/realms/Dave
+      - SPRING_SECURITY_OAUTH2_RESOURCE_SERVER_JWT_JWKSETURI=https://ssodev.muenchen.de/auth/realms/Dave/protocol/openid-connect/certs
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_TOKENURI=https://ssodev.muenchen.de/auth/realms/Dave/protocol/openid-connect/token
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID=dave
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET=36181282-0eb1-4915-afe5-655b9ddbc427
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_AUTHORIZATIONGRANTTYPE=client_credentials
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTAUTHENTICATIONMETHOD=client_secret_post
+      - REALM=Dave
+      - KEYCLOAK_AUTHSERVERURL=https://ssodev.muenchen.de/auth
+      - ELASTICSEARCH_INDEX_SUFFIX=-ng
+      - ELASTICSEARCH_USER=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+      - ELASTICSEARCH_HTTPCACERTIFICATE=DD:C5:24:1E:74:A1:FA:59:9E:68:47:73:7A:AB:B5:F8:3D:94:79:D2:77:D4:67:75:8E:D3:07:7A:B5:3D:B9:77
+      - ELASTICSEARCH_HOST=elastic
+      - ELASTICSEARCH_PORT=9200
+      - ELASTICSEARCH_CONNECT_TIMEOUT=10
+      - ELASTICSEARCH_SOCKET_TIMEOUT=30
+      - DAVE_ZAEHLUNG_STATUS_UPDATER=0 0/5 * 1/1 * ?
+      - DAVE_EMAIL_ADDRESS=dave-dummy@muenchen.de
+      - DAVE_EMAIL_PASSWORD=dummy
+      - DAVE_EMAIL_URL_ADMINPORTAL=http://localhost:8085
+      - DAVE_EMAIL_URL_SELF_SERVICE_PORTAL=http://localhost:8086
+      - DAVE_EMAIL_RECEIVER_UPDATE_INTERVAL=50000000000
+      - DAVE_EMAIL_RECEIVER_HOSTNAME=imap.de
+      - DAVE_MESSSTELLE_CRON=0 0/5 * 1/1 * ?
+      - DAVE_MESSSTELLE_SHEDLOCK=4m
+      - DAVE_REPORTS_LOGOICON=classpath:/pdf/images/kindl.jpg
+      - DAVE_REPORTS_LOGOSUBTITLE="Landeshauptstadt<br/>München<br/><b>Mobilitätsreferat</b>"
+      - GEODATEN_EAI_URL=http://localhost:8088
+      - DOCUMENTSTORAGE_URL=http://localhost:8089
+      - SPRING_PROFILES_ACTIVE=docker,local,no-security,debugging,sample
+      - elasticsearch.host=elastic
       - SSO_BASE_URL=http://sso.de
       - spring.datasource.url=jdbc:postgresql://postgres:5432/dave-db
       - spring.datasource.username=dave
       - spring.datasource.password=1234
-      - elasticsearch.http-ca-certificate=${ELASTICSEARCH_CERT_FINGERPRINT}
+#      - elasticsearch.http-ca-certificate=${ELASTICSEARCH_CERT_FINGERPRINT}
+      - spring.elasticsearch.rest.healthcheck.enabled=false
+      - spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      - spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      - spring.jpa.properties.hibernate.default_schema=dave_ng
+      - elasticsearch.connectTimeout=10
+      - elasticsearch.socketTimeout=30
+      - logging.level.root=INFO
+      - logging.level.de.muenchen.dave=INFO
+      - management.health.elasticsearenvch.enabled=false
+
+
+
     ports:
-      - "39146:39146"
+      - "50001:50001"
     networks:
       - dave-network
     pull_policy: always
     restart: on-failure
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -I http://localhost:39146/actuator/health | grep -q '\"status\":\"UP\"'",]
+      test: ["CMD-SHELL", "curl http://dave-backend:50001/actuator/health | grep -q '\"status\":\"UP\"'",]
       interval: 1s
       timeout: 5s
       retries: 120
@@ -30,7 +92,7 @@ services:
     depends_on:
       dave-backend:
         condition: service_healthy
-    image: ghcr.io/it-at-m/dave-backend/dave-frontend:latest
+    image: ghcr.io/it-at-m/dave-frontend/dave-frontend:FV-101
     environment:
       - SPRING_PROFILES_ACTIVE=docker,no-security
       - SSO_BASE_URL=http://sso.de
