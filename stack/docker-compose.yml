@@ -6,12 +6,9 @@ services:
     container_name: dave-backend
     image: ghcr.io/it-at-m/dave-backend/dave-backend:FV-101 # TODO
     environment:
-      - ELASTICSEARCH_HTTPCACERTIFICATE=DD:C5:24:1E:74:A1:FA:59:9E:68:47:73:7A:AB:B5:F8:3D:94:79:D2:77:D4:67:75:8E:D3:07:7A:B5:3D:B9:77 # TODO
-#      - ELASTICSEARCH_HTTPCACERTIFICATE=${ELASTICSEARCH_CERT_FINGERPRINT} TODO
+      - ELASTICSEARCH_HTTPCACERTIFICATE=${ELASTICSEARCH_CERT_FINGERPRINT}
       - SPRING_PROFILES_ACTIVE=docker,no-security,debugging,sample
       - SSO_BASE_URL=http://sso.de
-      - logging.level.root=WARN
-
     ports:
       - "50001:50001"
     networks:
