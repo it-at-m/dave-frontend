@@ -11,8 +11,8 @@ But for a basic peek or development environments on what DAVe has to offer, we p
 * PgAdmin
 
 When this infrastructure is up and running, basis configuration is needed to start DAVE [dave-backend](https://github.com/it-at-m/dave-backend) 
-and [dave-frontend](https://github.com/it-at-m/dave-frontend) with profiles "docker,no-security,sample" 
-to see a sample counting station with a sample count imported into the database and index.
+and [dave-frontend](https://github.com/it-at-m/dave-frontend) to see a sample counting station with a sample count 
+imported into the database and index.
 Afterwards you can inspect the sample data in the DAVe UI.
 
 Here are the steps to install the necessary stack to run the application:
@@ -39,13 +39,13 @@ and source the file:
 source stack/.env
 ```
 
-4. Startup backend and frontend: Navigate to the frontend stack directory and run:
+4. Startup backend and frontend: Navigate to the frontend stack directory and run compose:
 ```
 cd stack
 docker compose up
 ```
 
-5. Access the application: Once the containers are up and running, you can access DAVe 
+5. Access the application: Once the containers are up and running, you can access DAVe UI
 by navigating to http://localhost:8082 in your web browser.
 
 That's it! You have successfully installed and started the application stack for DAVe.
