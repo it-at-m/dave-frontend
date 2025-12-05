@@ -1,0 +1,41 @@
+name: dave-sample-stack
+
+services:
+
+  dave-backend:
+    container_name: dave-backend
+    image: ghcr.io/it-at-m/dave-backend/dave-backend:latest
+    environment:
+      - ELASTICSEARCH_HTTPCACERTIFICATE=${ELASTICSEARCH_CERT_FINGERPRINT}
+      - SPRING_PROFILES_ACTIVE=docker,no-security,debugging,sample
+      - SSO_BASE_URL=http://sso.de
+    ports:
+      - "50001:50001"
+    networks:
+      - dave-stack_dave-network
+    pull_policy: always
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://dave-backend:50001/actuator/health | grep -q '\"status\":\"UP\"'",]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
+  dave-frontend:
+    container_name: dave-frontend
+    depends_on:
+      dave-backend:
+        condition: service_healthy
+    image: ghcr.io/it-at-m/dave-frontend/dave-frontend:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,no-security
+      - SSO_BASE_URL=http://sso.de
+    ports:
+      - "8082:8082"
+    networks:
+      - dave-stack_dave-network
+    pull_policy: always
+
+networks:
+  dave-stack_dave-network:
+    external: true

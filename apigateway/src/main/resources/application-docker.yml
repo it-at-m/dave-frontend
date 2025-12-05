@@ -33,7 +33,7 @@ spring:
           filters:
             - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
         - id: backend
-          uri: http://dave-backend:39146/
+          uri: http://dave-backend:50001/
           predicates:
             - Path=/api/dave-backend-service/**
           filters:
@@ -74,6 +74,3 @@ spring:
           keycloak:
             client-id: dave
             client-secret: ${SSO_CLIENT_SECRET}
-
-  mvc:
-    log-request-details: on
