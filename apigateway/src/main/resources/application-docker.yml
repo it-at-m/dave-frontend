@@ -33,7 +33,7 @@ spring:
           filters:
             - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
         - id: backend
-          uri: http://localhost:39146/
+          uri: http://dave-backend:50001/
           predicates:
             - Path=/api/dave-backend-service/**
           filters:
