@@ -1,8 +1,11 @@
 <template>
   <v-card variant="flat">
     <v-card-title>
-      <v-icon start>mdi-filter-outline</v-icon>
-      Sucheinstellungen
+      <v-icon
+        start
+        icon="$searchAndFilter"
+      />
+      Such- & Filtereinstellungen
     </v-card-title>
 
     <v-card-text>
@@ -16,6 +19,7 @@
           variant="accordion"
         >
           <search-panel v-model="searchAndFilterOptions" />
+          <filter-panel v-model="searchAndFilterOptions" />
         </v-expansion-panels>
       </v-sheet>
     </v-card-text>
@@ -47,6 +51,7 @@ import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptions
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 
+import FilterPanel from "@/components/search/filter/FilterPanel.vue";
 import SearchPanel from "@/components/search/filter/SearchPanel.vue";
 
 interface Emits {

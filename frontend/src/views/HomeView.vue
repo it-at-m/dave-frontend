@@ -4,7 +4,7 @@
       ref="map"
       height="100%"
       width="100%"
-      :zoom="mapConfigStore.getMapConfig.zoom"
+      :zoom="configurationStore.getMapConfiguration.zoom"
     />
 
     <v-speed-dial
@@ -62,7 +62,7 @@ import html2canvas from "html2canvas";
 import { computed, onMounted, ref } from "vue";
 
 import ZaehlstelleMap from "@/components/map/ZaehlstelleMap.vue";
-import { useMapConfigStore } from "@/store/MapConfigStore";
+import { useConfigurationStore } from "@/store/ConfigurationStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -74,7 +74,7 @@ const pdfReportStore = usePdfReportStore();
 const searchStore = useSearchStore();
 const snackbarStore = useSnackbarStore();
 const downloadUtils = useDownloadUtils();
-const mapConfigStore = useMapConfigStore();
+const configurationStore = useConfigurationStore();
 const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);

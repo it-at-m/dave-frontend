@@ -30,8 +30,8 @@
 
       <zeitauswahl-radiogroup
         v-model="chosenOptionsCopy"
-        :messstelle-detektierte-fahrzeugart="
-          messstelleInfo.detektierteVerkehrsarten
+        :messstelle-detektierte-verkehrsart="
+          messstelleInfo.detektierteVerkehrsart
         "
       />
       <zeitauswahl-stunde-or-block v-model="chosenOptionsCopy" />

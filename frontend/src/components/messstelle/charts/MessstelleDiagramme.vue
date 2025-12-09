@@ -39,22 +39,25 @@
       <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
         <v-sheet
           :max-height="contentHeight"
+          :min-height="contentHeight"
           width="100%"
           class="overflow-y-auto"
         >
           <banner-messtelle-tabs
             v-if="
+              !chartDataLoading &&
               belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
                 .length === 0
             "
             :message="globalInfoMessage.NO_DATA_AVAILABLE"
           />
           <banner-messtelle-tabs
-            v-else-if="!hasSelectedVerkehrsarten"
+            v-else-if="!chartDataLoading && !hasSelectedVerkehrsarten"
             :message="globalInfoMessage.NO_BELASTUNGSPLAN"
           />
           <belastungsplan-messquerschnitt-card
             v-else-if="
+              !chartDataLoading &&
               belastungsplanDataDTO.ladeBelastungsplanMessquerschnittDataDTOList
             "
             :is-schematische-uebersicht="false"
@@ -62,6 +65,7 @@
             :dimension="contentHeight"
             @print="storeSvg($event)"
           />
+          <progress-loader v-model="chartDataLoading" />
         </v-sheet>
       </v-tabs-window-item>
       <v-tabs-window-item :value="TAB_GANGLINIE">
@@ -76,7 +80,10 @@
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
-            v-else-if="zaehldatenSteplineDTO.xaxisDataFirstChart.length === 0"
+            v-else-if="
+              !chartDataLoading &&
+              zaehldatenSteplineDTO.xaxisDataFirstChart.length === 0
+            "
             :message="globalInfoMessage.NO_DATA_AVAILABLE"
           />
           <step-line-card
@@ -97,7 +104,7 @@
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
-            v-else-if="listenausgabeDTO.length === 0"
+            v-else-if="!chartDataLoading && listenausgabeDTO.length === 0"
             :message="globalInfoMessage.NO_DATA_AVAILABLE"
           />
           <messwerte-listenausgabe
@@ -120,7 +127,10 @@
             :message="globalInfoMessage.ZEITRAUM_GROESSER_FUENF_JAHRE"
           />
           <banner-messtelle-tabs
-            v-else-if="zaehldatenHeatmapDTO.xaxisDataFirstChart.length === 0"
+            v-else-if="
+              !chartDataLoading &&
+              zaehldatenHeatmapDTO.xaxisDataFirstChart.length === 0
+            "
             :message="globalInfoMessage.NO_DATA_AVAILABLE"
           />
           <heatmap-card
@@ -349,6 +359,7 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
 
 function loadProcessedChartData() {
   chartDataLoading.value = true;
+  resetData();
   LadeMessdatenService.ladeMessdatenProcessed(messstelleId.value, options.value)
     .then((processedZaehldaten: LadeProcessedMessdatenDTO) => {
       zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
@@ -366,8 +377,6 @@ function loadProcessedChartData() {
     })
     .catch((error) => {
       snackbarStore.showApiError(error);
-      messstelleStore.setIncludedMeasuringDays(0);
-      messstelleStore.setRequestedMeasuringDays(0);
     })
     .finally(() => {
       chartDataLoading.value = false;
@@ -381,6 +390,18 @@ function loadProcessedChartData() {
         )
       );
     });
+}
+
+function resetData() {
+  messstelleStore.setIncludedMeasuringDays(0);
+  messstelleStore.setRequestedMeasuringDays(0);
+  zaehldatenSteplineDTO.value =
+    DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+  zaehldatenHeatmapDTO.value =
+    DefaultObjectCreator.createDefaultLadeZaehldatenHeatmapDTO();
+  listenausgabeDTO.value = [];
+  belastungsplanDataDTO.value =
+    DefaultObjectCreator.createDefaultBelastungsplanMessquerschnitteDTO();
 }
 
 function setMaxRangeYAchse() {

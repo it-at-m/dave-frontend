@@ -20,7 +20,6 @@
           label="Zeitintervall"
           variant="filled"
           density="compact"
-          :disabled="isIntervallChangingLocked"
           @mouseover="hoverZeitintervall = true"
           @mouseleave="hoverZeitintervall = false"
         />
@@ -83,25 +82,4 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
-const isIntervallChangingLocked = computed(() => {
-  return (
-    (isZeitauswahlSpitzenstunde.value &&
-      chosenOptionsCopy.value.zeitraum.length !== 2) ||
-    (isZeitauswahlSpitzenstundeKfz.value &&
-      chosenOptionsCopy.value.zeitraum.length === 2)
-  );
-});
-
-const isZeitauswahlSpitzenstundeKfz = computed(() => {
-  return chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ;
-});
-
-const isZeitauswahlSpitzenstunde = computed(() => {
-  return (
-    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
-  );
-});
 </script>

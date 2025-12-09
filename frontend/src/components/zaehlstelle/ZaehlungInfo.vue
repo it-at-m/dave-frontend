@@ -40,7 +40,7 @@
               </v-row>
               <v-row
                 no-gutters
-                class="ma-0"
+                class="ma-0 mt-1"
               >
                 <zaehlart-icon
                   :zaehlart="zaehlung.zaehlart"

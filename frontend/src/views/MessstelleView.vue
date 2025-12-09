@@ -102,7 +102,7 @@ const leftHeightVh = computed(() => {
 });
 
 const appBarHeight = computed(() => {
-  return 65 / (display.height.value / 100);
+  return 50 / (display.height.value / 100);
 });
 
 /**

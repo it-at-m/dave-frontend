@@ -78,7 +78,7 @@
           * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019, ...)<br />
           * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />
           * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
-          * Messstellennummer / -name (4203,...)<br />
+          * Messstellennummer / -name (4000,...)<br />
         </span>
       </v-tooltip>
     </template>
@@ -290,7 +290,7 @@ function iconOfSuggestion(type: string) {
   let icon = "";
   switch (type) {
     case SUGGESTION_TYPE_SEARCH_TEXT:
-      icon = "mdi-format-text";
+      icon = "mdi-magnify";
       break;
     case SUGGESTION_TYPE_VORSCHLAG:
       icon = "mdi-magnify";

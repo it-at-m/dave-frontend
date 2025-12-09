@@ -39,7 +39,7 @@ const canvas = ref<Svg>(SVG.SVG());
 const viewbox = ref(1400);
 const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
-const defaultFontSize = 20;
+const defaultFontSize = 24;
 const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
@@ -127,7 +127,7 @@ function redraw() {
  */
 function draw() {
   startX.value = 450;
-  startY.value = 250;
+  startY.value = 300;
   canvas.value.clear();
   querschnittGroup.value = canvas.value.group();
   const groupedByDirection = _.chain(
@@ -168,7 +168,7 @@ function drawArrowsPointingSouth(
           startX.value + 10,
           startY.value,
           startX.value + 10,
-          startY.value + 850
+          startY.value + 800
         )
         .stroke({
           width: calcStrokeSize(mq),
@@ -178,9 +178,9 @@ function drawArrowsPointingSouth(
     querschnittGroup.value.add(
       SVG.SVG()
         .polygon(
-          `${startX.value + 25},${startY.value + 853} ${
+          `${startX.value + 25},${startY.value + 803} ${
             startX.value - 5
-          },${startY.value + 853} ${startX.value + 10} ${startY.value + 872}`
+          },${startY.value + 803} ${startX.value + 10} ${startY.value + 822}`
         )
         .stroke({ width: 1, color: "black" })
         .attr("fill", "none")
@@ -256,17 +256,23 @@ function addSumSouthIfNecessary(
 function drawStreetName() {
   querschnittGroup.value.add(
     SVG.SVG()
-      .text(`${props.belastungsplanData.strassenname}`)
+      .text(`${getStreetnameOrDefalutIfEmpty()}`)
       .move(startX.value, startY.value + 425)
-      .font({ anchor: "middle", size: 30 })
+      .font({ anchor: "middle", size: defaultFontSize })
       .rotate(270, startX.value, startY.value + 425)
   );
+}
+
+function getStreetnameOrDefalutIfEmpty() {
+  return props.belastungsplanData.strassenname
+    ? props.belastungsplanData.strassenname
+    : "nicht vorhanden";
 }
 
 function drawTotal() {
   addTextNorthSide(
     startX.value,
-    startY.value - 10,
+    startY.value,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -277,7 +283,7 @@ function drawTotal() {
   );
   addTextSouthSide(
     startX.value,
-    startY.value + 910,
+    startY.value + 873,
     props.belastungsplanData.totalKfz,
     props.belastungsplanData.totalGv,
     props.belastungsplanData.totalSv,
@@ -306,7 +312,7 @@ function drawArrowsPointingNorth(
           startX.value + 10,
           startY.value,
           startX.value + 10,
-          startY.value + 850
+          startY.value + 800
         )
         .stroke({
           width: calcStrokeSize(mq),
@@ -325,7 +331,7 @@ function drawArrowsPointingNorth(
     );
     addTextSouthSide(
       startX.value,
-      startY.value + 910,
+      startY.value + 873,
       mq.sumKfz,
       mq.sumGv,
       mq.sumSv,
@@ -370,7 +376,7 @@ function addSumNorthIfNecessary(
       SVG.SVG()
         .line(
           startX.value - 25,
-          startY.value + 860,
+          startY.value + 80,
           startX.value - 25,
           startY.value + (1080 - (3 - numberOfChosenFahrzeugOptions.value) * 65)
         )
@@ -378,7 +384,7 @@ function addSumNorthIfNecessary(
     );
     addTextSouthSide(
       startX.value - 20,
-      startY.value + 910,
+      startY.value + 923,
       sumMqKfz,
       sumMqGv,
       sumMqSv,
@@ -574,10 +580,14 @@ function drawMessstelleInfo() {
         .newLine();
       if (dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum)) {
         add
+          .tspan(`Messzeitraum:`)
+          .font({ size: defaultFontSize, family: fontfamily })
+          .newLine();
+        add
           .tspan(
-            `Messzeitraum:  ${dateUtils.formatDate(
+            `${dateUtils.formatDate(
               chosenOptionsCopy.value.zeitraum[0]
-            )} -  ${dateUtils.formatDate(chosenOptionsCopy.value.zeitraum[1])}`
+            )} - ${dateUtils.formatDate(chosenOptionsCopy.value.zeitraum[1])}`
           )
           .font({ size: defaultFontSize, family: fontfamily })
           .newLine();
@@ -625,7 +635,7 @@ function drawLegende() {
 
   canvas.value
     .text(function (add) {
-      add.tspan(`${chosenOptionsCopy.value.zeitauswahl}`).font({
+      add.tspan(`${getZeitauswahlText.value}`).font({
         weight: "bold",
         size: defaultFontSize,
         family: fontfamily,
@@ -667,7 +677,7 @@ function drawLegende() {
         });
       }
     })
-    .move(50, startY.value + 950);
+    .move(50, startY.value + 870);
 }
 
 function calculateHighestValue(): number {
@@ -717,7 +727,7 @@ function drawLinienStaerke() {
     .group()
     .add(path1)
     .add(path2)
-    .move(1000, startY.value + 1000);
+    .move(1000, startY.value + 950);
 
   const high = calculateHighestValue();
 
@@ -729,8 +739,8 @@ function drawLinienStaerke() {
         anchor: "middle",
       });
     })
-    .x(1030)
-    .dy(startY.value + 1040);
+    .x(1020)
+    .dy(startY.value + 995);
   const text2 = SVG.SVG()
     .text((add) => {
       add.tspan(`${high}`).font({
@@ -739,15 +749,19 @@ function drawLinienStaerke() {
         anchor: "middle",
       });
     })
-    .x(1095)
-    .dy(startY.value + 1040);
+    .x(1100)
+    .dy(startY.value + 995);
 
   canvas.value.add(groupPath).add(text1).add(text2);
 }
 
+const getZeitauswahlText = computed(() => {
+  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${chosenOptionsCopy.value.zeitauswahl}`;
+});
+
 const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
-    return "0-24 Uhr";
+    return "0 - 24 Uhr";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
     return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
@@ -758,7 +772,7 @@ const getZeitblockText = computed(() => {
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
-    return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
+    return `${props.belastungsplanData.startUhrzeitSpitzenstunde} - ${props.belastungsplanData.endeUhrzeitSpitzenstunde} Uhr`;
   } else {
     return "";
   }

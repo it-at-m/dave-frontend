@@ -7,6 +7,11 @@
       >
         <v-sheet
           class="d-flex flex-column overflow-y-auto"
+          style="
+            border-right-color: lightgrey;
+            border-right-style: solid;
+            border-right-width: 1px;
+          "
           :height="stepperSheetHeight"
           width="100%"
         >
@@ -14,6 +19,8 @@
             v-model="auswertungsOptions"
             :height="stepperHeightVh"
             :all-visible-messstellen="allVisibleMessstellen"
+            :preset-data="presetData"
+            @reset-chart="resetChart"
           />
           <v-spacer />
           <v-card-actions>
@@ -36,7 +43,6 @@
           </v-card-actions>
         </v-sheet>
       </v-col>
-      <v-divider vertical />
       <v-col cols="8">
         <progress-loader v-model="chartDataLoading" />
         <step-line-card
@@ -92,10 +98,19 @@ import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/Messst
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
-import { cloneDeep, head, isNil, toArray, valuesIn } from "lodash";
-import { computed, onMounted, ref } from "vue";
+import {
+  cloneDeep,
+  head,
+  isEmpty,
+  isEqual,
+  isNil,
+  toArray,
+  valuesIn,
+} from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { ApiError, Levels } from "@/api/error";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
@@ -114,8 +129,6 @@ import { useReportTools } from "@/util/ReportTools";
 const NUMBER_OF_MAX_XAXIS_ELEMENTS_TO_SHOW = 96;
 const NUMBER_OF_MAX_MST_TO_SHOW = 10;
 
-const minWidth = 600;
-
 const reportTools = useReportTools();
 const display = useDisplay();
 const downloadUtils = useDownloadUtils();
@@ -129,6 +142,7 @@ const chartDataLoading = ref(false);
 const steplineCard = ref<InstanceType<typeof StepLineCard> | null>();
 const allVisibleMessstellen = ref<Array<MessstelleAuswertungDTO>>([]);
 const pdfReportDialog = ref(false);
+const presetData = ref(false);
 
 const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
@@ -140,7 +154,37 @@ const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
 
 onMounted(() => {
   loadAllVisibleMessstellen();
+  auswertungsOptions.value = cloneDeep(
+    gesamtauswertungStore.getAuswertungMessstelleOptions
+  );
+  zaehldatenMessstellen.value = cloneDeep(
+    gesamtauswertungStore.getZaehldatenMessstellen
+  );
+  presetData.value = !isEmpty(auswertungsOptions.value.zeitraum);
+  auswertungLoaded.value = presetData.value;
 });
+
+watch(
+  auswertungsOptions,
+  () => {
+    resetChart();
+  },
+  { deep: true, immediate: true }
+);
+
+function resetChart() {
+  if (
+    auswertungLoaded.value &&
+    !isEqual(
+      auswertungsOptions.value,
+      gesamtauswertungStore.getAuswertungMessstelleOptions
+    )
+  ) {
+    zaehldatenMessstellen.value =
+      DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+    auswertungLoaded.value = false;
+  }
+}
 
 const textForNonShownDiagram = computed(() => {
   const text = [];
@@ -203,8 +247,7 @@ const appBarHeight = computed(() => {
 });
 
 const stepperSheetHeight = computed(() => {
-  const overflowX = display.width.value / 3 <= minWidth;
-  return 100 - (overflowX ? 3 : 0) - appBarHeight.value + "vh";
+  return 100 - appBarHeight.value + "vh";
 });
 
 const stepperSheetActionsHeight = computed(() => {
@@ -251,6 +294,9 @@ function resetAuswertungsOptions() {
   );
   zaehldatenMessstellen.value =
     DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
+  gesamtauswertungStore.setZaehldatenMessstellen(zaehldatenMessstellen.value);
+  presetData.value = false;
+  auswertungLoaded.value = false;
 }
 
 function auswertungStarten() {
@@ -279,6 +325,9 @@ function auswertungStarten() {
         zaehldatenMessstellen.value =
           DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO();
       }
+      gesamtauswertungStore.setZaehldatenMessstellen(
+        zaehldatenMessstellen.value
+      );
     });
 }
 
@@ -408,11 +457,17 @@ function getFilenameSingleMessstelleAndMessquerschnitte(
 }
 
 function loadAllVisibleMessstellen(): void {
-  MessstelleAuswertungService.getAllVisibleMessstellen().then(
-    (messstellen: Array<MessstelleAuswertungDTO>) => {
+  MessstelleAuswertungService.getAllVisibleMessstellen()
+    .then((messstellen: Array<MessstelleAuswertungDTO>) => {
       allVisibleMessstellen.value = messstellen;
-    }
-  );
+    })
+    .catch((error) => {
+      throw new ApiError(
+        Levels.ERROR,
+        `Beim Laden aller auswählbaren Messstellen ist ein Fehler aufgetreten.`,
+        error
+      );
+    });
 }
 function openPdfReportDialog(): void {
   pdfReportDialog.value = true;

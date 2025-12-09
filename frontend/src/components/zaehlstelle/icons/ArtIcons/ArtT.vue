@@ -1,13 +1,6 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    width="32"
-    height="32"
-    viewBox="0 0 32 32"
-  >
-    <path
-      d="M14.054 25.842c0-5.44 0-10.881 0-16.283-2.002 0-4.043 0-6.045 0 0-0.982 0-1.927 0-2.871 5.176 0 10.314 0 15.49 0 0 0.944 0 1.889 0 2.871-2.040 0-4.043 0-6.045 0 0 5.403 0 10.843 0 16.283-1.133 0-2.267 0-3.4 0z"
-    />
-  </svg>
+  <art-icon model-value="T" />
 </template>
+<script setup lang="ts">
+import ArtIcon from "@/components/zaehlstelle/icons/ArtIcons/ArtIcon.vue";
+</script>

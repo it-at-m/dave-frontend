@@ -21,6 +21,7 @@ import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
+import { defaultTo } from "lodash";
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
@@ -29,7 +30,7 @@ import markerIconDiamondRed from "@/assets/cards-diamond-red.png";
 import markerIconDiamondShadow from "@/assets/cards-diamond-shadow.png";
 import markerIconDiamondViolet from "@/assets/cards-diamond-violet.png";
 import markerIconRed from "@/assets/marker-icon-red.png";
-import { useMapConfigStore } from "@/store/MapConfigStore";
+import { useConfigurationStore } from "@/store/ConfigurationStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -73,7 +74,7 @@ const snackbarStore = useSnackbarStore();
 const router = useRouter();
 const dateUtils = useDateUtils();
 const mapOptionsStore = useMapOptionsStore();
-const mapConfigStore = useMapConfigStore();
+const configurationStore = useConfigurationStore();
 
 const mapRef = ref<HTMLDivElement | null>(null);
 
@@ -149,8 +150,8 @@ const center = computed<LatLng>(() => {
     );
   } else {
     return createLatLngFromString(
-      mapConfigStore.getMapConfig.lat,
-      mapConfigStore.getMapConfig.lng
+      configurationStore.getMapConfiguration.lat,
+      configurationStore.getMapConfiguration.lng
     );
   }
 });
@@ -366,7 +367,12 @@ function searchErhebungsstelle() {
 }
 
 function getColorForZaehlartenMarker(zaehlart: string): string {
-  if (zaehlart == zaehlstelleStore.getAktiveZaehlung.zaehlart) {
+  const zaehlartUpperCase = defaultTo(zaehlart, "").toUpperCase();
+  const zaehlartFromZaehlungUpperCase = defaultTo(
+    zaehlstelleStore.getAktiveZaehlung.zaehlart,
+    ""
+  ).toUpperCase();
+  if (zaehlartUpperCase === zaehlartFromZaehlungUpperCase) {
     return ICON_COLOR_RED;
   } else {
     return ICON_COLOR_SECONDARY;
@@ -506,8 +512,8 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
   let tooltip = "<div>";
   if (tooltipDto.mstId) {
     tooltip = `<b>${tooltip}Messstelle: ${tooltipDto.mstId}`;
-    if (tooltipDto.detektierteVerkehrsarten) {
-      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsarten})`;
+    if (tooltipDto.detektierteVerkehrsart) {
+      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsart})`;
     }
     tooltip = `${tooltip}</b><br/>`;
   }
@@ -524,21 +530,17 @@ function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
     }
     tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
   }
-  if (tooltipDto.realisierungsdatum) {
-    tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
-      tooltipDto.realisierungsdatum
-    )}<br/>`;
-  }
+  tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
+    tooltipDto.realisierungsdatum
+  )}<br/>`;
   if (tooltipDto.abbaudatum) {
     tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
       tooltipDto.abbaudatum
     )}<br/>`;
   }
-  if (tooltipDto.datumLetztePlausibleMessung) {
-    tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
-      tooltipDto.datumLetztePlausibleMessung
-    )}<br/>`;
-  }
+  tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
+    tooltipDto.datumLetztePlausibleMessung
+  )}<br/>`;
 
   tooltip = `${tooltip}</div>`;
   return tooltip;
@@ -628,7 +630,7 @@ const emits = defineEmits<{
 }>();
 
 function choosenZaehlartIconToZaehlstelleHeader(zaehlart: string) {
-  emits("zeahlart-ausgewaehlt", zaehlart);
+  emits("zeahlart-ausgewaehlt", zaehlart.toUpperCase());
 }
 </script>
 

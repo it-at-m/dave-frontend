@@ -77,7 +77,7 @@
 
 <script setup lang="ts">
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
-import type MapConfigDTO from "@/types/karte/MapConfigDTO";
+import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";
@@ -85,7 +85,7 @@ import { useRoute } from "vue-router";
 
 import goldTrophy from "@/../public/easteregg/trophy-outline-gold.svg";
 import silverTrophy from "@/../public/easteregg/trophy-outline-silver.svg";
-import MapConfigService from "@/api/service/MapConfigService";
+import ConfigurationService from "@/api/service/ConfigurationService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
 import OptionsmenueSettingsService from "@/api/service/OptionsmenueSettingsService";
 import SsoUserInfoService from "@/api/service/SsoUserInfoService";
@@ -94,7 +94,7 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
 import SearchInputField from "@/components/search/SearchInputField.vue";
-import { useMapConfigStore } from "@/store/MapConfigStore";
+import { useConfigurationStore } from "@/store/ConfigurationStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSearchStore } from "@/store/SearchStore";
@@ -116,7 +116,7 @@ const userStore = useUserStore();
 const searchStore = useSearchStore();
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const mapOptionsStore = useMapOptionsStore();
-const mapConfigStore = useMapConfigStore();
+const configurationStore = useConfigurationStore();
 const route = useRoute();
 
 created();
@@ -152,9 +152,11 @@ function created() {
       );
     }
   );
-  MapConfigService.getMapConfig().then((res: MapConfigDTO) => {
-    mapConfigStore.setMapConfig(res);
-  });
+  ConfigurationService.getConfiguration().then(
+    (configuration: ConfigurationDTO) => {
+      configurationStore.setConfiguration(configuration);
+    }
+  );
   MessstelleAuswertungService.getAllVisibleMessstellen().then(
     (messstellen: Array<MessstelleAuswertungDTO>) => {
       showGesamtauswertung.value = messstellen.length > 0;

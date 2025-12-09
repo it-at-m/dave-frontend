@@ -91,7 +91,7 @@ import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-  messstelleDetektierteFahrzeugart: string;
+  messstelleDetektierteVerkehrsart: string;
 }
 
 const props = defineProps<Props>();
@@ -122,7 +122,7 @@ const durchschnitt = computed(() => {
 });
 
 function isTypeDisabled(type: string): boolean {
-  return type !== props.messstelleDetektierteFahrzeugart;
+  return type !== props.messstelleDetektierteVerkehrsart;
 }
 
 const helpText = computed(() => {
