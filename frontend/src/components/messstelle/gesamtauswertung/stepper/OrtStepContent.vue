@@ -14,6 +14,7 @@
       closable-chips
       :hint="messstelleHint"
       @update:model-value="selectMessstellen"
+      @click:clear="deselectAllMessstellen"
     >
       <template #prepend-item>
         <v-btn
@@ -230,7 +231,7 @@ const isLageReadonly = computed(() => {
 
 const showSelectAllButton = computed(() => {
   return (
-      selectedMessstellen.value.length <= props.allVisibleMessstellen.length / 2
+    selectedMessstellen.value.length <= props.allVisibleMessstellen.length / 2
   );
 });
 
@@ -315,15 +316,14 @@ function selectAllMessstellen() {
   auswertungOptions.value.messstelleAuswertungIds = [];
   props.allVisibleMessstellen.forEach((mst) => {
     selectedMessstellen.value.push(mst);
-    const mstAuswertungId = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
-    mstAuswertungId.mqIds = mst.messquerschnitte.map((mq) => mq.mqId);
-    auswertungOptions.value.messstelleAuswertungIds.push(mstAuswertungId);
   });
+  selectMessstellen();
 }
 
 function deselectAllMessstellen() {
   selectedMessstellen.value = [];
   auswertungOptions.value.messstelleAuswertungIds = [];
+  selectMessstellen();
 }
 
 function REQUIRED(v: Array<string>) {
