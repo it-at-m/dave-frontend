@@ -311,8 +311,8 @@ function buttonClick() {
 }
 
 function selectAllMessstellen() {
-  selectedMessstellen.value = []
-  auswertungOptions.value.messstelleAuswertungIds = []
+  selectedMessstellen.value = [];
+  auswertungOptions.value.messstelleAuswertungIds = [];
   props.allVisibleMessstellen.forEach((mst) => {
     selectedMessstellen.value.push(mst);
     const mstAuswertungId = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
@@ -322,7 +322,7 @@ function selectAllMessstellen() {
 }
 
 function deselectAllMessstellen() {
-  selectedMessstellen.value = []
+  selectedMessstellen.value = [];
   auswertungOptions.value.messstelleAuswertungIds = [];
 }
 
