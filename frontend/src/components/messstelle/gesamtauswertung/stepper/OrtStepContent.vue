@@ -230,8 +230,7 @@ const isLageReadonly = computed(() => {
 
 const showSelectAllButton = computed(() => {
   return (
-    auswertungOptions.value.messstelleAuswertungIds.length <=
-    props.allVisibleMessstellen.length / 2
+      selectedMessstellen.value.length <= props.allVisibleMessstellen.length / 2
   );
 });
 
@@ -312,15 +311,18 @@ function buttonClick() {
 }
 
 function selectAllMessstellen() {
-  auswertungOptions.value.messstelleAuswertungIds =
-    props.allVisibleMessstellen.map((mst) => {
-      const item = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
-      item.mqIds = mst.messquerschnitte.map((mq) => mq.mqId);
-      return item;
-    });
+  selectedMessstellen.value = []
+  auswertungOptions.value.messstelleAuswertungIds = []
+  props.allVisibleMessstellen.forEach((mst) => {
+    selectedMessstellen.value.push(mst);
+    const mstAuswertungId = { mstId: mst.mstId, mqIds: [] } as MessstelleAuswertungIdDTO;
+    mstAuswertungId.mqIds = mst.messquerschnitte.map((mq) => mq.mqId);
+    auswertungOptions.value.messstelleAuswertungIds.push(mstAuswertungId);
+  });
 }
 
 function deselectAllMessstellen() {
+  selectedMessstellen.value = []
   auswertungOptions.value.messstelleAuswertungIds = [];
 }
 
