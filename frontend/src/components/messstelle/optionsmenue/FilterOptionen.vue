@@ -31,7 +31,7 @@
             <span class="text-grey-lighten-1"
               >Zeit:
               <span class="font-weight-medium text-white"
-                >{{ zeitblock }}
+                >{{ zeitauswahl }}
               </span>
               in
               <span class="font-weight-medium text-white"
@@ -105,6 +105,7 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import type KeyVal from "@/types/common/KeyVal";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
@@ -164,24 +165,24 @@ const zeitraum = computed(() => {
   }
 });
 
-const zeitblock = computed(() => {
+const zeitauswahl = computed(() => {
   let text = Zeitauswahl.TAGESWERT.valueOf();
-  const existsBlock = zeitblockInfo.get(
+  const chosenBlock: KeyVal | undefined = zeitblockInfo.get(
     filterOptionsMessstelle.value.zeitblock
   );
-  const existsStunde = zeitblockStuendlichInfo.get(
+  const chosenStunde = zeitblockStuendlichInfo.get(
     filterOptionsMessstelle.value.zeitblock
   );
   if (
     Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
-    existsBlock
+    chosenBlock
   ) {
-    text = existsBlock.title;
+    text = chosenBlock.title;
   } else if (
     Zeitauswahl.STUNDE === filterOptionsMessstelle.value.zeitauswahl &&
-    existsStunde
+    chosenStunde
   ) {
-    text = existsStunde.title;
+    text = chosenStunde.title;
   } else if (
     Zeitauswahl.SPITZENSTUNDE_KFZ ===
       filterOptionsMessstelle.value.zeitauswahl ||
@@ -189,7 +190,8 @@ const zeitblock = computed(() => {
       filterOptionsMessstelle.value.zeitauswahl ||
     Zeitauswahl.SPITZENSTUNDE_FUSS === filterOptionsMessstelle.value.zeitauswahl
   ) {
-    text = filterOptionsMessstelle.value.zeitauswahl;
+    const blockInfo = chosenBlock ? ` von ${chosenBlock.title}` : ``;
+    text = `${filterOptionsMessstelle.value.zeitauswahl}${blockInfo}`;
   }
   if (dateUtils.isDateRange(filterOptionsMessstelle.value.zeitraum)) {
     text = `\u00D8 ${text}`;
