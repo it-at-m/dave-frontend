@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Build with Maven
         id: maven
-        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.20
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.22
 
   build-image:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       packages: write
     steps:
       - name: Build and push Docker image
-        uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.20
+        uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.22
         with:
           path: .
           image-name: ${{ env.IMAGE_NAME }}
