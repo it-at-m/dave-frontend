@@ -23,7 +23,7 @@
     "vuetify": "3.8.3"
   },
   "devDependencies": {
-    "@babel/types": "7.27.1",
+    "@babel/types": "7.28.5",
     "@ianvs/prettier-plugin-sort-imports": "4.4.1",
     "@muenchen/prettier-codeformat": "1.0.2",
     "@svgdotjs/svg.js": "3.0.16",
