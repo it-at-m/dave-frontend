@@ -32,12 +32,21 @@ export const useGesamtauswertungStore = defineStore(
     function setZaehldatenMessstellen(payload: LadeZaehldatenSteplineDTO) {
       zaehldatenMessstellen.value = cloneDeep(payload);
     }
+    function resetStore() {
+      setAuswertungMessstelleOptions(
+        DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
+      );
+      setZaehldatenMessstellen(
+        DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
+      );
+    }
 
     return {
       getAuswertungMessstelleOptions,
       getZaehldatenMessstellen,
       setAuswertungMessstelleOptions,
       setZaehldatenMessstellen,
+      resetStore,
     };
   }
 );
