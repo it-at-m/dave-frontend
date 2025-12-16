@@ -3,7 +3,7 @@ services:
 
   dave-frontend:
     container_name: dave-frontend
-    image: itatm/dave-frontend:latest
+    image: itatm/dave-frontend:latest@sha256:81d41aeb28592ff08c1a77bb3c7c636aaf350f84f4cc97208a3fee705e924325
     environment:
       - SPRING_PROFILES_ACTIVE=docker,no-security
       - SSO_BASE_URL=http://sso.de
@@ -13,7 +13,7 @@ services:
 
   dave-backend:
     container_name: dave-backend
-    image: itatm/dave-backend:latest
+    image: itatm/dave-backend:latest@sha256:9ce0972e99985e278caa14c35b457e7ff1104c658b7d16641b0a63f921382d5a
     environment:
       - SPRING_PROFILES_ACTIVE=docker,no-security,sample
       - elasticsearch.host=dave-elasticsearch
