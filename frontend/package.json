@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@babel/types": "7.27.1",
-    "@ianvs/prettier-plugin-sort-imports": "4.4.1",
+    "@ianvs/prettier-plugin-sort-imports": "4.4.2",
     "@muenchen/prettier-codeformat": "1.0.2",
     "@svgdotjs/svg.js": "3.0.16",
     "@types/jsdom": "21.1.7",
