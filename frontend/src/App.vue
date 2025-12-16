@@ -94,6 +94,7 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
 import SearchInputField from "@/components/search/SearchInputField.vue";
+import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useMapConfigStore } from "@/store/MapConfigStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
@@ -117,6 +118,7 @@ const searchStore = useSearchStore();
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const mapOptionsStore = useMapOptionsStore();
 const mapConfigStore = useMapConfigStore();
+const gesamtauswertungStore = useGesamtauswertungStore();
 const route = useRoute();
 
 created();
@@ -201,6 +203,7 @@ function resetMapAndSearch() {
   mapOptionsStore.resetMapOptions();
   searchStore.resetSearchAndFilterOptions();
   searchStore.resetAndTriggerSearch();
+  gesamtauswertungStore.resetStore();
 }
 </script>
 
