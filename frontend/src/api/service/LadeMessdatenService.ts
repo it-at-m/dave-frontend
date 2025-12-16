@@ -1,4 +1,4 @@
-import type LadeProcessedMessdatenDTO from "@/types/messstelle/LadeProcessedMessdatenDTO";
+import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
 import FetchService from "@/api/service/FetchService";
@@ -10,7 +10,7 @@ export default class LadeMessdatenService {
   public static ladeMessdatenProcessed(
     messstelleId: string,
     options: MessstelleOptionsDTO
-  ): Promise<LadeProcessedMessdatenDTO> {
+  ): Promise<LadeProcessedMesswerteDTO> {
     return FetchService.postData(
       options,
       `${this.ENDPOINT_LADE_MESSDATEN_PROCESSED}?messstelle_id=${messstelleId}`,
