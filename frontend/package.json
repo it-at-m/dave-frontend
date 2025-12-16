@@ -28,7 +28,7 @@
     "@muenchen/prettier-codeformat": "1.0.2",
     "@svgdotjs/svg.js": "3.0.16",
     "@types/jsdom": "21.1.7",
-    "@types/leaflet": "1.9.17",
+    "@types/leaflet": "1.9.21",
     "@types/leaflet.fullscreen": "3.0.2",
     "@types/leaflet.markercluster": "1.5.5",
     "@types/lodash": "4.17.16",
