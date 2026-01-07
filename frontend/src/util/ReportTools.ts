@@ -2,7 +2,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import _ from "lodash";
 import { computed } from "vue";
@@ -38,7 +38,7 @@ export function useReportTools() {
   const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
     return zaehlstelleStore.getAktiveZaehlung;
   });
-  const zaehlstelleOptions = computed<OptionsDTO>(() => {
+  const zaehlstelleOptions = computed<ZaehlstelleOptionsDTO>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
 

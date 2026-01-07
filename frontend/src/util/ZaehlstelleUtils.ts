@@ -1,5 +1,5 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 export function useZaehlstelleUtils() {
   /**
@@ -13,7 +13,7 @@ export function useZaehlstelleUtils() {
     return !zaehlung.kategorien.includes(type);
   }
 
-  function hasSelectedVerkehrsarten(options: OptionsDTO) {
+  function hasSelectedVerkehrsarten(options: ZaehlstelleOptionsDTO) {
     return (
       options.kraftfahrzeugverkehr ||
       options.schwerverkehr ||
@@ -25,7 +25,7 @@ export function useZaehlstelleUtils() {
     );
   }
 
-  function hasSelectedFahrzeugkategorie(options: OptionsDTO) {
+  function hasSelectedFahrzeugkategorie(options: ZaehlstelleOptionsDTO) {
     return (
       options.pkwEinheiten ||
       options.kraftraeder ||

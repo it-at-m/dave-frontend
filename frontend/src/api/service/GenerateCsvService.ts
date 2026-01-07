@@ -1,6 +1,6 @@
 import type CsvDTO from "@/types/common/CsvDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import FetchService from "@/api/service/FetchService";
 
@@ -10,7 +10,7 @@ export default class GenerateCsvService {
 
   public static generateCsv(
     zaehlungId: string,
-    options: OptionsDTO
+    options: ZaehlstelleOptionsDTO
   ): Promise<CsvDTO> {
     return FetchService.postData(
       options,

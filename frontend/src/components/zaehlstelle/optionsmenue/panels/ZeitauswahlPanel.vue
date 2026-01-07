@@ -25,7 +25,7 @@
       >
         <v-col cols="8">
           <v-radio-group
-            v-model="zeitauswahl"
+            v-model="chosenOptionsCopy.zeitauswahl"
             class="mt-3"
             color="quaternary"
             density="compact"
@@ -90,7 +90,7 @@
         <v-col cols="4">
           <v-select
             v-if="isZeitauswahlSpitzenstundeOrBlock && !isZeitblockValuesEmpty"
-            v-model="zeitblock"
+            v-model="chosenOptionsCopy.zeitblock"
             label="Zeitblock"
             :items="zeitblockValues"
             variant="filled"
@@ -101,7 +101,7 @@
           <!-- Auszuwählende Stunden -->
           <v-select
             v-if="isZeitauswahlStunde"
-            v-model="zeitblock"
+            v-model="chosenOptionsCopy.zeitblock"
             label="Stunde"
             :items="stuendlichValues"
             variant="filled"
@@ -135,7 +135,7 @@
       >
         <v-col cols="4">
           <v-select
-            v-model="intervall"
+            v-model="chosenOptionsCopy.intervall"
             :items="zaehldatenIntervalle"
             label="Zeitintervall"
             variant="filled"
@@ -159,16 +159,14 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { isEmpty } from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import ZaehldatenIntervall, {
-  ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -177,23 +175,12 @@ import ZeitblockStuendlich, {
 } from "@/types/enum/ZeitblockStuendlich";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-interface Props {
-  zaehlung?: LadeZaehlungDTO;
-}
+const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+  required: true,
+});
 
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
-
-const emits = defineEmits<{
-  (e: "zeitauswahl", v: string): void;
-  (e: "zeitblock", v: string): void;
-  (e: "intervall", v: ZaehldatenIntervall): void;
-}>();
-
-const zeitauswahl = ref(Zeitauswahl.TAGESWERT.valueOf());
-const zeitblock = ref(Zeitblock.ZB_00_24.valueOf());
-const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
 
 // Zeitauswahl
 const hoverTageswert = ref(false);
@@ -209,33 +196,26 @@ const hoverSelectStunde = ref(false);
 // Zeitintervall
 const hoverSelectZeitintervall = ref(false);
 
-onMounted(() => {
-  update(options.value);
-});
-
-const options = computed<OptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
-});
-
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
   return (
-    zeitauswahl.value === Zeitauswahl.BLOCK || isZeitauswahlSpitzenstunde.value
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK ||
+    isZeitauswahlSpitzenstunde.value
   );
 });
 
 const isZeitauswahlStunde = computed(() => {
-  return zeitauswahl.value === Zeitauswahl.STUNDE;
+  return chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE;
 });
 
 const isZeitauswahlSpitzenstunde = computed(() => {
   return (
-    zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-    zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_RAD ||
-    zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_FUSS
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   );
 });
 
@@ -282,7 +262,8 @@ const helpTextZeitintervall = computed(() => {
 const zeitblockValues = computed<Array<KeyVal>>(() => {
   const result = new Array<KeyVal>();
   // die möglichen Blöcke aus der Zählung
-  const blocks: Zeitblock[] = props.zaehlung?.zeitauswahl.blocks as Zeitblock[];
+  const blocks: Zeitblock[] = activeZaehlung.value.zeitauswahl
+    .blocks as Zeitblock[];
 
   if (blocks && Array.isArray(blocks)) {
     // Select Control mit den entsprechenden text/value Werten füllen
@@ -323,7 +304,7 @@ const isZeitblockValuesEmpty = computed<boolean>(() => {
 const stuendlichValues = computed<Array<KeyVal>>(() => {
   const result = new Array<KeyVal>();
   // die möglichen Stunden aus der Zählung
-  const hrs = props.zaehlung?.zeitauswahl.hours as ZeitblockStuendlich[];
+  const hrs = activeZaehlung.value.zeitauswahl.hours as ZeitblockStuendlich[];
 
   if (hrs && typeof Array.isArray(hrs)) {
     // Select Control mit den entsprechenden text/value Werten füllen
@@ -350,39 +331,25 @@ const zaehldatenIntervalle = computed<Array<KeyVal>>(() => {
  * Gruppe gelauscht werden.
  */
 function zeitauswahlChanged() {
-  if (zeitauswahl.value === Zeitauswahl.TAGESWERT) {
-    zeitblock.value = Zeitblock.ZB_00_24;
+  if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
   }
   // Der erste Eintrag wird als ausgewählt gesetzt
   if (isZeitauswahlSpitzenstundeOrBlock.value) {
     const zb = zeitblockInfo.get(zeitblockValues.value[0].value)?.value;
     if (zb) {
-      zeitblock.value = zb;
+      chosenOptionsCopy.value.zeitblock = zb;
     }
   }
   //Der erste Eintrag wird als ausgewählt gesetzt
-  if (zeitauswahl.value === Zeitauswahl.STUNDE) {
+  if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
     const zs = zeitblockStuendlichInfo.get(
       stuendlichValues.value[0].value
     )?.value;
     if (zs) {
-      zeitblock.value = zs;
+      chosenOptionsCopy.value.zeitblock = zs;
     }
   }
-}
-
-// Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
-//  übergebenen Werten im Optionsobjekt
-function update(newOptions: OptionsDTO) {
-  newOptions.zeitauswahl === null
-    ? (zeitauswahl.value = Zeitauswahl.TAGESWERT)
-    : (zeitauswahl.value = newOptions.zeitauswahl);
-  newOptions.zeitblock === null
-    ? (zeitblock.value = Zeitblock.ZB_00_24)
-    : (zeitblock.value = newOptions.zeitblock);
-  newOptions.intervall === null
-    ? (intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL)
-    : (intervall.value = newOptions.intervall);
 }
 
 /**
@@ -392,22 +359,4 @@ function update(newOptions: OptionsDTO) {
 function isTypeDisabled(type: string): boolean {
   return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
 }
-
-// Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-// Oberfläche ändern.
-watch(options, (newOptions: OptionsDTO) => {
-  update(newOptions);
-});
-
-watch(zeitauswahl, () => {
-  emits("zeitauswahl", zeitauswahl.value);
-});
-
-watch(zeitblock, () => {
-  emits("zeitblock", zeitblock.value);
-});
-
-watch(intervall, () => {
-  emits("intervall", intervall.value);
-});
 </script>

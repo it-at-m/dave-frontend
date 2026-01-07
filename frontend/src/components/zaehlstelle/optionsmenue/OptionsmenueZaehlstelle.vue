@@ -37,12 +37,7 @@
               focusable
               elevation="0"
             >
-              <zeitauswahl-panel
-                :zaehlung="zaehlung"
-                @zeitauswahl="setZeitauswahl($event)"
-                @zeitblock="setZeitblock($event)"
-                @intervall="setIntervall($event)"
-              />
+              <zeitauswahl-panel v-model="chosenOptions" />
 
               <fahrzeug-panel
                 :actual-zeitauswahl="chosenOptions.zeitauswahl"
@@ -116,7 +111,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -131,10 +126,10 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 /**
@@ -158,9 +153,11 @@ const display = useDisplay();
 
 const dialog = ref(false);
 const activePanel = ref(-1);
-const chosenOptions = ref({} as OptionsDTO);
+const chosenOptions = ref(
+  DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
+);
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -175,7 +172,7 @@ const getContentSheetHeight = computed(() => {
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
-  const optionsCopy = {} as OptionsDTO;
+  const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
   if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
@@ -240,25 +237,25 @@ function setDefaultOptionsForZaehlung() {
   saveOptions();
 }
 
-// Event Methoden für die Zeitauswahl Komponente
-function setZeitauswahl(event: string) {
-  chosenOptions.value.zeitauswahl = event;
-  zaehlstelleStore.setZeitauswahl(event);
-}
-
-function setZeitblock(event: string) {
-  chosenOptions.value.zeitblock = event;
-  zaehlstelleStore.setZeitblock(event);
-}
-
-function setIntervall(event: ZaehldatenIntervall) {
-  if (event) {
-    chosenOptions.value.intervall = event;
-  }
-}
+// // Event Methoden für die Zeitauswahl Komponente
+// function setZeitauswahl(event: string) {
+//   chosenOptions.value.zeitauswahl = event;
+//   zaehlstelleStore.setZeitauswahl(event);
+// }
+//
+// function setZeitblock(event: string) {
+//   chosenOptions.value.zeitblock = event;
+//   zaehlstelleStore.setZeitblock(event);
+// }
+//
+// function setIntervall(event: ZaehldatenIntervall) {
+//   if (event) {
+//     chosenOptions.value.intervall = event;
+//   }
+// }
 
 // Event Methode für die Fahrzeug Komponente
-function updateOptions(event: OptionsDTO) {
+function updateOptions(event: ZaehlstelleOptionsDTO) {
   if (event) {
     chosenOptions.value.kraftfahrzeugverkehr = event.kraftfahrzeugverkehr;
     chosenOptions.value.schwerverkehr = event.schwerverkehr;
@@ -450,13 +447,13 @@ function resetSizeBelastungsplan() {
 }
 
 /**
- * Da das OptionsDTO für die Auswahlfelder im Formular als
+ * Da das ZaehlstelleOptionsDTO für die Auswahlfelder im Formular als
  * v-model genutzt wird, muss hier eine Kopie erzeugt werden. Andernfalls
  * würde es zu einer dirketen Veränderung des Stores kommen - was dieser
  * nicht mag.
  */
-watch(options, (newOptions: OptionsDTO) => {
-  const options = {} as OptionsDTO;
+watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
+  const options = {} as ZaehlstelleOptionsDTO;
   Object.assign(options, newOptions);
   chosenOptions.value = options;
 });
@@ -472,10 +469,3 @@ watch(
   }
 );
 </script>
-
-<!--<style lang="sass">-->
-<!--@import 'vuetify/lib/components/VExpansionPanel/_variables.scss'-->
-<!--.v-expansion-panel-->
-<!--  &::before-->
-<!--    +elevation(0)-->
-<!--</style>-->

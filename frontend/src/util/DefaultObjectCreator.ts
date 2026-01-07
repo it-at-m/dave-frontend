@@ -15,11 +15,11 @@ import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptions
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import StartAndEndDate from "@/types/common/StartAndEndDate";
@@ -219,7 +219,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
+  public static createDefaultZaehlstelleOptionsDto(): ZaehlstelleOptionsDTO {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,

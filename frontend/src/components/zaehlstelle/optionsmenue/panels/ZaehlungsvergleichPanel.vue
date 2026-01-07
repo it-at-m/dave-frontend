@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -135,7 +135,7 @@ onMounted(() => {
   update(options.value);
 });
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -189,7 +189,7 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
-function update(newOptions: OptionsDTO) {
+function update(newOptions: ZaehlstelleOptionsDTO) {
   vergleichsdatumCalculator(newOptions.zeitblock, newOptions.zeitauswahl);
   zeitreihenVergleichsdatumCalculator(
     newOptions.zeitblock,
@@ -302,7 +302,7 @@ function containsZeitblock(
 
 // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
 // Oberfläche ändern.
-watch(options, (newOptions: OptionsDTO) => {
+watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
   update(newOptions);
 });
 

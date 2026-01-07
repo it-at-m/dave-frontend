@@ -267,7 +267,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -350,7 +350,7 @@ const minSizeBelastungsplanSvg = computed(() => {
   return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -417,7 +417,7 @@ const helpTextZeitreihe = computed(() => {
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
-function update(newOptions: OptionsDTO) {
+function update(newOptions: ZaehlstelleOptionsDTO) {
   newOptions.werteHundertRunden === null
     ? (werteHundertRunden.value = false)
     : (werteHundertRunden.value = newOptions.werteHundertRunden);
@@ -563,7 +563,7 @@ watch(zeitreiheGesamt, () => {
 
 // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
 // Oberfläche ändern.
-watch(options, (newOptions: OptionsDTO) => {
+watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
   update(newOptions);
 });
 

@@ -1,7 +1,7 @@
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 
-export default interface OptionsDTO {
+export default interface ZaehlstelleOptionsDTO {
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
   zeitblock: string;

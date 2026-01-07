@@ -418,7 +418,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -441,7 +441,7 @@ const zaehlstelleUtils = useZaehlstelleUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
 const emits = defineEmits<{
-  (e: "fahrzeugOptions", v: OptionsDTO): void;
+  (e: "fahrzeugOptions", v: ZaehlstelleOptionsDTO): void;
 }>();
 
 // Bei Auswahl der Checkbox für einen Differenzdatenvergleich werden die Werte für SV- und GV-Anteil in Prozent gespeichert,
@@ -450,7 +450,7 @@ const svAnteilForDifferenzdatenSaved = ref(true);
 const gvAnteilForDifferenzdatenSaved = ref(true);
 
 // Variablen für die Auswahloptionen
-const fahrzeugOptions = ref({} as OptionsDTO);
+const fahrzeugOptions = ref({} as ZaehlstelleOptionsDTO);
 
 const selectOrDeselectAllVmodel = ref(false);
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
@@ -478,7 +478,7 @@ onMounted(() => {
 });
 
 // reaktiver getter auf den Store
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -722,8 +722,8 @@ function selectOrDeselectAllVerkehrsarten() {
   }
 }
 
-function loadOptions(newOptions: OptionsDTO) {
-  const options = {} as OptionsDTO;
+function loadOptions(newOptions: ZaehlstelleOptionsDTO) {
+  const options = {} as ZaehlstelleOptionsDTO;
   Object.assign(options, newOptions);
   fahrzeugOptions.value = options;
   calculateSelectOrDeselect();
@@ -968,9 +968,11 @@ function calculateSelectOrDeselectVerkehrsarten() {
 }
 
 /**
- * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im OptionsDTO entsprechend der gewählten Zeitauswahl.
+ * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im ZaehlstelleOptionsDTO entsprechend der gewählten Zeitauswahl.
  */
-function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
+function adaptFahrzeugauswahl(
+  options: ZaehlstelleOptionsDTO
+): ZaehlstelleOptionsDTO {
   if (
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
@@ -1043,7 +1045,7 @@ watch(
 
 watch(
   options,
-  (newOptions: OptionsDTO) => {
+  (newOptions: ZaehlstelleOptionsDTO) => {
     loadOptions(newOptions);
   },
   { immediate: true }
