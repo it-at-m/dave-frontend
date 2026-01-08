@@ -190,7 +190,7 @@
         >
           <v-spacer />
           <v-col>
-            <optionsmenue :zaehlung="zaehlung" />
+            <optionsmenue-zaehlstelle />
           </v-col>
           <v-spacer />
         </v-row>
@@ -213,7 +213,7 @@ import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
+import OptionsmenueZaehlstelle from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";

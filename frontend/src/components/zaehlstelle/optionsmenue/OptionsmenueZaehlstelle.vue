@@ -39,23 +39,17 @@
             >
               <zeitauswahl-panel v-model="chosenOptions" />
 
-              <fahrzeug-panel
-                :actual-zeitauswahl="chosenOptions.zeitauswahl"
-                :is-differenzdatenvergleich-active="
-                  chosenOptions.differenzdatenDarstellen
-                "
-                @fahrzeug-options="updateOptions($event)"
-              />
+              <fahrzeug-panel v-model="chosenOptions" />
 
               <geometrie-panel
-                :zaehlung="zaehlung"
+                :zaehlung="activeZaehlung"
                 @von="setVon($event)"
                 @nach="setNach($event)"
                 @beide-richtungen="setBeideRichtungen($event)"
               />
 
               <zaehlungsvergleich-panel
-                :zaehlung="zaehlung"
+                :zaehlung="activeZaehlung"
                 @vergleichszaehlungs-id="setVergleichszaehlungsId($event)"
                 @differenzdaten-darstellen="setDifferenzdatenDarstellen($event)"
                 @id-vergleichszaehlung-zeitreihe="
@@ -141,11 +135,6 @@ import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
  * - Per Default werden anfangs nur KFZ, SV, GV, SV% und GV% angezeigt. Alle anderen Werte müssen vom Nutzer selbständig aktiviert werden.
  */
 
-interface Props {
-  zaehlung: LadeZaehlungDTO;
-}
-
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const snackbarStore = useSnackbarStore();
@@ -168,6 +157,10 @@ const getContentSheetHeight = computed(() => {
   return "500px";
 });
 
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
+});
+
 /**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
@@ -175,40 +168,42 @@ function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
-  if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+  if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     optionsCopy.zeitblock = Zeitblock.ZB_06_19;
   }
 
   if (
-    props.zaehlung.zaehlart === Zaehlart.R ||
-    props.zaehlung.zaehlart === Zaehlart.QR
+    activeZaehlung.value.zaehlart === Zaehlart.R ||
+    activeZaehlung.value.zaehlart === Zaehlart.QR
   ) {
-    if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
       optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
       optionsCopy.zeitblock = Zeitblock.ZB_06_22;
     } else if (
-      props.zaehlung.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
-      props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
+      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
+      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
     ) {
       optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
     }
     // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
   } else {
-    const zeitblockAvailable = !isEmpty(props.zaehlung.zeitauswahl?.blocks);
+    const zeitblockAvailable = !isEmpty(
+      activeZaehlung.value.zeitauswahl?.blocks
+    );
     if (
       zeitblockAvailable &&
-      props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
+      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
     ) {
-      const firstZeitblock = head(props.zaehlung.zeitauswahl?.blocks);
+      const firstZeitblock = head(activeZaehlung.value.zeitauswahl?.blocks);
       if (!isNil(firstZeitblock)) {
         optionsCopy.zeitblock = firstZeitblock;
       }
     }
   }
 
-  props.zaehlung.kategorien.forEach((fahr) => {
+  activeZaehlung.value.kategorien.forEach((fahr) => {
     switch (fahr) {
       // Verkehrsarten
       case Fahrzeug.KFZ:
@@ -228,52 +223,15 @@ function setDefaultOptionsForZaehlung() {
         break;
       case Fahrzeug.RAD:
         // Rad soll nur bei reinen Radzählungen aktiviert sein
-        optionsCopy.radverkehr = ["R", "QR"].includes(props.zaehlung.zaehlart);
+        optionsCopy.radverkehr = ["R", "QR"].includes(
+          activeZaehlung.value.zaehlart
+        );
         break;
     }
   });
   optionsCopy.beideRichtungen = false;
   chosenOptions.value = optionsCopy;
   saveOptions();
-}
-
-// // Event Methoden für die Zeitauswahl Komponente
-// function setZeitauswahl(event: string) {
-//   chosenOptions.value.zeitauswahl = event;
-//   zaehlstelleStore.setZeitauswahl(event);
-// }
-//
-// function setZeitblock(event: string) {
-//   chosenOptions.value.zeitblock = event;
-//   zaehlstelleStore.setZeitblock(event);
-// }
-//
-// function setIntervall(event: ZaehldatenIntervall) {
-//   if (event) {
-//     chosenOptions.value.intervall = event;
-//   }
-// }
-
-// Event Methode für die Fahrzeug Komponente
-function updateOptions(event: ZaehlstelleOptionsDTO) {
-  if (event) {
-    chosenOptions.value.kraftfahrzeugverkehr = event.kraftfahrzeugverkehr;
-    chosenOptions.value.schwerverkehr = event.schwerverkehr;
-    chosenOptions.value.gueterverkehr = event.gueterverkehr;
-    chosenOptions.value.schwerverkehrsanteilProzent =
-      event.schwerverkehrsanteilProzent;
-    chosenOptions.value.gueterverkehrsanteilProzent =
-      event.gueterverkehrsanteilProzent;
-    chosenOptions.value.radverkehr = event.radverkehr;
-    chosenOptions.value.fussverkehr = event.fussverkehr;
-
-    chosenOptions.value.personenkraftwagen = event.personenkraftwagen;
-    chosenOptions.value.lastkraftwagen = event.lastkraftwagen;
-    chosenOptions.value.lastzuege = event.lastzuege;
-    chosenOptions.value.busse = event.busse;
-    chosenOptions.value.kraftraeder = event.kraftraeder;
-    chosenOptions.value.pkwEinheiten = event.pkwEinheiten;
-  }
 }
 
 // Event-Methoden für die Geometrie Komponente
@@ -459,7 +417,7 @@ watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
 });
 
 watch(
-  () => props.zaehlung,
+  () => activeZaehlung.value,
   () => {
     if (zaehlstelleStore.isHistory) {
       zaehlstelleStore.reloadFilteroptions();
