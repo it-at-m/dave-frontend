@@ -1,44 +1,87 @@
-name: build maven and image
+name: build maven/ Docker image and publish with build number
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'What should the image be tagged as?'
-        required: false
-        default: 'dev'
+
+permissions:
+  packages: read
 
 env:
   IMAGE_NAME: "dave-frontend"
+  DOCKERHUB_USERNAME: starwit
+  DOCKERHUB_ORG: starwitorg
+ 
 
 jobs:
-  build-maven:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+  build:
+    name: "Build with Maven"
+    runs-on: [self-hosted, linux, X64]
     outputs:
-      ARTIFACT_NAME: ${{ steps.maven.outputs.artifact-name }}
-    steps:
-      - name: Build with Maven
-        id: maven
-        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.20
+      VERSION_BUILD: ${{ steps.get-version.outputs.VERSION_BUILD }}
 
-  build-image:
-    runs-on: ubuntu-latest
-    needs: build-maven
-    permissions:
-      packages: write
     steps:
-      - name: Build and push Docker image
-        uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.20
+      - name: Set up JDK 25
+        uses: actions/setup-java@v5
         with:
-          path: .
-          image-name: ${{ env.IMAGE_NAME }}
-          artifact-name: ${{ needs.build-maven.outputs.ARTIFACT_NAME }}
-          registry-username: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-tags: |
-            # use tag from input only if triggered by workflow_dispatch
-            type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event_name == 'workflow_dispatch' }}
-          image-labels: |
-            maintainer=it@m, Landeshauptstadt Muenchen (LHM)
+          distribution: "temurin"
+          java-version: 25
+
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.12
+
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - run: npm --version
+      - run: node --version
+      - run: mvn --version
+
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+
+      - name: Build with Maven
+        run: mvn clean -B package --file pom.xml
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: get version from pom.xml
+        id: get-version
+        run: |
+          echo "VERSION_BUILD=$( mvn org.apache.maven.plugins:maven-help-plugin:3.5.1:evaluate -Dexpression=project.version -q -DforceStdout )"  >> "$GITHUB_OUTPUT"
+
+  publish_docker:
+    name: "Build and publish docker"
+    needs: build
+    runs-on: [self-hosted, linux, X64]
+    env:
+      VERSION_BUILD: ${{ needs.build.outputs.VERSION_BUILD }}
+
+    steps:
+      - name: "echo version"
+        run: |
+          echo "Version is $VERSION_BUILD"
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          sbom: true
+          provenance: mode=max
+          tags: ${{ env.DOCKERHUB_ORG }}/${{ env.IMAGE_NAME }}:${{ env.VERSION_BUILD }}-${{ github.run_number }}

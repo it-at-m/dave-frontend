@@ -1,10 +1,18 @@
-name: compliance check and build test
+name: PR build - compliance check and build test
 
-on: [push]
+on:
+  push:
+  pull_request:
+    branches: [sprint,main]
+  workflow_dispatch:
+
+permissions:
+    packages: read
+    contents: read
 
 jobs:
   compliance:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
 
     steps:
       - name: Checkout code
@@ -12,18 +20,46 @@ jobs:
 
       - name: Advance Security Policy as Code
         uses: advanced-security/policy-as-code@v2.11.0
+        continue-on-error: true
         with:
           policy: GeekMasher/security-queries
           policy-path: $GITHUB_WORKSPACE/policies/default.yml
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-maven:
     needs: compliance
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    runs-on: [self-hosted, linux, X64]
     steps:
+      - name: Set up JDK 25
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: 25
+
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.12
+
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - run: npm --version
+      - run: node --version
+      - run: mvn --version
+
+      - name: checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: "0"
+
       - name: Build with Maven
-        id: maven
-        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.20
+        run: mvn clean -B install --file pom.xml
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

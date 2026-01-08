@@ -1,68 +1,121 @@
-name: release
+name: release & publish docker image
 
 on:
   workflow_dispatch:
     inputs:
-      releaseVersion:
-        description: "Version to use when preparing a release (e.g., 1.2.3)"
-        required: true
-        default: "2.1.0"
-      developmentVersion:
-        description: "Version to use for new local working copy (e.g., 1.2.4-SNAPSHOT)"
-        required: true
-        default: "2.2.0-SNAPSHOT"
-      use-pr:
-        description: "Use PR for version bump instead of direct push"
-        default: "true"
+      release-version: # id of input
+        description: "override default release version e.g. with 0.1.0-1"
+        required: false
 
 env:
   IMAGE_NAME: "dave-frontend"
+  RELEASE_VERSION: ${{ github.event.inputs.release-version }}
+  DOCKERHUB_USERNAME: starwit
+  DOCKERHUB_ORG: starwitorg
+
+permissions:
+  contents: write
+  packages: read
 
 jobs:
-  release-maven:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    outputs:
-      MVN_ARTIFACT_ID: ${{ steps.maven-release-step.outputs.MVN_ARTIFACT_ID }}
-      ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
-    env:
-      TZ: Europe/Berlin # timezone
+  build:
+    runs-on: [self-hosted, linux, X64]
     steps:
-      - id: maven-release-step
-        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@v1.0.20
+      - name: Set up JDK 25
+        uses: actions/setup-java@v5
         with:
-          app-path: ""
-          releaseVersion: ${{ github.event.inputs.releaseVersion }}
-          developmentVersion: ${{ github.event.inputs.developmentVersion }}
+          distribution: "temurin"
+          java-version: 25
 
-  build-image:
-    runs-on: ubuntu-latest
-    needs: release-maven
-    permissions:
-      packages: write
-    steps:
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.20
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
         with:
-          path: .
-          image-name: ${{ env.IMAGE_NAME }}
-          artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
-          registry-username: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-          image-tags: |
-            type=semver,pattern={{version}},value=${{ github.event.inputs.releaseVersion }}
-          image-labels: |
-            maintainer=it@m, Landeshauptstadt Muenchen (LHM)
+          maven-version: 3.9.12
 
-  create-github-release:
-    needs: ["release-maven", "build-image"]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Create GitHub Release
-        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@v1.0.20
+      - name: setup node
+        uses: actions/setup-node@v6
         with:
-          artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
-          tag-name: ${{ needs.release-maven.outputs.MVN_ARTIFACT_ID }}-${{ github.event.inputs.releaseVersion }}
-          artifact-path: "./target/*.jar"
+          node-version: 24
+
+      - run: npm --version
+      - run: node --version
+      - run: mvn --version
+
+      - name: checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: "0"
+
+      - name: Maven release pepare
+        run: |
+          git config --global user.email "code@starwit.de"
+          git config --global user.name "Starwit"
+          if [ ! -z "${{ env.RELEASE_VERSION }}" ]
+          then
+            echo "new version manually set to ${{ env.RELEASE_VERSION }}"
+            mvn -B build-helper:parse-version versions:set -DnewVersion=${{ env.RELEASE_VERSION }}-SNAPSHOT versions:commit --file pom.xml
+          fi
+          echo "mvn generate-sources --file pom.xml"
+          mvn generate-sources --file pom.xml
+          echo "git add ."
+          git add .
+          modifications=$(git status | grep "modified" || true)
+          if [ ! -z "$modifications" ]
+          then
+            echo "modifications found: $modifications"
+            git commit -m "modified changelog"
+            git push
+          fi
+          mvn -B release:clean release:prepare -Darguments="-DskipTests" --file pom.xml
+          mvn -B release:clean --file pom.xml
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get tag name
+        run: |
+          echo "TAG=$( git describe --abbrev=0 )" >> $GITHUB_ENV
+
+      - name: Create github release
+        run: gh release create ${{ env.TAG }} -F CHANGELOG.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout tag
+        run: |
+          git checkout ${{ env.TAG }}
+
+      - name: Build with Maven
+        run: mvn clean -B package --file pom.xml
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish_docker:
+    name: "Build and publish docker"
+    needs: build
+    runs-on: [self-hosted, linux, X64]
+
+    steps:
+      - name: Get tag name
+        run: |
+          echo "TAG=$( git describe --abbrev=0 )" >> $GITHUB_ENV
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./dockerfile
+          push: true
+          sbom: true
+          provenance: mode=max
+          tags: ${{ env.DOCKERHUB_ORG }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
