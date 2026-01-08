@@ -175,11 +175,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         ) as LadeZaehlungDTO[];
         inaktiveZaehlungen.value = iz.sort(LadeZaehlungComperator.sortByDatum);
         // Wenn inaktive Zählungen vorhanden sind, dann Wert auf true setzen
-        if (iz.length > 0) {
-          inaktiveZaehlungenVorhanden.value = true;
-        } else {
-          inaktiveZaehlungenVorhanden.value = false;
-        }
+        inaktiveZaehlungenVorhanden.value = iz.length > 0;
       }
     }
   }
