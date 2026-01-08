@@ -43,14 +43,7 @@
 
               <geometrie-panel v-model="chosenOptions" />
 
-              <zaehlungsvergleich-panel
-                :zaehlung="activeZaehlung"
-                @vergleichszaehlungs-id="setVergleichszaehlungsId($event)"
-                @differenzdaten-darstellen="setDifferenzdatenDarstellen($event)"
-                @id-vergleichszaehlung-zeitreihe="
-                  setIdVergleichszaehlungZeitreihe($event)
-                "
-              />
+              <zaehlungsvergleich-panel v-model="chosenOptions" />
 
               <darstellungsoptionen-panel
                 @werte-hundert-runden="setWerteHundertRunden($event)"
@@ -227,25 +220,6 @@ function setDefaultOptionsForZaehlung() {
   optionsCopy.beideRichtungen = false;
   chosenOptions.value = optionsCopy;
   saveOptions();
-}
-
-// Event-Methoden für die Vergleichs Komponente
-function setVergleichszaehlungsId(event: string) {
-  if (event) {
-    chosenOptions.value.vergleichszaehlungsId = event;
-  }
-}
-
-function setIdVergleichszaehlungZeitreihe(event: string) {
-  if (event) {
-    chosenOptions.value.idVergleichszaehlungZeitreihe = event;
-  }
-}
-
-function setDifferenzdatenDarstellen(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.differenzdatenDarstellen = event;
-  }
 }
 
 // Event-Methoden für die Darstellungsoptionen Komponente
