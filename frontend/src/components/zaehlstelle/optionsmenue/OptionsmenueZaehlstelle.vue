@@ -45,25 +45,7 @@
 
               <zaehlungsvergleich-panel v-model="chosenOptions" />
 
-              <darstellungsoptionen-panel
-                @werte-hundert-runden="setWerteHundertRunden($event)"
-                @black-print-mode="setBlackPrintMode($event)"
-                @mittelwert="setMittelwert($event)"
-                @stundensumme="setStundensumme($event)"
-                @blocksumme="setBlocksumme($event)"
-                @tagessumme="setTagessumme($event)"
-                @spitzenstunde="setSpitzenstunde($event)"
-                @spitzenstunde-kfz="setSpitzenstundeKfz($event)"
-                @spitzenstunde-rad="setSpitzenstundeRad($event)"
-                @spitzenstunde-fuss="setSpitzenstundeFuss($event)"
-                @ganglinie-y-achse1-max-value="
-                  setGanglinieYAchse1MaxValue($event)
-                "
-                @ganglinie-y-achse2-max-value="
-                  setGanglinieYAchse2MaxValue($event)
-                "
-                @zeitreihe-gesamt="setZeitreiheGesamt($event)"
-              />
+              <darstellungsoptionen-panel v-model="chosenOptions" />
             </v-expansion-panels>
           </v-sheet>
         </v-card-text>
@@ -220,85 +202,6 @@ function setDefaultOptionsForZaehlung() {
   optionsCopy.beideRichtungen = false;
   chosenOptions.value = optionsCopy;
   saveOptions();
-}
-
-// Event-Methoden für die Darstellungsoptionen Komponente
-function setWerteHundertRunden(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.werteHundertRunden = event;
-  }
-}
-
-function setBlackPrintMode(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.blackPrintMode = event;
-  }
-}
-
-function setMittelwert(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.mittelwert = event;
-  }
-}
-
-function setStundensumme(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.stundensumme = event;
-  }
-}
-
-function setBlocksumme(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.blocksumme = event;
-  }
-}
-
-function setTagessumme(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.tagessumme = event;
-  }
-}
-
-function setSpitzenstunde(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstunde = event;
-  }
-}
-
-function setSpitzenstundeKfz(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstundeKfz = event;
-  }
-}
-
-function setSpitzenstundeRad(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstundeRad = event;
-  }
-}
-
-function setSpitzenstundeFuss(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstundeFuss = event;
-  }
-}
-
-function setGanglinieYAchse1MaxValue(event: number | null) {
-  if (event != undefined) {
-    chosenOptions.value.ganglinieYAchse1MaxValue = event;
-  }
-}
-
-function setGanglinieYAchse2MaxValue(event: number | null) {
-  if (event != undefined) {
-    chosenOptions.value.ganglinieYAchse2MaxValue = event;
-  }
-}
-
-function setZeitreiheGesamt(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.zeitreiheGesamt = event;
-  }
 }
 
 /**

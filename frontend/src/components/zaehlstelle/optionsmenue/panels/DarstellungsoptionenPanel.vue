@@ -24,7 +24,7 @@
       >
         <v-col cols="4">
           <v-checkbox
-            v-model="werteHundertRunden"
+            v-model="chosenOptionsCopy.werteHundertRunden"
             class="mb-3"
             :label="'Werte auf 100 Runden'"
             hide-details
@@ -48,7 +48,7 @@
         </v-col>
         <v-col cols="4">
           <v-checkbox
-            v-model="blackPrintMode"
+            v-model="chosenOptionsCopy.blackPrintMode"
             class="mb-3"
             :label="'schwarz-weiß Druckausgabe'"
             hide-details
@@ -80,7 +80,7 @@
       >
         <v-col cols="4">
           <v-text-field
-            v-model="ganglinieYAchse1MaxValue"
+            v-model="chosenOptionsCopy.ganglinieYAchse1MaxValue"
             :label="'Y-Achse 1'"
             :rules="[
               (toCheck: string) =>
@@ -96,7 +96,7 @@
         </v-col>
         <v-col cols="4">
           <v-text-field
-            v-model="ganglinieYAchse2MaxValue"
+            v-model="chosenOptionsCopy.ganglinieYAchse2MaxValue"
             :label="'Y-Achse 2 (%)'"
             type="number"
             :rules="[
@@ -132,7 +132,7 @@
       >
         <v-col cols="4">
           <v-checkbox
-            v-model="stundensumme"
+            v-model="chosenOptionsCopy.stundensumme"
             :label="'Stundensumme'"
             hide-details
             color="quaternary"
@@ -141,7 +141,7 @@
             @mouseleave="hoverStundensumme = false"
           />
           <v-checkbox
-            v-model="blocksumme"
+            v-model="chosenOptionsCopy.blocksumme"
             class="mb-3"
             :label="'Blocksumme'"
             hide-details
@@ -153,7 +153,7 @@
         </v-col>
         <v-col cols="4">
           <v-checkbox
-            v-model="tagessumme"
+            v-model="chosenOptionsCopy.tagessumme"
             :label="'Tagessumme'"
             hide-details
             color="quaternary"
@@ -162,7 +162,7 @@
             @mouseleave="hoverTagessumme = false"
           />
           <v-checkbox
-            v-model="spitzenstunde"
+            v-model="chosenOptionsCopy.spitzenstunde"
             class="mb-3"
             :label="'Spitzenstunde'"
             hide-details
@@ -180,14 +180,14 @@
       </v-row>
 
       <panel-header
-        v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
+        v-if="!isZeitauswahlForSpitzenstunde && chosenOptionsCopy.spitzenstunde"
         font-size="0.875rem"
         font-weight="bold"
         padding="10px 0 0 0"
         header-text="Detailauswahl Listenausgabe"
       />
       <v-row
-        v-if="!isZeitauswahlForSpitzenstunde && spitzenstunde"
+        v-if="!isZeitauswahlForSpitzenstunde && chosenOptionsCopy.spitzenstunde"
         align="start"
         justify="center"
         dense
@@ -198,7 +198,7 @@
         <v-spacer />
         <v-col cols="4">
           <v-checkbox
-            v-model="spitzenstundeKfz"
+            v-model="chosenOptionsCopy.spitzenstundeKfz"
             :label="'Spitzenstunde KFZ'"
             hide-details
             color="quaternary"
@@ -206,7 +206,7 @@
             :disabled="isTypeKfzDisabled()"
           />
           <v-checkbox
-            v-model="spitzenstundeRad"
+            v-model="chosenOptionsCopy.spitzenstundeRad"
             :label="'Spitzenstunde Rad'"
             hide-details
             color="quaternary"
@@ -214,7 +214,7 @@
             :disabled="isTypeRadDisabled()"
           />
           <v-checkbox
-            v-model="spitzenstundeFuss"
+            v-model="chosenOptionsCopy.spitzenstundeFuss"
             :label="'Spitzenstunde Fuß'"
             hide-details
             color="quaternary"
@@ -244,7 +244,7 @@
       >
         <v-col cols="4">
           <v-checkbox
-            v-model="zeitreiheGesamt"
+            v-model="chosenOptionsCopy.zeitreiheGesamt"
             class="mb-3"
             :label="'Summe alle Verkehrsarten anzeigen'"
             hide-details
@@ -285,41 +285,12 @@ const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useValidationRules();
 
-const emits = defineEmits<{
-  (e: "werteHundertRunden", v: boolean): void;
-  (e: "blackPrintMode", v: boolean): void;
-  (e: "stundensumme", v: boolean): void;
-  (e: "blocksumme", v: boolean): void;
-  (e: "tagessumme", v: boolean): void;
-  (e: "spitzenstunde", v: boolean): void;
-  (e: "spitzenstundeKfz", v: boolean): void;
-  (e: "spitzenstundeRad", v: boolean): void;
-  (e: "spitzenstundeFuss", v: boolean): void;
-  (e: "ganglinieYAchse1MaxValue", v: number | null): void;
-  (e: "ganglinieYAchse2MaxValue", v: number | null): void;
-  (e: "zeitreiheGesamt", v: boolean): void;
-}>();
+const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+  required: true,
+});
 
 // Belastungsplan
-const werteHundertRunden = ref(false);
-const blackPrintMode = ref(false);
 const sizeBelastungsplan = ref(0);
-
-// Ganglinie
-const ganglinieYAchse1MaxValue = ref<number | null>(null);
-const ganglinieYAchse2MaxValue = ref<number | null>(null);
-
-// Listenausgabe
-const stundensumme = ref(false);
-const blocksumme = ref(false);
-const tagessumme = ref(false);
-const spitzenstunde = ref(false);
-const spitzenstundeKfz = ref(false);
-const spitzenstundeRad = ref(false);
-const spitzenstundeFuss = ref(false);
-
-// Zeitreihe
-const zeitreiheGesamt = ref(false);
 
 const hoverWerteHundertRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
@@ -334,7 +305,6 @@ const hoverYAchse2 = ref(false);
 const hoverZeitreiheGesamt = ref(false);
 
 onMounted(() => {
-  update(options.value);
   sizeBelastungsplan.value = sizeBelastungsplanSvg.value;
 });
 
@@ -350,16 +320,12 @@ const minSizeBelastungsplanSvg = computed(() => {
   return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
-const options = computed<ZaehlstelleOptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
-});
-
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isZeitauswahlForSpitzenstunde = computed(() => {
-  return zaehlstelleStore.getZeitauswahl.includes(SPITZENSTUNDE);
+  return chosenOptionsCopy.value.zeitauswahl.includes(SPITZENSTUNDE);
 });
 
 const helpTextBelastungsplan = computed(() => {
@@ -417,49 +383,49 @@ const helpTextZeitreihe = computed(() => {
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
-function update(newOptions: ZaehlstelleOptionsDTO) {
-  newOptions.werteHundertRunden === null
-    ? (werteHundertRunden.value = false)
-    : (werteHundertRunden.value = newOptions.werteHundertRunden);
-  newOptions.blackPrintMode === null
-    ? (blackPrintMode.value = false)
-    : (blackPrintMode.value = newOptions.blackPrintMode);
-  newOptions.stundensumme === null
-    ? (stundensumme.value = false)
-    : (stundensumme.value = newOptions.stundensumme);
-  newOptions.blocksumme === null
-    ? (blocksumme.value = false)
-    : (blocksumme.value = newOptions.blocksumme);
-  newOptions.tagessumme === null
-    ? (tagessumme.value = false)
-    : (tagessumme.value = newOptions.tagessumme);
-  newOptions.spitzenstunde === null
-    ? (spitzenstunde.value = false)
-    : (spitzenstunde.value = newOptions.spitzenstunde);
-  newOptions.spitzenstundeKfz === null
-    ? (spitzenstundeKfz.value = false)
-    : (spitzenstundeKfz.value = newOptions.spitzenstundeKfz);
-  newOptions.spitzenstundeRad === null
-    ? (spitzenstundeRad.value = false)
-    : (spitzenstundeRad.value = newOptions.spitzenstundeRad);
-  newOptions.spitzenstundeFuss === null
-    ? (spitzenstundeFuss.value = false)
-    : (spitzenstundeFuss.value = newOptions.spitzenstundeFuss);
-  newOptions.ganglinieYAchse1MaxValue === null
-    ? (ganglinieYAchse1MaxValue.value = null)
-    : (ganglinieYAchse1MaxValue.value = newOptions.ganglinieYAchse1MaxValue);
-  newOptions.ganglinieYAchse2MaxValue === null
-    ? (ganglinieYAchse2MaxValue.value = null)
-    : (ganglinieYAchse2MaxValue.value = newOptions.ganglinieYAchse2MaxValue);
-  newOptions.zeitreiheGesamt === null
-    ? (zeitreiheGesamt.value = false)
-    : (zeitreiheGesamt.value = newOptions.zeitreiheGesamt);
-}
+// function update(newOptions: ZaehlstelleOptionsDTO) {
+//   newOptions.werteHundertRunden === null
+//     ? (werteHundertRunden.value = false)
+//     : (werteHundertRunden.value = newOptions.werteHundertRunden);
+//   newOptions.blackPrintMode === null
+//     ? (blackPrintMode.value = false)
+//     : (blackPrintMode.value = newOptions.blackPrintMode);
+//   newOptions.stundensumme === null
+//     ? (stundensumme.value = false)
+//     : (stundensumme.value = newOptions.stundensumme);
+//   newOptions.blocksumme === null
+//     ? (blocksumme.value = false)
+//     : (blocksumme.value = newOptions.blocksumme);
+//   newOptions.tagessumme === null
+//     ? (tagessumme.value = false)
+//     : (tagessumme.value = newOptions.tagessumme);
+//   newOptions.spitzenstunde === null
+//     ? (spitzenstunde.value = false)
+//     : (spitzenstunde.value = newOptions.spitzenstunde);
+//   newOptions.spitzenstundeKfz === null
+//     ? (spitzenstundeKfz.value = false)
+//     : (spitzenstundeKfz.value = newOptions.spitzenstundeKfz);
+//   newOptions.spitzenstundeRad === null
+//     ? (spitzenstundeRad.value = false)
+//     : (spitzenstundeRad.value = newOptions.spitzenstundeRad);
+//   newOptions.spitzenstundeFuss === null
+//     ? (spitzenstundeFuss.value = false)
+//     : (spitzenstundeFuss.value = newOptions.spitzenstundeFuss);
+//   newOptions.ganglinieYAchse1MaxValue === null
+//     ? (ganglinieYAchse1MaxValue.value = null)
+//     : (ganglinieYAchse1MaxValue.value = newOptions.ganglinieYAchse1MaxValue);
+//   newOptions.ganglinieYAchse2MaxValue === null
+//     ? (ganglinieYAchse2MaxValue.value = null)
+//     : (ganglinieYAchse2MaxValue.value = newOptions.ganglinieYAchse2MaxValue);
+//   newOptions.zeitreiheGesamt === null
+//     ? (zeitreiheGesamt.value = false)
+//     : (zeitreiheGesamt.value = newOptions.zeitreiheGesamt);
+// }
 
 function isTypeKfzDisabled(): boolean {
   const disabled: boolean = isTypeDisabled("KFZ");
   if (disabled) {
-    spitzenstundeKfz.value = false;
+    chosenOptionsCopy.value.spitzenstundeKfz = false;
   }
   return disabled;
 }
@@ -467,7 +433,7 @@ function isTypeKfzDisabled(): boolean {
 function isTypeRadDisabled(): boolean {
   const disabled: boolean = isTypeDisabled("RAD");
   if (disabled) {
-    spitzenstundeRad.value = false;
+    chosenOptionsCopy.value.spitzenstundeRad = false;
   }
   return disabled;
 }
@@ -475,7 +441,7 @@ function isTypeRadDisabled(): boolean {
 function isTypeFussDisabled(): boolean {
   const disabled: boolean = isTypeDisabled("FUSS");
   if (disabled) {
-    spitzenstundeFuss.value = false;
+    chosenOptionsCopy.value.spitzenstundeFuss = false;
   }
   return disabled;
 }
@@ -489,82 +455,31 @@ function isTypeDisabled(type: string): boolean {
 }
 
 function checkRangeYAchse2() {
-  if (ganglinieYAchse2MaxValue.value) {
+  if (chosenOptionsCopy.value.ganglinieYAchse2MaxValue) {
     if (
-      !_.inRange(ganglinieYAchse2MaxValue.value, MIN_VALUE, MAX_VALUE_EXCLUDE)
+      !_.inRange(
+        chosenOptionsCopy.value.ganglinieYAchse2MaxValue,
+        MIN_VALUE,
+        MAX_VALUE_EXCLUDE
+      )
     ) {
-      ganglinieYAchse2MaxValue.value = null;
+      chosenOptionsCopy.value.ganglinieYAchse2MaxValue = null;
     }
   }
 }
 
 function checkRangeYAchse1() {
   if (
-    ganglinieYAchse1MaxValue.value &&
-    ganglinieYAchse1MaxValue.value < MIN_VALUE
+    chosenOptionsCopy.value.ganglinieYAchse1MaxValue &&
+    chosenOptionsCopy.value.ganglinieYAchse1MaxValue < MIN_VALUE
   ) {
-    ganglinieYAchse1MaxValue.value = null;
+    chosenOptionsCopy.value.ganglinieYAchse1MaxValue = null;
   }
 }
 
 // Watcher
-// Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
-watch(werteHundertRunden, () => {
-  emits("werteHundertRunden", werteHundertRunden.value);
-});
-
-watch(blackPrintMode, () => {
-  emits("blackPrintMode", blackPrintMode.value);
-});
-
 watch(sizeBelastungsplan, () => {
   zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
-});
-
-watch(stundensumme, () => {
-  emits("stundensumme", stundensumme.value);
-});
-
-watch(blocksumme, () => {
-  emits("blocksumme", blocksumme.value);
-});
-
-watch(tagessumme, () => {
-  emits("tagessumme", tagessumme.value);
-});
-
-watch(spitzenstunde, () => {
-  emits("spitzenstunde", spitzenstunde.value);
-});
-
-watch(spitzenstundeKfz, () => {
-  emits("spitzenstundeKfz", spitzenstundeKfz.value);
-});
-
-watch(spitzenstundeRad, () => {
-  emits("spitzenstundeRad", spitzenstundeRad.value);
-});
-
-watch(spitzenstundeFuss, () => {
-  emits("spitzenstundeFuss", spitzenstundeFuss.value);
-});
-
-watch(ganglinieYAchse1MaxValue, () => {
-  emits("ganglinieYAchse1MaxValue", ganglinieYAchse1MaxValue.value);
-});
-
-watch(ganglinieYAchse2MaxValue, () => {
-  emits("ganglinieYAchse2MaxValue", ganglinieYAchse2MaxValue.value);
-});
-
-watch(zeitreiheGesamt, () => {
-  emits("zeitreiheGesamt", zeitreiheGesamt.value);
-});
-
-// Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
-// Oberfläche ändern.
-watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
-  update(newOptions);
 });
 
 watch(sizeBelastungsplanSvg, (newSize: number) => {
