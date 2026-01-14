@@ -1,0 +1,135 @@
+# Default values for dave frontend.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: starwitorg/dave-frontend
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ${project.version}
+
+imagePullSecrets: []
+# nameOverride: ""
+# fullnameOverride: ""
+
+app:
+  server:
+    port: 8080
+  spring:
+    profile:
+      active: no-security, prod
+    cloud:
+      gateway:
+        actuator:
+          verbose:
+            enabled: true
+
+    routes:
+      SPRING_CLOUD_GATEWAY_ROUTES_0_ID: sso
+      SPRING_CLOUD_GATEWAY_ROUTES_0_URI: http://keycloak:8080/
+      SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0: Path=/api/sso/userinfo
+      SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0: RewritePath=/api/sso/userinfo, /auth/realms/<realm>/protocol/openid-connect/userinfo
+      SPRING_CLOUD_GATEWAY_ROUTES_1_ID: backend
+      SPRING_CLOUD_GATEWAY_ROUTES_1_URI: http://dave-backend-service:8080/
+      SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0: Path=/api/dave-backend-service/**
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_NAME: Retry
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_ARGS_RETRIES: "2"
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_ARGS_METHODS: GET,POST
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_ARGS_BACKOFF_FIRSTBACKOFF: 10ms
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_ARGS_BACKOFF_MAXBACKOFF: 50ms
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_ARGS_BACKOFF_FACTOR: "2"
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0_ARGS_BACKOFF_BASEDONPREVIOUSVALUE: "false"
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_1: RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
+      SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_2: RemoveResponseHeader=WWW-Authenticate
+      SPRING_CLOUD_GATEWAY_ROUTES_2_ID: eai
+      SPRING_CLOUD_GATEWAY_ROUTES_2_URI: http://dave-eai-service:8080/
+      SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0: Path=/api/dave-eai-service/**
+      SPRING_CLOUD_GATEWAY_ROUTES_2_METADATA_RESPONSETIMEOUT: "1800000"
+      SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0: RewritePath=/api/dave-eai-service/(?<urlsegments>.*), /$\{urlsegments}
+      SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_1: RemoveResponseHeader=WWW-Authenticate
+      SPRING_CLOUD_GATEWAY_DEFAULTFILTERS_0: RemoveResponseHeader=Expires
+      SPRING_CLOUD_GATEWAY_DEFAULTFILTERS_1: RemoveRequestHeader=cookie
+      SPRING_CLOUD_GATEWAY_DEFAULTFILTERS_2: RemoveRequestHeader=x-xsrf-token
+      SPRING_CLOUD_GATEWAY_DEFAULTFILTERS_3: TokenRelay=
+
+  log:
+    level:
+      root: info
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: dave-frontend.cluster.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: dave-frontend.cluster.local
+  #    hosts:
+  #      - dave-frontend.cluster.local
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+deploymentAnnotations: {}
+
+podSecurityContext: {}
+
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: service
+  - port: 5701
+    targetPort: 5701
+    protocol: TCP
+    name: hazelcast
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+extraEnvVars:
+#  - name: "TZ"
+#    value: "Europe/Berlin"
+
+extraVolumeMounts: []
+
+extraVolumes: []
+
+initContainers: []
+
+credentials:
+  # secret must contain keys USER_DN and PASSWORD for ldap authentication
+  existingSecret: ""
+
+serviceMonitor:
+  enabled: false

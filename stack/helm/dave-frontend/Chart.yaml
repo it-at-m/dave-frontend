@@ -1,0 +1,16 @@
+apiVersion: v2
+name: dave-frontend-chart
+description: DAVe traffic counting plattform, frontend
+type: application
+version: ${project.version}
+appVersion: "${project.version}"
+maintainers:
+  - name: klml
+    email: klml@muenchen.de
+  - name: Starwit Technologies GmbH
+    email: foss@starwit.de
+home: https://github.com/it-at-m/helm-charts/tree/main/charts/dave/charts/admin-portal
+#icon: https://raw.githubusercontent.com/it-at-m/helm-charts/main/images/logo.png
+sources:
+  - "https://github.com/it-at-m/helm-charts"
+  - "https://github.com/it-at-m/dave-admin-portal"
