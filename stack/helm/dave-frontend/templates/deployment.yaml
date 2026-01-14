@@ -71,6 +71,12 @@ spec:
               value: {{ $value | quote }}
             {{- end }}
             {{- end }}
+            {{- with .Values.app.spring.hazelcast }}
+            {{- range $name, $value := . }}
+            - name: {{ $name }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
             {{- with .Values.extraEnvVars }}
             {{- range $name, $value := . }}
             - name: {{ $name }}
