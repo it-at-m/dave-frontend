@@ -29,7 +29,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "daveFrontend.serviceAccountName" . }}
+      serviceAccountName: dave-hazelcast
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
