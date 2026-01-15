@@ -104,7 +104,7 @@ jobs:
 
       - name: run helm package
         working-directory: apigateway/target/helm
-        run: helm package dave-frontend
+        run: helm package dave-frontend-chart
 
       - name: get version number
         working-directory: apigateway/target/helm/dave-frontend

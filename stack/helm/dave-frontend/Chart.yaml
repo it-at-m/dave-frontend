@@ -2,10 +2,8 @@ apiVersion: v2
 name: dave-frontend-chart
 description: DAVe traffic counting plattform, frontend
 type: application
-#version: ${project.version}
-#appVersion: "${project.version}"
-version: 3.0.1
-appVersion: "3.0.1-SNAPSHOT-2"
+version: ${project.version}
+appVersion: "${project.version}"
 maintainers:
   - name: klml
     email: klml@muenchen.de
