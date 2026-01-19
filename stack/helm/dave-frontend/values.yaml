@@ -19,7 +19,7 @@ app:
     port: 8080
   spring:
     profile:
-      active: no-security, prod
+      active: prod
     cloud:
       gateway:
         actuator:
