@@ -63,8 +63,23 @@ spec:
               value: {{ .Values.app.log.level.root }}
             - name: SPRING_CLOUD_GATEWAY_ACTUATOR_VERBOSE_ENABLED
               value: {{ .Values.app.spring.cloud.gateway.actuator.verbose.enabled | quote }}
+            {{- if .Values.app.auth.enabled }}
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_PROVIDER
+              value: {{ .Values.app.auth.client.registration.keycloak.provider }}
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_AUTHORIZATION_GRANT_TYPE
+              value: {{ .Values.app.auth.client.registration.keycloak.authorization_grant_type }}
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID  
+              value: {{ .Values.app.auth.client.registration.keycloak.client_id }}
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET
+              value: {{ .Values.app.auth.client.registration.keycloak.client_secret }}
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_SCOPE
+              value: {{ .Values.app.auth.client.registration.keycloak.scope }}
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_MYKEYCLOAK_ISSUER_URI
+              value: {{ .Values.app.auth.client.provider.mykeycloak.issuer_uri }}
+            {{- else }}
             - name: SPRING_AUTOCONFIGURE_EXCLUDE 
               value: org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration
+            {{- end }}
             {{- with .Values.app.spring.routes }}
             {{- range $name, $value := . }}
             - name: {{ $name }}

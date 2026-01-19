@@ -58,6 +58,20 @@ app:
       HAZELCAST_INSTANCE: dave-frontend-apigateway-service-hazl_instance
       HAZELCAST_OPENSHIFT_SERVICE_NAME: dave-frontend-apigateway-service
 
+  auth:
+    enabled: true
+    client:
+      registration:
+        keycloak:
+          scope: openid
+          authorization_grant_type: authorization_code
+          provider: mykeycloak
+          client_secret: test
+          client_id: dave
+      provider:
+        mykeycloak:
+          issuer_uri: http://auth.cluster.local/auth/realms/realmname
+
   log:
     level:
       root: info
