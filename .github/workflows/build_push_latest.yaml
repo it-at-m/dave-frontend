@@ -85,3 +85,32 @@ jobs:
           sbom: true
           provenance: mode=max
           tags: ${{ env.DOCKERHUB_ORG }}/${{ env.IMAGE_NAME }}:${{ env.VERSION_BUILD }}-${{ github.run_number }}
+
+  publish_helm:
+    name: "Publish helm chart"
+    needs: build
+    runs-on: [self-hosted, linux, X64]
+
+    steps:
+      - name: get helm
+        uses: azure/setup-helm@v4
+
+      - name: login to Helm registry
+        run: helm registry login registry-1.docker.io -u starwit -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: run helm update
+        working-directory: apigateway/target/helm/dave-frontend
+        run: helm dep update
+
+      - name: run helm package
+        working-directory: apigateway/target/helm
+        run: helm package dave-frontend
+
+      - name: get version number
+        working-directory: apigateway/target/helm/dave-frontend
+        run: |
+          echo "HELM_VERSION=$(grep version: Chart.yaml | head -1 | awk '{print $2}')" >> $GITHUB_ENV
+
+      - name: run helm push
+        working-directory: apigateway/target/helm
+        run: helm push dave-frontend-chart-${{ env.HELM_VERSION }}.tgz oci://registry-1.docker.io/starwitorg

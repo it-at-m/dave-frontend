@@ -247,6 +247,41 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Generate Helm Chart -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>resources-helm-deployment</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/helm</outputDirectory>
+                            <delimiters>
+                                <delimiter>${*}</delimiter>
+                            </delimiters>
+                            <useDefaultDelimiters>false</useDefaultDelimiters>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.basedir}/../stack/helm
+                                    </directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.txt</include>
+                                        <include>**/*.yaml</include>
+                                        <include>**/*.yml</include>
+                                        <include>**/*.tpl</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

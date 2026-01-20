@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build-maven:
+  build:
     needs: compliance
     runs-on: [self-hosted, linux, X64]
     steps:
@@ -62,3 +62,20 @@ jobs:
         env:
           CI: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  check_helm:
+    name: "Check if Helm chart is correct"
+    needs: build
+    runs-on: [self-hosted, linux, X64]
+
+    steps:
+      - name: get helm
+        uses: azure/setup-helm@v4
+
+      - name: run helm dependency update
+        working-directory: apigateway/target/helm/dave-frontend
+        run: helm dep update
+
+      - name: run helm template
+        working-directory: apigateway/target/helm
+        run: helm template dave-frontend
