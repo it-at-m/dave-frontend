@@ -1,7 +1,7 @@
-import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
 import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
+import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
 
 export default interface ConfigurationDTO {
-  map: MapConfigurationDTO;
   zaehlstelle: ZaehlstelleConfigurationDTO;
+  tenant: TenantConfigurationDTO;
 }
