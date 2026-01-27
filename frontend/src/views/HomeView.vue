@@ -4,7 +4,7 @@
       ref="map"
       height="100%"
       width="100%"
-      :zoom="configurationStore.getMapConfiguration.zoom"
+      :zoom="configurationStore.getTenantConfiguration.mapConfiguration.zoom"
     />
 
     <v-speed-dial
