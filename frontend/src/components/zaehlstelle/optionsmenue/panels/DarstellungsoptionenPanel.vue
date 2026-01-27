@@ -381,47 +381,6 @@ const helpTextZeitreihe = computed(() => {
   return "";
 });
 
-// Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
-//  übergebenen Werten im Optionsobjekt
-// function update(newOptions: ZaehlstelleOptionsDTO) {
-//   newOptions.werteHundertRunden === null
-//     ? (werteHundertRunden.value = false)
-//     : (werteHundertRunden.value = newOptions.werteHundertRunden);
-//   newOptions.blackPrintMode === null
-//     ? (blackPrintMode.value = false)
-//     : (blackPrintMode.value = newOptions.blackPrintMode);
-//   newOptions.stundensumme === null
-//     ? (stundensumme.value = false)
-//     : (stundensumme.value = newOptions.stundensumme);
-//   newOptions.blocksumme === null
-//     ? (blocksumme.value = false)
-//     : (blocksumme.value = newOptions.blocksumme);
-//   newOptions.tagessumme === null
-//     ? (tagessumme.value = false)
-//     : (tagessumme.value = newOptions.tagessumme);
-//   newOptions.spitzenstunde === null
-//     ? (spitzenstunde.value = false)
-//     : (spitzenstunde.value = newOptions.spitzenstunde);
-//   newOptions.spitzenstundeKfz === null
-//     ? (spitzenstundeKfz.value = false)
-//     : (spitzenstundeKfz.value = newOptions.spitzenstundeKfz);
-//   newOptions.spitzenstundeRad === null
-//     ? (spitzenstundeRad.value = false)
-//     : (spitzenstundeRad.value = newOptions.spitzenstundeRad);
-//   newOptions.spitzenstundeFuss === null
-//     ? (spitzenstundeFuss.value = false)
-//     : (spitzenstundeFuss.value = newOptions.spitzenstundeFuss);
-//   newOptions.ganglinieYAchse1MaxValue === null
-//     ? (ganglinieYAchse1MaxValue.value = null)
-//     : (ganglinieYAchse1MaxValue.value = newOptions.ganglinieYAchse1MaxValue);
-//   newOptions.ganglinieYAchse2MaxValue === null
-//     ? (ganglinieYAchse2MaxValue.value = null)
-//     : (ganglinieYAchse2MaxValue.value = newOptions.ganglinieYAchse2MaxValue);
-//   newOptions.zeitreiheGesamt === null
-//     ? (zeitreiheGesamt.value = false)
-//     : (zeitreiheGesamt.value = newOptions.zeitreiheGesamt);
-// }
-
 function isTypeKfzDisabled(): boolean {
   const disabled: boolean = isTypeDisabled("KFZ");
   if (disabled) {
