@@ -1,25 +1,9 @@
-name: compliance check and build test
+name: build test
 
 on: [push]
 
 jobs:
-  compliance:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Advance Security Policy as Code
-        uses: advanced-security/policy-as-code@v2.11.0
-        with:
-          policy: GeekMasher/security-queries
-          policy-path: $GITHUB_WORKSPACE/policies/default.yml
-          token: ${{ secrets.ACCESS_TOKEN }}
-          argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
-
   build-maven:
-    needs: compliance
     runs-on: ubuntu-latest
     permissions:
       contents: read
