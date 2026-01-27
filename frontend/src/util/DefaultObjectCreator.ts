@@ -1,6 +1,7 @@
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
 import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
+import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
 import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
@@ -33,7 +34,6 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
-import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
 
 export default class DefaultObjectCreator {
   public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -329,7 +329,7 @@ export default class DefaultObjectCreator {
   public static createDefaultConfigurationDTO(): ConfigurationDTO {
     return {
       zaehlstelle: this.createDefaultZaehlstelleConfigurationDTO(),
-      tenant: this.createDefaultTenantConfigurationDTO()
+      tenant: this.createDefaultTenantConfigurationDTO(),
     };
   }
 
@@ -355,8 +355,7 @@ export default class DefaultObjectCreator {
   public static createDefaultTenantConfigurationDTO(): TenantConfigurationDTO {
     return {
       datenportalHeader: "Datenportal",
-      mapConfiguration: this.createDefaultMapConfigurationDTO()
-
+      mapConfiguration: this.createDefaultMapConfigurationDTO(),
     };
   }
 

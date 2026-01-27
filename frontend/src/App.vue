@@ -19,7 +19,12 @@
           >
             <v-toolbar-title class="text-white font-weight-medium">
               <span class="font-weight-medium">DAVe</span>
-              <span class="font-weight-thin"> | {{ configurationStore.getTenantConfiguration.datenportalHeader }}</span>
+              <span class="font-weight-thin">
+                |
+                {{
+                  configurationStore.getTenantConfiguration.datenportalHeader
+                }}</span
+              >
             </v-toolbar-title>
           </router-link>
         </v-col>
