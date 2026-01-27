@@ -971,7 +971,9 @@ function calculateSelectOrDeselectVerkehrsarten() {
  * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im OptionsDTO entsprechend der gewählten Zeitauswahl.
  */
 function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
+  // Alles Zurücksetzten, wenn es sich um die Spitzenstunde handelt
   if (
+    options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
@@ -985,19 +987,19 @@ function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
     options.lastzuege = false;
     options.busse = false;
     options.kraftraeder = false;
-  } else {
-    options.kraftfahrzeugverkehr = true;
-    options.schwerverkehr = true;
-    options.gueterverkehr = true;
-    options.schwerverkehrsanteilProzent = true;
-    options.gueterverkehrsanteilProzent = true;
-  }
-  if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD) {
-    options.radverkehr = true;
-    options.fussverkehr = false;
-  } else if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS) {
     options.radverkehr = false;
-    options.fussverkehr = true;
+    options.fussverkehr = false;
+  }
+  if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ) {
+    options.kraftfahrzeugverkehr = !isTypeDisabled(Fahrzeug.KFZ);
+    options.schwerverkehr = !isTypeDisabled(Fahrzeug.SV);
+    options.gueterverkehr = !isTypeDisabled(Fahrzeug.GV);
+    options.schwerverkehrsanteilProzent = !isTypeDisabled(Fahrzeug.SV_P);
+    options.gueterverkehrsanteilProzent = !isTypeDisabled(Fahrzeug.GV_P);
+  } else if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD) {
+    options.radverkehr = !isTypeDisabled(Fahrzeug.RAD);
+  } else if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS) {
+    options.fussverkehr = !isTypeDisabled(Fahrzeug.FUSS);
   }
   return options;
 }
