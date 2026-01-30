@@ -260,7 +260,7 @@
                 :hint="getHintToDisplay('FUSS')"
                 :color="getCheckboxColor('FUSS')"
                 :persistent-hint="
-                  chosenOptionsCopy.gueterverkehrsanteilProzent ||
+                  chosenOptionsCopy.fussverkehr ||
                   isTypeDisabled('FUSS') ||
                   isTageswertAndNot24h
                 "
