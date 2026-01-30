@@ -382,27 +382,15 @@ const helpTextZeitreihe = computed(() => {
 });
 
 function isTypeKfzDisabled(): boolean {
-  const disabled: boolean = isTypeDisabled("KFZ");
-  if (disabled) {
-    chosenOptionsCopy.value.spitzenstundeKfz = false;
-  }
-  return disabled;
+  return isTypeDisabled("KFZ");
 }
 
 function isTypeRadDisabled(): boolean {
-  const disabled: boolean = isTypeDisabled("RAD");
-  if (disabled) {
-    chosenOptionsCopy.value.spitzenstundeRad = false;
-  }
-  return disabled;
+  return isTypeDisabled("RAD");
 }
 
 function isTypeFussDisabled(): boolean {
-  const disabled: boolean = isTypeDisabled("FUSS");
-  if (disabled) {
-    chosenOptionsCopy.value.spitzenstundeFuss = false;
-  }
-  return disabled;
+  return isTypeDisabled("FUSS");
 }
 
 /**
@@ -444,4 +432,20 @@ watch(sizeBelastungsplan, () => {
 watch(sizeBelastungsplanSvg, (newSize: number) => {
   sizeBelastungsplan.value = newSize;
 });
+
+watch(
+  () => activeZaehlung.value,
+  () => {
+    if (isTypeDisabled("KFZ")) {
+      chosenOptionsCopy.value.spitzenstundeKfz = false;
+    }
+    if (isTypeDisabled("RAD")) {
+      chosenOptionsCopy.value.spitzenstundeRad = false;
+    }
+    if (isTypeDisabled("FUSS")) {
+      chosenOptionsCopy.value.spitzenstundeFuss = false;
+    }
+  },
+  { immediate: true }
+);
 </script>
