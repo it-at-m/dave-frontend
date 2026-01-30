@@ -17,7 +17,7 @@ import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 
 interface Props {
@@ -156,8 +156,8 @@ function drawArrowsPointingSouth(
 ) {
   const arrayOfDataForDirectionSouth = groupedByDirection.find(
     (obj) =>
-      obj.direction === Himmelsrichtungen.SUED ||
-      obj.direction === Himmelsrichtungen.WEST
+      obj.direction === Himmelsrichtung.SUED ||
+      obj.direction === Himmelsrichtung.WEST
   );
   arrayOfDataForDirectionSouth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -195,8 +195,8 @@ function drawArrowsPointingNorth(
 ) {
   const arrayOfDataForDirectionNorth = groupedByDirection.find(
     (obj) =>
-      obj.direction === Himmelsrichtungen.NORD ||
-      obj.direction === Himmelsrichtungen.OST
+      obj.direction === Himmelsrichtung.NORD ||
+      obj.direction === Himmelsrichtung.OST
   );
   arrayOfDataForDirectionNorth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -231,8 +231,8 @@ function rotateArrowsIfNecessary() {
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
       .direction;
   if (
-    direction === Himmelsrichtungen.OST ||
-    direction === Himmelsrichtungen.WEST
+    direction === Himmelsrichtung.OST ||
+    direction === Himmelsrichtung.WEST
   ) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
