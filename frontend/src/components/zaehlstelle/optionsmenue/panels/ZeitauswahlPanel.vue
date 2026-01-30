@@ -335,14 +335,20 @@ function zeitauswahlChanged() {
     chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
   }
   // Der erste Eintrag wird als ausgewählt gesetzt
-  if (isZeitauswahlSpitzenstundeOrBlock.value) {
+  if (
+    isZeitauswahlSpitzenstundeOrBlock.value &&
+    zeitblockValues.value.length > 0
+  ) {
     const zb = zeitblockInfo.get(zeitblockValues.value[0].value)?.value;
     if (zb) {
       chosenOptionsCopy.value.zeitblock = zb;
     }
   }
   //Der erste Eintrag wird als ausgewählt gesetzt
-  if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
+  if (
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE &&
+    stuendlichValues.value.length > 0
+  ) {
     const zs = zeitblockStuendlichInfo.get(
       stuendlichValues.value[0].value
     )?.value;
