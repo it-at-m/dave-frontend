@@ -486,7 +486,7 @@ function getMetaHeader(): Array<string> {
   if (isNotTagesWert.value) {
     data.push(`Stunde / Block`);
   }
-  data.push(`Fahrbeziehung`);
+  data.push(`Verkehrsbeziehung`);
   return data;
 }
 
@@ -507,15 +507,15 @@ function getMetaData(): Array<string> {
       data.push("unbekannt");
     }
   }
-  const fahrbeziehung: Array<string> = [];
-  fahrbeziehung.push(
+  const verkehrsbeziehung: Array<string> = [];
+  verkehrsbeziehung.push(
     `Von: ${filterOptions.value.vonKnotenarm ? filterOptions.value.vonKnotenarm : "Alle"}`
   );
-  fahrbeziehung.push(` - `);
-  fahrbeziehung.push(
+  verkehrsbeziehung.push(` - `);
+  verkehrsbeziehung.push(
     `Nach: ${filterOptions.value.nachKnotenarm ? filterOptions.value.nachKnotenarm : "Alle"}`
   );
-  data.push(fahrbeziehung.join(""));
+  data.push(verkehrsbeziehung.join(""));
   return data;
 }
 
