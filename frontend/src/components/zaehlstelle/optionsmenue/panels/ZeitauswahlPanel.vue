@@ -306,7 +306,7 @@ const stuendlichValues = computed<Array<KeyVal>>(() => {
   // die möglichen Stunden aus der Zählung
   const hrs = activeZaehlung.value.zeitauswahl.hours as ZeitblockStuendlich[];
 
-  if (hrs && typeof Array.isArray(hrs)) {
+  if (hrs && Array.isArray(hrs)) {
     // Select Control mit den entsprechenden text/value Werten füllen
     hrs.forEach((h) => {
       const kv = zeitblockStuendlichInfo.get(h);
