@@ -36,6 +36,7 @@
                 <v-radio
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
+                  :disabled="isTeilzaehlungFussverkehr || isOnlyFussgaengerSelected"
                   @mouseover="hoverTageswert = true"
                   @mouseleave="hoverTageswert = false"
                 />
@@ -162,11 +163,12 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { isEmpty } from "lodash";
-import { computed, ref } from "vue";
+import {computed, ref, watch} from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -195,6 +197,22 @@ const hoverSelectStunde = ref(false);
 
 // Zeitintervall
 const hoverSelectZeitintervall = ref(false);
+
+const isTeilzaehlungFussverkehr = computed(() => {
+  return (activeZaehlung.value.kategorien.length === 1 &&
+      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN);
+});
+
+const isOnlyFussgaengerSelected = computed(() => {
+  return chosenOptionsCopy.value.fussverkehr && !(
+      chosenOptionsCopy.value.kraftfahrzeugverkehr &&
+      chosenOptionsCopy.value.schwerverkehr &&
+      chosenOptionsCopy.value.gueterverkehr &&
+      chosenOptionsCopy.value.radverkehr &&
+      chosenOptionsCopy.value.schwerverkehrsanteilProzent &&
+      chosenOptionsCopy.value.gueterverkehrsanteilProzent);
+});
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -364,5 +382,34 @@ function zeitauswahlChanged() {
  */
 function isTypeDisabled(type: string): boolean {
   return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
+}
+
+watch(
+    chosenOptionsCopy,
+    () => {
+      adaptZeitauswahl(chosenOptionsCopy.value);
+    },
+    { deep: true }
+);
+
+/**
+ * Steuert die Zeitauswahl im ZaehlstelleOptionsDTO entsprechend der gewählten anderen Optionen.
+ */
+function adaptZeitauswahl(
+    options: ZaehlstelleOptionsDTO
+): ZaehlstelleOptionsDTO {
+  console.log("adaptZeitauswahl")
+  // wird eine alleinige Auswahl Fußverkehr neu eingestellt -> Änderung der Zeiteinstellung auf maximaler Block (6-19)
+  if (options.fussverkehr && !(
+      options.kraftfahrzeugverkehr &&
+      options.schwerverkehr &&
+      options.gueterverkehr &&
+      options.radverkehr &&
+      options.schwerverkehrsanteilProzent &&
+      options.gueterverkehrsanteilProzent)){
+    options.zeitauswahl = Zeitauswahl.BLOCK;
+    options.zeitblock = Zeitblock.ZB_06_19;
+  }
+  return options;
 }
 </script>

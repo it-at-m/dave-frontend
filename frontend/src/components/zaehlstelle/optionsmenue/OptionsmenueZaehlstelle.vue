@@ -127,6 +127,12 @@ const getContentSheetHeight = computed(() => {
   return "500px";
 });
 
+const isTeilzaehlungFussverkehr = computed(() => {
+  return activeZaehlung.value.kategorien.length === 1 &&
+      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN;
+});
+
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
@@ -199,6 +205,12 @@ function setDefaultOptionsForZaehlung() {
         break;
     }
   });
+
+  if (isTeilzaehlungFussverkehr.value) {
+    optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
+    optionsCopy.zeitblock = Zeitblock.ZB_06_19;
+  }
+
   optionsCopy.beideRichtungen = false;
   chosenOptions.value = optionsCopy;
   saveOptions();
