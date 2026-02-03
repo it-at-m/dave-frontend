@@ -41,17 +41,17 @@
             header-text="(Anzeige nur im Belastungsplan)"
           />
           <v-checkbox
-            v-model="differenzdatenDarstellen"
+            v-model="chosenOptionsCopy.differenzdatenDarstellen"
             color="quaternary"
             :label="'Differenzdaten darstellen'"
             @mouseover="hoverCheckbox = true"
             @mouseleave="hoverCheckbox = false"
           />
-          <div v-if="differenzdatenDarstellen">
+          <div v-if="chosenOptionsCopy.differenzdatenDarstellen">
             <v-select
-              v-model="vergleichszaehlungsId"
+              v-model="chosenOptionsCopy.vergleichszaehlungsId"
               :items="vergleichsdatum"
-              :disabled="!differenzdatenDarstellen"
+              :disabled="!chosenOptionsCopy.differenzdatenDarstellen"
               no-data-text="Keine Vergleichszählungen vorhanden"
               label="Vergleichsdatum Differenzdaten"
               variant="filled"
@@ -69,7 +69,7 @@
           />
 
           <v-select
-            v-model="idVergleichszaehlungZeitreihe"
+            v-model="chosenOptionsCopy.idVergleichszaehlungZeitreihe"
             :items="vergleichsdatumZeitreihe"
             no-data-text="Keine Vergleichszählungen vorhanden"
             label="Vergleichsdatum Zeitreihe"
@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -102,29 +102,15 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useDateUtils } from "@/util/DateUtils";
 
-interface Props {
-  zaehlung: LadeZaehlungDTO;
-}
+const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+  required: true,
+});
 
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
-const emits = defineEmits<{
-  (e: "vergleichszaehlungsId", v: string): void;
-  (e: "differenzdatenDarstellen", v: boolean): void;
-  (e: "idVergleichszaehlungZeitreihe", v: string): void;
-}>();
 
-const vergleichszaehlungsId = ref("");
-const differenzdatenDarstellen = ref(false);
 const vergleichsdatumDifferenzdarstellung = ref(new Array<KeyVal>());
-
-// Zeitreihe
 const vergleichsdatumZeitreihe = ref(new Array<KeyVal>());
-const idVergleichszaehlungZeitreihe = ref("");
-
-const currentZeitblock = ref("");
-const currentZeitauswahl = ref(Zeitauswahl.TAGESWERT.valueOf());
 
 const hoverSelectBasisdatum = ref(false);
 const hoverSelectVergleichsdatum = ref(false);
@@ -132,19 +118,11 @@ const hoverCheckbox = ref(false);
 const hoverSelectVergleichsdatumZeitreihe = ref(false);
 
 onMounted(() => {
-  update(options.value);
+  initData();
 });
 
-const options = computed<OptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
-});
-
-const zeitblock = computed(() => {
-  return zaehlstelleStore.getZeitblock;
-});
-
-const zeitauswahl = computed(() => {
-  return zaehlstelleStore.getZeitauswahl;
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
 });
 
 /**
@@ -152,9 +130,9 @@ const zeitauswahl = computed(() => {
  */
 const basisdatum = computed(() => {
   let result = "";
-  if (props.zaehlung.datum) {
+  if (activeZaehlung.value.datum) {
     result = dateUtils.getShortVersionOfDate(
-      dateUtils.getDatumOfString(props.zaehlung.datum)
+      dateUtils.getDatumOfString(activeZaehlung.value.datum)
     );
   }
   return result;
@@ -189,22 +167,9 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
-function update(newOptions: OptionsDTO) {
-  vergleichsdatumCalculator(newOptions.zeitblock, newOptions.zeitauswahl);
-  zeitreihenVergleichsdatumCalculator(
-    newOptions.zeitblock,
-    newOptions.zeitauswahl
-  );
-  newOptions.vergleichszaehlungsId === null
-    ? (vergleichszaehlungsId.value = "")
-    : (vergleichszaehlungsId.value = newOptions.vergleichszaehlungsId);
-  newOptions.differenzdatenDarstellen === null
-    ? (differenzdatenDarstellen.value = false)
-    : (differenzdatenDarstellen.value = newOptions.differenzdatenDarstellen);
-  newOptions.idVergleichszaehlungZeitreihe === null
-    ? (idVergleichszaehlungZeitreihe.value = "")
-    : (idVergleichszaehlungZeitreihe.value =
-        newOptions.idVergleichszaehlungZeitreihe);
+function initData() {
+  vergleichsdatumCalculator();
+  zeitreihenVergleichsdatumCalculator();
 }
 
 /**
@@ -213,24 +178,19 @@ function update(newOptions: OptionsDTO) {
  * - Welche nicht die selbe ID bezsitzt wie die Basiszählung.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
- *
- * @param newZeitblock zur Ermittlung der relevanten Zählungen.
- * @param newZeitauswahl zur Ermittlung der relevanten Zählungen.
  */
-function vergleichsdatumCalculator(
-  newZeitblock: string,
-  newZeitauswahl: string
-): void {
+function vergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
   const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
-  if (props.zaehlung.id) {
+  if (activeZaehlung.value.id) {
     zaehlungen.forEach((zaehl) => {
       if (
-        zaehl.id !== props.zaehlung.id &&
-        zaehl.zaehlart === props.zaehlung.zaehlart &&
-        zaehl.sonderzaehlung === props.zaehlung.sonderzaehlung &&
-        (containsZeitblock(zaehl, newZeitblock) ||
-          newZeitauswahl.toString() === Zeitauswahl.TAGESWERT.toString())
+        zaehl.id !== activeZaehlung.value.id &&
+        zaehl.zaehlart === activeZaehlung.value.zaehlart &&
+        zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
+        (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
+          chosenOptionsCopy.value.zeitauswahl.toString() ===
+            Zeitauswahl.TAGESWERT.toString())
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -251,21 +211,22 @@ function vergleichsdatumCalculator(
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
  * */
-function zeitreihenVergleichsdatumCalculator(
-  newZeitblock: string,
-  newZeitauswahl: string
-): void {
+function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
   const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
-  if (props.zaehlung.id != undefined && props.zaehlung.datum != undefined) {
+  if (
+    activeZaehlung.value.id != undefined &&
+    activeZaehlung.value.datum != undefined
+  ) {
     zaehlungen.forEach((zaehl) => {
       if (
-        zaehl.id !== props.zaehlung.id &&
-        zaehl.datum <= props.zaehlung!.datum &&
-        zaehl.zaehlart === props.zaehlung.zaehlart &&
-        zaehl.sonderzaehlung === props.zaehlung.sonderzaehlung &&
-        (containsZeitblock(zaehl, newZeitblock) ||
-          newZeitauswahl.toString() === Zeitauswahl.TAGESWERT.toString())
+        zaehl.id !== activeZaehlung.value.id &&
+        zaehl.datum <= activeZaehlung.value!.datum &&
+        zaehl.zaehlart === activeZaehlung.value.zaehlart &&
+        zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
+        (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
+          chosenOptionsCopy.value.zeitauswahl.toString() ===
+            Zeitauswahl.TAGESWERT.toString())
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -302,37 +263,11 @@ function containsZeitblock(
 
 // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
 // Oberfläche ändern.
-watch(options, (newOptions: OptionsDTO) => {
-  update(newOptions);
-});
-
-watch(vergleichszaehlungsId, () => {
-  emits("vergleichszaehlungsId", vergleichszaehlungsId.value);
-});
-
-watch(differenzdatenDarstellen, () => {
-  emits("differenzdatenDarstellen", differenzdatenDarstellen.value);
-});
-
-watch(idVergleichszaehlungZeitreihe, () => {
-  emits("idVergleichszaehlungZeitreihe", idVergleichszaehlungZeitreihe.value);
-});
-
-watch(zeitblock, (newZeitblock: string) => {
-  currentZeitblock.value = newZeitblock;
-  vergleichsdatumCalculator(currentZeitblock.value, currentZeitauswahl.value);
-  zeitreihenVergleichsdatumCalculator(
-    currentZeitblock.value,
-    currentZeitauswahl.value
-  );
-});
-
-watch(zeitauswahl, (newZeitauswahl: string) => {
-  currentZeitauswahl.value = newZeitauswahl;
-  vergleichsdatumCalculator(currentZeitblock.value, currentZeitauswahl.value);
-  zeitreihenVergleichsdatumCalculator(
-    currentZeitblock.value,
-    currentZeitauswahl.value
-  );
-});
+watch(
+  chosenOptionsCopy,
+  () => {
+    initData();
+  },
+  { deep: true }
+);
 </script>

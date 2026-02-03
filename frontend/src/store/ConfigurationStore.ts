@@ -10,19 +10,19 @@ export const useConfigurationStore = defineStore("configurationStore", () => {
     DefaultObjectCreator.createDefaultConfigurationDTO()
   );
 
-  const getMapConfiguration = computed(() => configuration.value.map);
-
   const getZaehlstelleConfiguration = computed(
     () => configuration.value.zaehlstelle
   );
+
+  const getTenantConfiguration = computed(() => configuration.value.tenant);
 
   function setConfiguration(payload: ConfigurationDTO) {
     configuration.value = payload;
   }
 
   return {
-    getMapConfiguration,
     getZaehlstelleConfiguration,
+    getTenantConfiguration,
     setConfiguration,
   };
 });
