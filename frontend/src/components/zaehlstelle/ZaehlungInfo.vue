@@ -190,7 +190,7 @@
         >
           <v-spacer />
           <v-col>
-            <optionsmenue :zaehlung="zaehlung" />
+            <optionsmenue-zaehlstelle />
           </v-col>
           <v-spacer />
         </v-row>
@@ -200,8 +200,8 @@
 </template>
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import _ from "lodash";
 import { computed, ref, watch } from "vue";
@@ -213,7 +213,7 @@ import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
 import ZaehlartIcon from "@/components/zaehlstelle/icons/ZaehlartIcon.vue";
 import ZaehldauerIcon from "@/components/zaehlstelle/icons/ZaehldauerIcon.vue";
 import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
-import Optionsmenue from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
+import OptionsmenueZaehlstelle from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
@@ -268,7 +268,7 @@ const sortedKnotenarme = computed(() => {
 /**
  * Die aktuell eingestellten Optionen werden aus dem Store geladen.
  */
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

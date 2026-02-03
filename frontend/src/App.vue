@@ -19,7 +19,12 @@
           >
             <v-toolbar-title class="text-white font-weight-medium">
               <span class="font-weight-medium">DAVe</span>
-              <span class="font-weight-thin"> | {{ configurationStore.getTenantConfiguration.datenportalHeader }}</span>
+              <span class="font-weight-thin">
+                |
+                {{
+                  configurationStore.getTenantConfiguration.datenportalHeader
+                }}</span
+              >
             </v-toolbar-title>
           </router-link>
         </v-col>
@@ -94,8 +99,8 @@ import InfoMessage from "@/components/app/InfoMessage.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
 import SearchInputField from "@/components/search/SearchInputField.vue";
-import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useConfigurationStore } from "@/store/ConfigurationStore";
+import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { useSearchStore } from "@/store/SearchStore";
