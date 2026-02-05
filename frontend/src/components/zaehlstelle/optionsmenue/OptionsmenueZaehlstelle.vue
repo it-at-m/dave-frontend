@@ -77,6 +77,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
+import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -88,6 +89,10 @@ import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/Zeita
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
+import Zaehlart from "@/types/enum/Zaehlart";
+import Zaehldauer from "@/types/enum/Zaehldauer";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -159,7 +164,6 @@ function setDefaultOptionsForZaehlung() {
         break;
     }
   });
-
   optionsCopy.beideRichtungen = false;
   chosenOptions.value = optionsCopy;
   saveOptions();
