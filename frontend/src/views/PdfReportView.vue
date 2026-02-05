@@ -217,7 +217,7 @@
 </template>
 
 <script lang="ts" setup>
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -259,7 +259,7 @@ const headingAsset = ref<HeadingAsset>(
 );
 const textAsset = ref<TextAsset>(new TextAsset(""));
 const datatableAsset = ref<DatatableAsset>(
-  new DatatableAsset({} as OptionsDTO, "", "")
+  new DatatableAsset({} as ZaehlstelleOptionsDTO, "", "")
 );
 
 const assetId = ref(0);

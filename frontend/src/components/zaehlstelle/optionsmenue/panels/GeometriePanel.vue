@@ -47,7 +47,7 @@
           />
           <v-checkbox
             v-if="beideRichtungenAnzeigen"
-            v-model="beideRichtungen"
+            v-model="chosenOptionsCopy.beideRichtungen"
             class="mb-3"
             :label="'Zulaufend/Ablaufend'"
             hide-details
@@ -78,26 +78,20 @@ import type KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
 import type LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import _, { isNil } from "lodash";
+import { isNil, union } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 
-interface Props {
-  zaehlung: LadeZaehlungDTO;
-}
+const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+  required: true,
+});
 
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
-const emits = defineEmits<{
-  (e: "beideRichtungen", v: boolean): void;
-  (e: "von", v: Array<number>): void;
-  (e: "nach", v: Array<number>): void;
-}>();
 
 /**
  * Je im von-Dropdown wählbaren Knotenarm werden die für den nach-Dropdown möglichen Zielknotenarme vorgehalten.
@@ -119,13 +113,13 @@ const nach = ref(0);
 
 const alle = { nummer: 0, strassenname: "Alle Knotenarme" };
 
-const beideRichtungen = ref(false);
+// const beideRichtungen = ref(false);
 const hoverSelectVon = ref(false);
 const hoverSelectNach = ref(false);
 const hoverBeideRichtungen = ref(false);
 
-const options = computed<OptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
 });
 
 // Lädt die "von" Knotenarme für den aktuell gewählten "nach" Knotenarm
@@ -168,20 +162,23 @@ const beideRichtungenAnzeigen = computed(() => {
   return von.value > 0 || nach.value > 0;
 });
 
-watch(options, (newOptions) => {
-  reset(newOptions);
-});
+watch(
+  chosenOptionsCopy,
+  () => {
+    reset();
+  },
+  { deep: true }
+);
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
-//  übergebenen Werten im Optionsobjekt
-function reset(fo: OptionsDTO) {
-  fo.vonKnotenarm === null ? (von.value = 0) : (von.value = fo.vonKnotenarm);
-  fo.nachKnotenarm === null
+//  Werten im Optionsobjekt
+function reset() {
+  chosenOptionsCopy.value.vonKnotenarm === null
+    ? (von.value = 0)
+    : (von.value = chosenOptionsCopy.value.vonKnotenarm);
+  chosenOptionsCopy.value.nachKnotenarm === null
     ? (nach.value = 0)
-    : (nach.value = fo.nachKnotenarm);
-  fo.beideRichtungen === null
-    ? (beideRichtungen.value = false)
-    : (beideRichtungen.value = fo.beideRichtungen);
+    : (nach.value = chosenOptionsCopy.value.nachKnotenarm);
 }
 
 /**
@@ -197,7 +194,7 @@ function reset(fo: OptionsDTO) {
 function initFahrbeziehungen(): void {
   // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
   const knotenarme: Map<number, string> = new Map<number, string>(
-    props.zaehlung.knotenarme.map((knotenarm) => [
+    activeZaehlung.value.knotenarme.map((knotenarm) => [
       knotenarm.nummer,
       knotenarm.nummer + " - " + knotenarm.strassenname,
     ])
@@ -211,7 +208,7 @@ function initFahrbeziehungen(): void {
 
   // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
   // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
-  const fahrbeziehungen = props.zaehlung.fahrbeziehungen;
+  const fahrbeziehungen = activeZaehlung.value.fahrbeziehungen;
   if (fahrbeziehungen && Array.isArray(fahrbeziehungen)) {
     fahrbeziehungen?.forEach((fahrbeziehung) => {
       if (isZaehlungForKreuzung()) {
@@ -254,11 +251,11 @@ function initFahrbeziehungen(): void {
     if (isZaehlungForKreuzung()) {
       const kv: KnotenarmVerbindungen = {
         knotenarm: alle,
-        moeglicheVerbindungen: _.union(
+        moeglicheVerbindungen: union(
           [alle],
           Array.from(alleZielknotenarmeVon.values())
         ),
-        moeglicheVerbindungenIds: _.union(
+        moeglicheVerbindungenIds: union(
           [alle],
           Array.from(alleZielknotenarmeVon.values())
         ).map((knotenarm) => knotenarm.nummer),
@@ -269,7 +266,7 @@ function initFahrbeziehungen(): void {
       const kv = {
         knotenarm: alle,
         moeglicheVerbindungen: [alle],
-        moeglicheVerbindungenIds: _.union(
+        moeglicheVerbindungenIds: union(
           [alle],
           Array.from(alleZielknotenarmeVon.values())
         ).map((knotenarm) => knotenarm.nummer),
@@ -279,11 +276,11 @@ function initFahrbeziehungen(): void {
     // Kreuzung und Kreisverkehr
     const kv: KnotenarmVerbindungen = {
       knotenarm: alle,
-      moeglicheVerbindungen: _.union(
+      moeglicheVerbindungen: union(
         [alle],
         Array.from(alleEingehendeKnotenarmeNach.values())
       ),
-      moeglicheVerbindungenIds: _.union(
+      moeglicheVerbindungenIds: union(
         [alle],
         Array.from(alleEingehendeKnotenarmeNach.values())
       ).map((knotenarm) => knotenarm.nummer),
@@ -397,7 +394,8 @@ function addNachKnotenarmWithPossibleVonKnotenarm(
  */
 function isZaehlungForKreuzung(): boolean {
   return (
-    props.zaehlung?.kreisverkehr !== undefined && !props.zaehlung?.kreisverkehr
+    activeZaehlung.value.kreisverkehr !== undefined &&
+    !activeZaehlung.value.kreisverkehr
   );
 }
 
@@ -420,10 +418,6 @@ function getKnotenarmBezeichnung(
   return strassenname === undefined ? "Kein Knotenarm gefunden" : strassenname;
 }
 
-watch(beideRichtungen, () => {
-  emits("beideRichtungen", beideRichtungen.value);
-});
-
 /**
  * Auswahl geändert? Event zum Aktualisieren des Optionsobjektes schicken!
  * @param n gewählter Knotenarm
@@ -437,7 +431,12 @@ watch(von, (n: number) => {
       vonCopy = nachK.moeglicheVerbindungenIds;
     }
   }
-  emits("von", vonCopy);
+  if (vonCopy.length > 1) {
+    chosenOptionsCopy.value.vonKnotenarm = null;
+  } else {
+    chosenOptionsCopy.value.vonKnotenarm = vonCopy[0];
+  }
+  chosenOptionsCopy.value.vonIds = vonCopy.filter((value) => value !== 0);
 });
 
 /**
@@ -454,7 +453,12 @@ watch(nach, (n: number) => {
       nachCopy = vonK.moeglicheVerbindungenIds;
     }
   }
-  emits("nach", nachCopy);
+  if (nachCopy.length > 1) {
+    chosenOptionsCopy.value.nachKnotenarm = null;
+  } else {
+    chosenOptionsCopy.value.nachKnotenarm = nachCopy[0];
+  }
+  chosenOptionsCopy.value.nachIds = nachCopy.filter((value) => value !== 0);
 });
 
 onMounted(() => {
@@ -466,6 +470,6 @@ onMounted(() => {
   // watch Methoden automatisch die richtigen "vonIds" und "nachIds" gesetzt werden. Damit
   // ist sichergestellt, dass bei einer 1 : n Beziehung alle "nach" Knotenarme in der
   // ZaehlungInfo angezeigt werden.
-  reset(options.value);
+  reset();
 });
 </script>
