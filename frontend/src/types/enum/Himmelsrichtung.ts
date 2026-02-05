@@ -35,6 +35,6 @@ export const himmelsRichtungenTextShort: Map<string, string> = new Map<
     [Himmelsrichtung.SO, "SO"],
     [Himmelsrichtung.S, "S"],
     [Himmelsrichtung.SW, "SW"],
-    [Himmelsrichtung.W, "W,"],
+    [Himmelsrichtung.W, "W"],
     [Himmelsrichtung.NW, "NW"],
 ]);
