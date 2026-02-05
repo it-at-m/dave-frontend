@@ -162,7 +162,7 @@ import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { isEmpty } from "lodash";
+import {head, isEmpty, isNil } from "lodash";
 import {computed, ref, watch} from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -176,6 +176,7 @@ import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import Zaehlart from "@/types/enum/Zaehlart";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -399,17 +400,45 @@ function adaptZeitauswahl(
     options: ZaehlstelleOptionsDTO
 ): ZaehlstelleOptionsDTO {
   console.log("adaptZeitauswahl")
-  // wird eine alleinige Auswahl Fußverkehr neu eingestellt -> Änderung der Zeiteinstellung auf maximaler Block (6-19)
-  if (options.fussverkehr && !(
-      options.kraftfahrzeugverkehr &&
-      options.schwerverkehr &&
-      options.gueterverkehr &&
-      options.radverkehr &&
-      options.schwerverkehrsanteilProzent &&
-      options.gueterverkehrsanteilProzent)){
-    options.zeitauswahl = Zeitauswahl.BLOCK;
-    options.zeitblock = Zeitblock.ZB_06_19;
+
+  const zeitblockAvailable = !isEmpty(activeZaehlung.value.zeitauswahl?.blocks);
+
+  // wird eine alleinige Auswahl Fußverkehr eingestellt -> Änderung der Zeiteinstellung auf maximaler Block (6-19)
+  if (isOnlyFussgaengerSelected.value || isTeilzaehlungFussverkehr.value) {
+    setBlockOptions(Zeitblock.ZB_06_19, options);
+
+    // Überprüfen der Zaehldauer und Zaehlart
+  } else if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+    setBlockOptions(Zeitblock.ZB_06_19, options);
+  } else if (
+      activeZaehlung.value.zaehlart === Zaehlart.R ||
+      activeZaehlung.value.zaehlart === Zaehlart.QR
+  ) {
+    switch (activeZaehlung.value.zaehldauer) {
+      case Zaehldauer.DAUER_16_STUNDEN:
+        setBlockOptions(Zeitblock.ZB_06_22, options);
+        break;
+      case Zaehldauer.DAUER_2_X_4_STUNDEN:
+      case Zaehldauer.SONSTIGE:
+        setBlockOptions(Zeitblock.ZB_06_10, options);
+        break;
+        // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
+    }
+  } else if (zeitblockAvailable && activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+      const firstZeitblock = head(activeZaehlung.value.zeitauswahl?.blocks);
+      if (!isNil(firstZeitblock)) {
+        options.zeitblock = firstZeitblock;
+      }
+  } else {
+    // Grundsätzlicher Default für alle anderen Fälle
+    options.zeitauswahl = Zeitauswahl.TAGESWERT;
   }
   return options;
 }
+
+function setBlockOptions(zeitblock: Zeitblock, options: ZaehlstelleOptionsDTO) {
+  options.zeitauswahl = Zeitauswahl.BLOCK;
+  options.zeitblock = zeitblock;
+}
+
 </script>

@@ -77,7 +77,6 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -89,10 +88,6 @@ import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/Zeita
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import Zaehlart from "@/types/enum/Zaehlart";
-import Zaehldauer from "@/types/enum/Zaehldauer";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -127,12 +122,6 @@ const getContentSheetHeight = computed(() => {
   return "500px";
 });
 
-const isTeilzaehlungFussverkehr = computed(() => {
-  return activeZaehlung.value.kategorien.length === 1 &&
-      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN;
-});
-
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
@@ -143,41 +132,6 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
-
-  if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
-    optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-  }
-
-  if (
-    activeZaehlung.value.zaehlart === Zaehlart.R ||
-    activeZaehlung.value.zaehlart === Zaehlart.QR
-  ) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
-      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-      optionsCopy.zeitblock = Zeitblock.ZB_06_10;
-    }
-    // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
-  } else {
-    const zeitblockAvailable = !isEmpty(
-      activeZaehlung.value.zeitauswahl?.blocks
-    );
-    if (
-      zeitblockAvailable &&
-      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      const firstZeitblock = head(activeZaehlung.value.zeitauswahl?.blocks);
-      if (!isNil(firstZeitblock)) {
-        optionsCopy.zeitblock = firstZeitblock;
-      }
-    }
-  }
 
   activeZaehlung.value.kategorien.forEach((fahr) => {
     switch (fahr) {
@@ -205,11 +159,6 @@ function setDefaultOptionsForZaehlung() {
         break;
     }
   });
-
-  if (isTeilzaehlungFussverkehr.value) {
-    optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-  }
 
   optionsCopy.beideRichtungen = false;
   chosenOptions.value = optionsCopy;
