@@ -168,8 +168,8 @@ import {computed, ref, watch} from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
-import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Fahrzeug from "@/types/enum/Fahrzeug";
+import Zaehlart from "@/types/enum/Zaehlart";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -182,7 +182,6 @@ const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
 });
 
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 
