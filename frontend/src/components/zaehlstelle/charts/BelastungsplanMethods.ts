@@ -1,7 +1,7 @@
 import type BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import type BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { computed } from "vue";
@@ -83,7 +83,7 @@ export function useBelastungsplanMethods() {
   const prozentSpalt = 0.05;
   const prozentMaxFahrtrichtungWidth = 0.12;
 
-  const optionen = computed<OptionsDTO>(() => {
+  const optionen = computed<ZaehlstelleOptionsDTO>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
 

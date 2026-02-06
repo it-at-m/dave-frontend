@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { BarChart, LineChart } from "echarts/charts";
 import {
@@ -83,7 +83,7 @@ const zeitreiheHeightAndWidth = computed(() => {
   }
   return `width: 100%; height: ${height}`;
 });
-const filterOptions = computed<OptionsDTO>(() => {
+const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

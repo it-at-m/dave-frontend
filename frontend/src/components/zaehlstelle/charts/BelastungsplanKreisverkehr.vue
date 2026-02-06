@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { GraphChart } from "echarts/charts";
 import {
@@ -254,7 +254,7 @@ const belastungsplanHeightAndWidth = computed(() => {
   return `width: 100%; height: ${height}`;
 });
 
-const selectedOptions = computed<OptionsDTO>(() => {
+const selectedOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

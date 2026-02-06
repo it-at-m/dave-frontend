@@ -1,6 +1,7 @@
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
 import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
+import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
 import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
@@ -15,11 +16,11 @@ import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptions
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import StartAndEndDate from "@/types/common/StartAndEndDate";
@@ -219,7 +220,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
+  public static createDefaultZaehlstelleOptionsDto(): ZaehlstelleOptionsDTO {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,
@@ -327,8 +328,8 @@ export default class DefaultObjectCreator {
 
   public static createDefaultConfigurationDTO(): ConfigurationDTO {
     return {
-      map: this.createDefaultMapConfigurationDTO(),
       zaehlstelle: this.createDefaultZaehlstelleConfigurationDTO(),
+      tenant: this.createDefaultTenantConfigurationDTO(),
     };
   }
 
@@ -349,6 +350,13 @@ export default class DefaultObjectCreator {
 
   public static createDefaultLadeZaehldatenTableDTO(): LadeZaehldatenTableDTO {
     return { zaehldaten: [] } as LadeZaehldatenTableDTO;
+  }
+
+  public static createDefaultTenantConfigurationDTO(): TenantConfigurationDTO {
+    return {
+      datenportalHeader: "Datenportal",
+      mapConfiguration: this.createDefaultMapConfigurationDTO(),
+    };
   }
 
   public static createDefaultLadeProcessedMessdatenDTO(): LadeProcessedMesswerteDTO {

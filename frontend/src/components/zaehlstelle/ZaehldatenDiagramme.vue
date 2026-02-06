@@ -174,7 +174,6 @@
 import type CsvDTO from "@/types/common/CsvDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
@@ -182,6 +181,7 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -273,7 +273,7 @@ const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
@@ -356,7 +356,7 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
 });
 
 function loadData(): void {
-  const o = Object.assign({}, options.value) as OptionsDTO;
+  const o = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
   // requests abschicken
   loadProcessedChartData(o);
@@ -374,7 +374,7 @@ function loadData(): void {
   );
 }
 
-function loadProcessedChartData(options: OptionsDTO) {
+function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
   LadeZaehldatenService.ladeZaehldatenProcessed(
@@ -629,7 +629,7 @@ function generatePdf() {
   const formData = new FormData();
   loadingFile.value = true;
 
-  const o = Object.assign({}, options.value) as OptionsDTO;
+  const o = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   formData.append(
@@ -727,7 +727,7 @@ function fetchPdf(formData: FormData, type: string) {
 
 function generateCsv() {
   loadingFile.value = true;
-  const optionsDTO = Object.assign({}, options.value) as OptionsDTO;
+  const optionsDTO = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
   optionsDTO.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)

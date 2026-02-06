@@ -11,9 +11,9 @@ import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO"
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -97,7 +97,7 @@ const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 
-const optionen = computed<OptionsDTO>(() => {
+const optionen = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
