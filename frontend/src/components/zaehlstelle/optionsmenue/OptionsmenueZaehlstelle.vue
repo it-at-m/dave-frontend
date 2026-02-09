@@ -131,6 +131,12 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
+const isTeilzaehlungFussverkehr = computed(() => {
+  return (activeZaehlung.value.kategorien.length === 1 &&
+      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN);
+});
+
 /**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
@@ -138,7 +144,7 @@ function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
-  if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+  if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN || isTeilzaehlungFussverkehr.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     optionsCopy.zeitblock = Zeitblock.ZB_06_19;
   }

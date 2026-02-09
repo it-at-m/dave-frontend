@@ -36,6 +36,7 @@
                 <v-radio
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
+                  :disabled="isTeilzaehlungFussverkehr || isOnlyFussgaengerSelected"
                   @mouseover="hoverTageswert = true"
                   @mouseleave="hoverTageswert = false"
                 />
@@ -162,7 +163,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { isEmpty } from "lodash";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -174,6 +175,7 @@ import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -324,6 +326,38 @@ const stuendlichValues = computed<Array<KeyVal>>(() => {
 const zaehldatenIntervalle = computed<Array<KeyVal>>(() => {
   return ZaehldatenIntervallToSelect;
 });
+
+const isTeilzaehlungFussverkehr = computed(() => {
+  return (activeZaehlung.value.kategorien.length === 1 &&
+      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN);
+});
+
+const isOnlyFussgaengerSelected = computed(() => {
+  return chosenOptionsCopy.value.fussverkehr && !(
+      chosenOptionsCopy.value.kraftfahrzeugverkehr &&
+      chosenOptionsCopy.value.schwerverkehr &&
+      chosenOptionsCopy.value.gueterverkehr &&
+      chosenOptionsCopy.value.radverkehr &&
+      chosenOptionsCopy.value.schwerverkehrsanteilProzent &&
+      chosenOptionsCopy.value.gueterverkehrsanteilProzent);
+});
+
+watch(
+    () => chosenOptionsCopy.value.fussverkehr,
+    () => {
+      console.log("watch chosenOptionsCopy")
+      adaptVerkehrsartUpdate();
+    },
+    { deep: true }
+);
+
+function adaptVerkehrsartUpdate(){
+  if (isOnlyFussgaengerSelected.value){
+    chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_19;
+  }
+}
 
 /**
  * Wird der Tageswert gewählt, so gibt es kein Dropdown Menü, da die Ansicht dann immer
