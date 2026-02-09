@@ -747,7 +747,7 @@ function getHintToDisplay(type: string): string {
     case "FUSS": {
       if (isTageswertAndNot24h.value) {
         hint =
-          "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zeitauswahl wird überschrieben.";
+          "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
       }
       break;
     }

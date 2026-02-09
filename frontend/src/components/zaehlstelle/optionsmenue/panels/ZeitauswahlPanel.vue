@@ -335,24 +335,26 @@ const isTeilzaehlungFussverkehr = computed(() => {
 
 const isOnlyFussgaengerSelected = computed(() => {
   return chosenOptionsCopy.value.fussverkehr && !(
-      chosenOptionsCopy.value.kraftfahrzeugverkehr &&
-      chosenOptionsCopy.value.schwerverkehr &&
-      chosenOptionsCopy.value.gueterverkehr &&
-      chosenOptionsCopy.value.radverkehr &&
-      chosenOptionsCopy.value.schwerverkehrsanteilProzent &&
+      chosenOptionsCopy.value.kraftfahrzeugverkehr ||
+      chosenOptionsCopy.value.schwerverkehr ||
+      chosenOptionsCopy.value.gueterverkehr ||
+      chosenOptionsCopy.value.radverkehr ||
+      chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
       chosenOptionsCopy.value.gueterverkehrsanteilProzent);
 });
 
 watch(
-    () => chosenOptionsCopy.value.fussverkehr,
+    () => chosenOptionsCopy.value,
     () => {
-      console.log("watch chosenOptionsCopy")
-      adaptVerkehrsartUpdate();
+      adaptOptionsUpdate();
     },
     { deep: true }
 );
 
-function adaptVerkehrsartUpdate(){
+/**
+ * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
+ */
+function adaptOptionsUpdate(){
   if (isOnlyFussgaengerSelected.value){
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
     chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_19;
