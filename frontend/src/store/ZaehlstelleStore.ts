@@ -12,6 +12,8 @@ import { useUserStore } from "@/store/UserStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import LadeZaehlungComperator from "@/types/zaehlung/LadeZaehlungComperator";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import type { set } from "lodash";
+import type StartAndEndDate from "@/types/common/StartAndEndDate";
 
 export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const route = useRoute();
@@ -22,6 +24,13 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const activeTab = ref(0);
   const filteroptions = ref<OptionsDTO>(
     DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
+  );
+  const zeitraumStartAndEndDate = ref<StartAndEndDate>( 
+    {
+      startDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      endDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      isRange: () => true
+    }
   );
   const zeitblock = ref("");
   const zeitauswahl = ref("");
@@ -51,6 +60,9 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     () => filteroptions.value.differenzdatenDarstellen
   );
   const isBlackprintMode = computed(() => filteroptions.value.blackPrintMode);
+  const getZeitraumStartAndEndDate = computed(
+    () => zeitraumStartAndEndDate.value
+  );
   const getZeitblock = computed(() => zeitblock.value);
   const getZeitauswahl = computed(() => zeitauswahl.value);
   const isHistory = computed(() => history.value);
@@ -99,6 +111,9 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   function setFilteroptionsHistory(payload: OptionsDTO) {
     filteroptions.value = payload;
     history.value = true;
+  }
+  function setZeitraumStartAndEndDate(payload: StartAndEndDate) {
+    zeitraumStartAndEndDate.value = payload;
   }
   function setZeitblock(payload: string) {
     zeitblock.value = payload;
@@ -204,6 +219,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     getFilteroptions,
     isDifferenzdatenDarstellung,
     isBlackprintMode,
+    getZeitraumStartAndEndDate,
     getZeitblock,
     getZeitauswahl,
     isHistory,
@@ -225,6 +241,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     setActiveTab,
     setFilteroptions,
     setFilteroptionsHistory,
+    setZeitraumStartAndEndDate,
     setZeitblock,
     setZeitauswahl,
     reloadFilteroptions,
