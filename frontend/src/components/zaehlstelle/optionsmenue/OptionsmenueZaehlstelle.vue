@@ -134,7 +134,7 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 const isTeilzaehlungFussverkehr = computed(() => {
   return (activeZaehlung.value.kategorien.length === 1 &&
       activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN);
+      activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN);
 });
 
 /**
