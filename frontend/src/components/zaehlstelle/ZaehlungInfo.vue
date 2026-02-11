@@ -305,7 +305,7 @@ const zeitintervall = computed(() => {
 });
 
 /**
- * Gibt die Himmelsrichtungen als Map zurück.
+ * Gibt die Himmelsrichtung als Map zurück.
  */
 const himmelsRichtungen = computed(() => {
   return new Map([

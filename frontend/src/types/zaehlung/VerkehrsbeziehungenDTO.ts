@@ -1,4 +1,4 @@
-export default interface FahrbeziehungenDTO {
+export default interface VerkehrsbeziehungenDTO {
   vonKnotenarme: Array<number>;
   nachKnotenarme: { [key: number]: Array<number> };
 }
