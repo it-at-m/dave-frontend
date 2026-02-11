@@ -14,7 +14,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
+import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
@@ -209,8 +209,8 @@ export default class DefaultObjectCreator {
       schulZeiten: "",
       kommentar: "",
       knotenarme: [],
-      fahrbeziehungen: [],
-      auswaehlbareFahrbeziehungen: {} as FahrbeziehungenDTO,
+      verkehrsbeziehungen: [],
+      auswaehlbareVerkehrsbeziehungen: {} as VerkehrsbeziehungenDTO,
       zeitauswahl: {} as ZeitauswahlDTO,
       kategorien: [],
       pkwEinheit: [],
