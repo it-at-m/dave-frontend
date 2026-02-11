@@ -355,7 +355,7 @@ watch(
  * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
  */
 function adaptOptionsUpdate(){
-  if (isOnlyFussgaengerSelected.value){
+  if (isOnlyFussgaengerSelected.value && chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.BLOCK && chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.SPITZENSTUNDE_FUSS){
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
     chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_19;
   }
