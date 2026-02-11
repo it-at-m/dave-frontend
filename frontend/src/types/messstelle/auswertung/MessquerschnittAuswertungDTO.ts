@@ -1,7 +1,7 @@
-import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
 export default interface MessquerschnittAuswertungDTO {
   mqId: string;
   standort: string;
-  fahrtrichtung: Himmelsrichtungen;
+  fahrtrichtung: Himmelsrichtung;
 }

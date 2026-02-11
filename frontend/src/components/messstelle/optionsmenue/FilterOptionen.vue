@@ -115,10 +115,10 @@ import { useDisplay } from "vuetify";
 
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtungen, {
+import Himmelsrichtung, {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
-} from "@/types/enum/Himmelsrichtungen";
+} from "@/types/enum/Himmelsrichtung";
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -213,7 +213,7 @@ function getStyleClass(mqId: string): string {
     : notIncluded;
 }
 
-function getHimmelsrichtungAsText(fahrtrichtung: Himmelsrichtungen) {
+function getHimmelsrichtungAsText(fahrtrichtung: Himmelsrichtung) {
   let text = display.xl.value ? "unbekannt" : "?";
   if (fahrtrichtung) {
     if (display.xl.value) {

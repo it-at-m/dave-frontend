@@ -1,15 +1,15 @@
 /**
- * In dieser Klasse befinden sich alle Informationen, um eine Fahrbeziehung
+ * In dieser Klasse befinden sich alle Informationen, um eine Verkehrsbeziehung
  * im Belastungsplan anzuzeigen.
  */
-export default class BelastungsplanFahrbeziehung {
-  constructor(fahrbeziehungsTyp: number, nach: number) {
-    this._fahrbeziehungsTyp = fahrbeziehungsTyp;
+export default class BelastungsplanVerkehrsbeziehung {
+  constructor(verkehrsbeziehungsTyp: number, nach: number) {
+    this._verkehrsbeziehungsTyp = verkehrsbeziehungsTyp;
     this._nach = nach;
     this._total = 0;
   }
 
-  private _fahrbeziehungsTyp!: number;
+  private _verkehrsbeziehungsTyp!: number;
   private _nach!: number;
 
   // Zahlen
@@ -45,8 +45,8 @@ export default class BelastungsplanFahrbeziehung {
     return this._value3;
   }
 
-  get fahrbeziehungsTyp(): number {
-    return this._fahrbeziehungsTyp;
+  get verkehrsbeziehungsTyp(): number {
+    return this._verkehrsbeziehungsTyp;
   }
 
   get nach(): number {
