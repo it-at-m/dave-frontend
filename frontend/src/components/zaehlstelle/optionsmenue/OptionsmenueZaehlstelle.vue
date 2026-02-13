@@ -181,20 +181,21 @@ const getContentSheetHeight = computed(() => {
 function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as OptionsDTO;
   Object.assign(optionsCopy, options.value);
+  const yesterday = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000);
 
   optionsCopy.zeitraumStartAndEndDate = {
-    startDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-    endDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+    startDate: yesterday,
+    endDate: yesterday,
     isRange: () => true
   };
 
   const isoStartDate = dateUtils.formatDateToISO(
-    chosenOptions.value.zeitraumStartAndEndDate.startDate
+    yesterday
   );
   const isoEndDate = dateUtils.formatDateToISO(
-    chosenOptions.value.zeitraumStartAndEndDate.endDate
+    yesterday
   );
-  chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
+  optionsCopy.zeitraum = [isoStartDate, isoEndDate].filter(
     (date) => !isEmpty(date)
   );
 

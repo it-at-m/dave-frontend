@@ -445,6 +445,15 @@ watch(options, (newOptions: OptionsDTO) => {
   update(newOptions);
 });
 
+watch(
+  () => [zeitraumStartAndEndDate.value.startDate, zeitraumStartAndEndDate.value.endDate],
+  () => {
+    emits("zeitraumStartAndEndDate", zeitraumStartAndEndDate.value);
+  },
+  { immediate: true }
+);
+
+
 watch(zeitauswahl, () => {
   emits("zeitauswahl", zeitauswahl.value);
 });
