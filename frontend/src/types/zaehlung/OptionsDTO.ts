@@ -1,7 +1,10 @@
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
+import type StartAndEndDate from "../common/StartAndEndDate";
 
 export default interface OptionsDTO {
+  zeitraumStartAndEndDate: StartAndEndDate;
+  zeitraum: string[];
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
   zeitblock: string;

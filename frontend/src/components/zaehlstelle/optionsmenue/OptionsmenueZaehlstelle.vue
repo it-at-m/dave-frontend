@@ -39,6 +39,7 @@
             >
               <zeitauswahl-panel
                 :zaehlung="zaehlung"
+                @zeitraumStartAndEndDate="setZeitraumStartAndEndDate($event)"
                 @zeitauswahl="setZeitauswahl($event)"
                 @zeitblock="setZeitblock($event)"
                 @intervall="setIntervall($event)"
@@ -136,6 +137,8 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import StartAndEndDate from "@/types/common/StartAndEndDate";
+import { useDateUtils } from "@/util/DateUtils";
 
 /**
  * Beschreibung Optionsmenü
@@ -159,6 +162,7 @@ const display = useDisplay();
 const dialog = ref(false);
 const activePanel = ref(-1);
 const chosenOptions = ref({} as OptionsDTO);
+const dateUtils = useDateUtils();
 
 const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
@@ -177,6 +181,23 @@ const getContentSheetHeight = computed(() => {
 function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as OptionsDTO;
   Object.assign(optionsCopy, options.value);
+  const yesterday = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000);
+
+  optionsCopy.zeitraumStartAndEndDate = {
+    startDate: yesterday,
+    endDate: yesterday,
+    isRange: () => true
+  };
+
+  const isoStartDate = dateUtils.formatDateToISO(
+    yesterday
+  );
+  const isoEndDate = dateUtils.formatDateToISO(
+    yesterday
+  );
+  optionsCopy.zeitraum = [isoStartDate, isoEndDate].filter(
+    (date) => !isEmpty(date)
+  );
 
   if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
@@ -241,6 +262,24 @@ function setDefaultOptionsForZaehlung() {
 }
 
 // Event Methoden für die Zeitauswahl Komponente
+function setZeitraumStartAndEndDate(event: StartAndEndDate) {
+  if (event) {
+    chosenOptions.value.zeitraumStartAndEndDate = event;
+    zaehlstelleStore.setZeitraumStartAndEndDate(event);
+    if (!isNil(chosenOptions.value.zeitraumStartAndEndDate)) {
+      const isoStartDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.startDate
+      );
+      const isoEndDate = dateUtils.formatDateToISO(
+        chosenOptions.value.zeitraumStartAndEndDate.endDate
+      );
+      chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
+        (date) => !isEmpty(date)
+      );
+    }
+  }
+}
+
 function setZeitauswahl(event: string) {
   chosenOptions.value.zeitauswahl = event;
   zaehlstelleStore.setZeitauswahl(event);

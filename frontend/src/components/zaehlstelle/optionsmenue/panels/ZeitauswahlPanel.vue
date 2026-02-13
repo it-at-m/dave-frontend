@@ -10,13 +10,21 @@
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
+      <date-range-picker
+        v-model="zeitraumStartAndEndDate"
+        :min-date="minDate"
+        :min-date-description="minDateDescription"
+        :max-date="maxDate"
+        :max-date-description="maxDateDescription"
+        :auffaellige-tage="auffaelligeTage"
+      />
+      <v-divider />
       <panel-header
         font-size="0.875rem"
         font-weight="bold"
         padding="10px 0 0 0"
         header-text="Zeitauswahl"
       />
-
       <v-row
         align="start"
         justify="center"
@@ -165,6 +173,7 @@ import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
+import DateRangePicker from "@/components/common/DateRangePicker.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import ZaehldatenIntervall, {
   ZaehldatenIntervallToSelect,
@@ -176,6 +185,8 @@ import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import { useDateUtils } from "@/util/DateUtils";
+import type StartAndEndDate from "@/types/common/StartAndEndDate";
 
 interface Props {
   zaehlung?: LadeZaehlungDTO;
@@ -184,8 +195,10 @@ interface Props {
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
+const dateUtils = useDateUtils();
 
 const emits = defineEmits<{
+  (e: "zeitraumStartAndEndDate", v: StartAndEndDate): void;
   (e: "zeitauswahl", v: string): void;
   (e: "zeitblock", v: string): void;
   (e: "intervall", v: ZaehldatenIntervall): void;
@@ -220,6 +233,39 @@ const options = computed<OptionsDTO>(() => {
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
+
+const zeitraumStartAndEndDate = computed<StartAndEndDate>(() => {
+  return zaehlstelleStore.getZeitraumStartAndEndDate;
+});
+
+const minDateDescription = ref<string>("");
+const minDate = ref<Date>();
+
+watch(
+  () => [activeZaehlung.value.datum],
+  () => {
+    const startdatum = new Date("2006-01-01");
+    const realisierungsdatum = new Date(
+      activeZaehlung.value.datum
+    );
+    if (
+      dateUtils.isValidIsoDate(activeZaehlung.value.datum) &&
+      realisierungsdatum >= startdatum
+    ) {
+      minDateDescription.value = "Realisierungsdatum";
+      minDate.value = realisierungsdatum;
+    } else {
+      minDateDescription.value = "frühestmöglichen Datum";
+      minDate.value = startdatum;
+    }
+  },
+  { immediate: true }
+);
+
+const maxDateDescription = ref<string>("gestrigen Datum");
+const maxDate = ref<Date>(new Date(new Date().setDate(new Date().getDate() - 1)));
+
+const auffaelligeTage = ref<Array<string>>([]);
 
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
   return (
@@ -398,6 +444,15 @@ function isTypeDisabled(type: string): boolean {
 watch(options, (newOptions: OptionsDTO) => {
   update(newOptions);
 });
+
+watch(
+  () => [zeitraumStartAndEndDate.value.startDate, zeitraumStartAndEndDate.value.endDate],
+  () => {
+    emits("zeitraumStartAndEndDate", zeitraumStartAndEndDate.value);
+  },
+  { immediate: true }
+);
+
 
 watch(zeitauswahl, () => {
   emits("zeitauswahl", zeitauswahl.value);

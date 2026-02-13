@@ -223,6 +223,8 @@ export default class DefaultObjectCreator {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,
+      zeitraumStartAndEndDate: new StartAndEndDate(undefined, undefined),
+      zeitraum: [],
       zaehldauer: Zaehldauer.DAUER_24_STUNDEN,
       intervall: ZaehldatenIntervall.STUNDE_VIERTEL,
       zeitblock: Zeitblock.ZB_00_24,
