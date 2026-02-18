@@ -134,7 +134,7 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 const isTeilzaehlungFussverkehr = computed(() => {
   return (activeZaehlung.value.kategorien.length === 1 &&
       activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-      activeZaehlung.value.zaehldauer != Zaehldauer.DAUER_24_STUNDEN);
+      activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN);
 });
 
 /**
@@ -198,7 +198,7 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
-        // Rad soll nur bei best. Zählarten aktiviert sein
+        // Rad soll nur bei bestimmten Zählarten aktiviert sein
         optionsCopy.radverkehr = [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
           activeZaehlung.value.zaehlart
         );
