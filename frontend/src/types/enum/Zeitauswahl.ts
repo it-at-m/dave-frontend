@@ -1,4 +1,5 @@
 enum Zeitauswahl {
+  ZEITRAUM = "Zeitraum",
   TAGESWERT = "Tageswert",
   BLOCK = "Block",
   STUNDE = "Stunde",
