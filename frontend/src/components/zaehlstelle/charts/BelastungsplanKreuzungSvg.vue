@@ -387,7 +387,13 @@ function legendeSpalten() {
   const zeitauswahl: string = optionen.value.zeitauswahl;
   const zaehlzeitFirstLine: string = zeitauswahl;
   let zaehlzeitSecondLine = "";
-  if (zeitauswahl === Zeitauswahl.TAGESWERT) {
+  if (zeitauswahl === Zeitauswahl.ZEITRAUM) {
+    zaehlzeitSecondLine = `${
+      optionen.value.zeitraumStartAndEndDate?.startDate ? dateUtils.formatDate(optionen.value.zeitraumStartAndEndDate.startDate.toLocaleDateString("de-DE")) : ''
+    } - ${
+      optionen.value.zeitraumStartAndEndDate?.endDate ? dateUtils.formatDate(optionen.value.zeitraumStartAndEndDate.endDate.toLocaleDateString("de-DE")) : ''
+    }`;
+  } else if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
       zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
         ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
