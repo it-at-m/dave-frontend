@@ -102,7 +102,7 @@
             <h3 class="text-grey-lighten-1">Aktuelle Filtereinstellungen</h3>
           </v-col>
         </v-row>
-        <v-row no-gutters>
+        <v-row no-gutters v-if="!isZeitraumInZeitauswahlChosen">
           <v-col
             cols="1"
             align-self="start"
@@ -123,6 +123,25 @@
               }}</span>
               Intervallen</span
             >
+          </v-col>
+        </v-row>
+        <v-row
+          v-if="isZeitraumInZeitauswahlChosen"
+          no-gutters
+        >
+                  <v-col
+            cols="1"
+            align-self="start"
+          >
+            <v-icon
+              size="small"
+              color="tertiary"
+              icon="mdi-clock-time-four-outline"
+            />
+          </v-col>
+          <v-col cols="10">
+            <span class="text-grey-lighten-1">Zeitraum von</span> {{ options.zeitraumStartAndEndDate?.startDate ? dateUtils.formatDate(options.zeitraumStartAndEndDate.startDate.toLocaleDateString("de-DE")) : '' }} 
+            <span class="text-grey-lighten-1">bis</span> {{ options.zeitraumStartAndEndDate?.endDate ? dateUtils.formatDate(options.zeitraumStartAndEndDate.endDate.toLocaleDateString("de-DE")) : '' }}
           </v-col>
         </v-row>
         <v-row
@@ -278,6 +297,10 @@ const options = computed<OptionsDTO>(() => {
 const zeitblock = computed(() => {
   // Wenn es sich um keine 24h Zählung handelt, dann darf nicht der Zeitblock 0 - 24 Uhr angezeigt werden, sondern Tageswert
   if (
+    options.value.zeitauswahl === Zeitauswahl.ZEITRAUM
+  ) {
+    return "Zeitraum";
+  } else if (
     zaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
     options.value.zeitblock === Zeitblock.ZB_00_24
   ) {
@@ -318,6 +341,10 @@ const himmelsRichtungen = computed(() => {
     [7, { l: "Süd-West", s: "SW" }],
     [8, { l: "Nord-West", s: "NW" }],
   ]);
+});
+
+const isZeitraumInZeitauswahlChosen = computed(() => {
+  return options.value.zeitauswahl === Zeitauswahl.ZEITRAUM;
 });
 
 const isSpitzenstundeInZeitauswahlChosen = computed(() => {
