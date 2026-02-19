@@ -292,6 +292,12 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
         result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
       }
     }
+    // Block 6-19 bei ausschliesslich Fussverkehr hinzufügen
+    if (isOnlyFussgaengerSelected.value){
+      result.push(zeitblockInfo.get(Zeitblock.ZB_06_19) as KeyVal);
+    } else {
+
+    }
   }
   return result;
 });
@@ -355,10 +361,17 @@ watch(
  * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
  */
 function adaptOptionsUpdate(){
-  if (isOnlyFussgaengerSelected.value && chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.BLOCK && chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.SPITZENSTUNDE_FUSS){
+  if (isOnlyFussgaengerSelected.value && (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT || chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ)){
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
     chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_19;
   }
+  // Korrigiere nicht mehr gültige Zeitblöcke
+  if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK && chosenOptionsCopy.value.zeitblock && !zeitblockValues.value.includes(<KeyVal>zeitblockInfo.get(chosenOptionsCopy.value.zeitblock))) {
+    // Setze den ersten gültigen Wert ein
+    const firstValidValue = zeitblockValues.value.at(0);
+    chosenOptionsCopy.value.zeitblock = firstValidValue?.value ?? '';
+  }
+
 }
 
 /**
