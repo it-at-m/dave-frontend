@@ -14,7 +14,7 @@
         font-size="0.875rem"
         font-weight="bold"
         padding="10px 0 10px 0"
-        header-text="Verkehrsbeziehungen zwischen den Knotenarmen"
+        :header-text="headerText"
       />
 
       <knotenverkehr-form
@@ -63,6 +63,12 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
+});
+
+const headerText = computed(() => {
+  return activeZaehlung.value.zaehlart === Zaehlart.FJS || activeZaehlung.value.zaehlart === Zaehlart.QU
+      ? 'Verkehrsbeziehungen an den Knotenarmen'
+      : 'Verkehrsbeziehungen zwischen den Knotenarmen';
 });
 
 
