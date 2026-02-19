@@ -11,13 +11,29 @@
 
 
     <scm>
-        <connection>scm:git:https://github.com/it-at-m/dave-frontend.git</connection>
-        <developerConnection>scm:git:https://github.com/it-at-m/dave-frontend.git</developerConnection>
-        <tag>dave-frontend-1.9.0</tag>
+        <connection>scm:git:https://github.com/starwit/dave-frontend.git</connection>
+        <developerConnection>scm:git:https://github.com/starwit/dave-frontend.git</developerConnection>
+        <tag>5.0.0</tag>
   </scm>
 
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <configuration>
+                        <checkModificationExcludes>
+                            <checkModificationExclude>pom.xml</checkModificationExclude>
+                        </checkModificationExcludes>
+                        <tagNameFormat>@{project.version}</tagNameFormat>
+                    </configuration>
+                </plugin>
+            </plugins>            
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <artifactId>maven-scm-plugin</artifactId>

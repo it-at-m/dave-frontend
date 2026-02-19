@@ -31,3 +31,6 @@ nbdist/
 
 # do not check in application profile yml
 /src/main/**/application-*.yml
+
+# packaged frontend
+src/main/resources/static
