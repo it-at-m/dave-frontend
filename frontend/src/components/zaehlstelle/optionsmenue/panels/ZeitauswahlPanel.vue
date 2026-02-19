@@ -10,15 +10,6 @@
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
-      <date-range-picker
-        v-model="zeitraumStartAndEndDate"
-        :min-date="minDate"
-        :min-date-description="minDateDescription"
-        :max-date="maxDate"
-        :max-date-description="maxDateDescription"
-        :auffaellige-tage="auffaelligeTage"
-      />
-      <v-divider />
       <panel-header
         font-size="0.875rem"
         font-weight="bold"
@@ -41,6 +32,12 @@
           >
             <v-row>
               <v-col cols="6">
+                <v-radio
+                  label="Zeitraum"
+                  :value="Zeitauswahl.ZEITRAUM"
+                  @mouseover="hoverZeitraum = true"
+                  @mouseleave="hoverZeitraum = false"
+                />
                 <v-radio
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
@@ -120,7 +117,16 @@
         </v-col>
         <v-spacer />
       </v-row>
-
+      <v-divider />
+      <date-range-picker
+        v-model="zeitraumStartAndEndDate"
+        :min-date="minDate"
+        :min-date-description="minDateDescription"
+        :max-date="maxDate"
+        :max-date-description="maxDateDescription"
+        :auffaellige-tage="auffaelligeTage"
+        :disabled="isZeitauswahlZeitraum === false"
+      />
       <v-divider />
       <panel-header
         font-size="0.875rem"
@@ -204,11 +210,12 @@ const emits = defineEmits<{
   (e: "intervall", v: ZaehldatenIntervall): void;
 }>();
 
-const zeitauswahl = ref(Zeitauswahl.TAGESWERT.valueOf());
+const zeitauswahl = ref(Zeitauswahl.ZEITRAUM.valueOf());
 const zeitblock = ref(Zeitblock.ZB_00_24.valueOf());
 const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
 
 // Zeitauswahl
+const hoverZeitraum = ref(false);
 const hoverTageswert = ref(false);
 const hoverBlock = ref(false);
 const hoverStunde = ref(false);
@@ -277,6 +284,10 @@ const isZeitauswahlStunde = computed(() => {
   return zeitauswahl.value === Zeitauswahl.STUNDE;
 });
 
+const isZeitauswahlZeitraum = computed(() => {
+  return zeitauswahl.value === Zeitauswahl.ZEITRAUM;
+});
+
 const isZeitauswahlSpitzenstunde = computed(() => {
   return (
     zeitauswahl.value === Zeitauswahl.SPITZENSTUNDE_KFZ ||
@@ -286,6 +297,9 @@ const isZeitauswahlSpitzenstunde = computed(() => {
 });
 
 const helpTextZeitauswahl = computed(() => {
+  if (hoverZeitraum.value) {
+    return "";
+  }
   if (hoverTageswert.value) {
     return "";
   }
