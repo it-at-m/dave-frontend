@@ -913,7 +913,7 @@
 import { isEmpty } from "lodash";
 import { computed, onMounted, watch } from "vue";
 
-// import { useEventbus } from "@/store/Eventbus";
+import { useEventbus } from "@/store/Eventbus";
 import Zaehlart from "@/types/enum/Zaehlart";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -923,9 +923,6 @@ interface Props {
   height: string;
 }
 defineProps<Props>();
-
-class ZaehlungDTO {
-}
 
 const zaehlstelleStore = useZaehlstelleStore();
 
@@ -943,10 +940,9 @@ const hasAvailableKnotenarme = computed(() => {
   return availableKnotenarme.value.length > 0;
 });
 
-// const eventbus = useEventbus();
+const eventbus = useEventbus();
 const selectedKnotenarme = computed(() => {
-  // return eventbus.getSelectedKnotenarme;
-  return ["1", "3"]; // TODO
+  return eventbus.getSelectedKnotenarme;
 });
 
 onMounted(() => {
@@ -983,8 +979,7 @@ function calculateColor(knotenarm: string): string | undefined {
 }
 
 function activateKnotenarm(knotenarm: string) {
-  // eventbus.activateKnotenarm(knotenarm);
-  console.log("TODO: activateKnotenarm: " + knotenarm);
+  eventbus.activateKnotenarm(knotenarm);
 }
 
 function activateOrDeactivateTotalKnotenarm(knotenarm: string) {
@@ -1013,8 +1008,7 @@ function activateOrDeactivateTotalKnotenarm(knotenarm: string) {
   knotenarmStrings.forEach((knotenarmString) => {
     if (selectedKnotenarme.value.includes(knotenarmString)) {
       nothingRemoved = false;
-      // eventbus.deactivateKnotenarm(knotenarmString);
-      console.log("TODO: deactivateKnotenarm")
+      eventbus.deactivateKnotenarm(knotenarmString);
     }
   });
 
@@ -1042,7 +1036,6 @@ function getColorOfKnotenarm(knotenarm: string) {
 }
 
 function resetForm() {
-  // eventbus.resetSelectedKnotenarme();
-  console.log("TODO: resetSelectedKnotenarme")
+  eventbus.resetSelectedKnotenarme();
 }
 </script>

@@ -46,11 +46,11 @@ import {computed, ref} from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
-import KnotenverkehrForm from "@/components/zaehlstelle/optionsmenue/panels/geometry/KnotenverkehrForm.vue";
+import KnotenverkehrForm from "@/components/zaehlstelle/optionsmenue/panels/verkehrsbeziehungen/KnotenverkehrForm.vue";
 import QuerschnittJeStrassenseiteForm
-  from "@/components/zaehlstelle/optionsmenue/panels/geometry/QuerschnittJeStrassenseiteForm.vue";
+  from "@/components/zaehlstelle/optionsmenue/panels/verkehrsbeziehungen/QuerschnittJeStrassenseiteForm.vue";
 import VerkehrsbeziehungKreuzungForm
-  from "@/components/zaehlstelle/optionsmenue/panels/geometry/VerkehrsbeziehungKreuzungForm.vue";
+  from "@/components/zaehlstelle/optionsmenue/panels/verkehrsbeziehungen/VerkehrsbeziehungKreuzungForm.vue";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 const zaehlstelleStore = useZaehlstelleStore();
