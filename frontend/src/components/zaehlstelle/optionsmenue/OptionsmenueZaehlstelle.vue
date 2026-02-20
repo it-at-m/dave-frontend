@@ -83,7 +83,7 @@ import { useDisplay } from "vuetify";
 
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
-import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue";
+import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";

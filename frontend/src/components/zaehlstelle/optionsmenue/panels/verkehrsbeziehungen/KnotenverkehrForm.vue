@@ -68,6 +68,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('8LU')"
                 id="path118"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -76,6 +77,7 @@
                 @click="activateKnotenarm('8LU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('8LD')"
                 id="path119"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -90,6 +92,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('8RU')"
                 id="path120"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -98,6 +101,7 @@
                 @click="activateKnotenarm('8RU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('8RD')"
                 id="path121"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -112,6 +116,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('8CL2R')"
                 id="path124"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -120,6 +125,7 @@
                 @click="activateKnotenarm('8CL2R')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('8CR2L')"
                 id="path125"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -176,6 +182,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('7LU')"
                 id="path109"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -184,6 +191,7 @@
                 @click="activateKnotenarm('7LU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('7LD')"
                 id="path110"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -198,6 +206,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('7RU')"
                 id="path111"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -206,6 +215,7 @@
                 @click="activateKnotenarm('7RU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('7RD')"
                 id="path112"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -220,6 +230,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('7CL2R')"
                 id="path115"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -228,6 +239,7 @@
                 @click="activateKnotenarm('7CL2R')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('7CR2L')"
                 id="path116"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -284,6 +296,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('6LU')"
                 id="path100"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -292,6 +305,7 @@
                 @click="activateKnotenarm('6LU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('6LD')"
                 id="path101"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -306,6 +320,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('6RU')"
                 id="path102"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -314,6 +329,7 @@
                 @click="activateKnotenarm('6RU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('6RD')"
                 id="path103"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -328,6 +344,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('6CL2R')"
                 id="path106"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -336,6 +353,7 @@
                 @click="activateKnotenarm('6CL2R')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('6CR2L')"
                 id="path107"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -391,6 +409,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('5LU')"
                 id="path91"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -399,6 +418,7 @@
                 @click="activateKnotenarm('5LU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('5LD')"
                 id="path92"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -413,6 +433,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('5RU')"
                 id="path93"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -421,6 +442,7 @@
                 @click="activateKnotenarm('5RU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('5RD')"
                 id="path94"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -435,6 +457,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('5CL2R')"
                 id="path97"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -443,6 +466,7 @@
                 @click="activateKnotenarm('5CL2R')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('5CR2L')"
                 id="path98"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -507,6 +531,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('4LU')"
                 id="path82"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -515,6 +540,7 @@
                 @click="activateKnotenarm('4LU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('4LD')"
                 id="path83"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -529,6 +555,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('4RU')"
                 id="path84"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -537,6 +564,7 @@
                 @click="activateKnotenarm('4RU')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('4RD')"
                 id="path85"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -551,6 +579,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                v-if="isVerkehrsbeziehungAvailable('4CL2R')"
                 id="path88"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -559,6 +588,7 @@
                 @click="activateKnotenarm('4CL2R')"
               />
               <path
+                v-if="isVerkehrsbeziehungAvailable('4CR2L')"
                 id="path89"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -616,6 +646,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('3LU')"
                 id="path73"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -624,6 +655,7 @@
                 @click="activateKnotenarm('3LU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('3LD')"
                 id="path74"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -638,6 +670,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('3RU')"
                 id="path75"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -646,6 +679,7 @@
                 @click="activateKnotenarm('3RU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('3RD')"
                 id="path76"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -660,6 +694,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('3CL2R')"
                 id="path79"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -668,6 +703,7 @@
                 @click="activateKnotenarm('3CL2R')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('3CR2L')"
                 id="path80"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -725,6 +761,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('2LU')"
                 id="path55"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -733,6 +770,7 @@
                 @click="activateKnotenarm('2LU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('2LD')"
                 id="path56"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -747,6 +785,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('2RU')"
                 id="path57"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -755,6 +794,7 @@
                 @click="activateKnotenarm('2RU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('2RD')"
                 id="path58"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -769,6 +809,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('2CL2R')"
                 id="path61"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -777,6 +818,7 @@
                 @click="activateKnotenarm('2CL2R')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('2CR2L')"
                 id="path62"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -833,6 +875,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,758.7668,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('1LU')"
                 id="path19"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -841,6 +884,7 @@
                 @click="activateKnotenarm('1LU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('1LD')"
                 id="path20"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -855,6 +899,7 @@
               transform="matrix(0.94605826,0,0,0.98386895,906.90013,274.96713)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('1RU')"
                 id="path39"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -863,6 +908,7 @@
                 @click="activateKnotenarm('1RU')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('1RD')"
                 id="path40"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -877,6 +923,7 @@
               transform="matrix(0,0.94605826,-0.79773158,0,28267.575,4038.8282)"
             >
               <path
+                  v-if="isVerkehrsbeziehungAvailable('1CL2R')"
                 id="path43"
                 d="m 14305.233,17535.315 v -165.798 h -5.582 l 9.768,-33.159 9.769,33.159 h -5.582 v 165.798 z"
                 stroke="none"
@@ -885,6 +932,7 @@
                 @click="activateKnotenarm('1CL2R')"
               />
               <path
+                  v-if="isVerkehrsbeziehungAvailable('1CR2L')"
                 id="path44"
                 d="m 14288.406,17336.358 v 165.798 h 5.582 l -9.768,33.159 -9.769,-33.159 h 5.582 v -165.798 z"
                 stroke="none"
@@ -929,6 +977,41 @@ const zaehlstelleStore = useZaehlstelleStore();
 const activeColor = "#D50000";
 const passiveColor = "#9E9E9E";
 
+const arrowMappings = {
+  1: {
+    'W': ['1LU', '1LD'],
+    'O': ['1RU', '1RD']
+  },
+  2: {
+    'N': ['2LU', '2LD'],
+    'S': ['2RU', '2RD']
+  },
+  3: {
+    'W': ['3RU', '3RD'],
+    'O': ['3LU', '3LD']
+  },
+  4: {
+    'N': ['4RU', '4RD'],
+    'S': ['4LU', '4LD']
+  },
+  5: {
+    'NW': ['5RU', '5RD'],
+    'SO': ['5LU', '5LD']
+  },
+  6: {
+    'NO': ['6RU', '6RD'],
+    'SW': ['6LU', '6LD']
+  },
+  7: {
+    'NW': ['7RD', '7RU'],
+    'SO': ['7LD', '7LU']
+  },
+  8: {
+    'NO': ['8RU', '8RD'],
+    'SW': ['8LU', '8LD']
+  }
+};
+
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
@@ -936,6 +1019,16 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 const availableKnotenarme = computed(() => {
   return activeZaehlung.value.knotenarme.map((arm) => `${arm.nummer}`);
 });
+
+const availableVerkehrsbeziehungen = computed(() => {
+  const verkehrsbeziehungen: string[] = [];
+  activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
+    const arrow = getVerkehrsbeziehungArrow(vb.knotenarm, vb.hinein, vb.heraus, vb.strassenseite);
+    verkehrsbeziehungen.push(arrow);
+  });
+  return verkehrsbeziehungen;
+})
+
 const hasAvailableKnotenarme = computed(() => {
   return availableKnotenarme.value.length > 0;
 });
@@ -957,9 +1050,22 @@ watch(
   { deep: true, immediate: true }
 );
 
+function getVerkehrsbeziehungArrow(knotenarm: number, hinein: boolean, heraus: boolean, strassenseite: string) : string {
+  if (knotenarm in arrowMappings && strassenseite in arrowMappings[knotenarm]) {
+    const index = hinein && !heraus ? 0 : 1; // 0 für hinein, 1 für heraus
+    return arrowMappings[knotenarm][strassenseite][index];
+  }
+  return '';
+}
+
 function isKnotenarmAvailable(knotenarm: string): boolean {
   return availableKnotenarme.value.includes(knotenarm);
 }
+
+function isVerkehrsbeziehungAvailable(verkehrsbeziehung: string): boolean {
+  return availableVerkehrsbeziehungen.value.includes(verkehrsbeziehung);
+}
+
 /**
  * Wenn die Knotenarmnummer im Array gefunden wurde, wird diese in der Grafik in der "activeColor" dargestellt,
  * ansonsten in der "passiveColor".
@@ -1037,5 +1143,9 @@ function getColorOfKnotenarm(knotenarm: string) {
 
 function resetForm() {
   eventbus.resetSelectedKnotenarme();
+  activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
+    const arrow = getVerkehrsbeziehungArrow(vb.knotenarm, vb.hinein, vb.heraus, vb.strassenseite)
+    activateKnotenarm(arrow);
+  })
 }
 </script>

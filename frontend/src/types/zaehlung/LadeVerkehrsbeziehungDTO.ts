@@ -10,6 +10,7 @@ export default interface LadeVerkehrsbeziehungDTO extends BaseEntity {
   vonknotennachstrnr: string;
   nachknotnachstrnr: string;
   nach_strnr: string;
+  strassenseite: string;
 
   // Kreisverkehr
   knotenarm: number;
