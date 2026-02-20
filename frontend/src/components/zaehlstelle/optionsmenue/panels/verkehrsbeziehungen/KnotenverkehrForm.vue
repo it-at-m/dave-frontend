@@ -995,20 +995,20 @@ const arrowMappings = {
     'S': ['4LU', '4LD']
   },
   5: {
-    'NW': ['5RU', '5RD'],
-    'SO': ['5LU', '5LD']
+    'NW': ['5LU', '5LD'],
+    'SO': ['5RU', '5RD']
   },
   6: {
-    'NO': ['6RU', '6RD'],
-    'SW': ['6LU', '6LD']
+    'NO': ['6LU', '6LD'],
+    'SW': ['6RU', '6RD']
   },
   7: {
-    'NW': ['7RD', '7RU'],
-    'SO': ['7LD', '7LU']
+    'NW': ['7LU', '7LD'],
+    'SO': ['7RU', '7RD']
   },
   8: {
-    'NO': ['8RU', '8RD'],
-    'SW': ['8LU', '8LD']
+    'NO': ['8LU', '8LD'],
+    'SW': ['8RU', '8RD']
   }
 };
 
@@ -1052,9 +1052,10 @@ watch(
 
 function getVerkehrsbeziehungArrow(knotenarm: number, hinein: boolean, heraus: boolean, strassenseite: string) : string {
   if (knotenarm in arrowMappings && strassenseite in arrowMappings[knotenarm]) {
-    const index = hinein && !heraus ? 0 : 1; // 0 für hinein, 1 für heraus
+    const index = hinein && !heraus ? 1 : 0; // 0 für hinein, 1 für heraus
     return arrowMappings[knotenarm][strassenseite][index];
   }
+  console.log("illegal combi")
   return '';
 }
 
