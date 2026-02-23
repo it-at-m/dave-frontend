@@ -146,7 +146,15 @@ function setDefaultOptionsForZaehlung() {
 
   if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN || isTeilzaehlungFussverkehr.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    optionsCopy.zeitblock = Zeitblock.ZB_06_19;
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+      optionsCopy.zeitblock = Zeitblock.ZB_06_19;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
+      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN) {
+      optionsCopy.zeitblock = Zeitblock.ZB_06_10;
+    } else {
+      optionsCopy.zeitblock = Zeitblock.ZB_00_24;
+    }
   }
 
   if (

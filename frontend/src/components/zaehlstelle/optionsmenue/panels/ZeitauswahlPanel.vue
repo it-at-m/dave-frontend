@@ -170,7 +170,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import Zeitblock, {zeitblockInfo, zeitblockOrder} from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
@@ -292,12 +292,6 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
         result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
       }
     }
-    // Block 6-19 bei ausschliesslich Fussverkehr hinzufügen
-    if (isOnlyFussgaengerSelected.value){
-      result.push(zeitblockInfo.get(Zeitblock.ZB_06_19) as KeyVal);
-    } else {
-
-    }
   }
   return result;
 });
@@ -363,15 +357,11 @@ watch(
 function adaptOptionsUpdate(){
   if (isOnlyFussgaengerSelected.value && (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT || chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ)){
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_19;
+    const zbMax = zeitblockOrder.find(zb =>
+        zeitblockValues.value.some(zbv => zbv.value === zb)
+    ) || '';
+    chosenOptionsCopy.value.zeitblock = zbMax;
   }
-  // Korrigiere nicht mehr gültige Zeitblöcke
-  if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK && chosenOptionsCopy.value.zeitblock && !zeitblockValues.value.includes(<KeyVal>zeitblockInfo.get(chosenOptionsCopy.value.zeitblock))) {
-    // Setze den ersten gültigen Wert ein
-    const firstValidValue = zeitblockValues.value.at(0);
-    chosenOptionsCopy.value.zeitblock = firstValidValue?.value ?? '';
-  }
-
 }
 
 /**
