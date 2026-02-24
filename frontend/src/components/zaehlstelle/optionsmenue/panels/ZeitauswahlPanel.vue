@@ -364,22 +364,6 @@ function adaptOptionsUpdate(){
   }
 }
 
-const isTeilzaehlungFussverkehr = computed(() => {
-  return (activeZaehlung.value.kategorien.length === 1 &&
-      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-      activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN);
-});
-
-const isOnlyFussgaengerSelected = computed(() => {
-  return chosenOptionsCopy.value.fussverkehr && !(
-      chosenOptionsCopy.value.kraftfahrzeugverkehr ||
-      chosenOptionsCopy.value.schwerverkehr ||
-      chosenOptionsCopy.value.gueterverkehr ||
-      chosenOptionsCopy.value.radverkehr ||
-      chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
-      chosenOptionsCopy.value.gueterverkehrsanteilProzent);
-});
-
 /**
  * Wird der Tageswert gewählt, so gibt es kein Dropdown Menü, da die Ansicht dann immer
  * über den kompletten Tag geht. Deshalb muss hier auf das "Change" event der Checkbox
