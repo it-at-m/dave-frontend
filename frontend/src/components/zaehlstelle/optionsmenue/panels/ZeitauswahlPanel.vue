@@ -170,7 +170,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import Zeitblock, {zeitblockInfo, zeitblockOrder} from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
@@ -355,11 +355,30 @@ watch(
  * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
  */
 function adaptOptionsUpdate(){
-  if (isOnlyFussgaengerSelected.value){
+  if (isOnlyFussgaengerSelected.value && (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT || chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ)){
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_06_19;
+    const zbMax = zeitblockOrder.find(zb =>
+        zeitblockValues.value.some(zbv => zbv.value === zb)
+    ) || '';
+    chosenOptionsCopy.value.zeitblock = zbMax;
   }
 }
+
+const isTeilzaehlungFussverkehr = computed(() => {
+  return (activeZaehlung.value.kategorien.length === 1 &&
+      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+      activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN);
+});
+
+const isOnlyFussgaengerSelected = computed(() => {
+  return chosenOptionsCopy.value.fussverkehr && !(
+      chosenOptionsCopy.value.kraftfahrzeugverkehr ||
+      chosenOptionsCopy.value.schwerverkehr ||
+      chosenOptionsCopy.value.gueterverkehr ||
+      chosenOptionsCopy.value.radverkehr ||
+      chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
+      chosenOptionsCopy.value.gueterverkehrsanteilProzent);
+});
 
 /**
  * Wird der Tageswert gewählt, so gibt es kein Dropdown Menü, da die Ansicht dann immer

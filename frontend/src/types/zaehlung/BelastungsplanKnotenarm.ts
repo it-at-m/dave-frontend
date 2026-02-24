@@ -10,15 +10,15 @@ export default class BelastungsplanKnotenarm {
   private _knotenarmNummer: number;
 
   // Das sind die Ausgleichswerte für Knotenarme, die sich gegenüber liegen und durch eine
-  // gerade Fahrbeziehung verbunden sind. Das ist immer dann ein Problem, wenn links und/oder
-  // rechts von der geraden Fahrbeziehung eine ungleiche Anzahl an Fahrbeziehungen vorhanden
+  // gerade Verkehrsbeziehung verbunden sind. Das ist immer dann ein Problem, wenn links und/oder
+  // rechts von der geraden Verkehrsbeziehung eine ungleiche Anzahl an Verkehrsbeziehungen vorhanden
   // ist. Das muss dann auf der "NACH" Seite ausgegliechen werden.
   private _ausgleich = 0;
 
-  // eingehende Fahrbeziehungstypen
-  private _nachFahrbeziehungsTypen: number[] = [];
-  // ausgehende Fahrbeziehungstypen
-  private _vonFahrbeziehungsTypen: number[] = [];
+  // eingehende Verkehrsbeziehungstypen
+  private _nachVerkehrsbeziehungsTypen: number[] = [];
+  // ausgehende Verkehrsbeziehungstypen
+  private _vonVerkehrsbeziehungsTypen: number[] = [];
 
   // Anzahl der Fahrzeuge nach Fahrtrichtung ("_vonTotal[Typ]" / "_nachTotal[Typ]") und
   // nach Knotenarm ("_total[Typ]").
@@ -42,30 +42,30 @@ export default class BelastungsplanKnotenarm {
   private _is3Filled = false;
 
   /**
-   * Gibt die "nach" Position des Fahrbeziehungstypes in der (für diesen Knotenarm)
+   * Gibt die "nach" Position des Verkehrsbeziehungstypes in der (für diesen Knotenarm)
    * eingehenden Fahrtrichtung zurück.
-   * @param fahrbeziehungsTyp
+   * @param verkehrsbeziehungsTyp
    */
-  findFahrbeziehungsNachPosition(fahrbeziehungsTyp: number): number {
-    const typen = this._nachFahrbeziehungsTypen.sort() as number[];
-    if (!typen.includes(fahrbeziehungsTyp)) {
+  findVerkehrsbeziehungNachPosition(verkehrsbeziehungsTyp: number): number {
+    const typen = this._nachVerkehrsbeziehungsTypen.sort() as number[];
+    if (!typen.includes(verkehrsbeziehungsTyp)) {
       return -1;
     }
-    return typen.indexOf(fahrbeziehungsTyp) + this.ausgleich;
+    return typen.indexOf(verkehrsbeziehungsTyp) + this.ausgleich;
   }
 
   /**
-   * Gibt die Position des Fahrbeziehungstypes in der (für diesen Knotenarm)
+   * Gibt die Position des Verkehrsbeziehungstypes in der (für diesen Knotenarm)
    * ausgehenden Fahrtrichtung zurück.
    *
-   * @param fahrbeziehungsTyp
+   * @param verkehrsbeziehungsTyp
    */
-  findFahrbeziehungVonPosition(fahrbeziehungsTyp: number): number {
-    const typen = this._vonFahrbeziehungsTypen.sort() as number[];
-    if (!typen.includes(fahrbeziehungsTyp)) {
+  findVerkehrsbeziehungVonPosition(verkehrsbeziehungsTyp: number): number {
+    const typen = this._vonVerkehrsbeziehungsTypen.sort() as number[];
+    if (!typen.includes(verkehrsbeziehungsTyp)) {
       return -1;
     }
-    return typen.indexOf(fahrbeziehungsTyp);
+    return typen.indexOf(verkehrsbeziehungsTyp);
   }
 
   /**
@@ -128,20 +128,20 @@ export default class BelastungsplanKnotenarm {
     this._ausgleich = value;
   }
 
-  get vonFahrbeziehungsTypen(): number[] {
-    return this._vonFahrbeziehungsTypen;
+  get vonVerkehrsbeziehungsTypen(): number[] {
+    return this._vonVerkehrsbeziehungsTypen;
   }
 
-  addVonFahrbeziehungsType(value: number) {
-    this._vonFahrbeziehungsTypen.push(value);
+  addVonVerkehrsbeziehungsType(value: number) {
+    this._vonVerkehrsbeziehungsTypen.push(value);
   }
 
-  get nachFahrbeziehungsTypen(): number[] {
-    return this._nachFahrbeziehungsTypen;
+  get nachVerkehrsbeziehungsTypen(): number[] {
+    return this._nachVerkehrsbeziehungsTypen;
   }
 
-  addNachFahrbeziehungsTyp(value: number) {
-    this._nachFahrbeziehungsTypen.push(value);
+  addNachVerkehrsbeziehungsTyp(value: number) {
+    this._nachVerkehrsbeziehungsTypen.push(value);
   }
 
   get vonTotalValue1(): number {
@@ -218,37 +218,37 @@ export default class BelastungsplanKnotenarm {
 
   private _strasse!: string;
 
-  // Anzahl der Fahrbeziehungen, die aus diesem Knotenarm heraus gehen
-  private _anzahlVonFahrbeziehungen = 0;
-  // Anzahl der Fahrbeziehungen, die in diesen Knotenarm hinein gehen
-  private _anzahlNachFahrbeziehungen = 0;
+  // Anzahl der Verkehrsbeziehungen, die aus diesem Knotenarm heraus gehen
+  private _anzahlVonVerkehrsbeziehungen = 0;
+  // Anzahl der Verkehrsbeziehung, die in diesen Knotenarm hinein gehen
+  private _anzahlNachVerkehrsbeziehungen = 0;
 
   /**
-   * Die Anzahl der ausgehenden Fahrbeziehungen.
+   * Die Anzahl der ausgehenden Verkehrsbeziehungen.
    */
-  get anzahlVonFahrbeziehungen(): number {
-    return this._anzahlVonFahrbeziehungen;
+  get anzahlVonVerkehrsbeziehungen(): number {
+    return this._anzahlVonVerkehrsbeziehungen;
   }
 
   /**
-   * Den Zähler für ausgehende Fahrbeziehungen um 1 erhöhen.
+   * Den Zähler für ausgehende Verkehrsbeziehungen um 1 erhöhen.
    */
-  plusFahrbeziehungenVon() {
-    this._anzahlVonFahrbeziehungen = this._anzahlVonFahrbeziehungen + 1;
+  plusVerkehrsbeziehungenVon() {
+    this._anzahlVonVerkehrsbeziehungen = this._anzahlVonVerkehrsbeziehungen + 1;
   }
 
   /**
-   * Die Anzahl der eingehenden Fahrbeziehungen.
+   * Die Anzahl der eingehenden Verkehrsbeziehungen.
    */
-  get anzahlNachFahrbeziehungen(): number {
-    return this._anzahlNachFahrbeziehungen;
+  get anzahlNachVerkehrsbeziehungen(): number {
+    return this._anzahlNachVerkehrsbeziehungen;
   }
 
   /**
-   * Den Zähler für eingehende Fahrbeziehungen um 1 erhöhen.
+   * Den Zähler für eingehende Verkehrsbeziehungen um 1 erhöhen.
    */
-  plusFahrbeziehungenNach() {
-    this._anzahlNachFahrbeziehungen = this._anzahlNachFahrbeziehungen + 1;
+  plusVerkehrsbeziehungenNach() {
+    this._anzahlNachVerkehrsbeziehungen = this._anzahlNachVerkehrsbeziehungen + 1;
   }
 
   get strasse(): string {
