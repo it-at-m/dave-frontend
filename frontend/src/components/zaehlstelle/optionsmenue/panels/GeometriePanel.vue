@@ -6,7 +6,7 @@
           start
           icon="mdi-arrow-decision"
         />
-        Fahrbeziehungen
+        Verkehrsbeziehungen
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
@@ -14,7 +14,7 @@
         font-size="0.875rem"
         font-weight="bold"
         padding="10px 0 10px 0"
-        header-text="Fahrbeziehungen zwischen den Knotenarmen"
+        header-text="Verkehrsbeziehungen zwischen den Knotenarmen"
       />
 
       <v-row
@@ -64,7 +64,7 @@
             <div
               :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
             >
-              {{ helpTextFahrbeziehung }}
+              {{ helpTextVerkehrsbeziehung }}
             </div>
           </v-card>
         </v-col>
@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import type KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
-import type LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
@@ -141,7 +141,7 @@ const nachKnotenarme = computed<Array<LadeKnotenarmDTO>>(() => {
   }
 });
 
-const helpTextFahrbeziehung = computed(() => {
+const helpTextVerkehrsbeziehung = computed(() => {
   if (hoverSelectVon.value) {
     return "Auf den Knoten zulaufende Fahrtrichtung.";
   }
@@ -187,11 +187,11 @@ function reset() {
  * Jeder wählbare von-Knotenarm wird mit den möglichen nach-Knotearmen befüllt.
  * Jeder wählbare nach-Knotenarm wird mit den möglichen von-Knotearmen befüllt.
  *
- * Als Basis zur Ermittlung der relevanten Knotenarme dient die Klasse "LadeFahrbeziehungDTO"
+ * Als Basis zur Ermittlung der relevanten Knotenarme dient die Klasse "LadeVerkehrsbeziehungDTO"
  * welche als relevante Attribute "von" und "nach" für Kreuzungen sowie "knotenarmKreisverkehr"
  * und "hinein" vorhält.
  */
-function initFahrbeziehungen(): void {
+function initVerkehrsbeziehungen(): void {
   // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
   const knotenarme: Map<number, string> = new Map<number, string>(
     activeZaehlung.value.knotenarme.map((knotenarm) => [
@@ -208,37 +208,37 @@ function initFahrbeziehungen(): void {
 
   // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
   // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
-  const fahrbeziehungen = activeZaehlung.value.fahrbeziehungen;
-  if (fahrbeziehungen && Array.isArray(fahrbeziehungen)) {
-    fahrbeziehungen?.forEach((fahrbeziehung) => {
+  const verkehrsbeziehungen = activeZaehlung.value.verkehrsbeziehungen;
+  if (verkehrsbeziehungen && Array.isArray(verkehrsbeziehungen)) {
+    verkehrsbeziehungen?.forEach((verkehrsbeziehung) => {
       if (isZaehlungForKreuzung()) {
         addVonKnotenarmWithPossibleNachKnotenarm(
-          fahrbeziehung,
+          verkehrsbeziehung,
           alleZielknotenarmeVon,
           knotenarme
         );
         addNachKnotenarmWithPossibleVonKnotenarm(
-          fahrbeziehung,
+          verkehrsbeziehung,
           alleEingehendeKnotenarmeNach,
           knotenarme
         );
       } else {
         // Kreisverkehr
-        if (!isNil(fahrbeziehung.knotenarm)) {
-          if (fahrbeziehung.hinein) {
+        if (!isNil(verkehrsbeziehung.knotenarm)) {
+          if (verkehrsbeziehung.hinein) {
             alleEingehendeKnotenarmeNach.add({
-              nummer: fahrbeziehung.knotenarm,
+              nummer: verkehrsbeziehung.knotenarm,
               strassenname: getKnotenarmBezeichnung(
-                fahrbeziehung.knotenarm,
+                verkehrsbeziehung.knotenarm,
                 knotenarme
               ),
             });
           }
-          if (fahrbeziehung.heraus) {
+          if (verkehrsbeziehung.heraus) {
             alleZielknotenarmeVon.add({
-              nummer: fahrbeziehung.knotenarm,
+              nummer: verkehrsbeziehung.knotenarm,
               strassenname: getKnotenarmBezeichnung(
-                fahrbeziehung.knotenarm,
+                verkehrsbeziehung.knotenarm,
                 knotenarme
               ),
             });
@@ -294,47 +294,47 @@ function initFahrbeziehungen(): void {
  * die möglichen nach-Knotenarme an.
  */
 function addVonKnotenarmWithPossibleNachKnotenarm(
-  fahrbeziehung: LadeFahrbeziehungDTO,
-  alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
-  knotenarme: Map<number, string>
+    verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
+    alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
+    knotenarme: Map<number, string>
 ): void {
-  if (moeglicheBeziehungenVon.value.has(fahrbeziehung.von)) {
+  if (moeglicheBeziehungenVon.value.has(verkehrsbeziehung.von)) {
     // Erweitern bereits vorhandener von-Knotenarm um zusätzlichen möglichen nach-Knotenarm
     const kv: KnotenarmVerbindungen | undefined =
-      moeglicheBeziehungenVon.value.get(fahrbeziehung.von);
+      moeglicheBeziehungenVon.value.get(verkehrsbeziehung.von);
     kv?.moeglicheVerbindungen.push({
-      nummer: fahrbeziehung.nach,
-      strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
+      nummer: verkehrsbeziehung.nach,
+      strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
     });
-    kv?.moeglicheVerbindungenIds.push(fahrbeziehung.nach);
+    kv?.moeglicheVerbindungenIds.push(verkehrsbeziehung.nach);
   } else {
     // Erstbefüllung noch nicht vorhandener von-Knotenarm
     const kv: KnotenarmVerbindungen = {
       knotenarm: {
-        nummer: fahrbeziehung.von,
-        strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
+        nummer: verkehrsbeziehung.von,
+        strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
       },
       moeglicheVerbindungen: [
         alle,
         {
-          nummer: fahrbeziehung.nach,
-          strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
+          nummer: verkehrsbeziehung.nach,
+          strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
         },
       ],
-      moeglicheVerbindungenIds: [alle.nummer, fahrbeziehung.nach],
+      moeglicheVerbindungenIds: [alle.nummer, verkehrsbeziehung.nach],
     };
-    moeglicheBeziehungenVon.value.set(fahrbeziehung.von, kv);
+    moeglicheBeziehungenVon.value.set(verkehrsbeziehung.von, kv);
   }
 
   let alreadyExists = false;
   alleZielknotenarmeVon.forEach((value) => {
-    alreadyExists = alreadyExists || value.nummer === fahrbeziehung.nach;
+    alreadyExists = alreadyExists || value.nummer === verkehrsbeziehung.nach;
   });
 
   if (!alreadyExists) {
     alleZielknotenarmeVon.add({
-      nummer: fahrbeziehung.nach,
-      strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
+      nummer: verkehrsbeziehung.nach,
+      strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
     });
   }
 }
@@ -344,47 +344,47 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
  * die möglichen von-Knotenarme an.
  */
 function addNachKnotenarmWithPossibleVonKnotenarm(
-  fahrbeziehung: LadeFahrbeziehungDTO,
-  alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
-  knotenarme: Map<number, string>
+    verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
+    alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
+    knotenarme: Map<number, string>
 ): void {
-  if (moeglicheBeziehungenNach.value.has(fahrbeziehung.nach)) {
+  if (moeglicheBeziehungenNach.value.has(verkehrsbeziehung.nach)) {
     // Erweitern bereits vorhandener nach-Knotenarm um zusätzlichen möglichen von-Knotenarm
     const kv: KnotenarmVerbindungen | undefined =
-      moeglicheBeziehungenNach.value.get(fahrbeziehung.nach);
+      moeglicheBeziehungenNach.value.get(verkehrsbeziehung.nach);
     kv?.moeglicheVerbindungen.push({
-      nummer: fahrbeziehung.von,
-      strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
+      nummer: verkehrsbeziehung.von,
+      strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
     });
-    kv?.moeglicheVerbindungenIds.push(fahrbeziehung.von);
+    kv?.moeglicheVerbindungenIds.push(verkehrsbeziehung.von);
   } else {
     // Erstbefüllung noch nicht vorhandener nach-Knotenarm
     const kv: KnotenarmVerbindungen = {
       knotenarm: {
-        nummer: fahrbeziehung.nach,
-        strassenname: getKnotenarmBezeichnung(fahrbeziehung.nach, knotenarme),
+        nummer: verkehrsbeziehung.nach,
+        strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
       },
       moeglicheVerbindungen: [
         alle,
         {
-          nummer: fahrbeziehung.von,
-          strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
+          nummer: verkehrsbeziehung.von,
+          strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
         },
       ],
-      moeglicheVerbindungenIds: [alle.nummer, fahrbeziehung.von],
+      moeglicheVerbindungenIds: [alle.nummer, verkehrsbeziehung.von],
     };
-    moeglicheBeziehungenNach.value.set(fahrbeziehung.nach, kv);
+    moeglicheBeziehungenNach.value.set(verkehrsbeziehung.nach, kv);
   }
 
   let alreadyExists = false;
   alleEingehendeKnotenarmeNach.forEach((value) => {
-    alreadyExists = alreadyExists || value.nummer === fahrbeziehung.von;
+    alreadyExists = alreadyExists || value.nummer === verkehrsbeziehung.von;
   });
 
   if (!alreadyExists) {
     alleEingehendeKnotenarmeNach.add({
-      nummer: fahrbeziehung.von,
-      strassenname: getKnotenarmBezeichnung(fahrbeziehung.von, knotenarme),
+      nummer: verkehrsbeziehung.von,
+      strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
     });
   }
 }
@@ -462,10 +462,10 @@ watch(nach, (n: number) => {
 });
 
 onMounted(() => {
-  initFahrbeziehungen();
+  initVerkehrsbeziehungen();
   // Von und nach Werte auf die Werte aus dem Options Objekt aus dem Store setzen.
   //
-  // Es ist wichtig, dass diese Funktion ausgeführt wird, nachdem die Fahrbeziehungen
+  // Es ist wichtig, dass diese Funktion ausgeführt wird, nachdem die Verkehrsbeziehungen
   // aufbereitet wurden, da durch das Setzen von "von" und "nach" in den entspechenden
   // watch Methoden automatisch die richtigen "vonIds" und "nachIds" gesetzt werden. Damit
   // ist sichergestellt, dass bei einer 1 : n Beziehung alle "nach" Knotenarme in der

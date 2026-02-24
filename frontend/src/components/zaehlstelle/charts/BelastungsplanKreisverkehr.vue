@@ -28,8 +28,8 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 
 /**
- * Die Berechnung der Koordinaten für die einzelnen Fahrbeziehungen erfolgt anhand einer Drehmatrix.
- * Lediglich die Koordinaten für die Fahrbeziehungen 1 nach * wurden händisch festgelegt.
+ * Die Berechnung der Koordinaten für die einzelnen Verkehrsbeziehungen erfolgt anhand einer Drehmatrix.
+ * Lediglich die Koordinaten für die Verkehrsbeziehungen 1 nach * wurden händisch festgelegt.
  * Daraus ergeben sich folgende Drehmatrizen.
  *
  * Drehmatrix 1 nach n:
@@ -258,7 +258,7 @@ const selectedOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
-/** Damit nicht für jede Linie die maximale an Fahrzeugen über alle Fahrbeziehungen berechnet wird,
+/** Damit nicht für jede Linie die maximale an Fahrzeugen über alle Verkehrsbeziehungen berechnet wird,
  * wird dieser Wert in der Variable this.maxNumberOfCars zwischengespeichert.
  * Wenn dort bereits ein Wert enthalten ist, wird dieser verwendet und nicht neu berechnet.
  */
@@ -304,7 +304,7 @@ const optionsBelastunsplan = computed(() => {
       show: false,
     },
     /**
-     * Start- und Endpunkte der Fahrbeziehungen
+     * Start- und Endpunkte der Verkehrsbeziehungen
      * Seitens des Fachbereiches war gefordert, dass die gezeichneten Linien geradeaus starten,
      * dann die Kurve beschreiben. Dazu wurde folgenden Struktur aufgebaut:
      *
@@ -318,8 +318,8 @@ const optionsBelastunsplan = computed(() => {
      *
      * Einfahrender Verkehr (t kommt vor s) analog zum ausfahrenden Verkehr mit dem Unterschied, dass s und t vertauscht sind.
      *
-     * Aufbau der Fahrbeziehungen:
-     * Es gibt keine genauen Fahrbeziehungen, sondern nur n nach * und * nach n
+     * Aufbau der Verkehrsbeziehungen:
+     * Es gibt keine genauen Verkehrsbeziehungen, sondern nur n nach * und * nach n
      * Beispiel: 1 nach *
      *
      * start1s -> ende1s: gerade Linie
@@ -1435,7 +1435,7 @@ const optionsBelastunsplan = computed(() => {
   };
 });
 
-/** Berechnet die maximale Anzahl an Fahrzeugen über alle Fahrbeziehungen und Zeitintervalle */
+/** Berechnet die maximale Anzahl an Fahrzeugen über alle Verkehrsbeziehungen und Zeitintervalle */
 function calculateMaxNumberOfCars() {
   let maxValue = 0;
   getDataToShow().forEach((mm: number[]) => {
