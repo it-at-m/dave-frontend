@@ -6,7 +6,7 @@
           start
           icon="mdi-car-multiple"
         />
-        Fahrzeuge
+        Verkehrsarten & Fahrzeuge
       </div>
     </v-expansion-panel-title>
     <v-expansion-panel-text class="mt-1">
@@ -256,7 +256,7 @@
             <v-col cols="6">
               <v-checkbox
                 v-model="chosenOptionsCopy.fussverkehr"
-                :label="'Fußgänger (Fuß)'"
+                :label="'Fußverkehr'"
                 :hint="getHintToDisplay('FUSS')"
                 :color="getCheckboxColor('FUSS')"
                 :persistent-hint="

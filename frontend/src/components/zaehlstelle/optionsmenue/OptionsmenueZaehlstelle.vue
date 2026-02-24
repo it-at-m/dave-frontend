@@ -206,9 +206,15 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
-        // Rad soll nur bei reinen Radzählungen aktiviert sein
-        optionsCopy.radverkehr = ["R", "QR"].includes(
+        // Rad soll nur bei bestimmten Zählarten aktiviert sein
+        optionsCopy.radverkehr = [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
           activeZaehlung.value.zaehlart
+        );
+        break;
+      case Fahrzeug.FUSS:
+        // Fuss soll nur bei Zählarten FjS, Qu, QjS aktiviert sein
+        optionsCopy.fussverkehr = [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+            activeZaehlung.value.zaehlart
         );
         break;
     }
