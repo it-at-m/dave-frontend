@@ -22,7 +22,7 @@
             />
           </v-col>
           <v-col cols="6">
-            <date-picker
+            <date-picker v-if="!props.disableEnd"
               v-model="endDate"
               label="Enddatum"
               :disabled="props.disabled"
@@ -93,6 +93,7 @@ interface Props {
   label?: string;
   required?: boolean;
   disabled?: boolean;
+  disableEnd?: boolean;
   minDate?: Date;
   minDateDescription?: string;
   maxDate?: Date;
@@ -104,6 +105,7 @@ const props = withDefaults(defineProps<Props>(), {
   label: "",
   required: false,
   disabled: false,
+  disableEnd: false,
   minDate: undefined,
   minDateDescription: undefined,
   maxDate: undefined,

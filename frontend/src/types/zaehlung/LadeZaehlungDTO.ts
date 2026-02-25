@@ -23,6 +23,7 @@ export default interface LadeZaehlungDTO extends BaseEntity {
   projektName: string;
   kreuzungsname: string;
   sonderzaehlung: boolean;
+  dauerzaehlung: boolean;
   kreisverkehr: boolean;
   zaehlsituation: string;
   zaehlsituationErweitert: string;
