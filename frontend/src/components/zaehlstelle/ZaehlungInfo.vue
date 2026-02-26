@@ -32,7 +32,13 @@
               cols="12"
               lg="8"
             >
-              <v-row no-gutters
+              <v-row no-gutters v-if="zaehlung.dauerzaehlung">
+                <span class="pb-0 text-truncate">Dauerzählung
+                   |
+                  {{ zaehlung.projektName }}
+                </span>
+              </v-row>
+              <v-row no-gutters v-if="!zaehlung.dauerzaehlung"
                 ><span class="pb-0 text-truncate"
                   >{{ dateUtils.getShortVersionOfDate(datum) }} |
                   {{ zaehlung.projektName }}</span
@@ -116,7 +122,7 @@
           <v-col cols="10">
             <span class="text-grey-lighten-1"
               >Zeitauswahl:
-              <span class="font-weight-medium text-white">{{ zeitblock }}</span>
+              <span class="font-weight-medium text-white"> {{ zeitraumStartDate ? dateUtils.getShortVersionOfDate(zeitraumStartDate) : '' }} | {{ zeitblock }}</span>
               in
               <span class="font-weight-medium text-white">{{
                 zeitintervall
@@ -140,8 +146,14 @@
             />
           </v-col>
           <v-col cols="10">
-            <span class="text-grey-lighten-1">Zeitraum von</span> {{ options.zeitraumStartAndEndDate?.startDate ? dateUtils.formatDate(options.zeitraumStartAndEndDate.startDate.toLocaleDateString("de-DE")) : '' }} 
-            <span class="text-grey-lighten-1">bis</span> {{ options.zeitraumStartAndEndDate?.endDate ? dateUtils.formatDate(options.zeitraumStartAndEndDate.endDate.toLocaleDateString("de-DE")) : '' }}
+            <span class="text-grey-lighten-1">Zeitauswahl: von </span> 
+            <span class="font-weight-medium text-white">
+              {{ options.zeitraumStartAndEndDate?.startDate ? dateUtils.formatDate(options.zeitraumStartAndEndDate.startDate.toLocaleDateString("de-DE")) : '' }} 
+            </span>
+            <span class="text-grey-lighten-1"> bis </span> 
+            <span class="font-weight-medium text-white">
+              {{ options.zeitraumStartAndEndDate?.endDate ? dateUtils.formatDate(options.zeitraumStartAndEndDate.endDate.toLocaleDateString("de-DE")) : '' }}
+            </span>
           </v-col>
         </v-row>
         <v-row
@@ -325,6 +337,10 @@ const zeitblock = computed(() => {
  */
 const zeitintervall = computed(() => {
   return ZaehldatenIntervallToBeschreibung.get(options.value.intervall);
+});
+
+const zeitraumStartDate = computed(() => {
+  return options.value.zeitraumStartAndEndDate?.startDate;
 });
 
 /**

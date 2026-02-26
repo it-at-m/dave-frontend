@@ -125,7 +125,7 @@
         :max-date="maxDate"
         :max-date-description="maxDateDescription"
         :auffaellige-tage="auffaelligeTage"
-        :disabled="isZeitauswahlZeitraum === false"
+        :disableEnd="isZeitauswahlZeitraum === false"
       />
       <v-divider />
       <panel-header
