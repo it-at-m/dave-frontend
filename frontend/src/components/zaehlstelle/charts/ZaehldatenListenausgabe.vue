@@ -325,8 +325,8 @@ const headers = computed(() => {
     }
 
     headers.push({
-      title: "Fahrzeugklassen",
-      key: "Fahrzeugklassen",
+      title: "Kategorien",
+      key: "Kategorien",
       align: "center",
       lastFixed: true,
       children: children,

@@ -141,7 +141,7 @@ const optionsDefault = computed(() => {
     },
     yAxis: [
       {
-        name: "Fahrzeuge",
+        name: "Anzahl",
         min: 0,
         max: rangeMax.value,
         type: "value",
