@@ -440,7 +440,7 @@ function addTextSouthSide(
   percentSv: number | string,
   bold: boolean = false
 ) {
-  let textposition = 2;
+  let textposition = 0;
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
     addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
     startPointY += 85;
@@ -453,7 +453,7 @@ function addTextSouthSide(
       bold
     );
     startPointY += 85;
-    textposition -= 1;
+    textposition += 1;
   }
   if (isSvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
@@ -463,7 +463,7 @@ function addTextSouthSide(
       bold
     );
     startPointY += 85;
-    textposition -= 1;
+    textposition += 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
     addTextToQuerschnittGroup(
@@ -473,7 +473,7 @@ function addTextSouthSide(
       bold
     );
     startPointY += 85;
-    textposition -= 1;
+    textposition += 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
     addTextToQuerschnittGroup(
