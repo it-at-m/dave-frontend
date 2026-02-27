@@ -441,28 +441,19 @@ function addTextSouthSide(
   bold: boolean = false
 ) {
   let textposition = 0;
-  if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
-    addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
-    startPointY += 85;
-  }
-  if (isGvpInBelastungsPlan.value) {
-    addTextToQuerschnittGroup(
-      addBracketsDependingOnPostition(`${percentGv}%`, textposition),
-      startPointX,
-      startPointY,
-      bold
-    );
-    startPointY += 85;
+  if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
+    addTextToQuerschnittGroup(kfz, startPointX, startPointY, bold);
+    startPointY -= 85;
     textposition += 1;
   }
-  if (isSvpInBelastungsPlan.value) {
+  if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
     addTextToQuerschnittGroup(
-      addBracketsDependingOnPostition(`${percentSv}%`, textposition),
+      addBracketsDependingOnPostition(sv, textposition),
       startPointX,
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY -= 85;
     textposition += 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
@@ -472,20 +463,29 @@ function addTextSouthSide(
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY -= 85;
     textposition += 1;
   }
-  if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
+  if (isSvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
-      addBracketsDependingOnPostition(`${sv}`, textposition),
+      addBracketsDependingOnPostition(`${percentSv}%`, textposition),
       startPointX,
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY -= 85;
+    textposition += 1;
   }
-  if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
-    addTextToQuerschnittGroup(kfz, startPointX, startPointY, bold);
+  if (isGvpInBelastungsPlan.value) {
+    addTextToQuerschnittGroup(
+      addBracketsDependingOnPostition(`${percentGv}%`, textposition),
+      startPointX,
+      startPointY,
+      bold
+    );
+  }
+  if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
+    addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
   }
 }
 
