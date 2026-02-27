@@ -200,6 +200,14 @@ function setDefaultOptionsForZaehlung() {
     }
   });
   optionsCopy.beideRichtungen = false;
+
+  activeZaehlung.value.laengsverkehr.forEach((lv) => {
+    optionsCopy.laengsverkehr.push(lv);
+  })
+  activeZaehlung.value.querungsverkehr.forEach((qv) => {
+    optionsCopy.querungsverkehr.push(qv);
+  })
+
   chosenOptions.value = optionsCopy;
   saveOptions();
 }

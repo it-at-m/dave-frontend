@@ -1302,7 +1302,7 @@ import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 
 import { cloneDeep, isEmpty, remove, toArray } from "lodash";
-import {computed, onMounted } from "vue";
+import {computed } from "vue";
 
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
@@ -1351,10 +1351,6 @@ function isLaengsverkehrAvailable(knotenarm: number, richtung: Bewegungsrichtung
 function isQuerungsverkehrAvailable(knotenarm: number, richtung: Himmelsrichtung): boolean {
   return activeZaehlung.value.querungsverkehr.filter(element => element.knotenarm === knotenarm && element.richtung === richtung).length > 0;
 }
-
-onMounted(() => {
-  resetForm();
-});
 
 function isKnotenarmAvailable(knotenarm: number): boolean {
   return availableKnotenarme.value.includes(knotenarm);
@@ -1960,15 +1956,6 @@ function createQuerungsverkehr(
   querungsverkehr.knotenarm = knotenarm;
   querungsverkehr.richtung = richtung;
   return querungsverkehr;
-}
-
-function resetForm() {
-  activeZaehlung.value.laengsverkehr.forEach((lv) => {
-    chosenOptionsCopy.value.laengsverkehr.push(lv);
-  })
-  activeZaehlung.value.querungsverkehr.forEach((qv) => {
-    chosenOptionsCopy.value.querungsverkehr.push(qv);
-  })
 }
 
 </script>
