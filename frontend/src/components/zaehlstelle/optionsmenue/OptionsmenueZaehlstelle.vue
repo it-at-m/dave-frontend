@@ -229,9 +229,6 @@ function setOptions() {
  * @private
  */
 function saveOptions() {
-  chosenOptions.value.laengsverkehr.forEach((lv) => {
-    console.log(`saveOptions: ${lv.knotenarm} ${lv.richtung} ${lv.strassenseite}`)
-  })
   zaehlstelleStore.setFilteroptions(Object.assign({}, chosenOptions.value));
 }
 
