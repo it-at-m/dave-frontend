@@ -229,6 +229,13 @@ function setOptions() {
  * @private
  */
 function saveOptions() {
+  // TODO: remove
+  chosenOptions.value.querungsverkehr.forEach((qv) => {
+    console.log(`save QU: ${qv.knotenarm} ${qv.richtung}`)
+  })
+  chosenOptions.value.laengsverkehr.forEach((lv) => {
+    console.log(`save FJS: ${lv.knotenarm} ${lv.strassenseite} ${lv.richtung}`)
+  })
   zaehlstelleStore.setFilteroptions(Object.assign({}, chosenOptions.value));
 }
 
