@@ -41,7 +41,7 @@
 
               <fahrzeug-panel v-model="chosenOptions" />
 
-              <geometrie-panel v-model="chosenOptions" />
+              <verkehrsbeziehungen-panel v-model="chosenOptions" />
 
               <zaehlungsvergleich-panel v-model="chosenOptions" />
 
@@ -83,7 +83,6 @@ import { useDisplay } from "vuetify";
 
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
-import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -95,6 +94,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 
 /**
  * Beschreibung Optionsmenü
@@ -229,6 +229,9 @@ function setOptions() {
  * @private
  */
 function saveOptions() {
+  chosenOptions.value.laengsverkehr.forEach((lv) => {
+    console.log(`saveOptions: ${lv.knotenarm} ${lv.richtung} ${lv.strassenseite}`)
+  })
   zaehlstelleStore.setFilteroptions(Object.assign({}, chosenOptions.value));
 }
 

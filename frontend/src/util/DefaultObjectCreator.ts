@@ -217,6 +217,9 @@ export default class DefaultObjectCreator {
       id: "",
       entityVersion: 0,
       createdTime: "",
+      laengsverkehr: [],
+      querungsverkehr: [],
+
     };
   }
 
@@ -265,6 +268,9 @@ export default class DefaultObjectCreator {
       ganglinieYAchse2MaxValue: null,
       idVergleichszaehlungZeitreihe: null,
       zeitreiheGesamt: false,
+      laengsverkehr: [],
+      querungsverkehr: []
+
     };
   }
 
