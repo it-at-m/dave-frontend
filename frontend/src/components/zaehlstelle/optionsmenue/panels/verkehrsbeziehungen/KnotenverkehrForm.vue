@@ -1963,11 +1963,9 @@ function createQuerungsverkehr(
 }
 
 function resetForm() {
-  // chosenOptionsCopy.value.laengsverkehr = [];
   activeZaehlung.value.laengsverkehr.forEach((lv) => {
     chosenOptionsCopy.value.laengsverkehr.push(lv);
   })
-  // chosenOptionsCopy.value.querungsverkehr = [];
   activeZaehlung.value.querungsverkehr.forEach((qv) => {
     chosenOptionsCopy.value.querungsverkehr.push(qv);
   })
