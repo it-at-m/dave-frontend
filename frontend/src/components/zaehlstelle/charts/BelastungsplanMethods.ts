@@ -1153,16 +1153,35 @@ export function useBelastungsplanMethods() {
     // Anzahl Zeichen
     if (zeichen > 17) {
       trenner = "-";
+      // str.
       if (strasse.endsWith("str.")) {
         const i = strasse.indexOf("str.");
         pieces[0] = strasse.substring(0, zeichen - 4);
         pieces[1] = strasse.substring(i, 4);
       }
-      // Platz
+      // straße
+      if (strasse.endsWith("straße")) {
+        const i = strasse.indexOf("straße");
+        pieces[0] = strasse.substring(0, zeichen - 6);
+        pieces[1] = strasse.substring(i, 6);
+      }
+      // pl.
       if (strasse.endsWith("pl.")) {
         const i = strasse.indexOf("pl.");
         pieces[0] = strasse.substring(0, zeichen - 3);
         pieces[1] = strasse.substring(i, 3);
+      }
+      // platz
+      if (strasse.endsWith("platz")) {
+        const i = strasse.indexOf("platz");
+        pieces[0] = strasse.substring(0, zeichen - 5);
+        pieces[1] = strasse.substring(i, 5);
+      }
+      // brücke
+      if (strasse.endsWith("brücke")) {
+        const i = strasse.indexOf("brücke");
+        pieces[0] = strasse.substring(0, zeichen - 6);
+        pieces[1] = strasse.substring(i, 6);
       }
     }
     // Bindestrich
