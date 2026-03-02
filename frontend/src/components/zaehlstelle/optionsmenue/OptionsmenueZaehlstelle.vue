@@ -201,12 +201,16 @@ function setDefaultOptionsForZaehlung() {
   });
   optionsCopy.beideRichtungen = false;
 
-  activeZaehlung.value.laengsverkehr.forEach((lv) => {
-    optionsCopy.laengsverkehr.push(lv);
-  })
-  activeZaehlung.value.querungsverkehr.forEach((qv) => {
-    optionsCopy.querungsverkehr.push(qv);
-  })
+  if (activeZaehlung.value.laengsverkehr) {
+    activeZaehlung.value.laengsverkehr.forEach((lv) => {
+      optionsCopy.laengsverkehr.push(lv);
+    })
+  }
+  if (activeZaehlung.value.querungsverkehr) {
+    activeZaehlung.value.querungsverkehr.forEach((qv) => {
+      optionsCopy.querungsverkehr.push(qv);
+    })
+  }
 
   chosenOptions.value = optionsCopy;
   saveOptions();
@@ -218,17 +222,27 @@ function setDefaultOptionsForZaehlung() {
  * @private
  */
 function setOptions() {
-  if (
-    zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) ||
-    zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
+  if (!
+      zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) &&
+    !zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
   ) {
-    saveOptions();
-    dialog.value = false;
-  } else {
     snackbarStore.showError(
       "Es muss mindestens eine Verkehrsart oder Fahrzeugkategorie ausgewählt sein."
     );
+    return;
   }
+  if ((activeZaehlung.value.zaehlart === Zaehlart.FJS &&
+      isEmpty(chosenOptions.value.laengsverkehr)) ||
+      (activeZaehlung.value.zaehlart === Zaehlart.QU &&
+          isEmpty(chosenOptions.value.querungsverkehr))
+  ) {
+    snackbarStore.showError(
+        "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
+    );
+    return;
+  }
+  saveOptions();
+  dialog.value = false;
 }
 
 /**
