@@ -278,8 +278,8 @@ const headers = computed(() => {
     }
 
     headers.push({
-      title: "Fahrzeugtypen",
-      key: "Fahrzeugtypen",
+      title: "Kategorien",
+      key: "Kategorien",
       align: "center",
       lastFixed: true,
       children: children,
@@ -325,8 +325,8 @@ const headers = computed(() => {
     }
 
     headers.push({
-      title: "Kategorien",
-      key: "Kategorien",
+      title: "Fahrzeugklassen",
+      key: "Fahrzeugklassen",
       align: "center",
       lastFixed: true,
       children: children,
