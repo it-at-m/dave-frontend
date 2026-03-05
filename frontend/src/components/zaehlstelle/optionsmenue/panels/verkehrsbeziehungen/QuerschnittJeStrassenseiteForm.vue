@@ -368,21 +368,18 @@ const chosenOptions = defineModel<ZaehlstelleOptionsDTO>({
 });
 const chosenOptionsCopy = reactive(cloneDeep(chosenOptions.value)) // cloneDeep aus lodash/immer o.ä.
 
-
 const activeColor = "#D50000";
 const passiveColor = "#9E9E9E";
 
 const firstStreetname = ref<Array<string>>([]);
 const secondStreetname = ref<Array<string>>([]);
 
-// const isSelectedArrowOne = ref(true)
-// const isSelectedArrowTwo = ref(true)
-// const isSelectedArrowThree = ref(true)
-// const isSelectedArrowFour = ref(true)
-
-// const selectedVerkehrsbeziehungen = computed(() => {
-//   return activeZaehlung.value.verkehrsbeziehungen;
-// });
+const arrowFourPatterns = [
+  { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.O },
+  { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.S },
+  { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
+  { knotenarm: 8, nach: 6, strassenseite: Himmelsrichtung.SW }
+];
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -391,8 +388,8 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 const availableNodeNumbers = computed(() => {
   return availableNodes.value.map((arm) => arm.nummer);
 });
+
 const availableNodes = computed(() => {
-  // console.log("availableNodes")
   const nodes: LadeKnotenarmDTO[] = [];
   activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
     const nr = vb.knotenarm
@@ -408,9 +405,11 @@ const availableNodes = computed(() => {
 const firstNode = computed(() => {
   return first(availableNodes.value);
 });
+
 const secondNode = computed(() => {
   return last(availableNodes.value);
 });
+
 const rotateSvg = computed(() => {
   // Die Viewbox der SVG liegt bei 1400 1400. Die Rotation muss in deren Zentrum stattfinden, daher 700 700
   let rotation = "rotate(0,700,700)";
@@ -430,298 +429,64 @@ const rotateSvg = computed(() => {
 });
 
 const isAvailableArrowOne = computed(() => {
-  return !!activeZaehlung.value?.verkehrsbeziehungen?.some((vb) => {
-    return (
-        (vb.knotenarm === 1 && vb.nach === 3 && vb.strassenseite === Himmelsrichtung.W) ||
-        (vb.knotenarm === 2 && vb.nach === 4 && vb.strassenseite === Himmelsrichtung.N) ||
-        (vb.knotenarm === 5 && vb.nach === 7 && vb.strassenseite === Himmelsrichtung.NW) ||
-        (vb.knotenarm === 6 && vb.nach === 8 && vb.strassenseite === Himmelsrichtung.SO)
-    );
-  });
+  // TODO
+  return false
 })
 
 const isAvailableArrowTwo = computed(() => {
-  return !!activeZaehlung.value?.verkehrsbeziehungen?.some((vb) => {
-    return (
-        (vb.knotenarm === 3 && vb.nach === 1 && vb.strassenseite === Himmelsrichtung.W) ||
-        (vb.knotenarm === 4 && vb.nach === 2 && vb.strassenseite === Himmelsrichtung.N) ||
-        (vb.knotenarm === 7 && vb.nach === 5 && vb.strassenseite === Himmelsrichtung.NW) ||
-        (vb.knotenarm === 8 && vb.nach === 6 && vb.strassenseite === Himmelsrichtung.SO)
-    );
-  });
+  // TODO
+  return false
 })
 
 const isAvailableArrowThree = computed(() => {
-  return !!activeZaehlung.value?.verkehrsbeziehungen?.some((vb) => {
-    return (
-        (vb.knotenarm === 1 && vb.nach === 3 && vb.strassenseite === Himmelsrichtung.O) ||
-        (vb.knotenarm === 2 && vb.nach === 4 && vb.strassenseite === Himmelsrichtung.S) ||
-        (vb.knotenarm === 5 && vb.nach === 7 && vb.strassenseite === Himmelsrichtung.SO) ||
-        (vb.knotenarm === 6 && vb.nach === 8 && vb.strassenseite === Himmelsrichtung.SW)
-    );
-  });
+  // TODO
+  return false
 })
 
 const isAvailableArrowFour = computed(() => {
-  return !!activeZaehlung.value?.verkehrsbeziehungen?.some((vb) => {
-    return (
-        (vb.knotenarm === 3 && vb.nach === 1 && vb.strassenseite === Himmelsrichtung.O) ||
-        (vb.knotenarm === 4 && vb.nach === 2 && vb.strassenseite === Himmelsrichtung.S) ||
-        (vb.knotenarm === 7 && vb.nach === 5 && vb.strassenseite === Himmelsrichtung.SO) ||
-        (vb.knotenarm === 8 && vb.nach === 6 && vb.strassenseite === Himmelsrichtung.SW)
-    );
-  });
+  return hasAnyArrowPatternIn(activeZaehlung.value?.verkehrsbeziehungen, arrowFourPatterns);
 })
 
 const isSelectedArrowFour = computed(() => {
-
-  const patterns = [
-    { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.O },
-    { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-      // TODO
-  ]
-
-  return chosenOptionsCopy.verkehrsbeziehungenQJS
-    .some(vb => patterns.some(p => vb.knotenarm === p.knotenarm && vb.nach === p.nach && vb.strassenseite === p.strassenseite))
+  return hasAnyArrowPatternIn(chosenOptionsCopy.verkehrsbeziehungenQJS, arrowFourPatterns);
 })
 
-// function createVerkehrsbeziehungArrowOne(): VerkehrsbeziehungDTO {
-//   const verkehrsbeziehung = {} as VerkehrsbeziehungDTO;
-//   if (availableNodeNumbers.value.includes(1)) {
-//     verkehrsbeziehung.von = 1;
-//     verkehrsbeziehung.nach = 3;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.W;
-//   }
-//   if (availableNodeNumbers.value.includes(2)) {
-//     verkehrsbeziehung.von = 2;
-//     verkehrsbeziehung.nach = 4;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.N;
-//   }
-//   if (availableNodeNumbers.value.includes(5)) {
-//     verkehrsbeziehung.von = 5;
-//     verkehrsbeziehung.nach = 7;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.NW;
-//   }
-//   if (availableNodeNumbers.value.includes(6)) {
-//     verkehrsbeziehung.von = 6;
-//     verkehrsbeziehung.nach = 8;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.NO;
-//   }
-//   return verkehrsbeziehung;
-// }
-//
-// function createVerkehrsbeziehungArrowTwo(): VerkehrsbeziehungDTO {
-//   const verkehrsbeziehung = {} as VerkehrsbeziehungDTO;
-//   if (availableNodeNumbers.value.includes(1)) {
-//     verkehrsbeziehung.von = 3;
-//     verkehrsbeziehung.nach = 1;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.W;
-//   }
-//   if (availableNodeNumbers.value.includes(2)) {
-//     verkehrsbeziehung.von = 4;
-//     verkehrsbeziehung.nach = 2;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.N;
-//   }
-//   if (availableNodeNumbers.value.includes(5)) {
-//     verkehrsbeziehung.von = 7;
-//     verkehrsbeziehung.nach = 5;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.NW;
-//   }
-//   if (availableNodeNumbers.value.includes(6)) {
-//     verkehrsbeziehung.von = 8;
-//     verkehrsbeziehung.nach = 6;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.NO;
-//   }
-//   return verkehrsbeziehung;
-// }
-//
-// function createVerkehrsbeziehungArrowThree(): VerkehrsbeziehungDTO {
-//   const verkehrsbeziehung = {} as VerkehrsbeziehungDTO;
-//   if (availableNodeNumbers.value.includes(1)) {
-//     verkehrsbeziehung.von = 1;
-//     verkehrsbeziehung.nach = 3;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.O;
-//   }
-//   if (availableNodeNumbers.value.includes(2)) {
-//     verkehrsbeziehung.von = 2;
-//     verkehrsbeziehung.nach = 4;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.S;
-//   }
-//   if (availableNodeNumbers.value.includes(5)) {
-//     verkehrsbeziehung.von = 5;
-//     verkehrsbeziehung.nach = 7;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.SO;
-//   }
-//   if (availableNodeNumbers.value.includes(6)) {
-//     verkehrsbeziehung.von = 6;
-//     verkehrsbeziehung.nach = 8;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.SW;
-//   }
-//   return verkehrsbeziehung;
-// }
-//
-// function createVerkehrsbeziehungArrowFour(): VerkehrsbeziehungDTO {
-//   const verkehrsbeziehung = {} as VerkehrsbeziehungDTO;
-//   if (availableNodeNumbers.value.includes(1)) {
-//     verkehrsbeziehung.von = 3;
-//     verkehrsbeziehung.nach = 1;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.O;
-//   }
-//   if (availableNodeNumbers.value.includes(2)) {
-//     verkehrsbeziehung.von = 4;
-//     verkehrsbeziehung.nach = 2;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.S;
-//   }
-//   if (availableNodeNumbers.value.includes(5)) {
-//     verkehrsbeziehung.von = 7;
-//     verkehrsbeziehung.nach = 5;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.SO;
-//   }
-//   if (availableNodeNumbers.value.includes(6)) {
-//     verkehrsbeziehung.von = 8;
-//     verkehrsbeziehung.nach = 6;
-//     verkehrsbeziehung.strassenseite = Himmelsrichtung.SW;
-//   }
-//   return verkehrsbeziehung;
-// }
+function matchesArrowPattern(verkehrsbeziehung, arrowPattern) {
+  return verkehrsbeziehung.knotenarm === arrowPattern.knotenarm && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
+}
+
+function hasAnyArrowPatternIn(verkehrsbeziehungen, arrowPatterns) {
+  return !!verkehrsbeziehungen?.some(vb => arrowPatterns.some(p => matchesArrowPattern(vb, p)));
+}
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowOne() {
-//   const verkehrsbeziehung = createVerkehrsbeziehungArrowOne();
-//
-//   const index =
-//     findIndexInSelectedVerkehrsbeziehungForClickedVerkehrsbeziehung(
-//       verkehrsbeziehung
-//     );
-//
-//   const verkehrsbeziehungen = toArray(
-//     cloneDeep(selectedVerkehrsbeziehungen.value)
-//   );
-//
-//   if (index >= 0) {
-//     verkehrsbeziehungen.splice(index, 1);
-//   } else {
-//     verkehrsbeziehungen.push(verkehrsbeziehung);
-//   }
-//
-//   activeZaehlung.value.verkehrsbeziehungen = verkehrsbeziehungen;
+  // TODO
 }
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowTwo() {
+  // TODO
 }
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowThree() {
+  // TODO
 }
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowFour() {
-  console.log("handleClickOnQuerschnittsverkehrJeStrassenseiteArrowFour")
   if (isSelectedArrowFour.value) {
-    console.log("isSelectedArrowFour")
-    if (firstNode.value?.nummer === 1) {
-      const idx = chosenOptionsCopy.verkehrsbeziehungenQJS.findIndex(q =>
-          q.knotenarm === 1 && q.nach === 3 && q.strassenseite === Himmelsrichtung.O
-      )
-      if (idx !== -1) {
-        chosenOptionsCopy.verkehrsbeziehungenQJS.splice(idx, 1)
-      }
-    }
-    if (firstNode.value?.nummer === 2) {
-      const idx = chosenOptionsCopy.verkehrsbeziehungenQJS.findIndex(q =>
-          q.knotenarm === 2 && q.nach === 4 && q.strassenseite === Himmelsrichtung.N
-      )
-      if (idx !== -1) {
-        chosenOptionsCopy.verkehrsbeziehungenQJS.splice(idx, 1)
-      }
-    }
-    if (firstNode.value?.nummer === 3) {
-      const idx = chosenOptionsCopy.verkehrsbeziehungenQJS.findIndex(q =>
-          q.knotenarm === 3 && q.nach === 1 && q.strassenseite === Himmelsrichtung.W
-      )
-      if (idx !== -1) {
-        chosenOptionsCopy.verkehrsbeziehungenQJS.splice(idx, 1)
-      }
-    }
-    if (firstNode.value?.nummer === 4) {
-      const idx = chosenOptionsCopy.verkehrsbeziehungenQJS.findIndex(q =>
-          q.knotenarm === 4 && q.nach === 2 && q.strassenseite === Himmelsrichtung.S
-      )
-      if (idx !== -1) {
-        chosenOptionsCopy.verkehrsbeziehungenQJS.splice(idx, 1)
-      }
-    }
-    // TODO: 5 - 8
-
+    chosenOptionsCopy.verkehrsbeziehungenQJS = chosenOptionsCopy.verkehrsbeziehungenQJS
+        .filter(vb => !arrowFourPatterns.some(p => matchesArrowPattern(vb, p)));
   } else { // !isSelectedArrowFour
-    if (availableNodeNumbers.value.includes(1)) {
-      chosenOptionsCopy.verkehrsbeziehungenQJS.push({
-        knotenarm: 1,
-        nach: 3,
-        strassenseite: Himmelsrichtung.O
-      })
-    }
-    if (firstNode.value?.nummer === 2) {
-      chosenOptionsCopy.verkehrsbeziehungenQJS.push({
-        knotenarm: 2,
-        nach: 4,
-        strassenseite: Himmelsrichtung.N
-      })
-    }
-    if (firstNode.value?.nummer === 3) {
-      chosenOptionsCopy.verkehrsbeziehungenQJS.push({
-        knotenarm: 3,
-        nach: 1,
-        strassenseite: Himmelsrichtung.W
-      })
-    }
-    if (firstNode.value?.nummer === 4) {
-      chosenOptionsCopy.verkehrsbeziehungenQJS.push({
-        knotenarm: 4,
-        nach: 2,
-        strassenseite: Himmelsrichtung.S
-      })
-    }
-    // TODO 5 - 8
+    availableNodeNumbers.value.forEach((kn) => {
+      const pattern = arrowFourPatterns.find((p) => p.knotenarm === kn);
+      if (pattern) {
+        const { knotenarm, nach, strassenseite } = pattern;
+        chosenOptionsCopy.verkehrsbeziehungenQJS.push({ knotenarm, nach, strassenseite });
+      }
+    })
   }
-
-
-// activeZaehlung.value?.verkehrsbeziehungen.forEach((vb) => {
-
-//   const verkehrsbeziehung = createVerkehrsbeziehungArrowFour();
-//
-//   const index =
-//     findIndexInSelectedVerkehrsbeziehungForClickedVerkehrsbeziehung(
-//       verkehrsbeziehung
-//     );
-//
-//   const verkehrsbeziehungen = toArray(
-//     cloneDeep(selectedVerkehrsbeziehungen.value)
-//   );
-//
-//   if (index >= 0) {
-//     verkehrsbeziehungen.splice(index, 1);
-//   } else {
-//     verkehrsbeziehungen.push(verkehrsbeziehung);
-//   }
-//
-//   activeZaehlung.value.verkehrsbeziehungen = verkehrsbeziehungen;
 }
 
-// function findIndexInSelectedVerkehrsbeziehungForClickedVerkehrsbeziehung(
-//   clickedVerkehrsbeziehung: VerkehrsbeziehungDTO
-// ) {
-//   return selectedVerkehrsbeziehungen.value.findIndex(
-//     (verkehrsbeziehung: VerkehrsbeziehungDTO) => {
-//       return (
-//         verkehrsbeziehung.von === clickedVerkehrsbeziehung.von &&
-//         verkehrsbeziehung.nach === clickedVerkehrsbeziehung.nach &&
-//         verkehrsbeziehung.strassenseite ===
-//           clickedVerkehrsbeziehung.strassenseite
-//       );
-//     }
-//   );
-// }
-
 onMounted(() => {
-  console.log("mounted - VB:" + chosenOptionsCopy.verkehrsbeziehungenQJS.length)
   resetForm();
   prepareStreetnames();
 });
@@ -736,19 +501,21 @@ watch(
 );
 
 function calculateColorOfVerkehrsbeziehungArrowOne(): string | undefined {
-  return isAvailableArrowOne.value ? activeColor : passiveColor;
+  // TODO
+  return passiveColor
 }
 
 function calculateColorOfVerkehrsbeziehungArrowTwo(): string | undefined {
-  return isAvailableArrowTwo.value ? activeColor : passiveColor;
+  // TODO
+  return passiveColor
 }
 
 function calculateColorOfVerkehrsbeziehungArrowThree(): string | undefined {
-  return isAvailableArrowThree.value ? activeColor : passiveColor;
+  // TODO
+  return passiveColor
 }
 
 const calculateColorOfVerkehrsbeziehungArrowFour = computed(() => {
-  console.log("calculateColorOfVerkehrsbeziehungArrowFour - VB:" + chosenOptionsCopy.verkehrsbeziehungenQJS.length)
   return isSelectedArrowFour.value ? activeColor : passiveColor;
 })
 
