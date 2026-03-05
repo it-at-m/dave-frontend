@@ -322,6 +322,24 @@ function legendeZaehlstellenInfo() {
     belastungsplanMethods.ecke.value -
     belastungsplanMethods.spalt.value;
   const startY = belastungsplanMethods.chartPosition.value / 7;
+  const zeitauswahl: string = optionen.value.zeitauswahl;
+
+  let zaehldatum = "";
+  if (zaehlung.value.dauerzaehlung) {
+    if (zeitauswahl === Zeitauswahl.ZEITRAUM) {
+      zaehldatum = `${
+        optionen.value.zeitraumStartAndEndDate?.startDate ? dateUtils.getShortVersionOfDate(optionen.value.zeitraumStartAndEndDate.startDate) : '' 
+      } - ${
+        optionen.value.zeitraumStartAndEndDate?.endDate ? dateUtils.getShortVersionOfDate(optionen.value.zeitraumStartAndEndDate.endDate) : ''
+      }`;
+    } else {
+      zaehldatum = `${optionen.value.zeitraumStartAndEndDate?.startDate ? dateUtils.getShortVersionOfDate(optionen.value.zeitraumStartAndEndDate.startDate) : ''}`;
+    }
+  } else {
+    zaehldatum = `${dateUtils.getShortVersionOfDate(
+            new Date(zaehlung.value.datum)
+          )}`
+  }
 
   info
     .text((add) => {
@@ -331,9 +349,7 @@ function legendeZaehlstellenInfo() {
       add.tspan(`Stadtbezirk ${zaehlstelle.value.stadtbezirkNummer}`).newLine();
       add
         .tspan(
-          `Zähldatum: ${dateUtils.getShortVersionOfDate(
-            new Date(zaehlung.value.datum)
-          )}`
+          `${zaehldatum}`
         )
         .newLine();
       if (isDifferenzdatendarstellung.value && vergleichsZaehlung.value) {
@@ -388,11 +404,7 @@ function legendeSpalten() {
   const zaehlzeitFirstLine: string = zeitauswahl;
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.ZEITRAUM) {
-    zaehlzeitSecondLine = `${
-      optionen.value.zeitraumStartAndEndDate?.startDate ? dateUtils.formatDate(optionen.value.zeitraumStartAndEndDate.startDate.toLocaleDateString("de-DE")) : ''
-    } - ${
-      optionen.value.zeitraumStartAndEndDate?.endDate ? dateUtils.formatDate(optionen.value.zeitraumStartAndEndDate.endDate.toLocaleDateString("de-DE")) : ''
-    }`;
+    zaehlzeitSecondLine = "hochgerechnet";
   } else if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
       zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
