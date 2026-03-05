@@ -268,6 +268,9 @@ function saveOptions() {
   chosenOptions.value.laengsverkehr.forEach((lv) => {
     console.log(`save FJS: ${lv.knotenarm} ${lv.strassenseite} ${lv.richtung}`)
   })
+  chosenOptions.value.verkehrsbeziehungenQJS.forEach((vb) => {
+    console.log(`save QJS: ${vb.knotenarm} -> ${vb.nach} ${vb.strassenseite}`)
+  })
   zaehlstelleStore.setFilteroptions(Object.assign({}, chosenOptions.value));
 }
 
