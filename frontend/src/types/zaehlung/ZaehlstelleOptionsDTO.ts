@@ -2,6 +2,7 @@ import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
 
 export default interface ZaehlstelleOptionsDTO {
   zaehldauer: Zaehldauer;
@@ -47,4 +48,5 @@ export default interface ZaehlstelleOptionsDTO {
   zeitreiheGesamt: boolean;
   laengsverkehr: Array<LaengsverkehrDTO>;
   querungsverkehr: Array<QuerungsverkehrDTO>;
+  verkehrsbeziehungenQJS: Array<VerkehrsbeziehungQJS>;
 }

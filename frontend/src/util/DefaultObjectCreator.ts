@@ -269,7 +269,8 @@ export default class DefaultObjectCreator {
       idVergleichszaehlungZeitreihe: null,
       zeitreiheGesamt: false,
       laengsverkehr: [],
-      querungsverkehr: []
+      querungsverkehr: [],
+      verkehrsbeziehungenQJS: []
 
     };
   }

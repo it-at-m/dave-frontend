@@ -212,6 +212,16 @@ function setDefaultOptionsForZaehlung() {
     })
   }
 
+  if (activeZaehlung.value.verkehrsbeziehungen) {
+    activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
+      optionsCopy.verkehrsbeziehungenQJS.push(
+          {
+            knotenarm: vb.knotenarm,
+            nach: vb.nach,
+            strassenseite: vb.strassenseite
+          });
+    })
+  }
   chosenOptions.value = optionsCopy;
   saveOptions();
 }
