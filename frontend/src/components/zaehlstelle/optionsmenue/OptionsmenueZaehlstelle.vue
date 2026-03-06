@@ -201,26 +201,13 @@ function setDefaultOptionsForZaehlung() {
   });
   optionsCopy.beideRichtungen = false;
 
-  if (activeZaehlung.value.laengsverkehr) {
-    activeZaehlung.value.laengsverkehr.forEach((lv) => {
-      optionsCopy.laengsverkehr.push(lv);
-    })
-  }
-  if (activeZaehlung.value.querungsverkehr) {
-    activeZaehlung.value.querungsverkehr.forEach((qv) => {
-      optionsCopy.querungsverkehr.push(qv);
-    })
-  }
-
-  if (activeZaehlung.value.verkehrsbeziehungen) {
-    activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
-      optionsCopy.verkehrsbeziehungenQJS.push(
-          {
-            knotenarm: vb.knotenarm,
-            nach: vb.nach,
-            strassenseite: vb.strassenseite
-          });
-    })
+  optionsCopy.laengsverkehr = (activeZaehlung.value.laengsverkehr ?? []).map((lv) => ({ ...lv }));
+  optionsCopy.querungsverkehr = (activeZaehlung.value.querungsverkehr ?? []).map((qv) => ({ ...qv }));
+  optionsCopy.verkehrsbeziehungenQJS = (activeZaehlung.value.verkehrsbeziehungen ?? []).map((vb) => ({
+    knotenarm: vb.knotenarm,
+    nach: vb.nach,
+    strassenseite: vb.strassenseite,
+  }));
   }
   chosenOptions.value = optionsCopy;
   saveOptions();
