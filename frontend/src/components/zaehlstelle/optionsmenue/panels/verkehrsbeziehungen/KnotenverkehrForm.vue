@@ -1615,16 +1615,16 @@ function selectAllLaengsverkehreForKnotenarmOne() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
   if (isLaengsverkehrAvailable(1,Bewegungsrichtung.EIN, Himmelsrichtung.W)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.EIN, Himmelsrichtung.W));
+    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.EIN, Himmelsrichtung.W));
   }
   if (isLaengsverkehrAvailable(1,Bewegungsrichtung.AUS, Himmelsrichtung.W)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.W));
+    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.W));
   }
   if (isLaengsverkehrAvailable(1,Bewegungsrichtung.EIN, Himmelsrichtung.O)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.EIN, Himmelsrichtung.O));
+    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.EIN, Himmelsrichtung.O));
   }
   if (isLaengsverkehrAvailable(1,Bewegungsrichtung.AUS, Himmelsrichtung.O)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.O));
+    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.O));
   }
   chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
 }
