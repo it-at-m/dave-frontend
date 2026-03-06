@@ -354,6 +354,7 @@ import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
 
 interface Props {
   height: string;
@@ -480,11 +481,11 @@ const isSelectedArrowFour = computed(() => {
   return hasAnyArrowPatternIn(chosenOptionsCopy.value.verkehrsbeziehungenQJS, arrowFourPatterns);
 })
 
-function matchesArrowPattern(verkehrsbeziehung, arrowPattern) {
+function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungQJS, arrowPattern: VerkehrsbeziehungQJS) {
   return verkehrsbeziehung.knotenarm === arrowPattern.knotenarm && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
 }
 
-function hasAnyArrowPatternIn(verkehrsbeziehungen, arrowPatterns) {
+function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungQJS>, arrowPatterns: VerkehrsbeziehungQJS[]) {
   return !!verkehrsbeziehungen?.some(vb => arrowPatterns.some(p => matchesArrowPattern(vb, p)));
 }
 
