@@ -1,58 +1,58 @@
 <template>
-<v-container>
-      <v-row
-          align="start"
-          justify="center"
-          dense
-      >
-        <v-col cols="4">
-          <v-select
-              v-model="von"
-              :items="vonKnotenarme"
-              label="Von Knotenarm"
-              item-title="strassenname"
-              item-value="nummer"
-              variant="filled"
-              density="comfortable"
-              @mouseover="hoverSelectVon = true"
-              @mouseleave="hoverSelectVon = false"
-          />
-          <v-select
-              v-model="nach"
-              :items="nachKnotenarme"
-              label="Nach Knotenarm"
-              item-title="strassenname"
-              item-value="nummer"
-              variant="filled"
-              density="comfortable"
-              @mouseover="hoverSelectNach = true"
-              @mouseleave="hoverSelectNach = false"
-          />
-          <v-checkbox
-              v-if="beideRichtungenAnzeigen"
-              v-model="chosenOptionsCopy.beideRichtungen"
-              class="mb-3"
-              :label="'Zulaufend/Ablaufend'"
-              hide-details
-              color="quaternary"
-              density="compact"
-              :disabled="!beideRichtungenAnzeigen"
-              @mouseover="hoverBeideRichtungen = true"
-              @mouseleave="hoverBeideRichtungen = false"
-          />
-        </v-col>
-        <v-spacer />
-        <v-col cols="4">
-          <v-card variant="flat">
-            <div
-                :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
-            >
-              {{ helpTextVerkehrsbeziehung }}
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-</v-container>
+  <v-container>
+    <v-row
+        align="start"
+        justify="center"
+        dense
+    >
+      <v-col cols="4">
+        <v-select
+            v-model="von"
+            :items="vonKnotenarme"
+            label="Von Knotenarm"
+            item-title="strassenname"
+            item-value="nummer"
+            variant="filled"
+            density="comfortable"
+            @mouseover="hoverSelectVon = true"
+            @mouseleave="hoverSelectVon = false"
+        />
+        <v-select
+            v-model="nach"
+            :items="nachKnotenarme"
+            label="Nach Knotenarm"
+            item-title="strassenname"
+            item-value="nummer"
+            variant="filled"
+            density="comfortable"
+            @mouseover="hoverSelectNach = true"
+            @mouseleave="hoverSelectNach = false"
+        />
+        <v-checkbox
+            v-if="beideRichtungenAnzeigen"
+            v-model="chosenOptionsCopy.beideRichtungen"
+            class="mb-3"
+            :label="'Zulaufend/Ablaufend'"
+            hide-details
+            color="quaternary"
+            density="compact"
+            :disabled="!beideRichtungenAnzeigen"
+            @mouseover="hoverBeideRichtungen = true"
+            @mouseleave="hoverBeideRichtungen = false"
+        />
+      </v-col>
+      <v-spacer/>
+      <v-col cols="4">
+        <v-card variant="flat">
+          <div
+              :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
+          >
+            {{ helpTextVerkehrsbeziehung }}
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -62,10 +62,10 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { isNil, union } from "lodash";
-import { computed, onMounted, ref, watch } from "vue";
+import {isNil, union} from "lodash";
+import {computed, onMounted, ref, watch} from "vue";
 
-import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
@@ -92,7 +92,7 @@ const von = ref(0);
  */
 const nach = ref(0);
 
-const alle = { nummer: 0, strassenname: "Alle Knotenarme" };
+const alle = {nummer: 0, strassenname: "Alle Knotenarme"};
 
 // const beideRichtungen = ref(false);
 const hoverSelectVon = ref(false);
@@ -148,7 +148,7 @@ watch(
     () => {
       reset();
     },
-    { deep: true }
+    {deep: true}
 );
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
