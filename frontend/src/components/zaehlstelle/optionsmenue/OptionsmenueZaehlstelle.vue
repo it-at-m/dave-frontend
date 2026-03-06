@@ -244,7 +244,9 @@ function setOptions() {
   if ((activeZaehlung.value.zaehlart === Zaehlart.FJS &&
       isEmpty(chosenOptions.value.laengsverkehr)) ||
       (activeZaehlung.value.zaehlart === Zaehlart.QU &&
-          isEmpty(chosenOptions.value.querungsverkehr))
+      isEmpty(chosenOptions.value.querungsverkehr)) ||
+      (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
+      isEmpty(chosenOptions.value.verkehrsbeziehungenQJS))
   ) {
     snackbarStore.showError(
         "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
