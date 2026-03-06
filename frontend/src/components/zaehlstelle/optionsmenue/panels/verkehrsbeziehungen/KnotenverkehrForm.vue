@@ -1331,7 +1331,7 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 });
 
 const availableKnotenarme = computed(() => {
-  return activeZaehlung.value.knotenarme.map((arm: LadeKnotenarmDTO) => arm.nummer);
+  return (activeZaehlung.value.knotenarme ?? []).map((arm: LadeKnotenarmDTO) => arm.nummer);
 });
 const hasAvailableKnotenarme = computed(() => {
   return availableKnotenarme.value.length > 0;
@@ -1345,11 +1345,17 @@ const selectedQuerungsverkehre = computed(() => {
 });
 
 function isLaengsverkehrAvailable(knotenarm: number, richtung: Bewegungsrichtung, strassenseite: Himmelsrichtung): boolean {
-  return activeZaehlung.value.laengsverkehr.filter(element => element.knotenarm === knotenarm && element.richtung === richtung && element.strassenseite === strassenseite).length > 0;
+  return (activeZaehlung.value.laengsverkehr ?? []).some((element) =>
+        element.knotenarm === knotenarm &&
+        element.richtung === richtung &&
+        element.strassenseite === strassenseite
+  );
 }
 
 function isQuerungsverkehrAvailable(knotenarm: number, richtung: Himmelsrichtung): boolean {
-  return activeZaehlung.value.querungsverkehr.filter(element => element.knotenarm === knotenarm && element.richtung === richtung).length > 0;
+  return (activeZaehlung.value.querungsverkehr ?? []).some((element) =>
+    element.knotenarm === knotenarm && element.richtung === richtung
+  );
 }
 
 function isKnotenarmAvailable(knotenarm: number): boolean {
