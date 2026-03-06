@@ -1813,7 +1813,7 @@ function findIndexInSelectedLaengsverkehreForClickedLaengsverkehr(
   clickedLaengsverkehr: LaengsverkehrDTO
 ) {
   if (!selectedLaengsverkehre.value)
-    return null
+    return -1;
   return selectedLaengsverkehre.value.findIndex(
     (laengsverkehr: LaengsverkehrDTO) => {
       return (
@@ -1829,7 +1829,7 @@ function findIndexInSelectedQuerungsverkehreForClickedQuerungsverkehr(
   clickedQuerungsverkehr: QuerungsverkehrDTO
 ) {
   if (!selectedQuerungsverkehre.value)
-    return null
+    return -1;
   return selectedQuerungsverkehre.value.findIndex(
     (querungsverkehr: QuerungsverkehrDTO) => {
       return (
