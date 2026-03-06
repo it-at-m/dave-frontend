@@ -208,7 +208,7 @@ function setDefaultOptionsForZaehlung() {
     nach: vb.nach,
     strassenseite: vb.strassenseite,
   }));
-  }
+
   chosenOptions.value = optionsCopy;
   saveOptions();
 }
