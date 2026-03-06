@@ -138,7 +138,7 @@
                   y="711.73895"
                   style="stroke-width: 52.2711"
               >
-                {{ secondNode?.nummer }}
+                {{ secondKnotenarm?.nummer }}
               </tspan>
             </text>
           </g>
@@ -258,7 +258,7 @@
                   x="465.80084"
                   y="711.73895"
               >
-                {{ firstNode?.nummer }}
+                {{ firstKnotenarm?.nummer }}
               </tspan>
             </text>
           </g>
@@ -405,11 +405,11 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const availableNodeNumbers = computed(() => {
-  return availableNodes.value.map((arm) => arm.nummer);
+const availableKnotenarmNummern = computed(() => {
+  return availableKnotenarme.value.map((arm) => arm.nummer);
 });
 
-const availableNodes = computed(() => {
+const availableKnotenarme = computed(() => {
   const nodes: LadeKnotenarmDTO[] = [];
   activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
     const nr = vb.knotenarm
@@ -422,27 +422,27 @@ const availableNodes = computed(() => {
       .reverse();
 });
 
-const firstNode = computed(() => {
-  return first(availableNodes.value);
+const firstKnotenarm = computed(() => {
+  return first(availableKnotenarme.value);
 });
 
-const secondNode = computed(() => {
-  return last(availableNodes.value);
+const secondKnotenarm = computed(() => {
+  return last(availableKnotenarme.value);
 });
 
 const rotateSvg = computed(() => {
   // Die Viewbox der SVG liegt bei 1400 1400. Die Rotation muss in deren Zentrum stattfinden, daher 700 700
   let rotation = "rotate(0,700,700)";
-  if (availableNodeNumbers.value.includes(1)) {
+  if (availableKnotenarmNummern.value.includes(1)) {
     rotation = "rotate(-90,700,700)";
   }
-  if (availableNodeNumbers.value.includes(2)) {
+  if (availableKnotenarmNummern.value.includes(2)) {
     rotation = "rotate(0,700,700)";
   }
-  if (availableNodeNumbers.value.includes(5)) {
+  if (availableKnotenarmNummern.value.includes(5)) {
     rotation = "rotate(-45,700,700)";
   }
-  if (availableNodeNumbers.value.includes(6)) {
+  if (availableKnotenarmNummern.value.includes(6)) {
     rotation = "rotate(45,700,700)";
   }
   return rotation;
@@ -493,7 +493,7 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowOne() {
     chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
         .filter(vb => !arrowOnePatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
-    availableNodeNumbers.value.forEach((kn) => {
+    availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowOnePatterns.find((p) => p.knotenarm === kn);
       if (pattern) {
         const { knotenarm, nach, strassenseite } = pattern;
@@ -508,7 +508,7 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowTwo() {
     chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
         .filter(vb => !arrowTwoPatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
-    availableNodeNumbers.value.forEach((kn) => {
+    availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowTwoPatterns.find((p) => p.knotenarm === kn);
       if (pattern) {
         const { knotenarm, nach, strassenseite } = pattern;
@@ -523,7 +523,7 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowThree() {
     chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
         .filter(vb => !arrowThreePatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
-    availableNodeNumbers.value.forEach((kn) => {
+    availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowThreePatterns.find((p) => p.knotenarm === kn);
       if (pattern) {
         const { knotenarm, nach, strassenseite } = pattern;
@@ -538,7 +538,7 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowFour() {
     chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
         .filter(vb => !arrowFourPatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
-    availableNodeNumbers.value.forEach((kn) => {
+    availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowFourPatterns.find((p) => p.knotenarm === kn);
       if (pattern) {
         const { knotenarm, nach, strassenseite } = pattern;
@@ -584,8 +584,8 @@ function resetForm(): void {
 }
 
 function prepareStreetnames(): void {
-  firstStreetname.value = getStreetname(firstNode.value);
-  secondStreetname.value = getStreetname(secondNode.value);
+  firstStreetname.value = getStreetname(firstKnotenarm.value);
+  secondStreetname.value = getStreetname(secondKnotenarm.value);
 }
 
 function getStreetname(knotenarm: LadeKnotenarmDTO | undefined): Array<string> {
