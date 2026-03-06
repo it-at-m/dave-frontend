@@ -1,52 +1,50 @@
 <template>
   <v-container>
     <v-row
-        align="start"
-        justify="center"
-        dense
+      align="start"
+      justify="center"
+      dense
     >
       <v-col cols="4">
         <v-select
-            v-model="von"
-            :items="vonKnotenarme"
-            label="Von Knotenarm"
-            item-title="strassenname"
-            item-value="nummer"
-            variant="filled"
-            density="comfortable"
-            @mouseover="hoverSelectVon = true"
-            @mouseleave="hoverSelectVon = false"
+          v-model="von"
+          :items="vonKnotenarme"
+          label="Von Knotenarm"
+          item-title="strassenname"
+          item-value="nummer"
+          variant="filled"
+          density="comfortable"
+          @mouseover="hoverSelectVon = true"
+          @mouseleave="hoverSelectVon = false"
         />
         <v-select
-            v-model="nach"
-            :items="nachKnotenarme"
-            label="Nach Knotenarm"
-            item-title="strassenname"
-            item-value="nummer"
-            variant="filled"
-            density="comfortable"
-            @mouseover="hoverSelectNach = true"
-            @mouseleave="hoverSelectNach = false"
+          v-model="nach"
+          :items="nachKnotenarme"
+          label="Nach Knotenarm"
+          item-title="strassenname"
+          item-value="nummer"
+          variant="filled"
+          density="comfortable"
+          @mouseover="hoverSelectNach = true"
+          @mouseleave="hoverSelectNach = false"
         />
         <v-checkbox
-            v-if="beideRichtungenAnzeigen"
-            v-model="chosenOptionsCopy.beideRichtungen"
-            class="mb-3"
-            :label="'Zulaufend/Ablaufend'"
-            hide-details
-            color="quaternary"
-            density="compact"
-            :disabled="!beideRichtungenAnzeigen"
-            @mouseover="hoverBeideRichtungen = true"
-            @mouseleave="hoverBeideRichtungen = false"
+          v-if="beideRichtungenAnzeigen"
+          v-model="chosenOptionsCopy.beideRichtungen"
+          class="mb-3"
+          :label="'Zulaufend/Ablaufend'"
+          hide-details
+          color="quaternary"
+          density="compact"
+          :disabled="!beideRichtungenAnzeigen"
+          @mouseover="hoverBeideRichtungen = true"
+          @mouseleave="hoverBeideRichtungen = false"
         />
       </v-col>
-      <v-spacer/>
+      <v-spacer />
       <v-col cols="4">
         <v-card variant="flat">
-          <div
-              :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
-          >
+          <div :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }">
             {{ helpTextVerkehrsbeziehung }}
           </div>
         </v-card>
@@ -57,15 +55,15 @@
 
 <script setup lang="ts">
 import type KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import {isNil, union} from "lodash";
-import {computed, onMounted, ref, watch} from "vue";
+import { isNil, union } from "lodash";
+import { computed, onMounted, ref, watch } from "vue";
 
-import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
@@ -92,7 +90,7 @@ const von = ref(0);
  */
 const nach = ref(0);
 
-const alle = {nummer: 0, strassenname: "Alle Knotenarme"};
+const alle = { nummer: 0, strassenname: "Alle Knotenarme" };
 
 // const beideRichtungen = ref(false);
 const hoverSelectVon = ref(false);
@@ -144,22 +142,22 @@ const beideRichtungenAnzeigen = computed(() => {
 });
 
 watch(
-    chosenOptionsCopy,
-    () => {
-      reset();
-    },
-    {deep: true}
+  chosenOptionsCopy,
+  () => {
+    reset();
+  },
+  { deep: true }
 );
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  Werten im Optionsobjekt
 function reset() {
   chosenOptionsCopy.value.vonKnotenarm === null
-      ? (von.value = 0)
-      : (von.value = chosenOptionsCopy.value.vonKnotenarm);
+    ? (von.value = 0)
+    : (von.value = chosenOptionsCopy.value.vonKnotenarm);
   chosenOptionsCopy.value.nachKnotenarm === null
-      ? (nach.value = 0)
-      : (nach.value = chosenOptionsCopy.value.nachKnotenarm);
+    ? (nach.value = 0)
+    : (nach.value = chosenOptionsCopy.value.nachKnotenarm);
 }
 
 /**
@@ -175,17 +173,17 @@ function reset() {
 function initVerkehrsbeziehungen(): void {
   // Knotenarmbezeichnung je Knotenarm für spätere effiziente Extraktion der Knotenarmbezeichnung.
   const knotenarme: Map<number, string> = new Map<number, string>(
-      activeZaehlung.value.knotenarme.map((knotenarm) => [
-        knotenarm.nummer,
-        knotenarm.nummer + " - " + knotenarm.strassenname,
-      ])
+    activeZaehlung.value.knotenarme.map((knotenarm) => [
+      knotenarm.nummer,
+      knotenarm.nummer + " - " + knotenarm.strassenname,
+    ])
   );
 
   // Wird für die Erstellung der Zielknotenarme und eingehenden Knotenarme bei Auswahl "alle" benötigt.
   const alleZielknotenarmeVon: Set<LadeKnotenarmDTO> =
-      new Set<LadeKnotenarmDTO>();
+    new Set<LadeKnotenarmDTO>();
   const alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO> =
-      new Set<LadeKnotenarmDTO>();
+    new Set<LadeKnotenarmDTO>();
 
   // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
   // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
@@ -194,14 +192,14 @@ function initVerkehrsbeziehungen(): void {
     verkehrsbeziehungen?.forEach((verkehrsbeziehung) => {
       if (isZaehlungForKreuzung()) {
         addVonKnotenarmWithPossibleNachKnotenarm(
-            verkehrsbeziehung,
-            alleZielknotenarmeVon,
-            knotenarme
+          verkehrsbeziehung,
+          alleZielknotenarmeVon,
+          knotenarme
         );
         addNachKnotenarmWithPossibleVonKnotenarm(
-            verkehrsbeziehung,
-            alleEingehendeKnotenarmeNach,
-            knotenarme
+          verkehrsbeziehung,
+          alleEingehendeKnotenarmeNach,
+          knotenarme
         );
       } else {
         // Kreisverkehr
@@ -210,8 +208,8 @@ function initVerkehrsbeziehungen(): void {
             alleEingehendeKnotenarmeNach.add({
               nummer: verkehrsbeziehung.knotenarm,
               strassenname: getKnotenarmBezeichnung(
-                  verkehrsbeziehung.knotenarm,
-                  knotenarme
+                verkehrsbeziehung.knotenarm,
+                knotenarme
               ),
             });
           }
@@ -219,8 +217,8 @@ function initVerkehrsbeziehungen(): void {
             alleZielknotenarmeVon.add({
               nummer: verkehrsbeziehung.knotenarm,
               strassenname: getKnotenarmBezeichnung(
-                  verkehrsbeziehung.knotenarm,
-                  knotenarme
+                verkehrsbeziehung.knotenarm,
+                knotenarme
               ),
             });
           }
@@ -233,12 +231,12 @@ function initVerkehrsbeziehungen(): void {
       const kv: KnotenarmVerbindungen = {
         knotenarm: alle,
         moeglicheVerbindungen: union(
-            [alle],
-            Array.from(alleZielknotenarmeVon.values())
+          [alle],
+          Array.from(alleZielknotenarmeVon.values())
         ),
         moeglicheVerbindungenIds: union(
-            [alle],
-            Array.from(alleZielknotenarmeVon.values())
+          [alle],
+          Array.from(alleZielknotenarmeVon.values())
         ).map((knotenarm) => knotenarm.nummer),
       };
       moeglicheBeziehungenVon.value.set(alle.nummer, kv);
@@ -248,8 +246,8 @@ function initVerkehrsbeziehungen(): void {
         knotenarm: alle,
         moeglicheVerbindungen: [alle],
         moeglicheVerbindungenIds: union(
-            [alle],
-            Array.from(alleZielknotenarmeVon.values())
+          [alle],
+          Array.from(alleZielknotenarmeVon.values())
         ).map((knotenarm) => knotenarm.nummer),
       };
       moeglicheBeziehungenVon.value.set(alle.nummer, kv);
@@ -258,12 +256,12 @@ function initVerkehrsbeziehungen(): void {
     const kv: KnotenarmVerbindungen = {
       knotenarm: alle,
       moeglicheVerbindungen: union(
-          [alle],
-          Array.from(alleEingehendeKnotenarmeNach.values())
+        [alle],
+        Array.from(alleEingehendeKnotenarmeNach.values())
       ),
       moeglicheVerbindungenIds: union(
-          [alle],
-          Array.from(alleEingehendeKnotenarmeNach.values())
+        [alle],
+        Array.from(alleEingehendeKnotenarmeNach.values())
       ).map((knotenarm) => knotenarm.nummer),
     };
     moeglicheBeziehungenNach.value.set(alle.nummer, kv);
@@ -275,14 +273,14 @@ function initVerkehrsbeziehungen(): void {
  * die möglichen nach-Knotenarme an.
  */
 function addVonKnotenarmWithPossibleNachKnotenarm(
-    verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
-    alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
-    knotenarme: Map<number, string>
+  verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
+  alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
+  knotenarme: Map<number, string>
 ): void {
   if (moeglicheBeziehungenVon.value.has(verkehrsbeziehung.von)) {
     // Erweitern bereits vorhandener von-Knotenarm um zusätzlichen möglichen nach-Knotenarm
     const kv: KnotenarmVerbindungen | undefined =
-        moeglicheBeziehungenVon.value.get(verkehrsbeziehung.von);
+      moeglicheBeziehungenVon.value.get(verkehrsbeziehung.von);
     kv?.moeglicheVerbindungen.push({
       nummer: verkehrsbeziehung.nach,
       strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
@@ -293,13 +291,19 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
     const kv: KnotenarmVerbindungen = {
       knotenarm: {
         nummer: verkehrsbeziehung.von,
-        strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
+        strassenname: getKnotenarmBezeichnung(
+          verkehrsbeziehung.von,
+          knotenarme
+        ),
       },
       moeglicheVerbindungen: [
         alle,
         {
           nummer: verkehrsbeziehung.nach,
-          strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
+          strassenname: getKnotenarmBezeichnung(
+            verkehrsbeziehung.nach,
+            knotenarme
+          ),
         },
       ],
       moeglicheVerbindungenIds: [alle.nummer, verkehrsbeziehung.nach],
@@ -325,14 +329,14 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
  * die möglichen von-Knotenarme an.
  */
 function addNachKnotenarmWithPossibleVonKnotenarm(
-    verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
-    alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
-    knotenarme: Map<number, string>
+  verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
+  alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
+  knotenarme: Map<number, string>
 ): void {
   if (moeglicheBeziehungenNach.value.has(verkehrsbeziehung.nach)) {
     // Erweitern bereits vorhandener nach-Knotenarm um zusätzlichen möglichen von-Knotenarm
     const kv: KnotenarmVerbindungen | undefined =
-        moeglicheBeziehungenNach.value.get(verkehrsbeziehung.nach);
+      moeglicheBeziehungenNach.value.get(verkehrsbeziehung.nach);
     kv?.moeglicheVerbindungen.push({
       nummer: verkehrsbeziehung.von,
       strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
@@ -343,13 +347,19 @@ function addNachKnotenarmWithPossibleVonKnotenarm(
     const kv: KnotenarmVerbindungen = {
       knotenarm: {
         nummer: verkehrsbeziehung.nach,
-        strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
+        strassenname: getKnotenarmBezeichnung(
+          verkehrsbeziehung.nach,
+          knotenarme
+        ),
       },
       moeglicheVerbindungen: [
         alle,
         {
           nummer: verkehrsbeziehung.von,
-          strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
+          strassenname: getKnotenarmBezeichnung(
+            verkehrsbeziehung.von,
+            knotenarme
+          ),
         },
       ],
       moeglicheVerbindungenIds: [alle.nummer, verkehrsbeziehung.von],
@@ -375,8 +385,8 @@ function addNachKnotenarmWithPossibleVonKnotenarm(
  */
 function isZaehlungForKreuzung(): boolean {
   return (
-      activeZaehlung.value.kreisverkehr !== undefined &&
-      !activeZaehlung.value.kreisverkehr
+    activeZaehlung.value.kreisverkehr !== undefined &&
+    !activeZaehlung.value.kreisverkehr
   );
 }
 
@@ -392,8 +402,8 @@ function isZaehlungForKreuzung(): boolean {
  * @param knotenarme Map bestehend aus dem Knotenarmbezeichnung je Knotenarm
  */
 function getKnotenarmBezeichnung(
-    knotenarm: number,
-    knotenarme: Map<number, string>
+  knotenarm: number,
+  knotenarme: Map<number, string>
 ): string {
   const strassenname: string | undefined = knotenarme.get(knotenarm);
   return strassenname === undefined ? "Kein Knotenarm gefunden" : strassenname;
