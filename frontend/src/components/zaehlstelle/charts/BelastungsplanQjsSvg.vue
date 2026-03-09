@@ -96,14 +96,15 @@
                 transform="matrix(-0.09192953,0,0,-0.07964786,1613.3955,2182.4526)" />
           </g>
           <g
-              id="arrow2">
+              id="arrow2"
+              ref="arrowTwoGroupRef"
+              :transform="transformTwo"
+          >
             <path
-                ref="pathArrowTwoRef"
                 style="stroke-width:40.9429"
                 :d="dArrowTwo"
                 id="path2"
                 :fill="colorArrowTwo"
-                :transform="transformTwo"
             />
             <path
                 style="stroke-width:78.3672"
@@ -113,14 +114,15 @@
                 transform="matrix(0.09192953,0,0,0.07964786,-213.39551,-782.45264)" />
           </g>
           <g
-              id="arrow1">
+              id="arrow1"
+              ref="arrowOneGroupRef"
+              :transform="transformOne"
+          >
             <path
-                ref="pathArrowOneRef"
                 style="stroke-width:40.9429"
                 :d="dArrowOne"
                 id="path1"
                 :fill="colorArrowOne"
-                :transform="transformOne"
             />
             <path
                 style="stroke-width:78.3672"
@@ -274,6 +276,9 @@ const anchor = 'center' // 'center'|'bottom'|Number (Y)
 // Refs zu den path-Elementen
 const pathArrowOneRef = ref(null)
 const pathArrowTwoRef = ref(null)
+// Refs zu den arrow-Gruppen (statt nur den path-Elementen)
+const arrowOneGroupRef = ref<SVGGElement | null>(null)
+const arrowTwoGroupRef = ref<SVGGElement | null>(null)
 
 // berechnete Anker-Y-Werte (werden per getBBox ermittelt)
 const centerYArrowOne = ref(0)
@@ -390,11 +395,11 @@ const isSelectedArrowFour = computed(() => {
 })
 
 const zaehlwertOne = computed(() => {
-  return 900; // TODO
+  return 500; // TODO
 })
 
 const zaehlwertTwo = computed(() => {
-  return 100; // TODO
+  return 200; // TODO
 })
 
 const zaehlwertThree = computed(() => {
@@ -447,9 +452,11 @@ onMounted(() => {
 
   prepareStreetnames();
 
-  if (pathArrowOneRef.value) centerYArrowOne.value = computeAnchorY(pathArrowOneRef.value, anchor)
-  if (pathArrowTwoRef.value) centerYArrowTwo.value = computeAnchorY(pathArrowTwoRef.value, anchor)
-
+  // if (pathArrowOneRef.value) centerYArrowOne.value = computeAnchorY(pathArrowOneRef.value, anchor)
+  // if (pathArrowTwoRef.value) centerYArrowTwo.value = computeAnchorY(pathArrowTwoRef.value, anchor)
+  // Berechne Anker aus der gesamten Gruppe (Rumpf + Spitze)
+  if (arrowOneGroupRef.value) centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value, anchor)
+  if (arrowTwoGroupRef.value) centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value, anchor)
 
 });
 
@@ -539,7 +546,6 @@ function prepareStreetnames(): void {
 }
 
 function getStreetname(knotenarm: LadeKnotenarmDTO | undefined): Array<string> {
-  console.log("getStreetname")
   let strasse = "";
   if (knotenarm && knotenarm.strassenname) {
     strasse = knotenarm.strassenname;
