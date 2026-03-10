@@ -248,7 +248,7 @@
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import { useDisplay } from "vuetify";
 import { first } from "lodash";
-import {computed, onMounted, ref, watch} from "vue";
+import { computed, onMounted, ref, watch, nextTick } from "vue";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import KnotenarmComparator from "@/util/KnotenarmComparator";
 import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
@@ -289,6 +289,7 @@ function getArrowScale(zaelwert: number) {
 }
 
 function computeAnchorY(el: SVGGraphicsElement | null, anchor: string|number) {
+  console.log("computeAnchorY")
   if (!el) return 0
   // getBBox ist DOM-API; liefert x,y,width,height in user units
   const bbox = el.getBBox()
@@ -462,8 +463,17 @@ onMounted(() => {
 
 watch(
     () => activeZaehlung.value.knotenarme,
-    () => {
+    async () => {
       prepareStreetnames();
+      // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
+      // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
+      await nextTick();
+      if (arrowOneGroupRef.value) {
+        centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value, anchor);
+      }
+      if (arrowTwoGroupRef.value) {
+        centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value, anchor);
+      }
     },
     {deep: true, immediate: true}
 );
