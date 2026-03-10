@@ -66,10 +66,13 @@
         <g
             id="arrows">
           <g
-              id="arrow4">
+              id="arrow4"
+              ref="arrowFourGroupRef"
+              :transform="transformFour"
+          >
             <path
                 style="stroke-width:40.9429"
-                d="m 210,860.99999 v -28 h 945 v 27.997 z"
+                :d="dArrowFour"
                 id="path4"
                 :fill="colorArrowFour"
             />
@@ -81,10 +84,13 @@
                 transform="matrix(0.09192953,0,0,0.07964786,-213.39551,-544.45264)" />
           </g>
           <g
-              id="arrow3">
+              id="arrow3"
+              ref="arrowThreeGroupRef"
+              :transform="transformThree"
+          >
             <path
                 style="stroke-width:40.9429"
-                d="m 245,804.99999 v -28 h 945 v 27.997 z"
+                :d="dArrowThree"
                 id="path3"
                 :fill="colorArrowThree"
             />
@@ -273,16 +279,17 @@ const firstStreetname = ref<Array<string>>([]);
 
 const anchor = 'center' // 'center'|'bottom'|Number (Y)
 
-// Refs zu den path-Elementen
-const pathArrowOneRef = ref(null)
-const pathArrowTwoRef = ref(null)
 // Refs zu den arrow-Gruppen (statt nur den path-Elementen)
 const arrowOneGroupRef = ref<SVGGElement | null>(null)
 const arrowTwoGroupRef = ref<SVGGElement | null>(null)
+const arrowThreeGroupRef = ref<SVGGElement | null>(null)
+const arrowFourGroupRef = ref<SVGGElement | null>(null)
 
 // berechnete Anker-Y-Werte (werden per getBBox ermittelt)
 const centerYArrowOne = ref(0)
 const centerYArrowTwo = ref(0)
+const centerYArrowThree = ref(0)
+const centerYArrowFour = ref(0)
 
 function getArrowScale(zaelwert: number) {
   return zaelwert / Math.max(zaehlwertOne.value, zaehlwertTwo.value, zaehlwertThree.value, zaehlwertFour.value)
@@ -306,10 +313,14 @@ function scaleTransform(scaleY: number, centerY: number) {
 
 const transformOne = computed(() => scaleTransform(getArrowScale(zaehlwertOne.value), centerYArrowOne.value))
 const transformTwo = computed(() => scaleTransform(getArrowScale(zaehlwertTwo.value), centerYArrowTwo.value))
+const transformThree = computed(() => scaleTransform(getArrowScale(zaehlwertThree.value), centerYArrowThree.value))
+const transformFour = computed(() => scaleTransform(getArrowScale(zaehlwertFour.value), centerYArrowFour.value))
 
 // --- Pfad-Daten
 const dArrowOne = 'm 245,567 v -28 h 945 v 27.998 z'
 const dArrowTwo = 'm 210,623 v -28 h 945 v 27.997 z'
+const dArrowThree = 'm 245,804.99999 v -28 h 945 v 27.997 z'
+const dArrowFour = 'm 210,860.99999 v -28 h 945 v 27.997 z'
 
 const arrowOnePatterns = [
   { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.W },
@@ -361,7 +372,6 @@ const availableKnotenarme = computed(() => {
 });
 
 const rotateSvg = computed(() => {
-  console.log("rotateSvg")
   // Die Viewbox der SVG liegt bei 1400 1400. Die Rotation muss in deren Zentrum stattfinden, daher 700 700
   let rotation = "rotate(0,700,700)";
   if (availableKnotenarmNummern.value.includes(1)) {
@@ -453,8 +463,6 @@ onMounted(() => {
 
   prepareStreetnames();
 
-  // if (pathArrowOneRef.value) centerYArrowOne.value = computeAnchorY(pathArrowOneRef.value, anchor)
-  // if (pathArrowTwoRef.value) centerYArrowTwo.value = computeAnchorY(pathArrowTwoRef.value, anchor)
   // Berechne Anker aus der gesamten Gruppe (Rumpf + Spitze)
   if (arrowOneGroupRef.value) centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value, anchor)
   if (arrowTwoGroupRef.value) centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value, anchor)
@@ -473,6 +481,12 @@ watch(
       }
       if (arrowTwoGroupRef.value) {
         centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value, anchor);
+      }
+      if (arrowThreeGroupRef.value) {
+        centerYArrowThree.value = computeAnchorY(arrowThreeGroupRef.value, anchor);
+      }
+      if (arrowFourGroupRef.value) {
+        centerYArrowFour.value = computeAnchorY(arrowFourGroupRef.value, anchor);
       }
     },
     {deep: true, immediate: true}
