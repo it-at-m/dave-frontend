@@ -277,8 +277,6 @@ const display = useDisplay();
 
 const firstStreetname = ref<Array<string>>([]);
 
-const anchor = 'center' // 'center'|'bottom'|Number (Y)
-
 // Refs zu den arrow-Gruppen (statt nur den path-Elementen)
 const arrowOneGroupRef = ref<SVGGElement | null>(null)
 const arrowTwoGroupRef = ref<SVGGElement | null>(null)
@@ -295,14 +293,11 @@ function getArrowScale(zaelwert: number) {
   return zaelwert / Math.max(zaehlwertOne.value, zaehlwertTwo.value, zaehlwertThree.value, zaehlwertFour.value)
 }
 
-function computeAnchorY(el: SVGGraphicsElement | null, anchor: string|number) {
+function computeAnchorY(el: SVGGraphicsElement | null) {
   console.log("computeAnchorY")
   if (!el) return 0
   // getBBox ist DOM-API; liefert x,y,width,height in user units
   const bbox = el.getBBox()
-  if (typeof anchor === 'number') return anchor
-  if (anchor === 'bottom') return bbox.y + bbox.height
-  // default: center
   return bbox.y + bbox.height / 2
 }
 
@@ -464,8 +459,8 @@ onMounted(() => {
   prepareStreetnames();
 
   // Berechne Anker aus der gesamten Gruppe (Rumpf + Spitze)
-  if (arrowOneGroupRef.value) centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value, anchor)
-  if (arrowTwoGroupRef.value) centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value, anchor)
+  if (arrowOneGroupRef.value) centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value)
+  if (arrowTwoGroupRef.value) centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value)
 
 });
 
@@ -477,16 +472,16 @@ watch(
       // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
       await nextTick();
       if (arrowOneGroupRef.value) {
-        centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value, anchor);
+        centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value);
       }
       if (arrowTwoGroupRef.value) {
-        centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value, anchor);
+        centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value);
       }
       if (arrowThreeGroupRef.value) {
-        centerYArrowThree.value = computeAnchorY(arrowThreeGroupRef.value, anchor);
+        centerYArrowThree.value = computeAnchorY(arrowThreeGroupRef.value);
       }
       if (arrowFourGroupRef.value) {
-        centerYArrowFour.value = computeAnchorY(arrowFourGroupRef.value, anchor);
+        centerYArrowFour.value = computeAnchorY(arrowFourGroupRef.value);
       }
     },
     {deep: true, immediate: true}
