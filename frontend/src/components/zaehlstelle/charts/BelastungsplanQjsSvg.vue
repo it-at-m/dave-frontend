@@ -245,6 +245,184 @@
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:Arial;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneToFour }}</tspan></text>
         </g>
       </g>
+      <g
+          id="legend">
+        <g
+            id="legend-verkehr"
+            style="stroke-width:28.2205;stroke-dasharray:none"
+            transform="translate(50.006244,33.337496)">
+          <text
+              xml:space="preserve"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:39.1848"
+              x="8.3906765"
+              y="1347.5106"
+              id="legend-gv"><tspan
+             id="tspan24"
+             x="16.390676"
+             y="1342.5106">GV = Lkw + Lz</tspan></text>
+          <text
+              xml:space="preserve"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:39.1849;stroke-dasharray:none"
+              x="-52.802258"
+              y="1327.5101"
+              id="legend-sv"><tspan
+             id="tspan10"
+             x="16.19775"
+             y="1317.5101"
+             style="stroke-width:39.1849">SV = Lkw + Lz + Bus</tspan></text>
+          <text
+              xml:space="preserve"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:39.1849;stroke-dasharray:none"
+              x="15.561096"
+              y="1292.5096"
+              id="legend-kfz1"><tspan
+             id="tspan8"
+             x="15.561096"
+             y="1292.5096"
+             style="stroke-width:39.1849">KFZ = Pkw + Lkw + Lz  Bus + Krad</tspan></text>
+          <text
+              xml:space="preserve"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+              id="legend-kfz"
+              x="168.24969"
+              y="1230.3373"
+              transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"><tspan
+             x="168.24969"
+             y="1230.3373"
+             id="tspan23"><tspan
+               style="font-weight:bold;-inkscape-font-specification:'Sans Bold'"
+               id="tspan22">KFZ      (SV)      GV</tspan></tspan></text>
+          <g
+              id="legend-hochgerechnet"
+              style="stroke-width:28.2205;stroke-dasharray:none"
+              transform="translate(-152.29421)">
+            <text
+                xml:space="preserve"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+                id="multirow-5-9"
+                x="168"
+                y="1210"><tspan
+               x="168"
+               y="1210"
+               id="tspan25">hochgerechnet</tspan></text>
+          </g>
+          <g
+              id="legend-tageswert"
+              style="stroke-width:28.2205;stroke-dasharray:none">
+            <text
+                xml:space="preserve"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+                id="multirow-5-8-4"
+                x="168.24969"
+                y="1190.3373"
+                transform="translate(-150.84646,0.00162031)"><tspan
+               x="168.24969"
+               y="1190.3373"
+               id="tspan27"><tspan
+                 style="font-weight:bold;-inkscape-font-specification:'Sans Bold'"
+                 id="tspan26">Tageswert</tspan></tspan></text>
+          </g>
+        </g>
+        <g
+            id="legend-compass"
+            transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)">
+          <path
+              style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.35093;stroke-linecap:butt;stroke-miterlimit:2.5;stroke-dasharray:none;stroke-opacity:1"
+              id="compass2"
+              d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
+              transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)" />
+          <text
+              xml:space="preserve"
+              id="compass1"
+              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24.6944px;font-family:RomanD;-inkscape-font-specification:'RomanD, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:2.2868"
+              x="141.28348"
+              y="93.924416"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24.6944px;font-family:RomanD;-inkscape-font-specification:'RomanD, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:2.2868"
+             id="tspan6">N</tspan></text>
+        </g>
+        <g
+            id="legend-massstab"
+            transform="translate(-18.042256,33.984156)">
+          <g
+              id="massstab-size1"
+              style="stroke-width:28.2205;stroke-dasharray:none"
+              transform="matrix(0.62382516,0,0,0.76417899,670.41706,744.80969)">
+            <text
+                xml:space="preserve"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.6128px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+                id="multirow-5-0"
+                x="699.24969"
+                y="688.33734"
+                transform="translate(181.39362,6.9760325e-4)"><tspan
+               x="699.24969"
+               y="688.33734"
+               id="tspan28">1000</tspan></text>
+          </g>
+          <g
+              id="massstab-size2"
+              style="stroke-width:28.2205;stroke-dasharray:none"
+              transform="matrix(0.62382516,0,0,0.76417899,482.7559,750.20552)">
+            <text
+                xml:space="preserve"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.6128px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+                id="multirow-5-0-5"
+                x="699.24969"
+                y="688.33734"
+                transform="translate(569.99057,-7.4083333)"><tspan
+               x="699.24969"
+               y="688.33734"
+               id="tspan29">2000</tspan></text>
+          </g>
+          <path
+              style="fill:none;stroke:#000000;stroke-width:1.07233;stroke-miterlimit:2.5;stroke-dasharray:none"
+              d="m 1240.7997,1241.3066 c 0,10.3055 0.4062,10.1074 0.4062,10.1074"
+              id="path7" />
+          <path
+              style="fill:none;stroke:#000000;stroke-width:0.769487;stroke-miterlimit:2.5;stroke-dasharray:none"
+              d="m 1180.4563,1251.6086 c 119.2371,-0.6702 119.2371,-0.6702 119.2371,-0.6702 -0.4947,-21.95 0.4948,-21.7825 0.4948,-21.7825 z"
+              id="massstab-path1" />
+        </g>
+        <g
+            id="legend-zaehlstelle"
+            transform="translate(-112.62637,-13.999124)">
+          <g
+              id="zaehlstelle2"
+              style="stroke-width:28.2205;stroke-dasharray:none"
+              transform="translate(163.18555,-589.09456)">
+            <text
+                xml:space="preserve"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+                id="multirow-5"
+                x="699.24969"
+                y="688.33734"
+                transform="translate(324.11416)"><tspan
+               x="699.24969"
+               y="688.33734"
+               id="tspan30">Stadtbezirk 8
+</tspan><tspan
+                x="699.24969"
+                y="713.03187"
+                id="tspan31">Zähldatum: 01.01.2026</tspan></text>
+          </g>
+          <g
+              id="zaehlstelle1"
+              style="stroke-width:28.2205;stroke-dasharray:none"
+              transform="translate(162.09712,-614.70735)">
+            <text
+                xml:space="preserve"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
+                id="multirow-5-8"
+                x="699.24969"
+                y="688.33734"
+                transform="translate(324.11416)"><tspan
+               x="699.24969"
+               y="688.33734"
+               id="tspan33"><tspan
+                 style="font-weight:bold;-inkscape-font-specification:'Sans Bold'"
+                 id="tspan32">Zählstelle 99999</tspan></tspan></text>
+          </g>
+        </g>
+      </g>
     </svg>
 
   </v-sheet>
