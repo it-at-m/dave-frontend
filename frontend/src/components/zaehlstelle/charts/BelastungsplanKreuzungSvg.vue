@@ -31,6 +31,7 @@ import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -305,7 +306,7 @@ function legendeNordPfeil() {
         .dy(startY - belastungsplanMethods.maxlineWidth / 2);
     })
     .font({
-      family: belastungsplanMethods.fontfamily,
+      family: BelastungsplanConstants.fontfamily,
       size: belastungsplanMethods.maxlineWidth,
       anchor: "middle",
       fill: belastungsplanMethods.legendColor,
@@ -344,7 +345,7 @@ function legendeZaehlstellenInfo() {
       }
     })
     .font({
-      family: belastungsplanMethods.fontfamily,
+      family: BelastungsplanConstants.fontfamily,
       size: belastungsplanMethods.maxlineWidth,
     })
     .x(startX)
@@ -459,7 +460,7 @@ function legendeSpalten() {
       }
     })
     .font({
-      family: belastungsplanMethods.fontfamily,
+      family: BelastungsplanConstants.fontfamily,
       size: getLegendLineWidth.value,
     })
     .x(startX)
@@ -485,12 +486,12 @@ function legendeLinienStaerke() {
   if (isDifferenzdatendarstellung.value) {
     size
       .rect(lineWidth.value, lineWidth.value)
-      .fill(belastungsplanMethods.zunahmeValueColor)
+      .fill(BelastungsplanConstants.zunahmeValueColor)
       .x(startX)
       .y(startY + 35);
     size
       .rect(lineWidth.value, lineWidth.value)
-      .fill(belastungsplanMethods.abnahmeValueColor)
+      .fill(BelastungsplanConstants.abnahmeValueColor)
       .x(startX)
       .y(startY + 35 + 5 + lineWidth.value);
 
@@ -502,7 +503,7 @@ function legendeLinienStaerke() {
           .dy(startY + 35 + lineWidth.value);
       })
       .font({
-        family: belastungsplanMethods.fontfamily,
+        family: BelastungsplanConstants.fontfamily,
         size: belastungsplanMethods.maxlineWidth,
       });
 
@@ -514,7 +515,7 @@ function legendeLinienStaerke() {
           .dy(startY + 35 + 5 + lineWidth.value * 2);
       })
       .font({
-        family: belastungsplanMethods.fontfamily,
+        family: BelastungsplanConstants.fontfamily,
         size: belastungsplanMethods.maxlineWidth,
       });
   }
@@ -544,7 +545,7 @@ function legendeLinienStaerke() {
         .dy(startY + belastungsplanMethods.maxlineWidth);
     })
     .font({
-      family: belastungsplanMethods.fontfamily,
+      family: BelastungsplanConstants.fontfamily,
       size: belastungsplanMethods.maxlineWidth,
       anchor: "middle",
     });
@@ -557,7 +558,7 @@ function legendeLinienStaerke() {
         .dy(startY + belastungsplanMethods.maxlineWidth);
     })
     .font({
-      family: belastungsplanMethods.fontfamily,
+      family: BelastungsplanConstants.fontfamily,
       size: belastungsplanMethods.maxlineWidth,
       anchor: "middle",
     });

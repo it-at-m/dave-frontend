@@ -440,6 +440,7 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -607,17 +608,50 @@ const summeOneToFour = computed(() => {
 })
 
 const colorArrowOne = computed<string>(() => {
-  return isSelectedArrowOne.value ? "#D50000" : "#EFEFEF";
+  if (!isSelectedArrowOne.value)
+    return BelastungsplanConstants.inaktivColor;
+  return calculateColorOneOrTwo();
 });
+
 const colorArrowTwo = computed<string>(() => {
-  return isSelectedArrowTwo.value ? "#D50000" : "#EFEFEF";
+  if (!isSelectedArrowTwo.value)
+    return BelastungsplanConstants.inaktivColor;
+  return calculateColorOneOrTwo();
 });
 const colorArrowThree = computed<string>(() => {
-  return isSelectedArrowThree.value ? "#0071C1" : "#EFEFEF";
+  if (!isSelectedArrowThree.value)
+    return BelastungsplanConstants.inaktivColor;
+  return calculateColorThreeOrFour();
 });
 const colorArrowFour = computed<string>(() => {
-  return isSelectedArrowFour.value ? "#0071C1" : "#EFEFEF";
+  if (!isSelectedArrowFour.value)
+    return BelastungsplanConstants.inaktivColor;
+  return calculateColorThreeOrFour();
 });
+
+function calculateColorOneOrTwo(){
+  if (availableKnotenarmNummern.value.includes(1))
+    return BelastungsplanConstants.farben.get(1) ?? BelastungsplanConstants.inaktivColor
+  if (availableKnotenarmNummern.value.includes(2))
+    return BelastungsplanConstants.farben.get(2) ?? BelastungsplanConstants.inaktivColor
+  if (availableKnotenarmNummern.value.includes(5))
+    return BelastungsplanConstants.farben.get(5) ?? BelastungsplanConstants.inaktivColor
+  if (availableKnotenarmNummern.value.includes(6))
+    return BelastungsplanConstants.farben.get(6) ?? BelastungsplanConstants.inaktivColor
+  return BelastungsplanConstants.inaktivColor;
+}
+
+function calculateColorThreeOrFour() {
+  if (availableKnotenarmNummern.value.includes(3))
+    return BelastungsplanConstants.farben.get(3) ?? BelastungsplanConstants.inaktivColor
+  if (availableKnotenarmNummern.value.includes(4))
+    return BelastungsplanConstants.farben.get(4) ?? BelastungsplanConstants.inaktivColor
+  if (availableKnotenarmNummern.value.includes(7))
+    return BelastungsplanConstants.farben.get(7) ?? BelastungsplanConstants.inaktivColor
+  if (availableKnotenarmNummern.value.includes(8))
+    return BelastungsplanConstants.farben.get(8) ?? BelastungsplanConstants.inaktivColor
+  return BelastungsplanConstants.inaktivColor;
+}
 
 function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungQJS, arrowPattern: VerkehrsbeziehungQJS) {
   return verkehrsbeziehung.knotenarm === arrowPattern.knotenarm && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
