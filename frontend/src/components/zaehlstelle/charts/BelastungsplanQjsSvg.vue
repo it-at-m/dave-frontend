@@ -143,7 +143,7 @@
                x="1533.9819"
                y="693.90204"
                id="tspan3"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">123456</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertThree }}</tspan></text>
               <text
                   xml:space="preserve"
                   transform="scale(0.86707182,1.153307)"
@@ -154,7 +154,7 @@
                x="1533.9819"
                y="742.45807"
                id="tspan4"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">123456</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertFour }}</tspan></text>
               <path
                   style="fill:#000000;fill-opacity:1;stroke-width:29.8746"
                   d="m 1231.93,859.24999 h 98 v 2.45 h -98 z"
@@ -169,7 +169,7 @@
                x="1535.3855"
                y="769.50153"
                id="tspan5"
-               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">123456</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeThreeFour }}</tspan></text>
             </g>
             <g
                 id="layer3">
@@ -183,7 +183,7 @@
                x="171.3958"
                y="487.53894"
                id="node4_north_west_number_tspan"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">123456</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertOne }}</tspan></text>
               <path
                   style="fill:#000000;fill-opacity:1;stroke-width:29.8746"
                   d="m 50.47,621.25 h 98 v 2.45 h -98 z"
@@ -198,7 +198,7 @@
                x="171.3958"
                y="536.09497"
                id="node4_north_east_number_tspan"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">123456</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertTwo }}</tspan></text>
               <text
                   xml:space="preserve"
                   transform="scale(0.86675167,1.153733)"
@@ -209,7 +209,7 @@
                x="172.29607"
                y="563.21466"
                id="node4_north_sum_tspan"
-               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">123456</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneTwo }}</tspan></text>
             </g>
             <text
                 xml:space="preserve"
@@ -221,7 +221,7 @@
              x="1535.3855"
              y="616.65204"
              id="node4_sum_tspan"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">123456</tspan></text>
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneToFour }}</tspan></text>
             <text
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
@@ -232,7 +232,7 @@
              x="172.29607"
              y="616.65204"
              id="tspan2"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">123456</tspan></text>
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneToFour }}</tspan></text>
           </g>
         </g>
         <g
@@ -317,7 +317,7 @@
                   transform="translate(181.39362,6.9760325e-4)"><tspan
                x="699.24969"
                y="688.33734"
-               id="tspan12">1000</tspan></text>
+               id="tspan12">{{ highestZaehlwertRounded / 2 }}</tspan></text>
             </g>
             <g
                 id="massstab-size2"
@@ -332,7 +332,7 @@
                   transform="translate(670.97788,-7.8186747)"><tspan
                x="699.24969"
                y="688.33734"
-               id="tspan13">2000</tspan></text>
+               id="tspan13">{{ highestZaehlwertRounded }}</tspan></text>
             </g>
             <path
                 style="fill:#000000;stroke:#000000;stroke-width:0.802209;stroke-linecap:square;stroke-miterlimit:2.5;stroke-dasharray:none"
