@@ -291,7 +291,7 @@
              y="1230.3373"
              id="tspan23"><tspan
                style="font-weight:bold;-inkscape-font-specification:'Sans Bold'"
-               id="tspan22">KFZ      (SV)      GV</tspan></tspan></text>
+               id="tspan22">{{ optionen.radverkehr ? 'RAD' : 'FUSS' }}</tspan></tspan></text>
           <g
               id="legend-hochgerechnet"
               style="stroke-width:28.2205;stroke-dasharray:none"
@@ -304,7 +304,7 @@
                 y="1210"><tspan
                x="168"
                y="1210"
-               id="tspan25">hochgerechnet</tspan></text>
+               id="tspan25">{{ zaehlzeit2 }}</tspan></text>
           </g>
           <g
               id="legend-tageswert"
@@ -320,7 +320,7 @@
                y="1190.3373"
                id="tspan27"><tspan
                  style="font-weight:bold;-inkscape-font-specification:'Sans Bold'"
-                 id="tspan26">Tageswert</tspan></tspan></text>
+                 id="tspan26">{{ optionen.zeitauswahl }}</tspan></tspan></text>
           </g>
         </g>
         <g
@@ -356,22 +356,22 @@
                 transform="translate(181.39362,6.9760325e-4)"><tspan
                x="699.24969"
                y="688.33734"
-               id="tspan28">1000</tspan></text>
+               id="tspan26">1000</tspan></text>
           </g>
           <g
               id="massstab-size2"
               style="stroke-width:28.2205;stroke-dasharray:none"
-              transform="matrix(0.62382516,0,0,0.76417899,482.7559,750.20552)">
+              transform="matrix(0.62382516,0,0,0.76417899,423.85279,750.20592)">
             <text
                 xml:space="preserve"
                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.6128px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
                 id="multirow-5-0-5"
                 x="699.24969"
                 y="688.33734"
-                transform="translate(569.99057,-7.4083333)"><tspan
+                transform="translate(670.97788,-7.8186747)"><tspan
                x="699.24969"
                y="688.33734"
-               id="tspan29">2000</tspan></text>
+               id="tspan27">2000</tspan></text>
           </g>
           <path
               style="fill:none;stroke:#000000;stroke-width:1.07233;stroke-miterlimit:2.5;stroke-dasharray:none"
@@ -441,6 +441,11 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zaehldauer from "@/types/enum/Zaehldauer";
+import Zeitblock, {zeitblockInfo} from "@/types/enum/Zeitblock";
+import {zeitblockStuendlichInfo} from "@/types/enum/ZeitblockStuendlich";
+import type {StartEndeUhrzeitIntervalls} from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -469,11 +474,10 @@ const centerYArrowThree = ref(0)
 const centerYArrowFour = ref(0)
 
 function getArrowScale(zaelwert: number) {
-  return zaelwert / Math.max(zaehlwertOne.value, zaehlwertTwo.value, zaehlwertThree.value, zaehlwertFour.value)
+  return zaelwert / highestZaehlwert.value;
 }
 
 function computeAnchorY(el: SVGGraphicsElement | null) {
-  console.log("computeAnchorY")
   if (!el) return 0
   // getBBox ist DOM-API; liefert x,y,width,height in user units
   const bbox = el.getBBox()
@@ -483,6 +487,34 @@ function computeAnchorY(el: SVGGraphicsElement | null) {
 function scaleTransform(scaleY: number, centerY: number) {
   if (!scaleY || scaleY === 1) return null
   return `translate(0 ${centerY}) scale(1 ${scaleY}) translate(0 ${-centerY})`
+}
+
+function calculateMassstabSizeTransform(baseTransform: string){
+  // originaler translate-Wert aus der Template-Vorlage
+  const base = 'translate(181.39362,6.9760325e-4)';
+  // gewünschte Verschiebung in "sichtbaren" Pixeln (anpassen nach Bedarf)
+  const desiredPixelShift = 10;
+
+  // Die Gruppe hat die matrix(...) mit scaleX = 0.62382516 (siehe transform der Gruppe).
+  // Weil Kind-Transforms von der Gruppen-Skalierung betroffen sind, muss
+  // eine visuelle Pixelverschiebung durch scaleX geteilt werden.
+  const groupScaleX = 0.62382516;
+
+  const value = Number(highestZaehlwertRounded.value ?? 0) / 2;
+
+  let offsetPx = 0;
+  if (value < 1000) {
+    offsetPx = desiredPixelShift;
+  } else if (value > 10000) {
+    offsetPx = -desiredPixelShift;
+  } else {
+    offsetPx = 0;
+  }
+
+  const offsetInGroupUnits = offsetPx === 0 ? 0 : offsetPx / groupScaleX;
+
+  // Wir hängen eine zusätzliche translate an den bestehenden transform an.
+  return `${base} translate(${offsetInGroupUnits}, 0)`;
 }
 
 const transformOne = computed(() => scaleTransform(getArrowScale(zaehlwertOne.value), centerYArrowOne.value))
@@ -605,6 +637,16 @@ const summeThreeFour = computed(() => {
 
 const summeOneToFour = computed(() => {
   return summeOneTwo.value + summeThreeFour.value;
+})
+
+const highestZaehlwert = computed(() => {
+  return Math.max(zaehlwertOne.value, zaehlwertTwo.value, zaehlwertThree.value, zaehlwertFour.value);
+})
+
+const highestZaehlwertRounded = computed(() => {
+  const v = Number(highestZaehlwert.value ?? 0);
+  const ceil = Math.ceil(v / 1000) * 1000;
+  return v % 1000 === 0 ? v + 1000 : ceil;
 })
 
 const colorArrowOne = computed<string>(() => {
@@ -753,23 +795,25 @@ const maxSizeBelastungsplan = computed(() => {
 //   return lineWidth.value / highestVerkehrsbeziehungsValue.value;
 // });
 
-const isDifferenzdatendarstellung = computed(() => {
-  return zaehlstelleStore.isDifferenzdatenDarstellung;
-});
-
-/**
- * Holt sich bei einer Diffenzdatendarstellung die Vergleichszählung
- */
-const vergleichsZaehlung = computed(() => {
-  if (
-    isDifferenzdatendarstellung.value &&
-    optionen.value.vergleichszaehlungsId
+const zaehlzeit2 = computed(() => {
+  if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN){
+      zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+    } else {
+      return "hochgerechnet";
+    }
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
+   return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+  } else if (
+      optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+      optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
-    return zaehlstelleStore.getZaehlungById(
-      optionen.value.vergleichszaehlungsId
-    );
+    const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
+      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+    return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
-  return undefined;
 });
 
 function prepareStreetnames(): void {
@@ -814,161 +858,6 @@ function getStreetname(knotenarm: LadeKnotenarmDTO | undefined): Array<string> {
   return pieces;
 }
 
-//
-// /**
-//  * Zeigt die Informationen zur Zählstelle rechts oben in der Ecke an.
-//  */
-// function legendeZaehlstellenInfo() {
-//   const info = canvas.value.group();
-//   const startX =
-//     belastungsplanMethods.viewbox -
-//     belastungsplanMethods.ecke.value -
-//     belastungsplanMethods.spalt.value;
-//   const startY = belastungsplanMethods.chartPosition.value / 7;
-//
-//   info
-//     .text((add) => {
-//       add.tspan(`Zählstelle ${zaehlstelle.value.nummer}`).font({
-//         weight: "bold",
-//       });
-//       add.tspan(`Stadtbezirk ${zaehlstelle.value.stadtbezirkNummer}`).newLine();
-//       add
-//         .tspan(
-//           `Zähldatum: ${dateUtils.getShortVersionOfDate(
-//             new Date(zaehlung.value.datum)
-//           )}`
-//         )
-//         .newLine();
-//       if (isDifferenzdatendarstellung.value && vergleichsZaehlung.value) {
-//         const localdate = dateUtils.getShortVersionOfDate(
-//           new Date(vergleichsZaehlung.value.datum)
-//         );
-//         add.tspan(`Vergleichszählung: ${localdate}`).newLine();
-//       }
-//     })
-//     .font({
-//       family: belastungsplanMethods.fontfamily,
-//       size: belastungsplanMethods.maxlineWidth,
-//     })
-//     .x(startX)
-//     .y(startY);
-// }
-//
-// /**
-//  * Erzeugt die Benennung der Datenspalten und die entsprechenden Formeln.
-//  */
-// function legendeSpalten() {
-//   const spalten = canvas.value.group();
-//   const startX = belastungsplanMethods.chartPosition.value / 5;
-//   const startY =
-//     belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 4.5;
-//   const formeln = new Map<string, string>();
-//   if (isDifferenzdatendarstellung.value) {
-//     formeln.set("KFZ", "KFZ = KFZ (Basis) - KFZ (Vergleich)");
-//     formeln.set("SV", "SV = SV (Basis) - SV (Vergleich)");
-//     formeln.set("GV", "GV = GV (Basis) - GV (Vergleich)");
-//     formeln.set("SV%", "kein SV% beim Vergleich");
-//     formeln.set("GV%", "kein GV% beim Vergleich");
-//     formeln.set("RAD", "RAD = RAD (Basis) - RAD (Vergleich)");
-//     formeln.set(
-//       "RAD (KI-Hochrechnung)",
-//       "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
-//     );
-//     formeln.set("FUSS", "FUSS = KFZ (Basis) - FUSS (Vergleich)");
-//   } else {
-//     formeln.set("KFZ", "KFZ = Pkw + Lkw + Lz + Bus + Krad");
-//     formeln.set("SV", "SV = Lkw + Lz + Bus");
-//     formeln.set("GV", "GV = Lkw + Lz");
-//     formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
-//     formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
-//     formeln.set("RAD", "");
-//     formeln.set("RAD (KI-Hochrechnung)", "");
-//     formeln.set("FUSS", "");
-//   }
-
-  // Zählzeit
-//   const zeitauswahl: string = optionen.value.zeitauswahl;
-//   const zaehlzeitFirstLine: string = zeitauswahl;
-//   let zaehlzeitSecondLine = "";
-//   if (zeitauswahl === Zeitauswahl.TAGESWERT) {
-//     zaehlzeitSecondLine = `${
-//       zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
-//         ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
-//         : "hochgerechnet"
-//     }`;
-//   } else if (zeitauswahl === Zeitauswahl.BLOCK) {
-//     zaehlzeitSecondLine = `${
-//       zeitblockInfo.get(optionen.value.zeitblock)?.title
-//     }`;
-//   } else if (zeitauswahl === Zeitauswahl.STUNDE) {
-//     zaehlzeitSecondLine = `${
-//       zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
-//     }`;
-//   } else if (
-//     zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
-//     zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-//     zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
-//   ) {
-//     const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
-//       zaehlstelleStore.getStartEndeUhrzeitIntervalls;
-//     zaehlzeitSecondLine = `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
-//   }
-//
-//   spalten
-//     .text((add) => {
-//       add.tspan(`${zaehlzeitFirstLine}`).font({ weight: "bold" }).x(startX);
-//       add.tspan(`${zaehlzeitSecondLine}`).newLine().x(startX);
-//       add.tspan(``).newLine().x(startX);
-//
-//       // Spaltenüberschriften
-//       add
-//         .tspan(`${props.data.value1.label}`)
-//         .font({ weight: "bold" })
-//         .newLine()
-//         .x(startX);
-//       // Datenblock 2 gefüllt?
-//       if (props.data.value2.filled) {
-//         add
-//           .tspan(`(${props.data.value2.label})`)
-//           .font({ weight: "bold" })
-//           .x(startX + 60);
-//       }
-//       // Datenblock 3 gefüllt?
-//       if (props.data.value3.filled) {
-//         add
-//           .tspan(`${props.data.value3.label}`)
-//           .font({ weight: "bold" })
-//           .x(startX + 120);
-//       }
-//
-//       // Formeln
-//       add
-//         .tspan(`${formeln.get(props.data.value1.label)}`)
-//         .newLine()
-//         .x(startX);
-//       // Datenblock 2 gefüllt?
-//       if (props.data.value2.filled) {
-//         add
-//           .tspan(`${formeln.get(props.data.value2.label)}`)
-//           .newLine()
-//           .x(startX);
-//       }
-//       // Datenblock 3 gefüllt?
-//       if (props.data.value3.filled) {
-//         add
-//           .tspan(`${formeln.get(props.data.value3.label)}`)
-//           .newLine()
-//           .x(startX);
-//       }
-//     })
-//     .font({
-//       family: belastungsplanMethods.fontfamily,
-//       size: getLegendLineWidth.value,
-//     })
-//     .x(startX)
-//     .y(startY);
-// }
-//
 // /**
 //  * Erzeugt die Legende für die Linienstärke.
 //  */
