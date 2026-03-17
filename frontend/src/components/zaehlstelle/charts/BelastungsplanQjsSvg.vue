@@ -351,6 +351,7 @@
                 style="stroke-width:28.2205;stroke-dasharray:none"
                 transform="translate(163.18555,-589.09456)">
               <text
+                  v-if="zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer"
                   xml:space="preserve"
                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;font-family:sans-serif;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:268.729;display:inline;fill:#000000;stroke-width:28.2205;stroke-dasharray:none"
                   id="zaehlstelle2-multirow"
@@ -359,11 +360,11 @@
                   transform="translate(324.11416)"><tspan
                x="699.24969"
                y="688.33734"
-               id="tspan14">Stadtbezirk 8
+               id="tspan14">Stadtbezirk {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
 </tspan><tspan
                   x="699.24969"
                   y="713.03187"
-                  id="tspan16">Zähldatum: 01.01.2026</tspan></text>
+                  id="tspan16">Zähldatum: {{ dateUtils.getShortVersionOfDate(new Date(activeZaehlung.datum)) }}</tspan></text>
             </g>
             <g
                 id="zaehlstelle1"
@@ -380,7 +381,7 @@
                y="688.33734"
                id="tspan18"><tspan
                  style="font-weight:bold;-inkscape-font-specification:'Sans Bold'"
-                 id="tspan17">Zählstelle 99999</tspan></tspan></text>
+                 id="tspan17">Zählstelle {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}</tspan></tspan></text>
             </g>
           </g>
         </g>
@@ -408,6 +409,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitblock, {zeitblockInfo} from "@/types/enum/Zeitblock";
 import {zeitblockStuendlichInfo} from "@/types/enum/ZeitblockStuendlich";
 import type {StartEndeUhrzeitIntervalls} from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import {useDateUtils} from "@/util/DateUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -420,6 +422,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
+const dateUtils = useDateUtils();
 
 const firstStreetname = ref<Array<string>>([]);
 
