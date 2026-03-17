@@ -577,7 +577,7 @@ const isSelectedArrowFour = computed(() => {
 })
 
 const zaehlwertOne = computed(() => {
-  return 500; // TODO
+  return 800; // TODO
 })
 
 const zaehlwertTwo = computed(() => {
