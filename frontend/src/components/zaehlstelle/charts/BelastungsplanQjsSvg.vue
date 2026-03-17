@@ -58,8 +58,8 @@
               id="arrows">
             <g
                 id="arrow4"
-                ref="arrowFourGroupRef"
-                :transform="transformFour"
+                ref="groupRefArrowFour"
+                :transform="transformArrowFour"
             >
               <path
                   style="stroke-width:40.9429"
@@ -76,8 +76,8 @@
             </g>
             <g
                 id="arrow3"
-                ref="arrowThreeGroupRef"
-                :transform="transformThree"
+                ref="groupRefArrowThree"
+                :transform="transformArrowThree"
             >
               <path
                   style="stroke-width:40.9429"
@@ -94,8 +94,8 @@
             </g>
             <g
                 id="arrow2"
-                ref="arrowTwoGroupRef"
-                :transform="transformTwo"
+                ref="groupRefArrowTwo"
+                :transform="transformArrowTwo"
             >
               <path
                   style="stroke-width:40.943"
@@ -112,8 +112,8 @@
             </g>
             <g
                 id="arrow1"
-                ref="arrowOneGroupRef"
-                :transform="transformOne"
+                ref="groupRefArrowOne"
+                :transform="transformArrowOne"
             >
               <path
                   style="stroke-width:40.9431"
@@ -143,7 +143,9 @@
                x="1533.9819"
                y="693.90204"
                id="tspan3"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertThree }}</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{
+                  zaehlwertArrowThree
+                }}</tspan></text>
               <text
                   xml:space="preserve"
                   transform="scale(0.86707182,1.153307)"
@@ -154,7 +156,9 @@
                x="1533.9819"
                y="742.45807"
                id="tspan4"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertFour }}</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{
+                  zaehlwertArrowFour
+                }}</tspan></text>
               <path
                   style="fill:#000000;fill-opacity:1;stroke-width:29.8746"
                   d="m 1231.93,859.24999 h 98 v 2.45 h -98 z"
@@ -169,7 +173,9 @@
                x="1535.3855"
                y="769.50153"
                id="tspan5"
-               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeThreeFour }}</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{
+                  sumArrowsThreeFour
+                }}</tspan></text>
             </g>
             <g
                 id="layer3">
@@ -183,7 +189,9 @@
                x="171.3958"
                y="487.53894"
                id="node4_north_west_number_tspan"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertOne }}</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{
+                  zaehlwertArrowOne
+                }}</tspan></text>
               <path
                   style="fill:#000000;fill-opacity:1;stroke-width:29.8746"
                   d="m 50.47,621.25 h 98 v 2.45 h -98 z"
@@ -198,7 +206,9 @@
                x="171.3958"
                y="536.09497"
                id="node4_north_east_number_tspan"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{ zaehlwertTwo }}</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9482">{{
+                  zaehlwertArrowTwo
+                }}</tspan></text>
               <text
                   xml:space="preserve"
                   transform="scale(0.86675167,1.153733)"
@@ -209,7 +219,9 @@
                x="172.29607"
                y="563.21466"
                id="node4_north_sum_tspan"
-               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneTwo }}</tspan></text>
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{
+                  sumArrowsOneTwo
+                }}</tspan></text>
             </g>
             <text
                 xml:space="preserve"
@@ -221,7 +233,9 @@
              x="1535.3855"
              y="616.65204"
              id="node4_sum_tspan"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneToFour }}</tspan></text>
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{
+                sumArrowsOneToFour
+              }}</tspan></text>
             <text
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
@@ -232,7 +246,9 @@
              x="172.29607"
              y="616.65204"
              id="tspan2"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{ summeOneToFour }}</tspan></text>
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:28.097px;font-family:sans-serif-serif;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:43.9644">{{
+                sumArrowsOneToFour
+              }}</tspan></text>
           </g>
         </g>
         <g
@@ -427,10 +443,10 @@ const dateUtils = useDateUtils();
 const firstStreetname = ref<Array<string>>([]);
 
 // Refs zu den arrow-Gruppen (statt nur den path-Elementen)
-const arrowOneGroupRef = ref<SVGGElement | null>(null)
-const arrowTwoGroupRef = ref<SVGGElement | null>(null)
-const arrowThreeGroupRef = ref<SVGGElement | null>(null)
-const arrowFourGroupRef = ref<SVGGElement | null>(null)
+const groupRefArrowOne = ref<SVGGElement | null>(null)
+const groupRefArrowTwo = ref<SVGGElement | null>(null)
+const groupRefArrowThree = ref<SVGGElement | null>(null)
+const groupRefArrowFour = ref<SVGGElement | null>(null)
 
 // berechnete Anker-Y-Werte (werden per getBBox ermittelt)
 const centerYArrowOne = ref(0)
@@ -454,38 +470,10 @@ function scaleTransform(scaleY: number, centerY: number) {
   return `translate(0 ${centerY}) scale(1 ${scaleY}) translate(0 ${-centerY})`
 }
 
-function calculateMassstabSizeTransform(baseTransform: string){
-  // originaler translate-Wert aus der Template-Vorlage
-  const base = 'translate(181.39362,6.9760325e-4)';
-  // gewünschte Verschiebung in "sichtbaren" Pixeln (anpassen nach Bedarf)
-  const desiredPixelShift = 10;
-
-  // Die Gruppe hat die matrix(...) mit scaleX = 0.62382516 (siehe transform der Gruppe).
-  // Weil Kind-Transforms von der Gruppen-Skalierung betroffen sind, muss
-  // eine visuelle Pixelverschiebung durch scaleX geteilt werden.
-  const groupScaleX = 0.62382516;
-
-  const value = Number(highestZaehlwertRounded.value ?? 0) / 2;
-
-  let offsetPx = 0;
-  if (value < 1000) {
-    offsetPx = desiredPixelShift;
-  } else if (value > 10000) {
-    offsetPx = -desiredPixelShift;
-  } else {
-    offsetPx = 0;
-  }
-
-  const offsetInGroupUnits = offsetPx === 0 ? 0 : offsetPx / groupScaleX;
-
-  // Wir hängen eine zusätzliche translate an den bestehenden transform an.
-  return `${base} translate(${offsetInGroupUnits}, 0)`;
-}
-
-const transformOne = computed(() => scaleTransform(getArrowScale(zaehlwertOne.value), centerYArrowOne.value))
-const transformTwo = computed(() => scaleTransform(getArrowScale(zaehlwertTwo.value), centerYArrowTwo.value))
-const transformThree = computed(() => scaleTransform(getArrowScale(zaehlwertThree.value), centerYArrowThree.value))
-const transformFour = computed(() => scaleTransform(getArrowScale(zaehlwertFour.value), centerYArrowFour.value))
+const transformArrowOne = computed(() => scaleTransform(getArrowScale(zaehlwertArrowOne.value), centerYArrowOne.value))
+const transformArrowTwo = computed(() => scaleTransform(getArrowScale(zaehlwertArrowTwo.value), centerYArrowTwo.value))
+const transformArrowThree = computed(() => scaleTransform(getArrowScale(zaehlwertArrowThree.value), centerYArrowThree.value))
+const transformArrowFour = computed(() => scaleTransform(getArrowScale(zaehlwertArrowFour.value), centerYArrowFour.value))
 
 // --- Pfad-Daten
 const dArrowOne = 'm 245,567 v -28 h 945 v 27.998 z'
@@ -493,28 +481,28 @@ const dArrowTwo = 'm 210,623 v -28 h 945 v 27.997 z'
 const dArrowThree = 'm 245,804.99999 v -28 h 945 v 27.997 z'
 const dArrowFour = 'm 210,860.99999 v -28 h 945 v 27.997 z'
 
-const arrowOnePatterns = [
+const patternsArrowOne = [
   { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.W },
   { knotenarm: 2, nach: 4, strassenseite: Himmelsrichtung.N },
   { knotenarm: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
   { knotenarm: 6, nach: 8, strassenseite: Himmelsrichtung.NO }
 ];
 
-const arrowTwoPatterns = [
+const patternsArrowTwo = [
   { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.W },
   { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.N },
   { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
   { knotenarm: 8, nach: 6, strassenseite: Himmelsrichtung.NO }
 ];
 
-const arrowThreePatterns = [
+const patternsArrowThree = [
   { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.O },
   { knotenarm: 2, nach: 4, strassenseite: Himmelsrichtung.S },
   { knotenarm: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
   { knotenarm: 6, nach: 8, strassenseite: Himmelsrichtung.SW }
 ];
 
-const arrowFourPatterns = [
+const patternsArrowFour = [
   { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.O },
   { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.S },
   { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
@@ -561,51 +549,51 @@ const rotateSvg = computed(() => {
 });
 
 const isSelectedArrowOne = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, arrowOnePatterns);
+  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowOne);
 })
 
 const isSelectedArrowTwo = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, arrowTwoPatterns);
+  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowTwo);
 })
 
 const isSelectedArrowThree = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, arrowThreePatterns);
+  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowThree);
 })
 
 const isSelectedArrowFour = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, arrowFourPatterns);
+  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowFour);
 })
 
-const zaehlwertOne = computed(() => {
+const zaehlwertArrowOne = computed(() => {
   return 800; // TODO
 })
 
-const zaehlwertTwo = computed(() => {
+const zaehlwertArrowTwo = computed(() => {
   return 200; // TODO
 })
 
-const zaehlwertThree = computed(() => {
+const zaehlwertArrowThree = computed(() => {
   return 900; // TODO
 })
 
-const zaehlwertFour = computed(() => {
+const zaehlwertArrowFour = computed(() => {
   return 100; // TODO
 })
 
-const summeOneTwo = computed(() => {
-  return zaehlwertOne.value + zaehlwertTwo.value;
+const sumArrowsOneTwo = computed(() => {
+  return zaehlwertArrowOne.value + zaehlwertArrowTwo.value;
 })
 
-const summeThreeFour = computed(() => {
-  return zaehlwertThree.value + zaehlwertFour.value;
+const sumArrowsThreeFour = computed(() => {
+  return zaehlwertArrowThree.value + zaehlwertArrowFour.value;
 })
 
-const summeOneToFour = computed(() => {
-  return summeOneTwo.value + summeThreeFour.value;
+const sumArrowsOneToFour = computed(() => {
+  return sumArrowsOneTwo.value + sumArrowsThreeFour.value;
 })
 
 const highestZaehlwert = computed(() => {
-  return Math.max(zaehlwertOne.value, zaehlwertTwo.value, zaehlwertThree.value, zaehlwertFour.value);
+  return Math.max(zaehlwertArrowOne.value, zaehlwertArrowTwo.value, zaehlwertArrowThree.value, zaehlwertArrowFour.value);
 })
 
 const highestZaehlwertRounded = computed(() => {
@@ -617,26 +605,26 @@ const highestZaehlwertRounded = computed(() => {
 const colorArrowOne = computed<string>(() => {
   if (!isSelectedArrowOne.value)
     return BelastungsplanConstants.inaktivColor;
-  return calculateColorOneOrTwo();
+  return calculateColorArrowOneTwo();
 });
 
 const colorArrowTwo = computed<string>(() => {
   if (!isSelectedArrowTwo.value)
     return BelastungsplanConstants.inaktivColor;
-  return calculateColorOneOrTwo();
+  return calculateColorArrowOneTwo();
 });
 const colorArrowThree = computed<string>(() => {
   if (!isSelectedArrowThree.value)
     return BelastungsplanConstants.inaktivColor;
-  return calculateColorThreeOrFour();
+  return calculateColorArrowThreeFour();
 });
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value)
     return BelastungsplanConstants.inaktivColor;
-  return calculateColorThreeOrFour();
+  return calculateColorArrowThreeFour();
 });
 
-function calculateColorOneOrTwo(){
+function calculateColorArrowOneTwo(){
   if (availableKnotenarmNummern.value.includes(1))
     return BelastungsplanConstants.farben.get(1) ?? BelastungsplanConstants.inaktivColor
   if (availableKnotenarmNummern.value.includes(2))
@@ -648,7 +636,7 @@ function calculateColorOneOrTwo(){
   return BelastungsplanConstants.inaktivColor;
 }
 
-function calculateColorThreeOrFour() {
+function calculateColorArrowThreeFour() {
   if (availableKnotenarmNummern.value.includes(3))
     return BelastungsplanConstants.farben.get(3) ?? BelastungsplanConstants.inaktivColor
   if (availableKnotenarmNummern.value.includes(4))
@@ -678,8 +666,8 @@ onMounted(() => {
   prepareStreetnames();
 
   // Berechne Anker aus der gesamten Gruppe (Rumpf + Spitze)
-  if (arrowOneGroupRef.value) centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value)
-  if (arrowTwoGroupRef.value) centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value)
+  if (groupRefArrowOne.value) centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value)
+  if (groupRefArrowTwo.value) centerYArrowTwo.value = computeAnchorY(groupRefArrowTwo.value)
 
 });
 
@@ -690,17 +678,17 @@ watch(
       // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
       // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
       await nextTick();
-      if (arrowOneGroupRef.value) {
-        centerYArrowOne.value = computeAnchorY(arrowOneGroupRef.value);
+      if (groupRefArrowOne.value) {
+        centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value);
       }
-      if (arrowTwoGroupRef.value) {
-        centerYArrowTwo.value = computeAnchorY(arrowTwoGroupRef.value);
+      if (groupRefArrowTwo.value) {
+        centerYArrowTwo.value = computeAnchorY(groupRefArrowTwo.value);
       }
-      if (arrowThreeGroupRef.value) {
-        centerYArrowThree.value = computeAnchorY(arrowThreeGroupRef.value);
+      if (groupRefArrowThree.value) {
+        centerYArrowThree.value = computeAnchorY(groupRefArrowThree.value);
       }
-      if (arrowFourGroupRef.value) {
-        centerYArrowFour.value = computeAnchorY(arrowFourGroupRef.value);
+      if (groupRefArrowFour.value) {
+        centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value);
       }
     },
     {deep: true, immediate: true}
@@ -732,33 +720,6 @@ const maxSizeBelastungsplan = computed(() => {
     100
   );
 });
-
-/**
- * Liefert die LineWidth für die Legende
- * Wenn alle 3 Spalten im Belastungsplan gefüllt sind,
- * so wird die maxlineWidth verwendet, ansonsten ist mehr Platz da
- */
-// const getLegendLineWidth = computed(() => {
-//   // Wenn alles gefüllt ist, dann die maxLineWidth
-//   if (
-//     props.data &&
-//     props.data.value1.filled &&
-//     props.data.value2.filled &&
-//     props.data.value3.filled
-//   ) {
-//     return belastungsplanMethods.maxlineWidth;
-//   } else {
-//     // sonst geht mehr
-//     return belastungsplanMethods.maxLegendLineWidth;
-//   }
-// });
-
-/**
- * Über diesen Wert wird die Liniendicke gesteuert, wenn zu wenig Platz vorhanden ist.
- */
-// const lineFactor = computed(() => {
-//   return lineWidth.value / highestVerkehrsbeziehungsValue.value;
-// });
 
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
@@ -822,138 +783,5 @@ function getStreetname(knotenarm: LadeKnotenarmDTO | undefined): Array<string> {
   }
   return pieces;
 }
-
-// /**
-//  * Erzeugt die Legende für die Linienstärke.
-//  */
-// function legendeLinienStaerke() {
-//   const size = canvas.value.group();
-//   const startX =
-//     belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 5;
-//   const startY =
-//     belastungsplanMethods.viewbox - belastungsplanMethods.spalt.value * 2.5;
-//   const path = `M${startX} ${startY}
-//                   L${startX + 3 * belastungsplanMethods.spalt.value} ${startY}
-//                   L${startX + 3 * belastungsplanMethods.spalt.value} ${startY - belastungsplanMethods.maxlineWidth}
-//                   z`;
-//   // Legende für die Farbgebung der Linien bei Differenzdatendarstellung
-//   // rot = Zunahme
-//   // grün = Abnahme
-//   if (isDifferenzdatendarstellung.value) {
-//     size
-//       .rect(lineWidth.value, lineWidth.value)
-//       .fill(belastungsplanMethods.zunahmeValueColor)
-//       .x(startX)
-//       .y(startY + 35);
-//     size
-//       .rect(lineWidth.value, lineWidth.value)
-//       .fill(belastungsplanMethods.abnahmeValueColor)
-//       .x(startX)
-//       .y(startY + 35 + 5 + lineWidth.value);
-//
-//     size
-//       .text((add) => {
-//         add
-//           .tspan("Zunahme")
-//           .x(startX + 28)
-//           .dy(startY + 35 + lineWidth.value);
-//       })
-//       .font({
-//         family: belastungsplanMethods.fontfamily,
-//         size: belastungsplanMethods.maxlineWidth,
-//       });
-//
-//     size
-//       .text((add) => {
-//         add
-//           .tspan("Abnahme")
-//           .x(startX + 28)
-//           .dy(startY + 35 + 5 + lineWidth.value * 2);
-//       })
-//       .font({
-//         family: belastungsplanMethods.fontfamily,
-//         size: belastungsplanMethods.maxlineWidth,
-//       });
-//   }
-//
-//   size
-//     .path(path)
-//     .stroke({ width: 2, color: belastungsplanMethods.legendColor })
-//     .attr("fill", "none");
-//
-//   const path2 = `M${startX + 1.5 * belastungsplanMethods.spalt.value} ${startY}
-//                    L${startX + 1.5 * belastungsplanMethods.spalt.value} ${
-//                      startY - belastungsplanMethods.maxlineWidth / 2
-//                    }`;
-//   size
-//     .path(path2)
-//     .stroke({ width: 2, color: belastungsplanMethods.legendColor })
-//     .attr("fill", "none");
-//
-//   const high =
-//     highestVerkehrsbeziehungsValue.value +
-//     (1000 - (highestVerkehrsbeziehungsValue.value % 1000));
-//   size
-//     .text((add) => {
-//       add
-//         .tspan(`${high}`)
-//         .x(startX + 3 * belastungsplanMethods.spalt.value)
-//         .dy(startY + belastungsplanMethods.maxlineWidth);
-//     })
-//     .font({
-//       family: belastungsplanMethods.fontfamily,
-//       size: belastungsplanMethods.maxlineWidth,
-//       anchor: "middle",
-//     });
-//
-//   size
-//     .text((add) => {
-//       add
-//         .tspan(`${high / 2}`)
-//         .x(startX + 1.5 * belastungsplanMethods.spalt.value)
-//         .dy(startY + belastungsplanMethods.maxlineWidth);
-//     })
-//     .font({
-//       family: belastungsplanMethods.fontfamily,
-//       size: belastungsplanMethods.maxlineWidth,
-//       anchor: "middle",
-//     });
-// }
-
-/**
- * Die maximale Dicke der Linien wird errechnet. Maßgeblich ist hierbei, ob die Summe des
- * größten "von" oder "nach" Knotenarms, mutlipliziert mit der maximalen Linien Stärke und
- * der jeweiligen Lücke zwischen den Linien, größer oder kleiner als die maximale Breite
- * einer Fahrtrichtung ist. Ist sie kleiner, so kann die maximale Linienbreite verwendet
- * werden, ist sie größer, so muss die Linienbreite so weit reduziert werden, dass alle
- * Verkehrsbeziehungen mit ihrer maximalen Breite aus eine Fahrtrichtung passen.
- */
-// function calcMaxLineWidth() {
-//   const mw = belastungsplanMethods.maxlineWidth + belastungsplanMethods.lineGap;
-//   let mv: number;
-//   if (vonMaxValue.value > nachMaxValue.value) {
-//     mv = vonMaxValue.value;
-//   } else {
-//     mv = nachMaxValue.value;
-//   }
-//   if (mv * mw > belastungsplanMethods.maxFahrtrichtungWidth.value) {
-//     // die maximale Breite der Linien muss reduziert werden
-//
-//     // Der Platz, der nach Abzug der Lücke je Linie bleibt, muss durch die Anzahl
-//     // der maximalen linien geteilt werden. Die Breite der Linie wird abgerundet,
-//     // damit wir einen glatten Wert für die Textgröße haben.
-//     lineWidth.value = Math.ceil(
-//       (belastungsplanMethods.maxFahrtrichtungWidth.value -
-//         mv * belastungsplanMethods.lineGap) /
-//         mv
-//     );
-//     fahrtrichtungWidth.value =
-//       belastungsplanMethods.maxFahrtrichtungWidth.value;
-//   } else {
-//     // die maximale Breite der Linien kann so bleiben
-//     fahrtrichtungWidth.value = mv * mw;
-//     lineWidth.value = belastungsplanMethods.maxlineWidth;
-//   }
-// }
 
 </script>
