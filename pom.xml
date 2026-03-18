@@ -5,7 +5,7 @@
 
     <groupId>de.muenchen.dave</groupId>
     <artifactId>dave-frontend</artifactId>
-    <version>5.1.2-SNAPSHOT</version>
+    <version>5.1.2</version>
     <packaging>pom</packaging>
     <name>dave_frontend</name>
 
@@ -13,7 +13,7 @@
     <scm>
         <connection>scm:git:https://github.com/starwit/dave-frontend.git</connection>
         <developerConnection>scm:git:https://github.com/starwit/dave-frontend.git</developerConnection>
-        <tag>5.0.0</tag>
+        <tag>5.1.2</tag>
   </scm>
 
 
