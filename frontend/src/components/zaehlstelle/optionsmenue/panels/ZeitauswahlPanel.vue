@@ -33,7 +33,7 @@
             <v-row>
               <v-col cols="6">
                 <v-radio
-                  label="Zeitraum"
+                  label="Zeitraum / DTV-w5"
                   :value="Zeitauswahl.ZEITRAUM"
                   @mouseover="hoverZeitraum = true"
                   @mouseleave="hoverZeitraum = false"
@@ -298,10 +298,10 @@ const isZeitauswahlSpitzenstunde = computed(() => {
 
 const helpTextZeitauswahl = computed(() => {
   if (hoverZeitraum.value) {
-    return "";
+    return "Wochentagsdurchschnitt Montag bis Freitag im gewählten Zeitraum.";
   }
   if (hoverTageswert.value) {
-    return "";
+    return "Tageswert über den gesamten Tag (0-24 Uhr).";
   }
   if (hoverBlock.value) {
     return "";
