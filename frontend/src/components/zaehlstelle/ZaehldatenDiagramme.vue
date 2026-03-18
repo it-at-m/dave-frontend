@@ -43,7 +43,7 @@
         <v-icon icon="mdi-chart-bubble" />
         Heatmap
       </v-tab>
-      <v-tab :value="TAB_ZEITREIHE">
+      <v-tab :value="TAB_ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
         <v-icon icon="mdi-timer-sand" />
         Zeitreihe
       </v-tab>
@@ -132,7 +132,7 @@
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
-      <v-tabs-window-item :value="TAB_ZEITREIHE">
+      <v-tabs-window-item :value="TAB_ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
         <v-sheet
           :min-height="contentHeight"
           :max-height="contentHeight"
