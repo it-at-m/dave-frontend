@@ -3,8 +3,8 @@
     id="belastungsplan-zaehlstelle"
   >
     <svg
-        :width="dimension"
-        :height="dimension"
+        :width="sizeBelastungsplan"
+        :height="sizeBelastungsplan"
         viewBox="0 0 1400 1400"
         version="1.1"
         id="svg1"
