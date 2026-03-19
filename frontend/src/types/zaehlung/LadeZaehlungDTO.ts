@@ -7,6 +7,8 @@ import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 import Quelle from "@/types/enum/Quelle";
 import Wetter from "@/types/enum/Wetter";
 import Zaehldauer from "@/types/enum/Zaehldauer";
+import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 
 export default interface LadeZaehlungDTO extends BaseEntity {
   // Zeit
@@ -34,6 +36,8 @@ export default interface LadeZaehlungDTO extends BaseEntity {
   kommentar: string;
   knotenarme: LadeKnotenarmDTO[];
   verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[];
+  laengsverkehr: LaengsverkehrDTO[];
+  querungsverkehr: QuerungsverkehrDTO[];
   auswaehlbareVerkehrsbeziehungen: VerkehrsbeziehungenDTO;
   zeitauswahl: ZeitauswahlDTO;
   kategorien: string[];
