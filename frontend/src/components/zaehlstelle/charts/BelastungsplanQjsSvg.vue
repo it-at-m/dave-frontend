@@ -3,6 +3,7 @@
     id="belastungsplan-zaehlstelle"
   >
     <svg
+        ref="svgRef"
         :width="sizeBelastungsplan"
         :height="sizeBelastungsplan"
         viewBox="0 0 1400 1400"
@@ -436,11 +437,16 @@ const props = withDefaults(defineProps<Props>(), {
   dimension: "600vh",
 });
 
+const emits = defineEmits<{
+  (e: "print", v: Blob): void;
+}>();
+
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 
 const firstStreetname = ref<Array<string>>([]);
+const svgRef = ref<SVGSVGElement | null>(null);
 
 // Refs zu den arrow-Gruppen (statt nur den path-Elementen)
 const groupRefArrowOne = ref<SVGGElement | null>(null)
@@ -665,9 +671,11 @@ onMounted(() => {
 
   prepareStreetnames();
 
-  // Berechne Anker aus der gesamten Gruppe (Rumpf + Spitze)
+  // Berechnet Anker aus der gesamten Gruppe (Rumpf + Spitze)
   if (groupRefArrowOne.value) centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value)
   if (groupRefArrowTwo.value) centerYArrowTwo.value = computeAnchorY(groupRefArrowTwo.value)
+  if (groupRefArrowThree.value) centerYArrowThree.value = computeAnchorY(groupRefArrowThree.value)
+  if (groupRefArrowFour.value) centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value)
 
 });
 
@@ -690,9 +698,39 @@ watch(
       if (groupRefArrowFour.value) {
         centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value);
       }
+
+      emitSvgAsBlob();
     },
     {deep: true, immediate: true}
 );
+
+/**
+ * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
+ */
+function serializeSvgElement(svgEl: SVGSVGElement): string {
+  const clone = svgEl.cloneNode(true) as SVGSVGElement;
+
+  const serializer = new XMLSerializer();
+  let svgString = serializer.serializeToString(clone);
+
+  const xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  if (!svgString.startsWith("<?xml")) {
+    svgString = xmlDeclaration + svgString;
+  }
+  return svgString;
+}
+/**
+ * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
+ */
+function emitSvgAsBlob(): void {
+  const svgEl = svgRef.value;
+  if (!svgEl) {
+    return;
+  }
+  const svgString = serializeSvgElement(svgEl);
+  const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+  emits("print", blob);
+}
 
 const optionen = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
