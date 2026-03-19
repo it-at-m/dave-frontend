@@ -482,31 +482,31 @@ const dArrowThree = 'm 245,804.99999 v -28 h 945 v 27.997 z'
 const dArrowFour = 'm 210,860.99999 v -28 h 945 v 27.997 z'
 
 const patternsArrowOne = [
-  { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.W },
-  { knotenarm: 2, nach: 4, strassenseite: Himmelsrichtung.N },
-  { knotenarm: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
-  { knotenarm: 6, nach: 8, strassenseite: Himmelsrichtung.NO }
+  { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+  { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+  { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
+  { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO }
 ];
 
 const patternsArrowTwo = [
-  { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.W },
-  { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.N },
-  { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
-  { knotenarm: 8, nach: 6, strassenseite: Himmelsrichtung.NO }
+  { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
+  { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
+  { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
+  { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO }
 ];
 
 const patternsArrowThree = [
-  { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.O },
-  { knotenarm: 2, nach: 4, strassenseite: Himmelsrichtung.S },
-  { knotenarm: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
-  { knotenarm: 6, nach: 8, strassenseite: Himmelsrichtung.SW }
+  { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
+  { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
+  { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
+  { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW }
 ];
 
 const patternsArrowFour = [
-  { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.O },
-  { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-  { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
-  { knotenarm: 8, nach: 6, strassenseite: Himmelsrichtung.SW }
+  { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
+  { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
+  { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
+  { von: 8, nach: 6, strassenseite: Himmelsrichtung.SW }
 ];
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
@@ -520,7 +520,7 @@ const availableKnotenarmNummern = computed(() => {
 const availableKnotenarme = computed(() => {
   const nodes: LadeKnotenarmDTO[] = [];
   activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
-    const nr = vb.knotenarm
+    const nr = vb.von
     const kn = activeZaehlung.value.knotenarme.find((kn) => kn.nummer === nr);
     if (kn) {
       nodes.push(kn);
@@ -649,7 +649,7 @@ function calculateColorArrowThreeFour() {
 }
 
 function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungQJS, arrowPattern: VerkehrsbeziehungQJS) {
-  return verkehrsbeziehung.knotenarm === arrowPattern.knotenarm && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
+  return verkehrsbeziehung.von === arrowPattern.von && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
 }
 
 function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungQJS>, arrowPatterns: VerkehrsbeziehungQJS[]) {
