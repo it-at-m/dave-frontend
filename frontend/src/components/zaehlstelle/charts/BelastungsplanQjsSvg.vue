@@ -619,11 +619,13 @@ const colorArrowTwo = computed<string>(() => {
     return BelastungsplanConstants.inaktivColor;
   return calculateColorArrowOneTwo();
 });
+
 const colorArrowThree = computed<string>(() => {
   if (!isSelectedArrowThree.value)
     return BelastungsplanConstants.inaktivColor;
   return calculateColorArrowThreeFour();
 });
+
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value)
     return BelastungsplanConstants.inaktivColor;
