@@ -1,6 +1,6 @@
 
 export default interface VerkehrsbeziehungQJS {
-  knotenarm: number;
+  von: number;
   nach: number;
   strassenseite: string;
 }

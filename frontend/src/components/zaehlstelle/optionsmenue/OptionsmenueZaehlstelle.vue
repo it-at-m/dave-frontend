@@ -204,7 +204,7 @@ function setDefaultOptionsForZaehlung() {
   optionsCopy.laengsverkehr = (activeZaehlung.value.laengsverkehr ?? []).map((lv) => ({ ...lv }));
   optionsCopy.querungsverkehr = (activeZaehlung.value.querungsverkehr ?? []).map((qv) => ({ ...qv }));
   optionsCopy.verkehrsbeziehungenQJS = (activeZaehlung.value.verkehrsbeziehungen ?? []).map((vb) => ({
-    knotenarm: vb.knotenarm,
+    von: vb.von,
     nach: vb.nach,
     strassenseite: vb.strassenseite,
   }));

@@ -355,6 +355,7 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 
 interface Props {
   height: string;
@@ -375,31 +376,31 @@ const firstStreetname = ref<Array<string>>([]);
 const secondStreetname = ref<Array<string>>([]);
 
 const arrowOnePatterns = [
-  { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.W },
-  { knotenarm: 2, nach: 4, strassenseite: Himmelsrichtung.N },
-  { knotenarm: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
-  { knotenarm: 6, nach: 8, strassenseite: Himmelsrichtung.NO }
+  { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+  { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+  { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
+  { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO }
 ];
 
 const arrowTwoPatterns = [
-  { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.W },
-  { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.N },
-  { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
-  { knotenarm: 8, nach: 6, strassenseite: Himmelsrichtung.NO }
+  { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
+  { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
+  { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
+  { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO }
 ];
 
 const arrowThreePatterns = [
-  { knotenarm: 1, nach: 3, strassenseite: Himmelsrichtung.O },
-  { knotenarm: 2, nach: 4, strassenseite: Himmelsrichtung.S },
-  { knotenarm: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
-  { knotenarm: 6, nach: 8, strassenseite: Himmelsrichtung.SW }
+  { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
+  { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
+  { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
+  { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW }
 ];
 
 const arrowFourPatterns = [
-  { knotenarm: 3, nach: 1, strassenseite: Himmelsrichtung.O },
-  { knotenarm: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-  { knotenarm: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
-  { knotenarm: 8, nach: 6, strassenseite: Himmelsrichtung.SW }
+  { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
+  { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
+  { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
+  { von: 8, nach: 6, strassenseite: Himmelsrichtung.SW }
 ];
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
@@ -413,7 +414,7 @@ const availableKnotenarmNummern = computed(() => {
 const availableKnotenarme = computed(() => {
   const nodes: LadeKnotenarmDTO[] = [];
   activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
-    const nr = vb.knotenarm
+    const nr = vb.von
     const kn = activeZaehlung.value.knotenarme.find((kn) => kn.nummer === nr);
     if (kn) {
       nodes.push(kn);
@@ -450,19 +451,19 @@ const rotateSvg = computed(() => {
 });
 
 const isAvailableArrowOne = computed(() => {
-  return hasAnyArrowPatternIn(activeZaehlung.value?.verkehrsbeziehungen, arrowOnePatterns);
+  return hasAnyArrowPatternIn(convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen), arrowOnePatterns);
 })
 
 const isAvailableArrowTwo = computed(() => {
-  return hasAnyArrowPatternIn(activeZaehlung.value?.verkehrsbeziehungen, arrowTwoPatterns);
+  return hasAnyArrowPatternIn(convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen), arrowTwoPatterns);
 })
 
 const isAvailableArrowThree = computed(() => {
-  return hasAnyArrowPatternIn(activeZaehlung.value?.verkehrsbeziehungen, arrowThreePatterns);
+  return hasAnyArrowPatternIn(convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen), arrowThreePatterns);
 })
 
 const isAvailableArrowFour = computed(() => {
-  return hasAnyArrowPatternIn(activeZaehlung.value?.verkehrsbeziehungen, arrowFourPatterns);
+  return hasAnyArrowPatternIn(convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen), arrowFourPatterns);
 })
 
 const isSelectedArrowOne = computed(() => {
@@ -481,8 +482,13 @@ const isSelectedArrowFour = computed(() => {
   return hasAnyArrowPatternIn(chosenOptionsCopy.value.verkehrsbeziehungenQJS, arrowFourPatterns);
 })
 
+function convertToVerkehrsbeziehungenQjs(verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined) {
+  return verkehrsbeziehungen?.map(({ von, nach, strassenseite }) => ({ von, nach, strassenseite })) ?? [];
+}
+
+
 function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungQJS, arrowPattern: VerkehrsbeziehungQJS) {
-  return verkehrsbeziehung.knotenarm === arrowPattern.knotenarm && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
+  return verkehrsbeziehung.von === arrowPattern.von && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
 }
 
 function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungQJS>, arrowPatterns: VerkehrsbeziehungQJS[]) {
@@ -495,10 +501,10 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowOne() {
         .filter(vb => !arrowOnePatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowOnePatterns.find((p) => p.knotenarm === kn);
+      const pattern = arrowOnePatterns.find((p) => p.von === kn);
       if (pattern) {
-        const { knotenarm, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ knotenarm, nach, strassenseite });
+        const { von, nach, strassenseite } = pattern;
+        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
       }
     })
   }
@@ -510,10 +516,10 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowTwo() {
         .filter(vb => !arrowTwoPatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowTwoPatterns.find((p) => p.knotenarm === kn);
+      const pattern = arrowTwoPatterns.find((p) => p.von === kn);
       if (pattern) {
-        const { knotenarm, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ knotenarm, nach, strassenseite });
+        const { von, nach, strassenseite } = pattern;
+        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
       }
     })
   }
@@ -525,10 +531,10 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowThree() {
         .filter(vb => !arrowThreePatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowThreePatterns.find((p) => p.knotenarm === kn);
+      const pattern = arrowThreePatterns.find((p) => p.von === kn);
       if (pattern) {
-        const { knotenarm, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ knotenarm, nach, strassenseite });
+        const { von, nach, strassenseite } = pattern;
+        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
       }
     })
   }
@@ -540,10 +546,10 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowFour() {
         .filter(vb => !arrowFourPatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowFourPatterns.find((p) => p.knotenarm === kn);
+      const pattern = arrowFourPatterns.find((p) => p.von === kn);
       if (pattern) {
-        const { knotenarm, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ knotenarm, nach, strassenseite });
+        const { von, nach, strassenseite } = pattern;
+        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
       }
     })
   }
