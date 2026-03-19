@@ -264,7 +264,7 @@ const options = computed(() => {
     yAxis: [
       {
         type: "value",
-        name: "Fahrzeuge",
+        name: "Anzahl",
         min: 0,
         axisLabel: {
           formatter: function (value: number) {

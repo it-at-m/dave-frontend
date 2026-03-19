@@ -22,6 +22,17 @@ export const zeitblockInfo = new Map<string, KeyVal>([
   [Zeitblock.ZB_06_22, { title: "6 - 22 Uhr", value: Zeitblock.ZB_06_22 }],
 ]);
 
+export const zeitblockOrder = [
+  Zeitblock.ZB_00_24,
+  Zeitblock.ZB_06_22,
+  Zeitblock.ZB_06_19,
+  Zeitblock.ZB_06_10,
+  Zeitblock.ZB_10_15,
+  Zeitblock.ZB_15_19,
+  Zeitblock.ZB_00_06,
+  Zeitblock.ZB_19_24
+];
+
 export const BeschreibungToZeitblock = new Map([...zeitblockInfo].reverse());
 
 export default Zeitblock;
