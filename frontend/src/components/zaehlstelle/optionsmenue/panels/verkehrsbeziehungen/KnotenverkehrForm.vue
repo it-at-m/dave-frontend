@@ -1338,10 +1338,10 @@ const hasAvailableKnotenarme = computed(() => {
 });
 
 const selectedLaengsverkehre = computed(() => {
-  return chosenOptionsCopy.value.laengsverkehr;
+  return chosenOptionsCopy.value.chosenLaengsverkehre;
 });
 const selectedQuerungsverkehre = computed(() => {
-  return chosenOptionsCopy.value.querungsverkehr;
+  return chosenOptionsCopy.value.chosenQuerungsverkehre;
 });
 
 function isLaengsverkehrAvailable(knotenarm: number, richtung: Bewegungsrichtung, strassenseite: Himmelsrichtung): boolean {
@@ -1480,7 +1480,7 @@ function deselectLaengsverkehreOfKnotenarm(knotenarm: number) {
   remove(laengsverkehre, function (laengsverkehr: LaengsverkehrDTO) {
     return laengsverkehr.knotenarm === knotenarm;
   });
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function laengsverkehrForKnotenarmStillSelected(knotenarm: number): boolean {
@@ -1506,7 +1506,7 @@ function selectAllLaengsverkehreForKnotenarmEight() {
   if (isLaengsverkehrAvailable(8,Bewegungsrichtung.AUS, Himmelsrichtung.SW)){
     laengsverkehre.push(createLaengsverkehr(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmSeven() {
@@ -1524,7 +1524,7 @@ function selectAllLaengsverkehreForKnotenarmSeven() {
   if (isLaengsverkehrAvailable(7,Bewegungsrichtung.AUS, Himmelsrichtung.SO)){
     laengsverkehre.push(createLaengsverkehr(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmSix() {
@@ -1542,7 +1542,7 @@ function selectAllLaengsverkehreForKnotenarmSix() {
   if (isLaengsverkehrAvailable(6,Bewegungsrichtung.AUS, Himmelsrichtung.SW)){
     laengsverkehre.push(createLaengsverkehr(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmFive() {
@@ -1560,7 +1560,7 @@ function selectAllLaengsverkehreForKnotenarmFive() {
   if (isLaengsverkehrAvailable(5,Bewegungsrichtung.AUS, Himmelsrichtung.SO)){
     laengsverkehre.push(createLaengsverkehr(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmFour() {
@@ -1578,7 +1578,7 @@ function selectAllLaengsverkehreForKnotenarmFour() {
   if (isLaengsverkehrAvailable(4,Bewegungsrichtung.AUS, Himmelsrichtung.S)){
     laengsverkehre.push(createLaengsverkehr(4, Bewegungsrichtung.AUS, Himmelsrichtung.S));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmThree() {
@@ -1596,7 +1596,7 @@ function selectAllLaengsverkehreForKnotenarmThree() {
   if (isLaengsverkehrAvailable(3,Bewegungsrichtung.AUS, Himmelsrichtung.O)){
     laengsverkehre.push(createLaengsverkehr(3, Bewegungsrichtung.AUS, Himmelsrichtung.O));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmTwo() {
@@ -1614,7 +1614,7 @@ function selectAllLaengsverkehreForKnotenarmTwo() {
   if (isLaengsverkehrAvailable(2,Bewegungsrichtung.AUS, Himmelsrichtung.S)){
     laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.S));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function selectAllLaengsverkehreForKnotenarmOne() {
@@ -1632,7 +1632,7 @@ function selectAllLaengsverkehreForKnotenarmOne() {
   if (isLaengsverkehrAvailable(1,Bewegungsrichtung.AUS, Himmelsrichtung.O)){
     laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.O));
   }
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function deselectQuerungsverkehreOfKnotenarm(knotenarm: number) {
@@ -1640,7 +1640,7 @@ function deselectQuerungsverkehreOfKnotenarm(knotenarm: number) {
   remove(querungsverkehre, function (querungsverkehr: QuerungsverkehrDTO) {
     return querungsverkehr.knotenarm === knotenarm;
   });
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function querungsverkehreForKnotenarmStillSelected(knotenarm: number): boolean {
@@ -1661,7 +1661,7 @@ function selectAllQuerungenForKnotenarmEight() {
   if (isQuerungsverkehrAvailable(8, Himmelsrichtung.SW)) {
     querungsverkehre.push(createQuerungsverkehr(8, Himmelsrichtung.SW));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmSeven() {
@@ -1673,7 +1673,7 @@ function selectAllQuerungenForKnotenarmSeven() {
   if (isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)) {
     querungsverkehre.push(createQuerungsverkehr(7, Himmelsrichtung.SO));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmSix() {
@@ -1685,7 +1685,7 @@ function selectAllQuerungenForKnotenarmSix() {
   if (isQuerungsverkehrAvailable(6, Himmelsrichtung.SW)) {
     querungsverkehre.push(createQuerungsverkehr(6, Himmelsrichtung.SW));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmFive() {
@@ -1697,7 +1697,7 @@ function selectAllQuerungenForKnotenarmFive() {
   if (isQuerungsverkehrAvailable(5, Himmelsrichtung.SO)) {
     querungsverkehre.push(createQuerungsverkehr(5, Himmelsrichtung.SO));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmFour() {
@@ -1709,7 +1709,7 @@ function selectAllQuerungenForKnotenarmFour() {
   if (isQuerungsverkehrAvailable(4, Himmelsrichtung.S)) {
     querungsverkehre.push(createQuerungsverkehr(4, Himmelsrichtung.S));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmThree() {
@@ -1721,7 +1721,7 @@ function selectAllQuerungenForKnotenarmThree() {
   if (isQuerungsverkehrAvailable(3, Himmelsrichtung.O)) {
     querungsverkehre.push(createQuerungsverkehr(3, Himmelsrichtung.O));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmTwo() {
@@ -1733,7 +1733,7 @@ function selectAllQuerungenForKnotenarmTwo() {
   if (isQuerungsverkehrAvailable(2, Himmelsrichtung.S)) {
     querungsverkehre.push(createQuerungsverkehr(2, Himmelsrichtung.S));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function selectAllQuerungenForKnotenarmOne() {
@@ -1745,7 +1745,7 @@ function selectAllQuerungenForKnotenarmOne() {
   if (isQuerungsverkehrAvailable(1, Himmelsrichtung.O)) {
     querungsverkehre.push(createQuerungsverkehr(1, Himmelsrichtung.O));
   }
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function getCursorType(knotenarm: number) {
@@ -1788,7 +1788,7 @@ function handleClickOnLaengsverkehr(
     laengsverkehre.push(clickedLaengsverkehr);
   }
 
-  chosenOptionsCopy.value.laengsverkehr = laengsverkehre;
+  chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
 
 function handleClickOnQuerungsverkehr(
@@ -1812,7 +1812,7 @@ function handleClickOnQuerungsverkehr(
     querungsverkehre.push(clickedQuerungsverkehr);
   }
 
-  chosenOptionsCopy.value.querungsverkehr = querungsverkehre;
+  chosenOptionsCopy.value.chosenQuerungsverkehre = querungsverkehre;
 }
 
 function findIndexInSelectedLaengsverkehreForClickedLaengsverkehr(

@@ -467,19 +467,19 @@ const isAvailableArrowFour = computed(() => {
 })
 
 const isSelectedArrowOne = computed(() => {
-  return hasAnyArrowPatternIn(chosenOptionsCopy.value.verkehrsbeziehungenQJS, arrowOnePatterns);
+  return hasAnyArrowPatternIn(chosenOptionsCopy.value.chosenVerkehrsbeziehungen, arrowOnePatterns);
 })
 
 const isSelectedArrowTwo = computed(() => {
-  return hasAnyArrowPatternIn(chosenOptionsCopy.value.verkehrsbeziehungenQJS, arrowTwoPatterns);
+  return hasAnyArrowPatternIn(chosenOptionsCopy.value.chosenVerkehrsbeziehungen, arrowTwoPatterns);
 })
 
 const isSelectedArrowThree = computed(() => {
-  return hasAnyArrowPatternIn(chosenOptionsCopy.value.verkehrsbeziehungenQJS, arrowThreePatterns);
+  return hasAnyArrowPatternIn(chosenOptionsCopy.value.chosenVerkehrsbeziehungen, arrowThreePatterns);
 })
 
 const isSelectedArrowFour = computed(() => {
-  return hasAnyArrowPatternIn(chosenOptionsCopy.value.verkehrsbeziehungenQJS, arrowFourPatterns);
+  return hasAnyArrowPatternIn(chosenOptionsCopy.value.chosenVerkehrsbeziehungen, arrowFourPatterns);
 })
 
 function convertToVerkehrsbeziehungenQjs(verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined) {
@@ -497,14 +497,14 @@ function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungDTO>, 
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowOne() {
   if (isSelectedArrowOne.value) {
-    chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
+    chosenOptionsCopy.value.chosenVerkehrsbeziehungen = chosenOptionsCopy.value.chosenVerkehrsbeziehungen
         .filter(vb => !arrowOnePatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowOnePatterns.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
+        chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({ von, nach, strassenseite });
       }
     })
   }
@@ -512,14 +512,14 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowOne() {
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowTwo() {
   if (isSelectedArrowTwo.value) {
-    chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
+    chosenOptionsCopy.value.chosenVerkehrsbeziehungen = chosenOptionsCopy.value.chosenVerkehrsbeziehungen
         .filter(vb => !arrowTwoPatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowTwoPatterns.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
+        chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({ von, nach, strassenseite });
       }
     })
   }
@@ -527,14 +527,14 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowTwo() {
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowThree() {
   if (isSelectedArrowThree.value) {
-    chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
+    chosenOptionsCopy.value.chosenVerkehrsbeziehungen = chosenOptionsCopy.value.chosenVerkehrsbeziehungen
         .filter(vb => !arrowThreePatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowThreePatterns.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
+        chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({ von, nach, strassenseite });
       }
     })
   }
@@ -542,14 +542,14 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowThree() {
 
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowFour() {
   if (isSelectedArrowFour.value) {
-    chosenOptionsCopy.value.verkehrsbeziehungenQJS = chosenOptionsCopy.value.verkehrsbeziehungenQJS
+    chosenOptionsCopy.value.chosenVerkehrsbeziehungen = chosenOptionsCopy.value.chosenVerkehrsbeziehungen
         .filter(vb => !arrowFourPatterns.some(p => matchesArrowPattern(vb, p)));
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
       const pattern = arrowFourPatterns.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
-        chosenOptionsCopy.value.verkehrsbeziehungenQJS.push({ von, nach, strassenseite });
+        chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({ von, nach, strassenseite });
       }
     })
   }
