@@ -14,9 +14,9 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
@@ -219,7 +219,6 @@ export default class DefaultObjectCreator {
       createdTime: "",
       laengsverkehr: [],
       querungsverkehr: [],
-
     };
   }
 
@@ -270,8 +269,7 @@ export default class DefaultObjectCreator {
       zeitreiheGesamt: false,
       chosenLaengsverkehre: [],
       chosenQuerungsverkehre: [],
-      chosenVerkehrsbeziehungen: []
-
+      chosenVerkehrsbeziehungen: [],
     };
   }
 

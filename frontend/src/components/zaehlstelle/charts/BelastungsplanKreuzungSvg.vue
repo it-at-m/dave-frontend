@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
@@ -26,8 +26,8 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
+import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
@@ -60,9 +60,11 @@ const fahrtrichtungWidth = ref(0);
 const highestVerkehrsbeziehungsValue = ref(0);
 const lowestVerkehrsbeziehungsValue = ref(1000000);
 
-const verkehrsbeziehungsTypen = ref<Map<number, BelastungsplanVerkehrsbeziehung[]>>(
-  new Map<number, BelastungsplanVerkehrsbeziehung[]>()
-) as Ref<Map<number, BelastungsplanVerkehrsbeziehung[]>>;
+const verkehrsbeziehungsTypen = ref<
+  Map<number, BelastungsplanVerkehrsbeziehung[]>
+>(new Map<number, BelastungsplanVerkehrsbeziehung[]>()) as Ref<
+  Map<number, BelastungsplanVerkehrsbeziehung[]>
+>;
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
   new Map<number, BelastungsplanKnotenarm>()
 ) as Ref<Map<number, BelastungsplanKnotenarm>>;
@@ -626,13 +628,15 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
       belastungsplanMethods.anzeigeWerte(knotenarmNach, data);
 
       // Verkehrsbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
-      const belastungsplanVerkehrsbeziehungen = verkehrsbeziehungsTypen.value.get(
-        fb.von
-      ) as BelastungsplanVerkehrsbeziehung[];
-      const belastungsplanVerkehrsbeziehung = new BelastungsplanVerkehrsbeziehung(
-        belastungsplanMethods.calcVerkehrsbeziehungstype(fb.von, fb.nach),
-        fb.nach
-      ) as BelastungsplanVerkehrsbeziehung;
+      const belastungsplanVerkehrsbeziehungen =
+        verkehrsbeziehungsTypen.value.get(
+          fb.von
+        ) as BelastungsplanVerkehrsbeziehung[];
+      const belastungsplanVerkehrsbeziehung =
+        new BelastungsplanVerkehrsbeziehung(
+          belastungsplanMethods.calcVerkehrsbeziehungstype(fb.von, fb.nach),
+          fb.nach
+        ) as BelastungsplanVerkehrsbeziehung;
       belastungsplanVerkehrsbeziehungen.push(belastungsplanVerkehrsbeziehung);
 
       const v = fb.von - 1;

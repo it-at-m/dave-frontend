@@ -1,4 +1,3 @@
-
 export default interface VerkehrsbeziehungDTO {
   von: number;
   nach: number;

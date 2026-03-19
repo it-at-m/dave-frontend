@@ -65,8 +65,14 @@
               id="node8_south_west"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW)"
-                  id="node8_south_west_north_west"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    8,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.SW
+                  )
+                "
+                id="node8_south_west_north_west"
                 d="m 621.66642,364.92523 v -194.445 h -11.111 l 19.443,-38.888 19.446,38.888 h -11.111 v 194.445 z"
                 stroke="none"
                 :style="{ cursor: 'pointer' }"
@@ -86,8 +92,14 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW)"
-                  id="node8_south_west_south_east"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    8,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.SW
+                  )
+                "
+                id="node8_south_west_south_east"
                 d="m 599.44453,131.59223 v 194.445 h 11.111 l -19.444,38.888 -19.445,-38.888 h 11.111 v -194.445 z"
                 stroke="none"
                 :style="{ cursor: 'pointer' }"
@@ -112,7 +124,13 @@
               id="node8_north_east"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    8,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.NO
+                  )
+                "
                 id="node8_north_east_north_west"
                 d="m 800.55532,364.92563 v -194.4453 h -11.111 l 19.444,-38.8881 19.445,38.8881 h -11.111 v 194.4453 z"
                 stroke="none"
@@ -133,7 +151,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    8,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.NO
+                  )
+                "
                 id="node8_north_east_south_east"
                 d="m 778.33343,131.59223 v 194.445 h 11.111 l -19.443,38.888 -19.446,-38.888 h 11.111 v -194.445 z"
                 stroke="none"
@@ -159,7 +183,7 @@
               id="node8_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.NO)"
+                v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.NO)"
                 id="node8_crossing_north_east"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 stroke="none"
@@ -168,7 +192,7 @@
                 @click="handleClickOnQuerungsverkehr(8, Himmelsrichtung.NO)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.SW)"
+                v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.SW)"
                 id="node8_crossing_south_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 stroke="none"
@@ -221,7 +245,13 @@
               id="node7_south_east"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    7,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.SO
+                  )
+                "
                 id="node7_south_east_south_west"
                 d="m 778.33336,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
                 stroke="none"
@@ -242,7 +272,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    7,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.SO
+                  )
+                "
                 id="node7_south_east_north_east"
                 d="m 800.55599,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
                 stroke="none"
@@ -268,7 +304,13 @@
               id="node7_north_west"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    7,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.NW
+                  )
+                "
                 id="node7_north_west_south_west"
                 d="m 599.44446,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
                 stroke="none"
@@ -289,7 +331,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    7,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.NW
+                  )
+                "
                 id="node7_north_west_north_east"
                 d="m 621.66709,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
                 stroke="none"
@@ -315,7 +363,7 @@
               id="node7_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.NW)"
+                v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.NW)"
                 id="node7_crossing_north_west"
                 d="M 808.33025,1077.7756 H 613.88531 v 11.1116 l -38.8884,-19.4435 38.8884,-19.4454 v 11.1105 h 194.44494 z"
                 stroke="none"
@@ -324,7 +372,7 @@
                 @click="handleClickOnQuerungsverkehr(7, Himmelsrichtung.NW)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)"
+                v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)"
                 id="node7_crossing_south_east"
                 d="m 591.66231,1099.9989 h 194.44506 v -11.1112 l 38.8883,19.4435 -38.8883,19.4454 v -11.1111 H 591.66231 Z"
                 stroke="none"
@@ -378,7 +426,13 @@
               id="node6_north_east"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    6,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.NO
+                  )
+                "
                 id="node6_north_east_south_east"
                 d="m 621.66667,364.92553 v -194.445 h -11.1111 l 19.4435,-38.888 19.4454,38.888 h -11.1111 v 194.445 z"
                 stroke="none"
@@ -399,7 +453,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    6,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.NO
+                  )
+                "
                 id="node6_north_east_north_west"
                 d="m 599.44448,131.59253 v 194.445 h 11.1111 l -19.4434,38.888 -19.4455,-38.888 h 11.1111 v -194.445 z"
                 stroke="none"
@@ -425,7 +485,13 @@
               id="node6_south_west"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    6,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.SW
+                  )
+                "
                 id="node6_south_west_south_east"
                 d="m 800.55557,364.92553 v -194.445 h -11.1111 l 19.4434,-38.888 19.4455,38.888 h -11.1111 v 194.445 z"
                 stroke="none"
@@ -446,7 +512,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    6,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.SW
+                  )
+                "
                 id="node6_south_west_north_west"
                 d="m 778.33338,131.59253 v 194.445 h 11.1111 l -19.4435,38.888 -19.4454,-38.888 h 11.1111 v -194.445 z"
                 stroke="none"
@@ -472,7 +544,7 @@
               id="node6_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.SW)"
+                v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.SW)"
                 id="node6_crossing_south_west"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 stroke="none"
@@ -481,7 +553,7 @@
                 @click="handleClickOnQuerungsverkehr(6, Himmelsrichtung.SW)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.NO)"
+                v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.NO)"
                 id="node6_crossing_north_east"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 stroke="none"
@@ -534,7 +606,13 @@
               id="node5_north_west"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    5,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.NW
+                  )
+                "
                 id="node5_north_west_north_east"
                 d="M 621.66709,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
                 stroke="none"
@@ -555,7 +633,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    5,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.NW
+                  )
+                "
                 id="node5_north_west_south_west"
                 d="m 599.44446,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
                 stroke="none"
@@ -581,7 +665,13 @@
               id="node5_south_east"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    5,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.SO
+                  )
+                "
                 id="node5_south_east_north_east"
                 d="M 800.55599,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
                 stroke="none"
@@ -602,7 +692,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    5,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.SO
+                  )
+                "
                 id="node5_south_east_south_west"
                 d="m 778.33336,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
                 stroke="none"
@@ -628,7 +724,7 @@
               id="node5_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.SO)"
+                v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.SO)"
                 id="node5_crossing_south_east"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 stroke="none"
@@ -637,7 +733,7 @@
                 @click="handleClickOnQuerungsverkehr(5, Himmelsrichtung.SO)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.NW)"
+                v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.NW)"
                 id="node5_crossing_north_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 stroke="none"
@@ -698,7 +794,13 @@
               id="node4_south"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(4, Bewegungsrichtung.AUS, Himmelsrichtung.S)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    4,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.S
+                  )
+                "
                 id="node4_south_west"
                 d="m 621.66642,364.92523 v -194.445 h -11.111 l 19.443,-38.888 19.446,38.888 h -11.111 v 194.445 z"
                 stroke="none"
@@ -719,7 +821,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(4, Bewegungsrichtung.EIN, Himmelsrichtung.S)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    4,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.S
+                  )
+                "
                 id="node4_south_east"
                 d="m 599.44453,131.59223 v 194.445 h 11.111 l -19.444,38.888 -19.445,-38.888 h 11.111 v -194.445 z"
                 stroke="none"
@@ -745,7 +853,13 @@
               id="node4_north"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(4, Bewegungsrichtung.AUS, Himmelsrichtung.N)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    4,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.N
+                  )
+                "
                 id="node4_north_west"
                 d="m 800.55532,364.92563 v -194.4453 h -11.111 l 19.444,-38.8881 19.445,38.8881 h -11.111 v 194.4453 z"
                 stroke="none"
@@ -766,7 +880,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(4, Bewegungsrichtung.EIN, Himmelsrichtung.N)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    4,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.N
+                  )
+                "
                 id="node4_north_east"
                 d="m 778.33343,131.59223 v 194.445 h 11.111 l -19.443,38.888 -19.446,-38.888 h 11.111 v -194.445 z"
                 stroke="none"
@@ -792,7 +912,7 @@
               id="node4_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.N)"
+                v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.N)"
                 id="node4_crossing_north"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 stroke="none"
@@ -801,7 +921,7 @@
                 @click="handleClickOnQuerungsverkehr(4, Himmelsrichtung.N)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.S)"
+                v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.S)"
                 id="node4_crossing_south"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 stroke="none"
@@ -855,7 +975,13 @@
               id="node3_east"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(3, Bewegungsrichtung.AUS, Himmelsrichtung.O)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    3,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.O
+                  )
+                "
                 id="node3_east_south"
                 d="m 778.33336,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
                 stroke="none"
@@ -876,7 +1002,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(3, Bewegungsrichtung.EIN, Himmelsrichtung.O)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    3,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.O
+                  )
+                "
                 id="node3_east_north"
                 d="m 800.55599,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
                 stroke="none"
@@ -902,7 +1034,13 @@
               id="node3_west"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(3, Bewegungsrichtung.AUS, Himmelsrichtung.W)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    3,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.W
+                  )
+                "
                 id="node3_west_south"
                 d="m 599.44446,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
                 stroke="none"
@@ -923,7 +1061,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(3, Bewegungsrichtung.EIN, Himmelsrichtung.W)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    3,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.W
+                  )
+                "
                 id="node3_west_north"
                 d="m 621.66709,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
                 stroke="none"
@@ -949,7 +1093,7 @@
               id="node3_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.W)"
+                v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.W)"
                 id="node3_crossing_west"
                 d="M 816.66669,1077.7774 H 622.22175 v 11.1115 l -38.8884,-19.4435 38.8884,-19.4454 v 11.1106 h 194.44494 z"
                 stroke="none"
@@ -958,7 +1102,7 @@
                 @click="handleClickOnQuerungsverkehr(3, Himmelsrichtung.W)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.O)"
+                v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.O)"
                 id="node3_crossing_east"
                 d="m 583.33335,1100 h 194.44503 v -11.1111 l 38.88831,19.4435 -38.88831,19.4454 v -11.1111 H 583.33335 Z"
                 stroke="none"
@@ -1013,7 +1157,13 @@
               id="node2_north"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(2, Bewegungsrichtung.AUS, Himmelsrichtung.N)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    2,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.N
+                  )
+                "
                 id="node2_north_east"
                 d="m 621.66667,364.92553 v -194.445 h -11.1111 l 19.4435,-38.888 19.4454,38.888 h -11.1111 v 194.445 z"
                 stroke="none"
@@ -1034,7 +1184,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(2, Bewegungsrichtung.EIN, Himmelsrichtung.N)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    2,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.N
+                  )
+                "
                 id="node2_north_west"
                 d="m 599.44448,131.59253 v 194.445 h 11.1111 l -19.4434,38.888 -19.4455,-38.888 h 11.1111 v -194.445 z"
                 stroke="none"
@@ -1060,7 +1216,13 @@
               id="node2_south"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(2, Bewegungsrichtung.AUS, Himmelsrichtung.S)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    2,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.S
+                  )
+                "
                 id="node2_south_east"
                 d="m 800.55557,364.92553 v -194.445 h -11.1111 l 19.4434,-38.888 19.4455,38.888 h -11.1111 v 194.445 z"
                 stroke="none"
@@ -1081,7 +1243,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(2, Bewegungsrichtung.EIN, Himmelsrichtung.S)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    2,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.S
+                  )
+                "
                 id="node2_south_west"
                 d="m 778.33338,131.59253 v 194.445 h 11.1111 l -19.4435,38.888 -19.4454,-38.888 h 11.1111 v -194.445 z"
                 stroke="none"
@@ -1107,7 +1275,7 @@
               id="node2_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.S)"
+                v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.S)"
                 id="node2_crossing_south"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 stroke="none"
@@ -1116,7 +1284,7 @@
                 @click="handleClickOnQuerungsverkehr(2, Himmelsrichtung.S)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.N)"
+                v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.N)"
                 id="node2_crossing_north"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 stroke="none"
@@ -1170,7 +1338,13 @@
               id="node1_west"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(1, Bewegungsrichtung.AUS, Himmelsrichtung.W)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    1,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.W
+                  )
+                "
                 id="node1_west_north"
                 d="M 621.66709,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
                 stroke="none"
@@ -1191,7 +1365,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(1, Bewegungsrichtung.EIN, Himmelsrichtung.W)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    1,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.W
+                  )
+                "
                 id="node1_west_south"
                 d="m 599.44446,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
                 stroke="none"
@@ -1217,7 +1397,13 @@
               id="node1_east"
             >
               <path
-                  v-if="isLaengsverkehrAvailable(1, Bewegungsrichtung.AUS, Himmelsrichtung.O)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    1,
+                    Bewegungsrichtung.AUS,
+                    Himmelsrichtung.O
+                  )
+                "
                 id="node1_east_north"
                 d="M 800.55599,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
                 stroke="none"
@@ -1238,7 +1424,13 @@
                 "
               />
               <path
-                  v-if="isLaengsverkehrAvailable(1, Bewegungsrichtung.EIN, Himmelsrichtung.O)"
+                v-if="
+                  isLaengsverkehrAvailable(
+                    1,
+                    Bewegungsrichtung.EIN,
+                    Himmelsrichtung.O
+                  )
+                "
                 id="node1_east_south"
                 d="m 778.33336,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
                 stroke="none"
@@ -1264,7 +1456,7 @@
               id="node1_crossing"
             >
               <path
-                  v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.O)"
+                v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.O)"
                 id="node1_crossing_east"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 stroke="none"
@@ -1273,7 +1465,7 @@
                 @click="handleClickOnQuerungsverkehr(1, Himmelsrichtung.O)"
               />
               <path
-                  v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.W)"
+                v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.W)"
                 id="node1_crossing_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 stroke="none"
@@ -1298,19 +1490,19 @@
 </template>
 
 <script setup lang="ts">
+import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import {cloneDeep, isEmpty, remove, toArray} from "lodash";
-import {computed} from "vue";
+import { cloneDeep, isEmpty, remove, toArray } from "lodash";
+import { computed } from "vue";
 
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehlart from "@/types/enum/Zaehlart";
-import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 
 interface Props {
   height: string;
@@ -1331,7 +1523,9 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 });
 
 const availableKnotenarme = computed(() => {
-  return (activeZaehlung.value.knotenarme ?? []).map((arm: LadeKnotenarmDTO) => arm.nummer);
+  return (activeZaehlung.value.knotenarme ?? []).map(
+    (arm: LadeKnotenarmDTO) => arm.nummer
+  );
 });
 const hasAvailableKnotenarme = computed(() => {
   return availableKnotenarme.value.length > 0;
@@ -1344,17 +1538,26 @@ const selectedQuerungsverkehre = computed(() => {
   return chosenOptionsCopy.value.chosenQuerungsverkehre;
 });
 
-function isLaengsverkehrAvailable(knotenarm: number, richtung: Bewegungsrichtung, strassenseite: Himmelsrichtung): boolean {
-  return (activeZaehlung.value.laengsverkehr ?? []).some((element) =>
-        element.knotenarm === knotenarm &&
-        element.richtung === richtung &&
-        element.strassenseite === strassenseite
+function isLaengsverkehrAvailable(
+  knotenarm: number,
+  richtung: Bewegungsrichtung,
+  strassenseite: Himmelsrichtung
+): boolean {
+  return (activeZaehlung.value.laengsverkehr ?? []).some(
+    (element) =>
+      element.knotenarm === knotenarm &&
+      element.richtung === richtung &&
+      element.strassenseite === strassenseite
   );
 }
 
-function isQuerungsverkehrAvailable(knotenarm: number, richtung: Himmelsrichtung): boolean {
-  return (activeZaehlung.value.querungsverkehr ?? []).some((element) =>
-    element.knotenarm === knotenarm && element.richtung === richtung
+function isQuerungsverkehrAvailable(
+  knotenarm: number,
+  richtung: Himmelsrichtung
+): boolean {
+  return (activeZaehlung.value.querungsverkehr ?? []).some(
+    (element) =>
+      element.knotenarm === knotenarm && element.richtung === richtung
   );
 }
 
@@ -1494,17 +1697,25 @@ function laengsverkehrForKnotenarmStillSelected(knotenarm: number): boolean {
 function selectAllLaengsverkehreForKnotenarmEight() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(8,Bewegungsrichtung.EIN, Himmelsrichtung.NO)){
-    laengsverkehre.push(createLaengsverkehr(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO));
+  if (isLaengsverkehrAvailable(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO)
+    );
   }
-  if (isLaengsverkehrAvailable(8,Bewegungsrichtung.AUS, Himmelsrichtung.NO)){
-    laengsverkehre.push(createLaengsverkehr(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO));
+  if (isLaengsverkehrAvailable(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO)
+    );
   }
-  if (isLaengsverkehrAvailable(8,Bewegungsrichtung.EIN, Himmelsrichtung.SW)){
-    laengsverkehre.push(createLaengsverkehr(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW));
+  if (isLaengsverkehrAvailable(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW)
+    );
   }
-  if (isLaengsverkehrAvailable(8,Bewegungsrichtung.AUS, Himmelsrichtung.SW)){
-    laengsverkehre.push(createLaengsverkehr(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW));
+  if (isLaengsverkehrAvailable(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1512,17 +1723,25 @@ function selectAllLaengsverkehreForKnotenarmEight() {
 function selectAllLaengsverkehreForKnotenarmSeven() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(7,Bewegungsrichtung.EIN, Himmelsrichtung.NW)){
-    laengsverkehre.push(createLaengsverkehr(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW));
+  if (isLaengsverkehrAvailable(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW)
+    );
   }
-  if (isLaengsverkehrAvailable(7,Bewegungsrichtung.AUS, Himmelsrichtung.NW)){
-    laengsverkehre.push(createLaengsverkehr(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW));
+  if (isLaengsverkehrAvailable(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW)
+    );
   }
-  if (isLaengsverkehrAvailable(7,Bewegungsrichtung.EIN, Himmelsrichtung.SO)){
-    laengsverkehre.push(createLaengsverkehr(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO));
+  if (isLaengsverkehrAvailable(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO)
+    );
   }
-  if (isLaengsverkehrAvailable(7,Bewegungsrichtung.AUS, Himmelsrichtung.SO)){
-    laengsverkehre.push(createLaengsverkehr(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO));
+  if (isLaengsverkehrAvailable(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1530,17 +1749,25 @@ function selectAllLaengsverkehreForKnotenarmSeven() {
 function selectAllLaengsverkehreForKnotenarmSix() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(6,Bewegungsrichtung.EIN, Himmelsrichtung.NO)){
-    laengsverkehre.push(createLaengsverkehr(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO));
+  if (isLaengsverkehrAvailable(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO)
+    );
   }
-  if (isLaengsverkehrAvailable(6,Bewegungsrichtung.AUS, Himmelsrichtung.NO)){
-    laengsverkehre.push(createLaengsverkehr(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO));
+  if (isLaengsverkehrAvailable(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO)
+    );
   }
-  if (isLaengsverkehrAvailable(6,Bewegungsrichtung.EIN, Himmelsrichtung.SW)){
-    laengsverkehre.push(createLaengsverkehr(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW));
+  if (isLaengsverkehrAvailable(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW)
+    );
   }
-  if (isLaengsverkehrAvailable(6,Bewegungsrichtung.AUS, Himmelsrichtung.SW)){
-    laengsverkehre.push(createLaengsverkehr(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW));
+  if (isLaengsverkehrAvailable(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1548,17 +1775,25 @@ function selectAllLaengsverkehreForKnotenarmSix() {
 function selectAllLaengsverkehreForKnotenarmFive() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(5,Bewegungsrichtung.EIN, Himmelsrichtung.NW)){
-    laengsverkehre.push(createLaengsverkehr(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW));
+  if (isLaengsverkehrAvailable(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW)
+    );
   }
-  if (isLaengsverkehrAvailable(5,Bewegungsrichtung.AUS, Himmelsrichtung.NW)){
-    laengsverkehre.push(createLaengsverkehr(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW));
+  if (isLaengsverkehrAvailable(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW)) {
+    laengsverkehre.push(
+      createLaengsverkehr(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW)
+    );
   }
-  if (isLaengsverkehrAvailable(5,Bewegungsrichtung.EIN, Himmelsrichtung.SO)){
-    laengsverkehre.push(createLaengsverkehr(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO));
+  if (isLaengsverkehrAvailable(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO)
+    );
   }
-  if (isLaengsverkehrAvailable(5,Bewegungsrichtung.AUS, Himmelsrichtung.SO)){
-    laengsverkehre.push(createLaengsverkehr(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO));
+  if (isLaengsverkehrAvailable(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO)) {
+    laengsverkehre.push(
+      createLaengsverkehr(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1566,17 +1801,25 @@ function selectAllLaengsverkehreForKnotenarmFive() {
 function selectAllLaengsverkehreForKnotenarmFour() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(4,Bewegungsrichtung.EIN, Himmelsrichtung.N)){
-    laengsverkehre.push(createLaengsverkehr(4, Bewegungsrichtung.EIN, Himmelsrichtung.N));
+  if (isLaengsverkehrAvailable(4, Bewegungsrichtung.EIN, Himmelsrichtung.N)) {
+    laengsverkehre.push(
+      createLaengsverkehr(4, Bewegungsrichtung.EIN, Himmelsrichtung.N)
+    );
   }
-  if (isLaengsverkehrAvailable(4,Bewegungsrichtung.AUS, Himmelsrichtung.N)){
-    laengsverkehre.push(createLaengsverkehr(4, Bewegungsrichtung.AUS, Himmelsrichtung.N));
+  if (isLaengsverkehrAvailable(4, Bewegungsrichtung.AUS, Himmelsrichtung.N)) {
+    laengsverkehre.push(
+      createLaengsverkehr(4, Bewegungsrichtung.AUS, Himmelsrichtung.N)
+    );
   }
-  if (isLaengsverkehrAvailable(4,Bewegungsrichtung.EIN, Himmelsrichtung.S)){
-    laengsverkehre.push(createLaengsverkehr(4, Bewegungsrichtung.EIN, Himmelsrichtung.S));
+  if (isLaengsverkehrAvailable(4, Bewegungsrichtung.EIN, Himmelsrichtung.S)) {
+    laengsverkehre.push(
+      createLaengsverkehr(4, Bewegungsrichtung.EIN, Himmelsrichtung.S)
+    );
   }
-  if (isLaengsverkehrAvailable(4,Bewegungsrichtung.AUS, Himmelsrichtung.S)){
-    laengsverkehre.push(createLaengsverkehr(4, Bewegungsrichtung.AUS, Himmelsrichtung.S));
+  if (isLaengsverkehrAvailable(4, Bewegungsrichtung.AUS, Himmelsrichtung.S)) {
+    laengsverkehre.push(
+      createLaengsverkehr(4, Bewegungsrichtung.AUS, Himmelsrichtung.S)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1584,17 +1827,25 @@ function selectAllLaengsverkehreForKnotenarmFour() {
 function selectAllLaengsverkehreForKnotenarmThree() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(3,Bewegungsrichtung.EIN, Himmelsrichtung.W)){
-    laengsverkehre.push(createLaengsverkehr(3, Bewegungsrichtung.EIN, Himmelsrichtung.W));
+  if (isLaengsverkehrAvailable(3, Bewegungsrichtung.EIN, Himmelsrichtung.W)) {
+    laengsverkehre.push(
+      createLaengsverkehr(3, Bewegungsrichtung.EIN, Himmelsrichtung.W)
+    );
   }
-  if (isLaengsverkehrAvailable(3,Bewegungsrichtung.AUS, Himmelsrichtung.W)){
-    laengsverkehre.push(createLaengsverkehr(3, Bewegungsrichtung.AUS, Himmelsrichtung.W));
+  if (isLaengsverkehrAvailable(3, Bewegungsrichtung.AUS, Himmelsrichtung.W)) {
+    laengsverkehre.push(
+      createLaengsverkehr(3, Bewegungsrichtung.AUS, Himmelsrichtung.W)
+    );
   }
-  if (isLaengsverkehrAvailable(3,Bewegungsrichtung.EIN, Himmelsrichtung.O)){
-    laengsverkehre.push(createLaengsverkehr(3, Bewegungsrichtung.EIN, Himmelsrichtung.O));
+  if (isLaengsverkehrAvailable(3, Bewegungsrichtung.EIN, Himmelsrichtung.O)) {
+    laengsverkehre.push(
+      createLaengsverkehr(3, Bewegungsrichtung.EIN, Himmelsrichtung.O)
+    );
   }
-  if (isLaengsverkehrAvailable(3,Bewegungsrichtung.AUS, Himmelsrichtung.O)){
-    laengsverkehre.push(createLaengsverkehr(3, Bewegungsrichtung.AUS, Himmelsrichtung.O));
+  if (isLaengsverkehrAvailable(3, Bewegungsrichtung.AUS, Himmelsrichtung.O)) {
+    laengsverkehre.push(
+      createLaengsverkehr(3, Bewegungsrichtung.AUS, Himmelsrichtung.O)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1602,17 +1853,25 @@ function selectAllLaengsverkehreForKnotenarmThree() {
 function selectAllLaengsverkehreForKnotenarmTwo() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(2,Bewegungsrichtung.EIN, Himmelsrichtung.N)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.EIN, Himmelsrichtung.N));
+  if (isLaengsverkehrAvailable(2, Bewegungsrichtung.EIN, Himmelsrichtung.N)) {
+    laengsverkehre.push(
+      createLaengsverkehr(2, Bewegungsrichtung.EIN, Himmelsrichtung.N)
+    );
   }
-  if (isLaengsverkehrAvailable(2,Bewegungsrichtung.AUS, Himmelsrichtung.N)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.N));
+  if (isLaengsverkehrAvailable(2, Bewegungsrichtung.AUS, Himmelsrichtung.N)) {
+    laengsverkehre.push(
+      createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.N)
+    );
   }
-  if (isLaengsverkehrAvailable(2,Bewegungsrichtung.EIN, Himmelsrichtung.S)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.EIN, Himmelsrichtung.S));
+  if (isLaengsverkehrAvailable(2, Bewegungsrichtung.EIN, Himmelsrichtung.S)) {
+    laengsverkehre.push(
+      createLaengsverkehr(2, Bewegungsrichtung.EIN, Himmelsrichtung.S)
+    );
   }
-  if (isLaengsverkehrAvailable(2,Bewegungsrichtung.AUS, Himmelsrichtung.S)){
-    laengsverkehre.push(createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.S));
+  if (isLaengsverkehrAvailable(2, Bewegungsrichtung.AUS, Himmelsrichtung.S)) {
+    laengsverkehre.push(
+      createLaengsverkehr(2, Bewegungsrichtung.AUS, Himmelsrichtung.S)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1620,17 +1879,25 @@ function selectAllLaengsverkehreForKnotenarmTwo() {
 function selectAllLaengsverkehreForKnotenarmOne() {
   const laengsverkehre = toArray(cloneDeep(selectedLaengsverkehre.value));
 
-  if (isLaengsverkehrAvailable(1,Bewegungsrichtung.EIN, Himmelsrichtung.W)){
-    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.EIN, Himmelsrichtung.W));
+  if (isLaengsverkehrAvailable(1, Bewegungsrichtung.EIN, Himmelsrichtung.W)) {
+    laengsverkehre.push(
+      createLaengsverkehr(1, Bewegungsrichtung.EIN, Himmelsrichtung.W)
+    );
   }
-  if (isLaengsverkehrAvailable(1,Bewegungsrichtung.AUS, Himmelsrichtung.W)){
-    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.W));
+  if (isLaengsverkehrAvailable(1, Bewegungsrichtung.AUS, Himmelsrichtung.W)) {
+    laengsverkehre.push(
+      createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.W)
+    );
   }
-  if (isLaengsverkehrAvailable(1,Bewegungsrichtung.EIN, Himmelsrichtung.O)){
-    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.EIN, Himmelsrichtung.O));
+  if (isLaengsverkehrAvailable(1, Bewegungsrichtung.EIN, Himmelsrichtung.O)) {
+    laengsverkehre.push(
+      createLaengsverkehr(1, Bewegungsrichtung.EIN, Himmelsrichtung.O)
+    );
   }
-  if (isLaengsverkehrAvailable(1,Bewegungsrichtung.AUS, Himmelsrichtung.O)){
-    laengsverkehre.push(createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.O));
+  if (isLaengsverkehrAvailable(1, Bewegungsrichtung.AUS, Himmelsrichtung.O)) {
+    laengsverkehre.push(
+      createLaengsverkehr(1, Bewegungsrichtung.AUS, Himmelsrichtung.O)
+    );
   }
   chosenOptionsCopy.value.chosenLaengsverkehre = laengsverkehre;
 }
@@ -1818,8 +2085,7 @@ function handleClickOnQuerungsverkehr(
 function findIndexInSelectedLaengsverkehreForClickedLaengsverkehr(
   clickedLaengsverkehr: LaengsverkehrDTO
 ) {
-  if (!selectedLaengsverkehre.value)
-    return -1;
+  if (!selectedLaengsverkehre.value) return -1;
   return selectedLaengsverkehre.value.findIndex(
     (laengsverkehr: LaengsverkehrDTO) => {
       return (
@@ -1834,8 +2100,7 @@ function findIndexInSelectedLaengsverkehreForClickedLaengsverkehr(
 function findIndexInSelectedQuerungsverkehreForClickedQuerungsverkehr(
   clickedQuerungsverkehr: QuerungsverkehrDTO
 ) {
-  if (!selectedQuerungsverkehre.value)
-    return -1;
+  if (!selectedQuerungsverkehre.value) return -1;
   return selectedQuerungsverkehre.value.findIndex(
     (querungsverkehr: QuerungsverkehrDTO) => {
       return (
@@ -1867,7 +2132,6 @@ function createQuerungsverkehr(
   querungsverkehr.richtung = richtung;
   return querungsverkehr;
 }
-
 </script>
 <style scoped>
 .prevent-select {

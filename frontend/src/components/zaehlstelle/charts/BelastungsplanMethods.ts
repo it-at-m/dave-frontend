@@ -419,16 +419,19 @@ export function useBelastungsplanMethods() {
   }
 
   function fahrtrichtungVon(
-      knotenarmnummer: number,
-      canvas: SVG.Svg,
-      knotenarme: Map<number, BelastungsplanKnotenarm>,
-      verkehrsbeziehungsTypen: Map<number, Array<BelastungsplanVerkehrsbeziehung>>,
-      prozentWerte: Map<number, boolean>,
-      lineWidth: number,
-      line: number,
-      documentationGroup: SVG.G,
-      lineFactor: number,
-      schema: boolean
+    knotenarmnummer: number,
+    canvas: SVG.Svg,
+    knotenarme: Map<number, BelastungsplanKnotenarm>,
+    verkehrsbeziehungsTypen: Map<
+      number,
+      Array<BelastungsplanVerkehrsbeziehung>
+    >,
+    prozentWerte: Map<number, boolean>,
+    lineWidth: number,
+    line: number,
+    documentationGroup: SVG.G,
+    lineFactor: number,
+    schema: boolean
   ): SVG.G {
     // Es wird alles gruppiert, damit wir es später einfach so drehen können, dass der Knotenarm richtig sitzt.
     const knotenarmGroup = canvas.group() as SVG.G;

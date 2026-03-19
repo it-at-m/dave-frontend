@@ -1,8 +1,9 @@
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import Zaehldauer from "@/types/enum/Zaehldauer";
 
 export default interface ZaehlstelleOptionsDTO {
   zaehldauer: Zaehldauer;
