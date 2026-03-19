@@ -268,9 +268,9 @@ export default class DefaultObjectCreator {
       ganglinieYAchse2MaxValue: null,
       idVergleichszaehlungZeitreihe: null,
       zeitreiheGesamt: false,
-      laengsverkehr: [],
-      querungsverkehr: [],
-      verkehrsbeziehungenQJS: []
+      chosenLaengsverkehre: [],
+      chosenQuerungsverkehre: [],
+      chosenVerkehrsbeziehungen: []
 
     };
   }

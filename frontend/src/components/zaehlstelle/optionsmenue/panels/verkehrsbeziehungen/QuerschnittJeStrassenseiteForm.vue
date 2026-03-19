@@ -354,7 +354,7 @@ import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
+import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 
 interface Props {
@@ -487,11 +487,11 @@ function convertToVerkehrsbeziehungenQjs(verkehrsbeziehungen: LadeVerkehrsbezieh
 }
 
 
-function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungQJS, arrowPattern: VerkehrsbeziehungQJS) {
+function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungDTO, arrowPattern: VerkehrsbeziehungDTO) {
   return verkehrsbeziehung.von === arrowPattern.von && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
 }
 
-function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungQJS>, arrowPatterns: VerkehrsbeziehungQJS[]) {
+function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungDTO>, arrowPatterns: VerkehrsbeziehungDTO[]) {
   return !!verkehrsbeziehungen?.some(vb => arrowPatterns.some(p => matchesArrowPattern(vb, p)));
 }
 

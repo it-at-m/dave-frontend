@@ -221,9 +221,9 @@ function setDefaultOptionsForZaehlung() {
   });
   optionsCopy.beideRichtungen = false;
 
-  optionsCopy.laengsverkehr = (activeZaehlung.value.laengsverkehr ?? []).map((lv) => ({ ...lv }));
-  optionsCopy.querungsverkehr = (activeZaehlung.value.querungsverkehr ?? []).map((qv) => ({ ...qv }));
-  optionsCopy.verkehrsbeziehungenQJS = (activeZaehlung.value.verkehrsbeziehungen ?? []).map((vb) => ({
+  optionsCopy.chosenLaengsverkehre = (activeZaehlung.value.laengsverkehr ?? []).map((lv) => ({ ...lv }));
+  optionsCopy.chosenQuerungsverkehre = (activeZaehlung.value.querungsverkehr ?? []).map((qv) => ({ ...qv }));
+  optionsCopy.chosenVerkehrsbeziehungen = (activeZaehlung.value.verkehrsbeziehungen ?? []).map((vb) => ({
     von: vb.von,
     nach: vb.nach,
     strassenseite: vb.strassenseite,
@@ -249,11 +249,11 @@ function setOptions() {
     return;
   }
   if ((activeZaehlung.value.zaehlart === Zaehlart.FJS &&
-      isEmpty(chosenOptions.value.laengsverkehr)) ||
+      isEmpty(chosenOptions.value.chosenLaengsverkehre)) ||
       (activeZaehlung.value.zaehlart === Zaehlart.QU &&
-      isEmpty(chosenOptions.value.querungsverkehr)) ||
+      isEmpty(chosenOptions.value.chosenQuerungsverkehre)) ||
       (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
-      isEmpty(chosenOptions.value.verkehrsbeziehungenQJS))
+      isEmpty(chosenOptions.value.chosenVerkehrsbeziehungen))
   ) {
     snackbarStore.showError(
         "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
