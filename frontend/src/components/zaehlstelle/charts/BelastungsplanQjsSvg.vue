@@ -600,6 +600,54 @@ function calculateColorArrowThreeFour() {
   return BelastungsplanConstants.inaktivColor;
 }
 
+const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+  return zaehlstelleStore.getFilteroptions;
+});
+
+const sizeBelastungsplan = computed(() => {
+  let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
+  if (sizeBelastungsplanSvg === 0) {
+    sizeBelastungsplanSvg = minSizeBelastungsplan.value;
+  }
+  return sizeBelastungsplanSvg + "px";
+});
+
+const minSizeBelastungsplan = computed(() => {
+  return (
+      (parseInt(props.dimension.trim().replace("vh", "")) *
+          display.height.value) /
+      100
+  );
+});
+
+const maxSizeBelastungsplan = computed(() => {
+  return (
+      (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
+      100
+  );
+});
+
+const zaehlzeit2 = computed(() => {
+  if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN){
+      zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+    } else {
+      return "hochgerechnet";
+    }
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+  } else if (
+      optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+      optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  ) {
+    const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
+        zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+    return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
+  }
+});
+
 onMounted(() => {
   zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
@@ -618,7 +666,13 @@ onMounted(() => {
 });
 
 watch(
-    () => activeZaehlung.value.knotenarme,
+    [
+      () => activeZaehlung.value.knotenarme,
+      () => props.data,
+      () => optionen.value.verkehrsbeziehungenQJS,
+      () => optionen.value.zeitauswahl,
+      () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
+    ],
     async () => {
       firstStreetname.value = qjs.getStreetname(first(availableKnotenarme.value));
       // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
@@ -669,53 +723,5 @@ function emitSvgAsBlob(): void {
   const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
   emits("print", blob);
 }
-
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
-});
-
-const sizeBelastungsplan = computed(() => {
-  let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
-  if (sizeBelastungsplanSvg === 0) {
-    sizeBelastungsplanSvg = minSizeBelastungsplan.value;
-  }
-  return sizeBelastungsplanSvg + "px";
-});
-
-const minSizeBelastungsplan = computed(() => {
-  return (
-    (parseInt(props.dimension.trim().replace("vh", "")) *
-      display.height.value) /
-    100
-  );
-});
-
-const maxSizeBelastungsplan = computed(() => {
-  return (
-    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
-    100
-  );
-});
-
-const zaehlzeit2 = computed(() => {
-  if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN){
-      zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
-    } else {
-      return "hochgerechnet";
-    }
-  } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
-  } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
-   return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
-  } else if (
-      optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
-      optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
-  ) {
-    const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
-      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
-    return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
-  }
-});
 
 </script>
