@@ -632,7 +632,7 @@ const maxSizeBelastungsplan = computed(() => {
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN){
-      zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
     } else {
       return "hochgerechnet";
     }
