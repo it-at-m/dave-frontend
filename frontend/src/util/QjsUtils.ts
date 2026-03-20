@@ -27,13 +27,13 @@ export function useQjs() {
             if (strasse.endsWith("str.")) {
                 const index = strasse.indexOf("str.");
                 pieces[0] = strasse.substring(0, zeichen - 4);
-                pieces[1] = strasse.substring(index, 4);
+                pieces[1] = strasse.substring(index);
             }
             // Platz
             if (strasse.endsWith("pl.")) {
                 const index = strasse.indexOf("pl.");
                 pieces[0] = strasse.substring(0, zeichen - 3);
-                pieces[1] = strasse.substring(index, 3);
+                pieces[1] = strasse.substring(index)
             }
             // Bindestrich
             if (strasse.includes("-")) {
