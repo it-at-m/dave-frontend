@@ -458,7 +458,9 @@ const centerYArrowThree = ref(0)
 const centerYArrowFour = ref(0)
 
 function getArrowScale(zaelwert: number) {
-  return zaelwert / highestZaehlwert.value;
+  const max = highestZaehlwert.value;
+  if (!Number.isFinite(max) || max <= 0) return 0;
+  return Math.max(zaelwert, 0) / max;
 }
 
 function computeAnchorY(el: SVGGraphicsElement | null) {
@@ -469,7 +471,7 @@ function computeAnchorY(el: SVGGraphicsElement | null) {
 }
 
 function scaleTransform(scaleY: number, centerY: number) {
-  if (!scaleY || scaleY === 1) return null
+  if (!Number.isFinite(scaleY) || scaleY === 1) return null
   return `translate(0 ${centerY}) scale(1 ${scaleY}) translate(0 ${-centerY})`
 }
 
