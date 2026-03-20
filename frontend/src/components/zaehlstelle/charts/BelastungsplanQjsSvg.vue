@@ -39,12 +39,11 @@
                x="699.24969"
                y="709.21594">{{ firstStreetname[0] }}</tspan></text>
               <text
-                  v-if="firstStreetname.length === 1 || firstStreetname.length === 3"
                   xml:space="preserve"
                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.4058px;font-family:sans-serif-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;stroke-width:39.1848"
                   id="multirow"
                   x="699.24969"
-                  y="688.33734"><tspan
+                  y="688.33734"><tspan v-if="firstStreetname.length === 1 || firstStreetname.length === 3"
                id="tspan20"
                style="stroke-width:39.1848"
                x="699.24969"
@@ -413,13 +412,9 @@ import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastun
 import { useDisplay } from "vuetify";
 import { first } from "lodash";
 import { computed, onMounted, ref, watch, nextTick } from "vue";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import KnotenarmComparator from "@/util/KnotenarmComparator";
 import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zaehldauer from "@/types/enum/Zaehldauer";
@@ -427,6 +422,7 @@ import Zeitblock, {zeitblockInfo} from "@/types/enum/Zeitblock";
 import {zeitblockStuendlichInfo} from "@/types/enum/ZeitblockStuendlich";
 import type {StartEndeUhrzeitIntervalls} from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import {useDateUtils} from "@/util/DateUtils";
+import { useQjs } from "@/util/QjsUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -444,6 +440,7 @@ const emits = defineEmits<{
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
+const qjs = useQjs();
 
 const firstStreetname = ref<Array<string>>([]);
 const svgRef = ref<SVGSVGElement | null>(null);
@@ -487,87 +484,34 @@ const dArrowTwo = 'm 210,623 v -28 h 945 v 27.997 z'
 const dArrowThree = 'm 245,804.99999 v -28 h 945 v 27.997 z'
 const dArrowFour = 'm 210,860.99999 v -28 h 945 v 27.997 z'
 
-const patternsArrowOne = [
-  { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
-  { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
-  { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
-  { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO }
-];
-
-const patternsArrowTwo = [
-  { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
-  { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
-  { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
-  { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO }
-];
-
-const patternsArrowThree = [
-  { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
-  { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
-  { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
-  { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW }
-];
-
-const patternsArrowFour = [
-  { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
-  { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-  { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
-  { von: 8, nach: 6, strassenseite: Himmelsrichtung.SW }
-];
-
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const availableKnotenarmNummern = computed(() => {
-  return availableKnotenarme.value.map((arm) => arm.nummer);
+  return qjs.computeAvailableKnotenarmNummernFromZaehlung(activeZaehlung.value);
 });
 
 const availableKnotenarme = computed(() => {
-  const nodes: LadeKnotenarmDTO[] = [];
-  activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
-    const nr = vb.von
-    const kn = activeZaehlung.value.knotenarme.find((kn) => kn.nummer === nr);
-    if (kn) {
-      nodes.push(kn);
-    }
-  })
-  return nodes.toSorted(KnotenarmComparator.sortByNumber)
-      .reverse();
+  return qjs.computeAvailableKnotenarme(activeZaehlung.value);
 });
 
-const rotateSvg = computed(() => {
-  // Die Viewbox der SVG liegt bei 1400 1400. Die Rotation muss in deren Zentrum stattfinden, daher 700 700
-  let rotation = "rotate(0,700,700)";
-  if (availableKnotenarmNummern.value.includes(1)) {
-    rotation = "rotate(-90,700,700)";
-  }
-  if (availableKnotenarmNummern.value.includes(2)) {
-    rotation = "rotate(0,700,700)";
-  }
-  if (availableKnotenarmNummern.value.includes(5)) {
-    rotation = "rotate(-45,700,700)";
-  }
-  if (availableKnotenarmNummern.value.includes(6)) {
-    rotation = "rotate(45,700,700)";
-  }
-  return rotation;
-});
+const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
 
 const isSelectedArrowOne = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowOne);
+  return qjs.hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, qjs.patternsArrowOne);
 })
 
 const isSelectedArrowTwo = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowTwo);
+  return qjs.hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, qjs.patternsArrowTwo);
 })
 
 const isSelectedArrowThree = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowThree);
+  return qjs.hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, qjs.patternsArrowThree);
 })
 
 const isSelectedArrowFour = computed(() => {
-  return hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, patternsArrowFour);
+  return qjs.hasAnyArrowPatternIn(optionen.value?.verkehrsbeziehungenQJS, qjs.patternsArrowFour);
 })
 
 const zaehlwertArrowOne = computed(() => {
@@ -656,14 +600,6 @@ function calculateColorArrowThreeFour() {
   return BelastungsplanConstants.inaktivColor;
 }
 
-function matchesArrowPattern(verkehrsbeziehung: VerkehrsbeziehungQJS, arrowPattern: VerkehrsbeziehungQJS) {
-  return verkehrsbeziehung.von === arrowPattern.von && verkehrsbeziehung.nach === arrowPattern.nach && verkehrsbeziehung.strassenseite === arrowPattern.strassenseite;
-}
-
-function hasAnyArrowPatternIn(verkehrsbeziehungen: Array<VerkehrsbeziehungQJS>, arrowPatterns: VerkehrsbeziehungQJS[]) {
-  return !!verkehrsbeziehungen?.some(vb => arrowPatterns.some(p => matchesArrowPattern(vb, p)));
-}
-
 onMounted(() => {
   zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
@@ -671,7 +607,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  prepareStreetnames();
+  firstStreetname.value = qjs.getStreetname(first(availableKnotenarme.value));
 
   // Berechnet Anker aus der gesamten Gruppe (Rumpf + Spitze)
   if (groupRefArrowOne.value) centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value)
@@ -684,7 +620,7 @@ onMounted(() => {
 watch(
     () => activeZaehlung.value.knotenarme,
     async () => {
-      prepareStreetnames();
+      firstStreetname.value = qjs.getStreetname(first(availableKnotenarme.value));
       // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
       // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
       await nextTick();
@@ -781,47 +717,5 @@ const zaehlzeit2 = computed(() => {
     return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
 });
-
-function prepareStreetnames(): void {
-  firstStreetname.value = getStreetname(first(availableKnotenarme.value));
-}
-
-function getStreetname(knotenarm: LadeKnotenarmDTO | undefined): Array<string> {
-  let strasse = "";
-  if (knotenarm && knotenarm.strassenname) {
-    strasse = knotenarm.strassenname;
-  }
-  let pieces = [strasse];
-  const zeichen = strasse.length;
-  // Anzahl Zeichen
-  if (zeichen > 17) {
-    pieces = ["", ""];
-    if (strasse.endsWith("str.")) {
-      const index = strasse.indexOf("str.");
-      pieces[0] = strasse.substring(0, zeichen - 4);
-      pieces[1] = strasse.substring(index, 4);
-    }
-    // Platz
-    if (strasse.endsWith("pl.")) {
-      const index = strasse.indexOf("pl.");
-      pieces[0] = strasse.substring(0, zeichen - 3);
-      pieces[1] = strasse.substring(index, 3);
-    }
-    // Bindestrich
-    if (strasse.includes("-")) {
-      // pieces = strasse.split(trenner);
-      const index = strasse.indexOf("-");
-      pieces[0] = strasse.substring(0, index + 1);
-      pieces[1] = strasse.substring(index + 1);
-    }
-    // Leerzeichen
-    else if (strasse.includes(" ")) {
-      const index = strasse.indexOf(" ");
-      pieces[0] = strasse.substring(0, index + 1);
-      pieces[1] = strasse.substring(index + 1);
-    }
-  }
-  return pieces;
-}
 
 </script>
