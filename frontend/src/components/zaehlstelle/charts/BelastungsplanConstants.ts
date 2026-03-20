@@ -1,5 +1,4 @@
 export const BelastungsplanConstants = {
-
   // Farben der Knotenarme
   farben: new Map<number, string>([
     [1, "#000000"],
@@ -19,5 +18,4 @@ export const BelastungsplanConstants = {
   abnahmeValueColor: "#4CAF50",
   gleichValueColor: "#000000",
   inaktivColor: "#E0E0E0",
-
 } as const;
