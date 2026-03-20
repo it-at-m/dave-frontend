@@ -43,7 +43,7 @@
                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.4058px;font-family:sans-serif-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;stroke-width:39.1848"
                   id="multirow"
                   x="699.24969"
-                  y="688.33734"><tspan v-if="firstStreetname.length === 1 || firstStreetname.length === 3"
+                  y="688.33734"><tspan v-if="firstStreetname.length === 1"
                id="tspan20"
                style="stroke-width:39.1848"
                x="699.24969"
@@ -51,7 +51,7 @@
                   id="tspan1"
                   style="stroke-width:39.1848"
                   x="699.24969"
-                  y="730.0946">{{firstStreetname.length === 2 ? firstStreetname[1] : firstStreetname[2] }}</tspan></text>
+                  y="730.0946">{{ firstStreetname[1] }}</tspan></text>
             </g>
           </g>
           <g
