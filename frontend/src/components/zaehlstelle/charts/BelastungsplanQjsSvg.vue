@@ -515,19 +515,19 @@ const isSelectedArrowFour = computed(() => {
 })
 
 const zaehlwertArrowOne = computed(() => {
-  return 800; // TODO
+  return 800; // TODO: wire props.data
 })
 
 const zaehlwertArrowTwo = computed(() => {
-  return 200; // TODO
+  return 200; // TODO: wire props.data
 })
 
 const zaehlwertArrowThree = computed(() => {
-  return 900; // TODO
+  return 900; // TODO: wire props.data
 })
 
 const zaehlwertArrowFour = computed(() => {
-  return 100; // TODO
+  return 100; // TODO: wire props.data
 })
 
 const sumArrowsOneTwo = computed(() => {
