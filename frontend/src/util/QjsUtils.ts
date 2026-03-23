@@ -143,7 +143,7 @@ export function useQjs() {
         nodes.push(kn);
       }
     });
-    return nodes.toSorted(KnotenarmComparator.sortByNumber).reverse();
+    return nodes.sort(KnotenarmComparator.sortByNumber).reverse();
   }
 
   function computeAvailableKnotenarmNummernFromZaehlung(
