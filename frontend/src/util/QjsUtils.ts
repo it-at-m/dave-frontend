@@ -135,15 +135,17 @@ export function useQjs() {
   function computeAvailableKnotenarme(
     activeZaehlung: LadeZaehlungDTO
   ): LadeKnotenarmDTO[] {
-    const nodes: LadeKnotenarmDTO[] = [];
+    const knotenarmeByNumber = new Map(
+      activeZaehlung.knotenarme.map((kn) => [kn.nummer, kn] as const)
+    );
+    const nodes = new Map<number, LadeKnotenarmDTO>();
     activeZaehlung.verkehrsbeziehungen.forEach((vb) => {
-      const nr = vb.von;
-      const kn = activeZaehlung.knotenarme.find((kn) => kn.nummer === nr);
+      const kn = knotenarmeByNumber.get(vb.von);
       if (kn) {
-        nodes.push(kn);
+        nodes.set(kn.nummer, kn);
       }
     });
-    return nodes.sort(KnotenarmComparator.sortByNumber).reverse();
+    return Array.from(nodes.values()).sort(KnotenarmComparator.sortByNumber).reverse();
   }
 
   function computeAvailableKnotenarmNummernFromZaehlung(
