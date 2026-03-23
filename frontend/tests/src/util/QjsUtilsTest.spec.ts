@@ -62,7 +62,7 @@ describe("QjsUtils", () => {
     // Überprüfe, dass tatsächlich am Bindestrich geteilt wurde
     expect(res[0].endsWith("-")).toBe(true);
     // Der zweite Teil darf keine führenden Leerzeichen haben (es ist das direkte Substring nach "-")
-    expect(res[1]).toBe("Teil MitWeiterem".replace(/^Teil /, "Teil "));
+    expect(res[1]).toBe("Teil MitWeiterem");
   });
 
   it("getStreetname: undefined knotenarm liefert ein Array mit einem leeren String", () => {
