@@ -145,7 +145,9 @@ export function useQjs() {
         nodes.set(kn.nummer, kn);
       }
     });
-    return Array.from(nodes.values()).sort(KnotenarmComparator.sortByNumber).reverse();
+    return Array.from(nodes.values())
+      .sort(KnotenarmComparator.sortByNumber)
+      .reverse();
   }
 
   function computeAvailableKnotenarmNummernFromZaehlung(

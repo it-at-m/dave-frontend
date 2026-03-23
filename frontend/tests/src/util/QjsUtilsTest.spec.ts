@@ -1,10 +1,9 @@
+import { describe, expect, it } from "vitest";
 import { ref } from "vue";
-import { describe, it, expect } from "vitest";
 
 import { useQjs } from "@/util/QjsUtils";
 
 describe("QjsUtils", () => {
-
   // getStreetname ------------------------------------
   it("getStreetname: kurze Straße bleibt ein Element", () => {
     const { getStreetname } = useQjs();
@@ -98,7 +97,8 @@ describe("QjsUtils", () => {
 
   // matchesArrowPattern ---------------------------------------
   it("matchesArrowPattern / hasAnyArrowPatternIn", () => {
-    const { patternsArrowOne, matchesArrowPattern, hasAnyArrowPatternIn } = useQjs();
+    const { patternsArrowOne, matchesArrowPattern, hasAnyArrowPatternIn } =
+      useQjs();
 
     const p = patternsArrowOne[0];
     expect(matchesArrowPattern(p, p)).toBe(true);
