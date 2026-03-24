@@ -343,18 +343,15 @@
 </template>
 
 <script setup lang="ts">
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first, last } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import KnotenarmComparator from "@/util/KnotenarmComparator";
+import { useQjs } from "@/util/QjsUtils";
 
 interface Props {
   height: string;
@@ -363,6 +360,7 @@ interface Props {
 defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
+const qjs = useQjs();
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -374,52 +372,16 @@ const passiveColor = "#9E9E9E";
 const firstStreetname = ref<Array<string>>([]);
 const secondStreetname = ref<Array<string>>([]);
 
-const arrowOnePatterns = [
-  { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
-  { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
-  { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
-  { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO },
-];
-
-const arrowTwoPatterns = [
-  { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
-  { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
-  { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
-  { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO },
-];
-
-const arrowThreePatterns = [
-  { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
-  { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
-  { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
-  { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW },
-];
-
-const arrowFourPatterns = [
-  { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
-  { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-  { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
-  { von: 8, nach: 6, strassenseite: Himmelsrichtung.SW },
-];
-
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const availableKnotenarmNummern = computed(() => {
-  return availableKnotenarme.value.map((arm) => arm.nummer);
+  return qjs.computeAvailableKnotenarmNummernFromZaehlung(activeZaehlung.value);
 });
 
 const availableKnotenarme = computed(() => {
-  const nodes: LadeKnotenarmDTO[] = [];
-  activeZaehlung.value.verkehrsbeziehungen.forEach((vb) => {
-    const nr = vb.von;
-    const kn = activeZaehlung.value.knotenarme.find((kn) => kn.nummer === nr);
-    if (kn) {
-      nodes.push(kn);
-    }
-  });
-  return nodes.toSorted(KnotenarmComparator.sortByNumber).reverse();
+  return qjs.computeAvailableKnotenarme(activeZaehlung.value);
 });
 
 const firstKnotenarm = computed(() => {
@@ -430,77 +392,61 @@ const secondKnotenarm = computed(() => {
   return last(availableKnotenarme.value);
 });
 
-const rotateSvg = computed(() => {
-  // Die Viewbox der SVG liegt bei 1400 1400. Die Rotation muss in deren Zentrum stattfinden, daher 700 700
-  let rotation = "rotate(0,700,700)";
-  if (availableKnotenarmNummern.value.includes(1)) {
-    rotation = "rotate(-90,700,700)";
-  }
-  if (availableKnotenarmNummern.value.includes(2)) {
-    rotation = "rotate(0,700,700)";
-  }
-  if (availableKnotenarmNummern.value.includes(5)) {
-    rotation = "rotate(-45,700,700)";
-  }
-  if (availableKnotenarmNummern.value.includes(6)) {
-    rotation = "rotate(45,700,700)";
-  }
-  return rotation;
-});
+const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
 
 const isAvailableArrowOne = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen),
-    arrowOnePatterns
+    qjs.patternsArrowOne
   );
 });
 
 const isAvailableArrowTwo = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen),
-    arrowTwoPatterns
+    qjs.patternsArrowTwo
   );
 });
 
 const isAvailableArrowThree = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen),
-    arrowThreePatterns
+    qjs.patternsArrowThree
   );
 });
 
 const isAvailableArrowFour = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     convertToVerkehrsbeziehungenQjs(activeZaehlung.value?.verkehrsbeziehungen),
-    arrowFourPatterns
+    qjs.patternsArrowFour
   );
 });
 
 const isSelectedArrowOne = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
-    arrowOnePatterns
+    qjs.patternsArrowOne
   );
 });
 
 const isSelectedArrowTwo = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
-    arrowTwoPatterns
+    qjs.patternsArrowTwo
   );
 });
 
 const isSelectedArrowThree = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
-    arrowThreePatterns
+    qjs.patternsArrowThree
   );
 });
 
 const isSelectedArrowFour = computed(() => {
-  return hasAnyArrowPatternIn(
+  return qjs.hasAnyArrowPatternIn(
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
-    arrowFourPatterns
+    qjs.patternsArrowFour
   );
 });
 
@@ -516,35 +462,16 @@ function convertToVerkehrsbeziehungenQjs(
   );
 }
 
-function matchesArrowPattern(
-  verkehrsbeziehung: VerkehrsbeziehungDTO,
-  arrowPattern: VerkehrsbeziehungDTO
-) {
-  return (
-    verkehrsbeziehung.von === arrowPattern.von &&
-    verkehrsbeziehung.nach === arrowPattern.nach &&
-    verkehrsbeziehung.strassenseite === arrowPattern.strassenseite
-  );
-}
-
-function hasAnyArrowPatternIn(
-  verkehrsbeziehungen: Array<VerkehrsbeziehungDTO>,
-  arrowPatterns: VerkehrsbeziehungDTO[]
-) {
-  return !!verkehrsbeziehungen?.some((vb) =>
-    arrowPatterns.some((p) => matchesArrowPattern(vb, p))
-  );
-}
-
 function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowOne() {
   if (isSelectedArrowOne.value) {
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen =
       chosenOptionsCopy.value.chosenVerkehrsbeziehungen.filter(
-        (vb) => !arrowOnePatterns.some((p) => matchesArrowPattern(vb, p))
+        (vb) =>
+          !qjs.patternsArrowOne.some((p) => qjs.matchesArrowPattern(vb, p))
       );
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowOnePatterns.find((p) => p.von === kn);
+      const pattern = qjs.patternsArrowOne.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
         chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({
@@ -561,11 +488,12 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowTwo() {
   if (isSelectedArrowTwo.value) {
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen =
       chosenOptionsCopy.value.chosenVerkehrsbeziehungen.filter(
-        (vb) => !arrowTwoPatterns.some((p) => matchesArrowPattern(vb, p))
+        (vb) =>
+          !qjs.patternsArrowTwo.some((p) => qjs.matchesArrowPattern(vb, p))
       );
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowTwoPatterns.find((p) => p.von === kn);
+      const pattern = qjs.patternsArrowTwo.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
         chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({
@@ -582,11 +510,12 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowThree() {
   if (isSelectedArrowThree.value) {
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen =
       chosenOptionsCopy.value.chosenVerkehrsbeziehungen.filter(
-        (vb) => !arrowThreePatterns.some((p) => matchesArrowPattern(vb, p))
+        (vb) =>
+          !qjs.patternsArrowThree.some((p) => qjs.matchesArrowPattern(vb, p))
       );
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowThreePatterns.find((p) => p.von === kn);
+      const pattern = qjs.patternsArrowThree.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
         chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({
@@ -603,11 +532,12 @@ function handleClickOnQuerschnittsverkehrJeStrassenseiteArrowFour() {
   if (isSelectedArrowFour.value) {
     chosenOptionsCopy.value.chosenVerkehrsbeziehungen =
       chosenOptionsCopy.value.chosenVerkehrsbeziehungen.filter(
-        (vb) => !arrowFourPatterns.some((p) => matchesArrowPattern(vb, p))
+        (vb) =>
+          !qjs.patternsArrowFour.some((p) => qjs.matchesArrowPattern(vb, p))
       );
   } else {
     availableKnotenarmNummern.value.forEach((kn) => {
-      const pattern = arrowFourPatterns.find((p) => p.von === kn);
+      const pattern = qjs.patternsArrowFour.find((p) => p.von === kn);
       if (pattern) {
         const { von, nach, strassenseite } = pattern;
         chosenOptionsCopy.value.chosenVerkehrsbeziehungen.push({
@@ -656,45 +586,7 @@ function resetForm(): void {
 }
 
 function prepareStreetnames(): void {
-  firstStreetname.value = getStreetname(firstKnotenarm.value);
-  secondStreetname.value = getStreetname(secondKnotenarm.value);
-}
-
-function getStreetname(knotenarm: LadeKnotenarmDTO | undefined): Array<string> {
-  let strasse = "";
-  if (knotenarm && knotenarm.strassenname) {
-    strasse = knotenarm.strassenname;
-  }
-  let pieces = [strasse];
-  const zeichen = strasse.length;
-  // Anzahl Zeichen
-  if (zeichen > 17) {
-    pieces = ["", ""];
-    if (strasse.endsWith("str.")) {
-      const index = strasse.indexOf("str.");
-      pieces[0] = strasse.substring(0, zeichen - 4);
-      pieces[1] = strasse.substring(index, 4);
-    }
-    // Platz
-    if (strasse.endsWith("pl.")) {
-      const index = strasse.indexOf("pl.");
-      pieces[0] = strasse.substring(0, zeichen - 3);
-      pieces[1] = strasse.substring(index, 3);
-    }
-    // Bindestrich
-    if (strasse.includes("-")) {
-      // pieces = strasse.split(trenner);
-      const index = strasse.indexOf("-");
-      pieces[0] = strasse.substring(0, index + 1);
-      pieces[1] = strasse.substring(index + 1);
-    }
-    // Leerzeichen
-    else if (strasse.includes(" ")) {
-      const index = strasse.indexOf(" ");
-      pieces[0] = strasse.substring(0, index + 1);
-      pieces[1] = strasse.substring(index + 1);
-    }
-  }
-  return pieces;
+  firstStreetname.value = qjs.getStreetname(firstKnotenarm.value);
+  secondStreetname.value = qjs.getStreetname(secondKnotenarm.value);
 }
 </script>

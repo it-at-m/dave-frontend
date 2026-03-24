@@ -6,6 +6,7 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import * as SVG from "@svgdotjs/svg.js";
 import { computed } from "vue";
 
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrtrichtungsarten from "@/types/enum/Fahrtrichtungsarten";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
@@ -23,17 +24,6 @@ export function useBelastungsplanMethods() {
     [6, 225],
     [7, 315],
     [8, 45],
-  ]);
-
-  const farben = new Map<number, string>([
-    [1, "#000000"],
-    [2, "#F44336"],
-    [3, "#4CAF50"],
-    [4, "#2196F3"],
-    [5, "#CDDC39"],
-    [6, "#9C27B0"],
-    [7, "#FF9800"],
-    [8, "#795548"],
   ]);
 
   const rotationLabel = new Map<number, number>([
@@ -64,20 +54,14 @@ export function useBelastungsplanMethods() {
   // Exported Functions and Constants
   // die Basis Werte zum Errechnen der Positionen
   const viewbox = 1400;
-  const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
   // Grafischer Modus, um zu dokumentieren, wie die Winkelverbindungen
   // 45° / 135° errechnet werden.
   const docMode: boolean = false;
   const lineGap = 3;
   const maxlineWidth = 20;
   const maxLegendLineWidth = 25;
-  // Farben Differenzdatendarstellung
-  const zunahmeValueColor: string = "#F44336";
-  const abnahmeValueColor: string = "#4CAF50";
-  const gleichValueColor: string = "#000000";
   const shadowColor = "#E0E0E0";
   const legendColor = "#757575";
-  const inaktivColor = "#E0E0E0";
   // Prozentwerte um die Strecken zu errechnen
   const prozentDiagram = 0.6;
   const prozentSpalt = 0.05;
@@ -769,7 +753,7 @@ export function useBelastungsplanMethods() {
         })
         .font({
           size: knotenarmnummerSize,
-          family: fontfamily,
+          family: BelastungsplanConstants.fontfamily,
           anchor: "middle",
         })
         .attr("alignment-baseline", "central")
@@ -1067,7 +1051,7 @@ export function useBelastungsplanMethods() {
           }
         })
         .font({
-          family: fontfamily,
+          family: BelastungsplanConstants.fontfamily,
           size: lineWidth,
           weight: weight,
           anchor: "end",
@@ -1195,7 +1179,7 @@ export function useBelastungsplanMethods() {
       })
       .font({
         size: lineWidth,
-        family: fontfamily,
+        family: BelastungsplanConstants.fontfamily,
         anchor: "middle",
       })
       .y(y - zweiteZeile);
@@ -1418,10 +1402,10 @@ export function useBelastungsplanMethods() {
     schema: boolean
   ): string {
     // Die Standardfarbe des Knotenarms
-    let color = farben.get(vonKnotenarm)!;
+    let color = BelastungsplanConstants.farben.get(vonKnotenarm)!;
 
     if (schema) {
-      color = inaktivColor;
+      color = BelastungsplanConstants.inaktivColor;
       if (
         vonIds.value.includes(vonKnotenarm) &&
         nachIds.value.includes(nachKnotenarm)
@@ -1436,9 +1420,9 @@ export function useBelastungsplanMethods() {
     // alle die gleich geblieben sind mit Schwarz eingefärbt. Die
     // Nummer des Knotenarms spielt hier keine Rolle.
     if (isDifferenzdatendarstellung.value) {
-      if (vonWert > 0) color = zunahmeValueColor;
-      if (vonWert < 0) color = abnahmeValueColor;
-      if (vonWert === 0) color = gleichValueColor;
+      if (vonWert > 0) color = BelastungsplanConstants.zunahmeValueColor;
+      if (vonWert < 0) color = BelastungsplanConstants.abnahmeValueColor;
+      if (vonWert === 0) color = BelastungsplanConstants.gleichValueColor;
     }
 
     // Wenn der schwarz weiß Modus angeschaltet ist, dann werden alle aktiven Verkehrsbeziehungen
@@ -1463,7 +1447,7 @@ export function useBelastungsplanMethods() {
             nachIds.value.includes(vonKnotenarm)
           )
         ) {
-          color = inaktivColor;
+          color = BelastungsplanConstants.inaktivColor;
         }
       }
     }
@@ -1523,9 +1507,6 @@ export function useBelastungsplanMethods() {
     legendColor,
     maxlineWidth,
     maxLegendLineWidth,
-    fontfamily,
-    abnahmeValueColor,
-    zunahmeValueColor,
     maxFahrtrichtungWidth,
     fahrtrichtungVon,
     positiveNumber,
