@@ -875,6 +875,5 @@ function addBracketsDependingOnPostition(
   position: number
 ) {
   return position == 1 ? `(${text})` : text;
-  // return `(${text})`;
 }
 </script>
