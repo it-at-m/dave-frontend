@@ -36,9 +36,7 @@
                 <v-radio
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
-                  :disabled="
-                    isTeilzaehlungFussverkehr || isOnlyFussgaengerSelected
-                  "
+                  :disabled="isTeilzaehlung && isOnlyFussgaengerSelected"
                   @mouseover="hoverTageswert = true"
                   @mouseleave="hoverTageswert = false"
                 />
@@ -332,12 +330,8 @@ const zaehldatenIntervalle = computed<Array<KeyVal>>(() => {
   return ZaehldatenIntervallToSelect;
 });
 
-const isTeilzaehlungFussverkehr = computed(() => {
-  return (
-    activeZaehlung.value.kategorien.length === 1 &&
-    activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
-  );
+const isTeilzaehlung = computed(() => {
+  return activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
 });
 
 const isOnlyFussgaengerSelected = computed(() => {
@@ -368,8 +362,8 @@ watch(
 function adaptOptionsUpdate() {
   if (
     isOnlyFussgaengerSelected.value &&
-    (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT ||
-      chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ)
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
+    isTeilzaehlung.value
   ) {
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
     const zbMax =
