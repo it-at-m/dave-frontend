@@ -440,7 +440,16 @@ function addTextSouthSide(
   percentSv: number | string,
   bold: boolean = false
 ) {
-  let textposition = 2;
+  const countTexts = [
+    isGvpInBelastungsPlan.value,
+    isSvpInBelastungsPlan.value,
+    chosenOptionsCopyFahrzeuge.value.schwerverkehr,
+    chosenOptionsCopyFahrzeuge.value.gueterverkehr,
+    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr
+  ].filter(Boolean).length;
+  // Über textposition wird bestimmt, ob der Wert in Klammern gesetzt werden muss.
+  let textposition = countTexts - 1;
+
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
     addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
     startPointY += 85;
@@ -866,5 +875,6 @@ function addBracketsDependingOnPostition(
   position: number
 ) {
   return position == 1 ? `(${text})` : text;
+  // return `(${text})`;
 }
 </script>
