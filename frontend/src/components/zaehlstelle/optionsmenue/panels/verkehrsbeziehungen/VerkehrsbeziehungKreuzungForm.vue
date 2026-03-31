@@ -1,89 +1,68 @@
 <template>
-  <v-expansion-panel>
-    <v-expansion-panel-title>
-      <div>
-        <v-icon
-          start
-          icon="mdi-arrow-decision"
+  <v-container>
+    <v-row
+      align="start"
+      justify="center"
+      dense
+    >
+      <v-col cols="4">
+        <v-select
+          v-model="von"
+          :items="vonKnotenarme"
+          label="Von Knotenarm"
+          item-title="strassenname"
+          item-value="nummer"
+          variant="filled"
+          density="comfortable"
+          @mouseover="hoverSelectVon = true"
+          @mouseleave="hoverSelectVon = false"
         />
-        Verkehrsbeziehungen
-      </div>
-    </v-expansion-panel-title>
-    <v-expansion-panel-text class="mt-1">
-      <panel-header
-        font-size="0.875rem"
-        font-weight="bold"
-        padding="10px 0 10px 0"
-        header-text="Verkehrsbeziehungen zwischen den Knotenarmen"
-      />
-
-      <v-row
-        align="start"
-        justify="center"
-        dense
-      >
-        <v-col cols="4">
-          <v-select
-            v-model="von"
-            :items="vonKnotenarme"
-            label="Von Knotenarm"
-            item-title="strassenname"
-            item-value="nummer"
-            variant="filled"
-            density="comfortable"
-            @mouseover="hoverSelectVon = true"
-            @mouseleave="hoverSelectVon = false"
-          />
-          <v-select
-            v-model="nach"
-            :items="nachKnotenarme"
-            label="Nach Knotenarm"
-            item-title="strassenname"
-            item-value="nummer"
-            variant="filled"
-            density="comfortable"
-            @mouseover="hoverSelectNach = true"
-            @mouseleave="hoverSelectNach = false"
-          />
-          <v-checkbox
-            v-if="beideRichtungenAnzeigen"
-            v-model="chosenOptionsCopy.beideRichtungen"
-            class="mb-3"
-            :label="'Zulaufend/Ablaufend'"
-            hide-details
-            color="quaternary"
-            density="compact"
-            :disabled="!beideRichtungenAnzeigen"
-            @mouseover="hoverBeideRichtungen = true"
-            @mouseleave="hoverBeideRichtungen = false"
-          />
-        </v-col>
-        <v-spacer />
-        <v-col cols="4">
-          <v-card variant="flat">
-            <div
-              :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }"
-            >
-              {{ helpTextVerkehrsbeziehung }}
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-expansion-panel-text>
-  </v-expansion-panel>
+        <v-select
+          v-model="nach"
+          :items="nachKnotenarme"
+          label="Nach Knotenarm"
+          item-title="strassenname"
+          item-value="nummer"
+          variant="filled"
+          density="comfortable"
+          @mouseover="hoverSelectNach = true"
+          @mouseleave="hoverSelectNach = false"
+        />
+        <v-checkbox
+          v-if="beideRichtungenAnzeigen"
+          v-model="chosenOptionsCopy.beideRichtungen"
+          class="mb-3"
+          :label="'Zulaufend/Ablaufend'"
+          hide-details
+          color="quaternary"
+          density="compact"
+          :disabled="!beideRichtungenAnzeigen"
+          @mouseover="hoverBeideRichtungen = true"
+          @mouseleave="hoverBeideRichtungen = false"
+        />
+      </v-col>
+      <v-spacer />
+      <v-col cols="4">
+        <v-card variant="flat">
+          <div :style="{ color: `${hoverBeideRichtungen ? 'red' : 'black'}` }">
+            {{ helpTextVerkehrsbeziehung }}
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
 import type KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { isNil, union } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
-import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 
@@ -294,9 +273,9 @@ function initVerkehrsbeziehungen(): void {
  * die möglichen nach-Knotenarme an.
  */
 function addVonKnotenarmWithPossibleNachKnotenarm(
-    verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
-    alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
-    knotenarme: Map<number, string>
+  verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
+  alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
+  knotenarme: Map<number, string>
 ): void {
   if (moeglicheBeziehungenVon.value.has(verkehrsbeziehung.von)) {
     // Erweitern bereits vorhandener von-Knotenarm um zusätzlichen möglichen nach-Knotenarm
@@ -312,13 +291,19 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
     const kv: KnotenarmVerbindungen = {
       knotenarm: {
         nummer: verkehrsbeziehung.von,
-        strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
+        strassenname: getKnotenarmBezeichnung(
+          verkehrsbeziehung.von,
+          knotenarme
+        ),
       },
       moeglicheVerbindungen: [
         alle,
         {
           nummer: verkehrsbeziehung.nach,
-          strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
+          strassenname: getKnotenarmBezeichnung(
+            verkehrsbeziehung.nach,
+            knotenarme
+          ),
         },
       ],
       moeglicheVerbindungenIds: [alle.nummer, verkehrsbeziehung.nach],
@@ -344,9 +329,9 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
  * die möglichen von-Knotenarme an.
  */
 function addNachKnotenarmWithPossibleVonKnotenarm(
-    verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
-    alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
-    knotenarme: Map<number, string>
+  verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
+  alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
+  knotenarme: Map<number, string>
 ): void {
   if (moeglicheBeziehungenNach.value.has(verkehrsbeziehung.nach)) {
     // Erweitern bereits vorhandener nach-Knotenarm um zusätzlichen möglichen von-Knotenarm
@@ -362,13 +347,19 @@ function addNachKnotenarmWithPossibleVonKnotenarm(
     const kv: KnotenarmVerbindungen = {
       knotenarm: {
         nummer: verkehrsbeziehung.nach,
-        strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.nach, knotenarme),
+        strassenname: getKnotenarmBezeichnung(
+          verkehrsbeziehung.nach,
+          knotenarme
+        ),
       },
       moeglicheVerbindungen: [
         alle,
         {
           nummer: verkehrsbeziehung.von,
-          strassenname: getKnotenarmBezeichnung(verkehrsbeziehung.von, knotenarme),
+          strassenname: getKnotenarmBezeichnung(
+            verkehrsbeziehung.von,
+            knotenarme
+          ),
         },
       ],
       moeglicheVerbindungenIds: [alle.nummer, verkehrsbeziehung.von],

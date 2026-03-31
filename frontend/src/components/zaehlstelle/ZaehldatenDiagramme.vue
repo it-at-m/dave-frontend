@@ -62,7 +62,7 @@
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-              v-show="!belastungsplanDTO.kreisverkehr"
+              v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
@@ -77,6 +77,15 @@
               :loaded="false"
               :zaehlung-id="zaehlungsId"
             />
+
+            <belastungsplan-qjs-svg
+                v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung"
+                :dimension="contentHeight"
+                :data="belastungsplanDTO"
+                @print="storeSvg($event)"
+                @print-schema="storeSvgSchematischeUebersicht($event)"
+            />
+
           </div>
           <v-banner v-else>
             <v-icon
@@ -194,6 +203,7 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
+import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
@@ -209,6 +219,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
+import Zaehlart from "@/types/enum/Zaehlart";
 
 interface Props {
   height?: string;
@@ -272,6 +283,10 @@ const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
+
+const isQJSZaehlung = computed<boolean>(() => {
+  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS;
+});
 
 const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;

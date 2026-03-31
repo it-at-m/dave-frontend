@@ -41,7 +41,7 @@
 
               <fahrzeug-panel v-model="chosenOptions" />
 
-              <geometrie-panel v-model="chosenOptions" />
+              <verkehrsbeziehungen-panel v-model="chosenOptions" />
 
               <zaehlungsvergleich-panel v-model="chosenOptions" />
 
@@ -83,7 +83,6 @@ import { useDisplay } from "vuetify";
 
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
-import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -95,6 +94,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 
 /**
  * Beschreibung Optionsmenü
@@ -220,6 +220,15 @@ function setDefaultOptionsForZaehlung() {
     }
   });
   optionsCopy.beideRichtungen = false;
+
+  optionsCopy.laengsverkehr = (activeZaehlung.value.laengsverkehr ?? []).map((lv) => ({ ...lv }));
+  optionsCopy.querungsverkehr = (activeZaehlung.value.querungsverkehr ?? []).map((qv) => ({ ...qv }));
+  optionsCopy.verkehrsbeziehungenQJS = (activeZaehlung.value.verkehrsbeziehungen ?? []).map((vb) => ({
+    von: vb.von,
+    nach: vb.nach,
+    strassenseite: vb.strassenseite,
+  }));
+
   chosenOptions.value = optionsCopy;
   saveOptions();
 }
@@ -230,17 +239,29 @@ function setDefaultOptionsForZaehlung() {
  * @private
  */
 function setOptions() {
-  if (
-    zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) ||
-    zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
+  if (!
+      zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) &&
+    !zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
   ) {
-    saveOptions();
-    dialog.value = false;
-  } else {
     snackbarStore.showError(
       "Es muss mindestens eine Verkehrsart oder Fahrzeugkategorie ausgewählt sein."
     );
+    return;
   }
+  if ((activeZaehlung.value.zaehlart === Zaehlart.FJS &&
+      isEmpty(chosenOptions.value.laengsverkehr)) ||
+      (activeZaehlung.value.zaehlart === Zaehlart.QU &&
+      isEmpty(chosenOptions.value.querungsverkehr)) ||
+      (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
+      isEmpty(chosenOptions.value.verkehrsbeziehungenQJS))
+  ) {
+    snackbarStore.showError(
+        "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
+    );
+    return;
+  }
+  saveOptions();
+  dialog.value = false;
 }
 
 /**
