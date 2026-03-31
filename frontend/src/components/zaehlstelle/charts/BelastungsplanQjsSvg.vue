@@ -23,7 +23,7 @@
           <g id="description">
             <g id="first_street">
               <text
-                v-if="firstStreetname.length > 1"
+                v-if="firstStreetname.length === 1"
                 xml:space="preserve"
                 style="
                   font-style: normal;
@@ -58,6 +58,7 @@
                 </tspan>
               </text>
               <text
+                v-if="firstStreetname.length > 1"
                 xml:space="preserve"
                 style="
                   font-style: normal;
@@ -83,20 +84,14 @@
                 y="688.33734"
               >
                 <tspan
-                  v-if="firstStreetname.length === 1"
                   id="tspan20"
                   style="stroke-width: 39.1848"
                   x="699.24969"
                   y="688.33734"
                 >
-                  {{
-                    firstStreetname.length === 1
-                      ? firstStreetname[0]
-                      : firstStreetname[1]
-                  }}
+                  {{ firstStreetname[0] }}
                 </tspan>
                 <tspan
-                  v-if="firstStreetname.length > 1"
                   id="tspan1"
                   style="stroke-width: 39.1848"
                   x="699.24969"
