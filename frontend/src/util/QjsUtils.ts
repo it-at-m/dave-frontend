@@ -1,8 +1,7 @@
 // Hilfsfunktion für die Darstellung von Qjs-Zählungen
-
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
+import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import type { ComputedRef, Ref } from "vue";
 
 import { computed } from "vue";
@@ -101,28 +100,28 @@ export function useQjs() {
   }
 
   // --- Arrow pattern constants ---
-  const patternsArrowOne: VerkehrsbeziehungQJS[] = [
+  const patternsArrowOne: VerkehrsbeziehungDTO[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
     { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
     { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
     { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO },
   ];
 
-  const patternsArrowTwo: VerkehrsbeziehungQJS[] = [
+  const patternsArrowTwo: VerkehrsbeziehungDTO[] = [
     { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
     { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
     { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
     { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO },
   ];
 
-  const patternsArrowThree: VerkehrsbeziehungQJS[] = [
+  const patternsArrowThree: VerkehrsbeziehungDTO[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
     { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
     { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
     { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW },
   ];
 
-  const patternsArrowFour: VerkehrsbeziehungQJS[] = [
+  const patternsArrowFour: VerkehrsbeziehungDTO[] = [
     { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
     { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
     { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
@@ -130,8 +129,8 @@ export function useQjs() {
   ];
 
   function matchesArrowPattern(
-    verkehrsbeziehung: VerkehrsbeziehungQJS,
-    arrowPattern: VerkehrsbeziehungQJS
+    verkehrsbeziehung: VerkehrsbeziehungDTO,
+    arrowPattern: VerkehrsbeziehungDTO
   ) {
     return (
       verkehrsbeziehung.von === arrowPattern.von &&
@@ -141,8 +140,8 @@ export function useQjs() {
   }
 
   function hasAnyArrowPatternIn(
-    verkehrsbeziehungen: Array<VerkehrsbeziehungQJS>,
-    arrowPatterns: VerkehrsbeziehungQJS[]
+    verkehrsbeziehungen: Array<VerkehrsbeziehungDTO>,
+    arrowPatterns: VerkehrsbeziehungDTO[]
   ) {
     return !!verkehrsbeziehungen?.some((vb) =>
       arrowPatterns.some((p) => matchesArrowPattern(vb, p))
