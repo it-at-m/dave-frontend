@@ -19,7 +19,7 @@
         <spring.boot.version>3.4.6</spring.boot.version>
         <spring.cloud.version>2024.0.1</spring.cloud.version>
         <!-- Version muss mit der in den spring-boot-dependencies bereitgestellten Lombok-Version übereinstimmen -->
-        <org.projectlombok.lombok.version>1.18.38</org.projectlombok.lombok.version>
+        <org.projectlombok.lombok.version>1.18.42</org.projectlombok.lombok.version>
         <logstash.encoder.version>8.1</logstash.encoder.version>
         <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
