@@ -33,7 +33,7 @@
             <v-row>
               <v-col cols="6">
                 <v-radio
-                  label="Zeitraum / DTV-w5"
+                  label="Zeitraum"
                   :value="Zeitauswahl.ZEITRAUM"
                   @mouseover="hoverZeitraum = true"
                   @mouseleave="hoverZeitraum = false"
@@ -114,6 +114,16 @@
             @mouseover="hoverSelectStunde = true"
             @mouseleave="hoverSelectStunde = false"
           />
+            <v-select
+            v-if="isZeitauswahlZeitraum"
+            v-model="tagesTyp"
+            label="TagesTyp"
+            :items="tagesTypValues"
+            variant="filled"
+            density="compact"
+            @mouseover="hoverTagesTyp = true"
+            @mouseleave="hoverTagesTyp = false"
+          />
         </v-col>
         <v-spacer />
       </v-row>
@@ -187,6 +197,7 @@ import ZaehldatenIntervall, {
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import TagesTyp, { tagesTypDauerzaehlungText } from "@/types/enum/TagesTyp";
 import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
@@ -208,10 +219,12 @@ const emits = defineEmits<{
   (e: "zeitauswahl", v: string): void;
   (e: "zeitblock", v: string): void;
   (e: "intervall", v: ZaehldatenIntervall): void;
+  (e: "tagesTyp", v: string): void;
 }>();
 
 const zeitauswahl = ref(Zeitauswahl.ZEITRAUM.valueOf());
 const zeitblock = ref(Zeitblock.ZB_00_24.valueOf());
+const tagesTyp = ref(tagesTypDauerzaehlungText.get(TagesTyp.WERKTAG_MO_FR));
 const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
 
 // Zeitauswahl
@@ -219,6 +232,7 @@ const hoverZeitraum = ref(false);
 const hoverTageswert = ref(false);
 const hoverBlock = ref(false);
 const hoverStunde = ref(false);
+const hoverTagesTyp = ref(false);
 const hoverSpitzenstundeKfz = ref(false);
 const hoverSpitzenstundeRad = ref(false);
 const hoverSpitzenstundeFuss = ref(false);
@@ -309,6 +323,9 @@ const helpTextZeitauswahl = computed(() => {
   if (hoverStunde.value) {
     return "";
   }
+  if (hoverTagesTyp.value) {
+    return "";
+  }
   if (hoverSpitzenstundeKfz.value) {
     return "Stunde der höchsten Belastung des Kraftfahrzeugverkehrs an einem Knoten (gleitend).";
   }
@@ -397,6 +414,19 @@ const stuendlichValues = computed<Array<KeyVal>>(() => {
   return result;
 });
 
+const tagesTypValues = computed<Array<string>>(() => {
+  const result = new Array<string>();
+  const tt = tagesTypDauerzaehlungText.keys();
+    tt.forEach((h) => {
+      const kv = tagesTypDauerzaehlungText.get(h);
+      if (kv) {
+        result.push(h);
+      }
+    });
+
+  return result;
+});
+
 /**
  * Gibt die ZaehldatenIntervalle zurück welche für den Intervall Select zur Anzeige relevant sind.
  */
@@ -443,6 +473,9 @@ function update(newOptions: OptionsDTO) {
   newOptions.intervall === null
     ? (intervall.value = ZaehldatenIntervall.STUNDE_VIERTEL)
     : (intervall.value = newOptions.intervall);
+  newOptions.tagesTyp === null
+    ? (tagesTyp.value = TagesTyp.WERKTAG_MO_FR as string)
+    : (tagesTyp.value = newOptions.tagesTyp);
 }
 
 /**
@@ -478,5 +511,9 @@ watch(zeitblock, () => {
 
 watch(intervall, () => {
   emits("intervall", intervall.value);
+});
+
+watch(tagesTyp, () => {
+  emits("tagesTyp", tagesTyp.value || TagesTyp.WERKTAG_MO_FR || "");
 });
 </script>
