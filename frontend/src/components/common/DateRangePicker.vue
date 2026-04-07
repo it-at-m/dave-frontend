@@ -44,7 +44,7 @@
         >
           <p>Hinweise:</p>
           <p
-            v-if="endDateBeforeStartDate"
+            v-if="endDateBeforeStartDate && !props.disableEnd"
             class="text-red"
           >
             {{ messageEndDateBeforeStartDate }}
@@ -56,10 +56,10 @@
             {{ messageStartDateOutOfRange }}
           </p>
           <p
-            v-if="isEndDateOutOfRange"
+            v-if="isEndDateOutOfRange && !props.disableEnd"
             class="text-red"
           >
-            {{ messageEndDateOutOfRange }}
+            {{ messageEndDateOutOfRange}}
           </p>
           <p
             v-if="isAnwender && isDateRangeGreaterThanFiveYears"
