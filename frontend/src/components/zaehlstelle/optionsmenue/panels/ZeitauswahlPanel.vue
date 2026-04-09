@@ -167,15 +167,18 @@ import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, {zeitblockInfo, zeitblockOrder} from "@/types/enum/Zeitblock";
+import Zeitblock, {
+  zeitblockInfo,
+  zeitblockOrder,
+} from "@/types/enum/Zeitblock";
 import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
-import Fahrzeug from "@/types/enum/Fahrzeug";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -332,21 +335,25 @@ const isTeilzaehlung = computed(() => {
 });
 
 const isOnlyFussgaengerSelected = computed(() => {
-  return chosenOptionsCopy.value.fussverkehr && !(
+  return (
+    chosenOptionsCopy.value.fussverkehr &&
+    !(
       chosenOptionsCopy.value.kraftfahrzeugverkehr ||
       chosenOptionsCopy.value.schwerverkehr ||
       chosenOptionsCopy.value.gueterverkehr ||
       chosenOptionsCopy.value.radverkehr ||
       chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
-      chosenOptionsCopy.value.gueterverkehrsanteilProzent);
+      chosenOptionsCopy.value.gueterverkehrsanteilProzent
+    )
+  );
 });
 
 watch(
-    () => chosenOptionsCopy.value,
-    () => {
-      adaptOptionsUpdate();
-    },
-    { deep: true }
+  () => chosenOptionsCopy.value,
+  () => {
+    adaptOptionsUpdate();
+  },
+  { deep: true }
 );
 
 /**
@@ -357,9 +364,10 @@ function adaptOptionsUpdate(){
       chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
       isTeilzaehlung.value ){
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
-    const zbMax = zeitblockOrder.find(zb =>
-        zeitblockValues.value.some(zbv => zbv.value === zb)
-    ) || '';
+    const zbMax =
+      zeitblockOrder.find((zb) =>
+        zeitblockValues.value.some((zbv) => zbv.value === zb)
+      ) || "";
     chosenOptionsCopy.value.zeitblock = zbMax;
   }
 }
