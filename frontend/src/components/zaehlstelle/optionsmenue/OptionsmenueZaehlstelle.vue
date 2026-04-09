@@ -43,6 +43,7 @@
                 @zeitauswahl="setZeitauswahl($event)"
                 @zeitblock="setZeitblock($event)"
                 @intervall="setIntervall($event)"
+                @tagesTyp="setTagesTyp($event)"
               />
 
               <fahrzeug-panel
@@ -296,6 +297,12 @@ function setIntervall(event: ZaehldatenIntervall) {
   }
 }
 
+function setTagesTyp(event: string) {
+  if (event) {
+    chosenOptions.value.tagesTyp = event;
+  }
+}
+
 // Event Methode für die Fahrzeug Komponente
 function updateOptions(event: OptionsDTO) {
   if (event) {
@@ -315,6 +322,7 @@ function updateOptions(event: OptionsDTO) {
     chosenOptions.value.busse = event.busse;
     chosenOptions.value.kraftraeder = event.kraftraeder;
     chosenOptions.value.pkwEinheiten = event.pkwEinheiten;
+    chosenOptions.value.tagesTyp = event.tagesTyp;
   }
 }
 

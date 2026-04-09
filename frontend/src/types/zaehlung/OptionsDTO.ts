@@ -5,6 +5,7 @@ import type StartAndEndDate from "../common/StartAndEndDate";
 export default interface OptionsDTO {
   zeitraumStartAndEndDate: StartAndEndDate;
   zeitraum: string[];
+  tagesTyp: string;
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
   zeitblock: string;
