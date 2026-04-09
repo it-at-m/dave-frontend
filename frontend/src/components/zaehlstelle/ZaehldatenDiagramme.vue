@@ -79,13 +79,12 @@
             />
 
             <belastungsplan-qjs-svg
-                v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung"
-                :dimension="contentHeight"
-                :data="belastungsplanDTO"
-                @print="storeSvg($event)"
-                @print-schema="storeSvgSchematischeUebersicht($event)"
+              v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung"
+              :dimension="contentHeight"
+              :data="belastungsplanDTO"
+              @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
-
           </div>
           <v-banner v-else>
             <v-icon
@@ -203,8 +202,8 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
-import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
+import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -214,12 +213,12 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import Zaehlart from "@/types/enum/Zaehlart";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
-import Zaehlart from "@/types/enum/Zaehlart";
 
 interface Props {
   height?: string;

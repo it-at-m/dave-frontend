@@ -114,10 +114,7 @@ function drawArrowsPointingSouth() {
         width: strokeSize,
         color: calculateColor(Himmelsrichtung.SUED, Himmelsrichtung.WEST),
       })
-      .attr(
-        "fill",
-        calculateColor(Himmelsrichtung.SUED, Himmelsrichtung.WEST)
-      )
+      .attr("fill", calculateColor(Himmelsrichtung.SUED, Himmelsrichtung.WEST))
   );
   startX.value += 50;
 }
@@ -147,20 +144,14 @@ function drawArrowsPointingNorth() {
         width: strokeSize,
         color: calculateColor(Himmelsrichtung.OST, Himmelsrichtung.NORD),
       })
-      .attr(
-        "fill",
-        calculateColor(Himmelsrichtung.OST, Himmelsrichtung.NORD)
-      )
+      .attr("fill", calculateColor(Himmelsrichtung.OST, Himmelsrichtung.NORD))
   );
   startX.value += 50;
 }
 
 function rotateArrowsIfNecessary() {
   const direction = props.messquerschnitte[0]?.fahrtrichtung;
-  if (
-    direction === Himmelsrichtung.OST ||
-    direction === Himmelsrichtung.WEST
-  ) {
+  if (direction === Himmelsrichtung.OST || direction === Himmelsrichtung.WEST) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
