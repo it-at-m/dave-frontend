@@ -1,10 +1,10 @@
 <template>
   <v-sheet id="belastungsplan-zaehlstelle">
     <svg
+      id="svg1"
       ref="svgRef"
       :width="sizeBelastungsplan"
       :height="sizeBelastungsplan"
-      id="svg1"
       viewBox="0 0 1400 1400"
       version="1.1"
       fill-rule="evenodd"
@@ -5226,49 +5226,6 @@ const sumNodeEightArrowsSouthWest = computed(() => {
 
 const sumNodeEightArrows = computed(() => {
   return sumNodeEightArrowsNorthEast.value + sumNodeEightArrowsSouthWest.value;
-});
-
-const highestZaehlwert = computed(() => {
-  return Math.max(
-    zaehlwertNodeOneArrowWestNorth.value,
-    zaehlwertNodeOneArrowWestSouth.value,
-    zaehlwertNodeOneArrowEastNorth.value,
-    zaehlwertNodeOneArrowEastSouth.value,
-    zaehlwertNodeTwoArrowNorthWest.value,
-    zaehlwertNodeTwoArrowNorthEast.value,
-    zaehlwertNodeTwoArrowSouthWest.value,
-    zaehlwertNodeTwoArrowSouthEast.value,
-    zaehlwertNodeThreeArrowWestNorth.value,
-    zaehlwertNodeThreeArrowWestSouth.value,
-    zaehlwertNodeThreeArrowEastNorth.value,
-    zaehlwertNodeThreeArrowEastSouth.value,
-    zaehlwertNodeFourArrowNorthWest.value,
-    zaehlwertNodeFourArrowNorthEast.value,
-    zaehlwertNodeFourArrowSouthWest.value,
-    zaehlwertNodeFourArrowSouthEast.value,
-    zaehlwertNodeFiveArrowNorthWestNorthEast.value,
-    zaehlwertNodeFiveArrowNorthWestSouthWest.value,
-    zaehlwertNodeFiveArrowSouthEastNorthEast.value,
-    zaehlwertNodeFiveArrowSouthEastSouthWest.value,
-    zaehlwertNodeSixArrowNorthEastNorthWest.value,
-    zaehlwertNodeSixArrowNorthEastSouthEast.value,
-    zaehlwertNodeSixArrowSouthWestNorthWest.value,
-    zaehlwertNodeSixArrowSouthWestSouthEast.value,
-    zaehlwertNodeSevenArrowNorthWestNorthEast.value,
-    zaehlwertNodeSevenArrowNorthWestSouthWest.value,
-    zaehlwertNodeSevenArrowSouthEastNorthEast.value,
-    zaehlwertNodeSevenArrowSouthEastSouthWest.value,
-    zaehlwertNodeEightArrowNorthEastNorthWest.value,
-    zaehlwertNodeEightArrowNorthEastSouthEast.value,
-    zaehlwertNodeEightArrowSouthWestNorthWest.value,
-    zaehlwertNodeEightArrowSouthWestSouthEast.value
-  );
-});
-
-const highestZaehlwertRounded = computed(() => {
-  const v = Number(highestZaehlwert.value ?? 0);
-  const ceil = Math.ceil(v / 1000) * 1000;
-  return v % 1000 === 0 ? v + 1000 : ceil;
 });
 
 // Arrows of Node 1
