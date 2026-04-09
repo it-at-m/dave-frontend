@@ -83,6 +83,7 @@ import { useDisplay } from "vuetify";
 
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
+import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -94,7 +95,6 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
-import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 
 /**
  * Beschreibung Optionsmenü
@@ -132,9 +132,11 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 });
 
 const isTeilzaehlungFussverkehr = computed(() => {
-  return (activeZaehlung.value.kategorien.length === 1 &&
-      activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-      activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN);
+  return (
+    activeZaehlung.value.kategorien.length === 1 &&
+    activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+  );
 });
 
 /**
@@ -144,13 +146,20 @@ function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
-  if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN || isTeilzaehlungFussverkehr.value) {
+  if (
+    activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN ||
+    isTeilzaehlungFussverkehr.value
+  ) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
+    } else if (
+      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN
+    ) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_22;
-    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN) {
+    } else if (
+      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
+    ) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
     } else {
       optionsCopy.zeitblock = Zeitblock.ZB_00_24;
@@ -207,23 +216,35 @@ function setDefaultOptionsForZaehlung() {
         break;
       case Fahrzeug.RAD:
         // Rad soll nur bei bestimmten Zählarten aktiviert sein
-        optionsCopy.radverkehr = [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
-          activeZaehlung.value.zaehlart
-        );
+        optionsCopy.radverkehr = [
+          Zaehlart.R,
+          Zaehlart.QR,
+          Zaehlart.FJS,
+          Zaehlart.QU,
+          Zaehlart.QJS,
+        ].includes(activeZaehlung.value.zaehlart);
         break;
       case Fahrzeug.FUSS:
         // Fuss soll nur bei Zählarten FjS, Qu, QjS aktiviert sein
-        optionsCopy.fussverkehr = [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
-            activeZaehlung.value.zaehlart
-        );
+        optionsCopy.fussverkehr = [
+          Zaehlart.FJS,
+          Zaehlart.QU,
+          Zaehlart.QJS,
+        ].includes(activeZaehlung.value.zaehlart);
         break;
     }
   });
   optionsCopy.beideRichtungen = false;
 
-  optionsCopy.laengsverkehr = (activeZaehlung.value.laengsverkehr ?? []).map((lv) => ({ ...lv }));
-  optionsCopy.querungsverkehr = (activeZaehlung.value.querungsverkehr ?? []).map((qv) => ({ ...qv }));
-  optionsCopy.verkehrsbeziehungenQJS = (activeZaehlung.value.verkehrsbeziehungen ?? []).map((vb) => ({
+  optionsCopy.chosenLaengsverkehre = (
+    activeZaehlung.value.laengsverkehr ?? []
+  ).map((lv) => ({ ...lv }));
+  optionsCopy.chosenQuerungsverkehre = (
+    activeZaehlung.value.querungsverkehr ?? []
+  ).map((qv) => ({ ...qv }));
+  optionsCopy.chosenVerkehrsbeziehungen = (
+    activeZaehlung.value.verkehrsbeziehungen ?? []
+  ).map((vb) => ({
     von: vb.von,
     nach: vb.nach,
     strassenseite: vb.strassenseite,
@@ -239,8 +260,8 @@ function setDefaultOptionsForZaehlung() {
  * @private
  */
 function setOptions() {
-  if (!
-      zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) &&
+  if (
+    !zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) &&
     !zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
   ) {
     snackbarStore.showError(
@@ -248,15 +269,16 @@ function setOptions() {
     );
     return;
   }
-  if ((activeZaehlung.value.zaehlart === Zaehlart.FJS &&
-      isEmpty(chosenOptions.value.laengsverkehr)) ||
-      (activeZaehlung.value.zaehlart === Zaehlart.QU &&
-      isEmpty(chosenOptions.value.querungsverkehr)) ||
-      (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
-      isEmpty(chosenOptions.value.verkehrsbeziehungenQJS))
+  if (
+    (activeZaehlung.value.zaehlart === Zaehlart.FJS &&
+      isEmpty(chosenOptions.value.chosenLaengsverkehre)) ||
+    (activeZaehlung.value.zaehlart === Zaehlart.QU &&
+      isEmpty(chosenOptions.value.chosenQuerungsverkehre)) ||
+    (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
+      isEmpty(chosenOptions.value.chosenVerkehrsbeziehungen))
   ) {
     snackbarStore.showError(
-        "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
+      "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
     );
     return;
   }

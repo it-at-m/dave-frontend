@@ -3,9 +3,9 @@ import type Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import type Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
 export default interface LaengsverkehrDTO extends BaseEntity {
-    knotenarm: number;
+  knotenarm: number;
 
-    richtung: Bewegungsrichtung;
+  richtung: Bewegungsrichtung;
 
-    strassenseite: Himmelsrichtung;
+  strassenseite: Himmelsrichtung;
 }
