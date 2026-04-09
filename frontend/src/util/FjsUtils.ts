@@ -5,6 +5,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import KnotenarmComparator from "./KnotenarmComparator";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
+import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 
 export function useFjs() {
   /**
@@ -69,9 +70,8 @@ export function useFjs() {
 
   function computeSelectedArrowsOfNode(
     node: number,
-    activeZaehlung: LadeZaehlungDTO
+    laengsverkehr: LaengsverkehrDTO[]
   ): Map<Himmelsrichtung, Array<Bewegungsrichtung>> {
-    const laengsverkehr = activeZaehlung.laengsverkehr;
     const selectedArrows = new Map<Himmelsrichtung, Array<Bewegungsrichtung>>();
 
     laengsverkehr

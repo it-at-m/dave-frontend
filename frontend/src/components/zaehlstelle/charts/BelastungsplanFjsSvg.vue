@@ -2538,14 +2538,14 @@ onMounted(() => {
   streetnameNodeSeven.value = fjs.getStreetname(availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7));
   streetnameNodeEight.value = fjs.getStreetname(availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8));
 
-  selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(1, activeZaehlung.value);
-  selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(2, activeZaehlung.value);
-  selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(3, activeZaehlung.value);
-  selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(4, activeZaehlung.value);
-  selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(5, activeZaehlung.value);
-  selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(6, activeZaehlung.value);
-  selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(7, activeZaehlung.value);
-  selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(8, activeZaehlung.value);
+  selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(1, optionen.value.laengsverkehr);
+  selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(2, optionen.value.laengsverkehr);
+  selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(3, optionen.value.laengsverkehr);
+  selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(4, optionen.value.laengsverkehr);
+  selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(5, optionen.value.laengsverkehr);
+  selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(6, optionen.value.laengsverkehr);
+  selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(7, optionen.value.laengsverkehr);
+  selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(8, optionen.value.laengsverkehr);
 });
 
 watch(
@@ -2553,6 +2553,8 @@ watch(
     () => props.data,
     () => activeZaehlung.value.laengsverkehr,
     () => activeZaehlung.value.knotenarme,
+    () => optionen.value.zeitauswahl,
+    () => optionen.value.laengsverkehr
   ],
   async () => {
     streetnameNodeOne.value = fjs.getStreetname(availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1));
@@ -2564,14 +2566,14 @@ watch(
     streetnameNodeSeven.value = fjs.getStreetname(availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7));
     streetnameNodeEight.value = fjs.getStreetname(availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8));
 
-    selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(1, activeZaehlung.value);
-    selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(2, activeZaehlung.value);
-    selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(3, activeZaehlung.value);
-    selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(4, activeZaehlung.value);
-    selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(5, activeZaehlung.value);
-    selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(6, activeZaehlung.value);
-    selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(7, activeZaehlung.value);
-    selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(8, activeZaehlung.value);
+    selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(1, optionen.value.laengsverkehr);
+    selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(2, optionen.value.laengsverkehr);
+    selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(3, optionen.value.laengsverkehr);
+    selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(4, optionen.value.laengsverkehr);
+    selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(5, optionen.value.laengsverkehr);
+    selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(6, optionen.value.laengsverkehr);
+    selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(7, optionen.value.laengsverkehr);
+    selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(8, optionen.value.laengsverkehr);
     await nextTick();
 
     emitSvgAsBlob();
