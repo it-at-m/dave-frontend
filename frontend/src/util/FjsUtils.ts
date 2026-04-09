@@ -2,10 +2,11 @@
 
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import KnotenarmComparator from "./KnotenarmComparator";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+
+import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import KnotenarmComparator from "./KnotenarmComparator";
 
 export function useFjs() {
   /**
@@ -58,8 +59,9 @@ export function useFjs() {
     const knotenarmeByNumber = new Map(
       activeZaehlung.knotenarme.map((kn) => [kn.nummer, kn] as const)
     );
-    return Array.from(knotenarmeByNumber.values())
-      .sort(KnotenarmComparator.sortByNumber);
+    return Array.from(knotenarmeByNumber.values()).sort(
+      KnotenarmComparator.sortByNumber
+    );
   }
 
   function computeAvailableKnotenarmNummernFromZaehlung(

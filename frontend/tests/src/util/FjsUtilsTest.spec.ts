@@ -1,5 +1,6 @@
-import { useFjs } from "@/util/FjsUtils";
 import { describe, expect, it } from "vitest";
+
+import { useFjs } from "@/util/FjsUtils";
 
 describe("FjsUtils", () => {
   // getStreetname ------------------------------------
@@ -82,7 +83,7 @@ describe("FjsUtils", () => {
       knotenarme: [
         { nummer: 1, strassenname: "Straße A" },
         { nummer: 3, strassenname: "Straße B" },
-      ]
+      ],
     } as any;
 
     const nums = computeAvailableKnotenarmNummernFromZaehlung(zaehlung);
@@ -109,12 +110,15 @@ describe("FjsUtils", () => {
       ["W", ["EIN", "AUS"]],
       ["O", ["EIN", "AUS"]],
     ]);
-    
-    const selectedArrowsNodeThree = computeSelectedArrowsOfNode(3, laengsverkehr);
+
+    const selectedArrowsNodeThree = computeSelectedArrowsOfNode(
+      3,
+      laengsverkehr
+    );
     // Überprüfe, dass alle Pfeile von Knotenarm 3 enthalten sind
     expect(Array.from(selectedArrowsNodeThree.entries())).toEqual([
       ["O", ["AUS"]],
-      ["W", ["EIN"]]
+      ["W", ["EIN"]],
     ]);
   });
 
