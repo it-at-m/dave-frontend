@@ -230,10 +230,7 @@ function rotateArrowsIfNecessary() {
   const direction =
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
       .direction;
-  if (
-    direction === Himmelsrichtung.OST ||
-    direction === Himmelsrichtung.WEST
-  ) {
+  if (direction === Himmelsrichtung.OST || direction === Himmelsrichtung.WEST) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
