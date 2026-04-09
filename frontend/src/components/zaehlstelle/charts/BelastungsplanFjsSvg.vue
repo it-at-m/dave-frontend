@@ -5758,35 +5758,35 @@ onMounted(() => {
 
   selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(
     1,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(
     2,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(
     3,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(
     4,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(
     5,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(
     6,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(
     7,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
   selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(
     8,
-    optionen.value.laengsverkehr
+    optionen.value.chosenLaengsverkehre
   );
 });
 
@@ -5796,7 +5796,7 @@ watch(
     () => activeZaehlung.value.laengsverkehr,
     () => activeZaehlung.value.knotenarme,
     () => optionen.value.zeitauswahl,
-    () => optionen.value.laengsverkehr,
+    () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
     streetnameNodeOne.value = fjs.getStreetname(
@@ -5826,35 +5826,35 @@ watch(
 
     selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(
       1,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(
       2,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(
       3,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(
       4,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(
       5,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(
       6,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(
       7,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(
       8,
-      optionen.value.laengsverkehr
+      optionen.value.chosenLaengsverkehre
     );
     await nextTick();
 
