@@ -1,4 +1,4 @@
-import type KeyVal from "../common/KeyVal";
+import type KeyVal from "@/types/common/KeyVal";
 
 enum TagesTyp {
   WERKTAG_DI_MI_DO = "WERKTAG_DI_MI_DO",
