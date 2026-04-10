@@ -389,6 +389,9 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
       }
     }
   }
+  if (result.length === 0) {
+    result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
+  }
   return result;
 });
 
