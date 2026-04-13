@@ -1,5 +1,5 @@
 <template>
-  <v-sheet id="belastungsplan-zaehlstelle">
+  <v-sheet id="belastungsplan-zaehlung-fjs">
     <svg
       id="svg1"
       ref="svgRef"
