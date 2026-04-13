@@ -62,6 +62,7 @@
               />
 
               <zaehlungsvergleich-panel
+                v-if="!zaehlung.dauerzaehlung"
                 :zaehlung="zaehlung"
                 @vergleichszaehlungs-id="setVergleichszaehlungsId($event)"
                 @differenzdaten-darstellen="setDifferenzdatenDarstellen($event)"

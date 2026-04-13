@@ -52,6 +52,7 @@
                   @mouseleave="hoverBlock = false"
                 />
                 <v-radio
+                  :disabled="activeZaehlung.dauerzaehlung"
                   label="Stunde"
                   :value="Zeitauswahl.STUNDE"
                   @mouseover="hoverStunde = true"
@@ -166,7 +167,7 @@
             label="Zeitintervall"
             variant="filled"
             density="compact"
-            :disabled="isZeitauswahlSpitzenstunde"
+            :disabled="isZeitauswahlSpitzenstunde || activeZaehlung.dauerzaehlung"
             @mouseover="hoverSelectZeitintervall = true"
             @mouseleave="hoverSelectZeitintervall = false"
           />
@@ -388,6 +389,9 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
         result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
       }
     }
+  }
+  if (result.length === 0) {
+    result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
   }
   return result;
 });
