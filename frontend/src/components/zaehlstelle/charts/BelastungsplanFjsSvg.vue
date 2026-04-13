@@ -552,24 +552,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node1_arrows">
-            <g id="node1_west">
+          <g id="arrows_node1">
+            <g id="arrows_node1_west">
               <path
-                id="node1_west_north"
+                id="arrow_node1_west_outgoing"
                 d="M 627.50029,395.409 V 220.40855 H 619.5 L 633.49931,185.409 647.5,220.40855 h -7.99962 V 395.409 Z"
-                :fill="colorNodeOneArrowWestNorth"
+                :fill="colorArrowNodeOneWestOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <path
-                id="node1_west_south"
+                id="arrow_node1_west_incoming"
                 d="m 606.25,185.409 v 175.00052 h 8 L 600.25072,395.409 586.25,360.40952 h 8 V 185.409 Z"
-                :fill="colorNodeOneArrowWestSouth"
+                :fill="colorArrowNodeOneWestIncoming"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <text
-                id="node1_west_south_number_text"
+                id="arrow_node1_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -596,7 +596,7 @@
                 y="-259.38544"
               >
                 <tspan
-                  id="node1_west_south_number_tspan"
+                  id="arrow_node1_west_incoming_number_tspan"
                   x="-49.490978"
                   y="528.50812"
                   style="
@@ -613,11 +613,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeOneArrowWestSouth }}
+                  {{ zaehlwertArrowNodeOneWestIncoming }}
                 </tspan>
               </text>
               <text
-                id="node1_west_north_number_text"
+                id="arrow_node1_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -644,7 +644,7 @@
                 y="-230.55521"
               >
                 <tspan
-                  id="node1_west_north_number_tspan"
+                  id="arrow_node1_west_outgoing_number_tspan"
                   x="-49.490978"
                   y="557.33826"
                   style="
@@ -661,11 +661,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeOneArrowWestNorth }}
+                  {{ zaehlwertArrowNodeOneWestOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node1_west_sum_text"
+                id="arrows_node1_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
                 style="
@@ -692,7 +692,7 @@
                 y="-203.73477"
               >
                 <tspan
-                  id="node1_west_sum_tspan"
+                  id="arrows_node1_west_sum_tspan"
                   x="-49.797356"
                   y="584.45007"
                   style="
@@ -709,32 +709,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeOneArrowsWest }}
+                  {{ sumArrowsNodeOneWest }}
                 </tspan>
               </text>
               <path
-                id="node1_west_sum_line"
+                id="arrows_node1_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 645.75,142.03 v -98 h 2.45 v 98 z"
               />
             </g>
-            <g id="node1_east">
+            <g id="arrows_node1_east">
               <path
-                id="node1_east_north"
+                id="arrow_node1_east_outgoing"
                 d="M 793.75028,395.409 V 220.40855 h -8.00029 l 13.99931,-34.99955 14.00069,34.99955 h -7.99962 V 395.409 Z"
-                :fill="colorNodeOneArrowEastNorth"
+                :fill="colorArrowNodeOneEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node1_east_south"
+                id="arrow_node1_east_incoming"
                 d="m 772.49999,185.409 v 175.00052 h 8 L 766.50071,395.409 752.49999,360.40952 h 8 V 185.409 Z"
-                :fill="colorNodeOneArrowEastSouth"
+                :fill="colorArrowNodeOneEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node1_east_south_number_text"
+                id="arrow_node1_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -761,7 +761,7 @@
                 y="-115.23471"
               >
                 <tspan
-                  id="node1_east_south_number_tspan"
+                  id="arrow_node1_east_incoming_number_tspan"
                   x="-49.490978"
                   y="672.65881"
                   style="
@@ -778,11 +778,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeOneArrowEastSouth }}
+                  {{ zaehlwertArrowNodeOneEastIncoming }}
                 </tspan>
               </text>
               <text
-                id="node1_east_north_number_text"
+                id="arrow_node1_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -809,7 +809,7 @@
                 y="-86.404541"
               >
                 <tspan
-                  id="node1_east_north_number_tspan"
+                  id="arrow_node1_east_outgoing_number_tspan"
                   x="-49.490978"
                   y="701.48889"
                   style="
@@ -826,11 +826,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeOneArrowEastNorth }}
+                  {{ zaehlwertArrowNodeOneEastOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node1_east_sum_text"
+                id="arrows_node1_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
                 style="
@@ -857,7 +857,7 @@
                 y="-59.637333"
               >
                 <tspan
-                  id="node1_east_sum_tspan"
+                  id="arrows_node1_east_sum_tspan"
                   x="-49.797356"
                   y="728.54749"
                   style="
@@ -874,11 +874,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeOneArrowsEast }}
+                  {{ sumArrowsNodeOneEast }}
                 </tspan>
               </text>
               <path
-                id="node1_east_sum_line"
+                id="arrows_node1_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 811.99999,142.03 v -98 h 2.45 v 98 z"
               />
@@ -1099,24 +1099,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node2_arrows">
-            <g id="node2_north">
+          <g id="arrows_node2">
+            <g id="arrows_node2_north">
               <path
-                id="node2_north_west"
+                id="arrow_node2_north_incoming"
                 d="m 1214.591,606.25 h -175.0005 v 8 L 1004.591,600.25072 1039.5905,586.25 v 8 h 175.0005 z"
-                :fill="colorNodeTwoArrowNorthWest"
+                :fill="colorArrowNodeTwoNorthIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node2_north_east"
+                id="arrow_node2_north_outgoing"
                 d="m 1004.591,627.5 h 175.0005 v -8 l 34.9995,13.9993 -34.9995,14.0007 v -8 H 1004.591 Z"
-                :fill="colorNodeTwoArrowNorthEast"
+                :fill="colorArrowNodeTwoNorthOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node2_north_west_number_text"
+                id="arrow_node2_north_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -1143,7 +1143,7 @@
                 y="-259.38541"
               >
                 <tspan
-                  id="node2_north_west_number_tspan"
+                  id="arrow_node2_north_incoming_number_tspan"
                   x="1564.014"
                   y="528.50812"
                   style="
@@ -1160,11 +1160,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeTwoArrowNorthWest }}
+                  {{ zaehlwertArrowNodeTwoNorthIncoming }}
                 </tspan>
               </text>
               <text
-                id="node2_north_east_number_text"
+                id="arrow_node2_north_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -1191,7 +1191,7 @@
                 y="-230.55528"
               >
                 <tspan
-                  id="node2_north_east_number_tspan"
+                  id="arrow_node2_north_outgoing_number_tspan"
                   x="1564.014"
                   y="557.33826"
                   style="
@@ -1208,11 +1208,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeTwoArrowNorthEast }}
+                  {{ zaehlwertArrowNodeTwoNorthOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node2_north_sum_text"
+                id="arrows_node2_north_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
                 style="
@@ -1239,7 +1239,7 @@
                 y="-203.73479"
               >
                 <tspan
-                  id="node2_north_sum_tspan"
+                  id="arrows_node2_north_sum_tspan"
                   x="1565.4286"
                   y="584.45001"
                   style="
@@ -1256,32 +1256,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeTwoArrowsNorth }}
+                  {{ sumArrowsNodeTwoNorth }}
                 </tspan>
               </text>
               <path
-                id="node2_north_sum_line"
+                id="arrows_node2_north_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8774"
                 d="m 1260,645.75 h 98 v 2.45 h -98 z"
               />
             </g>
-            <g id="node2_south">
+            <g id="arrows_node2_south">
               <path
-                id="node2_south_west"
+                id="arrow_node2_south_incoming"
                 d="m 1214.591,772.49999 h -175.0005 v 8 l -34.9995,-13.99928 34.9995,-14.00072 v 8 h 175.0005 z"
-                :fill="colorNodeTwoArrowSouthWest"
+                :fill="colorArrowNodeTwoSouthIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node2_south_east"
+                id="arrow_node2_south_outgoing"
                 d="m 1004.591,793.74999 h 175.0005 v -8 l 34.9995,13.9993 -34.9995,14.0007 v -8 H 1004.591 Z"
-                :fill="colorNodeTwoArrowSouthEast"
+                :fill="colorArrowNodeTwoSouthOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node2_south_west_number_text"
+                id="arrow_node2_south_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -1308,7 +1308,7 @@
                 y="-115.2347"
               >
                 <tspan
-                  id="node2_south_west_number_tspan"
+                  id="arrow_node2_south_incoming_number_tspan"
                   x="1564.014"
                   y="672.65881"
                   style="
@@ -1325,11 +1325,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeTwoArrowSouthWest }}
+                  {{ zaehlwertArrowNodeTwoSouthIncoming }}
                 </tspan>
               </text>
               <text
-                id="node2_south_east_number_text"
+                id="arrow_node2_south_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -1356,7 +1356,7 @@
                 y="-86.404564"
               >
                 <tspan
-                  id="node2_south_east_number_tspan"
+                  id="arrow_node2_south_outgoing_number_tspan"
                   x="1564.014"
                   y="701.48889"
                   style="
@@ -1373,11 +1373,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeTwoArrowSouthEast }}
+                  {{ zaehlwertArrowNodeTwoSouthOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node2_south_sum_text"
+                id="arrows_node2_south_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
                 style="
@@ -1404,7 +1404,7 @@
                 y="-59.637352"
               >
                 <tspan
-                  id="node2_south_sum_tspan"
+                  id="arrows_node2_south_sum_tspan"
                   x="1565.4287"
                   y="728.54749"
                   style="
@@ -1421,11 +1421,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeTwoArrowsSouth }}
+                  {{ sumArrowsNodeTwoSouth }}
                 </tspan>
               </text>
               <path
-                id="node2_south_sum_line"
+                id="arrows_node2_south_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1260,811.99999 h 98 v 2.45 h -98 z"
               />
@@ -1685,24 +1685,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node3_arrows">
-            <g id="node3_east">
+          <g id="arrows_node3">
+            <g id="arrows_node3_east">
               <path
-                id="node3_east_north"
+                id="arrow_node3_east_outgoing"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
-                :fill="colorNodeThreeArrowEastNorth"
+                :fill="colorArrowNodeThreeEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node3_east_south"
+                id="arrow_node3_east_incoming"
                 d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
-                :fill="colorNodeThreeArrowEastSouth"
+                :fill="colorArrowNodeThreeEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node3_east_south_number_text"
+                id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -1729,7 +1729,7 @@
                 y="-115.23471"
               >
                 <tspan
-                  id="node3_east_south_number_tspan"
+                  id="arrow_node3_east_incoming_number_tspan"
                   x="-1472.0605"
                   y="672.65881"
                   style="
@@ -1746,11 +1746,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeThreeArrowEastSouth }}
+                  {{ zaehlwertArrowNodeThreeEastIncoming }}
                 </tspan>
               </text>
               <text
-                id="node3_east_north_number_text"
+                id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -1777,7 +1777,7 @@
                 y="-86.404541"
               >
                 <tspan
-                  id="node3_east_north_number_tspan"
+                  id="arrow_node3_east_outgoing_number_tspan"
                   x="-1472.0605"
                   y="701.48889"
                   style="
@@ -1794,11 +1794,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeThreeArrowEastNorth }}
+                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node3_east_sum_text"
+                id="arrows_node3_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
                 style="
@@ -1825,7 +1825,7 @@
                 y="-59.637333"
               >
                 <tspan
-                  id="node3_east_sum_tspan"
+                  id="arrows_node3_east_sum_tspan"
                   x="-1472.8923"
                   y="728.54749"
                   style="
@@ -1842,32 +1842,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeThreeArrowsEast }}
+                  {{ sumArrowsNodeThreeEast }}
                 </tspan>
               </text>
               <path
-                id="node3_east_sum_line"
+                id="arrows_node3_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 811.99999,1375.5 v -98 h 2.45 v 98 z"
               />
             </g>
-            <g id="node3_west">
+            <g id="arrows_node3_west">
               <path
-                id="node3_west_north"
+                id="arrow_node3_west_incoming"
                 d="M 627.50029,1214.591 V 1039.5905 H 619.5 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
-                :fill="colorNodeThreeArrowWestNorth"
+                :fill="colorArrowNodeThreeWestIncoming"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <path
-                id="node3_west_south"
+                id="arrow_node3_west_outgoing"
                 d="m 606.25,1004.591 v 175.0005 h 8 L 600.25072,1214.591 586.25,1179.5915 h 8 V 1004.591 Z"
-                :fill="colorNodeThreeArrowWestSouth"
+                :fill="colorArrowNodeThreeWestOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <text
-                id="node3_west_south_number_text"
+                id="arrow_node3_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -1894,7 +1894,7 @@
                 y="-259.38544"
               >
                 <tspan
-                  id="node3_west_south_number_tspan"
+                  id="arrow_node3_west_outgoing_number_tspan"
                   x="-1472.0605"
                   y="528.50812"
                   style="
@@ -1911,11 +1911,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeThreeArrowWestSouth }}
+                  {{ zaehlwertArrowNodeThreeWestOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node3_west_north_number_text"
+                id="arrow_node3_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
                 style="
@@ -1942,7 +1942,7 @@
                 y="-230.55521"
               >
                 <tspan
-                  id="node3_west_north_number_tspan"
+                  id="arrow_node3_west_incoming_number_tspan"
                   x="-1472.0605"
                   y="557.33826"
                   style="
@@ -1959,11 +1959,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeThreeArrowWestNorth }}
+                  {{ zaehlwertArrowNodeThreeWestIncoming }}
                 </tspan>
               </text>
               <text
-                id="node3_west_sum_text"
+                id="arrows_node3_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
                 style="
@@ -1990,7 +1990,7 @@
                 y="-203.73477"
               >
                 <tspan
-                  id="node3_west_sum_tspan"
+                  id="arrows_node3_west_sum_tspan"
                   x="-1472.8923"
                   y="584.45007"
                   style="
@@ -2007,11 +2007,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeThreeArrowsWest }}
+                  {{ sumArrowsNodeThreeWest }}
                 </tspan>
               </text>
               <path
-                id="node3_west_sum_line"
+                id="arrows_node3_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 645.75,1375.5 v -98 h 2.45 v 98 z"
               />
@@ -2268,24 +2268,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node4_arrows">
-            <g id="node4_south">
+          <g id="arrows_node4">
+            <g id="arrows_node4_south">
               <path
-                id="node4_south_west"
+                id="arrow_node4_south_outgoing"
                 d="M 395.409,772.49999 H 220.4085 v 8 l -34.9995,-13.99928 34.9995,-14.00072 v 8 H 395.409 Z"
-                :fill="colorNodeFourArrowSouthWest"
+                :fill="colorArrowNodeFourSouthOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node4_south_east"
+                id="arrow_node4_south_incoming"
                 d="m 185.409,793.74999 h 175.0005 v -8 l 34.9995,13.9993 -34.9995,14.0007 v -8 H 185.409 Z"
-                :fill="colorNodeFourArrowSouthEast"
+                :fill="colorArrowNodeFourSouthIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node4_south_west_number_text"
+                id="arrow_node4_south_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -2312,7 +2312,7 @@
                 y="-115.2348"
               >
                 <tspan
-                  id="node4_south_west_number_tspan"
+                  id="arrow_node4_south_outgoing_number_tspan"
                   x="141.44441"
                   y="672.65881"
                   style="
@@ -2329,11 +2329,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFourArrowSouthWest }}
+                  {{ zaehlwertArrowNodeFourSouthOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node4_south_east_number_text"
+                id="arrow_node4_south_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -2360,7 +2360,7 @@
                 y="-86.404541"
               >
                 <tspan
-                  id="node4_south_east_number_tspan"
+                  id="arrow_node4_south_incoming_number_tspan"
                   x="141.44441"
                   y="701.48889"
                   style="
@@ -2377,11 +2377,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFourArrowSouthEast }}
+                  {{ zaehlwertArrowNodeFourSouthIncoming }}
                 </tspan>
               </text>
               <text
-                id="node4_south_sum_text"
+                id="arrows_node4_south_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
                 style="
@@ -2408,7 +2408,7 @@
                 y="-59.637363"
               >
                 <tspan
-                  id="node4_south_sum_tspan"
+                  id="arrows_node4_south_sum_tspan"
                   x="142.33362"
                   y="728.54749"
                   style="
@@ -2425,32 +2425,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeFourArrowsSouth }}
+                  {{ sumArrowsNodeFourSouth }}
                 </tspan>
               </text>
               <path
-                id="node4_south_sum_line"
+                id="arrows_node4_south_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 24.5,811.99999 h 98 v 2.45 h -98 z"
               />
             </g>
-            <g id="node4_north">
+            <g id="arrows_node4_north">
               <path
-                id="node4_north_west"
+                id="arrow_node4_north_outgoing"
                 d="M 395.409,606.25 H 220.4085 v 8 L 185.409,600.25072 220.4085,586.25 v 8 H 395.409 Z"
-                :fill="colorNodeFourArrowNorthWest"
+                :fill="colorArrowNodeFourNorthOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node4_north_east"
+                id="arrow_node4_north_incoming"
                 d="m 185.409,627.5 h 175.0005 v -8 L 395.409,633.4993 360.4095,647.5 v -8 H 185.409 Z"
-                :fill="colorNodeFourArrowNorthEast"
+                :fill="colorArrowNodeFourNorthIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node4_north_west_number_text"
+                id="arrow_node4_north_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -2477,7 +2477,7 @@
                 y="-259.38544"
               >
                 <tspan
-                  id="node4_north_west_number_tspan"
+                  id="arrow_node4_north_outgoing_number_tspan"
                   x="141.44441"
                   y="528.50812"
                   style="
@@ -2494,11 +2494,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFourArrowNorthWest }}
+                  {{ zaehlwertArrowNodeFourNorthOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node4_north_east_number_text"
+                id="arrow_node4_north_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
                 style="
@@ -2525,7 +2525,7 @@
                 y="-230.55518"
               >
                 <tspan
-                  id="node4_north_east_number_tspan"
+                  id="arrow_node4_north_incoming_number_tspan"
                   x="141.44441"
                   y="557.33826"
                   style="
@@ -2542,11 +2542,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFourArrowNorthEast }}
+                  {{ zaehlwertArrowNodeFourNorthIncoming }}
                 </tspan>
               </text>
               <text
-                id="node4_north_sum_text"
+                id="arrows_node4_north_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
                 style="
@@ -2573,7 +2573,7 @@
                 y="-203.7348"
               >
                 <tspan
-                  id="node4_north_sum_tspan"
+                  id="arrows_node4_north_sum_tspan"
                   x="142.33362"
                   y="584.45007"
                   style="
@@ -2590,11 +2590,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeFourArrowsNorth }}
+                  {{ sumArrowsNodeFourNorth }}
                 </tspan>
               </text>
               <path
-                id="node4_north_sum_line"
+                id="arrows_node4_north_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 24.5,645.75 h 98 v 2.45 h -98 z"
               />
@@ -2821,24 +2821,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node5_arrows">
-            <g id="node5_north_west">
+          <g id="arrows_node5">
+            <g id="arrows_node5_north_west">
               <path
-                id="node5_north_west_north_east"
+                id="arrow_node5_north_west_outgoing"
                 d="M 864.11499,433.35748 987.859,309.61347 l -5.65706,-5.65706 34.64746,-14.84941 -14.8485,34.6484 -5.65656,-5.65658 -123.744,123.744 z"
-                :fill="colorNodeFiveArrowNorthWestNorthEast"
+                :fill="colorArrowNodeFiveNorthWestOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <path
-                id="node5_north_west_south_west"
+                id="arrow_node5_north_west_incoming"
                 d="m 997.57854,269.83728 -123.74405,123.74405 5.65685,5.65686 -34.64735,14.84938 14.84836,-34.64837 5.65686,5.65685 L 989.09326,261.352 Z"
-                :fill="colorNodeFiveArrowNorthWestSouthWest"
+                :fill="colorArrowNodeFiveNorthWestIncoming"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <text
-                id="node5_north_west_south_west_number_text"
+                id="arrow_node5_north_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -2865,7 +2865,7 @@
                 y="-7.9779282"
               >
                 <tspan
-                  id="node5_north_west_south_west_number_tspan"
+                  id="arrow_node5_north_west_incoming_number_tspan"
                   x="757.82507"
                   y="779.91565"
                   style="
@@ -2882,11 +2882,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFiveArrowNorthWestSouthWest }}
+                  {{ zaehlwertArrowNodeFiveNorthWestIncoming }}
                 </tspan>
               </text>
               <text
-                id="node5_north_west_north_east_number_text"
+                id="arrow_node5_north_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -2913,7 +2913,7 @@
                 y="20.852219"
               >
                 <tspan
-                  id="node5_north_west_north_east_number_tspan"
+                  id="arrow_node5_north_west_outgoing_number_tspan"
                   x="757.82214"
                   y="808.74573"
                   style="
@@ -2930,11 +2930,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFiveArrowNorthWestNorthEast }}
+                  {{ zaehlwertArrowNodeFiveNorthWestOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node5_north_west_sum_text"
+                id="arrows_node5_north_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
                 style="
@@ -2961,7 +2961,7 @@
                 y="47.580051"
               >
                 <tspan
-                  id="node5_north_west_sum_tspan"
+                  id="arrows_node5_north_west_sum_tspan"
                   x="757.81403"
                   y="835.76489"
                   style="
@@ -2978,32 +2978,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeFiveArrowsNorthWest }}
+                  {{ sumArrowsNodeFiveNorthWest }}
                 </tspan>
               </text>
               <path
-                id="node5_north_west_sum_line"
+                id="arrows_node5_north_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1056.1845,267.09547 69.2965,-69.29647 1.7324,1.73241 -69.2965,69.29647 z"
               />
             </g>
-            <g id="node5_south_east">
+            <g id="arrows_node5_south_east">
               <path
-                id="node5_south_east_north_east"
+                id="arrow_node5_south_east_outgoing"
                 d="m 981.66949,550.91198 123.74401,-123.74401 -5.6571,-5.65706 34.6475,-14.84941 -14.8485,34.6484 -5.6566,-5.65658 -123.74396,123.744 z"
-                :fill="colorNodeFiveArrowSouthEastNorthEast"
+                :fill="colorArrowNodeFiveSouthEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node5_south_east_south_west"
+                id="arrow_node5_south_east_incoming"
                 d="m 1115.1365,387.39528 -123.74401,123.74405 5.65685,5.65686 -34.64735,14.84938 14.84836,-34.64837 5.65686,5.65685 L 1106.6513,378.91 Z"
-                :fill="colorNodeFiveArrowSouthEastSouthWest"
+                :fill="colorArrowNodeFiveSouthEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node5_south_east_south_west_number_text"
+                id="arrow_node5_south_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -3030,7 +3030,7 @@
                 y="136.17249"
               >
                 <tspan
-                  id="node5_south_east_south_west_number_tspan"
+                  id="arrow_node5_south_east_incoming_number_tspan"
                   x="757.82214"
                   y="924.06604"
                   style="
@@ -3047,11 +3047,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFiveArrowSouthEastSouthWest }}
+                  {{ zaehlwertArrowNodeFiveSouthEastIncoming }}
                 </tspan>
               </text>
               <text
-                id="node5_south_east_north_east_number_text"
+                id="arrow_node5_south_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -3078,7 +3078,7 @@
                 y="165.00262"
               >
                 <tspan
-                  id="node5_south_east_north_east_number_tspan"
+                  id="arrow_node5_south_east_outgoing_number_tspan"
                   x="757.82501"
                   y="952.89612"
                   style="
@@ -3095,11 +3095,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeFiveArrowSouthEastNorthEast }}
+                  {{ zaehlwertArrowNodeFiveSouthEastOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node5_south_east_sum_text"
+                id="arrows_node5_south_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
                 style="
@@ -3126,7 +3126,7 @@
                 y="191.67722"
               >
                 <tspan
-                  id="node5_south_east_sum_tspan"
+                  id="arrows_node5_south_east_sum_tspan"
                   x="757.81683"
                   y="979.86206"
                   style="
@@ -3143,11 +3143,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeFiveArrowsSouthEast }}
+                  {{ sumArrowsNodeFiveSouthEast }}
                 </tspan>
               </text>
               <path
-                id="node5_south_east_sum_line"
+                id="arrows_node5_south_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1173.739,384.64997 69.2965,-69.29647 1.7324,1.73241 -69.2965,69.29647 z"
               />
@@ -3375,24 +3375,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node6_arrows">
-            <g id="node6_north_east">
+          <g id="arrows_node6">
+            <g id="arrows_node6_north_east">
               <path
-                id="node6_north_east_north_west"
+                id="arrow_node6_north_east_incoming"
                 d="m 1130.1618,997.57854 -123.7441,-123.74404 -5.6568,5.65686 -14.84941,-34.64737 34.64841,14.84838 -5.6569,5.65685 123.7441,123.74404 z"
-                :fill="colorNodeSixArrowNorthEastNorthWest"
+                :fill="colorArrowNodeSixNorthEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node6_north_east_south_east"
+                id="arrow_node6_north_east_outgoing"
                 d="m 966.64529,864.11149 123.74411,123.74404 5.6568,-5.65686 14.8494,34.64743 -34.6484,-14.8484 5.6569,-5.65689 -123.74411,-123.74404 z"
-                :fill="colorNodeSixArrowNorthEastSouthEast"
+                :fill="colorArrowNodeSixNorthEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node6_north_east_north_west_number_text"
+                id="arrow_node6_north_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -3419,7 +3419,7 @@
                 y="-866.33527"
               >
                 <tspan
-                  id="node6_north_east_north_west_number_tspan"
+                  id="arrow_node6_north_east_incoming_number_tspan"
                   x="1898.416"
                   y="-78.441635"
                   style="
@@ -3436,11 +3436,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSixArrowNorthEastNorthWest }}
+                  {{ zaehlwertArrowNodeSixNorthEastIncoming }}
                 </tspan>
               </text>
               <text
-                id="node6_north_east_south_east_number_text"
+                id="arrow_node6_north_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -3467,7 +3467,7 @@
                 y="-837.50513"
               >
                 <tspan
-                  id="node6_north_east_south_east_number_tspan"
+                  id="arrow_node6_north_east_outgoing_number_tspan"
                   x="1898.4132"
                   y="-49.611588"
                   style="
@@ -3484,11 +3484,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSixArrowNorthEastSouthEast }}
+                  {{ zaehlwertArrowNodeSixNorthEastOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node6_north_east_sum_text"
+                id="arrows_node6_north_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
                 style="
@@ -3515,7 +3515,7 @@
                 y="-810.4613"
               >
                 <tspan
-                  id="node6_north_east_sum_tspan"
+                  id="arrows_node6_north_east_sum_tspan"
                   x="1899.9528"
                   y="-22.276493"
                   style="
@@ -3532,32 +3532,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeSixArrowsNorthEast }}
+                  {{ sumArrowsNode6NorthEast }}
                 </tspan>
               </text>
               <path
-                id="node6_north_east_sum_line"
+                id="arrows_node6_north_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8774"
                 d="m 1134.3394,1057.6195 69.2964,69.2965 -1.7324,1.7324 -69.2964,-69.2965 z"
               />
             </g>
-            <g id="node6_south_west">
+            <g id="arrows_node6_south_west">
               <path
-                id="node6_south_west_north_west"
+                id="arrow_node6_south_west_incoming"
                 d="m 1012.6073,1115.1365 -123.74411,-123.744 -5.6568,5.65686 -14.8494,-34.64737 34.6484,14.84838 -5.6569,5.65685 123.74411,123.74408 z"
-                :fill="colorNodeSixArrowSouthWestNorthWest"
+                :fill="colorArrowNodeSixSouthWestIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node6_south_west_south_east"
+                id="arrow_node6_south_west_outgoing"
                 d="m 849.08729,981.66949 123.7441,123.74401 5.6568,-5.6568 14.8494,34.6474 -34.6484,-14.8484 5.6569,-5.6569 -123.7441,-123.74403 z"
-                :fill="colorNodeSixArrowSouthWestSouthEast"
+                :fill="colorArrowNodeSixSouthWestOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node6_south_west_north_west_number_text"
+                id="arrow_node6_south_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -3584,7 +3584,7 @@
                 y="-722.18481"
               >
                 <tspan
-                  id="node6_south_west_north_west_number_tspan"
+                  id="arrow_node6_south_west_incoming_number_tspan"
                   x="1898.4132"
                   y="65.708748"
                   style="
@@ -3601,11 +3601,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSixArrowSouthWestNorthWest }}
+                  {{ zaehlwertArrowNodeSixSouthWestIncoming }}
                 </tspan>
               </text>
               <text
-                id="node6_south_west_south_east_number_text"
+                id="arrow_node6_south_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -3632,7 +3632,7 @@
                 y="-693.35468"
               >
                 <tspan
-                  id="node6_south_west_south_east_number_tspan"
+                  id="arrow_node6_south_west_outgoing_number_tspan"
                   x="1898.416"
                   y="94.53878"
                   style="
@@ -3649,11 +3649,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSixArrowSouthWestSouthEast }}
+                  {{ zaehlwertArrowNodeSixSouthWestOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node6_south_west_sum_text"
+                id="arrows_node6_south_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
                 style="
@@ -3680,7 +3680,7 @@
                 y="-666.362"
               >
                 <tspan
-                  id="node6_south_west_sum_tspan"
+                  id="arrows_node6_south_west_sum_tspan"
                   x="1899.9528"
                   y="121.82278"
                   style="
@@ -3697,11 +3697,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeSixArrowsSouthWest }}
+                  {{ sumArrowsNodeSixSouthWest }}
                 </tspan>
               </text>
               <path
-                id="node6_south_west_sum_line"
+                id="arrows_node6_south_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1016.7849,1175.1775 69.2964,69.2965 -1.7324,1.7324 -69.2964,-69.2965 z"
               />
@@ -3961,24 +3961,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node7_arrows">
-            <g id="node7_south_east">
+          <g id="arrows_node7">
+            <g id="arrows_node7_south_east">
               <path
-                id="node7_south_east_north_east"
+                id="arrow_node7_south_east_incoming"
                 d="m 402.4195,1130.162 123.74404,-123.7441 -5.65706,-5.657 34.64739,-14.84941 -14.8484,34.64841 -5.65658,-5.6566 -123.74404,123.744 z"
-                :fill="colorNodeSevenArrowSouthEastNorthEast"
+                :fill="colorArrowNodeSevenSouthEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node7_south_east_south_west"
+                id="arrow_node7_south_east_outgoing"
                 d="m 535.88655,966.64529 -123.74404,123.74411 5.65686,5.6568 -34.64737,14.8494 14.84838,-34.6484 5.65685,5.6569 123.74404,-123.74411 z"
-                :fill="colorNodeSevenArrowSouthEastSouthWest"
+                :fill="colorArrowNodeSevenSouthEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node7_south_east_south_west_number_text"
+                id="arrow_node7_south_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -4005,7 +4005,7 @@
                 y="136.17253"
               >
                 <tspan
-                  id="node7_south_east_south_west_number_tspan"
+                  id="arrow_node7_south_east_outgoing_number_tspan"
                   x="-664.74414"
                   y="924.06604"
                   style="
@@ -4022,11 +4022,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSevenArrowSouthEastSouthWest }}
+                  {{ zaehlwertArrowNodeSevenSouthEastOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node7_south_east_north_east_number_text"
+                id="arrow_node7_south_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -4053,7 +4053,7 @@
                 y="165.00264"
               >
                 <tspan
-                  id="node7_south_east_north_east_number_tspan"
+                  id="arrow_node7_south_east_incoming_number_tspan"
                   x="-664.74701"
                   y="952.89606"
                   style="
@@ -4070,11 +4070,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSevenArrowSouthEastNorthEast }}
+                  {{ zaehlwertArrowNodeSevenSouthEastIncoming }}
                 </tspan>
               </text>
               <text
-                id="node7_south_east_sum_text"
+                id="arrows_node7_south_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
                 style="
@@ -4101,7 +4101,7 @@
                 y="191.67723"
               >
                 <tspan
-                  id="node7_south_east_sum_tspan"
+                  id="arrows_node7_south_east_sum_tspan"
                   x="-665.28058"
                   y="979.86206"
                   style="
@@ -4118,32 +4118,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeSevenArrowsSouthEast }}
+                  {{ sumArrowsNodeSevenSouthEast }}
                 </tspan>
               </text>
               <path
-                id="node7_south_east_sum_line"
+                id="arrows_node7_south_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 301.546,1256.8464 69.29647,-69.2964 1.73241,1.7324 -69.29647,69.2964 z"
               />
             </g>
-            <g id="node7_north_west">
+            <g id="arrows_node7_north_west">
               <path
-                id="node7_north_west_north_east"
+                id="arrow_node7_north_west_incoming"
                 d="m 284.865,1012.6075 123.74404,-123.74411 -5.65706,-5.657 34.64739,-14.8494 -14.8484,34.6484 -5.65658,-5.6566 -123.74404,123.74401 z"
-                :fill="colorNodeSevenArrowNorthWestNorthEast"
+                :fill="colorArrowNodeSevenNorthWestIncoming"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <path
-                id="node7_north_west_south_west"
+                id="arrow_node7_north_west_outgoing"
                 d="m 418.33205,849.08729 -123.74404,123.7441 5.65686,5.6568 -34.64737,14.8494 14.84838,-34.6484 5.65685,5.6569 123.74404,-123.7441 z"
-                :fill="colorNodeSevenArrowNorthWestSouthWest"
+                :fill="colorArrowNodeSevenNorthWestOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8112"
               />
               <text
-                id="node7_north_west_south_west_number_text"
+                id="arrow_node7_north_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -4170,7 +4170,7 @@
                 y="-7.9778929"
               >
                 <tspan
-                  id="node7_north_west_south_west_number_tspan"
+                  id="arrow_node7_north_west_outgoing_number_tspan"
                   x="-664.74695"
                   y="779.91565"
                   style="
@@ -4187,11 +4187,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSevenArrowNorthWestSouthWest }}
+                  {{ zaehlwertArrowNodeSevenNorthWestOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node7_north_west_north_east_number_text"
+                id="arrow_node7_north_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
                 style="
@@ -4218,7 +4218,7 @@
                 y="20.852285"
               >
                 <tspan
-                  id="node7_north_west_north_east_number_tspan"
+                  id="arrow_node7_north_west_incoming_number_tspan"
                   x="-664.74414"
                   y="808.74573"
                   style="
@@ -4235,11 +4235,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeSevenArrowNorthWestNorthEast }}
+                  {{ zaehlwertArrowNodeSevenNorthWestIncoming }}
                 </tspan>
               </text>
               <text
-                id="node7_north_west_sum_text"
+                id="arrows_node7_north_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
                 style="
@@ -4266,7 +4266,7 @@
                 y="47.580002"
               >
                 <tspan
-                  id="node7_north_west_sum_tspan"
+                  id="arrows_node7_north_west_sum_tspan"
                   x="-665.27777"
                   y="835.76489"
                   style="
@@ -4283,11 +4283,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeSevenArrowsNorthWest }}
+                  {{ sumArrowsNodeSevenNorthWest }}
                 </tspan>
               </text>
               <path
-                id="node7_north_west_sum_line"
+                id="arrows_node7_north_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 183.988,1139.2884 69.29647,-69.2964 1.73241,1.7324 -69.29647,69.2964 z"
               />
@@ -4547,24 +4547,24 @@
               </tspan>
             </text>
           </g>
-          <g id="node8_arrows">
-            <g id="node8_south_west">
+          <g id="arrows_node8">
+            <g id="arrows_node8_south_west">
               <path
-                id="node8_south_west_north_west"
+                id="arrow_node8_south_west_outgoing"
                 d="M 433.35729,535.88655 309.61325,412.14251 303.9564,417.79937 289.107,383.152 l 34.64839,14.84838 -5.65686,5.65685 123.74404,123.74404 z"
-                :fill="colorNodeEightArrowSouthWestNorthWest"
+                :fill="colorArrowNodeEightSouthWestOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node8_south_west_south_east"
+                id="arrow_node8_south_west_incoming"
                 d="m 269.83728,402.4195 123.74404,123.74404 5.65685,-5.65686 14.84939,34.64739 -34.64838,-14.8484 5.65686,-5.65685 L 261.352,410.90478 Z"
-                :fill="colorNodeEightArrowSouthWestSouthEast"
+                :fill="colorArrowNodeEightSouthWestIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node8_south_west_north_west_number_text"
+                id="arrow_node8_south_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -4591,7 +4591,7 @@
                 y="-722.18488"
               >
                 <tspan
-                  id="node8_south_west_north_west_number_tspan"
+                  id="arrow_node8_south_west_outgoing_number_tspan"
                   x="475.84692"
                   y="65.708733"
                   style="
@@ -4608,11 +4608,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeEightArrowSouthWestNorthWest }}
+                  {{ zaehlwertArrowNodeEightSouthWestOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node8_south_west_south_east_number_text"
+                id="arrow_node8_south_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -4639,7 +4639,7 @@
                 y="-693.35461"
               >
                 <tspan
-                  id="node8_south_west_south_east_number_tspan"
+                  id="arrow_node8_south_west_incoming_number_tspan"
                   x="475.84406"
                   y="94.538795"
                   style="
@@ -4656,11 +4656,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeEightArrowSouthWestSouthEast }}
+                  {{ zaehlwertArrowNodeEightSouthWestIncoming }}
                 </tspan>
               </text>
               <text
-                id="node8_south_west_sum_text"
+                id="arrows_node8_south_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
                 style="
@@ -4687,7 +4687,7 @@
                 y="-666.3642"
               >
                 <tspan
-                  id="node8_south_west_sum_tspan"
+                  id="arrows_node8_south_west_sum_tspan"
                   x="476.85815"
                   y="121.82064"
                   style="
@@ -4704,32 +4704,32 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeEightArrowsSouthWest }}
+                  {{ sumArrowsNodeEightSouthWest }}
                 </tspan>
               </text>
               <path
-                id="node8_south_west_sum_line"
+                id="arrows_node8_south_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 143.15341,301.546 69.29647,69.29647 -1.73241,1.73241 -69.29647,-69.29647 z"
               />
             </g>
-            <g id="node8_north_east">
+            <g id="arrows_node8_north_east">
               <path
-                id="node8_north_east_north_west"
+                id="arrow_node8_north_east_outgoing"
                 d="m 550.91179,418.33205 -123.74404,-123.74404 -5.65685,5.65686 -14.8494,-34.64737 34.64839,14.84838 -5.65686,5.65685 123.74404,123.74404 z"
-                :fill="colorNodeEightArrowNorthEastNorthWest"
+                :fill="colorArrowNodeEightNorthEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <path
-                id="node8_north_east_south_east"
+                id="arrow_node8_north_east_incoming"
                 d="m 387.39528,284.865 123.74404,123.74404 5.65685,-5.65686 14.84939,34.64739 -34.64838,-14.8484 5.65686,-5.65685 L 378.91,293.35028 Z"
-                :fill="colorNodeEightArrowNorthEastSouthEast"
+                :fill="colorArrowNodeEightNorthEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
               <text
-                id="node8_north_east_north_west_number_text"
+                id="arrow_node8_north_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -4756,7 +4756,7 @@
                 y="-866.33521"
               >
                 <tspan
-                  id="node8_north_east_north_west_number_tspan"
+                  id="arrow_node8_north_east_outgoing_number_tspan"
                   x="475.84406"
                   y="-78.441643"
                   style="
@@ -4773,11 +4773,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeEightArrowNorthEastNorthWest }}
+                  {{ zaehlwertArrowNodeEightNorthEastOutgoing }}
                 </tspan>
               </text>
               <text
-                id="node8_north_east_south_east_number_text"
+                id="arrow_node8_north_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
                 style="
@@ -4804,7 +4804,7 @@
                 y="-837.505"
               >
                 <tspan
-                  id="node8_north_east_south_east_number_tspan"
+                  id="arrow_node8_north_east_incoming_number_tspan"
                   x="475.84692"
                   y="-49.611568"
                   style="
@@ -4821,11 +4821,11 @@
                     stroke-width: 43.9482;
                   "
                 >
-                  {{ zaehlwertNodeEightArrowNorthEastSouthEast }}
+                  {{ zaehlwertArrowNodeEightNorthEastIncoming }}
                 </tspan>
               </text>
               <text
-                id="node8_north_east_sum_text"
+                id="arrows_node8_north_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
                 style="
@@ -4852,7 +4852,7 @@
                 y="-810.45923"
               >
                 <tspan
-                  id="node8_north_east_sum_tspan"
+                  id="arrows_node8_north_east_sum_tspan"
                   x="476.85815"
                   y="-22.274359"
                   style="
@@ -4869,11 +4869,11 @@
                     stroke-width: 43.9644;
                   "
                 >
-                  {{ sumNodeEightArrowsNorthEast }}
+                  {{ sumArrowsNodeEightNorthEast }}
                 </tspan>
               </text>
               <path
-                id="node8_north_east_sum_line"
+                id="arrows_node8_north_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 260.71141,183.988 69.29647,69.29647 -1.73241,1.73241 -69.29647,-69.29647 z"
               />
@@ -4953,286 +4953,290 @@ const availableKnotenarme = computed(() => {
 });
 
 // Zaehlwerte of Node 1
-const zaehlwertNodeOneArrowWestNorth = computed(() => {
+const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeOneArrowWestSouth = computed(() => {
+const zaehlwertArrowNodeOneWestIncoming = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeOneArrowEastNorth = computed(() => {
+const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeOneArrowEastSouth = computed(() => {
+const zaehlwertArrowNodeOneEastIncoming = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeOneArrowsWest = computed(() => {
+const sumArrowsNodeOneWest = computed(() => {
   return (
-    zaehlwertNodeOneArrowWestNorth.value + zaehlwertNodeOneArrowWestSouth.value
+    zaehlwertArrowNodeOneWestOutgoing.value +
+    zaehlwertArrowNodeOneWestIncoming.value
   );
 });
 
-const sumNodeOneArrowsEast = computed(() => {
+const sumArrowsNodeOneEast = computed(() => {
   return (
-    zaehlwertNodeOneArrowEastNorth.value + zaehlwertNodeOneArrowEastSouth.value
+    zaehlwertArrowNodeOneEastOutgoing.value +
+    zaehlwertArrowNodeOneEastIncoming.value
   );
 });
 
 const sumNodeOneArrows = computed(() => {
-  return sumNodeOneArrowsWest.value + sumNodeOneArrowsEast.value;
+  return sumArrowsNodeOneWest.value + sumArrowsNodeOneEast.value;
 });
 
 // Zaehlwerte of Node 2
-const zaehlwertNodeTwoArrowNorthWest = computed(() => {
+const zaehlwertArrowNodeTwoNorthIncoming = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeTwoArrowNorthEast = computed(() => {
+const zaehlwertArrowNodeTwoNorthOutgoing = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeTwoArrowSouthWest = computed(() => {
+const zaehlwertArrowNodeTwoSouthIncoming = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeTwoArrowSouthEast = computed(() => {
+const zaehlwertArrowNodeTwoSouthOutgoing = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeTwoArrowsNorth = computed(() => {
+const sumArrowsNodeTwoNorth = computed(() => {
   return (
-    zaehlwertNodeTwoArrowNorthWest.value + zaehlwertNodeTwoArrowNorthEast.value
+    zaehlwertArrowNodeTwoNorthIncoming.value +
+    zaehlwertArrowNodeTwoNorthOutgoing.value
   );
 });
 
-const sumNodeTwoArrowsSouth = computed(() => {
+const sumArrowsNodeTwoSouth = computed(() => {
   return (
-    zaehlwertNodeTwoArrowSouthWest.value + zaehlwertNodeTwoArrowSouthEast.value
+    zaehlwertArrowNodeTwoSouthIncoming.value +
+    zaehlwertArrowNodeTwoSouthOutgoing.value
   );
 });
 
 const sumNodeTwoArrows = computed(() => {
-  return sumNodeTwoArrowsNorth.value + sumNodeTwoArrowsSouth.value;
+  return sumArrowsNodeTwoNorth.value + sumArrowsNodeTwoSouth.value;
 });
 
 // Zaehlwerte of Node 3
-const zaehlwertNodeThreeArrowWestNorth = computed(() => {
+const zaehlwertArrowNodeThreeWestIncoming = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeThreeArrowWestSouth = computed(() => {
+const zaehlwertArrowNodeThreeWestOutgoing = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeThreeArrowEastNorth = computed(() => {
+const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeThreeArrowEastSouth = computed(() => {
+const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeThreeArrowsWest = computed(() => {
+const sumArrowsNodeThreeWest = computed(() => {
   return (
-    zaehlwertNodeThreeArrowWestNorth.value +
-    zaehlwertNodeThreeArrowWestSouth.value
+    zaehlwertArrowNodeThreeWestIncoming.value +
+    zaehlwertArrowNodeThreeWestOutgoing.value
   );
 });
 
-const sumNodeThreeArrowsEast = computed(() => {
+const sumArrowsNodeThreeEast = computed(() => {
   return (
-    zaehlwertNodeThreeArrowEastNorth.value +
-    zaehlwertNodeThreeArrowEastSouth.value
+    zaehlwertArrowNodeThreeEastOutgoing.value +
+    zaehlwertArrowNodeThreeEastIncoming.value
   );
 });
 
 const sumNodeThreeArrows = computed(() => {
-  return sumNodeThreeArrowsWest.value + sumNodeThreeArrowsEast.value;
+  return sumArrowsNodeThreeWest.value + sumArrowsNodeThreeEast.value;
 });
 
 // Zaehlwerte of Node 4
-const zaehlwertNodeFourArrowNorthWest = computed(() => {
+const zaehlwertArrowNodeFourNorthOutgoing = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeFourArrowNorthEast = computed(() => {
+const zaehlwertArrowNodeFourNorthIncoming = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeFourArrowSouthWest = computed(() => {
+const zaehlwertArrowNodeFourSouthOutgoing = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeFourArrowSouthEast = computed(() => {
+const zaehlwertArrowNodeFourSouthIncoming = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeFourArrowsNorth = computed(() => {
+const sumArrowsNodeFourNorth = computed(() => {
   return (
-    zaehlwertNodeFourArrowNorthWest.value +
-    zaehlwertNodeFourArrowNorthEast.value
+    zaehlwertArrowNodeFourNorthOutgoing.value +
+    zaehlwertArrowNodeFourNorthIncoming.value
   );
 });
 
-const sumNodeFourArrowsSouth = computed(() => {
+const sumArrowsNodeFourSouth = computed(() => {
   return (
-    zaehlwertNodeFourArrowSouthWest.value +
-    zaehlwertNodeFourArrowSouthEast.value
+    zaehlwertArrowNodeFourSouthOutgoing.value +
+    zaehlwertArrowNodeFourSouthIncoming.value
   );
 });
 
 const sumNodeFourArrows = computed(() => {
-  return sumNodeFourArrowsNorth.value + sumNodeFourArrowsSouth.value;
+  return sumArrowsNodeFourNorth.value + sumArrowsNodeFourSouth.value;
 });
 
 // Zaehlwerte of Node 5
-const zaehlwertNodeFiveArrowNorthWestNorthEast = computed(() => {
+const zaehlwertArrowNodeFiveNorthWestOutgoing = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeFiveArrowNorthWestSouthWest = computed(() => {
+const zaehlwertArrowNodeFiveNorthWestIncoming = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeFiveArrowSouthEastNorthEast = computed(() => {
+const zaehlwertArrowNodeFiveSouthEastOutgoing = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeFiveArrowSouthEastSouthWest = computed(() => {
+const zaehlwertArrowNodeFiveSouthEastIncoming = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeFiveArrowsNorthWest = computed(() => {
+const sumArrowsNodeFiveNorthWest = computed(() => {
   return (
-    zaehlwertNodeFiveArrowNorthWestNorthEast.value +
-    zaehlwertNodeFiveArrowNorthWestSouthWest.value
+    zaehlwertArrowNodeFiveNorthWestOutgoing.value +
+    zaehlwertArrowNodeFiveNorthWestIncoming.value
   );
 });
 
-const sumNodeFiveArrowsSouthEast = computed(() => {
+const sumArrowsNodeFiveSouthEast = computed(() => {
   return (
-    zaehlwertNodeFiveArrowSouthEastNorthEast.value +
-    zaehlwertNodeFiveArrowSouthEastSouthWest.value
+    zaehlwertArrowNodeFiveSouthEastOutgoing.value +
+    zaehlwertArrowNodeFiveSouthEastIncoming.value
   );
 });
 
 const sumNodeFiveArrows = computed(() => {
-  return sumNodeFiveArrowsNorthWest.value + sumNodeFiveArrowsSouthEast.value;
+  return sumArrowsNodeFiveNorthWest.value + sumArrowsNodeFiveSouthEast.value;
 });
 
 // Zaehlwerte of Node 6
-const zaehlwertNodeSixArrowNorthEastNorthWest = computed(() => {
+const zaehlwertArrowNodeSixNorthEastIncoming = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeSixArrowNorthEastSouthEast = computed(() => {
+const zaehlwertArrowNodeSixNorthEastOutgoing = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeSixArrowSouthWestNorthWest = computed(() => {
+const zaehlwertArrowNodeSixSouthWestIncoming = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeSixArrowSouthWestSouthEast = computed(() => {
+const zaehlwertArrowNodeSixSouthWestOutgoing = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeSixArrowsNorthEast = computed(() => {
+const sumArrowsNode6NorthEast = computed(() => {
   return (
-    zaehlwertNodeSixArrowNorthEastNorthWest.value +
-    zaehlwertNodeSixArrowNorthEastSouthEast.value
+    zaehlwertArrowNodeSixNorthEastIncoming.value +
+    zaehlwertArrowNodeSixNorthEastOutgoing.value
   );
 });
 
-const sumNodeSixArrowsSouthWest = computed(() => {
+const sumArrowsNodeSixSouthWest = computed(() => {
   return (
-    zaehlwertNodeSixArrowSouthWestNorthWest.value +
-    zaehlwertNodeSixArrowSouthWestSouthEast.value
+    zaehlwertArrowNodeSixSouthWestIncoming.value +
+    zaehlwertArrowNodeSixSouthWestOutgoing.value
   );
 });
 
 const sumNodeSixArrows = computed(() => {
-  return sumNodeSixArrowsNorthEast.value + sumNodeSixArrowsSouthWest.value;
+  return sumArrowsNode6NorthEast.value + sumArrowsNodeSixSouthWest.value;
 });
 
 // Zaehlwerte of Node 7
-const zaehlwertNodeSevenArrowNorthWestNorthEast = computed(() => {
+const zaehlwertArrowNodeSevenNorthWestIncoming = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeSevenArrowNorthWestSouthWest = computed(() => {
+const zaehlwertArrowNodeSevenNorthWestOutgoing = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeSevenArrowSouthEastNorthEast = computed(() => {
+const zaehlwertArrowNodeSevenSouthEastIncoming = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeSevenArrowSouthEastSouthWest = computed(() => {
+const zaehlwertArrowNodeSevenSouthEastOutgoing = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeSevenArrowsNorthWest = computed(() => {
+const sumArrowsNodeSevenNorthWest = computed(() => {
   return (
-    zaehlwertNodeSevenArrowNorthWestNorthEast.value +
-    zaehlwertNodeSevenArrowNorthWestSouthWest.value
+    zaehlwertArrowNodeSevenNorthWestIncoming.value +
+    zaehlwertArrowNodeSevenNorthWestOutgoing.value
   );
 });
 
-const sumNodeSevenArrowsSouthEast = computed(() => {
+const sumArrowsNodeSevenSouthEast = computed(() => {
   return (
-    zaehlwertNodeSevenArrowSouthEastNorthEast.value +
-    zaehlwertNodeSevenArrowSouthEastSouthWest.value
+    zaehlwertArrowNodeSevenSouthEastIncoming.value +
+    zaehlwertArrowNodeSevenSouthEastOutgoing.value
   );
 });
 
 const sumNodeSevenArrows = computed(() => {
-  return sumNodeSevenArrowsNorthWest.value + sumNodeSevenArrowsSouthEast.value;
+  return sumArrowsNodeSevenNorthWest.value + sumArrowsNodeSevenSouthEast.value;
 });
 
 // Zaehlwerte of Node 8
-const zaehlwertNodeEightArrowNorthEastNorthWest = computed(() => {
+const zaehlwertArrowNodeEightNorthEastOutgoing = computed(() => {
   return 800; // TODO: wire real data
 });
 
-const zaehlwertNodeEightArrowNorthEastSouthEast = computed(() => {
+const zaehlwertArrowNodeEightNorthEastIncoming = computed(() => {
   return 200; // TODO: wire real data
 });
 
-const zaehlwertNodeEightArrowSouthWestNorthWest = computed(() => {
+const zaehlwertArrowNodeEightSouthWestOutgoing = computed(() => {
   return 900; // TODO: wire real data
 });
 
-const zaehlwertNodeEightArrowSouthWestSouthEast = computed(() => {
+const zaehlwertArrowNodeEightSouthWestIncoming = computed(() => {
   return 100; // TODO: wire real data
 });
 
-const sumNodeEightArrowsNorthEast = computed(() => {
+const sumArrowsNodeEightNorthEast = computed(() => {
   return (
-    zaehlwertNodeEightArrowNorthEastNorthWest.value +
-    zaehlwertNodeEightArrowNorthEastSouthEast.value
+    zaehlwertArrowNodeEightNorthEastOutgoing.value +
+    zaehlwertArrowNodeEightNorthEastIncoming.value
   );
 });
 
-const sumNodeEightArrowsSouthWest = computed(() => {
+const sumArrowsNodeEightSouthWest = computed(() => {
   return (
-    zaehlwertNodeEightArrowSouthWestNorthWest.value +
-    zaehlwertNodeEightArrowSouthWestSouthEast.value
+    zaehlwertArrowNodeEightSouthWestOutgoing.value +
+    zaehlwertArrowNodeEightSouthWestIncoming.value
   );
 });
 
 const sumNodeEightArrows = computed(() => {
-  return sumNodeEightArrowsNorthEast.value + sumNodeEightArrowsSouthWest.value;
+  return sumArrowsNodeEightNorthEast.value + sumArrowsNodeEightSouthWest.value;
 });
 
 // Arrows of Node 1
 const selectedArrowsNodeOne =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeOneArrowWestNorth = computed<string>(() => {
+const colorArrowNodeOneWestOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeOne.value
       ?.get(Himmelsrichtung.W)
@@ -5245,7 +5249,7 @@ const colorNodeOneArrowWestNorth = computed<string>(() => {
   );
 });
 
-const colorNodeOneArrowWestSouth = computed<string>(() => {
+const colorArrowNodeOneWestIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeOne.value
       ?.get(Himmelsrichtung.W)
@@ -5258,7 +5262,7 @@ const colorNodeOneArrowWestSouth = computed<string>(() => {
   );
 });
 
-const colorNodeOneArrowEastNorth = computed<string>(() => {
+const colorArrowNodeOneEastOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeOne.value
       ?.get(Himmelsrichtung.O)
@@ -5271,7 +5275,7 @@ const colorNodeOneArrowEastNorth = computed<string>(() => {
   );
 });
 
-const colorNodeOneArrowEastSouth = computed<string>(() => {
+const colorArrowNodeOneEastIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeOne.value
       ?.get(Himmelsrichtung.O)
@@ -5288,7 +5292,7 @@ const colorNodeOneArrowEastSouth = computed<string>(() => {
 const selectedArrowsNodeTwo =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeTwoArrowNorthWest = computed<string>(() => {
+const colorArrowNodeTwoNorthIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeTwo.value
       ?.get(Himmelsrichtung.N)
@@ -5301,7 +5305,7 @@ const colorNodeTwoArrowNorthWest = computed<string>(() => {
   );
 });
 
-const colorNodeTwoArrowNorthEast = computed<string>(() => {
+const colorArrowNodeTwoNorthOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeTwo.value
       ?.get(Himmelsrichtung.N)
@@ -5314,7 +5318,7 @@ const colorNodeTwoArrowNorthEast = computed<string>(() => {
   );
 });
 
-const colorNodeTwoArrowSouthWest = computed<string>(() => {
+const colorArrowNodeTwoSouthIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeTwo.value
       ?.get(Himmelsrichtung.S)
@@ -5327,7 +5331,7 @@ const colorNodeTwoArrowSouthWest = computed<string>(() => {
   );
 });
 
-const colorNodeTwoArrowSouthEast = computed<string>(() => {
+const colorArrowNodeTwoSouthOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeTwo.value
       ?.get(Himmelsrichtung.S)
@@ -5344,7 +5348,7 @@ const colorNodeTwoArrowSouthEast = computed<string>(() => {
 const selectedArrowsNodeThree =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeThreeArrowWestNorth = computed<string>(() => {
+const colorArrowNodeThreeWestIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeThree.value
       ?.get(Himmelsrichtung.W)
@@ -5357,7 +5361,7 @@ const colorNodeThreeArrowWestNorth = computed<string>(() => {
   );
 });
 
-const colorNodeThreeArrowWestSouth = computed<string>(() => {
+const colorArrowNodeThreeWestOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeThree.value
       ?.get(Himmelsrichtung.W)
@@ -5370,7 +5374,7 @@ const colorNodeThreeArrowWestSouth = computed<string>(() => {
   );
 });
 
-const colorNodeThreeArrowEastNorth = computed<string>(() => {
+const colorArrowNodeThreeEastOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeThree.value
       ?.get(Himmelsrichtung.O)
@@ -5383,7 +5387,7 @@ const colorNodeThreeArrowEastNorth = computed<string>(() => {
   );
 });
 
-const colorNodeThreeArrowEastSouth = computed<string>(() => {
+const colorArrowNodeThreeEastIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeThree.value
       ?.get(Himmelsrichtung.O)
@@ -5400,7 +5404,7 @@ const colorNodeThreeArrowEastSouth = computed<string>(() => {
 const selectedArrowsNodeFour =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeFourArrowNorthWest = computed<string>(() => {
+const colorArrowNodeFourNorthOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeFour.value
       ?.get(Himmelsrichtung.N)
@@ -5413,7 +5417,7 @@ const colorNodeFourArrowNorthWest = computed<string>(() => {
   );
 });
 
-const colorNodeFourArrowNorthEast = computed<string>(() => {
+const colorArrowNodeFourNorthIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeFour.value
       ?.get(Himmelsrichtung.N)
@@ -5426,7 +5430,7 @@ const colorNodeFourArrowNorthEast = computed<string>(() => {
   );
 });
 
-const colorNodeFourArrowSouthWest = computed<string>(() => {
+const colorArrowNodeFourSouthOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeFour.value
       ?.get(Himmelsrichtung.S)
@@ -5439,7 +5443,7 @@ const colorNodeFourArrowSouthWest = computed<string>(() => {
   );
 });
 
-const colorNodeFourArrowSouthEast = computed<string>(() => {
+const colorArrowNodeFourSouthIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeFour.value
       ?.get(Himmelsrichtung.S)
@@ -5456,7 +5460,7 @@ const colorNodeFourArrowSouthEast = computed<string>(() => {
 const selectedArrowsNodeFive =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeFiveArrowNorthWestNorthEast = computed<string>(() => {
+const colorArrowNodeFiveNorthWestOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeFive.value
       ?.get(Himmelsrichtung.NW)
@@ -5469,7 +5473,7 @@ const colorNodeFiveArrowNorthWestNorthEast = computed<string>(() => {
   );
 });
 
-const colorNodeFiveArrowNorthWestSouthWest = computed<string>(() => {
+const colorArrowNodeFiveNorthWestIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeFive.value
       ?.get(Himmelsrichtung.NW)
@@ -5482,7 +5486,7 @@ const colorNodeFiveArrowNorthWestSouthWest = computed<string>(() => {
   );
 });
 
-const colorNodeFiveArrowSouthEastNorthEast = computed<string>(() => {
+const colorArrowNodeFiveSouthEastOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeFive.value
       ?.get(Himmelsrichtung.SO)
@@ -5495,7 +5499,7 @@ const colorNodeFiveArrowSouthEastNorthEast = computed<string>(() => {
   );
 });
 
-const colorNodeFiveArrowSouthEastSouthWest = computed<string>(() => {
+const colorArrowNodeFiveSouthEastIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeFive.value
       ?.get(Himmelsrichtung.SO)
@@ -5512,7 +5516,7 @@ const colorNodeFiveArrowSouthEastSouthWest = computed<string>(() => {
 const selectedArrowsNodeSix =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeSixArrowNorthEastNorthWest = computed<string>(() => {
+const colorArrowNodeSixNorthEastIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeSix.value
       ?.get(Himmelsrichtung.NO)
@@ -5525,7 +5529,7 @@ const colorNodeSixArrowNorthEastNorthWest = computed<string>(() => {
   );
 });
 
-const colorNodeSixArrowNorthEastSouthEast = computed<string>(() => {
+const colorArrowNodeSixNorthEastOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeSix.value
       ?.get(Himmelsrichtung.NO)
@@ -5538,7 +5542,7 @@ const colorNodeSixArrowNorthEastSouthEast = computed<string>(() => {
   );
 });
 
-const colorNodeSixArrowSouthWestNorthWest = computed<string>(() => {
+const colorArrowNodeSixSouthWestIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeSix.value
       ?.get(Himmelsrichtung.SW)
@@ -5551,7 +5555,7 @@ const colorNodeSixArrowSouthWestNorthWest = computed<string>(() => {
   );
 });
 
-const colorNodeSixArrowSouthWestSouthEast = computed<string>(() => {
+const colorArrowNodeSixSouthWestOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeSix.value
       ?.get(Himmelsrichtung.SW)
@@ -5568,7 +5572,7 @@ const colorNodeSixArrowSouthWestSouthEast = computed<string>(() => {
 const selectedArrowsNodeSeven =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeSevenArrowNorthWestNorthEast = computed<string>(() => {
+const colorArrowNodeSevenNorthWestIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeSeven.value
       ?.get(Himmelsrichtung.NW)
@@ -5581,7 +5585,7 @@ const colorNodeSevenArrowNorthWestNorthEast = computed<string>(() => {
   );
 });
 
-const colorNodeSevenArrowNorthWestSouthWest = computed<string>(() => {
+const colorArrowNodeSevenNorthWestOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeSeven.value
       ?.get(Himmelsrichtung.NW)
@@ -5594,7 +5598,7 @@ const colorNodeSevenArrowNorthWestSouthWest = computed<string>(() => {
   );
 });
 
-const colorNodeSevenArrowSouthEastNorthEast = computed<string>(() => {
+const colorArrowNodeSevenSouthEastIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeSeven.value
       ?.get(Himmelsrichtung.SO)
@@ -5607,7 +5611,7 @@ const colorNodeSevenArrowSouthEastNorthEast = computed<string>(() => {
   );
 });
 
-const colorNodeSevenArrowSouthEastSouthWest = computed<string>(() => {
+const colorArrowNodeSevenSouthEastOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeSeven.value
       ?.get(Himmelsrichtung.SO)
@@ -5624,7 +5628,7 @@ const colorNodeSevenArrowSouthEastSouthWest = computed<string>(() => {
 const selectedArrowsNodeEight =
   ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
 
-const colorNodeEightArrowNorthEastNorthWest = computed<string>(() => {
+const colorArrowNodeEightNorthEastOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeEight.value
       ?.get(Himmelsrichtung.NO)
@@ -5637,7 +5641,7 @@ const colorNodeEightArrowNorthEastNorthWest = computed<string>(() => {
   );
 });
 
-const colorNodeEightArrowNorthEastSouthEast = computed<string>(() => {
+const colorArrowNodeEightNorthEastIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeEight.value
       ?.get(Himmelsrichtung.NO)
@@ -5650,7 +5654,7 @@ const colorNodeEightArrowNorthEastSouthEast = computed<string>(() => {
   );
 });
 
-const colorNodeEightArrowSouthWestNorthWest = computed<string>(() => {
+const colorArrowNodeEightSouthWestOutgoing = computed<string>(() => {
   if (
     !selectedArrowsNodeEight.value
       ?.get(Himmelsrichtung.SW)
@@ -5663,7 +5667,7 @@ const colorNodeEightArrowSouthWestNorthWest = computed<string>(() => {
   );
 });
 
-const colorNodeEightArrowSouthWestSouthEast = computed<string>(() => {
+const colorArrowNodeEightSouthWestIncoming = computed<string>(() => {
   if (
     !selectedArrowsNodeEight.value
       ?.get(Himmelsrichtung.SW)
