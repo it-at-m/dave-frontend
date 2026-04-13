@@ -52,6 +52,7 @@
                   @mouseleave="hoverBlock = false"
                 />
                 <v-radio
+                  :disabled="activeZaehlung.dauerzaehlung"
                   label="Stunde"
                   :value="Zeitauswahl.STUNDE"
                   @mouseover="hoverStunde = true"
@@ -166,7 +167,7 @@
             label="Zeitintervall"
             variant="filled"
             density="compact"
-            :disabled="isZeitauswahlSpitzenstunde"
+            :disabled="isZeitauswahlSpitzenstunde || activeZaehlung.dauerzaehlung"
             @mouseover="hoverSelectZeitintervall = true"
             @mouseleave="hoverSelectZeitintervall = false"
           />
