@@ -219,6 +219,8 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
+import type BelastungsplanQJSDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanQJSDataDTO";
+import type BelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanDataDTO";
 
 interface Props {
   height?: string;
@@ -770,12 +772,18 @@ const schemaStyle = computed(() => {
 });
 
 const drawSchematischeUebersicht = computed(() => {
-  return (
-    hasSelectedVerkehrsarten.value &&
-    belastungsplanDTO.value &&
-    belastungsplanDTO.value.value1 &&
-    belastungsplanDTO.value.value1.values &&
-    belastungsplanDTO.value.value1.values.length > 0
+  if (!hasSelectedVerkehrsarten.value ||
+      !belastungsplanDTO.value ||
+      !belastungsplanDTO.value.value1) {
+    return false;
+  }
+  if (zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS ) {
+    return (belastungsplanDTO.value.value1 as BelastungsplanQJSDataDTO).valuesVerkehrsbeziehungen && // TODO: improve cast
+        (belastungsplanDTO.value.value1 as BelastungsplanQJSDataDTO).valuesVerkehrsbeziehungen.size > 0
+  }
+  else return (
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values &&
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values.length > 0
   );
 });
 </script>

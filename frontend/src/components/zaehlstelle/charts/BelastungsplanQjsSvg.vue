@@ -1066,6 +1066,8 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
+import type BelastungsplanQJSDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanQJSDataDTO";
+import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -1186,7 +1188,15 @@ const isSelectedArrowFour = computed(() => {
 });
 
 const zaehlwertArrowOne = computed(() => {
-  return 800; // TODO: wire props.data
+  // console.log(availableKnotenarmNummern+" "+props.data.value1)
+  const von = Math.min(...availableKnotenarmNummern.value);
+  const nach = Math.max(...availableKnotenarmNummern.value);
+  if (props.data && props.data.value1) {
+    const match = qjs.patternsArrowOne.find(p => p.von === von && p.nach === nach);
+    return (props.data.value1 as BelastungsplanQJSDataDTO).valuesVerkehrsbeziehungen.get(<VerkehrsbeziehungDTO>match);
+  }
+  else
+    return 0;
 });
 
 const zaehlwertArrowTwo = computed(() => {
