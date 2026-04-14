@@ -305,6 +305,10 @@ const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
 });
 
+watch(selectedZaehlung, () => {
+    zaehlstelleStore.setActiveTab(activeTab.value);
+});
+
 watch(options, () => {
   displaySchema.value = true;
   loadData();
