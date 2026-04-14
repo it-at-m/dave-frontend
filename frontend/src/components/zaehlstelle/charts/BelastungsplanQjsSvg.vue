@@ -1159,28 +1159,28 @@ const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
 
 const isSelectedArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowOne
   );
 });
 
 const isSelectedArrowTwo = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowTwo
   );
 });
 
 const isSelectedArrowThree = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowThree
   );
 });
 
 const isSelectedArrowFour = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowFour
   );
 });
@@ -1368,7 +1368,7 @@ watch(
   [
     () => activeZaehlung.value.knotenarme,
     () => props.data,
-    () => optionen.value.verkehrsbeziehungenQJS,
+    () => optionen.value.chosenVerkehrsbeziehungen,
     () => optionen.value.zeitauswahl,
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
