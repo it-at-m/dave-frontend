@@ -529,7 +529,7 @@
             <path
               id="north_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
-              :fill=colorArrowNorth
+              :fill="colorArrowNorth"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />

@@ -1,22 +1,22 @@
 enum Bewegungsrichtung {
-    EIN = "EIN",
-    AUS = "AUS",
+  EIN = "EIN",
+  AUS = "AUS",
 }
 
 export default Bewegungsrichtung;
 
 export const himmelsRichtungenTextLong: Map<string, string> = new Map<
-    string,
-    string
+  string,
+  string
 >([
-    [Bewegungsrichtung.EIN, "Ein"],
-    [Bewegungsrichtung.AUS, "Aus"],
+  [Bewegungsrichtung.EIN, "Ein"],
+  [Bewegungsrichtung.AUS, "Aus"],
 ]);
 
 export const himmelsRichtungenTextShort: Map<string, string> = new Map<
-    string,
-    string
+  string,
+  string
 >([
-    [Bewegungsrichtung.EIN, "Ein"],
-    [Bewegungsrichtung.AUS, "Aus"],
+  [Bewegungsrichtung.EIN, "Ein"],
+  [Bewegungsrichtung.AUS, "Aus"],
 ]);

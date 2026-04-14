@@ -1,19 +1,13 @@
-;
 // Hilfsfunktion für die Darstellung von Qjs-Zählungen
 
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 
-
-
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import KnotenarmComparator from "./KnotenarmComparator";
 
-
 export function useQu() {
-
-
   function computeAvailableKnotenarme(
     activeZaehlung: LadeZaehlungDTO
   ): LadeKnotenarmDTO[] {
@@ -56,6 +50,4 @@ export function useQu() {
     computeAvailableKnotenarmNummernFromZaehlung,
     computeSelectedArrowsOfNode,
   };
-
-
 }

@@ -1073,7 +1073,6 @@ import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
 
-
 interface Props {
   data: LadeBelastungsplanDTO;
   dimension?: string;
@@ -1359,7 +1358,9 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  firstStreetname.value = streetname.getStreetname(first(availableKnotenarme.value));
+  firstStreetname.value = streetname.getStreetname(
+    first(availableKnotenarme.value)
+  );
 
   // Berechnet Anker aus der gesamten Gruppe (Rumpf + Spitze)
   if (groupRefArrowOne.value)
@@ -1381,7 +1382,9 @@ watch(
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
   async () => {
-    firstStreetname.value = streetname.getStreetname(first(availableKnotenarme.value));
+    firstStreetname.value = streetname.getStreetname(
+      first(availableKnotenarme.value)
+    );
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
     // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
     await nextTick();

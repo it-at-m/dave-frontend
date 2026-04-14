@@ -1,7 +1,6 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 
 export function useStreetname() {
-
   /**
    * Extrahiert und splittet den Straßennamen eines Knotenarms
    * @param knotenarm optionaler Knotenarm DTO
