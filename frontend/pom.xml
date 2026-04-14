@@ -5,7 +5,7 @@
     <parent>
         <groupId>de.muenchen.dave</groupId>
         <artifactId>dave-frontend</artifactId>
-        <version>5.1.3-SNAPSHOT</version>        
+        <version>5.2.1-SNAPSHOT</version>        
     </parent>  
 
     <groupId>de.muenchen.dave.frontend</groupId>
