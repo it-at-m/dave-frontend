@@ -23,7 +23,7 @@
           <g id="description">
             <g id="first_street">
               <text
-                v-if="firstStreetname.length > 1"
+                v-if="firstStreetname.length === 1"
                 xml:space="preserve"
                 style="
                   font-style: normal;
@@ -58,6 +58,7 @@
                 </tspan>
               </text>
               <text
+                v-if="firstStreetname.length > 1"
                 xml:space="preserve"
                 style="
                   font-style: normal;
@@ -83,20 +84,14 @@
                 y="688.33734"
               >
                 <tspan
-                  v-if="firstStreetname.length === 1"
                   id="tspan20"
                   style="stroke-width: 39.1848"
                   x="699.24969"
                   y="688.33734"
                 >
-                  {{
-                    firstStreetname.length === 1
-                      ? firstStreetname[0]
-                      : firstStreetname[1]
-                  }}
+                  {{ firstStreetname[0] }}
                 </tspan>
                 <tspan
-                  v-if="firstStreetname.length > 1"
                   id="tspan1"
                   style="stroke-width: 39.1848"
                   x="699.24969"
@@ -1166,28 +1161,28 @@ const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
 
 const isSelectedArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowOne
   );
 });
 
 const isSelectedArrowTwo = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowTwo
   );
 });
 
 const isSelectedArrowThree = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowThree
   );
 });
 
 const isSelectedArrowFour = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    optionen.value?.verkehrsbeziehungenQJS,
+    optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowFour
   );
 });
@@ -1377,7 +1372,7 @@ watch(
   [
     () => activeZaehlung.value.knotenarme,
     () => props.data,
-    () => optionen.value.verkehrsbeziehungenQJS,
+    () => optionen.value.chosenVerkehrsbeziehungen,
     () => optionen.value.zeitauswahl,
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
