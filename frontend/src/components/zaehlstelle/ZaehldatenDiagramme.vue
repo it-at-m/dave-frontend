@@ -64,7 +64,7 @@
             <belastungsplan-kreuzung-svg
               v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung"
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -73,7 +73,7 @@
               v-show="belastungsplanDTO.kreisverkehr"
               ref="belastungsplanCard"
               :dimension="contentHeight"
-              :belastungsplan-data="belastungsplanDTO"
+              :belastungsplan-data="belastungsplanDTO as LadeBelastungsplanDTO"
               :loaded="false"
               :zaehlung-id="zaehlungsId"
             />
@@ -81,7 +81,7 @@
             <belastungsplan-qjs-svg
               v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung"
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQJSDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -172,7 +172,7 @@
     <belastungsplan-kreuzung-svg-schematische-uebersicht
       v-if="drawSchematischeUebersicht"
       :dimension="contentHeight"
-      :data="belastungsplanDTO"
+      :data="belastungsplanDTO as LadeBelastungsplanDTO"
       :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
@@ -219,8 +219,8 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
-import type BelastungsplanQJSDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanQJSDataDTO";
 import type BelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanDataDTO";
+import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
 
 interface Props {
   height?: string;
@@ -248,9 +248,7 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO>(
-  {} as LadeBelastungsplanDTO
-);
+const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQJSDTO>({} as LadeBelastungsplanDTO);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
@@ -398,13 +396,14 @@ function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
     options
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
-      storeStartAndEndeUhrzeitOfIntervalls(
-        processedZaehldaten.zaehldatenTable.zaehldaten
-      );
-      listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
-      zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
-      zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
-      zaehldatenZeitreihe.value = processedZaehldaten.zaehldatenZeitreihe;
+      // TODO:
+      //   storeStartAndEndeUhrzeitOfIntervalls(
+      //       processedZaehldaten.zaehldatenTable.zaehldaten
+      //   );
+      //   listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
+      // zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
+      // zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
+      // zaehldatenZeitreihe.value = processedZaehldaten.zaehldatenZeitreihe;
       belastungsplanDTO.value = processedZaehldaten.zaehldatenBelastungsplan;
       setMaxRangeYAchse();
     })
@@ -778,8 +777,8 @@ const drawSchematischeUebersicht = computed(() => {
     return false;
   }
   if (zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS ) {
-    return (belastungsplanDTO.value.value1 as BelastungsplanQJSDataDTO).valuesVerkehrsbeziehungen && // TODO: improve cast
-        (belastungsplanDTO.value.value1 as BelastungsplanQJSDataDTO).valuesVerkehrsbeziehungen.size > 0
+    return (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1.valuesVerkehrsbeziehungen &&
+        (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1.valuesVerkehrsbeziehungen.length > 0
   }
   else return (
       (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values &&

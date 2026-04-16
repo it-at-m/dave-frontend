@@ -1051,7 +1051,6 @@
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first } from "lodash";
@@ -1069,9 +1068,10 @@ import { useQjs } from "@/util/QjsUtils";
 import type BelastungsplanQJSDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanQJSDataDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
 
 interface Props {
-  data: LadeBelastungsplanDTO;
+  data: LadeBelastungsplanQJSDTO;
   dimension?: string;
 }
 
@@ -1203,7 +1203,6 @@ function getArrowZaehlwert(patterns: VerkehrsbeziehungDTO[]) {
 }
 
 const zaehlwertArrowOne = computed(() => {
-  // console.log(availableKnotenarmNummern+" "+props.data.value1)
   return getArrowZaehlwert(qjs.patternsArrowOne);
 });
 
@@ -1220,8 +1219,6 @@ const zaehlwertArrowFour = computed(() => {
 });
 
 const sumArrowsOneTwo = computed(() => {
-  console.log("sumArrowsOneTwo")
-  // const von = Math.min(...availableKnotenarmNummern.value);
   let sum: number | undefined = 0;
   if (props.data && props.data.value1) {
     if (availableKnotenarmNummern.value.includes(1)) {
@@ -1249,7 +1246,6 @@ const sumArrowsOneTwo = computed(() => {
 });
 
 const sumArrowsThreeFour = computed(() => {
-  console.log("sumArrowsThreeFour")
   let sum: number | undefined = 0;
   if (props.data && props.data.value1) {
     if (availableKnotenarmNummern.value.includes(1)) {
@@ -1277,7 +1273,6 @@ const sumArrowsThreeFour = computed(() => {
 });
 
 const sumArrowsOneToFour = computed(() => {
-  console.log("sumArrowsOneToFour")
   if (props.data && props.data.value1) {
     return (props.data.value1 as BelastungsplanQJSDataDTO).sumAll;
   }
