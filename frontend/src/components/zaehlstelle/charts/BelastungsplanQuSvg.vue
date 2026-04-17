@@ -622,7 +622,7 @@
             </text>
             <text
               v-if="streetnamesNode1.length > 1"
-              id="north_strassenname_multirow1_text"
+              id="node1_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -765,7 +765,7 @@
             >
               <path
                 v-if="isQuerungNode1WestEast"
-                id="northCrossingWestToEast"
+                id="arrow_node1_west_to_east"
                 d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
                 fill="#000000"
                 stroke="none"
@@ -773,7 +773,7 @@
               />
               <path
                 v-if="isQuerungNode1EastWest"
-                id="northCrossingEastToWest"
+                id="arrow_node1_east_to_west"
                 d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
                 fill="#000000"
                 stroke="none"
@@ -781,7 +781,7 @@
               />
               <text
                 v-if="isQuerungNode1WestEast || isQuerungNode1EastWest"
-                id="northCrossingSum1"
+                id="node1_crossing_sum1_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
                 style="
@@ -834,7 +834,7 @@
               </text>
               <text
                 v-if="isQuerungNode1EastWest"
-                id="northNumberSouth"
+                id="arrow_node1_east_to_west_number_text"
                 xml:space="preserve"
                 transform="scale(0.87251096,1.1461174)"
                 style="
@@ -2485,7 +2485,7 @@
           </g>
         </g>
       </g>
-      <g id="intercardinal_north_east_to_north_west">
+      <g id="nodes5To8">
         <g
           id="g96"
           class="com.sun.star.drawing.ClosedBezierShape"
