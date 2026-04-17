@@ -2494,7 +2494,7 @@
             <path
               id="path83"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
-              :fill=colorNode5
+              :fill="colorNode5"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -2933,7 +2933,7 @@
             <path
               id="path96"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
-              :fill=colorNode6
+              :fill="colorNode6"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3376,7 +3376,7 @@
             <path
               id="path109"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
-              :fill=colorNode7
+              :fill="colorNode7"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3854,7 +3854,7 @@
             <path
               id="path122"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
-              :fill=colorNode8
+              :fill="colorNode8"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -4779,8 +4779,14 @@ const zaehlwertNode1EastWest = createZaehlwert(6543213); // TODO: wire real data
 const zaehlwertNode1SumEast = createZaehlwert(6543214); // TODO: wire real data
 const zaehlwertNode1SumWest = createZaehlwert(6543215); // TODO: wire real data
 
-const isQuerungNode1WestEast = createQuerungsPruefung(nodeNumber1, Himmelsrichtung.O);
-const isQuerungNode1EastWest = createQuerungsPruefung(nodeNumber1, Himmelsrichtung.W);
+const isQuerungNode1WestEast = createQuerungsPruefung(
+  nodeNumber1,
+  Himmelsrichtung.O
+);
+const isQuerungNode1EastWest = createQuerungsPruefung(
+  nodeNumber1,
+  Himmelsrichtung.W
+);
 
 const colorNode1 = setColor(nodeNumber1);
 
@@ -4799,8 +4805,14 @@ const zaehlwertArrowEast_EastCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const isQuerungNode2NorthSouth = createQuerungsPruefung(nodeNumber2, Himmelsrichtung.S);
-const isQuerungNode2SouthNorth = createQuerungsPruefung(nodeNumber2, Himmelsrichtung.N);
+const isQuerungNode2NorthSouth = createQuerungsPruefung(
+  nodeNumber2,
+  Himmelsrichtung.S
+);
+const isQuerungNode2SouthNorth = createQuerungsPruefung(
+  nodeNumber2,
+  Himmelsrichtung.N
+);
 
 const colorNode2 = setColor(nodeNumber2);
 
@@ -4852,7 +4864,7 @@ const zaehlwertArrowWest_WestCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const colorNode4 =setColor(nodeNumber4);
+const colorNode4 = setColor(nodeNumber4);
 
 // Zaehlwerte of Node5/North-East
 const nodeNumber5 = 5;

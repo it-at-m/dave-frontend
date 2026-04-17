@@ -1,4 +1,5 @@
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
 /**
