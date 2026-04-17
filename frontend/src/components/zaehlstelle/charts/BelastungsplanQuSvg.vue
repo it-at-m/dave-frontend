@@ -4678,7 +4678,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 // import { useFjs } from "@/util/FjsUtils";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 // import { useDateUtils } from "@/util/DateUtils";
-import { useQu } from "@/util/HimmelsrichtungUtils";
+import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
 import { istQerungVorhanden } from '@/util/Querungspruefung';
 
