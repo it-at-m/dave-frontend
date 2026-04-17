@@ -12,6 +12,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { Ref } from "vue";
@@ -23,6 +24,7 @@ import { useDisplay } from "vuetify";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -574,6 +576,9 @@ function legendeLinienStaerke() {
  * @param data  Die Anzeigedaten des Belastungsplanes.
  */
 function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
+  if (!isDiscriminatedType(props.data) || !props.data.value1) {
+    return;
+  }
   // alte Daten ggf. leeren
   knotenarme.value.clear();
   verkehrsbeziehungsTypen.value.clear();
@@ -794,6 +799,10 @@ function redraw() {
   nextTick(() => {
     calcVerkehrsbeziehung(props.data);
   });
+}
+
+function isDiscriminatedType(data: AbstractLadeBelastungsplanDTO): boolean {
+  return data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 
 /**

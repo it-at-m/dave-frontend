@@ -183,7 +183,9 @@ import type CsvDTO from "@/types/common/CsvDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type BelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanDataDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -219,8 +221,6 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
-import type BelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanDataDTO";
-import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
 
 interface Props {
   height?: string;
@@ -248,7 +248,9 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQJSDTO>({} as LadeBelastungsplanDTO);
+const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQJSDTO>(
+  {} as LadeBelastungsplanDTO
+);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
@@ -771,19 +773,26 @@ const schemaStyle = computed(() => {
 });
 
 const drawSchematischeUebersicht = computed(() => {
-  if (!hasSelectedVerkehrsarten.value ||
-      !belastungsplanDTO.value ||
-      !belastungsplanDTO.value.value1) {
+  if (
+    !hasSelectedVerkehrsarten.value ||
+    !belastungsplanDTO.value ||
+    !belastungsplanDTO.value.value1
+  ) {
     return false;
   }
-  if (zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS ) {
-    return (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1.valuesVerkehrsbeziehungen &&
-        (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1.valuesVerkehrsbeziehungen.length > 0
-  }
-  else return (
+  if (zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS) {
+    return (
+      (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1
+        .valuesVerkehrsbeziehungen &&
+      (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1
+        .valuesVerkehrsbeziehungen.length > 0
+    );
+  } else
+    return (
       (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values &&
-      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values.length > 0
-  );
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values.length >
+        0
+    );
 });
 </script>
 
