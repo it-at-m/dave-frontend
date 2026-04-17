@@ -1108,7 +1108,8 @@ const centerYArrowFour = ref(0);
 function getArrowScale(zaelwert: number) {
   const max = highestZaehlwert.value;
   if (!Number.isFinite(max) || max <= 0) return 0;
-  return Math.max(zaelwert, 0) / max;
+  const scale = Math.max(zaelwert, 0) / max;
+  return Math.max(BelastungsplanConstants.minimum_arrow_scale, scale);
 }
 
 function computeAnchorY(el: SVGGraphicsElement | null) {

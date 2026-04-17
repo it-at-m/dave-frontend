@@ -18,4 +18,7 @@ export const BelastungsplanConstants = {
   abnahmeValueColor: "#4CAF50",
   gleichValueColor: "#000000",
   inaktivColor: "#E0E0E0",
+
+  // kleinstmögliche Skalierung eines Pfeils, damit er überhaupt angezeigt wird
+  minimum_arrow_scale: 0.005
 } as const;
