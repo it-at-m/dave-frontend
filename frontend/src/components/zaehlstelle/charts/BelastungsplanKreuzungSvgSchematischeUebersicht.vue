@@ -23,6 +23,8 @@ import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -217,6 +219,9 @@ function draw() {
  * @param data  Die Anzeigedaten des Belastungsplanes.
  */
 function calcVerkehrsbeziehungen(data: LadeBelastungsplanDTO) {
+  if (!isDiscriminatedType(data)){
+    return;
+  }
   // alte Daten ggf. leeren
   knotenarme.value.clear();
   verkehrsbeziehungTypen.value.clear();
@@ -437,6 +442,10 @@ function redraw() {
   nextTick(() => {
     calcVerkehrsbeziehungen(props.data);
   });
+}
+
+function isDiscriminatedType(data: AbstractLadeBelastungsplanDTO): boolean {
+  return data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 
 /**
