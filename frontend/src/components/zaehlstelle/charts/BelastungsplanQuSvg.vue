@@ -513,32 +513,32 @@
         />
       </defs>
       <g
-        id="cardinal_north_to_east"
+        id="nodes1To4"
         class="Page"
         style="stroke-width: 28.22049979; stroke-dasharray: none"
       >
         <g
-          id="north_group"
+          id="node1_group"
           class="com.sun.star.drawing.ClosedBezierShape"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="north"
+            id="node1"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              id="north_spike"
+              id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
               :fill="setColorArm1"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <g
-              id="north_number"
+              id="node1_number"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             >
               <circle
-                id="north_circle"
+                id="node1_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -553,7 +553,7 @@
                 r="11.951238"
               />
               <text
-                id="north_circle_text"
+                id="node1_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -571,7 +571,7 @@
                 x="693.53955"
               >
                 <tspan
-                  id="north_circle_tspan"
+                  id="node1_circle_tspan"
                   style="stroke-width: 28.22049979; stroke-dasharray: none"
                   x="693.53955"
                   y="622.00684"
@@ -582,7 +582,7 @@
             </g>
             <text
               v-if="streetnamesNorth.length === 1"
-              id="north_strassenname_text"
+              id="node1_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -612,7 +612,7 @@
               y="629.34802"
             >
               <tspan
-                id="tspan16"
+                id="node1_strassenname_tspan"
                 x="-438.67819"
                 y="705.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -622,7 +622,7 @@
             </text>
             <text
               v-if="streetnamesNorth.length > 1"
-              id="north_strassenname_multirow1_text"
+              id="node1_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -652,7 +652,7 @@
               y="615.34802"
             >
               <tspan
-                id="tspan18"
+                id="node1_strassenname_multirow1_tspan"
                 x="-438.67819"
                 y="691.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -662,7 +662,7 @@
             </text>
             <text
               v-if="streetnamesNorth.length > 1"
-              id="north_strassenname_multirow2_text"
+              id="node1_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -692,7 +692,7 @@
               y="643.34802"
             >
               <tspan
-                id="tspan17"
+                id="node1_strassenname_multirow2_tspan"
                 x="-438.67819"
                 y="719.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -702,7 +702,7 @@
             </text>
             <text
               v-if="istKnotenarmVerfuegbar(1)"
-              id="north_sum"
+              id="node1_sum_text"
               xml:space="preserve"
               transform="matrix(0,-0.86675092,1.153734,0,0,0)"
               style="
@@ -732,7 +732,7 @@
               y="-171.53365"
             >
               <tspan
-                id="north_sum_tspan"
+                id="node1_sum_tspan"
                 x="-96.676033"
                 y="616.65149"
                 style="
@@ -756,7 +756,7 @@
             </text>
           </g>
           <g
-            id="north_arrows"
+            id="arrows_node1"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <g
@@ -765,7 +765,7 @@
             >
               <path
                 v-if="istQuerungArm1WestOst"
-                id="northCrossingWestToEast"
+                id="arrow_node1_west_to_east"
                 d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
                 fill="#000000"
                 stroke="none"
@@ -773,7 +773,7 @@
               />
               <path
                 v-if="istQuerungArm1OstWest"
-                id="northCrossingEastToWest"
+                id="arrow_node1_east_to_west"
                 d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
                 fill="#000000"
                 stroke="none"
@@ -781,7 +781,7 @@
               />
               <text
                 v-if="istQuerungArm1WestOst || istQuerungArm1OstWest"
-                id="northCrossingSum1"
+                id="node1_crossing_sum1_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
                 style="
@@ -810,7 +810,7 @@
                 y="-265.22723"
               >
                 <tspan
-                  id="tspan63"
+                  id="node1_crossing_sum1_tspan"
                   x="-226.30139"
                   y="522.95795"
                   style="
@@ -834,7 +834,7 @@
               </text>
               <text
                 v-if="istQuerungArm1OstWest"
-                id="northNumberSouth"
+                id="arrow_node1_east_to_west_number_text"
                 xml:space="preserve"
                 transform="scale(0.87251096,1.1461174)"
                 style="
@@ -864,7 +864,7 @@
                 y="-553.82526"
               >
                 <tspan
-                  id="tspan64"
+                  id="arrow_node1_east_to_west_number_tspan"
                   x="801.39209"
                   y="239.01094"
                   style="
@@ -888,7 +888,7 @@
               </text>
               <text
                 v-if="istQuerungArm1WestOst"
-                id="northNumberNorth"
+                id="arrow_node1_west_to_east_number_text"
                 xml:space="preserve"
                 transform="scale(0.87251096,1.1461174)"
                 style="
@@ -918,7 +918,7 @@
                 y="-599.6322"
               >
                 <tspan
-                  id="tspan65"
+                  id="arrow_node1_west_to_east_number_tspan"
                   x="801.39209"
                   y="193.2041"
                   style="
@@ -942,7 +942,7 @@
               </text>
               <text
                 v-if="istQuerungArm1WestOst || istQuerungArm1OstWest"
-                id="northCrossingSum2"
+                id="node1_crossing_sum2_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
                 style="
@@ -971,7 +971,7 @@
                 y="-77.840034"
               >
                 <tspan
-                  id="tspan66"
+                  id="node1_crossing_sum2_tspan"
                   x="-226.30139"
                   y="710.34515"
                   style="
@@ -2485,7 +2485,7 @@
           </g>
         </g>
       </g>
-      <g id="intercardinal_north_east_to_north_west">
+      <g id="nodes5To8">
         <g
           id="g96"
           class="com.sun.star.drawing.ClosedBezierShape"
