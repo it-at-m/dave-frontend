@@ -581,7 +581,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNorth.length === 1"
+              v-if="streetnamesNode1.length === 1"
               id="north_strassenname_text"
               xml:space="preserve"
               style="
@@ -617,11 +617,11 @@
                 y="705.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               >
-                {{ streetnamesNorth[0] }}
+                {{ streetnamesNode1[0] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNorth.length > 1"
+              v-if="streetnamesNode1.length > 1"
               id="north_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -657,11 +657,11 @@
                 y="691.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               >
-                {{ streetnamesNorth[0] }}
+                {{ streetnamesNode1[0] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNorth.length > 1"
+              v-if="streetnamesNode1.length > 1"
               id="north_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -697,7 +697,7 @@
                 y="719.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               >
-                {{ streetnamesNorth[1] }}
+                {{ streetnamesNode1[1] }}
               </tspan>
             </text>
             <text
@@ -1305,7 +1305,7 @@
                 </tspan>
               </text>
               <text
-                v-if="istQuerungArm2NordSued"
+                v-if="isQuerungNode2NorthSouth"
                 id="numberNorthToSouth"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1359,7 +1359,7 @@
                 </tspan>
               </text>
               <text
-                v-if="istQuerungArm2SuedNord"
+                v-if="isQuerungNode2SouthNorth"
                 id="numberSouthToNorth"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -4749,15 +4749,15 @@ const minSizeBelastungsplan = computed(() => {
 const qu = useQu();
 const streetname = useStreetname();
 
-const streetnamesNorth = ref<Array<string>>([]);
+const streetnamesNode1 = ref<Array<string>>([]);
 
-const streetnameNodeTwo = ref<Array<string>>([]);
-const streetnameNodeThree = ref<Array<string>>([]);
-const streetnameNodeFour = ref<Array<string>>([]);
-const streetnameNodeFive = ref<Array<string>>([]);
-const streetnameNodeSix = ref<Array<string>>([]);
-const streetnameNodeSeven = ref<Array<string>>([]);
-const streetnameNodeEight = ref<Array<string>>([]);
+const streetnamesNode2 = ref<Array<string>>([]);
+const streetnamesNode3 = ref<Array<string>>([]);
+const streetnamesNode4 = ref<Array<string>>([]);
+const streetnamesNode5 = ref<Array<string>>([]);
+const streetnamesNode6 = ref<Array<string>>([]);
+const streetnamesNode7 = ref<Array<string>>([]);
+const streetnamesNode8 = ref<Array<string>>([]);
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -4799,8 +4799,8 @@ const zaehlwertArrowEast_EastCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const istQuerungArm2NordSued = createQuerungsPruefung(nodeNumber2, Himmelsrichtung.S);
-const istQuerungArm2SuedNord = createQuerungsPruefung(nodeNumber2, Himmelsrichtung.N);
+const isQuerungNode2NorthSouth = createQuerungsPruefung(nodeNumber2, Himmelsrichtung.S);
+const isQuerungNode2SouthNorth = createQuerungsPruefung(nodeNumber2, Himmelsrichtung.N);
 
 const colorNode2 = setColor(nodeNumber2);
 
@@ -5000,7 +5000,7 @@ function createQuerungsPruefung(knNummer: number, richtung: Himmelsrichtung) {
 }
 
 onMounted(() => {
-  streetnamesNorth.value = streetname.getStreetname(
+  streetnamesNode1.value = streetname.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
 });
@@ -5012,7 +5012,7 @@ watch(
     () => activeZaehlung.value.knotenarme,
   ],
   async () => {
-    streetnamesNorth.value = streetname.getStreetname(
+    streetnamesNode1.value = streetname.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
     );
 
