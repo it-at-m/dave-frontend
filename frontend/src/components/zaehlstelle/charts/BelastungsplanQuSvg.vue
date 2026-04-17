@@ -2487,20 +2487,20 @@
       </g>
       <g id="nodes5To8">
         <g
-          id="g96"
+          id="node5_group"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
-          <g id="g87">
+          <g id="node5">
             <path
-              id="path83"
+              id="node5_spike"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
-              :fill=colorNode5
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
-            <g id="g83">
+            <g id="node5_number">
               <circle
-                id="circle83"
+                id="node5_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2515,7 +2515,7 @@
                 r="11.951238"
               />
               <text
-                id="text83"
+                id="node5_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -2532,7 +2532,7 @@
                 x="754.23737"
               >
                 <tspan
-                  id="tspan83"
+                  id="node5_circle_tspan"
                   style="stroke-width: 30.9229"
                   x="754.23737"
                   y="646.03784"
@@ -2542,7 +2542,7 @@
               </text>
             </g>
             <text
-              id="text84"
+              id="node5_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2571,7 +2571,7 @@
               y="919.29742"
             >
               <tspan
-                id="tspan26"
+                id="node5_strassenname_tspan"
                 x="261.3215"
                 y="995.74023"
                 style="stroke-width: 26.4927"
@@ -2580,7 +2580,7 @@
               </tspan>
             </text>
             <text
-              id="text85"
+              id="node5_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2609,7 +2609,7 @@
               y="933.29785"
             >
               <tspan
-                id="tspan27"
+                id="node5_strassenname_multirow2_tspan"
                 x="261.32397"
                 y="1009.7406"
                 style="stroke-width: 26.4927"
@@ -2618,7 +2618,7 @@
               </tspan>
             </text>
             <text
-              id="text86"
+              id="node5_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2647,7 +2647,7 @@
               y="905.2995"
             >
               <tspan
-                id="tspan28"
+                id="node5_strassenname_multirow1_tspan"
                 x="261.32147"
                 y="981.74231"
                 style="stroke-width: 26.4927"
@@ -2656,7 +2656,7 @@
               </tspan>
             </text>
             <text
-              id="northEastSum"
+              id="node5_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
               style="
@@ -2685,7 +2685,7 @@
               y="79.779068"
             >
               <tspan
-                id="tspan87"
+                id="node5_sum_tspan"
                 x="710.93884"
                 y="867.96423"
                 style="
@@ -2707,24 +2707,24 @@
               </tspan>
             </text>
           </g>
-          <g id="g95">
+          <g id="arrows_node5">
             <g id="g54">
               <path
-                id="northEastCrossingWestToEast"
+                id="arrow_node5_north_west_to_south_east"
                 d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <path
-                id="northEastCrossingEastToWest"
+                id="arrow_node5_south_east_to_north_west"
                 d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <text
-                id="northEastCrossingSum1"
+                id="node5_crossing_sum1_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
                 style="
@@ -2752,7 +2752,7 @@
                 y="-13.914626"
               >
                 <tspan
-                  id="tspan51"
+                  id="node5_crossing_sum1_tspan"
                   x="581.31146"
                   y="774.27063"
                   style="
@@ -2774,7 +2774,7 @@
                 </tspan>
               </text>
               <text
-                id="numberNorthEastNorthToSouth"
+                id="arrow_node5_north_west_to_south_east_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
                 style="
@@ -2803,7 +2803,7 @@
                 y="-1164.397"
               >
                 <tspan
-                  id="tspan52"
+                  id="arrow_node5_north_west_to_south_east_number_tspan"
                   x="1134.0402"
                   y="-371.56079"
                   style="
@@ -2825,7 +2825,7 @@
                 </tspan>
               </text>
               <text
-                id="numberNorthEastSouthToNorth"
+                id="arrow_node5_south_east_to_north_west_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
                 style="
@@ -2854,7 +2854,7 @@
                 y="-1210.2013"
               >
                 <tspan
-                  id="tspan53"
+                  id="arrow_node5_south_east_to_north_west_number_tspan"
                   x="1134.0402"
                   y="-417.36499"
                   style="
@@ -2876,7 +2876,7 @@
                 </tspan>
               </text>
               <text
-                id="northEastCrossingSum2"
+                id="node5_crossing_sum2_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
                 style="
@@ -2904,7 +2904,7 @@
                 y="173.4727"
               >
                 <tspan
-                  id="tspan54"
+                  id="node5_crossing_sum2_tspan"
                   x="581.31146"
                   y="961.6579"
                   style="
@@ -2928,17 +2928,17 @@
             </g>
           </g>
         </g>
-        <g id="g109">
-          <g id="g100">
+        <g id="node6_group">
+          <g id="node6">
             <path
-              id="path96"
+              id="node6_spike"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
-              :fill=colorNode6
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
             <text
-              id="text96"
+              id="node6_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2967,7 +2967,7 @@
               y="-70.653908"
             >
               <tspan
-                id="tspan29"
+                id="node6_strassenname_tspan"
                 x="1251.2728"
                 y="5.7888861"
                 style="stroke-width: 26.4927"
@@ -2976,11 +2976,11 @@
               </tspan>
             </text>
             <g
-              id="g97"
+              id="node6_number"
               transform="rotate(45,785.75,700)"
             >
               <circle
-                id="circle96"
+                id="node6_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2995,7 +2995,7 @@
                 r="11.951238"
               />
               <text
-                id="text97"
+                id="node6_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -3013,7 +3013,7 @@
                 transform="rotate(-45)"
               >
                 <tspan
-                  id="tspan97"
+                  id="node6_circle_tspan"
                   style="stroke-width: 30.9229"
                   x="29.266506"
                   y="1118.2867"
@@ -3023,7 +3023,7 @@
               </text>
             </g>
             <text
-              id="text98"
+              id="node6_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3052,7 +3052,7 @@
               y="-56.651062"
             >
               <tspan
-                id="tspan30"
+                id="node6_strassenname_multirow2_tspan"
                 x="1251.2728"
                 y="19.791727"
                 style="stroke-width: 26.4927"
@@ -3061,7 +3061,7 @@
               </tspan>
             </text>
             <text
-              id="text99"
+              id="node6_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3090,7 +3090,7 @@
               y="-84.651779"
             >
               <tspan
-                id="tspan31"
+                id="node6_strassenname_multirow1_tspan"
                 x="1251.2728"
                 y="-8.208993"
                 style="stroke-width: 26.4927"
@@ -3099,7 +3099,7 @@
               </tspan>
             </text>
             <text
-              id="southEastSum"
+              id="node6_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
               style="
@@ -3128,7 +3128,7 @@
               y="-778.25079"
             >
               <tspan
-                id="tspan100"
+                id="node6_sum_tspan"
                 x="1853.0757"
                 y="9.9343376"
                 style="
@@ -3150,24 +3150,24 @@
               </tspan>
             </text>
           </g>
-          <g id="g108">
+          <g id="arrows_node6">
             <g id="g62">
               <path
-                id="southEastCrossingWestToEast"
+                id="arrow_node6_south_west_to_north_east"
                 d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <path
-                id="southEastCrossingEastToWest"
+                id="arrow_node6_north_east_to_south_west"
                 d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <text
-                id="southEastCrossingSum1"
+                id="node6_crossing_sum1_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
                 style="
@@ -3195,7 +3195,7 @@
                 y="-871.953"
               >
                 <tspan
-                  id="tspan59"
+                  id="node6_crossing_sum1_tspan"
                   x="1723.4482"
                   y="-83.767906"
                   style="
@@ -3217,7 +3217,7 @@
                 </tspan>
               </text>
               <text
-                id="numberSouthEastNorthToSouth"
+                id="arrow_node6_north_east_to_south_west_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
                 style="
@@ -3246,7 +3246,7 @@
                 y="463.03299"
               >
                 <tspan
-                  id="tspan60"
+                  id="arrow_node6_north_east_to_south_west_number_tspan"
                   x="-0.89014673"
                   y="1255.8691"
                   style="
@@ -3268,7 +3268,7 @@
                 </tspan>
               </text>
               <text
-                id="numberSouthEastSouthToNorth"
+                id="arrow_node6_south_west_to_north_east_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
                 style="
@@ -3297,7 +3297,7 @@
                 y="508.83719"
               >
                 <tspan
-                  id="tspan61"
+                  id="arrow_node6_south_west_to_north_east_number_tspan"
                   x="-0.89011478"
                   y="1301.6733"
                   style="
@@ -3319,7 +3319,7 @@
                 </tspan>
               </text>
               <text
-                id="southEastCrossingSum2"
+                id="node6_crossing_sum2_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
                 style="
@@ -3347,7 +3347,7 @@
                 y="-684.56586"
               >
                 <tspan
-                  id="tspan62"
+                  id="node6_crossing_sum2_tspan"
                   x="1723.4484"
                   y="103.61935"
                   style="
@@ -3371,17 +3371,17 @@
             </g>
           </g>
         </g>
-        <g id="g122">
-          <g id="g113">
+        <g id="node7_group">
+          <g id="node7">
             <path
-              id="path109"
+              id="node7_spike"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
-              :fill=colorNode7
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
             <text
-              id="text109"
+              id="node7_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3410,7 +3410,7 @@
               y="995.74023"
             >
               <tspan
-                id="tspan109"
+                id="node7_strassenname_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3431,9 +3431,9 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
-            <g id="g110">
+            <g id="node7_number">
               <circle
-                id="circle109"
+                id="node7_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -3448,7 +3448,7 @@
                 r="11.951238"
               />
               <text
-                id="text110"
+                id="node7_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -3465,7 +3465,7 @@
                 x="633.51685"
               >
                 <tspan
-                  id="tspan110"
+                  id="node7_circle_tspan"
                   style="stroke-width: 30.9229"
                   x="633.51685"
                   y="767.69238"
@@ -3475,7 +3475,7 @@
               </text>
             </g>
             <text
-              id="text111"
+              id="node7_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3504,7 +3504,7 @@
               y="1009.7406"
             >
               <tspan
-                id="tspan111"
+                id="node7_strassenname_multirow2_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3526,7 +3526,7 @@
               </tspan>
             </text>
             <text
-              id="text112"
+              id="node7_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3555,7 +3555,7 @@
               y="981.73987"
             >
               <tspan
-                id="tspan112"
+                id="node7_strassenname_multirow1_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3577,7 +3577,7 @@
               </tspan>
             </text>
             <text
-              id="southWestSum"
+              id="node7_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
               style="
@@ -3606,7 +3606,7 @@
               y="79.781227"
             >
               <tspan
-                id="tspan113"
+                id="node7_sum_tspan"
                 x="-712.15698"
                 y="867.96637"
                 style="
@@ -3628,24 +3628,24 @@
               </tspan>
             </text>
           </g>
-          <g id="g121">
+          <g id="arrows_node7">
             <g id="g50">
               <path
-                id="southWestCrossingWestToEast"
+                id="arrow_node7_north_west_to_south_east"
                 d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <path
-                id="southWestCrossingEastToWest"
+                id="arrow_node7_south_east_to_north_west"
                 d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <text
-                id="southWestCrossingSum1"
+                id="node7_crossing_sum1_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
                 style="
@@ -3673,7 +3673,7 @@
                 y="173.64429"
               >
                 <tspan
-                  id="tspan47"
+                  id="node7_crossing_sum1_tspan"
                   x="-489.00357"
                   y="961.82947"
                   style="
@@ -3695,7 +3695,7 @@
                 </tspan>
               </text>
               <text
-                id="numberSouthEastSouthToNorth"
+                id="arrow_node7_south_east_to_north_west_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
                 style="
@@ -3724,7 +3724,7 @@
                 y="-401.13431"
               >
                 <tspan
-                  id="tspan48"
+                  id="arrow_node7_south_east_to_north_west_number_tspan"
                   x="1134.2671"
                   y="391.7019"
                   style="
@@ -3746,7 +3746,7 @@
                 </tspan>
               </text>
               <text
-                id="numberSouthEastNorthToSouth"
+                id="arrow_node7_north_west_to_south_east_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
                 style="
@@ -3775,7 +3775,7 @@
                 y="-355.33026"
               >
                 <tspan
-                  id="tspan49"
+                  id="arrow_node7_north_west_to_south_east_number_tspan"
                   x="1134.2671"
                   y="437.50613"
                   style="
@@ -3797,7 +3797,7 @@
                 </tspan>
               </text>
               <text
-                id="zaehlwertArrowSouthWest_SouthWestCrossingSum2"
+                id="node7_crossing_sum2_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
                 style="
@@ -3825,7 +3825,7 @@
                 y="-13.742985"
               >
                 <tspan
-                  id="tspan50"
+                  id="node7_crossing_sum2_tspan"
                   x="-489.0036"
                   y="774.4422"
                   style="
@@ -3849,17 +3849,17 @@
             </g>
           </g>
         </g>
-        <g id="g135">
-          <g id="g126">
+        <g id="node8_group">
+          <g id="node8">
             <path
-              id="path122"
+              id="node8_spike"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
-              :fill=colorNode8
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
             <text
-              id="text122"
+              id="node8_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3888,7 +3888,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="tspan122"
+                id="node8_strassenname_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3909,9 +3909,9 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
-            <g id="g123">
+            <g id="node8_number">
               <circle
-                id="circle122"
+                id="node8_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -3926,7 +3926,7 @@
                 r="11.951238"
               />
               <text
-                id="text123"
+                id="node8_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -3943,7 +3943,7 @@
                 x="633.36969"
               >
                 <tspan
-                  id="tspan123"
+                  id="node8_circle_tspan"
                   style="stroke-width: 30.9229"
                   x="633.36969"
                   y="646.78491"
@@ -3953,7 +3953,7 @@
               </text>
             </g>
             <text
-              id="text124"
+              id="node8_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -3982,7 +3982,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="tspan124"
+                id="node8_strassenname_multirow2_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -4004,7 +4004,7 @@
               </tspan>
             </text>
             <text
-              id="text125"
+              id="node8_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -4033,7 +4033,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="tspan125"
+                id="node8_strassenname_multirow1_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -4055,7 +4055,7 @@
               </tspan>
             </text>
             <text
-              id="northWestSum"
+              id="node8_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
               style="
@@ -4084,7 +4084,7 @@
               y="-778.25232"
             >
               <tspan
-                id="tspan126"
+                id="node8_sum_tspan"
                 x="429.97952"
                 y="9.9321842"
                 style="
@@ -4106,24 +4106,24 @@
               </tspan>
             </text>
           </g>
-          <g id="g134">
+          <g id="arrows_node8">
             <g id="g24">
               <path
-                id="northWestCrossingWestToEast"
+                id="arrow_node8_south_west_to_north_east"
                 d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <path
-                id="northWestCrossingEastToWest"
+                id="arrow_node8_north_east_to_south_west"
                 d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
                 fill="#000000"
                 stroke="none"
                 style="stroke-width: 27.0576"
               />
               <text
-                id="northWestCrossingSum1"
+                id="node8_crossing_sum1_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
                 style="
@@ -4151,7 +4151,7 @@
                 y="-684.39423"
               >
                 <tspan
-                  id="tspan21"
+                  id="node8_crossing_sum1_tspan"
                   x="653.13324"
                   y="103.791"
                   style="
@@ -4173,7 +4173,7 @@
                 </tspan>
               </text>
               <text
-                id="numberNorthWestSouthToNorth"
+                id="arrow_node8_north_east_to_south_west_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
                 style="
@@ -4202,7 +4202,7 @@
                 y="-300.22974"
               >
                 <tspan
-                  id="tspan22"
+                  id="arrow_node8_north_east_to_south_west_number_tspan"
                   x="-1.1170298"
                   y="492.60648"
                   style="
@@ -4224,7 +4224,7 @@
                 </tspan>
               </text>
               <text
-                id="numberNorthWestNorthToSouth"
+                id="arrow_node8_south_west_to_north_east_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
                 style="
@@ -4253,7 +4253,7 @@
                 y="-346.03415"
               >
                 <tspan
-                  id="tspan23"
+                  id="arrow_node8_south_west_to_north_east_number_tspan"
                   x="-1.117029"
                   y="446.80225"
                   style="
@@ -4275,7 +4275,7 @@
                 </tspan>
               </text>
               <text
-                id="northWestCrossingSum2"
+                id="node8_crossing_sum2_text"
                 xml:space="preserve"
                 transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
                 style="
@@ -4303,7 +4303,7 @@
                 y="-871.78137"
               >
                 <tspan
-                  id="tspan24"
+                  id="node8_crossing_sum2_tspan"
                   x="653.1333"
                   y="-83.596291"
                   style="
