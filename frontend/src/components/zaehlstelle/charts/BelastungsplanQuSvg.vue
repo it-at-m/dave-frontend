@@ -558,7 +558,6 @@
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
-                  -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
@@ -591,7 +590,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -631,7 +629,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -671,7 +668,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -712,7 +708,6 @@
                   font-stretch: normal;
                   font-size: 28.097px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -741,7 +736,6 @@
                     font-stretch: normal;
                     font-size: 28.097px;
                     font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
@@ -798,7 +792,6 @@
                 font-stretch: normal;
                 font-size: 28.2628px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -828,7 +821,6 @@
                   font-stretch: normal;
                   font-size: 28.2628px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -852,7 +844,6 @@
                 font-stretch: normal;
                 font-size: 28.2628px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -882,7 +873,6 @@
                   font-stretch: normal;
                   font-size: 28.2628px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -925,7 +915,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -978,7 +967,6 @@
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
-                  -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
@@ -1010,7 +998,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1048,7 +1035,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1092,7 +1078,6 @@
                   font-stretch: normal;
                   font-size: 28.097px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1121,7 +1106,6 @@
                     font-stretch: normal;
                     font-size: 28.097px;
                     font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
@@ -1177,7 +1161,6 @@
                 font-stretch: normal;
                 font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1207,7 +1190,6 @@
                   font-stretch: normal;
                   font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1231,7 +1213,6 @@
                 font-stretch: normal;
                 font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1261,7 +1242,6 @@
                   font-stretch: normal;
                   font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1300,7 +1280,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1329,7 +1308,6 @@
                   font-stretch: normal;
                   font-size: 22.3767px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1368,7 +1346,6 @@
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
-                  -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
@@ -1400,7 +1377,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1429,7 +1405,6 @@
                   font-stretch: normal;
                   font-size: 22.3767px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1453,7 +1428,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1482,7 +1456,6 @@
                   font-stretch: normal;
                   font-size: 22.3767px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1512,7 +1485,6 @@
                   font-stretch: normal;
                   font-size: 28.097px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1541,7 +1513,6 @@
                     font-stretch: normal;
                     font-size: 28.097px;
                     font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
@@ -1595,7 +1566,6 @@
                 font-stretch: normal;
                 font-size: 28.2628px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1625,7 +1595,6 @@
                   font-stretch: normal;
                   font-size: 28.2628px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1648,7 +1617,6 @@
                 font-stretch: normal;
                 font-size: 28.2628px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1678,7 +1646,6 @@
                   font-stretch: normal;
                   font-size: 28.2628px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1717,7 +1684,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1745,7 +1711,6 @@
                   font-stretch: normal;
                   font-size: 22.3767px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1784,7 +1749,6 @@
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
-                  -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
@@ -1816,7 +1780,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1844,7 +1807,6 @@
                   font-stretch: normal;
                   font-size: 22.3767px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1868,7 +1830,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1896,7 +1857,6 @@
                   font-stretch: normal;
                   font-size: 22.3767px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1930,7 +1890,6 @@
                   font-stretch: normal;
                   font-size: 28.097px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1959,7 +1918,6 @@
                     font-stretch: normal;
                     font-size: 28.097px;
                     font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
@@ -2014,7 +1972,6 @@
                 font-stretch: normal;
                 font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2044,7 +2001,6 @@
                   font-stretch: normal;
                   font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2067,7 +2023,6 @@
                 font-stretch: normal;
                 font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2097,7 +2052,6 @@
                   font-stretch: normal;
                   font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
