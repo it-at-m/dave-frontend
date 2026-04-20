@@ -1,5 +1,9 @@
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+
+
+
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+
 
 /**
  * Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert.
@@ -8,7 +12,7 @@ import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
  * @param richtung Himmelsrichtung
  * @returns Boolean, ob die Querung existiert
  */
-export function istQerungVorhanden(
+export function isQuerung(
   querungsverkehr: QuerungsverkehrDTO[] | undefined,
   knNummer: number,
   richtung: Himmelsrichtung

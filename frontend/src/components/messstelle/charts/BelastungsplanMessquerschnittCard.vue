@@ -158,8 +158,7 @@ function drawArrowsPointingSouth(
 ) {
   const arrayOfDataForDirectionSouth = groupedByDirection.find(
     (obj) =>
-      obj.direction === Himmelsrichtung.S ||
-      obj.direction === Himmelsrichtung.W
+      obj.direction === Himmelsrichtung.S || obj.direction === Himmelsrichtung.W
   );
   arrayOfDataForDirectionSouth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -302,8 +301,7 @@ function drawArrowsPointingNorth(
 ) {
   const arrayOfDataForDirectionNorth = groupedByDirection.find(
     (obj) =>
-      obj.direction === Himmelsrichtung.N ||
-      obj.direction === Himmelsrichtung.O
+      obj.direction === Himmelsrichtung.N || obj.direction === Himmelsrichtung.O
   );
   arrayOfDataForDirectionNorth?.data.forEach((mq) => {
     querschnittGroup.value.add(
