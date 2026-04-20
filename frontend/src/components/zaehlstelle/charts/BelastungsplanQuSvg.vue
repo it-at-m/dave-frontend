@@ -753,6 +753,7 @@
                 </tspan>
               </text>
               <path
+                v-if="istKnotenarmVerfuegbar(1)"
                 style="
                   fill: #000000;
                   stroke: #000000;
@@ -770,7 +771,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="isQuerungNode1WestEast"
+              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_west_to_east"
               d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
               :fill="colorNode1WestEast"
@@ -778,7 +779,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
-              v-if="isQuerungNode1EastWest"
+              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_east_to_west"
               d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
               :fill="colorNode1EastWest"
@@ -786,7 +787,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="isQuerungNode1WestEast"
+              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -838,7 +839,7 @@
               </tspan>
             </text>
             <text
-              v-if="isQuerungNode1EastWest"
+              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1067,7 +1068,7 @@
                 y="691.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
               >
-                 {{ streetnamesNode2[0] }}
+                {{ streetnamesNode2[0] }}
               </tspan>
             </text>
             <g
@@ -1127,6 +1128,7 @@
                 </tspan>
               </text>
               <path
+                v-if="istKnotenarmVerfuegbar(2)"
                 id="node2_sum_line"
                 style="
                   display: inline;
@@ -1145,6 +1147,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_north_to_south"
               d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               :fill="colorNode2NorthSouth"
@@ -1152,6 +1155,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_south_to_north"
               d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               :fill="colorNode2SouthNorth"
@@ -1159,7 +1163,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="isQuerungNode2NorthSouth"
+              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1211,7 +1215,7 @@
               </tspan>
             </text>
             <text
-              v-if="isQuerungNode2SouthNorth"
+              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1328,7 +1332,7 @@
                 x="-962.48126"
                 y="705.79083"
               >
-                 {{ streetnamesNode3[0] }}
+                {{ streetnamesNode3[0] }}
               </tspan>
             </text>
             <g
@@ -1426,7 +1430,7 @@
                 x="-962.48126"
                 y="719.79083"
               >
-               {{ streetnamesNode3[1] }}
+                {{ streetnamesNode3[1] }}
               </tspan>
             </text>
             <text
@@ -1478,7 +1482,7 @@
                 x="-962.48126"
                 y="691.79083"
               >
-                 {{ streetnamesNode3[0] }}
+                {{ streetnamesNode3[0] }}
               </tspan>
             </text>
             <g
@@ -1534,10 +1538,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                   {{ zaehlwertNode3 }}
+                  {{ zaehlwertNode3 }}
                 </tspan>
               </text>
               <path
+                v-if="istKnotenarmVerfuegbar(3)"
                 id="node3_sum_line"
                 style="
                   fill: #000000;
@@ -1555,6 +1560,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_west_to_east"
               d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
               :fill="colorNode3WestEast"
@@ -1562,6 +1568,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_east_to_west"
               d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
               :fill="colorNode3EastWest"
@@ -1569,7 +1576,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="isQuerungNode3WestEast"
+              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1621,7 +1628,7 @@
               </tspan>
             </text>
             <text
-              v-if="isQuerungNode3EastWest"
+              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1885,7 +1892,7 @@
                 x="437.52008"
                 y="691.79083"
               >
-               {{ streetnamesNode4[0] }}
+                {{ streetnamesNode4[0] }}
               </tspan>
             </text>
             <g
@@ -1945,10 +1952,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                   {{ zaehlwertNode4 }}
+                  {{ zaehlwertNode4 }}
                 </tspan>
               </text>
               <path
+                v-if="istKnotenarmVerfuegbar(4)"
                 id="node4_sum_line"
                 style="
                   display: inline;
@@ -1967,6 +1975,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="istKnotenarmVerfuegbar(4)"
               id="arrow_node4_north_to_south"
               d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               :fill="colorNode4NorthSouth"
@@ -1974,6 +1983,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="istKnotenarmVerfuegbar(4)"
               id="arrow_node4_south_to_north"
               d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               :fill="colorNode4SouthNorth"
@@ -1981,35 +1991,116 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="isQuerungNode4NorthSouth"
+              v-if="istKnotenarmVerfuegbar(4)"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_north_to_south_number_text"
-              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:rl-tb;direction:rtl;text-anchor:middle;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:28.2205;stroke-dasharray:none"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
               x="-1965.2267"
-              y="-595.89404"><tspan
-             x="-808.19946"
-             y="191.99969"
-             id="arrow_node4_north_to_south_number_tspan"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:28.2205;stroke-dasharray:none">
-               {{zaehlwertNode4NorthSouth}}</tspan></text>
+              y="-595.89404"
+            >
+              <tspan
+                x="-808.19946"
+                y="191.99969"
+                id="arrow_node4_north_to_south_number_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.0866px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+              >
+                {{ zaehlwertNode4NorthSouth }}
+              </tspan>
+            </text>
             <text
-              v-if="isQuerungNode4SouthNorth"
+              v-if="istKnotenarmVerfuegbar(4)"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_south_to_north_number_text"
-              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:rl-tb;direction:rtl;text-anchor:middle;white-space:pre;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:28.2205;stroke-dasharray:none"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
               x="-1965.2268"
-              y="-550.37286"><tspan
-             x="-808.19946"
-             y="237.52097"
-             id="arrow_node4_south_to_north_number_tspan"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.0866px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:28.2205;stroke-dasharray:none">
-              {{zaehlwertNode4SouthNorth}}</tspan></text>
-
-          </g>
+              y="-550.37286"
+            >
+              <tspan
+                x="-808.19946"
+                y="237.52097"
+                id="arrow_node4_south_to_north_number_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.0866px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+              >
+                {{ zaehlwertNode4SouthNorth }}
+              </tspan>
+            </text>
           </g>
         </g>
+      </g>
 
       <path
         id="center"
@@ -2024,23 +2115,18 @@
 <script setup lang="ts">
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-//import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
-// import { computed, nextTick, onMounted, ref, watch } from "vue";
-// import { useDisplay } from "vuetify";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-// import { useFjs } from "@/util/FjsUtils";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import { isQuerung } from "@/util/Querungspruefung";
-// import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -2070,42 +2156,6 @@ const minSizeBelastungsplan = computed(() => {
   );
 });
 
-// const emits = defineEmits<{
-//   (e: "print", v: Blob): void;
-// }>();
-//
-// const svgRef = ref<SVGSVGElement | null>(null);
-//
-// /**
-//  * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
-//  */
-// function emitSvgAsBlob(): void {
-//   const svgEl = svgRef.value;
-//   if (!svgEl) {
-//     return;
-//   }
-//   const svgString = serializeSvgElement(svgEl);
-//   const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
-//   emits("print", blob);
-// }
-
-/**
- * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
- */
-// function serializeSvgElement(svgEl: SVGSVGElement): string {
-//   const clone = svgEl.cloneNode(true) as SVGSVGElement;
-//
-//   const serializer = new XMLSerializer();
-//   let svgString = serializer.serializeToString(clone);
-//
-//   const xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>\n';
-//   if (!svgString.startsWith("<?xml")) {
-//     svgString = xmlDeclaration + svgString;
-//   }
-//   return svgString;
-// }
-
-// const dateUtils = useDateUtils();
 const qu = useQu();
 const streetname = useStreetname();
 
@@ -2119,10 +2169,6 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-// const availableKnotenarmNummern = computed(() => {
-//   return qu.computeAvailableKnotenarmNummernFromZaehlung(activeZaehlung.value);
-// });
-
 const availableKnotenarme = computed(() => {
   return qu.computeAvailableKnotenarme(activeZaehlung.value);
 });
@@ -2133,15 +2179,6 @@ const zaehlwertNode1 = createZaehlwert(6543211); // TODO: wire real data
 const zaehlwertNode1WestEast = createZaehlwert(6543212); // TODO: wire real data
 const zaehlwertNode1EastWest = createZaehlwert(6543213); // TODO: wire real data
 
-const isQuerungNode1WestEast = createQuerungsPruefung(
-  nodeNumber1,
-  Himmelsrichtung.O
-);
-const isQuerungNode1EastWest = createQuerungsPruefung(
-  nodeNumber1,
-  Himmelsrichtung.W
-);
-
 const colorNode1WestEast = setColor(nodeNumber1, Himmelsrichtung.O);
 const colorNode1EastWest = setColor(nodeNumber1, Himmelsrichtung.W);
 
@@ -2150,15 +2187,6 @@ const nodeNumber2 = 2;
 const zaehlwertNode2 = createZaehlwert(6543211); // TODO: wire real data
 const zaehlwertNode2SouthNorth = createZaehlwert(6543212); // TODO: wire real data
 const zaehlwertNode2NorthSouth = createZaehlwert(6543213);
-
-const isQuerungNode2NorthSouth = createQuerungsPruefung(
-  nodeNumber2,
-  Himmelsrichtung.S
-);
-const isQuerungNode2SouthNorth = createQuerungsPruefung(
-  nodeNumber2,
-  Himmelsrichtung.N
-);
 
 const colorNode2NorthSouth = setColor(nodeNumber2, Himmelsrichtung.S);
 const colorNode2SouthNorth = setColor(nodeNumber2, Himmelsrichtung.N);
@@ -2169,15 +2197,6 @@ const zaehlwertNode3 = createZaehlwert(6543211); // TODO: wire real data
 const zaehlwertNode3WestEast = createZaehlwert(6543212); // TODO: wire real data
 const zaehlwertNode3EastWest = createZaehlwert(6543213); // TODO: wire real data
 
-const isQuerungNode3WestEast = createQuerungsPruefung(
-  nodeNumber3,
-  Himmelsrichtung.O
-);
-const isQuerungNode3EastWest = createQuerungsPruefung(
-  nodeNumber3,
-  Himmelsrichtung.W
-);
-
 const colorNode3WestEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorNode3EastWest = setColor(nodeNumber3, Himmelsrichtung.W);
 
@@ -2187,15 +2206,6 @@ const nodeNumber4 = 4;
 const zaehlwertNode4 = createZaehlwert(6543211); // TODO: wire real data
 const zaehlwertNode4SouthNorth = createZaehlwert(6543212); // TODO: wire real data
 const zaehlwertNode4NorthSouth = createZaehlwert(6543213);
-
-const isQuerungNode4NorthSouth = createQuerungsPruefung(
-  nodeNumber2,
-  Himmelsrichtung.S
-);
-const isQuerungNode4SouthNorth = createQuerungsPruefung(
-  nodeNumber2,
-  Himmelsrichtung.N
-);
 
 const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
@@ -2210,7 +2220,12 @@ function createZaehlwert(value: number) {
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     istKnotenarmVerfuegbar(knNumber) &&
-    isQuerung(activeZaehlung.value?.querungsverkehr, knNumber, direction)
+    isQuerung(
+      activeZaehlung.value?.querungsverkehr,
+      optionen.value.chosenQuerungsverkehre,
+      knNumber,
+      direction
+    )
       ? (BelastungsplanConstants.farben.get(knNumber) ??
         BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor
@@ -2224,19 +2239,6 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
  */
 function istKnotenarmVerfuegbar(knNummer: number) {
   return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
-}
-
-/**
- * Erstellt eine computed Property für eine bestimmte knNummer und richtung.
- */
-function createQuerungsPruefung(knNummer: number, richtung: Himmelsrichtung) {
-  return computed(() =>
-    isQuerung(
-      activeZaehlung.value.querungsverkehr,
-      knNummer,
-      richtung
-    )
-  );
 }
 
 const optionen = computed<ZaehlstelleOptionsDTO>(() => {
@@ -2271,7 +2273,6 @@ watch(
 
     await nextTick();
 
-    // emitSvgAsBlob();
   }
 );
 </script>
