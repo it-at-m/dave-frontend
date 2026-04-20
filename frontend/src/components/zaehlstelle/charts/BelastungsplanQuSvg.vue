@@ -529,7 +529,7 @@
             <path
               id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
-              :fill="setColorArm1"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -767,7 +767,7 @@
                 v-if="isQuerungNode1WestEast"
                 id="arrow_node1_west_to_east"
                 d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
-                fill="#000000"
+                :fill="colorNode1WestEast"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
@@ -775,7 +775,7 @@
                 v-if="isQuerungNode1EastWest"
                 id="arrow_node1_east_to_west"
                 d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
-                fill="#000000"
+                :fill="colorNode1EastWest"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
@@ -1011,7 +1011,7 @@
             <path
               id="east_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
-              :fill="colorNode2"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 28.2205; stroke-dasharray: none"
             />
@@ -1177,6 +1177,7 @@
               </tspan>
             </text>
             <text
+              v-if="istKnotenarmVerfuegbar(2)"
               id="east_sum"
               xml:space="preserve"
               transform="scale(0.86675092,1.153734)"
@@ -1241,14 +1242,14 @@
               <path
                 id="eastCrossingNorthToSouth"
                 d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-                fill="#000000"
+                :fill="colorNode2NorthSouth"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
               <path
                 id="eastCrossingSouthToNorth"
                 d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-                fill="#000000"
+                :fill="colorNode2SouthNorth"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
@@ -1301,7 +1302,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowEast_EastCrossingSum1 }}
+                  {{ zaehlwertNode2SumNorth }}
                 </tspan>
               </text>
               <text
@@ -1413,6 +1414,7 @@
                 </tspan>
               </text>
               <text
+                v-if="isQuerungNode2NorthSouth"
                 id="eastCrossingSum2"
                 xml:space="preserve"
                 transform="scale(0.86675092,1.153734)"
@@ -1461,7 +1463,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowEast_EastCrossingSum2 }}
+                  {{ zaehlwertNode2SumSouth }}
                 </tspan>
               </text>
             </g>
@@ -1478,7 +1480,7 @@
             <path
               id="south_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
-              :fill="colorNode3"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -1636,6 +1638,7 @@
               </tspan>
             </text>
             <text
+              v-if="istKnotenarmVerfuegbar(3)"
               id="south_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -1689,6 +1692,7 @@
               </tspan>
             </text>
             <text
+              v-if="istKnotenarmVerfuegbar(3)"
               id="southSum"
               xml:space="preserve"
               transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -1738,7 +1742,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertArrowSouth_SouthSum }}
+                {{ zaehlwertNode3 }}
               </tspan>
             </text>
           </g>
@@ -1753,18 +1757,19 @@
               <path
                 id="southCrossingWestToEast"
                 d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
-                fill="#000000"
+                :fill="colorNode3WestEast"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
               <path
                 id="southCrossingEastToWest"
                 d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
-                fill="#000000"
+                :fill="colorNode3EastWest"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
               <text
+                v-if="isQuerungNode3WestEast && isQuerungNode3EastWest"
                 id="southCrossingSum1"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -1813,10 +1818,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowSouth_SouthCrossingSum1 }}
+                  {{ zaehlwertNode3SumWest }}
                 </tspan>
               </text>
               <text
+                v-if="isQuerungNode3WestEast"
                 id="southNumberSouth"
                 xml:space="preserve"
                 transform="scale(0.87251096,1.1461174)"
@@ -1866,10 +1872,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowSouth_NumberSouth }}
+                  {{ zaehlwertNode3WestEast }}
                 </tspan>
               </text>
               <text
+                v-if="isQuerungNode3EastWest"
                 id="southNumberNorth"
                 xml:space="preserve"
                 transform="scale(0.87251096,1.1461174)"
@@ -1919,10 +1926,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowSouth_NumberNorth }}
+                  {{ zaehlwertNode3EastWest }}
                 </tspan>
               </text>
               <text
+                v-if="isQuerungNode3EastWest && isQuerungNode3WestEast"
                 id="southCrossingSum2"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -1971,7 +1979,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowSouth_SouthCrossingSum2 }}
+                  {{ zaehlwertNode3SumEast }}
                 </tspan>
               </text>
             </g>
@@ -1988,7 +1996,7 @@
             <path
               id="west_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
-              :fill="colorNode4"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -2196,6 +2204,7 @@
               </tspan>
             </text>
             <text
+              v-if="istKnotenarmVerfuegbar(4)"
               id="westSum"
               xml:space="preserve"
               transform="scale(0.86675167,1.153733)"
@@ -2245,7 +2254,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertArrowWest_WestSum }}
+                {{ zaehlwertNode4 }}
               </tspan>
             </text>
           </g>
@@ -2260,14 +2269,14 @@
               <path
                 id="westCrossingNorthToSouth"
                 d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-                fill="#000000"
+                :fill="colorNode4NorthSouth"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
               <path
                 id="westCrossingSouthToNorth"
                 d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-                fill="#000000"
+                :fill="colorNode4SouthNorth"
                 stroke="none"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               />
@@ -2320,10 +2329,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowWest_WestCrossingSum1 }}
+                  {{ zaehlwertNode4SumNorth }}
                 </tspan>
               </text>
               <text
+                v-if="isQuerungNode4NorthSouth"
                 id="numberNorthToSouth"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -2373,10 +2383,11 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowWest_NumberNorthToSouth }}
+                  {{ zaehlwertNode4NorthSouth }}
                 </tspan>
               </text>
               <text
+                v-if="isQuerungNode4SouthNorth"
                 id="numberSouthToNorth"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -2426,7 +2437,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowWest_NumberSouthToNorth }}
+                  {{ zaehlwertNode4SouthNorth }}
                 </tspan>
               </text>
               <text
@@ -2478,7 +2489,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertArrowWest_WestCrossingSum2 }}
+                  {{ zaehlwertNode4SumSouth }}
                 </tspan>
               </text>
             </g>
@@ -2494,7 +2505,7 @@
             <path
               id="path83"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
-              :fill="colorNode5"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -2933,7 +2944,7 @@
             <path
               id="path96"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
-              :fill="colorNode6"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3376,7 +3387,7 @@
             <path
               id="path109"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
-              :fill="colorNode7"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3854,7 +3865,7 @@
             <path
               id="path122"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
-              :fill="colorNode8"
+              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -4667,6 +4678,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 //import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
@@ -4677,7 +4689,7 @@ import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/Belastu
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 // import { useFjs } from "@/util/FjsUtils";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import { istQerungVorhanden } from "@/util/Querungspruefung";
+import { isQuerung } from "@/util/Querungspruefung";
 // import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
@@ -4776,8 +4788,8 @@ const nodeNumber1 = 1;
 const zaehlwertNode1 = createZaehlwert(6543211); // TODO: wire real data
 const zaehlwertNode1WestEast = createZaehlwert(6543212); // TODO: wire real data
 const zaehlwertNode1EastWest = createZaehlwert(6543213); // TODO: wire real data
-const zaehlwertNode1SumEast = createZaehlwert(6543214); // TODO: wire real data
-const zaehlwertNode1SumWest = createZaehlwert(6543215); // TODO: wire real data
+// const zaehlwertNode1SumEast = createZaehlwert(6543214); // TODO: wire real data
+// const zaehlwertNode1SumWest = createZaehlwert(6543215); // TODO: wire real data
 
 const isQuerungNode1WestEast = createQuerungsPruefung(
   nodeNumber1,
@@ -4788,22 +4800,16 @@ const isQuerungNode1EastWest = createQuerungsPruefung(
   Himmelsrichtung.W
 );
 
-const colorNode1 = setColor(nodeNumber1);
+const colorNode1WestEast = setColor(nodeNumber1, Himmelsrichtung.O);
+const colorNode1EastWest = setColor(nodeNumber1, Himmelsrichtung.W);
 
 // Zaehlwerte of Node2/East
 const nodeNumber2 = 2;
 const zaehlwertNode2 = createZaehlwert(6543211); // TODO: wire real data
 const zaehlwertNode2SouthNorth = createZaehlwert(6543212); // TODO: wire real data
-
 const zaehlwertNode2NorthSouth = createZaehlwert(6543213);
-
-const zaehlwertArrowEast_EastCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowEast_EastCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
+// const zaehlwertNode2SumSouth = createZaehlwert(6543214); // TODO: wire real data
+// const zaehlwertNode2SumNorth = createZaehlwert(6543215); // TODO: wire real data
 
 const isQuerungNode2NorthSouth = createQuerungsPruefung(
   nodeNumber2,
@@ -4814,153 +4820,49 @@ const isQuerungNode2SouthNorth = createQuerungsPruefung(
   Himmelsrichtung.N
 );
 
-const colorNode2 = setColor(nodeNumber2);
+const colorNode2NorthSouth = setColor(nodeNumber2, Himmelsrichtung.S);
+const colorNode2SouthNorth = setColor(nodeNumber2, Himmelsrichtung.N);
 
 // Zaehlwerte of Node3/South
 const nodeNumber3 = 3;
-const zaehlwertArrowSouth_SouthSum = computed(() => {
-  return 654321; // TODO: wire real data
-});
+const zaehlwertNode3 = createZaehlwert(6543211); // TODO: wire real data
+const zaehlwertNode3WestEast = createZaehlwert(6543212); // TODO: wire real data
+const zaehlwertNode3EastWest = createZaehlwert(6543213); // TODO: wire real data
+// const zaehlwertNode3SumEast = createZaehlwert(6543214); // TODO: wire real data
+// const zaehlwertNode3SumWest = createZaehlwert(6543215); // TODO: wire real data
 
-const zaehlwertArrowSouth_NumberNorth = computed(() => {
-  return 654321; // TODO: wire real data
-});
+const isQuerungNode3WestEast = createQuerungsPruefung(
+  nodeNumber3,
+  Himmelsrichtung.O
+);
+const isQuerungNode3EastWest = createQuerungsPruefung(
+  nodeNumber3,
+  Himmelsrichtung.W
+);
 
-const zaehlwertArrowSouth_NumberSouth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouth_SouthCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouth_SouthCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const colorNode3 = setColor(nodeNumber3);
+const colorNode3WestEast = setColor(nodeNumber3, Himmelsrichtung.O);
+const colorNode3EastWest = setColor(nodeNumber3, Himmelsrichtung.W);
 
 // Zaehlwerte of Node4/West
-
 const nodeNumber4 = 4;
 
-const zaehlwertArrowWest_WestSum = computed(() => {
-  return 654321; // TODO: wire real data
-});
+const zaehlwertNode4 = createZaehlwert(6543211); // TODO: wire real data
+const zaehlwertNode4SouthNorth = createZaehlwert(6543212); // TODO: wire real data
+const zaehlwertNode4NorthSouth = createZaehlwert(6543213);
+// const zaehlwertNode4SumSouth = createZaehlwert(6543214); // TODO: wire real data
+// const zaehlwertNode4SumNorth = createZaehlwert(6543215); // TODO: wire real data
 
-const zaehlwertArrowWest_NumberSouthToNorth = computed(() => {
-  return 654321; // TODO: wire real data
-});
+const isQuerungNode4NorthSouth = createQuerungsPruefung(
+  nodeNumber2,
+  Himmelsrichtung.S
+);
+const isQuerungNode4SouthNorth = createQuerungsPruefung(
+  nodeNumber2,
+  Himmelsrichtung.N
+);
 
-const zaehlwertArrowWest_NumberNorthToSouth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowWest_WestCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowWest_WestCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const colorNode4 = setColor(nodeNumber4);
-
-// Zaehlwerte of Node5/North-East
-const nodeNumber5 = 5;
-const zaehlwertArrowNorthEast_NorthEastSum = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthEast_NumberSouthToNorth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthEast_NumberNorthToSouth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthEast_NorthEastCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthEast_NorthEastCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const colorNode5 = setColor(nodeNumber5);
-
-// Zaehlwerte of Node6/South-East
-const nodeNumber6 = 6;
-const zaehlwertArrowSouthEast_SouthEastSum = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthEast_NumberSouthToNorth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthEast_NumberNorthToSouth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthEast_SouthEastCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthEast_SouthEastCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const colorNode6 = setColor(nodeNumber6);
-
-// Zaehlwerte of Node7/South-West
-const nodeNumber7 = 7;
-const zaehlwertArrowSouthWest_SouthWestSum = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthWest_NumberSouthToNorth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthWest_NumberNorthToSouth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthWest_SouthWestCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowSouthWest_SouthWestCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const colorNode7 = setColor(nodeNumber7);
-
-// Zaehlwerte of Node8/North-West
-const nodeNumber8 = 8;
-const zaehlwertArrowNorthWest_NorthWestSum = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthWest_NumberSouthToNorth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthWest_NumberNorthToSouth = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthWest_NorthWestCrossingSum2 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const zaehlwertArrowNorthWest_NorthWestCrossingSum1 = computed(() => {
-  return 654321; // TODO: wire real data
-});
-
-const colorNode8 = setColor(nodeNumber8);
+const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
+const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
 /**
  * Erstellt eine computed Property für einen Wert.
@@ -4969,10 +4871,12 @@ function createZaehlwert(value: number) {
   return computed(() => value);
 }
 
-function setColor(value: number) {
+function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
-    istKnotenarmVerfuegbar(value)
-      ? BelastungsplanConstants.farben.get(value)
+    istKnotenarmVerfuegbar(knNumber) &&
+    isQuerung(activeZaehlung.value?.querungsverkehr, knNumber, direction)
+      ? (BelastungsplanConstants.farben.get(knNumber) ??
+        BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor
   );
 }
@@ -4986,52 +4890,22 @@ function istKnotenarmVerfuegbar(knNummer: number) {
   return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
 }
 
-const istQuerungArm3WestOst = createQuerungsPruefung(3, Himmelsrichtung.O);
-const istQuerungArm3OstWest = createQuerungsPruefung(3, Himmelsrichtung.W);
-const istQuerungArm4NordSued = createQuerungsPruefung(4, Himmelsrichtung.S);
-const istQuerungArm4SuedNord = createQuerungsPruefung(4, Himmelsrichtung.N);
-
-const istQuerungArm5NordOstSuedOst = createQuerungsPruefung(
-  5,
-  Himmelsrichtung.SO
-);
-const istQuerungArm5NordOstNordWest = createQuerungsPruefung(
-  5,
-  Himmelsrichtung.NW
-);
-const istQuerungArm6NordOstSuedWest = createQuerungsPruefung(
-  6,
-  Himmelsrichtung.SW
-);
-const istQuerungArm6SuedWestNordOst = createQuerungsPruefung(
-  6,
-  Himmelsrichtung.NO
-);
-const istQuerungArm7SuedOstNordWest = createQuerungsPruefung(
-  7,
-  Himmelsrichtung.NW
-);
-const istQuerungArm7NordWestSuedOst = createQuerungsPruefung(
-  7,
-  Himmelsrichtung.SO
-);
-const istQuerungArm8NordOstSuedWest = createQuerungsPruefung(
-  8,
-  Himmelsrichtung.SW
-);
-const istQuerungArm8SuedWestNordOst = createQuerungsPruefung(
-  8,
-  Himmelsrichtung.NO
-);
-
 /**
  * Erstellt eine computed Property für eine bestimmte knNummer und richtung.
  */
 function createQuerungsPruefung(knNummer: number, richtung: Himmelsrichtung) {
   return computed(() =>
-    istQerungVorhanden(activeZaehlung.value.querungsverkehr, knNummer, richtung)
+    isQuerung(
+      activeZaehlung.value.querungsverkehr,
+      knNummer,
+      richtung
+    )
   );
 }
+
+const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+  return zaehlstelleStore.getFilteroptions;
+});
 
 onMounted(() => {
   streetnamesNode1.value = streetname.getStreetname(
@@ -5042,7 +4916,7 @@ onMounted(() => {
 watch(
   [
     () => props.data,
-    () => activeZaehlung.value.laengsverkehr,
+    () => optionen.value.chosenQuerungsverkehre,
     () => activeZaehlung.value.knotenarme,
   ],
   async () => {
