@@ -529,7 +529,7 @@
             <path
               id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
-              :fill="setColorArm1"
+              :fill="colorNode1"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -700,19 +700,105 @@
                 {{ streetnamesNode1[1] }}
               </tspan>
             </text>
+            <g id="node1_sum">
+              <text
+                id="node1_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node1_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  {{ zaehlwertNode1 }}
+                </tspan>
+              </text>
+              <path
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+                id="node1_sum_line"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node1"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              v-if="isQuerungNode1WestEast"
+              id="arrow_node1_west_to_east"
+              d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
+            <path
+              v-if="isQuerungNode1EastWest"
+              id="arrow_node1_east_to_west"
+              d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
             <text
-              v-if="istKnotenarmVerfuegbar(1)"
-              id="node1_sum_text"
+              v-if="isQuerungNode1WestEast"
+              id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+              transform="scale(0.87251096,1.1461174)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.2628px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -723,26 +809,80 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 28.2204997;
+                stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-1254.1317"
-              y="-171.53365"
+              x="-362.89398"
+              y="-553.82526"
             >
               <tspan
-                id="node1_sum_tspan"
-                x="-96.676033"
-                y="616.65149"
+                id="arrow_node1_west_to_east_number_tspan"
+                x="801.39209"
+                y="239.01094"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.2628px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049989;
+                  stroke-dasharray: none;
+                "
+              >
+                {{ zaehlwertNode1WestEast }}
+              </tspan>
+            </text>
+            <text
+              v-if="isQuerungNode1EastWest"
+              id="arrow_node1_east_to_west_number_text"
+              xml:space="preserve"
+              transform="scale(0.87251096,1.1461174)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 28.22049989;
+                stroke-dasharray: none;
+              "
+              x="-362.89325"
+              y="-599.6322"
+            >
+              <tspan
+                id="arrow_node1_east_to_west_number_tspan"
+                x="801.39209"
+                y="193.2041"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -751,253 +891,13 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode1 }}
+                {{ zaehlwertNode1EastWest }}
               </tspan>
             </text>
           </g>
-          <g
-            id="arrows_node1"
-            style="stroke-width: 28.22049979; stroke-dasharray: none"
-          >
-            <g
-              id="g66"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
-            >
-              <path
-                v-if="isQuerungNode1WestEast"
-                id="arrow_node1_west_to_east"
-                d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <path
-                v-if="isQuerungNode1EastWest"
-                id="arrow_node1_east_to_west"
-                d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <text
-                v-if="isQuerungNode1WestEast || isQuerungNode1EastWest"
-                id="node1_crossing_sum1_text"
-                xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="-1383.7572"
-                y="-265.22723"
-              >
-                <tspan
-                  id="node1_crossing_sum1_tspan"
-                  x="-226.30139"
-                  y="522.95795"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertNode1SumWest }}
-                </tspan>
-              </text>
-              <text
-                v-if="isQuerungNode1EastWest"
-                id="arrow_node1_east_to_west_number_text"
-                xml:space="preserve"
-                transform="scale(0.87251096,1.1461174)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049989;
-                  stroke-dasharray: none;
-                "
-                x="-362.89398"
-                y="-553.82526"
-              >
-                <tspan
-                  id="arrow_node1_east_to_west_number_tspan"
-                  x="801.39209"
-                  y="239.01094"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049989;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertNode1EastWest }}
-                </tspan>
-              </text>
-              <text
-                v-if="isQuerungNode1WestEast"
-                id="arrow_node1_west_to_east_number_text"
-                xml:space="preserve"
-                transform="scale(0.87251096,1.1461174)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049989;
-                  stroke-dasharray: none;
-                "
-                x="-362.89325"
-                y="-599.6322"
-              >
-                <tspan
-                  id="arrow_node1_west_to_east_number_tspan"
-                  x="801.39209"
-                  y="193.2041"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049989;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertNode1WestEast }}
-                </tspan>
-              </text>
-              <text
-                v-if="isQuerungNode1WestEast || isQuerungNode1EastWest"
-                id="node1_crossing_sum2_text"
-                xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="-1383.7572"
-                y="-77.840034"
-              >
-                <tspan
-                  id="node1_crossing_sum2_tspan"
-                  x="-226.30139"
-                  y="710.34515"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertNode1SumEast }}
-                </tspan>
-              </text>
-            </g>
-          </g>
         </g>
         <g
-          id="east_group"
+          id="node2_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
@@ -1009,14 +909,14 @@
             "
           >
             <path
-              id="east_spike"
+              id="node2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
               :fill="colorNode2"
               stroke="none"
               style="stroke-width: 28.2205; stroke-dasharray: none"
             />
             <text
-              id="east_strassenname_text"
+              id="node2_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -1045,7 +945,7 @@
               y="629.34802"
             >
               <tspan
-                id="tspan19"
+                id="node2_strassenname_tspan"
                 x="961.323"
                 y="705.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
@@ -1054,11 +954,11 @@
               </tspan>
             </text>
             <g
-              id="east_number"
+              id="node2_number"
               style="stroke-width: 28.2205; stroke-dasharray: none"
             >
               <circle
-                id="east_number_circle"
+                id="node2_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -1073,7 +973,7 @@
                 r="11.951238"
               />
               <text
-                id="east_number_text"
+                id="node2_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -1091,7 +991,7 @@
                 x="779.30457"
               >
                 <tspan
-                  id="east_number_tspan"
+                  id="node2_circle_tspan"
                   style="stroke-width: 28.2205; stroke-dasharray: none"
                   x="779.30457"
                   y="707.33368"
@@ -1101,7 +1001,7 @@
               </text>
             </g>
             <text
-              id="east_strassenname_multirow2_text"
+              id="node2_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -1130,7 +1030,7 @@
               y="643.34802"
             >
               <tspan
-                id="tspan20"
+                id="node2_strassenname_multirow2_tspan"
                 x="961.323"
                 y="719.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
@@ -1139,7 +1039,7 @@
               </tspan>
             </text>
             <text
-              id="east_strassenname_multirow1_text"
+              id="node2_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -1168,7 +1068,7 @@
               y="615.34802"
             >
               <tspan
-                id="tspan25"
+                id="node2_strassenname_multirow1_tspan"
                 x="961.323"
                 y="691.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
@@ -1176,18 +1076,108 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node2_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(90,699.99982,699.99982)"
+            >
+              <text
+                id="node2_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node2_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  {{ zaehlwertNode2 }}
+                </tspan>
+              </text>
+              <path
+                id="node2_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node2"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              id="arrow_node2_north_to_south"
+              d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
+            <path
+              id="arrow_node2_south_to_north"
+              d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
             <text
-              id="east_sum"
+              v-if="isQuerungNode2NorthSouth"
+              id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
-              transform="scale(0.86675092,1.153734)"
+              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1198,292 +1188,110 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 28.2205;
+                stroke-width: 28.22049979;
                 stroke-dasharray: none;
               "
-              x="361.09558"
-              y="-171.52608"
+              x="-1965.2267"
+              y="208.31508"
             >
               <tspan
-                id="tspan1"
-                x="1518.5513"
-                y="616.65906"
+                id="arrow_node2_north_to_south_number_tspan"
+                x="-808.19946"
+                y="996.2088"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 28.2205;
+                  stroke-width: 28.22049979;
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode2 }}
+                {{ zaehlwertNode2NorthSouth }}
+              </tspan>
+            </text>
+            <text
+              v-if="isQuerungNode2SouthNorth"
+              id="arrow_node2_south_to_north_number_text"
+              xml:space="preserve"
+              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              "
+              x="-1965.2268"
+              y="253.83627"
+            >
+              <tspan
+                id="arrow_node2_south_to_north_number_tspan"
+                x="-808.19946"
+                y="1041.7301"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.0866px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                "
+              >
+                {{ zaehlwertNode2SouthNorth }}
               </tspan>
             </text>
           </g>
-          <g
-            id="east_arrows"
-            style="stroke-width: 28.22049979; stroke-dasharray: none"
-          >
-            <g
-              id="east_north"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
-            >
-              <path
-                id="eastCrossingNorthToSouth"
-                d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <path
-                id="eastCrossingSouthToNorth"
-                d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <text
-                id="eastCrossingSum1"
-                xml:space="preserve"
-                transform="scale(0.86675092,1.153734)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="231.4702"
-                y="-265.2272"
-              >
-                <tspan
-                  id="east_sum_tspan"
-                  x="1388.9259"
-                  y="522.95795"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowEast_EastCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                v-if="isQuerungNode2NorthSouth"
-                id="numberNorthToSouth"
-                xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049979;
-                  stroke-dasharray: none;
-                "
-                x="-1965.2267"
-                y="208.31508"
-              >
-                <tspan
-                  id="numberNorthToSouth-8"
-                  x="-808.19946"
-                  y="996.2088"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049979;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertNode2NorthSouth }}
-                </tspan>
-              </text>
-              <text
-                v-if="isQuerungNode2SouthNorth"
-                id="numberSouthToNorth"
-                xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049979;
-                  stroke-dasharray: none;
-                "
-                x="-1965.2268"
-                y="253.83627"
-              >
-                <tspan
-                  id="tspan14"
-                  x="-808.19946"
-                  y="1041.7301"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049979;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertNode2SouthNorth }}
-                </tspan>
-              </text>
-              <text
-                id="eastCrossingSum2"
-                xml:space="preserve"
-                transform="scale(0.86675092,1.153734)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="231.4702"
-                y="-77.840019"
-              >
-                <tspan
-                  id="tspan15"
-                  x="1388.9259"
-                  y="710.34515"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowEast_EastCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
-          </g>
         </g>
         <g
-          id="south_group"
+          id="node3_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="south"
+            id="node3"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              id="south_spike"
+              id="node3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
               :fill="colorNode3"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              id="south_strassenname_text"
+              id="node3_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -1513,7 +1321,7 @@
               y="705.79083"
             >
               <tspan
-                id="south_strassenname_tspan"
+                id="node3_strassenname_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1536,11 +1344,11 @@
               </tspan>
             </text>
             <g
-              id="south_number"
+              id="node3_number"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             >
               <circle
-                id="south_number_circle"
+                id="node3_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -1555,7 +1363,7 @@
                 r="11.951238"
               />
               <text
-                id="south_number_text"
+                id="node3_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -1573,7 +1381,7 @@
                 x="693.75189"
               >
                 <tspan
-                  id="south_number_tspan"
+                  id="node3_circle_tspan"
                   style="stroke-width: 28.22049979; stroke-dasharray: none"
                   x="693.75189"
                   y="792.38141"
@@ -1583,7 +1391,7 @@
               </text>
             </g>
             <text
-              id="south_strassenname_multirow2_text"
+              id="node3_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -1613,7 +1421,7 @@
               y="719.79083"
             >
               <tspan
-                id="south_strassenname_multirow2_tspan"
+                id="node3_strassenname_multirow2_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1636,7 +1444,7 @@
               </tspan>
             </text>
             <text
-              id="south_strassenname_multirow1_text"
+              id="node3_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -1666,7 +1474,7 @@
               y="691.79083"
             >
               <tspan
-                id="south_strassenname_multirow1_tspan"
+                id="node3_strassenname_multirow1_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1688,18 +1496,106 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node3_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="translate(-3.251155e-6,927.49999)"
+            >
+              <text
+                id="node3_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2204997;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node3_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2204997;
+                    stroke-dasharray: none;
+                  "
+                >
+                  123456
+                </tspan>
+              </text>
+              <path
+                id="node3_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node3"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              id="arrow_node3_west_to_east"
+              d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
+            <path
+              id="arrow_node3_east_to_west"
+              d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
             <text
-              id="southSum"
+              id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+              transform="scale(0.87251096,1.1461174)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.2628px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1710,290 +1606,109 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 28.2204997;
+                stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-2677.228"
-              y="-171.53365"
+              x="-362.89398"
+              y="255.42867"
             >
               <tspan
-                id="south_sum_tspan"
-                x="-1519.7723"
-                y="616.65149"
+                id="arrow_node3_west_to_east_number_tspan"
+                x="801.39209"
+                y="1048.2649"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.2628px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 28.2204997;
+                  stroke-width: 28.22049989;
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertArrowSouth_SouthSum }}
+                123456
+              </tspan>
+            </text>
+            <text
+              id="arrow_node3_east_to_west_number_text"
+              xml:space="preserve"
+              transform="scale(0.87251096,1.1461174)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 28.22049989;
+                stroke-dasharray: none;
+              "
+              x="-362.89322"
+              y="209.62167"
+            >
+              <tspan
+                id="arrow_node3_east_to_west_number_tspan"
+                x="801.39209"
+                y="1002.458"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049989;
+                  stroke-dasharray: none;
+                "
+              >
+                123456
               </tspan>
             </text>
           </g>
-          <g
-            id="south_arrows"
-            style="stroke-width: 28.22049979; stroke-dasharray: none"
-          >
-            <g
-              id="g5"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
-            >
-              <path
-                id="southCrossingWestToEast"
-                d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <path
-                id="southCrossingEastToWest"
-                d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <text
-                id="southCrossingSum1"
-                xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="-2453.8455"
-                y="-265.22723"
-              >
-                <tspan
-                  id="tspan2"
-                  x="-1296.3896"
-                  y="522.95795"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowSouth_SouthCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                id="southNumberSouth"
-                xml:space="preserve"
-                transform="scale(0.87251096,1.1461174)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049989;
-                  stroke-dasharray: none;
-                "
-                x="-362.89398"
-                y="255.42867"
-              >
-                <tspan
-                  id="tspan3"
-                  x="801.39209"
-                  y="1048.2649"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049989;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowSouth_NumberSouth }}
-                </tspan>
-              </text>
-              <text
-                id="southNumberNorth"
-                xml:space="preserve"
-                transform="scale(0.87251096,1.1461174)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049989;
-                  stroke-dasharray: none;
-                "
-                x="-362.89322"
-                y="209.62167"
-              >
-                <tspan
-                  id="tspan4"
-                  x="801.39209"
-                  y="1002.458"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049989;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowSouth_NumberNorth }}
-                </tspan>
-              </text>
-              <text
-                id="southCrossingSum2"
-                xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="-2453.8455"
-                y="-77.840034"
-              >
-                <tspan
-                  id="tspan5"
-                  x="-1296.3896"
-                  y="710.34515"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowSouth_SouthCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
-          </g>
         </g>
         <g
-          id="west_group"
+          id="node4_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="west"
+            id="node4"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              id="west_spike"
+              id="node4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
               :fill="colorNode4"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              id="west_text"
+              id="node4_strassenname_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2022,7 +1737,7 @@
               y="705.79083"
             >
               <tspan
-                id="west_strassenname_tspan"
+                id="node4_strassenname_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2045,11 +1760,11 @@
               </tspan>
             </text>
             <g
-              id="west_number"
+              id="node4_number"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             >
               <circle
-                id="west_number_circle"
+                id="node4_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2064,7 +1779,7 @@
                 r="11.951238"
               />
               <text
-                id="west_number_text"
+                id="node4_circle_text"
                 xml:space="preserve"
                 style="
                   font-size: 19.7624px;
@@ -2082,7 +1797,7 @@
                 x="608.34302"
               >
                 <tspan
-                  id="west_number_tspan"
+                  id="node4_circle_tspan"
                   style="stroke-width: 28.22049979; stroke-dasharray: none"
                   x="608.34302"
                   y="707.20343"
@@ -2092,7 +1807,7 @@
               </text>
             </g>
             <text
-              id="west_strassenname_multirow2_text"
+              id="node4_strassenname_multirow2_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2121,7 +1836,7 @@
               y="719.79083"
             >
               <tspan
-                id="west_strassenname_multirow2_tspan"
+                id="node4_strassenname_multirow2_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2144,7 +1859,7 @@
               </tspan>
             </text>
             <text
-              id="west_strassenname_multirow1_text"
+              id="node4_strassenname_multirow1_text"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -2173,7 +1888,7 @@
               y="691.79083"
             >
               <tspan
-                id="west_strassenname_multirow1_tspan"
+                id="node4_strassenname_multirow1_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2195,18 +1910,111 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node4_sum"
+              style="
+                display: inline;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              transform="rotate(90,236.24983,236.24982)"
+            >
+              <text
+                id="node4_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.22049972;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node4_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.22049972;
+                    stroke-dasharray: none;
+                  "
+                >
+                  123456
+                </tspan>
+              </text>
+              <path
+                id="node4_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node4"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              id="arrow_node4_north_to_south"
+              d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
+            <path
+              id="arrow_node4_south_to_north"
+              d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            />
             <text
-              id="westSum"
+              id="arrow_node4_north_to_south_number_text"
               xml:space="preserve"
-              transform="scale(0.86675167,1.153733)"
+              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2217,116 +2025,71 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 28.22049972;
+                stroke-width: 28.22049979;
                 stroke-dasharray: none;
               "
-              x="-1061.9998"
-              y="-171.52489"
+              x="-1965.2267"
+              y="-595.89404"
             >
               <tspan
-                id="west_sum_tspan"
-                x="95.454987"
-                y="616.65955"
+                id="arrow_node4_north_to_south_number_tspan"
+                x="-808.19946"
+                y="191.99969"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 28.22049972;
+                  stroke-width: 28.22049979;
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertArrowWest_WestSum }}
+                123456
               </tspan>
             </text>
-          </g>
-          <g
-            id="west_arrows"
-            style="stroke-width: 28.22049979; stroke-dasharray: none"
-          >
-            <g
-              id="g46"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            <text
+              id="arrow_node4_south_to_north_number_text"
+              xml:space="preserve"
+              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              "
+              x="-1965.2268"
+              y="-550.37286"
             >
-              <path
-                id="westCrossingNorthToSouth"
-                d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <path
-                id="westCrossingSouthToNorth"
-                d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 28.22049979; stroke-dasharray: none"
-              />
-              <text
-                id="westCrossingSum1"
-                xml:space="preserve"
-                transform="scale(0.86675092,1.153734)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="-838.61804"
-                y="-265.2272"
-              >
-                <tspan
-                  id="tspan43"
-                  x="318.83765"
-                  y="522.95795"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowWest_WestCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                id="numberNorthToSouth"
-                xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              <tspan
+                id="arrow_node4_south_to_north_number_tspan"
+                x="-808.19946"
+                y="237.52097"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2339,149 +2102,13 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
                   stroke-width: 28.22049979;
                   stroke-dasharray: none;
                 "
-                x="-1965.2267"
-                y="-595.89404"
               >
-                <tspan
-                  id="tspan44"
-                  x="-808.19946"
-                  y="191.99969"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049979;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowWest_NumberNorthToSouth }}
-                </tspan>
-              </text>
-              <text
-                id="numberSouthToNorth"
-                xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 28.22049979;
-                  stroke-dasharray: none;
-                "
-                x="-1965.2268"
-                y="-550.37286"
-              >
-                <tspan
-                  id="tspan45"
-                  x="-808.19946"
-                  y="237.52097"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.22049979;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowWest_NumberSouthToNorth }}
-                </tspan>
-              </text>
-              <text
-                id="westCrossingSum2"
-                xml:space="preserve"
-                transform="scale(0.86675092,1.153734)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2204997;
-                  stroke-dasharray: none;
-                "
-                x="-838.61804"
-                y="-77.840019"
-              >
-                <tspan
-                  id="tspan46"
-                  x="318.83765"
-                  y="710.34515"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 28.2204997;
-                    stroke-dasharray: none;
-                  "
-                >
-                  {{ zaehlwertArrowWest_WestCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
+                123456
+              </tspan>
+            </text>
           </g>
         </g>
       </g>
@@ -2494,7 +2121,7 @@
             <path
               id="path83"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
-              :fill=colorNode5
+              :fill="colorNode5"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -2933,7 +2560,7 @@
             <path
               id="path96"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
-              :fill=colorNode6
+              :fill="colorNode6"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3376,7 +3003,7 @@
             <path
               id="path109"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
-              :fill=colorNode7
+              :fill="colorNode7"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3854,7 +3481,7 @@
             <path
               id="path122"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
-              :fill=colorNode8
+              :fill="colorNode8"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -4852,7 +4479,7 @@ const zaehlwertArrowWest_WestCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const colorNode4 =setColor(nodeNumber4);
+const colorNode4 = setColor(nodeNumber4);
 
 // Zaehlwerte of Node5/North-East
 const nodeNumber5 = 5;
