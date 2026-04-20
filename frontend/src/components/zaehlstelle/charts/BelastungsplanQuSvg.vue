@@ -2651,16 +2651,107 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node5_sum"
+              style="
+                display: inline;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              transform="rotate(45,720.59848,699.99663)"
+            >
+              <text
+                id="node5_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node5_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  123456
+                </tspan>
+              </text>
+              <path
+                id="node5_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node5"
+            transform="translate(6.0322729,-14.56374)"
+          >
+            <path
+              id="arrow_node5_north_west_to_south_east"
+              d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node5_south_east_to_north_west"
+              d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
             <text
-              id="node5_sum_text"
+              id="arrow_node5_north_west_to_south_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.2628px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -2672,103 +2763,66 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 43.9645;
+                stroke-width: 44.2239;
               "
-              x="-446.51675"
-              y="79.779068"
+              x="-30.245787"
+              y="-1164.397"
             >
               <tspan
-                id="node5_sum_tspan"
-                x="710.93884"
-                y="867.96423"
+                id="arrow_node5_north_west_to_south_east_number_tspan"
+                x="1134.0402"
+                y="-371.56079"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.2628px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 43.9645;
+                  stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNorthEast_NorthEastSum }}
+                {{ zaehlwertArrowNorthEast_NumberNorthToSouth }}
               </tspan>
             </text>
-          </g>
-          <g id="arrows_node5">
-            <g id="g54">
-              <path
-                id="arrow_node5_north_west_to_south_east"
-                d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <path
-                id="arrow_node5_south_east_to_north_west"
-                d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <text
-                id="node5_crossing_sum1_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="-576.14435"
-                y="-13.914626"
-              >
-                <tspan
-                  id="node5_crossing_sum1_tspan"
-                  x="581.31146"
-                  y="774.27063"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowNorthEast_NorthEastCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node5_north_west_to_south_east_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
+            <text
+              id="arrow_node5_south_east_to_north_west_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-30.245035"
+              y="-1210.2013"
+            >
+              <tspan
+                id="arrow_node5_south_east_to_north_west_number_tspan"
+                x="1134.0402"
+                y="-417.36499"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2780,138 +2834,12 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
                   stroke-width: 44.2239;
                 "
-                x="-30.245787"
-                y="-1164.397"
               >
-                <tspan
-                  id="arrow_node5_north_west_to_south_east_number_tspan"
-                  x="1134.0402"
-                  y="-371.56079"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowNorthEast_NumberNorthToSouth }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node5_south_east_to_north_west_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 44.2239;
-                "
-                x="-30.245035"
-                y="-1210.2013"
-              >
-                <tspan
-                  id="arrow_node5_south_east_to_north_west_number_tspan"
-                  x="1134.0402"
-                  y="-417.36499"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowNorthEast_NumberSouthToNorth }}
-                </tspan>
-              </text>
-              <text
-                id="node5_crossing_sum2_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="-576.14441"
-                y="173.4727"
-              >
-                <tspan
-                  id="node5_crossing_sum2_tspan"
-                  x="581.31146"
-                  y="961.6579"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowNorthEast_NorthEastCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
+                {{ zaehlwertArrowNorthEast_NumberSouthToNorth }}
+              </tspan>
+            </text>
           </g>
         </g>
         <g id="node6_group">
@@ -3080,16 +3008,102 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node6_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(135,706.03406,706.03209)"
+            >
+              <text
+                id="node6_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node6_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  123456
+                </tspan>
+              </text>
+              <path
+                id="node6_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node6"
+            transform="translate(14.564164,6.031585)"
+          >
+            <path
+              id="arrow_node6_south_west_to_north_east"
+              d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node6_north_east_to_south_west"
+              d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
             <text
-              id="node6_sum_text"
+              id="arrow_node6_north_east_to_south_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.2628px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -3101,103 +3115,66 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 43.9645;
+                stroke-width: 44.2239;
               "
-              x="695.61987"
-              y="-778.25079"
+              x="-1165.1763"
+              y="463.03299"
             >
               <tspan
-                id="node6_sum_tspan"
-                x="1853.0757"
-                y="9.9343376"
+                id="arrow_node6_north_east_to_south_west_number_tspan"
+                x="-0.89014673"
+                y="1255.8691"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.2628px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 43.9645;
+                  stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowSouthEast_SouthEastSum }}
+                {{ zaehlwertArrowSouthEast_NumberNorthToSouth }}
               </tspan>
             </text>
-          </g>
-          <g id="arrows_node6">
-            <g id="g62">
-              <path
-                id="arrow_node6_south_west_to_north_east"
-                d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <path
-                id="arrow_node6_north_east_to_south_west"
-                d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <text
-                id="node6_crossing_sum1_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="565.99261"
-                y="-871.953"
-              >
-                <tspan
-                  id="node6_crossing_sum1_tspan"
-                  x="1723.4482"
-                  y="-83.767906"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowSouthEast_SouthEastCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node6_north_east_to_south_west_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
+            <text
+              id="arrow_node6_south_west_to_north_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1165.1754"
+              y="508.83719"
+            >
+              <tspan
+                id="arrow_node6_south_west_to_north_east_number_tspan"
+                x="-0.89011478"
+                y="1301.6733"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3209,138 +3186,12 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
                   stroke-width: 44.2239;
                 "
-                x="-1165.1763"
-                y="463.03299"
               >
-                <tspan
-                  id="arrow_node6_north_east_to_south_west_number_tspan"
-                  x="-0.89014673"
-                  y="1255.8691"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowSouthEast_NumberNorthToSouth }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node6_south_west_to_north_east_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 44.2239;
-                "
-                x="-1165.1754"
-                y="508.83719"
-              >
-                <tspan
-                  id="arrow_node6_south_west_to_north_east_number_tspan"
-                  x="-0.89011478"
-                  y="1301.6733"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowSouthEast_NumberSouthToNorth }}
-                </tspan>
-              </text>
-              <text
-                id="node6_crossing_sum2_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="565.99237"
-                y="-684.56586"
-              >
-                <tspan
-                  id="node6_crossing_sum2_tspan"
-                  x="1723.4484"
-                  y="103.61935"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowSouthEast_SouthEastCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
+                {{ zaehlwertArrowSouthEast_NumberSouthToNorth }}
+              </tspan>
+            </text>
           </g>
         </g>
         <g id="node7_group">
@@ -3541,16 +3392,102 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node7_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(45,-434.15313,221.6861)"
+            >
+              <text
+                id="node7_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node7_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  123456
+                </tspan>
+              </text>
+              <path
+                id="node7_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node7"
+            transform="translate(-14.563392,6.0334257)"
+          >
+            <path
+              id="arrow_node7_north_west_to_south_east"
+              d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node7_south_east_to_north_west"
+              d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
             <text
-              id="node7_sum_text"
+              id="arrow_node7_south_east_to_north_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.2628px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -3562,103 +3499,66 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 43.9645;
+                stroke-width: 44.2239;
               "
-              x="-1869.6128"
-              y="79.781227"
+              x="-30.018866"
+              y="-401.13431"
             >
               <tspan
-                id="node7_sum_tspan"
-                x="-712.15698"
-                y="867.96637"
+                id="arrow_node7_south_east_to_north_west_number_tspan"
+                x="1134.2671"
+                y="391.7019"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.2628px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 43.9645;
+                  stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowSouthWest_SouthWestSum }}
+                {{ zaehlwertArrowSouthWest_NumberSouthToNorth }}
               </tspan>
             </text>
-          </g>
-          <g id="arrows_node7">
-            <g id="g50">
-              <path
-                id="arrow_node7_north_west_to_south_east"
-                d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <path
-                id="arrow_node7_south_east_to_north_west"
-                d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <text
-                id="node7_crossing_sum1_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="-1646.4594"
-                y="173.64429"
-              >
-                <tspan
-                  id="node7_crossing_sum1_tspan"
-                  x="-489.00357"
-                  y="961.82947"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowSouthWest_SouthWestCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node7_south_east_to_north_west_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
+            <text
+              id="arrow_node7_north_west_to_south_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-30.018135"
+              y="-355.33026"
+            >
+              <tspan
+                id="arrow_node7_north_west_to_south_east_number_tspan"
+                x="1134.2671"
+                y="437.50613"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3670,138 +3570,12 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
                   stroke-width: 44.2239;
                 "
-                x="-30.018866"
-                y="-401.13431"
               >
-                <tspan
-                  id="arrow_node7_south_east_to_north_west_number_tspan"
-                  x="1134.2671"
-                  y="391.7019"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowSouthWest_NumberSouthToNorth }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node7_north_west_to_south_east_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 44.2239;
-                "
-                x="-30.018135"
-                y="-355.33026"
-              >
-                <tspan
-                  id="arrow_node7_north_west_to_south_east_number_tspan"
-                  x="1134.2671"
-                  y="437.50613"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowSouthWest_NumberNorthToSouth }}
-                </tspan>
-              </text>
-              <text
-                id="node7_crossing_sum2_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="-1646.4594"
-                y="-13.742985"
-              >
-                <tspan
-                  id="node7_crossing_sum2_tspan"
-                  x="-489.0036"
-                  y="774.4422"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowSouthWest_SouthWestCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
+                {{ zaehlwertArrowSouthWest_NumberNorthToSouth }}
+              </tspan>
+            </text>
           </g>
         </g>
         <g id="node8_group">
@@ -4002,16 +3776,102 @@
                 Ich bin ein langer Straßenname
               </tspan>
             </text>
+            <g
+              id="node8_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(135,507.90765,227.71915)"
+            >
+              <text
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                id="node8_sum_text"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node8_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  123456
+                </tspan>
+              </text>
+              <path
+                id="node8_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node8"
+            transform="translate(-6.0332912,-14.564242)"
+          >
+            <path
+              id="arrow_node8_south_west_to_north_east"
+              d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node8_north_east_to_south_west"
+              d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
+              fill="#000000"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
             <text
-              id="node8_sum_text"
+              id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
               style="
                 font-style: normal;
                 font-variant: normal;
-                font-weight: bold;
+                font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.097px;
+                font-size: 28.2628px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -4023,259 +3883,185 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #000000;
+                fill: #ffffff;
                 fill-opacity: 1;
-                stroke-width: 43.9644;
+                stroke-width: 44.2239;
               "
-              x="-727.47522"
-              y="-778.25232"
+              x="-1165.4031"
+              y="-300.22974"
             >
               <tspan
-                id="node8_sum_tspan"
-                x="429.97952"
-                y="9.9321842"
+                id="arrow_node8_north_east_to_south_west_number_tspan"
+                x="-1.1170298"
+                y="492.60648"
                 style="
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: bold;
+                  font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.097px;
+                  font-size: 28.2628px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 43.9644;
+                  stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNorthWest_NorthWestSum }}
+                {{ zaehlwertArrowNorthWest_NumberSouthToNorth }}
+              </tspan>
+            </text>
+            <text
+              id="arrow_node8_south_west_to_north_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1165.4023"
+              y="-346.03415"
+            >
+              <tspan
+                id="arrow_node8_south_west_to_north_east_number_tspan"
+                x="-1.117029"
+                y="446.80225"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNorthWest_NorthWestCrossingSum2 }}
               </tspan>
             </text>
           </g>
-          <g id="arrows_node8">
-            <g id="g24">
-              <path
-                id="arrow_node8_south_west_to_north_east"
-                d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <path
-                id="arrow_node8_north_east_to_south_west"
-                d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
-                fill="#000000"
-                stroke="none"
-                style="stroke-width: 27.0576"
-              />
-              <text
-                id="node8_crossing_sum1_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="-504.32257"
-                y="-684.39423"
-              >
-                <tspan
-                  id="node8_crossing_sum1_tspan"
-                  x="653.13324"
-                  y="103.791"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowNorthWest_NorthWestCrossingSum1 }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node8_north_east_to_south_west_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 44.2239;
-                "
-                x="-1165.4031"
-                y="-300.22974"
-              >
-                <tspan
-                  id="arrow_node8_north_east_to_south_west_number_tspan"
-                  x="-1.1170298"
-                  y="492.60648"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowNorthWest_NumberSouthToNorth }}
-                </tspan>
-              </text>
-              <text
-                id="arrow_node8_south_west_to_north_east_number_text"
-                xml:space="preserve"
-                transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 28.2628px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  text-anchor: middle;
-                  white-space: pre;
-                  display: inline;
-                  fill: #ffffff;
-                  fill-opacity: 1;
-                  stroke-width: 44.2239;
-                "
-                x="-1165.4023"
-                y="-346.03415"
-              >
-                <tspan
-                  id="arrow_node8_south_west_to_north_east_number_tspan"
-                  x="-1.117029"
-                  y="446.80225"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.2628px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 44.2239;
-                  "
-                >
-                  {{ zaehlwertArrowNorthWest_NumberNorthToSouth }}
-                </tspan>
-              </text>
-              <text
-                id="node8_crossing_sum2_text"
-                xml:space="preserve"
-                transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: rl-tb;
-                  direction: rtl;
-                  white-space: pre;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 43.9645;
-                "
-                x="-504.3226"
-                y="-871.78137"
-              >
-                <tspan
-                  id="node8_crossing_sum2_tspan"
-                  x="653.1333"
-                  y="-83.596291"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9645;
-                  "
-                >
-                  {{ zaehlwertArrowNorthWest_NorthWestCrossingSum2 }}
-                </tspan>
-              </text>
-            </g>
-          </g>
         </g>
+      </g>
+      <g
+        id="legend"
+        transform="matrix(1.0449912,0,0,1.0489734,-20.934144,-1.2761587)"
+      >
         <g
-          id="legend"
-          transform="matrix(1.0449912,0,0,1.0489734,-20.934144,-1.2761587)"
+          id="legend-zaehlinfo"
+          style="stroke-width: 28.2205; stroke-dasharray: none"
+          transform="translate(50.006244,31.659644)"
         >
+          <text
+            id="verkehrsart"
+            xml:space="preserve"
+            style="
+              font-style: normal;
+              font-variant: normal;
+              font-weight: normal;
+              font-stretch: normal;
+              font-size: 19.7556px;
+              font-family: sans-serif;
+              font-variant-ligatures: normal;
+              font-variant-caps: normal;
+              font-variant-numeric: normal;
+              font-variant-east-asian: normal;
+              text-align: start;
+              writing-mode: lr-tb;
+              direction: ltr;
+              text-anchor: start;
+              white-space: pre;
+              inline-size: 268.729;
+              display: inline;
+              fill: #000000;
+              stroke-width: 28.2205;
+              stroke-dasharray: none;
+            "
+            x="168.24969"
+            y="1230.3373"
+            transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
+          >
+            <tspan
+              id="tspan35"
+              x="168.24969"
+              y="1230.3373"
+            >
+              <tspan
+                id="tspan34"
+                style="font-weight: bold"
+              >
+                FUSS
+              </tspan>
+            </tspan>
+          </text>
           <g
-            id="legend-zaehlinfo"
+            id="zaehlzeit2"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(50.006244,31.659644)"
+            transform="translate(-152.29421)"
           >
             <text
-              id="verkehrsart"
+              id="zaehlzeit2-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="168"
+              y="1210"
+            >
+              <tspan
+                id="tspan36"
+                x="168"
+                y="1210"
+              >
+                hochgerechnet
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="zaehlzeit1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              id="zaehlzeit1-multirow"
               xml:space="preserve"
               style="
                 font-style: normal;
@@ -4300,138 +4086,69 @@
                 stroke-dasharray: none;
               "
               x="168.24969"
-              y="1230.3373"
-              transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
+              y="1190.3373"
+              transform="translate(-150.84646,0.00162031)"
             >
               <tspan
-                id="tspan35"
+                id="tspan38"
                 x="168.24969"
-                y="1230.3373"
+                y="1190.3373"
               >
                 <tspan
-                  id="tspan34"
-                  style="
-                    font-weight: bold;
-                  "
+                  id="tspan37"
+                  style="font-weight: bold"
                 >
-                  FUSS
+                  Tageswert
                 </tspan>
               </tspan>
             </text>
-            <g
-              id="zaehlzeit2"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="translate(-152.29421)"
-            >
-              <text
-                id="zaehlzeit2-multirow"
-                xml:space="preserve"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 19.7556px;
-                  font-family: sans-serif;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                "
-                x="168"
-                y="1210"
-              >
-                <tspan
-                  id="tspan36"
-                  x="168"
-                  y="1210"
-                >
-                  hochgerechnet
-                </tspan>
-              </text>
-            </g>
-            <g
-              id="zaehlzeit1"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                id="zaehlzeit1-multirow"
-                xml:space="preserve"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 19.7556px;
-                  font-family: sans-serif;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                "
-                x="168.24969"
-                y="1190.3373"
-                transform="translate(-150.84646,0.00162031)"
-              >
-                <tspan
-                  id="tspan38"
-                  x="168.24969"
-                  y="1190.3373"
-                >
-                  <tspan
-                    id="tspan37"
-                    style="
-                      font-weight: bold;
-                    "
-                  >
-                    Tageswert
-                  </tspan>
-                </tspan>
-              </text>
-            </g>
           </g>
-          <g
-            id="legend-compass"
-            transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)"
+        </g>
+        <g
+          id="legend-compass"
+          transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)"
+        >
+          <path
+            id="compass2"
+            style="
+              fill: none;
+              fill-opacity: 1;
+              stroke: #000000;
+              stroke-width: 3.35093;
+              stroke-linecap: butt;
+              stroke-miterlimit: 2.5;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+            "
+            d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
+            transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
+          />
+          <text
+            id="compass1"
+            xml:space="preserve"
+            style="
+              font-style: normal;
+              font-variant: normal;
+              font-weight: normal;
+              font-stretch: normal;
+              font-size: 24.6944px;
+              font-family: RomanD;
+              font-variant-ligatures: normal;
+              font-variant-caps: normal;
+              font-variant-numeric: normal;
+              font-variant-east-asian: normal;
+              text-align: start;
+              writing-mode: lr-tb;
+              direction: ltr;
+              text-anchor: start;
+              fill: #000000;
+              stroke-width: 2.2868;
+            "
+            x="141.28348"
+            y="93.924416"
           >
-            <path
-              id="compass2"
-              style="
-                fill: none;
-                fill-opacity: 1;
-                stroke: #000000;
-                stroke-width: 3.35093;
-                stroke-linecap: butt;
-                stroke-miterlimit: 2.5;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-              d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
-              transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
-            />
-            <text
-              id="compass1"
-              xml:space="preserve"
+            <tspan
+              id="tspan6"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -4443,140 +4160,114 @@
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
+                stroke-width: 2.2868;
+              "
+            >
+              N
+            </tspan>
+          </text>
+        </g>
+        <g
+          id="legend-zaehlstelle"
+          transform="translate(-112.62637,-13.999124)"
+        >
+          <g
+            id="zaehlstelle2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+            transform="translate(163.18555,-589.09456)"
+          >
+            <text
+              id="zaehlstelle2-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
                 text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
                 fill: #000000;
-                stroke-width: 2.2868;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
               "
-              x="141.28348"
-              y="93.924416"
+              x="699.24969"
+              y="688.33734"
+              transform="translate(324.11416)"
             >
               <tspan
-                id="tspan6"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 24.6944px;
-                  font-family: RomanD;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  stroke-width: 2.2868;
-                "
+                id="tspan39"
+                x="699.24969"
+                y="688.33734"
               >
-                N
+                Stadtbezirk 8
+              </tspan>
+              <tspan
+                id="tspan40"
+                x="699.24969"
+                y="713.03187"
+              >
+                Zähldatum: 01.01.2026
               </tspan>
             </text>
           </g>
           <g
-            id="legend-zaehlstelle"
-            transform="translate(-112.62637,-13.999124)"
+            id="zaehlstelle1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+            transform="translate(162.09712,-614.70735)"
           >
-            <g
-              id="zaehlstelle2"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="translate(163.18555,-589.09456)"
+            <text
+              id="zaehlstelle1-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="699.24969"
+              y="688.33734"
+              transform="translate(324.11416)"
             >
-              <text
-                id="zaehlstelle2-multirow"
-                xml:space="preserve"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 19.7556px;
-                  font-family: sans-serif;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                "
+              <tspan
+                id="tspan42"
                 x="699.24969"
                 y="688.33734"
-                transform="translate(324.11416)"
               >
                 <tspan
-                  id="tspan39"
-                  x="699.24969"
-                  y="688.33734"
+                  id="tspan41"
+                  style="font-weight: bold"
                 >
-                  Stadtbezirk 8
+                  Zählstelle 99999
                 </tspan>
-                <tspan
-                  id="tspan40"
-                  x="699.24969"
-                  y="713.03187"
-                >
-                  Zähldatum: 01.01.2026
-                </tspan>
-              </text>
-            </g>
-            <g
-              id="zaehlstelle1"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="translate(162.09712,-614.70735)"
-            >
-              <text
-                id="zaehlstelle1-multirow"
-                xml:space="preserve"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: 19.7556px;
-                  font-family: sans-serif;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                "
-                x="699.24969"
-                y="688.33734"
-                transform="translate(324.11416)"
-              >
-                <tspan
-                  id="tspan42"
-                  x="699.24969"
-                  y="688.33734"
-                >
-                  <tspan
-                    id="tspan41"
-                    style="
-                      font-weight: bold;
-                    "
-                  >
-                    Zählstelle 99999
-                  </tspan>
-                </tspan>
-              </text>
-            </g>
+              </tspan>
+            </text>
           </g>
         </g>
       </g>
@@ -4780,7 +4471,7 @@ const zaehlwertArrowWest_WestCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const colorNode4 =setColor(nodeNumber4);
+const colorNode4 = setColor(nodeNumber4);
 
 // Zaehlwerte of Node5/North-East
 const nodeNumber5 = 5;
