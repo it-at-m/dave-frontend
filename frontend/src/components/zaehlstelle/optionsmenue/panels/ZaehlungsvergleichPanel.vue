@@ -158,8 +158,9 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
     return (
-      "Datum der Zählung, bis zu der die Zeitreihe angezeigt werden soll (inklusive).\n" +
-      "Es können nur Zählungen gleicher Zählart verglichen werden. Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein."
+        (["FJS", "QJS", "QU"].includes(activeZaehlung.value.zaehlart)
+            ? "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden. Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein."
+            : "Es können nur Zählungen gleicher Zählart verglichen werden. Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein.")
     );
   }
   return "";
