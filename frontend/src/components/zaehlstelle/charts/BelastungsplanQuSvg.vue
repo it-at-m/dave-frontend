@@ -2799,7 +2799,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNorthEast_NumberNorthToSouth }}
+                123
               </tspan>
             </text>
             <text
@@ -2848,7 +2848,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNorthEast_NumberSouthToNorth }}
+                123
               </tspan>
             </text>
           </g>
@@ -3151,7 +3151,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowSouthEast_NumberNorthToSouth }}
+                123
               </tspan>
             </text>
             <text
@@ -3200,7 +3200,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowSouthEast_NumberSouthToNorth }}
+                123
               </tspan>
             </text>
           </g>
@@ -3535,7 +3535,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowSouthWest_NumberSouthToNorth }}
+                123
               </tspan>
             </text>
             <text
@@ -3584,7 +3584,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowSouthWest_NumberNorthToSouth }}
+                123
               </tspan>
             </text>
           </g>
@@ -3919,7 +3919,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNorthWest_NumberSouthToNorth }}
+                123
               </tspan>
             </text>
             <text
@@ -3968,7 +3968,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNorthWest_NorthWestCrossingSum2 }}
+                132
               </tspan>
             </text>
           </g>
@@ -4483,7 +4483,7 @@ const isQuerungNode4SouthNorth = createQuerungsPruefung(
 const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
-const colorNode5 = setColor(nodeNumber5);
+// const colorNode5 = setColor(nodeNumber5);
 
 // Zaehlwerte of Node6/South-East
 const nodeNumber6 = 6;
@@ -4507,7 +4507,7 @@ const zaehlwertArrowSouthEast_SouthEastCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const colorNode6 = setColor(nodeNumber6);
+// const colorNode6 = setColor(nodeNumber6);
 
 // Zaehlwerte of Node7/South-West
 const nodeNumber7 = 7;
@@ -4531,7 +4531,7 @@ const zaehlwertArrowSouthWest_SouthWestCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const colorNode7 = setColor(nodeNumber7);
+// const colorNode7 = setColor(nodeNumber7);
 
 // Zaehlwerte of Node8/North-West
 const nodeNumber8 = 8;
@@ -4555,7 +4555,7 @@ const zaehlwertArrowNorthWest_NorthWestCrossingSum1 = computed(() => {
   return 654321; // TODO: wire real data
 });
 
-const colorNode8 = setColor(nodeNumber8);
+// const colorNode8 = setColor(nodeNumber8);
 
 /**
  * Erstellt eine computed Property für einen Wert.
