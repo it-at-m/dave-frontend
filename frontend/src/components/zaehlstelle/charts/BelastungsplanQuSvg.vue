@@ -518,6 +518,7 @@
         style="stroke-width: 28.22049979; stroke-dasharray: none"
       >
         <g
+          v-if="isKnotenarm(1)"
           id="node1_group"
           class="com.sun.star.drawing.ClosedBezierShape"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -527,7 +528,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(1)"
               id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
               fill="#9e9e9e"
@@ -543,8 +543,8 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: none;
-                  stroke-width: 28.22049979;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                   paint-order: normal;
@@ -554,7 +554,6 @@
                 r="11.951238"
               />
               <text
-                v-if="istKnotenarmVerfuegbar(1)"
                 id="node1_circle_text"
                 xml:space="preserve"
                 style="
@@ -700,7 +699,6 @@
             </text>
             <g id="node1_sum">
               <text
-                v-if="istKnotenarmVerfuegbar(1)"
                 id="node1_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -751,7 +749,6 @@
                 </tspan>
               </text>
               <path
-                v-if="istKnotenarmVerfuegbar(1)"
                 style="
                   fill: #000000;
                   stroke: #000000;
@@ -769,7 +766,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_west_to_east"
               d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
               :fill="colorNode1WestEast"
@@ -777,7 +773,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
-              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_east_to_west"
               d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
               :fill="colorNode1EastWest"
@@ -785,7 +780,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -837,7 +831,6 @@
               </tspan>
             </text>
             <text
-              v-if="istKnotenarmVerfuegbar(1)"
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -895,6 +888,7 @@
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
+            v-if="isKnotenarm(2)"
             id="node2"
             style="
               display: inline;
@@ -903,7 +897,6 @@
             "
           >
             <path
-              v-if="istKnotenarmVerfuegbar(2)"
               id="node2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
               fill="#9e9e9e"
@@ -957,8 +950,8 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: none;
-                  stroke-width: 28.2205;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                   paint-order: normal;
@@ -968,7 +961,6 @@
                 r="11.951238"
               />
               <text
-                v-if="istKnotenarmVerfuegbar(2)"
                 id="node2_circle_text"
                 xml:space="preserve"
                 style="
@@ -1077,7 +1069,6 @@
               transform="rotate(90,699.99982,699.99982)"
             >
               <text
-                v-if="istKnotenarmVerfuegbar(2)"
                 id="node2_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -1128,7 +1119,6 @@
                 </tspan>
               </text>
               <path
-                v-if="istKnotenarmVerfuegbar(2)"
                 id="node2_sum_line"
                 style="
                   display: inline;
@@ -1147,7 +1137,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_north_to_south"
               d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               :fill="colorNode2NorthSouth"
@@ -1155,7 +1144,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
-              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_south_to_north"
               d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               :fill="colorNode2SouthNorth"
@@ -1163,7 +1151,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1215,7 +1202,6 @@
               </tspan>
             </text>
             <text
-              v-if="istKnotenarmVerfuegbar(2)"
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1269,6 +1255,7 @@
           </g>
         </g>
         <g
+          v-if="isKnotenarm(3)"
           id="node3_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
@@ -1277,7 +1264,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(3)"
               id="node3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
               fill="#9e9e9e"
@@ -1345,8 +1331,8 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: none;
-                  stroke-width: 28.22049979;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                   paint-order: normal;
@@ -1356,7 +1342,6 @@
                 r="11.951238"
               />
               <text
-                v-if="istKnotenarmVerfuegbar(3)"
                 id="node3_circle_text"
                 xml:space="preserve"
                 style="
@@ -1493,7 +1478,6 @@
               transform="translate(-3.251155e-6,927.49999)"
             >
               <text
-                v-if="istKnotenarmVerfuegbar(3)"
                 id="node3_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -1544,7 +1528,6 @@
                 </tspan>
               </text>
               <path
-                v-if="istKnotenarmVerfuegbar(3)"
                 id="node3_sum_line"
                 style="
                   fill: #000000;
@@ -1562,7 +1545,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_west_to_east"
               d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
               :fill="colorNode3WestEast"
@@ -1570,7 +1552,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
-              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_east_to_west"
               d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
               :fill="colorNode3EastWest"
@@ -1578,7 +1559,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1630,7 +1610,6 @@
               </tspan>
             </text>
             <text
-              v-if="istKnotenarmVerfuegbar(3)"
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1684,6 +1663,7 @@
           </g>
         </g>
         <g
+          v-if="isKnotenarm(4)"
           id="node4_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
@@ -1692,7 +1672,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(4)"
               id="node4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
               fill="#9e9e9e"
@@ -1759,8 +1738,8 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: none;
-                  stroke-width: 28.22049979;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                   paint-order: normal;
@@ -1770,7 +1749,6 @@
                 r="11.951238"
               />
               <text
-                v-if="istKnotenarmVerfuegbar(4)"
                 id="node4_circle_text"
                 xml:space="preserve"
                 style="
@@ -1909,7 +1887,6 @@
               transform="rotate(90,236.24983,236.24982)"
             >
               <text
-                v-if="istKnotenarmVerfuegbar(4)"
                 id="node4_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675092,1.153734,0,0,0)"
@@ -1960,7 +1937,6 @@
                 </tspan>
               </text>
               <path
-                v-if="istKnotenarmVerfuegbar(4)"
                 id="node4_sum_line"
                 style="
                   display: inline;
@@ -1979,7 +1955,6 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              v-if="istKnotenarmVerfuegbar(4)"
               id="arrow_node4_north_to_south"
               d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               :fill="colorNode4NorthSouth"
@@ -1987,7 +1962,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
-              v-if="istKnotenarmVerfuegbar(4)"
               id="arrow_node4_south_to_north"
               d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               :fill="colorNode4SouthNorth"
@@ -1995,7 +1969,6 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="istKnotenarmVerfuegbar(4)"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_north_to_south_number_text"
@@ -2047,7 +2020,6 @@
               </tspan>
             </text>
             <text
-              v-if="istKnotenarmVerfuegbar(4)"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_south_to_north_number_text"
@@ -2103,7 +2075,7 @@
       </g>
       <g id="nodes5To8">
         <g
-          v-if="istKnotenarmVerfuegbar(5)"
+          v-if="isKnotenarm(5)"
           id="node5_group"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
@@ -2463,7 +2435,7 @@
           </g>
         </g>
         <g
-          v-if="istKnotenarmVerfuegbar(6)"
+          v-if="isKnotenarm(6)"
           id="node6_group"
         >
           <g id="node6">
@@ -2821,7 +2793,7 @@
           </g>
         </g>
         <g
-          v-if="istKnotenarmVerfuegbar(7)"
+          v-if="isKnotenarm(7)"
           id="node7_group"
         >
           <g id="node7">
@@ -3211,7 +3183,7 @@
           </g>
         </g>
         <g
-          v-if="istKnotenarmVerfuegbar(8)"
+          v-if="isKnotenarm(8)"
           id="node8_group"
         >
           <g id="node8">
@@ -4145,7 +4117,7 @@ function calculateSum(zaehlwert1: number, zaehlwert2: number) {
 
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
-    istKnotenarmVerfuegbar(knNumber) &&
+    isKnotenarm(knNumber) &&
     isQuerung(
       activeZaehlung.value?.querungsverkehr,
       optionen.value.chosenQuerungsverkehre,
@@ -4163,7 +4135,7 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
  * @param {number} knNummer - Die Nummer des Knotenarms, nach der gesucht werden soll.
  * @returns {boolean} - True, wenn ein Eintrag gefunden wurde, sonst false.
  */
-function istKnotenarmVerfuegbar(knNummer: number) {
+function isKnotenarm(knNummer: number) {
   return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
 }
 
