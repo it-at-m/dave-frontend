@@ -768,14 +768,14 @@
             <path
               id="arrow_node1_west_to_east"
               d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
-              :fill="colorNode1WestEast"
+              :fill="colorArrowNode1WestToEast"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
               id="arrow_node1_east_to_west"
               d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
-              :fill="colorNode1EastWest"
+              :fill="colorArrowNode1EastToWest"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -827,7 +827,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode1WestEast }}
+                {{ zaehlwertArrowNode1WestToEast }}
               </tspan>
             </text>
             <text
@@ -878,7 +878,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode1EastWest }}
+                {{ zaehlwertArrowNode1EastToWest }}
               </tspan>
             </text>
           </g>
@@ -1139,14 +1139,14 @@
             <path
               id="arrow_node2_north_to_south"
               d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-              :fill="colorNode2NorthSouth"
+              :fill="colorArrowNode2NorthToSouth"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
               id="arrow_node2_south_to_north"
               d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-              :fill="colorNode2SouthNorth"
+              :fill="colorArrowNode2SouthToNorth"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -1198,7 +1198,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode2NorthSouth }}
+                {{ zaehlwertArrowNode2NorthToSouth }}
               </tspan>
             </text>
             <text
@@ -1249,7 +1249,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode2SouthNorth }}
+                {{ zaehlwertArrowNode2SouthToNorth }}
               </tspan>
             </text>
           </g>
@@ -1547,14 +1547,14 @@
             <path
               id="arrow_node3_west_to_east"
               d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
-              :fill="colorNode3WestEast"
+              :fill="colorArrowNode3WestToEast"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
               id="arrow_node3_east_to_west"
               d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
-              :fill="colorNode3EastWest"
+              :fill="colorArrowNode3EastToWest"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -1606,7 +1606,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode3WestEast }}
+                {{ zaehlwertArrowNode3WestToEast }}
               </tspan>
             </text>
             <text
@@ -1657,7 +1657,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode3EastWest }}
+                {{ zaehlwertArrowNode3EastToWest }}
               </tspan>
             </text>
           </g>
@@ -1957,14 +1957,14 @@
             <path
               id="arrow_node4_north_to_south"
               d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-              :fill="colorNode4NorthSouth"
+              :fill="colorArrowNode4NorthToSouth"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
               id="arrow_node4_south_to_north"
               d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-              :fill="colorNode4SouthNorth"
+              :fill="colorArrowNode4SouthToNorth"
               stroke="none"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
@@ -2016,7 +2016,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode4NorthSouth }}
+                {{ zaehlwertArrowNode4NorthToSouth }}
               </tspan>
             </text>
             <text
@@ -2067,7 +2067,7 @@
                   stroke-dasharray: none;
                 "
               >
-                {{ zaehlwertNode4SouthNorth }}
+                {{ zaehlwertArrowNode4SouthToNorth }}
               </tspan>
             </text>
           </g>
@@ -3993,51 +3993,51 @@ const availableKnotenarme = computed(() => {
 // Zaehlwerte of Node1/North
 const nodeNumber1 = 1;
 const zaehlwertNode1 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertNode1WestEast = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertNode1EastWest = createZaehlwert(6543213); // TODO: wire real data
+const zaehlwertArrowNode1WestToEast = createZaehlwert(6543212); // TODO: wire real data
+const zaehlwertArrowNode1EastToWest = createZaehlwert(6543213); // TODO: wire real data
 
-const colorNode1WestEast = setColor(nodeNumber1, Himmelsrichtung.O);
-const colorNode1EastWest = setColor(nodeNumber1, Himmelsrichtung.W);
+const colorArrowNode1WestToEast = setColor(nodeNumber1, Himmelsrichtung.O);
+const colorArrowNode1EastToWest = setColor(nodeNumber1, Himmelsrichtung.W);
 
-const textColorArrowNode1WestToEast = setTextColor(colorNode1WestEast);
-const textColorArrowNode1EastToWest = setTextColor(colorNode1EastWest);
+const textColorArrowNode1WestToEast = setTextColor(colorArrowNode1WestToEast);
+const textColorArrowNode1EastToWest = setTextColor(colorArrowNode1EastToWest);
 
 // Zaehlwerte of Node2/East
 const nodeNumber2 = 2;
 const zaehlwertNode2 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertNode2SouthNorth = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertNode2NorthSouth = createZaehlwert(6543213);
+const zaehlwertArrowNode2SouthToNorth = createZaehlwert(6543212); // TODO: wire real data
+const zaehlwertArrowNode2NorthToSouth = createZaehlwert(6543213);
 
-const colorNode2NorthSouth = setColor(nodeNumber2, Himmelsrichtung.S);
-const colorNode2SouthNorth = setColor(nodeNumber2, Himmelsrichtung.N);
+const colorArrowNode2NorthToSouth = setColor(nodeNumber2, Himmelsrichtung.S);
+const colorArrowNode2SouthToNorth = setColor(nodeNumber2, Himmelsrichtung.N);
 
-const textColorArrowNode2NorthToSouth = setTextColor(colorNode2NorthSouth);
-const textColorArrowNode2SouthToNorth = setTextColor(colorNode2SouthNorth);
+const textColorArrowNode2NorthToSouth = setTextColor(colorArrowNode2NorthToSouth);
+const textColorArrowNode2SouthToNorth = setTextColor(colorArrowNode2SouthToNorth);
 
 // Zaehlwerte of Node3/South
 const nodeNumber3 = 3;
 const zaehlwertNode3 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertNode3WestEast = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertNode3EastWest = createZaehlwert(6543213); // TODO: wire real data
+const zaehlwertArrowNode3WestToEast = createZaehlwert(6543212); // TODO: wire real data
+const zaehlwertArrowNode3EastToWest = createZaehlwert(6543213); // TODO: wire real data
 
-const colorNode3WestEast = setColor(nodeNumber3, Himmelsrichtung.O);
-const colorNode3EastWest = setColor(nodeNumber3, Himmelsrichtung.W);
+const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
+const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
 
-const textColorArrowNode3WestToEast = setTextColor(colorNode3WestEast);
-const textColorArrowNode3EastToWest = setTextColor(colorNode3EastWest);
+const textColorArrowNode3WestToEast = setTextColor(colorArrowNode3WestToEast);
+const textColorArrowNode3EastToWest = setTextColor(colorArrowNode3EastToWest);
 
 // Zaehlwerte of Node4/West
 const nodeNumber4 = 4;
 
 const zaehlwertNode4 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertNode4SouthNorth = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertNode4NorthSouth = createZaehlwert(6543213);
+const zaehlwertArrowNode4SouthToNorth = createZaehlwert(6543212); // TODO: wire real data
+const zaehlwertArrowNode4NorthToSouth = createZaehlwert(6543213);
 
-const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
-const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
+const colorArrowNode4NorthToSouth = setColor(nodeNumber4, Himmelsrichtung.S);
+const colorArrowNode4SouthToNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
-const textColorArrowNode4NorthToSouth = setTextColor(colorNode4NorthSouth);
-const textColorArrowNode4SouthToNorth = setTextColor(colorNode4SouthNorth);
+const textColorArrowNode4NorthToSouth = setTextColor(colorArrowNode4NorthToSouth);
+const textColorArrowNode4SouthToNorth = setTextColor(colorArrowNode4SouthToNorth);
 
 // Zaehlwerte of Node5
 const nodeNumber5 = 5;
