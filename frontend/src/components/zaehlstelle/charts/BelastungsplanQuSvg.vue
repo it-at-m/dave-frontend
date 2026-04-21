@@ -2149,6 +2149,7 @@
               </text>
             </g>
             <text
+              v-if="streetnamesNode5.length === 1"
               id="node5_strassenname_text"
               xml:space="preserve"
               style="
@@ -2182,10 +2183,11 @@
                 y="995.74023"
                 style="stroke-width: 26.4927"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode5[0] }}
               </tspan>
             </text>
             <text
+              v-if="streetnamesNode5.length > 1"
               id="node5_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -2219,10 +2221,11 @@
                 y="1009.7406"
                 style="stroke-width: 26.4927"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode5[1] }}
               </tspan>
             </text>
             <text
+              v-if="streetnamesNode5.length > 1"
               id="node5_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -2256,7 +2259,7 @@
                 y="981.74231"
                 style="stroke-width: 26.4927"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode5[0] }}
               </tspan>
             </text>
             <g
@@ -2460,6 +2463,7 @@
               style="stroke-width: 14.949"
             />
             <text
+              v-if="streetnamesNode6.length === 1"
               id="node6_strassenname_text"
               xml:space="preserve"
               style="
@@ -2493,7 +2497,7 @@
                 y="5.7888861"
                 style="stroke-width: 26.4927"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode6[0] }}
               </tspan>
             </text>
             <g
@@ -2543,6 +2547,7 @@
               </text>
             </g>
             <text
+              v-if="streetnamesNode6.length > 1"
               id="node6_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -2576,10 +2581,11 @@
                 y="19.791727"
                 style="stroke-width: 26.4927"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode6[1] }}
               </tspan>
             </text>
             <text
+              v-if="streetnamesNode6.length > 1"
               id="node6_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -2613,7 +2619,7 @@
                 y="-8.208993"
                 style="stroke-width: 26.4927"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode6[0] }}
               </tspan>
             </text>
             <g
@@ -2812,6 +2818,7 @@
               style="stroke-width: 14.949"
             />
             <text
+              v-if="streetnamesNode7.length === 1"
               id="node7_strassenname_text"
               xml:space="preserve"
               style="
@@ -2857,7 +2864,7 @@
                 x="-262.48056"
                 y="995.74023"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode7[0] }}
               </tspan>
             </text>
             <g id="node7_number">
@@ -2903,6 +2910,7 @@
               </text>
             </g>
             <text
+              v-if="streetnamesNode7.length > 1"
               id="node7_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -2948,10 +2956,11 @@
                 x="-262.48306"
                 y="1009.7406"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode7[1] }}
               </tspan>
             </text>
             <text
+              v-if="streetnamesNode7.length > 1"
               id="node7_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -2997,7 +3006,7 @@
                 x="-262.48306"
                 y="981.73987"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode7[0] }}
               </tspan>
             </text>
             <g
@@ -3196,6 +3205,7 @@
               style="stroke-width: 14.949"
             />
             <text
+              v-if="streetnamesNode8.length === 1"
               id="node8_strassenname_text"
               xml:space="preserve"
               style="
@@ -3241,7 +3251,7 @@
                 x="727.46826"
                 y="5.7913613"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode8[0] }}
               </tspan>
             </text>
             <g id="node8_number">
@@ -3287,6 +3297,7 @@
               </text>
             </g>
             <text
+              v-if="streetnamesNode8.length > 1"
               id="node8_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -3332,10 +3343,11 @@
                 x="727.47076"
                 y="19.791721"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode8[1] }}
               </tspan>
             </text>
             <text
+              v-if="streetnamesNode8.length > 1"
               id="node8_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -3381,7 +3393,7 @@
                 x="727.47076"
                 y="-8.2089996"
               >
-                Ich bin ein langer Straßenname
+                {{ streetnamesNode8[0] }}
               </tspan>
             </text>
             <g
@@ -3937,10 +3949,13 @@ const qu = useQu();
 const streetname = useStreetname();
 
 const streetnamesNode1 = ref<Array<string>>([]);
-
 const streetnamesNode2 = ref<Array<string>>([]);
 const streetnamesNode3 = ref<Array<string>>([]);
 const streetnamesNode4 = ref<Array<string>>([]);
+const streetnamesNode5 = ref<Array<string>>([]);
+const streetnamesNode6 = ref<Array<string>>([]);
+const streetnamesNode7 = ref<Array<string>>([]);
+const streetnamesNode8 = ref<Array<string>>([]);
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -4034,6 +4049,18 @@ onMounted(() => {
   );
   streetnamesNode4.value = streetname.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+  );
+  streetnamesNode5.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+  );
+  streetnamesNode6.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+  );
+  streetnamesNode7.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+  );
+  streetnamesNode8.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 });
 
