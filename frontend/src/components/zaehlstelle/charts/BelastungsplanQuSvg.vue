@@ -2319,7 +2319,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  123456
+                  {{ sumNode5Arrows }}
                 </tspan>
               </text>
               <path
@@ -2343,14 +2343,14 @@
             <path
               id="arrow_node5_north_west_to_south_east"
               d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
-              fill="#000000"
+              :fill="colorArrowNode5NorthWestToSouthEast"
               stroke="none"
               style="stroke-width: 27.0576"
             />
             <path
               id="arrow_node5_south_east_to_north_west"
               d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
-              fill="#000000"
+              :fill="colorArrowNode5SouthEastToNorthWest"
               stroke="none"
               style="stroke-width: 27.0576"
             />
@@ -2400,7 +2400,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode5NorthWestToSouthEast }}
               </tspan>
             </text>
             <text
@@ -2449,7 +2449,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode5SouthEastToNorthWest }}
               </tspan>
             </text>
           </g>
@@ -2677,7 +2677,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  123456
+                  {{ sumNode6Arrows }}
                 </tspan>
               </text>
               <path
@@ -2700,14 +2700,14 @@
             <path
               id="arrow_node6_south_west_to_north_east"
               d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
-              fill="#000000"
+              :fill="colorArrowNode6SouthWestToNorthEast"
               stroke="none"
               style="stroke-width: 27.0576"
             />
             <path
               id="arrow_node6_north_east_to_south_west"
               d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
-              fill="#000000"
+              :fill="colorArrowNode6NorthEastToSouthWest"
               stroke="none"
               style="stroke-width: 27.0576"
             />
@@ -2757,7 +2757,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode6NorthEastToSouthWest }}
               </tspan>
             </text>
             <text
@@ -2806,7 +2806,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode6SouthWestToNorthEast }}
               </tspan>
             </text>
           </g>
@@ -3066,7 +3066,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  123456
+                  {{ sumNode7Arrows }}
                 </tspan>
               </text>
               <path
@@ -3089,14 +3089,14 @@
             <path
               id="arrow_node7_north_west_to_south_east"
               d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
-              fill="#000000"
+              :fill="colorArrowNode7NorthWestToSouthEast"
               stroke="none"
               style="stroke-width: 27.0576"
             />
             <path
               id="arrow_node7_south_east_to_north_west"
               d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
-              fill="#000000"
+              :fill="colorArrowNode7SouthEastToNorthWest"
               stroke="none"
               style="stroke-width: 27.0576"
             />
@@ -3146,7 +3146,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode7SouthEastToNorthWest }}
               </tspan>
             </text>
             <text
@@ -3195,7 +3195,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode7NorthWestToSouthEast }}
               </tspan>
             </text>
           </g>
@@ -3455,7 +3455,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  123456
+                  {{ sumNode8Arrows }}
                 </tspan>
               </text>
               <path
@@ -3478,19 +3478,19 @@
             <path
               id="arrow_node8_south_west_to_north_east"
               d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
-              fill="#000000"
+              :fill="colorArrowNode8SouthWestToNorthEast"
               stroke="none"
               style="stroke-width: 27.0576"
             />
             <path
               id="arrow_node8_north_east_to_south_west"
               d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
-              fill="#000000"
+              :fill="colorArrowNode8NorthEastToSouthWest"
               stroke="none"
               style="stroke-width: 27.0576"
             />
             <text
-              id="arrow_node8_north_east_to_south_west_number_text"
+              id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
               style="
@@ -3518,7 +3518,7 @@
               y="-300.22974"
             >
               <tspan
-                id="arrow_node8_north_east_to_south_west_number_tspan"
+                id="arrow_node8_south_west_to_north_east_number_tspan"
                 x="-1.1170298"
                 y="492.60648"
                 style="
@@ -3535,11 +3535,11 @@
                   stroke-width: 44.2239;
                 "
               >
-                123
+                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
               </tspan>
             </text>
             <text
-              id="arrow_node8_south_west_to_north_east_number_text"
+              id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
               style="
@@ -3567,7 +3567,7 @@
               y="-346.03415"
             >
               <tspan
-                id="arrow_node8_south_west_to_north_east_number_tspan"
+                id="arrow_node8_north_east_to_south_west_number_tspan"
                 x="-1.117029"
                 y="446.80225"
                 style="
@@ -3584,7 +3584,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                132
+                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
               </tspan>
             </text>
           </g>
@@ -4009,11 +4009,58 @@ const zaehlwertNode4NorthSouth = createZaehlwert(6543213);
 const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
+// Zaehlwerte of Node5
+const nodeNumber5 = 5;
+
+const zaehlwertArrowNode5NorthWestToSouthEast = createZaehlwert(800); // TODO: wire real data
+const zaehlwertArrowNode5SouthEastToNorthWest = createZaehlwert(200); // TODO: wire real data
+const sumNode5Arrows = calculateSum(zaehlwertArrowNode5NorthWestToSouthEast.value, zaehlwertArrowNode5SouthEastToNorthWest.value);
+
+const colorArrowNode5NorthWestToSouthEast = setColor(nodeNumber5, Himmelsrichtung.SO);
+const colorArrowNode5SouthEastToNorthWest = setColor(nodeNumber5, Himmelsrichtung.NW);
+
+// Zaehlwerte of Node6
+const nodeNumber6 = 6;
+
+const zaehlwertArrowNode6NorthEastToSouthWest = createZaehlwert(700); // TODO: wire real data
+const zaehlwertArrowNode6SouthWestToNorthEast = createZaehlwert(300); // TODO: wire real data
+const sumNode6Arrows = calculateSum(zaehlwertArrowNode6NorthEastToSouthWest.value, zaehlwertArrowNode6SouthWestToNorthEast.value);
+
+const colorArrowNode6NorthEastToSouthWest = setColor(nodeNumber6, Himmelsrichtung.SW);
+const colorArrowNode6SouthWestToNorthEast = setColor(nodeNumber6, Himmelsrichtung.NO);
+
+// Zaehlwerte of Node7
+const nodeNumber7 = 7;
+
+const zaehlwertArrowNode7NorthWestToSouthEast = createZaehlwert(600); // TODO: wire real data
+const zaehlwertArrowNode7SouthEastToNorthWest = createZaehlwert(400); // TODO: wire real data
+const sumNode7Arrows = calculateSum(zaehlwertArrowNode7NorthWestToSouthEast.value, zaehlwertArrowNode7SouthEastToNorthWest.value);
+
+const colorArrowNode7NorthWestToSouthEast = setColor(nodeNumber7, Himmelsrichtung.SO);
+const colorArrowNode7SouthEastToNorthWest = setColor(nodeNumber7, Himmelsrichtung.NW);
+
+// Zaehlwerte of Node8
+const nodeNumber8 = 8;
+
+const zaehlwertArrowNode8NorthEastToSouthWest = createZaehlwert(900); // TODO: wire real data
+const zaehlwertArrowNode8SouthWestToNorthEast = createZaehlwert(100); // TODO: wire real data
+const sumNode8Arrows = calculateSum(zaehlwertArrowNode8NorthEastToSouthWest.value, zaehlwertArrowNode8SouthWestToNorthEast.value);
+
+const colorArrowNode8NorthEastToSouthWest = setColor(nodeNumber8, Himmelsrichtung.SW);
+const colorArrowNode8SouthWestToNorthEast = setColor(nodeNumber8, Himmelsrichtung.NO);
+
+
 /**
  * Erstellt eine computed Property für einen Wert.
  */
 function createZaehlwert(value: number) {
   return computed(() => value);
+}
+
+function calculateSum(zaehlwert1: number, zaehlwert2: number) {
+  return computed(() => {
+    return zaehlwert1 + zaehlwert2;
+  });
 }
 
 function setColor(knNumber: number, direction: Himmelsrichtung) {
