@@ -745,7 +745,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertNode1 }}
+                  {{ sumNode1Arrows }}
                 </tspan>
               </text>
               <path
@@ -1115,7 +1115,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertNode2 }}
+                  {{ sumNode2Arrows }}
                 </tspan>
               </text>
               <path
@@ -1524,7 +1524,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertNode3 }}
+                  {{ sumNode3Arrows }}
                 </tspan>
               </text>
               <path
@@ -1933,7 +1933,7 @@
                     stroke-dasharray: none;
                   "
                 >
-                  {{ zaehlwertNode4 }}
+                  {{ sumNode4Arrows }}
                 </tspan>
               </text>
               <path
@@ -3992,9 +3992,13 @@ const availableKnotenarme = computed(() => {
 
 // Zaehlwerte of Node1/North
 const nodeNumber1 = 1;
-const zaehlwertNode1 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertArrowNode1WestToEast = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertArrowNode1EastToWest = createZaehlwert(6543213); // TODO: wire real data
+
+const zaehlwertArrowNode1WestToEast = createZaehlwert(150); // TODO: wire real data
+const zaehlwertArrowNode1EastToWest = createZaehlwert(850); // TODO: wire real data
+const sumNode1Arrows = calculateSum(
+  zaehlwertArrowNode1WestToEast.value,
+  zaehlwertArrowNode1EastToWest.value
+);
 
 const colorArrowNode1WestToEast = setColor(nodeNumber1, Himmelsrichtung.O);
 const colorArrowNode1EastToWest = setColor(nodeNumber1, Himmelsrichtung.W);
@@ -4004,21 +4008,33 @@ const textColorArrowNode1EastToWest = setTextColor(colorArrowNode1EastToWest);
 
 // Zaehlwerte of Node2/East
 const nodeNumber2 = 2;
-const zaehlwertNode2 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertArrowNode2SouthToNorth = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertArrowNode2NorthToSouth = createZaehlwert(6543213);
+
+const zaehlwertArrowNode2SouthToNorth = createZaehlwert(250); // TODO: wire real data
+const zaehlwertArrowNode2NorthToSouth = createZaehlwert(750); // TODO: wire real data
+const sumNode2Arrows = calculateSum(
+  zaehlwertArrowNode2SouthToNorth.value,
+  zaehlwertArrowNode2NorthToSouth.value
+);
 
 const colorArrowNode2NorthToSouth = setColor(nodeNumber2, Himmelsrichtung.S);
 const colorArrowNode2SouthToNorth = setColor(nodeNumber2, Himmelsrichtung.N);
 
-const textColorArrowNode2NorthToSouth = setTextColor(colorArrowNode2NorthToSouth);
-const textColorArrowNode2SouthToNorth = setTextColor(colorArrowNode2SouthToNorth);
+const textColorArrowNode2NorthToSouth = setTextColor(
+  colorArrowNode2NorthToSouth
+);
+const textColorArrowNode2SouthToNorth = setTextColor(
+  colorArrowNode2SouthToNorth
+);
 
 // Zaehlwerte of Node3/South
 const nodeNumber3 = 3;
-const zaehlwertNode3 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertArrowNode3WestToEast = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertArrowNode3EastToWest = createZaehlwert(6543213); // TODO: wire real data
+
+const zaehlwertArrowNode3WestToEast = createZaehlwert(350); // TODO: wire real data
+const zaehlwertArrowNode3EastToWest = createZaehlwert(650); // TODO: wire real data
+const sumNode3Arrows = calculateSum(
+  zaehlwertArrowNode3WestToEast.value,
+  zaehlwertArrowNode3EastToWest.value
+);
 
 const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
@@ -4029,15 +4045,22 @@ const textColorArrowNode3EastToWest = setTextColor(colorArrowNode3EastToWest);
 // Zaehlwerte of Node4/West
 const nodeNumber4 = 4;
 
-const zaehlwertNode4 = createZaehlwert(6543211); // TODO: wire real data
-const zaehlwertArrowNode4SouthToNorth = createZaehlwert(6543212); // TODO: wire real data
-const zaehlwertArrowNode4NorthToSouth = createZaehlwert(6543213);
+const zaehlwertArrowNode4SouthToNorth = createZaehlwert(450); // TODO: wire real data
+const zaehlwertArrowNode4NorthToSouth = createZaehlwert(450); // TODO: wire real data
+const sumNode4Arrows = calculateSum(
+  zaehlwertArrowNode4SouthToNorth.value,
+  zaehlwertArrowNode4NorthToSouth.value
+);
 
 const colorArrowNode4NorthToSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorArrowNode4SouthToNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
-const textColorArrowNode4NorthToSouth = setTextColor(colorArrowNode4NorthToSouth);
-const textColorArrowNode4SouthToNorth = setTextColor(colorArrowNode4SouthToNorth);
+const textColorArrowNode4NorthToSouth = setTextColor(
+  colorArrowNode4NorthToSouth
+);
+const textColorArrowNode4SouthToNorth = setTextColor(
+  colorArrowNode4SouthToNorth
+);
 
 // Zaehlwerte of Node5
 const nodeNumber5 = 5;
