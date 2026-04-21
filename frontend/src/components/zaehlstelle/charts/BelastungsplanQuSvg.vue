@@ -783,6 +783,7 @@
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
+              :fill="textColorArrowNode1WestToEast"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -800,7 +801,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
@@ -834,6 +834,7 @@
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
+              :fill="textColorArrowNode1EastToWest"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -851,7 +852,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
@@ -1154,6 +1154,7 @@
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              :fill="textColorArrowNode2NorthToSouth"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1171,7 +1172,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
@@ -1205,6 +1205,7 @@
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              :fill="textColorArrowNode2SouthToNorth"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1222,7 +1223,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
@@ -1562,6 +1562,7 @@
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
+              :fill="textColorArrowNode3WestToEast"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1579,7 +1580,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
@@ -1613,6 +1613,7 @@
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
+              :fill="textColorArrowNode3EastToWest"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1630,7 +1631,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
@@ -1972,6 +1972,7 @@
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_north_to_south_number_text"
+              :fill="textColorArrowNode4NorthToSouth"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1989,7 +1990,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
@@ -2023,6 +2023,7 @@
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_south_to_north_number_text"
+              :fill="textColorArrowNode4SouthToNorth"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2040,7 +2041,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
@@ -2338,6 +2338,7 @@
               id="arrow_node5_north_west_to_south_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              :fill="textColorArrowNode5NorthWestToSouthEast"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2355,7 +2356,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -2387,6 +2387,7 @@
               id="arrow_node5_south_east_to_north_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              :fill="textColorArrowNode5SouthEastToNorthWest"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2404,7 +2405,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -2696,6 +2696,7 @@
               id="arrow_node6_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              :fill="textColorArrowNode6NorthEastToSouthWest"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2713,7 +2714,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -2745,6 +2745,7 @@
               id="arrow_node6_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              :fill="textColorArrowNode6SouthWestToNorthEast"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2762,7 +2763,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -3086,6 +3086,7 @@
               id="arrow_node7_south_east_to_north_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              :fill="textColorArrowNode7SouthEastToNorthWest"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -3103,7 +3104,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -3135,6 +3135,7 @@
               id="arrow_node7_north_west_to_south_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              :fill="textColorArrowNode7NorthWestToSouthEast"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -3152,7 +3153,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -3476,6 +3476,7 @@
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              :fill="textColorArrowNode8SouthWestToNorthEast"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -3493,7 +3494,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -3525,6 +3525,7 @@
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              :fill="textColorArrowNode8NorthEastToSouthWest"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -3542,7 +3543,6 @@
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
-                fill: #ffffff;
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
@@ -3904,7 +3904,7 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, type ComputedRef, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
@@ -3998,6 +3998,9 @@ const zaehlwertNode1EastWest = createZaehlwert(6543213); // TODO: wire real data
 const colorNode1WestEast = setColor(nodeNumber1, Himmelsrichtung.O);
 const colorNode1EastWest = setColor(nodeNumber1, Himmelsrichtung.W);
 
+const textColorArrowNode1WestToEast = setTextColor(colorNode1WestEast);
+const textColorArrowNode1EastToWest = setTextColor(colorNode1EastWest);
+
 // Zaehlwerte of Node2/East
 const nodeNumber2 = 2;
 const zaehlwertNode2 = createZaehlwert(6543211); // TODO: wire real data
@@ -4006,6 +4009,9 @@ const zaehlwertNode2NorthSouth = createZaehlwert(6543213);
 
 const colorNode2NorthSouth = setColor(nodeNumber2, Himmelsrichtung.S);
 const colorNode2SouthNorth = setColor(nodeNumber2, Himmelsrichtung.N);
+
+const textColorArrowNode2NorthToSouth = setTextColor(colorNode2NorthSouth);
+const textColorArrowNode2SouthToNorth = setTextColor(colorNode2SouthNorth);
 
 // Zaehlwerte of Node3/South
 const nodeNumber3 = 3;
@@ -4016,6 +4022,9 @@ const zaehlwertNode3EastWest = createZaehlwert(6543213); // TODO: wire real data
 const colorNode3WestEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorNode3EastWest = setColor(nodeNumber3, Himmelsrichtung.W);
 
+const textColorArrowNode3WestToEast = setTextColor(colorNode3WestEast);
+const textColorArrowNode3EastToWest = setTextColor(colorNode3EastWest);
+
 // Zaehlwerte of Node4/West
 const nodeNumber4 = 4;
 
@@ -4025,6 +4034,9 @@ const zaehlwertNode4NorthSouth = createZaehlwert(6543213);
 
 const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
+
+const textColorArrowNode4NorthToSouth = setTextColor(colorNode4NorthSouth);
+const textColorArrowNode4SouthToNorth = setTextColor(colorNode4SouthNorth);
 
 // Zaehlwerte of Node5
 const nodeNumber5 = 5;
@@ -4045,6 +4057,9 @@ const colorArrowNode5SouthEastToNorthWest = setColor(
   Himmelsrichtung.NW
 );
 
+const textColorArrowNode5NorthWestToSouthEast = setTextColor(colorArrowNode5NorthWestToSouthEast);
+const textColorArrowNode5SouthEastToNorthWest = setTextColor(colorArrowNode5SouthEastToNorthWest);
+
 // Zaehlwerte of Node6
 const nodeNumber6 = 6;
 
@@ -4063,6 +4078,9 @@ const colorArrowNode6SouthWestToNorthEast = setColor(
   nodeNumber6,
   Himmelsrichtung.NO
 );
+
+const textColorArrowNode6NorthEastToSouthWest = setTextColor(colorArrowNode6NorthEastToSouthWest);
+const textColorArrowNode6SouthWestToNorthEast = setTextColor(colorArrowNode6SouthWestToNorthEast);
 
 // Zaehlwerte of Node7
 const nodeNumber7 = 7;
@@ -4083,6 +4101,9 @@ const colorArrowNode7SouthEastToNorthWest = setColor(
   Himmelsrichtung.NW
 );
 
+const textColorArrowNode7NorthWestToSouthEast = setTextColor(colorArrowNode7NorthWestToSouthEast);
+const textColorArrowNode7SouthEastToNorthWest = setTextColor(colorArrowNode7SouthEastToNorthWest);
+
 // Zaehlwerte of Node8
 const nodeNumber8 = 8;
 
@@ -4101,6 +4122,9 @@ const colorArrowNode8SouthWestToNorthEast = setColor(
   nodeNumber8,
   Himmelsrichtung.NO
 );
+
+const textColorArrowNode8NorthEastToSouthWest = setTextColor(colorArrowNode8NorthEastToSouthWest);
+const textColorArrowNode8SouthWestToNorthEast = setTextColor(colorArrowNode8SouthWestToNorthEast);
 
 /**
  * Erstellt eine computed Property für einen Wert.
@@ -4127,6 +4151,12 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
       ? (BelastungsplanConstants.farben.get(knNumber) ??
         BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor
+  );
+}
+
+function setTextColor(arrowColor: ComputedRef<string>) {
+  return computed(() =>
+    arrowColor.value === BelastungsplanConstants.inaktivColor ? "#000000" : "#ffffff"
   );
 }
 
