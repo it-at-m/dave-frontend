@@ -527,6 +527,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="istKnotenarmVerfuegbar(1)"
               id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
               fill="#9e9e9e"
@@ -542,7 +543,7 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: #000000;
+                  stroke: none;
                   stroke-width: 28.22049979;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
@@ -553,6 +554,7 @@
                 r="11.951238"
               />
               <text
+                v-if="istKnotenarmVerfuegbar(1)"
                 id="node1_circle_text"
                 xml:space="preserve"
                 style="
@@ -905,6 +907,7 @@
             "
           >
             <path
+              v-if="istKnotenarmVerfuegbar(2)"
               id="node2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
               fill="#9e9e9e"
@@ -958,7 +961,7 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: #000000;
+                  stroke: none;
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
@@ -969,6 +972,7 @@
                 r="11.951238"
               />
               <text
+                v-if="istKnotenarmVerfuegbar(2)"
                 id="node2_circle_text"
                 xml:space="preserve"
                 style="
@@ -1277,6 +1281,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="istKnotenarmVerfuegbar(3)"
               id="node3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
               fill="#9e9e9e"
@@ -1344,7 +1349,7 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: #000000;
+                  stroke: none;
                   stroke-width: 28.22049979;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
@@ -1355,6 +1360,7 @@
                 r="11.951238"
               />
               <text
+                v-if="istKnotenarmVerfuegbar(3)"
                 id="node3_circle_text"
                 xml:space="preserve"
                 style="
@@ -1690,6 +1696,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="istKnotenarmVerfuegbar(4)"
               id="node4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
               fill="#9e9e9e"
@@ -1756,7 +1763,7 @@
                 style="
                   fill: none;
                   fill-opacity: 1;
-                  stroke: #000000;
+                  stroke: none;
                   stroke-width: 28.22049979;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
@@ -1767,6 +1774,7 @@
                 r="11.951238"
               />
               <text
+                v-if="istKnotenarmVerfuegbar(4)"
                 id="node4_circle_text"
                 xml:space="preserve"
                 style="
@@ -2272,7 +2280,6 @@ watch(
     );
 
     await nextTick();
-
   }
 );
 </script>
