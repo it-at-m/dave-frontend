@@ -3637,7 +3637,7 @@
                 id="tspan34"
                 style="font-weight: bold"
               >
-                FUSS
+                {{ optionen.radverkehr ? "RAD" : "FUSS" }}
               </tspan>
             </tspan>
           </text>
@@ -3679,7 +3679,7 @@
                 x="168"
                 y="1210"
               >
-                hochgerechnet
+                {{ zaehlzeit2 }}
               </tspan>
             </text>
           </g>
@@ -3725,7 +3725,7 @@
                   id="tspan37"
                   style="font-weight: bold"
                 >
-                  Tageswert
+                  {{ optionen.zeitauswahl }}
                 </tspan>
               </tspan>
             </text>
@@ -3837,14 +3837,20 @@
                 x="699.24969"
                 y="688.33734"
               >
-                Stadtbezirk 8
+                Stadtbezirk
+                {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
               </tspan>
               <tspan
                 id="tspan40"
                 x="699.24969"
                 y="713.03187"
               >
-                Zähldatum: 01.01.2026
+                Zähldatum:
+                {{
+                  dateUtils.getShortVersionOfDate(
+                    new Date(activeZaehlung.datum)
+                  )
+                }}
               </tspan>
             </text>
           </g>
@@ -3891,7 +3897,7 @@
                   id="tspan41"
                   style="font-weight: bold"
                 >
-                  Zählstelle 99999
+                  Zählstelle {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
                 </tspan>
               </tspan>
             </text>
@@ -3920,9 +3926,15 @@ import { useDisplay } from "vuetify/framework";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import Zaehldauer from "@/types/enum/Zaehldauer";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { useDateUtils } from "@/util/DateUtils";
 import { isQuerung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -3935,6 +3947,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
+const dateUtils = useDateUtils();
 
 const sizeBelastungsplan = computed(() => {
   let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
@@ -3950,6 +3963,27 @@ const minSizeBelastungsplan = computed(() => {
       display.height.value) /
     100
   );
+});
+
+const zaehlzeit2 = computed(() => {
+  if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN) {
+      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+    } else {
+      return "hochgerechnet";
+    }
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+  } else if (
+    optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  ) {
+    const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
+      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+    return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
+  }
 });
 
 const qu = useQu();
