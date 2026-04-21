@@ -560,7 +560,6 @@
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
-                  -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
@@ -593,7 +592,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -633,7 +631,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -673,7 +670,6 @@
                 font-stretch: normal;
                 font-size: 22.3767px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2010,7 +2006,6 @@
                 font-stretch: normal;
                 font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2040,7 +2035,6 @@
                   font-stretch: normal;
                   font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2064,7 +2058,6 @@
                 font-stretch: normal;
                 font-size: 28.0866px;
                 font-family: Arial;
-                -inkscape-font-specification: &quot;Arial, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2094,7 +2087,6 @@
                   font-stretch: normal;
                   font-size: 28.0866px;
                   font-family: Arial;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2109,7 +2101,1820 @@
           </g>
         </g>
       </g>
-
+      <g id="nodes5To8">
+        <g
+          v-if="istKnotenarmVerfuegbar(5)"
+          id="node5_group"
+          class="com.sun.star.drawing.ClosedBezierShape"
+        >
+          <g id="node5">
+            <path
+              id="node5_spike"
+              d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
+              fill="#9e9e9e"
+              stroke="none"
+              style="stroke-width: 14.949"
+            />
+            <g id="node5_number">
+              <circle
+                id="node5_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="760.63751"
+                cy="639.36597"
+                r="11.951238"
+              />
+              <text
+                id="node5_circle_text"
+                xml:space="preserve"
+                style="
+                  font-size: 19.7624px;
+                  font-family: sans-serif;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                "
+                y="646.03784"
+                x="754.23737"
+              >
+                <tspan
+                  id="node5_circle_tspan"
+                  style="stroke-width: 30.9229"
+                  x="754.23737"
+                  y="646.03784"
+                >
+                  5
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnamesNode5.length === 1"
+              id="node5_strassenname_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(-45)"
+              x="28.961172"
+              y="919.29742"
+            >
+              <tspan
+                id="node5_strassenname_tspan"
+                x="261.3215"
+                y="995.74023"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnamesNode5[0] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnamesNode5.length > 1"
+              id="node5_strassenname_multirow2_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(-45)"
+              x="28.963634"
+              y="933.29785"
+            >
+              <tspan
+                id="node5_strassenname_multirow2_tspan"
+                x="261.32397"
+                y="1009.7406"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnamesNode5[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnamesNode5.length > 1"
+              id="node5_strassenname_multirow1_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(-45)"
+              x="28.961161"
+              y="905.2995"
+            >
+              <tspan
+                id="node5_strassenname_multirow1_tspan"
+                x="261.32147"
+                y="981.74231"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnamesNode5[0] }}
+              </tspan>
+            </text>
+            <g
+              id="node5_sum"
+              style="
+                display: inline;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              transform="rotate(45,720.59848,699.99663)"
+            >
+              <text
+                id="node5_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node5_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  {{ sumNode5Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="node5_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node5"
+            transform="translate(6.0322729,-14.56374)"
+          >
+            <path
+              id="arrow_node5_north_west_to_south_east"
+              d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
+              :fill="colorArrowNode5NorthWestToSouthEast"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node5_south_east_to_north_west"
+              d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
+              :fill="colorArrowNode5SouthEastToNorthWest"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <text
+              id="arrow_node5_north_west_to_south_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-30.245787"
+              y="-1164.397"
+            >
+              <tspan
+                id="arrow_node5_north_west_to_south_east_number_tspan"
+                x="1134.0402"
+                y="-371.56079"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode5NorthWestToSouthEast }}
+              </tspan>
+            </text>
+            <text
+              id="arrow_node5_south_east_to_north_west_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-30.245035"
+              y="-1210.2013"
+            >
+              <tspan
+                id="arrow_node5_south_east_to_north_west_number_tspan"
+                x="1134.0402"
+                y="-417.36499"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode5SouthEastToNorthWest }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="istKnotenarmVerfuegbar(6)"
+          id="node6_group"
+        >
+          <g id="node6">
+            <path
+              id="node6_spike"
+              d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
+              fill="#9e9e9e"
+              stroke="none"
+              style="stroke-width: 14.949"
+            />
+            <text
+              v-if="streetnamesNode6.length === 1"
+              id="node6_strassenname_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(45)"
+              x="1018.9124"
+              y="-70.653908"
+            >
+              <tspan
+                id="node6_strassenname_tspan"
+                x="1251.2728"
+                y="5.7888861"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnamesNode6[0] }}
+              </tspan>
+            </text>
+            <g
+              id="node6_number"
+              transform="rotate(45,785.75,700)"
+            >
+              <circle
+                id="node6_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="810.86731"
+                cy="760.6344"
+                r="11.951238"
+              />
+              <text
+                id="node6_circle_text"
+                xml:space="preserve"
+                style="
+                  font-size: 19.7624px;
+                  font-family: sans-serif;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                "
+                y="1118.2867"
+                x="29.266506"
+                transform="rotate(-45)"
+              >
+                <tspan
+                  id="node6_circle_tspan"
+                  style="stroke-width: 30.9229"
+                  x="29.266506"
+                  y="1118.2867"
+                >
+                  6
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnamesNode6.length > 1"
+              id="node6_strassenname_multirow2_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(45)"
+              x="1018.9124"
+              y="-56.651062"
+            >
+              <tspan
+                id="node6_strassenname_multirow2_tspan"
+                x="1251.2728"
+                y="19.791727"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnamesNode6[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnamesNode6.length > 1"
+              id="node6_strassenname_multirow1_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(45)"
+              x="1018.9124"
+              y="-84.651779"
+            >
+              <tspan
+                id="node6_strassenname_multirow1_tspan"
+                x="1251.2728"
+                y="-8.208993"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnamesNode6[0] }}
+              </tspan>
+            </text>
+            <g
+              id="node6_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(135,706.03406,706.03209)"
+            >
+              <text
+                id="node6_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node6_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  {{ sumNode6Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="node6_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node6"
+            transform="translate(14.564164,6.031585)"
+          >
+            <path
+              id="arrow_node6_south_west_to_north_east"
+              d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
+              :fill="colorArrowNode6SouthWestToNorthEast"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node6_north_east_to_south_west"
+              d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
+              :fill="colorArrowNode6NorthEastToSouthWest"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <text
+              id="arrow_node6_north_east_to_south_west_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1165.1763"
+              y="463.03299"
+            >
+              <tspan
+                id="arrow_node6_north_east_to_south_west_number_tspan"
+                x="-0.89014673"
+                y="1255.8691"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode6NorthEastToSouthWest }}
+              </tspan>
+            </text>
+            <text
+              id="arrow_node6_south_west_to_north_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1165.1754"
+              y="508.83719"
+            >
+              <tspan
+                id="arrow_node6_south_west_to_north_east_number_tspan"
+                x="-0.89011478"
+                y="1301.6733"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode6SouthWestToNorthEast }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="istKnotenarmVerfuegbar(7)"
+          id="node7_group"
+        >
+          <g id="node7">
+            <path
+              id="node7_spike"
+              d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
+              fill="#9e9e9e"
+              stroke="none"
+              style="stroke-width: 14.949"
+            />
+            <text
+              v-if="streetnamesNode7.length === 1"
+              id="node7_strassenname_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(-45)"
+              x="-262.48056"
+              y="995.74023"
+            >
+              <tspan
+                id="node7_strassenname_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 22.3767px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                "
+                x="-262.48056"
+                y="995.74023"
+              >
+                {{ streetnamesNode7[0] }}
+              </tspan>
+            </text>
+            <g id="node7_number">
+              <circle
+                id="node7_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="639.36597"
+                cy="760.63751"
+                r="11.951238"
+              />
+              <text
+                id="node7_circle_text"
+                xml:space="preserve"
+                style="
+                  font-size: 19.7624px;
+                  font-family: sans-serif;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                "
+                y="767.69238"
+                x="633.51685"
+              >
+                <tspan
+                  id="node7_circle_tspan"
+                  style="stroke-width: 30.9229"
+                  x="633.51685"
+                  y="767.69238"
+                >
+                  7
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnamesNode7.length > 1"
+              id="node7_strassenname_multirow2_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(-45)"
+              x="-262.48306"
+              y="1009.7406"
+            >
+              <tspan
+                id="node7_strassenname_multirow2_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 22.3767px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                "
+                x="-262.48306"
+                y="1009.7406"
+              >
+                {{ streetnamesNode7[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnamesNode7.length > 1"
+              id="node7_strassenname_multirow1_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              transform="rotate(-45)"
+              x="-262.48306"
+              y="981.73987"
+            >
+              <tspan
+                id="node7_strassenname_multirow1_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 22.3767px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                "
+                x="-262.48306"
+                y="981.73987"
+              >
+                {{ streetnamesNode7[0] }}
+              </tspan>
+            </text>
+            <g
+              id="node7_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(45,-434.15313,221.6861)"
+            >
+              <text
+                id="node7_sum_text"
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node7_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  {{ sumNode7Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="node7_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node7"
+            transform="translate(-14.563392,6.0334257)"
+          >
+            <path
+              id="arrow_node7_north_west_to_south_east"
+              d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
+              :fill="colorArrowNode7NorthWestToSouthEast"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node7_south_east_to_north_west"
+              d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
+              :fill="colorArrowNode7SouthEastToNorthWest"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <text
+              id="arrow_node7_south_east_to_north_west_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-30.018866"
+              y="-401.13431"
+            >
+              <tspan
+                id="arrow_node7_south_east_to_north_west_number_tspan"
+                x="1134.2671"
+                y="391.7019"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode7SouthEastToNorthWest }}
+              </tspan>
+            </text>
+            <text
+              id="arrow_node7_north_west_to_south_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-30.018135"
+              y="-355.33026"
+            >
+              <tspan
+                id="arrow_node7_north_west_to_south_east_number_tspan"
+                x="1134.2671"
+                y="437.50613"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode7NorthWestToSouthEast }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="istKnotenarmVerfuegbar(8)"
+          id="node8_group"
+        >
+          <g id="node8">
+            <path
+              id="node8_spike"
+              d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
+              fill="#9e9e9e"
+              stroke="none"
+              style="stroke-width: 14.949"
+            />
+            <text
+              v-if="streetnamesNode8.length === 1"
+              id="node8_strassenname_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              x="727.46826"
+              y="5.7913613"
+              transform="rotate(45)"
+            >
+              <tspan
+                id="node8_strassenname_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 22.3767px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                "
+                x="727.46826"
+                y="5.7913613"
+              >
+                {{ streetnamesNode8[0] }}
+              </tspan>
+            </text>
+            <g id="node8_number">
+              <circle
+                id="node8_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="639.36597"
+                cy="639.36597"
+                r="11.951238"
+              />
+              <text
+                id="node8_circle_text"
+                xml:space="preserve"
+                style="
+                  font-size: 19.7624px;
+                  font-family: sans-serif;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                "
+                y="646.78491"
+                x="633.36969"
+              >
+                <tspan
+                  id="node8_circle_tspan"
+                  style="stroke-width: 30.9229"
+                  x="633.36969"
+                  y="646.78491"
+                >
+                  8
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnamesNode8.length > 1"
+              id="node8_strassenname_multirow2_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              x="727.47076"
+              y="19.791721"
+              transform="rotate(45)"
+            >
+              <tspan
+                id="node8_strassenname_multirow2_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 22.3767px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                "
+                x="727.47076"
+                y="19.791721"
+              >
+                {{ streetnamesNode8[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnamesNode8.length > 1"
+              id="node8_strassenname_multirow1_text"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 22.3767px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              "
+              x="727.47076"
+              y="-8.2089996"
+              transform="rotate(45)"
+            >
+              <tspan
+                id="node8_strassenname_multirow1_tspan"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 22.3767px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                "
+                x="727.47076"
+                y="-8.2089996"
+              >
+                {{ streetnamesNode8[0] }}
+              </tspan>
+            </text>
+            <g
+              id="node8_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(135,507.90765,227.71915)"
+            >
+              <text
+                xml:space="preserve"
+                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                id="node8_sum_text"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: 28.097px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                "
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="node8_sum_tspan"
+                  x="-226.30139"
+                  y="717.9292"
+                  style="
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: 28.097px;
+                    font-family: Arial;
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  "
+                >
+                  {{ sumNode8Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="node8_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_node8"
+            transform="translate(-6.0332912,-14.564242)"
+          >
+            <path
+              id="arrow_node8_south_west_to_north_east"
+              d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
+              :fill="colorArrowNode8SouthWestToNorthEast"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <path
+              id="arrow_node8_north_east_to_south_west"
+              d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
+              :fill="colorArrowNode8NorthEastToSouthWest"
+              stroke="none"
+              style="stroke-width: 27.0576"
+            />
+            <text
+              id="arrow_node8_south_west_to_north_east_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1165.4031"
+              y="-300.22974"
+            >
+              <tspan
+                id="arrow_node8_south_west_to_north_east_number_tspan"
+                x="-1.1170298"
+                y="492.60648"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
+              </tspan>
+            </text>
+            <text
+              id="arrow_node8_north_east_to_south_west_number_text"
+              xml:space="preserve"
+              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #ffffff;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1165.4023"
+              y="-346.03415"
+            >
+              <tspan
+                id="arrow_node8_north_east_to_south_west_number_tspan"
+                x="-1.117029"
+                y="446.80225"
+                style="
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: 28.2628px;
+                  font-family: Arial;
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                "
+              >
+                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+      </g>
+      <g
+        id="legend"
+        transform="matrix(1.0449912,0,0,1.0489734,-20.934144,-1.2761587)"
+      >
+        <g
+          id="legend-zaehlinfo"
+          style="stroke-width: 28.2205; stroke-dasharray: none"
+          transform="translate(50.006244,31.659644)"
+        >
+          <text
+            id="verkehrsart"
+            xml:space="preserve"
+            style="
+              font-style: normal;
+              font-variant: normal;
+              font-weight: normal;
+              font-stretch: normal;
+              font-size: 19.7556px;
+              font-family: sans-serif;
+              font-variant-ligatures: normal;
+              font-variant-caps: normal;
+              font-variant-numeric: normal;
+              font-variant-east-asian: normal;
+              text-align: start;
+              writing-mode: lr-tb;
+              direction: ltr;
+              text-anchor: start;
+              white-space: pre;
+              inline-size: 268.729;
+              display: inline;
+              fill: #000000;
+              stroke-width: 28.2205;
+              stroke-dasharray: none;
+            "
+            x="168.24969"
+            y="1230.3373"
+            transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
+          >
+            <tspan
+              id="tspan35"
+              x="168.24969"
+              y="1230.3373"
+            >
+              <tspan
+                id="tspan34"
+                style="font-weight: bold"
+              >
+                {{ optionen.radverkehr ? "RAD" : "FUSS" }}
+              </tspan>
+            </tspan>
+          </text>
+          <g
+            id="zaehlzeit2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+            transform="translate(-152.29421)"
+          >
+            <text
+              id="zaehlzeit2-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="168"
+              y="1210"
+            >
+              <tspan
+                id="tspan36"
+                x="168"
+                y="1210"
+              >
+                {{ zaehlzeit2 }}
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="zaehlzeit1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              id="zaehlzeit1-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="168.24969"
+              y="1190.3373"
+              transform="translate(-150.84646,0.00162031)"
+            >
+              <tspan
+                id="tspan38"
+                x="168.24969"
+                y="1190.3373"
+              >
+                <tspan
+                  id="tspan37"
+                  style="font-weight: bold"
+                >
+                  {{ optionen.zeitauswahl }}
+                </tspan>
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          id="legend-compass"
+          transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)"
+        >
+          <path
+            id="compass2"
+            style="
+              fill: none;
+              fill-opacity: 1;
+              stroke: #000000;
+              stroke-width: 3.35093;
+              stroke-linecap: butt;
+              stroke-miterlimit: 2.5;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+            "
+            d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
+            transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
+          />
+          <text
+            id="compass1"
+            xml:space="preserve"
+            style="
+              font-style: normal;
+              font-variant: normal;
+              font-weight: normal;
+              font-stretch: normal;
+              font-size: 24.6944px;
+              font-family: RomanD;
+              font-variant-ligatures: normal;
+              font-variant-caps: normal;
+              font-variant-numeric: normal;
+              font-variant-east-asian: normal;
+              text-align: start;
+              writing-mode: lr-tb;
+              direction: ltr;
+              text-anchor: start;
+              fill: #000000;
+              stroke-width: 2.2868;
+            "
+            x="141.28348"
+            y="93.924416"
+          >
+            <tspan
+              id="tspan6"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 24.6944px;
+                font-family: RomanD;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                stroke-width: 2.2868;
+              "
+            >
+              N
+            </tspan>
+          </text>
+        </g>
+        <g
+          id="legend-zaehlstelle"
+          transform="translate(-112.62637,-13.999124)"
+        >
+          <g
+            id="zaehlstelle2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+            transform="translate(163.18555,-589.09456)"
+          >
+            <text
+              id="zaehlstelle2-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="699.24969"
+              y="688.33734"
+              transform="translate(324.11416)"
+            >
+              <tspan
+                id="tspan39"
+                x="699.24969"
+                y="688.33734"
+              >
+                Stadtbezirk
+                {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
+              </tspan>
+              <tspan
+                id="tspan40"
+                x="699.24969"
+                y="713.03187"
+              >
+                Zähldatum:
+                {{
+                  dateUtils.getShortVersionOfDate(
+                    new Date(activeZaehlung.datum)
+                  )
+                }}
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="zaehlstelle1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+            transform="translate(162.09712,-614.70735)"
+          >
+            <text
+              id="zaehlstelle1-multirow"
+              xml:space="preserve"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 19.7556px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="699.24969"
+              y="688.33734"
+              transform="translate(324.11416)"
+            >
+              <tspan
+                id="tspan42"
+                x="699.24969"
+                y="688.33734"
+              >
+                <tspan
+                  id="tspan41"
+                  style="font-weight: bold"
+                >
+                  Zählstelle {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
+                </tspan>
+              </tspan>
+            </text>
+          </g>
+        </g>
+      </g>
       <path
         id="center"
         d="m 14253.004,17465.11 166.703,0 117.876,117.877 0,166.702 -117.876,117.877 -166.703,0 -117.876,-117.877 0,-166.702 z"
@@ -2123,6 +3928,7 @@
 <script setup lang="ts">
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
@@ -2132,6 +3938,11 @@ import { useDisplay } from "vuetify/framework";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import Zaehldauer from "@/types/enum/Zaehldauer";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useDateUtils } from "@/util/DateUtils";
 import { isQuerung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
@@ -2147,6 +3958,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
+const dateUtils = useDateUtils();
 
 const sizeBelastungsplan = computed(() => {
   let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
@@ -2164,14 +3976,38 @@ const minSizeBelastungsplan = computed(() => {
   );
 });
 
+const zaehlzeit2 = computed(() => {
+  if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN) {
+      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+    } else {
+      return "hochgerechnet";
+    }
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+  } else if (
+    optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  ) {
+    const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
+      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+    return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
+  }
+});
+
 const qu = useQu();
 const streetname = useStreetname();
 
 const streetnamesNode1 = ref<Array<string>>([]);
-
 const streetnamesNode2 = ref<Array<string>>([]);
 const streetnamesNode3 = ref<Array<string>>([]);
 const streetnamesNode4 = ref<Array<string>>([]);
+const streetnamesNode5 = ref<Array<string>>([]);
+const streetnamesNode6 = ref<Array<string>>([]);
+const streetnamesNode7 = ref<Array<string>>([]);
+const streetnamesNode8 = ref<Array<string>>([]);
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -2218,11 +4054,93 @@ const zaehlwertNode4NorthSouth = createZaehlwert(6543213);
 const colorNode4NorthSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorNode4SouthNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
+// Zaehlwerte of Node5
+const nodeNumber5 = 5;
+
+const zaehlwertArrowNode5NorthWestToSouthEast = createZaehlwert(800); // TODO: wire real data
+const zaehlwertArrowNode5SouthEastToNorthWest = createZaehlwert(200); // TODO: wire real data
+const sumNode5Arrows = calculateSum(
+  zaehlwertArrowNode5NorthWestToSouthEast.value,
+  zaehlwertArrowNode5SouthEastToNorthWest.value
+);
+
+const colorArrowNode5NorthWestToSouthEast = setColor(
+  nodeNumber5,
+  Himmelsrichtung.SO
+);
+const colorArrowNode5SouthEastToNorthWest = setColor(
+  nodeNumber5,
+  Himmelsrichtung.NW
+);
+
+// Zaehlwerte of Node6
+const nodeNumber6 = 6;
+
+const zaehlwertArrowNode6NorthEastToSouthWest = createZaehlwert(700); // TODO: wire real data
+const zaehlwertArrowNode6SouthWestToNorthEast = createZaehlwert(300); // TODO: wire real data
+const sumNode6Arrows = calculateSum(
+  zaehlwertArrowNode6NorthEastToSouthWest.value,
+  zaehlwertArrowNode6SouthWestToNorthEast.value
+);
+
+const colorArrowNode6NorthEastToSouthWest = setColor(
+  nodeNumber6,
+  Himmelsrichtung.SW
+);
+const colorArrowNode6SouthWestToNorthEast = setColor(
+  nodeNumber6,
+  Himmelsrichtung.NO
+);
+
+// Zaehlwerte of Node7
+const nodeNumber7 = 7;
+
+const zaehlwertArrowNode7NorthWestToSouthEast = createZaehlwert(600); // TODO: wire real data
+const zaehlwertArrowNode7SouthEastToNorthWest = createZaehlwert(400); // TODO: wire real data
+const sumNode7Arrows = calculateSum(
+  zaehlwertArrowNode7NorthWestToSouthEast.value,
+  zaehlwertArrowNode7SouthEastToNorthWest.value
+);
+
+const colorArrowNode7NorthWestToSouthEast = setColor(
+  nodeNumber7,
+  Himmelsrichtung.SO
+);
+const colorArrowNode7SouthEastToNorthWest = setColor(
+  nodeNumber7,
+  Himmelsrichtung.NW
+);
+
+// Zaehlwerte of Node8
+const nodeNumber8 = 8;
+
+const zaehlwertArrowNode8NorthEastToSouthWest = createZaehlwert(900); // TODO: wire real data
+const zaehlwertArrowNode8SouthWestToNorthEast = createZaehlwert(100); // TODO: wire real data
+const sumNode8Arrows = calculateSum(
+  zaehlwertArrowNode8NorthEastToSouthWest.value,
+  zaehlwertArrowNode8SouthWestToNorthEast.value
+);
+
+const colorArrowNode8NorthEastToSouthWest = setColor(
+  nodeNumber8,
+  Himmelsrichtung.SW
+);
+const colorArrowNode8SouthWestToNorthEast = setColor(
+  nodeNumber8,
+  Himmelsrichtung.NO
+);
+
 /**
  * Erstellt eine computed Property für einen Wert.
  */
 function createZaehlwert(value: number) {
   return computed(() => value);
+}
+
+function calculateSum(zaehlwert1: number, zaehlwert2: number) {
+  return computed(() => {
+    return zaehlwert1 + zaehlwert2;
+  });
 }
 
 function setColor(knNumber: number, direction: Himmelsrichtung) {
@@ -2265,6 +4183,18 @@ onMounted(() => {
   );
   streetnamesNode4.value = streetname.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+  );
+  streetnamesNode5.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+  );
+  streetnamesNode6.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+  );
+  streetnamesNode7.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+  );
+  streetnamesNode8.value = streetname.getStreetname(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 });
 
