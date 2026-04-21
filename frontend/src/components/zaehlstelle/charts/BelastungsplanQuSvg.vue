@@ -2095,6 +2095,7 @@
       </g>
       <g id="nodes5To8">
         <g
+          v-if="istKnotenarmVerfuegbar(5)"
           id="node5_group"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
@@ -2453,7 +2454,9 @@
             </text>
           </g>
         </g>
-        <g id="node6_group">
+        <g
+          v-if="istKnotenarmVerfuegbar(6)"
+          id="node6_group">
           <g id="node6">
             <path
               id="node6_spike"
@@ -2808,7 +2811,9 @@
             </text>
           </g>
         </g>
-        <g id="node7_group">
+        <g
+          v-if="istKnotenarmVerfuegbar(7)"
+          id="node7_group">
           <g id="node7">
             <path
               id="node7_spike"
@@ -3195,7 +3200,9 @@
             </text>
           </g>
         </g>
-        <g id="node8_group">
+        <g
+          v-if="istKnotenarmVerfuegbar(8)"
+          id="node8_group">
           <g id="node8">
             <path
               id="node8_spike"
