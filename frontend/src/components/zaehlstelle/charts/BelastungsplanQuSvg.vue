@@ -2456,7 +2456,8 @@
         </g>
         <g
           v-if="istKnotenarmVerfuegbar(6)"
-          id="node6_group">
+          id="node6_group"
+        >
           <g id="node6">
             <path
               id="node6_spike"
@@ -2813,7 +2814,8 @@
         </g>
         <g
           v-if="istKnotenarmVerfuegbar(7)"
-          id="node7_group">
+          id="node7_group"
+        >
           <g id="node7">
             <path
               id="node7_spike"
@@ -3202,7 +3204,8 @@
         </g>
         <g
           v-if="istKnotenarmVerfuegbar(8)"
-          id="node8_group">
+          id="node8_group"
+        >
           <g id="node8">
             <path
               id="node8_spike"
@@ -3917,6 +3920,7 @@
 <script setup lang="ts">
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
@@ -3929,12 +3933,11 @@ import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { isQuerung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -4048,41 +4051,76 @@ const nodeNumber5 = 5;
 
 const zaehlwertArrowNode5NorthWestToSouthEast = createZaehlwert(800); // TODO: wire real data
 const zaehlwertArrowNode5SouthEastToNorthWest = createZaehlwert(200); // TODO: wire real data
-const sumNode5Arrows = calculateSum(zaehlwertArrowNode5NorthWestToSouthEast.value, zaehlwertArrowNode5SouthEastToNorthWest.value);
+const sumNode5Arrows = calculateSum(
+  zaehlwertArrowNode5NorthWestToSouthEast.value,
+  zaehlwertArrowNode5SouthEastToNorthWest.value
+);
 
-const colorArrowNode5NorthWestToSouthEast = setColor(nodeNumber5, Himmelsrichtung.SO);
-const colorArrowNode5SouthEastToNorthWest = setColor(nodeNumber5, Himmelsrichtung.NW);
+const colorArrowNode5NorthWestToSouthEast = setColor(
+  nodeNumber5,
+  Himmelsrichtung.SO
+);
+const colorArrowNode5SouthEastToNorthWest = setColor(
+  nodeNumber5,
+  Himmelsrichtung.NW
+);
 
 // Zaehlwerte of Node6
 const nodeNumber6 = 6;
 
 const zaehlwertArrowNode6NorthEastToSouthWest = createZaehlwert(700); // TODO: wire real data
 const zaehlwertArrowNode6SouthWestToNorthEast = createZaehlwert(300); // TODO: wire real data
-const sumNode6Arrows = calculateSum(zaehlwertArrowNode6NorthEastToSouthWest.value, zaehlwertArrowNode6SouthWestToNorthEast.value);
+const sumNode6Arrows = calculateSum(
+  zaehlwertArrowNode6NorthEastToSouthWest.value,
+  zaehlwertArrowNode6SouthWestToNorthEast.value
+);
 
-const colorArrowNode6NorthEastToSouthWest = setColor(nodeNumber6, Himmelsrichtung.SW);
-const colorArrowNode6SouthWestToNorthEast = setColor(nodeNumber6, Himmelsrichtung.NO);
+const colorArrowNode6NorthEastToSouthWest = setColor(
+  nodeNumber6,
+  Himmelsrichtung.SW
+);
+const colorArrowNode6SouthWestToNorthEast = setColor(
+  nodeNumber6,
+  Himmelsrichtung.NO
+);
 
 // Zaehlwerte of Node7
 const nodeNumber7 = 7;
 
 const zaehlwertArrowNode7NorthWestToSouthEast = createZaehlwert(600); // TODO: wire real data
 const zaehlwertArrowNode7SouthEastToNorthWest = createZaehlwert(400); // TODO: wire real data
-const sumNode7Arrows = calculateSum(zaehlwertArrowNode7NorthWestToSouthEast.value, zaehlwertArrowNode7SouthEastToNorthWest.value);
+const sumNode7Arrows = calculateSum(
+  zaehlwertArrowNode7NorthWestToSouthEast.value,
+  zaehlwertArrowNode7SouthEastToNorthWest.value
+);
 
-const colorArrowNode7NorthWestToSouthEast = setColor(nodeNumber7, Himmelsrichtung.SO);
-const colorArrowNode7SouthEastToNorthWest = setColor(nodeNumber7, Himmelsrichtung.NW);
+const colorArrowNode7NorthWestToSouthEast = setColor(
+  nodeNumber7,
+  Himmelsrichtung.SO
+);
+const colorArrowNode7SouthEastToNorthWest = setColor(
+  nodeNumber7,
+  Himmelsrichtung.NW
+);
 
 // Zaehlwerte of Node8
 const nodeNumber8 = 8;
 
 const zaehlwertArrowNode8NorthEastToSouthWest = createZaehlwert(900); // TODO: wire real data
 const zaehlwertArrowNode8SouthWestToNorthEast = createZaehlwert(100); // TODO: wire real data
-const sumNode8Arrows = calculateSum(zaehlwertArrowNode8NorthEastToSouthWest.value, zaehlwertArrowNode8SouthWestToNorthEast.value);
+const sumNode8Arrows = calculateSum(
+  zaehlwertArrowNode8NorthEastToSouthWest.value,
+  zaehlwertArrowNode8SouthWestToNorthEast.value
+);
 
-const colorArrowNode8NorthEastToSouthWest = setColor(nodeNumber8, Himmelsrichtung.SW);
-const colorArrowNode8SouthWestToNorthEast = setColor(nodeNumber8, Himmelsrichtung.NO);
-
+const colorArrowNode8NorthEastToSouthWest = setColor(
+  nodeNumber8,
+  Himmelsrichtung.SW
+);
+const colorArrowNode8SouthWestToNorthEast = setColor(
+  nodeNumber8,
+  Himmelsrichtung.NO
+);
 
 /**
  * Erstellt eine computed Property für einen Wert.
@@ -4164,7 +4202,6 @@ watch(
     );
 
     await nextTick();
-
   }
 );
 </script>
