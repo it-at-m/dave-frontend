@@ -3903,8 +3903,9 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { ComputedRef } from "vue";
 
-import { computed, type ComputedRef, nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
@@ -4057,8 +4058,12 @@ const colorArrowNode5SouthEastToNorthWest = setColor(
   Himmelsrichtung.NW
 );
 
-const textColorArrowNode5NorthWestToSouthEast = setTextColor(colorArrowNode5NorthWestToSouthEast);
-const textColorArrowNode5SouthEastToNorthWest = setTextColor(colorArrowNode5SouthEastToNorthWest);
+const textColorArrowNode5NorthWestToSouthEast = setTextColor(
+  colorArrowNode5NorthWestToSouthEast
+);
+const textColorArrowNode5SouthEastToNorthWest = setTextColor(
+  colorArrowNode5SouthEastToNorthWest
+);
 
 // Zaehlwerte of Node6
 const nodeNumber6 = 6;
@@ -4079,8 +4084,12 @@ const colorArrowNode6SouthWestToNorthEast = setColor(
   Himmelsrichtung.NO
 );
 
-const textColorArrowNode6NorthEastToSouthWest = setTextColor(colorArrowNode6NorthEastToSouthWest);
-const textColorArrowNode6SouthWestToNorthEast = setTextColor(colorArrowNode6SouthWestToNorthEast);
+const textColorArrowNode6NorthEastToSouthWest = setTextColor(
+  colorArrowNode6NorthEastToSouthWest
+);
+const textColorArrowNode6SouthWestToNorthEast = setTextColor(
+  colorArrowNode6SouthWestToNorthEast
+);
 
 // Zaehlwerte of Node7
 const nodeNumber7 = 7;
@@ -4101,8 +4110,12 @@ const colorArrowNode7SouthEastToNorthWest = setColor(
   Himmelsrichtung.NW
 );
 
-const textColorArrowNode7NorthWestToSouthEast = setTextColor(colorArrowNode7NorthWestToSouthEast);
-const textColorArrowNode7SouthEastToNorthWest = setTextColor(colorArrowNode7SouthEastToNorthWest);
+const textColorArrowNode7NorthWestToSouthEast = setTextColor(
+  colorArrowNode7NorthWestToSouthEast
+);
+const textColorArrowNode7SouthEastToNorthWest = setTextColor(
+  colorArrowNode7SouthEastToNorthWest
+);
 
 // Zaehlwerte of Node8
 const nodeNumber8 = 8;
@@ -4123,8 +4136,12 @@ const colorArrowNode8SouthWestToNorthEast = setColor(
   Himmelsrichtung.NO
 );
 
-const textColorArrowNode8NorthEastToSouthWest = setTextColor(colorArrowNode8NorthEastToSouthWest);
-const textColorArrowNode8SouthWestToNorthEast = setTextColor(colorArrowNode8SouthWestToNorthEast);
+const textColorArrowNode8NorthEastToSouthWest = setTextColor(
+  colorArrowNode8NorthEastToSouthWest
+);
+const textColorArrowNode8SouthWestToNorthEast = setTextColor(
+  colorArrowNode8SouthWestToNorthEast
+);
 
 /**
  * Erstellt eine computed Property für einen Wert.
@@ -4156,7 +4173,9 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
 
 function setTextColor(arrowColor: ComputedRef<string>) {
   return computed(() =>
-    arrowColor.value === BelastungsplanConstants.inaktivColor ? "#000000" : "#ffffff"
+    arrowColor.value === BelastungsplanConstants.inaktivColor
+      ? "#000000"
+      : "#ffffff"
   );
 }
 
