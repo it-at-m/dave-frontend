@@ -242,9 +242,9 @@ function zeitreihenVergleichsdatumCalculator(): void {
     });
   }
   vergleichsdatumZeitreihe.value = result;
-  // // Setze idVergleichszaehlungZeitreihe auf null, wenn der Wert nicht im Array vergleichsdatumZeitreihe enthalten ist
-  const isIdVergleichszaehlungInArray = vergleichsdatumZeitreihe.value.some(item => item.value === chosenOptionsCopy.value.idVergleichszaehlungZeitreihe);
-  if (!isIdVergleichszaehlungInArray) {
+  // Setze idVergleichszaehlungZeitreihe zurück (auf null), wenn der Wert nicht im Array result enthalten ist
+  const selectedVergleichszaehlungId = chosenOptionsCopy.value.idVergleichszaehlungZeitreihe;
+  if (selectedVergleichszaehlungId != null && !result.some(item => item.value === selectedVergleichszaehlungId)) {
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
   }
 }
