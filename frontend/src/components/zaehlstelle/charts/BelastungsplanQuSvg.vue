@@ -3422,6 +3422,7 @@ import { useDateUtils } from "@/util/DateUtils";
 import { isQuerung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
+import { first } from "lodash";
 
 
 interface Props {
@@ -3449,6 +3450,13 @@ const minSizeBelastungsplan = computed(() => {
   return (
     (parseInt(props.dimension.trim().replace("vh", "")) *
       display.height.value) /
+    100
+  );
+});
+
+const maxSizeBelastungsplan = computed(() => {
+  return (
+    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
     100
   );
 });
@@ -3719,13 +3727,6 @@ const optionen = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
-const maxSizeBelastungsplan = computed(() => {
-  return (
-    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
-    100
-  );
-});
-
 const emits = defineEmits<{
   (e: "print", v: Blob): void;
 }>();
@@ -3792,7 +3793,6 @@ onMounted(() => {
   );
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
-
 });
 
 watch(
