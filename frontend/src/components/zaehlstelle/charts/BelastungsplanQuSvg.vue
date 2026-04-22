@@ -1,6 +1,7 @@
 <template>
   <v-sheet id="belastungsplan-zaehlstelle">
     <svg
+      ref="svgRef"
       id="svg1"
       :width="sizeBelastungsplan"
       :height="sizeBelastungsplan"
@@ -3422,6 +3423,7 @@ import { isQuerung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
 
+
 interface Props {
   data: LadeBelastungsplanDTO;
   dimension?: string;
@@ -3717,6 +3719,48 @@ const optionen = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
+const maxSizeBelastungsplan = computed(() => {
+  return (
+    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
+    100
+  );
+});
+
+const emits = defineEmits<{
+  (e: "print", v: Blob): void;
+}>();
+
+const svgRef = ref<SVGSVGElement | null>(null);
+
+/**
+ * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
+ */
+function emitSvgAsBlob(): void {
+  const svgEl = svgRef.value;
+  if (!svgEl) {
+    return;
+  }
+  const svgString = serializeSvgElement(svgEl);
+  const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+  emits("print", blob);
+}
+
+/**
+ * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
+ */
+function serializeSvgElement(svgEl: SVGSVGElement): string {
+  const clone = svgEl.cloneNode(true) as SVGSVGElement;
+
+  const serializer = new XMLSerializer();
+  let svgString = serializer.serializeToString(clone);
+
+  const xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  if (!svgString.startsWith("<?xml")) {
+    svgString = xmlDeclaration + svgString;
+  }
+  return svgString;
+}
+
 onMounted(() => {
   streetnamesNode1.value = streetname.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
@@ -3742,6 +3786,13 @@ onMounted(() => {
   streetnamesNode8.value = streetname.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
+
+  zaehlstelleStore.setSizeBelastungsplanSvg(
+    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
+  );
+  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
+
 });
 
 watch(
@@ -3754,8 +3805,31 @@ watch(
     streetnamesNode1.value = streetname.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
     );
+    streetnamesNode2.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+    );
+    streetnamesNode3.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+    );
+    streetnamesNode4.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+    );
+    streetnamesNode5.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+    );
+    streetnamesNode6.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+    );
+    streetnamesNode7.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+    );
+    streetnamesNode8.value = streetname.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+    );
 
     await nextTick();
+
+    emitSvgAsBlob();
   }
 );
 </script>
