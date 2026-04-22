@@ -10,6 +10,7 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type { Ref } from "vue";
 
@@ -19,12 +20,11 @@ import { useDisplay } from "vuetify";
 
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -219,7 +219,7 @@ function draw() {
  * @param data  Die Anzeigedaten des Belastungsplanes.
  */
 function calcVerkehrsbeziehungen(data: LadeBelastungsplanDTO) {
-  if (!isDiscriminatedType(data)){
+  if (!isDiscriminatedType(data)) {
     return;
   }
   // alte Daten ggf. leeren
