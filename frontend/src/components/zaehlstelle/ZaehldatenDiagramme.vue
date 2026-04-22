@@ -183,7 +183,7 @@ import type CsvDTO from "@/types/common/CsvDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type BelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanDataDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
@@ -214,6 +214,7 @@ import { useHistoryStore } from "@/store/HistoryStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
@@ -779,20 +780,20 @@ const drawSchematischeUebersicht = computed(() => {
   ) {
     return false;
   }
-  if (zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS) {
-    return (
-      (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1
-        .valuesVerkehrsbeziehungen &&
-      (belastungsplanDTO.value as LadeBelastungsplanQJSDTO).value1
-        .valuesVerkehrsbeziehungen.length > 0
-    );
+  if (isQjsBelastungsplan(belastungsplanDTO.value)) {
+    return false;
   } else
     return (
-      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values &&
-      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values.length >
-        0
+      belastungsplanDTO.value.value1.values &&
+      belastungsplanDTO.value.value1.values.length > 0
     );
 });
+
+function isQjsBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQJSDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
+}
 </script>
 
 <style scoped lang="scss">

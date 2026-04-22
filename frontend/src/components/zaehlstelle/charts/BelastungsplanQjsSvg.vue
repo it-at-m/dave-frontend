@@ -1192,7 +1192,7 @@ const isSelectedArrowFour = computed(() => {
 });
 
 function getArrowZaehlwert(patterns: VerkehrsbeziehungDTO[]) {
-  if (!isDiscriminatedType(props.data) || !props.data.value1) {
+  if (!isQjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
   const match = patterns.find(
@@ -1201,8 +1201,7 @@ function getArrowZaehlwert(patterns: VerkehrsbeziehungDTO[]) {
       availableKnotenarmNummern.value.includes(p.nach)
   );
   if (!match) return 0;
-  const values = (props.data.value1 as BelastungsplanQJSDataDTO)
-    .valuesVerkehrsbeziehungen;
+  const values = props.data.value1.valuesVerkehrsbeziehungen;
   const zaehlwert = values.find(
     (k) =>
       k.von === match.von &&
@@ -1229,82 +1228,66 @@ const zaehlwertArrowFour = computed(() => {
 });
 
 const sumArrowsOneTwo = computed(() => {
-  if (!isDiscriminatedType(props.data) || !props.data.value1) {
+  if (!isQjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
   let sum: number | undefined = 0;
   if (availableKnotenarmNummern.value.includes(1)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.W
     )?.value;
   }
-  if (availableKnotenarmNummern.value.includes(2)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+  else if (availableKnotenarmNummern.value.includes(2)) {
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.N
     )?.value;
   }
-  if (availableKnotenarmNummern.value.includes(5)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+  else if (availableKnotenarmNummern.value.includes(5)) {
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.NW
     )?.value;
   }
-  if (availableKnotenarmNummern.value.includes(6)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+  else if (availableKnotenarmNummern.value.includes(6)) {
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.NO
     )?.value;
   }
-  return sum ? (sum ?? 0) : 0;
+  return sum ?? 0;
 });
 
 const sumArrowsThreeFour = computed(() => {
-  if (!isDiscriminatedType(props.data) || !props.data.value1) {
+  if (!isQjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
   let sum: number | undefined = 0;
   if (availableKnotenarmNummern.value.includes(1)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.O
     )?.value;
   }
-  if (availableKnotenarmNummern.value.includes(2)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+  else if (availableKnotenarmNummern.value.includes(2)) {
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.S
     )?.value;
   }
-  if (availableKnotenarmNummern.value.includes(5)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+  else if (availableKnotenarmNummern.value.includes(5)) {
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.SO
     )?.value;
   }
-  if (availableKnotenarmNummern.value.includes(6)) {
-    sum = (
-      props.data.value1 as BelastungsplanQJSDataDTO
-    ).valuesStrassenseite.find(
+  else if (availableKnotenarmNummern.value.includes(6)) {
+    sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.SW
     )?.value;
   }
-  return sum ? (sum ?? 0) : 0;
+  return sum ?? 0;
 });
 
 const sumArrowsOneToFour = computed(() => {
-  if (!isDiscriminatedType(props.data) || !props.data.value1) {
+  if (!isQjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
-  return (props.data.value1 as BelastungsplanQJSDataDTO).sumAll;
+  return props.data.value1.sumAll;
 });
 
 const highestZaehlwert = computed(() => {
@@ -1517,7 +1500,9 @@ function emitSvgAsBlob(): void {
   emits("print", blob);
 }
 
-function isDiscriminatedType(data: AbstractLadeBelastungsplanDTO): boolean {
-  return data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
+function isQjsBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQJSDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 </script>

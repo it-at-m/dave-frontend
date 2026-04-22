@@ -576,14 +576,14 @@ function legendeLinienStaerke() {
  * @param data  Die Anzeigedaten des Belastungsplanes.
  */
 function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
-  if (!isDiscriminatedType(props.data) || !props.data.value1) {
-    return;
-  }
   // alte Daten ggf. leeren
   knotenarme.value.clear();
   verkehrsbeziehungsTypen.value.clear();
   highestVerkehrsbeziehungsValue.value = 0;
   lowestVerkehrsbeziehungsValue.value = 0;
+  if (!isDefaultBelastungsplan(props.data) || !props.data.value1) {
+    return;
+  }
   // Die Datentypen der Werteblöcke werden extrahiert
   prozentWerte.value.set(0, data.value1.percent);
   prozentWerte.value.set(1, data.value2.percent);
@@ -801,8 +801,10 @@ function redraw() {
   });
 }
 
-function isDiscriminatedType(data: AbstractLadeBelastungsplanDTO): boolean {
-  return data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
+function isDefaultBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 
 /**
