@@ -398,14 +398,13 @@ function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
     options
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
-      // TODO:
-      //   storeStartAndEndeUhrzeitOfIntervalls(
-      //       processedZaehldaten.zaehldatenTable.zaehldaten
-      //   );
-      //   listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
-      // zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
-      // zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
-      // zaehldatenZeitreihe.value = processedZaehldaten.zaehldatenZeitreihe;
+      storeStartAndEndeUhrzeitOfIntervalls(
+        processedZaehldaten.zaehldatenTable.zaehldaten
+      );
+      listenausgabeDTO.value = processedZaehldaten.zaehldatenTable.zaehldaten;
+      zaehldatenSteplineDTO.value = processedZaehldaten.zaehldatenStepline;
+      zaehldatenHeatmap.value = processedZaehldaten.zaehldatenHeatmap;
+      zaehldatenZeitreihe.value = processedZaehldaten.zaehldatenZeitreihe;
       belastungsplanDTO.value = processedZaehldaten.zaehldatenBelastungsplan;
       setMaxRangeYAchse();
     })
