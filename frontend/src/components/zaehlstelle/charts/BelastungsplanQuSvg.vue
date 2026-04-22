@@ -386,11 +386,11 @@
           </g>
         </g>
         <g
+          v-if="isKnotenarm(2)"
           id="node2_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            v-if="isKnotenarm(2)"
             id="node2"
             style="
               display: inline;
