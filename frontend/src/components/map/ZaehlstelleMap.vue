@@ -203,9 +203,9 @@ function createBaseLayers(): L.Control.LayersObject {
 
 function createOverlayLayers(): L.Control.LayersObject {
   const stadtbezirke = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
+    "https://agswebwip001.srv.muenchen.de/arcgis/services/basis/MapServer/WMSServer?",
     {
-      layers: "gsm:stadtbezirk",
+      layers: "Stadtbezirke",
       className: "Stadtbezirke",
       transparent: true,
       format: "image/png",
@@ -213,9 +213,9 @@ function createOverlayLayers(): L.Control.LayersObject {
     }
   );
   const stadtviertel = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
+    "https://agswebwip001.srv.muenchen.de/arcgis/services/basis/MapServer/WMSServer?",
     {
-      layers: "gsm:vablock_viertel_dave",
+      layers: "Stadtviertel",
       className: "Stadtviertel",
       transparent: true,
       format: "image/png",
@@ -223,9 +223,9 @@ function createOverlayLayers(): L.Control.LayersObject {
     }
   );
   const lichtsignalanlagen = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/kvr/wms?",
+    "https://agswebwip001.srv.muenchen.de/arcgis/services/basis/MapServer/WMSServer?",
     {
-      layers: "kvr:lsa_dave",
+      layers: "Lichtzeichenanlagen_Punkte",
       className: "Lichtsignalanlagen",
       transparent: true,
       format: "image/png",
