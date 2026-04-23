@@ -230,7 +230,7 @@ function zeitreihenVergleichsdatumCalculator(): void {
         (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
           chosenOptionsCopy.value.zeitauswahl.toString() ===
             Zeitauswahl.TAGESWERT.toString()) &&
-          checkVerkehrsbeziehungen(zaehl)
+          checkVerkehrsbeziehungen(zaehl, activeZaehlung)
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -250,37 +250,41 @@ function zeitreihenVergleichsdatumCalculator(): void {
 }
 
 /**
- * Prüfung bei Zählart QU, QJS oder FJS: Alle Verkehrsbeziehungen und Pfeile der in den Optionen gewählten Zählung müssen in der zu prüfenden Zählung vorhanden sein.
+ * Prüfung bei Zählart QU, QJS oder FJS: Alle Verkehrsbeziehungen und Pfeile müssen mit der aktive Zählung übereinstimmen.
  * Für alle anderen Verkehrsarten wird immer true zurückgegeben.
  *
- * @param zaehlung
+ * @param zaehlung zu prüfende Zaehlung
+ * @param activeZaehlung aktive Zaehlung
  */
-function checkVerkehrsbeziehungen(zaehlung: LadeZaehlungDTO): boolean {
+function checkVerkehrsbeziehungen(zaehlung: LadeZaehlungDTO, activeZaehlung: ComputedRef<LadeZaehlungDTO>): boolean {
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
-    return chosenOptionsCopy.value.chosenQuerungsverkehre.every(chosenQv =>
+    return activeZaehlung.value.querungsverkehr.length === zaehlung.querungsverkehr.length &&
+        activeZaehlung.value.querungsverkehr.every(activeQv =>
         zaehlung.querungsverkehr.some(qv =>
-            qv.knotenarm === chosenQv.knotenarm && qv.richtung === chosenQv.richtung
+            qv.knotenarm === activeQv.knotenarm && qv.richtung === activeQv.richtung
         )
     );
   }
   // Bei FJS: Prüfe auf Knotenarm, Richtung und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.FJS.toString()) {
-    return chosenOptionsCopy.value.chosenLaengsverkehre.every(ChosenLv =>
+    return activeZaehlung.value.laengsverkehr.length === zaehlung.laengsverkehr.length &&
+        activeZaehlung.value.laengsverkehr.every(activeLv =>
         zaehlung.laengsverkehr.some(lv =>
-            lv.knotenarm === ChosenLv.knotenarm &&
-            lv.richtung === ChosenLv.richtung &&
-            lv.strassenseite === ChosenLv.strassenseite
+            lv.knotenarm === activeLv.knotenarm &&
+            lv.richtung === activeLv.richtung &&
+            lv.strassenseite === activeLv.strassenseite
         )
     );
   }
   // Bei QJS: Prüfe auf Von, Nach und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
-    return chosenOptionsCopy.value.chosenVerkehrsbeziehungen.every(chosenVb =>
+    return activeZaehlung.value.verkehrsbeziehungen.length === zaehlung.verkehrsbeziehungen.length &&
+        activeZaehlung.value.verkehrsbeziehungen.every(activeVb =>
         zaehlung.verkehrsbeziehungen.some(qjs =>
-            qjs.von === chosenVb.von &&
-            qjs.nach === chosenVb.nach &&
-            qjs.strassenseite === chosenVb.strassenseite
+            qjs.von === activeVb.von &&
+            qjs.nach === activeVb.nach &&
+            qjs.strassenseite === activeVb.strassenseite
         )
     );
   }
