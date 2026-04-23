@@ -209,10 +209,11 @@ function vergleichsdatumCalculator(): void {
 
 /**
  * Diese Methode ermittelt alle Zählungen für die Zeitreihendarstellung.
- * Die für die Differenzendarstellung relevanten Zählungen sind:
+ * Die für die Zeitreihendarstellung relevanten Zählungen sind:
  * - Welche älter als oder gleich alt wie die Basiszählung sind.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
+ * - Bei QU, QJS, FJS: Welche übereinstimmende Bewegungsbeziehungen/Pfeilen besitzt.
  * */
 function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
@@ -230,7 +231,7 @@ function zeitreihenVergleichsdatumCalculator(): void {
         (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
           chosenOptionsCopy.value.zeitauswahl.toString() ===
             Zeitauswahl.TAGESWERT.toString()) &&
-          checkVerkehrsbeziehungen(zaehl, activeZaehlung)
+          checkBewegungsbeziehungen(zaehl, activeZaehlung)
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -250,13 +251,13 @@ function zeitreihenVergleichsdatumCalculator(): void {
 }
 
 /**
- * Prüfung bei Zählart QU, QJS oder FJS: Alle Verkehrsbeziehungen und Pfeile müssen mit der aktive Zählung übereinstimmen.
+ * Prüfung bei Zählart QU, QJS oder FJS: Alle Bewegungsbeziehungen/Pfeile müssen mit der aktive Zählung übereinstimmen.
  * Für alle anderen Verkehrsarten wird immer true zurückgegeben.
  *
  * @param zaehlung zu prüfende Zaehlung
  * @param activeZaehlung aktive Zaehlung
  */
-function checkVerkehrsbeziehungen(zaehlung: LadeZaehlungDTO, activeZaehlung: ComputedRef<LadeZaehlungDTO>): boolean {
+function checkBewegungsbeziehungen(zaehlung: LadeZaehlungDTO, activeZaehlung: ComputedRef<LadeZaehlungDTO>): boolean {
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
     return activeZaehlung.value.querungsverkehr.length === zaehlung.querungsverkehr.length &&
