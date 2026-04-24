@@ -669,7 +669,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeOneWestIncomingAvailable || arrowNodeOneWestOutgoingAvailable"
+                v-if="
+                  arrowNodeOneWestIncomingAvailable ||
+                  arrowNodeOneWestOutgoingAvailable
+                "
                 id="arrows_node1_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
@@ -718,7 +721,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeOneWestIncomingAvailable || arrowNodeOneWestOutgoingAvailable"
+                v-if="
+                  arrowNodeOneWestIncomingAvailable ||
+                  arrowNodeOneWestOutgoingAvailable
+                "
                 id="arrows_node1_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 645.75,142.03 v -98 h 2.45 v 98 z"
@@ -840,7 +846,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeOneEastIncomingAvailable || arrowNodeOneEastOutgoingAvailable"
+                v-if="
+                  arrowNodeOneEastIncomingAvailable ||
+                  arrowNodeOneEastOutgoingAvailable
+                "
                 id="arrows_node1_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
@@ -889,7 +898,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeOneEastIncomingAvailable || arrowNodeOneEastOutgoingAvailable"
+                v-if="
+                  arrowNodeOneEastIncomingAvailable ||
+                  arrowNodeOneEastOutgoingAvailable
+                "
                 id="arrows_node1_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 811.99999,142.03 v -98 h 2.45 v 98 z"
@@ -1228,7 +1240,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeTwoNorthIncomingAvailable || arrowNodeTwoNorthOutgoingAvailable"
+                v-if="
+                  arrowNodeTwoNorthIncomingAvailable ||
+                  arrowNodeTwoNorthOutgoingAvailable
+                "
                 id="arrows_node2_north_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
@@ -1277,7 +1292,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeTwoNorthIncomingAvailable || arrowNodeTwoNorthOutgoingAvailable"
+                v-if="
+                  arrowNodeTwoNorthIncomingAvailable ||
+                  arrowNodeTwoNorthOutgoingAvailable
+                "
                 id="arrows_node2_north_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8774"
                 d="m 1260,645.75 h 98 v 2.45 h -98 z"
@@ -1399,7 +1417,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeTwoSouthIncomingAvailable || arrowNodeTwoSouthOutgoingAvailable"
+                v-if="
+                  arrowNodeTwoSouthIncomingAvailable ||
+                  arrowNodeTwoSouthOutgoingAvailable
+                "
                 id="arrows_node2_south_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
@@ -1448,7 +1469,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeTwoSouthIncomingAvailable || arrowNodeTwoSouthOutgoingAvailable"
+                v-if="
+                  arrowNodeTwoSouthIncomingAvailable ||
+                  arrowNodeTwoSouthOutgoingAvailable
+                "
                 id="arrows_node2_south_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1260,811.99999 h 98 v 2.45 h -98 z"
@@ -1826,7 +1850,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeThreeEastIncomingAvailable || arrowNodeThreeEastOutgoingAvailable"
+                v-if="
+                  arrowNodeThreeEastIncomingAvailable ||
+                  arrowNodeThreeEastOutgoingAvailable
+                "
                 id="arrows_node3_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
@@ -1875,7 +1902,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeThreeEastIncomingAvailable || arrowNodeThreeEastOutgoingAvailable"
+                v-if="
+                  arrowNodeThreeEastIncomingAvailable ||
+                  arrowNodeThreeEastOutgoingAvailable
+                "
                 id="arrows_node3_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 811.99999,1375.5 v -98 h 2.45 v 98 z"
@@ -1997,7 +2027,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeThreeWestIncomingAvailable || arrowNodeThreeWestOutgoingAvailable"
+                v-if="
+                  arrowNodeThreeWestIncomingAvailable ||
+                  arrowNodeThreeWestOutgoingAvailable
+                "
                 id="arrows_node3_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
@@ -2046,7 +2079,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeThreeWestIncomingAvailable || arrowNodeThreeWestOutgoingAvailable"
+                v-if="
+                  arrowNodeThreeWestIncomingAvailable ||
+                  arrowNodeThreeWestOutgoingAvailable
+                "
                 id="arrows_node3_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 645.75,1375.5 v -98 h 2.45 v 98 z"
@@ -2421,7 +2457,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeFourSouthIncomingAvailable || arrowNodeFourSouthOutgoingAvailable"
+                v-if="
+                  arrowNodeFourSouthIncomingAvailable ||
+                  arrowNodeFourSouthOutgoingAvailable
+                "
                 id="arrows_node4_south_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
@@ -2470,7 +2509,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeFourSouthIncomingAvailable || arrowNodeFourSouthOutgoingAvailable"
+                v-if="
+                  arrowNodeFourSouthIncomingAvailable ||
+                  arrowNodeFourSouthOutgoingAvailable
+                "
                 id="arrows_node4_south_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 24.5,811.99999 h 98 v 2.45 h -98 z"
@@ -2592,7 +2634,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeFourNorthIncomingAvailable || arrowNodeFourNorthOutgoingAvailable"
+                v-if="
+                  arrowNodeFourNorthIncomingAvailable ||
+                  arrowNodeFourNorthOutgoingAvailable
+                "
                 id="arrows_node4_north_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
@@ -2641,7 +2686,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeFourNorthIncomingAvailable || arrowNodeFourNorthOutgoingAvailable"
+                v-if="
+                  arrowNodeFourNorthIncomingAvailable ||
+                  arrowNodeFourNorthOutgoingAvailable
+                "
                 id="arrows_node4_north_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 24.5,645.75 h 98 v 2.45 h -98 z"
@@ -2986,7 +3034,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeFiveNorthWestIncomingAvailable || arrowNodeFiveNorthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeFiveNorthWestIncomingAvailable ||
+                  arrowNodeFiveNorthWestOutgoingAvailable
+                "
                 id="arrows_node5_north_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
@@ -3035,7 +3086,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeFiveNorthWestIncomingAvailable || arrowNodeFiveNorthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeFiveNorthWestIncomingAvailable ||
+                  arrowNodeFiveNorthWestOutgoingAvailable
+                "
                 id="arrows_node5_north_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1056.1845,267.09547 69.2965,-69.29647 1.7324,1.73241 -69.2965,69.29647 z"
@@ -3157,7 +3211,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeFiveSouthEastIncomingAvailable || arrowNodeFiveSouthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeFiveSouthEastIncomingAvailable ||
+                  arrowNodeFiveSouthEastOutgoingAvailable
+                "
                 id="arrows_node5_south_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
@@ -3206,7 +3263,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeFiveSouthEastIncomingAvailable || arrowNodeFiveSouthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeFiveSouthEastIncomingAvailable ||
+                  arrowNodeFiveSouthEastOutgoingAvailable
+                "
                 id="arrows_node5_south_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1173.739,384.64997 69.2965,-69.29647 1.7324,1.73241 -69.2965,69.29647 z"
@@ -3552,7 +3612,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeSixNorthEastIncomingAvailable || arrowNodeSixNorthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeSixNorthEastIncomingAvailable ||
+                  arrowNodeSixNorthEastOutgoingAvailable
+                "
                 id="arrows_node6_north_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
@@ -3601,7 +3664,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeSixNorthEastIncomingAvailable || arrowNodeSixNorthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeSixNorthEastIncomingAvailable ||
+                  arrowNodeSixNorthEastOutgoingAvailable
+                "
                 id="arrows_node6_north_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8774"
                 d="m 1134.3394,1057.6195 69.2964,69.2965 -1.7324,1.7324 -69.2964,-69.2965 z"
@@ -3723,7 +3789,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeSixSouthWestIncomingAvailable || arrowNodeSixSouthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeSixSouthWestIncomingAvailable ||
+                  arrowNodeSixSouthWestOutgoingAvailable
+                "
                 id="arrows_node6_south_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
@@ -3772,7 +3841,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeSixSouthWestIncomingAvailable || arrowNodeSixSouthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeSixSouthWestIncomingAvailable ||
+                  arrowNodeSixSouthWestOutgoingAvailable
+                "
                 id="arrows_node6_south_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1016.7849,1175.1775 69.2964,69.2965 -1.7324,1.7324 -69.2964,-69.2965 z"
@@ -4150,7 +4222,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeSevenSouthEastIncomingAvailable || arrowNodeSevenSouthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeSevenSouthEastIncomingAvailable ||
+                  arrowNodeSevenSouthEastOutgoingAvailable
+                "
                 id="arrows_node7_south_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
@@ -4199,7 +4274,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeSevenSouthEastIncomingAvailable || arrowNodeSevenSouthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeSevenSouthEastIncomingAvailable ||
+                  arrowNodeSevenSouthEastOutgoingAvailable
+                "
                 id="arrows_node7_south_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 301.546,1256.8464 69.29647,-69.2964 1.73241,1.7324 -69.29647,69.2964 z"
@@ -4321,7 +4399,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeSevenNorthWestIncomingAvailable || arrowNodeSevenNorthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeSevenNorthWestIncomingAvailable ||
+                  arrowNodeSevenNorthWestOutgoingAvailable
+                "
                 id="arrows_node7_north_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
@@ -4370,7 +4451,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeSevenNorthWestIncomingAvailable || arrowNodeSevenNorthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeSevenNorthWestIncomingAvailable ||
+                  arrowNodeSevenNorthWestOutgoingAvailable
+                "
                 id="arrows_node7_north_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 183.988,1139.2884 69.29647,-69.2964 1.73241,1.7324 -69.29647,69.2964 z"
@@ -4748,7 +4832,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeEightSouthWestIncomingAvailable || arrowNodeEightSouthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeEightSouthWestIncomingAvailable ||
+                  arrowNodeEightSouthWestOutgoingAvailable
+                "
                 id="arrows_node8_south_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
@@ -4797,7 +4884,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeEightSouthWestIncomingAvailable || arrowNodeEightSouthWestOutgoingAvailable"
+                v-if="
+                  arrowNodeEightSouthWestIncomingAvailable ||
+                  arrowNodeEightSouthWestOutgoingAvailable
+                "
                 id="arrows_node8_south_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 143.15341,301.546 69.29647,69.29647 -1.73241,1.73241 -69.29647,-69.29647 z"
@@ -4919,7 +5009,10 @@
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeEightNorthEastIncomingAvailable || arrowNodeEightNorthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeEightNorthEastIncomingAvailable ||
+                  arrowNodeEightNorthEastOutgoingAvailable
+                "
                 id="arrows_node8_north_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
@@ -4968,7 +5061,10 @@
                 </tspan>
               </text>
               <path
-                v-if="arrowNodeEightNorthEastIncomingAvailable || arrowNodeEightNorthEastOutgoingAvailable"
+                v-if="
+                  arrowNodeEightNorthEastIncomingAvailable ||
+                  arrowNodeEightNorthEastOutgoingAvailable
+                "
                 id="arrows_node8_north_east_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 260.71141,183.988 69.29647,69.29647 -1.73241,1.73241 -69.29647,-69.29647 z"
@@ -5337,7 +5433,7 @@ const colorArrowNodeOneWestOutgoing = setColor(
 const arrowNodeOneWestOutgoingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.W,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeOneWestIncoming = setColor(
@@ -5348,7 +5444,7 @@ const colorArrowNodeOneWestIncoming = setColor(
 const arrowNodeOneWestIncomingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.W,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeOneEastOutgoing = setColor(
@@ -5359,7 +5455,7 @@ const colorArrowNodeOneEastOutgoing = setColor(
 const arrowNodeOneEastOutgoingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.O,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeOneEastIncoming = setColor(
@@ -5370,7 +5466,7 @@ const colorArrowNodeOneEastIncoming = setColor(
 const arrowNodeOneEastIncomingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.O,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 // Arrows of Node 2
@@ -5382,7 +5478,7 @@ const colorArrowNodeTwoNorthIncoming = setColor(
 const arrowNodeTwoNorthIncomingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.N,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeTwoNorthOutgoing = setColor(
@@ -5393,7 +5489,7 @@ const colorArrowNodeTwoNorthOutgoing = setColor(
 const arrowNodeTwoNorthOutgoingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.N,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeTwoSouthIncoming = setColor(
@@ -5404,7 +5500,7 @@ const colorArrowNodeTwoSouthIncoming = setColor(
 const arrowNodeTwoSouthIncomingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.S,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeTwoSouthOutgoing = setColor(
@@ -5415,7 +5511,7 @@ const colorArrowNodeTwoSouthOutgoing = setColor(
 const arrowNodeTwoSouthOutgoingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.S,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 // Arrows of Node 3
@@ -5427,7 +5523,7 @@ const colorArrowNodeThreeWestIncoming = setColor(
 const arrowNodeThreeWestIncomingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.W,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeThreeWestOutgoing = setColor(
@@ -5438,7 +5534,7 @@ const colorArrowNodeThreeWestOutgoing = setColor(
 const arrowNodeThreeWestOutgoingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.W,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeThreeEastOutgoing = setColor(
@@ -5449,7 +5545,7 @@ const colorArrowNodeThreeEastOutgoing = setColor(
 const arrowNodeThreeEastOutgoingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.O,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeThreeEastIncoming = setColor(
@@ -5460,7 +5556,7 @@ const colorArrowNodeThreeEastIncoming = setColor(
 const arrowNodeThreeEastIncomingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.O,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 // Arrows of Node 4
@@ -5472,7 +5568,7 @@ const colorArrowNodeFourNorthOutgoing = setColor(
 const arrowNodeFourNorthOutgoingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.N,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeFourNorthIncoming = setColor(
@@ -5483,7 +5579,7 @@ const colorArrowNodeFourNorthIncoming = setColor(
 const arrowNodeFourNorthIncomingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.N,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeFourSouthOutgoing = setColor(
@@ -5494,7 +5590,7 @@ const colorArrowNodeFourSouthOutgoing = setColor(
 const arrowNodeFourSouthOutgoingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.S,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeFourSouthIncoming = setColor(
@@ -5505,7 +5601,7 @@ const colorArrowNodeFourSouthIncoming = setColor(
 const arrowNodeFourSouthIncomingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.S,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 // Arrows of Node 5
@@ -5517,7 +5613,7 @@ const colorArrowNodeFiveNorthWestOutgoing = setColor(
 const arrowNodeFiveNorthWestOutgoingAvailable = isArrowAvailable(
   5,
   Himmelsrichtung.NW,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeFiveNorthWestIncoming = setColor(
@@ -5528,7 +5624,7 @@ const colorArrowNodeFiveNorthWestIncoming = setColor(
 const arrowNodeFiveNorthWestIncomingAvailable = isArrowAvailable(
   5,
   Himmelsrichtung.NW,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeFiveSouthEastOutgoing = setColor(
@@ -5539,7 +5635,7 @@ const colorArrowNodeFiveSouthEastOutgoing = setColor(
 const arrowNodeFiveSouthEastOutgoingAvailable = isArrowAvailable(
   5,
   Himmelsrichtung.SO,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeFiveSouthEastIncoming = setColor(
@@ -5550,7 +5646,7 @@ const colorArrowNodeFiveSouthEastIncoming = setColor(
 const arrowNodeFiveSouthEastIncomingAvailable = isArrowAvailable(
   5,
   Himmelsrichtung.SO,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 // Arrows of Node 6
@@ -5562,7 +5658,7 @@ const colorArrowNodeSixNorthEastIncoming = setColor(
 const arrowNodeSixNorthEastIncomingAvailable = isArrowAvailable(
   6,
   Himmelsrichtung.NO,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeSixNorthEastOutgoing = setColor(
@@ -5573,7 +5669,7 @@ const colorArrowNodeSixNorthEastOutgoing = setColor(
 const arrowNodeSixNorthEastOutgoingAvailable = isArrowAvailable(
   6,
   Himmelsrichtung.NO,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeSixSouthWestIncoming = setColor(
@@ -5584,7 +5680,7 @@ const colorArrowNodeSixSouthWestIncoming = setColor(
 const arrowNodeSixSouthWestIncomingAvailable = isArrowAvailable(
   6,
   Himmelsrichtung.SW,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeSixSouthWestOutgoing = setColor(
@@ -5595,7 +5691,7 @@ const colorArrowNodeSixSouthWestOutgoing = setColor(
 const arrowNodeSixSouthWestOutgoingAvailable = isArrowAvailable(
   6,
   Himmelsrichtung.SW,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 // Arrows of Node 7
@@ -5607,7 +5703,7 @@ const colorArrowNodeSevenNorthWestIncoming = setColor(
 const arrowNodeSevenNorthWestIncomingAvailable = isArrowAvailable(
   7,
   Himmelsrichtung.NW,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeSevenNorthWestOutgoing = setColor(
@@ -5618,7 +5714,7 @@ const colorArrowNodeSevenNorthWestOutgoing = setColor(
 const arrowNodeSevenNorthWestOutgoingAvailable = isArrowAvailable(
   7,
   Himmelsrichtung.NW,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeSevenSouthEastIncoming = setColor(
@@ -5629,7 +5725,7 @@ const colorArrowNodeSevenSouthEastIncoming = setColor(
 const arrowNodeSevenSouthEastIncomingAvailable = isArrowAvailable(
   7,
   Himmelsrichtung.SO,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeSevenSouthEastOutgoing = setColor(
@@ -5640,7 +5736,7 @@ const colorArrowNodeSevenSouthEastOutgoing = setColor(
 const arrowNodeSevenSouthEastOutgoingAvailable = isArrowAvailable(
   7,
   Himmelsrichtung.SO,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 // Arrows of Node 8
@@ -5652,7 +5748,7 @@ const colorArrowNodeEightNorthEastOutgoing = setColor(
 const arrowNodeEightNorthEastOutgoingAvailable = isArrowAvailable(
   8,
   Himmelsrichtung.NO,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeEightNorthEastIncoming = setColor(
@@ -5663,7 +5759,7 @@ const colorArrowNodeEightNorthEastIncoming = setColor(
 const arrowNodeEightNorthEastIncomingAvailable = isArrowAvailable(
   8,
   Himmelsrichtung.NO,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const colorArrowNodeEightSouthWestOutgoing = setColor(
@@ -5674,7 +5770,7 @@ const colorArrowNodeEightSouthWestOutgoing = setColor(
 const arrowNodeEightSouthWestOutgoingAvailable = isArrowAvailable(
   8,
   Himmelsrichtung.SW,
-  Bewegungsrichtung.AUS,
+  Bewegungsrichtung.AUS
 );
 
 const colorArrowNodeEightSouthWestIncoming = setColor(
@@ -5685,7 +5781,7 @@ const colorArrowNodeEightSouthWestIncoming = setColor(
 const arrowNodeEightSouthWestIncomingAvailable = isArrowAvailable(
   8,
   Himmelsrichtung.SW,
-  Bewegungsrichtung.EIN,
+  Bewegungsrichtung.EIN
 );
 
 const optionen = computed<ZaehlstelleOptionsDTO>(() => {
