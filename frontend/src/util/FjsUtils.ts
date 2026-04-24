@@ -70,29 +70,24 @@ export function useFjs() {
     return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
   }
 
-  function computeSelectedArrowsOfNode(
+  function isLaengsverkehrAvailable(
     node: number,
-    laengsverkehr: LaengsverkehrDTO[]
-  ): Map<Himmelsrichtung, Array<Bewegungsrichtung>> {
-    const selectedArrows = new Map<Himmelsrichtung, Array<Bewegungsrichtung>>();
-
-    laengsverkehr
-      .filter((arrow) => arrow.knotenarm === node)
-      .forEach((arrow) => {
-        const richtungen = new Array<Bewegungsrichtung>(arrow.richtung);
-        selectedArrows.set(
-          arrow.strassenseite,
-          richtungen.concat(selectedArrows.get(arrow.strassenseite) ?? [])
-        );
-      });
-
-    return selectedArrows;
+    strassenseite: Himmelsrichtung,
+    richtung: Bewegungsrichtung,
+    laengsverkehrOfZaehlung: LaengsverkehrDTO[]
+  ): boolean {
+    return laengsverkehrOfZaehlung.some(
+      (element) =>
+        element.knotenarm === node &&
+        element.strassenseite === strassenseite &&
+        element.richtung === richtung
+    );
   }
 
   return {
     getStreetname,
     computeAvailableKnotenarme,
     computeAvailableKnotenarmNummernFromZaehlung,
-    computeSelectedArrowsOfNode,
+    isLaengsverkehrAvailable,
   };
 }

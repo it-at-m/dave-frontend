@@ -5233,452 +5233,204 @@ const sumNodeEightArrows = computed(() => {
 });
 
 // Arrows of Node 1
-const selectedArrowsNodeOne =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeOneWestOutgoing = setColor(
+  1,
+  Himmelsrichtung.W,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeOneWestOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeOne.value
-      ?.get(Himmelsrichtung.W)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(1) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeOneWestIncoming = setColor(
+  1,
+  Himmelsrichtung.W,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeOneWestIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeOne.value
-      ?.get(Himmelsrichtung.W)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(1) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeOneEastOutgoing = setColor(
+  1,
+  Himmelsrichtung.O,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeOneEastOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeOne.value
-      ?.get(Himmelsrichtung.O)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(1) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeOneEastIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeOne.value
-      ?.get(Himmelsrichtung.O)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(1) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeOneEastIncoming = setColor(
+  1,
+  Himmelsrichtung.O,
+  Bewegungsrichtung.EIN
+);
 
 // Arrows of Node 2
-const selectedArrowsNodeTwo =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeTwoNorthIncoming = setColor(
+  2,
+  Himmelsrichtung.N,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeTwoNorthIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeTwo.value
-      ?.get(Himmelsrichtung.N)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(2) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeTwoNorthOutgoing = setColor(
+  2,
+  Himmelsrichtung.N,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeTwoNorthOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeTwo.value
-      ?.get(Himmelsrichtung.N)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(2) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeTwoSouthIncoming = setColor(
+  2,
+  Himmelsrichtung.S,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeTwoSouthIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeTwo.value
-      ?.get(Himmelsrichtung.S)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(2) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeTwoSouthOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeTwo.value
-      ?.get(Himmelsrichtung.S)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(2) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeTwoSouthOutgoing = setColor(
+  2,
+  Himmelsrichtung.S,
+  Bewegungsrichtung.AUS
+);
 
 // Arrows of Node 3
-const selectedArrowsNodeThree =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeThreeWestIncoming = setColor(
+  3,
+  Himmelsrichtung.W,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeThreeWestIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeThree.value
-      ?.get(Himmelsrichtung.W)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(3) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeThreeWestOutgoing = setColor(
+  3,
+  Himmelsrichtung.W,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeThreeWestOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeThree.value
-      ?.get(Himmelsrichtung.W)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(3) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeThreeEastOutgoing = setColor(
+  3,
+  Himmelsrichtung.O,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeThreeEastOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeThree.value
-      ?.get(Himmelsrichtung.O)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(3) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeThreeEastIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeThree.value
-      ?.get(Himmelsrichtung.O)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(3) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeThreeEastIncoming = setColor(
+  3,
+  Himmelsrichtung.O,
+  Bewegungsrichtung.EIN
+);
 
 // Arrows of Node 4
-const selectedArrowsNodeFour =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeFourNorthOutgoing = setColor(
+  4,
+  Himmelsrichtung.N,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeFourNorthOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFour.value
-      ?.get(Himmelsrichtung.N)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(4) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeFourNorthIncoming = setColor(
+  4,
+  Himmelsrichtung.N,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeFourNorthIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFour.value
-      ?.get(Himmelsrichtung.N)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(4) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeFourSouthOutgoing = setColor(
+  4,
+  Himmelsrichtung.S,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeFourSouthOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFour.value
-      ?.get(Himmelsrichtung.S)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(4) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeFourSouthIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFour.value
-      ?.get(Himmelsrichtung.S)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(4) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeFourSouthIncoming = setColor(
+  4,
+  Himmelsrichtung.S,
+  Bewegungsrichtung.EIN
+);
 
 // Arrows of Node 5
-const selectedArrowsNodeFive =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeFiveNorthWestOutgoing = setColor(
+  5,
+  Himmelsrichtung.NW,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeFiveNorthWestOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFive.value
-      ?.get(Himmelsrichtung.NW)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(5) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeFiveNorthWestIncoming = setColor(
+  5,
+  Himmelsrichtung.NW,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeFiveNorthWestIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFive.value
-      ?.get(Himmelsrichtung.NW)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(5) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeFiveSouthEastOutgoing = setColor(
+  5,
+  Himmelsrichtung.SO,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeFiveSouthEastOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFive.value
-      ?.get(Himmelsrichtung.SO)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(5) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeFiveSouthEastIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeFive.value
-      ?.get(Himmelsrichtung.SO)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(5) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeFiveSouthEastIncoming = setColor(
+  5,
+  Himmelsrichtung.SO,
+  Bewegungsrichtung.EIN
+);
 
 // Arrows of Node 6
-const selectedArrowsNodeSix =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeSixNorthEastIncoming = setColor(
+  6,
+  Himmelsrichtung.NO,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeSixNorthEastIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSix.value
-      ?.get(Himmelsrichtung.NO)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(6) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeSixNorthEastOutgoing = setColor(
+  6,
+  Himmelsrichtung.NO,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeSixNorthEastOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSix.value
-      ?.get(Himmelsrichtung.NO)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(6) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeSixSouthWestIncoming = setColor(
+  6,
+  Himmelsrichtung.SW,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeSixSouthWestIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSix.value
-      ?.get(Himmelsrichtung.SW)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(6) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeSixSouthWestOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSix.value
-      ?.get(Himmelsrichtung.SW)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(6) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeSixSouthWestOutgoing = setColor(
+  6,
+  Himmelsrichtung.SW,
+  Bewegungsrichtung.AUS
+);
 
 // Arrows of Node 7
-const selectedArrowsNodeSeven =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeSevenNorthWestIncoming = setColor(
+  7,
+  Himmelsrichtung.NW,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeSevenNorthWestIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSeven.value
-      ?.get(Himmelsrichtung.NW)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(7) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeSevenNorthWestOutgoing = setColor(
+  7,
+  Himmelsrichtung.NW,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeSevenNorthWestOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSeven.value
-      ?.get(Himmelsrichtung.NW)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(7) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeSevenSouthEastIncoming = setColor(
+  7,
+  Himmelsrichtung.SO,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeSevenSouthEastIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSeven.value
-      ?.get(Himmelsrichtung.SO)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(7) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeSevenSouthEastOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeSeven.value
-      ?.get(Himmelsrichtung.SO)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(7) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeSevenSouthEastOutgoing = setColor(
+  7,
+  Himmelsrichtung.SO,
+  Bewegungsrichtung.AUS
+);
 
 // Arrows of Node 8
-const selectedArrowsNodeEight =
-  ref<Map<Himmelsrichtung, Array<Bewegungsrichtung>>>();
+const colorArrowNodeEightNorthEastOutgoing = setColor(
+  8,
+  Himmelsrichtung.NO,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeEightNorthEastOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeEight.value
-      ?.get(Himmelsrichtung.NO)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(8) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeEightNorthEastIncoming = setColor(
+  8,
+  Himmelsrichtung.NO,
+  Bewegungsrichtung.EIN
+);
 
-const colorArrowNodeEightNorthEastIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeEight.value
-      ?.get(Himmelsrichtung.NO)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(8) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeEightSouthWestOutgoing = setColor(
+  8,
+  Himmelsrichtung.SW,
+  Bewegungsrichtung.AUS
+);
 
-const colorArrowNodeEightSouthWestOutgoing = computed<string>(() => {
-  if (
-    !selectedArrowsNodeEight.value
-      ?.get(Himmelsrichtung.SW)
-      ?.includes(Bewegungsrichtung.AUS)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(8) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
-
-const colorArrowNodeEightSouthWestIncoming = computed<string>(() => {
-  if (
-    !selectedArrowsNodeEight.value
-      ?.get(Himmelsrichtung.SW)
-      ?.includes(Bewegungsrichtung.EIN)
-  )
-    return BelastungsplanConstants.inaktivColor;
-  return (
-    BelastungsplanConstants.farben.get(8) ??
-    BelastungsplanConstants.inaktivColor
-  );
-});
+const colorArrowNodeEightSouthWestIncoming = setColor(
+  8,
+  Himmelsrichtung.SW,
+  Bewegungsrichtung.EIN
+);
 
 const optionen = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
@@ -5728,6 +5480,24 @@ const zaehlzeit2 = computed(() => {
   }
 });
 
+function setColor(
+  node: number,
+  strassenseite: Himmelsrichtung,
+  richtung: Bewegungsrichtung
+) {
+  return computed(() =>
+    fjs.isLaengsverkehrAvailable(
+      node,
+      strassenseite,
+      richtung,
+      optionen.value.chosenLaengsverkehre
+    )
+      ? (BelastungsplanConstants.farben.get(node) ??
+        BelastungsplanConstants.inaktivColor)
+      : BelastungsplanConstants.inaktivColor
+  );
+}
+
 onMounted(() => {
   zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
@@ -5758,39 +5528,6 @@ onMounted(() => {
   );
   streetnameNodeEight.value = fjs.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-  );
-
-  selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(
-    1,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(
-    2,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(
-    3,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(
-    4,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(
-    5,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(
-    6,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(
-    7,
-    optionen.value.chosenLaengsverkehre
-  );
-  selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(
-    8,
-    optionen.value.chosenLaengsverkehre
   );
 });
 
@@ -5826,39 +5563,6 @@ watch(
     );
     streetnameNodeEight.value = fjs.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-    );
-
-    selectedArrowsNodeOne.value = fjs.computeSelectedArrowsOfNode(
-      1,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeTwo.value = fjs.computeSelectedArrowsOfNode(
-      2,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeThree.value = fjs.computeSelectedArrowsOfNode(
-      3,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeFour.value = fjs.computeSelectedArrowsOfNode(
-      4,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeFive.value = fjs.computeSelectedArrowsOfNode(
-      5,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeSix.value = fjs.computeSelectedArrowsOfNode(
-      6,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeSeven.value = fjs.computeSelectedArrowsOfNode(
-      7,
-      optionen.value.chosenLaengsverkehre
-    );
-    selectedArrowsNodeEight.value = fjs.computeSelectedArrowsOfNode(
-      8,
-      optionen.value.chosenLaengsverkehre
     );
     await nextTick();
 
