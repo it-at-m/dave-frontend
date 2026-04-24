@@ -3586,8 +3586,8 @@ const sumNode3Arrows = calculateSum(
   zaehlwertArrowNode3EastToWest.value
 );
 
-const node3WestToEastCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.O);
-const node3EastToWestCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.W);
+const node3WestToEastCensusComissioned = isCommissioned(nodeNumber3, Himmelsrichtung.O);
+const node3EastToWestCensusComissioned = isCommissioned(nodeNumber3, Himmelsrichtung.W);
 
 const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
