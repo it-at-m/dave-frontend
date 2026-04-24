@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import { useFjs } from "@/util/FjsUtils";
 
 describe("FjsUtils", () => {
@@ -91,9 +93,9 @@ describe("FjsUtils", () => {
     expect(nums).toEqual([1, 3]);
   });
 
-  // computeSelectedArrowsOfNode -----------------------------------
-  it("computeSelectedArrowsOfNode: ausgewählte pfeile werden korrekt zurückgegeben", () => {
-    const { computeSelectedArrowsOfNode } = useFjs();
+  // isLaengsverkehrAvailable -----------------------------------
+  it("isLaengsverkehrAvailable: für ausgewählte pfeile wird korrekt true/false zurückgegeben", () => {
+    const { isLaengsverkehrAvailable } = useFjs();
 
     const laengsverkehr = [
       { knotenarm: 1, richtung: "AUS", strassenseite: "W" },
@@ -104,35 +106,80 @@ describe("FjsUtils", () => {
       { knotenarm: 3, richtung: "EIN", strassenseite: "W" },
     ] as any;
 
-    const selectedArrowsNodeOne = computeSelectedArrowsOfNode(1, laengsverkehr);
-    // Überprüfe, dass alle Pfeile von Knotenarm 1 enthalten sind
-    expect(Array.from(selectedArrowsNodeOne.entries())).toEqual([
-      ["W", ["EIN", "AUS"]],
-      ["O", ["EIN", "AUS"]],
-    ]);
+    expect(
+      isLaengsverkehrAvailable(
+        1,
+        Himmelsrichtung.W,
+        Bewegungsrichtung.AUS,
+        laengsverkehr
+      )
+    ).toBe(true);
+    expect(
+      isLaengsverkehrAvailable(
+        1,
+        Himmelsrichtung.O,
+        Bewegungsrichtung.AUS,
+        laengsverkehr
+      )
+    ).toBe(true);
+    expect(
+      isLaengsverkehrAvailable(
+        1,
+        Himmelsrichtung.W,
+        Bewegungsrichtung.EIN,
+        laengsverkehr
+      )
+    ).toBe(true);
+    expect(
+      isLaengsverkehrAvailable(
+        1,
+        Himmelsrichtung.O,
+        Bewegungsrichtung.EIN,
+        laengsverkehr
+      )
+    ).toBe(true);
+    expect(
+      isLaengsverkehrAvailable(
+        3,
+        Himmelsrichtung.O,
+        Bewegungsrichtung.AUS,
+        laengsverkehr
+      )
+    ).toBe(true);
+    expect(
+      isLaengsverkehrAvailable(
+        3,
+        Himmelsrichtung.W,
+        Bewegungsrichtung.EIN,
+        laengsverkehr
+      )
+    ).toBe(true);
 
-    const selectedArrowsNodeThree = computeSelectedArrowsOfNode(
-      3,
-      laengsverkehr
-    );
-    // Überprüfe, dass alle Pfeile von Knotenarm 3 enthalten sind
-    expect(Array.from(selectedArrowsNodeThree.entries())).toEqual([
-      ["O", ["AUS"]],
-      ["W", ["EIN"]],
-    ]);
+    expect(
+      isLaengsverkehrAvailable(
+        3,
+        Himmelsrichtung.W,
+        Bewegungsrichtung.AUS,
+        laengsverkehr
+      )
+    ).toBe(false);
   });
 
-  it("computeSelectedArrowsOfNode: knotenarm nicht vorhanden", () => {
-    const { computeSelectedArrowsOfNode } = useFjs();
+  it("isLaengsverkehrAvailable: knotenarm nicht vorhanden; sollte false zurückgeben", () => {
+    const { isLaengsverkehrAvailable } = useFjs();
 
     const laengsverkehr = [
       { knotenarm: 1, richtung: "AUS", strassenseite: "W" },
       { knotenarm: 1, richtung: "EIN", strassenseite: "O" },
     ] as any;
 
-    const selectedArrowsNodeTwo = computeSelectedArrowsOfNode(2, laengsverkehr);
-    // Überprüfe, dass die Map keine Einträge enthält
-    expect(Array.from(selectedArrowsNodeTwo.entries())).toEqual([]);
-    expect(selectedArrowsNodeTwo.size).toBe(0);
+    expect(
+      isLaengsverkehrAvailable(
+        2,
+        Himmelsrichtung.W,
+        Bewegungsrichtung.AUS,
+        laengsverkehr
+      )
+    ).toBe(false);
   });
 });

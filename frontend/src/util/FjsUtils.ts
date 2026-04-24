@@ -74,9 +74,9 @@ export function useFjs() {
     node: number,
     strassenseite: Himmelsrichtung,
     richtung: Bewegungsrichtung,
-    laengsverkehrOfZaehlung: LaengsverkehrDTO[]
+    laengsverkehr: LaengsverkehrDTO[]
   ): boolean {
-    return laengsverkehrOfZaehlung.some(
+    return laengsverkehr.some(
       (element) =>
         element.knotenarm === node &&
         element.strassenseite === strassenseite &&
