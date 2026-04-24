@@ -269,6 +269,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east"
               d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
               :fill="colorArrowNode1WestToEast"
@@ -276,6 +277,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="node1EastToWestCensusComissioned"
               id="arrow_node1_east_to_west"
               d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
               :fill="colorArrowNode1EastToWest"
@@ -283,6 +285,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
+              v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -334,6 +337,7 @@
               </tspan>
             </text>
             <text
+              v-if="node1EastToWestCensusComissioned"
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -640,6 +644,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south"
               d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               :fill="colorArrowNode2NorthToSouth"
@@ -647,6 +652,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="node2SouthToNorthCensusComissioned"
               id="arrow_node2_south_to_north"
               d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               :fill="colorArrowNode2SouthToNorth"
@@ -654,6 +660,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
+              v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -705,6 +712,7 @@
               </tspan>
             </text>
             <text
+              v-if="node2SouthToNorthCensusComissioned"
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1048,6 +1056,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="node3WestToEastCensusComissioned"
               id="arrow_node3_west_to_east"
               d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
               :fill="colorArrowNode3WestToEast"
@@ -1055,6 +1064,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="node3EastToWestCensusComissioned"
               id="arrow_node3_east_to_west"
               d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
               :fill="colorArrowNode3EastToWest"
@@ -1062,6 +1072,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
+              v-if="node3WestToEastCensusComissioned"
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1113,6 +1124,7 @@
               </tspan>
             </text>
             <text
+              v-if="node3EastToWestCensusComissioned"
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
@@ -1458,6 +1470,7 @@
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
+              v-if="node4NorthToSouthCensusComissioned"
               id="arrow_node4_north_to_south"
               d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               :fill="colorArrowNode4NorthToSouth"
@@ -1465,6 +1478,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <path
+              v-if="node4SouthToNorthCensusComissioned"
               id="arrow_node4_south_to_north"
               d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               :fill="colorArrowNode4SouthToNorth"
@@ -1472,6 +1486,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
+              v-if="node4NorthToSouthCensusComissioned"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_north_to_south_number_text"
@@ -1523,6 +1538,7 @@
               </tspan>
             </text>
             <text
+              v-if="node4SouthToNorthCensusComissioned"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_south_to_north_number_text"
@@ -1824,6 +1840,7 @@
             transform="translate(6.0322729,-14.56374)"
           >
             <path
+              v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east"
               d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
               :fill="colorArrowNode5NorthWestToSouthEast"
@@ -1831,6 +1848,7 @@
               style="stroke-width: 27.0576"
             />
             <path
+              v-if="node5SouthEastToNorthWestCensusComissioned"
               id="arrow_node5_south_east_to_north_west"
               d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
               :fill="colorArrowNode5SouthEastToNorthWest"
@@ -1838,6 +1856,7 @@
               style="stroke-width: 27.0576"
             />
             <text
+              v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
@@ -1887,6 +1906,7 @@
               </tspan>
             </text>
             <text
+              v-if="node5SouthEastToNorthWestCensusComissioned"
               id="arrow_node5_south_east_to_north_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
@@ -2182,6 +2202,7 @@
             transform="translate(14.564164,6.031585)"
           >
             <path
+              v-if="node6SouthWestToNorthEastCensusComissioned"
               id="arrow_node6_south_west_to_north_east"
               d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
               :fill="colorArrowNode6SouthWestToNorthEast"
@@ -2189,6 +2210,7 @@
               style="stroke-width: 27.0576"
             />
             <path
+              v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west"
               d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
               :fill="colorArrowNode6NorthEastToSouthWest"
@@ -2196,6 +2218,7 @@
               style="stroke-width: 27.0576"
             />
             <text
+              v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
@@ -2245,6 +2268,7 @@
               </tspan>
             </text>
             <text
+              v-if="node6SouthWestToNorthEastCensusComissioned"
               id="arrow_node6_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
@@ -2572,6 +2596,7 @@
             transform="translate(-14.563392,6.0334257)"
           >
             <path
+              v-if="node7NorthWestToSouthEastCensusComissioned"
               id="arrow_node7_north_west_to_south_east"
               d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
               :fill="colorArrowNode7NorthWestToSouthEast"
@@ -2579,6 +2604,7 @@
               style="stroke-width: 27.0576"
             />
             <path
+              v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west"
               d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
               :fill="colorArrowNode7SouthEastToNorthWest"
@@ -2586,6 +2612,7 @@
               style="stroke-width: 27.0576"
             />
             <text
+              v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
@@ -2635,6 +2662,7 @@
               </tspan>
             </text>
             <text
+              v-if="node7NorthWestToSouthEastCensusComissioned"
               id="arrow_node7_north_west_to_south_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
@@ -2962,6 +2990,7 @@
             transform="translate(-6.0332912,-14.564242)"
           >
             <path
+              v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east"
               d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
               :fill="colorArrowNode8SouthWestToNorthEast"
@@ -2969,6 +2998,7 @@
               style="stroke-width: 27.0576"
             />
             <path
+              v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west"
               d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
               :fill="colorArrowNode8NorthEastToSouthWest"
@@ -2976,6 +3006,7 @@
               style="stroke-width: 27.0576"
             />
             <text
+              v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
@@ -3025,6 +3056,7 @@
               </tspan>
             </text>
             <text
+              v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
@@ -3512,6 +3544,9 @@ const sumNode1Arrows = calculateSum(
   zaehlwertArrowNode1EastToWest.value
 );
 
+const node1WestToEastCensusComissioned = isCommissioned(nodeNumber1, Himmelsrichtung.O);
+const node1EastToWestCensusComissioned = isCommissioned(nodeNumber1, Himmelsrichtung.W);
+
 const colorArrowNode1WestToEast = setColor(nodeNumber1, Himmelsrichtung.O);
 const colorArrowNode1EastToWest = setColor(nodeNumber1, Himmelsrichtung.W);
 
@@ -3527,6 +3562,9 @@ const sumNode2Arrows = calculateSum(
   zaehlwertArrowNode2SouthToNorth.value,
   zaehlwertArrowNode2NorthToSouth.value
 );
+
+const node2NorthToSouthCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.S);
+const node2SouthToNorthCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.N);
 
 const colorArrowNode2NorthToSouth = setColor(nodeNumber2, Himmelsrichtung.S);
 const colorArrowNode2SouthToNorth = setColor(nodeNumber2, Himmelsrichtung.N);
@@ -3548,6 +3586,9 @@ const sumNode3Arrows = calculateSum(
   zaehlwertArrowNode3EastToWest.value
 );
 
+const node3WestToEastCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.O);
+const node3EastToWestCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.W);
+
 const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
 
@@ -3563,6 +3604,9 @@ const sumNode4Arrows = calculateSum(
   zaehlwertArrowNode4SouthToNorth.value,
   zaehlwertArrowNode4NorthToSouth.value
 );
+
+const node4NorthToSouthCensusComissioned = isCommissioned(nodeNumber4, Himmelsrichtung.S);
+const node4SouthToNorthCensusComissioned = isCommissioned(nodeNumber4, Himmelsrichtung.N);
 
 const colorArrowNode4NorthToSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorArrowNode4SouthToNorth = setColor(nodeNumber4, Himmelsrichtung.N);
@@ -3583,6 +3627,9 @@ const sumNode5Arrows = calculateSum(
   zaehlwertArrowNode5NorthWestToSouthEast.value,
   zaehlwertArrowNode5SouthEastToNorthWest.value
 );
+
+const node5NorthWestToSouthEastCensusComissioned = isCommissioned(nodeNumber5, Himmelsrichtung.SO);
+const node5SouthEastToNorthWestCensusComissioned = isCommissioned(nodeNumber5, Himmelsrichtung.NW);
 
 const colorArrowNode5NorthWestToSouthEast = setColor(
   nodeNumber5,
@@ -3610,6 +3657,9 @@ const sumNode6Arrows = calculateSum(
   zaehlwertArrowNode6SouthWestToNorthEast.value
 );
 
+const node6NorthEastToSouthWestCensusComissioned = isCommissioned(nodeNumber6, Himmelsrichtung.SW);
+const node6SouthWestToNorthEastCensusComissioned = isCommissioned(nodeNumber6, Himmelsrichtung.NO);
+
 const colorArrowNode6NorthEastToSouthWest = setColor(
   nodeNumber6,
   Himmelsrichtung.SW
@@ -3636,6 +3686,9 @@ const sumNode7Arrows = calculateSum(
   zaehlwertArrowNode7SouthEastToNorthWest.value
 );
 
+const node7NorthWestToSouthEastCensusComissioned = isCommissioned(nodeNumber7, Himmelsrichtung.SO);
+const node7SouthEastToNorthWestCensusComissioned = isCommissioned(nodeNumber7, Himmelsrichtung.NW);
+
 const colorArrowNode7NorthWestToSouthEast = setColor(
   nodeNumber7,
   Himmelsrichtung.SO
@@ -3661,6 +3714,9 @@ const sumNode8Arrows = calculateSum(
   zaehlwertArrowNode8NorthEastToSouthWest.value,
   zaehlwertArrowNode8SouthWestToNorthEast.value
 );
+
+const node8NorthEastToSouthWestCensusComissioned = isCommissioned(nodeNumber8, Himmelsrichtung.SW);
+const node8SouthWestToNorthEastCensusComissioned = isCommissioned(nodeNumber8, Himmelsrichtung.NO);
 
 const colorArrowNode8NorthEastToSouthWest = setColor(
   nodeNumber8,
@@ -3705,6 +3761,19 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
       : BelastungsplanConstants.inaktivColor
   );
 }
+
+function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
+  return computed(() =>
+    isKnotenarm(knNumber) &&
+    isQuerung(
+      activeZaehlung.value?.querungsverkehr,
+      optionen.value.chosenQuerungsverkehre,
+      knNumber,
+      direction
+    )
+  );
+}
+
 
 function setTextColor(arrowColor: ComputedRef<string>) {
   return computed(() =>
