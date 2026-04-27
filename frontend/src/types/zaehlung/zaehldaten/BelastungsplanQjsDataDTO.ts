@@ -2,7 +2,7 @@ import type AbstractBelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/Abst
 
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
-export default interface BelastungsplanQJSDataDTO
+export default interface BelastungsplanQjsDataDTO
   extends AbstractBelastungsplanDataDTO {
   sumAll: number;
   valuesStrassenseite: { strassenseite: Himmelsrichtung; value: number }[];
