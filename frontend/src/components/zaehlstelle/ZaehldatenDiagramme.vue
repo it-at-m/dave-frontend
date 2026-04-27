@@ -81,7 +81,7 @@
             <belastungsplan-qjs-svg
               v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung"
               :dimension="contentHeight"
-              :data="belastungsplanDTO as LadeBelastungsplanQJSDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -185,7 +185,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
+import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -249,7 +249,7 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQJSDTO>(
+const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO>(
   {} as LadeBelastungsplanDTO
 );
 const belastungsplanSvg = ref<Blob>();
@@ -791,7 +791,7 @@ const drawSchematischeUebersicht = computed(() => {
 
 function isQjsBelastungsplan(
   data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQJSDTO {
+): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 </script>

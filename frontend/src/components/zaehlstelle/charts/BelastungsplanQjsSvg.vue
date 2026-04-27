@@ -1053,8 +1053,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type BelastungsplanQJSDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanQJSDataDTO";
-import type LadeBelastungsplanQJSDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQJSDTO";
+import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first } from "lodash";
@@ -1073,7 +1072,7 @@ import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 
 interface Props {
-  data: LadeBelastungsplanQJSDTO;
+  data: LadeBelastungsplanQjsDTO;
   dimension?: string;
 }
 
@@ -1105,10 +1104,10 @@ const centerYArrowTwo = ref(0);
 const centerYArrowThree = ref(0);
 const centerYArrowFour = ref(0);
 
-function getArrowScale(zaelwert: number) {
+function getArrowScale(zaehlwert: number) {
   const max = highestZaehlwert.value;
   if (!Number.isFinite(max) || max <= 0) return 0;
-  const scale = Math.max(zaelwert, 0) / max;
+  const scale = Math.max(zaehlwert, 0) / max;
   return Math.max(BelastungsplanConstants.minimum_arrow_scale, scale);
 }
 
@@ -1502,7 +1501,7 @@ function emitSvgAsBlob(): void {
 
 function isQjsBelastungsplan(
   data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQJSDTO {
+): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 </script>
