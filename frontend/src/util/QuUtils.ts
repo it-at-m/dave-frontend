@@ -2,6 +2,7 @@
 
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+
 import KnotenarmComparator from "./KnotenarmComparator";
 
 export function useQu() {
@@ -16,7 +17,7 @@ export function useQu() {
     );
   }
 
- return {
+  return {
     computeAvailableKnotenarme,
   };
 }

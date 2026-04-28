@@ -3440,6 +3440,7 @@ import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastun
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { ComputedRef } from "vue";
 
+import { first } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
@@ -3454,8 +3455,6 @@ import { useDateUtils } from "@/util/DateUtils";
 import { existsQuerungOnKnotenarmInRichtung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
-import { first } from "lodash";
-
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -3544,8 +3543,14 @@ const sumNode1Arrows = calculateSum(
   zaehlwertArrowNode1EastToWest.value
 );
 
-const node1WestToEastCensusComissioned = isCommissioned(nodeNumber1, Himmelsrichtung.O);
-const node1EastToWestCensusComissioned = isCommissioned(nodeNumber1, Himmelsrichtung.W);
+const node1WestToEastCensusComissioned = isCommissioned(
+  nodeNumber1,
+  Himmelsrichtung.O
+);
+const node1EastToWestCensusComissioned = isCommissioned(
+  nodeNumber1,
+  Himmelsrichtung.W
+);
 
 const colorArrowNode1WestToEast = setColor(nodeNumber1, Himmelsrichtung.O);
 const colorArrowNode1EastToWest = setColor(nodeNumber1, Himmelsrichtung.W);
@@ -3563,8 +3568,14 @@ const sumNode2Arrows = calculateSum(
   zaehlwertArrowNode2NorthToSouth.value
 );
 
-const node2NorthToSouthCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.S);
-const node2SouthToNorthCensusComissioned = isCommissioned(nodeNumber2, Himmelsrichtung.N);
+const node2NorthToSouthCensusComissioned = isCommissioned(
+  nodeNumber2,
+  Himmelsrichtung.S
+);
+const node2SouthToNorthCensusComissioned = isCommissioned(
+  nodeNumber2,
+  Himmelsrichtung.N
+);
 
 const colorArrowNode2NorthToSouth = setColor(nodeNumber2, Himmelsrichtung.S);
 const colorArrowNode2SouthToNorth = setColor(nodeNumber2, Himmelsrichtung.N);
@@ -3586,8 +3597,14 @@ const sumNode3Arrows = calculateSum(
   zaehlwertArrowNode3EastToWest.value
 );
 
-const node3WestToEastCensusComissioned = isCommissioned(nodeNumber3, Himmelsrichtung.O);
-const node3EastToWestCensusComissioned = isCommissioned(nodeNumber3, Himmelsrichtung.W);
+const node3WestToEastCensusComissioned = isCommissioned(
+  nodeNumber3,
+  Himmelsrichtung.O
+);
+const node3EastToWestCensusComissioned = isCommissioned(
+  nodeNumber3,
+  Himmelsrichtung.W
+);
 
 const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
@@ -3605,8 +3622,14 @@ const sumNode4Arrows = calculateSum(
   zaehlwertArrowNode4NorthToSouth.value
 );
 
-const node4NorthToSouthCensusComissioned = isCommissioned(nodeNumber4, Himmelsrichtung.S);
-const node4SouthToNorthCensusComissioned = isCommissioned(nodeNumber4, Himmelsrichtung.N);
+const node4NorthToSouthCensusComissioned = isCommissioned(
+  nodeNumber4,
+  Himmelsrichtung.S
+);
+const node4SouthToNorthCensusComissioned = isCommissioned(
+  nodeNumber4,
+  Himmelsrichtung.N
+);
 
 const colorArrowNode4NorthToSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorArrowNode4SouthToNorth = setColor(nodeNumber4, Himmelsrichtung.N);
@@ -3628,8 +3651,14 @@ const sumNode5Arrows = calculateSum(
   zaehlwertArrowNode5SouthEastToNorthWest.value
 );
 
-const node5NorthWestToSouthEastCensusComissioned = isCommissioned(nodeNumber5, Himmelsrichtung.SO);
-const node5SouthEastToNorthWestCensusComissioned = isCommissioned(nodeNumber5, Himmelsrichtung.NW);
+const node5NorthWestToSouthEastCensusComissioned = isCommissioned(
+  nodeNumber5,
+  Himmelsrichtung.SO
+);
+const node5SouthEastToNorthWestCensusComissioned = isCommissioned(
+  nodeNumber5,
+  Himmelsrichtung.NW
+);
 
 const colorArrowNode5NorthWestToSouthEast = setColor(
   nodeNumber5,
@@ -3657,8 +3686,14 @@ const sumNode6Arrows = calculateSum(
   zaehlwertArrowNode6SouthWestToNorthEast.value
 );
 
-const node6NorthEastToSouthWestCensusComissioned = isCommissioned(nodeNumber6, Himmelsrichtung.SW);
-const node6SouthWestToNorthEastCensusComissioned = isCommissioned(nodeNumber6, Himmelsrichtung.NO);
+const node6NorthEastToSouthWestCensusComissioned = isCommissioned(
+  nodeNumber6,
+  Himmelsrichtung.SW
+);
+const node6SouthWestToNorthEastCensusComissioned = isCommissioned(
+  nodeNumber6,
+  Himmelsrichtung.NO
+);
 
 const colorArrowNode6NorthEastToSouthWest = setColor(
   nodeNumber6,
@@ -3686,8 +3721,14 @@ const sumNode7Arrows = calculateSum(
   zaehlwertArrowNode7SouthEastToNorthWest.value
 );
 
-const node7NorthWestToSouthEastCensusComissioned = isCommissioned(nodeNumber7, Himmelsrichtung.SO);
-const node7SouthEastToNorthWestCensusComissioned = isCommissioned(nodeNumber7, Himmelsrichtung.NW);
+const node7NorthWestToSouthEastCensusComissioned = isCommissioned(
+  nodeNumber7,
+  Himmelsrichtung.SO
+);
+const node7SouthEastToNorthWestCensusComissioned = isCommissioned(
+  nodeNumber7,
+  Himmelsrichtung.NW
+);
 
 const colorArrowNode7NorthWestToSouthEast = setColor(
   nodeNumber7,
@@ -3715,8 +3756,14 @@ const sumNode8Arrows = calculateSum(
   zaehlwertArrowNode8SouthWestToNorthEast.value
 );
 
-const node8NorthEastToSouthWestCensusComissioned = isCommissioned(nodeNumber8, Himmelsrichtung.SW);
-const node8SouthWestToNorthEastCensusComissioned = isCommissioned(nodeNumber8, Himmelsrichtung.NO);
+const node8NorthEastToSouthWestCensusComissioned = isCommissioned(
+  nodeNumber8,
+  Himmelsrichtung.SW
+);
+const node8SouthWestToNorthEastCensusComissioned = isCommissioned(
+  nodeNumber8,
+  Himmelsrichtung.NO
+);
 
 const colorArrowNode8NorthEastToSouthWest = setColor(
   nodeNumber8,
@@ -3763,17 +3810,17 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
 }
 
 function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
-  return computed(() =>
-    isKnotenarm(knNumber) &&
-    existsQuerungOnKnotenarmInRichtung(
-      activeZaehlung.value?.querungsverkehr,
-      optionen.value.chosenQuerungsverkehre,
-      knNumber,
-      direction
-    )
+  return computed(
+    () =>
+      isKnotenarm(knNumber) &&
+      existsQuerungOnKnotenarmInRichtung(
+        activeZaehlung.value?.querungsverkehr,
+        optionen.value.chosenQuerungsverkehre,
+        knNumber,
+        direction
+      )
   );
 }
-
 
 function setTextColor(arrowColor: ComputedRef<string>) {
   return computed(() =>
