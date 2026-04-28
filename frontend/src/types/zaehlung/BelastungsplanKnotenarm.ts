@@ -248,7 +248,8 @@ export default class BelastungsplanKnotenarm {
    * Den Zähler für eingehende Verkehrsbeziehungen um 1 erhöhen.
    */
   plusVerkehrsbeziehungenNach() {
-    this._anzahlNachVerkehrsbeziehungen = this._anzahlNachVerkehrsbeziehungen + 1;
+    this._anzahlNachVerkehrsbeziehungen =
+      this._anzahlNachVerkehrsbeziehungen + 1;
   }
 
   get strasse(): string {

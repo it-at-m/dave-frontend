@@ -1,8 +1,9 @@
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
-import type VerkehrsbeziehungQJS from "@/types/zaehlung/VerkehrsbeziehungQJS";
+import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+
+import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import Zaehldauer from "@/types/enum/Zaehldauer";
 
 export default interface ZaehlstelleOptionsDTO {
   zaehldauer: Zaehldauer;
@@ -46,7 +47,7 @@ export default interface ZaehlstelleOptionsDTO {
   ganglinieYAchse2MaxValue: number | null;
   idVergleichszaehlungZeitreihe: string | null;
   zeitreiheGesamt: boolean;
-  laengsverkehr: Array<LaengsverkehrDTO>;
-  querungsverkehr: Array<QuerungsverkehrDTO>;
-  verkehrsbeziehungenQJS: Array<VerkehrsbeziehungQJS>;
+  chosenLaengsverkehre: Array<LaengsverkehrDTO>;
+  chosenQuerungsverkehre: Array<QuerungsverkehrDTO>;
+  chosenVerkehrsbeziehungen: Array<VerkehrsbeziehungDTO>;
 }

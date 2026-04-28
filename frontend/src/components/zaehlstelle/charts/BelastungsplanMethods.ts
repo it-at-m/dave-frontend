@@ -6,11 +6,11 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import * as SVG from "@svgdotjs/svg.js";
 import { computed } from "vue";
 
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrtrichtungsarten from "@/types/enum/Fahrtrichtungsarten";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BelastungsplanVerkehrsbeziehungComperator from "@/types/zaehlung/BelastungsplanVerkehrsbeziehungComperator";
-import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 
 export function useBelastungsplanMethods() {
   const zaehlstelleStore = useZaehlstelleStore();
@@ -403,16 +403,19 @@ export function useBelastungsplanMethods() {
   }
 
   function fahrtrichtungVon(
-      knotenarmnummer: number,
-      canvas: SVG.Svg,
-      knotenarme: Map<number, BelastungsplanKnotenarm>,
-      verkehrsbeziehungsTypen: Map<number, Array<BelastungsplanVerkehrsbeziehung>>,
-      prozentWerte: Map<number, boolean>,
-      lineWidth: number,
-      line: number,
-      documentationGroup: SVG.G,
-      lineFactor: number,
-      schema: boolean
+    knotenarmnummer: number,
+    canvas: SVG.Svg,
+    knotenarme: Map<number, BelastungsplanKnotenarm>,
+    verkehrsbeziehungsTypen: Map<
+      number,
+      Array<BelastungsplanVerkehrsbeziehung>
+    >,
+    prozentWerte: Map<number, boolean>,
+    lineWidth: number,
+    line: number,
+    documentationGroup: SVG.G,
+    lineFactor: number,
+    schema: boolean
   ): SVG.G {
     // Es wird alles gruppiert, damit wir es später einfach so drehen können, dass der Knotenarm richtig sitzt.
     const knotenarmGroup = canvas.group() as SVG.G;
@@ -1400,7 +1403,6 @@ export function useBelastungsplanMethods() {
   ): string {
     // Die Standardfarbe des Knotenarms
     let color = BelastungsplanConstants.farben.get(vonKnotenarm)!;
-
 
     if (schema) {
       color = BelastungsplanConstants.inaktivColor;

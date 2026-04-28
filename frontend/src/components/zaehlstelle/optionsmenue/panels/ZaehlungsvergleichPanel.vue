@@ -93,12 +93,15 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { ComputedRef } from "vue";
 
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useDateUtils } from "@/util/DateUtils";
 
@@ -157,10 +160,16 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
     return "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
-    return (
-      "Datum der Zählung, bis zu der die Zeitreihe angezeigt werden soll (inklusive).\n" +
-      "Es können nur Zählungen gleicher Zählart verglichen werden. Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein."
-    );
+    const part: string =
+      "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein. ";
+    return [
+      Zaehlart.FJS.toString(),
+      Zaehlart.QJS.toString(),
+      Zaehlart.QU.toString(),
+    ].includes(activeZaehlung.value.zaehlart)
+      ? "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden." +
+          part
+      : "Es können nur Zählungen gleicher Zählart verglichen werden." + part;
   }
   return "";
 });
@@ -206,10 +215,11 @@ function vergleichsdatumCalculator(): void {
 
 /**
  * Diese Methode ermittelt alle Zählungen für die Zeitreihendarstellung.
- * Die für die Differenzendarstellung relevanten Zählungen sind:
+ * Die für die Zeitreihendarstellung relevanten Zählungen sind:
  * - Welche älter als oder gleich alt wie die Basiszählung sind.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
+ * - Bei QU, QJS, FJS: Welche übereinstimmende Bewegungsbeziehungen/Pfeile besitzt.
  * */
 function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
@@ -226,7 +236,8 @@ function zeitreihenVergleichsdatumCalculator(): void {
         zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
         (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
           chosenOptionsCopy.value.zeitauswahl.toString() ===
-            Zeitauswahl.TAGESWERT.toString())
+            Zeitauswahl.TAGESWERT.toString()) &&
+        checkBewegungsbeziehungen(zaehl, activeZaehlung)
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -238,6 +249,73 @@ function zeitreihenVergleichsdatumCalculator(): void {
     });
   }
   vergleichsdatumZeitreihe.value = result;
+  // Setze idVergleichszaehlungZeitreihe zurück (auf null), wenn der Wert nicht im Array result enthalten ist
+  const selectedVergleichszaehlungId =
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe;
+  if (
+    selectedVergleichszaehlungId != null &&
+    !result.some((item) => item.value === selectedVergleichszaehlungId)
+  ) {
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+  }
+}
+
+/**
+ * Prüfung bei Zählart QU, QJS oder FJS: Alle Bewegungsbeziehungen/Pfeile müssen mit der aktive Zählung übereinstimmen.
+ * Für alle anderen Verkehrsarten wird immer true zurückgegeben.
+ *
+ * @param zaehlung zu prüfende Zaehlung
+ * @param activeZaehlung aktive Zaehlung
+ */
+function checkBewegungsbeziehungen(
+  zaehlung: LadeZaehlungDTO,
+  activeZaehlung: ComputedRef<LadeZaehlungDTO>
+): boolean {
+  // Bei QU: Prüfe auf Knotenarm und Richtung
+  if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
+    return (
+      activeZaehlung.value.querungsverkehr.length ===
+        zaehlung.querungsverkehr.length &&
+      activeZaehlung.value.querungsverkehr.every((activeQv) =>
+        zaehlung.querungsverkehr.some(
+          (qv) =>
+            qv.knotenarm === activeQv.knotenarm &&
+            qv.richtung === activeQv.richtung
+        )
+      )
+    );
+  }
+  // Bei FJS: Prüfe auf Knotenarm, Richtung und Straßenseite
+  if (zaehlung.zaehlart === Zaehlart.FJS.toString()) {
+    return (
+      activeZaehlung.value.laengsverkehr.length ===
+        zaehlung.laengsverkehr.length &&
+      activeZaehlung.value.laengsverkehr.every((activeLv) =>
+        zaehlung.laengsverkehr.some(
+          (lv) =>
+            lv.knotenarm === activeLv.knotenarm &&
+            lv.richtung === activeLv.richtung &&
+            lv.strassenseite === activeLv.strassenseite
+        )
+      )
+    );
+  }
+  // Bei QJS: Prüfe auf Von, Nach und Straßenseite
+  if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
+    return (
+      activeZaehlung.value.verkehrsbeziehungen.length ===
+        zaehlung.verkehrsbeziehungen.length &&
+      activeZaehlung.value.verkehrsbeziehungen.every((activeVb) =>
+        zaehlung.verkehrsbeziehungen.some(
+          (qjs) =>
+            qjs.von === activeVb.von &&
+            qjs.nach === activeVb.nach &&
+            qjs.strassenseite === activeVb.strassenseite
+        )
+      )
+    );
+  }
+  return true; // Standard-Rückgabewert, wenn andere Zaehlart
 }
 
 /**

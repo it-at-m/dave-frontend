@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type { Ref } from "vue";
@@ -19,8 +19,8 @@ import { useDisplay } from "vuetify";
 
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
+import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 
@@ -51,9 +51,11 @@ const fahrtrichtungWidth = ref(0);
 const highestVerkehrsbeziehungsValue = ref(0);
 const lowestVerkehrsbeziehungsValue = ref(1000000);
 
-const verkehrsbeziehungTypen = ref<Map<number, BelastungsplanVerkehrsbeziehung[]>>(
-  new Map<number, BelastungsplanVerkehrsbeziehung[]>()
-) as Ref<Map<number, BelastungsplanVerkehrsbeziehung[]>>;
+const verkehrsbeziehungTypen = ref<
+  Map<number, BelastungsplanVerkehrsbeziehung[]>
+>(new Map<number, BelastungsplanVerkehrsbeziehung[]>()) as Ref<
+  Map<number, BelastungsplanVerkehrsbeziehung[]>
+>;
 const knotenarme = ref<Map<number, BelastungsplanKnotenarm>>(
   new Map<number, BelastungsplanKnotenarm>()
 ) as Ref<Map<number, BelastungsplanKnotenarm>>;
@@ -270,13 +272,15 @@ function calcVerkehrsbeziehungen(data: LadeBelastungsplanDTO) {
       belastungsplanMethods.anzeigeWerte(knotenarmNach, data);
 
       // Verkehrsbeziehungstypen (Rechts-/Linksabbieger usw.) ermitteln
-      const belastungsplanVerkehrsbeziehungen = verkehrsbeziehungTypen.value.get(
-        fb.von
-      ) as BelastungsplanVerkehrsbeziehung[];
-      const belastungsplanVerkehrsbeziehung = new BelastungsplanVerkehrsbeziehung(
-        belastungsplanMethods.calcVerkehrsbeziehungstype(fb.von, fb.nach),
-        fb.nach
-      ) as BelastungsplanVerkehrsbeziehung;
+      const belastungsplanVerkehrsbeziehungen =
+        verkehrsbeziehungTypen.value.get(
+          fb.von
+        ) as BelastungsplanVerkehrsbeziehung[];
+      const belastungsplanVerkehrsbeziehung =
+        new BelastungsplanVerkehrsbeziehung(
+          belastungsplanMethods.calcVerkehrsbeziehungstype(fb.von, fb.nach),
+          fb.nach
+        ) as BelastungsplanVerkehrsbeziehung;
       belastungsplanVerkehrsbeziehungen.push(belastungsplanVerkehrsbeziehung);
 
       const v = fb.von - 1;

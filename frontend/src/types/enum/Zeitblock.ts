@@ -30,7 +30,7 @@ export const zeitblockOrder = [
   Zeitblock.ZB_10_15,
   Zeitblock.ZB_15_19,
   Zeitblock.ZB_00_06,
-  Zeitblock.ZB_19_24
+  Zeitblock.ZB_19_24,
 ];
 
 export const BeschreibungToZeitblock = new Map([...zeitblockInfo].reverse());
