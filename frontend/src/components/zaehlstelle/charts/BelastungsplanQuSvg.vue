@@ -391,11 +391,11 @@
           </g>
         </g>
         <g
+          v-if="isKnotenarm(2)"
           id="node2_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            v-if="isKnotenarm(2)"
             id="node2"
             style="
               display: inline;
@@ -3451,7 +3451,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
-import { isQuerung } from "@/util/Querungspruefung";
+import { existsQuerungOnKnotenarmInRichtung } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
 import { first } from "lodash";
@@ -3750,7 +3750,7 @@ function calculateSum(zaehlwert1: number, zaehlwert2: number) {
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     isKnotenarm(knNumber) &&
-    isQuerung(
+    existsQuerungOnKnotenarmInRichtung(
       activeZaehlung.value?.querungsverkehr,
       optionen.value.chosenQuerungsverkehre,
       knNumber,
@@ -3765,7 +3765,7 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
 function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     isKnotenarm(knNumber) &&
-    isQuerung(
+    existsQuerungOnKnotenarmInRichtung(
       activeZaehlung.value?.querungsverkehr,
       optionen.value.chosenQuerungsverkehre,
       knNumber,
