@@ -83,7 +83,15 @@
             />
 
             <belastungsplan-qjs-svg
-              v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung"
+              v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung && !isFJSZaehlung"
+              :dimension="contentHeight"
+              :data="belastungsplanDTO"
+              @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
+            />
+
+            <belastungsplan-fjs-svg
+              v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && isFJSZaehlung"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
@@ -214,6 +222,7 @@ import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
+import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/BelastungsplanFjsSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import BelastungsplanQuSvg from "@/components/zaehlstelle/charts/BelastungsplanQuSvg.vue";
@@ -302,6 +311,10 @@ const isQJSZaehlung = computed<boolean>(() => {
 
 const isQUZaehlung = computed<boolean>(() => {
   return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QU;
+});
+  
+const isFJSZaehlung = computed<boolean>(() => {
+  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.FJS;
 });
 
 const options = computed<ZaehlstelleOptionsDTO>(() => {
