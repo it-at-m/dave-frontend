@@ -2,9 +2,6 @@
 
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import KnotenarmComparator from "./KnotenarmComparator";
 
 export function useQu() {
@@ -19,35 +16,7 @@ export function useQu() {
     );
   }
 
-  function computeAvailableKnotenarmNummernFromZaehlung(
-    activeZaehlung: LadeZaehlungDTO
-  ): number[] {
-    return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
-  }
-
-  function computeSelectedArrowsOfNode(
-    node: number,
-    activeZaehlung: LadeZaehlungDTO
-  ): Map<Himmelsrichtung, Array<Bewegungsrichtung>> {
-    const laengsverkehr = activeZaehlung.laengsverkehr;
-    const selectedArrows = new Map<Himmelsrichtung, Array<Bewegungsrichtung>>();
-
-    laengsverkehr
-      .filter((arrow) => arrow.knotenarm === node)
-      .forEach((arrow) => {
-        const richtungen = new Array<Bewegungsrichtung>(arrow.richtung);
-        selectedArrows.set(
-          arrow.strassenseite,
-          richtungen.concat(selectedArrows.get(arrow.strassenseite) ?? [])
-        );
-      });
-
-    return selectedArrows;
-  }
-
-  return {
+ return {
     computeAvailableKnotenarme,
-    computeAvailableKnotenarmNummernFromZaehlung,
-    computeSelectedArrowsOfNode,
   };
 }
