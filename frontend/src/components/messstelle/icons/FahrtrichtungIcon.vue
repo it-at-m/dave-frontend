@@ -44,19 +44,19 @@ const icon = computed<IconTooltip>(() => {
 function himmelsrichtungIcons(): Map<string, IconTooltip> {
   return new Map([
     [
-      Himmelsrichtung.NORD,
+      Himmelsrichtung.N,
       new IconTooltip("mdi-arrow-up-thin-circle-outline", "Nord"),
     ],
     [
-      Himmelsrichtung.SUED,
+      Himmelsrichtung.S,
       new IconTooltip("mdi-arrow-down-thin-circle-outline", "Süd"),
     ],
     [
-      Himmelsrichtung.OST,
+      Himmelsrichtung.O,
       new IconTooltip("mdi-arrow-right-thin-circle-outline", "Ost"),
     ],
     [
-      Himmelsrichtung.WEST,
+      Himmelsrichtung.W,
       new IconTooltip("mdi-arrow-left-thin-circle-outline", "West"),
     ],
   ]);
