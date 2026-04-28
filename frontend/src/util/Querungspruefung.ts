@@ -9,7 +9,7 @@ import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
  * @param richtung Himmelsrichtung
  * @returns Boolean, ob die Querung existiert
  */
-export function isQuerung(
+export function existsQuerungOnKnotenarmInRichtung(
   querungsverkehr: QuerungsverkehrDTO[] | undefined,
   chosenQuerungsverkehr: QuerungsverkehrDTO[] | undefined,
   knNummer: number,
