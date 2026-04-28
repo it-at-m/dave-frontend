@@ -1,10 +1,14 @@
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 
+
+
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+
 
 /**
  * Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert.
  * @param querungsverkehr Array mit Querungsverkehr-Daten
+ * @param chosenQuerungsverkehr Array mit Querungsverkehr-Daten zur Darstellung
  * @param knNummer Knotenarmnummer
  * @param richtung Himmelsrichtung
  * @returns Boolean, ob die Querung existiert
