@@ -362,7 +362,7 @@ defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const qjs = useQjs();
-const streetname = useStreetname();
+const streetnameUtils = useStreetname();
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -588,7 +588,7 @@ function resetForm(): void {
 }
 
 function prepareStreetnames(): void {
-  firstStreetname.value = streetname.getStreetname(firstKnotenarm.value);
-  secondStreetname.value = streetname.getStreetname(secondKnotenarm.value);
+  firstStreetname.value = streetnameUtils.getStreetname(firstKnotenarm.value);
+  secondStreetname.value = streetnameUtils.getStreetname(secondKnotenarm.value);
 }
 </script>

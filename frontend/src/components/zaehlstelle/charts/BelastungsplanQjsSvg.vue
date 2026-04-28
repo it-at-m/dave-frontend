@@ -1085,7 +1085,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const qjs = useQjs();
-const streetname = useStreetname();
+const streetnameUtils = useStreetname();
 
 const firstStreetname = ref<Array<string>>([]);
 const svgRef = ref<SVGSVGElement | null>(null);
@@ -1353,7 +1353,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  firstStreetname.value = streetname.getStreetname(
+  firstStreetname.value = streetnameUtils.getStreetname(
     first(availableKnotenarme.value)
   );
 
@@ -1377,7 +1377,7 @@ watch(
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
   async () => {
-    firstStreetname.value = streetname.getStreetname(
+    firstStreetname.value = streetnameUtils.getStreetname(
       first(availableKnotenarme.value)
     );
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
