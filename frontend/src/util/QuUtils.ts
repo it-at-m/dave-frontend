@@ -1,4 +1,4 @@
-// Hilfsfunktion für die Darstellung von Qjs-Zählungen
+// Hilfsfunktion für die Darstellung von Qu-Zählungen
 
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
