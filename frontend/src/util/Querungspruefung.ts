@@ -1,9 +1,6 @@
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 
-
-
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-
 
 /**
  * Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert.
