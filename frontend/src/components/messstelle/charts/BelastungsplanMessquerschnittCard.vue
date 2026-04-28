@@ -43,10 +43,10 @@ const defaultFontSize = 24;
 const sheetId = "belastungsplan-messquerschnitt";
 
 const farben = new Map<string, string>([
-  [Himmelsrichtung.NORD, "#4CAF50"],
-  [Himmelsrichtung.OST, "#2196F3"],
-  [Himmelsrichtung.SUED, "#000000"],
-  [Himmelsrichtung.WEST, "#F44336"],
+  [Himmelsrichtung.N, "#4CAF50"],
+  [Himmelsrichtung.O, "#2196F3"],
+  [Himmelsrichtung.S, "#000000"],
+  [Himmelsrichtung.W, "#F44336"],
 ]);
 
 const maxVerhiclesPerMq = ref(0);
@@ -158,8 +158,7 @@ function drawArrowsPointingSouth(
 ) {
   const arrayOfDataForDirectionSouth = groupedByDirection.find(
     (obj) =>
-      obj.direction === Himmelsrichtung.SUED ||
-      obj.direction === Himmelsrichtung.WEST
+      obj.direction === Himmelsrichtung.S || obj.direction === Himmelsrichtung.W
   );
   arrayOfDataForDirectionSouth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -302,8 +301,7 @@ function drawArrowsPointingNorth(
 ) {
   const arrayOfDataForDirectionNorth = groupedByDirection.find(
     (obj) =>
-      obj.direction === Himmelsrichtung.NORD ||
-      obj.direction === Himmelsrichtung.OST
+      obj.direction === Himmelsrichtung.N || obj.direction === Himmelsrichtung.O
   );
   arrayOfDataForDirectionNorth?.data.forEach((mq) => {
     querschnittGroup.value.add(
@@ -400,7 +398,7 @@ function rotateArrowsIfNecessary() {
   const direction =
     props.belastungsplanData.ladeBelastungsplanMessquerschnittDataDTOList[0]
       .direction;
-  if (direction === Himmelsrichtung.OST || direction === Himmelsrichtung.WEST) {
+  if (direction === Himmelsrichtung.O || direction === Himmelsrichtung.W) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
@@ -437,7 +435,16 @@ function addTextSouthSide(
   percentSv: number | string,
   bold: boolean = false
 ) {
-  let textposition = 2;
+  const countTexts = [
+    isGvpInBelastungsPlan.value,
+    isSvpInBelastungsPlan.value,
+    chosenOptionsCopyFahrzeuge.value.schwerverkehr,
+    chosenOptionsCopyFahrzeuge.value.gueterverkehr,
+    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr
+  ].filter(Boolean).length;
+  // Über textposition wird bestimmt, ob der Wert in Klammern gesetzt werden muss.
+  let textposition = countTexts - 1;
+
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
     addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
     startPointY += 85;
