@@ -3452,7 +3452,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
-import { existsQuerungOnKnotenarmInRichtung } from "@/util/Querungspruefung";
+import { existsQuerungOnKnotenarmInRichtung, isQuerungOnKnotenarmInRichtungActive } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
 
@@ -3797,8 +3797,7 @@ function calculateSum(zaehlwert1: number, zaehlwert2: number) {
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     isKnotenarm(knNumber) &&
-    existsQuerungOnKnotenarmInRichtung(
-      activeZaehlung.value?.querungsverkehr,
+    isQuerungOnKnotenarmInRichtungActive(
       optionen.value.chosenQuerungsverkehre,
       knNumber,
       direction
@@ -3815,7 +3814,6 @@ function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
       isKnotenarm(knNumber) &&
       existsQuerungOnKnotenarmInRichtung(
         activeZaehlung.value?.querungsverkehr,
-        optionen.value.chosenQuerungsverkehre,
         knNumber,
         direction
       )
