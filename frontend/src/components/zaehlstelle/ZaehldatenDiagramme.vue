@@ -62,9 +62,10 @@
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
+                !isFJSZaehlung &&
                 !isQUZaehlung
               "
               :dimension="contentHeight"
@@ -74,7 +75,7 @@
             />
 
             <belastungsplan-card
-              v-show="belastungsplanDTO.kreisverkehr"
+              v-if="belastungsplanDTO.kreisverkehr"
               ref="belastungsplanCard"
               :dimension="contentHeight"
               :belastungsplan-data="belastungsplanDTO"
@@ -83,10 +84,11 @@
             />
 
             <belastungsplan-qjs-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQJSZaehlung &&
-                !isFJSZaehlung
+                !isFJSZaehlung &&
+                !isQUZaehlung
               "
               :dimension="contentHeight"
               :data="belastungsplanDTO"
@@ -95,9 +97,10 @@
             />
 
             <belastungsplan-fjs-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
+                !isQUZaehlung &&
                 isFJSZaehlung
               "
               :dimension="contentHeight"
@@ -107,7 +110,10 @@
             />
 
             <belastungsplan-qu-svg
-              v-show="!belastungsplanDTO.kreisverkehr && isQUZaehlung"
+              v-if="!belastungsplanDTO.kreisverkehr &&
+              isQUZaehlung &&
+              !isQJSZaehlung &&
+              !isFJSZaehlung"
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
