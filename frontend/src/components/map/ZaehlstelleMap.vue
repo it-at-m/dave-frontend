@@ -80,6 +80,7 @@ const mapRef = ref<HTMLDivElement | null>(null);
 let map: L.Map;
 let mapMarkerClusterGroup = L.markerClusterGroup();
 let zaehlartenLayer = L.layerGroup();
+let layerControl: L.Control.Layers;
 
 onMounted(() => {
   initMap();
@@ -161,10 +162,10 @@ function createLatLngFromString(lat: string, lng: string): LatLng {
 
 function createLayersAndAddToMap(): void {
   const baseLayers = createBaseLayers();
-  const overlayLayers = createOverlayLayers();
 
   baseLayers.Stadtkarte.addTo(map);
-  L.control.layers(baseLayers, overlayLayers).addTo(map);
+  layerControl = L.control.layers(baseLayers).addTo(map);
+  addOverlayLayers();
 }
 
 function createBaseLayers(): L.Control.LayersObject {
@@ -201,44 +202,27 @@ function createBaseLayers(): L.Control.LayersObject {
   };
 }
 
-function createOverlayLayers(): L.Control.LayersObject {
-  const stadtbezirke = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
-    {
-      layers: "gsm:stadtbezirk",
-      className: "Stadtbezirke",
-      transparent: true,
-      format: "image/png",
-      attribution: mapAttribution,
-    }
-  );
-  const stadtviertel = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
-    {
-      layers: "gsm:vablock_viertel_dave",
-      className: "Stadtviertel",
-      transparent: true,
-      format: "image/png",
-      attribution: mapAttribution,
-    }
-  );
-  const lichtsignalanlagen = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/kvr/wms?",
-    {
-      layers: "kvr:lsa_dave",
-      className: "Lichtsignalanlagen",
-      transparent: true,
-      format: "image/png",
-      attribution: mapAttribution,
-    }
-  );
+/**
+ * Fügt im Backend konfigurierte Overlay-Layer zur Karte hinzu.
+ */
+function addOverlayLayers(): void {
+  const overlayLayers = mapConfigStore.getMapConfig.overlayLayers;
 
-  return {
-    Stadtbezirke: stadtbezirke,
-    Stadtviertel: stadtviertel,
-    Lichtsignalanlagen: lichtsignalanlagen,
-  };
+  overlayLayers.forEach((layerConfig) => {
+    const layer = L.tileLayer.wms(layerConfig.baseUrl, {
+      layers: layerConfig.layerName,
+      className: layerConfig.layerName,
+      transparent: true,
+      format: "image/png",
+      attribution: mapAttribution,
+    });
+    layerControl.addOverlay(layer, layerConfig.layerNameToDisplay);
+  });
 }
+
+watch(mapConfigStore, () => {
+  addOverlayLayers();
+});
 
 const searchResult = computed(() => {
   return searchStore.getSearchResult;
