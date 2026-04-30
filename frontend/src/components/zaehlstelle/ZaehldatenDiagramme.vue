@@ -64,7 +64,7 @@
             <belastungsplan-kreuzung-svg
               v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && !isFJSZaehlung"
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -73,7 +73,7 @@
               v-show="belastungsplanDTO.kreisverkehr"
               ref="belastungsplanCard"
               :dimension="contentHeight"
-              :belastungsplan-data="belastungsplanDTO"
+              :belastungsplan-data="belastungsplanDTO as LadeBelastungsplanDTO"
               :loaded="false"
               :zaehlung-id="zaehlungsId"
             />
@@ -89,7 +89,7 @@
             <belastungsplan-fjs-svg
               v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && isFJSZaehlung"
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -180,7 +180,7 @@
     <belastungsplan-kreuzung-svg-schematische-uebersicht
       v-if="drawSchematischeUebersicht"
       :dimension="contentHeight"
-      :data="belastungsplanDTO"
+      :data="belastungsplanDTO as LadeBelastungsplanDTO"
       :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
@@ -191,7 +191,9 @@ import type CsvDTO from "@/types/common/CsvDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -221,6 +223,7 @@ import { useHistoryStore } from "@/store/HistoryStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
@@ -255,7 +258,7 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO>(
+const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO>(
   {} as LadeBelastungsplanDTO
 );
 const belastungsplanSvg = ref<Blob>();
@@ -783,14 +786,27 @@ const schemaStyle = computed(() => {
 });
 
 const drawSchematischeUebersicht = computed(() => {
-  return (
-    hasSelectedVerkehrsarten.value &&
-    belastungsplanDTO.value &&
-    belastungsplanDTO.value.value1 &&
-    belastungsplanDTO.value.value1.values &&
-    belastungsplanDTO.value.value1.values.length > 0
-  );
+  if (
+    !hasSelectedVerkehrsarten.value ||
+    !belastungsplanDTO.value ||
+    !belastungsplanDTO.value.value1
+  ) {
+    return false;
+  }
+  if (isQjsBelastungsplan(belastungsplanDTO.value)) {
+    return false;
+  } else
+    return (
+      belastungsplanDTO.value.value1.values &&
+      belastungsplanDTO.value.value1.values.length > 0
+    );
 });
+
+function isQjsBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQjsDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
+}
 </script>
 
 <style scoped lang="scss">
