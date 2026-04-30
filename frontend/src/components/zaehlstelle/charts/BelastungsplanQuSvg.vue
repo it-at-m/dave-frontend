@@ -3440,7 +3440,6 @@ import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastun
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { ComputedRef } from "vue";
 
-import { first } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
