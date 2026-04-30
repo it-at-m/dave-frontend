@@ -3517,7 +3517,7 @@ const zaehlzeit2 = computed(() => {
 });
 
 const qu = useQu();
-const streetname = useStreetname();
+const streetnameUtils = useStreetname();
 
 const streetnamesNode1 = ref<Array<string>>([]);
 const streetnamesNode2 = ref<Array<string>>([]);
@@ -3880,28 +3880,28 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
 }
 
 onMounted(() => {
-  streetnamesNode1.value = streetname.getStreetname(
+  streetnamesNode1.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
-  streetnamesNode2.value = streetname.getStreetname(
+  streetnamesNode2.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
   );
-  streetnamesNode3.value = streetname.getStreetname(
+  streetnamesNode3.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
   );
-  streetnamesNode4.value = streetname.getStreetname(
+  streetnamesNode4.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
   );
-  streetnamesNode5.value = streetname.getStreetname(
+  streetnamesNode5.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
   );
-  streetnamesNode6.value = streetname.getStreetname(
+  streetnamesNode6.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
   );
-  streetnamesNode7.value = streetname.getStreetname(
+  streetnamesNode7.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
   );
-  streetnamesNode8.value = streetname.getStreetname(
+  streetnamesNode8.value = streetnameUtils.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 
@@ -3919,28 +3919,28 @@ watch(
     () => activeZaehlung.value.knotenarme,
   ],
   async () => {
-    streetnamesNode1.value = streetname.getStreetname(
+    streetnamesNode1.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
     );
-    streetnamesNode2.value = streetname.getStreetname(
+    streetnamesNode2.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
     );
-    streetnamesNode3.value = streetname.getStreetname(
+    streetnamesNode3.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
     );
-    streetnamesNode4.value = streetname.getStreetname(
+    streetnamesNode4.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
     );
-    streetnamesNode5.value = streetname.getStreetname(
+    streetnamesNode5.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
     );
-    streetnamesNode6.value = streetname.getStreetname(
+    streetnamesNode6.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
     );
-    streetnamesNode7.value = streetname.getStreetname(
+    streetnamesNode7.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
     );
-    streetnamesNode8.value = streetname.getStreetname(
+    streetnamesNode8.value = streetnameUtils.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
     );
 
