@@ -43,9 +43,6 @@ const NUMBER_OF_COLUMNS_ZAEHLART_MARKER = 2;
 const ICON_COLOR_SECONDARY = "secondary";
 const ICON_COLOR_RED = "red";
 
-const mapAttribution =
-  '&copy; <a href="https://stadt.muenchen.de/infos/geobasisdaten.html">GeodatenService München</a>';
-
 interface Props {
   minheight?: string;
   zId?: string;
@@ -161,45 +158,30 @@ function createLatLngFromString(lat: string, lng: string): LatLng {
 }
 
 function createLayersAndAddToMap(): void {
-  const baseLayers = createBaseLayers();
-
-  baseLayers.Stadtkarte.addTo(map);
-  layerControl = L.control.layers(baseLayers).addTo(map);
+  layerControl = L.control.layers().addTo(map);
+  addBaseLayers();
   addOverlayLayers();
 }
 
-function createBaseLayers(): L.Control.LayersObject {
-  const stadtkarteGesamt = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
-    {
-      layers: "gsm:g_stadtkarte_gesamt",
-      className: "Stadtkarte",
-      attribution: mapAttribution,
-    }
-  );
+/**
+ * Fügt im Backend konfigurierte Base-Layer zur Karte hinzu.
+ */
+function addBaseLayers(): void {
+  const baseLayers = mapConfigStore.getMapConfig.baseLayers;
+  let firstLayerAddedToMap = false;
 
-  const luftbild = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
-    {
-      layers: "gsm:g_luftbild",
-      className: "Luftbild",
-      attribution: mapAttribution,
+  baseLayers.forEach((layerConfig) => {
+    const layer = L.tileLayer.wms(layerConfig.baseUrl, {
+      layers: layerConfig.layerName,
+      className: layerConfig.layerName,
+      attribution: layerConfig.attribution,
+    });
+    layerControl.addBaseLayer(layer, layerConfig.layerNameToDisplay);
+    if (!firstLayerAddedToMap) {
+      layer.addTo(map);
+      firstLayerAddedToMap = true;
     }
-  );
-
-  const osm = L.tileLayer.wms(
-    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }
-  );
-
-  return {
-    Stadtkarte: stadtkarteGesamt,
-    Luftbild: luftbild,
-    OpenStreetMap: osm,
-  };
+  });
 }
 
 /**
@@ -214,13 +196,14 @@ function addOverlayLayers(): void {
       className: layerConfig.layerName,
       transparent: true,
       format: "image/png",
-      attribution: mapAttribution,
+      attribution: layerConfig.attribution,
     });
     layerControl.addOverlay(layer, layerConfig.layerNameToDisplay);
   });
 }
 
 watch(mapConfigStore, () => {
+  addBaseLayers();
   addOverlayLayers();
 });
 

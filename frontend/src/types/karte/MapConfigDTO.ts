@@ -1,8 +1,9 @@
-import type OverlayLayerDTO from "@/types/karte/OverlayLayerDTO";
+import type LayerDTO from "@/types/karte/LayerDTO";
 
 export default interface MapConfigDTO {
   lat: string;
   lng: string;
   zoom: number;
-  overlayLayers: OverlayLayerDTO[];
+  baseLayers: LayerDTO[];
+  overlayLayers: LayerDTO[];
 }
