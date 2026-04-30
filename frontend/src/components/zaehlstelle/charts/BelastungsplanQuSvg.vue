@@ -3452,7 +3452,10 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
-import { existsQuerungOnKnotenarmInRichtung, isQuerungOnKnotenarmInRichtungActive } from "@/util/Querungspruefung";
+import {
+  existsQuerungOnKnotenarmInRichtung,
+  isQuerungOnKnotenarmInRichtungActive,
+} from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStreetname } from "@/util/StrassennameUtils";
 
