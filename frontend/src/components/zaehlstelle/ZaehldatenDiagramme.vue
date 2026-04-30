@@ -89,7 +89,7 @@
             <belastungsplan-fjs-svg
               v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && isFJSZaehlung"
               :dimension="contentHeight"
-              :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
+              :data="belastungsplanDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -231,6 +231,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 
 interface Props {
   height?: string;
@@ -258,7 +259,7 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO>(
+const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO | LadeBelastungsplanFjsDTO>(
   {} as LadeBelastungsplanDTO
 );
 const belastungsplanSvg = ref<Blob>();
@@ -793,7 +794,7 @@ const drawSchematischeUebersicht = computed(() => {
   ) {
     return false;
   }
-  if (isQjsBelastungsplan(belastungsplanDTO.value)) {
+  if (isQjsBelastungsplan(belastungsplanDTO.value) || isFjsBelastungsplan(belastungsplanDTO.value)) {
     return false;
   } else
     return (
@@ -806,6 +807,12 @@ function isQjsBelastungsplan(
   data: AbstractLadeBelastungsplanDTO | undefined
 ): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
+}
+
+function isFjsBelastungsplan(
+    data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanFjsDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 </script>
 

@@ -5087,9 +5087,8 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
-
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -5103,9 +5102,11 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 
 interface Props {
-  data: LadeBelastungsplanDTO;
+  data: LadeBelastungsplanFjsDTO;
   dimension?: string;
 }
 
@@ -5965,4 +5966,11 @@ function emitSvgAsBlob(): void {
   const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
   emits("print", blob);
 }
+
+function isFjsBelastungsplan(
+    data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanFjsDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
+}
+
 </script>
