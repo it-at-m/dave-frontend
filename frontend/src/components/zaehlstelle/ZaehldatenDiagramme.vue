@@ -62,7 +62,7 @@
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
                 !isFJSZaehlung &&
@@ -75,7 +75,7 @@
             />
 
             <belastungsplan-card
-              v-show="belastungsplanDTO.kreisverkehr"
+              v-if="belastungsplanDTO.kreisverkehr"
               ref="belastungsplanCard"
               :dimension="contentHeight"
               :belastungsplan-data="belastungsplanDTO"
@@ -84,7 +84,7 @@
             />
 
             <belastungsplan-qjs-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQJSZaehlung &&
                 !isFJSZaehlung &&
@@ -97,7 +97,7 @@
             />
 
             <belastungsplan-fjs-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
                 !isQUZaehlung &&
@@ -110,7 +110,7 @@
             />
 
             <belastungsplan-qu-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQUZaehlung &&
                 !isQJSZaehlung &&
