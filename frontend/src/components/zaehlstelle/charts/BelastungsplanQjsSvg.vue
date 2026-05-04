@@ -1068,6 +1068,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useBlp } from "@/util/BlpUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 
@@ -1088,6 +1089,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const qjs = useQjs();
+const blp = useBlp();
 
 const firstStreetname = ref<Array<string>>([]);
 const svgRef = ref<SVGSVGElement | null>(null);
@@ -1235,18 +1237,15 @@ const sumArrowsOneTwo = computed(() => {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.W
     )?.value;
-  }
-  else if (availableKnotenarmNummern.value.includes(2)) {
+  } else if (availableKnotenarmNummern.value.includes(2)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.N
     )?.value;
-  }
-  else if (availableKnotenarmNummern.value.includes(5)) {
+  } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.NW
     )?.value;
-  }
-  else if (availableKnotenarmNummern.value.includes(6)) {
+  } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.NO
     )?.value;
@@ -1263,18 +1262,15 @@ const sumArrowsThreeFour = computed(() => {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.O
     )?.value;
-  }
-  else if (availableKnotenarmNummern.value.includes(2)) {
+  } else if (availableKnotenarmNummern.value.includes(2)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.S
     )?.value;
-  }
-  else if (availableKnotenarmNummern.value.includes(5)) {
+  } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.SO
     )?.value;
-  }
-  else if (availableKnotenarmNummern.value.includes(6)) {
+  } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.SW
     )?.value;
@@ -1427,7 +1423,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  firstStreetname.value = qjs.getStreetname(first(availableKnotenarme.value));
+  firstStreetname.value = blp.getStreetname(first(availableKnotenarme.value));
 
   // Berechnet Anker aus der gesamten Gruppe (Rumpf + Spitze)
   if (groupRefArrowOne.value)
@@ -1449,7 +1445,7 @@ watch(
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
   async () => {
-    firstStreetname.value = qjs.getStreetname(first(availableKnotenarme.value));
+    firstStreetname.value = blp.getStreetname(first(availableKnotenarme.value));
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
     // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
     await nextTick();

@@ -5087,23 +5087,25 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useBlp } from "@/util/BlpUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;
@@ -5122,6 +5124,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const fjs = useFjs();
+const blp = useBlp();
 
 const streetnameNodeOne = ref<Array<string>>([]);
 const streetnameNodeTwo = ref<Array<string>>([]);
@@ -5145,284 +5148,381 @@ const availableKnotenarme = computed(() => {
   return fjs.computeAvailableKnotenarme(activeZaehlung.value);
 });
 
+function getArrowZaehlwert(
+  values: any,
+  knotenarm: number,
+  richtung: Bewegungsrichtung,
+  strassenseite: Himmelsrichtung
+) {
+  const kn = values.find((k) => k.knotenarm === knotenarm);
+  if (!kn) return 0;
+  const seite = kn.valuesStrassenseiten.find(
+    (s) => s.strassenseite === strassenseite
+  );
+  if (!seite) return 0;
+  const laengsverkehr = seite.valuesLaengsverkehre.find(
+    (l) => l.richtung === richtung
+  );
+  return laengsverkehr?.value ?? 0;
+}
+
 // Zaehlwerte of Node 1
 const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return getArrowZaehlwert(
+    props.data.value1.valuesKnotenarme,
+    1,
+    Bewegungsrichtung.AUS,
+    Himmelsrichtung.W
+  );
 });
 
 const zaehlwertArrowNodeOneWestIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return getArrowZaehlwert(
+    props.data.value1.valuesKnotenarme,
+    1,
+    Bewegungsrichtung.EIN,
+    Himmelsrichtung.W
+  );
 });
 
 const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return getArrowZaehlwert(
+    props.data.value1.valuesKnotenarme,
+    1,
+    Bewegungsrichtung.AUS,
+    Himmelsrichtung.O
+  );
 });
 
 const zaehlwertArrowNodeOneEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return getArrowZaehlwert(
+    props.data.value1.valuesKnotenarme,
+    1,
+    Bewegungsrichtung.EIN,
+    Himmelsrichtung.O
+  );
 });
 
 const sumArrowsNodeOneWest = computed(() => {
-  return (
-    zaehlwertArrowNodeOneWestOutgoing.value +
-    zaehlwertArrowNodeOneWestIncoming.value
+  const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === 1);
+  if (!kn) return 0;
+  const seite = kn.valuesStrassenseiten.find(
+    (s) => s.strassenseite === Himmelsrichtung.W
   );
+  return seite?.sumStrassenseite ?? 0;
 });
 
 const sumArrowsNodeOneEast = computed(() => {
-  return (
-    zaehlwertArrowNodeOneEastOutgoing.value +
-    zaehlwertArrowNodeOneEastIncoming.value
+  const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === 1);
+  if (!kn) return 0;
+  const seite = kn.valuesStrassenseiten.find(
+    (s) => s.strassenseite === Himmelsrichtung.O
   );
+  return seite?.sumStrassenseite ?? 0;
 });
 
 const sumNodeOneArrows = computed(() => {
-  return sumArrowsNodeOneWest.value + sumArrowsNodeOneEast.value;
+  const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === 1);
+  return kn?.sumKnotenarm ?? 0;
 });
 
 // Zaehlwerte of Node 2
 const zaehlwertArrowNodeTwoNorthIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeTwoNorthOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeTwoSouthIncoming = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeTwoSouthOutgoing = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNodeTwoNorth = computed(() => {
-  return (
-    zaehlwertArrowNodeTwoNorthIncoming.value +
-    zaehlwertArrowNodeTwoNorthOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeTwoSouth = computed(() => {
-  return (
-    zaehlwertArrowNodeTwoSouthIncoming.value +
-    zaehlwertArrowNodeTwoSouthOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeTwoArrows = computed(() => {
-  return sumArrowsNodeTwoNorth.value + sumArrowsNodeTwoSouth.value;
+  return 0; // TODO
 });
 
 // Zaehlwerte of Node 3
 const zaehlwertArrowNodeThreeWestIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeThreeWestOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
-  return (
-    zaehlwertArrowNodeThreeWestIncoming.value +
-    zaehlwertArrowNodeThreeWestOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeThreeEast = computed(() => {
-  return (
-    zaehlwertArrowNodeThreeEastOutgoing.value +
-    zaehlwertArrowNodeThreeEastIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeThreeArrows = computed(() => {
-  return sumArrowsNodeThreeWest.value + sumArrowsNodeThreeEast.value;
+  return 0; // TODO
 });
 
 // Zaehlwerte of Node 4
 const zaehlwertArrowNodeFourNorthOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeFourNorthIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeFourSouthOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeFourSouthIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNodeFourNorth = computed(() => {
-  return (
-    zaehlwertArrowNodeFourNorthOutgoing.value +
-    zaehlwertArrowNodeFourNorthIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeFourSouth = computed(() => {
-  return (
-    zaehlwertArrowNodeFourSouthOutgoing.value +
-    zaehlwertArrowNodeFourSouthIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeFourArrows = computed(() => {
-  return sumArrowsNodeFourNorth.value + sumArrowsNodeFourSouth.value;
+  return 0; // TODO
 });
 
 // Zaehlwerte of Node 5
 const zaehlwertArrowNodeFiveNorthWestOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeFiveNorthWestIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeFiveSouthEastOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeFiveSouthEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNodeFiveNorthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeFiveNorthWestOutgoing.value +
-    zaehlwertArrowNodeFiveNorthWestIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeFiveSouthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeFiveSouthEastOutgoing.value +
-    zaehlwertArrowNodeFiveSouthEastIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeFiveArrows = computed(() => {
-  return sumArrowsNodeFiveNorthWest.value + sumArrowsNodeFiveSouthEast.value;
+  return 0; // TODO
 });
 
 // Zaehlwerte of Node 6
 const zaehlwertArrowNodeSixNorthEastIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeSixNorthEastOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeSixSouthWestIncoming = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeSixSouthWestOutgoing = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNode6NorthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeSixNorthEastIncoming.value +
-    zaehlwertArrowNodeSixNorthEastOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeSixSouthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeSixSouthWestIncoming.value +
-    zaehlwertArrowNodeSixSouthWestOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeSixArrows = computed(() => {
-  return sumArrowsNode6NorthEast.value + sumArrowsNodeSixSouthWest.value;
+  return 0; // TODO
 });
 
 // Zaehlwerte of Node 7
 const zaehlwertArrowNodeSevenNorthWestIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeSevenNorthWestOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeSevenSouthEastIncoming = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeSevenSouthEastOutgoing = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNodeSevenNorthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeSevenNorthWestIncoming.value +
-    zaehlwertArrowNodeSevenNorthWestOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeSevenSouthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeSevenSouthEastIncoming.value +
-    zaehlwertArrowNodeSevenSouthEastOutgoing.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeSevenArrows = computed(() => {
-  return sumArrowsNodeSevenNorthWest.value + sumArrowsNodeSevenSouthEast.value;
+  return 0; // TODO
 });
 
 // Zaehlwerte of Node 8
 const zaehlwertArrowNodeEightNorthEastOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeEightNorthEastIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeEightSouthWestOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const zaehlwertArrowNodeEightSouthWestIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  return 0; // TODO
 });
 
 const sumArrowsNodeEightNorthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeEightNorthEastOutgoing.value +
-    zaehlwertArrowNodeEightNorthEastIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumArrowsNodeEightSouthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeEightSouthWestOutgoing.value +
-    zaehlwertArrowNodeEightSouthWestIncoming.value
-  );
+  return 0; // TODO
 });
 
 const sumNodeEightArrows = computed(() => {
-  return sumArrowsNodeEightNorthEast.value + sumArrowsNodeEightSouthWest.value;
+  return 0; // TODO
 });
 
 // Arrows of Node 1
@@ -5873,28 +5973,28 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  streetnameNodeOne.value = fjs.getStreetname(
+  streetnameNodeOne.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
-  streetnameNodeTwo.value = fjs.getStreetname(
+  streetnameNodeTwo.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
   );
-  streetnameNodeThree.value = fjs.getStreetname(
+  streetnameNodeThree.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
   );
-  streetnameNodeFour.value = fjs.getStreetname(
+  streetnameNodeFour.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
   );
-  streetnameNodeFive.value = fjs.getStreetname(
+  streetnameNodeFive.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
   );
-  streetnameNodeSix.value = fjs.getStreetname(
+  streetnameNodeSix.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
   );
-  streetnameNodeSeven.value = fjs.getStreetname(
+  streetnameNodeSeven.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
   );
-  streetnameNodeEight.value = fjs.getStreetname(
+  streetnameNodeEight.value = blp.getStreetname(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 });
@@ -5908,28 +6008,28 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    streetnameNodeOne.value = fjs.getStreetname(
+    streetnameNodeOne.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
     );
-    streetnameNodeTwo.value = fjs.getStreetname(
+    streetnameNodeTwo.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
     );
-    streetnameNodeThree.value = fjs.getStreetname(
+    streetnameNodeThree.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
     );
-    streetnameNodeFour.value = fjs.getStreetname(
+    streetnameNodeFour.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
     );
-    streetnameNodeFive.value = fjs.getStreetname(
+    streetnameNodeFive.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
     );
-    streetnameNodeSix.value = fjs.getStreetname(
+    streetnameNodeSix.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
     );
-    streetnameNodeSeven.value = fjs.getStreetname(
+    streetnameNodeSeven.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
     );
-    streetnameNodeEight.value = fjs.getStreetname(
+    streetnameNodeEight.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
     );
     await nextTick();
@@ -5968,9 +6068,8 @@ function emitSvgAsBlob(): void {
 }
 
 function isFjsBelastungsplan(
-    data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTO | undefined
 ): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
-
 </script>

@@ -62,7 +62,11 @@
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-              v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && !isFJSZaehlung"
+              v-show="
+                !belastungsplanDTO.kreisverkehr &&
+                !isQJSZaehlung &&
+                !isFJSZaehlung
+              "
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanDTO"
               @print="storeSvg($event)"
@@ -79,7 +83,11 @@
             />
 
             <belastungsplan-qjs-svg
-              v-show="!belastungsplanDTO.kreisverkehr && isQJSZaehlung && !isFJSZaehlung"
+              v-show="
+                !belastungsplanDTO.kreisverkehr &&
+                isQJSZaehlung &&
+                !isFJSZaehlung
+              "
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
@@ -87,7 +95,11 @@
             />
 
             <belastungsplan-fjs-svg
-              v-show="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && isFJSZaehlung"
+              v-show="
+                !belastungsplanDTO.kreisverkehr &&
+                !isQJSZaehlung &&
+                isFJSZaehlung
+              "
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
@@ -193,6 +205,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
@@ -211,8 +224,8 @@ import PdfReportMenue from "@/components/common/PdfReportMenue.vue";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
-import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/BelastungsplanFjsSvg.vue";
+import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
@@ -231,7 +244,6 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 
 interface Props {
   height?: string;
@@ -259,9 +271,9 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO | LadeBelastungsplanFjsDTO>(
-  {} as LadeBelastungsplanDTO
-);
+const belastungsplanDTO = ref<
+  LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO | LadeBelastungsplanFjsDTO
+>({} as LadeBelastungsplanDTO);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
@@ -794,7 +806,10 @@ const drawSchematischeUebersicht = computed(() => {
   ) {
     return false;
   }
-  if (isQjsBelastungsplan(belastungsplanDTO.value) || isFjsBelastungsplan(belastungsplanDTO.value)) {
+  if (
+    isQjsBelastungsplan(belastungsplanDTO.value) ||
+    isFjsBelastungsplan(belastungsplanDTO.value)
+  ) {
     return false;
   } else
     return (
@@ -810,7 +825,7 @@ function isQjsBelastungsplan(
 }
 
 function isFjsBelastungsplan(
-    data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTO | undefined
 ): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
