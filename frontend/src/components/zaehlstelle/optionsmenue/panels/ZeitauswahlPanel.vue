@@ -359,10 +359,12 @@ watch(
 /**
  * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
  */
-function adaptOptionsUpdate(){
-  if (isOnlyFussgaengerSelected.value &&
-      chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
-      isTeilzaehlung.value ){
+function adaptOptionsUpdate() {
+  if (
+    isOnlyFussgaengerSelected.value &&
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
+    isTeilzaehlung.value
+  ) {
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
     const zbMax =
       zeitblockOrder.find((zb) =>

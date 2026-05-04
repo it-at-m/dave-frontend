@@ -62,7 +62,11 @@
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-              v-if="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && !isFJSZaehlung"
+              v-if="
+                !belastungsplanDTO.kreisverkehr &&
+                !isQJSZaehlung &&
+                !isFJSZaehlung
+              "
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanDTO"
               @print="storeSvg($event)"
@@ -79,7 +83,11 @@
             />
 
             <belastungsplan-qjs-svg
-              v-if="!belastungsplanDTO.kreisverkehr && isQJSZaehlung && !isFJSZaehlung"
+              v-if="
+                !belastungsplanDTO.kreisverkehr &&
+                isQJSZaehlung &&
+                !isFJSZaehlung
+              "
               :dimension="contentHeight"
               :data="belastungsplanDTO"
               @print="storeSvg($event)"
@@ -87,7 +95,11 @@
             />
 
             <belastungsplan-fjs-svg
-              v-if="!belastungsplanDTO.kreisverkehr && !isQJSZaehlung && isFJSZaehlung"
+              v-if="
+                !belastungsplanDTO.kreisverkehr &&
+                !isQJSZaehlung &&
+                isFJSZaehlung
+              "
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
@@ -211,8 +223,8 @@ import PdfReportMenue from "@/components/common/PdfReportMenue.vue";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
-import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/BelastungsplanFjsSvg.vue";
+import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
