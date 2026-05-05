@@ -5149,7 +5149,7 @@ const availableKnotenarme = computed(() => {
 });
 
 function getArrowZaehlwert(
-ty  knotenarm: number,
+  knotenarm: number,
   richtung: Bewegungsrichtung,
   strassenseite: Himmelsrichtung
 ) {
