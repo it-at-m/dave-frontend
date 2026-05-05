@@ -5235,31 +5235,35 @@ const sumNodeOneArrows = computed(() => {
 
 // Zaehlwerte of Node 2
 const zaehlwertArrowNodeTwoNorthIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      2,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.N
+  );
 });
 
 const zaehlwertArrowNodeTwoNorthOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      2,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.N
+  );
 });
 
 const zaehlwertArrowNodeTwoSouthIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      2,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.S
+  );
 });
 
 const zaehlwertArrowNodeTwoSouthOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      2,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.S
+  );
 });
 
 const sumArrowsNodeTwoNorth = computed(() => {
@@ -5276,31 +5280,35 @@ const sumNodeTwoArrows = computed(() => {
 
 // Zaehlwerte of Node 3
 const zaehlwertArrowNodeThreeWestIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      3,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.W
+  );
 });
 
 const zaehlwertArrowNodeThreeWestOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      3,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.W
+  );
 });
 
 const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      3,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.O
+  );
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      3,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.O
+  );
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
@@ -5317,31 +5325,35 @@ const sumNodeThreeArrows = computed(() => {
 
 // Zaehlwerte of Node 4
 const zaehlwertArrowNodeFourNorthOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      4,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.N
+  );
 });
 
 const zaehlwertArrowNodeFourNorthIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      4,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.N
+  );
 });
 
 const zaehlwertArrowNodeFourSouthOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      4,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.S
+  );
 });
 
 const zaehlwertArrowNodeFourSouthIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      4,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.S
+  );
 });
 
 const sumArrowsNodeFourNorth = computed(() => {
@@ -5358,31 +5370,35 @@ const sumNodeFourArrows = computed(() => {
 
 // Zaehlwerte of Node 5
 const zaehlwertArrowNodeFiveNorthWestOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      5,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.NW
+  );
 });
 
 const zaehlwertArrowNodeFiveNorthWestIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      5,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.NW
+  );
 });
 
 const zaehlwertArrowNodeFiveSouthEastOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      5,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.SO
+  );
 });
 
 const zaehlwertArrowNodeFiveSouthEastIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      5,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.SO
+  );
 });
 
 const sumArrowsNodeFiveNorthWest = computed(() => {
@@ -5399,31 +5415,35 @@ const sumNodeFiveArrows = computed(() => {
 
 // Zaehlwerte of Node 6
 const zaehlwertArrowNodeSixNorthEastIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      6,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.NO
+  );
 });
 
 const zaehlwertArrowNodeSixNorthEastOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      6,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.NO
+  );
 });
 
 const zaehlwertArrowNodeSixSouthWestIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      6,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.SW
+  );
 });
 
 const zaehlwertArrowNodeSixSouthWestOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      6,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.SW
+  );
 });
 
 const sumArrowsNode6NorthEast = computed(() => {
@@ -5440,31 +5460,35 @@ const sumNodeSixArrows = computed(() => {
 
 // Zaehlwerte of Node 7
 const zaehlwertArrowNodeSevenNorthWestIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      7,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.NW
+  );
 });
 
 const zaehlwertArrowNodeSevenNorthWestOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      7,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.NW
+  );
 });
 
 const zaehlwertArrowNodeSevenSouthEastIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      7,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.SO
+  );
 });
 
 const zaehlwertArrowNodeSevenSouthEastOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      7,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.SO
+  );
 });
 
 const sumArrowsNodeSevenNorthWest = computed(() => {
@@ -5481,31 +5505,35 @@ const sumNodeSevenArrows = computed(() => {
 
 // Zaehlwerte of Node 8
 const zaehlwertArrowNodeEightNorthEastOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      8,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.NO
+  );
 });
 
 const zaehlwertArrowNodeEightNorthEastIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      8,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.NO
+  );
 });
 
 const zaehlwertArrowNodeEightSouthWestOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      8,
+      Bewegungsrichtung.AUS,
+      Himmelsrichtung.SW
+  );
 });
 
 const zaehlwertArrowNodeEightSouthWestIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
-  return 0; // TODO
+  return getArrowZaehlwert(
+      8,
+      Bewegungsrichtung.EIN,
+      Himmelsrichtung.SW
+  );
 });
 
 const sumArrowsNodeEightNorthEast = computed(() => {
