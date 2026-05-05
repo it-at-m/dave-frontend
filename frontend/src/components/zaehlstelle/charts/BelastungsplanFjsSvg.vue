@@ -5149,12 +5149,14 @@ const availableKnotenarme = computed(() => {
 });
 
 function getArrowZaehlwert(
-  values: any,
-  knotenarm: number,
+ty  knotenarm: number,
   richtung: Bewegungsrichtung,
   strassenseite: Himmelsrichtung
 ) {
-  const kn = values.find((k) => k.knotenarm === knotenarm);
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === knotenarm);
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
     (s) => s.strassenseite === strassenseite
@@ -5168,11 +5170,7 @@ function getArrowZaehlwert(
 
 // Zaehlwerte of Node 1
 const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
   return getArrowZaehlwert(
-    props.data.value1.valuesKnotenarme,
     1,
     Bewegungsrichtung.AUS,
     Himmelsrichtung.W
@@ -5180,11 +5178,7 @@ const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
 });
 
 const zaehlwertArrowNodeOneWestIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
   return getArrowZaehlwert(
-    props.data.value1.valuesKnotenarme,
     1,
     Bewegungsrichtung.EIN,
     Himmelsrichtung.W
@@ -5192,11 +5186,7 @@ const zaehlwertArrowNodeOneWestIncoming = computed(() => {
 });
 
 const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
   return getArrowZaehlwert(
-    props.data.value1.valuesKnotenarme,
     1,
     Bewegungsrichtung.AUS,
     Himmelsrichtung.O
@@ -5204,11 +5194,7 @@ const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
 });
 
 const zaehlwertArrowNodeOneEastIncoming = computed(() => {
-  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
-    return 0;
-  }
   return getArrowZaehlwert(
-    props.data.value1.valuesKnotenarme,
     1,
     Bewegungsrichtung.EIN,
     Himmelsrichtung.O
@@ -5216,6 +5202,9 @@ const zaehlwertArrowNodeOneEastIncoming = computed(() => {
 });
 
 const sumArrowsNodeOneWest = computed(() => {
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
   const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === 1);
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
@@ -5225,6 +5214,9 @@ const sumArrowsNodeOneWest = computed(() => {
 });
 
 const sumArrowsNodeOneEast = computed(() => {
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
   const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === 1);
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
@@ -5234,6 +5226,9 @@ const sumArrowsNodeOneEast = computed(() => {
 });
 
 const sumNodeOneArrows = computed(() => {
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
   const kn = props.data.value1.valuesKnotenarme.find((k) => k.knotenarm === 1);
   return kn?.sumKnotenarm ?? 0;
 });
