@@ -74,5 +74,4 @@ describe("BlpUtils", () => {
     const res = getStreetname({ strassenname: "" } as any);
     expect(res).toEqual([""]);
   });
-
 });
