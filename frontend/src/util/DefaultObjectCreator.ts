@@ -329,6 +329,8 @@ export default class DefaultObjectCreator {
       lat: "48.137227",
       lng: "11.575517",
       zoom: 12,
+      baseLayers: [],
+      overlayLayers: [],
     };
   }
 
