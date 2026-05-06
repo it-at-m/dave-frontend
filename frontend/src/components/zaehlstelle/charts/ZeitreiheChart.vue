@@ -349,7 +349,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_RAD),
     });
   }
-  if (filterOptions.value.fussverkehr) {
+  if (filterOptions.value.fussverkehr && zeitreiheDaten.fuss.some(value => value > 0)) {
     series.push({
       name: FUSSVERKEHR,
       type: CHART_TYPE_X_AXIS,
@@ -531,4 +531,5 @@ watch(
   },
   { immediate: true }
 );
+
 </script>
