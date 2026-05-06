@@ -10,6 +10,7 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type { Ref } from "vue";
 
@@ -19,6 +20,7 @@ import { useDisplay } from "vuetify";
 
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
@@ -222,6 +224,9 @@ function calcVerkehrsbeziehungen(data: LadeBelastungsplanDTO) {
   verkehrsbeziehungTypen.value.clear();
   highestVerkehrsbeziehungsValue.value = 0;
   lowestVerkehrsbeziehungsValue.value = 0;
+  if (!isDefaultBelastungsplan(data)) {
+    return;
+  }
   // Die Datentypen der Werteblöcke werden extrahiert
   prozentWerte.value.set(0, data.value1.percent);
   prozentWerte.value.set(1, data.value2.percent);
@@ -437,6 +442,12 @@ function redraw() {
   nextTick(() => {
     calcVerkehrsbeziehungen(props.data);
   });
+}
+
+function isDefaultBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 
 /**
