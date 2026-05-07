@@ -62,7 +62,7 @@
         >
           <div v-if="hasSelectedVerkehrsarten">
             <belastungsplan-kreuzung-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
                 !isFJSZaehlung
@@ -74,7 +74,7 @@
             />
 
             <belastungsplan-card
-              v-show="belastungsplanDTO.kreisverkehr"
+              v-if="belastungsplanDTO.kreisverkehr"
               ref="belastungsplanCard"
               :dimension="contentHeight"
               :belastungsplan-data="belastungsplanDTO as LadeBelastungsplanDTO"
@@ -83,7 +83,7 @@
             />
 
             <belastungsplan-qjs-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQJSZaehlung &&
                 !isFJSZaehlung
@@ -95,7 +95,7 @@
             />
 
             <belastungsplan-fjs-svg
-              v-show="
+              v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
                 isFJSZaehlung
@@ -205,7 +205,6 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
