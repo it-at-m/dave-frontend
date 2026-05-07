@@ -19,15 +19,15 @@
 
 <script setup lang="ts">
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { SeriesOption } from "echarts";
 import type { ResizeOpts } from "echarts/core";
 
-import {computed, onMounted, ref, watch} from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 import ZeitreiheChart from "@/components/zaehlstelle/charts/ZeitreiheChart.vue";
-import {useSnackbarStore} from "@/store/SnackbarStore";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
-import {useZaehlstelleStore} from "@/store/ZaehlstelleStore";
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 
 interface Props {
   zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
@@ -63,12 +63,17 @@ function charttypeChanged(newChartType: "line" | "bar") {
 
 // Zeige die Snackbar an, wenn Fuss ausgewählt ist und keine Fuss-Daten vorhanden sind
 watch(
-    () => props.zaehldatenZeitreihe,
-    (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
-      if (filterOptions.value.fussverkehr && ! zaehldatenZeitreihe.fuss.some(value => value > 0)) {
-        snackbarStore.showInfo("Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein.");
-      }
-    },
-    { immediate: true }
+  () => props.zaehldatenZeitreihe,
+  (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
+    if (
+      filterOptions.value.fussverkehr &&
+      !zaehldatenZeitreihe.fuss.some((value) => value > 0)
+    ) {
+      snackbarStore.showInfo(
+        "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
+      );
+    }
+  },
+  { immediate: true }
 );
 </script>
