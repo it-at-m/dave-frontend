@@ -351,7 +351,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (
     filterOptions.value.fussverkehr &&
-    zeitreiheDaten.fuss.every((value) => value > 0)
+    isFussDataValidToShow(zeitreiheDaten.fuss)
   ) {
     series.push({
       name: FUSSVERKEHR,
@@ -393,6 +393,21 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
 
   return series;
+}
+
+/**
+ * Entscheidet ob Zeitreihen-Fußdaten für die Anzeige in der Zeitreihe valide sind.
+ * Wenn Tageswert ausgewählt ist, müssen alle Daten > 0 sein, sonst sind sie nicht valide (da mind. eine Zaehlung keine Ganztageszählung ist).
+ * Ansonsten müssen alle Daten != null sein (da bei Vergleich mit einer Zählung ohne Fußdaten die Daten nicht valide sind).
+ * @param fussData das Array der Fußdaten für die Zeitreihe
+ * @return ob die Fußdaten valide für die Anzeige sind
+ */
+function isFussDataValidToShow(fussData: number[]): boolean {
+  if (filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
+    return fussData.every((value) => value > 0);
+  } else {
+    return fussData.every((value) => value != null);
+  }
 }
 
 function downloadCsv() {

@@ -28,6 +28,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import ZeitreiheChart from "@/components/zaehlstelle/charts/ZeitreiheChart.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 interface Props {
   zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
@@ -61,13 +62,14 @@ function charttypeChanged(newChartType: "line" | "bar") {
   });
 }
 
-// Zeige die Snackbar an, wenn Fuss ausgewählt ist und keine Fuss-Daten vorhanden sind
+// Zeige die Snackbar-Infomeldung an, wenn Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert 0 ist (wegen Teilzählung kein Tageswert vorhanden).
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
     if (
       filterOptions.value.fussverkehr &&
-      !zaehldatenZeitreihe.fuss.every((value) => value > 0)
+      filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
+      zaehldatenZeitreihe.fuss.some((value) => value == 0)
     ) {
       snackbarStore.showInfo(
         "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
