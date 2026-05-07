@@ -351,7 +351,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (
     filterOptions.value.fussverkehr &&
-    zeitreiheDaten.fuss.some((value) => value > 0)
+    zeitreiheDaten.fuss.every((value) => value > 0)
   ) {
     series.push({
       name: FUSSVERKEHR,

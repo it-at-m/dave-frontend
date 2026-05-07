@@ -67,7 +67,7 @@ watch(
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
     if (
       filterOptions.value.fussverkehr &&
-      !zaehldatenZeitreihe.fuss.some((value) => value > 0)
+      !zaehldatenZeitreihe.fuss.every((value) => value > 0)
     ) {
       snackbarStore.showInfo(
         "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
