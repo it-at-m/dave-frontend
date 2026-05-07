@@ -5148,7 +5148,13 @@ const availableKnotenarme = computed(() => {
   return fjs.computeAvailableKnotenarme(activeZaehlung.value);
 });
 
-function getArrowZaehlwert(
+/**
+ * Auslesen des Zählwertes aus dem LadeBelastungsplanFjsDTO für den angegebenen Knotenarm, Strassenseite und Richtung.
+ * Wird eines davon nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundener Zählwert oder 0
+ */
+function getArrowZaehlwertOrZero(
   knotenarm: number,
   richtung: Bewegungsrichtung,
   strassenseite: Himmelsrichtung
@@ -5170,7 +5176,13 @@ function getArrowZaehlwert(
   return laengsverkehr?.value ?? 0;
 }
 
-function sumArrowsKnotenarmStrassenseite(
+/**
+ * Auslesen der Zählwert-Summe aus dem LadeBelastungsplanFjsDTO für den angegebenen Knotenarm und Strassenseite.
+ * Wird eines davon nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundene Summe oder 0
+ */
+function getSumArrowsKnotenarmStrassenseiteOrZero(
   knotenarm: number,
   strassenseite: Himmelsrichtung
 ) {
@@ -5187,7 +5199,13 @@ function sumArrowsKnotenarmStrassenseite(
   return seite?.sumStrassenseite ?? 0;
 }
 
-function sumArrowsKnotenarm(knotenarm: number) {
+/**
+ * Auslesen der Zählwert-Summe aus dem LadeBelastungsplanFjsDTO für den angegebenen Knotenarm.
+ * Wird dieser nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundene Summe oder 0
+ */
+function getSumArrowsKnotenarmOrZero(knotenarm: number) {
   if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
@@ -5199,234 +5217,234 @@ function sumArrowsKnotenarm(knotenarm: number) {
 
 // Zaehlwerte of Node 1
 const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
-  return getArrowZaehlwert(1, Bewegungsrichtung.AUS, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.AUS, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeOneWestIncoming = computed(() => {
-  return getArrowZaehlwert(1, Bewegungsrichtung.EIN, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.EIN, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
-  return getArrowZaehlwert(1, Bewegungsrichtung.AUS, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.AUS, Himmelsrichtung.O);
 });
 
 const zaehlwertArrowNodeOneEastIncoming = computed(() => {
-  return getArrowZaehlwert(1, Bewegungsrichtung.EIN, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.EIN, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeOneWest = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(1, Himmelsrichtung.W);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(1, Himmelsrichtung.W);
 });
 
 const sumArrowsNodeOneEast = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(1, Himmelsrichtung.O);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(1, Himmelsrichtung.O);
 });
 
 const sumNodeOneArrows = computed(() => {
-  return sumArrowsKnotenarm(1);
+  return getSumArrowsKnotenarmOrZero(1);
 });
 
 // Zaehlwerte of Node 2
 const zaehlwertArrowNodeTwoNorthIncoming = computed(() => {
-  return getArrowZaehlwert(2, Bewegungsrichtung.EIN, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.EIN, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeTwoNorthOutgoing = computed(() => {
-  return getArrowZaehlwert(2, Bewegungsrichtung.AUS, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.AUS, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeTwoSouthIncoming = computed(() => {
-  return getArrowZaehlwert(2, Bewegungsrichtung.EIN, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.EIN, Himmelsrichtung.S);
 });
 
 const zaehlwertArrowNodeTwoSouthOutgoing = computed(() => {
-  return getArrowZaehlwert(2, Bewegungsrichtung.AUS, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.AUS, Himmelsrichtung.S);
 });
 
 const sumArrowsNodeTwoNorth = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(2, Himmelsrichtung.N);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(2, Himmelsrichtung.N);
 });
 
 const sumArrowsNodeTwoSouth = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(2, Himmelsrichtung.S);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(2, Himmelsrichtung.S);
 });
 
 const sumNodeTwoArrows = computed(() => {
-  return sumArrowsKnotenarm(2);
+  return getSumArrowsKnotenarmOrZero(2);
 });
 
 // Zaehlwerte of Node 3
 const zaehlwertArrowNodeThreeWestIncoming = computed(() => {
-  return getArrowZaehlwert(3, Bewegungsrichtung.EIN, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeThreeWestOutgoing = computed(() => {
-  return getArrowZaehlwert(3, Bewegungsrichtung.AUS, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.AUS, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
-  return getArrowZaehlwert(3, Bewegungsrichtung.AUS, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.AUS, Himmelsrichtung.O);
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  return getArrowZaehlwert(3, Bewegungsrichtung.EIN, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(3, Himmelsrichtung.W);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(3, Himmelsrichtung.W);
 });
 
 const sumArrowsNodeThreeEast = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(3, Himmelsrichtung.O);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(3, Himmelsrichtung.O);
 });
 
 const sumNodeThreeArrows = computed(() => {
-  return sumArrowsKnotenarm(3);
+  return getSumArrowsKnotenarmOrZero(3);
 });
 
 // Zaehlwerte of Node 4
 const zaehlwertArrowNodeFourNorthOutgoing = computed(() => {
-  return getArrowZaehlwert(4, Bewegungsrichtung.AUS, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.AUS, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeFourNorthIncoming = computed(() => {
-  return getArrowZaehlwert(4, Bewegungsrichtung.EIN, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.EIN, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeFourSouthOutgoing = computed(() => {
-  return getArrowZaehlwert(4, Bewegungsrichtung.AUS, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.AUS, Himmelsrichtung.S);
 });
 
 const zaehlwertArrowNodeFourSouthIncoming = computed(() => {
-  return getArrowZaehlwert(4, Bewegungsrichtung.EIN, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.EIN, Himmelsrichtung.S);
 });
 
 const sumArrowsNodeFourNorth = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(4, Himmelsrichtung.N);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(4, Himmelsrichtung.N);
 });
 
 const sumArrowsNodeFourSouth = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(4, Himmelsrichtung.S);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(4, Himmelsrichtung.S);
 });
 
 const sumNodeFourArrows = computed(() => {
-  return sumArrowsKnotenarm(4);
+  return getSumArrowsKnotenarmOrZero(4);
 });
 
 // Zaehlwerte of Node 5
 const zaehlwertArrowNodeFiveNorthWestOutgoing = computed(() => {
-  return getArrowZaehlwert(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeFiveNorthWestIncoming = computed(() => {
-  return getArrowZaehlwert(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeFiveSouthEastOutgoing = computed(() => {
-  return getArrowZaehlwert(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
 });
 
 const zaehlwertArrowNodeFiveSouthEastIncoming = computed(() => {
-  return getArrowZaehlwert(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
 });
 
 const sumArrowsNodeFiveNorthWest = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(5, Himmelsrichtung.NW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.NW);
 });
 
 const sumArrowsNodeFiveSouthEast = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(5, Himmelsrichtung.SO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.SO);
 });
 
 const sumNodeFiveArrows = computed(() => {
-  return sumArrowsKnotenarm(5);
+  return getSumArrowsKnotenarmOrZero(5);
 });
 
 // Zaehlwerte of Node 6
 const zaehlwertArrowNodeSixNorthEastIncoming = computed(() => {
-  return getArrowZaehlwert(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeSixNorthEastOutgoing = computed(() => {
-  return getArrowZaehlwert(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeSixSouthWestIncoming = computed(() => {
-  return getArrowZaehlwert(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
 });
 
 const zaehlwertArrowNodeSixSouthWestOutgoing = computed(() => {
-  return getArrowZaehlwert(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
 });
 
 const sumArrowsNodeSixNorthEast = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(6, Himmelsrichtung.NO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.NO);
 });
 
 const sumArrowsNodeSixSouthWest = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(6, Himmelsrichtung.SW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.SW);
 });
 
 const sumNodeSixArrows = computed(() => {
-  return sumArrowsKnotenarm(6);
+  return getSumArrowsKnotenarmOrZero(6);
 });
 
 // Zaehlwerte of Node 7
 const zaehlwertArrowNodeSevenNorthWestIncoming = computed(() => {
-  return getArrowZaehlwert(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeSevenNorthWestOutgoing = computed(() => {
-  return getArrowZaehlwert(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeSevenSouthEastIncoming = computed(() => {
-  return getArrowZaehlwert(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
 });
 
 const zaehlwertArrowNodeSevenSouthEastOutgoing = computed(() => {
-  return getArrowZaehlwert(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
 });
 
 const sumArrowsNodeSevenNorthWest = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(7, Himmelsrichtung.NW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.NW);
 });
 
 const sumArrowsNodeSevenSouthEast = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(7, Himmelsrichtung.SO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.SO);
 });
 
 const sumNodeSevenArrows = computed(() => {
-  return sumArrowsKnotenarm(7);
+  return getSumArrowsKnotenarmOrZero(7);
 });
 
 // Zaehlwerte of Node 8
 const zaehlwertArrowNodeEightNorthEastOutgoing = computed(() => {
-  return getArrowZaehlwert(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeEightNorthEastIncoming = computed(() => {
-  return getArrowZaehlwert(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeEightSouthWestOutgoing = computed(() => {
-  return getArrowZaehlwert(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
 });
 
 const zaehlwertArrowNodeEightSouthWestIncoming = computed(() => {
-  return getArrowZaehlwert(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
 });
 
 const sumArrowsNodeEightNorthEast = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(8, Himmelsrichtung.NO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.NO);
 });
 
 const sumArrowsNodeEightSouthWest = computed(() => {
-  return sumArrowsKnotenarmStrassenseite(8, Himmelsrichtung.SW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.SW);
 });
 
 const sumNodeEightArrows = computed(() => {
-  return sumArrowsKnotenarm(8);
+  return getSumArrowsKnotenarmOrZero(8);
 });
 
 // Arrows of Node 1
