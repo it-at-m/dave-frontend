@@ -610,7 +610,7 @@ function fetchPdf(formData: FormData, type: string) {
 const schemaStyle = computed(() => {
   let style = ``;
   if (!displaySchema.value) {
-    style = `display: none`;
+    style = `position: absolute; opacity: 0; pointerEvents: none;`;
   }
   return style;
 });
