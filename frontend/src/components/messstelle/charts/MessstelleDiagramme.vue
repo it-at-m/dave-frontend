@@ -152,7 +152,7 @@
     v-if="drawSchematischeUebersicht"
     :belastungsplan-data="belastungsplanDataDTO"
     :dimension="contentHeight"
-    :style="schemaStyle"
+    style="position: absolute; opacity: 0; pointerEvents: none;"
     @print="storeSvgSchematischeUebersicht($event)"
   />
 </template>
@@ -229,7 +229,7 @@ const belastungsplanSvg = ref<Blob>();
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtPngBase64 = ref("");
-const displaySchema = ref(true);
+// const displaySchema = ref(true);
 
 const messstelleStore = useMessstelleStore();
 const messstelleUtils = useMessstelleUtils();
@@ -287,7 +287,7 @@ function changeTab() {
 }
 
 watch(options, () => {
-  displaySchema.value = true;
+  // displaySchema.value = true;
   loadProcessedChartData();
 });
 watch(belastungsplanSvg, () => {
@@ -515,7 +515,7 @@ function storeSvg(svg: Blob): void {
 
 function storeSvgSchematischeUebersicht(svg: Blob): void {
   belastungsplanSchematischeUebersichtSvg.value = svg;
-  displaySchema.value = false;
+  // displaySchema.value = false;
 }
 
 function openPdfReportDialog(): void {
@@ -607,13 +607,13 @@ function fetchPdf(formData: FormData, type: string) {
     .finally(() => (loadingFile.value = false));
 }
 
-const schemaStyle = computed(() => {
-  let style = ``;
-  if (!displaySchema.value) {
-    style = `position: absolute; opacity: 0; pointerEvents: none;`;
-  }
-  return style;
-});
+// const schemaStyle = computed(() => {
+//   let style = ``;
+//   if (!displaySchema.value) {
+//     style = `position: absolute; opacity: 0; pointerEvents: none;`;
+//   }
+//   return style;
+// });
 </script>
 
 <style scoped lang="scss">
