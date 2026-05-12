@@ -14,6 +14,17 @@ export default class FetchUtils {
     };
   }
 
+  static getBlobGETConfig(): RequestInit {
+    const headers = this.getHeaders();
+    headers.delete("Content-Type");
+    return {
+      headers,
+      mode: "cors",
+      credentials: "same-origin",
+      redirect: "manual",
+    };
+  }
+
   /**
    * Liefert eine default POST-Config für fetch
    * @param body zu übertragender Body

@@ -16,6 +16,7 @@
             :kreuzungsname="kreuzungsname"
             :stadtbezirk-nummer="`${zaehlstelle.stadtbezirkNummer}`"
             :stadtbezirk="zaehlstelle.stadtbezirk"
+            :zaehlstelle-uuid="zaehlstelle.id"
           />
           <!-- Information zur aktiven Zählung -->
           <zaehlung-info

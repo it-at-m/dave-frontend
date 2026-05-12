@@ -15,6 +15,12 @@ export default class FetchService {
     return FetchService.sendRequestForJson(url, request, errorMessage);
   }
 
+  static getForBlob(endpoint: string, errorMessage: string): Promise<Blob> {
+    const url = `${this.BASE}/${endpoint}`;
+    const request = FetchUtils.getBlobGETConfig();
+    return FetchService.sendRequestForBlob(url, request, errorMessage);
+  }
+
   static postData(
     dataToSave: any,
     endpoint: string,
