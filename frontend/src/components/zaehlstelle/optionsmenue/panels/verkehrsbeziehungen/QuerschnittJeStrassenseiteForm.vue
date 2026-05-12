@@ -352,6 +352,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useQjs } from "@/util/QjsUtils";
+import { useStreetname } from "@/util/StrassennameUtils";
 
 interface Props {
   height: string;
@@ -361,6 +362,7 @@ defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 const qjs = useQjs();
+const streetnameUtils = useStreetname();
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -586,7 +588,7 @@ function resetForm(): void {
 }
 
 function prepareStreetnames(): void {
-  firstStreetname.value = qjs.getStreetname(firstKnotenarm.value);
-  secondStreetname.value = qjs.getStreetname(secondKnotenarm.value);
+  firstStreetname.value = streetnameUtils.getStreetname(firstKnotenarm.value);
+  secondStreetname.value = streetnameUtils.getStreetname(secondKnotenarm.value);
 }
 </script>
