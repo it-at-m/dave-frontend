@@ -30,8 +30,8 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 33.4058px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -44,15 +44,14 @@
                   fill: #000000;
                   stroke-width: 39.1848;
                 "
-                x="699.24969"
-                y="709.21594"
+                x="697.23627"
+                y="704.51794"
                 id="singlerow"
               >
                 <tspan
-                  id="tspan15"
-                  style="stroke-width: 39.1848"
-                  x="699.24969"
-                  y="709.21594"
+                  id="tspan21"
+                  x="697.23627"
+                  y="704.51794"
                 >
                   {{ firstStreetname[0] }}
                 </tspan>
@@ -65,8 +64,8 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 33.4058px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;sans-serif, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -84,18 +83,16 @@
                 y="688.33734"
               >
                 <tspan
-                  id="tspan20"
-                  style="stroke-width: 39.1848"
+                  id="tspan19"
                   x="699.24969"
                   y="688.33734"
                 >
                   {{ firstStreetname[0] }}
                 </tspan>
                 <tspan
-                  id="tspan1"
-                  style="stroke-width: 39.1848"
+                  id="tspan20"
                   x="699.24969"
-                  y="730.0946"
+                  y="719.49121"
                 >
                   {{ firstStreetname[1] }}
                 </tspan>
@@ -104,101 +101,116 @@
           </g>
           <g id="arrows">
             <g
-              id="arrow4"
-              ref="groupRefArrowFour"
-              :transform="transformArrowFour"
+                id="arrow4"
+                ref="groupRefArrowFour"
             >
               <path
-                style="stroke-width: 40.9429"
+                style="stroke-width: 40.1798"
                 :d="dArrowFour"
-                id="path4"
+                id="shaft4"
                 :fill="colorArrowFour"
+                :transform="transformArrowFour"
               />
               <path
-                style="stroke-width: 78.3672"
-                id="spike4"
-                d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-                :fill="colorArrowFour"
-                transform="matrix(0.09192953,0,0,0.07964786,-213.39551,-544.45264)"
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 1.75413;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="tip4"
+                d="m 1178.1774,846.90543 -18.6954,-22.33904 -0.017,44.62008 z"
               />
             </g>
             <g
-              id="arrow3"
-              ref="groupRefArrowThree"
-              :transform="transformArrowThree"
+                id="arrow3"
+                ref="groupRefArrowThree"
             >
               <path
-                style="stroke-width: 40.9429"
+                style="stroke-width: 40.1798"
                 :d="dArrowThree"
-                id="path3"
+                id="shaft3"
                 :fill="colorArrowThree"
+                :transform="transformArrowThree"
               />
               <path
-                style="stroke-width: 78.3672"
-                id="spike3"
-                d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-                :fill="colorArrowThree"
-                transform="matrix(-0.09192953,0,0,-0.07964786,1613.3955,2182.4526)"
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 1.7698;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="tip3"
+                d="m 221.49329,791.09394 19.39305,-22.32164 0.0169,44.58532 z"
               />
             </g>
             <g
-              id="arrow2"
-              ref="groupRefArrowTwo"
-              :transform="transformArrowTwo"
+                id="arrow2"
+                ref="groupRefArrowTwo"
             >
               <path
-                style="stroke-width: 40.943"
+                style="stroke-width: 40.1708"
                 :d="dArrowTwo"
-                id="path2"
+                id="shaft2"
                 :fill="colorArrowTwo"
+                :transform="transformArrowTwo"
               />
               <path
-                style="stroke-width: 78.3672"
-                id="spike2"
-                d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-                :fill="colorArrowTwo"
-                transform="matrix(0.09192953,0,0,0.07964786,-213.39551,-782.45264)"
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 1.75545;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="tip2"
+                d="m 1178.1206,609.06771 -18.7975,-22.45207 -0.017,44.84587 z"
               />
             </g>
             <g
-              id="arrow1"
-              ref="groupRefArrowOne"
-              :transform="transformArrowOne"
+                id="arrow1"
+                ref="groupRefArrowOne"
             >
               <path
-                style="stroke-width: 40.9431"
+                style="stroke-width: 40.1656"
                 :d="dArrowOne"
-                id="path1"
+                id="shaft1"
                 :fill="colorArrowOne"
+                :transform="transformArrowOne"
               />
               <path
-                style="stroke-width: 78.3672"
-                id="spike1"
-                d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-                :fill="colorArrowOne"
-                transform="matrix(-0.09192953,0,0,-0.07964786,1613.3955,1944.4526)"
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 2.08902;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="tip1"
+                d="m 221.73348,553.05942 19.31149,-25.58133 0.0167,51.09625 z"
               />
             </g>
           </g>
-          <g id="layer1">
-            <g id="layer2">
+          <g id="zaehlwerte">
+            <g id="zaehlwerteArrowsThreeFour">
               <text
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
-                id="text3"
+                id="zaehlwertArrowThree"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family:Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: end;
                   writing-mode: rl-tb;
                   direction: rtl;
                   white-space: pre;
@@ -207,48 +219,33 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 "
-                x="376.95462"
-                y="-93.991508"
+                x="1298.7062"
+                y="799.76965"
               >
                 <tspan
-                  x="1533.9819"
-                  y="693.90204"
-                  id="tspan3"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: sans-serif-serif;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9482;
-                  "
+                  id="tspan39"
+                  x="1298.7062"
+                  y="799.76965"
                 >
                   {{ zaehlwertArrowThree }}
                 </tspan>
               </text>
               <text
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
-                id="text4"
+                id="zaehlwertArrowFour"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family:Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: end;
                   writing-mode: rl-tb;
                   direction: rtl;
                   white-space: pre;
@@ -257,53 +254,38 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 "
-                x="376.95462"
-                y="-45.435368"
+                x="1298.0775"
+                y="855.68152"
               >
                 <tspan
-                  x="1533.9819"
-                  y="742.45807"
-                  id="tspan4"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: sans-serif-serif;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9482;
-                  "
+                  id="tspan38"
+                  x="1298.0775"
+                  y="855.68152"
                 >
                   {{ zaehlwertArrowFour }}
                 </tspan>
               </text>
               <path
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
-                d="m 1231.93,859.24999 h 98 v 2.45 h -98 z"
-                id="path5-1"
+                d="m 1198.9417,860.12963 h 98 v 2.45 h -98 z"
+                id="separatorThreeFour"
               />
               <text
                 xml:space="preserve"
-                transform="scale(0.86675167,1.153733)"
-                id="text5"
+                id="sumArrowsThreeFour"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family:Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Arial, Bold&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: end;
                   writing-mode: rl-tb;
                   direction: rtl;
                   white-space: pre;
@@ -312,50 +294,35 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 "
-                x="377.93076"
-                y="-18.683392"
+                x="1298.6099"
+                y="884.09052"
               >
                 <tspan
-                  x="1535.3855"
-                  y="769.50153"
-                  id="tspan5"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: sans-serif-serif;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9644;
-                  "
+                  id="tspan37"
+                  x="1298.6099"
+                  y="884.09052"
                 >
                   {{ sumArrowsThreeFour }}
                 </tspan>
               </text>
             </g>
-            <g id="layer3">
+            <g id="zaehlwerteArrowsOneTwo">
               <text
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
-                id="node4_north_west_number_text"
+                id="zaehlwertArrowOne"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family:Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: end;
                   writing-mode: rl-tb;
                   direction: rtl;
                   white-space: pre;
@@ -364,53 +331,38 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 "
-                x="-985.63147"
-                y="-300.35461"
+                x="158.24681"
+                y="562.0257"
               >
                 <tspan
-                  x="171.3958"
-                  y="487.53894"
-                  id="node4_north_west_number_tspan"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: sans-serif-serif;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9482;
-                  "
+                  id="tspan36"
+                  x="158.24681"
+                  y="562.0257"
                 >
-                  {{ zaehlwertArrowOne }}
+                  123456
                 </tspan>
               </text>
               <path
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
-                d="m 50.47,621.25 h 98 v 2.45 h -98 z"
-                id="path5"
+                d="M 59.530403,619.40436 H 157.5304 v 2.45 H 59.530403 Z"
+                id="separatorOneTwo"
               />
               <text
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
-                id="node4_north_east_number_text"
+                id="zaehlwertArrowTwo"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family:Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: end;
                   writing-mode: rl-tb;
                   direction: rtl;
                   white-space: pre;
@@ -419,48 +371,33 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 "
-                x="-985.63147"
-                y="-251.79846"
+                x="158.83165"
+                y="615.81903"
               >
                 <tspan
-                  x="171.3958"
-                  y="536.09497"
-                  id="node4_north_east_number_tspan"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: sans-serif-serif;
-                    -inkscape-font-specification: &quot;Arial, Normal&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9482;
-                  "
+                  id="tspan35"
+                  x="158.83165"
+                  y="615.81903"
                 >
-                  {{ zaehlwertArrowTwo }}
+                  123456
                 </tspan>
               </text>
               <text
                 xml:space="preserve"
-                transform="scale(0.86675167,1.153733)"
-                id="node4_north_sum_text"
+                id="sumArrowsOneTwo"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: sans-serif-serif;
+                  font-size: 24.6944px;
+                  font-family:Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Arial, Bold&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: end;
                   writing-mode: rl-tb;
                   direction: rtl;
                   white-space: pre;
@@ -469,27 +406,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 "
-                x="-985.15863"
-                y="-224.97026"
+                x="158.26794"
+                y="642.70013"
               >
                 <tspan
-                  x="172.29607"
-                  y="563.21466"
-                  id="node4_north_sum_tspan"
-                  style="
-                    font-style: normal;
-                    font-variant: normal;
-                    font-weight: bold;
-                    font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: sans-serif-serif;
-                    -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                    font-variant-ligatures: normal;
-                    font-variant-caps: normal;
-                    font-variant-numeric: normal;
-                    font-variant-east-asian: normal;
-                    stroke-width: 43.9644;
-                  "
+                  id="tspan34"
+                  x="158.26794"
+                  y="642.70013"
                 >
                   {{ sumArrowsOneTwo }}
                 </tspan>
@@ -497,21 +420,20 @@
             </g>
             <text
               xml:space="preserve"
-              transform="scale(0.86675167,1.153733)"
-              id="node4_sum_text"
+              id="sumArrowsOneToFourRight"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: sans-serif-serif;
+                font-size: 24.6944px;
+                font-family:Roboto, Arial, Helvetica, sans-serif;
                 -inkscape-font-specification: &quot;Arial, Bold&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
-                text-align: start;
+                text-align: end;
                 writing-mode: rl-tb;
                 direction: rtl;
                 white-space: pre;
@@ -520,48 +442,33 @@
                 fill-opacity: 1;
                 stroke-width: 43.9644;
               "
-              x="377.93076"
-              y="-171.53239"
+              x="1297.9579"
+              y="708.37695"
             >
               <tspan
-                x="1535.3855"
-                y="616.65204"
-                id="node4_sum_tspan"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: sans-serif-serif;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  stroke-width: 43.9644;
-                "
+                id="tspan33"
+                x="1297.9579"
+                y="708.37695"
               >
                 {{ sumArrowsOneToFour }}
               </tspan>
             </text>
             <text
               xml:space="preserve"
-              transform="scale(0.86675167,1.153733)"
-              id="text2"
+              id="sumArrowsOneToFourLeft"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: sans-serif-serif;
+                font-size: 24.6944px;
+                font-family:Roboto, Arial, Helvetica, sans-serif;
                 -inkscape-font-specification: &quot;Arial, Bold&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
-                text-align: start;
+                text-align: end;
                 writing-mode: rl-tb;
                 direction: rtl;
                 white-space: pre;
@@ -570,27 +477,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9644;
               "
-              x="-985.15863"
-              y="-171.53239"
+              x="158.22824"
+              y="707.44586"
             >
               <tspan
-                x="172.29607"
-                y="616.65204"
-                id="tspan2"
-                style="
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: sans-serif-serif;
-                  -inkscape-font-specification: &quot;Arial, Bold&quot;;
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  stroke-width: 43.9644;
-                "
+                id="tspan32"
+                x="158.22824"
+                y="707.44586"
               >
                 {{ sumArrowsOneToFour }}
               </tspan>
@@ -611,7 +504,7 @@
                 font-weight: normal;
                 font-stretch: normal;
                 font-size: 19.7556px;
-                font-family: sans-serif;
+                font-family: Roboto, Arial, Helvetica, sans-serif;
                 -inkscape-font-specification: &quot;Sans, Normal&quot;;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -636,14 +529,14 @@
               <tspan
                 x="168.24969"
                 y="1230.3373"
-                id="tspan8"
+                id="tspan2"
               >
                 <tspan
                   style="
                     font-weight: bold;
                     -inkscape-font-specification: &quot;Sans Bold&quot;;
                   "
-                  id="tspan7"
+                  id="tspan1"
                 >
                   {{ optionen.radverkehr ? "RAD" : "FUSS" }}
                 </tspan>
@@ -662,7 +555,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: 19.7556px;
-                  font-family: sans-serif;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Sans, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -686,7 +579,7 @@
                 <tspan
                   x="168"
                   y="1210"
-                  id="tspan9"
+                  id="tspan3"
                 >
                   {{ zaehlzeit2 }}
                 </tspan>
@@ -704,7 +597,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: 19.7556px;
-                  font-family: sans-serif;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Sans, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -729,14 +622,14 @@
                 <tspan
                   x="168.24969"
                   y="1190.3373"
-                  id="tspan11"
+                  id="tspan5"
                 >
                   <tspan
                     style="
                       font-weight: bold;
                       -inkscape-font-specification: &quot;Sans Bold&quot;;
                     "
-                    id="tspan10"
+                    id="tspan4"
                   >
                     {{ optionen.zeitauswahl }}
                   </tspan>
@@ -826,7 +719,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: 28.6128px;
-                  font-family: sans-serif;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Sans, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -851,7 +744,7 @@
                 <tspan
                   x="699.24969"
                   y="688.33734"
-                  id="tspan12"
+                  id="tspan7"
                 >
                   {{ highestZaehlwertRounded / 2 }}
                 </tspan>
@@ -870,7 +763,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: 28.6128px;
-                  font-family: sans-serif;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Sans, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -895,7 +788,7 @@
                 <tspan
                   x="699.24969"
                   y="688.33734"
-                  id="tspan13"
+                  id="tspan8"
                 >
                   {{ highestZaehlwertRounded }}
                 </tspan>
@@ -910,7 +803,7 @@
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
               "
-              d="m 1244.823,1240.0379 c 0.4871,10.937 0.4871,10.8003 0.4871,10.8003 v 0"
+              d="m 1244.9784,1240.0379 c 0.1622,10.937 0.1662,10.8003 0.1662,10.8003 v 0"
               id="massstab-path2"
             />
             <path
@@ -944,7 +837,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: 19.7556px;
-                  font-family: sans-serif;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Sans, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -969,15 +862,15 @@
                 <tspan
                   x="699.24969"
                   y="688.33734"
-                  id="tspan14"
+                  id="tspan9"
                 >
                   Stadtbezirk
                   {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
                 </tspan>
                 <tspan
                   x="699.24969"
-                  y="713.03187"
-                  id="tspan16"
+                  y="713.26057"
+                  id="tspan10"
                 >
                   Zähldatum:
                   {{
@@ -1001,7 +894,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: 19.7556px;
-                  font-family: sans-serif;
+                  font-family: Roboto, Arial, Helvetica, sans-serif;
                   -inkscape-font-specification: &quot;Sans, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1026,14 +919,14 @@
                 <tspan
                   x="699.24969"
                   y="688.33734"
-                  id="tspan18"
+                  id="tspan12"
                 >
                   <tspan
                     style="
                       font-weight: bold;
                       -inkscape-font-specification: &quot;Sans Bold&quot;;
                     "
-                    id="tspan17"
+                    id="tspan11"
                   >
                     Zählstelle
                     {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
@@ -1145,10 +1038,10 @@ const transformArrowFour = computed(() =>
 );
 
 // --- Pfad-Daten
-const dArrowOne = "m 245,567 v -28 h 945 v 27.998 z";
-const dArrowTwo = "m 210,623 v -28 h 945 v 27.997 z";
-const dArrowThree = "m 245,804.99999 v -28 h 945 v 27.997 z";
-const dArrowFour = "m 210,860.99999 v -28 h 945 v 27.997 z";
+const dArrowOne = "m 245,567 v -28 h 910.7202 v 27.998 z";
+const dArrowTwo = "m 245.31124,623 v -28 h 909.68866 v 27.997 z";
+const dArrowThree = "m 245,804.99999 v -28 h 910.1007 v 27.997 z";
+const dArrowFour = "m 244.89933,860.99999 v -28 H 1155 v 27.997 z";
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
