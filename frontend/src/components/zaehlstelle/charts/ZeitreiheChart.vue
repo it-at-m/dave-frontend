@@ -342,21 +342,29 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
     });
   }
   if (filterOptions.value.radverkehr) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenRad: any[] = zeitreiheDaten.rad.map(value => value == null ? "" : value);
     series.push({
       name: RADVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.rad,
+      data: zeitreiheDatenRad,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_RAD),
     });
   }
   if (
-    filterOptions.value.fussverkehr &&
-    isFussDataValidToShow(zeitreiheDaten.fuss)
+    filterOptions.value.fussverkehr //&&
+    //isFussDataValidToShow(zeitreiheDaten.fuss)
   ) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    let zeitreiheDatenFuss: any[] = zeitreiheDaten.fuss.map(value => value == null ? "" : value);
+    // im speziellen Fall, dass Tageswert gesetzt ist und bei Fuß Werte 0 sind, diese auch auf leer setzen
+    if (filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
+      zeitreiheDatenFuss = zeitreiheDatenFuss.map(value => value == 0 ? "" : value);
+    }
     series.push({
       name: FUSSVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.fuss,
+      data: zeitreiheDatenFuss,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_FUSS),
     });
   }
@@ -398,16 +406,14 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
 /**
  * Entscheidet ob Zeitreihen-Fußdaten für die Anzeige in der Zeitreihe valide sind.
  * Wenn Tageswert ausgewählt ist, müssen alle Daten > 0 sein, sonst sind sie nicht valide (da mind. eine Zaehlung keine Ganztageszählung ist).
- * Ansonsten müssen alle Daten != null sein (da bei Vergleich mit einer Zählung ohne Fußdaten die Daten nicht valide sind).
  * @param fussData das Array der Fußdaten für die Zeitreihe
  * @return ob die Fußdaten valide für die Anzeige sind
  */
 function isFussDataValidToShow(fussData: number[]): boolean {
   if (filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
     return fussData.every((value) => value > 0);
-  } else {
-    return fussData.every((value) => value != null);
   }
+    return true;
 }
 
 function downloadCsv() {
