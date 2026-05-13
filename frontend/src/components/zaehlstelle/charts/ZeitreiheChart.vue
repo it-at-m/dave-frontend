@@ -53,7 +53,7 @@ const KRAFTFAHRZEUGVERKEHR = "Kraftfahrzeugverkehr";
 const GUETERVERKEHR = "Güterverkehr";
 const SCHWERVERKEHR = "Schwerverkehr";
 const RADVERKEHR = "Radverkehr";
-const FUSSVERKEHR = "Fussverkehr";
+const FUSSVERKEHR = "Fußverkehr";
 const GESAMT = "Summe alle Verkehrsarten";
 
 provide(THEME_KEY, "default");
@@ -418,7 +418,7 @@ function isFussDataValidToShow(fussData: number[]): boolean {
 
 function downloadCsv() {
   const header =
-    "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fussverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
+    "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fußverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
   const rows = [];
 
   rows.push(getMetaHeader().join(";"));
