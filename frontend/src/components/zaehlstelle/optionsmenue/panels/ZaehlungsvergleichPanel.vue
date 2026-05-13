@@ -40,13 +40,17 @@
             font-weight="normal"
             header-text="(Anzeige nur im Belastungsplan)"
           />
-          <v-checkbox
-            v-model="chosenOptionsCopy.differenzdatenDarstellen"
-            color="quaternary"
-            :label="'Differenzdaten darstellen'"
+          <div
             @mouseover="hoverCheckbox = true"
             @mouseleave="hoverCheckbox = false"
-          />
+          >
+            <v-checkbox
+              v-model="chosenOptionsCopy.differenzdatenDarstellen"
+              color="quaternary"
+              :label="'Differenzdaten darstellen'"
+              :disabled="isQjsOrFjsOrQu"
+            />
+          </div>
           <div v-if="chosenOptionsCopy.differenzdatenDarstellen">
             <v-select
               v-model="chosenOptionsCopy.vergleichszaehlungsId"
@@ -93,7 +97,6 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { ComputedRef } from "vue";
 
@@ -157,7 +160,9 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
     return "Datum der für den Vergleich ausgewählten Zählung. Hier werden nur Zählungen mit identischer Zählart zum Basisdatum angezeigt.";
   }
   if (hoverCheckbox.value) {
-    return "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
+    return isQjsOrFjsOrQu.value
+      ? "Für Fußverkehrszählungen ist eine Differenzdatendarstellung nicht möglich."
+      : "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
     const part: string =
@@ -172,6 +177,14 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
       : "Es können nur Zählungen gleicher Zählart verglichen werden." + part;
   }
   return "";
+});
+
+const isQjsOrFjsOrQu = computed<boolean>(() => {
+  return [
+    Zaehlart.QJS.toString(),
+    Zaehlart.FJS.toString(),
+    Zaehlart.QU.toString(),
+  ].includes(activeZaehlung.value.zaehlart);
 });
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
