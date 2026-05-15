@@ -167,11 +167,7 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
   if (hoverSelectVergleichsdatumZeitreihe.value) {
     const part: string =
       "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein. ";
-    return [
-      Zaehlart.FJS.toString(),
-      Zaehlart.QJS.toString(),
-      Zaehlart.QU.toString(),
-    ].includes(activeZaehlung.value.zaehlart)
+    return isQjsOrFjsOrQu.value
       ? "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden." +
           part
       : "Es können nur Zählungen gleicher Zählart verglichen werden." + part;
