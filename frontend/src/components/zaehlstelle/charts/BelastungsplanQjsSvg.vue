@@ -208,12 +208,12 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="1298.7062"
+                x="1288.7062"
                 y="799.76965"
               >
                 <tspan
                   id="tspan39"
-                  x="1298.7062"
+                  x="1288.7062"
                   y="799.76965"
                 >
                   {{ zaehlwertArrowThree }}
@@ -242,12 +242,12 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="1298.0775"
+                x="1288.0775"
                 y="855.68152"
               >
                 <tspan
                   id="tspan38"
-                  x="1298.0775"
+                  x="1288.0775"
                   y="855.68152"
                 >
                   {{ zaehlwertArrowFour }}
@@ -281,12 +281,12 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="1298.6099"
+                x="1288.6099"
                 y="884.09052"
               >
                 <tspan
                   id="tspan37"
-                  x="1298.6099"
+                  x="1288.6099"
                   y="884.09052"
                 >
                   {{ sumArrowsThreeFour }}
@@ -317,12 +317,12 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="158.24681"
+                x="215.24681"
                 y="562.0257"
               >
                 <tspan
                   id="tspan36"
-                  x="158.24681"
+                  x="215.24681"
                   y="562.0257"
                 >
                   {{ zaehlwertArrowOne }}
@@ -330,7 +330,7 @@
               </text>
               <path
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
-                d="M 59.530403,619.40436 H 157.5304 v 2.45 H 59.530403 Z"
+                d="m 116.95317,618.45522 h 97.99999 v 1.0263 h -97.99999 z"
                 id="separatorOneTwo"
               />
               <text
@@ -356,12 +356,12 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="158.83165"
+                x="215.83165"
                 y="615.81903"
               >
                 <tspan
                   id="tspan35"
-                  x="158.83165"
+                  x="215.83165"
                   y="615.81903"
                 >
                   {{ zaehlwertArrowTwo }}
@@ -390,12 +390,12 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="158.26794"
+                x="215.26794"
                 y="642.70013"
               >
                 <tspan
                   id="tspan34"
-                  x="158.26794"
+                  x="215.26794"
                   y="642.70013"
                 >
                   {{ sumArrowsOneTwo }}
@@ -425,12 +425,12 @@
                 fill-opacity: 1;
                 stroke-width: 43.9644;
               `"
-              x="1297.9579"
+              x="1288.9579"
               y="708.37695"
             >
               <tspan
                 id="tspan33"
-                x="1297.9579"
+                x="1288.9579"
                 y="708.37695"
               >
                 {{ sumArrowsOneToFour }}
@@ -459,12 +459,12 @@
                 fill-opacity: 1;
                 stroke-width: 43.9644;
               `"
-              x="158.22824"
+              x="215.22824"
               y="707.44586"
             >
               <tspan
                 id="tspan32"
-                x="158.22824"
+                x="215.22824"
                 y="707.44586"
               >
                 {{ sumArrowsOneToFour }}
@@ -476,7 +476,6 @@
           <g
             id="legend-zaehlinfo"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(50.006244,31.659644)"
           >
             <text
               xml:space="preserve"
@@ -503,13 +502,12 @@
                 stroke-dasharray: none;
               `"
               id="verkehrsart"
-              x="168.24969"
-              y="1230.3373"
-              transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
+              x="56.24969"
+              y="1310.3373"
             >
               <tspan
-                x="168.24969"
-                y="1230.3373"
+                x="56.24969"
+                y="1310.3373"
                 id="tspan2"
               >
                 <tspan
@@ -523,7 +521,6 @@
             <g
               id="zaehlzeit2"
               style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="translate(-152.29421)"
             >
               <text
                 xml:space="preserve"
@@ -550,12 +547,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlzeit2-multirow"
-                x="168"
-                y="1210"
+                x="56.24969"
+                y="1257"
               >
                 <tspan
-                  x="168"
-                  y="1210"
+                  x="56.24969"
+                  y="1257"
                   id="tspan3"
                 >
                   {{ zaehlzeit2 }}
@@ -591,13 +588,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlzeit1-multirow"
-                x="168.24969"
-                y="1190.3373"
-                transform="translate(-150.84646,0.00162031)"
+                x="56.24969"
+                y="1231.3373"
               >
                 <tspan
-                  x="168.24969"
-                  y="1190.3373"
+                  x="56.24969"
+                  y="1231.3373"
                   id="tspan5"
                 >
                   <tspan
@@ -612,22 +608,20 @@
           </g>
           <g
             id="legend-compass"
-            transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)"
           >
             <path
-              style="
+              :style="`
                 fill: none;
                 fill-opacity: 1;
-                stroke: #000000;
-                stroke-width: 3.35093;
+                stroke: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2.05093;
                 stroke-linecap: butt;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
-              "
+              `"
               id="compass2"
-              d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
-              transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
+              d="m 107.4337,29.986817 13.91905,63.782102 H 106.06633 93.514636 Z"
             />
             <text
               xml:space="preserve"
@@ -638,7 +632,7 @@
                 font-weight: normal;
                 font-stretch: normal;
                 font-size: ${belastungsplanMethods.maxlineWidth};
-                font-family: RomanD;
+                font-family: sans-serif;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -647,11 +641,11 @@
                 writing-mode: lr-tb;
                 direction: ltr;
                 text-anchor: start;
-                fill: #000000;
+                fill: ${BelastungsplanConstants.legendColor};
                 stroke-width: 2.2868;
               `"
-              x="141.28348"
-              y="93.924416"
+              x="100.269417"
+              y="84.061363"
             >
               <tspan
                 :style="`
@@ -660,7 +654,7 @@
                   font-weight: normal;
                   font-stretch: normal;
                   font-size: ${belastungsplanMethods.maxlineWidth};
-                  font-family: RomanD;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -675,12 +669,10 @@
           </g>
           <g
             id="legend-massstab"
-            transform="translate(-18.042256,33.984156)"
           >
             <g
               id="massstab-size1"
               style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="matrix(0.62382516,0,0,0.76417899,670.41706,744.80969)"
             >
               <text
                 xml:space="preserve"
@@ -689,16 +681,16 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.6128px;
+                  font-size: ${belastungsplanMethods.maxlineWidth};
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: center;
                   writing-mode: lr-tb;
                   direction: ltr;
-                  text-anchor: start;
+                  text-anchor: middle;
                   white-space: pre;
                   inline-size: 268.729;
                   display: inline;
@@ -707,13 +699,12 @@
                   stroke-dasharray: none;
                 `"
                 id="massstab-size1-multirow"
-                x="699.24969"
-                y="688.33734"
-                transform="translate(181.39362,6.9760325e-4)"
+                x="1250.2496"
+                y="1315.3373"
               >
                 <tspan
-                  x="699.24969"
-                  y="688.33734"
+                  x="1250.2496"
+                  y="1315.3373"
                   id="tspan7"
                 >
                   {{ highestZaehlwertRounded / 2 }}
@@ -723,7 +714,6 @@
             <g
               id="massstab-size2"
               style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="matrix(0.62382516,0,0,0.76417899,423.85279,750.20592)"
             >
               <text
                 xml:space="preserve"
@@ -732,16 +722,16 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.6128px;
+                  font-size: ${belastungsplanMethods.maxlineWidth};
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
+                  text-align: center;
                   writing-mode: lr-tb;
                   direction: ltr;
-                  text-anchor: start;
+                  text-anchor: middle;
                   white-space: pre;
                   inline-size: 268.729;
                   display: inline;
@@ -750,13 +740,12 @@
                   stroke-dasharray: none;
                 `"
                 id="massstab-size2-multirow"
-                x="699.24969"
-                y="688.33734"
-                transform="translate(670.97788,-7.8186747)"
+                x="1316.2496"
+                y="1315.3373"
               >
                 <tspan
-                  x="699.24969"
-                  y="688.33734"
+                    x="1316.2496"
+                    y="1315.3373"
                   id="tspan8"
                 >
                   {{ highestZaehlwertRounded }}
@@ -767,35 +756,33 @@
               style="
                 fill: #000000;
                 stroke: #000000;
-                stroke-width: 0.802209;
+                stroke-width: 1.580777;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
               "
-              d="m 1244.9784,1240.0379 c 0.1622,10.937 0.1662,10.8003 0.1662,10.8003 v 0"
+              d="m 1252.7468,1284.8273 c 0.1805,8.9058 0.185,8.7945 0.185,8.7945 v 0"
               id="massstab-path2"
             />
             <path
-              style="
+              :style="`
                 fill: none;
-                stroke: #000000;
-                stroke-width: 0.880777;
+                stroke: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2.000000;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
-              "
-              d="m 1300.4928,1251.6987 -119.9017,-0.2413 119.9017,-22.432 z"
-              id="path6"
+              `"
+              d="m 1316.5243,1294.7302 -124.9982,-0.2134 124.9982,-19.8383 z"
+              id="massstab-path1"
             />
           </g>
           <g
             id="legend-zaehlstelle"
-            transform="translate(-112.62637,-13.999124)"
           >
             <g
               id="zaehlstelle2"
               style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="translate(163.18555,-589.09456)"
             >
               <text
                 v-if="zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer"
@@ -823,21 +810,20 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlstelle2-multirow"
-                x="699.24969"
-                y="688.33734"
-                transform="translate(324.11416)"
+                x="1107.24969"
+                y="86.33734"
               >
                 <tspan
-                  x="699.24969"
-                  y="688.33734"
+                  x="1107.24969"
+                  y="86.33734"
                   id="tspan9"
                 >
                   Stadtbezirk
                   {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
                 </tspan>
                 <tspan
-                  x="699.24969"
-                  y="713.26057"
+                  x="1107.24969"
+                  y="112.26057"
                   id="tspan10"
                 >
                   Zähldatum:
@@ -852,7 +838,6 @@
             <g
               id="zaehlstelle1"
               style="stroke-width: 28.2205; stroke-dasharray: none"
-              transform="translate(162.09712,-614.70735)"
             >
               <text
                 xml:space="preserve"
@@ -879,13 +864,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlstelle1-multirow"
-                x="699.24969"
-                y="688.33734"
-                transform="translate(324.11416)"
+                x="1107.24969"
+                y="60.33734"
               >
                 <tspan
-                  x="699.24969"
-                  y="688.33734"
+                  x="1107.24969"
+                  y="60.33734"
                   id="tspan12"
                 >
                   <tspan
