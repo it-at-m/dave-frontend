@@ -20,5 +20,5 @@ export const BelastungsplanConstants = {
   inaktivColor: "#E0E0E0",
 
   // kleinstmögliche Skalierung eines Pfeils, damit er überhaupt angezeigt wird
-  minimum_arrow_scale: 0.005,
+  minimum_arrow_scale: 0.05,
 } as const;
