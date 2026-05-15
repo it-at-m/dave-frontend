@@ -969,7 +969,7 @@ function computeAnchorY(el: SVGGraphicsElement | null) {
 }
 
 function scaleTransform(scaleY: number, centerY: number) {
-  if (!Number.isFinite(scaleY) || scaleY === 1) return null;
+  if (!Number.isFinite(scaleY) || scaleY === 1) return undefined;
   return `translate(0 ${centerY}) scale(1 ${scaleY}) translate(0 ${-centerY})`;
 }
 
