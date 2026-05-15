@@ -299,7 +299,7 @@ function legendeNordPfeil() {
                   z`;
   nord
     .path(path)
-    .stroke({ width: 2, color: belastungsplanMethods.legendColor })
+    .stroke({ width: 2, color: BelastungsplanConstants.legendColor })
     .attr("fill", "none");
 
   nord
@@ -313,7 +313,7 @@ function legendeNordPfeil() {
       family: BelastungsplanConstants.fontfamily,
       size: belastungsplanMethods.maxlineWidth,
       anchor: "middle",
-      fill: belastungsplanMethods.legendColor,
+      fill: BelastungsplanConstants.legendColor,
     });
 }
 
@@ -526,7 +526,7 @@ function legendeLinienStaerke() {
 
   size
     .path(path)
-    .stroke({ width: 2, color: belastungsplanMethods.legendColor })
+    .stroke({ width: 2, color: BelastungsplanConstants.legendColor })
     .attr("fill", "none");
 
   const path2 = `M${startX + 1.5 * belastungsplanMethods.spalt.value} ${startY}
@@ -535,7 +535,7 @@ function legendeLinienStaerke() {
                    }`;
   size
     .path(path2)
-    .stroke({ width: 2, color: belastungsplanMethods.legendColor })
+    .stroke({ width: 2, color: BelastungsplanConstants.legendColor })
     .attr("fill", "none");
 
   const high =
