@@ -355,15 +355,21 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (filterOptions.value.fussverkehr) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
-    let zeitreiheDatenFuss: any[] = zeitreiheDaten.fuss.map((value) =>
-      value == null ? "" : value
+    const zeitreiheDatenFuss: (number | string)[] = zeitreiheDaten.fuss.map(
+      (value) => {
+        if (value == null) {
+          return "";
+        }
+        // im speziellen Fall, dass Tageswert gesetzt ist und bei Fuß Werte 0 sind, diese auch auf leer setzen
+        if (
+          filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
+          value === 0
+        ) {
+          return "";
+        }
+        return value;
+      }
     );
-    // im speziellen Fall, dass Tageswert gesetzt ist und bei Fuß Werte 0 sind, diese auch auf leer setzen
-    if (filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
-      zeitreiheDatenFuss = zeitreiheDatenFuss.map((value) =>
-        value == 0 ? "" : value
-      );
-    }
     series.push({
       name: FUSSVERKEHR,
       type: CHART_TYPE_X_AXIS,
