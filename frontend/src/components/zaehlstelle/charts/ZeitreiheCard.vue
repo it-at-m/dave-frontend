@@ -32,6 +32,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 interface Props {
   zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
+  isTabZeitreiheActive: boolean;
 }
 
 const props = defineProps<Props>();
@@ -40,6 +41,7 @@ const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const snackbarStore = useSnackbarStore();
+
 const zeitreiheForPdf = ref<InstanceType<typeof ZeitreiheChart> | null>();
 defineExpose({
   zeitreiheForPdf,
@@ -62,11 +64,12 @@ function charttypeChanged(newChartType: "line" | "bar") {
   });
 }
 
-// Zeige die Snackbar-Infomeldung an, wenn Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert 0 ist (wegen Teilzählung kein Tageswert vorhanden).
+// Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert 0 ist (wegen Teilzählung kein Tageswert vorhanden).
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
     if (
+      props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
       zaehldatenZeitreihe.fuss.some((value) => value == 0)
