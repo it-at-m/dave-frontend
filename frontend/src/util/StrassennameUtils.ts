@@ -112,6 +112,19 @@ export function useStrassennameUtils() {
     ];
   }
 
+  /**
+   * Gleicht die Länge zweier Zeilen eines String-Arrays, so dass beide Zeilen
+   * in etwa gleich lang sind und ganze Token (Wörter ohne Trenner) verwendet werden.
+   *
+   * @param streetnameTokens Array mit einem oder zwei Teilen, wie von getStreetname geliefert.
+   *                         Falls nur ein Element vorhanden ist, wird dieses unverändert zurückgegeben.
+   * @param separator        Der Trenner, der beim Zusammensetzen der Token verwendet werden soll
+   *                         (Standard: ein Leerzeichen). Falls die ursprüngliche erste Zeile mit
+   *                         einem Trenner endete, wird genau dieser Trenner am Ende der ersten
+   *                         Zeile wieder angehängt.
+   * @returns Array mit genau zwei Strings: [ersteZeile, zweiteZeile]. Bei kurzeren Eingaben kann
+   *          die zweite Zeile leer sein.
+   */
   function balanceLines(streetnameTokens: string[], separator = " ") {
     // Wenn getStreetname.maxChars nicht überschritten wird
     if (streetnameTokens.length === 1) return streetnameTokens;
@@ -163,6 +176,17 @@ export function useStrassennameUtils() {
     return [firstLineResult, secondLineResult];
   }
 
+  /**
+   * Bestimmt den häufiger verwendeten Trenner in einem Array von Zeilen-Strings.
+   *
+   * Diese Hilfsfunktion zählt die Anzahl von Leerzeichen und Bindestrichen in allen
+   * Eingabezeilen. Gibt als Ergebnis entweder ein Leerzeichen (" ") oder einen Bindestrich ("-")
+   * zurück. Bei Gleichstand oder wenn keine Bindestriche vorhanden sind, wird standardmäßig
+   * das Leerzeichen zurückgegeben.
+   *
+   * @param array Array von Strings, typischerweise die Zeilen-Teile aus getStreetname
+   * @returns Der am häufigsten vorkommende Trenner: entweder " " (Leerzeichen) oder "-" (Bindestrich).
+   */
   function getMostFrequentSeparator(array: string[]) {
     let spaceCount = 0;
     let dashCount = 0;
