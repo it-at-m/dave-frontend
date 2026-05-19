@@ -58,7 +58,7 @@
               />
               <text
                 id="node1_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -469,7 +469,7 @@
               />
               <text
                 id="node2_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -854,7 +854,7 @@
               />
               <text
                 id="node3_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -1265,7 +1265,7 @@
               />
               <text
                 id="node4_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -1624,7 +1624,7 @@
               />
               <text
                 id="node5_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2028,7 +2028,7 @@
               />
               <text
                 id="node6_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2399,7 +2399,7 @@
               />
               <text
                 id="node7_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2793,7 +2793,7 @@
               />
               <text
                 id="node8_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -3270,7 +3270,7 @@
           />
           <text
             id="compass1"
-            xml:space="preserve"
+            xml:space="default"
             style="
               font-style: normal;
               font-variant: normal;

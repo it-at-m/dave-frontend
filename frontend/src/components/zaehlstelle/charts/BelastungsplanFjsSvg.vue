@@ -177,7 +177,7 @@
           />
           <text
             id="compass1"
-            xml:space="preserve"
+            xml:space="default"
             style="
               font-style: normal;
               font-variant: normal;
@@ -349,7 +349,7 @@
             />
             <g id="node1_number">
               <circle
-                id="node1_circle"
+                id="node1_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -364,8 +364,8 @@
                 r="11.951238"
               />
               <text
-                id="node1_circle_text"
-                xml:space="preserve"
+                id="node1_number_text"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -380,7 +380,7 @@
                 x="693.53955"
               >
                 <tspan
-                  id="node1_circle_tspan"
+                  id="node1_number_tspan"
                   style="stroke-width: 30.9229"
                   x="693.53955"
                   y="622.00684"
@@ -976,7 +976,7 @@
               />
               <text
                 id="node2_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -1560,7 +1560,7 @@
               />
               <text
                 id="node3_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2169,7 +2169,7 @@
               />
               <text
                 id="node4_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2730,7 +2730,7 @@
               />
               <text
                 id="node5_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -3345,7 +3345,7 @@
               />
               <text
                 id="node6_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -3932,7 +3932,7 @@
               />
               <text
                 id="node7_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -4542,7 +4542,7 @@
               />
               <text
                 id="node8_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;

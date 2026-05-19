@@ -50,12 +50,22 @@ watch(
       zaehldatum.endeUhrzeit =
         DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
       // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0
-      zaehldatum.anteilGueterverkehrAnKfzProzent = parseFloat(
+      const anteilGueterverkehrAnKfzProzent = parseFloat(
         zaehldatum.anteilGueterverkehrAnKfzProzent
-      ).toFixed(1);
-      zaehldatum.anteilSchwerverkehrAnKfzProzent = parseFloat(
+      );
+      zaehldatum.anteilGueterverkehrAnKfzProzent = Number.isFinite(
+        anteilGueterverkehrAnKfzProzent
+      )
+        ? anteilGueterverkehrAnKfzProzent.toFixed(1)
+        : "0.0";
+      const anteilSchwerverkehrAnKfzProzent = parseFloat(
         zaehldatum.anteilSchwerverkehrAnKfzProzent
-      ).toFixed(1);
+      );
+      zaehldatum.anteilSchwerverkehrAnKfzProzent = Number.isFinite(
+        anteilSchwerverkehrAnKfzProzent
+      )
+        ? anteilSchwerverkehrAnKfzProzent.toFixed(1)
+        : "0.0";
     });
   },
   { immediate: true }

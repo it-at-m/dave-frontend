@@ -764,7 +764,7 @@
               transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
             />
             <text
-              xml:space="preserve"
+              xml:space="default"
               id="compass1"
               style="
                 font-style: normal;
