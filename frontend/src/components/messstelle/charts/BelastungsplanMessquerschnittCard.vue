@@ -441,7 +441,7 @@ function addTextSouthSide(
     isSvpInBelastungsPlan.value,
     chosenOptionsCopyFahrzeuge.value.schwerverkehr,
     chosenOptionsCopyFahrzeuge.value.gueterverkehr,
-    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr
+    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr,
   ].filter(Boolean).length;
   // Über textposition wird bestimmt, ob der Wert in Klammern gesetzt werden muss.
   let textposition = countTexts - 1;
