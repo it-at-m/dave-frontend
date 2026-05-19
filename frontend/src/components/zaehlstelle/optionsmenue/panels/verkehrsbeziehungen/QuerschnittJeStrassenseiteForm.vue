@@ -588,7 +588,9 @@ function resetForm(): void {
 }
 
 function prepareStreetnames(): void {
-  firstStreetname.value = strassennameUtils.getStreetLines(firstKnotenarm.value);
+  firstStreetname.value = strassennameUtils.getStreetLines(
+    firstKnotenarm.value
+  );
   secondStreetname.value = strassennameUtils.getStreetLines(
     secondKnotenarm.value
   );
