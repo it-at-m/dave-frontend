@@ -4,7 +4,7 @@ export function useStrassennameUtils() {
   /**
    * Extrahiert und splittet den Straßennamen eines Knotenarms
    * @param knotenarm optionaler Knotenarm DTO
-   * @param maxChars maximale Zeichenanzahl in der ersten Zeile (Default: 20)
+   * @param maxChars maximale Zeichenanzahl in der ersten Zeile (Default: 17)
    * @returns Array<string> mit einem oder zwei Elementen (falls gesplittet)
    */
   function getStreetname(
