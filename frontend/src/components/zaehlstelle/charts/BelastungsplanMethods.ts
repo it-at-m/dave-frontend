@@ -1144,7 +1144,7 @@ export function useBelastungsplanMethods() {
           add.tspan(pieces[0]).x(x).dy(line);
           add.tspan(pieces[1]).x(x).dy(line);
         } else {
-          add.tspan(knotenarm.strasse).x(x);
+          add.tspan(pieces[0] ?? "").x(x);
         }
       })
       .font({

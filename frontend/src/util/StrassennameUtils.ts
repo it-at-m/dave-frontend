@@ -11,7 +11,7 @@ export function useStrassennameUtils() {
     knotenarm: LadeKnotenarmDTO | undefined,
     maxChars = 17
   ): Array<string> {
-    const strasse = knotenarm?.strassenname ?? "";
+    const strasse = (knotenarm?.strassenname ?? "").trim();
     if (!strasse) {
       return [""];
     }
@@ -23,7 +23,7 @@ export function useStrassennameUtils() {
 
     // 1) Fallback: An Leerstelle trennen falls vorhanden
     const lastSpaceBefore = strasse.lastIndexOf(" ");
-    if (lastSpaceBefore > 0) {
+    if (lastSpaceBefore > 0 && lastSpaceBefore < strasse.length - 1) {
       return [
         strasse.substring(0, lastSpaceBefore + 1).trim(),
         strasse.substring(lastSpaceBefore + 1).trim(),
