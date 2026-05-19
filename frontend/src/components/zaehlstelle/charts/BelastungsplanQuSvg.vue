@@ -84,7 +84,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode1.length === 1"
+              v-if="streetnameNode1.length === 1"
               id="node1_strassenname_text"
               xml:space="preserve"
               style="
@@ -119,11 +119,11 @@
                 y="705.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               >
-                {{ streetnamesNode1[0] }}
+                {{ streetnameNode1[0] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode1.length > 1"
+              v-if="streetnameNode1.length > 1"
               id="node1_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -158,11 +158,11 @@
                 y="691.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               >
-                {{ streetnamesNode1[0] }}
+                {{ streetnameNode1[0] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode1.length > 1"
+              v-if="streetnameNode1.length > 1"
               id="node1_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -197,7 +197,7 @@
                 y="719.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
               >
-                {{ streetnamesNode1[1] }}
+                {{ streetnameNode1[1] }}
               </tspan>
             </text>
             <g id="node1_sum">
@@ -411,7 +411,7 @@
               style="stroke-width: 28.2205; stroke-dasharray: none"
             />
             <text
-              v-if="streetnamesNode2.length === 1"
+              v-if="streetnameNode2.length === 1"
               id="node2_strassenname_text"
               xml:space="preserve"
               style="
@@ -445,7 +445,7 @@
                 y="705.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
               >
-                {{ streetnamesNode2[0] }}
+                {{ streetnameNode2[0] }}
               </tspan>
             </text>
             <g
@@ -495,7 +495,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode2.length > 1"
+              v-if="streetnameNode2.length > 1"
               id="node2_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -529,11 +529,11 @@
                 y="719.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
               >
-                {{ streetnamesNode2[1] }}
+                {{ streetnameNode2[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode2.length > 1"
+              v-if="streetnameNode2.length > 1"
               id="node2_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -567,7 +567,7 @@
                 y="691.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
               >
-                {{ streetnamesNode2[0] }}
+                {{ streetnameNode2[0] }}
               </tspan>
             </text>
             <g
@@ -782,7 +782,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="streetnamesNode3.length === 1"
+              v-if="streetnameNode3.length === 1"
               id="node3_strassenname_text"
               xml:space="preserve"
               style="
@@ -798,7 +798,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -830,7 +830,7 @@
                 x="-962.48126"
                 y="705.79083"
               >
-                {{ streetnamesNode3[0] }}
+                {{ streetnameNode3[0] }}
               </tspan>
             </text>
             <g
@@ -880,7 +880,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode3.length > 1"
+              v-if="streetnameNode3.length > 1"
               id="node3_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -896,7 +896,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -928,11 +928,11 @@
                 x="-962.48126"
                 y="719.79083"
               >
-                {{ streetnamesNode3[1] }}
+                {{ streetnameNode3[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode3.length > 1"
+              v-if="streetnameNode3.length > 1"
               id="node3_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -948,7 +948,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -980,7 +980,7 @@
                 x="-962.48126"
                 y="691.79083"
               >
-                {{ streetnamesNode3[0] }}
+                {{ streetnameNode3[0] }}
               </tspan>
             </text>
             <g
@@ -1194,7 +1194,7 @@
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             />
             <text
-              v-if="streetnamesNode4.length === 1"
+              v-if="streetnameNode4.length === 1"
               id="node4_strassenname_text"
               xml:space="preserve"
               style="
@@ -1210,7 +1210,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1241,7 +1241,7 @@
                 x="437.52008"
                 y="705.79083"
               >
-                {{ streetnamesNode4[0] }}
+                {{ streetnameNode4[0] }}
               </tspan>
             </text>
             <g
@@ -1291,7 +1291,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode4.length > 1"
+              v-if="streetnameNode4.length > 1"
               id="node4_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -1307,7 +1307,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1338,11 +1338,11 @@
                 x="437.52008"
                 y="719.79083"
               >
-                {{ streetnamesNode4[1] }}
+                {{ streetnameNode4[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode4.length > 1"
+              v-if="streetnameNode4.length > 1"
               id="node4_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -1358,7 +1358,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1389,7 +1389,7 @@
                 x="437.52008"
                 y="691.79083"
               >
-                {{ streetnamesNode4[0] }}
+                {{ streetnameNode4[0] }}
               </tspan>
             </text>
             <g
@@ -1649,7 +1649,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode5.length === 1"
+              v-if="streetnameNode5.length === 1"
               id="node5_strassenname_text"
               xml:space="preserve"
               style="
@@ -1683,11 +1683,11 @@
                 y="995.74023"
                 style="stroke-width: 26.4927"
               >
-                {{ streetnamesNode5[0] }}
+                {{ streetnameNode5[0] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode5.length > 1"
+              v-if="streetnameNode5.length > 1"
               id="node5_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -1721,11 +1721,11 @@
                 y="1009.7406"
                 style="stroke-width: 26.4927"
               >
-                {{ streetnamesNode5[1] }}
+                {{ streetnameNode5[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode5.length > 1"
+              v-if="streetnameNode5.length > 1"
               id="node5_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -1759,7 +1759,7 @@
                 y="981.74231"
                 style="stroke-width: 26.4927"
               >
-                {{ streetnamesNode5[0] }}
+                {{ streetnameNode5[0] }}
               </tspan>
             </text>
             <g
@@ -1970,7 +1970,7 @@
               style="stroke-width: 14.949"
             />
             <text
-              v-if="streetnamesNode6.length === 1"
+              v-if="streetnameNode6.length === 1"
               id="node6_strassenname_text"
               xml:space="preserve"
               style="
@@ -2004,7 +2004,7 @@
                 y="5.7888861"
                 style="stroke-width: 26.4927"
               >
-                {{ streetnamesNode6[0] }}
+                {{ streetnameNode6[0] }}
               </tspan>
             </text>
             <g
@@ -2054,7 +2054,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode6.length > 1"
+              v-if="streetnameNode6.length > 1"
               id="node6_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -2088,11 +2088,11 @@
                 y="19.791727"
                 style="stroke-width: 26.4927"
               >
-                {{ streetnamesNode6[1] }}
+                {{ streetnameNode6[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode6.length > 1"
+              v-if="streetnameNode6.length > 1"
               id="node6_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -2126,7 +2126,7 @@
                 y="-8.208993"
                 style="stroke-width: 26.4927"
               >
-                {{ streetnamesNode6[0] }}
+                {{ streetnameNode6[0] }}
               </tspan>
             </text>
             <g
@@ -2332,7 +2332,7 @@
               style="stroke-width: 14.949"
             />
             <text
-              v-if="streetnamesNode7.length === 1"
+              v-if="streetnameNode7.length === 1"
               id="node7_strassenname_text"
               xml:space="preserve"
               style="
@@ -2378,7 +2378,7 @@
                 x="-262.48056"
                 y="995.74023"
               >
-                {{ streetnamesNode7[0] }}
+                {{ streetnameNode7[0] }}
               </tspan>
             </text>
             <g id="node7_number">
@@ -2424,7 +2424,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode7.length > 1"
+              v-if="streetnameNode7.length > 1"
               id="node7_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -2440,7 +2440,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2470,11 +2470,11 @@
                 x="-262.48306"
                 y="1009.7406"
               >
-                {{ streetnamesNode7[1] }}
+                {{ streetnameNode7[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode7.length > 1"
+              v-if="streetnameNode7.length > 1"
               id="node7_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -2490,7 +2490,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2520,7 +2520,7 @@
                 x="-262.48306"
                 y="981.73987"
               >
-                {{ streetnamesNode7[0] }}
+                {{ streetnameNode7[0] }}
               </tspan>
             </text>
             <g
@@ -2726,7 +2726,7 @@
               style="stroke-width: 14.949"
             />
             <text
-              v-if="streetnamesNode8.length === 1"
+              v-if="streetnameNode8.length === 1"
               id="node8_strassenname_text"
               xml:space="preserve"
               style="
@@ -2742,7 +2742,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2772,7 +2772,7 @@
                 x="727.46826"
                 y="5.7913613"
               >
-                {{ streetnamesNode8[0] }}
+                {{ streetnameNode8[0] }}
               </tspan>
             </text>
             <g id="node8_number">
@@ -2818,7 +2818,7 @@
               </text>
             </g>
             <text
-              v-if="streetnamesNode8.length > 1"
+              v-if="streetnameNode8.length > 1"
               id="node8_strassenname_multirow2_text"
               xml:space="preserve"
               style="
@@ -2834,7 +2834,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2864,11 +2864,11 @@
                 x="727.47076"
                 y="19.791721"
               >
-                {{ streetnamesNode8[1] }}
+                {{ streetnameNode8[1] }}
               </tspan>
             </text>
             <text
-              v-if="streetnamesNode8.length > 1"
+              v-if="streetnameNode8.length > 1"
               id="node8_strassenname_multirow1_text"
               xml:space="preserve"
               style="
@@ -2884,7 +2884,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2914,7 +2914,7 @@
                 x="727.47076"
                 y="-8.2089996"
               >
-                {{ streetnamesNode8[0] }}
+                {{ streetnameNode8[0] }}
               </tspan>
             </text>
             <g
@@ -3456,7 +3456,7 @@ import {
   isQuerungOnKnotenarmInRichtungActive,
 } from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
-import { useStreetname } from "@/util/StrassennameUtils";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -3516,16 +3516,16 @@ const zaehlzeit2 = computed(() => {
 });
 
 const qu = useQu();
-const streetnameUtils = useStreetname();
+const strassennameUtils = useStrassennameUtils();
 
-const streetnamesNode1 = ref<Array<string>>([]);
-const streetnamesNode2 = ref<Array<string>>([]);
-const streetnamesNode3 = ref<Array<string>>([]);
-const streetnamesNode4 = ref<Array<string>>([]);
-const streetnamesNode5 = ref<Array<string>>([]);
-const streetnamesNode6 = ref<Array<string>>([]);
-const streetnamesNode7 = ref<Array<string>>([]);
-const streetnamesNode8 = ref<Array<string>>([]);
+const streetnameNode1 = ref<Array<string>>([]);
+const streetnameNode2 = ref<Array<string>>([]);
+const streetnameNode3 = ref<Array<string>>([]);
+const streetnameNode4 = ref<Array<string>>([]);
+const streetnameNode5 = ref<Array<string>>([]);
+const streetnameNode6 = ref<Array<string>>([]);
+const streetnameNode7 = ref<Array<string>>([]);
+const streetnameNode8 = ref<Array<string>>([]);
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -3879,28 +3879,28 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
 }
 
 onMounted(() => {
-  streetnamesNode1.value = streetnameUtils.getStreetname(
+  streetnameNode1.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
-  streetnamesNode2.value = streetnameUtils.getStreetname(
+  streetnameNode2.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
   );
-  streetnamesNode3.value = streetnameUtils.getStreetname(
+  streetnameNode3.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
   );
-  streetnamesNode4.value = streetnameUtils.getStreetname(
+  streetnameNode4.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
   );
-  streetnamesNode5.value = streetnameUtils.getStreetname(
+  streetnameNode5.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
   );
-  streetnamesNode6.value = streetnameUtils.getStreetname(
+  streetnameNode6.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
   );
-  streetnamesNode7.value = streetnameUtils.getStreetname(
+  streetnameNode7.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
   );
-  streetnamesNode8.value = streetnameUtils.getStreetname(
+  streetnameNode8.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 
@@ -3918,28 +3918,28 @@ watch(
     () => activeZaehlung.value.knotenarme,
   ],
   async () => {
-    streetnamesNode1.value = streetnameUtils.getStreetname(
+    streetnameNode1.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
     );
-    streetnamesNode2.value = streetnameUtils.getStreetname(
+    streetnameNode2.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
     );
-    streetnamesNode3.value = streetnameUtils.getStreetname(
+    streetnameNode3.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
     );
-    streetnamesNode4.value = streetnameUtils.getStreetname(
+    streetnameNode4.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
     );
-    streetnamesNode5.value = streetnameUtils.getStreetname(
+    streetnameNode5.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
     );
-    streetnamesNode6.value = streetnameUtils.getStreetname(
+    streetnameNode6.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
     );
-    streetnamesNode7.value = streetnameUtils.getStreetname(
+    streetnameNode7.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
     );
-    streetnamesNode8.value = streetnameUtils.getStreetname(
+    streetnameNode8.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
     );
 

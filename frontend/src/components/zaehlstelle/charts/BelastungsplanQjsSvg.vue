@@ -1070,7 +1070,7 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
-import { useStreetname } from "@/util/StrassennameUtils";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanQjsDTO;
@@ -1089,7 +1089,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const qjs = useQjs();
-const streetnameUtils = useStreetname();
+const strassennameUtils = useStrassennameUtils();
 
 const firstStreetname = ref<Array<string>>([]);
 const svgRef = ref<SVGSVGElement | null>(null);
@@ -1423,7 +1423,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  firstStreetname.value = streetnameUtils.getStreetname(
+  firstStreetname.value = strassennameUtils.getStreetLines(
     first(availableKnotenarme.value)
   );
 
@@ -1447,7 +1447,7 @@ watch(
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
   async () => {
-    firstStreetname.value = streetnameUtils.getStreetname(
+    firstStreetname.value = strassennameUtils.getStreetLines(
       first(availableKnotenarme.value)
     );
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird

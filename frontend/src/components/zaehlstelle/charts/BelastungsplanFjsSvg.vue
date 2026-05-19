@@ -1509,7 +1509,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1601,7 +1601,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1651,7 +1651,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2119,7 +2119,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2210,7 +2210,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2259,7 +2259,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2308,7 +2308,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 white-space: pre;
                 display: inline;
                 fill: #000000;
@@ -3881,7 +3881,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -3973,7 +3973,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4023,7 +4023,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4491,7 +4491,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4583,7 +4583,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4633,7 +4633,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -5103,6 +5103,7 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -5121,6 +5122,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const fjs = useFjs();
+const strassennameUtils = useStrassennameUtils();
 
 const streetnameNodeOne = ref<Array<string>>([]);
 const streetnameNodeTwo = ref<Array<string>>([]);
@@ -5872,28 +5874,28 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  streetnameNodeOne.value = fjs.getStreetname(
+  streetnameNodeOne.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
-  streetnameNodeTwo.value = fjs.getStreetname(
+  streetnameNodeTwo.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
   );
-  streetnameNodeThree.value = fjs.getStreetname(
+  streetnameNodeThree.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
   );
-  streetnameNodeFour.value = fjs.getStreetname(
+  streetnameNodeFour.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
   );
-  streetnameNodeFive.value = fjs.getStreetname(
+  streetnameNodeFive.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
   );
-  streetnameNodeSix.value = fjs.getStreetname(
+  streetnameNodeSix.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
   );
-  streetnameNodeSeven.value = fjs.getStreetname(
+  streetnameNodeSeven.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
   );
-  streetnameNodeEight.value = fjs.getStreetname(
+  streetnameNodeEight.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 });
@@ -5907,28 +5909,28 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    streetnameNodeOne.value = fjs.getStreetname(
+    streetnameNodeOne.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
     );
-    streetnameNodeTwo.value = fjs.getStreetname(
+    streetnameNodeTwo.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
     );
-    streetnameNodeThree.value = fjs.getStreetname(
+    streetnameNodeThree.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
     );
-    streetnameNodeFour.value = fjs.getStreetname(
+    streetnameNodeFour.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
     );
-    streetnameNodeFive.value = fjs.getStreetname(
+    streetnameNodeFive.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
     );
-    streetnameNodeSix.value = fjs.getStreetname(
+    streetnameNodeSix.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
     );
-    streetnameNodeSeven.value = fjs.getStreetname(
+    streetnameNodeSeven.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
     );
-    streetnameNodeEight.value = fjs.getStreetname(
+    streetnameNodeEight.value = strassennameUtils.getStreetLines(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
     );
     await nextTick();
