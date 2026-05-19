@@ -3878,7 +3878,7 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
   return svgString;
 }
 
-onMounted(() => {
+function setStreetnameNodes() {
   streetnameNode1.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
@@ -3903,7 +3903,10 @@ onMounted(() => {
   streetnameNode8.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
+}
 
+onMounted(() => {
+  setStreetnameNodes();
   zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
   );
@@ -3918,31 +3921,7 @@ watch(
     () => activeZaehlung.value.knotenarme,
   ],
   async () => {
-    streetnameNode1.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-    );
-    streetnameNode2.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-    );
-    streetnameNode3.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-    );
-    streetnameNode4.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-    );
-    streetnameNode5.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-    );
-    streetnameNode6.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-    );
-    streetnameNode7.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-    );
-    streetnameNode8.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-    );
-
+    setStreetnameNodes();
     await nextTick();
 
     emitSvgAsBlob();

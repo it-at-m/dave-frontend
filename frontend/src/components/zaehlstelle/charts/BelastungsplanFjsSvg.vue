@@ -5867,13 +5867,7 @@ function isArrowAvailable(
   );
 }
 
-onMounted(() => {
-  zaehlstelleStore.setSizeBelastungsplanSvg(
-    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
-  );
-  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
-  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
-
+function setStreetnameNodes() {
   streetnameNodeOne.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
@@ -5898,6 +5892,16 @@ onMounted(() => {
   streetnameNodeEight.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
+}
+
+onMounted(() => {
+  zaehlstelleStore.setSizeBelastungsplanSvg(
+    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
+  );
+  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
+
+  setStreetnameNodes();
 });
 
 watch(
@@ -5909,30 +5913,7 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    streetnameNodeOne.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-    );
-    streetnameNodeTwo.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-    );
-    streetnameNodeThree.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-    );
-    streetnameNodeFour.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-    );
-    streetnameNodeFive.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-    );
-    streetnameNodeSix.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-    );
-    streetnameNodeSeven.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-    );
-    streetnameNodeEight.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-    );
+    setStreetnameNodes();
     await nextTick();
 
     emitSvgAsBlob();
