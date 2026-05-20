@@ -25,8 +25,8 @@ export function useStrassennameUtils() {
     const lastSpaceBefore = strasse.lastIndexOf(" ");
     if (lastSpaceBefore > 0 && lastSpaceBefore < strasse.length - 1) {
       return [
-        strasse.substring(0, lastSpaceBefore + 1).trim(),
-        strasse.substring(lastSpaceBefore + 1).trim(),
+        strasse.substring(0, lastSpaceBefore + 1),
+        strasse.substring(lastSpaceBefore + 1),
       ];
     }
 
@@ -43,6 +43,7 @@ export function useStrassennameUtils() {
       "allee",
       "ring",
       "weg",
+      "bruecke",
       "brücke",
       "damm",
     ];
@@ -53,7 +54,7 @@ export function useStrassennameUtils() {
           const value = strasse.substring(0, idx).trim();
           return [
             value.endsWith("-") ? value : value + "-",
-            strasse.substring(idx).trim(),
+            strasse.substring(idx),
           ];
         }
       }
@@ -63,8 +64,8 @@ export function useStrassennameUtils() {
     const hyphenPos = strasse.indexOf("-");
     if (hyphenPos > 0 && hyphenPos < strasse.length - 1) {
       return [
-        strasse.substring(0, hyphenPos + 1).trim(), // Bindestrich am Ende der ersten Zeile
-        strasse.substring(hyphenPos + 1).trim(),
+        strasse.substring(0, hyphenPos + 1), // Bindestrich am Ende der ersten Zeile
+        strasse.substring(hyphenPos + 1),
       ];
     }
 
@@ -113,37 +114,54 @@ export function useStrassennameUtils() {
   }
 
   /**
+   * Zerlegt die übergebenen Straßennamen-Zeilen in Token inklusive nachfolgender Trenner.
+   *
+   * @param streetnameTokens Array von Zeilen-Strings (typischerweise das Ergebnis von getStreetname),
+   *                         die zusammen verarbeitet werden sollen.
+   * @returns Array von Strings, wobei jedes Element ein Token eventuell inklusive des
+   *          unmittelbar darauf folgenden Trenners (Leerzeichen oder Bindestrich) ist.
+   */
+  function getAllToken(streetnameTokens: string[]) {
+    return streetnameTokens.flatMap((line) => {
+      const tokensWithSeparators = [];
+      let currentToken = "";
+
+      for (const char of line) {
+        if (char === " " || char === "-") {
+          if (currentToken) {
+            tokensWithSeparators.push(currentToken + char);
+            currentToken = "";
+          } else {
+            currentToken += char;
+          }
+        } else {
+          currentToken += char;
+        }
+      }
+
+      if (currentToken) {
+        tokensWithSeparators.push(currentToken);
+      }
+
+      return tokensWithSeparators;
+    });
+  }
+
+  /**
    * Gleicht die Länge zweier Zeilen eines String-Arrays, so dass beide Zeilen
    * in etwa gleich lang sind und ganze Token (Wörter ohne Trenner) verwendet werden.
    *
    * @param streetnameTokens Array mit einem oder zwei Teilen, wie von getStreetname geliefert.
    *                         Falls nur ein Element vorhanden ist, wird dieses unverändert zurückgegeben.
-   * @param separator        Der Trenner, der beim Zusammensetzen der Token verwendet werden soll
-   *                         (Standard: ein Leerzeichen). Falls die ursprüngliche erste Zeile mit
-   *                         einem Trenner endete, wird genau dieser Trenner am Ende der ersten
-   *                         Zeile wieder angehängt.
    * @returns Array mit genau zwei Strings: [ersteZeile, zweiteZeile]. Bei kurzeren Eingaben kann
    *          die zweite Zeile leer sein.
    */
-  function balanceLines(streetnameTokens: string[], separator = " ") {
+  function balanceLines(streetnameTokens: string[]) {
     // Wenn getStreetname.maxChars nicht überschritten wird
     if (streetnameTokens.length === 1) return streetnameTokens;
 
-    const firstLine = streetnameTokens[0];
-    // Prüfe, ob die erste Zeile mit einem Trenner endet
-    const firstLineEndsWithSeparator = /[ -]$/.test(firstLine);
-    const separatorAtEnd = firstLineEndsWithSeparator
-      ? firstLine.slice(-1)
-      : "";
-
-    // Extrahiere alle Token (ohne Trenner am Ende der ersten Zeile)
-    const allTokens = streetnameTokens.flatMap((line) =>
-      line
-        .replace(/[ -]$/, "")
-        .split(/[ -]+/)
-        .filter((token) => token.length > 0)
-    );
-
+    // Extrahiere alle Token (mit Trenner)
+    const allTokens = getAllToken(streetnameTokens);
     // Ziel: beide Zeilen sollen so kurz wie möglich und gleich lang sein
     let bestSplitIndex = 0;
     let minMaxLength = Infinity;
@@ -165,40 +183,9 @@ export function useStrassennameUtils() {
     }
 
     // Erstelle die beiden Zeilen mit dem angegebenen Trenner
-    let firstLineResult = allTokens.slice(0, bestSplitIndex).join(separator);
-    const secondLineResult = allTokens.slice(bestSplitIndex).join(separator);
-
-    // Füge den Trenner am Ende der ersten Zeile hinzu, falls er im Input vorhanden war
-    if (firstLineEndsWithSeparator) {
-      firstLineResult += separatorAtEnd;
-    }
-
+    const firstLineResult = allTokens.slice(0, bestSplitIndex).join("");
+    const secondLineResult = allTokens.slice(bestSplitIndex).join("");
     return [firstLineResult, secondLineResult];
-  }
-
-  /**
-   * Bestimmt den häufiger verwendeten Trenner in einem Array von Zeilen-Strings.
-   *
-   * Diese Hilfsfunktion zählt die Anzahl von Leerzeichen und Bindestrichen in allen
-   * Eingabezeilen. Gibt als Ergebnis entweder ein Leerzeichen (" ") oder einen Bindestrich ("-")
-   * zurück. Bei Gleichstand oder wenn keine Bindestriche vorhanden sind, wird standardmäßig
-   * das Leerzeichen zurückgegeben.
-   *
-   * @param array Array von Strings, typischerweise die Zeilen-Teile aus getStreetname
-   * @returns Der am häufigsten vorkommende Trenner: entweder " " (Leerzeichen) oder "-" (Bindestrich).
-   */
-  function getMostFrequentSeparator(array: string[]) {
-    let spaceCount = 0;
-    let dashCount = 0;
-
-    for (const line of array) {
-      // Zähle Leerzeichen
-      spaceCount += (line.match(/ /g) || []).length;
-      // Zähle Bindestriche
-      dashCount += (line.match(/-/g) || []).length;
-    }
-
-    return spaceCount >= dashCount ? " " : "-";
   }
 
   /**
@@ -211,7 +198,7 @@ export function useStrassennameUtils() {
     maxChars?: number
   ): Array<string> {
     const pieces = getStreetname(knotenarm, maxChars);
-    return balanceLines(pieces, getMostFrequentSeparator(pieces));
+    return balanceLines(pieces);
   }
 
   return {

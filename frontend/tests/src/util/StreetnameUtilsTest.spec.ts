@@ -1,8 +1,7 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-
 import { describe, expect, it } from "vitest";
-
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
+
 
 describe("StrassennamenUtils", () => {
   // getStreetname ------------------------------------
@@ -56,7 +55,7 @@ describe("StrassennamenUtils", () => {
     const { getStreetLines } = useStrassennameUtils();
     const long = "Platz der Opfer des Nationalsozialismus";
     const res = getStreetLines({ strassenname: long } as any);
-    expect(res[0]).toBe("Platz der Opfer des");
+    expect(res[0]).toBe("Platz der Opfer des ");
     expect(res[1]).toBe("Nationalsozialismus");
   });
 
@@ -116,6 +115,38 @@ describe("StrassennamenUtils", () => {
     expect(res[1]).toBe("Fassbinder-Pl.");
   });
 
+  it("getStreetLines: Rainer-Werner Fassbinder Pl.", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const long = "Rainer-Werner Fassbinder Pl.";
+    const res = getStreetLines({ strassenname: long } as any);
+    expect(res[0]).toBe("Rainer-Werner ");
+    expect(res[1]).toBe("Fassbinder Pl.");
+  });
+
+  it("getStreetLines: Rainer Werner-Fassbinder Pl.", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const long = "Rainer Werner-Fassbinder Pl.";
+    const res = getStreetLines({ strassenname: long } as any);
+    expect(res[0]).toBe("Rainer Werner-");
+    expect(res[1]).toBe("Fassbinder Pl.");
+  });
+
+  it("getStreetLines: Rainer Werner-Fassbinder-Pl.", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const long = "Rainer Werner-Fassbinder-Pl.";
+    const res = getStreetLines({ strassenname: long } as any);
+    expect(res[0]).toBe("Rainer Werner-");
+    expect(res[1]).toBe("Fassbinder-Pl.");
+  });
+
+  it("getStreetLines: Luise-Kiesselbach-Platz (Tunneleinfahrt)", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const long = "Luise-Kiesselbach-Platz (Tunneleinfahrt)";
+    const res = getStreetLines({ strassenname: long } as any);
+    expect(res[0]).toBe("Luise-Kiesselbach-");
+    expect(res[1]).toBe("Platz (Tunneleinfahrt)");
+  });
+
   it("getStreetLines: langer Straßename mit 'Str.' wird gesplittet", () => {
     const { getStreetLines } = useStrassennameUtils();
     const long = "Adalbert-Stifter-Str.";
@@ -136,7 +167,7 @@ describe("StrassennamenUtils", () => {
     // length > 20 -> should split at first space
     const res = getStreetLines({ strassenname: longWithSpace } as any);
     expect(res.length).toBe(2);
-    expect(res[0]).toBe("VeryLongStreetname");
+    expect(res[0]).toBe("VeryLongStreetname ");
     expect(res[1]).toBe("ExampleStreet");
   });
 
@@ -152,21 +183,6 @@ describe("StrassennamenUtils", () => {
     expect(res[0].endsWith("-")).toBe(true);
     // Der zweite Teil ist alles hinter dem Bindestrich
     expect(res[1]).toBe("TeilRest");
-  });
-
-  it("getStreetLines: wenn sowohl Bindestrich als auch Leerzeichen vorhanden sind, hat der Bindestrich Vorrang", () => {
-    const { getStreetLines } = useStrassennameUtils();
-    // Enthält sowohl "-" als auch " ", Länge > 20 -> erwartet Split am Bindestrich
-    const both = "SehrLanger-Teil MitWeiterem";
-    expect(both.length).toBeGreaterThan(20);
-
-    const res = getStreetLines({ strassenname: both } as any);
-
-    expect(res.length).toBe(2);
-    // Überprüfe, dass tatsächlich am Bindestrich geteilt wurde
-    expect(res[0]).toBe("SehrLanger-Teil");
-    // Der zweite Teil darf keine führenden Leerzeichen haben (es ist das direkte Substring nach "-")
-    expect(res[1]).toBe("MitWeiterem");
   });
 
   it("getStreetLines: undefined knotenarm liefert ein Array mit einem leeren String", () => {
