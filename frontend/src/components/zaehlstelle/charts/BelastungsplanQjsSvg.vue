@@ -501,7 +501,7 @@
                 stroke-width: 2.2868;
               `"
               x="100.26942"
-              y="83.035934"
+              y="84.035934"
             >
               <tspan
                 :style="`
@@ -529,14 +529,14 @@
                 fill: none;
                 fill-opacity: 1;
                 stroke: #666666;
-                stroke-width: 1.73910624;
+                stroke-width: 1.99499999;
                 stroke-linecap: butt;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               "
               id="compass2"
-              d="m 107.4337,29.986817 13.91905,63.782102 H 106.06633 93.514636 Z"
+              d="m 107.4337,29.984176 13.9217,63.312817 H 106.06607 93.511995 Z"
             />
           </g>
           <g id="legend-zaehlstelle">
@@ -549,7 +549,7 @@
                 :style="`
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: normal;
+                  font-weight: bold;
                   font-stretch: normal;
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-family: ${BelastungsplanConstants.fontfamily};
@@ -577,13 +577,9 @@
                   y="60.337341"
                   id="tspan16"
                 >
-                  <tspan
-                    style="font-weight: bold"
-                    id="tspan15"
-                  >
+
                     Zählstelle
                     {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
-                  </tspan>
                 </tspan>
               </text>
             </g>
@@ -618,11 +614,11 @@
                 `"
                 id="zaehlstelle2-multirow"
                 x="1107.2496"
-                y="86.837341"
+                y="85.837341"
               >
                 <tspan
                   x="1107.2496"
-                  y="86.837341"
+                  y="85.837341"
                   id="tspan17"
                 >
                   Stadtbezirk
@@ -677,11 +673,11 @@
                 `"
                 id="zaehlzeit1-multirow"
                 x="56.249691"
-                y="1231.3373"
+                y="1230.3373"
               >
                 <tspan
                   x="56.249691"
-                  y="1231.3373"
+                  y="1230.3373"
                   id="tspan23"
                 >
                   <tspan
@@ -781,7 +777,7 @@
               :style="`
                 fill: none;
                 stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 1.51785;
+                stroke-width: 1.99499999;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
