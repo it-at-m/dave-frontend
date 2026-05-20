@@ -480,7 +480,7 @@
         <g id="legend">
           <g id="legend-compass">
             <text
-              xml:space="preserve"
+              xml:space="default"
               id="compass1"
               :style="`
                 font-style: normal;
