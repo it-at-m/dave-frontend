@@ -177,7 +177,7 @@
           />
           <text
             id="compass1"
-            xml:space="preserve"
+            xml:space="default"
             :style="`
               font-style: normal;
               font-variant: normal;
@@ -349,7 +349,7 @@
             />
             <g id="node1_number">
               <circle
-                id="node1_circle"
+                id="node1_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -365,7 +365,7 @@
               />
               <text
                 id="node1_circle_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -976,7 +976,7 @@
               />
               <text
                 id="node2_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -1560,7 +1560,7 @@
               />
               <text
                 id="node3_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -2169,7 +2169,7 @@
               />
               <text
                 id="node4_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -2728,7 +2728,7 @@
               />
               <text
                 id="node5_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -3343,7 +3343,7 @@
               />
               <text
                 id="node6_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -3930,7 +3930,7 @@
               />
               <text
                 id="node7_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
@@ -4540,7 +4540,7 @@
               />
               <text
                 id="node8_number_text"
-                xml:space="preserve"
+                xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   family: ${BelastungsplanConstants.fontfamily};
