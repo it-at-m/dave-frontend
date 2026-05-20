@@ -30,7 +30,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -63,7 +63,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -192,7 +192,7 @@
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth};
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
                 font-familiy: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -226,7 +226,7 @@
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth};
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
                 font-familiy: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -261,7 +261,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -295,7 +295,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -339,7 +339,7 @@
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-family: ${belastungsplanMethods.maxlineWidth};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -375,7 +375,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -409,7 +409,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -448,7 +448,7 @@
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -487,7 +487,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth};
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
                 font-family: sans-serif;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -501,7 +501,7 @@
                 stroke-width: 2.2868;
               `"
               x="100.26942"
-              y="84.035934"
+              y="83.035934"
             >
               <tspan
                 :style="`
@@ -509,7 +509,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -551,7 +551,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -599,7 +599,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -618,11 +618,11 @@
                 `"
                 id="zaehlstelle2-multirow"
                 x="1107.2496"
-                y="85.837341"
+                y="86.837341"
               >
                 <tspan
                   x="1107.2496"
-                  y="85.837341"
+                  y="86.837341"
                   id="tspan17"
                 >
                   Stadtbezirk
@@ -658,7 +658,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -704,7 +704,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -741,7 +741,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth};
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
                 font-familiy: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -814,7 +814,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -856,7 +856,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth};
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-familiy: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
