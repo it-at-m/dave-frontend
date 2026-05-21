@@ -199,7 +199,6 @@ describe("StrassennamenUtils", () => {
   it("getStreetLines: langer Name mit Leerzeichen (> 17 Zeichen) wird am ersten Leerzeichen gesplittet", () => {
     const { getStreetLines } = useStrassennameUtils();
     const longWithSpace = "VeryLongStreetname ExampleStreet";
-    // length > 20 -> should split at first space
     const res = getStreetLines({ strassenname: longWithSpace } as any);
     expect(res.length).toBe(2);
     expect(res[0]).toBe("VeryLongStreetname ");
