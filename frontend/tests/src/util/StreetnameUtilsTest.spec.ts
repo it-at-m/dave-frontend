@@ -1,5 +1,11 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+
+
+
 import { describe, expect, it } from "vitest";
+
+
+
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 
@@ -155,13 +161,42 @@ describe("StrassennamenUtils", () => {
     expect(res[1]).toBe("Stifter-Str.");
   });
 
-  it("getStreetLines: kurzer Name mit Leerzeichen (<= 20 Zeichen) bleibt ein Element", () => {
+  it("getStreetLines: Name mit Blank am Ende 18 Zeichen bleibt ein Element", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau18ZeichMiBla " } as any);
+    expect(res.length).toEqual(1);
+    expect(res).toEqual(["Genau18ZeichMiBla"]);
+  });
+
+  it("getStreetLines: Name ohne Blank am Ende 17 Zeichen bleibt ein Element", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau17ZeichenOhn" } as any);
+    expect(res.length).toEqual(1);
+    expect(res).toEqual(["Genau17ZeichenOhn"]);
+  });
+
+  it("getStreetLines: Name mit Leerzeichentrenner und Blank am Ende 18 Zeichen bleibt ein Element", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau18Zeic MiBla " } as any);
+    expect(res.length).toEqual(1);
+    expect(res).toEqual(["Genau18Zeic MiBla"]);
+  });
+
+  it("getStreetLines: Name mit Leerzeichentrenner und Blank am Ende 20 Zeichen wird getrennt", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau20Zeic MiBla F" } as any);
+    expect(res.length).toEqual(2);
+    expect(res[0]).toBe("Genau20Zeic ");
+    expect(res[1]).toBe("MiBla F");
+  });
+
+  it("getStreetLines: kurzer Name mit Leerzeichen (<= 17 Zeichen) bleibt ein Element", () => {
     const { getStreetLines } = useStrassennameUtils();
     const res = getStreetLines({ strassenname: "Kleine Allee" } as any);
     expect(res).toEqual(["Kleine Allee"]);
   });
 
-  it("getStreetLines: langer Name mit Leerzeichen (> 20 Zeichen) wird am ersten Leerzeichen gesplittet", () => {
+  it("getStreetLines: langer Name mit Leerzeichen (> 17 Zeichen) wird am ersten Leerzeichen gesplittet", () => {
     const { getStreetLines } = useStrassennameUtils();
     const longWithSpace = "VeryLongStreetname ExampleStreet";
     // length > 20 -> should split at first space
