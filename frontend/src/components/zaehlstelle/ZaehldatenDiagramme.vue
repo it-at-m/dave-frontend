@@ -65,7 +65,8 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
-                !isFJSZaehlung
+                !isFJSZaehlung &&
+                !isQUZaehlung
               "
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanDTO"
@@ -86,7 +87,8 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQJSZaehlung &&
-                !isFJSZaehlung
+                !isFJSZaehlung &&
+                !isQUZaehlung
               "
               :dimension="contentHeight"
               :data="belastungsplanDTO"
@@ -98,7 +100,21 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
+                !isQUZaehlung &&
                 isFJSZaehlung
+              "
+              :dimension="contentHeight"
+              :data="belastungsplanDTO"
+              @print="storeSvg($event)"
+              @print-schema="storeSvgSchematischeUebersicht($event)"
+            />
+
+            <belastungsplan-qu-svg
+              v-if="
+                !belastungsplanDTO.kreisverkehr &&
+                isQUZaehlung &&
+                !isQJSZaehlung &&
+                !isFJSZaehlung
               "
               :dimension="contentHeight"
               :data="belastungsplanDTO"
@@ -170,6 +186,7 @@
           <zeitreihe-card
             ref="zeitreiheCard"
             :zaehldaten-zeitreihe="zaehldatenZeitreihe"
+            :is-tab-zeitreihe-active="activeTab === TAB_ZEITREIHE"
           />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
@@ -192,7 +209,7 @@
     <belastungsplan-kreuzung-svg-schematische-uebersicht
       v-if="drawSchematischeUebersicht"
       :dimension="contentHeight"
-      :data="belastungsplanDTO as LadeBelastungsplanDTO"
+      :data="belastungsplanDTO"
       :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
@@ -228,6 +245,7 @@ import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/Belastungsplan
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
+import BelastungsplanQuSvg from "@/components/zaehlstelle/charts/BelastungsplanQuSvg.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -310,6 +328,10 @@ const globalInfoMessage = useGlobalInfoMessage();
 
 const isQJSZaehlung = computed<boolean>(() => {
   return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS;
+});
+
+const isQUZaehlung = computed<boolean>(() => {
+  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QU;
 });
 
 const isFJSZaehlung = computed<boolean>(() => {

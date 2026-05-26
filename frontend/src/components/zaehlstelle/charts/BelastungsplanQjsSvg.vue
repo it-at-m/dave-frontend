@@ -764,7 +764,7 @@
               transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
             />
             <text
-              xml:space="preserve"
+              xml:space="default"
               id="compass1"
               style="
                 font-style: normal;
@@ -1071,6 +1071,7 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useBlp } from "@/util/BlpUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
+import { useStreetname } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanQjsDTO;
@@ -1089,7 +1090,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const qjs = useQjs();
-const blp = useBlp();
+const streetnameUtils = useStreetname();
 
 const firstStreetname = ref<Array<string>>([]);
 const svgRef = ref<SVGSVGElement | null>(null);
@@ -1423,7 +1424,9 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  firstStreetname.value = blp.getStreetname(first(availableKnotenarme.value));
+  firstStreetname.value = streetnameUtils.getStreetname(
+    first(availableKnotenarme.value)
+  );
 
   // Berechnet Anker aus der gesamten Gruppe (Rumpf + Spitze)
   if (groupRefArrowOne.value)
@@ -1445,7 +1448,9 @@ watch(
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
   async () => {
-    firstStreetname.value = blp.getStreetname(first(availableKnotenarme.value));
+    firstStreetname.value = streetnameUtils.getStreetname(
+      first(availableKnotenarme.value)
+    );
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
     // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
     await nextTick();
