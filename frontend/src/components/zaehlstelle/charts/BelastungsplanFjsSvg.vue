@@ -27,13 +27,13 @@
           <text
             id="verkehrsart"
             xml:space="preserve"
-            style="
+            :style="`
               font-style: normal;
               font-variant: normal;
               font-weight: normal;
               font-stretch: normal;
-              font-size: 19.7556px;
-              font-family: sans-serif;
+              font-size: ${belastungsplanMethods.maxlineWidth};
+              font-family: ${BelastungsplanConstants.fontfamily};
               font-variant-ligatures: normal;
               font-variant-caps: normal;
               font-variant-numeric: normal;
@@ -48,7 +48,7 @@
               fill: #000000;
               stroke-width: 28.2205;
               stroke-dasharray: none;
-            "
+            `"
             x="168.24969"
             y="1230.3373"
             transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
@@ -74,13 +74,13 @@
             <text
               id="zaehlzeit2-multirow"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 19.7556px;
-                font-family: sans-serif;
+                font-size: ${belastungsplanMethods.maxlineWidth};
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -95,7 +95,7 @@
                 fill: #000000;
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
-              "
+              `"
               x="168"
               y="1210"
             >
@@ -115,13 +115,13 @@
             <text
               id="zaehlzeit1-multirow"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 19.7556px;
-                font-family: sans-serif;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -136,7 +136,7 @@
                 fill: #000000;
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
-              "
+              `"
               x="168.24969"
               y="1190.3373"
               transform="translate(-150.84646,0.00360406)"
@@ -178,13 +178,13 @@
           <text
             id="compass1"
             xml:space="default"
-            style="
+            :style="`
               font-style: normal;
               font-variant: normal;
               font-weight: normal;
               font-stretch: normal;
-              font-size: 24.6944px;
-              font-family: RomanD;
+              font-size: ${belastungsplanMethods.maxlineWidth}px;
+              font-family: ${BelastungsplanConstants.fontfamily};
               font-variant-ligatures: normal;
               font-variant-caps: normal;
               font-variant-numeric: normal;
@@ -195,25 +195,25 @@
               text-anchor: start;
               fill: #000000;
               stroke-width: 2.2868;
-            "
+            `"
             x="141.28041"
             y="93.924416"
           >
             <tspan
               id="tspan6-1"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 24.6944px;
-                font-family: RomanD;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
                 stroke-width: 2.2868;
-              "
+              `"
             >
               N
             </tspan>
@@ -232,13 +232,13 @@
               v-if="zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer"
               id="zaehlstelle2-multirow"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 19.7556px;
-                font-family: sans-serif;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -253,7 +253,7 @@
                 fill: #000000;
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
-              "
+              `"
               x="699.24969"
               y="688.33734"
               transform="translate(324.11416)"
@@ -288,13 +288,13 @@
             <text
               id="zaehlstelle1-multirow"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 19.7556px;
-                font-family: sans-serif;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -309,7 +309,7 @@
                 fill: #000000;
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
-              "
+              `"
               x="699.24969"
               y="688.33734"
               transform="translate(324.11217)"
@@ -364,23 +364,23 @@
                 r="11.951238"
               />
               <text
-                id="node1_number_text"
+                id="node1_circle_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="622.00684"
                 x="693.53955"
               >
                 <tspan
-                  id="node1_number_tspan"
+                  id="node1_circle_tspan"
                   style="stroke-width: 30.9229"
                   x="693.53955"
                   y="622.00684"
@@ -393,13 +393,13 @@
               v-if="streetnameNodeOne.length === 1"
               id="node1_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -413,7 +413,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-90)"
               x="-671.03851"
               y="629.34802"
@@ -431,13 +431,13 @@
               v-if="streetnameNodeOne.length > 1"
               id="node1_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -451,7 +451,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-90)"
               x="-671.03851"
               y="643.34802"
@@ -469,13 +469,13 @@
               v-if="streetnameNodeOne.length > 1"
               id="node1_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -489,7 +489,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-90)"
               x="-671.03851"
               y="615.34802"
@@ -507,13 +507,13 @@
               id="node1_sum_text"
               xml:space="preserve"
               transform="matrix(0,-0.86675092,1.153734,0,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -526,7 +526,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9645;
-              "
+              `"
               x="-1207.2531"
               y="-171.53365"
             >
@@ -534,19 +534,19 @@
                 id="node1_sum_tspan"
                 x="-49.797398"
                 y="616.65149"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9645;
-                "
+                `"
               >
                 {{ sumNodeOneArrows }}
               </tspan>
@@ -575,13 +575,13 @@
                 id="arrow_node1_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -594,7 +594,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1206.5183"
                 y="-259.38544"
               >
@@ -602,19 +602,19 @@
                   id="arrow_node1_west_incoming_number_tspan"
                   x="-49.490978"
                   y="528.50812"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeOneWestIncoming }}
                 </tspan>
@@ -624,13 +624,13 @@
                 id="arrow_node1_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -643,7 +643,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1206.5183"
                 y="-230.55521"
               >
@@ -651,19 +651,19 @@
                   id="arrow_node1_west_outgoing_number_tspan"
                   x="-49.490978"
                   y="557.33826"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeOneWestOutgoing }}
                 </tspan>
@@ -676,13 +676,13 @@
                 id="arrows_node1_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -695,7 +695,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-1207.2521"
                 y="-203.73477"
               >
@@ -703,19 +703,19 @@
                   id="arrows_node1_west_sum_tspan"
                   x="-49.797356"
                   y="584.45007"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeOneWest }}
                 </tspan>
@@ -752,13 +752,13 @@
                 id="arrow_node1_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -771,7 +771,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1206.5183"
                 y="-115.23471"
               >
@@ -779,19 +779,19 @@
                   id="arrow_node1_east_incoming_number_tspan"
                   x="-49.490978"
                   y="672.65881"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeOneEastIncoming }}
                 </tspan>
@@ -801,13 +801,13 @@
                 id="arrow_node1_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -820,7 +820,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1206.5183"
                 y="-86.404541"
               >
@@ -828,19 +828,19 @@
                   id="arrow_node1_east_outgoing_number_tspan"
                   x="-49.490978"
                   y="701.48889"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeOneEastOutgoing }}
                 </tspan>
@@ -853,13 +853,13 @@
                 id="arrows_node1_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -872,7 +872,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-1207.2521"
                 y="-59.637333"
               >
@@ -880,19 +880,19 @@
                   id="arrows_node1_east_sum_tspan"
                   x="-49.797356"
                   y="728.54749"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeOneEast }}
                 </tspan>
@@ -925,13 +925,13 @@
               v-if="streetnameNodeTwo.length === 1"
               id="node2_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -945,7 +945,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="728.96271"
               y="629.34802"
             >
@@ -977,16 +977,16 @@
               <text
                 id="node2_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="707.33368"
                 x="779.30457"
               >
@@ -1004,13 +1004,13 @@
               v-if="streetnameNodeTwo.length > 1"
               id="node2_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1024,7 +1024,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="728.96271"
               y="643.34802"
             >
@@ -1041,13 +1041,13 @@
               v-if="streetnameNodeTwo.length > 1"
               id="node2_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1061,7 +1061,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="728.96271"
               y="615.34802"
             >
@@ -1078,13 +1078,13 @@
               id="node2_sum_text"
               xml:space="preserve"
               transform="scale(0.86675092,1.153734)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1097,7 +1097,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9645;
-              "
+              `"
               x="407.97421"
               y="-171.52608"
             >
@@ -1105,19 +1105,19 @@
                 id="node2_sum_tspan"
                 x="1565.4299"
                 y="616.65906"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9645;
-                "
+                `"
               >
                 {{ sumNodeTwoArrows }}
               </tspan>
@@ -1146,13 +1146,13 @@
                 id="arrow_node2_north_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1165,7 +1165,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="406.98672"
                 y="-259.38541"
               >
@@ -1173,19 +1173,19 @@
                   id="arrow_node2_north_incoming_number_tspan"
                   x="1564.014"
                   y="528.50812"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeTwoNorthIncoming }}
                 </tspan>
@@ -1195,13 +1195,13 @@
                 id="arrow_node2_north_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1214,7 +1214,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="406.98672"
                 y="-230.55528"
               >
@@ -1222,19 +1222,19 @@
                   id="arrow_node2_north_outgoing_number_tspan"
                   x="1564.014"
                   y="557.33826"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeTwoNorthOutgoing }}
                 </tspan>
@@ -1247,13 +1247,13 @@
                 id="arrows_node2_north_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1266,7 +1266,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="407.97394"
                 y="-203.73479"
               >
@@ -1274,19 +1274,19 @@
                   id="arrows_node2_north_sum_tspan"
                   x="1565.4286"
                   y="584.45001"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeTwoNorth }}
                 </tspan>
@@ -1323,13 +1323,13 @@
                 id="arrow_node2_south_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1342,7 +1342,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="406.98672"
                 y="-115.2347"
               >
@@ -1350,19 +1350,19 @@
                   id="arrow_node2_south_incoming_number_tspan"
                   x="1564.014"
                   y="672.65881"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeTwoSouthIncoming }}
                 </tspan>
@@ -1372,13 +1372,13 @@
                 id="arrow_node2_south_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1391,7 +1391,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="406.98669"
                 y="-86.404564"
               >
@@ -1399,19 +1399,19 @@
                   id="arrow_node2_south_outgoing_number_tspan"
                   x="1564.014"
                   y="701.48889"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeTwoSouthOutgoing }}
                 </tspan>
@@ -1424,13 +1424,13 @@
                 id="arrows_node2_south_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1443,7 +1443,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="407.97397"
                 y="-59.637352"
               >
@@ -1451,19 +1451,19 @@
                   id="arrows_node2_south_sum_tspan"
                   x="1565.4287"
                   y="728.54749"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeTwoSouth }}
                 </tspan>
@@ -1496,13 +1496,13 @@
               v-if="streetnameNodeThree.length === 1"
               id="node3_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1516,26 +1516,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-90)"
               x="-962.48126"
               y="705.79083"
             >
               <tspan
                 id="node3_strassenname_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="-962.48126"
                 y="705.79083"
               >
@@ -1561,16 +1561,16 @@
               <text
                 id="node3_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="792.38141"
                 x="693.75189"
               >
@@ -1588,13 +1588,13 @@
               v-if="streetnameNodeThree.length > 1"
               id="node3_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1608,26 +1608,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-90)"
               x="-962.48126"
               y="719.79083"
             >
               <tspan
                 id="node3_strassenname_multirow2_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="-962.48126"
                 y="719.79083"
               >
@@ -1638,13 +1638,13 @@
               v-if="streetnameNodeThree.length > 1"
               id="node3_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1658,26 +1658,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-90)"
               x="-962.48126"
               y="691.79083"
             >
               <tspan
                 id="node3_strassenname_multirow1_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="-962.48126"
                 y="691.79083"
               >
@@ -1688,13 +1688,13 @@
               id="node3_sum_text"
               xml:space="preserve"
               transform="matrix(0,-0.86675092,1.153734,0,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -1707,7 +1707,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9645;
-              "
+              `"
               x="-2630.3494"
               y="-171.53365"
             >
@@ -1715,19 +1715,19 @@
                 id="node3_sum_tspan"
                 x="-1472.8937"
                 y="616.65149"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9645;
-                "
+                `"
               >
                 {{ sumNodeThreeArrows }}
               </tspan>
@@ -1756,13 +1756,13 @@
                 id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1775,7 +1775,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-2629.0879"
                 y="-115.23471"
               >
@@ -1783,19 +1783,19 @@
                   id="arrow_node3_east_incoming_number_tspan"
                   x="-1472.0605"
                   y="672.65881"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeThreeEastIncoming }}
                 </tspan>
@@ -1805,13 +1805,13 @@
                 id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1824,7 +1824,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-2629.0879"
                 y="-86.404541"
               >
@@ -1832,19 +1832,19 @@
                   id="arrow_node3_east_outgoing_number_tspan"
                   x="-1472.0605"
                   y="701.48889"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeThreeEastOutgoing }}
                 </tspan>
@@ -1857,13 +1857,13 @@
                 id="arrows_node3_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1876,7 +1876,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-2630.3472"
                 y="-59.637333"
               >
@@ -1884,19 +1884,19 @@
                   id="arrows_node3_east_sum_tspan"
                   x="-1472.8923"
                   y="728.54749"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeThreeEast }}
                 </tspan>
@@ -1933,13 +1933,13 @@
                 id="arrow_node3_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1952,7 +1952,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-2629.0879"
                 y="-259.38544"
               >
@@ -1960,19 +1960,19 @@
                   id="arrow_node3_west_outgoing_number_tspan"
                   x="-1472.0605"
                   y="528.50812"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeThreeWestOutgoing }}
                 </tspan>
@@ -1982,13 +1982,13 @@
                 id="arrow_node3_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2001,7 +2001,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-2629.0879"
                 y="-230.55521"
               >
@@ -2009,19 +2009,19 @@
                   id="arrow_node3_west_incoming_number_tspan"
                   x="-1472.0605"
                   y="557.33826"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeThreeWestIncoming }}
                 </tspan>
@@ -2034,13 +2034,13 @@
                 id="arrows_node3_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86675167,1.153733,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2053,7 +2053,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-2630.3472"
                 y="-203.73477"
               >
@@ -2061,19 +2061,19 @@
                   id="arrows_node3_west_sum_tspan"
                   x="-1472.8923"
                   y="584.45007"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeThreeWest }}
                 </tspan>
@@ -2106,13 +2106,13 @@
               v-if="streetnameNodeFour.length === 1"
               id="node4_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2126,25 +2126,25 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="437.52008"
               y="705.79083"
             >
               <tspan
                 id="node4_strassenname_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="437.52008"
                 y="705.79083"
               >
@@ -2170,16 +2170,16 @@
               <text
                 id="node4_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="707.20343"
                 x="608.34302"
               >
@@ -2197,13 +2197,13 @@
               v-if="streetnameNodeFour.length > 1"
               id="node4_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2217,25 +2217,25 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="437.52008"
               y="719.79083"
             >
               <tspan
                 id="node4_strassenname_multirow2_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="437.52008"
                 y="719.79083"
               >
@@ -2246,13 +2246,13 @@
               v-if="streetnameNodeFour.length > 1"
               id="node4_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2266,25 +2266,25 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="437.52008"
               y="691.79083"
             >
               <tspan
                 id="node4_strassenname_multirow1_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="437.52008"
                 y="691.79083"
               >
@@ -2294,14 +2294,13 @@
             <text
               id="node4_sum_text"
               xml:space="preserve"
-              transform="scale(0.86675167,1.153733)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2314,27 +2313,27 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9644;
-              "
-              x="-1015.1211"
-              y="-171.52489"
+              `"
+              x="-1034.2489"
+              y="-78.905891"
             >
               <tspan
+                x="123.20578"
+                y="709.27856"
                 id="node4_sum_tspan"
-                x="142.33362"
-                y="616.65955"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9644;
-                "
+                `"
               >
                 {{ sumNodeFourArrows }}
               </tspan>
@@ -2363,13 +2362,13 @@
                 id="arrow_node4_south_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2382,7 +2381,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1015.5829"
                 y="-115.2348"
               >
@@ -2390,19 +2389,19 @@
                   id="arrow_node4_south_outgoing_number_tspan"
                   x="141.44441"
                   y="672.65881"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFourSouthOutgoing }}
                 </tspan>
@@ -2412,13 +2411,13 @@
                 id="arrow_node4_south_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2431,7 +2430,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1015.5829"
                 y="-86.404541"
               >
@@ -2439,19 +2438,19 @@
                   id="arrow_node4_south_incoming_number_tspan"
                   x="141.44441"
                   y="701.48889"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFourSouthIncoming }}
                 </tspan>
@@ -2464,13 +2463,13 @@
                 id="arrows_node4_south_sum_text"
                 xml:space="preserve"
                 transform="scale(0.86675167,1.153733)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2483,7 +2482,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-1015.1211"
                 y="-59.637363"
               >
@@ -2491,19 +2490,19 @@
                   id="arrows_node4_south_sum_tspan"
                   x="142.33362"
                   y="728.54749"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeFourSouth }}
                 </tspan>
@@ -2540,13 +2539,13 @@
                 id="arrow_node4_north_outgoing_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2559,7 +2558,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1015.5829"
                 y="-259.38544"
               >
@@ -2567,19 +2566,19 @@
                   id="arrow_node4_north_outgoing_number_tspan"
                   x="141.44441"
                   y="528.50812"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFourNorthOutgoing }}
                 </tspan>
@@ -2589,13 +2588,13 @@
                 id="arrow_node4_north_incoming_number_text"
                 xml:space="preserve"
                 transform="scale(0.86707182,1.153307)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2608,7 +2607,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1015.5829"
                 y="-230.55518"
               >
@@ -2616,19 +2615,19 @@
                   id="arrow_node4_north_incoming_number_tspan"
                   x="141.44441"
                   y="557.33826"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFourNorthIncoming }}
                 </tspan>
@@ -2640,14 +2639,13 @@
                 "
                 id="arrows_node4_north_sum_text"
                 xml:space="preserve"
-                transform="scale(0.86675167,1.153733)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2660,7 +2658,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-1015.1211"
                 y="-203.7348"
               >
@@ -2668,19 +2666,19 @@
                   id="arrows_node4_north_sum_tspan"
                   x="142.33362"
                   y="584.45007"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeFourNorth }}
                 </tspan>
@@ -2731,16 +2729,16 @@
               <text
                 id="node5_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="646.03784"
                 x="754.23737"
               >
@@ -2758,13 +2756,13 @@
               v-if="streetnameNodeFive.length === 1"
               id="node5_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2778,7 +2776,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-45)"
               x="28.961178"
               y="919.29749"
@@ -2796,13 +2794,13 @@
               v-if="streetnameNodeFive.length > 1"
               id="node5_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2816,7 +2814,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-45)"
               x="28.963634"
               y="933.29785"
@@ -2834,13 +2832,13 @@
               v-if="streetnameNodeFive.length > 1"
               id="node5_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2854,7 +2852,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-45)"
               x="28.961172"
               y="905.2995"
@@ -2872,13 +2870,13 @@
               id="node5_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -2891,7 +2889,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9645;
-              "
+              `"
               x="-399.63812"
               y="79.779076"
             >
@@ -2899,19 +2897,19 @@
                 id="node5_sum_tspan"
                 x="757.8175"
                 y="867.96423"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9645;
-                "
+                `"
               >
                 {{ sumNodeFiveArrows }}
               </tspan>
@@ -2940,13 +2938,13 @@
                 id="arrow_node5_north_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2959,7 +2957,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-399.20233"
                 y="-7.9779282"
               >
@@ -2967,19 +2965,19 @@
                   id="arrow_node5_north_west_incoming_number_tspan"
                   x="757.82507"
                   y="779.91565"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFiveNorthWestIncoming }}
                 </tspan>
@@ -2989,13 +2987,13 @@
                 id="arrow_node5_north_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3008,7 +3006,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-399.20517"
                 y="20.852219"
               >
@@ -3016,19 +3014,19 @@
                   id="arrow_node5_north_west_outgoing_number_tspan"
                   x="757.82214"
                   y="808.74573"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFiveNorthWestOutgoing }}
                 </tspan>
@@ -3041,13 +3039,13 @@
                 id="arrows_node5_north_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3060,7 +3058,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-399.64072"
                 y="47.580051"
               >
@@ -3068,19 +3066,19 @@
                   id="arrows_node5_north_west_sum_tspan"
                   x="757.81403"
                   y="835.76489"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeFiveNorthWest }}
                 </tspan>
@@ -3117,13 +3115,13 @@
                 id="arrow_node5_south_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3136,7 +3134,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-399.20517"
                 y="136.17249"
               >
@@ -3144,19 +3142,19 @@
                   id="arrow_node5_south_east_incoming_number_tspan"
                   x="757.82214"
                   y="924.06604"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFiveSouthEastIncoming }}
                 </tspan>
@@ -3166,13 +3164,13 @@
                 id="arrow_node5_south_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3185,7 +3183,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-399.2023"
                 y="165.00262"
               >
@@ -3193,19 +3191,19 @@
                   id="arrow_node5_south_east_outgoing_number_tspan"
                   x="757.82501"
                   y="952.89612"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeFiveSouthEastOutgoing }}
                 </tspan>
@@ -3218,13 +3216,13 @@
                 id="arrows_node5_south_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3237,7 +3235,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-399.63785"
                 y="191.67722"
               >
@@ -3245,19 +3243,19 @@
                   id="arrows_node5_south_east_sum_tspan"
                   x="757.81683"
                   y="979.86206"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeFiveSouthEast }}
                 </tspan>
@@ -3290,13 +3288,13 @@
               v-if="streetnameNodeSix.length === 1"
               id="node6_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3310,7 +3308,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(45)"
               x="1018.9124"
               y="-70.653908"
@@ -3346,16 +3344,16 @@
               <text
                 id="node6_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="1118.2867"
                 x="29.266506"
                 transform="rotate(-45)"
@@ -3374,13 +3372,13 @@
               v-if="streetnameNodeSix.length > 1"
               id="node6_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3394,7 +3392,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(45)"
               x="1018.9124"
               y="-56.65107"
@@ -3412,13 +3410,13 @@
               v-if="streetnameNodeSix.length > 1"
               id="node6_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3432,7 +3430,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(45)"
               x="1018.9124"
               y="-84.651787"
@@ -3450,13 +3448,13 @@
               id="node6_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3469,7 +3467,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9645;
-              "
+              `"
               x="742.49854"
               y="-778.25079"
             >
@@ -3477,19 +3475,19 @@
                 id="node6_sum_tspan"
                 x="1899.9543"
                 y="9.9343462"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9645;
-                "
+                `"
               >
                 {{ sumNodeSixArrows }}
               </tspan>
@@ -3518,13 +3516,13 @@
                 id="arrow_node6_north_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3537,7 +3535,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="741.38873"
                 y="-866.33527"
               >
@@ -3545,19 +3543,19 @@
                   id="arrow_node6_north_east_incoming_number_tspan"
                   x="1898.416"
                   y="-78.441635"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSixNorthEastIncoming }}
                 </tspan>
@@ -3567,13 +3565,13 @@
                 id="arrow_node6_north_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3586,7 +3584,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="741.38599"
                 y="-837.50513"
               >
@@ -3594,19 +3592,19 @@
                   id="arrow_node6_north_east_outgoing_number_tspan"
                   x="1898.4132"
                   y="-49.611588"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSixNorthEastOutgoing }}
                 </tspan>
@@ -3619,13 +3617,13 @@
                 id="arrows_node6_north_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3638,7 +3636,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="742.49811"
                 y="-810.4613"
               >
@@ -3646,19 +3644,19 @@
                   id="arrows_node6_north_east_sum_tspan"
                   x="1899.9528"
                   y="-22.276493"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNode6NorthEast }}
                 </tspan>
@@ -3695,13 +3693,13 @@
                 id="arrow_node6_south_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3714,7 +3712,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="741.38593"
                 y="-722.18481"
               >
@@ -3722,19 +3720,19 @@
                   id="arrow_node6_south_west_incoming_number_tspan"
                   x="1898.4132"
                   y="65.708748"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSixSouthWestIncoming }}
                 </tspan>
@@ -3744,13 +3742,13 @@
                 id="arrow_node6_south_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3763,7 +3761,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="741.38873"
                 y="-693.35468"
               >
@@ -3771,19 +3769,19 @@
                   id="arrow_node6_south_west_outgoing_number_tspan"
                   x="1898.416"
                   y="94.53878"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSixSouthWestOutgoing }}
                 </tspan>
@@ -3796,13 +3794,13 @@
                 id="arrows_node6_south_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3815,7 +3813,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="742.49805"
                 y="-666.362"
               >
@@ -3823,19 +3821,19 @@
                   id="arrows_node6_south_west_sum_tspan"
                   x="1899.9528"
                   y="121.82278"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeSixSouthWest }}
                 </tspan>
@@ -3868,13 +3866,13 @@
               v-if="streetnameNodeSeven.length === 1"
               id="node7_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3888,26 +3886,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-45)"
               x="-262.48059"
               y="995.74023"
             >
               <tspan
                 id="node7_strassenname_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="-262.48059"
                 y="995.74023"
               >
@@ -3933,16 +3931,16 @@
               <text
                 id="node7_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="767.69238"
                 x="633.51685"
               >
@@ -3960,13 +3958,13 @@
               v-if="streetnameNodeSeven.length > 1"
               id="node7_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3980,26 +3978,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-45)"
               x="-262.48306"
               y="1009.7406"
             >
               <tspan
                 id="node7_strassenname_multirow2_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="-262.48306"
                 y="1009.7406"
               >
@@ -4010,13 +4008,13 @@
               v-if="streetnameNodeSeven.length > 1"
               id="node7_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -4030,26 +4028,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               transform="rotate(-45)"
               x="-262.48306"
               y="981.73987"
             >
               <tspan
                 id="node7_strassenname_multirow1_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="-262.48306"
                 y="981.73987"
               >
@@ -4060,13 +4058,13 @@
               id="node7_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -4079,7 +4077,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9645;
-              "
+              `"
               x="-1822.7341"
               y="79.781219"
             >
@@ -4087,19 +4085,19 @@
                 id="node7_sum_tspan"
                 x="-665.27838"
                 y="867.96637"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9645;
-                "
+                `"
               >
                 {{ sumNodeSevenArrows }}
               </tspan>
@@ -4128,13 +4126,13 @@
                 id="arrow_node7_south_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4147,7 +4145,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1821.7715"
                 y="136.17253"
               >
@@ -4155,19 +4153,19 @@
                   id="arrow_node7_south_east_outgoing_number_tspan"
                   x="-664.74414"
                   y="924.06604"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSevenSouthEastOutgoing }}
                 </tspan>
@@ -4177,13 +4175,13 @@
                 id="arrow_node7_south_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4196,7 +4194,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1821.7743"
                 y="165.00264"
               >
@@ -4204,19 +4202,19 @@
                   id="arrow_node7_south_east_incoming_number_tspan"
                   x="-664.74701"
                   y="952.89606"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSevenSouthEastIncoming }}
                 </tspan>
@@ -4229,13 +4227,13 @@
                 id="arrows_node7_south_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4248,7 +4246,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-1822.7355"
                 y="191.67723"
               >
@@ -4256,19 +4254,19 @@
                   id="arrows_node7_south_east_sum_tspan"
                   x="-665.28058"
                   y="979.86206"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeSevenSouthEast }}
                 </tspan>
@@ -4305,13 +4303,13 @@
                 id="arrow_node7_north_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4324,7 +4322,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1821.7744"
                 y="-7.9778929"
               >
@@ -4332,19 +4330,19 @@
                   id="arrow_node7_north_west_outgoing_number_tspan"
                   x="-664.74695"
                   y="779.91565"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSevenNorthWestOutgoing }}
                 </tspan>
@@ -4354,13 +4352,13 @@
                 id="arrow_node7_north_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4373,7 +4371,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-1821.7715"
                 y="20.852285"
               >
@@ -4381,19 +4379,19 @@
                   id="arrow_node7_north_west_incoming_number_tspan"
                   x="-664.74414"
                   y="808.74573"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeSevenNorthWestIncoming }}
                 </tspan>
@@ -4406,13 +4404,13 @@
                 id="arrows_node7_north_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4425,7 +4423,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-1822.7325"
                 y="47.580002"
               >
@@ -4433,19 +4431,19 @@
                   id="arrows_node7_north_west_sum_tspan"
                   x="-665.27777"
                   y="835.76489"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeSevenNorthWest }}
                 </tspan>
@@ -4478,13 +4476,13 @@
               v-if="streetnameNodeEight.length === 1"
               id="node8_strassenname_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -4498,26 +4496,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="727.46826"
               y="5.7913613"
               transform="rotate(45)"
             >
               <tspan
                 id="node8_strassenname_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="727.46826"
                 y="5.7913613"
               >
@@ -4543,16 +4541,16 @@
               <text
                 id="node8_number_text"
                 xml:space="default"
-                style="
-                  font-size: 19.7624px;
-                  font-family: sans-serif;
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
                   text-anchor: start;
                   fill: #000000;
                   stroke-width: 30.9229;
-                "
+                `"
                 y="646.78491"
                 x="633.36969"
               >
@@ -4570,13 +4568,13 @@
               v-if="streetnameNodeEight.length > 1"
               id="node8_strassenname_multirow2_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -4590,26 +4588,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="727.47076"
               y="19.791721"
               transform="rotate(45)"
             >
               <tspan
                 id="node8_strassenname_multirow2_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="727.47076"
                 y="19.791721"
               >
@@ -4620,13 +4618,13 @@
               v-if="streetnameNodeEight.length > 1"
               id="node8_strassenname_multirow1_text"
               xml:space="preserve"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 22.3767px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -4640,26 +4638,26 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 26.4927;
-              "
+              `"
               x="727.47076"
               y="-8.2089996"
               transform="rotate(45)"
             >
               <tspan
                 id="node8_strassenname_multirow1_tspan"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 22.3767px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 26.4927;
-                "
+                `"
                 x="727.47076"
                 y="-8.2089996"
               >
@@ -4669,14 +4667,13 @@
             <text
               id="node8_sum_text"
               xml:space="preserve"
-              transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -4689,7 +4686,7 @@
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9644;
-              "
+              `"
               x="-680.59656"
               y="-778.25226"
             >
@@ -4697,19 +4694,19 @@
                 id="node8_sum_tspan"
                 x="476.85812"
                 y="9.9321899"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
                   stroke-width: 43.9644;
-                "
+                `"
               >
                 {{ sumNodeEightArrows }}
               </tspan>
@@ -4738,13 +4735,13 @@
                 id="arrow_node8_south_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4757,7 +4754,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-681.18036"
                 y="-722.18488"
               >
@@ -4765,19 +4762,19 @@
                   id="arrow_node8_south_west_outgoing_number_tspan"
                   x="475.84692"
                   y="65.708733"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeEightSouthWestOutgoing }}
                 </tspan>
@@ -4787,13 +4784,13 @@
                 id="arrow_node8_south_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4806,7 +4803,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-681.18329"
                 y="-693.35461"
               >
@@ -4814,19 +4811,19 @@
                   id="arrow_node8_south_west_incoming_number_tspan"
                   x="475.84406"
                   y="94.538795"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeEightSouthWestIncoming }}
                 </tspan>
@@ -4839,13 +4836,13 @@
                 id="arrows_node8_south_west_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4858,7 +4855,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-680.59656"
                 y="-666.3642"
               >
@@ -4866,19 +4863,19 @@
                   id="arrows_node8_south_west_sum_tspan"
                   x="476.85815"
                   y="121.82064"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeEightSouthWest }}
                 </tspan>
@@ -4915,13 +4912,13 @@
                 id="arrow_node8_north_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4934,7 +4931,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-681.18323"
                 y="-866.33521"
               >
@@ -4942,19 +4939,19 @@
                   id="arrow_node8_north_east_outgoing_number_tspan"
                   x="475.84406"
                   y="-78.441643"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeEightNorthEastOutgoing }}
                 </tspan>
@@ -4964,13 +4961,13 @@
                 id="arrow_node8_north_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -4983,7 +4980,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9482;
-                "
+                `"
                 x="-681.18036"
                 y="-837.505"
               >
@@ -4991,19 +4988,19 @@
                   id="arrow_node8_north_east_incoming_number_tspan"
                   x="475.84692"
                   y="-49.611568"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9482;
-                  "
+                  `"
                 >
                   {{ zaehlwertArrowNodeEightNorthEastIncoming }}
                 </tspan>
@@ -5016,13 +5013,13 @@
                 id="arrows_node8_north_east_sum_text"
                 xml:space="preserve"
                 transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
-                  font-size: 28.097px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -5035,7 +5032,7 @@
                   fill: #000000;
                   fill-opacity: 1;
                   stroke-width: 43.9644;
-                "
+                `"
                 x="-680.59656"
                 y="-810.45923"
               >
@@ -5043,19 +5040,19 @@
                   id="arrows_node8_north_east_sum_tspan"
                   x="476.85815"
                   y="-22.274359"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: bold;
                     font-stretch: normal;
-                    font-size: 28.097px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
                     font-variant-east-asian: normal;
                     stroke-width: 43.9644;
-                  "
+                  `"
                 >
                   {{ sumArrowsNodeEightNorthEast }}
                 </tspan>
@@ -5103,6 +5100,7 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
+import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -5121,6 +5119,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const fjs = useFjs();
+const belastungsplanMethods = useBelastungsplanMethods();
 
 const streetnameNodeOne = ref<Array<string>>([]);
 const streetnameNodeTwo = ref<Array<string>>([]);

@@ -61,7 +61,6 @@ export function useBelastungsplanMethods() {
   const maxlineWidth = 20;
   const maxLegendLineWidth = 25;
   const shadowColor = "#E0E0E0";
-  const legendColor = "#757575";
   // Prozentwerte um die Strecken zu errechnen
   const prozentDiagram = 0.6;
   const prozentSpalt = 0.05;
@@ -1504,7 +1503,6 @@ export function useBelastungsplanMethods() {
     chartPosition,
     spalt,
     ecke,
-    legendColor,
     maxlineWidth,
     maxLegendLineWidth,
     maxFahrtrichtungWidth,
