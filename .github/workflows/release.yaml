@@ -35,10 +35,12 @@ jobs:
           RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
           DEVELOPMENT_VERSION: ${{ github.event.inputs.developmentVersion }}
           USE_PR: ${{ github.event.inputs.use-pr }}
+          CLIENT_RELEASE_VERSION: ${{ github.event.client_payload.releaseVersion }}
+          CLIENT_DEVELOPMENT_VERSION: ${{ github.event.client_payload.developmentVersion }}
         run: |
           if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
-            echo "releaseVersion=${{ github.event.client_payload.releaseVersion }}" >> $GITHUB_OUTPUT
-            echo "developmentVersion=${{ github.event.client_payload.developmentVersion }}" >> $GITHUB_OUTPUT
+            echo "releaseVersion=${CLIENT_RELEASE_VERSION}" >> $GITHUB_OUTPUT
+            echo "developmentVersion=${CLIENT_DEVELOPMENT_VERSION}" >> $GITHUB_OUTPUT
             echo "use-pr=true" >> $GITHUB_OUTPUT
           else
             echo "releaseVersion=${RELEASE_VERSION}" >> $GITHUB_OUTPUT
