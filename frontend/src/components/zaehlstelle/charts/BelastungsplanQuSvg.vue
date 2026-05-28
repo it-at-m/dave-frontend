@@ -35,7 +35,11 @@
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              style="
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+                fill: #e0e0e0;
+              "
             />
             <g
               id="node1_number"
@@ -58,7 +62,7 @@
               />
               <text
                 id="node1_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -272,24 +276,24 @@
               v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east"
               d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
-              :fill="colorArrowNode1WestToEast"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode1WestToEast"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node1EastToWestCensusComissioned"
               id="arrow_node1_east_to_west"
               d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
-              :fill="colorArrowNode1EastToWest"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode1EastToWest"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
-              :fill="textColorArrowNode1WestToEast"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -323,7 +327,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -341,7 +345,7 @@
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
-              :fill="textColorArrowNode1EastToWest"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -369,13 +373,13 @@
               <tspan
                 id="arrow_node1_east_to_west_number_tspan"
                 x="801.39209"
-                y="193.2041"
+                y="191"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -408,7 +412,11 @@
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
+              style="
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+                fill: #e0e0e0;
+              "
             />
             <text
               v-if="streetnameNode2.length === 1"
@@ -469,7 +477,7 @@
               />
               <text
                 id="node2_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -647,24 +655,24 @@
               v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south"
               d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-              :fill="colorArrowNode2NorthToSouth"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode2NorthToSouth"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node2SouthToNorthCensusComissioned"
               id="arrow_node2_south_to_north"
               d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-              :fill="colorArrowNode2SouthToNorth"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode2SouthToNorth"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-              :fill="textColorArrowNode2NorthToSouth"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -698,7 +706,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -716,7 +724,7 @@
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-              :fill="textColorArrowNode2SouthToNorth"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -744,13 +752,13 @@
               <tspan
                 id="arrow_node2_south_to_north_number_tspan"
                 x="-808.19946"
-                y="1041.7301"
+                y="1039.7301"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -779,7 +787,11 @@
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              style="
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+                fill: #e0e0e0;
+              "
             />
             <text
               v-if="streetnameNode3.length === 1"
@@ -854,7 +866,7 @@
               />
               <text
                 id="node3_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -1059,30 +1071,30 @@
               v-if="node3WestToEastCensusComissioned"
               id="arrow_node3_west_to_east"
               d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
-              :fill="colorArrowNode3WestToEast"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode3WestToEast"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node3EastToWestCensusComissioned"
               id="arrow_node3_east_to_west"
               d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
-              :fill="colorArrowNode3EastToWest"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode3EastToWest"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node3WestToEastCensusComissioned"
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
-              :fill="textColorArrowNode3WestToEast"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.2628px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -1110,7 +1122,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.3px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1128,13 +1140,13 @@
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
               transform="scale(0.87251096,1.1461174)"
-              :fill="textColorArrowNode3EastToWest"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.2628px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -1162,7 +1174,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1191,7 +1203,11 @@
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              style="
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+                fill: #e0e0e0;
+              "
             />
             <text
               v-if="streetnameNode4.length === 1"
@@ -1265,7 +1281,7 @@
               />
               <text
                 id="node4_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -1473,24 +1489,24 @@
               v-if="node4NorthToSouthCensusComissioned"
               id="arrow_node4_north_to_south"
               d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
-              :fill="colorArrowNode4NorthToSouth"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode4NorthToSouth"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node4SouthToNorthCensusComissioned"
               id="arrow_node4_south_to_north"
               d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
-              :fill="colorArrowNode4SouthToNorth"
-              stroke="none"
-              style="stroke-width: 28.22049979; stroke-dasharray: none"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode4SouthToNorth"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node4NorthToSouthCensusComissioned"
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_north_to_south_number_text"
-              :fill="textColorArrowNode4NorthToSouth"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1517,14 +1533,14 @@
             >
               <tspan
                 x="-808.19946"
-                y="191.99969"
+                y="191"
                 id="arrow_node4_north_to_south_number_tspan"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1542,13 +1558,13 @@
               xml:space="preserve"
               transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_south_to_north_number_text"
-              :fill="textColorArrowNode4SouthToNorth"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.0866px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -1576,7 +1592,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1604,7 +1620,7 @@
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949"
+              style="stroke-width: 14.949; fill: #e0e0e0"
             />
             <g id="node5_number">
               <circle
@@ -1624,7 +1640,7 @@
               />
               <text
                 id="node5_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -1843,24 +1859,24 @@
               v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east"
               d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
-              :fill="colorArrowNode5NorthWestToSouthEast"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode5NorthWestToSouthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node5SouthEastToNorthWestCensusComissioned"
               id="arrow_node5_south_east_to_north_west"
               d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
-              :fill="colorArrowNode5SouthEastToNorthWest"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode5SouthEastToNorthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
-              :fill="textColorArrowNode5NorthWestToSouthEast"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1893,7 +1909,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1910,7 +1926,7 @@
               id="arrow_node5_south_east_to_north_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
-              :fill="textColorArrowNode5SouthEastToNorthWest"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -1943,7 +1959,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1967,7 +1983,7 @@
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949"
+              style="stroke-width: 14.949; fill: #e0e0e0"
             />
             <text
               v-if="streetnameNode6.length === 1"
@@ -2028,7 +2044,7 @@
               />
               <text
                 id="node6_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2205,24 +2221,24 @@
               v-if="node6SouthWestToNorthEastCensusComissioned"
               id="arrow_node6_south_west_to_north_east"
               d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
-              :fill="colorArrowNode6SouthWestToNorthEast"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode6SouthWestToNorthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west"
               d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
-              :fill="colorArrowNode6NorthEastToSouthWest"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode6NorthEastToSouthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
-              :fill="textColorArrowNode6NorthEastToSouthWest"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2255,7 +2271,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2272,7 +2288,7 @@
               id="arrow_node6_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
-              :fill="textColorArrowNode6SouthWestToNorthEast"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
@@ -2305,7 +2321,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2329,7 +2345,7 @@
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949"
+              style="stroke-width: 14.949; fill: #e0e0e0"
             />
             <text
               v-if="streetnameNode7.length === 1"
@@ -2399,7 +2415,7 @@
               />
               <text
                 id="node7_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2599,30 +2615,30 @@
               v-if="node7NorthWestToSouthEastCensusComissioned"
               id="arrow_node7_north_west_to_south_east"
               d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
-              :fill="colorArrowNode7NorthWestToSouthEast"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode7NorthWestToSouthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west"
               d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
-              :fill="colorArrowNode7SouthEastToNorthWest"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode7SouthEastToNorthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
-              :fill="textColorArrowNode7SouthEastToNorthWest"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.2628px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -2649,7 +2665,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2666,13 +2682,13 @@
               id="arrow_node7_north_west_to_south_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
-              :fill="textColorArrowNode7NorthWestToSouthEast"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.2628px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -2699,7 +2715,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2723,7 +2739,7 @@
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949"
+              style="stroke-width: 14.949; fill: #e0e0e0"
             />
             <text
               v-if="streetnameNode8.length === 1"
@@ -2793,7 +2809,7 @@
               />
               <text
                 id="node8_circle_text"
-                xml:space="default"
+                xml:space="preserve"
                 style="
                   font-size: 19.7624px;
                   font-family: sans-serif;
@@ -2993,30 +3009,30 @@
               v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east"
               d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
-              :fill="colorArrowNode8SouthWestToNorthEast"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode8SouthWestToNorthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <path
               v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west"
               d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
-              :fill="colorArrowNode8NorthEastToSouthWest"
-              stroke="none"
-              style="stroke-width: 27.0576"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode8NorthEastToSouthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
               v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
-              :fill="textColorArrowNode8SouthWestToNorthEast"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.2628px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -3043,7 +3059,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -3060,13 +3076,13 @@
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
-              :fill="textColorArrowNode8NorthEastToSouthWest"
+              fill="#000000"
               style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 28.2628px;
+                font-size: 23.5px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -3093,7 +3109,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.2628px;
+                  font-size: 23.5px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -3270,7 +3286,7 @@
           />
           <text
             id="compass1"
-            xml:space="default"
+            xml:space="preserve"
             style="
               font-style: normal;
               font-variant: normal;
@@ -3425,7 +3441,7 @@
       <path
         id="center"
         d="m 14253.004,17465.11 166.703,0 117.876,117.877 0,166.702 -117.876,117.877 -166.703,0 -117.876,-117.877 0,-166.702 z"
-        fill="#9e9e9e"
+        fill="#E0E0E0"
         transform="matrix(0.31493043,0,0,0.31493043,-3814.9546,-4863.6674)"
       />
     </svg>
@@ -3557,8 +3573,8 @@ const node1EastToWestCensusComissioned = isCommissioned(
 const colorArrowNode1WestToEast = setColor(nodeNumber1, Himmelsrichtung.O);
 const colorArrowNode1EastToWest = setColor(nodeNumber1, Himmelsrichtung.W);
 
-const textColorArrowNode1WestToEast = setTextColor(colorArrowNode1WestToEast);
-const textColorArrowNode1EastToWest = setTextColor(colorArrowNode1EastToWest);
+// const textColorArrowNode1WestToEast = setTextColor(colorArrowNode1WestToEast);
+// const textColorArrowNode1EastToWest = setTextColor(colorArrowNode1EastToWest);
 
 // Zaehlwerte of Node2/East
 const nodeNumber2 = 2;
@@ -3582,12 +3598,12 @@ const node2SouthToNorthCensusComissioned = isCommissioned(
 const colorArrowNode2NorthToSouth = setColor(nodeNumber2, Himmelsrichtung.S);
 const colorArrowNode2SouthToNorth = setColor(nodeNumber2, Himmelsrichtung.N);
 
-const textColorArrowNode2NorthToSouth = setTextColor(
-  colorArrowNode2NorthToSouth
-);
-const textColorArrowNode2SouthToNorth = setTextColor(
-  colorArrowNode2SouthToNorth
-);
+// const textColorArrowNode2NorthToSouth = setTextColor(
+//   colorArrowNode2NorthToSouth
+// );
+// const textColorArrowNode2SouthToNorth = setTextColor(
+//   colorArrowNode2SouthToNorth
+// );
 
 // Zaehlwerte of Node3/South
 const nodeNumber3 = 3;
@@ -3611,8 +3627,8 @@ const node3EastToWestCensusComissioned = isCommissioned(
 const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
 const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
 
-const textColorArrowNode3WestToEast = setTextColor(colorArrowNode3WestToEast);
-const textColorArrowNode3EastToWest = setTextColor(colorArrowNode3EastToWest);
+// const textColorArrowNode3WestToEast = setTextColor(colorArrowNode3WestToEast);
+// const textColorArrowNode3EastToWest = setTextColor(colorArrowNode3EastToWest);
 
 // Zaehlwerte of Node4/West
 const nodeNumber4 = 4;
@@ -3636,12 +3652,12 @@ const node4SouthToNorthCensusComissioned = isCommissioned(
 const colorArrowNode4NorthToSouth = setColor(nodeNumber4, Himmelsrichtung.S);
 const colorArrowNode4SouthToNorth = setColor(nodeNumber4, Himmelsrichtung.N);
 
-const textColorArrowNode4NorthToSouth = setTextColor(
-  colorArrowNode4NorthToSouth
-);
-const textColorArrowNode4SouthToNorth = setTextColor(
-  colorArrowNode4SouthToNorth
-);
+// const textColorArrowNode4NorthToSouth = setTextColor(
+//   colorArrowNode4NorthToSouth
+// );
+// const textColorArrowNode4SouthToNorth = setTextColor(
+//   colorArrowNode4SouthToNorth
+// );
 
 // Zaehlwerte of Node5
 const nodeNumber5 = 5;
@@ -3671,12 +3687,12 @@ const colorArrowNode5SouthEastToNorthWest = setColor(
   Himmelsrichtung.NW
 );
 
-const textColorArrowNode5NorthWestToSouthEast = setTextColor(
-  colorArrowNode5NorthWestToSouthEast
-);
-const textColorArrowNode5SouthEastToNorthWest = setTextColor(
-  colorArrowNode5SouthEastToNorthWest
-);
+// const textColorArrowNode5NorthWestToSouthEast = setTextColor(
+//   colorArrowNode5NorthWestToSouthEast
+// );
+// const textColorArrowNode5SouthEastToNorthWest = setTextColor(
+//   colorArrowNode5SouthEastToNorthWest
+// );
 
 // Zaehlwerte of Node6
 const nodeNumber6 = 6;
@@ -3706,12 +3722,12 @@ const colorArrowNode6SouthWestToNorthEast = setColor(
   Himmelsrichtung.NO
 );
 
-const textColorArrowNode6NorthEastToSouthWest = setTextColor(
-  colorArrowNode6NorthEastToSouthWest
-);
-const textColorArrowNode6SouthWestToNorthEast = setTextColor(
-  colorArrowNode6SouthWestToNorthEast
-);
+// const textColorArrowNode6NorthEastToSouthWest = setTextColor(
+//   colorArrowNode6NorthEastToSouthWest
+// );
+// const textColorArrowNode6SouthWestToNorthEast = setTextColor(
+//   colorArrowNode6SouthWestToNorthEast
+// );
 
 // Zaehlwerte of Node7
 const nodeNumber7 = 7;
@@ -3741,12 +3757,12 @@ const colorArrowNode7SouthEastToNorthWest = setColor(
   Himmelsrichtung.NW
 );
 
-const textColorArrowNode7NorthWestToSouthEast = setTextColor(
-  colorArrowNode7NorthWestToSouthEast
-);
-const textColorArrowNode7SouthEastToNorthWest = setTextColor(
-  colorArrowNode7SouthEastToNorthWest
-);
+// const textColorArrowNode7NorthWestToSouthEast = setTextColor(
+//   colorArrowNode7NorthWestToSouthEast
+// );
+// const textColorArrowNode7SouthEastToNorthWest = setTextColor(
+//   colorArrowNode7SouthEastToNorthWest
+// );
 
 // Zaehlwerte of Node8
 const nodeNumber8 = 8;
@@ -3776,12 +3792,12 @@ const colorArrowNode8SouthWestToNorthEast = setColor(
   Himmelsrichtung.NO
 );
 
-const textColorArrowNode8NorthEastToSouthWest = setTextColor(
-  colorArrowNode8NorthEastToSouthWest
-);
-const textColorArrowNode8SouthWestToNorthEast = setTextColor(
-  colorArrowNode8SouthWestToNorthEast
-);
+// const textColorArrowNode8NorthEastToSouthWest = setTextColor(
+//   colorArrowNode8NorthEastToSouthWest
+// );
+// const textColorArrowNode8SouthWestToNorthEast = setTextColor(
+//   colorArrowNode8SouthWestToNorthEast
+// );
 
 /**
  * Erstellt eine computed Property für einen Wert.
