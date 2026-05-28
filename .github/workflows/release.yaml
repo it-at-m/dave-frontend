@@ -1,16 +1,18 @@
 name: release
 
 on:
+  repository_dispatch:
+    types: [trigger_release_action]
   workflow_dispatch:
     inputs:
       releaseVersion:
-        description: "Version to use when preparing a release (e.g., 1.2.3)"
+        description: "Version number to be released (e.g., 1.2.3)"
         required: true
-        default: "2.1.0"
+        default: "6.0.0"
       developmentVersion:
-        description: "Version to use for new local working copy (e.g., 1.2.4-SNAPSHOT)"
+        description: "Next version number with snapshot (e.g., 1.2.4-SNAPSHOT)"
         required: true
-        default: "2.2.0-SNAPSHOT"
+        default: "6.0.1-SNAPSHOT"
       use-pr:
         description: "Use PR for version bump instead of direct push"
         default: "true"
@@ -19,10 +21,38 @@ env:
   IMAGE_NAME: "dave-frontend"
 
 jobs:
+  set-parameters:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      releaseVersion: ${{ steps.set-params.outputs.releaseVersion }}
+      developmentVersion: ${{ steps.set-params.outputs.developmentVersion }}
+      use-pr: ${{ steps.set-params.outputs.use-pr }}
+    steps:
+      - name: set parameters
+        id: set-params
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
+          DEVELOPMENT_VERSION: ${{ github.event.inputs.developmentVersion }}
+          USE_PR: ${{ github.event.inputs.use-pr }}
+          CLIENT_RELEASE_VERSION: ${{ github.event.client_payload.releaseVersion }}
+          CLIENT_DEVELOPMENT_VERSION: ${{ github.event.client_payload.developmentVersion }}
+        run: |
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "releaseVersion=${CLIENT_RELEASE_VERSION}" >> $GITHUB_OUTPUT
+            echo "developmentVersion=${CLIENT_DEVELOPMENT_VERSION}" >> $GITHUB_OUTPUT
+            echo "use-pr=true" >> $GITHUB_OUTPUT
+          else
+            echo "releaseVersion=${RELEASE_VERSION}" >> $GITHUB_OUTPUT
+            echo "developmentVersion=${DEVELOPMENT_VERSION}" >> $GITHUB_OUTPUT
+            echo "use-pr=${USE_PR}" >> $GITHUB_OUTPUT
+          fi
   release-maven:
     runs-on: ubuntu-latest
+    needs: set-parameters
     permissions:
       contents: write
+      pull-requests: write
     outputs:
       MVN_ARTIFACT_ID: ${{ steps.maven-release-step.outputs.MVN_ARTIFACT_ID }}
       ARTIFACT_NAME: ${{ steps.maven-release-step.outputs.artifact-name }}
@@ -30,19 +60,20 @@ jobs:
       TZ: Europe/Berlin # timezone
     steps:
       - id: maven-release-step
-        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@v1.0.20
+        uses: it-at-m/lhm_actions/action-templates/actions/action-maven-release@v1.0.29
         with:
           app-path: ""
-          releaseVersion: ${{ github.event.inputs.releaseVersion }}
-          developmentVersion: ${{ github.event.inputs.developmentVersion }}
+          releaseVersion: ${{ needs.set-parameters.outputs.releaseVersion }}
+          developmentVersion: ${{ needs.set-parameters.outputs.developmentVersion }}
+          use-pr: ${{ needs.set-parameters.outputs.use-pr }}
 
   build-image:
     runs-on: ubuntu-latest
-    needs: release-maven
+    needs: ["set-parameters", "release-maven"]
     permissions:
       packages: write
     steps:
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.20
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.29
         with:
           path: .
           image-name: ${{ env.IMAGE_NAME }}
@@ -50,19 +81,43 @@ jobs:
           registry-username: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           image-tags: |
-            type=semver,pattern={{version}},value=${{ github.event.inputs.releaseVersion }}
+            type=semver,pattern={{version}},value=${{ needs.set-parameters.outputs.releaseVersion }}
           image-labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
 
   create-github-release:
-    needs: ["release-maven", "build-image"]
+    needs: ["set-parameters", "release-maven", "build-image"]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Create GitHub Release
-        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@v1.0.20
+        uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@v1.0.29
         with:
           artifact-name: ${{ needs.release-maven.outputs.ARTIFACT_NAME }}
-          tag-name: ${{ needs.release-maven.outputs.MVN_ARTIFACT_ID }}-${{ github.event.inputs.releaseVersion }}
+          tag-name: ${{ needs.release-maven.outputs.MVN_ARTIFACT_ID }}-${{ needs.set-parameters.outputs.releaseVersion }}
           artifact-path: "./target/*.jar"
+          generate-release-notes: true
+  
+  create-pull-request:
+    needs: ["release-maven", "build-image", "create-github-release"]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          persist-credentials: true
+      - name: Create PR to demo
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        run: |
+          # configure git
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          # create pull request
+          BRANCH="${GITHUB_REF#refs/heads/}" # preserves full branch path
+          gh pr create --base demo --head "$BRANCH" --title "$BRANCH to demo" --body "This PR is auto-generated"

@@ -186,6 +186,7 @@
           <zeitreihe-card
             ref="zeitreiheCard"
             :zaehldaten-zeitreihe="zaehldatenZeitreihe"
+            :is-tab-zeitreihe-active="activeTab === TAB_ZEITREIHE"
           />
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
