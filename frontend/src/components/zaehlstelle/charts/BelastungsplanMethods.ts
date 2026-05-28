@@ -1,5 +1,6 @@
 import type BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import type BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
+import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
@@ -11,6 +12,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrtrichtungsarten from "@/types/enum/Fahrtrichtungsarten";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BelastungsplanVerkehrsbeziehungComperator from "@/types/zaehlung/BelastungsplanVerkehrsbeziehungComperator";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 export function useBelastungsplanMethods() {
   const zaehlstelleStore = useZaehlstelleStore();
@@ -120,6 +122,8 @@ export function useBelastungsplanMethods() {
   const spalt = computed(() => {
     return seite.value * prozentSpalt;
   });
+
+  const strassennameUtils = useStrassennameUtils();
 
   /**
    * Prüft, ob sich zwei Knotenarme gegenüber liegen.
@@ -1126,54 +1130,20 @@ export function useBelastungsplanMethods() {
     lineWidth: number,
     line: number
   ) {
-    // Der Knotenarmname wird umgebrochen, wenn er zu lang ist. Als
-    // Merkmal werden hier vorerst nur die Bindestriche genommen.
-    let strasse = "";
-    if (knotenarm.strasse) {
-      strasse = knotenarm.strasse;
-    }
-    let zweiteZeile = 0;
-    let pieces = [strasse];
-    let trenner = "";
-    const zeichen = strasse.length;
-    // Anzahl Zeichen
-    if (zeichen > 17) {
-      trenner = "-";
-      if (strasse.endsWith("str.")) {
-        const i = strasse.indexOf("str.");
-        pieces[0] = strasse.substring(0, zeichen - 4);
-        pieces[1] = strasse.substring(i, 4);
-      }
-      // Platz
-      if (strasse.endsWith("pl.")) {
-        const i = strasse.indexOf("pl.");
-        pieces[0] = strasse.substring(0, zeichen - 3);
-        pieces[1] = strasse.substring(i, 3);
-      }
-    }
-    // Bindestrich
-    if (strasse.includes("-")) {
-      trenner = "-";
-      pieces = strasse.split(trenner);
-    }
-    // Leerzeichen
-    if (strasse.includes(" ")) {
-      trenner = " ";
-      pieces = strasse.split(trenner);
-    }
+    const ladeKnotenarmWrapper: LadeKnotenarmDTO = {
+      nummer: knotenarm.knotenarmNummer,
+      strassenname: knotenarm.strasse,
+    };
 
-    if (pieces.length > 1) {
-      zweiteZeile = line / 2;
-    }
+    const pieces = strassennameUtils.getStreetLines(ladeKnotenarmWrapper);
+
     group
       .text((add) => {
         if (pieces.length > 1) {
-          const firstAndSecondLineOfStreetnames: Array<string> =
-            getFirstAndSecondLineOfStreetname(trenner, pieces);
-          add.tspan(firstAndSecondLineOfStreetnames[0]).x(x).dy(line);
-          add.tspan(firstAndSecondLineOfStreetnames[1]).x(x).dy(line);
+          add.tspan(pieces[0]).x(x).dy(line);
+          add.tspan(pieces[1]).x(x).dy(line);
         } else {
-          add.tspan(strasse).x(x);
+          add.tspan(pieces[0] ?? "").x(x);
         }
       })
       .font({
@@ -1181,76 +1151,7 @@ export function useBelastungsplanMethods() {
         family: BelastungsplanConstants.fontfamily,
         anchor: "middle",
       })
-      .y(y - zweiteZeile);
-  }
-
-  /**
-   * Verteilt den Straßennamen anhand der getrenten Wörter auf die erste und zweite Zeile
-   * zur Anzeige im Belastungsplan.
-   *
-   * @param trenner Trennzeichen der einzelnen Wörter (pieces)
-   * @param pieces einzelne Wörter des Straßennames
-   * @return [firsLine, SecondLine]
-   */
-  function getFirstAndSecondLineOfStreetname(
-    trenner: string,
-    pieces: Array<string>
-  ): Array<string> {
-    let firstLine: string;
-    let secondLine: string;
-
-    // In der Mitte teilen
-    // Math.floor wirft die Nachkommastellen weg -> 3/2 = 1
-    const index: number = Math.floor(pieces.length / 2);
-    const streetnames: Array<string> = getStreetnames(index, trenner, pieces);
-    firstLine = streetnames[0];
-    secondLine = streetnames[1];
-
-    // Ungerade Anzahl -> schauen, wie es am Besten passt
-    // FirstLine oder SecondLine mehr Wörter?
-    if (pieces.length % 2 === 1) {
-      // Variante 1: firstLine weniger Worte als secondLine
-      // default -> wurde vor dem <<if (pieces.length % 2 === 1) {>> schon berechnet
-
-      // Variante 2: firstLine mehr Worte als secondLine -> Index aufrunden
-      // 3/2 = 1.5 -> 2
-      const index: number = Number.parseInt((pieces.length / 2).toFixed(0));
-      const streetnames: Array<string> = getStreetnames(index, trenner, pieces);
-      const firstLineVariante2: string = streetnames[0];
-      const secondLineVariante2: string = streetnames[1];
-
-      // Wenn die erste Zeile der zweiten Variante kürzer ist, als die zweite Zeile der ersten Variante,
-      // dann wird die zweite Variante verwendet.
-      if (firstLineVariante2.length < secondLine.length) {
-        firstLine = firstLineVariante2;
-        secondLine = secondLineVariante2;
-      }
-    }
-    return [firstLine, secondLine];
-  }
-
-  // Verteilt die Teile (pieces) der Straßennamen auf die first and second Line
-  // Der index gibt dabei vor, wieviele Teile wohin gehören
-  function getStreetnames(
-    index: number,
-    trenner: string,
-    pieces: Array<string>
-  ): Array<string> {
-    let firstLine = "";
-    let secondLine = "";
-    for (let i = 0; i < index; i++) {
-      firstLine = firstLine + pieces[i] + trenner;
-    }
-
-    for (let i = index; i < pieces.length; i++) {
-      // Nur ein Trennzeichen hinzufügen, wenn Text vorhanden
-      // am Anfang von Zeile 2 soll kein Trennzeichen stehen
-      if (secondLine !== "") {
-        secondLine = secondLine + trenner;
-      }
-      secondLine = secondLine + pieces[i];
-    }
-    return [firstLine, secondLine];
+      .y(y - (pieces.length > 1 ? line / 2 : 0));
   }
 
   /**

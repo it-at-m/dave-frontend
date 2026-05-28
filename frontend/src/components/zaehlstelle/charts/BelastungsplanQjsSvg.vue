@@ -295,8 +295,9 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-size: 28.0866px;
+                  font-family: sans-serif-serif;
+                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -515,11 +516,8 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  fill: ${BelastungsplanConstants.legendColor};
-                  fill-opacity: 1;
-                  stroke-width: 2.2868;
+                  stroke-width: 43.9644;
                 `"
-                id="tspan6"
               >
                 N
               </tspan>
@@ -577,9 +575,8 @@
                   y="60.337341"
                   id="tspan16"
                 >
-
-                    Zählstelle
-                    {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
+                  Zählstelle
+                  {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
                 </tspan>
               </text>
             </g>
@@ -717,9 +714,10 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 `"
-                id="zaehlzeit2-multirow"
-                x="56.249691"
-                y="1257"
+                id="massstab-size1-multirow"
+                x="699.24969"
+                y="688.33734"
+                transform="translate(181.39362,6.9760325e-4)"
               >
                 <tspan
                   x="56.249691"
@@ -913,7 +911,7 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
-import { useStreetname } from "@/util/StrassennameUtils";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanQjsDTO;
@@ -932,7 +930,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const qjs = useQjs();
-const streetnameUtils = useStreetname();
+const strassennameUtils = useStrassennameUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
 
 const firstStreetname = ref<Array<string>>([]);
@@ -1267,7 +1265,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  firstStreetname.value = streetnameUtils.getStreetname(
+  firstStreetname.value = strassennameUtils.getStreetLines(
     first(availableKnotenarme.value)
   );
 
@@ -1291,7 +1289,7 @@ watch(
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
   ],
   async () => {
-    firstStreetname.value = streetnameUtils.getStreetname(
+    firstStreetname.value = strassennameUtils.getStreetLines(
       first(availableKnotenarme.value)
     );
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird

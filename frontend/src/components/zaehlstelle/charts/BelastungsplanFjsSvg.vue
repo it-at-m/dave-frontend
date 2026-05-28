@@ -1509,7 +1509,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1601,7 +1601,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1651,7 +1651,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1933,13 +1933,13 @@
                 id="arrow_node3_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                :style="`
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-size: 28.0866px;
+                  font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1982,13 +1982,13 @@
                 id="arrow_node3_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                :style="`
+                style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-size: 28.0866px;
+                  font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -2119,7 +2119,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2210,7 +2210,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2259,7 +2259,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2307,7 +2307,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 white-space: pre;
                 display: inline;
                 fill: #000000;
@@ -3019,8 +3019,8 @@
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: ${belastungsplanMethods.maxlineWidth}px;
-                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-size: 28.0866px;
+                    font-family: Arial;
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
@@ -3448,13 +3448,13 @@
               id="node6_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-              :style="`
+              style="
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth}px;
-                font-family: ${BelastungsplanConstants.fontfamily};
+                font-size: 28.097px;
+                font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3879,7 +3879,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -3971,7 +3971,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4021,7 +4021,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4489,7 +4489,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4581,7 +4581,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4631,7 +4631,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -5101,6 +5101,7 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
 import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -5120,6 +5121,7 @@ const display = useDisplay();
 const dateUtils = useDateUtils();
 const fjs = useFjs();
 const belastungsplanMethods = useBelastungsplanMethods();
+const strassennameUtils = useStrassennameUtils();
 
 const streetnameNodeOne = ref<Array<string>>([]);
 const streetnameNodeTwo = ref<Array<string>>([]);
@@ -5864,6 +5866,33 @@ function isArrowAvailable(
   );
 }
 
+function setStreetnameNodes() {
+  streetnameNodeOne.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+  );
+  streetnameNodeTwo.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+  );
+  streetnameNodeThree.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+  );
+  streetnameNodeFour.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+  );
+  streetnameNodeFive.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+  );
+  streetnameNodeSix.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+  );
+  streetnameNodeSeven.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+  );
+  streetnameNodeEight.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+  );
+}
+
 onMounted(() => {
   zaehlstelleStore.setSizeBelastungsplanSvg(
     Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
@@ -5871,30 +5900,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  streetnameNodeOne.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-  );
-  streetnameNodeTwo.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-  );
-  streetnameNodeThree.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-  );
-  streetnameNodeFour.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-  );
-  streetnameNodeFive.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-  );
-  streetnameNodeSix.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-  );
-  streetnameNodeSeven.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-  );
-  streetnameNodeEight.value = fjs.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-  );
+  setStreetnameNodes();
 });
 
 watch(
@@ -5906,30 +5912,7 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    streetnameNodeOne.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-    );
-    streetnameNodeTwo.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-    );
-    streetnameNodeThree.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-    );
-    streetnameNodeFour.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-    );
-    streetnameNodeFive.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-    );
-    streetnameNodeSix.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-    );
-    streetnameNodeSeven.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-    );
-    streetnameNodeEight.value = fjs.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-    );
+    setStreetnameNodes();
     await nextTick();
 
     emitSvgAsBlob();
