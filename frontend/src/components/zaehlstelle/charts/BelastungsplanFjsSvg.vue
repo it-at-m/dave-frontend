@@ -3658,7 +3658,7 @@
                     stroke-width: 43.9644;
                   `"
                 >
-                  {{ sumArrowsNode6NorthEast }}
+                  {{ sumArrowsNodeSixNorthEast }}
                 </tspan>
               </text>
               <path
@@ -4202,7 +4202,7 @@
                   id="arrow_node7_south_east_incoming_number_tspan"
                   x="-664.74701"
                   y="952.89606"
-                  style="
+                  :style="`
                     font-style: normal;
                     font-variant: normal;
                     font-weight: normal;
@@ -5102,6 +5102,8 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useBlp } from "@/util/BlpUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
+import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;
@@ -5892,30 +5894,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  streetnameNodeOne.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-  );
-  streetnameNodeTwo.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-  );
-  streetnameNodeThree.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-  );
-  streetnameNodeFour.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-  );
-  streetnameNodeFive.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-  );
-  streetnameNodeSix.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-  );
-  streetnameNodeSeven.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-  );
-  streetnameNodeEight.value = blp.getStreetname(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-  );
+  updateStreetname();
 });
 
 watch(
@@ -5927,30 +5906,7 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    streetnameNodeOne.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-    );
-    streetnameNodeTwo.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-    );
-    streetnameNodeThree.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-    );
-    streetnameNodeFour.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-    );
-    streetnameNodeFive.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-    );
-    streetnameNodeSix.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-    );
-    streetnameNodeSeven.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-    );
-    streetnameNodeEight.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-    );
+    updateStreetname();
     await nextTick();
 
     emitSvgAsBlob();
@@ -5958,6 +5914,32 @@ watch(
   { deep: true, immediate: true }
 );
 
+function updateStreetname(){
+  streetnameNodeOne.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+  );
+  streetnameNodeTwo.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+  );
+  streetnameNodeThree.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+  );
+  streetnameNodeFour.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+  );
+  streetnameNodeFive.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+  );
+  streetnameNodeSix.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+  );
+  streetnameNodeSeven.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+  );
+  streetnameNodeEight.value = blp.getStreetname(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+  );
+}
 /**
  * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
  */
