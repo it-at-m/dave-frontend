@@ -5894,7 +5894,7 @@ onMounted(() => {
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 
-  updateStreetname();
+  updateStreetnames();
 });
 
 watch(
@@ -5906,7 +5906,7 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    updateStreetname();
+    updateStreetnames();
     await nextTick();
 
     emitSvgAsBlob();
@@ -5914,7 +5914,7 @@ watch(
   { deep: true, immediate: true }
 );
 
-function updateStreetname(){
+function updateStreetnames(){
   streetnameNodeOne.value = blp.getStreetname(
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
