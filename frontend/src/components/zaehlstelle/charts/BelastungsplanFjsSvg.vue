@@ -1736,23 +1736,23 @@
           <g id="arrows_node3">
             <g id="arrows_node3_east">
               <path
-                v-if="arrowNodeThreeEastOutgoingAvailable"
+                v-if="arrowNodeThreeEastIncomingAvailable"
                 id="arrow_node3_east_outgoing"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
-                :fill="colorArrowNodeThreeEastOutgoing"
-                stroke="none"
-                style="stroke-width: 17.8113"
-              />
-              <path
-                v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_incoming"
-                d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
+              <path
+                v-if="arrowNodeThreeEastOutgoingAvailable"
+                id="arrow_node3_east_incoming"
+                d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
+                :fill="colorArrowNodeThreeEastOutgoing"
+                stroke="none"
+                style="stroke-width: 17.8113"
+              />
               <text
-                v-if="arrowNodeThreeEastIncomingAvailable"
+                v-if="arrowNodeThreeEastOutgoingAvailable"
                 id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1797,11 +1797,11 @@
                     stroke-width: 43.9482;
                   `"
                 >
-                  {{ zaehlwertArrowNodeThreeEastIncoming }}
+                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeThreeEastOutgoingAvailable"
+                v-if="arrowNodeThreeEastIncomingAvailable"
                 id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1846,7 +1846,7 @@
                     stroke-width: 43.9482;
                   `"
                 >
-                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
+                  {{ zaehlwertArrowNodeThreeEastIncoming }}
                 </tspan>
               </text>
               <text
@@ -1933,13 +1933,13 @@
                 id="arrow_node3_west_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -1982,13 +1982,13 @@
                 id="arrow_node3_west_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
-                style="
+                :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: Arial;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -3019,8 +3019,8 @@
                     font-variant: normal;
                     font-weight: normal;
                     font-stretch: normal;
-                    font-size: 28.0866px;
-                    font-family: Arial;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
                     font-variant-ligatures: normal;
                     font-variant-caps: normal;
                     font-variant-numeric: normal;
@@ -3448,13 +3448,13 @@
               id="node6_sum_text"
               xml:space="preserve"
               transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
-              style="
+              :style="`
                 font-style: normal;
                 font-variant: normal;
                 font-weight: bold;
                 font-stretch: normal;
-                font-size: 28.097px;
-                font-family: Arial;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
@@ -3658,7 +3658,7 @@
                     stroke-width: 43.9644;
                   `"
                 >
-                  {{ sumArrowsNode6NorthEast }}
+                  {{ sumArrowsNodeSixNorthEast }}
                 </tspan>
               </text>
               <path
@@ -5084,14 +5084,17 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
+import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehldauer from "@/types/enum/Zaehldauer";
@@ -5100,11 +5103,10 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
-import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
-  data: LadeBelastungsplanDTO;
+  data: LadeBelastungsplanFjsDTO;
   dimension?: string;
 }
 
@@ -5145,284 +5147,303 @@ const availableKnotenarme = computed(() => {
   return fjs.computeAvailableKnotenarme(activeZaehlung.value);
 });
 
+/**
+ * Auslesen des Zählwertes aus dem LadeBelastungsplanFjsDTO für den angegebenen Knotenarm, Strassenseite und Richtung.
+ * Wird eines davon nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundener Zählwert oder 0
+ */
+function getArrowZaehlwertOrZero(
+  knotenarm: number,
+  richtung: Bewegungsrichtung,
+  strassenseite: Himmelsrichtung
+) {
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  if (!kn) return 0;
+  const seite = kn.valuesStrassenseiten.find(
+    (s) => s.strassenseite === strassenseite
+  );
+  if (!seite) return 0;
+  const laengsverkehr = seite.valuesLaengsverkehre.find(
+    (l) => l.richtung === richtung
+  );
+  return laengsverkehr?.value ?? 0;
+}
+
+/**
+ * Auslesen der Zählwert-Summe aus dem LadeBelastungsplanFjsDTO für den angegebenen Knotenarm und Strassenseite.
+ * Wird eines davon nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundene Summe oder 0
+ */
+function getSumArrowsKnotenarmStrassenseiteOrZero(
+  knotenarm: number,
+  strassenseite: Himmelsrichtung
+) {
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  if (!kn) return 0;
+  const seite = kn.valuesStrassenseiten.find(
+    (s) => s.strassenseite === strassenseite
+  );
+  return seite?.sumStrassenseite ?? 0;
+}
+
+/**
+ * Auslesen der Zählwert-Summe aus dem LadeBelastungsplanFjsDTO für den angegebenen Knotenarm.
+ * Wird dieser nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundene Summe oder 0
+ */
+function getSumArrowsKnotenarmOrZero(knotenarm: number) {
+  if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  return kn?.sumKnotenarm ?? 0;
+}
+
 // Zaehlwerte of Node 1
 const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.AUS, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeOneWestIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.EIN, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.AUS, Himmelsrichtung.O);
 });
 
 const zaehlwertArrowNodeOneEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.EIN, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeOneWest = computed(() => {
-  return (
-    zaehlwertArrowNodeOneWestOutgoing.value +
-    zaehlwertArrowNodeOneWestIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(1, Himmelsrichtung.W);
 });
 
 const sumArrowsNodeOneEast = computed(() => {
-  return (
-    zaehlwertArrowNodeOneEastOutgoing.value +
-    zaehlwertArrowNodeOneEastIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(1, Himmelsrichtung.O);
 });
 
 const sumNodeOneArrows = computed(() => {
-  return sumArrowsNodeOneWest.value + sumArrowsNodeOneEast.value;
+  return getSumArrowsKnotenarmOrZero(1);
 });
 
 // Zaehlwerte of Node 2
 const zaehlwertArrowNodeTwoNorthIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.EIN, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeTwoNorthOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.AUS, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeTwoSouthIncoming = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.EIN, Himmelsrichtung.S);
 });
 
 const zaehlwertArrowNodeTwoSouthOutgoing = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.AUS, Himmelsrichtung.S);
 });
 
 const sumArrowsNodeTwoNorth = computed(() => {
-  return (
-    zaehlwertArrowNodeTwoNorthIncoming.value +
-    zaehlwertArrowNodeTwoNorthOutgoing.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(2, Himmelsrichtung.N);
 });
 
 const sumArrowsNodeTwoSouth = computed(() => {
-  return (
-    zaehlwertArrowNodeTwoSouthIncoming.value +
-    zaehlwertArrowNodeTwoSouthOutgoing.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(2, Himmelsrichtung.S);
 });
 
 const sumNodeTwoArrows = computed(() => {
-  return sumArrowsNodeTwoNorth.value + sumArrowsNodeTwoSouth.value;
+  return getSumArrowsKnotenarmOrZero(2);
 });
 
 // Zaehlwerte of Node 3
 const zaehlwertArrowNodeThreeWestIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeThreeWestOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.AUS, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.AUS, Himmelsrichtung.O);
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
-  return (
-    zaehlwertArrowNodeThreeWestIncoming.value +
-    zaehlwertArrowNodeThreeWestOutgoing.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(3, Himmelsrichtung.W);
 });
 
 const sumArrowsNodeThreeEast = computed(() => {
-  return (
-    zaehlwertArrowNodeThreeEastOutgoing.value +
-    zaehlwertArrowNodeThreeEastIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(3, Himmelsrichtung.O);
 });
 
 const sumNodeThreeArrows = computed(() => {
-  return sumArrowsNodeThreeWest.value + sumArrowsNodeThreeEast.value;
+  return getSumArrowsKnotenarmOrZero(3);
 });
 
 // Zaehlwerte of Node 4
 const zaehlwertArrowNodeFourNorthOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.AUS, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeFourNorthIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.EIN, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeFourSouthOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.AUS, Himmelsrichtung.S);
 });
 
 const zaehlwertArrowNodeFourSouthIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.EIN, Himmelsrichtung.S);
 });
 
 const sumArrowsNodeFourNorth = computed(() => {
-  return (
-    zaehlwertArrowNodeFourNorthOutgoing.value +
-    zaehlwertArrowNodeFourNorthIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(4, Himmelsrichtung.N);
 });
 
 const sumArrowsNodeFourSouth = computed(() => {
-  return (
-    zaehlwertArrowNodeFourSouthOutgoing.value +
-    zaehlwertArrowNodeFourSouthIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(4, Himmelsrichtung.S);
 });
 
 const sumNodeFourArrows = computed(() => {
-  return sumArrowsNodeFourNorth.value + sumArrowsNodeFourSouth.value;
+  return getSumArrowsKnotenarmOrZero(4);
 });
 
 // Zaehlwerte of Node 5
 const zaehlwertArrowNodeFiveNorthWestOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeFiveNorthWestIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeFiveSouthEastOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
 });
 
 const zaehlwertArrowNodeFiveSouthEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
 });
 
 const sumArrowsNodeFiveNorthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeFiveNorthWestOutgoing.value +
-    zaehlwertArrowNodeFiveNorthWestIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.NW);
 });
 
 const sumArrowsNodeFiveSouthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeFiveSouthEastOutgoing.value +
-    zaehlwertArrowNodeFiveSouthEastIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.SO);
 });
 
 const sumNodeFiveArrows = computed(() => {
-  return sumArrowsNodeFiveNorthWest.value + sumArrowsNodeFiveSouthEast.value;
+  return getSumArrowsKnotenarmOrZero(5);
 });
 
 // Zaehlwerte of Node 6
 const zaehlwertArrowNodeSixNorthEastIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeSixNorthEastOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeSixSouthWestIncoming = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
 });
 
 const zaehlwertArrowNodeSixSouthWestOutgoing = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
 });
 
-const sumArrowsNode6NorthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeSixNorthEastIncoming.value +
-    zaehlwertArrowNodeSixNorthEastOutgoing.value
-  );
+const sumArrowsNodeSixNorthEast = computed(() => {
+  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.NO);
 });
 
 const sumArrowsNodeSixSouthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeSixSouthWestIncoming.value +
-    zaehlwertArrowNodeSixSouthWestOutgoing.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.SW);
 });
 
 const sumNodeSixArrows = computed(() => {
-  return sumArrowsNode6NorthEast.value + sumArrowsNodeSixSouthWest.value;
+  return getSumArrowsKnotenarmOrZero(6);
 });
 
 // Zaehlwerte of Node 7
 const zaehlwertArrowNodeSevenNorthWestIncoming = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeSevenNorthWestOutgoing = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
 });
 
 const zaehlwertArrowNodeSevenSouthEastIncoming = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
 });
 
 const zaehlwertArrowNodeSevenSouthEastOutgoing = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
 });
 
 const sumArrowsNodeSevenNorthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeSevenNorthWestIncoming.value +
-    zaehlwertArrowNodeSevenNorthWestOutgoing.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.NW);
 });
 
 const sumArrowsNodeSevenSouthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeSevenSouthEastIncoming.value +
-    zaehlwertArrowNodeSevenSouthEastOutgoing.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.SO);
 });
 
 const sumNodeSevenArrows = computed(() => {
-  return sumArrowsNodeSevenNorthWest.value + sumArrowsNodeSevenSouthEast.value;
+  return getSumArrowsKnotenarmOrZero(7);
 });
 
 // Zaehlwerte of Node 8
 const zaehlwertArrowNodeEightNorthEastOutgoing = computed(() => {
-  return 800; // TODO: wire real data
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeEightNorthEastIncoming = computed(() => {
-  return 200; // TODO: wire real data
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
 });
 
 const zaehlwertArrowNodeEightSouthWestOutgoing = computed(() => {
-  return 900; // TODO: wire real data
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
 });
 
 const zaehlwertArrowNodeEightSouthWestIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
 });
 
 const sumArrowsNodeEightNorthEast = computed(() => {
-  return (
-    zaehlwertArrowNodeEightNorthEastOutgoing.value +
-    zaehlwertArrowNodeEightNorthEastIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.NO);
 });
 
 const sumArrowsNodeEightSouthWest = computed(() => {
-  return (
-    zaehlwertArrowNodeEightSouthWestOutgoing.value +
-    zaehlwertArrowNodeEightSouthWestIncoming.value
-  );
+  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.SW);
 });
 
 const sumNodeEightArrows = computed(() => {
-  return sumArrowsNodeEightNorthEast.value + sumArrowsNodeEightSouthWest.value;
+  return getSumArrowsKnotenarmOrZero(8);
 });
 
 // Arrows of Node 1
@@ -5866,6 +5887,31 @@ function isArrowAvailable(
   );
 }
 
+onMounted(() => {
+  zaehlstelleStore.setSizeBelastungsplanSvg(
+    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
+  );
+  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
+});
+
+watch(
+  [
+    () => props.data,
+    () => activeZaehlung.value.laengsverkehr,
+    () => activeZaehlung.value.knotenarme,
+    () => optionen.value.zeitauswahl,
+    () => optionen.value.chosenLaengsverkehre,
+  ],
+  async () => {
+    setStreetnameNodes();
+    await nextTick();
+
+    emitSvgAsBlob();
+  },
+  { deep: true, immediate: true }
+);
+
 function setStreetnameNodes() {
   streetnameNodeOne.value = strassennameUtils.getStreetLines(
     availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
@@ -5893,33 +5939,6 @@ function setStreetnameNodes() {
   );
 }
 
-onMounted(() => {
-  zaehlstelleStore.setSizeBelastungsplanSvg(
-    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
-  );
-  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
-  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
-
-  setStreetnameNodes();
-});
-
-watch(
-  [
-    () => props.data,
-    () => activeZaehlung.value.laengsverkehr,
-    () => activeZaehlung.value.knotenarme,
-    () => optionen.value.zeitauswahl,
-    () => optionen.value.chosenLaengsverkehre,
-  ],
-  async () => {
-    setStreetnameNodes();
-    await nextTick();
-
-    emitSvgAsBlob();
-  },
-  { deep: true, immediate: true }
-);
-
 /**
  * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
  */
@@ -5935,6 +5954,7 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
   }
   return svgString;
 }
+
 /**
  * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
  */
@@ -5946,5 +5966,11 @@ function emitSvgAsBlob(): void {
   const svgString = serializeSvgElement(svgEl);
   const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
   emits("print", blob);
+}
+
+function isFjsBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanFjsDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 </script>
