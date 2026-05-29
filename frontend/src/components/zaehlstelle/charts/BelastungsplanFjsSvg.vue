@@ -3658,7 +3658,7 @@
                     stroke-width: 43.9644;
                   `"
                 >
-                  {{ sumArrowsNode6NorthEast }}
+                  {{ sumArrowsNodeSixNorthEast }}
                 </tspan>
               </text>
               <path
