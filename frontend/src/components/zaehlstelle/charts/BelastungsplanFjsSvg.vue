@@ -1736,23 +1736,23 @@
           <g id="arrows_node3">
             <g id="arrows_node3_east">
               <path
-                v-if="arrowNodeThreeEastOutgoingAvailable"
+                v-if="arrowNodeThreeEastIncomingAvailable"
                 id="arrow_node3_east_outgoing"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
-                :fill="colorArrowNodeThreeEastOutgoing"
-                stroke="none"
-                style="stroke-width: 17.8113"
-              />
-              <path
-                v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_incoming"
-                d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeEastIncoming"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
+              <path
+                v-if="arrowNodeThreeEastOutgoingAvailable"
+                id="arrow_node3_east_incoming"
+                d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
+                :fill="colorArrowNodeThreeEastOutgoing"
+                stroke="none"
+                style="stroke-width: 17.8113"
+              />
               <text
-                v-if="arrowNodeThreeEastIncomingAvailable"
+                v-if="arrowNodeThreeEastOutgoingAvailable"
                 id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1797,11 +1797,11 @@
                     stroke-width: 43.9482;
                   `"
                 >
-                  {{ zaehlwertArrowNodeThreeEastIncoming }}
+                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeThreeEastOutgoingAvailable"
+                v-if="arrowNodeThreeEastIncomingAvailable"
                 id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1846,7 +1846,7 @@
                     stroke-width: 43.9482;
                   `"
                 >
-                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
+                  {{ zaehlwertArrowNodeThreeEastIncoming }}
                 </tspan>
               </text>
               <text
