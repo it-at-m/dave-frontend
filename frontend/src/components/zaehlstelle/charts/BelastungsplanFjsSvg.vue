@@ -1509,7 +1509,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1601,7 +1601,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1651,7 +1651,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -1736,23 +1736,23 @@
           <g id="arrows_node3">
             <g id="arrows_node3_east">
               <path
-                v-if="arrowNodeThreeEastIncomingAvailable"
+                v-if="arrowNodeThreeEastOutgoingAvailable"
                 id="arrow_node3_east_outgoing"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
-                :fill="colorArrowNodeThreeEastIncoming"
-                stroke="none"
-                style="stroke-width: 17.8113"
-              />
-              <path
-                v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_incoming"
-                d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeEastOutgoing"
                 stroke="none"
                 style="stroke-width: 17.8113"
               />
+              <path
+                v-if="arrowNodeThreeEastIncomingAvailable"
+                id="arrow_node3_east_incoming"
+                d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
+                :fill="colorArrowNodeThreeEastIncoming"
+                stroke="none"
+                style="stroke-width: 17.8113"
+              />
               <text
-                v-if="arrowNodeThreeEastOutgoingAvailable"
+                v-if="arrowNodeThreeEastIncomingAvailable"
                 id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1797,11 +1797,11 @@
                     stroke-width: 43.9482;
                   `"
                 >
-                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
+                  {{ zaehlwertArrowNodeThreeEastIncoming }}
                 </tspan>
               </text>
               <text
-                v-if="arrowNodeThreeEastIncomingAvailable"
+                v-if="arrowNodeThreeEastOutgoingAvailable"
                 id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="matrix(0,-0.86707182,1.153307,0,0,0)"
@@ -1846,7 +1846,7 @@
                     stroke-width: 43.9482;
                   `"
                 >
-                  {{ zaehlwertArrowNodeThreeEastIncoming }}
+                  {{ zaehlwertArrowNodeThreeEastOutgoing }}
                 </tspan>
               </text>
               <text
@@ -2119,7 +2119,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2210,7 +2210,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2259,7 +2259,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -2307,7 +2307,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 white-space: pre;
                 display: inline;
                 fill: #000000;
@@ -3658,7 +3658,7 @@
                     stroke-width: 43.9644;
                   `"
                 >
-                  {{ sumArrowsNodeSixNorthEast }}
+                  {{ sumArrowsNode6NorthEast }}
                 </tspan>
               </text>
               <path
@@ -3879,7 +3879,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -3971,7 +3971,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4021,7 +4021,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4489,7 +4489,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4581,7 +4581,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -4631,7 +4631,7 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: rtl;
+                direction: ltr;
                 text-anchor: middle;
                 white-space: pre;
                 display: inline;
@@ -5084,8 +5084,7 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
+import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -5104,6 +5103,7 @@ import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
 import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;
@@ -5123,6 +5123,7 @@ const display = useDisplay();
 const dateUtils = useDateUtils();
 const fjs = useFjs();
 const belastungsplanMethods = useBelastungsplanMethods();
+const strassennameUtils = useStrassennameUtils();
 const blp = useBlp();
 
 const streetnameNodeOne = ref<Array<string>>([]);
@@ -5286,7 +5287,7 @@ const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.O);
+  return 100; // TODO: wire real data
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
@@ -5904,13 +5905,41 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    updateStreetnames();
+    updateStreetnames(); // TODO
+    setStreetnameNodes(); // TODO
     await nextTick();
 
     emitSvgAsBlob();
   },
   { deep: true, immediate: true }
 );
+
+function setStreetnameNodes() {
+  streetnameNodeOne.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+  );
+  streetnameNodeTwo.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+  );
+  streetnameNodeThree.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+  );
+  streetnameNodeFour.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+  );
+  streetnameNodeFive.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+  );
+  streetnameNodeSix.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+  );
+  streetnameNodeSeven.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+  );
+  streetnameNodeEight.value = strassennameUtils.getStreetLines(
+      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+  );
+}
 
 function updateStreetnames(){
   streetnameNodeOne.value = blp.getStreetname(
@@ -5938,6 +5967,7 @@ function updateStreetnames(){
       availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 }
+
 /**
  * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
  */
