@@ -5893,8 +5893,6 @@ onMounted(() => {
   );
   zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
-
-  updateStreetnames();
 });
 
 watch(
