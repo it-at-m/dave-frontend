@@ -5084,7 +5084,6 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -5098,12 +5097,13 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import { useBlp } from "@/util/BlpUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
 import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;
@@ -5124,7 +5124,6 @@ const dateUtils = useDateUtils();
 const fjs = useFjs();
 const belastungsplanMethods = useBelastungsplanMethods();
 const strassennameUtils = useStrassennameUtils();
-const blp = useBlp();
 
 const streetnameNodeOne = ref<Array<string>>([]);
 const streetnameNodeTwo = ref<Array<string>>([]);
@@ -5287,7 +5286,7 @@ const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  return 100; // TODO: wire real data
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
@@ -5905,8 +5904,7 @@ watch(
     () => optionen.value.chosenLaengsverkehre,
   ],
   async () => {
-    updateStreetnames(); // TODO
-    setStreetnameNodes(); // TODO
+    setStreetnameNodes();
     await nextTick();
 
     emitSvgAsBlob();
@@ -5941,33 +5939,6 @@ function setStreetnameNodes() {
   );
 }
 
-function updateStreetnames(){
-  streetnameNodeOne.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
-  );
-  streetnameNodeTwo.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
-  );
-  streetnameNodeThree.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
-  );
-  streetnameNodeFour.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
-  );
-  streetnameNodeFive.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
-  );
-  streetnameNodeSix.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
-  );
-  streetnameNodeSeven.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
-  );
-  streetnameNodeEight.value = blp.getStreetname(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
-  );
-}
-
 /**
  * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
  */
@@ -5983,6 +5954,7 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
   }
   return svgString;
 }
+
 /**
  * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
  */

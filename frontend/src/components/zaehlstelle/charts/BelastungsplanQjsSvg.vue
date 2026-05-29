@@ -909,7 +909,6 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import { useBlp } from "@/util/BlpUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
