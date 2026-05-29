@@ -5084,13 +5084,17 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
+import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehldauer from "@/types/enum/Zaehldauer";
@@ -5099,11 +5103,7 @@ import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
-import {useBelastungsplanMethods} from "@/components/zaehlstelle/charts/BelastungsplanMethods";
-import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;
@@ -5914,28 +5914,28 @@ watch(
 
 function setStreetnameNodes() {
   streetnameNodeOne.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
   );
   streetnameNodeTwo.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
   );
   streetnameNodeThree.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
   );
   streetnameNodeFour.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
   );
   streetnameNodeFive.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
   );
   streetnameNodeSix.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
   );
   streetnameNodeSeven.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
   );
   streetnameNodeEight.value = strassennameUtils.getStreetLines(
-      availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
   );
 }
 

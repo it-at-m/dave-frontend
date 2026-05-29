@@ -1,13 +1,8 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 
-
-
 import { describe, expect, it } from "vitest";
 
-
-
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-
 
 describe("StrassennamenUtils", () => {
   // getStreetname ------------------------------------
