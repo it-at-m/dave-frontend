@@ -506,7 +506,7 @@
             <text
               id="node1_sum_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+              transform="rotate(-90)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -527,13 +527,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9645;
               `"
-              x="-1207.2531"
-              y="-171.53365"
+              x="-1200.4841"
+              y="-79.837906"
             >
               <tspan
                 id="node1_sum_tspan"
-                x="-49.797398"
-                y="616.65149"
+                x="-43.028492"
+                y="708.34723"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -574,7 +574,7 @@
                 v-if="arrowNodeOneWestIncomingAvailable"
                 id="arrow_node1_west_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -595,13 +595,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1206.5183"
-                y="-259.38544"
+                x="-1199.7682"
+                y="-181.45634"
               >
                 <tspan
                   id="arrow_node1_west_incoming_number_tspan"
-                  x="-49.490978"
-                  y="528.50812"
+                  x="-42.740871"
+                  y="606.43726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -623,7 +623,7 @@
                 v-if="arrowNodeOneWestOutgoingAvailable"
                 id="arrow_node1_west_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -644,13 +644,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1206.5183"
-                y="-230.55521"
+                x="-1199.7682"
+                y="-148.20622"
               >
                 <tspan
                   id="arrow_node1_west_outgoing_number_tspan"
-                  x="-49.490978"
-                  y="557.33826"
+                  x="-42.740871"
+                  y="639.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -675,7 +675,7 @@
                 "
                 id="arrows_node1_west_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675167,1.153733,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -696,13 +696,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-1207.2521"
-                y="-203.73477"
+                x="-1200.4833"
+                y="-116.99011"
               >
                 <tspan
                   id="arrows_node1_west_sum_tspan"
-                  x="-49.797356"
-                  y="584.45007"
+                  x="-43.028492"
+                  y="671.1947"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -751,7 +751,7 @@
                 v-if="arrowNodeOneEastIncomingAvailable"
                 id="arrow_node1_east_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -772,13 +772,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1206.5183"
-                y="-115.23471"
+                x="-1199.7682"
+                y="-15.206282"
               >
                 <tspan
                   id="arrow_node1_east_incoming_number_tspan"
-                  x="-49.490978"
-                  y="672.65881"
+                  x="-42.740871"
+                  y="772.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -800,7 +800,7 @@
                 v-if="arrowNodeOneEastOutgoingAvailable"
                 id="arrow_node1_east_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -821,13 +821,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1206.5183"
-                y="-86.404541"
+                x="-1199.7682"
+                y="18.043777"
               >
                 <tspan
                   id="arrow_node1_east_outgoing_number_tspan"
-                  x="-49.490978"
-                  y="701.48889"
+                  x="-42.740871"
+                  y="805.93726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -852,7 +852,7 @@
                 "
                 id="arrows_node1_east_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675167,1.153733,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -873,13 +873,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-1207.2521"
-                y="-59.637333"
+                x="-1200.4833"
+                y="49.25988"
               >
                 <tspan
                   id="arrows_node1_east_sum_tspan"
-                  x="-49.797356"
-                  y="728.54749"
+                  x="-43.028492"
+                  y="837.4447"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1077,7 +1077,6 @@
             <text
               id="node2_sum_text"
               xml:space="preserve"
-              transform="scale(0.86675092,1.153734)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -1098,13 +1097,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9645;
               `"
-              x="407.97421"
-              y="-171.52608"
+              x="211.57898"
+              y="-79.830925"
             >
               <tspan
                 id="node2_sum_tspan"
-                x="1565.4299"
-                y="616.65906"
+                x="1369.0348"
+                y="708.35419"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1145,7 +1144,6 @@
                 v-if="arrowNodeTwoNorthIncomingAvailable"
                 id="arrow_node2_north_incoming_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1166,13 +1164,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="406.98672"
-                y="-259.38541"
+                x="211.13699"
+                y="-181.45631"
               >
                 <tspan
                   id="arrow_node2_north_incoming_number_tspan"
-                  x="1564.014"
-                  y="528.50812"
+                  x="1368.1643"
+                  y="606.43726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1194,7 +1192,6 @@
                 v-if="arrowNodeTwoNorthOutgoingAvailable"
                 id="arrow_node2_north_outgoing_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1215,13 +1212,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="406.98672"
-                y="-230.55528"
+                x="211.13699"
+                y="-148.2063"
               >
                 <tspan
                   id="arrow_node2_north_outgoing_number_tspan"
-                  x="1564.014"
-                  y="557.33826"
+                  x="1368.1643"
+                  y="639.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1246,7 +1243,6 @@
                 "
                 id="arrows_node2_north_sum_text"
                 xml:space="preserve"
-                transform="scale(0.86675167,1.153733)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1267,13 +1263,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="407.97394"
-                y="-203.73479"
+                x="211.58005"
+                y="-116.99011"
               >
                 <tspan
                   id="arrows_node2_north_sum_tspan"
-                  x="1565.4286"
-                  y="584.45001"
+                  x="1369.0348"
+                  y="671.1947"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1322,7 +1318,6 @@
                 v-if="arrowNodeTwoSouthIncomingAvailable"
                 id="arrow_node2_south_incoming_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1343,13 +1338,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="406.98672"
-                y="-115.2347"
+                x="211.13699"
+                y="-15.206279"
               >
                 <tspan
                   id="arrow_node2_south_incoming_number_tspan"
-                  x="1564.014"
-                  y="672.65881"
+                  x="1368.1643"
+                  y="772.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1371,7 +1366,6 @@
                 v-if="arrowNodeTwoSouthOutgoingAvailable"
                 id="arrow_node2_south_outgoing_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1392,13 +1386,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="406.98669"
-                y="-86.404564"
+                x="211.13696"
+                y="18.043781"
               >
                 <tspan
                   id="arrow_node2_south_outgoing_number_tspan"
-                  x="1564.014"
-                  y="701.48889"
+                  x="1368.1643"
+                  y="805.93726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1423,7 +1417,6 @@
                 "
                 id="arrows_node2_south_sum_text"
                 xml:space="preserve"
-                transform="scale(0.86675167,1.153733)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1444,13 +1437,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="407.97397"
-                y="-59.637352"
+                x="211.57996"
+                y="49.259895"
               >
                 <tspan
                   id="arrows_node2_south_sum_tspan"
-                  x="1565.4287"
-                  y="728.54749"
+                  x="1369.0348"
+                  y="837.4447"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1687,7 +1680,7 @@
             <text
               id="node3_sum_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+              transform="rotate(-90)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -1708,13 +1701,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9645;
               `"
-              x="-2630.3494"
-              y="-171.53365"
+              x="-2433.9543"
+              y="-79.837982"
             >
               <tspan
                 id="node3_sum_tspan"
-                x="-1472.8937"
-                y="616.65149"
+                x="-1276.4985"
+                y="708.34723"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1755,7 +1748,7 @@
                 v-if="arrowNodeThreeEastOutgoingAvailable"
                 id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1776,13 +1769,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-2629.0879"
-                y="-115.23471"
+                x="-2433.238"
+                y="-15.206213"
               >
                 <tspan
                   id="arrow_node3_east_incoming_number_tspan"
-                  x="-1472.0605"
-                  y="672.65881"
+                  x="-1276.2108"
+                  y="772.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1804,7 +1797,7 @@
                 v-if="arrowNodeThreeEastIncomingAvailable"
                 id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1825,13 +1818,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-2629.0879"
-                y="-86.404541"
+                x="-2433.238"
+                y="18.043785"
               >
                 <tspan
                   id="arrow_node3_east_outgoing_number_tspan"
-                  x="-1472.0605"
-                  y="701.48889"
+                  x="-1276.2108"
+                  y="805.93726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1856,7 +1849,7 @@
                 "
                 id="arrows_node3_east_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675167,1.153733,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1877,13 +1870,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-2630.3472"
-                y="-59.637333"
+                x="-2433.9534"
+                y="49.259911"
               >
                 <tspan
                   id="arrows_node3_east_sum_tspan"
-                  x="-1472.8923"
-                  y="728.54749"
+                  x="-1276.4985"
+                  y="837.4447"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1932,7 +1925,7 @@
                 v-if="arrowNodeThreeWestOutgoingAvailable"
                 id="arrow_node3_west_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1953,13 +1946,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-2629.0879"
-                y="-259.38544"
+                x="-2433.2383"
+                y="-181.45621"
               >
                 <tspan
                   id="arrow_node3_west_outgoing_number_tspan"
-                  x="-1472.0605"
-                  y="528.50812"
+                  x="-1276.2108"
+                  y="606.43726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -1981,7 +1974,7 @@
                 v-if="arrowNodeThreeWestIncomingAvailable"
                 id="arrow_node3_west_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2002,13 +1995,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-2629.0879"
-                y="-230.55521"
+                x="-2433.2383"
+                y="-148.20621"
               >
                 <tspan
                   id="arrow_node3_west_incoming_number_tspan"
-                  x="-1472.0605"
-                  y="557.33826"
+                  x="-1276.2108"
+                  y="639.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2033,7 +2026,7 @@
                 "
                 id="arrows_node3_west_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675167,1.153733,0,0,0)"
+                transform="rotate(-90)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2054,13 +2047,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-2630.3472"
-                y="-203.73477"
+                x="-2433.9534"
+                y="-116.99008"
               >
                 <tspan
                   id="arrows_node3_west_sum_tspan"
-                  x="-1472.8923"
-                  y="584.45007"
+                  x="-1276.4985"
+                  y="671.1947"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2307,19 +2300,19 @@
                 font-variant-east-asian: normal;
                 text-align: start;
                 writing-mode: rl-tb;
-                direction: ltr;
+                direction: rtl;
                 white-space: pre;
                 display: inline;
                 fill: #000000;
                 fill-opacity: 1;
                 stroke-width: 43.9644;
               `"
-              x="-1034.2489"
-              y="-78.905891"
+              x="-1021.89"
+              y="-79.830223"
             >
               <tspan
-                x="123.20578"
-                y="709.27856"
+                x="135.56476"
+                y="708.35419"
                 id="node4_sum_tspan"
                 :style="`
                   font-style: normal;
@@ -2361,7 +2354,6 @@
                 v-if="arrowNodeFourSouthOutgoingAvailable"
                 id="arrow_node4_south_outgoing_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2382,13 +2374,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1015.5829"
-                y="-115.2348"
+                x="-1022.333"
+                y="-15.206355"
               >
                 <tspan
                   id="arrow_node4_south_outgoing_number_tspan"
-                  x="141.44441"
-                  y="672.65881"
+                  x="134.69431"
+                  y="772.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2410,7 +2402,6 @@
                 v-if="arrowNodeFourSouthIncomingAvailable"
                 id="arrow_node4_south_incoming_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2431,13 +2422,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1015.5829"
-                y="-86.404541"
+                x="-1022.333"
+                y="18.043804"
               >
                 <tspan
                   id="arrow_node4_south_incoming_number_tspan"
-                  x="141.44441"
-                  y="701.48889"
+                  x="134.69431"
+                  y="805.93726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2462,7 +2453,6 @@
                 "
                 id="arrows_node4_south_sum_text"
                 xml:space="preserve"
-                transform="scale(0.86675167,1.153733)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2483,13 +2473,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-1015.1211"
-                y="-59.637363"
+                x="-1021.89"
+                y="49.259884"
               >
                 <tspan
                   id="arrows_node4_south_sum_tspan"
-                  x="142.33362"
-                  y="728.54749"
+                  x="135.56476"
+                  y="837.4447"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2538,7 +2528,6 @@
                 v-if="arrowNodeFourNorthOutgoingAvailable"
                 id="arrow_node4_north_outgoing_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2559,13 +2548,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1015.5829"
-                y="-259.38544"
+                x="-1022.333"
+                y="-181.45634"
               >
                 <tspan
                   id="arrow_node4_north_outgoing_number_tspan"
-                  x="141.44441"
-                  y="528.50812"
+                  x="134.69431"
+                  y="606.43726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2587,7 +2576,6 @@
                 v-if="arrowNodeFourNorthIncomingAvailable"
                 id="arrow_node4_north_incoming_number_text"
                 xml:space="preserve"
-                transform="scale(0.86707182,1.153307)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2608,13 +2596,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1015.5829"
-                y="-230.55518"
+                x="-1022.333"
+                y="-148.20619"
               >
                 <tspan
                   id="arrow_node4_north_incoming_number_tspan"
-                  x="141.44441"
-                  y="557.33826"
+                  x="134.69431"
+                  y="639.68726"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2659,13 +2647,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-1015.1211"
-                y="-203.7348"
+                x="-1021.89"
+                y="-116.99019"
               >
                 <tspan
                   id="arrows_node4_north_sum_tspan"
-                  x="142.33362"
-                  y="584.45007"
+                  x="135.56476"
+                  y="671.1947"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2869,7 +2857,7 @@
             <text
               id="node5_sum_text"
               xml:space="preserve"
-              transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
+              transform="rotate(-45)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -2890,13 +2878,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9645;
               `"
-              x="-399.63812"
-              y="79.779076"
+              x="-494.45148"
+              y="216.14178"
             >
               <tspan
                 id="node5_sum_tspan"
-                x="757.8175"
-                y="867.96423"
+                x="663.00421"
+                y="1004.327"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2937,7 +2925,7 @@
                 v-if="arrowNodeFiveNorthWestIncomingAvailable"
                 id="arrow_node5_north_west_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2958,13 +2946,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-399.20233"
-                y="-7.9779282"
+                x="-493.82706"
+                y="114.43393"
               >
                 <tspan
                   id="arrow_node5_north_west_incoming_number_tspan"
-                  x="757.82507"
-                  y="779.91565"
+                  x="663.20032"
+                  y="902.32751"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -2986,7 +2974,7 @@
                 v-if="arrowNodeFiveNorthWestOutgoingAvailable"
                 id="arrow_node5_north_west_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3007,13 +2995,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-399.20517"
-                y="20.852219"
+                x="-493.82944"
+                y="147.68399"
               >
                 <tspan
                   id="arrow_node5_north_west_outgoing_number_tspan"
-                  x="757.82214"
-                  y="808.74573"
+                  x="663.19788"
+                  y="935.57745"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3038,7 +3026,7 @@
                 "
                 id="arrows_node5_north_west_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3059,13 +3047,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-399.64072"
-                y="47.580051"
+                x="-494.453"
+                y="178.99188"
               >
                 <tspan
                   id="arrows_node5_north_west_sum_tspan"
-                  x="757.81403"
-                  y="835.76489"
+                  x="663.00171"
+                  y="967.17664"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3114,7 +3102,7 @@
                 v-if="arrowNodeFiveSouthEastIncomingAvailable"
                 id="arrow_node5_south_east_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3135,13 +3123,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-399.20517"
-                y="136.17249"
+                x="-493.82947"
+                y="280.68359"
               >
                 <tspan
                   id="arrow_node5_south_east_incoming_number_tspan"
-                  x="757.82214"
-                  y="924.06604"
+                  x="663.19788"
+                  y="1068.5773"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3163,7 +3151,7 @@
                 v-if="arrowNodeFiveSouthEastOutgoingAvailable"
                 id="arrow_node5_south_east_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3184,13 +3172,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-399.2023"
-                y="165.00262"
+                x="-493.827"
+                y="313.93362"
               >
                 <tspan
                   id="arrow_node5_south_east_outgoing_number_tspan"
-                  x="757.82501"
-                  y="952.89612"
+                  x="663.20032"
+                  y="1101.8271"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3215,7 +3203,7 @@
                 "
                 id="arrows_node5_south_east_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3236,13 +3224,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-399.63785"
-                y="191.67722"
+                x="-494.45044"
+                y="345.24139"
               >
                 <tspan
                   id="arrows_node5_south_east_sum_tspan"
-                  x="757.81683"
-                  y="979.86206"
+                  x="663.00421"
+                  y="1133.4263"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3447,7 +3435,7 @@
             <text
               id="node6_sum_text"
               xml:space="preserve"
-              transform="matrix(0.61288545,0.61288545,-0.81581313,0.81581313,0,0)"
+              transform="rotate(45)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -3468,13 +3456,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9645;
               `"
-              x="742.49854"
-              y="-778.25079"
+              x="499.97598"
+              y="-778.27582"
             >
               <tspan
                 id="node6_sum_tspan"
-                x="1899.9543"
-                y="9.9343462"
+                x="1657.4318"
+                y="9.9092941"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3515,7 +3503,7 @@
                 v-if="arrowNodeSixNorthEastIncomingAvailable"
                 id="arrow_node6_north_east_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3536,13 +3524,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="741.38873"
-                y="-866.33527"
+                x="499.54016"
+                y="-879.90857"
               >
                 <tspan
                   id="arrow_node6_north_east_incoming_number_tspan"
-                  x="1898.416"
-                  y="-78.441635"
+                  x="1656.5675"
+                  y="-92.014687"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3564,7 +3552,7 @@
                 v-if="arrowNodeSixNorthEastOutgoingAvailable"
                 id="arrow_node6_north_east_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3585,13 +3573,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="741.38599"
-                y="-837.50513"
+                x="499.53778"
+                y="-846.65826"
               >
                 <tspan
                   id="arrow_node6_north_east_outgoing_number_tspan"
-                  x="1898.4132"
-                  y="-49.611588"
+                  x="1656.5651"
+                  y="-58.764801"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3616,7 +3604,7 @@
                 "
                 id="arrows_node6_north_east_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3637,13 +3625,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="742.49811"
-                y="-810.4613"
+                x="499.97711"
+                y="-815.43823"
               >
                 <tspan
                   id="arrows_node6_north_east_sum_tspan"
-                  x="1899.9528"
-                  y="-22.276493"
+                  x="1657.4318"
+                  y="-27.253418"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3692,7 +3680,7 @@
                 v-if="arrowNodeSixSouthWestIncomingAvailable"
                 id="arrow_node6_south_west_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3713,13 +3701,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="741.38593"
-                y="-722.18481"
+                x="499.53769"
+                y="-713.65863"
               >
                 <tspan
                   id="arrow_node6_south_west_incoming_number_tspan"
-                  x="1898.4132"
-                  y="65.708748"
+                  x="1656.5651"
+                  y="74.234932"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3741,7 +3729,7 @@
                 v-if="arrowNodeSixSouthWestOutgoingAvailable"
                 id="arrow_node6_south_west_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3762,13 +3750,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="741.38873"
-                y="-693.35468"
+                x="499.54025"
+                y="-680.40863"
               >
                 <tspan
                   id="arrow_node6_south_west_outgoing_number_tspan"
-                  x="1898.416"
-                  y="94.53878"
+                  x="1656.5675"
+                  y="107.48486"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -3793,7 +3781,7 @@
                 "
                 id="arrows_node6_south_west_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3814,13 +3802,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="742.49805"
-                y="-666.362"
+                x="499.97708"
+                y="-649.18616"
               >
                 <tspan
                   id="arrows_node6_south_west_sum_tspan"
-                  x="1899.9528"
-                  y="121.82278"
+                  x="1657.4318"
+                  y="138.99867"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4057,7 +4045,7 @@
             <text
               id="node7_sum_text"
               xml:space="preserve"
-              transform="matrix(0.61288545,-0.61288545,0.81581313,0.81581313,0,0)"
+              transform="rotate(-45)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -4078,13 +4066,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9645;
               `"
-              x="-1822.7341"
-              y="79.781219"
+              x="-1727.9211"
+              y="216.14433"
             >
               <tspan
                 id="node7_sum_tspan"
-                x="-665.27838"
-                y="867.96637"
+                x="-570.46545"
+                y="1004.3294"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4125,7 +4113,7 @@
                 v-if="arrowNodeSevenSouthEastOutgoingAvailable"
                 id="arrow_node7_south_east_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4146,13 +4134,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1821.7715"
-                y="136.17253"
+                x="-1727.2966"
+                y="280.68369"
               >
                 <tspan
                   id="arrow_node7_south_east_outgoing_number_tspan"
-                  x="-664.74414"
-                  y="924.06604"
+                  x="-570.26935"
+                  y="1068.5771"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4174,7 +4162,7 @@
                 v-if="arrowNodeSevenSouthEastIncomingAvailable"
                 id="arrow_node7_south_east_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4195,13 +4183,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1821.7743"
-                y="165.00264"
+                x="-1727.2992"
+                y="313.93372"
               >
                 <tspan
                   id="arrow_node7_south_east_incoming_number_tspan"
-                  x="-664.74701"
-                  y="952.89606"
+                  x="-570.27179"
+                  y="1101.8271"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4226,7 +4214,7 @@
                 "
                 id="arrows_node7_south_east_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4247,13 +4235,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-1822.7355"
-                y="191.67723"
+                x="-1727.9227"
+                y="345.24146"
               >
                 <tspan
                   id="arrows_node7_south_east_sum_tspan"
-                  x="-665.28058"
-                  y="979.86206"
+                  x="-570.4679"
+                  y="1133.4263"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4302,7 +4290,7 @@
                 v-if="arrowNodeSevenNorthWestOutgoingAvailable"
                 id="arrow_node7_north_west_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4323,13 +4311,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1821.7744"
-                y="-7.9778929"
+                x="-1727.2993"
+                y="114.43401"
               >
                 <tspan
                   id="arrow_node7_north_west_outgoing_number_tspan"
-                  x="-664.74695"
-                  y="779.91565"
+                  x="-570.27179"
+                  y="902.32758"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4351,7 +4339,7 @@
                 v-if="arrowNodeSevenNorthWestIncomingAvailable"
                 id="arrow_node7_north_west_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,-0.61311236,0.8155112,0.8155112,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4372,13 +4360,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-1821.7715"
-                y="20.852285"
+                x="-1727.2968"
+                y="147.68407"
               >
                 <tspan
                   id="arrow_node7_north_west_incoming_number_tspan"
-                  x="-664.74414"
-                  y="808.74573"
+                  x="-570.26935"
+                  y="935.57745"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4403,7 +4391,7 @@
                 "
                 id="arrows_node7_north_west_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,-0.61288598,0.81581243,0.81581243,0,0)"
+                transform="rotate(-45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4424,13 +4412,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-1822.7325"
-                y="47.580002"
+                x="-1727.9203"
+                y="178.99174"
               >
                 <tspan
                   id="arrows_node7_north_west_sum_tspan"
-                  x="-665.27777"
-                  y="835.76489"
+                  x="-570.46545"
+                  y="967.17664"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4667,6 +4655,7 @@
             <text
               id="node8_sum_text"
               xml:space="preserve"
+              transform="rotate(45)"
               :style="`
                 font-style: normal;
                 font-variant: normal;
@@ -4687,13 +4676,13 @@
                 fill-opacity: 1;
                 stroke-width: 43.9644;
               `"
-              x="-680.59656"
-              y="-778.25226"
+              x="-733.49255"
+              y="-778.27759"
             >
               <tspan
                 id="node8_sum_tspan"
-                x="476.85812"
-                y="9.9321899"
+                x="423.96216"
+                y="9.9067898"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4734,7 +4723,7 @@
                 v-if="arrowNodeEightSouthWestOutgoingAvailable"
                 id="arrow_node8_south_west_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4755,13 +4744,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-681.18036"
-                y="-722.18488"
+                x="-733.92938"
+                y="-713.65863"
               >
                 <tspan
                   id="arrow_node8_south_west_outgoing_number_tspan"
-                  x="475.84692"
-                  y="65.708733"
+                  x="423.09784"
+                  y="74.234932"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4783,7 +4772,7 @@
                 v-if="arrowNodeEightSouthWestIncomingAvailable"
                 id="arrow_node8_south_west_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4804,13 +4793,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-681.18329"
-                y="-693.35461"
+                x="-733.93195"
+                y="-680.40857"
               >
                 <tspan
                   id="arrow_node8_south_west_incoming_number_tspan"
-                  x="475.84406"
-                  y="94.538795"
+                  x="423.0954"
+                  y="107.48485"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4835,7 +4824,7 @@
                 "
                 id="arrows_node8_south_west_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4856,13 +4845,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-680.59656"
-                y="-666.3642"
+                x="-733.49261"
+                y="-649.18854"
               >
                 <tspan
                   id="arrows_node8_south_west_sum_tspan"
-                  x="476.85815"
-                  y="121.82064"
+                  x="423.96213"
+                  y="138.99622"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4911,7 +4900,7 @@
                 v-if="arrowNodeEightNorthEastOutgoingAvailable"
                 id="arrow_node8_north_east_outgoing_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4932,13 +4921,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-681.18323"
-                y="-866.33521"
+                x="-733.93188"
+                y="-879.90833"
               >
                 <tspan
                   id="arrow_node8_north_east_outgoing_number_tspan"
-                  x="475.84406"
-                  y="-78.441643"
+                  x="423.0954"
+                  y="-92.014717"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -4960,7 +4949,7 @@
                 v-if="arrowNodeEightNorthEastIncomingAvailable"
                 id="arrow_node8_north_east_incoming_number_text"
                 xml:space="preserve"
-                transform="matrix(0.61311236,0.61311236,-0.8155112,0.8155112,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4981,13 +4970,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="-681.18036"
-                y="-837.505"
+                x="-733.92938"
+                y="-846.6582"
               >
                 <tspan
                   id="arrow_node8_north_east_incoming_number_tspan"
-                  x="475.84692"
-                  y="-49.611568"
+                  x="423.09787"
+                  y="-58.764786"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
@@ -5012,7 +5001,7 @@
                 "
                 id="arrows_node8_north_east_sum_text"
                 xml:space="preserve"
-                transform="matrix(0.61288598,0.61288598,-0.81581243,0.81581243,0,0)"
+                transform="rotate(45)"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -5033,13 +5022,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
-                x="-680.59656"
-                y="-810.45923"
+                x="-733.49261"
+                y="-815.43579"
               >
                 <tspan
                   id="arrows_node8_north_east_sum_tspan"
-                  x="476.85815"
-                  y="-22.274359"
+                  x="423.96216"
+                  y="-27.250959"
                   :style="`
                     font-style: normal;
                     font-variant: normal;
