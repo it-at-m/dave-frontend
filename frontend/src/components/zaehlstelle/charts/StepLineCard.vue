@@ -3,6 +3,9 @@
     elevation="0"
     class="pt-5"
   >
+  <header class="text-h5 text-center mb-5">
+    Wochentagsdurchschnitt
+  </header>
     <step-line-chart
       :zaehldaten-stepline="zaehldatenStepline"
       :is-gesamt-auswertung="isGesamtAuswertung"

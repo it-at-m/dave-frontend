@@ -404,7 +404,7 @@ function legendeSpalten() {
   const zaehlzeitFirstLine: string = zeitauswahl;
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.ZEITRAUM) {
-    zaehlzeitSecondLine = "Wochentagsdurchschnitt";
+    zaehlzeitSecondLine = "Gesamt";
   } else if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
       zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
