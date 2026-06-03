@@ -404,12 +404,12 @@ function legendeSpalten() {
   const zaehlzeitFirstLine: string = zeitauswahl;
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.ZEITRAUM) {
-    zaehlzeitSecondLine = "hochgerechnet";
+    zaehlzeitSecondLine = "Wochentagsdurchschnitt";
   } else if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
       zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
         ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
-        : "hochgerechnet"
+        : zaehlung.value.dauerzaehlung ? "" : "hochgerechnet"
     }`;
   } else if (zeitauswahl === Zeitauswahl.BLOCK) {
     zaehlzeitSecondLine = `${

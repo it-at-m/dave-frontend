@@ -747,7 +747,7 @@ function getHintToDisplay(type: string): string {
       /**
        * Durch die KI-Aufbereitung hat der Radverkehr hochgerechnete Werte
        */
-      if (isTageswertAndNot24h.value) {
+      if (isTageswertAndNot24h.value  && !zaehlstelleStore.getAktiveZaehlung.dauerzaehlung) {
         hint =
           "Hinweis: Die Tageswerte für den Radverkehr wurden vom KI-Modul hochgerechnet.";
         if (isAnyKFZselected.value) {
@@ -758,7 +758,7 @@ function getHintToDisplay(type: string): string {
       break;
     }
     case "FUSS": {
-      if (isTageswertAndNot24h.value) {
+      if (isTageswertAndNot24h.value && !zaehlstelleStore.getAktiveZaehlung.dauerzaehlung) {
         hint =
           "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
       }
@@ -987,10 +987,10 @@ function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
     options.kraftraeder = false;
   } else {
     options.kraftfahrzeugverkehr = true;
-    options.schwerverkehr = true;
-    options.gueterverkehr = true;
-    options.schwerverkehrsanteilProzent = true;
-    options.gueterverkehrsanteilProzent = true;
+    //options.schwerverkehr = true;
+    //options.gueterverkehr = true;
+    //options.schwerverkehrsanteilProzent = true;
+    //options.gueterverkehrsanteilProzent = true;
   }
   if (options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD) {
     options.radverkehr = true;
@@ -1001,6 +1001,7 @@ function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
   }
   return options;
 }
+
 
 /**
  * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
