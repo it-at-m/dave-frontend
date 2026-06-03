@@ -204,7 +204,7 @@
               <text
                 id="node1_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -226,13 +226,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1347.4354"
+                y="37.009502"
               >
                 <tspan
                   id="node1_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-189.97949"
+                  y="825.1947"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -288,7 +288,6 @@
               v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               :fill="textColorArrowNode1WestToEast"
               style="
                 font-style: normal;
@@ -311,13 +310,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89398"
-              y="-553.82526"
+              x="-465.17621"
+              y="-520.35779"
             >
               <tspan
                 id="arrow_node1_west_to_east_number_tspan"
-                x="801.39209"
-                y="239.01094"
+                x="699.1098"
+                y="272.47839"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -340,7 +339,6 @@
               v-if="node1EastToWestCensusComissioned"
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               :fill="textColorArrowNode1EastToWest"
               style="
                 font-style: normal;
@@ -363,13 +361,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89325"
-              y="-599.6322"
+              x="-465.17548"
+              y="-572.85791"
             >
               <tspan
                 id="arrow_node1_east_to_west_number_tspan"
-                x="801.39209"
-                y="193.2041"
+                x="699.1098"
+                y="219.97839"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -578,7 +576,7 @@
               <text
                 id="node2_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -600,13 +598,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1347.438"
+                y="37.009502"
               >
                 <tspan
                   id="node2_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-189.98215"
+                  y="825.1947"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -663,7 +661,7 @@
               v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               :fill="textColorArrowNode2NorthToSouth"
               style="
                 font-style: normal;
@@ -686,13 +684,13 @@
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
               "
-              x="-1965.2267"
-              y="208.31508"
+              x="-1857.6315"
+              y="359.45795"
             >
               <tspan
                 id="arrow_node2_north_to_south_number_tspan"
-                x="-808.19946"
-                y="996.2088"
+                x="-700.60413"
+                y="1147.3517"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -715,7 +713,7 @@
               v-if="node2SouthToNorthCensusComissioned"
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               :fill="textColorArrowNode2SouthToNorth"
               style="
                 font-style: normal;
@@ -738,13 +736,13 @@
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
               "
-              x="-1965.2268"
-              y="253.83627"
+              x="-1857.6313"
+              y="411.95795"
             >
               <tspan
                 id="arrow_node2_south_to_north_number_tspan"
-                x="-808.19946"
-                y="1041.7301"
+                x="-700.60413"
+                y="1199.8517"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -991,7 +989,7 @@
               <text
                 id="node3_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1013,13 +1011,13 @@
                   stroke-width: 28.2204997;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1347.437"
+                y="37.009521"
               >
                 <tspan
                   id="node3_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-189.98125"
+                  y="825.1947"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -1075,7 +1073,6 @@
               v-if="node3WestToEastCensusComissioned"
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               :fill="textColorArrowNode3WestToEast"
               style="
                 font-style: normal;
@@ -1098,13 +1095,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89398"
-              y="255.42867"
+              x="-465.17621"
+              y="407.14215"
             >
               <tspan
                 id="arrow_node3_west_to_east_number_tspan"
-                x="801.39209"
-                y="1048.2649"
+                x="699.1098"
+                y="1199.9784"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1127,7 +1124,6 @@
               v-if="node3EastToWestCensusComissioned"
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               :fill="textColorArrowNode3EastToWest"
               style="
                 font-style: normal;
@@ -1150,13 +1146,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89322"
-              y="209.62167"
+              x="-465.17545"
+              y="354.64206"
             >
               <tspan
                 id="arrow_node3_east_to_west_number_tspan"
-                x="801.39209"
-                y="1002.458"
+                x="699.1098"
+                y="1147.4784"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1404,7 +1400,7 @@
               <text
                 id="node4_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1426,13 +1422,13 @@
                   stroke-width: 28.22049972;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1347.438"
+                y="37.009583"
               >
                 <tspan
                   id="node4_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-189.98215"
+                  y="825.1947"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -1488,7 +1484,7 @@
             <text
               v-if="node4NorthToSouthCensusComissioned"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               id="arrow_node4_north_to_south_number_text"
               :fill="textColorArrowNode4NorthToSouth"
               style="
@@ -1512,12 +1508,12 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               "
-              x="-1965.2267"
-              y="-595.89404"
+              x="-1857.6313"
+              y="-568.04199"
             >
               <tspan
-                x="-808.19946"
-                y="191.99969"
+                x="-700.60413"
+                y="219.85175"
                 id="arrow_node4_north_to_south_number_tspan"
                 style="
                   font-style: normal;
@@ -1540,7 +1536,7 @@
             <text
               v-if="node4SouthToNorthCensusComissioned"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               id="arrow_node4_south_to_north_number_text"
               :fill="textColorArrowNode4SouthToNorth"
               style="
@@ -1564,12 +1560,12 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               "
-              x="-1965.2268"
-              y="-550.37286"
+              x="-1857.6316"
+              y="-515.54205"
             >
               <tspan
-                x="-808.19946"
-                y="237.52097"
+                x="-700.60413"
+                y="272.35175"
                 id="arrow_node4_south_to_north_number_tspan"
                 style="
                   font-style: normal;
@@ -1774,7 +1770,7 @@
               <text
                 id="node5_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1796,13 +1792,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1347.4376"
+                y="36.689121"
               >
                 <tspan
                   id="node5_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-189.98169"
+                  y="824.87433"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -1859,7 +1855,7 @@
               v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              transform="rotate(45)"
               :fill="textColorArrowNode5NorthWestToSouthEast"
               style="
                 font-style: normal;
@@ -1881,13 +1877,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.245787"
-              y="-1164.397"
+              x="-170.68669"
+              y="-1220.1736"
             >
               <tspan
                 id="arrow_node5_north_west_to_south_east_number_tspan"
-                x="1134.0402"
-                y="-371.56079"
+                x="993.59924"
+                y="-427.33743"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1909,7 +1905,7 @@
               v-if="node5SouthEastToNorthWestCensusComissioned"
               id="arrow_node5_south_east_to_north_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              transform="rotate(45)"
               :fill="textColorArrowNode5SouthEastToNorthWest"
               style="
                 font-style: normal;
@@ -1931,13 +1927,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.245035"
-              y="-1210.2013"
+              x="-170.68846"
+              y="-1272.6682"
             >
               <tspan
                 id="arrow_node5_south_east_to_north_west_number_tspan"
-                x="1134.0402"
-                y="-417.36499"
+                x="993.59674"
+                y="-479.83194"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2137,7 +2133,7 @@
               <text
                 id="node6_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2159,13 +2155,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1349.311"
+                y="38.561497"
               >
                 <tspan
                   id="node6_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-191.85516"
+                  y="826.7467"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -2221,7 +2217,7 @@
               v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              transform="rotate(-45)"
               :fill="textColorArrowNode6NorthEastToSouthWest"
               style="
                 font-style: normal;
@@ -2243,13 +2239,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.1763"
-              y="463.03299"
+              x="-1172.4175"
+              y="644.03931"
             >
               <tspan
                 id="arrow_node6_north_east_to_south_west_number_tspan"
-                x="-0.89014673"
-                y="1255.8691"
+                x="-8.1312895"
+                y="1436.8754"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2271,7 +2267,7 @@
               v-if="node6SouthWestToNorthEastCensusComissioned"
               id="arrow_node6_south_west_to_north_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              transform="rotate(-45)"
               :fill="textColorArrowNode6SouthWestToNorthEast"
               style="
                 font-style: normal;
@@ -2293,13 +2289,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.1754"
-              y="508.83719"
+              x="-1172.6617"
+              y="696.29114"
             >
               <tspan
                 id="arrow_node6_south_west_to_north_east_number_tspan"
-                x="-0.89011478"
-                y="1301.6733"
+                x="-8.3763189"
+                y="1489.1274"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2531,7 +2527,7 @@
               <text
                 id="node7_sum_text"
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2553,13 +2549,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1347.4363"
+                y="36.689327"
               >
                 <tspan
                   id="node7_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-189.98039"
+                  y="824.87451"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -2615,7 +2611,7 @@
               v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              transform="rotate(45)"
               :fill="textColorArrowNode7SouthEastToNorthWest"
               style="
                 font-style: normal;
@@ -2637,13 +2633,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.018866"
-              y="-401.13431"
+              x="-170.48979"
+              y="-345.38342"
             >
               <tspan
                 id="arrow_node7_south_east_to_north_west_number_tspan"
-                x="1134.2671"
-                y="391.7019"
+                x="993.79614"
+                y="447.45276"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2665,7 +2661,7 @@
               v-if="node7NorthWestToSouthEastCensusComissioned"
               id="arrow_node7_north_west_to_south_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              transform="rotate(45)"
               :fill="textColorArrowNode7NorthWestToSouthEast"
               style="
                 font-style: normal;
@@ -2687,13 +2683,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.018135"
-              y="-355.33026"
+              x="-170.48906"
+              y="-292.88657"
             >
               <tspan
                 id="arrow_node7_north_west_to_south_east_number_tspan"
-                x="1134.2671"
-                y="437.50613"
+                x="993.79614"
+                y="499.94977"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -2924,7 +2920,7 @@
             >
               <text
                 xml:space="preserve"
-                transform="matrix(0,-0.86675092,1.153734,0,0,0)"
+                transform="rotate(-90)"
                 id="node8_sum_text"
                 style="
                   font-style: normal;
@@ -2947,13 +2943,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 "
-                x="-1383.7572"
-                y="-70.255974"
+                x="-1349.311"
+                y="38.561852"
               >
                 <tspan
                   id="node8_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-191.85516"
+                  y="826.74701"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -3009,7 +3005,7 @@
               v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              transform="rotate(-45)"
               :fill="textColorArrowNode8SouthWestToNorthEast"
               style="
                 font-style: normal;
@@ -3031,13 +3027,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.4031"
-              y="-300.22974"
+              x="-1171.1313"
+              y="-283.24542"
             >
               <tspan
                 id="arrow_node8_south_west_to_north_east_number_tspan"
-                x="-1.1170298"
-                y="492.60648"
+                x="-6.8456869"
+                y="509.59097"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -3059,7 +3055,7 @@
               v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              transform="rotate(-45)"
               :fill="textColorArrowNode8NorthEastToSouthWest"
               style="
                 font-style: normal;
@@ -3081,13 +3077,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.4023"
-              y="-346.03415"
+              x="-1172.6158"
+              y="-231.24287"
             >
               <tspan
                 id="arrow_node8_north_east_to_south_west_number_tspan"
-                x="-1.117029"
-                y="446.80225"
+                x="-8.3306265"
+                y="561.59302"
                 style="
                   font-style: normal;
                   font-variant: normal;
