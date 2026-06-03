@@ -15,14 +15,10 @@
       xmlns:svg="http://www.w3.org/2000/svg"
     >
       <defs id="defs1" />
-      <g
-        id="legend"
-        transform="translate(9.0201068e-4,-7.1314694e-4)"
-      >
+      <g id="legend">
         <g
           id="legend-zaehlinfo"
           style="stroke-width: 28.2205; stroke-dasharray: none"
-          transform="translate(50.006244,31.659644)"
         >
           <text
             id="verkehrsart"
@@ -32,7 +28,7 @@
               font-variant: normal;
               font-weight: normal;
               font-stretch: normal;
-              font-size: ${belastungsplanMethods.maxlineWidth};
+              font-size: ${belastungsplanMethods.maxlineWidth}px;
               font-family: ${BelastungsplanConstants.fontfamily};
               font-variant-ligatures: normal;
               font-variant-caps: normal;
@@ -49,14 +45,13 @@
               stroke-width: 28.2205;
               stroke-dasharray: none;
             `"
-            x="168.24969"
-            y="1230.3373"
-            transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
+            x="56.249691"
+            y="1310.3373"
           >
             <tspan
               id="tspan13"
-              x="168.24969"
-              y="1230.3373"
+              x="56.249691"
+              y="1310.3373"
             >
               <tspan
                 id="tspan12"
@@ -69,7 +64,6 @@
           <g
             id="zaehlzeit2"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(-152.29421)"
           >
             <text
               id="zaehlzeit2-multirow"
@@ -79,7 +73,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth};
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -96,13 +90,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="168"
-              y="1210"
+              x="56.249691"
+              y="1257"
             >
               <tspan
                 id="tspan18"
-                x="168"
-                y="1210"
+                x="56.249691"
+                y="1257"
               >
                 {{ zaehlzeit2 }}
               </tspan>
@@ -137,14 +131,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="168.24969"
-              y="1190.3373"
-              transform="translate(-150.84646,0.00360406)"
+              x="56.249691"
+              y="1230.3373"
             >
               <tspan
                 id="tspan20"
-                x="168.24969"
-                y="1190.3373"
+                x="56.249691"
+                y="1230.3373"
               >
                 <tspan
                   id="tspan19"
@@ -156,24 +149,20 @@
             </text>
           </g>
         </g>
-        <g
-          id="legend-compass"
-          transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)"
-        >
+        <g id="legend-compass">
           <path
             id="compass2"
             style="
               fill: none;
               fill-opacity: 1;
-              stroke: #000000;
-              stroke-width: 3.35093;
+              stroke: #666666;
+              stroke-width: 1.99499999;
               stroke-linecap: butt;
               stroke-miterlimit: 2.5;
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
-            transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
+            d="m 107.4337,29.984176 13.9217,63.312817 H 106.06607 93.511995 Z"
           />
           <text
             id="compass1"
@@ -193,11 +182,11 @@
               writing-mode: lr-tb;
               direction: ltr;
               text-anchor: start;
-              fill: #000000;
+              fill: #666666;
               stroke-width: 2.2868;
             `"
-            x="141.28041"
-            y="93.924416"
+            x="100.26942"
+            y="84.035934"
           >
             <tspan
               id="tspan6-1"
@@ -212,21 +201,17 @@
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
-                stroke-width: 2.2868;
+                stroke-width: 43.9644;
               `"
             >
               N
             </tspan>
           </text>
         </g>
-        <g
-          id="legend-zaehlstelle"
-          transform="translate(-112.62637,-13.999124)"
-        >
+        <g id="legend-zaehlstelle">
           <g
             id="zaehlstelle2"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(163.18555,-589.09456)"
           >
             <text
               v-if="zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer"
@@ -254,22 +239,21 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="699.24969"
-              y="688.33734"
-              transform="translate(324.11416)"
+              x="1107.2496"
+              y="85.837341"
             >
               <tspan
                 id="tspan21"
-                x="699.24969"
-                y="688.33734"
+                x="1107.2496"
+                y="85.837341"
               >
                 Stadtbezirk
                 {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
               </tspan>
               <tspan
                 id="tspan22"
-                x="699.24969"
-                y="713.03187"
+                x="1107.2496"
+                y="112.26053"
               >
                 Zähldatum:
                 {{
@@ -283,7 +267,6 @@
           <g
             id="zaehlstelle1"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(162.09712,-614.70735)"
           >
             <text
               id="zaehlstelle1-multirow"
@@ -310,14 +293,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="699.24969"
-              y="688.33734"
-              transform="translate(324.11217)"
+              x="1107.2496"
+              y="60.337341"
             >
               <tspan
                 id="tspan24"
-                x="699.24969"
-                y="688.33734"
+                x="1107.2496"
+                y="60.337341"
               >
                 <tspan
                   id="tspan23"
