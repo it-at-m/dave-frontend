@@ -152,17 +152,17 @@
         <g id="legend-compass">
           <path
             id="compass2"
-            style="
+            :style="`
               fill: none;
               fill-opacity: 1;
-              stroke: #666666;
-              stroke-width: 1.99499999;
+              stroke: ${BelastungsplanConstants.legendColor};
+              stroke-width: 2;
               stroke-linecap: butt;
               stroke-miterlimit: 2.5;
               stroke-dasharray: none;
               stroke-opacity: 1;
-            "
-            d="m 107.4337,29.984176 13.9217,63.312817 H 106.06607 93.511995 Z"
+            `"
+            d="m 93.333333,93.333333 h 27.999997 l -14,-63 z"
           />
           <text
             id="compass1"
@@ -181,12 +181,12 @@
               text-align: start;
               writing-mode: lr-tb;
               direction: ltr;
-              text-anchor: start;
-              fill: #666666;
-              stroke-width: 2.2868;
+              text-anchor: middle;
+              fill: ${BelastungsplanConstants.legendColor};
+              stroke-width: 2;
             `"
-            x="100.26942"
-            y="84.035934"
+            x="107.33477"
+            y="83.332977"
           >
             <tspan
               id="tspan6-1"
@@ -201,7 +201,7 @@
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
-                stroke-width: 43.9644;
+                stroke-width: 2;
               `"
             >
               N
