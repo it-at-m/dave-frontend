@@ -295,9 +295,8 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: sans-serif-serif;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -516,7 +515,9 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 43.9644;
+                  fill: ${BelastungsplanConstants.legendColor};
+                  fill-opacity: 1;
+                  stroke-width: 2.2868;
                 `"
               >
                 N
@@ -714,10 +715,9 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 `"
-                id="massstab-size1-multirow"
-                x="699.24969"
-                y="688.33734"
-                transform="translate(181.39362,6.9760325e-4)"
+                id="zaehlzeit2-multirow"
+                x="56.249691"
+                y="1257"
               >
                 <tspan
                   x="56.249691"
