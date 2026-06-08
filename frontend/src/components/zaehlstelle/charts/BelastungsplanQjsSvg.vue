@@ -568,12 +568,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlstelle1-multirow"
-                x="1107.2496"
-                y="60.337341"
+                x="1107.0699"
+                y="58.662277"
               >
                 <tspan
-                  x="1107.2496"
-                  y="60.337341"
+                  x="1107.0699"
+                  y="58.662277"
                   id="tspan16"
                 >
                   Zählstelle
@@ -611,20 +611,20 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlstelle2-multirow"
-                x="1107.2496"
-                y="85.837341"
+                x="1107.0699"
+                y="84.662277"
               >
                 <tspan
-                  x="1107.2496"
-                  y="85.837341"
+                  x="1107.0699"
+                  y="84.662277"
                   id="tspan17"
                 >
                   Stadtbezirk
                   {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
                 </tspan>
                 <tspan
-                  x="1107.2496"
-                  y="112.26053"
+                  x="1107.0699"
+                  y="110.83184"
                   id="tspan18"
                 >
                   Zähldatum:
