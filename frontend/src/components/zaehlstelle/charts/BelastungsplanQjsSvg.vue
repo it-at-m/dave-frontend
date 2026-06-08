@@ -775,26 +775,26 @@
               :style="`
                 fill: none;
                 stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 1.99499999;
+                stroke-width: 2;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               `"
-              d="m 1316.5243,1294.7302 -124.9982,-0.2134 124.9982,-19.8383 z"
+              d="M 1190.6,1295 H 1316 v -20 z"
               id="massstab-path1"
             />
             <path
               :style="`
                 fill: #000000;
                 stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 1.50489;
+                stroke-width: 2;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               `"
-              d="m 1252.7468,1284.8273 c 0.1805,8.9058 0.185,8.7945 0.185,8.7945 v 0"
+              d="m 1253,1295 v -10"
               id="massstab-path2"
             />
             <g
@@ -827,12 +827,12 @@
                   stroke-dasharray: none;
                 `"
                 id="massstab-size1-multirow"
-                x="1250.2496"
-                y="1315.3373"
+                x="1253"
+                y="1315"
               >
                 <tspan
-                  x="1250.2496"
-                  y="1315.3373"
+                  x="1253"
+                  y="1315"
                   id="tspan27"
                 >
                   {{ highestZaehlwertRounded / 2 }}
@@ -869,12 +869,12 @@
                   stroke-dasharray: none;
                 `"
                 id="massstab-size2-multirow"
-                x="1316.2496"
-                y="1315.3373"
+                x="1316"
+                y="1315"
               >
                 <tspan
-                  x="1316.2496"
-                  y="1315.3373"
+                  x="1316"
+                  y="1315"
                   id="tspan28"
                 >
                   {{ highestZaehlwertRounded }}
