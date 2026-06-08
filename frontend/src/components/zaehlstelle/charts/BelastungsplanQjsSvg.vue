@@ -670,12 +670,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlzeit1-multirow"
-                x="56.249691"
-                y="1230.3373"
+                x="56"
+                y="1229.6622"
               >
                 <tspan
-                  x="56.249691"
-                  y="1230.3373"
+                  x="56"
+                  y="1229.6622"
                   id="tspan23"
                 >
                   <tspan
@@ -716,12 +716,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlzeit2-multirow"
-                x="56.249691"
-                y="1257"
+                x="56"
+                y="1255.6622"
               >
                 <tspan
-                  x="56.249691"
-                  y="1257"
+                  x="56"
+                  y="1255.6622"
                   id="tspan24"
                 >
                   {{ zaehlzeit2 }}
@@ -753,12 +753,12 @@
                 stroke-dasharray: none;
               `"
               id="verkehrsart"
-              x="56.249691"
-              y="1310.3373"
+              x="56"
+              y="1307.6622"
             >
               <tspan
-                x="56.249691"
-                y="1310.3373"
+                x="56"
+                y="1307.6622"
                 id="tspan26"
               >
                 <tspan
