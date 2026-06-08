@@ -45,13 +45,13 @@
               stroke-width: 28.2205;
               stroke-dasharray: none;
             `"
-            x="56.249691"
-            y="1310.3373"
+            x="56"
+            y="1307.6622"
           >
             <tspan
               id="tspan13"
-              x="56.249691"
-              y="1310.3373"
+              x="56"
+              y="1307.6622"
             >
               <tspan
                 id="tspan12"
@@ -90,13 +90,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="56.249691"
-              y="1257"
+              x="56"
+              y="1255.6622"
             >
               <tspan
                 id="tspan18"
-                x="56.249691"
-                y="1257"
+                x="56"
+                y="1255.6622"
               >
                 {{ zaehlzeit2 }}
               </tspan>
@@ -131,13 +131,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="56.249691"
-              y="1230.3373"
+              x="56"
+              y="1229.6622"
             >
               <tspan
                 id="tspan20"
-                x="56.249691"
-                y="1230.3373"
+                x="56"
+                y="1229.6622"
               >
                 <tspan
                   id="tspan19"
