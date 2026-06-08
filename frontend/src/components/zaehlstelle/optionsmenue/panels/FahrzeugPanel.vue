@@ -125,13 +125,12 @@
                 :persistent-hint="
                   chosenOptionsCopy.schwerverkehrsanteilProzent ||
                   isTypeDisabled('SV_P') ||
-                  chosenOptionsCopy.differenzdatenDarstellen
+                  isDifferenzdatenDarstellung
                 "
                 :disabled="
-                  isTypeDisabled('SV_P') ||
-                  chosenOptionsCopy.differenzdatenDarstellen
+                  isTypeDisabled('SV_P')
                 "
-                :hide-details="!chosenOptionsCopy.differenzdatenDarstellen"
+                :hide-details="!isDifferenzdatenDarstellung"
                 density="compact"
                 @mouseover="hoverSv_p = true"
                 @mouseleave="hoverSv_p = false"
@@ -190,14 +189,12 @@
                 :color="getCheckboxColor('GV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.gueterverkehrsanteilProzent ||
-                  isTypeDisabled('GV_P') ||
-                  chosenOptionsCopy.differenzdatenDarstellen
+                  isTypeDisabled('GV_P') || isDifferenzdatenDarstellung
                 "
                 :disabled="
-                  isTypeDisabled('GV_P') ||
-                  chosenOptionsCopy.differenzdatenDarstellen
+                  isTypeDisabled('GV_P')
                 "
-                :hide-details="!chosenOptionsCopy.differenzdatenDarstellen"
+                :hide-details="!isDifferenzdatenDarstellung"
                 density="compact"
                 @mouseover="hoverGv_p = true"
                 @mouseleave="hoverGv_p = false"
@@ -441,11 +438,6 @@ const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
-// Bei Auswahl der Checkbox für einen Differenzdatenvergleich werden die Werte für SV- und GV-Anteil in Prozent gespeichert,
-// um diese bei Abwahl der Checkbox wieder anzeigen zu können.
-const svAnteilForDifferenzdatenSaved = ref(true);
-const gvAnteilForDifferenzdatenSaved = ref(true);
-
 const selectOrDeselectAllVmodel = ref(false);
 const selectOrDeselectAllVerkehrsartenVmodel = ref(false);
 const hoverSelectOrDeselectAll = ref(false);
@@ -650,6 +642,10 @@ const labelSelectOrDeselectAllVerkehrsarten = computed(() => {
     ? "Alles abwählen"
     : "Alles auswählen";
 });
+
+const isDifferenzdatenDarstellung = computed(() => {
+  return chosenOptionsCopy.value.differenzdatenDarstellen && chosenOptionsCopy.value.vergleichszaehlungsId != null
+})
 
 /**
  * Hilfsmethode, um alle Checkboxen der Fahrzeugkategorien aufeinmal
@@ -1000,27 +996,6 @@ function adaptFahrzeugauswahl(
 function isTypeDisabled(type: string): boolean {
   return zaehlstelleUtils.isTypeDisabled(type, activeZaehlung.value);
 }
-
-watch(
-  () => chosenOptionsCopy.value.differenzdatenDarstellen,
-  () => {
-    if (chosenOptionsCopy.value.differenzdatenDarstellen) {
-      // Werte zwischenspeichern und auf false setzen
-      svAnteilForDifferenzdatenSaved.value =
-        chosenOptionsCopy.value.schwerverkehrsanteilProzent;
-      gvAnteilForDifferenzdatenSaved.value =
-        chosenOptionsCopy.value.gueterverkehrsanteilProzent;
-      chosenOptionsCopy.value.schwerverkehrsanteilProzent = false;
-      chosenOptionsCopy.value.gueterverkehrsanteilProzent = false;
-    } else {
-      // Zwischengespeicherte Werte den Optionen zuweisen
-      chosenOptionsCopy.value.schwerverkehrsanteilProzent =
-        svAnteilForDifferenzdatenSaved.value;
-      chosenOptionsCopy.value.gueterverkehrsanteilProzent =
-        gvAnteilForDifferenzdatenSaved.value;
-    }
-  }
-);
 
 watch(
   chosenOptionsCopy,

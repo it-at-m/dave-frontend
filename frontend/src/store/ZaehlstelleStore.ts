@@ -48,7 +48,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const getActiveTab = computed(() => activeTab.value);
   const getFilteroptions = computed(() => filteroptions.value);
   const isDifferenzdatenDarstellung = computed(
-    () => filteroptions.value.differenzdatenDarstellen
+    () => filteroptions.value.differenzdatenDarstellen && filteroptions.value.vergleichszaehlungsId
   );
   const isBlackprintMode = computed(() => filteroptions.value.blackPrintMode);
   const getZeitblock = computed(() => zeitblock.value);
