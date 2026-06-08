@@ -3327,21 +3327,21 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="1107.2496"
-              y="85.837341"
+              x="1107.0699"
+              y="84.662277"
             >
               <tspan
                 id="tspan39"
-                x="1107.2496"
-                y="85.837341"
+                x="1107.0699"
+                y="84.662277"
               >
                 Stadtbezirk
                 {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
               </tspan>
               <tspan
                 id="tspan40"
-                x="1107.2496"
-                y="112.26053"
+                x="1107.0699"
+                y="110.83184"
               >
                 Zähldatum:
                 {{
@@ -3381,13 +3381,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="1107.2496"
-              y="60.337341"
+              x="1107.0699"
+              y="58.662277"
             >
               <tspan
                 id="tspan42"
-                x="1107.2496"
-                y="60.337341"
+                x="1107.0699"
+                y="58.662277"
               >
                 <tspan
                   id="tspan41"
