@@ -370,6 +370,10 @@ const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
 });
 
+watch(selectedZaehlung, () => {
+  changeTab();
+});
+
 watch(options, () => {
   displaySchema.value = true;
   loadData();
