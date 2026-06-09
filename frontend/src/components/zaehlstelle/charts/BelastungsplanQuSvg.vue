@@ -38,7 +38,7 @@
               style="
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
-                fill: #e0e0e0;
+                fill: #ececec;
               "
             />
             <g
@@ -235,7 +235,7 @@
               >
                 <tspan
                   id="node1_sum_tspan"
-                  x="-226.30139"
+                  x="-231.30139"
                   y="717.9292"
                   style="
                     font-style: normal;
@@ -263,7 +263,7 @@
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
-                d="M 796.33788,290.49696 796.16212,182.00269"
+                d="M 796.33788,299.49696 796.16212,185.00269"
                 id="node1_sum_line"
               />
             </g>
@@ -275,7 +275,7 @@
             <path
               v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east"
-              d="M 612.5,247.424 H 745.2445 V 234.5 l 42.2555,28 -42.2555,28 V 277.576 H 612.5 Z"
+              d="M 612.5,252.424 H 745.2445 V 239.5 l 42.2555,28 -42.2555,28 V 282.576 H 612.5 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode1WestToEast"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -283,7 +283,7 @@
             <path
               v-if="node1EastToWestCensusComissioned"
               id="arrow_node1_east_to_west"
-              d="M 787.5,225.076 H 654.7555 V 238 L 612.5,210 654.7555,182 v 12.924 H 787.5 Z"
+              d="M 787.5,230.076 H 654.7555 V 243 L 612.5,215 654.7555,187 v 12.924 H 787.5 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode1EastToWest"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -321,13 +321,13 @@
               <tspan
                 id="arrow_node1_west_to_east_number_tspan"
                 x="801.39209"
-                y="239.01094"
+                y="241.01094"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -373,13 +373,13 @@
               <tspan
                 id="arrow_node1_east_to_west_number_tspan"
                 x="801.39209"
-                y="191"
+                y="196"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -415,7 +415,7 @@
               style="
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
-                fill: #e0e0e0;
+                fill: #ececec;
               "
             />
             <text
@@ -654,7 +654,7 @@
             <path
               v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south"
-              d="m 1152.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
+              d="m 1147.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode2NorthToSouth"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -662,7 +662,7 @@
             <path
               v-if="node2SouthToNorthCensusComissioned"
               id="arrow_node2_south_to_north"
-              d="M 1174.924,787.49999 V 654.75552 H 1162 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
+              d="M 1170.924,787.49999 V 654.75552 H 1158 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode2SouthToNorth"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -700,13 +700,13 @@
               <tspan
                 id="arrow_node2_north_to_south_number_tspan"
                 x="-808.19946"
-                y="996.2088"
+                y="990.2088"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -752,13 +752,13 @@
               <tspan
                 id="arrow_node2_south_to_north_number_tspan"
                 x="-808.19946"
-                y="1039.7301"
+                y="1037.7301"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -790,7 +790,7 @@
               style="
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
-                fill: #e0e0e0;
+                fill: #ececec;
               "
             />
             <text
@@ -1094,7 +1094,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -1116,7 +1116,7 @@
               <tspan
                 id="arrow_node3_west_to_east_number_tspan"
                 x="801.39209"
-                y="1048.2649"
+                y="1045.2649"
                 style="
                   font-style: normal;
                   font-variant: normal;
@@ -1146,7 +1146,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -1168,13 +1168,13 @@
               <tspan
                 id="arrow_node3_east_to_west_number_tspan"
                 x="801.39209"
-                y="1002.458"
+                y="1000.458"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1206,7 +1206,7 @@
               style="
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
-                fill: #e0e0e0;
+                fill: #ececec;
               "
             />
             <text
@@ -1540,7 +1540,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1564,7 +1564,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -1592,7 +1592,7 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1620,7 +1620,7 @@
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949; fill: #e0e0e0"
+              style="stroke-width: 14.949; fill: #ececec"
             />
             <g id="node5_number">
               <circle
@@ -1817,7 +1817,7 @@
               >
                 <tspan
                   id="node5_sum_tspan"
-                  x="-226.30139"
+                  x="-242.30139"
                   y="717.9292"
                   style="
                     font-style: normal;
@@ -1847,7 +1847,7 @@
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
-                d="M 796.33788,290.49696 796.16212,182.00269"
+                d="M 796.33788,310.49696 796.16212,195.00269"
               />
             </g>
           </g>
@@ -1858,7 +1858,7 @@
             <path
               v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east"
-              d="m 958.14818,318.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
+              d="m 948.14818,331.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode5NorthWestToSouthEast"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -1866,7 +1866,7 @@
             <path
               v-if="node5SouthEastToNorthWestCensusComissioned"
               id="arrow_node5_south_east_to_north_west"
-              d="m 1097.6928,426.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
+              d="m 1086.6928,441.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode5SouthEastToNorthWest"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -1902,14 +1902,14 @@
             >
               <tspan
                 id="arrow_node5_north_west_to_south_east_number_tspan"
-                x="1134.0402"
-                y="-371.56079"
+                x="1136.0402"
+                y="-359.56079"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1952,14 +1952,14 @@
             >
               <tspan
                 id="arrow_node5_south_east_to_north_west_number_tspan"
-                x="1134.0402"
-                y="-417.36499"
+                x="1136.0402"
+                y="-404.36499"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -1983,7 +1983,7 @@
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949; fill: #e0e0e0"
+              style="stroke-width: 14.949; fill: #ececec"
             />
             <text
               v-if="streetnameNode6.length === 1"
@@ -2180,7 +2180,7 @@
               >
                 <tspan
                   id="node6_sum_tspan"
-                  x="-226.30139"
+                  x="-246.30139"
                   y="717.9292"
                   style="
                     font-style: normal;
@@ -2209,7 +2209,7 @@
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
-                d="M 796.33788,290.49696 796.16212,182.00269"
+                d="M 799.33788,300.49696 795.16212,185.00269"
               />
             </g>
           </g>
@@ -2220,7 +2220,7 @@
             <path
               v-if="node6SouthWestToNorthEastCensusComissioned"
               id="arrow_node6_south_west_to_north_east"
-              d="m 973.94849,1097.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
+              d="m 963.94849,1083.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode6SouthWestToNorthEast"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -2228,7 +2228,7 @@
             <path
               v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west"
-              d="m 1081.8925,958.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
+              d="m 1068.8925,950.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode6NorthEastToSouthWest"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -2265,13 +2265,13 @@
               <tspan
                 id="arrow_node6_north_east_to_south_west_number_tspan"
                 x="-0.89014673"
-                y="1255.8691"
+                y="1240.8691"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2315,13 +2315,13 @@
               <tspan
                 id="arrow_node6_south_west_to_north_east_number_tspan"
                 x="-0.89011478"
-                y="1301.6733"
+                y="1284.6733"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2345,7 +2345,7 @@
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949; fill: #e0e0e0"
+              style="stroke-width: 14.949; fill: #ececec"
             />
             <text
               v-if="streetnameNode7.length === 1"
@@ -2574,7 +2574,7 @@
               >
                 <tspan
                   id="node7_sum_tspan"
-                  x="-226.30139"
+                  x="-210.30139"
                   y="717.9292"
                   style="
                     font-style: normal;
@@ -2603,7 +2603,7 @@
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
-                d="M 796.33788,290.49696 796.16212,182.00269"
+                d="M 800.33788,284.49696 800.16212,166.00269"
               />
             </g>
           </g>
@@ -2614,7 +2614,7 @@
             <path
               v-if="node7NorthWestToSouthEastCensusComissioned"
               id="arrow_node7_north_west_to_south_east"
-              d="m 302.30769,973.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
+              d="m 318.30769,965.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode7NorthWestToSouthEast"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -2622,7 +2622,7 @@
             <path
               v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west"
-              d="m 441.85234,1081.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
+              d="m 457.85234,1073.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode7SouthEastToNorthWest"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -2638,7 +2638,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -2658,14 +2658,14 @@
             >
               <tspan
                 id="arrow_node7_south_east_to_north_west_number_tspan"
-                x="1134.2671"
-                y="391.7019"
+                x="1140.2671"
+                y="373.7019"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2688,7 +2688,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -2708,14 +2708,14 @@
             >
               <tspan
                 id="arrow_node7_north_west_to_south_east_number_tspan"
-                x="1134.2671"
-                y="437.50613"
+                x="1136.2671"
+                y="421.50613"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -2739,7 +2739,7 @@
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
               fill="#9e9e9e"
               stroke="none"
-              style="stroke-width: 14.949; fill: #e0e0e0"
+              style="stroke-width: 14.949; fill: #ececec"
             />
             <text
               v-if="streetnameNode8.length === 1"
@@ -2968,8 +2968,8 @@
               >
                 <tspan
                   id="node8_sum_tspan"
-                  x="-226.30139"
-                  y="717.9292"
+                  x="-205.30139"
+                  y="719.9292"
                   style="
                     font-style: normal;
                     font-variant: normal;
@@ -2997,7 +2997,7 @@
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
-                d="M 796.33788,290.49696 796.16212,182.00269"
+                d="M 802.33788,280.49696 802.16212,168.00269"
               />
             </g>
           </g>
@@ -3008,7 +3008,7 @@
             <path
               v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east"
-              d="m 318.108,441.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
+              d="m 328.108,456.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode8SouthWestToNorthEast"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -3016,7 +3016,7 @@
             <path
               v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west"
-              d="m 426.04853,302.30769 -93.86454,93.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
+              d="m 436.04853,318.30769 -95.86454,96.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode8NorthEastToSouthWest"
               style="stroke-width: 3; stroke-dasharray: none"
@@ -3032,7 +3032,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -3052,14 +3052,14 @@
             >
               <tspan
                 id="arrow_node8_south_west_to_north_east_number_tspan"
-                x="-1.1170298"
-                y="492.60648"
+                x="-9.1170298"
+                y="505.60648"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -3082,7 +3082,7 @@
                 font-variant: normal;
                 font-weight: normal;
                 font-stretch: normal;
-                font-size: 23.5px;
+                font-size: 22px;
                 font-family: Arial;
                 font-variant-ligatures: normal;
                 font-variant-caps: normal;
@@ -3102,14 +3102,14 @@
             >
               <tspan
                 id="arrow_node8_north_east_to_south_west_number_tspan"
-                x="-1.117029"
-                y="446.80225"
+                x="-9.117029"
+                y="459.80225"
                 style="
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 23.5px;
+                  font-size: 22px;
                   font-family: Arial;
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
@@ -3441,7 +3441,7 @@
       <path
         id="center"
         d="m 14253.004,17465.11 166.703,0 117.876,117.877 0,166.702 -117.876,117.877 -166.703,0 -117.876,-117.877 0,-166.702 z"
-        fill="#E0E0E0"
+        fill="#ececec"
         transform="matrix(0.31493043,0,0,0.31493043,-3814.9546,-4863.6674)"
       />
     </svg>
