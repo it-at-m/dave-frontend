@@ -14,22 +14,28 @@ export function useZaehlstelleUtils() {
   }
 
   function hasSelectedVerkehrsarten(options: ZaehlstelleOptionsDTO) {
-
-      // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart kein Anteil sein
-      if (options.differenzdatenDarstellen && options.vergleichszaehlungsId != null) {
-        return (options.kraftfahrzeugverkehr ||
+    // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart KEIN Anteil sein
+    if (
+      options.differenzdatenDarstellen &&
+      options.vergleichszaehlungsId != null
+    ) {
+      return (
+        options.kraftfahrzeugverkehr ||
         options.schwerverkehr ||
         options.gueterverkehr ||
         options.radverkehr ||
-        options.fussverkehr);
-      }
-      return (options.kraftfahrzeugverkehr ||
+        options.fussverkehr
+      );
+    }
+    return (
+      options.kraftfahrzeugverkehr ||
       options.schwerverkehr ||
       options.gueterverkehr ||
       options.schwerverkehrsanteilProzent ||
       options.gueterverkehrsanteilProzent ||
       options.radverkehr ||
-      options.fussverkehr);
+      options.fussverkehr
+    );
   }
 
   function hasSelectedFahrzeugkategorie(options: ZaehlstelleOptionsDTO) {

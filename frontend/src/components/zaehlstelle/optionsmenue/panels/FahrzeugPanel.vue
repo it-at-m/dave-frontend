@@ -127,9 +127,7 @@
                   isTypeDisabled('SV_P') ||
                   isDifferenzdatenDarstellung
                 "
-                :disabled="
-                  isTypeDisabled('SV_P')
-                "
+                :disabled="isTypeDisabled('SV_P')"
                 :hide-details="!isDifferenzdatenDarstellung"
                 density="compact"
                 @mouseover="hoverSv_p = true"
@@ -189,11 +187,10 @@
                 :color="getCheckboxColor('GV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.gueterverkehrsanteilProzent ||
-                  isTypeDisabled('GV_P') || isDifferenzdatenDarstellung
+                  isTypeDisabled('GV_P') ||
+                  isDifferenzdatenDarstellung
                 "
-                :disabled="
-                  isTypeDisabled('GV_P')
-                "
+                :disabled="isTypeDisabled('GV_P')"
                 :hide-details="!isDifferenzdatenDarstellung"
                 density="compact"
                 @mouseover="hoverGv_p = true"
@@ -652,8 +649,11 @@ const labelSelectOrDeselectAllVerkehrsarten = computed(() => {
 });
 
 const isDifferenzdatenDarstellung = computed(() => {
-  return chosenOptionsCopy.value.differenzdatenDarstellen && chosenOptionsCopy.value.vergleichszaehlungsId != null
-})
+  return (
+    chosenOptionsCopy.value.differenzdatenDarstellen &&
+    chosenOptionsCopy.value.vergleichszaehlungsId != null
+  );
+});
 
 /**
  * Hilfsmethode, um alle Checkboxen der Fahrzeugkategorien aufeinmal
