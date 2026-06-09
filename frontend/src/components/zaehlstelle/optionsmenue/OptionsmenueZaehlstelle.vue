@@ -241,20 +241,24 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.kraftfahrzeugverkehr = true;
         break;
       case Fahrzeug.SV:
-        optionsCopy.schwerverkehr = true;
+        //optionsCopy.schwerverkehr = true;
         break;
       case Fahrzeug.SV_P:
-        optionsCopy.schwerverkehrsanteilProzent = true;
+        //optionsCopy.schwerverkehrsanteilProzent = true;
         break;
       case Fahrzeug.GV:
-        optionsCopy.gueterverkehr = true;
+        //optionsCopy.gueterverkehr = true;
         break;
       case Fahrzeug.GV_P:
-        optionsCopy.gueterverkehrsanteilProzent = true;
+        //optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
         // Rad soll nur bei reinen Radzählungen aktiviert sein
         optionsCopy.radverkehr = ["R", "QR"].includes(props.zaehlung.zaehlart);
+        if (props.zaehlung.dauerzaehlung) {
+          optionsCopy.radverkehr = true;
+          optionsCopy.fussverkehr = true;
+        }
         break;
     }
   });

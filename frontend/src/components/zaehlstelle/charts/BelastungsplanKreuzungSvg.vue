@@ -404,12 +404,12 @@ function legendeSpalten() {
   const zaehlzeitFirstLine: string = zeitauswahl;
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.ZEITRAUM) {
-    zaehlzeitSecondLine = "hochgerechnet";
+    zaehlzeitSecondLine = "Gesamt";
   } else if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
       zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
         ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
-        : "hochgerechnet"
+        : zaehlung.value.dauerzaehlung ? "" : "hochgerechnet"
     }`;
   } else if (zeitauswahl === Zeitauswahl.BLOCK) {
     zaehlzeitSecondLine = `${
@@ -690,6 +690,21 @@ function calcFahrbeziehungen(data: LadeBelastungsplanDTO) {
         )
           lowestFahrbeziehungsValue.value =
             belastungsplanMethods.positiveNumber(data.value1.values[v][n]);
+
+        if (data.value1.label === "RAD" && data.value2.label === "FUSS") {
+          if (
+            belastungsplanMethods.positiveNumber(data.value1.values[v][n]) + belastungsplanMethods.positiveNumber(data.value2.values[v][n]) >
+            highestFahrbeziehungsValue.value
+          )
+            highestFahrbeziehungsValue.value =
+              belastungsplanMethods.positiveNumber(data.value1.values[v][n]) + belastungsplanMethods.positiveNumber(data.value2.values[v][n]);
+          if (
+            belastungsplanMethods.positiveNumber(data.value1.values[v][n]) + belastungsplanMethods.positiveNumber(data.value2.values[v][n]) <
+            lowestFahrbeziehungsValue.value
+          )
+            lowestFahrbeziehungsValue.value =
+              belastungsplanMethods.positiveNumber(data.value1.values[v][n]) + belastungsplanMethods.positiveNumber(data.value2.values[v][n]);
+        }
         // Fahrbeziehungstyp wird gesetzt um später die Position der Linien berrechnen zu können
         knotenarmVon.addVonFahrbeziehungsType(
           belastungsplanFahrbeziehung.fahrbeziehungsTyp
