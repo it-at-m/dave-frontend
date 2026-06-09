@@ -104,7 +104,7 @@
                 isFJSZaehlung
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
+              :data="belastungsplanDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -222,6 +222,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
@@ -288,9 +289,9 @@ const chartDataLoading = ref(false);
 const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
-const belastungsplanDTO = ref<LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO>(
-  {} as LadeBelastungsplanDTO
-);
+const belastungsplanDTO = ref<
+  LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO | LadeBelastungsplanFjsDTO
+>({} as LadeBelastungsplanDTO);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
 const belastungsplanSchematischeUebersichtSvg = ref<Blob>();
@@ -367,6 +368,10 @@ const isTabListenausgabe = computed<boolean>(() => {
 });
 const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
+});
+
+watch(selectedZaehlung, () => {
+  changeTab();
 });
 
 watch(options, () => {
@@ -827,7 +832,10 @@ const drawSchematischeUebersicht = computed(() => {
   ) {
     return false;
   }
-  if (isQjsBelastungsplan(belastungsplanDTO.value)) {
+  if (
+    isQjsBelastungsplan(belastungsplanDTO.value) ||
+    isFjsBelastungsplan(belastungsplanDTO.value)
+  ) {
     return false;
   } else
     return (
@@ -840,6 +848,12 @@ function isQjsBelastungsplan(
   data: AbstractLadeBelastungsplanDTO | undefined
 ): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
+}
+
+function isFjsBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanFjsDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 </script>
 
