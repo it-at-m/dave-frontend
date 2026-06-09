@@ -560,10 +560,14 @@ const helpTextFahrzeugkategorien = computed(() => {
 
 /**
  * Hilfsmethode, um zu schauen, ob der Wert SV% im Belastungsplan angezeigt wird.
- * Dies ist nur der Fall, wenn KFZ, SV oder SV aktiviert sind und inklusive SV_P nicht
- * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
+ * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive SV_P nicht
+ * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind.
+ * Im Fall der Differenzdatendarstellung wird SV% nie angezeigt.
  */
 const isSvpInBelastungsPlan = computed(() => {
+  if (isDifferenzdatenDarstellung) {
+    return false;
+  }
   let actualNumberOfSelectedKfzSvAndGv = 0;
   chosenOptionsCopy.value.kraftfahrzeugverkehr
     ? actualNumberOfSelectedKfzSvAndGv++
@@ -586,9 +590,13 @@ const isSvpInBelastungsPlan = computed(() => {
 /**
  * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
  * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
- * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
+ * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind.
+ * Im Fall der Differenzdatendarstellung wird GV% nie angezeigt.
  */
 const isGvpInBelastungsPlan = computed(() => {
+  if (isDifferenzdatenDarstellung) {
+    return false;
+  }
   let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
   chosenOptionsCopy.value.kraftfahrzeugverkehr
     ? actualNumberOfSelectedKfzSvGvAndSV_P++
