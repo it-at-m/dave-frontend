@@ -1712,7 +1712,7 @@
             <g id="arrows_node3_east">
               <path
                 v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_outgoing"
+                id="arrow_node3_east_incoming"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
                 :fill="colorArrowNodeThreeEastIncoming"
                 stroke="none"
@@ -1720,7 +1720,7 @@
               />
               <path
                 v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_incoming"
+                id="arrow_node3_east_outgoing"
                 d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeEastOutgoing"
                 stroke="none"
@@ -1728,7 +1728,7 @@
               />
               <text
                 v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_incoming_number_text"
+                id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1755,7 +1755,7 @@
                 y="-15.206213"
               >
                 <tspan
-                  id="arrow_node3_east_incoming_number_tspan"
+                  id="arrow_node3_east_outgoing_number_tspan"
                   x="-1276.2108"
                   y="772.68726"
                   :style="`
@@ -1777,7 +1777,7 @@
               </text>
               <text
                 v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_outgoing_number_text"
+                id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1804,7 +1804,7 @@
                 y="18.043785"
               >
                 <tspan
-                  id="arrow_node3_east_outgoing_number_tspan"
+                  id="arrow_node3_east_incoming_number_tspan"
                   x="-1276.2108"
                   y="805.93726"
                   :style="`
