@@ -295,9 +295,8 @@
                   font-variant: normal;
                   font-weight: normal;
                   font-stretch: normal;
-                  font-size: 28.0866px;
-                  font-family: sans-serif-serif;
-                  -inkscape-font-specification: &quot;Arial, Normal&quot;;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -497,12 +496,12 @@
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
-                text-anchor: start;
+                text-anchor: middle;
                 fill: ${BelastungsplanConstants.legendColor};
-                stroke-width: 2.2868;
+                stroke-width: 2;
               `"
-              x="100.26942"
-              y="84.035934"
+              x="107.33477"
+              y="83.332977"
             >
               <tspan
                 :style="`
@@ -516,25 +515,27 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  stroke-width: 43.9644;
+                  fill: ${BelastungsplanConstants.legendColor};
+                  fill-opacity: 1;
+                  stroke-width: 2;
                 `"
               >
                 N
               </tspan>
             </text>
             <path
-              style="
+              :style="`
                 fill: none;
                 fill-opacity: 1;
-                stroke: #666666;
-                stroke-width: 1.99499999;
+                stroke: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2;
                 stroke-linecap: butt;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
-              "
+              `"
               id="compass2"
-              d="m 107.4337,29.984176 13.9217,63.312817 H 106.06607 93.511995 Z"
+              d="m 93.333333,93.333333 h 27.999997 l -14,-63 z"
             />
           </g>
           <g id="legend-zaehlstelle">
@@ -567,12 +568,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlstelle1-multirow"
-                x="1107.2496"
-                y="60.337341"
+                x="1107.0699"
+                y="58.662277"
               >
                 <tspan
-                  x="1107.2496"
-                  y="60.337341"
+                  x="1107.0699"
+                  y="58.662277"
                   id="tspan16"
                 >
                   Zählstelle
@@ -610,20 +611,20 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlstelle2-multirow"
-                x="1107.2496"
-                y="85.837341"
+                x="1107.0699"
+                y="84.662277"
               >
                 <tspan
-                  x="1107.2496"
-                  y="85.837341"
+                  x="1107.0699"
+                  y="84.662277"
                   id="tspan17"
                 >
                   Stadtbezirk
                   {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
                 </tspan>
                 <tspan
-                  x="1107.2496"
-                  y="112.26053"
+                  x="1107.0699"
+                  y="110.83184"
                   id="tspan18"
                 >
                   Zähldatum:
@@ -669,12 +670,12 @@
                   stroke-dasharray: none;
                 `"
                 id="zaehlzeit1-multirow"
-                x="56.249691"
-                y="1230.3373"
+                x="56"
+                y="1229.6622"
               >
                 <tspan
-                  x="56.249691"
-                  y="1230.3373"
+                  x="56"
+                  y="1229.6622"
                   id="tspan23"
                 >
                   <tspan
@@ -714,14 +715,13 @@
                   stroke-width: 28.2205;
                   stroke-dasharray: none;
                 `"
-                id="massstab-size1-multirow"
-                x="699.24969"
-                y="688.33734"
-                transform="translate(181.39362,6.9760325e-4)"
+                id="zaehlzeit2-multirow"
+                x="56"
+                y="1255.6622"
               >
                 <tspan
-                  x="56.249691"
-                  y="1257"
+                  x="56"
+                  y="1255.6622"
                   id="tspan24"
                 >
                   {{ zaehlzeit2 }}
@@ -753,12 +753,12 @@
                 stroke-dasharray: none;
               `"
               id="verkehrsart"
-              x="56.249691"
-              y="1310.3373"
+              x="56"
+              y="1307.6622"
             >
               <tspan
-                x="56.249691"
-                y="1310.3373"
+                x="56"
+                y="1307.6622"
                 id="tspan26"
               >
                 <tspan
@@ -775,26 +775,26 @@
               :style="`
                 fill: none;
                 stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 1.99499999;
+                stroke-width: 2;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               `"
-              d="m 1316.5243,1294.7302 -124.9982,-0.2134 124.9982,-19.8383 z"
+              d="M 1190.6,1295 H 1316 v -20 z"
               id="massstab-path1"
             />
             <path
               :style="`
                 fill: #000000;
                 stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 1.50489;
+                stroke-width: 2;
                 stroke-linecap: square;
                 stroke-miterlimit: 2.5;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               `"
-              d="m 1252.7468,1284.8273 c 0.1805,8.9058 0.185,8.7945 0.185,8.7945 v 0"
+              d="m 1253,1295 v -10"
               id="massstab-path2"
             />
             <g
@@ -827,12 +827,12 @@
                   stroke-dasharray: none;
                 `"
                 id="massstab-size1-multirow"
-                x="1250.2496"
-                y="1315.3373"
+                x="1253"
+                y="1315"
               >
                 <tspan
-                  x="1250.2496"
-                  y="1315.3373"
+                  x="1253"
+                  y="1315"
                   id="tspan27"
                 >
                   {{ highestZaehlwertRounded / 2 }}
@@ -869,12 +869,12 @@
                   stroke-dasharray: none;
                 `"
                 id="massstab-size2-multirow"
-                x="1316.2496"
-                y="1315.3373"
+                x="1316"
+                y="1315"
               >
                 <tspan
-                  x="1316.2496"
-                  y="1315.3373"
+                  x="1316"
+                  y="1315"
                   id="tspan28"
                 >
                   {{ highestZaehlwertRounded }}
