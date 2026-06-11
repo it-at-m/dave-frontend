@@ -292,7 +292,6 @@
               v-if="node1WestToEastCensusComissioned"
               id="arrow_node1_west_to_east_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -315,13 +314,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89398"
-              y="-553.82526"
+              x="-465.17621"
+              y="-520.35779"
             >
               <tspan
                 id="arrow_node1_west_to_east_number_tspan"
-                x="801.39209"
-                y="240.01094"
+                x="699.1098"
+                y="272.47839"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -344,7 +343,6 @@
               v-if="node1EastToWestCensusComissioned"
               id="arrow_node1_east_to_west_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -367,13 +365,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89325"
-              y="-599.6322"
+              x="-465.17548"
+              y="-572.85791"
             >
               <tspan
                 id="arrow_node1_east_to_west_number_tspan"
-                x="801.39209"
-                y="195"
+                x="699.1098"
+                y="219.97839"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -671,7 +669,7 @@
               v-if="node2NorthToSouthCensusComissioned"
               id="arrow_node2_north_to_south_number_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -694,13 +692,13 @@
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
               "
-              x="-1965.2267"
-              y="208.31508"
+              x="-1857.6315"
+              y="359.45795"
             >
               <tspan
                 id="arrow_node2_north_to_south_number_tspan"
-                x="-808.19946"
-                y="989.2088"
+                x="-700.60413"
+                y="1140.3517"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -723,7 +721,7 @@
               v-if="node2SouthToNorthCensusComissioned"
               id="arrow_node2_south_to_north_number_text"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -746,13 +744,13 @@
                 stroke-width: 28.22049979;
                 stroke-dasharray: none;
               "
-              x="-1965.2268"
-              y="253.83627"
+              x="-1857.6313"
+              y="411.95795"
             >
               <tspan
                 id="arrow_node2_south_to_north_number_tspan"
-                x="-808.19946"
-                y="1036.7301"
+                x="-700.60413"
+                y="1194"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1087,7 +1085,6 @@
               v-if="node3WestToEastCensusComissioned"
               id="arrow_node3_west_to_east_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               fill="#000000"
               :style="`
                 font-style: normal;
@@ -1110,13 +1107,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               `"
-              x="-362.89398"
-              y="255.42867"
+              x="-465.17621"
+              y="407.14215"
             >
               <tspan
                 id="arrow_node3_west_to_east_number_tspan"
-                x="801"
-                y="1045"
+                x="699.1098"
+                y="1196"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1139,7 +1136,6 @@
               v-if="node3EastToWestCensusComissioned"
               id="arrow_node3_east_to_west_number_text"
               xml:space="preserve"
-              transform="scale(0.87251096,1.1461174)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -1162,13 +1158,13 @@
                 stroke-width: 28.22049989;
                 stroke-dasharray: none;
               "
-              x="-362.89322"
-              y="209.62167"
+              x="-465.17545"
+              y="354.64206"
             >
               <tspan
                 id="arrow_node3_east_to_west_number_tspan"
-                x="801"
-                y="999"
+                x="699.1098"
+                y="1144"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1504,8 +1500,8 @@
             <text
               v-if="node4NorthToSouthCensusComissioned"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
               id="arrow_node4_north_to_south_number_text"
+              transform="rotate(-90)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -1528,12 +1524,12 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               "
-              x="-1965.2267"
-              y="-595.89404"
+              x="-1857.6313"
+              y="-568.04199"
             >
               <tspan
-                x="-808.19946"
-                y="189.99969"
+                x="-700.60413"
+                y="217"
                 id="arrow_node4_north_to_south_number_tspan"
                 :style="`
                   font-style: normal;
@@ -1556,7 +1552,7 @@
             <text
               v-if="node4SouthToNorthCensusComissioned"
               xml:space="preserve"
-              transform="matrix(0,-0.86707182,1.153307,0,0,0)"
+              transform="rotate(-90)"
               id="arrow_node4_south_to_north_number_text"
               fill="#000000"
               style="
@@ -1580,12 +1576,12 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               "
-              x="-1965.2268"
-              y="-550.37286"
+              x="-1857.6316"
+              y="-515.54205"
             >
               <tspan
-                x="-808.19946"
-                y="236.52097"
+                x="-700.60413"
+                y="271"
                 id="arrow_node4_south_to_north_number_tspan"
                 :style="`
                   font-style: normal;
@@ -1875,7 +1871,7 @@
               v-if="node5NorthWestToSouthEastCensusComissioned"
               id="arrow_node5_north_west_to_south_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              transform="rotate(45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -1897,13 +1893,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.245787"
-              y="-1164.397"
+              x="-170.68669"
+              y="-1220.1736"
             >
               <tspan
                 id="arrow_node5_north_west_to_south_east_number_tspan"
-                x="1134.0402"
-                y="-361.56079"
+                x="993.59924"
+                y="-416"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1925,7 +1921,7 @@
               v-if="node5SouthEastToNorthWestCensusComissioned"
               id="arrow_node5_south_east_to_north_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-2.4668423e-8,4.2673751e-7)"
+              transform="rotate(45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -1947,13 +1943,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.245035"
-              y="-1210.2013"
+              x="-170.68846"
+              y="-1272.6682"
             >
               <tspan
                 id="arrow_node5_south_east_to_north_west_number_tspan"
-                x="1134.0402"
-                y="-405.36499"
+                x="993.59674"
+                y="-464"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2237,7 +2233,7 @@
               v-if="node6NorthEastToSouthWestCensusComissioned"
               id="arrow_node6_north_east_to_south_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              transform="rotate(-45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -2259,13 +2255,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.1763"
-              y="463.03299"
+              x="-1172.4175"
+              y="644.03931"
             >
               <tspan
                 id="arrow_node6_north_east_to_south_west_number_tspan"
-                x="-0.89014673"
-                y="1239.8691"
+                x="-8.1312895"
+                y="1420.8754"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2287,7 +2283,7 @@
               v-if="node6SouthWestToNorthEastCensusComissioned"
               id="arrow_node6_south_west_to_north_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-2.9965742e-7,1.1586825e-8)"
+              transform="rotate(-45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -2309,13 +2305,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.1754"
-              y="508.83719"
+              x="-1172.6617"
+              y="696.29114"
             >
               <tspan
                 id="arrow_node6_south_west_to_north_east_number_tspan"
-                x="-0.89011478"
-                y="1283.6733"
+                x="-8.3763189"
+                y="1470"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2631,7 +2627,7 @@
               v-if="node7SouthEastToNorthWestCensusComissioned"
               id="arrow_node7_south_east_to_north_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              transform="rotate(45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -2653,13 +2649,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.018866"
-              y="-401.13431"
+              x="-170.48979"
+              y="-345.38342"
             >
               <tspan
                 id="arrow_node7_south_east_to_north_west_number_tspan"
-                x="1139.2671"
-                y="373.7019"
+                x="993.79614"
+                y="428"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2681,7 +2677,7 @@
               v-if="node7NorthWestToSouthEastCensusComissioned"
               id="arrow_node7_north_west_to_south_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,0.61695842,-0.81042739,0.81042739,-3.0764013e-7,0)"
+              transform="rotate(45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -2703,13 +2699,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-30.018135"
-              y="-355.33026"
+              x="-170.48906"
+              y="-292.88657"
             >
               <tspan
                 id="arrow_node7_north_west_to_south_east_number_tspan"
-                x="1143.2671"
-                y="420.50613"
+                x="993.79614"
+                y="480"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3025,7 +3021,8 @@
               v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              transform="rotate(-45)"
+
               fill="#000000"
               style="
                 font-style: normal;
@@ -3047,13 +3044,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.4031"
-              y="-300.22974"
+              x="-1171.1313"
+              y="-283.24542"
             >
               <tspan
                 id="arrow_node8_south_west_to_north_east_number_tspan"
-                x="-10.1170298"
-                y="503.60648"
+                x="-6.8456869"
+                y="578"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3075,7 +3072,7 @@
               v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
-              transform="matrix(0.61695842,-0.61695842,0.81042739,0.81042739,-4.3344642e-8,-4.1388365e-7)"
+              transform="rotate(-45)"
               fill="#000000"
               style="
                 font-style: normal;
@@ -3097,13 +3094,13 @@
                 fill-opacity: 1;
                 stroke-width: 44.2239;
               "
-              x="-1165.4023"
-              y="-346.03415"
+              x="-1172.6158"
+              y="-231.24287"
             >
               <tspan
                 id="arrow_node8_north_east_to_south_west_number_tspan"
-                x="-10.117029"
-                y="459.80225"
+                x="-8.3306265"
+                y="525"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3124,14 +3121,10 @@
           </g>
         </g>
       </g>
-      <g
-        id="legend"
-        transform="matrix(1.0449912,0,0,1.0489734,-20.934144,-1.2761587)"
-      >
+      <g id="legend">
         <g
           id="legend-zaehlinfo"
           style="stroke-width: 28.2205; stroke-dasharray: none"
-          transform="translate(50.006244,31.659644)"
         >
           <text
             id="verkehrsart"
@@ -3158,14 +3151,13 @@
               stroke-width: 28.2205;
               stroke-dasharray: none;
             `"
-            x="168.24969"
-            y="1230.3373"
-            transform="matrix(1.000004,0,0,1,-152.56418,35.000043)"
+            x="56"
+            y="1307.6622"
           >
             <tspan
               id="tspan35"
-              x="168.24969"
-              y="1230.3373"
+              x="56"
+              y="1307.6622"
             >
               <tspan
                 id="tspan34"
@@ -3178,7 +3170,6 @@
           <g
             id="zaehlzeit2"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(-152.29421)"
           >
             <text
               id="zaehlzeit2-multirow"
@@ -3205,13 +3196,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="168"
-              y="1210"
+              x="56"
+              y="1255.6622"
             >
               <tspan
                 id="tspan36"
-                x="168"
-                y="1210"
+                x="56"
+                y="1255.6622"
               >
                 {{ zaehlzeit2 }}
               </tspan>
@@ -3246,14 +3237,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="168.24969"
-              y="1190.3373"
-              transform="translate(-150.84646,0.00162031)"
+              x="56"
+              y="1229.6622"
             >
               <tspan
                 id="tspan38"
-                x="168.24969"
-                y="1190.3373"
+                x="56"
+                y="1229.6622"
               >
                 <tspan
                   id="tspan37"
@@ -3265,10 +3255,7 @@
             </text>
           </g>
         </g>
-        <g
-          id="legend-compass"
-          transform="matrix(0.79169692,0,0,0.78817168,-25.092397,5.5190685)"
-        >
+        <g id="legend-compass">
           <path
             id="compass2"
             :style="`
@@ -3281,8 +3268,7 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             `"
-            d="m 399.4343,-24.60083 105.23313,182.26914 -210.46627,-1e-5 z"
-            transform="matrix(0.16996929,0,0,0.4104001,81.91578,36.842952)"
+            d="m 93.333333,93.333333 h 27.999997 l -14,-63 z"
           />
           <text
             id="compass1"
@@ -3305,8 +3291,8 @@
               fill: ${BelastungsplanConstants.legendColor};
               stroke-width: 2;
             `"
-            x="141.28348"
-            y="93.924416"
+            x="107.33477"
+            y="83.332977"
           >
             <tspan
               id="tspan6"
@@ -3328,14 +3314,10 @@
             </tspan>
           </text>
         </g>
-        <g
-          id="legend-zaehlstelle"
-          transform="translate(-112.62637,-13.999124)"
-        >
+        <g id="legend-zaehlstelle">
           <g
             id="zaehlstelle2"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(163.18555,-589.09456)"
           >
             <text
               id="zaehlstelle2-multirow"
@@ -3362,22 +3344,21 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="699.24969"
-              y="688.33734"
-              transform="translate(324.11416)"
+              x="1107.0699"
+              y="84.662277"
             >
               <tspan
                 id="tspan39"
-                x="699.24969"
-                y="688.33734"
+                x="1107.0699"
+                y="84.662277"
               >
                 Stadtbezirk
                 {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
               </tspan>
               <tspan
                 id="tspan40"
-                x="699.24969"
-                y="713.03187"
+                x="1107.0699"
+                y="110.83184"
               >
                 Zähldatum:
                 {{
@@ -3391,7 +3372,6 @@
           <g
             id="zaehlstelle1"
             style="stroke-width: 28.2205; stroke-dasharray: none"
-            transform="translate(162.09712,-614.70735)"
           >
             <text
               id="zaehlstelle1-multirow"
@@ -3418,14 +3398,13 @@
                 stroke-width: 28.2205;
                 stroke-dasharray: none;
               `"
-              x="699.24969"
-              y="688.33734"
-              transform="translate(324.11416)"
+              x="1107.0699"
+              y="58.662277"
             >
               <tspan
                 id="tspan42"
-                x="699.24969"
-                y="688.33734"
+                x="1107.0699"
+                y="58.662277"
               >
                 <tspan
                   id="tspan41"
