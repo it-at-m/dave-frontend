@@ -33,7 +33,6 @@
             <path
               id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
-              fill="#9e9e9e"
               stroke="none"
               style="
                 stroke-width: 28.22049979;
@@ -408,7 +407,6 @@
             <path
               id="node2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
-              fill="#9e9e9e"
               stroke="none"
               style="
                 stroke-width: 28.2205;
@@ -783,7 +781,6 @@
             <path
               id="node3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
-              fill="#9e9e9e"
               stroke="none"
               style="
                 stroke-width: 28.22049979;
@@ -1197,7 +1194,6 @@
             <path
               id="node4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
-              fill="#9e9e9e"
               stroke="none"
               style="
                 stroke-width: 28.22049979;
@@ -1614,7 +1610,6 @@
             <path
               id="node5_spike"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
-              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
@@ -1977,7 +1972,6 @@
             <path
               id="node6_spike"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
-              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
@@ -2339,7 +2333,6 @@
             <path
               id="node7_spike"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
-              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
@@ -2733,7 +2726,6 @@
             <path
               id="node8_spike"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
-              fill="#9e9e9e"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
