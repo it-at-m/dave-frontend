@@ -224,6 +224,7 @@ import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/Abst
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
+import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -290,7 +291,10 @@ const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
 const belastungsplanDTO = ref<
-  LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO | LadeBelastungsplanFjsDTO
+  | LadeBelastungsplanDTO
+  | LadeBelastungsplanQjsDTO
+  | LadeBelastungsplanFjsDTO
+  | LadeBelastungsplanQuDTO
 >({} as LadeBelastungsplanDTO);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
@@ -834,7 +838,8 @@ const drawSchematischeUebersicht = computed(() => {
   }
   if (
     isQjsBelastungsplan(belastungsplanDTO.value) ||
-    isFjsBelastungsplan(belastungsplanDTO.value)
+    isFjsBelastungsplan(belastungsplanDTO.value) ||
+    isQuBelastungsplan(belastungsplanDTO.value)
   ) {
     return false;
   } else
@@ -854,6 +859,12 @@ function isFjsBelastungsplan(
   data: AbstractLadeBelastungsplanDTO | undefined
 ): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
+}
+
+function isQuBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQuDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>
 

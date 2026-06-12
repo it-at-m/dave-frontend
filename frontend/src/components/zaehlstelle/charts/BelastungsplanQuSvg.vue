@@ -3002,7 +3002,7 @@
               style="stroke-width: 27.0576"
             />
             <text
-              v-if="node8SouthWestToNorthEastCensusComissioned"
+              v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="rotate(-45)"
@@ -3048,11 +3048,11 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
+                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
               </tspan>
             </text>
             <text
-              v-if="node8NorthEastToSouthWestCensusComissioned"
+              v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="rotate(-45)"
@@ -3098,7 +3098,7 @@
                   stroke-width: 44.2239;
                 "
               >
-                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
+                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
               </tspan>
             </text>
           </g>
@@ -3414,7 +3414,8 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { ComputedRef } from "vue";
 
@@ -3424,6 +3425,7 @@ import { useDisplay } from "vuetify/framework";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -3438,7 +3440,7 @@ import { useQu } from "@/util/QuUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
 interface Props {
-  data: LadeBelastungsplanDTO;
+  data: LadeBelastungsplanQuDTO;
   dimension?: string;
 }
 
@@ -3515,15 +3517,52 @@ const availableKnotenarme = computed(() => {
   return qu.computeAvailableKnotenarme(activeZaehlung.value);
 });
 
+/**
+ * Auslesen des Zählwertes aus dem {@link LadeBelastungsplanQuDTO} für den angegebenen Knotenarm und Richtung.
+ * Wird eines davon nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundener Zählwert oder 0
+ */
+function getArrowZaehlwertOrZero(knotenarm: number, richtung: Himmelsrichtung) {
+  if (!isQuBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  if (!kn) return 0;
+  const querungsverkehr = kn.valuesQuerungsverkehre.find(
+    (l) => l.richtung === richtung
+  );
+  return querungsverkehr?.value ?? 0;
+}
+
+/**
+ * Auslesen der Zählwert-Summe aus dem {@link LadeBelastungsplanQuDTO} für den angegebenen Knotenarm.
+ * Wird dieser nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundene Summe oder 0
+ */
+function getSumArrowsKnotenarmOrZero(knotenarm: number) {
+  if (!isQuBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  return kn?.sumKnotenarm ?? 0;
+}
+
 // Zaehlwerte of Node1/North
 const nodeNumber1 = 1;
 
-const zaehlwertArrowNode1WestToEast = createZaehlwert(150); // TODO: wire real data
-const zaehlwertArrowNode1EastToWest = createZaehlwert(850); // TODO: wire real data
-const sumNode1Arrows = calculateSum(
-  zaehlwertArrowNode1WestToEast.value,
-  zaehlwertArrowNode1EastToWest.value
+const zaehlwertArrowNode1WestToEast = computed(() =>
+  getArrowZaehlwertOrZero(1, Himmelsrichtung.O)
 );
+const zaehlwertArrowNode1EastToWest = computed(() =>
+  getArrowZaehlwertOrZero(1, Himmelsrichtung.W)
+);
+const sumNode1Arrows = computed(() => getSumArrowsKnotenarmOrZero(1));
 
 const node1WestToEastCensusComissioned = isCommissioned(
   nodeNumber1,
@@ -3543,12 +3582,13 @@ const textColorArrowNode1EastToWest = setTextColor(colorArrowNode1EastToWest);
 // Zaehlwerte of Node2/East
 const nodeNumber2 = 2;
 
-const zaehlwertArrowNode2SouthToNorth = createZaehlwert(250); // TODO: wire real data
-const zaehlwertArrowNode2NorthToSouth = createZaehlwert(750); // TODO: wire real data
-const sumNode2Arrows = calculateSum(
-  zaehlwertArrowNode2SouthToNorth.value,
-  zaehlwertArrowNode2NorthToSouth.value
+const zaehlwertArrowNode2SouthToNorth = computed(() =>
+  getArrowZaehlwertOrZero(2, Himmelsrichtung.N)
 );
+const zaehlwertArrowNode2NorthToSouth = computed(() =>
+  getArrowZaehlwertOrZero(2, Himmelsrichtung.S)
+);
+const sumNode2Arrows = computed(() => getSumArrowsKnotenarmOrZero(2));
 
 const node2NorthToSouthCensusComissioned = isCommissioned(
   nodeNumber2,
@@ -3572,12 +3612,13 @@ const textColorArrowNode2SouthToNorth = setTextColor(
 // Zaehlwerte of Node3/South
 const nodeNumber3 = 3;
 
-const zaehlwertArrowNode3WestToEast = createZaehlwert(350); // TODO: wire real data
-const zaehlwertArrowNode3EastToWest = createZaehlwert(650); // TODO: wire real data
-const sumNode3Arrows = calculateSum(
-  zaehlwertArrowNode3WestToEast.value,
-  zaehlwertArrowNode3EastToWest.value
+const zaehlwertArrowNode3WestToEast = computed(() =>
+  getArrowZaehlwertOrZero(3, Himmelsrichtung.O)
 );
+const zaehlwertArrowNode3EastToWest = computed(() =>
+  getArrowZaehlwertOrZero(3, Himmelsrichtung.W)
+);
+const sumNode3Arrows = computed(() => getSumArrowsKnotenarmOrZero(3));
 
 const node3WestToEastCensusComissioned = isCommissioned(
   nodeNumber3,
@@ -3597,12 +3638,13 @@ const textColorArrowNode3EastToWest = setTextColor(colorArrowNode3EastToWest);
 // Zaehlwerte of Node4/West
 const nodeNumber4 = 4;
 
-const zaehlwertArrowNode4SouthToNorth = createZaehlwert(450); // TODO: wire real data
-const zaehlwertArrowNode4NorthToSouth = createZaehlwert(450); // TODO: wire real data
-const sumNode4Arrows = calculateSum(
-  zaehlwertArrowNode4SouthToNorth.value,
-  zaehlwertArrowNode4NorthToSouth.value
+const zaehlwertArrowNode4SouthToNorth = computed(() =>
+  getArrowZaehlwertOrZero(4, Himmelsrichtung.N)
 );
+const zaehlwertArrowNode4NorthToSouth = computed(() =>
+  getArrowZaehlwertOrZero(4, Himmelsrichtung.S)
+);
+const sumNode4Arrows = computed(() => getSumArrowsKnotenarmOrZero(4));
 
 const node4NorthToSouthCensusComissioned = isCommissioned(
   nodeNumber4,
@@ -3626,12 +3668,13 @@ const textColorArrowNode4SouthToNorth = setTextColor(
 // Zaehlwerte of Node5
 const nodeNumber5 = 5;
 
-const zaehlwertArrowNode5NorthWestToSouthEast = createZaehlwert(800); // TODO: wire real data
-const zaehlwertArrowNode5SouthEastToNorthWest = createZaehlwert(200); // TODO: wire real data
-const sumNode5Arrows = calculateSum(
-  zaehlwertArrowNode5NorthWestToSouthEast.value,
-  zaehlwertArrowNode5SouthEastToNorthWest.value
+const zaehlwertArrowNode5NorthWestToSouthEast = computed(() =>
+  getArrowZaehlwertOrZero(5, Himmelsrichtung.SO)
 );
+const zaehlwertArrowNode5SouthEastToNorthWest = computed(() =>
+  getArrowZaehlwertOrZero(5, Himmelsrichtung.NW)
+);
+const sumNode5Arrows = computed(() => getSumArrowsKnotenarmOrZero(5));
 
 const node5NorthWestToSouthEastCensusComissioned = isCommissioned(
   nodeNumber5,
@@ -3661,12 +3704,13 @@ const textColorArrowNode5SouthEastToNorthWest = setTextColor(
 // Zaehlwerte of Node6
 const nodeNumber6 = 6;
 
-const zaehlwertArrowNode6NorthEastToSouthWest = createZaehlwert(700); // TODO: wire real data
-const zaehlwertArrowNode6SouthWestToNorthEast = createZaehlwert(300); // TODO: wire real data
-const sumNode6Arrows = calculateSum(
-  zaehlwertArrowNode6NorthEastToSouthWest.value,
-  zaehlwertArrowNode6SouthWestToNorthEast.value
+const zaehlwertArrowNode6NorthEastToSouthWest = computed(() =>
+  getArrowZaehlwertOrZero(6, Himmelsrichtung.SW)
 );
+const zaehlwertArrowNode6SouthWestToNorthEast = computed(() =>
+  getArrowZaehlwertOrZero(6, Himmelsrichtung.NO)
+);
+const sumNode6Arrows = computed(() => getSumArrowsKnotenarmOrZero(6));
 
 const node6NorthEastToSouthWestCensusComissioned = isCommissioned(
   nodeNumber6,
@@ -3696,12 +3740,13 @@ const textColorArrowNode6SouthWestToNorthEast = setTextColor(
 // Zaehlwerte of Node7
 const nodeNumber7 = 7;
 
-const zaehlwertArrowNode7NorthWestToSouthEast = createZaehlwert(600); // TODO: wire real data
-const zaehlwertArrowNode7SouthEastToNorthWest = createZaehlwert(400); // TODO: wire real data
-const sumNode7Arrows = calculateSum(
-  zaehlwertArrowNode7NorthWestToSouthEast.value,
-  zaehlwertArrowNode7SouthEastToNorthWest.value
+const zaehlwertArrowNode7NorthWestToSouthEast = computed(() =>
+  getArrowZaehlwertOrZero(7, Himmelsrichtung.SO)
 );
+const zaehlwertArrowNode7SouthEastToNorthWest = computed(() =>
+  getArrowZaehlwertOrZero(7, Himmelsrichtung.NW)
+);
+const sumNode7Arrows = computed(() => getSumArrowsKnotenarmOrZero(7));
 
 const node7NorthWestToSouthEastCensusComissioned = isCommissioned(
   nodeNumber7,
@@ -3731,12 +3776,13 @@ const textColorArrowNode7SouthEastToNorthWest = setTextColor(
 // Zaehlwerte of Node8
 const nodeNumber8 = 8;
 
-const zaehlwertArrowNode8NorthEastToSouthWest = createZaehlwert(900); // TODO: wire real data
-const zaehlwertArrowNode8SouthWestToNorthEast = createZaehlwert(100); // TODO: wire real data
-const sumNode8Arrows = calculateSum(
-  zaehlwertArrowNode8NorthEastToSouthWest.value,
-  zaehlwertArrowNode8SouthWestToNorthEast.value
+const zaehlwertArrowNode8NorthEastToSouthWest = computed(() =>
+  getArrowZaehlwertOrZero(8, Himmelsrichtung.SW)
 );
+const zaehlwertArrowNode8SouthWestToNorthEast = computed(() =>
+  getArrowZaehlwertOrZero(8, Himmelsrichtung.NO)
+);
+const sumNode8Arrows = computed(() => getSumArrowsKnotenarmOrZero(8));
 
 const node8NorthEastToSouthWestCensusComissioned = isCommissioned(
   nodeNumber8,
@@ -3762,19 +3808,6 @@ const textColorArrowNode8NorthEastToSouthWest = setTextColor(
 const textColorArrowNode8SouthWestToNorthEast = setTextColor(
   colorArrowNode8SouthWestToNorthEast
 );
-
-/**
- * Erstellt eine computed Property für einen Wert.
- */
-function createZaehlwert(value: number) {
-  return computed(() => value);
-}
-
-function calculateSum(zaehlwert1: number, zaehlwert2: number) {
-  return computed(() => {
-    return zaehlwert1 + zaehlwert2;
-  });
-}
 
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
@@ -3907,6 +3940,12 @@ watch(
     emitSvgAsBlob();
   }
 );
+
+function isQuBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQuDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
+}
 </script>
 
 <style scoped lang="css"></style>
