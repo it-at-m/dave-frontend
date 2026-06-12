@@ -3554,8 +3554,6 @@ function getSumArrowsKnotenarmOrZero(knotenarm: number) {
 }
 
 // Zaehlwerte of Node1/North
-const nodeNumber1 = 1;
-
 const zaehlwertArrowNode1WestToEast = computed(() =>
   getArrowZaehlwertOrZero(1, Himmelsrichtung.O)
 );
@@ -3564,24 +3562,16 @@ const zaehlwertArrowNode1EastToWest = computed(() =>
 );
 const sumNode1Arrows = computed(() => getSumArrowsKnotenarmOrZero(1));
 
-const node1WestToEastCensusComissioned = isCommissioned(
-  nodeNumber1,
-  Himmelsrichtung.O
-);
-const node1EastToWestCensusComissioned = isCommissioned(
-  nodeNumber1,
-  Himmelsrichtung.W
-);
+const node1WestToEastCensusComissioned = isCommissioned(1, Himmelsrichtung.O);
+const node1EastToWestCensusComissioned = isCommissioned(1, Himmelsrichtung.W);
 
-const colorArrowNode1WestToEast = setColor(nodeNumber1, Himmelsrichtung.O);
-const colorArrowNode1EastToWest = setColor(nodeNumber1, Himmelsrichtung.W);
+const colorArrowNode1WestToEast = setColor(1, Himmelsrichtung.O);
+const colorArrowNode1EastToWest = setColor(1, Himmelsrichtung.W);
 
 const textColorArrowNode1WestToEast = setTextColor(colorArrowNode1WestToEast);
 const textColorArrowNode1EastToWest = setTextColor(colorArrowNode1EastToWest);
 
 // Zaehlwerte of Node2/East
-const nodeNumber2 = 2;
-
 const zaehlwertArrowNode2SouthToNorth = computed(() =>
   getArrowZaehlwertOrZero(2, Himmelsrichtung.N)
 );
@@ -3590,17 +3580,11 @@ const zaehlwertArrowNode2NorthToSouth = computed(() =>
 );
 const sumNode2Arrows = computed(() => getSumArrowsKnotenarmOrZero(2));
 
-const node2NorthToSouthCensusComissioned = isCommissioned(
-  nodeNumber2,
-  Himmelsrichtung.S
-);
-const node2SouthToNorthCensusComissioned = isCommissioned(
-  nodeNumber2,
-  Himmelsrichtung.N
-);
+const node2NorthToSouthCensusComissioned = isCommissioned(2, Himmelsrichtung.S);
+const node2SouthToNorthCensusComissioned = isCommissioned(2, Himmelsrichtung.N);
 
-const colorArrowNode2NorthToSouth = setColor(nodeNumber2, Himmelsrichtung.S);
-const colorArrowNode2SouthToNorth = setColor(nodeNumber2, Himmelsrichtung.N);
+const colorArrowNode2NorthToSouth = setColor(2, Himmelsrichtung.S);
+const colorArrowNode2SouthToNorth = setColor(2, Himmelsrichtung.N);
 
 const textColorArrowNode2NorthToSouth = setTextColor(
   colorArrowNode2NorthToSouth
@@ -3610,8 +3594,6 @@ const textColorArrowNode2SouthToNorth = setTextColor(
 );
 
 // Zaehlwerte of Node3/South
-const nodeNumber3 = 3;
-
 const zaehlwertArrowNode3WestToEast = computed(() =>
   getArrowZaehlwertOrZero(3, Himmelsrichtung.O)
 );
@@ -3620,24 +3602,16 @@ const zaehlwertArrowNode3EastToWest = computed(() =>
 );
 const sumNode3Arrows = computed(() => getSumArrowsKnotenarmOrZero(3));
 
-const node3WestToEastCensusComissioned = isCommissioned(
-  nodeNumber3,
-  Himmelsrichtung.O
-);
-const node3EastToWestCensusComissioned = isCommissioned(
-  nodeNumber3,
-  Himmelsrichtung.W
-);
+const node3WestToEastCensusComissioned = isCommissioned(3, Himmelsrichtung.O);
+const node3EastToWestCensusComissioned = isCommissioned(3, Himmelsrichtung.W);
 
-const colorArrowNode3WestToEast = setColor(nodeNumber3, Himmelsrichtung.O);
-const colorArrowNode3EastToWest = setColor(nodeNumber3, Himmelsrichtung.W);
+const colorArrowNode3WestToEast = setColor(3, Himmelsrichtung.O);
+const colorArrowNode3EastToWest = setColor(3, Himmelsrichtung.W);
 
 const textColorArrowNode3WestToEast = setTextColor(colorArrowNode3WestToEast);
 const textColorArrowNode3EastToWest = setTextColor(colorArrowNode3EastToWest);
 
 // Zaehlwerte of Node4/West
-const nodeNumber4 = 4;
-
 const zaehlwertArrowNode4SouthToNorth = computed(() =>
   getArrowZaehlwertOrZero(4, Himmelsrichtung.N)
 );
@@ -3646,17 +3620,11 @@ const zaehlwertArrowNode4NorthToSouth = computed(() =>
 );
 const sumNode4Arrows = computed(() => getSumArrowsKnotenarmOrZero(4));
 
-const node4NorthToSouthCensusComissioned = isCommissioned(
-  nodeNumber4,
-  Himmelsrichtung.S
-);
-const node4SouthToNorthCensusComissioned = isCommissioned(
-  nodeNumber4,
-  Himmelsrichtung.N
-);
+const node4NorthToSouthCensusComissioned = isCommissioned(4, Himmelsrichtung.S);
+const node4SouthToNorthCensusComissioned = isCommissioned(4, Himmelsrichtung.N);
 
-const colorArrowNode4NorthToSouth = setColor(nodeNumber4, Himmelsrichtung.S);
-const colorArrowNode4SouthToNorth = setColor(nodeNumber4, Himmelsrichtung.N);
+const colorArrowNode4NorthToSouth = setColor(4, Himmelsrichtung.S);
+const colorArrowNode4SouthToNorth = setColor(4, Himmelsrichtung.N);
 
 const textColorArrowNode4NorthToSouth = setTextColor(
   colorArrowNode4NorthToSouth
@@ -3666,8 +3634,6 @@ const textColorArrowNode4SouthToNorth = setTextColor(
 );
 
 // Zaehlwerte of Node5
-const nodeNumber5 = 5;
-
 const zaehlwertArrowNode5NorthWestToSouthEast = computed(() =>
   getArrowZaehlwertOrZero(5, Himmelsrichtung.SO)
 );
@@ -3677,22 +3643,16 @@ const zaehlwertArrowNode5SouthEastToNorthWest = computed(() =>
 const sumNode5Arrows = computed(() => getSumArrowsKnotenarmOrZero(5));
 
 const node5NorthWestToSouthEastCensusComissioned = isCommissioned(
-  nodeNumber5,
+  5,
   Himmelsrichtung.SO
 );
 const node5SouthEastToNorthWestCensusComissioned = isCommissioned(
-  nodeNumber5,
+  5,
   Himmelsrichtung.NW
 );
 
-const colorArrowNode5NorthWestToSouthEast = setColor(
-  nodeNumber5,
-  Himmelsrichtung.SO
-);
-const colorArrowNode5SouthEastToNorthWest = setColor(
-  nodeNumber5,
-  Himmelsrichtung.NW
-);
+const colorArrowNode5NorthWestToSouthEast = setColor(5, Himmelsrichtung.SO);
+const colorArrowNode5SouthEastToNorthWest = setColor(5, Himmelsrichtung.NW);
 
 const textColorArrowNode5NorthWestToSouthEast = setTextColor(
   colorArrowNode5NorthWestToSouthEast
@@ -3702,8 +3662,6 @@ const textColorArrowNode5SouthEastToNorthWest = setTextColor(
 );
 
 // Zaehlwerte of Node6
-const nodeNumber6 = 6;
-
 const zaehlwertArrowNode6NorthEastToSouthWest = computed(() =>
   getArrowZaehlwertOrZero(6, Himmelsrichtung.SW)
 );
@@ -3713,22 +3671,16 @@ const zaehlwertArrowNode6SouthWestToNorthEast = computed(() =>
 const sumNode6Arrows = computed(() => getSumArrowsKnotenarmOrZero(6));
 
 const node6NorthEastToSouthWestCensusComissioned = isCommissioned(
-  nodeNumber6,
+  6,
   Himmelsrichtung.SW
 );
 const node6SouthWestToNorthEastCensusComissioned = isCommissioned(
-  nodeNumber6,
+  6,
   Himmelsrichtung.NO
 );
 
-const colorArrowNode6NorthEastToSouthWest = setColor(
-  nodeNumber6,
-  Himmelsrichtung.SW
-);
-const colorArrowNode6SouthWestToNorthEast = setColor(
-  nodeNumber6,
-  Himmelsrichtung.NO
-);
+const colorArrowNode6NorthEastToSouthWest = setColor(6, Himmelsrichtung.SW);
+const colorArrowNode6SouthWestToNorthEast = setColor(6, Himmelsrichtung.NO);
 
 const textColorArrowNode6NorthEastToSouthWest = setTextColor(
   colorArrowNode6NorthEastToSouthWest
@@ -3738,8 +3690,6 @@ const textColorArrowNode6SouthWestToNorthEast = setTextColor(
 );
 
 // Zaehlwerte of Node7
-const nodeNumber7 = 7;
-
 const zaehlwertArrowNode7NorthWestToSouthEast = computed(() =>
   getArrowZaehlwertOrZero(7, Himmelsrichtung.SO)
 );
@@ -3749,22 +3699,16 @@ const zaehlwertArrowNode7SouthEastToNorthWest = computed(() =>
 const sumNode7Arrows = computed(() => getSumArrowsKnotenarmOrZero(7));
 
 const node7NorthWestToSouthEastCensusComissioned = isCommissioned(
-  nodeNumber7,
+  7,
   Himmelsrichtung.SO
 );
 const node7SouthEastToNorthWestCensusComissioned = isCommissioned(
-  nodeNumber7,
+  7,
   Himmelsrichtung.NW
 );
 
-const colorArrowNode7NorthWestToSouthEast = setColor(
-  nodeNumber7,
-  Himmelsrichtung.SO
-);
-const colorArrowNode7SouthEastToNorthWest = setColor(
-  nodeNumber7,
-  Himmelsrichtung.NW
-);
+const colorArrowNode7NorthWestToSouthEast = setColor(7, Himmelsrichtung.SO);
+const colorArrowNode7SouthEastToNorthWest = setColor(7, Himmelsrichtung.NW);
 
 const textColorArrowNode7NorthWestToSouthEast = setTextColor(
   colorArrowNode7NorthWestToSouthEast
@@ -3774,8 +3718,6 @@ const textColorArrowNode7SouthEastToNorthWest = setTextColor(
 );
 
 // Zaehlwerte of Node8
-const nodeNumber8 = 8;
-
 const zaehlwertArrowNode8NorthEastToSouthWest = computed(() =>
   getArrowZaehlwertOrZero(8, Himmelsrichtung.SW)
 );
@@ -3785,22 +3727,16 @@ const zaehlwertArrowNode8SouthWestToNorthEast = computed(() =>
 const sumNode8Arrows = computed(() => getSumArrowsKnotenarmOrZero(8));
 
 const node8NorthEastToSouthWestCensusComissioned = isCommissioned(
-  nodeNumber8,
+  8,
   Himmelsrichtung.SW
 );
 const node8SouthWestToNorthEastCensusComissioned = isCommissioned(
-  nodeNumber8,
+  8,
   Himmelsrichtung.NO
 );
 
-const colorArrowNode8NorthEastToSouthWest = setColor(
-  nodeNumber8,
-  Himmelsrichtung.SW
-);
-const colorArrowNode8SouthWestToNorthEast = setColor(
-  nodeNumber8,
-  Himmelsrichtung.NO
-);
+const colorArrowNode8NorthEastToSouthWest = setColor(8, Himmelsrichtung.SW);
+const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.NO);
 
 const textColorArrowNode8NorthEastToSouthWest = setTextColor(
   colorArrowNode8NorthEastToSouthWest
