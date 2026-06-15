@@ -3010,7 +3010,7 @@
               style="stroke-width: 3; stroke-dasharray: none"
             />
             <text
-              v-if="node8NorthEastToSouthWestCensusComissioned"
+              v-if="node8SouthWestToNorthEastCensusComissioned"
               id="arrow_node8_south_west_to_north_east_number_text"
               xml:space="preserve"
               transform="rotate(-45)"
@@ -3056,11 +3056,11 @@
                   stroke-width: 44.2239;
                 `"
               >
-                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
+                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
               </tspan>
             </text>
             <text
-              v-if="node8SouthWestToNorthEastCensusComissioned"
+              v-if="node8NorthEastToSouthWestCensusComissioned"
               id="arrow_node8_north_east_to_south_west_number_text"
               xml:space="preserve"
               transform="rotate(-45)"
@@ -3106,7 +3106,7 @@
                   stroke-width: 44.2239;
                 `"
               >
-                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
+                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
               </tspan>
             </text>
           </g>
