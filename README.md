@@ -13,7 +13,7 @@ Das Datenportal bietet einen lesenden Zugriff auf die Zählungen. Es kann nach Z
 
 
 ## Built with
-    Java 11
+    Java 21
 
 ## Contributing
 

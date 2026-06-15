@@ -41,6 +41,7 @@ const querschnittGroup = ref(canvas.value.group());
 const fontfamily = "Roboto, Arial, Helvetica, sans-serif";
 const defaultFontSize = 24;
 const sheetId = "belastungsplan-messquerschnitt";
+const textOffset = 100;
 
 const farben = new Map<string, string>([
   [Himmelsrichtung.N, "#4CAF50"],
@@ -440,14 +441,14 @@ function addTextSouthSide(
     isSvpInBelastungsPlan.value,
     chosenOptionsCopyFahrzeuge.value.schwerverkehr,
     chosenOptionsCopyFahrzeuge.value.gueterverkehr,
-    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr
+    chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr,
   ].filter(Boolean).length;
   // Über textposition wird bestimmt, ob der Wert in Klammern gesetzt werden muss.
   let textposition = countTexts - 1;
 
   if (chosenOptionsCopyFahrzeuge.value.radverkehr) {
     addTextToQuerschnittGroup(`${rad}`, startPointX, startPointY, bold);
-    startPointY += 85;
+    startPointY += textOffset;
   }
   if (isGvpInBelastungsPlan.value) {
     addTextToQuerschnittGroup(
@@ -456,7 +457,7 @@ function addTextSouthSide(
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY += textOffset;
     textposition -= 1;
   }
   if (isSvpInBelastungsPlan.value) {
@@ -466,7 +467,7 @@ function addTextSouthSide(
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY += textOffset;
     textposition -= 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
@@ -476,7 +477,7 @@ function addTextSouthSide(
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY += textOffset;
     textposition -= 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
@@ -486,7 +487,7 @@ function addTextSouthSide(
       startPointY,
       bold
     );
-    startPointY += 85;
+    startPointY += textOffset;
   }
   if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
     addTextToQuerschnittGroup(kfz, startPointX, startPointY, bold);
@@ -507,7 +508,7 @@ function addTextNorthSide(
   let textposition = 0;
   if (chosenOptionsCopyFahrzeuge.value.kraftfahrzeugverkehr) {
     addTextToQuerschnittGroup(kfz, startPointX, startPointY, bold);
-    startPointY -= 85;
+    startPointY -= textOffset;
     textposition += 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.schwerverkehr) {
@@ -517,7 +518,7 @@ function addTextNorthSide(
       startPointY,
       bold
     );
-    startPointY -= 85;
+    startPointY -= textOffset;
     textposition += 1;
   }
   if (chosenOptionsCopyFahrzeuge.value.gueterverkehr) {
@@ -527,7 +528,7 @@ function addTextNorthSide(
       startPointY,
       bold
     );
-    startPointY -= 85;
+    startPointY -= textOffset;
     textposition += 1;
   }
   if (isSvpInBelastungsPlan.value) {
@@ -537,7 +538,7 @@ function addTextNorthSide(
       startPointY,
       bold
     );
-    startPointY -= 85;
+    startPointY -= textOffset;
     textposition += 1;
   }
   if (isGvpInBelastungsPlan.value) {

@@ -53,7 +53,7 @@ const KRAFTFAHRZEUGVERKEHR = "Kraftfahrzeugverkehr";
 const GUETERVERKEHR = "Güterverkehr";
 const SCHWERVERKEHR = "Schwerverkehr";
 const RADVERKEHR = "Radverkehr";
-const FUSSVERKEHR = "Fussverkehr";
+const FUSSVERKEHR = "Fußverkehr";
 const GESAMT = "Summe alle Verkehrsarten";
 
 provide(THEME_KEY, "default");
@@ -342,18 +342,38 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
     });
   }
   if (filterOptions.value.radverkehr) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenRad: any[] = zeitreiheDaten.rad.map((value) =>
+      value == null ? "" : value
+    );
     series.push({
       name: RADVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.rad,
+      data: zeitreiheDatenRad,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_RAD),
     });
   }
   if (filterOptions.value.fussverkehr) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenFuss: (number | string)[] = zeitreiheDaten.fuss.map(
+      (value) => {
+        if (value == null) {
+          return "";
+        }
+        // im speziellen Fall, dass Tageswert gesetzt ist und bei Fuß Werte 0 sind, diese auch auf leer setzen
+        if (
+          filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
+          value === 0
+        ) {
+          return "";
+        }
+        return value;
+      }
+    );
     series.push({
       name: FUSSVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.fuss,
+      data: zeitreiheDatenFuss,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_FUSS),
     });
   }
@@ -394,7 +414,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
 
 function downloadCsv() {
   const header =
-    "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fussverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
+    "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fußverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
   const rows = [];
 
   rows.push(getMetaHeader().join(";"));

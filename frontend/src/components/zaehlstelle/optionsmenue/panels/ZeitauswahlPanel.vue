@@ -167,7 +167,6 @@ import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Fahrzeug from "@/types/enum/Fahrzeug";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -373,10 +372,12 @@ watch(
 /**
  * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
  */
-function adaptOptionsUpdate(){
-  if (isOnlyFussgaengerSelected.value &&
-      chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
-      isTeilzaehlung.value ){
+function adaptOptionsUpdate() {
+  if (
+    isOnlyFussgaengerSelected.value &&
+    chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
+    isTeilzaehlung.value
+  ) {
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
     const zbMax =
       zeitblockOrder.find((zb) =>
