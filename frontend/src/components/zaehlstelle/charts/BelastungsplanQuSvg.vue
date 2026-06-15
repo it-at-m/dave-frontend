@@ -3425,7 +3425,6 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
 import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
-import type { ComputedRef } from "vue";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
@@ -3728,14 +3727,6 @@ function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
         knNumber,
         direction
       )
-  );
-}
-
-function setTextColor(arrowColor: ComputedRef<string>) {
-  return computed(() =>
-    arrowColor.value === BelastungsplanConstants.inaktivColor
-      ? "#000000"
-      : "#ffffff"
   );
 }
 
