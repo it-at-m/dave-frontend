@@ -276,19 +276,9 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
   if (blocks && Array.isArray(blocks)) {
     // Select Control mit den entsprechenden text/value Werten füllen
     blocks.forEach((block) => {
-      let keyVal = zeitblockInfo.get(block);
-
-      // Adapt titel for Zeitblock ZB_19_24 for 16h Zählung
-      const zaehldauer = zaehldauerOfActiveZaehlung.value;
-      if (
-          Zaehldauer.DAUER_16_STUNDEN === zaehldauer &&
-          Zeitblock.ZB_19_24 === block
-      ) {
-        keyVal = { title: "19 - 22 Uhr", value: Zeitblock.ZB_19_24 };
-      }
-
-      if (keyVal) {
-        result.push(keyVal);
+      const kv = zeitblockInfo.get(block);
+      if (kv) {
+        result.push(kv);
       }
     });
     // Block 0-24 bei Zeitauswahl Spitzenstunde hinzufügen falls kein Zeitblock ZB_06_19 oder ZB_06_22 existiert.
