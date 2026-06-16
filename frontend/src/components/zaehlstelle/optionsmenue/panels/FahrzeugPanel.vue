@@ -756,13 +756,13 @@ function getHintToDisplay(type: string): string {
       break;
     }
     case "SV_P": {
-      if (chosenOptionsCopy.value.differenzdatenDarstellen) {
+      if (isDifferenzdatenDarstellung.value) {
         hint = "Schwerverkehrsanteil bei Differenzdatenvergleich deaktiviert.";
       }
       break;
     }
     case "GV_P": {
-      if (chosenOptionsCopy.value.differenzdatenDarstellen) {
+      if (isDifferenzdatenDarstellung.value) {
         hint = "Güterverkehrsanteil bei Differenzdatenvergleich deaktiviert.";
       }
       break;
