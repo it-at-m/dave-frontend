@@ -204,10 +204,6 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const zaehldauerOfActiveZaehlung = computed<Zaehldauer>(() => {
-  return activeZaehlung.value.zaehldauer;
-});
-
 const isZeitauswahlSpitzenstundeOrBlock = computed(() => {
   return (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK ||
