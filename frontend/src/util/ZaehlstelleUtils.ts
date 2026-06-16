@@ -1,6 +1,8 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
+import { isEmpty } from "lodash";
+
 export function useZaehlstelleUtils() {
   /**
    * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
@@ -17,7 +19,7 @@ export function useZaehlstelleUtils() {
     // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart KEIN Anteil sein
     if (
       options.differenzdatenDarstellen &&
-      options.vergleichszaehlungsId != null
+      !isEmpty(options.vergleichszaehlungsId)
     ) {
       return (
         options.kraftfahrzeugverkehr ||

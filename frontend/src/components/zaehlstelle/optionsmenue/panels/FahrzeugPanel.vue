@@ -417,6 +417,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
+import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -651,7 +652,7 @@ const labelSelectOrDeselectAllVerkehrsarten = computed(() => {
 const isDifferenzdatenDarstellung = computed(() => {
   return (
     chosenOptionsCopy.value.differenzdatenDarstellen &&
-    chosenOptionsCopy.value.vergleichszaehlungsId != null
+    !isEmpty(chosenOptionsCopy.value.vergleichszaehlungsId)
   );
 });
 
