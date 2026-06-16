@@ -161,7 +161,7 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
   }
   if (hoverCheckbox.value) {
     return isQjsOrFjsOrQu.value
-      ? "Für Fußverkehrszählungen ist eine Differenzdatendarstellung nicht möglich."
+      ? "Für diese Zählung ist eine Differenzdatendarstellung nicht möglich."
       : "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
