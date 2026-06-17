@@ -87,11 +87,12 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQJSZaehlung &&
+                isQjsBelastungsplan(belastungsplanDTO) &&
                 !isFJSZaehlung &&
                 !isQUZaehlung
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -101,10 +102,11 @@
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
                 !isQUZaehlung &&
-                isFJSZaehlung
+                isFJSZaehlung &&
+                isFjsBelastungsplan(belastungsplanDTO)
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanFjsDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -113,11 +115,12 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQUZaehlung &&
+                isQuBelastungsplan(belastungsplanDTO) &&
                 !isQJSZaehlung &&
                 !isFJSZaehlung
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQuDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -209,7 +212,7 @@
     <belastungsplan-kreuzung-svg-schematische-uebersicht
       v-if="drawSchematischeUebersicht"
       :dimension="contentHeight"
-      :data="belastungsplanDTO"
+      :data="belastungsplanDTO as LadeBelastungsplanDTO"
       :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
