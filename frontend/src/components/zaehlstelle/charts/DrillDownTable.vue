@@ -32,12 +32,18 @@
             class="drilldown-table__cell"
           >
             <div class="drilldown-table__cell-content">
-              <span
-                v-for="fahrbeziehung in fahrbeziehungen"
-                :key="getFahrbeziehungKey(fahrbeziehung)"
-              >
-                {{ getFahrbeziehungKey(fahrbeziehung) }}: {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung), vehicleType.key) }}
-              </span>
+                <table>
+                    <tr>
+                        <td v-for="fahrbeziehung in fahrbeziehungen">
+                            {{ getFahrbeziehungKey(fahrbeziehung) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
+                            {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung), vehicleType.key) }}
+                        </td>
+                    </tr>
+                </table>
             </div>
           </td>
         </tr>
