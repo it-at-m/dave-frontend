@@ -31,20 +31,18 @@
             :key="`${zeitintervall.startUhrzeit}-${zeitintervall.endeUhrzeit}-${vehicleType.key}`"
             class="drilldown-table__cell"
           >
-            <div class="drilldown-table__cell-content">
-                <table>
-                    <tr>
-                        <td v-for="fahrbeziehung in fahrbeziehungen">
-                            {{ getFahrbeziehungKey(fahrbeziehung) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
-                            {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung), vehicleType.key) }}
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <table class="innertable">
+                <tr>
+                    <td v-for="fahrbeziehung in fahrbeziehungen">
+                        {{ getFahrbeziehungKey(fahrbeziehung) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="innertable_cell-content" v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
+                        {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung), vehicleType.key) }}
+                    </td>
+                </tr>
+            </table>
           </td>
         </tr>
       </tbody>
@@ -149,5 +147,23 @@ function formatDateTime(value: string): string {
   flex-direction: column;
   gap: 2px;
   white-space: nowrap;
+}
+
+.innertable {
+  margin: 0 auto;
+}
+
+.innertable td {
+  border: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 2px 4px;
+}
+
+.innertable td:last-child {
+  border-right: none;
+}
+
+.innertable_cell-content {
+  text-align: center;
 }
 </style>
