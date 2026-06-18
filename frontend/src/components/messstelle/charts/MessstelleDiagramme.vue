@@ -3,6 +3,7 @@
     ref="sheet"
     :min-height="height"
   >
+  TEST
     <v-tabs
       v-model="activeTab"
       fixed-tabs
@@ -31,6 +32,7 @@
         Heatmap
       </v-tab>
     </v-tabs>
+
     <v-tabs-window
       v-model="activeTab"
       class="d-flex flex-column align-stretch"

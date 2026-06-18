@@ -43,11 +43,16 @@
         <v-icon icon="mdi-chart-bubble" />
         Heatmap
       </v-tab>
+      <v-tab :value="TAB_DRILLDOWN">
+        <v-icon icon="mdi-database-arrow-down-outline" />
+        Drill-Down
+      </v-tab>
       <v-tab :value="TAB_ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
         <v-icon icon="mdi-timer-sand" />
         Zeitreihe
       </v-tab>
     </v-tabs>
+
     <v-tabs-window
       v-if="hasZaehlungen"
       v-model="activeTab"
@@ -132,6 +137,23 @@
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
+      
+      <v-tabs-window-item :value="TAB_DRILLDOWN">
+        <v-sheet
+          :min-height="contentHeight"
+          :max-height="contentHeight"
+          width="100%"
+          class="overflow-y-auto"
+        >
+          <drill-down-table
+            v-if="drillDownDTO"
+            :drill-down-data="drillDownDTO"
+            :height="contentHeight"
+          />
+
+        </v-sheet>
+      </v-tabs-window-item>
+
       <v-tabs-window-item :value="TAB_ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
         <v-sheet
           :min-height="contentHeight"
@@ -209,6 +231,8 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
+import DrillDownTable from "./charts/DrillDownTable.vue";
+import type { DrilldownDTO } from "@/types/zaehlung/zaehldaten/DrillDownDTO.js";
 
 interface Props {
   height?: string;
@@ -226,6 +250,7 @@ const TAB_GANGLINIE = 1;
 const TAB_LISTENAUSGABE = 2;
 const TAB_HEATMAP = 3;
 const TAB_ZEITREIHE = 4;
+const TAB_DRILLDOWN = 5;
 const BELASTUNGSPLAN_PNG_DIMENSION = 1400;
 const BELASTUNGSPLAN_SCHEMATISCHE_UEBERSICHT_PNG_DIMENSION = 1400;
 const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
@@ -248,6 +273,9 @@ const zaehldatenSteplineDTO = ref<LadeZaehldatenSteplineDTO>(
   {} as LadeZaehldatenSteplineDTO
 );
 const listenausgabeDTO = ref<Array<LadeZaehldatumDTO>>([]);
+//drilldown table
+const drillDownDTO = ref<DrilldownDTO>();
+
 const zaehldatenHeatmap = ref<LadeZaehldatenHeatmapDTO>(
   {} as LadeZaehldatenHeatmapDTO
 );
@@ -381,6 +409,7 @@ function loadData(): void {
 function loadProcessedChartData(options: OptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
+
   LadeZaehldatenService.ladeZaehldatenProcessed(
     selectedZaehlung.value.id,
     options
@@ -400,6 +429,16 @@ function loadProcessedChartData(options: OptionsDTO) {
     .finally(() => {
       chartDataLoading.value = false;
     });
+
+  LadeZaehldatenService.ladeZaehldatenDrillDown(
+    selectedZaehlung.value.id,
+    options
+  ).then((drilldownData: DrilldownDTO) => {
+    drillDownDTO.value = drilldownData;
+  })
+    .catch((error) => snackbarStore.showApiError(error)
+  );
+  
 }
 
 function openPdfReportDialog(): void {
