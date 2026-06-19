@@ -210,10 +210,24 @@
     <pdf-report-menue v-model="pdfReportDialog" />
 
     <belastungsplan-kreuzung-svg-schematische-uebersicht
-      v-if="drawSchematischeUebersicht"
+      v-if="
+        drawSchematischeUebersicht && !isQjsBelastungsplan(belastungsplanDTO)
+      "
       :dimension="contentHeight"
       :data="belastungsplanDTO as LadeBelastungsplanDTO"
-      :style="schemaStyle"
+      style="position: absolute; opacity: 0; pointer-events: none"
+      @print="storeSvgSchematischeUebersicht($event)"
+    />
+
+    <belastungsplan-qjs-svg-schematische-uebersicht
+      id="schematische-uebersicht-qjs"
+      v-if="
+        drawSchematischeUebersicht && isQjsBelastungsplan(belastungsplanDTO)
+      "
+      :dimension="contentHeight"
+      :data="belastungsplanDTO"
+      v-model="options"
+      style="position: absolute; opacity: 0; pointer-events: none"
       @print="storeSvgSchematischeUebersicht($event)"
     />
   </v-sheet>
@@ -249,6 +263,7 @@ import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/Belastungsplan
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
+import BelastungsplanQjsSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanQjsSvgSchematischeUebersicht.vue";
 import BelastungsplanQuSvg from "@/components/zaehlstelle/charts/BelastungsplanQuSvg.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
@@ -839,8 +854,12 @@ const drawSchematischeUebersicht = computed(() => {
   ) {
     return false;
   }
-  if (
-    isQjsBelastungsplan(belastungsplanDTO.value) ||
+  if (isQjsBelastungsplan(belastungsplanDTO.value)) {
+    return (
+      belastungsplanDTO.value.value1.valuesVerkehrsbeziehungen &&
+      belastungsplanDTO.value.value1.valuesVerkehrsbeziehungen.length > 0
+    );
+  } else if (
     isFjsBelastungsplan(belastungsplanDTO.value) ||
     isQuBelastungsplan(belastungsplanDTO.value)
   ) {
