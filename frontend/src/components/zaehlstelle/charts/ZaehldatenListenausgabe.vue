@@ -388,9 +388,25 @@ const headers = computed(() => {
   return headers;
 });
 
+const maxGesamt = computed(() => {
+  if (!props.listenausgabeData || props.listenausgabeData.length === 0) {
+    return 0;
+  }
+  // Only consider rows with type=null (regular rows), not total sum rows
+  const regularRows = props.listenausgabeData.filter(item => item.type === null);
+  if (regularRows.length === 0) {
+    return 0;
+  }
+  return Math.max(...regularRows.map(item => item.fussgaenger));
+});
+
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
   let color = "bg-white";
-  if (ladeZaehldatum.type === TYPE_STUNDE) {
+  
+  // Highlight the row with maximum total value
+  if (ladeZaehldatum.fussgaenger === maxGesamt.value) {
+    color = "bg-yellow-lighten-3 font-weight-bold text-black";
+  } else if (ladeZaehldatum.type === TYPE_STUNDE) {
     color = "bg-blue-grey-lighten-4 font-weight-bold";
   } else if (
     ladeZaehldatum.type != undefined &&
