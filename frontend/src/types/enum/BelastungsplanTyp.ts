@@ -4,6 +4,8 @@ export enum BelastungsplanTyp {
   QJS = "QJS",
 
   FJS = "FJS",
+
+  QU = "QU",
 }
 
 export default BelastungsplanTyp;

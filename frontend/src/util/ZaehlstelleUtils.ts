@@ -1,6 +1,8 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
+import { isEmpty } from "lodash";
+
 export function useZaehlstelleUtils() {
   /**
    * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
@@ -14,6 +16,19 @@ export function useZaehlstelleUtils() {
   }
 
   function hasSelectedVerkehrsarten(options: ZaehlstelleOptionsDTO) {
+    // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart KEIN Anteil sein
+    if (
+      options.differenzdatenDarstellen &&
+      !isEmpty(options.vergleichszaehlungsId)
+    ) {
+      return (
+        options.kraftfahrzeugverkehr ||
+        options.schwerverkehr ||
+        options.gueterverkehr ||
+        options.radverkehr ||
+        options.fussverkehr
+      );
+    }
     return (
       options.kraftfahrzeugverkehr ||
       options.schwerverkehr ||
