@@ -211,7 +211,10 @@
 
     <belastungsplan-kreuzung-svg-schematische-uebersicht
       v-if="
-        drawSchematischeUebersicht && !isQjsBelastungsplan(belastungsplanDTO)
+        drawSchematischeUebersicht &&
+        !isQjsBelastungsplan(belastungsplanDTO) &&
+        !isFjsBelastungsplan(belastungsplanDTO) &&
+        !isQuBelastungsplan(belastungsplanDTO)
       "
       :dimension="contentHeight"
       :data="belastungsplanDTO as LadeBelastungsplanDTO"
@@ -223,6 +226,20 @@
       id="schematische-uebersicht-qjs"
       v-if="
         drawSchematischeUebersicht && isQjsBelastungsplan(belastungsplanDTO)
+      "
+      :dimension="contentHeight"
+      :data="belastungsplanDTO"
+      v-model="options"
+      style="position: absolute; opacity: 0; pointer-events: none"
+      @print="storeSvgSchematischeUebersicht($event)"
+    />
+
+    <belastungsplan-fjs-and-qu-svg-schematische-uebersicht
+      id="schematische-uebersicht-fjs-qu"
+      v-if="
+        drawSchematischeUebersicht &&
+        (isFjsBelastungsplan(belastungsplanDTO) ||
+          isQuBelastungsplan(belastungsplanDTO))
       "
       :dimension="contentHeight"
       :data="belastungsplanDTO"
@@ -259,6 +276,7 @@ import PdfReportMenue from "@/components/common/PdfReportMenue.vue";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
+import BelastungsplanFjsAndQuSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanFjsAndQuSvgSchematischeUebersicht.vue";
 import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/BelastungsplanFjsSvg.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
@@ -863,7 +881,10 @@ const drawSchematischeUebersicht = computed(() => {
     isFjsBelastungsplan(belastungsplanDTO.value) ||
     isQuBelastungsplan(belastungsplanDTO.value)
   ) {
-    return false;
+    return (
+      belastungsplanDTO.value.value1.valuesKnotenarme &&
+      belastungsplanDTO.value.value1.valuesKnotenarme.length > 0
+    );
   } else
     return (
       belastungsplanDTO.value.value1.values &&
