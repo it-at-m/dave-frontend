@@ -209,42 +209,11 @@
 
     <pdf-report-menue v-model="pdfReportDialog" />
 
-    <belastungsplan-kreuzung-svg-schematische-uebersicht
-      v-if="
-        drawSchematischeUebersicht &&
-        !isQjsBelastungsplan(belastungsplanDTO) &&
-        !isFjsBelastungsplan(belastungsplanDTO) &&
-        !isQuBelastungsplan(belastungsplanDTO)
-      "
+    <belastungsplan-schematische-uebersicht
+      :draw-schematische-uebersicht="drawSchematischeUebersicht"
       :dimension="contentHeight"
+      :options="options"
       :data="belastungsplanDTO as LadeBelastungsplanDTO"
-      style="position: absolute; opacity: 0; pointer-events: none"
-      @print="storeSvgSchematischeUebersicht($event)"
-    />
-
-    <belastungsplan-qjs-svg-schematische-uebersicht
-      id="schematische-uebersicht-qjs"
-      v-if="
-        drawSchematischeUebersicht && isQjsBelastungsplan(belastungsplanDTO)
-      "
-      :dimension="contentHeight"
-      :data="belastungsplanDTO"
-      v-model="options"
-      style="position: absolute; opacity: 0; pointer-events: none"
-      @print="storeSvgSchematischeUebersicht($event)"
-    />
-
-    <belastungsplan-fjs-and-qu-svg-schematische-uebersicht
-      id="schematische-uebersicht-fjs-qu"
-      v-if="
-        drawSchematischeUebersicht &&
-        (isFjsBelastungsplan(belastungsplanDTO) ||
-          isQuBelastungsplan(belastungsplanDTO))
-      "
-      :dimension="contentHeight"
-      :data="belastungsplanDTO"
-      v-model="options"
-      style="position: absolute; opacity: 0; pointer-events: none"
       @print="storeSvgSchematischeUebersicht($event)"
     />
   </v-sheet>
@@ -276,13 +245,11 @@ import PdfReportMenue from "@/components/common/PdfReportMenue.vue";
 import ProgressLoader from "@/components/common/ProgressLoader.vue";
 import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
-import BelastungsplanFjsAndQuSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanFjsAndQuSvgSchematischeUebersicht.vue";
 import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/BelastungsplanFjsSvg.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
-import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
-import BelastungsplanQjsSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanQjsSvgSchematischeUebersicht.vue";
 import BelastungsplanQuSvg from "@/components/zaehlstelle/charts/BelastungsplanQuSvg.vue";
+import BelastungsplanSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -856,13 +823,6 @@ function generateCsv() {
     .finally(() => (loadingFile.value = false));
 }
 const displaySchema = ref(true);
-const schemaStyle = computed(() => {
-  let style = ``;
-  if (!displaySchema.value) {
-    style = `display: none`;
-  }
-  return style;
-});
 
 const drawSchematischeUebersicht = computed(() => {
   if (

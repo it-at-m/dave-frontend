@@ -194,6 +194,7 @@ import { useQjs } from "@/util/QjsUtils";
 interface Props {
   data: LadeBelastungsplanQjsDTO;
   dimension: string;
+  options: ZaehlstelleOptionsDTO;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -206,10 +207,6 @@ const emits = defineEmits<{
 
 const zaehlstelleStore = useZaehlstelleStore();
 const qjs = useQjs();
-
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
-  required: true,
-});
 
 const svgRef = ref<SVGSVGElement | null>(null);
 
@@ -268,28 +265,28 @@ const isAvailableArrowFour = computed(() => {
 
 const isSelectedArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
+    props.options.chosenVerkehrsbeziehungen,
     qjs.patternsArrowOne
   );
 });
 
 const isSelectedArrowTwo = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
+    props.options.chosenVerkehrsbeziehungen,
     qjs.patternsArrowTwo
   );
 });
 
 const isSelectedArrowThree = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
+    props.options.chosenVerkehrsbeziehungen,
     qjs.patternsArrowThree
   );
 });
 
 const isSelectedArrowFour = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-    chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
+    props.options.chosenVerkehrsbeziehungen,
     qjs.patternsArrowFour
   );
 });
@@ -363,7 +360,7 @@ function emitSvgAsBlob(): void {
 }
 
 watch(
-  () => chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
+  () => props.options.chosenVerkehrsbeziehungen,
   () => {
     nextTick(() => emitSvgAsBlob());
   },

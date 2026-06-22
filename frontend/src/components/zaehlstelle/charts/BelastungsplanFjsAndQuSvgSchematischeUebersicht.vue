@@ -1403,6 +1403,7 @@ import Zaehlart from "@/types/enum/Zaehlart";
 interface Props {
   data: LadeBelastungsplanFjsDTO | LadeBelastungsplanQuDTO;
   dimension: string;
+  options: ZaehlstelleOptionsDTO;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -1414,10 +1415,6 @@ const emits = defineEmits<{
 }>();
 
 const zaehlstelleStore = useZaehlstelleStore();
-
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
-  required: true,
-});
 
 const svgRef = ref<SVGSVGElement | null>(null);
 
@@ -1437,10 +1434,10 @@ const hasAvailableKnotenarme = computed(() => {
 });
 
 const selectedLaengsverkehre = computed(() => {
-  return chosenOptionsCopy.value.chosenLaengsverkehre;
+  return props.options.chosenLaengsverkehre;
 });
 const selectedQuerungsverkehre = computed(() => {
-  return chosenOptionsCopy.value.chosenQuerungsverkehre;
+  return props.options.chosenQuerungsverkehre;
 });
 
 function isLaengsverkehrAvailable(
@@ -1621,8 +1618,8 @@ function emitSvgAsBlob(): void {
 
 watch(
   [
-    () => chosenOptionsCopy.value.chosenLaengsverkehre,
-    () => chosenOptionsCopy.value.chosenQuerungsverkehre,
+    () => props.options.chosenLaengsverkehre,
+    () => props.options.chosenQuerungsverkehre,
   ],
   () => {
     nextTick(() => emitSvgAsBlob());
