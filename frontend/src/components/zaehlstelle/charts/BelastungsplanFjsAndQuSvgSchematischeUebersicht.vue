@@ -1392,7 +1392,7 @@ import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelas
 import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -1575,10 +1575,6 @@ function createQuerungsverkehr(
   querungsverkehr.richtung = richtung;
   return querungsverkehr;
 }
-
-onMounted(() => {
-  nextTick(() => emitSvgAsBlob());
-});
 
 /**
  * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.

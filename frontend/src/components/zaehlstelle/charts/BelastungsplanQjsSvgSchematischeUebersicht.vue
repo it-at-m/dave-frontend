@@ -186,7 +186,7 @@ import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelas
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first, last } from "lodash";
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useQjs } from "@/util/QjsUtils";
@@ -305,10 +305,6 @@ function convertToVerkehrsbeziehungenQjs(
     })) ?? []
   );
 }
-
-onMounted(() => {
-  nextTick(() => emitSvgAsBlob());
-});
 
 const colorOfVerkehrsbeziehungArrowOne = computed(() =>
   isSelectedArrowOne.value ? activeColor : passiveColor
