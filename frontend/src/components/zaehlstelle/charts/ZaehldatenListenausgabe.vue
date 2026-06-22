@@ -9,7 +9,13 @@
     fixed-header
     :height="height"
     :row-props="(item: any) => rowClasses(item.item)"
-  />
+  >
+    <template v-for="field in ['pkw', 'lkw', 'lastzuege', 'busse', 'kraftraeder', 'fahrradfahrer', 'fussgaenger', 'pkwEinheiten', 'kfz', 'schwerverkehr', 'gueterverkehr']" #[`item.${field}`]="{ item, index }">
+      <span :class="{ 'font-weight-bold text-primary px-2 rounded bg-blue-lighten-4': isPeakHour(field, index) }">
+        {{ item[field] }}
+      </span>
+    </template>
+  </v-data-table>
 </template>
 
 <script setup lang="ts">
@@ -44,17 +50,16 @@ const props = withDefaults(defineProps<Props>(), {
 
 const zaehlstelleStore = useZaehlstelleStore();
 
+// contains sum for full hours and indices of cells for the four entries for each hour
 const hours: { indices: [number, number, number, number]; sums: Record<string, number> }[] = Array.from(
   { length: 24 },
   () => ({
     indices: [0, 0, 0, 0] as [number, number, number, number],
-    sums: { pkw: 0, lkw: 0, lastzuege: 0, busse: 0, kraftraeder: 0, fahrradfahrer: 0, fussgaenger: 0, pkwEinheiten: 0, gesamt: 0, kfz: 0, schwerverkehr: 0, gueterverkehr: 0 }
+    sums: { pkw: 0, lkw: 0, lastzuege: 0, busse: 0, kraftraeder: 0, fahrradfahrer: 0, fussgaenger: 0, pkwEinheiten: 0, kfz: 0, schwerverkehr: 0, gueterverkehr: 0 }
   })
 );
 
 const peakHours: Record<string, number> = {};
-
-computeHighesValueHour();
 
 function computeHighesValueHour () {
   for (let i = 0; i < props.listenausgabeData.length; i++) {
@@ -73,7 +78,12 @@ function computeHighesValueHour () {
   for (const key of Object.keys(hours[0].sums)) {
     peakHours[key] = hours.reduce((max, hour, i) => hour.sums[key] > hours[max].sums[key] ? i : max, 0);
   }
-} 
+}
+
+function isPeakHour(key: string, index: number): boolean {
+  const peak = peakHours[key];
+  return hours[peak].indices.includes(index);
+}
 
 /**
  * Liefert die Anzahl der ausgewaehlten Fahrzeugtypen zurueck.
@@ -462,6 +472,7 @@ watch(
         zaehldatum.anteilSchwerverkehrAnKfzProzent
       ).toFixed(1);
     });
+    computeHighesValueHour();
   },
   { immediate: true }
 );
