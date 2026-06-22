@@ -23,48 +23,6 @@
         :transform="rotateSvg"
       >
         <g id="knotenarmnummern">
-          <g id="knotenarmnummer2">
-            <ellipse
-              id="knotenarmnummer2_circle"
-              style="
-                fill: none;
-                fill-opacity: 1;
-                stroke: #000000;
-                stroke-width: 1.02435;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-              cx="924"
-              cy="700"
-              rx="20.487822"
-              ry="20.487823"
-            />
-            <text
-              id="knotenarmnummer2_text"
-              xml:space="preserve"
-              style="
-                font-size: 33.4058px;
-                font-family: sans-serif;
-                text-align: start;
-                writing-mode: lr-tb;
-                direction: ltr;
-                text-anchor: start;
-                fill: #000000;
-                stroke-width: 52.2711;
-              "
-              x="913.19183"
-              y="711.73895"
-            >
-              <tspan
-                id="knotenarmnummer2_tspan"
-                x="913.19183"
-                y="711.73895"
-                style="stroke-width: 52.2711"
-              >
-                {{ secondKnotenarm?.nummer }}
-              </tspan>
-            </text>
-          </g>
           <g id="knotenarmnummer1">
             <ellipse
               id="knotenarmnummer1_circle"
@@ -107,38 +65,64 @@
               </tspan>
             </text>
           </g>
+          <g id="knotenarmnummer2">
+            <ellipse
+              id="knotenarmnummer2_circle"
+              style="
+                fill: none;
+                fill-opacity: 1;
+                stroke: #000000;
+                stroke-width: 1.02435;
+                stroke-dasharray: none;
+                stroke-opacity: 1;
+              "
+              cx="924"
+              cy="700"
+              rx="20.487822"
+              ry="20.487823"
+            />
+            <text
+              id="knotenarmnummer2_text"
+              xml:space="preserve"
+              style="
+                font-size: 33.4058px;
+                font-family: sans-serif;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                fill: #000000;
+                stroke-width: 52.2711;
+              "
+              x="913.19183"
+              y="711.73895"
+            >
+              <tspan
+                id="knotenarmnummer2_tspan"
+                x="913.19183"
+                y="711.73895"
+                style="stroke-width: 52.2711"
+              >
+                {{ secondKnotenarm?.nummer }}
+              </tspan>
+            </text>
+          </g>
         </g>
         <g id="arrows">
           <g
-            v-if="isAvailableArrowFour"
-            id="arrow4"
+            v-if="isAvailableArrowOne"
+            id="arrow1"
           >
             <path
-              id="arrow4_line"
-              :fill="colorOfVerkehrsbeziehungArrowFour"
-              d="m 69.999999,860.99999 v -28 H 1330 v 27.997 z"
+              id="arrow1_line"
+              :fill="colorOfVerkehrsbeziehungArrowOne"
+              d="M 69.999999,567 V 539 H 1330 v 27.998 z"
             />
             <path
-              id="arrow4_tip"
-              :fill="colorOfVerkehrsbeziehungArrowFour"
+              id="arrow1_tip"
+              :fill="colorOfVerkehrsbeziehungArrowOne"
               d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-              transform="matrix(0.09192953,0,0,0.07964786,-38.395512,-544.45264)"
-            />
-          </g>
-          <g
-            v-if="isAvailableArrowThree"
-            id="arrow3"
-          >
-            <path
-              id="arrow3_line"
-              :fill="colorOfVerkehrsbeziehungArrowThree"
-              d="m 69.999999,804.99999 v -28 H 1330 v 27.997 z"
-            />
-            <path
-              id="arrow3_tip"
-              :fill="colorOfVerkehrsbeziehungArrowThree"
-              d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-              transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,2182.4526)"
+              transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,1944.4526)"
             />
           </g>
           <g
@@ -158,19 +142,35 @@
             />
           </g>
           <g
-            v-if="isAvailableArrowOne"
-            id="arrow1"
+            v-if="isAvailableArrowThree"
+            id="arrow3"
           >
             <path
-              id="arrow1_line"
-              :fill="colorOfVerkehrsbeziehungArrowOne"
-              d="M 69.999999,567 V 539 H 1330 v 27.998 z"
+              id="arrow3_line"
+              :fill="colorOfVerkehrsbeziehungArrowThree"
+              d="m 69.999999,804.99999 v -28 H 1330 v 27.997 z"
             />
             <path
-              id="arrow1_tip"
-              :fill="colorOfVerkehrsbeziehungArrowOne"
+              id="arrow3_tip"
+              :fill="colorOfVerkehrsbeziehungArrowThree"
               d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
-              transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,1944.4526)"
+              transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,2182.4526)"
+            />
+          </g>
+          <g
+            v-if="isAvailableArrowFour"
+            id="arrow4"
+          >
+            <path
+              id="arrow4_line"
+              :fill="colorOfVerkehrsbeziehungArrowFour"
+              d="m 69.999999,860.99999 v -28 H 1330 v 27.997 z"
+            />
+            <path
+              id="arrow4_tip"
+              :fill="colorOfVerkehrsbeziehungArrowFour"
+              d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
+              transform="matrix(0.09192953,0,0,0.07964786,-38.395512,-544.45264)"
             />
           </g>
         </g>
