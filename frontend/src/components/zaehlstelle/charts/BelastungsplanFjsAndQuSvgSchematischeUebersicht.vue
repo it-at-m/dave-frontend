@@ -166,15 +166,25 @@
                 v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.O)"
                 id="arrow_knotenarm1_crossing_ost"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(1, Himmelsrichtung.O)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(1, Himmelsrichtung.O, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(1, Himmelsrichtung.O, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.W)"
                 id="arrow_knotenarm1_crossing_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(1, Himmelsrichtung.W)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(1, Himmelsrichtung.W, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(1, Himmelsrichtung.W, false)
+                "
               />
             </g>
           </g>
@@ -325,15 +335,25 @@
                 v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.S)"
                 id="arrow_knotenarm2_crossing_sued"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(2, Himmelsrichtung.S)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(2, Himmelsrichtung.S, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(2, Himmelsrichtung.S, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.N)"
                 id="arrow_knotenarm2_crossing_nord"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(2, Himmelsrichtung.N)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(2, Himmelsrichtung.N, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(2, Himmelsrichtung.N, false)
+                "
               />
             </g>
           </g>
@@ -483,15 +503,25 @@
                 v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.W)"
                 id="arrow_knotenarm3_crossing_west"
                 d="M 816.66669,1077.7774 H 622.22175 v 11.1115 l -38.8884,-19.4435 38.8884,-19.4454 v 11.1106 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(3, Himmelsrichtung.W)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(3, Himmelsrichtung.W, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(3, Himmelsrichtung.W, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.O)"
                 id="arrow_knotenarm3_crossing_ost"
                 d="m 583.33335,1100 h 194.44503 v -11.1111 l 38.88831,19.4435 -38.88831,19.4454 v -11.1111 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(3, Himmelsrichtung.O)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(3, Himmelsrichtung.O, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(3, Himmelsrichtung.O, false)
+                "
               />
             </g>
           </g>
@@ -642,15 +672,25 @@
                 v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.N)"
                 id="arrow_knotenarm4_crossing_nord"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(4, Himmelsrichtung.N)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(4, Himmelsrichtung.N, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(4, Himmelsrichtung.N, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.S)"
                 id="arrow_knotenarm4_crossing_sued"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(4, Himmelsrichtung.S)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(4, Himmelsrichtung.S, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(4, Himmelsrichtung.S, false)
+                "
               />
             </g>
           </g>
@@ -805,15 +845,25 @@
                 v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.SO)"
                 id="arrow_knotenarm5_crossing_sued_ost"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(5, Himmelsrichtung.SO)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.SO, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.SO, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.NW)"
                 id="arrow_knotenarm5_crossing_nord_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(5, Himmelsrichtung.NW)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.NW, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.NW, false)
+                "
               />
             </g>
           </g>
@@ -963,15 +1013,25 @@
                 v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.SW)"
                 id="arrow_knotenarm6_crossing_sued_west"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(6, Himmelsrichtung.SW)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.SW, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.SW, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.NO)"
                 id="arrow_knotenarm6_crossing_nord_ost"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(6, Himmelsrichtung.NO)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.NO, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.NO, false)
+                "
               />
             </g>
           </g>
@@ -1120,15 +1180,25 @@
                 v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.NW)"
                 id="arrow_knotenarm7_crossing_nord_west"
                 d="M 808.33025,1077.7756 H 613.88531 v 11.1116 l -38.8884,-19.4435 38.8884,-19.4454 v 11.1105 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(7, Himmelsrichtung.NW)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.NW, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.NW, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)"
                 id="arrow_knotenarm7_crossing_sued_ost"
                 d="m 591.66231,1099.9989 h 194.44506 v -11.1112 l 38.8883,19.4435 -38.8883,19.4454 v -11.1111 H 591.66231 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO, false)
+                "
               />
             </g>
           </g>
@@ -1278,15 +1348,25 @@
                 v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.NO)"
                 id="arrow_knotenarm8_crossing_nord_ost"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(8, Himmelsrichtung.NO)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.NO, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.NO, false)
+                "
               />
               <path
                 v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.SW)"
                 id="arrow_knotenarm8_crossing_sued_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
-                stroke="none"
-                :fill="calculateColorOfQuerungsverkehr(8, Himmelsrichtung.SW)"
+                :stroke="
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.SW, true)
+                "
+                stroke-width="3"
+                :fill="
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.SW, false)
+                "
               />
             </g>
           </g>
@@ -1342,7 +1422,6 @@ const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
 const svgRef = ref<SVGSVGElement | null>(null);
 
 const activeColor = "#000000";
-const passiveColor = "#E0E0E0";
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -1403,7 +1482,7 @@ function calculateColorOfLaengsverkehr(
   richtung: Bewegungsrichtung,
   strassenseite: Himmelsrichtung
 ): string | undefined {
-  let color = passiveColor;
+  let color = "#E0E0E0";
   const clickedLaengsverkehr: LaengsverkehrDTO = createLaengsverkehr(
     knotenarm,
     richtung,
@@ -1424,12 +1503,14 @@ function calculateColorOfLaengsverkehr(
  *
  * @param knotenarm
  * @param richtung
+ * @param isStroke
  */
 function calculateColorOfQuerungsverkehr(
   knotenarm: number,
-  richtung: Himmelsrichtung
+  richtung: Himmelsrichtung,
+  isStroke: boolean
 ): string | undefined {
-  let color = passiveColor;
+  let color = isStroke ? BelastungsplanConstants.inaktivColor : "#FFFFFF";
   const clickedQuerungsverkehr: QuerungsverkehrDTO = createQuerungsverkehr(
     knotenarm,
     richtung
