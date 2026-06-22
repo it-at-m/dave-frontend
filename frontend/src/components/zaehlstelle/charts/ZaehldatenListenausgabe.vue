@@ -44,6 +44,37 @@ const props = withDefaults(defineProps<Props>(), {
 
 const zaehlstelleStore = useZaehlstelleStore();
 
+const hours: { indices: [number, number, number, number]; sums: Record<string, number> }[] = Array.from(
+  { length: 24 },
+  () => ({
+    indices: [0, 0, 0, 0] as [number, number, number, number],
+    sums: { pkw: 0, lkw: 0, lastzuege: 0, busse: 0, kraftraeder: 0, fahrradfahrer: 0, fussgaenger: 0, pkwEinheiten: 0, gesamt: 0, kfz: 0, schwerverkehr: 0, gueterverkehr: 0 }
+  })
+);
+
+const peakHours: Record<string, number> = {};
+
+computeHighesValueHour();
+
+function computeHighesValueHour () {
+  for (let i = 0; i < props.listenausgabeData.length; i++) {
+    if (props.listenausgabeData[i].type !== null) {
+      continue;
+    }
+    const row = props.listenausgabeData[i];
+    const hour = parseInt(row.startUhrzeit.split(":")[0]);
+    const quarter = parseInt(row.startUhrzeit.split(":")[1]) / 15;
+    hours[hour].indices[quarter] = i;
+    for (const key of Object.keys(hours[hour].sums)) {
+      hours[hour].sums[key] += (row as any)[key];
+    }
+  }
+
+  for (const key of Object.keys(hours[0].sums)) {
+    peakHours[key] = hours.reduce((max, hour, i) => hour.sums[key] > hours[max].sums[key] ? i : max, 0);
+  }
+} 
+
 /**
  * Liefert die Anzahl der ausgewaehlten Fahrzeugtypen zurueck.
  * Wird benoetigt, um die Kategorie-Ueberschrift in der Listenausgabe
