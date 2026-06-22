@@ -429,25 +429,58 @@ const headers = computed(() => {
   return headers;
 });
 
+//const numericColumnKeys = ['pkw', 'fussgaenger', 'fahrradfahrer', 'kraftraeder', 'kfz', 'lkw', 'schwerverkehr', 'gueterverkehr'];
+
+const numericColumnKeys = computed(() => {
+  const leafKeys = new Set<string>();
+  const collectLeaves = (hdrs: any[]) => {
+    for (const h of hdrs) {
+      if (h.children) collectLeaves(h.children);
+      else if (h.key && h.key !== 'startUhrzeit' && h.key !== 'endeUhrzeit' && h.key !== 'type') {
+        leafKeys.add(h.key);
+      }
+    }
+  };
+  collectLeaves(headers.value);
+  return [...leafKeys];
+});
+
+function getNumericValue(item: LadeZaehldatumDTO, key: string): number {
+  return (item as Record<string, unknown>)[key] as number;
+}
+
+const columnMaxima = computed(() => {
+  const regularRows = props.listenausgabeData.filter(item => item.type === null);
+  if (regularRows.length === 0) return {} as Record<string, number>;
+
+  return Object.fromEntries(
+    numericColumnKeys.value.map(key => [
+      key,
+      Math.max(...regularRows.map(item => getNumericValue(item, key) ?? 0))
+    ])
+  );
+});
+
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
-  let color = "bg-white";
+
+  // Summary row types take priority
   if (ladeZaehldatum.type === TYPE_STUNDE) {
-    color = "bg-blue-grey-lighten-4 font-weight-bold";
+    return { class: "bg-blue-grey-lighten-4" };
   } else if (
-    ladeZaehldatum.type != undefined &&
-    (ladeZaehldatum.type.includes(TYPE_SP_STD_BLOCK) ||
-      ladeZaehldatum.type.includes(TYPE_SP_STD_TAG))
+    ladeZaehldatum.type?.includes(TYPE_SP_STD_BLOCK) ||
+    ladeZaehldatum.type?.includes(TYPE_SP_STD_TAG)
   ) {
-    color = "bg-blue-grey-lighten-3 font-weight-bold";
+    return { class: "bg-blue-grey-lighten-3" };
   } else if (ladeZaehldatum.type === TYPE_BLOCK) {
-    color = "bg-blue-grey-lighten-2 font-weight-black text-black";
+    return { class: "bg-blue-grey-lighten-2 text-black" };
   } else if (
     ladeZaehldatum.type === TYPE_GESAMT ||
     ladeZaehldatum.type === TYPE_TAGESWERT
   ) {
-    color = "bg-blue-grey-lighten-1 font-weight-black text-black";
+    return { class: "bg-blue-grey-lighten-1 text-black" };
   }
-  return { class: color };
+
+  return { class: "bg-white" };
 }
 
 /** Berechnet die Spaltenbreite für die einzelnen Eintraege */
