@@ -1191,7 +1191,7 @@
               <path
                 v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)"
                 id="arrow_knotenarm7_crossing_sued_ost"
-                d="m 591.66231,1099.9989 h 194.44506 v -11.1112 l 38.8883,19.4435 -38.8883,19.4454 v -11.1111 H 591.66231 Z"
+                d="m 575.66231,1099.9989 h 194.44506 v -11.1112 l 38.8883,19.4435 -38.8883,19.4454 v -11.1111 H 575.66231 Z"
                 :stroke="
                   calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO, true)
                 "
