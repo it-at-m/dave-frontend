@@ -22,10 +22,10 @@
         id="querschnitt"
         :transform="rotateSvg"
       >
-        <g id="description">
-          <g id="second_number">
+        <g id="knotenarmnummern">
+          <g id="knotenarmnummer2">
             <ellipse
-              id="ellipse13"
+              id="knotenarmnummer2_circle"
               style="
                 fill: none;
                 fill-opacity: 1;
@@ -40,7 +40,7 @@
               ry="20.487823"
             />
             <text
-              id="text14"
+              id="knotenarmnummer2_text"
               xml:space="preserve"
               style="
                 font-size: 33.4058px;
@@ -56,7 +56,7 @@
               y="711.73895"
             >
               <tspan
-                id="tspan14"
+                id="knotenarmnummer2_tspan"
                 x="913.19183"
                 y="711.73895"
                 style="stroke-width: 52.2711"
@@ -65,9 +65,9 @@
               </tspan>
             </text>
           </g>
-          <g id="first_number">
+          <g id="knotenarmnummer1">
             <ellipse
-              id="ellipse3"
+              id="knotenarmnummer1_circle"
               style="
                 fill: none;
                 fill-opacity: 1;
@@ -82,7 +82,7 @@
               ry="20.487823"
             />
             <text
-              id="text2"
+              id="knotenarmnummer1_text"
               xml:space="preserve"
               style="
                 font-size: 33.4058px;
@@ -98,7 +98,7 @@
               x="465.80084"
             >
               <tspan
-                id="tspan2"
+                id="knotenarmnummer1_tspan"
                 style="stroke-width: 52.2711"
                 x="465.80084"
                 y="711.73895"
@@ -114,12 +114,12 @@
             id="arrow4"
           >
             <path
-              id="path4"
+              id="arrow4_line"
               :fill="colorOfVerkehrsbeziehungArrowFour"
               d="m 69.999999,860.99999 v -28 H 1330 v 27.997 z"
             />
             <path
-              id="spike4"
+              id="arrow4_tip"
               :fill="colorOfVerkehrsbeziehungArrowFour"
               d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(0.09192953,0,0,0.07964786,-38.395512,-544.45264)"
@@ -130,12 +130,12 @@
             id="arrow3"
           >
             <path
-              id="path3"
+              id="arrow3_line"
               :fill="colorOfVerkehrsbeziehungArrowThree"
               d="m 69.999999,804.99999 v -28 H 1330 v 27.997 z"
             />
             <path
-              id="spike3"
+              id="arrow3_tip"
               :fill="colorOfVerkehrsbeziehungArrowThree"
               d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,2182.4526)"
@@ -146,12 +146,12 @@
             id="arrow2"
           >
             <path
-              id="path2"
+              id="arrow2_line"
               :fill="colorOfVerkehrsbeziehungArrowTwo"
               d="M 69.999999,623 V 595 H 1330 v 27.997 z"
             />
             <path
-              id="spike2"
+              id="arrow2_tip"
               :fill="colorOfVerkehrsbeziehungArrowTwo"
               d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(0.09192953,0,0,0.07964786,-38.395512,-782.45264)"
@@ -162,12 +162,12 @@
             id="arrow1"
           >
             <path
-              id="path1"
+              id="arrow1_line"
               :fill="colorOfVerkehrsbeziehungArrowOne"
               d="M 69.999999,567 V 539 H 1330 v 27.998 z"
             />
             <path
-              id="spike1"
+              id="arrow1_tip"
               :fill="colorOfVerkehrsbeziehungArrowOne"
               d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,1944.4526)"
