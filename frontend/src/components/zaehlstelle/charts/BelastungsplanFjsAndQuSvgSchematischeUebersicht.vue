@@ -1630,6 +1630,7 @@ watch(
   ],
   () => {
     nextTick(() => emitSvgAsBlob());
-  }
+  },
+  { deep: true }
 );
 </script>

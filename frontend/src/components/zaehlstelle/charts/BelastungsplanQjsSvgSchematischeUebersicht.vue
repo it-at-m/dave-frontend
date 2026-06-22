@@ -370,6 +370,7 @@ watch(
   () => chosenOptionsCopy.value.chosenVerkehrsbeziehungen,
   () => {
     nextTick(() => emitSvgAsBlob());
-  }
+  },
+  { deep: true }
 );
 </script>
