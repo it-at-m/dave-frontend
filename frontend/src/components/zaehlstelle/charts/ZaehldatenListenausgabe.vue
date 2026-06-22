@@ -429,38 +429,6 @@ const headers = computed(() => {
   return headers;
 });
 
-//const numericColumnKeys = ['pkw', 'fussgaenger', 'fahrradfahrer', 'kraftraeder', 'kfz', 'lkw', 'schwerverkehr', 'gueterverkehr'];
-
-const numericColumnKeys = computed(() => {
-  const leafKeys = new Set<string>();
-  const collectLeaves = (hdrs: any[]) => {
-    for (const h of hdrs) {
-      if (h.children) collectLeaves(h.children);
-      else if (h.key && h.key !== 'startUhrzeit' && h.key !== 'endeUhrzeit' && h.key !== 'type') {
-        leafKeys.add(h.key);
-      }
-    }
-  };
-  collectLeaves(headers.value);
-  return [...leafKeys];
-});
-
-function getNumericValue(item: LadeZaehldatumDTO, key: string): number {
-  return (item as Record<string, unknown>)[key] as number;
-}
-
-const columnMaxima = computed(() => {
-  const regularRows = props.listenausgabeData.filter(item => item.type === null);
-  if (regularRows.length === 0) return {} as Record<string, number>;
-
-  return Object.fromEntries(
-    numericColumnKeys.value.map(key => [
-      key,
-      Math.max(...regularRows.map(item => getNumericValue(item, key) ?? 0))
-    ])
-  );
-});
-
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
 
   // Summary row types take priority
