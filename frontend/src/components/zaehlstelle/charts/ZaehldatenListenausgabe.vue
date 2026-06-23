@@ -10,13 +10,9 @@
     :height="height"
     :row-props="(item: any) => rowClasses(item.item)"
   >
-  <template
-    v-for="key in numericColumnKeys"
-    :key="key"
-    #[`item.${key}`]="{ item, value }"
-  >
-      <span :class="{ 'font-weight-black': getNumericValue(item, key) === columnMaxima[key] && item.type === null }">
-        {{ value }}
+    <template v-for="field in ['pkw', 'lkw', 'lastzuege', 'busse', 'kraftraeder', 'fahrradfahrer', 'fussgaenger', 'pkwEinheiten', 'kfz', 'schwerverkehr', 'gueterverkehr']" #[`item.${field}`]="{ item, index }">
+      <span :class="{ 'font-weight-bold text-primary px-2 rounded bg-blue-lighten-4': isPeakHour(field, index) }">
+        {{ item[field] }}
       </span>
     </template>
   </v-data-table>
@@ -53,6 +49,41 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
+
+// contains sum for full hours and indices of cells for the four entries for each hour
+const hours: { indices: [number, number, number, number]; sums: Record<string, number> }[] = Array.from(
+  { length: 24 },
+  () => ({
+    indices: [0, 0, 0, 0] as [number, number, number, number],
+    sums: { pkw: 0, lkw: 0, lastzuege: 0, busse: 0, kraftraeder: 0, fahrradfahrer: 0, fussgaenger: 0, pkwEinheiten: 0, kfz: 0, schwerverkehr: 0, gueterverkehr: 0 }
+  })
+);
+
+const peakHours: Record<string, number> = {};
+
+function computeHighesValueHour () {
+  for (let i = 0; i < props.listenausgabeData.length; i++) {
+    if (props.listenausgabeData[i].type !== null) {
+      continue;
+    }
+    const row = props.listenausgabeData[i];
+    const hour = parseInt(row.startUhrzeit.split(":")[0]);
+    const quarter = parseInt(row.startUhrzeit.split(":")[1]) / 15;
+    hours[hour].indices[quarter] = i;
+    for (const key of Object.keys(hours[hour].sums)) {
+      hours[hour].sums[key] += (row as any)[key];
+    }
+  }
+
+  for (const key of Object.keys(hours[0].sums)) {
+    peakHours[key] = hours.reduce((max, hour, i) => hour.sums[key] > hours[max].sums[key] ? i : max, 0);
+  }
+}
+
+function isPeakHour(key: string, index: number): boolean {
+  const peak = peakHours[key];
+  return hours[peak].indices.includes(index);
+}
 
 /**
  * Liefert die Anzahl der ausgewaehlten Fahrzeugtypen zurueck.
@@ -398,38 +429,6 @@ const headers = computed(() => {
   return headers;
 });
 
-//const numericColumnKeys = ['pkw', 'fussgaenger', 'fahrradfahrer', 'kraftraeder', 'kfz', 'lkw', 'schwerverkehr', 'gueterverkehr'];
-
-const numericColumnKeys = computed(() => {
-  const leafKeys = new Set<string>();
-  const collectLeaves = (hdrs: any[]) => {
-    for (const h of hdrs) {
-      if (h.children) collectLeaves(h.children);
-      else if (h.key && h.key !== 'startUhrzeit' && h.key !== 'endeUhrzeit' && h.key !== 'type') {
-        leafKeys.add(h.key);
-      }
-    }
-  };
-  collectLeaves(headers.value);
-  return [...leafKeys];
-});
-
-function getNumericValue(item: LadeZaehldatumDTO, key: string): number {
-  return (item as Record<string, unknown>)[key] as number;
-}
-
-const columnMaxima = computed(() => {
-  const regularRows = props.listenausgabeData.filter(item => item.type === null);
-  if (regularRows.length === 0) return {} as Record<string, number>;
-
-  return Object.fromEntries(
-    numericColumnKeys.value.map(key => [
-      key,
-      Math.max(...regularRows.map(item => getNumericValue(item, key) ?? 0))
-    ])
-  );
-});
-
 function rowClasses(ladeZaehldatum: LadeZaehldatumDTO) {
 
   // Summary row types take priority
@@ -474,6 +473,7 @@ watch(
         zaehldatum.anteilSchwerverkehrAnKfzProzent
       ).toFixed(1);
     });
+    computeHighesValueHour();
   },
   { immediate: true }
 );
