@@ -8,41 +8,26 @@
         <tr>
           <th class="drilldown-table__sticky">Zeit</th>
           <th
-            v-for="vehicleType in vehicleTypes"
-            :key="vehicleType.key"
+            v-for="beziehung in fahrbeziehungen"
             class="drilldown-table__sticky"
           >
-            {{ vehicleType.title }}
+            {{ beziehung.von }} <br />
+            {{ beziehung.nach }}
           </th>
         </tr>
       </thead>
 
       <tbody>
         <tr
-          v-for="zeitintervall in drillDownData.zeitintervalle"
+          v-for="zeitintervall in zeitintervalle"
           :key="`${zeitintervall.startUhrzeit}-${zeitintervall.endeUhrzeit}`"
         >
           <td class="text-no-wrap">
             {{ formatDateTime(zeitintervall.startUhrzeit) }} -
             {{ formatDateTime(zeitintervall.endeUhrzeit) }}
           </td>
-          <td
-            v-for="vehicleType in vehicleTypes"
-            :key="`${zeitintervall.startUhrzeit}-${zeitintervall.endeUhrzeit}-${vehicleType.key}`"
-            class="drilldown-table__cell"
-          >
-            <table class="innertable">
-                <tr>
-                    <td v-for="fahrbeziehung in fahrbeziehungen">
-                        {{ getFahrbeziehungKey(fahrbeziehung) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="innertable_cell-content" v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
-                        {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung), vehicleType.key) }}
-                    </td>
-                </tr>
-            </table>
+          <td class="innertable_cell-content" v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
+            {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung)) }}
           </td>
         </tr>
       </tbody>
@@ -69,6 +54,12 @@ const props = withDefaults(defineProps<Props>(), {
   height: "100%",
 });
 
+const zeitintervalle = computed(() =>
+  [...(props.drillDownData.zeitintervalle ?? [])].sort((a, b) =>
+    a.startUhrzeit.localeCompare(b.startUhrzeit)
+  )
+);
+
 const vehicleTypes = [
   { key: "pkw", title: "Pkw" },
   { key: "lkw", title: "Lkw" },
@@ -88,8 +79,8 @@ function getFahrbeziehungKey(fahrbeziehung: FahrbeziehungKeyDTO): string {
 function getVehicleValue(
   zeitintervall: ZeitintervallRowDTO,
   fahrbeziehungKey: string,
-  vehicleTypeKey: keyof FahrbeziehungWerteDTO
 ): number {
+  const vehicleTypeKey = "pkw"; // TODO: use actual vehicle type
   return zeitintervall.wertByFahrbeziehung?.[fahrbeziehungKey]?.[vehicleTypeKey] ?? 0;
 }
 
