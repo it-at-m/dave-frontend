@@ -1604,15 +1604,12 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
  * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
  */
 function emitSvgAsBlob(): void {
-  console.log("emitSvgAsBlob()");
   const svgEl = svgRef.value;
   if (!svgEl) {
-    console.log("return");
     return;
   }
   const svgString = serializeSvgElement(svgEl);
   const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
-  console.log("print");
   emits("print", blob);
 }
 

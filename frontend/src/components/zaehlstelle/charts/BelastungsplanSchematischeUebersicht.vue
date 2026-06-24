@@ -65,7 +65,6 @@ const emits = defineEmits<{
 }>();
 
 function emitPrint(event: any) {
-  console.log("emitPrint");
   emits("print", event);
 }
 
