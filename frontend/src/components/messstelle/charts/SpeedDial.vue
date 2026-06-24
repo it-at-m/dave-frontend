@@ -22,7 +22,7 @@
       />
     </template>
     <v-btn
-      v-if="isNotHeatmap"
+      v-if="getVisibleButton('generatePdfButton')"
       key="generatePdfButton"
       v-tooltip:start="generatePdfTooltip"
       size="small"
@@ -32,7 +32,7 @@
       @click="$emit('generatePdf')"
     />
     <v-btn
-      v-if="isListenausgabe"
+      v-if="getVisibleButton('generatecsvButton')"
       key="generatecsvButton"
       v-tooltip:start="'CSV'"
       size="small"
@@ -42,7 +42,7 @@
       @click="$emit('generateCsv')"
     />
     <v-btn
-      v-if="openPdfReportDialog"
+      v-if="getVisibleButton('openPdfReportDialogButton')"
       key="openPdfReportDialogButton"
       v-tooltip:start="'PDF Report Menü öffnen'"
       size="small"
@@ -52,6 +52,7 @@
       @click="$emit('openPdfReportDialog')"
     />
     <v-btn
+      v-if="getVisibleButton('addChartToPdfReportButton')"
       key="addChartToPdfReportButton"
       v-tooltip:start="addChartToReportTooltip"
       size="small"
@@ -61,7 +62,7 @@
       @click="$emit('addChartToPdfReport')"
     />
     <v-btn
-      v-if="!isListenausgabe"
+      v-if="getVisibleButton('saveGraphAsImageButton')"
       key="saveGraphAsImageButton"
       v-tooltip:start="'Graph herunterladen'"
       size="small"
@@ -73,11 +74,13 @@
   </v-speed-dial>
 </template>
 <script setup lang="ts">
+import { ZaehldatenTab } from "@/components/zaehlstelle/ZaehldatenDiagrammeDataTypes";
 import { computed, ref } from "vue";
 
 interface Props {
   isListenausgabe: boolean;
   isNotHeatmap: boolean;
+  selectedTab: ZaehldatenTab;
   loadingFile: boolean;
   openPdfReportDialog?: boolean;
 }
@@ -112,4 +115,30 @@ const addChartToReportTooltip = computed(() => {
   }
   return `${type} dem PDF Report hinzufügen`;
 });
+
+function getVisibleButton(buttonKey: string): boolean {
+  let buttons = selectButtons(props.selectedTab);
+  if (buttons) {
+    return buttons.includes(buttonKey);
+  }
+  return true;
+}
+
+function selectButtons(tab: ZaehldatenTab) {
+  switch (tab) {
+    case ZaehldatenTab.BELASTUNGSPLAN:
+      return ["generatePdfButton", "openPdfReportDialogButton", "addChartToPdfReportButton", "saveGraphAsImageButton"];
+    case ZaehldatenTab.GANGLINIE:
+      return ["generatePdfButton", "openPdfReportDialogButton", "addChartToPdfReportButton", "saveGraphAsImageButton"];
+    case ZaehldatenTab.LISTENAUSGABE:
+      return ["generatePdfButton", "generatecsvButton", "openPdfReportDialogButton", "addChartToPdfReportButton"];
+    case ZaehldatenTab.HEATMAP:
+      return ["generatePdfButton", "addChartToPdfReportButton", "saveGraphAsImageButton"];
+    case ZaehldatenTab.DRILLDOWN:
+      return ["generatePdfButton", "generatecsvButton"];
+    default:
+      return ["generatePdfButton"];
+  }
+}
+
 </script>

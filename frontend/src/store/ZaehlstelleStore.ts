@@ -12,6 +12,7 @@ import { useUserStore } from "@/store/UserStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import LadeZaehlungComperator from "@/types/zaehlung/LadeZaehlungComperator";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import { ZaehldatenTab } from "@/components/zaehlstelle/ZaehldatenDiagrammeDataTypes";
 import { isNil, isEmpty } from "lodash";
 import type StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
@@ -22,7 +23,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const zaehlstelleHeader = ref<ZaehlstelleHeaderDTO>(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
   );
-  const activeTab = ref(0);
+  const activeTab = ref<ZaehldatenTab>(ZaehldatenTab.BELASTUNGSPLAN);
   const filteroptions = ref<OptionsDTO>(
     DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
   );
@@ -105,7 +106,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     payload.zaehlungen = [];
     zaehlstelleHeader.value = payload;
   }
-  function setActiveTab(payload: number) {
+  function setActiveTab(payload: ZaehldatenTab) {
     activeTab.value = payload;
   }
   function setFilteroptions(payload: OptionsDTO) {

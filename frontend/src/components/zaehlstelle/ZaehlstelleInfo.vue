@@ -23,6 +23,7 @@
             :src="previewImageUrl"
             alt="Zählstelle Vorschau"
             class="preview-img"
+            @click="showFullSizeImage"
           />
         </template>
         <template v-else>
@@ -31,6 +32,25 @@
       </div>
     </div>
   </div>
+
+  <!-- Dialog for full-size image -->
+  <v-dialog v-model="imageDialog" width="90%" max-width="800px">
+    <v-card>
+      <v-card-title class="text-h5">Zählstelle</v-card-title>
+      <v-card-text>
+        <img
+          :src="previewImageUrl"
+          alt="Zählstelle Vorschau"
+          class="full-size-img"
+          style="max-width: 100%; max-height: 60vh; display: block; margin: auto;"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="secondary" @click="imageDialog = false">Schließen</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </v-sheet>
 </template>
 <script setup lang="ts">
@@ -59,6 +79,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const previewImageUrl = ref<string>("");
+const imageDialog = ref<boolean>(false);
 let currentObjectUrl: string | null = null;
 
 const revokePreviewUrl = (): void => {
@@ -89,6 +110,10 @@ const loadPreviewImage = (): void => {
     .catch(() => {
       revokePreviewUrl();
     });
+};
+
+const showFullSizeImage = (): void => {
+  imageDialog.value = true;
 };
 
 onMounted(loadPreviewImage);
