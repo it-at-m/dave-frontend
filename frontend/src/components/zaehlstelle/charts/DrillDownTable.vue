@@ -3,40 +3,47 @@
     class="drilldown-table-wrapper"
     :style="{ maxHeight: height }"
   >
-    <table class="drilldown-table">
-      <thead>
-        <tr>
-          <th class="drilldown-table__sticky">Zeit</th>
-          <th
-            v-for="beziehung in fahrbeziehungen"
-            class="drilldown-table__sticky"
-          >
-            {{ beziehung.von }} <br />
-            {{ beziehung.nach }}
-          </th>
-        </tr>
-      </thead>
+    <v-tabs v-model="activeTab">
+      <v-tab v-for="type in vehicleTypes" :key="type.key" :value="type.key">{{ type.title }}</v-tab>
+    </v-tabs>
+    <v-tabs-window v-model="activeTab">
+      <v-tabs-window-item v-for="type in vehicleTypes" :key="type.key" :value="type.key">
+        <table class="drilldown-table">
+          <thead>
+            <tr>
+              <th class="drilldown-table__sticky">Zeit/ von -> nach</th>
+              <th
+                v-for="beziehung in fahrbeziehungen"
+                class="drilldown-table__sticky"
+              >
+                {{ beziehung.von }} <br />
+                {{ beziehung.nach }}
+              </th>
+            </tr>
+          </thead>
 
-      <tbody>
-        <tr
-          v-for="zeitintervall in zeitintervalle"
-          :key="`${zeitintervall.startUhrzeit}-${zeitintervall.endeUhrzeit}`"
-        >
-          <td class="text-no-wrap">
-            {{ formatDateTime(zeitintervall.startUhrzeit) }} -
-            {{ formatDateTime(zeitintervall.endeUhrzeit) }}
-          </td>
-          <td class="innertable_cell-content" v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
-            {{ getVehicleValue(zeitintervall, getFahrbeziehungKey(fahrbeziehung)) }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          <tbody>
+            <tr
+              v-for="zeitintervall in zeitintervalle"
+              :key="`${zeitintervall.startUhrzeit}-${zeitintervall.endeUhrzeit}`"
+            >
+              <td class="text-no-wrap">
+                {{ formatDateTime(zeitintervall.startUhrzeit) }} -
+                {{ formatDateTime(zeitintervall.endeUhrzeit) }}
+              </td>
+              <td class="innertable_cell-content" v-for="fahrbeziehung in fahrbeziehungen" :key="getFahrbeziehungKey(fahrbeziehung)">
+                {{ getVehicleValue(type, zeitintervall, getFahrbeziehungKey(fahrbeziehung)) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </v-tabs-window-item>
+    </v-tabs-window>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 import type {
   DrilldownDTO,
@@ -54,12 +61,6 @@ const props = withDefaults(defineProps<Props>(), {
   height: "100%",
 });
 
-const zeitintervalle = computed(() =>
-  [...(props.drillDownData.zeitintervalle ?? [])].sort((a, b) =>
-    a.startUhrzeit.localeCompare(b.startUhrzeit)
-  )
-);
-
 const vehicleTypes = [
   { key: "pkw", title: "Pkw" },
   { key: "lkw", title: "Lkw" },
@@ -70,18 +71,30 @@ const vehicleTypes = [
   { key: "fussgaenger", title: "Fuß" },
 ] as const;
 
-const fahrbeziehungen = computed(() => props.drillDownData.fahrbeziehungen ?? []);
+const activeTab = ref(vehicleTypes[0].key);
+
+const zeitintervalle = computed(() =>
+  [...(props.drillDownData.zeitintervalle ?? [])].sort((a, b) =>
+    a.startUhrzeit.localeCompare(b.startUhrzeit)
+  )
+);
+
+const fahrbeziehungen = computed(() =>
+  [...(props.drillDownData.fahrbeziehungen ?? [])].sort((a, b) =>
+    a.von !== b.von ? a.von - b.von : a.nach - b.nach
+  )
+);
 
 function getFahrbeziehungKey(fahrbeziehung: FahrbeziehungKeyDTO): string {
   return `${fahrbeziehung.von}→${fahrbeziehung.nach}`;
 }
 
 function getVehicleValue(
+  vehicleType: { key: string },
   zeitintervall: ZeitintervallRowDTO,
   fahrbeziehungKey: string,
 ): number {
-  const vehicleTypeKey = "pkw"; // TODO: use actual vehicle type
-  return zeitintervall.wertByFahrbeziehung?.[fahrbeziehungKey]?.[vehicleTypeKey] ?? 0;
+  return zeitintervall.wertByFahrbeziehung?.[fahrbeziehungKey]?.[vehicleType.key as keyof FahrbeziehungWerteDTO] ?? 0;
 }
 
 function formatDateTime(value: string): string {

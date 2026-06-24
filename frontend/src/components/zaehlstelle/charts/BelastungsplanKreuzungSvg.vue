@@ -31,6 +31,7 @@ import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
+import { ZaehldatenTab } from "../ZaehldatenDiagrammeDataTypes";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -828,8 +829,8 @@ function redraw() {
  * Diese Methode zeichnet den Balastungsplan immer dann, wenn von einem anderen Tab auf
  * den Belastungsplan Tab gewechselt wird.
  */
-watch(activeTab, (tab: number) => {
-  if (tab === 0 && !props.data.kreisverkehr) {
+watch(activeTab, (tab: ZaehldatenTab) => {
+  if (tab === ZaehldatenTab.BELASTUNGSPLAN && !props.data.kreisverkehr) {
     redraw();
   }
 });
@@ -840,7 +841,7 @@ watch(activeTab, (tab: number) => {
 watch(
   () => props.data,
   (data: LadeBelastungsplanDTO) => {
-    if (activeTab.value === 0 && !data.kreisverkehr) {
+    if (activeTab.value === ZaehldatenTab.BELASTUNGSPLAN && !data.kreisverkehr) {
       redraw();
     }
   }

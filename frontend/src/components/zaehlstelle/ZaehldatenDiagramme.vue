@@ -27,27 +27,27 @@
       @update:model-value="changeTab"
     >
       <!-- Kopfzeile -->
-      <v-tab :value="TAB_BELASTUNGSPLAN">
+      <v-tab :value="ZaehldatenTab.BELASTUNGSPLAN">
         <v-icon icon="mdi-arrow-decision" />
         Belastungsplan
       </v-tab>
-      <v-tab :value="TAB_GANGLINIE">
+      <v-tab :value="ZaehldatenTab.GANGLINIE">
         <v-icon icon="mdi-chart-histogram" />
         Ganglinie
       </v-tab>
-      <v-tab :value="TAB_LISTENAUSGABE">
+      <v-tab :value="ZaehldatenTab.LISTENAUSGABE">
         <v-icon icon="mdi-table" />
         Listenausgabe
       </v-tab>
-      <v-tab :value="TAB_HEATMAP">
+      <v-tab :value="ZaehldatenTab.HEATMAP">
         <v-icon icon="mdi-chart-bubble" />
         Heatmap
       </v-tab>
-      <v-tab :value="TAB_DRILLDOWN">
+      <v-tab :value="ZaehldatenTab.DRILLDOWN">
         <v-icon icon="mdi-database-arrow-down-outline" />
         Drill-Down
       </v-tab>
-      <v-tab :value="TAB_ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
+      <v-tab :value="ZaehldatenTab.ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
         <v-icon icon="mdi-timer-sand" />
         Zeitreihe
       </v-tab>
@@ -59,7 +59,7 @@
       class="d-flex flex-column align-stretch"
     >
       <!-- Inhalte -->
-      <v-tabs-window-item :value="TAB_BELASTUNGSPLAN">
+      <v-tabs-window-item :value="ZaehldatenTab.BELASTUNGSPLAN">
         <v-sheet
           :max-height="contentHeight"
           width="100%"
@@ -96,7 +96,7 @@
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
-      <v-tabs-window-item :value="TAB_GANGLINIE">
+      <v-tabs-window-item :value="ZaehldatenTab.GANGLINIE">
         <v-sheet
           :min-height="contentHeight"
           :max-height="contentHeight"
@@ -110,7 +110,7 @@
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
-      <v-tabs-window-item :value="TAB_LISTENAUSGABE">
+      <v-tabs-window-item :value="ZaehldatenTab.LISTENAUSGABE">
         <v-sheet
           :max-height="contentHeight"
           width="94%"
@@ -123,7 +123,7 @@
         </v-sheet>
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
-      <v-tabs-window-item :value="TAB_HEATMAP">
+      <v-tabs-window-item :value="ZaehldatenTab.HEATMAP">
         <v-sheet
           :min-height="contentHeight"
           :max-height="contentHeight"
@@ -138,7 +138,7 @@
         <progress-loader v-model="chartDataLoading" />
       </v-tabs-window-item>
       
-      <v-tabs-window-item :value="TAB_DRILLDOWN">
+      <v-tabs-window-item :value="ZaehldatenTab.DRILLDOWN">
         <v-sheet
           :min-height="contentHeight"
           :max-height="contentHeight"
@@ -154,7 +154,7 @@
         </v-sheet>
       </v-tabs-window-item>
 
-      <v-tabs-window-item :value="TAB_ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
+      <v-tabs-window-item :value="ZaehldatenTab.ZEITREIHE" v-if="!selectedZaehlung.dauerzaehlung">
         <v-sheet
           :min-height="contentHeight"
           :max-height="contentHeight"
@@ -173,6 +173,7 @@
     <speed-dial
       :is-listenausgabe="isTabListenausgabe"
       :is-not-heatmap="isNotTabHeatmap"
+      :selected-tab="activeTab"
       :loading-file="loadingFile"
       @add-chart-to-pdf-report="addChartToPdfReport"
       @save-graph-as-image="saveGraphAsImage"
@@ -231,7 +232,8 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useReportTools } from "@/util/ReportTools";
-import DrillDownTable from "./charts/DrillDownTable.vue";
+import { ZaehldatenTab } from "@/components/zaehlstelle/ZaehldatenDiagrammeDataTypes";
+import DrillDownTable from "@/components/zaehlstelle/charts/DrillDownTable.vue";
 import type { DrilldownDTO } from "@/types/zaehlung/zaehldaten/DrillDownDTO.js";
 
 interface Props {
@@ -245,12 +247,6 @@ withDefaults(defineProps<Props>(), {
   hasZaehlungen: true,
 });
 
-const TAB_BELASTUNGSPLAN = 0;
-const TAB_GANGLINIE = 1;
-const TAB_LISTENAUSGABE = 2;
-const TAB_HEATMAP = 3;
-const TAB_ZEITREIHE = 4;
-const TAB_DRILLDOWN = 5;
 const BELASTUNGSPLAN_PNG_DIMENSION = 1400;
 const BELASTUNGSPLAN_SCHEMATISCHE_UEBERSICHT_PNG_DIMENSION = 1400;
 const REQUEST_PART_CHART_AS_BASE64_PNG = "chartAsBase64Png";
@@ -283,7 +279,7 @@ const zaehldatenZeitreihe = ref<LadeZaehldatenZeitreiheDTO>(
   {} as LadeZaehldatenZeitreiheDTO
 );
 
-const activeTab = ref(0);
+const activeTab = ref(ZaehldatenTab.BELASTUNGSPLAN);
 const loadingFile = ref(false);
 
 const belastungsplanCard = ref<InstanceType<
@@ -327,10 +323,10 @@ const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 const isTabListenausgabe = computed<boolean>(() => {
-  return TAB_LISTENAUSGABE === activeTab.value;
+  return ZaehldatenTab.LISTENAUSGABE === activeTab.value;
 });
 const isNotTabHeatmap = computed<boolean>(() => {
-  return TAB_HEATMAP !== activeTab.value;
+  return ZaehldatenTab.HEATMAP !== activeTab.value;
 });
 
 watch(selectedZaehlung, () => {
@@ -521,7 +517,7 @@ function setMaxRangeYAchse() {
  */
 function addChartToPdfReport(): void {
   switch (activeTab.value) {
-    case TAB_BELASTUNGSPLAN:
+    case ZaehldatenTab.BELASTUNGSPLAN:
       if (belastungsplanDTO.value.kreisverkehr) {
         reportTools.addChartToPdfReport(
           Erhebungsstelle.ZAEHLSTELLE,
@@ -540,7 +536,7 @@ function addChartToPdfReport(): void {
         );
       }
       break;
-    case TAB_GANGLINIE:
+    case ZaehldatenTab.GANGLINIE:
       reportTools.addChartToPdfReport(
         Erhebungsstelle.ZAEHLSTELLE,
         "Die",
@@ -549,7 +545,7 @@ function addChartToPdfReport(): void {
         true
       );
       break;
-    case TAB_HEATMAP:
+    case ZaehldatenTab.HEATMAP:
       reportTools.addChartToPdfReport(
         Erhebungsstelle.ZAEHLSTELLE,
         "Die",
@@ -558,7 +554,7 @@ function addChartToPdfReport(): void {
         true
       );
       break;
-    case TAB_ZEITREIHE:
+    case ZaehldatenTab.ZEITREIHE:
       reportTools.addChartToPdfReport(
         Erhebungsstelle.ZAEHLSTELLE,
         "Die",
@@ -567,7 +563,7 @@ function addChartToPdfReport(): void {
         true
       );
       break;
-    case TAB_LISTENAUSGABE:
+    case ZaehldatenTab.LISTENAUSGABE:
       reportTools.addDatatableToPdfReport(
         Erhebungsstelle.ZAEHLSTELLE,
         "Die",
@@ -587,7 +583,7 @@ function saveGraphAsImage(): void {
   let type = "";
 
   switch (activeTab.value) {
-    case TAB_BELASTUNGSPLAN:
+    case ZaehldatenTab.BELASTUNGSPLAN:
       type = "Belastungsplan";
       if (belastungsplanDTO.value.kreisverkehr) {
         encodedUri = getKreisverkehrBase64();
@@ -596,15 +592,15 @@ function saveGraphAsImage(): void {
         encodedUri = URL.createObjectURL(belastungsplanSvg.value);
       }
       break;
-    case TAB_GANGLINIE:
+    case ZaehldatenTab.GANGLINIE:
       type = "Ganglinie";
       encodedUri = getGanglinieBase64();
       break;
-    case TAB_HEATMAP:
+    case ZaehldatenTab.HEATMAP:
       type = "Heatmap";
       encodedUri = getHeatmapBase64();
       break;
-    case TAB_ZEITREIHE:
+    case ZaehldatenTab.ZEITREIHE:
       type = "Zeitreihe";
       encodedUri = getZeitreiheBase64();
       break;
@@ -683,7 +679,7 @@ function generatePdf() {
   );
 
   // Belastungsplan
-  if (activeTab.value === TAB_BELASTUNGSPLAN) {
+  if (activeTab.value === ZaehldatenTab.BELASTUNGSPLAN) {
     // Kreisverkehr
     const kreisverkehrBase64 = getKreisverkehrBase64();
     if (belastungsplanDTO.value.kreisverkehr && kreisverkehrBase64) {
@@ -703,7 +699,7 @@ function generatePdf() {
     fetchPdf(formData, "belastungsplan");
 
     // Ganglinie
-  } else if (activeTab.value === TAB_GANGLINIE) {
+  } else if (activeTab.value === ZaehldatenTab.GANGLINIE) {
     const ganglinieBase64 = getGanglinieBase64();
     if (ganglinieBase64) {
       formData.append(
@@ -719,14 +715,14 @@ function generatePdf() {
     );
     fetchPdf(formData, "ganglinie");
     // Listenausgabe
-  } else if (activeTab.value === TAB_LISTENAUSGABE) {
+  } else if (activeTab.value === ZaehldatenTab.LISTENAUSGABE) {
     formData.append(
       REQUEST_PART_SCHEMATISCHE_UEBERSICHT_AS_BASE64_PNG,
       belastungsplanSchematischeUebersichtPngBase64.value
     );
     fetchPdf(formData, "datentabelle");
     // Zeitreihe
-  } else if (activeTab.value === TAB_ZEITREIHE) {
+  } else if (activeTab.value === ZaehldatenTab.ZEITREIHE) {
     const zeitreiheBase64 = getZeitreiheBase64();
     if (zeitreiheBase64) {
       formData.append(
