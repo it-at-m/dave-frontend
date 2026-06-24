@@ -24,83 +24,81 @@
       >
         <g id="knotenarmnummern">
           <g id="knotenarmnummer1">
-            <ellipse
+            <circle
               id="knotenarmnummer1_circle"
               style="
                 fill: none;
                 fill-opacity: 1;
                 stroke: #000000;
-                stroke-width: 1.02435;
+                stroke-width: 3;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               "
               cx="476"
               cy="700"
-              rx="20.487822"
-              ry="20.487823"
+              r="32"
             />
             <text
               id="knotenarmnummer1_text"
               xml:space="preserve"
-              style="
-                font-size: 33.4058px;
-                font-family: sans-serif;
+              :style="`
+                font-size: 60px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
                 text-anchor: start;
                 fill: #000000;
                 stroke-width: 52.2711;
-              "
-              y="711.73895"
-              x="465.80084"
+              `"
+              y="720.73895"
+              x="458.80084"
             >
               <tspan
                 id="knotenarmnummer1_tspan"
                 style="stroke-width: 52.2711"
-                x="465.80084"
-                y="711.73895"
+                x="458.80084"
+                y="720.73895"
               >
                 {{ firstKnotenarm?.nummer }}
               </tspan>
             </text>
           </g>
           <g id="knotenarmnummer2">
-            <ellipse
+            <circle
               id="knotenarmnummer2_circle"
               style="
                 fill: none;
                 fill-opacity: 1;
                 stroke: #000000;
-                stroke-width: 1.02435;
+                stroke-width: 3;
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               "
               cx="924"
               cy="700"
-              rx="20.487822"
-              ry="20.487823"
+              r="32"
             />
             <text
               id="knotenarmnummer2_text"
               xml:space="preserve"
-              style="
-                font-size: 33.4058px;
-                font-family: sans-serif;
+              :style="`
+                font-size: 60px;
+                font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
-                text-anchor: start;
+                text-anchor: center;
                 fill: #000000;
                 stroke-width: 52.2711;
-              "
-              x="913.19183"
-              y="711.73895"
+              `"
+              x="907.19183"
+              y="720.73895"
             >
               <tspan
                 id="knotenarmnummer2_tspan"
-                x="913.19183"
-                y="711.73895"
+                x="907.19183"
+                y="720.73895"
                 style="stroke-width: 52.2711"
               >
                 {{ secondKnotenarm?.nummer }}
@@ -188,6 +186,7 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import { first, last } from "lodash";
 import { computed, nextTick, ref, watch } from "vue";
 
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useQjs } from "@/util/QjsUtils";
 
