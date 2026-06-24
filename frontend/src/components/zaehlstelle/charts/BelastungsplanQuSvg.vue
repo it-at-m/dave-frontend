@@ -3825,7 +3825,8 @@ watch(
     await nextTick();
 
     emitSvgAsBlob();
-  }
+  },
+  { deep: true, immediate: true }
 );
 
 function isQuBelastungsplan(
