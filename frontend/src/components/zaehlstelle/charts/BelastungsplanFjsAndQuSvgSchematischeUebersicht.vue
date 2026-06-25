@@ -47,14 +47,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="150"
-                r="25.951238"
+                cy="35"
+                r="32"
               />
               <text
                 id="knotenarm1_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -63,8 +63,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="711.77631"
-                y="161.69041"
+                x="708.77631"
+                y="55.69041"
                 transform="scale(0.96576588,1.0354476)"
               >
                 1
@@ -215,14 +215,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="150"
-                r="25.951238"
+                cy="35"
+                r="32"
               />
               <text
                 id="knotenarm2_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -231,8 +231,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="-167.92575"
-                y="691.33978"
+                x="-52.92575"
+                y="695.33978"
                 transform="matrix(0,-0.96576591,1.0354476,0,0,0)"
               >
                 2
@@ -383,14 +383,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="1250"
-                r="25.951238"
+                cy="1365"
+                r="32"
               />
               <text
                 id="knotenarm3_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -399,8 +399,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="712.77631"
-                y="1222.7999"
+                x="708.77631"
+                y="1337.7999"
                 transform="scale(0.96576591,1.0354476)"
               >
                 3
@@ -552,14 +552,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="150"
-                r="25.951238"
+                cy="35"
+                r="32"
               />
               <text
                 id="knotenarm4_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -568,8 +568,8 @@
                 fill: #000000;
                 stroke-width: 38.9426;
               `"
-                x="140.91887"
-                y="-659.36975"
+                x="17.91887"
+                y="-656.36975"
                 transform="matrix(0,0.96512986,-1.03613,0,0,0)"
               >
                 4
@@ -726,14 +726,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="150"
-                r="25.951238"
+                cy="35"
+                r="32"
               />
               <text
                 id="knotenarm5_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -742,8 +742,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="388.39447"
-                y="596.23108"
+                x="468.39447"
+                y="524.23108"
                 transform="matrix(0.68289962,-0.68289962,0.73217203,0.73217203,0,0)"
               >
                 5
@@ -894,14 +894,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="150"
-                r="25.951238"
+                cy="35"
+                r="32"
               />
               <text
                 id="knotenarm6_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -910,8 +910,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="-635.21271"
-                y="391.35382"
+                x="-555.21271"
+                y="475.35382"
                 transform="matrix(-0.68289963,-0.68289963,0.73217202,-0.73217202,0,0)"
               >
                 6
@@ -1061,14 +1061,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="1250"
-                r="25.951238"
+                cy="1365"
+                r="32"
               />
               <text
                 id="knotenarm7_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -1077,8 +1077,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="-415.5455"
-                y="1349.3147"
+                x="-502.5455"
+                y="1432.3147"
                 transform="matrix(0.68289963,-0.68289963,0.73217202,0.73217202,0,0)"
               >
                 7
@@ -1229,14 +1229,14 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="150"
-                r="25.951238"
+                cy="35"
+                r="32"
               />
               <text
                 id="knotenarm8_number_text"
                 xml:space="default"
                 :style="`
-                font-size: 45px;
+                font-size: 60px;
                 font-family: ${BelastungsplanConstants.fontfamily};
                 text-align: start;
                 writing-mode: lr-tb;
@@ -1245,8 +1245,8 @@
                 fill: #000000;
                 stroke-width: 38.9426;
               `"
-                x="609.00354"
-                y="-359.56787"
+                x="522.00354"
+                y="-433.56787"
                 transform="matrix(0.68244987,0.68244987,-0.73265455,0.73265455,0,0)"
               >
                 8
