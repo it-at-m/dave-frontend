@@ -1,20 +1,27 @@
-# Dokumentation
+# Developer Documenation
 
-## Architektur
+## Build & Run
+
+* Execute Dev Setup steps to start DAVe stack
+* run mvn clean install
+* run apigateway/runLocalNoSecurity.sh
+
+## Architecture
 
 ![Architektur](img/DAVe_Architektur_LS2.drawio.png)
 
-## Technisches Setup
-Zum schnellen Starten eines vollständig lauffähigen DAVe Datenportal ist im Verzeichnis "stack" ein docker-compose-Skript verfügbar. 
-Dieses fährt folgende Komponenten hoch:
-* ElasticSearch
-* Kibana
-* H2-Datenbank
-* DAVe-Backend
-* DAVe-Frontend (Datenportal)
+## Dev Setup
 
-Die Security-Funktionen für Login etc. sind dabei ausgeschaltet.
+* Clone repository for [DAVe Backend](https://github.com/starwit/dave-backend)
+* Run Docker Compose file
+* Import sample data
+* Start Backend via Maven / Docker
+* Start Frontend
+* Open: http://localhost:8081
+* Optional: run npm run dev
+* Open: http://localhost:8082
 
-Mit dem voreingestellten Profil "sample" wird eine Beispiel-Zählstelle mit einer Beispielzählung in die Datenbank bzw. den Index eingespielt.
+### Coding Conventions
 
-Das Frontend ist nach dem Hochfahren unter "http://localhost:8082" verfügbar.
+We use the [itm-java-codeformat](https://github.com/it-at-m/itm-java-codeformat) project to apply code formatting conventions.
+To add those conventions to your favorite IDE, please have a look at the [README of itm-java-codeformat](https://github.com/it-at-m/itm-java-codeformat#verwendung).
