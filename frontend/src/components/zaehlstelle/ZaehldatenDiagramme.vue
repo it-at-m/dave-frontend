@@ -382,7 +382,6 @@ watch(selectedZaehlung, () => {
 });
 
 watch(options, () => {
-  displaySchema.value = true;
   loadData();
 });
 
@@ -490,7 +489,6 @@ function storeSvg(svg: Blob) {
 
 function storeSvgSchematischeUebersicht(svg: Blob) {
   belastungsplanSchematischeUebersichtSvg.value = svg;
-  displaySchema.value = false;
 }
 
 /**
@@ -822,7 +820,6 @@ function generateCsv() {
     })
     .finally(() => (loadingFile.value = false));
 }
-const displaySchema = ref(true);
 
 const drawSchematischeUebersicht = computed(() => {
   if (
