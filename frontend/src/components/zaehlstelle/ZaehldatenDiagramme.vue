@@ -71,7 +71,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card
@@ -94,7 +93,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-fjs-svg
@@ -108,7 +106,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanFjsDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-qu-svg
@@ -122,7 +119,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQuDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
           </div>
           <v-banner v-else>
