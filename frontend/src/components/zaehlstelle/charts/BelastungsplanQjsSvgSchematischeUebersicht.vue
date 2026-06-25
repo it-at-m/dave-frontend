@@ -34,7 +34,7 @@
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               "
-              cx="476"
+              cx="376"
               cy="700"
               r="32"
             />
@@ -52,12 +52,12 @@
                 stroke-width: 52.2711;
               `"
               y="720.73895"
-              x="458.80084"
+              x="358.80084"
             >
               <tspan
                 id="knotenarmnummer1_tspan"
                 style="stroke-width: 52.2711"
-                x="458.80084"
+                x="358.80084"
                 y="720.73895"
               >
                 {{ firstKnotenarm?.nummer }}
@@ -75,7 +75,7 @@
                 stroke-dasharray: none;
                 stroke-opacity: 1;
               "
-              cx="924"
+              cx="1024"
               cy="700"
               r="32"
             />
@@ -92,12 +92,12 @@
                 fill: #000000;
                 stroke-width: 52.2711;
               `"
-              x="907.19183"
+              x="1007.19183"
               y="720.73895"
             >
               <tspan
                 id="knotenarmnummer2_tspan"
-                x="907.19183"
+                x="1007.19183"
                 y="720.73895"
                 style="stroke-width: 52.2711"
               >
@@ -114,12 +114,12 @@
             <path
               id="arrow1_line"
               :fill="colorOfVerkehrsbeziehungArrowOne"
-              d="M 69.999999,567 V 539 H 1330 v 27.998 z"
+              d="M 280,567 V 539 H 1119 v 27.998 z"
             />
             <path
               id="arrow1_tip"
               :fill="colorOfVerkehrsbeziehungArrowOne"
-              d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
+              d="m 13000.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,1944.4526)"
             />
           </g>
@@ -130,12 +130,12 @@
             <path
               id="arrow2_line"
               :fill="colorOfVerkehrsbeziehungArrowTwo"
-              d="M 69.999999,623 V 595 H 1330 v 27.997 z"
+              d="M 280.999999,623 V 595 H 1119 v 27.997 z"
             />
             <path
               id="arrow2_tip"
               :fill="colorOfVerkehrsbeziehungArrowTwo"
-              d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
+              d="m 13000.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(0.09192953,0,0,0.07964786,-38.395512,-782.45264)"
             />
           </g>
@@ -146,12 +146,12 @@
             <path
               id="arrow3_line"
               :fill="colorOfVerkehrsbeziehungArrowThree"
-              d="m 69.999999,804.99999 v -28 H 1330 v 27.997 z"
+              d="m 280.999999,804.99999 v -28 H 1119 v 27.997 z"
             />
             <path
               id="arrow3_tip"
               :fill="colorOfVerkehrsbeziehungArrowThree"
-              d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
+              d="m 13000.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(-0.09192953,0,0,-0.07964786,1438.3955,2182.4526)"
             />
           </g>
@@ -162,12 +162,12 @@
             <path
               id="arrow4_line"
               :fill="colorOfVerkehrsbeziehungArrowFour"
-              d="m 69.999999,860.99999 v -28 H 1330 v 27.997 z"
+              d="m 280.999999,860.99999 v -28 H 1119 v 27.997 z"
             />
             <path
               id="arrow4_tip"
               :fill="colorOfVerkehrsbeziehungArrowFour"
-              d="m 15265.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
+              d="m 13000.992,17469.828 -304.316,176.002 -0.265,-351.547 z"
               transform="matrix(0.09192953,0,0,0.07964786,-38.395512,-544.45264)"
             />
           </g>
