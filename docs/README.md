@@ -1,4 +1,5 @@
 # Developer Documenation
+Here you can find info, how to build & run DAVe Frontend. Application is divided in two main parts, a light Spring Boot proxy backend and a VueJs based frontend.
 
 ## Build & Run
 

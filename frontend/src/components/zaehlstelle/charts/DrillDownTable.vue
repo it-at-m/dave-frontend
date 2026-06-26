@@ -1,7 +1,7 @@
 <template>
   <div
     class="drilldown-table-wrapper"
-    :style="{ maxHeight: height }"
+    :style="{ height: height }"
   >
     <v-tabs v-model="activeTab">
       <v-tab v-for="type in vehicleTypes" :key="type.key" :value="type.key">{{ type.title }}</v-tab>
@@ -11,7 +11,7 @@
         <table class="drilldown-table">
           <thead>
             <tr>
-              <th class="drilldown-table__sticky">Zeit/ von -> nach</th>
+              <th class="drilldown-table__sticky time-col text-center">Zeit/ von -> nach</th>
               <th
                 v-for="beziehung in fahrbeziehungen"
                 class="drilldown-table__sticky"
@@ -27,7 +27,7 @@
               v-for="zeitintervall in zeitintervalle"
               :key="`${zeitintervall.startUhrzeit}-${zeitintervall.endeUhrzeit}`"
             >
-              <td class="text-no-wrap">
+              <td class="text-no-wrap text-center time-col">
                 {{ formatDateTime(zeitintervall.startUhrzeit) }} -
                 {{ formatDateTime(zeitintervall.endeUhrzeit) }}
               </td>
@@ -82,8 +82,14 @@ const zeitintervalle = computed(() =>
 const fahrbeziehungen = computed(() =>
   [...(props.drillDownData.fahrbeziehungen ?? [])].sort((a, b) =>
     a.von !== b.von ? a.von - b.von : a.nach - b.nach
-  )
+  ).filter(f => hasNonZeroValues(getFahrbeziehungKey(f)))
 );
+
+function hasNonZeroValues(key: string): boolean {
+  return zeitintervalle.value.some(z =>
+    vehicleTypes.some(t => (z.wertByFahrbeziehung?.[key]?.[t.key as keyof FahrbeziehungWerteDTO] ?? 0) !== 0)
+  );
+}
 
 function getFahrbeziehungKey(fahrbeziehung: FahrbeziehungKeyDTO): string {
   return `${fahrbeziehung.von}→${fahrbeziehung.nach}`;
@@ -111,8 +117,23 @@ function formatDateTime(value: string): string {
 </script>
 
 <style scoped>
+
+/* Make the tabs bar stick to the top */
+:deep(.v-tabs) {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgb(var(--v-theme-surface));
+}
+
+:deep(.v-tabs-window),
+:deep(.v-tabs-window-item) {
+  overflow: visible !important;
+}
+
 .drilldown-table-wrapper {
   overflow: auto;
+  height: 100%;   /* <-- height, not just max-height */
   width: 100%;
 }
 
@@ -132,14 +153,16 @@ function formatDateTime(value: string): string {
 .drilldown-table thead th,
 .drilldown-table tfoot th,
 .drilldown-table tfoot td {
-  background: rgba(0, 0, 0, 0.04);
+  background: white;
   font-weight: 600;
 }
 
 .drilldown-table__sticky {
+  overflow: auto;
   position: sticky;
-  top: 0;
+  top: var(--tabs-height, 48px); /* Vuetify default tab height is 48px */
   z-index: 1;
+  background: rgb(var(--v-theme-surface))
 }
 
 .drilldown-table__cell {
@@ -151,6 +174,11 @@ function formatDateTime(value: string): string {
   flex-direction: column;
   gap: 2px;
   white-space: nowrap;
+}
+
+.time-col {
+  width: 10rem;
+  min-width: 8rem;
 }
 
 .innertable {
