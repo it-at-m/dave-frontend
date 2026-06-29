@@ -18,6 +18,7 @@ export default class GenerateCsvService {
       "Beim Erzeugen der CSV ist ein Fehler aufgetreten."
     );
   }
+
   public static generateCsvMst(
     messstelleId: string,
     options: MessstelleOptionsDTO
@@ -28,4 +29,5 @@ export default class GenerateCsvService {
       "Beim Erzeugen der CSV ist ein Fehler aufgetreten."
     );
   }
+
 }

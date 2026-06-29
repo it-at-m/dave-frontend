@@ -235,6 +235,8 @@ import { useReportTools } from "@/util/ReportTools";
 import { ZaehldatenTab } from "@/components/zaehlstelle/ZaehldatenDiagrammeDataTypes";
 import DrillDownTable from "@/components/zaehlstelle/charts/DrillDownTable.vue";
 import type { DrilldownDTO } from "@/types/zaehlung/zaehldaten/DrillDownDTO.js";
+import { ApiError, Levels } from "@/api/error";
+import { useCsvUtils } from "@/util/CSVUtils";
 
 interface Props {
   height?: string;
@@ -295,6 +297,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const historyStore = useHistoryStore();
 const reportTools = useReportTools();
 const downloadUtils = useDownloadUtils();
+const csvUtils = useCsvUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
 const options = computed<OptionsDTO>(() => {
@@ -769,22 +772,45 @@ function generateCsv() {
   const optionsDTO = Object.assign({}, options.value) as OptionsDTO;
   optionsDTO.zaehldauer = selectedZaehlung.value.zaehldauer;
 
-  GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)
-    .then((result: CsvDTO) => {
-      // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
-      const filename = `${reportTools.getFileName(
-        Erhebungsstelle.ZAEHLSTELLE,
-        "Listenausgabe",
-        [selectedZaehlung.value.datum]
-      )}.csv`;
+  switch (activeTab.value) {
+    case ZaehldatenTab.LISTENAUSGABE: 
+      GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)
+        .then((result: CsvDTO) => {
+          // Beispiel: 251101K_15-11-2020_Listenausgabe.csv
+          const filename = `${reportTools.getFileName(
+            Erhebungsstelle.ZAEHLSTELLE,
+            "Listenausgabe",
+            [selectedZaehlung.value.datum]
+          )}.csv`;
 
-      downloadUtils.downloadCsv(result.csvAsString, filename);
-    })
-    .catch((error) => {
-      snackbarStore.showApiError(error);
-    })
-    .finally(() => (loadingFile.value = false));
+          downloadUtils.downloadCsv(result.csvAsString, filename);
+        })
+        .catch((error) => {
+          snackbarStore.showApiError(error);
+        })
+        .finally(() => (loadingFile.value = false));
+      break;
+    
+    case ZaehldatenTab.DRILLDOWN:
+      if(!drillDownDTO.value) {
+        snackbarStore.showApiError(new ApiError(Levels.ERROR,"Keine CSV-Exportfunktion für diese Daten vorhanden",""));
+        loadingFile.value = false
+        return;
+      } else {
+        let timeBasedValues = csvUtils.convertToCSV(zaehlstelle.value, zaehlungsId.value, drillDownDTO.value.zeitintervalle);
+        console.log(timeBasedValues);
+        downloadUtils.downloadCsv(timeBasedValues, "Drilldown.csv");
+        loadingFile.value = false
+      }
+      
+      break;
+    default:
+      snackbarStore.showApiError(new ApiError(Levels.ERROR,"Keine CSV-Exportfunktion für diese Daten vorhanden",""));
+      loadingFile.value = false
+      break;
+  }
 }
+
 const displaySchema = ref(true);
 const schemaStyle = computed(() => {
   let style = ``;
