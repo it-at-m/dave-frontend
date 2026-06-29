@@ -400,6 +400,9 @@ watch(belastungsplanSvg, () => {
       canvas.height = dimension;
       const context = canvas.getContext("2d");
       if (context) {
+        // Weißen Hintergrund setzen
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image, 0, 0, dimension, dimension);
         // Image Asset erstellen und in Variable speichern
         belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
