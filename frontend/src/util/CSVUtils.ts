@@ -1,4 +1,5 @@
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { ZeitintervallRowDTO } from "@/types/zaehlung/zaehldaten/DrillDownDTO";
 
 export function useCsvUtils() {
@@ -42,5 +43,13 @@ export function useCsvUtils() {
         return [header, ...dataRows].join('\n');
     }
 
-    return { convertToCSV, zeitintervallRowToCSVFlat };
+    function generateFileName(zaehlung: LadeZaehlungDTO, rows: ZeitintervallRowDTO[]): string {
+        let filename = "drilldown-" + zaehlung.kreuzungsname.replaceAll(" ","_" ) + "-";
+        if(rows != null) {
+            filename += rows[0].startUhrzeit;
+        }
+        return filename + ".csv";
+    }
+
+    return { convertToCSV, zeitintervallRowToCSVFlat, generateFileName };
 }
