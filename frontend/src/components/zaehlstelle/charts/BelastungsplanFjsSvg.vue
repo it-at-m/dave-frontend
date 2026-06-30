@@ -325,7 +325,7 @@
             <path
               id="node1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -899,7 +899,7 @@
             <path
               id="node2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -1463,7 +1463,7 @@
             <path
               id="node3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -1712,7 +1712,7 @@
             <g id="arrows_node3_east">
               <path
                 v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_outgoing"
+                id="arrow_node3_east_incoming"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
                 :fill="colorArrowNodeThreeEastIncoming"
                 stroke="none"
@@ -1720,7 +1720,7 @@
               />
               <path
                 v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_incoming"
+                id="arrow_node3_east_outgoing"
                 d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeEastOutgoing"
                 stroke="none"
@@ -1728,7 +1728,7 @@
               />
               <text
                 v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_incoming_number_text"
+                id="arrow_node3_east_outgoing_number_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1755,7 +1755,7 @@
                 y="-15.206213"
               >
                 <tspan
-                  id="arrow_node3_east_incoming_number_tspan"
+                  id="arrow_node3_east_outgoing_number_tspan"
                   x="-1276.2108"
                   y="772.68726"
                   :style="`
@@ -1777,7 +1777,7 @@
               </text>
               <text
                 v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_outgoing_number_text"
+                id="arrow_node3_east_incoming_number_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1804,7 +1804,7 @@
                 y="18.043785"
               >
                 <tspan
-                  id="arrow_node3_east_outgoing_number_tspan"
+                  id="arrow_node3_east_incoming_number_tspan"
                   x="-1276.2108"
                   y="805.93726"
                   :style="`
@@ -2073,7 +2073,7 @@
             <path
               id="node4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -2676,7 +2676,7 @@
             <path
               id="node5_spike"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3250,7 +3250,7 @@
             <path
               id="node6_spike"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -3828,7 +3828,7 @@
             <path
               id="node7_spike"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -4438,7 +4438,7 @@
             <path
               id="node8_spike"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
-              fill="#9e9e9e"
+              fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
@@ -5044,7 +5044,7 @@
       <path
         id="center"
         d="m 14253.004,17465.11 166.703,0 117.876,117.877 0,166.702 -117.876,117.877 -166.703,0 -117.876,-117.877 0,-166.702 z"
-        fill="#9e9e9e"
+        fill="#ececec"
         transform="matrix(0.31493043,0,0,0.31493043,-3814.9546,-4863.6674)"
       />
     </svg>

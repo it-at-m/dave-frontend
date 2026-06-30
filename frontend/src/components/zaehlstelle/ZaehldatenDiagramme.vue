@@ -87,11 +87,12 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQJSZaehlung &&
+                isQjsBelastungsplan(belastungsplanDTO) &&
                 !isFJSZaehlung &&
                 !isQUZaehlung
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -101,10 +102,11 @@
                 !belastungsplanDTO.kreisverkehr &&
                 !isQJSZaehlung &&
                 !isQUZaehlung &&
-                isFJSZaehlung
+                isFJSZaehlung &&
+                isFjsBelastungsplan(belastungsplanDTO)
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanFjsDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -113,11 +115,12 @@
               v-if="
                 !belastungsplanDTO.kreisverkehr &&
                 isQUZaehlung &&
+                isQuBelastungsplan(belastungsplanDTO) &&
                 !isQJSZaehlung &&
                 !isFJSZaehlung
               "
               :dimension="contentHeight"
-              :data="belastungsplanDTO"
+              :data="belastungsplanDTO as LadeBelastungsplanQuDTO"
               @print="storeSvg($event)"
               @print-schema="storeSvgSchematischeUebersicht($event)"
             />
@@ -209,7 +212,7 @@
     <belastungsplan-kreuzung-svg-schematische-uebersicht
       v-if="drawSchematischeUebersicht"
       :dimension="contentHeight"
-      :data="belastungsplanDTO"
+      :data="belastungsplanDTO as LadeBelastungsplanDTO"
       :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
@@ -224,6 +227,7 @@ import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/Abst
 import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
+import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
@@ -290,7 +294,10 @@ const pdfReportDialog = ref(false);
 
 // Belastungsplan Kreuzung
 const belastungsplanDTO = ref<
-  LadeBelastungsplanDTO | LadeBelastungsplanQjsDTO | LadeBelastungsplanFjsDTO
+  | LadeBelastungsplanDTO
+  | LadeBelastungsplanQjsDTO
+  | LadeBelastungsplanFjsDTO
+  | LadeBelastungsplanQuDTO
 >({} as LadeBelastungsplanDTO);
 const belastungsplanSvg = ref<Blob>();
 const belastungsplanPngBase64 = ref("");
@@ -393,6 +400,9 @@ watch(belastungsplanSvg, () => {
       canvas.height = dimension;
       const context = canvas.getContext("2d");
       if (context) {
+        // Weißen Hintergrund setzen
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image, 0, 0, dimension, dimension);
         // Image Asset erstellen und in Variable speichern
         belastungsplanPngBase64.value = canvas.toDataURL("image/jpg");
@@ -834,7 +844,8 @@ const drawSchematischeUebersicht = computed(() => {
   }
   if (
     isQjsBelastungsplan(belastungsplanDTO.value) ||
-    isFjsBelastungsplan(belastungsplanDTO.value)
+    isFjsBelastungsplan(belastungsplanDTO.value) ||
+    isQuBelastungsplan(belastungsplanDTO.value)
   ) {
     return false;
   } else
@@ -854,6 +865,12 @@ function isFjsBelastungsplan(
   data: AbstractLadeBelastungsplanDTO | undefined
 ): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
+}
+
+function isQuBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQuDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>
 

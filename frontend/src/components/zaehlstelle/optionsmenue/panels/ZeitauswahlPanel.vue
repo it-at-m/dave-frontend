@@ -271,8 +271,8 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
 
   if (blocks && Array.isArray(blocks)) {
     // Select Control mit den entsprechenden text/value Werten füllen
-    blocks.forEach((b) => {
-      const kv = zeitblockInfo.get(b);
+    blocks.forEach((block) => {
+      const kv = zeitblockInfo.get(block);
       if (kv) {
         result.push(kv);
       }
