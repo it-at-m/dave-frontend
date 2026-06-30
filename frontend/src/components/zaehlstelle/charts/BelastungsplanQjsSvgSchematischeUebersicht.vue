@@ -88,7 +88,7 @@
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
-                text-anchor: center;
+                text-anchor: start;
                 fill: #000000;
                 stroke-width: 52.2711;
               `"
