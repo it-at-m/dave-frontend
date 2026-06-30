@@ -30,7 +30,7 @@
           <g id="knotenarm1">
             <path
               id="knotenarm1_spike"
-              d="M 661.11113,700.00002 V 131.59223 l 38.88831,-53.81445 38.88947,53.8143 v 568.40794 z"
+              d="M 661.11113,700.00002 V 291.59223 l 38.88831,-53.81445 38.88947,53.8143 v 568.40794 z"
               fill="#ececec"
               stroke="none"
             />
@@ -47,7 +47,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="35"
+                cy="195"
                 r="32"
               />
               <text
@@ -64,7 +64,7 @@
                 stroke-width: 38.9365;
               `"
                 x="708.77631"
-                y="55.69041"
+                y="210.69041"
                 transform="scale(0.96576588,1.0354476)"
               >
                 1
@@ -85,7 +85,7 @@
                   )
                 "
                 id="arrow_knotenarm1_west_ausgehend"
-                d="M 621.66709,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
+                d="M 640.66709,434.92557 V 320.48063 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.44494 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -104,7 +104,7 @@
                   )
                 "
                 id="arrow_knotenarm1_west_eingehend"
-                d="m 599.44446,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
+                d="m 603.44446,281.59223 v 114.44503 h 19.11111 l -14.44345,38.88831 -14.44544,-38.88831 h 19.11111 V 281.59223 Z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -128,7 +128,7 @@
                   )
                 "
                 id="arrow_knotenarm1_ost_ausgehend"
-                d="M 800.55599,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
+                d="M 796.55599,434.92557 V 320.48063 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.44494 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -147,7 +147,7 @@
                   )
                 "
                 id="arrow_knotenarm1_ost_eingehend"
-                d="m 778.33336,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
+                d="m 759.33336,281.59223 v 114.44503 h 19.11111 l -14.44345,38.88831 -14.44544,-38.88831 h 19.11111 V 281.59223 Z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -173,6 +173,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(1, Himmelsrichtung.O, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(1, Himmelsrichtung.W)"
@@ -185,6 +186,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(1, Himmelsrichtung.W, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
             </g>
           </g>
@@ -198,7 +200,7 @@
           <g id="knotenarm2">
             <path
               id="knotenarm2_spike"
-              d="m 661.11113,699.99998 v -568.408 l 38.889,-53.814 38.889,53.813 v 568.409 z"
+              d="m 661.11113,699.99998 v -408.408 l 38.889,-53.814 38.889,53.813 v 568.409 z"
               fill="#ececec"
               stroke="none"
             />
@@ -215,7 +217,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="35"
+                cy="195"
                 r="32"
               />
               <text
@@ -231,7 +233,7 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="-52.92575"
+                x="-217.92575"
                 y="695.33978"
                 transform="matrix(0,-0.96576591,1.0354476,0,0,0)"
               >
@@ -254,7 +256,7 @@
                   )
                 "
                 id="arrow_knotenarm2_nord_ausgehend"
-                d="m 621.66667,364.92553 v -194.445 h -11.1111 l 19.4435,-38.888 19.4454,38.888 h -11.1111 v 194.445 z"
+                d="m 640.66667,434.92553 v -114.445 h -19.1111 l 14.4435,-38.888 14.4454,38.888 h -19.1111 v 114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -273,7 +275,7 @@
                   )
                 "
                 id="arrow_knotenarm2_nord_eingehend"
-                d="m 599.44448,131.59253 v 194.445 h 11.1111 l -19.4434,38.888 -19.4455,-38.888 h 11.1111 v -194.445 z"
+                d="m 603.44448,281.59253 v 114.445 h 19.1111 l -14.4434,38.888 -14.4455,-38.888 h 19.1111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -297,7 +299,7 @@
                   )
                 "
                 id="arrow_knotenarm2_sued_ausgehend"
-                d="m 800.55557,364.92553 v -194.445 h -11.1111 l 19.4434,-38.888 19.4455,38.888 h -11.1111 v 194.445 z"
+                d="m 796.55557,434.92553 v -114.445 h -19.1111 l 14.4434,-38.888 14.4455,38.888 h -19.1111 v 114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -316,7 +318,7 @@
                   )
                 "
                 id="arrow_knotenarm2_sued_eingehend"
-                d="m 778.33338,131.59253 v 194.445 h 11.1111 l -19.4435,38.888 -19.4454,-38.888 h 11.1111 v -194.445 z"
+                d="m 759.33338,281.59253 v 114.445 h 19.1111 l -14.4435,38.888 -14.4454,-38.888 h 19.1111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -342,6 +344,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(2, Himmelsrichtung.S, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(2, Himmelsrichtung.N)"
@@ -354,6 +357,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(2, Himmelsrichtung.N, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
             </g>
           </g>
@@ -366,7 +370,7 @@
           <g id="knotenarm3">
             <path
               id="knotenarm3_spike"
-              d="m 738.88891,700.00002 v 568.40778 l -38.88831,53.8145 -38.88947,-53.8143 V 700.00002 Z"
+              d="m 738.88891,700.00002 v 408.40778 l -38.88831,53.8145 -38.88947,-53.8143 V 700.00002 Z"
               fill="#ececec"
               stroke="none"
             />
@@ -383,7 +387,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="1365"
+                cy="1205"
                 r="32"
               />
               <text
@@ -400,7 +404,7 @@
                 stroke-width: 38.9365;
               `"
                 x="708.77631"
-                y="1337.7999"
+                y="1183.7999"
                 transform="scale(0.96576591,1.0354476)"
               >
                 3
@@ -422,7 +426,7 @@
                   )
                 "
                 id="arrow_knotenarm3_ost_ausgehend"
-                d="m 778.33336,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
+                d="m 759.33336,965.0745 v 114.445 h 19.11111 l -14.44345,38.8883 -14.44544,-38.8883 h 19.11111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -441,7 +445,7 @@
                   )
                 "
                 id="arrow_knotenarm3_ost_eingehend"
-                d="m 800.55599,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
+                d="m 796.55599,1118.4078 v -114.4449 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.4449 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -465,7 +469,7 @@
                   )
                 "
                 id="arrow_knotenarm3_west_ausgehend"
-                d="m 599.44446,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
+                d="m 603.44446,965.0745 v 114.445 h 19.11111 l -14.44345,38.8883 -14.44544,-38.8883 h 19.11111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -484,7 +488,7 @@
                   )
                 "
                 id="arrow_knotenarm3_west_eingehend"
-                d="m 621.66709,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
+                d="m 640.66709,1118.4078 v -114.4449 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.4449 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -510,6 +514,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(3, Himmelsrichtung.W, false)
                 "
+                transform="translate(140,160) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(3, Himmelsrichtung.O)"
@@ -522,6 +527,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(3, Himmelsrichtung.O, false)
                 "
+                transform="translate(140,160) scale(0.8)"
               />
             </g>
           </g>
@@ -535,7 +541,7 @@
           <g id="knotenarm4">
             <path
               id="knotenarm4_spike"
-              d="m 661.11087,699.99998 v -568.4076 l 38.889,-53.8146 38.889,53.8135 v 568.4087 z"
+              d="m 661.11087,699.99998 v -408.4076 l 38.889,-53.8146 38.889,53.8135 v 568.4087 z"
               fill="#ececec"
               stroke="none"
             />
@@ -552,7 +558,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="35"
+                cy="195"
                 r="32"
               />
               <text
@@ -568,7 +574,7 @@
                 fill: #000000;
                 stroke-width: 38.9426;
               `"
-                x="17.91887"
+                x="182.91887"
                 y="-656.36975"
                 transform="matrix(0,0.96512986,-1.03613,0,0,0)"
               >
@@ -591,7 +597,7 @@
                   )
                 "
                 id="arrow_knotenarm4_sued_ausgehend"
-                d="m 621.66642,364.92523 v -194.445 h -11.111 l 19.443,-38.888 19.446,38.888 h -11.111 v 194.445 z"
+                d="m 640.66642,434.92523 v -114.445 h -19.111 l 14.443,-38.888 14.446,38.888 h -19.111 v 114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -610,7 +616,7 @@
                   )
                 "
                 id="arrow_knotenarm4_sued_eingehend"
-                d="m 599.44453,131.59223 v 194.445 h 11.111 l -19.444,38.888 -19.445,-38.888 h 11.111 v -194.445 z"
+                d="m 603.44453,281.59223 v 114.445 h 19.111 l -14.444,38.888 -14.445,-38.888 h 19.111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -634,7 +640,7 @@
                   )
                 "
                 id="arrow_knotenarm4_nord_ausgehend"
-                d="m 800.55532,364.92563 v -194.4453 h -11.111 l 19.444,-38.8881 19.445,38.8881 h -11.111 v 194.4453 z"
+                d="m 796.55532,434.92563 v -114.4453 h -19.111 l 14.444,-38.8881 14.445,38.8881 h -19.111 v 114.4453 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -653,7 +659,7 @@
                   )
                 "
                 id="arrow_knotenarm4_nord_eingehend"
-                d="m 778.33343,131.59223 v 194.445 h 11.111 l -19.443,38.888 -19.446,-38.888 h 11.111 v -194.445 z"
+                d="m 759.33343,281.59223 v 114.445 h 19.111 l -14.443,38.888 -14.446,-38.888 h 19.111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -679,6 +685,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(4, Himmelsrichtung.N, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(4, Himmelsrichtung.S)"
@@ -691,6 +698,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(4, Himmelsrichtung.S, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
             </g>
           </g>
@@ -709,7 +717,7 @@
           <g id="knotenarm5">
             <path
               id="knotenarm5_spike"
-              d="M 661.11113,700.00002 V 131.59223 l 38.88831,-53.81445 38.88947,53.8143 v 568.40794 z"
+              d="M 661.11113,700.00002 V 291.59223 l 38.88831,-53.81445 38.88947,53.8143 v 568.40794 z"
               fill="#ececec"
               stroke="none"
             />
@@ -726,7 +734,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="35"
+                cy="195"
                 r="32"
               />
               <text
@@ -742,8 +750,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="468.39447"
-                y="524.23108"
+                x="352.39447"
+                y="633.23108"
                 transform="matrix(0.68289962,-0.68289962,0.73217203,0.73217203,0,0)"
               >
                 5
@@ -764,7 +772,7 @@
                   )
                 "
                 id="arrow_knotenarm5_nord_west_ausgehend"
-                d="M 621.66709,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
+                d="M 640.66709,434.92557 V 320.48063 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.44494 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -783,7 +791,7 @@
                   )
                 "
                 id="arrow_knotenarm5_nord_west_eingehend"
-                d="m 599.44446,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
+                d="m 603.44446,281.59223 v 114.44503 h 19.11111 l -14.44345,38.88831 -14.44544,-38.88831 h 19.11111 V 281.59223 Z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -807,7 +815,7 @@
                   )
                 "
                 id="arrow_knotenarm5_sued_ost_ausgehend"
-                d="M 800.55599,364.92557 V 170.48063 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.44494 z"
+                d="M 796.55599,434.92557 V 320.48063 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.44494 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -826,7 +834,7 @@
                   )
                 "
                 id="arrow_knotenarm5_sued_ost_eingehend"
-                d="m 778.33336,131.59223 v 194.44503 h 11.11111 l -19.44345,38.88831 -19.44544,-38.88831 h 11.11111 V 131.59223 Z"
+                d="m 759.33336,281.59223 v 114.44503 h 19.11111 l -14.44345,38.88831 -14.44544,-38.88831 h 19.11111 V 281.59223 Z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -852,6 +860,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(5, Himmelsrichtung.SO, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.NW)"
@@ -864,6 +873,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(5, Himmelsrichtung.NW, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
             </g>
           </g>
@@ -877,7 +887,7 @@
           <g id="knotenarm6">
             <path
               id="knotenarm6_spike"
-              d="m 661.11113,699.99998 v -568.408 l 38.889,-53.814 38.889,53.813 v 568.409 z"
+              d="m 661.11113,699.99998 v -408.408 l 38.889,-53.814 38.889,53.813 v 568.409 z"
               fill="#ececec"
               stroke="none"
             />
@@ -894,7 +904,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="35"
+                cy="195"
                 r="32"
               />
               <text
@@ -910,8 +920,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="-555.21271"
-                y="475.35382"
+                x="-673.21271"
+                y="366.35382"
                 transform="matrix(-0.68289963,-0.68289963,0.73217202,-0.73217202,0,0)"
               >
                 6
@@ -932,7 +942,7 @@
                   )
                 "
                 id="arrow_knotenarm6_nord_ost_ausgehend"
-                d="m 621.66667,364.92553 v -194.445 h -11.1111 l 19.4435,-38.888 19.4454,38.888 h -11.1111 v 194.445 z"
+                d="m 640.66667,434.92553 v -114.445 h -19.1111 l 14.4435,-38.888 14.4454,38.888 h -19.1111 v 114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -951,7 +961,7 @@
                   )
                 "
                 id="arrow_knotenarm6_nord_ost_eingehend"
-                d="m 599.44448,131.59253 v 194.445 h 11.1111 l -19.4434,38.888 -19.4455,-38.888 h 11.1111 v -194.445 z"
+                d="m 603.44448,281.59253 v 114.445 h 19.1111 l -14.4434,38.888 -14.4455,-38.888 h 19.1111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -975,7 +985,7 @@
                   )
                 "
                 id="arrow_knotenarm6_sued_west_ausgehend"
-                d="m 800.55557,364.92553 v -194.445 h -11.1111 l 19.4434,-38.888 19.4455,38.888 h -11.1111 v 194.445 z"
+                d="m 796.55557,434.92553 v -114.445 h -19.1111 l 14.4434,-38.888 14.4455,38.888 h -19.1111 v 114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -994,7 +1004,7 @@
                   )
                 "
                 id="arrow_knotenarm6_sued_west_eingehend"
-                d="m 778.33338,131.59253 v 194.445 h 11.1111 l -19.4435,38.888 -19.4454,-38.888 h 11.1111 v -194.445 z"
+                d="m 759.33338,281.59253 v 114.445 h 19.1111 l -14.4435,38.888 -14.4454,-38.888 h 19.1111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1020,6 +1030,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(6, Himmelsrichtung.SW, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.NO)"
@@ -1032,6 +1043,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(6, Himmelsrichtung.NO, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
             </g>
           </g>
@@ -1044,7 +1056,7 @@
           <g id="knotenarm7">
             <path
               id="knotenarm7_spike"
-              d="m 738.88891,700.00002 v 568.40778 l -38.88831,53.8145 -38.88947,-53.8143 V 700.00002 Z"
+              d="m 738.88891,700.00002 v 408.40778 l -38.88831,53.8145 -38.88947,-53.8143 V 700.00002 Z"
               fill="#ececec"
               stroke="none"
             />
@@ -1061,7 +1073,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="1365"
+                cy="1205"
                 r="32"
               />
               <text
@@ -1077,8 +1089,8 @@
                 fill: #000000;
                 stroke-width: 38.9365;
               `"
-                x="-502.5455"
-                y="1432.3147"
+                x="-385.5455"
+                y="1323.3147"
                 transform="matrix(0.68289963,-0.68289963,0.73217202,0.73217202,0,0)"
               >
                 7
@@ -1099,7 +1111,7 @@
                   )
                 "
                 id="arrow_knotenarm7_sued_ost_ausgehend"
-                d="m 778.33336,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
+                d="m 759.33336,965.0745 v 114.445 h 19.11111 l -14.44345,38.8883 -14.44544,-38.8883 h 19.11111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1118,7 +1130,7 @@
                   )
                 "
                 id="arrow_knotenarm7_sued_ost_eingehend"
-                d="m 800.55599,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
+                d="m 796.55599,1118.4078 v -114.4449 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.4449 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1142,7 +1154,7 @@
                   )
                 "
                 id="arrow_knotenarm7_nord_west_ausgehend"
-                d="m 599.44446,1035.0745 v 194.445 h 11.11111 l -19.44345,38.8883 -19.44544,-38.8883 h 11.11111 v -194.445 z"
+                d="m 603.44446,965.0745 v 114.445 h 19.11111 l -14.44345,38.8883 -14.44544,-38.8883 h 19.11111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1161,7 +1173,7 @@
                   )
                 "
                 id="arrow_knotenarm7_nord_west_eingehend"
-                d="m 621.66709,1268.4078 v -194.4449 h -11.11152 l 19.4435,-38.8884 19.44539,38.8884 h -11.11057 v 194.4449 z"
+                d="m 640.66709,1118.4078 v -114.4449 h -19.11152 l 14.4435,-38.8884 14.44539,38.8884 h -19.11057 v 114.4449 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1187,6 +1199,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(7, Himmelsrichtung.NW, false)
                 "
+                transform="translate(140,160) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)"
@@ -1199,6 +1212,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO, false)
                 "
+                transform="translate(140,160) scale(0.8)"
               />
             </g>
           </g>
@@ -1212,7 +1226,7 @@
           <g id="knotenarm8">
             <path
               id="knotenarm8_spike"
-              d="m 661.11087,699.99998 v -568.4076 l 38.889,-53.8146 38.889,53.8135 v 568.4087 z"
+              d="m 661.11087,699.99998 v -408.4076 l 38.889,-53.8146 38.889,53.8135 v 568.4087 z"
               fill="#ececec"
               stroke="none"
             />
@@ -1229,7 +1243,7 @@
                   paint-order: normal;
                 "
                 cx="700"
-                cy="35"
+                cy="195"
                 r="32"
               />
               <text
@@ -1245,8 +1259,8 @@
                 fill: #000000;
                 stroke-width: 38.9426;
               `"
-                x="522.00354"
-                y="-433.56787"
+                x="639.00354"
+                y="-324.56787"
                 transform="matrix(0.68244987,0.68244987,-0.73265455,0.73265455,0,0)"
               >
                 8
@@ -1267,7 +1281,7 @@
                   )
                 "
                 id="arrow_knotenarm8_sued_west_ausgehend"
-                d="m 621.66642,364.92523 v -194.445 h -11.111 l 19.443,-38.888 19.446,38.888 h -11.111 v 194.445 z"
+                d="m 640.66642,434.92523 v -114.445 h -19.111 l 14.443,-38.888 14.446,38.888 h -19.111 v 114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1286,7 +1300,7 @@
                   )
                 "
                 id="arrow_knotenarm8_sued_west_eingehend"
-                d="m 599.44453,131.59223 v 194.445 h 11.111 l -19.444,38.888 -19.445,-38.888 h 11.111 v -194.445 z"
+                d="m 603.44453,281.59223 v 114.445 h 19.111 l -14.444,38.888 -14.445,-38.888 h 19.111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1310,7 +1324,7 @@
                   )
                 "
                 id="arrow_knotenarm8_nord_ost_ausgehend"
-                d="m 800.55532,364.92563 v -194.4453 h -11.111 l 19.444,-38.8881 19.445,38.8881 h -11.111 v 194.4453 z"
+                d="m 796.55532,434.92563 v -114.4453 h -19.111 l 14.444,-38.8881 14.445,38.8881 h -19.111 v 114.4453 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1329,7 +1343,7 @@
                   )
                 "
                 id="arrow_knotenarm8_nord_ost_eingehend"
-                d="m 778.33343,131.59223 v 194.445 h 11.111 l -19.443,38.888 -19.446,-38.888 h 11.111 v -194.445 z"
+                d="m 759.33343,281.59223 v 114.445 h 19.111 l -14.443,38.888 -14.446,-38.888 h 19.111 v -114.445 z"
                 stroke="none"
                 :fill="
                   calculateColorOfLaengsverkehr(
@@ -1355,6 +1369,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(8, Himmelsrichtung.NO, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
               <path
                 v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.SW)"
@@ -1367,6 +1382,7 @@
                 :fill="
                   calculateColorOfQuerungsverkehr(8, Himmelsrichtung.SW, false)
                 "
+                transform="translate(140,110) scale(0.8)"
               />
             </g>
           </g>
