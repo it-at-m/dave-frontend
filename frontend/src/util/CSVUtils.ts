@@ -4,14 +4,14 @@ import type { ZeitintervallRowDTO } from "@/types/zaehlung/zaehldaten/DrillDownD
 
 export function useCsvUtils() {
 
-    function convertToCSV(zs: ZaehlstelleHeaderDTO, zaehlungsId: string, rows: ZeitintervallRowDTO[]): string {
+    function convertToCSV(zs: ZaehlstelleHeaderDTO, zaehlung: LadeZaehlungDTO, rows: ZeitintervallRowDTO[]): string {
         rows = [...rows].sort((a, b) => a.startUhrzeit.localeCompare(b.startUhrzeit));
         let startDate = rows[0].startUhrzeit;
         let endDate = rows[rows.length - 1].endeUhrzeit;
         let result = "";
 
         result += "Zählstelle,Zaehlung,Zählzeitraum Start, Zählzeitraum Ende\n";
-        result += zs.nummer + "," + zaehlungsId + "," + startDate + "," + endDate +  "\n";
+        result += zs.nummer + "," + zaehlung.kreuzungsname + "," + startDate + "," + endDate +  "\n";
         result += zeitintervallRowToCSVFlat(rows);
 
         return result;

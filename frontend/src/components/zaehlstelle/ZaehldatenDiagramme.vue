@@ -797,7 +797,7 @@ function generateCsv() {
         loadingFile.value = false
         return;
       } else {
-        let timeBasedValues = csvUtils.convertToCSV(zaehlstelle.value, zaehlungsId.value, drillDownDTO.value.zeitintervalle);
+        let timeBasedValues = csvUtils.convertToCSV(zaehlstelle.value, selectedZaehlung.value, drillDownDTO.value.zeitintervalle);
         let filename = csvUtils.generateFileName(selectedZaehlung.value, drillDownDTO.value.zeitintervalle);
         downloadUtils.downloadCsv(timeBasedValues, filename);
         loadingFile.value = false
