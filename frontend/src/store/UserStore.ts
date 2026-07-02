@@ -5,6 +5,7 @@ import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 
 const roleAnwender = "ROLE_ANWENDER";
 const rolePoweruser = "ROLE_POWERUSER";
+const roleFachadmin = "ROLE_FACHADMIN";
 
 /**
  * Der UserStore wird benötigt, um die vom KeyCloak erhaltenen Nutzerdaten (Name, eMail und Authorities)
@@ -22,6 +23,12 @@ export const useUserStore = defineStore("userStore", () => {
     return (
       ssoUserInfoResponse.value.authorities.includes(roleAnwender) &&
       !ssoUserInfoResponse.value.authorities.includes(rolePoweruser)
+    );
+  });
+  const isPoweruserOrFachadmin = computed(() => {
+    return (
+      ssoUserInfoResponse.value.authorities.includes(rolePoweruser) ||
+      ssoUserInfoResponse.value.authorities.includes(roleFachadmin)
     );
   });
   const hasAuthorities = computed(() => {

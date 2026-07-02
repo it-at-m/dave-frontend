@@ -33,10 +33,16 @@ const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
 
+const FIRST_YEAR_OF_MEASUREMENT = 2006;
+
 const jahre = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
   const actualDate = new Date();
-  for (let index = 2006; index <= actualDate.getFullYear(); index++) {
+  for (
+    let index = FIRST_YEAR_OF_MEASUREMENT;
+    index <= actualDate.getFullYear();
+    index++
+  ) {
     result.push({
       title: `${index}`,
       value: `${index}`,
