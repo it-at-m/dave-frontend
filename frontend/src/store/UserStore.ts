@@ -25,10 +25,11 @@ export const useUserStore = defineStore("userStore", () => {
       !ssoUserInfoResponse.value.authorities.includes(rolePoweruser)
     );
   });
-  const isPoweruserOrFachadmin = computed(() => {
+  const isSolelyAnwender = computed(() => {
     return (
-      ssoUserInfoResponse.value.authorities.includes(rolePoweruser) ||
-      ssoUserInfoResponse.value.authorities.includes(roleFachadmin)
+      ssoUserInfoResponse.value.authorities.includes(roleAnwender) &&
+      !ssoUserInfoResponse.value.authorities.includes(rolePoweruser) &&
+      !ssoUserInfoResponse.value.authorities.includes(roleFachadmin)
     );
   });
   const hasAuthorities = computed(() => {
@@ -46,6 +47,7 @@ export const useUserStore = defineStore("userStore", () => {
     getName,
     getDepartment,
     isAnwender,
+    isSolelyAnwender,
     hasAuthorities,
     setSsoUserInfoResponse,
   };

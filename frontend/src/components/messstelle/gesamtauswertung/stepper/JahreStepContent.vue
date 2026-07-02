@@ -8,6 +8,9 @@
     multiple
     chips
     clearable
+    item-title="title"
+    item-value="value"
+    item-props="props"
     closable-chips
     variant="outlined"
   >
@@ -24,31 +27,65 @@
 </template>
 
 <script setup lang="ts">
-import type KeyVal from "@/types/common/KeyVal";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
-import { computed } from "vue";
+import { toArray } from "lodash";
+import { computed, watch } from "vue";
+
+import { useUserStore } from "@/store/UserStore";
+
+interface YearItem {
+  title: string;
+  value: string;
+  props: { disabled: boolean };
+}
 
 const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
 
-const FIRST_YEAR_OF_MEASUREMENT = 2006;
+const MAX_SELECTABLE_NUMBER_OF_YEARS_FOR_ANWENDER = 5;
 
-const jahre = computed<Array<KeyVal>>(() => {
-  const result: Array<KeyVal> = [];
+const userStore = useUserStore();
+
+watch(
+  () => auswertungOptions.value.jahre,
+  () => {
+    if (isSolelyAnwender.value) {
+      if (
+        toArray(auswertungOptions.value.jahre).length >=
+        MAX_SELECTABLE_NUMBER_OF_YEARS_FOR_ANWENDER
+      ) {
+        jahre.value.forEach((jahrToSelect) => {
+          const isJahrSelected = auswertungOptions.value.jahre.includes(
+            jahrToSelect.value
+          );
+          jahrToSelect.props.disabled = !isJahrSelected;
+        });
+      } else {
+        jahre.value.forEach(
+          (jahrToSelect) => (jahrToSelect.props.disabled = false)
+        );
+      }
+    }
+  }
+);
+
+const jahre = computed<Array<YearItem>>(() => {
+  const result: Array<YearItem> = [];
   const actualDate = new Date();
-  for (
-    let index = FIRST_YEAR_OF_MEASUREMENT;
-    index <= actualDate.getFullYear();
-    index++
-  ) {
+  for (let index = 2006; index <= actualDate.getFullYear(); index++) {
     result.push({
       title: `${index}`,
       value: `${index}`,
-    });
+      props: { disabled: false },
+    } as YearItem);
   }
   return result;
+});
+
+const isSolelyAnwender = computed(() => {
+  return userStore.isSolelyAnwender;
 });
 
 const showSelectAllButton = computed(() => {
