@@ -135,7 +135,7 @@ function selectButtons(tab: ZaehldatenTab) {
     case ZaehldatenTab.HEATMAP:
       return ["generatePdfButton", "addChartToPdfReportButton", "saveGraphAsImageButton"];
     case ZaehldatenTab.DRILLDOWN:
-      return ["generatePdfButton", "generatecsvButton"];
+      return ["generatecsvButton"];
     default:
       return ["generatePdfButton"];
   }
