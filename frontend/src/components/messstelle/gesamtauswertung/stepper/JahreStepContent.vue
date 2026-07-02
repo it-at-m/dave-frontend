@@ -89,8 +89,14 @@ const isSolelyAnwender = computed(() => {
 });
 
 const showSelectAllButton = computed(() => {
-  const helper = jahre.value.length / 2;
-  return auswertungOptions.value.jahre.length <= helper;
+  let showSelectAll: boolean;
+  if (isSolelyAnwender.value) {
+    showSelectAll = false;
+  } else {
+    const helper = jahre.value.length / 2;
+    showSelectAll = auswertungOptions.value.jahre.length <= helper;
+  }
+  return showSelectAll;
 });
 
 const buttonText = computed(() => {
