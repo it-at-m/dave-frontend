@@ -105,7 +105,7 @@ import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 import VersionInfoResponse from "@/types/app/VersionInfoResponse";
 
 const URL_HANDBUCH_LINK =
-  "https://github.com/it-at-m/dave/blob/main/2025_DAVe_Anwenderhandbuch_Datenportal_v1.1.pdf";
+  "https://it-at-m.github.io/dave/de/DAVe_Anwenderhandbuch_Datenportal.pdf";
 
 const loggedInUser = ref("no-security");
 const backendVersion = ref("");
