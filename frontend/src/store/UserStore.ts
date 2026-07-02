@@ -1,3 +1,4 @@
+import { toArray } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -26,10 +27,11 @@ export const useUserStore = defineStore("userStore", () => {
     );
   });
   const isSolelyAnwender = computed(() => {
+    const authorities = toArray(ssoUserInfoResponse.value.authorities);
     return (
-      ssoUserInfoResponse.value.authorities.includes(roleAnwender) &&
-      !ssoUserInfoResponse.value.authorities.includes(rolePoweruser) &&
-      !ssoUserInfoResponse.value.authorities.includes(roleFachadmin)
+      authorities.includes(roleAnwender) &&
+      !authorities.includes(rolePoweruser) &&
+      !authorities.includes(roleFachadmin)
     );
   });
   const hasAuthorities = computed(() => {
