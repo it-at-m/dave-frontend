@@ -270,5 +270,6 @@ export function useReportTools() {
     saveGraphAsImage,
     saveGesamtauswertungAsImage,
     getFileName,
+    createHeading,
   };
 }
