@@ -71,7 +71,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-card
@@ -94,7 +93,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-fjs-svg
@@ -108,7 +106,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanFjsDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
 
             <belastungsplan-qu-svg
@@ -122,7 +119,6 @@
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQuDTO"
               @print="storeSvg($event)"
-              @print-schema="storeSvgSchematischeUebersicht($event)"
             />
           </div>
           <v-banner v-else>
@@ -209,11 +205,11 @@
 
     <pdf-report-menue v-model="pdfReportDialog" />
 
-    <belastungsplan-kreuzung-svg-schematische-uebersicht
-      v-if="drawSchematischeUebersicht"
+    <belastungsplan-schematische-uebersicht
+      :draw-schematische-uebersicht="drawSchematischeUebersicht"
       :dimension="contentHeight"
+      :options="options"
       :data="belastungsplanDTO as LadeBelastungsplanDTO"
-      :style="schemaStyle"
       @print="storeSvgSchematischeUebersicht($event)"
     />
   </v-sheet>
@@ -247,9 +243,9 @@ import SpeedDial from "@/components/messstelle/charts/SpeedDial.vue";
 import BelastungsplanCard from "@/components/zaehlstelle/charts/BelastungsplanCard.vue";
 import BelastungsplanFjsSvg from "@/components/zaehlstelle/charts/BelastungsplanFjsSvg.vue";
 import BelastungsplanKreuzungSvg from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvg.vue";
-import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvg from "@/components/zaehlstelle/charts/BelastungsplanQjsSvg.vue";
 import BelastungsplanQuSvg from "@/components/zaehlstelle/charts/BelastungsplanQuSvg.vue";
+import BelastungsplanSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanSchematischeUebersicht.vue";
 import HeatmapCard from "@/components/zaehlstelle/charts/HeatmapCard.vue";
 import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import ZaehldatenListenausgabe from "@/components/zaehlstelle/charts/ZaehldatenListenausgabe.vue";
@@ -382,7 +378,6 @@ watch(selectedZaehlung, () => {
 });
 
 watch(options, () => {
-  displaySchema.value = true;
   loadData();
 });
 
@@ -422,6 +417,9 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
       canvas.height = dimension;
       const context = canvas.getContext("2d");
       if (context) {
+        // Weißen Hintergrund setzen
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image, 0, 0, dimension, dimension);
         // Image Asset erstellen und in Variable speichern
         belastungsplanSchematischeUebersichtPngBase64.value =
@@ -493,7 +491,6 @@ function storeSvg(svg: Blob) {
 
 function storeSvgSchematischeUebersicht(svg: Blob) {
   belastungsplanSchematischeUebersichtSvg.value = svg;
-  displaySchema.value = false;
 }
 
 /**
@@ -825,14 +822,6 @@ function generateCsv() {
     })
     .finally(() => (loadingFile.value = false));
 }
-const displaySchema = ref(true);
-const schemaStyle = computed(() => {
-  let style = ``;
-  if (!displaySchema.value) {
-    style = `display: none`;
-  }
-  return style;
-});
 
 const drawSchematischeUebersicht = computed(() => {
   if (
@@ -842,12 +831,19 @@ const drawSchematischeUebersicht = computed(() => {
   ) {
     return false;
   }
-  if (
-    isQjsBelastungsplan(belastungsplanDTO.value) ||
+  if (isQjsBelastungsplan(belastungsplanDTO.value)) {
+    return (
+      belastungsplanDTO.value.value1.valuesVerkehrsbeziehungen &&
+      belastungsplanDTO.value.value1.valuesVerkehrsbeziehungen.length > 0
+    );
+  } else if (
     isFjsBelastungsplan(belastungsplanDTO.value) ||
     isQuBelastungsplan(belastungsplanDTO.value)
   ) {
-    return false;
+    return (
+      belastungsplanDTO.value.value1.valuesKnotenarme &&
+      belastungsplanDTO.value.value1.valuesKnotenarme.length > 0
+    );
   } else
     return (
       belastungsplanDTO.value.value1.values &&
