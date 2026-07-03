@@ -74,7 +74,7 @@ describe("ReportTools", () => {
     zaehlstelleStore.setFilteroptions(options);
 
     expect(createHeading(Erhebungsstelle.ZAEHLSTELLE)).toBe(
-      "von  Zweistraße (2) "
+      "von Zweistraße (2)"
     );
   });
 
@@ -90,7 +90,7 @@ describe("ReportTools", () => {
     zaehlstelleStore.setFilteroptions(options);
 
     expect(createHeading(Erhebungsstelle.ZAEHLSTELLE)).toBe(
-      " nach Vierstraße (4)"
+      "nach Vierstraße (4)"
     );
   });
 
@@ -107,7 +107,7 @@ describe("ReportTools", () => {
     zaehlstelleStore.setFilteroptions(options);
 
     expect(createHeading(Erhebungsstelle.ZAEHLSTELLE)).toBe(
-      "von  Zweistraße (2)  nach Vierstraße (4)"
+      "von Zweistraße (2) nach Vierstraße (4)"
     );
   });
 

@@ -124,7 +124,7 @@ export function useReportTools() {
                 if (!selectedZaehlung.value.kreisverkehr) {
                   chartTitle = "von ";
                 }
-                chartTitle = `${chartTitle} ${knotenarm.strassenname} (${knotenarm.nummer}) `;
+                chartTitle = `${chartTitle}${knotenarm.strassenname} (${knotenarm.nummer}) `;
               }
             });
           }
@@ -132,14 +132,14 @@ export function useReportTools() {
           if (zaehlstelleOptions.value.nachKnotenarm !== null) {
             selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
               if (knotenarm.nummer === zaehlstelleOptions.value.nachKnotenarm) {
-                chartTitle = `${chartTitle} nach ${knotenarm.strassenname} (${knotenarm.nummer})`;
+                chartTitle = `${chartTitle}nach ${knotenarm.strassenname} (${knotenarm.nummer})`;
               }
             });
           }
         }
         break;
     }
-    return chartTitle;
+    return chartTitle.trim();
   }
 
   // von außen aufrufbar
