@@ -1,4 +1,3 @@
-import { toArray } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -6,7 +5,6 @@ import SsoUserInfoResponse from "@/types/app/SsoUserInfoResponse";
 
 const roleAnwender = "ROLE_ANWENDER";
 const rolePoweruser = "ROLE_POWERUSER";
-const roleFachadmin = "ROLE_FACHADMIN";
 
 /**
  * Der UserStore wird benötigt, um die vom KeyCloak erhaltenen Nutzerdaten (Name, eMail und Authorities)
@@ -19,21 +17,16 @@ export const useUserStore = defineStore("userStore", () => {
   );
 
   const getName = computed(() => ssoUserInfoResponse.value.name);
+
   const getDepartment = computed(() => ssoUserInfoResponse.value.department);
+
   const isAnwender = computed(() => {
     return (
       ssoUserInfoResponse.value.authorities.includes(roleAnwender) &&
       !ssoUserInfoResponse.value.authorities.includes(rolePoweruser)
     );
   });
-  const isSolelyAnwender = computed(() => {
-    const authorities = toArray(ssoUserInfoResponse.value.authorities);
-    return (
-      authorities.includes(roleAnwender) &&
-      !authorities.includes(rolePoweruser) &&
-      !authorities.includes(roleFachadmin)
-    );
-  });
+
   const hasAuthorities = computed(() => {
     return (
       ssoUserInfoResponse.value.authorities &&
@@ -49,7 +42,6 @@ export const useUserStore = defineStore("userStore", () => {
     getName,
     getDepartment,
     isAnwender,
-    isSolelyAnwender,
     hasAuthorities,
     setSsoUserInfoResponse,
   };
