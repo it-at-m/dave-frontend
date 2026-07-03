@@ -1,102 +1,53 @@
 <template>
   <v-autocomplete
-    v-model="auswertungOptions.jahre"
-    :items="jahre"
-    class="mt-4"
-    density="compact"
-    label="Jahre"
-    multiple
-    chips
-    clearable
-    item-title="title"
-    item-value="value"
-    item-props="props"
-    closable-chips
-    variant="outlined"
+      v-model="auswertungOptions.jahre"
+      :items="jahre"
+      class="mt-4"
+      density="compact"
+      label="Jahre"
+      multiple
+      chips
+      clearable
+      closable-chips
+      variant="outlined"
   >
     <template #prepend-item>
       <v-btn
-        class="text-none"
-        width="100%"
-        variant="flat"
-        :text="buttonText"
-        @click="buttonClick"
+          class="text-none"
+          width="100%"
+          variant="flat"
+          :text="buttonText"
+          @click="buttonClick"
       />
     </template>
   </v-autocomplete>
 </template>
 
 <script setup lang="ts">
+import type KeyVal from "@/types/common/KeyVal";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
-import { toArray } from "lodash";
-import { computed, watch } from "vue";
-
-import { useUserStore } from "@/store/UserStore";
-
-interface YearItem {
-  title: string;
-  value: string;
-  props: { disabled: boolean };
-}
+import { computed } from "vue";
 
 const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
 });
 
-const MAX_SELECTABLE_NUMBER_OF_YEARS_FOR_ANWENDER = 5;
-
-const userStore = useUserStore();
-
-watch(
-  () => auswertungOptions.value.jahre,
-  () => {
-    if (isSolelyAnwender.value) {
-      if (
-        toArray(auswertungOptions.value.jahre).length >=
-        MAX_SELECTABLE_NUMBER_OF_YEARS_FOR_ANWENDER
-      ) {
-        jahre.value.forEach((jahrToSelect) => {
-          const isJahrSelected = auswertungOptions.value.jahre.includes(
-            jahrToSelect.value
-          );
-          jahrToSelect.props.disabled = !isJahrSelected;
-        });
-      } else {
-        jahre.value.forEach(
-          (jahrToSelect) => (jahrToSelect.props.disabled = false)
-        );
-      }
-    }
-  }
-);
-
-const jahre = computed<Array<YearItem>>(() => {
-  const result: Array<YearItem> = [];
+const jahre = computed<Array<KeyVal>>(() => {
+  const result: Array<KeyVal> = [];
   const actualDate = new Date();
   for (let index = 2006; index <= actualDate.getFullYear(); index++) {
     result.push({
       title: `${index}`,
       value: `${index}`,
-      props: { disabled: false },
-    } as YearItem);
+    });
   }
   return result;
 });
 
-const isSolelyAnwender = computed(() => {
-  return userStore.isSolelyAnwender;
-});
-
 const showSelectAllButton = computed(() => {
-  let showSelectAll: boolean;
-  if (isSolelyAnwender.value) {
-    showSelectAll = false;
-  } else {
-    const helper = jahre.value.length / 2;
-    showSelectAll = auswertungOptions.value.jahre.length <= helper;
-  }
-  return showSelectAll;
+  const helper = jahre.value.length / 2;
+  return auswertungOptions.value.jahre.length <= helper;
 });
 
 const buttonText = computed(() => {
