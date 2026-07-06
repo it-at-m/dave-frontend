@@ -1,10 +1,10 @@
-import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
-import {existsQuerungOnKnotenarmInRichtung} from "@/util/Querungspruefung";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { existsQuerungOnKnotenarmInRichtung } from "@/util/Querungspruefung";
 
 /**
  * Vergleicht zwei Arrays von Querungsverkehren.
@@ -22,7 +22,7 @@ export function areQuVerkehrsbeziehungenEqual(
   }
 
   return a.every((q) =>
-      existsQuerungOnKnotenarmInRichtung(b, q.knotenarm, q.richtung)
+    existsQuerungOnKnotenarmInRichtung(b, q.knotenarm, q.richtung)
   );
 }
 
@@ -89,8 +89,7 @@ function existsQJSVerkehrsbeziehung(
     return false;
   }
   return verkehrsbeziehungen.some(
-    (v) =>
-      v.von === von && v.nach === nach && v.strassenseite === strassenseite
+    (v) => v.von === von && v.nach === nach && v.strassenseite === strassenseite
   );
 }
 
