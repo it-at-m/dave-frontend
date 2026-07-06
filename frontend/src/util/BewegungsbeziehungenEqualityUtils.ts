@@ -4,7 +4,26 @@ import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import { existsQuerungOnKnotenarmInRichtung } from "@/util/Querungspruefung";
+
+/**
+ * Prüft, ob ein Querungsverkehr für eine bestimmte Knotenarmnummer und Richtung im Array existiert.
+ * @param querungsverkehr Array Querungsverkehr-Daten
+ * @param knNummer Knotenarmnummer
+ * @param richtung Himmelsrichtung
+ * @returns Boolean, ob der Querungsverkehr existiert
+ */
+export function existsQuerungsverkehr(
+    querungsverkehr: QuerungsverkehrDTO[] | undefined,
+    knNummer: number,
+    richtung: Himmelsrichtung
+): boolean {
+  if (!querungsverkehr || querungsverkehr.length === 0) {
+    return false;
+  }
+  return querungsverkehr.some(
+      (q) => q.knotenarm === knNummer && q.richtung === richtung
+  );
+}
 
 /**
  * Vergleicht zwei Arrays von Querungsverkehren.
@@ -22,7 +41,7 @@ export function areQuVerkehrsbeziehungenEqual(
   }
 
   return a.every((q) =>
-    existsQuerungOnKnotenarmInRichtung(b, q.knotenarm, q.richtung)
+    existsQuerungsverkehr(b, q.knotenarm, q.richtung)
   );
 }
 
@@ -34,7 +53,7 @@ export function areQuVerkehrsbeziehungenEqual(
  * @param richtung Bewegungsrichtung
  * @returns Boolean, ob der Laengsverkehr existiert
  */
-function existsLaengsverkehr(
+export function existsLaengsverkehr(
   laengsverkehr: LaengsverkehrDTO[] | undefined,
   knNummer: number,
   strassenseite: Himmelsrichtung,
@@ -79,7 +98,7 @@ export function areFjsVerkehrsbeziehungenEqual(
  * @param strassenseite String
  * @returns Boolean, ob die Verkehrsbeziehung existiert
  */
-function existsQJSVerkehrsbeziehung(
+export function existsQJSVerkehrsbeziehung(
   verkehrsbeziehungen: VerkehrsbeziehungDTO[] | undefined,
   von: number,
   nach: number,

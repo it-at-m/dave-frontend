@@ -39,7 +39,7 @@ import {
   areFjsVerkehrsbeziehungenEqual,
   areQjsVerkehrsbeziehungenEqual,
   areQuVerkehrsbeziehungenEqual,
-} from "@/util/EqualityUtils";
+} from "@/util/BewegungsbeziehungenEqualityUtils";
 
 use([
   CanvasRenderer,

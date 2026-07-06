@@ -6,9 +6,9 @@ import {
   areFjsVerkehrsbeziehungenEqual,
   areQjsVerkehrsbeziehungenEqual,
   areQuVerkehrsbeziehungenEqual,
-} from "@/util/EqualityUtils";
+} from "@/util/BewegungsbeziehungenEqualityUtils";
 
-describe("EqualityUtils", () => {
+describe("BewegungsbeziehungenEqualityUtils", () => {
   describe("areQuVerkehrsbeziehungenEqual", () => {
     it("returns true for two identical arrays", () => {
       const a = [

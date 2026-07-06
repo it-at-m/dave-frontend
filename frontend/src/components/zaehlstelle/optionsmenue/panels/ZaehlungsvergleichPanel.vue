@@ -107,6 +107,11 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useDateUtils } from "@/util/DateUtils";
+import {
+  areFjsVerkehrsbeziehungenEqual,
+  areQjsVerkehrsbeziehungenEqual,
+  areQuVerkehrsbeziehungenEqual
+} from "@/util/BewegungsbeziehungenEqualityUtils";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -283,45 +288,19 @@ function checkBewegungsbeziehungen(
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
     return (
-      activeZaehlung.value.querungsverkehr.length ===
-        zaehlung.querungsverkehr.length &&
-      activeZaehlung.value.querungsverkehr.every((activeQv) =>
-        zaehlung.querungsverkehr.some(
-          (qv) =>
-            qv.knotenarm === activeQv.knotenarm &&
-            qv.richtung === activeQv.richtung
-        )
-      )
+        areQuVerkehrsbeziehungenEqual(activeZaehlung.value.querungsverkehr, zaehlung.querungsverkehr)
     );
   }
   // Bei FJS: Prüfe auf Knotenarm, Richtung und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.FJS.toString()) {
     return (
-      activeZaehlung.value.laengsverkehr.length ===
-        zaehlung.laengsverkehr.length &&
-      activeZaehlung.value.laengsverkehr.every((activeLv) =>
-        zaehlung.laengsverkehr.some(
-          (lv) =>
-            lv.knotenarm === activeLv.knotenarm &&
-            lv.richtung === activeLv.richtung &&
-            lv.strassenseite === activeLv.strassenseite
-        )
-      )
+      areFjsVerkehrsbeziehungenEqual(activeZaehlung.value.laengsverkehr, zaehlung.laengsverkehr)
     );
   }
   // Bei QJS: Prüfe auf Von, Nach und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
     return (
-      activeZaehlung.value.verkehrsbeziehungen.length ===
-        zaehlung.verkehrsbeziehungen.length &&
-      activeZaehlung.value.verkehrsbeziehungen.every((activeVb) =>
-        zaehlung.verkehrsbeziehungen.some(
-          (qjs) =>
-            qjs.von === activeVb.von &&
-            qjs.nach === activeVb.nach &&
-            qjs.strassenseite === activeVb.strassenseite
-        )
-      )
+      areQjsVerkehrsbeziehungenEqual(activeZaehlung.value.verkehrsbeziehungen, zaehlung.verkehrsbeziehungen)
     );
   }
   return true; // Standard-Rückgabewert, wenn andere Zaehlart
