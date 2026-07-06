@@ -98,7 +98,7 @@
             </g>
           </g>
           <g id="arrows">
-            <g id="arrow1">
+            <g v-if="isArrowOneCounted" id="arrow1">
               <path
                 style="stroke-width: 40.1656"
                 :d="dArrowOne"
@@ -119,7 +119,7 @@
                 d="m 221.73348,553.05942 19.31149,-25.58133 0.0167,51.09625 z"
               />
             </g>
-            <g id="arrow2">
+            <g v-if="isArrowTwoCounted" id="arrow2">
               <path
                 style="stroke-width: 40.1708"
                 :d="dArrowTwo"
@@ -140,7 +140,7 @@
                 d="m 1178.1206,609.06771 -18.7975,-22.45207 -0.017,44.84587 z"
               />
             </g>
-            <g id="arrow3">
+            <g v-if="isArrowThreeCounted" id="arrow3">
               <path
                 style="stroke-width: 40.1798"
                 :d="dArrowThree"
@@ -161,7 +161,7 @@
                 d="m 221.49329,791.09394 19.39305,-22.32164 0.0169,44.58532 z"
               />
             </g>
-            <g id="arrow4">
+            <g v-if="isArrowFourCounted" id="arrow4">
               <path
                 style="stroke-width: 40.1798"
                 :d="dArrowFour"
@@ -252,8 +252,9 @@
                 {{ sumArrowsOneToFour }}
               </tspan>
             </text>
-            <g id="zaehlwerteArrowsOneTwo">
+            <g v-if="isArrowOneCounted || isArrowTwoCounted" id="zaehlwerteArrowsOneTwo">
               <text
+                v-if="isArrowOneCounted"
                 xml:space="preserve"
                 id="zaehlwertArrowOne"
                 :style="`
@@ -288,6 +289,7 @@
                 </tspan>
               </text>
               <text
+                v-if="isArrowTwoCounted"
                 xml:space="preserve"
                 id="zaehlwertArrowTwo"
                 :style="`
@@ -366,8 +368,9 @@
                 </tspan>
               </text>
             </g>
-            <g id="zaehlwerteArrowsThreeFour">
+            <g v-if="isArrowThreeCounted || isArrowFourCounted" id="zaehlwerteArrowsThreeFour">
               <text
+                v-if="isArrowThreeCounted"
                 xml:space="preserve"
                 id="zaehlwertArrowThree"
                 :style="`
@@ -402,6 +405,7 @@
                 </tspan>
               </text>
               <text
+                v-if="isArrowFourCounted"
                 xml:space="preserve"
                 id="zaehlwertArrowFour"
                 :style="`
@@ -1160,6 +1164,34 @@ const colorArrowThree = computed<string>(() => {
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value) return BelastungsplanConstants.inaktivColor;
   return calculateColorArrowThreeFour();
+});
+
+const isArrowOneCounted = computed<string>(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowOne
+  );
+});
+
+const isArrowTwoCounted = computed<string>(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowTwo
+  );
+});
+
+const isArrowThreeCounted = computed<string>(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowThree
+  );
+});
+
+const isArrowFourCounted = computed<string>(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowFour
+  );
 });
 
 function calculateColorArrowOneTwo() {
