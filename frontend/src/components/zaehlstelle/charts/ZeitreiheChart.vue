@@ -33,6 +33,9 @@ import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import Zaehlart from "@/types/enum/Zaehlart";
+import { areQuVerkehrsbeziehungenEqual, areFjsVerkehrsbeziehungenEqual, areQjsVerkehrsbeziehungenEqual } from "@/util/EqualityUtils";
 
 use([
   CanvasRenderer,
@@ -85,6 +88,10 @@ const zeitreiheHeightAndWidth = computed(() => {
 });
 const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
 });
 
 /**
@@ -528,16 +535,27 @@ function getMetaData(): Array<string> {
     }
   }
   const verkehrsbeziehung: Array<string> = [];
-  verkehrsbeziehung.push(
-    `Von: ${filterOptions.value.vonKnotenarm ? filterOptions.value.vonKnotenarm : "Alle"}`
-  );
-  verkehrsbeziehung.push(` - `);
-  verkehrsbeziehung.push(
-    `Nach: ${filterOptions.value.nachKnotenarm ? filterOptions.value.nachKnotenarm : "Alle"}`
-  );
-  data.push(verkehrsbeziehung.join(""));
+  if (activeZaehlung.value.zaehlart === Zaehlart.QU || activeZaehlung.value.zaehlart === Zaehlart.FJS  || activeZaehlung.value.zaehlart === Zaehlart.QJS) {
+    if (areQuVerkehrsbeziehungenEqual(filterOptions.value.chosenQuerungsverkehre, activeZaehlung.value.querungsverkehr) &&
+        areFjsVerkehrsbeziehungenEqual(filterOptions.value.chosenLaengsverkehre, activeZaehlung.value.laengsverkehr) &&
+        areQjsVerkehrsbeziehungenEqual(filterOptions.value.chosenVerkehrsbeziehungen, activeZaehlung.value.verkehrsbeziehungen)) {
+        data.push("alle");
+    } else {
+      data.push("Teilauswahl");
+    }
+  } else {
+    verkehrsbeziehung.push(
+        `Von: ${filterOptions.value.vonKnotenarm ? filterOptions.value.vonKnotenarm : "Alle"}`
+    );
+    verkehrsbeziehung.push(` - `);
+    verkehrsbeziehung.push(
+        `Nach: ${filterOptions.value.nachKnotenarm ? filterOptions.value.nachKnotenarm : "Alle"}`
+    );
+    data.push(verkehrsbeziehung.join(""));
+  }
   return data;
 }
+
 
 const isNotTagesWert = computed(() => {
   return filterOptions.value.zeitauswahl !== Zeitauswahl.TAGESWERT;
