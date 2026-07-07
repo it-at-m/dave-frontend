@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { ref } from "vue";
 
-import { useQjs } from "@/util/QjsUtils";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { useQjs } from "@/util/QjsUtils";
 
 describe("QjsUtils", () => {
   // rotateSvgFor ----------------------------------

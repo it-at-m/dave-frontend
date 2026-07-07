@@ -35,9 +35,9 @@ import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-import { useQu } from "@/util/QuUtils";
 import { useFjs } from "@/util/FjsUtils";
 import { useQjs } from "@/util/QjsUtils";
+import { useQu } from "@/util/QuUtils";
 
 use([
   CanvasRenderer,

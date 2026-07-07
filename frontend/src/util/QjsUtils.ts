@@ -116,8 +116,8 @@ export function useQjs() {
    * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
    */
   function areVerkehrsbeziehungenEqual(
-      qjsA: VerkehrsbeziehungDTO[] | undefined,
-      qjsB: VerkehrsbeziehungDTO[] | undefined
+    qjsA: VerkehrsbeziehungDTO[] | undefined,
+    qjsB: VerkehrsbeziehungDTO[] | undefined
   ): boolean {
     const a = qjsA ?? [];
     const b = qjsB ?? [];
@@ -127,7 +127,7 @@ export function useQjs() {
     }
 
     return a.every((v) =>
-        existsQJSVerkehrsbeziehung(b, v.von, v.nach, v.strassenseite)
+      existsQJSVerkehrsbeziehung(b, v.von, v.nach, v.strassenseite)
     );
   }
 
@@ -140,16 +140,17 @@ export function useQjs() {
    * @returns Boolean, ob die Verkehrsbeziehung existiert
    */
   function existsQJSVerkehrsbeziehung(
-      verkehrsbeziehungen: VerkehrsbeziehungDTO[] | undefined,
-      von: number,
-      nach: number,
-      strassenseite: string
+    verkehrsbeziehungen: VerkehrsbeziehungDTO[] | undefined,
+    von: number,
+    nach: number,
+    strassenseite: string
   ): boolean {
     if (!verkehrsbeziehungen || verkehrsbeziehungen.length === 0) {
       return false;
     }
     return verkehrsbeziehungen.some(
-        (v) => v.von === von && v.nach === nach && v.strassenseite === strassenseite
+      (v) =>
+        v.von === von && v.nach === nach && v.strassenseite === strassenseite
     );
   }
 

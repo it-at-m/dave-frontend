@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { useQu } from "@/util/QuUtils";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { useQu } from "@/util/QuUtils";
 
 describe("QuUtils", () => {
   it("computeAvailableKnotenarme: entfernt Duplikate und sortiert aufsteigend", () => {
@@ -89,5 +89,4 @@ describe("QuUtils", () => {
       expect(areQuerungsverkehreEqual(a, d)).toBe(false);
     });
   });
-
 });

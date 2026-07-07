@@ -3703,7 +3703,8 @@ const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.NO);
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     isKnotenarm(knNumber) &&
-    qu.existsQuerungsverkehr( // Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung gefiltert ist.
+    qu.existsQuerungsverkehr(
+      // Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung gefiltert ist.
       optionen.value.chosenQuerungsverkehre,
       knNumber,
       direction
@@ -3718,7 +3719,8 @@ function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
   return computed(
     () =>
       isKnotenarm(knNumber) &&
-      qu.existsQuerungsverkehr( //Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert bzw. zur Zaehlung beauftragt ist.
+      qu.existsQuerungsverkehr(
+        //Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert bzw. zur Zaehlung beauftragt ist.
         activeZaehlung.value?.querungsverkehr,
         knNumber,
         direction
