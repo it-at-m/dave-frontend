@@ -5831,11 +5831,11 @@ function setColor(
   richtung: Bewegungsrichtung
 ) {
   return computed(() =>
-    fjs.isLaengsverkehrAvailable(
+    fjs.existsLaengsverkehr(
+      optionen.value.chosenLaengsverkehre,
       node,
       strassenseite,
-      richtung,
-      optionen.value.chosenLaengsverkehre
+      richtung
     )
       ? (BelastungsplanConstants.farben.get(node) ??
         BelastungsplanConstants.inaktivColor)
@@ -5849,11 +5849,11 @@ function isArrowAvailable(
   richtung: Bewegungsrichtung
 ) {
   return computed(() =>
-    fjs.isLaengsverkehrAvailable(
+    fjs.existsLaengsverkehr(
+      activeZaehlung.value.laengsverkehr,
       node,
       strassenseite,
-      richtung,
-      activeZaehlung.value.laengsverkehr
+      richtung
     )
   );
 }

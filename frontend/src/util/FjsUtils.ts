@@ -26,17 +26,28 @@ export function useFjs() {
     return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
   }
 
-  function isLaengsverkehrAvailable(
-    node: number,
+  /**
+   * Prüft, ob ein Laengsverkehr für eine bestimmte Knotenarmnummer, Richtung und Straßenseite im Array existiert.
+   * @param laengsverkehr Array Laengsverkehre
+   * @param knNummer Knotenarmnummer
+   * @param strassenseite Straßenseite
+   * @param richtung Himmelsrichtung
+   * @returns Boolean, ob der Laengsverkehr existiert
+   */
+  function existsLaengsverkehr(
+    laengsverkehr: LaengsverkehrDTO[],
+    knNummer: number,
     strassenseite: Himmelsrichtung,
-    richtung: Bewegungsrichtung,
-    laengsverkehr: LaengsverkehrDTO[]
+    richtung: Bewegungsrichtung
   ): boolean {
+    if (!laengsverkehr || laengsverkehr.length === 0) {
+      return false;
+    }
     return laengsverkehr.some(
-      (element) =>
-        element.knotenarm === node &&
-        element.strassenseite === strassenseite &&
-        element.richtung === richtung
+      (q) =>
+        q.knotenarm === knNummer &&
+        q.strassenseite === strassenseite &&
+        q.richtung === richtung
     );
   }
 
@@ -79,7 +90,7 @@ export function useFjs() {
   return {
     computeAvailableKnotenarme,
     computeAvailableKnotenarmNummernFromZaehlung,
-    isLaengsverkehrAvailable,
+    existsLaengsverkehr,
     areLaengsverkehreEqual,
   };
 }

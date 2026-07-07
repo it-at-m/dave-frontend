@@ -21,9 +21,9 @@ describe("FjsUtils", () => {
     expect(nums).toEqual([1, 3]);
   });
 
-  // isLaengsverkehrAvailable -----------------------------------
-  it("isLaengsverkehrAvailable: für ausgewählte pfeile wird korrekt true/false zurückgegeben", () => {
-    const { isLaengsverkehrAvailable } = useFjs();
+  // existsLaengsverkehr -----------------------------------
+  it("existsLaengsverkehr: für ausgewählte pfeile wird korrekt true/false zurückgegeben", () => {
+    const { existsLaengsverkehr } = useFjs();
 
     const laengsverkehr = [
       { knotenarm: 1, richtung: "AUS", strassenseite: "W" },
@@ -35,66 +35,66 @@ describe("FjsUtils", () => {
     ] as any;
 
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         1,
         Himmelsrichtung.W,
-        Bewegungsrichtung.AUS,
-        laengsverkehr
+        Bewegungsrichtung.AUS
       )
     ).toBe(true);
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         1,
         Himmelsrichtung.O,
-        Bewegungsrichtung.AUS,
-        laengsverkehr
+        Bewegungsrichtung.AUS
       )
     ).toBe(true);
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         1,
         Himmelsrichtung.W,
-        Bewegungsrichtung.EIN,
-        laengsverkehr
+        Bewegungsrichtung.EIN
       )
     ).toBe(true);
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         1,
         Himmelsrichtung.O,
-        Bewegungsrichtung.EIN,
-        laengsverkehr
+        Bewegungsrichtung.EIN
       )
     ).toBe(true);
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         3,
         Himmelsrichtung.O,
-        Bewegungsrichtung.AUS,
-        laengsverkehr
+        Bewegungsrichtung.AUS
       )
     ).toBe(true);
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         3,
         Himmelsrichtung.W,
-        Bewegungsrichtung.EIN,
-        laengsverkehr
+        Bewegungsrichtung.EIN
       )
     ).toBe(true);
 
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         3,
         Himmelsrichtung.W,
-        Bewegungsrichtung.AUS,
-        laengsverkehr
+        Bewegungsrichtung.AUS
       )
     ).toBe(false);
   });
 
   it("isLaengsverkehrAvailable: knotenarm nicht vorhanden; sollte false zurückgeben", () => {
-    const { isLaengsverkehrAvailable } = useFjs();
+    const { existsLaengsverkehr } = useFjs();
 
     const laengsverkehr = [
       { knotenarm: 1, richtung: "AUS", strassenseite: "W" },
@@ -102,11 +102,11 @@ describe("FjsUtils", () => {
     ] as any;
 
     expect(
-      isLaengsverkehrAvailable(
+      existsLaengsverkehr(
+        laengsverkehr,
         2,
         Himmelsrichtung.W,
-        Bewegungsrichtung.AUS,
-        laengsverkehr
+        Bewegungsrichtung.AUS
       )
     ).toBe(false);
   });
