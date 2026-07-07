@@ -55,9 +55,25 @@ export function useFjs() {
       return false;
     }
 
-    return a.every((l) =>
-      isLaengsverkehrAvailable(l.knotenarm, l.strassenseite, l.richtung, b)
-    );
+    // Kopiere b in ein veränderbares Array 'remaining'.
+    // Für jedes Element q aus 'a' suchen wir in 'remaining' nach einem Eintrag
+    // mit derselben Kombination aus `knotenarm`, `strassenseite` und `richtung`. Wird ein Treffer
+    // gefunden, entfernen wir ihn aus 'remaining', damit doppelte Einträge
+    // korrekt berücksichtigt werden. Fehlt ein Treffer, sind die Arrays nicht gleich.
+    const remaining = [...b];
+    return a.every((q) => {
+      const idx = remaining.findIndex(
+        (r) =>
+          r.knotenarm === q.knotenarm &&
+          r.strassenseite === q.strassenseite &&
+          r.richtung === q.richtung
+      );
+      if (idx === -1) {
+        return false;
+      }
+      remaining.splice(idx, 1);
+      return true;
+    });
   }
 
   return {

@@ -126,9 +126,25 @@ export function useQjs() {
       return false;
     }
 
-    return a.every((v) =>
-      existsQJSVerkehrsbeziehung(b, v.von, v.nach, v.strassenseite)
-    );
+    // Kopiere b in ein veränderbares Array 'remaining'.
+    // Für jedes Element q aus 'a' suchen wir in 'remaining' nach einem Eintrag
+    // mit derselben Kombination aus `von`, `nach` und `strassenseite`. Wird ein Treffer
+    // gefunden, entfernen wir ihn aus 'remaining', damit doppelte Einträge
+    // korrekt berücksichtigt werden. Fehlt ein Treffer, sind die Arrays nicht gleich.
+    const remaining = [...b];
+    return a.every((q) => {
+      const idx = remaining.findIndex(
+        (r) =>
+          r.von === q.von &&
+          r.nach === q.nach &&
+          r.strassenseite === q.strassenseite
+      );
+      if (idx === -1) {
+        return false;
+      }
+      remaining.splice(idx, 1);
+      return true;
+    });
   }
 
   /**
