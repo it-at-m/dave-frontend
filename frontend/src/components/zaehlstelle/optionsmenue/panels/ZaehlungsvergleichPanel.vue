@@ -107,11 +107,9 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useDateUtils } from "@/util/DateUtils";
-import {
-  areFjsVerkehrsbeziehungenEqual,
-  areQjsVerkehrsbeziehungenEqual,
-  areQuVerkehrsbeziehungenEqual
-} from "@/util/BewegungsbeziehungenEqualityUtils";
+import { useQu } from "@/util/QuUtils";
+import { useFjs } from "@/util/FjsUtils";
+import { useQjs } from "@/util/QjsUtils";
 
 const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
   required: true,
@@ -127,6 +125,10 @@ const hoverSelectBasisdatum = ref(false);
 const hoverSelectVergleichsdatum = ref(false);
 const hoverCheckbox = ref(false);
 const hoverSelectVergleichsdatumZeitreihe = ref(false);
+
+const qu = useQu();
+const fjs = useFjs();
+const qjs = useQjs();
 
 onMounted(() => {
   initData();
@@ -288,19 +290,19 @@ function checkBewegungsbeziehungen(
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
     return (
-        areQuVerkehrsbeziehungenEqual(activeZaehlung.value.querungsverkehr, zaehlung.querungsverkehr)
+        qu.areQuerungsverkehreEqual(activeZaehlung.value.querungsverkehr, zaehlung.querungsverkehr)
     );
   }
   // Bei FJS: Prüfe auf Knotenarm, Richtung und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.FJS.toString()) {
     return (
-      areFjsVerkehrsbeziehungenEqual(activeZaehlung.value.laengsverkehr, zaehlung.laengsverkehr)
+      fjs.areLaengsverkehreEqual(activeZaehlung.value.laengsverkehr, zaehlung.laengsverkehr)
     );
   }
   // Bei QJS: Prüfe auf Von, Nach und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
     return (
-      areQjsVerkehrsbeziehungenEqual(activeZaehlung.value.verkehrsbeziehungen, zaehlung.verkehrsbeziehungen)
+      qjs.areVerkehrsbeziehungenEqual(activeZaehlung.value.verkehrsbeziehungen, zaehlung.verkehrsbeziehungen)
     );
   }
   return true; // Standard-Rückgabewert, wenn andere Zaehlart

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ref } from "vue";
 
 import { useQjs } from "@/util/QjsUtils";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
 describe("QjsUtils", () => {
   // rotateSvgFor ----------------------------------
@@ -54,5 +55,65 @@ describe("QjsUtils", () => {
     const nums = computeAvailableKnotenarmNummernFromZaehlung(zaehlung);
     // Erwartet: nur 1 und 2, sortiert absteigend -> [2,1]
     expect(nums).toEqual([2, 1]);
+  });
+
+  describe("areQjsVerkehrsbeziehungenEqual", () => {
+    const { areVerkehrsbeziehungenEqual } = useQjs();
+    it("returns true for identical verkehrsbeziehungen", () => {
+      const a = [
+        { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+        { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+      ] as any;
+      const b = [
+        { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+        { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+      ] as any;
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(true);
+    });
+
+    it("is order independent for qjs", () => {
+      const a = [
+        { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+        { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+      ] as any;
+      const b = [
+        { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+        { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+      ] as any;
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(true);
+    });
+
+    it("handles undefined/empty", () => {
+      expect(areVerkehrsbeziehungenEqual(undefined, [])).toBe(true);
+      expect(areVerkehrsbeziehungenEqual([], undefined)).toBe(true);
+      expect(areVerkehrsbeziehungenEqual(undefined, undefined)).toBe(true);
+    });
+
+    it("returns false for different lengths", () => {
+      const a = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.W }] as any;
+      const b = [
+        { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
+        { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
+      ] as any;
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(false);
+    });
+
+    it("returns false when 'von' differs", () => {
+      const a = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.W }] as any;
+      const b = [{ von: 2, nach: 3, strassenseite: Himmelsrichtung.W }] as any; // different 'von'
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(false);
+    });
+
+    it("returns false when 'nach' differs", () => {
+      const a = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.W }] as any;
+      const b = [{ von: 1, nach: 2, strassenseite: Himmelsrichtung.W }] as any; // different 'nach'
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(false);
+    });
+
+    it("returns false when 'strassenseite' differs", () => {
+      const a = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.W }] as any;
+      const b = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.N }] as any; // different strassenseite
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(false);
+    });
   });
 });

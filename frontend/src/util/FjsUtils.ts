@@ -40,9 +40,30 @@ export function useFjs() {
     );
   }
 
+  /**
+  * Vergleicht zwei Arrays von Laengsverkehren.
+   * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
+  */
+  function areLaengsverkehreEqual(
+      laengsA: LaengsverkehrDTO[] | undefined,
+      laengsB: LaengsverkehrDTO[] | undefined
+  ): boolean {
+    const a = laengsA ?? [];
+    const b = laengsB ?? [];
+
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    return a.every((l) =>
+        isLaengsverkehrAvailable(l.knotenarm, l.strassenseite, l.richtung, b)
+    );
+  }
+
   return {
     computeAvailableKnotenarme,
     computeAvailableKnotenarmNummernFromZaehlung,
     isLaengsverkehrAvailable,
+    areLaengsverkehreEqual,
   };
 }

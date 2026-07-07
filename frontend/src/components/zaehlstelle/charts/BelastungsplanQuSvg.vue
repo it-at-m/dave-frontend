@@ -3441,7 +3441,6 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-import {existsQuerungsverkehr} from "@/util/BewegungsbeziehungenEqualityUtils";
 
 interface Props {
   data: LadeBelastungsplanQuDTO;
@@ -3704,7 +3703,7 @@ const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.NO);
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     isKnotenarm(knNumber) &&
-    existsQuerungsverkehr( // Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung gefiltert ist.
+    qu.existsQuerungsverkehr( // Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung gefiltert ist.
       optionen.value.chosenQuerungsverkehre,
       knNumber,
       direction
@@ -3719,7 +3718,7 @@ function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
   return computed(
     () =>
       isKnotenarm(knNumber) &&
-      existsQuerungsverkehr( //Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert bzw. zur Zaehlung beauftragt ist.
+      qu.existsQuerungsverkehr( //Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert bzw. zur Zaehlung beauftragt ist.
         activeZaehlung.value?.querungsverkehr,
         knNumber,
         direction

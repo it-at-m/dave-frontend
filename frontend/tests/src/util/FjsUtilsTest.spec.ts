@@ -110,4 +110,146 @@ describe("FjsUtils", () => {
       )
     ).toBe(false);
   });
+
+  describe("areLaengsverkehreEqual", () => {
+    const { areLaengsverkehreEqual } = useFjs();
+    it("returns true for identical laengsverkehr entries", () => {
+      const a = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+        {
+          knotenarm: 2,
+          strassenseite: Himmelsrichtung.N,
+          richtung: Bewegungsrichtung.AUS,
+        },
+      ] as any;
+      const b = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+        {
+          knotenarm: 2,
+          strassenseite: Himmelsrichtung.N,
+          richtung: Bewegungsrichtung.AUS,
+        },
+      ] as any;
+      expect(areLaengsverkehreEqual(a, b)).toBe(true);
+    });
+
+    it("is order independent for laengsverkehr", () => {
+      const a = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+        {
+          knotenarm: 2,
+          strassenseite: Himmelsrichtung.N,
+          richtung: Bewegungsrichtung.AUS,
+        },
+      ] as any;
+      const b = [
+        {
+          knotenarm: 2,
+          strassenseite: Himmelsrichtung.N,
+          richtung: Bewegungsrichtung.AUS,
+        },
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      expect(areLaengsverkehreEqual(a, b)).toBe(true);
+    });
+
+    it("handles undefined/empty", () => {
+      expect(areLaengsverkehreEqual(undefined, [])).toBe(true);
+      expect(areLaengsverkehreEqual([], undefined)).toBe(true);
+      expect(areLaengsverkehreEqual(undefined, undefined)).toBe(true);
+    });
+
+    it("returns false for different lengths", () => {
+      const a = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      const b = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+        {
+          knotenarm: 2,
+          strassenseite: Himmelsrichtung.N,
+          richtung: Bewegungsrichtung.AUS,
+        },
+      ] as any;
+      expect(areLaengsverkehreEqual(a, b)).toBe(false);
+    });
+
+    it("returns false when richtung differs", () => {
+      const a = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      const b = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.AUS,
+        },
+      ] as any;
+      expect(areLaengsverkehreEqual(a, b)).toBe(false);
+    });
+
+    it("returns false when knotenarm differs", () => {
+      const a = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      const b = [
+        {
+          knotenarm: 2,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      expect(areLaengsverkehreEqual(a, b)).toBe(false);
+    });
+
+    it("returns false when strassenseite differs", () => {
+      const a = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.W,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      const b = [
+        {
+          knotenarm: 1,
+          strassenseite: Himmelsrichtung.N,
+          richtung: Bewegungsrichtung.EIN,
+        },
+      ] as any;
+      expect(areLaengsverkehreEqual(a, b)).toBe(false);
+    });
+  });
 });

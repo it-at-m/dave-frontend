@@ -111,6 +111,48 @@ export function useQjs() {
     return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
   }
 
+  /**
+   * Vergleicht zwei Arrays von QJS-Verkehrsbeziehungen.
+   * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
+   */
+  function areVerkehrsbeziehungenEqual(
+      qjsA: VerkehrsbeziehungDTO[] | undefined,
+      qjsB: VerkehrsbeziehungDTO[] | undefined
+  ): boolean {
+    const a = qjsA ?? [];
+    const b = qjsB ?? [];
+
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    return a.every((v) =>
+        existsQJSVerkehrsbeziehung(b, v.von, v.nach, v.strassenseite)
+    );
+  }
+
+  /**
+   * Prüft, ob eine QJS-Verkehrsbeziehung mit bestimmten von, nach und Straßenseite im Array existiert.
+   * @param verkehrsbeziehungen Array QJS-Verkehrsbeziehungen
+   * @param von Knotenarmnummer
+   * @param nach Knotenarmnummer
+   * @param strassenseite String
+   * @returns Boolean, ob die Verkehrsbeziehung existiert
+   */
+  function existsQJSVerkehrsbeziehung(
+      verkehrsbeziehungen: VerkehrsbeziehungDTO[] | undefined,
+      von: number,
+      nach: number,
+      strassenseite: string
+  ): boolean {
+    if (!verkehrsbeziehungen || verkehrsbeziehungen.length === 0) {
+      return false;
+    }
+    return verkehrsbeziehungen.some(
+        (v) => v.von === von && v.nach === nach && v.strassenseite === strassenseite
+    );
+  }
+
   return {
     rotateSvgFor,
     patternsArrowOne,
@@ -121,5 +163,6 @@ export function useQjs() {
     hasAnyArrowPatternIn,
     computeAvailableKnotenarme,
     computeAvailableKnotenarmNummernFromZaehlung,
+    areVerkehrsbeziehungenEqual,
   };
 }

@@ -35,11 +35,9 @@ import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
-import {
-  areFjsVerkehrsbeziehungenEqual,
-  areQjsVerkehrsbeziehungenEqual,
-  areQuVerkehrsbeziehungenEqual,
-} from "@/util/BewegungsbeziehungenEqualityUtils";
+import { useQu } from "@/util/QuUtils";
+import { useFjs } from "@/util/FjsUtils";
+import { useQjs } from "@/util/QjsUtils";
 
 use([
   CanvasRenderer,
@@ -82,6 +80,9 @@ const display = useDisplay();
 const zaehlstelleStore = useZaehlstelleStore();
 const downloadUtils = useDownloadUtils();
 const seriesEntriesChart = ref<Array<unknown>>([]);
+const fjs = useFjs();
+const qu = useQu();
+const qjs = useQjs();
 
 const zeitreiheHeightAndWidth = computed(() => {
   let height = "500px";
@@ -545,15 +546,15 @@ function getMetaData(): Array<string> {
     activeZaehlung.value.zaehlart === Zaehlart.QJS
   ) {
     if (
-      areQuVerkehrsbeziehungenEqual(
+      qu.areQuerungsverkehreEqual(
         filterOptions.value.chosenQuerungsverkehre,
         activeZaehlung.value.querungsverkehr
       ) &&
-      areFjsVerkehrsbeziehungenEqual(
+      fjs.areLaengsverkehreEqual(
         filterOptions.value.chosenLaengsverkehre,
         activeZaehlung.value.laengsverkehr
       ) &&
-      areQjsVerkehrsbeziehungenEqual(
+      qjs.areVerkehrsbeziehungenEqual(
         filterOptions.value.chosenVerkehrsbeziehungen,
         activeZaehlung.value.verkehrsbeziehungen
       )
