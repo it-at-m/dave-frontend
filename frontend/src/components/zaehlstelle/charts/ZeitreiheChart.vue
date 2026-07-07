@@ -559,7 +559,7 @@ function getMetaData(): Array<string> {
         activeZaehlung.value.verkehrsbeziehungen
       )
     ) {
-      data.push("alle");
+      data.push("Alle");
     } else {
       data.push("Teilauswahl");
     }
