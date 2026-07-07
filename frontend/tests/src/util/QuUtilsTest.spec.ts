@@ -36,7 +36,7 @@ describe("QuUtils", () => {
     expect(result).toEqual([]);
   });
 
-  describe("areVerkehrsbeziehungenEqual", () => {
+  describe("areQuerungsverkehreEqual", () => {
     const { areQuerungsverkehreEqual } = useQu();
     it("returns true for two identical arrays", () => {
       const a = [
