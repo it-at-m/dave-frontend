@@ -148,42 +148,76 @@
             </span>
           </v-col>
         </v-row>
-        <v-row
-          v-for="(k, index) in sortedKnotenarme"
-          :key="k.nummer"
-          no-gutters
-          class="ma-0"
-        >
-          <v-col cols="1">
-            <v-icon
-              v-if="index === 0"
-              size="small"
-              color="tertiary"
-              icon="mdi-arrow-decision"
-            />
-          </v-col>
-          <v-col cols="9">
-            <span
-              v-if="options.vonIds.includes(k.nummer)"
-              class="text-caption font-weight-medium text-white"
-            >
-              {{ getDirectionAsText("von") }}
-            </span>
-            <span
-              v-if="options.nachIds.includes(k.nummer)"
-              class="text-caption font-weight-medium text-white"
-              >{{ getDirectionAsText("nach") }}
-            </span>
-            <span class="text-caption text-grey-lighten-1"
-              >{{ k.nummer }} {{ k.strassenname }}</span
-            >
-          </v-col>
-          <v-col cols="2">
-            <span class="text-caption text-grey-lighten-1">
-              {{ getHimmelsrichtungAsText(k.nummer) }}
-            </span>
-          </v-col>
-        </v-row>
+        <template v-if="!isZaehlartQjsOrFjsOrQu">
+          <v-row
+            v-for="(k, index) in sortedKnotenarme"
+            :key="k.nummer"
+            no-gutters
+            class="ma-0"
+          >
+            <v-col cols="1">
+              <v-icon
+                v-if="index === 0"
+                size="small"
+                color="tertiary"
+                icon="mdi-arrow-decision"
+              />
+            </v-col>
+            <v-col cols="9">
+              <span
+                v-if="options.vonIds.includes(k.nummer)"
+                class="text-caption font-weight-medium text-white"
+              >
+                {{ getDirectionAsText("von") }}
+              </span>
+              <span
+                v-if="options.nachIds.includes(k.nummer)"
+                class="text-caption font-weight-medium text-white"
+                >{{ getDirectionAsText("nach") }}
+              </span>
+              <span class="text-caption text-grey-lighten-1"
+                >{{ k.nummer }} {{ k.strassenname }}</span
+              >
+            </v-col>
+            <v-col cols="2">
+              <span class="text-caption text-grey-lighten-1">
+                {{ getHimmelsrichtungAsText(k.nummer) }}
+              </span>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-else>
+          <v-row
+            no-gutters
+            class="ma-0"
+          >
+            <v-col cols="1">
+              <v-icon
+                size="small"
+                color="tertiary"
+                icon="mdi-arrow-decision"
+              />
+            </v-col>
+            <v-col cols="11">
+              <span class="text-caption text-white">{{
+                verkehrsbeziehungenPrefix
+              }}</span>
+            </v-col>
+          </v-row>
+          <v-row
+            v-for="(k, index) in sortedKnotenarme"
+            :key="k.nummer"
+            no-gutters
+            class="ma-0"
+          >
+            <v-col cols="1"> </v-col>
+            <v-col cols="11">
+              <span class="text-caption text-grey-lighten-1">
+                {{ k.nummer }} {{ k.strassenname }}
+              </span>
+            </v-col>
+          </v-row>
+        </template>
         <v-row
           no-gutters
           class="mt-2"
@@ -216,6 +250,7 @@ import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import OptionsmenueZaehlstelle from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zaehlart from "@/types/enum/Zaehlart";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -259,10 +294,25 @@ const knotenarme = computed(() => {
 });
 
 /**
- * Holt die sortierten Knotenarme aus dem Store.
+ * Holt die sortierten Knotenarme aus dem Store
+ * und filtert nur die Knotenarme mit mindestens einer
+ * Verkehrsbeziehung.
  */
 const sortedKnotenarme = computed(() => {
-  return zaehlstelleStore.getSortedKnotenarme;
+  const all = zaehlstelleStore.getSortedKnotenarme || [];
+  const relations = getCurrentOption() ?? [];
+
+  // Wenn keine Relations gewählt sind, gib alle Knotenarme zurück
+  if (!Array.isArray(relations) || relations.length === 0) {
+    return all;
+  }
+
+  return all.filter((k: any) =>
+    relations.some((rel: any) => {
+      const relKnoten = rel?.knotenarm;
+      return relKnoten === k.nummer || Number(relKnoten) === k.nummer;
+    })
+  );
 });
 
 /**
@@ -271,6 +321,84 @@ const sortedKnotenarme = computed(() => {
 const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
+
+const isZaehlartQjsOrFjsOrQu = computed(() => {
+  return (
+    zaehlung.value.zaehlart === Zaehlart.QJS ||
+    zaehlung.value.zaehlart === Zaehlart.FJS ||
+    zaehlung.value.zaehlart === Zaehlart.QU
+  );
+});
+
+const verkehrsbeziehungenPrefix = computed(() => {
+  const alleVerkehrsbeziehungen = getCurrentZaehlung();
+  const ausgewählteVerkehrsbeziehungen = getCurrentOption();
+
+  if (
+    ausgewählteVerkehrsbeziehungen.length === alleVerkehrsbeziehungen.length
+  ) {
+    return "Alle Verkehrsbeziehungen";
+  }
+  return "Teilauswahl";
+});
+
+/**
+ * Liefert das für die aktuelle Zählart relevante Array von Verkehrsbeziehungen.
+ *
+ * Verhalten:
+ * - Zaehlart.QU -> zaehlung.value?.querungsverkehr
+ * - Zaehlart.FJS -> zaehlung.value?.laengsverkehr
+ * - Zaehlart.QJS  -> zaehlung.value?.verkehrsbeziehungen
+ * - Default      -> oder []
+ *
+ * @returns {Array<any>} Array entsprechender Beziehungsobjekte oder [] als Fallback
+ */
+function getCurrentZaehlung() {
+  const z = zaehlung?.value;
+  if (!z) return [];
+
+  switch (z.zaehlart) {
+    case Zaehlart.QU:
+      return z.querungsverkehr ?? [];
+    case Zaehlart.FJS:
+      return z.laengsverkehr ?? [];
+    case Zaehlart.QJS:
+      return z.verkehrsbeziehungen ?? [];
+    default:
+      return [];
+  }
+}
+
+/**
+ * Liefert das für die aktuelle Zählart relevante Array aus den Options.
+ *
+ * Reihenfolge / Zuordnung:
+ * - Zaehlart.QU -> options.value?.chosenQuerungsverkehre
+ * - Zaehlart.FJS -> options.value?.chosenLaengsverkehre
+ * - Zaehlart.QJS  -> options.value?.chosenVerkehrsbeziehungen
+ * - Default      -> oder []
+ *
+ * Rückgabeverhalten:
+ * - Gibt das passende Array zurück, falls definiert.
+ * - Falls das Options‑Objekt nicht vorhanden ist oder das Feld undefined/null ist, wird [] zurückgegeben.
+ *
+ * @returns {Array<any>} Array entsprechender Auswahlobjekte oder [] als Fallback
+ */
+function getCurrentOption() {
+  const opt = options?.value;
+  if (!opt) return [];
+
+  switch (zaehlung.value?.zaehlart) {
+    case Zaehlart.QU:
+      return opt.chosenQuerungsverkehre ?? [];
+    case Zaehlart.FJS:
+      return opt.chosenLaengsverkehre ?? [];
+    case Zaehlart.QJS:
+      return opt.chosenVerkehrsbeziehungen ?? [];
+    default:
+      return [];
+  }
+}
 
 /**
  * Holt die lesbare Schreibweise für einen Zeitblock.
