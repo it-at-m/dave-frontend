@@ -300,7 +300,7 @@ const knotenarme = computed(() => {
  */
 const sortedFilteredKnotenarme = computed(() => {
   const all = zaehlstelleStore.getSortedKnotenarme || [];
-  const relations = getCurrentOption() ?? [];
+  const relations = getChosenBewegungsbeziehungen() ?? [];
 
   // Wenn keine Relations gewählt sind, gib alle Knotenarme zurück
   if (!Array.isArray(relations) || relations.length === 0) {
@@ -331,11 +331,11 @@ const isZaehlartQjsOrFjsOrQu = computed(() => {
 });
 
 const verkehrsbeziehungenPrefix = computed(() => {
-  const alleVerkehrsbeziehungen = getCurrentZaehlung();
-  const ausgewählteVerkehrsbeziehungen = getCurrentOption();
+  const alleVerkehrsbeziehungen = getCurrentBewegungsbeziehungen();
+  const ausgewaehlteVerkehrsbeziehungen = getChosenBewegungsbeziehungen();
 
   if (
-    ausgewählteVerkehrsbeziehungen.length === alleVerkehrsbeziehungen.length
+    ausgewaehlteVerkehrsbeziehungen.length === alleVerkehrsbeziehungen.length
   ) {
     return "Alle Verkehrsbeziehungen";
   }
@@ -353,7 +353,7 @@ const verkehrsbeziehungenPrefix = computed(() => {
  *
  * @returns {Array<any>} Array entsprechender Beziehungsobjekte oder [] als Fallback
  */
-function getCurrentZaehlung() {
+function getCurrentBewegungsbeziehungen() {
   const z = zaehlung?.value;
   if (!z) return [];
 
@@ -384,7 +384,7 @@ function getCurrentZaehlung() {
  *
  * @returns {Array<any>} Array entsprechender Auswahlobjekte oder [] als Fallback
  */
-function getCurrentOption() {
+function getChosenBewegungsbeziehungen() {
   const opt = options?.value;
   if (!opt) return [];
 
