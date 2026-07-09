@@ -496,28 +496,28 @@ function createHeader(): string {
   const headers: string[] = [];
   headers.push("Zähldatum");
   if (filterOptions.value.kraftfahrzeugverkehr) {
-    headers.push("Kraftfahrzeugverkehr");
+    headers.push(KRAFTFAHRZEUGVERKEHR);
   }
   if (filterOptions.value.gueterverkehr) {
-    headers.push("Güterverkehr");
+    headers.push(GUETERVERKEHR);
   }
   if (filterOptions.value.schwerverkehr) {
-    headers.push("Schwerverkehr");
+    headers.push(SCHWERVERKEHR);
   }
   if (filterOptions.value.radverkehr) {
-    headers.push("Radverkehr");
+    headers.push(RADVERKEHR);
   }
   if (filterOptions.value.fussverkehr) {
-    headers.push("Fußverkehr");
+    headers.push(FUSSVERKEHR);
   }
   if (filterOptions.value.zeitreiheGesamt) {
-    headers.push("Gesamt");
+    headers.push(GESAMT);
   }
   if (filterOptions.value.schwerverkehrsanteilProzent) {
-    headers.push("Schwerverkehrsanteil");
+    headers.push(SCHWERVERKEHRSANTEIL);
   }
   if (filterOptions.value.gueterverkehrsanteilProzent) {
-    headers.push("Güterverkehrsanteil");
+    headers.push(GUETERVERKEHRSANTEIL);
   }
   return headers.join(";");
 }
