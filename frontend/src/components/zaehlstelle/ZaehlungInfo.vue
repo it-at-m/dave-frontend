@@ -150,7 +150,7 @@
         </v-row>
         <template v-if="!isZaehlartQjsOrFjsOrQu">
           <v-row
-            v-for="(k, index) in sortedKnotenarme"
+            v-for="(k, index) in sortedFilteredKnotenarme"
             :key="k.nummer"
             no-gutters
             class="ma-0"
@@ -205,7 +205,7 @@
             </v-col>
           </v-row>
           <v-row
-            v-for="(k, index) in sortedKnotenarme"
+            v-for="(k, index) in sortedFilteredKnotenarme"
             :key="k.nummer"
             no-gutters
             class="ma-0"
@@ -298,7 +298,7 @@ const knotenarme = computed(() => {
  * und filtert nur die Knotenarme mit mindestens einer
  * Verkehrsbeziehung.
  */
-const sortedKnotenarme = computed(() => {
+const sortedFilteredKnotenarme = computed(() => {
   const all = zaehlstelleStore.getSortedKnotenarme || [];
   const relations = getCurrentOption() ?? [];
 
