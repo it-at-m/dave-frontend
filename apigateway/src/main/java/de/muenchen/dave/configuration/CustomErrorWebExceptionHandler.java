@@ -3,7 +3,6 @@ package de.muenchen.dave.configuration;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
