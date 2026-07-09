@@ -657,7 +657,7 @@
                   font-weight: bold;
                   font-stretch: normal;
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${belastungsplanMethods.maxlineWidth};
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
