@@ -425,8 +425,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
 }
 
 function downloadCsv() {
-  const header =
-    "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fußverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
+  const header = createHeader();
   const rows = [];
 
   rows.push(getMetaHeader().join(";"));
@@ -485,10 +484,42 @@ function fillCsvRow(isWanted: boolean, data: number) {
   let row = "";
   if (isWanted) {
     row += `;${data}`;
-  } else {
-    row += `;`;
   }
   return row;
+}
+
+/**
+ * Erstellt den CSV-Header abhängig von den gewählten Filteroptionen.
+ * Nicht gewählte Fahrzeugkategorien werden weggelassen.
+ */
+function createHeader(): string {
+  const headers: string[] = [];
+  headers.push("Zähldatum");
+  if (filterOptions.value.kraftfahrzeugverkehr) {
+    headers.push("Kraftfahrzeugverkehr");
+  }
+  if (filterOptions.value.gueterverkehr) {
+    headers.push("Güterverkehr");
+  }
+  if (filterOptions.value.schwerverkehr) {
+    headers.push("Schwerverkehr");
+  }
+  if (filterOptions.value.radverkehr) {
+    headers.push("Radverkehr");
+  }
+  if (filterOptions.value.fussverkehr) {
+    headers.push("Fußverkehr");
+  }
+  if (filterOptions.value.zeitreiheGesamt) {
+    headers.push("Gesamt");
+  }
+  if (filterOptions.value.schwerverkehrsanteilProzent) {
+    headers.push("Schwerverkehrsanteil");
+  }
+  if (filterOptions.value.gueterverkehrsanteilProzent) {
+    headers.push("Güterverkehrsanteil");
+  }
+  return headers.join(";");
 }
 
 function getMetaHeaderAndData(): string {
