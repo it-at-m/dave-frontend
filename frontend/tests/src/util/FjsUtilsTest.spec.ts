@@ -93,7 +93,7 @@ describe("FjsUtils", () => {
     ).toBe(false);
   });
 
-  it("isLaengsverkehrAvailable: knotenarm nicht vorhanden; sollte false zurückgeben", () => {
+  it("existsLaengsverkehr: knotenarm nicht vorhanden; sollte false zurückgeben", () => {
     const { existsLaengsverkehr } = useFjs();
 
     const laengsverkehr = [

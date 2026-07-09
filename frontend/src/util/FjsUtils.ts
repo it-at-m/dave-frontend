@@ -35,7 +35,7 @@ export function useFjs() {
    * @returns Boolean, ob der Laengsverkehr existiert
    */
   function existsLaengsverkehr(
-    laengsverkehr: LaengsverkehrDTO[],
+    laengsverkehr: LaengsverkehrDTO[] | undefined,
     knNummer: number,
     strassenseite: Himmelsrichtung,
     richtung: Bewegungsrichtung
