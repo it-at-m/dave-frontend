@@ -44,6 +44,7 @@
                 @zeitblock="setZeitblock($event)"
                 @intervall="setIntervall($event)"
                 @tagesTyp="setTagesTyp($event)"
+                @holidayOptions="setHolidayOptions($event)"
               />
 
               <fahrzeug-panel
@@ -308,6 +309,12 @@ function setTagesTyp(event: string) {
   }
 }
 
+function setHolidayOptions(event: string) {
+  if (event) {
+    chosenOptions.value.holidayOptions = event;
+  }
+}
+
 // Event Methode für die Fahrzeug Komponente
 function updateOptions(event: OptionsDTO) {
   if (event) {
@@ -328,6 +335,7 @@ function updateOptions(event: OptionsDTO) {
     chosenOptions.value.kraftraeder = event.kraftraeder;
     chosenOptions.value.pkwEinheiten = event.pkwEinheiten;
     chosenOptions.value.tagesTyp = event.tagesTyp;
+    chosenOptions.value.holidayOptions = event.holidayOptions;
   }
 }
 
