@@ -3,7 +3,7 @@ package de.muenchen.dave.configuration;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.WebProperties;
@@ -48,7 +48,7 @@ public class CustomErrorWebExceptionHandler extends DefaultErrorWebExceptionHand
     @Override
     protected Mono<ServerResponse> renderErrorResponse(final ServerRequest request) {
         final Throwable error = this.getError(request);
-        if (!ObjectUtils.isEmpty(error) && StringUtils.startsWith(error.getMessage(), INVALID_GRANT)) {
+        if (!ObjectUtils.isEmpty(error) && Strings.CS.startsWith(error.getMessage(), INVALID_GRANT)) {
             log.info("Invalidieren der WebSession und Antwort mit 302 (FOUND).");
             request.exchange().getSession().subscribe(WebSession::invalidate);
             return ServerResponse.status(HttpStatus.FOUND).build();

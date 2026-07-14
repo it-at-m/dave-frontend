@@ -71,7 +71,7 @@ public class GatewayUtils {
                 if (body instanceof Flux && responseHttpStatus.equals(httpStatus)) {
                     final var dataBufferFactory = response.bufferFactory();
                     final DataBuffer newDataBuffer = dataBufferFactory.wrap(
-                            ObjectUtils.defaultIfNull(newResponseBody, EMPTY_JSON_OBJECT).getBytes(StandardCharsets.UTF_8));
+                            ObjectUtils.getIfNull(newResponseBody, EMPTY_JSON_OBJECT).getBytes(StandardCharsets.UTF_8));
 
                     log.debug("Response from upstream {} get new response body: {}", httpStatus, newResponseBody);
                     getDelegate().getHeaders().setContentLength(newDataBuffer.readableByteCount());
