@@ -17,13 +17,16 @@ export const useUserStore = defineStore("userStore", () => {
   );
 
   const getName = computed(() => ssoUserInfoResponse.value.name);
+
   const getDepartment = computed(() => ssoUserInfoResponse.value.department);
+
   const isAnwender = computed(() => {
     return (
       ssoUserInfoResponse.value.authorities.includes(roleAnwender) &&
       !ssoUserInfoResponse.value.authorities.includes(rolePoweruser)
     );
   });
+
   const hasAuthorities = computed(() => {
     return (
       ssoUserInfoResponse.value.authorities &&
