@@ -16,12 +16,12 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <spring.boot.version>3.4.6</spring.boot.version>
-        <spring.cloud.version>2024.0.1</spring.cloud.version>
+        <spring.boot.version>3.5.16</spring.boot.version>
+        <spring.cloud.version>2025.0.3</spring.cloud.version>
         <!-- Version muss mit der in den spring-boot-dependencies bereitgestellten Lombok-Version übereinstimmen -->
-        <org.projectlombok.lombok.version>1.18.38</org.projectlombok.lombok.version>
+        <org.projectlombok.lombok.version>1.18.46</org.projectlombok.lombok.version>
         <logstash.encoder.version>8.1</logstash.encoder.version>
-        <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
+        <apache.commons.lang.version>3.20.0</apache.commons.lang.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
         <jvm.options>-Dorg.conscrypt.native.workdir=$(pwd)</jvm.options>
