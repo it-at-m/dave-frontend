@@ -13,15 +13,17 @@
       no-gutters
     >
       <v-col cols="4">
-        <v-checkbox
-          v-model="chosenOptionsCopy.werteHundertRunden"
+        <v-select
+          v-model="chosenOptionsCopy.rounding"
           class="mb-3"
-          :label="'Werte auf 100 Runden'"
-          hide-details
+          label="Rundung"
+          :items="roundingItems"
+          item-title="label"
+          item-value="key"
           color="quaternary"
           density="compact"
-          @mouseover="hoverWerteHundertRunden = true"
-          @mouseleave="hoverWerteHundertRunden = false"
+          @mouseover="hoverWerteRunden = true"
+          @mouseleave="hoverWerteRunden = false"
         />
         <v-slider
           v-model="sizeBelastungsplan"
@@ -64,12 +66,13 @@ import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import { roundingList } from "@/types/enum/Rounding";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();
 const zaehlstelleStore = useZaehlstelleStore();
 
-const hoverWerteHundertRunden = ref(false);
+const hoverWerteRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
 const hoverBlackPrintMode = ref(false);
 const sizeBelastungsplan = computed({
@@ -77,6 +80,10 @@ const sizeBelastungsplan = computed({
   set: (payload: number) =>
     messstelleStore.setBelastungsplanChosenSize(payload),
 });
+
+const roundingItems = computed(() =>
+    roundingList.map((it) => ({ key: it.key, label: it.label }))
+);
 
 watch(sizeBelastungsplan, () => {
   zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
