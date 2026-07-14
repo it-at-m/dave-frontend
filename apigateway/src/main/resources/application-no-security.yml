@@ -5,8 +5,10 @@ spring:
   cloud:
     gateway:
       # The whole list need to be overridden to remove CustomTokenRelayGatewayFilter
-      default-filters:
-        - RemoveResponseHeader=Expires
-        - RemoveRequestHeader=cookie
-        - RemoveRequestHeader=x-xsrf-token
+      server:
+        webflux:
+          default-filters:
+            - RemoveResponseHeader=Expires
+            - RemoveRequestHeader=cookie
+            - RemoveRequestHeader=x-xsrf-token
 
