@@ -13,7 +13,7 @@ export const roundingLabels: Record<Rounding, string> = {
   [Rounding.R100]: "auf 100er",
 };
 
-export const roundingList = Object.values(Rounding).map((value) => ({
+export const roundingItems = Object.values(Rounding).map((value) => ({
   key: value as Rounding,
   label: roundingLabels[value as Rounding],
 }));

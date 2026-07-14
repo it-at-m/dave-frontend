@@ -276,7 +276,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import { roundingList } from "@/types/enum/Rounding";
+import { roundingItems } from "@/types/enum/Rounding";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -383,10 +383,6 @@ const helpTextZeitreihe = computed(() => {
   }
   return "";
 });
-
-const roundingItems = computed(() =>
-  roundingList.map((it) => ({ key: it.key, label: it.label }))
-);
 
 function isTypeKfzDisabled(): boolean {
   return isTypeDisabled("KFZ");

@@ -66,7 +66,7 @@ import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import { roundingList } from "@/types/enum/Rounding";
+import { roundingItems } from "@/types/enum/Rounding";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();
@@ -80,10 +80,6 @@ const sizeBelastungsplan = computed({
   set: (payload: number) =>
     messstelleStore.setBelastungsplanChosenSize(payload),
 });
-
-const roundingItems = computed(() =>
-    roundingList.map((it) => ({ key: it.key, label: it.label }))
-);
 
 watch(sizeBelastungsplan, () => {
   zaehlstelleStore.setSizeBelastungsplanSvg(sizeBelastungsplan.value);
