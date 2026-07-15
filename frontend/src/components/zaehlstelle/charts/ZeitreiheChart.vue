@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
@@ -28,11 +29,15 @@ import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useFjs } from "@/util/FjsUtils";
+import { useQjs } from "@/util/QjsUtils";
+import { useQu } from "@/util/QuUtils";
 
 use([
   CanvasRenderer,
@@ -75,6 +80,9 @@ const display = useDisplay();
 const zaehlstelleStore = useZaehlstelleStore();
 const downloadUtils = useDownloadUtils();
 const seriesEntriesChart = ref<Array<unknown>>([]);
+const fjs = useFjs();
+const qu = useQu();
+const qjs = useQjs();
 
 const zeitreiheHeightAndWidth = computed(() => {
   let height = "500px";
@@ -85,6 +93,10 @@ const zeitreiheHeightAndWidth = computed(() => {
 });
 const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
 });
 
 /**
@@ -437,8 +449,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
 }
 
 function downloadCsv() {
-  const header =
-    "Zähldatum;Kraftfahrzeugverkehr;Güterverkehr;Schwerverkehr;Radverkehr;Fußverkehr;Gesamt;Schwerverkehrsanteil;Güterverkehrsanteil";
+  const header = createHeader();
   const rows = [];
 
   rows.push(getMetaHeader().join(";"));
@@ -509,10 +520,42 @@ function fillCsvRow(isWanted: boolean, data: number | null) {
     } else {
       row += `;${data}`;
     }
-  } else {
-    row += `;`;
   }
   return row;
+}
+
+/**
+ * Erstellt den CSV-Header abhängig von den gewählten Filteroptionen.
+ * Nicht gewählte Fahrzeugkategorien werden weggelassen.
+ */
+function createHeader(): string {
+  const headers: string[] = [];
+  headers.push("Zähldatum");
+  if (filterOptions.value.kraftfahrzeugverkehr) {
+    headers.push(KRAFTFAHRZEUGVERKEHR);
+  }
+  if (filterOptions.value.gueterverkehr) {
+    headers.push(GUETERVERKEHR);
+  }
+  if (filterOptions.value.schwerverkehr) {
+    headers.push(SCHWERVERKEHR);
+  }
+  if (filterOptions.value.radverkehr) {
+    headers.push(RADVERKEHR);
+  }
+  if (filterOptions.value.fussverkehr) {
+    headers.push(FUSSVERKEHR);
+  }
+  if (filterOptions.value.zeitreiheGesamt) {
+    headers.push(GESAMT);
+  }
+  if (filterOptions.value.schwerverkehrsanteilProzent) {
+    headers.push(SCHWERVERKEHRSANTEIL);
+  }
+  if (filterOptions.value.gueterverkehrsanteilProzent) {
+    headers.push(GUETERVERKEHRSANTEIL);
+  }
+  return headers.join(";");
 }
 
 function getMetaHeaderAndData(): string {
@@ -564,14 +607,39 @@ function getMetaData(): Array<string> {
     }
   }
   const verkehrsbeziehung: Array<string> = [];
-  verkehrsbeziehung.push(
-    `Von: ${filterOptions.value.vonKnotenarm ? filterOptions.value.vonKnotenarm : "Alle"}`
-  );
-  verkehrsbeziehung.push(` - `);
-  verkehrsbeziehung.push(
-    `Nach: ${filterOptions.value.nachKnotenarm ? filterOptions.value.nachKnotenarm : "Alle"}`
-  );
-  data.push(verkehrsbeziehung.join(""));
+  if (
+    activeZaehlung.value.zaehlart === Zaehlart.QU ||
+    activeZaehlung.value.zaehlart === Zaehlart.FJS ||
+    activeZaehlung.value.zaehlart === Zaehlart.QJS
+  ) {
+    if (
+      qu.areQuerungsverkehreEqual(
+        filterOptions.value.chosenQuerungsverkehre,
+        activeZaehlung.value.querungsverkehr
+      ) &&
+      fjs.areLaengsverkehreEqual(
+        filterOptions.value.chosenLaengsverkehre,
+        activeZaehlung.value.laengsverkehr
+      ) &&
+      qjs.areVerkehrsbeziehungenEqual(
+        filterOptions.value.chosenVerkehrsbeziehungen,
+        activeZaehlung.value.verkehrsbeziehungen
+      )
+    ) {
+      data.push("Alle");
+    } else {
+      data.push("Teilauswahl");
+    }
+  } else {
+    verkehrsbeziehung.push(
+      `Von: ${filterOptions.value.vonKnotenarm ? filterOptions.value.vonKnotenarm : "Alle"}`
+    );
+    verkehrsbeziehung.push(` - `);
+    verkehrsbeziehung.push(
+      `Nach: ${filterOptions.value.nachKnotenarm ? filterOptions.value.nachKnotenarm : "Alle"}`
+    );
+    data.push(verkehrsbeziehung.join(""));
+  }
   return data;
 }
 
