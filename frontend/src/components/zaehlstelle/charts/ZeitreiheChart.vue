@@ -318,8 +318,8 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   const series: Array<unknown> = [];
 
   if (filterOptions.value.kraftfahrzeugverkehr) {
-    const zeitreiheDatenKfz: any[] = zeitreiheDaten.kfz.map((value) =>
-      value == null ? "" : value
+    const zeitreiheDatenKfz: (number | string)[] = zeitreiheDaten.kfz.map(
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: KRAFTFAHRZEUGVERKEHR,
@@ -329,8 +329,8 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
     });
   }
   if (filterOptions.value.schwerverkehr) {
-    const zeitreiheDatenSv: any[] = zeitreiheDaten.sv.map((value) =>
-      value == null ? "" : value
+    const zeitreiheDatenSv: (number | string)[] = zeitreiheDaten.sv.map(
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: SCHWERVERKEHR,
@@ -341,8 +341,8 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (filterOptions.value.gueterverkehr) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
-    const zeitreiheDatenGv: any[] = zeitreiheDaten.gv.map((value) =>
-      value == null ? "" : value
+    const zeitreiheDatenGv: (number | string)[] = zeitreiheDaten.gv.map(
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: GUETERVERKEHR,
@@ -353,8 +353,8 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (filterOptions.value.radverkehr) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
-    const zeitreiheDatenRad: any[] = zeitreiheDaten.rad.map((value) =>
-      value == null ? "" : value
+    const zeitreiheDatenRad: (number | string)[] = zeitreiheDaten.rad.map(
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: RADVERKEHR,
@@ -389,8 +389,8 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (filterOptions.value.zeitreiheGesamt) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
-    const zeitreiheDatenGesamt: any[] = zeitreiheDaten.gesamt.map((value) =>
-      value == null ? "" : value
+    const zeitreiheDatenGesamt: (number | string)[] = zeitreiheDaten.gesamt.map(
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: GESAMT,
@@ -401,9 +401,10 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
   if (filterOptions.value.schwerverkehrsanteilProzent) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
-    const zeitreiheDatenSvp: any[] = zeitreiheDaten.svAnteilInProzent.map(
-      (value) => (value == null ? "" : value)
-    );
+    const zeitreiheDatenSvp: (number | string)[] =
+      zeitreiheDaten.svAnteilInProzent.map((value) =>
+        value == null ? "" : value
+      );
     series.push({
       name: SCHWERVERKEHRSANTEIL,
       type: CHART_TYPE_X_AXIS,
@@ -417,9 +418,10 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
 
   if (filterOptions.value.gueterverkehrsanteilProzent) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
-    const zeitreiheDatenGvp: any[] = zeitreiheDaten.gvAnteilInProzent.map(
-      (value) => (value == null ? "" : value)
-    );
+    const zeitreiheDatenGvp: (number | string)[] =
+      zeitreiheDaten.gvAnteilInProzent.map((value) =>
+        value == null ? "" : value
+      );
     series.push({
       name: GUETERVERKEHRSANTEIL,
       type: CHART_TYPE_X_AXIS,
@@ -494,7 +496,7 @@ function downloadCsv() {
  * @param data
  * @private
  */
-function fillCsvRow(isWanted: boolean, data: number) {
+function fillCsvRow(isWanted: boolean, data: number | null) {
   let row = "";
   if (isWanted) {
     if (data == null) {
