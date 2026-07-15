@@ -318,26 +318,36 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   const series: Array<unknown> = [];
 
   if (filterOptions.value.kraftfahrzeugverkehr) {
+    const zeitreiheDatenKfz: any[] = zeitreiheDaten.kfz.map((value) =>
+      value == null ? "" : value
+    );
     series.push({
       name: KRAFTFAHRZEUGVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.kfz,
+      data: zeitreiheDatenKfz,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_KFZ),
     });
   }
   if (filterOptions.value.schwerverkehr) {
+    const zeitreiheDatenSv: any[] = zeitreiheDaten.sv.map((value) =>
+      value == null ? "" : value
+    );
     series.push({
       name: SCHWERVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.sv,
+      data: zeitreiheDatenSv,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_SV),
     });
   }
   if (filterOptions.value.gueterverkehr) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenGv: any[] = zeitreiheDaten.gv.map((value) =>
+      value == null ? "" : value
+    );
     series.push({
       name: GUETERVERKEHR,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.gv,
+      data: zeitreiheDatenGv,
       color: ChartUtils.CHART_COLOR.get(ChartUtils.LEGEND_ENTRY_GV),
     });
   }
@@ -378,19 +388,27 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
     });
   }
   if (filterOptions.value.zeitreiheGesamt) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenGesamt: any[] = zeitreiheDaten.gesamt.map((value) =>
+      value == null ? "" : value
+    );
     series.push({
       name: GESAMT,
       type: CHART_TYPE_X_AXIS,
-      data: zeitreiheDaten.gesamt,
+      data: zeitreiheDatenGesamt,
       color: "#311B92",
     });
   }
   if (filterOptions.value.schwerverkehrsanteilProzent) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenSvp: any[] = zeitreiheDaten.svAnteilInProzent.map(
+      (value) => (value == null ? "" : value)
+    );
     series.push({
       name: SCHWERVERKEHRSANTEIL,
       type: CHART_TYPE_X_AXIS,
       yAxisIndex: 1,
-      data: zeitreiheDaten.svAnteilInProzent,
+      data: zeitreiheDatenSvp,
       color: ChartUtils.CHART_COLOR.get(
         ChartUtils.LEGEND_ENTRY_SV_ANTEIL_PROZENT
       ),
@@ -398,11 +416,15 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   }
 
   if (filterOptions.value.gueterverkehrsanteilProzent) {
+    // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
+    const zeitreiheDatenGvp: any[] = zeitreiheDaten.gvAnteilInProzent.map(
+      (value) => (value == null ? "" : value)
+    );
     series.push({
       name: GUETERVERKEHRSANTEIL,
       type: CHART_TYPE_X_AXIS,
       yAxisIndex: 1,
-      data: zeitreiheDaten.gvAnteilInProzent,
+      data: zeitreiheDatenGvp,
       color: ChartUtils.CHART_COLOR.get(
         ChartUtils.LEGEND_ENTRY_GV_ANTEIL_PROZENT
       ),
@@ -464,7 +486,10 @@ function downloadCsv() {
 }
 
 /**
- * Befüllt die CSV Rows, je nachdem
+ * Befüllt die CSV Rows, je nachdem ob in den Filtereinstellungen die Fahreugkategorie ausgewählt ist.
+ * Sonderfälle:
+ * - null-Werte werden durch "nicht vorh." ersetzt.
+ * - Im Fall, dass Tageswert ausgewählt ist aber der Wert 0 ist, wird der Wert auf "Tageswert nicht vorh." ersetzt (für Fußverkehr nötig).
  * @param isWanted
  * @param data
  * @private
@@ -472,7 +497,16 @@ function downloadCsv() {
 function fillCsvRow(isWanted: boolean, data: number) {
   let row = "";
   if (isWanted) {
-    row += `;${data}`;
+    if (data == null) {
+      row += ";nicht vorh.";
+    } else if (
+      data === 0 &&
+      filterOptions.value.zeitauswahl === Zeitauswahl.TAGESWERT
+    ) {
+      row += ";Tageswert nicht vorh.";
+    } else {
+      row += `;${data}`;
+    }
   } else {
     row += `;`;
   }
