@@ -376,7 +376,7 @@ const helpTextDetailauswahlListenausgabe = computed(() => {
 
 const helpTextZeitreihe = computed(() => {
   if (hoverZeitreiheGesamt.value) {
-    return "";
+    return "Der Fußverkehr ist in der Summe aller Verkehrsarten nicht enthalten.";
   }
   return "";
 });
