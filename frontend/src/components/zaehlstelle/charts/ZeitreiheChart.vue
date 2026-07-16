@@ -272,6 +272,10 @@ const options = computed(() => {
       axisTick: {
         alignWithLabel: true,
       },
+      axisLabel: {
+        // Zeigt immer alle x-Achsen-Labels (0 = every label)
+        interval: 0,
+      },
     },
     yAxis: [
       {
