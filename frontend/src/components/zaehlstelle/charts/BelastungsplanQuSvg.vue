@@ -16,22 +16,22 @@
     >
       <defs id="defs1" />
       <g
-        id="nodes1To4"
+        id="knotenarme_1_to_4"
         class="Page"
         style="stroke-width: 28.22049979; stroke-dasharray: none"
       >
         <g
           v-if="isKnotenarm(1)"
-          id="node1_group"
+          id="knotenarm1_group"
           class="com.sun.star.drawing.ClosedBezierShape"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="node1"
+            id="knotenarm1"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              id="node1_spike"
+              id="knotenarm1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
               stroke="none"
               style="
@@ -41,11 +41,11 @@
               "
             />
             <g
-              id="node1_number"
+              id="knotenarm1_number"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             >
               <circle
-                id="node1_circle"
+                id="knotenarm1_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -60,7 +60,7 @@
                 r="11.951238"
               />
               <text
-                id="node1_circle_text"
+                id="knotenarm1_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -77,7 +77,7 @@
                 x="693.53955"
               >
                 <tspan
-                  id="node1_circle_tspan"
+                  id="knotenarm1_number_tspan"
                   style="stroke-width: 28.22049979; stroke-dasharray: none"
                   x="693.53955"
                   y="622.00684"
@@ -88,7 +88,7 @@
             </g>
             <text
               v-if="streetnameNode1.length === 1"
-              id="node1_strassenname_text"
+              id="knotenarm1_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -117,7 +117,7 @@
               y="629.34802"
             >
               <tspan
-                id="node1_strassenname_tspan"
+                id="knotenarm1_strassenname_tspan"
                 x="-438.67819"
                 y="705.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -127,7 +127,7 @@
             </text>
             <text
               v-if="streetnameNode1.length > 1"
-              id="node1_strassenname_multirow1_text"
+              id="knotenarm1_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -156,7 +156,7 @@
               y="615.34802"
             >
               <tspan
-                id="node1_strassenname_multirow1_tspan"
+                id="knotenarm1_strassenname_multirow1_tspan"
                 x="-438.67819"
                 y="691.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -166,7 +166,7 @@
             </text>
             <text
               v-if="streetnameNode1.length > 1"
-              id="node1_strassenname_multirow2_text"
+              id="knotenarm1_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -195,7 +195,7 @@
               y="643.34802"
             >
               <tspan
-                id="node1_strassenname_multirow2_tspan"
+                id="knotenarm1_strassenname_multirow2_tspan"
                 x="-438.67819"
                 y="719.79083"
                 style="stroke-width: 28.22049979; stroke-dasharray: none"
@@ -203,9 +203,9 @@
                 {{ streetnameNode1[1] }}
               </tspan>
             </text>
-            <g id="node1_sum">
+            <g id="knotenarm1_sum">
               <text
-                id="node1_sum_text"
+                id="knotenarm1_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -233,7 +233,7 @@
                 y="37.009502"
               >
                 <tspan
-                  id="node1_sum_tspan"
+                  id="knotenarm1_sum_tspan"
                   x="-200"
                   y="818"
                   :style="`
@@ -263,17 +263,17 @@
                   stroke-opacity: 1;
                 "
                 d="M 796.33788,299.49696 796.16212,193.00269"
-                id="node1_sum_line"
+                id="knotenarm1_sum_line"
               />
             </g>
           </g>
           <g
-            id="arrows_node1"
+            id="arrows_knotenarm1"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
               v-if="node1WestToEastCensusComissioned"
-              id="arrow_node1_west_to_east"
+              id="arrow_knotenarm1_west_to_ost"
               d="M 612.5,252.424 H 745.2445 V 239.5 l 42.2555,28 -42.2555,28 V 282.576 H 612.5 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode1WestToEast"
@@ -281,7 +281,7 @@
             />
             <path
               v-if="node1EastToWestCensusComissioned"
-              id="arrow_node1_east_to_west"
+              id="arrow_knotenarm1_ost_to_west"
               d="M 787.5,230.076 H 654.7555 V 243 L 612.5,215 654.7555,187 v 12.924 H 787.5 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode1EastToWest"
@@ -289,7 +289,7 @@
             />
             <text
               v-if="node1WestToEastCensusComissioned"
-              id="arrow_node1_west_to_east_number_text"
+              id="arrow_knotenarm1_west_to_ost_zaehlwert_text"
               xml:space="preserve"
               fill="#000000"
               style="
@@ -317,7 +317,7 @@
               y="-520.35779"
             >
               <tspan
-                id="arrow_node1_west_to_east_number_tspan"
+                id="arrow_knotenarm1_west_to_ost_zaehlwert_tspan"
                 x="699.1098"
                 y="272.47839"
                 :style="`
@@ -340,7 +340,7 @@
             </text>
             <text
               v-if="node1EastToWestCensusComissioned"
-              id="arrow_node1_east_to_west_number_text"
+              id="arrow_knotenarm1_ost_to_west_zaehlwert_text"
               xml:space="preserve"
               fill="#000000"
               style="
@@ -368,7 +368,7 @@
               y="-572.85791"
             >
               <tspan
-                id="arrow_node1_east_to_west_number_tspan"
+                id="arrow_knotenarm1_ost_to_west_zaehlwert_tspan"
                 x="699.1098"
                 y="219.97839"
                 :style="`
@@ -393,11 +393,11 @@
         </g>
         <g
           v-if="isKnotenarm(2)"
-          id="node2_group"
+          id="knotenarm2_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="node2"
+            id="knotenarm2"
             style="
               display: inline;
               stroke-width: 28.2205;
@@ -405,7 +405,7 @@
             "
           >
             <path
-              id="node2_spike"
+              id="knotenarm2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
               stroke="none"
               style="
@@ -416,7 +416,7 @@
             />
             <text
               v-if="streetnameNode2.length === 1"
-              id="node2_strassenname_text"
+              id="knotenarm2_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -444,7 +444,7 @@
               y="629.34802"
             >
               <tspan
-                id="node2_strassenname_tspan"
+                id="knotenarm2_strassenname_tspan"
                 x="961.323"
                 y="705.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
@@ -453,11 +453,11 @@
               </tspan>
             </text>
             <g
-              id="node2_number"
+              id="knotenarm2_number"
               style="stroke-width: 28.2205; stroke-dasharray: none"
             >
               <circle
-                id="node2_circle"
+                id="knotenarm2_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -472,7 +472,7 @@
                 r="11.951238"
               />
               <text
-                id="node2_circle_text"
+                id="knotenarm2_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -489,7 +489,7 @@
                 x="779.30457"
               >
                 <tspan
-                  id="node2_circle_tspan"
+                  id="knotenarm2_number_tspan"
                   style="stroke-width: 28.2205; stroke-dasharray: none"
                   x="779.30457"
                   y="707.33368"
@@ -500,7 +500,7 @@
             </g>
             <text
               v-if="streetnameNode2.length > 1"
-              id="node2_strassenname_multirow2_text"
+              id="knotenarm2_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -528,7 +528,7 @@
               y="643.34802"
             >
               <tspan
-                id="node2_strassenname_multirow2_tspan"
+                id="knotenarm2_strassenname_multirow2_tspan"
                 x="961.323"
                 y="719.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
@@ -538,7 +538,7 @@
             </text>
             <text
               v-if="streetnameNode2.length > 1"
-              id="node2_strassenname_multirow1_text"
+              id="knotenarm2_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -566,7 +566,7 @@
               y="615.34802"
             >
               <tspan
-                id="node2_strassenname_multirow1_tspan"
+                id="knotenarm2_strassenname_multirow1_tspan"
                 x="961.323"
                 y="691.79083"
                 style="stroke-width: 28.2205; stroke-dasharray: none"
@@ -575,12 +575,12 @@
               </tspan>
             </text>
             <g
-              id="node2_sum"
+              id="knotenarm2_sum"
               style="stroke-width: 28.2205; stroke-dasharray: none"
               transform="rotate(90,699.99982,699.99982)"
             >
               <text
-                id="node2_sum_text"
+                id="knotenarm2_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -608,7 +608,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node2_sum_tspan"
+                  id="knotenarm2_sum_tspan"
                   x="-195"
                   y="818"
                   :style="`
@@ -630,7 +630,7 @@
                 </tspan>
               </text>
               <path
-                id="node2_sum_line"
+                id="knotenarm2_sum_line"
                 style="
                   display: inline;
                   fill: #000000;
@@ -644,12 +644,12 @@
             </g>
           </g>
           <g
-            id="arrows_node2"
+            id="arrows_knotenarm2"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
               v-if="node2NorthToSouthCensusComissioned"
-              id="arrow_node2_north_to_south"
+              id="arrow_knotenarm2_nord_to_sued"
               d="m 1147.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode2NorthToSouth"
@@ -657,7 +657,7 @@
             />
             <path
               v-if="node2SouthToNorthCensusComissioned"
-              id="arrow_node2_south_to_north"
+              id="arrow_knotenarm2_sued_to_nord"
               d="M 1170.924,787.49999 V 654.75552 H 1158 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode2SouthToNorth"
@@ -665,7 +665,7 @@
             />
             <text
               v-if="node2NorthToSouthCensusComissioned"
-              id="arrow_node2_north_to_south_number_text"
+              id="arrow_knotenarm2_nord_to_sued_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(-90)"
               fill="#000000"
@@ -694,7 +694,7 @@
               y="359.45795"
             >
               <tspan
-                id="arrow_node2_north_to_south_number_tspan"
+                id="arrow_knotenarm2_nord_to_sued_zaehlwert_tspan"
                 x="-700.60413"
                 y="1140.3517"
                 :style="`
@@ -717,7 +717,7 @@
             </text>
             <text
               v-if="node2SouthToNorthCensusComissioned"
-              id="arrow_node2_south_to_north_number_text"
+              id="arrow_knotenarm2_sued_to_nord_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(-90)"
               fill="#000000"
@@ -746,7 +746,7 @@
               y="411.95795"
             >
               <tspan
-                id="arrow_node2_south_to_north_number_tspan"
+                id="arrow_knotenarm2_sued_to_nord_zaehlwert_tspan"
                 x="-700.60413"
                 y="1194"
                 :style="`
@@ -771,15 +771,15 @@
         </g>
         <g
           v-if="isKnotenarm(3)"
-          id="node3_group"
+          id="knotenarm3_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="node3"
+            id="knotenarm3"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              id="node3_spike"
+              id="knotenarm3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
               stroke="none"
               style="
@@ -790,7 +790,7 @@
             />
             <text
               v-if="streetnameNode3.length === 1"
-              id="node3_strassenname_text"
+              id="knotenarm3_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -819,7 +819,7 @@
               y="705.79083"
             >
               <tspan
-                id="node3_strassenname_tspan"
+                id="knotenarm3_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -841,11 +841,11 @@
               </tspan>
             </text>
             <g
-              id="node3_number"
+              id="knotenarm3_number"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             >
               <circle
-                id="node3_circle"
+                id="knotenarm3_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -860,7 +860,7 @@
                 r="11.951238"
               />
               <text
-                id="node3_circle_text"
+                id="knotenarm3_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -877,7 +877,7 @@
                 x="693.75189"
               >
                 <tspan
-                  id="node3_circle_tspan"
+                  id="knotenarm3_number_tspan"
                   style="stroke-width: 28.22049979; stroke-dasharray: none"
                   x="693.75189"
                   y="792.38141"
@@ -888,7 +888,7 @@
             </g>
             <text
               v-if="streetnameNode3.length > 1"
-              id="node3_strassenname_multirow2_text"
+              id="knotenarm3_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -917,7 +917,7 @@
               y="719.79083"
             >
               <tspan
-                id="node3_strassenname_multirow2_tspan"
+                id="knotenarm3_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -940,7 +940,7 @@
             </text>
             <text
               v-if="streetnameNode3.length > 1"
-              id="node3_strassenname_multirow1_text"
+              id="knotenarm3_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -969,7 +969,7 @@
               y="691.79083"
             >
               <tspan
-                id="node3_strassenname_multirow1_tspan"
+                id="knotenarm3_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -991,12 +991,12 @@
               </tspan>
             </text>
             <g
-              id="node3_sum"
+              id="knotenarm3_sum"
               style="stroke-width: 28.2205; stroke-dasharray: none"
               transform="translate(-3.251155e-6,927.49999)"
             >
               <text
-                id="node3_sum_text"
+                id="knotenarm3_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1024,7 +1024,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node3_sum_tspan"
+                  id="knotenarm3_sum_tspan"
                   x="-195"
                   y="818"
                   :style="`
@@ -1046,7 +1046,7 @@
                 </tspan>
               </text>
               <path
-                id="node3_sum_line"
+                id="knotenarm3_sum_line"
                 style="
                   fill: #000000;
                   stroke: #000000;
@@ -1059,12 +1059,12 @@
             </g>
           </g>
           <g
-            id="arrows_node3"
+            id="arrows_knotenarm3"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
               v-if="node3WestToEastCensusComissioned"
-              id="arrow_node3_west_to_east"
+              id="arrow_knotenarm3_west_to_ost"
               d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode3WestToEast"
@@ -1072,7 +1072,7 @@
             />
             <path
               v-if="node3EastToWestCensusComissioned"
-              id="arrow_node3_east_to_west"
+              id="arrow_knotenarm3_ost_to_west"
               d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode3EastToWest"
@@ -1080,7 +1080,7 @@
             />
             <text
               v-if="node3WestToEastCensusComissioned"
-              id="arrow_node3_west_to_east_number_text"
+              id="arrow_knotenarm3_west_to_ost_zaehlwert_text"
               xml:space="preserve"
               fill="#000000"
               :style="`
@@ -1108,7 +1108,7 @@
               y="407.14215"
             >
               <tspan
-                id="arrow_node3_west_to_east_number_tspan"
+                id="arrow_knotenarm3_west_to_ost_zaehlwert_tspan"
                 x="699.1098"
                 y="1196"
                 :style="`
@@ -1131,7 +1131,7 @@
             </text>
             <text
               v-if="node3EastToWestCensusComissioned"
-              id="arrow_node3_east_to_west_number_text"
+              id="arrow_knotenarm3_ost_to_west_zaehlwert_text"
               xml:space="preserve"
               fill="#000000"
               style="
@@ -1159,7 +1159,7 @@
               y="354.64206"
             >
               <tspan
-                id="arrow_node3_east_to_west_number_tspan"
+                id="arrow_knotenarm3_ost_to_west_zaehlwert_tspan"
                 x="699.1098"
                 y="1144"
                 :style="`
@@ -1184,15 +1184,15 @@
         </g>
         <g
           v-if="isKnotenarm(4)"
-          id="node4_group"
+          id="knotenarm4_group"
           style="stroke-width: 28.22049979; stroke-dasharray: none"
         >
           <g
-            id="node4"
+            id="knotenarm4"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
-              id="node4_spike"
+              id="knotenarm4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
               stroke="none"
               style="
@@ -1203,7 +1203,7 @@
             />
             <text
               v-if="streetnameNode4.length === 1"
-              id="node4_strassenname_text"
+              id="knotenarm4_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1231,7 +1231,7 @@
               y="705.79083"
             >
               <tspan
-                id="node4_strassenname_tspan"
+                id="knotenarm4_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1253,11 +1253,11 @@
               </tspan>
             </text>
             <g
-              id="node4_number"
+              id="knotenarm4_number"
               style="stroke-width: 28.22049979; stroke-dasharray: none"
             >
               <circle
-                id="node4_circle"
+                id="knotenarm4_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -1272,7 +1272,7 @@
                 r="11.951238"
               />
               <text
-                id="node4_circle_text"
+                id="knotenarm4_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -1289,7 +1289,7 @@
                 x="608.34302"
               >
                 <tspan
-                  id="node4_circle_tspan"
+                  id="knotenarm4_number_tspan"
                   style="stroke-width: 28.22049979; stroke-dasharray: none"
                   x="608.34302"
                   y="707.20343"
@@ -1300,7 +1300,7 @@
             </g>
             <text
               v-if="streetnameNode4.length > 1"
-              id="node4_strassenname_multirow2_text"
+              id="knotenarm4_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1328,7 +1328,7 @@
               y="719.79083"
             >
               <tspan
-                id="node4_strassenname_multirow2_tspan"
+                id="knotenarm4_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1351,7 +1351,7 @@
             </text>
             <text
               v-if="streetnameNode4.length > 1"
-              id="node4_strassenname_multirow1_text"
+              id="knotenarm4_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1379,7 +1379,7 @@
               y="691.79083"
             >
               <tspan
-                id="node4_strassenname_multirow1_tspan"
+                id="knotenarm4_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1401,7 +1401,7 @@
               </tspan>
             </text>
             <g
-              id="node4_sum"
+              id="knotenarm4_sum"
               style="
                 display: inline;
                 stroke-width: 28.2205;
@@ -1410,7 +1410,7 @@
               transform="rotate(90,236.24983,236.24982)"
             >
               <text
-                id="node4_sum_text"
+                id="knotenarm4_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1438,7 +1438,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node4_sum_tspan"
+                  id="knotenarm4_sum_tspan"
                   x="-190"
                   y="817"
                   :style="`
@@ -1460,7 +1460,7 @@
                 </tspan>
               </text>
               <path
-                id="node4_sum_line"
+                id="knotenarm4_sum_line"
                 style="
                   display: inline;
                   fill: #000000;
@@ -1474,12 +1474,12 @@
             </g>
           </g>
           <g
-            id="arrows_node4"
+            id="arrows_knotenarm4"
             style="stroke-width: 28.22049979; stroke-dasharray: none"
           >
             <path
               v-if="node4NorthToSouthCensusComissioned"
-              id="arrow_node4_north_to_south"
+              id="arrow_knotenarm4_nord_to_sued"
               d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
               fill="#FFFFFF"
               :stroke="colorArrowNode4NorthToSouth"
@@ -1487,7 +1487,7 @@
             />
             <path
               v-if="node4SouthToNorthCensusComissioned"
-              id="arrow_node4_south_to_north"
+              id="arrow_knotenarm4_sued_to_nord"
               d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode4SouthToNorth"
@@ -1496,7 +1496,7 @@
             <text
               v-if="node4NorthToSouthCensusComissioned"
               xml:space="preserve"
-              id="arrow_node4_north_to_south_number_text"
+              id="arrow_knotenarm4_nord_to_sued_zaehlwert_text"
               transform="rotate(-90)"
               fill="#000000"
               style="
@@ -1526,7 +1526,7 @@
               <tspan
                 x="-700.60413"
                 y="217"
-                id="arrow_node4_north_to_south_number_tspan"
+                id="arrow_knotenarm4_nord_to_sued_zaehlwert_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1549,7 +1549,7 @@
               v-if="node4SouthToNorthCensusComissioned"
               xml:space="preserve"
               transform="rotate(-90)"
-              id="arrow_node4_south_to_north_number_text"
+              id="arrow_knotenarm4_sued_to_nord_zaehlwert_text"
               fill="#000000"
               style="
                 font-style: normal;
@@ -1578,7 +1578,7 @@
               <tspan
                 x="-700.60413"
                 y="271"
-                id="arrow_node4_south_to_north_number_tspan"
+                id="arrow_knotenarm4_sued_to_nord_zaehlwert_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1600,22 +1600,22 @@
           </g>
         </g>
       </g>
-      <g id="nodes5To8">
+      <g id="knotenarme_5_to_8">
         <g
           v-if="isKnotenarm(5)"
-          id="node5_group"
+          id="knotenarm5_group"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
-          <g id="node5">
+          <g id="knotenarm5">
             <path
-              id="node5_spike"
+              id="knotenarm5_spike"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
-            <g id="node5_number">
+            <g id="knotenarm5_number">
               <circle
-                id="node5_circle"
+                id="knotenarm5_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -1630,7 +1630,7 @@
                 r="11.951238"
               />
               <text
-                id="node5_circle_text"
+                id="knotenarm5_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -1646,7 +1646,7 @@
                 x="754.23737"
               >
                 <tspan
-                  id="node5_circle_tspan"
+                  id="knotenarm5_number_tspan"
                   style="stroke-width: 30.9229"
                   x="754.23737"
                   y="646.03784"
@@ -1657,7 +1657,7 @@
             </g>
             <text
               v-if="streetnameNode5.length === 1"
-              id="node5_strassenname_text"
+              id="knotenarm5_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1685,7 +1685,7 @@
               y="919.29742"
             >
               <tspan
-                id="node5_strassenname_tspan"
+                id="knotenarm5_strassenname_tspan"
                 x="261.3215"
                 y="995.74023"
                 style="stroke-width: 26.4927"
@@ -1695,7 +1695,7 @@
             </text>
             <text
               v-if="streetnameNode5.length > 1"
-              id="node5_strassenname_multirow2_text"
+              id="knotenarm5_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1723,7 +1723,7 @@
               y="933.29785"
             >
               <tspan
-                id="node5_strassenname_multirow2_tspan"
+                id="knotenarm5_strassenname_multirow2_tspan"
                 x="261.32397"
                 y="1009.7406"
                 style="stroke-width: 26.4927"
@@ -1733,7 +1733,7 @@
             </text>
             <text
               v-if="streetnameNode5.length > 1"
-              id="node5_strassenname_multirow1_text"
+              id="knotenarm5_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1761,7 +1761,7 @@
               y="905.2995"
             >
               <tspan
-                id="node5_strassenname_multirow1_tspan"
+                id="knotenarm5_strassenname_multirow1_tspan"
                 x="261.32147"
                 y="981.74231"
                 style="stroke-width: 26.4927"
@@ -1770,7 +1770,7 @@
               </tspan>
             </text>
             <g
-              id="node5_sum"
+              id="knotenarm5_sum"
               style="
                 display: inline;
                 stroke-width: 28.2205;
@@ -1779,7 +1779,7 @@
               transform="rotate(45,720.59848,699.99663)"
             >
               <text
-                id="node5_sum_text"
+                id="knotenarm5_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1807,7 +1807,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node5_sum_tspan"
+                  id="knotenarm5_sum_tspan"
                   x="-210"
                   y="818"
                   :style="`
@@ -1829,7 +1829,7 @@
                 </tspan>
               </text>
               <path
-                id="node5_sum_line"
+                id="knotenarm5_sum_line"
                 style="
                   display: inline;
                   fill: #000000;
@@ -1843,12 +1843,12 @@
             </g>
           </g>
           <g
-            id="arrows_node5"
+            id="arrows_knotenarm5"
             transform="translate(6.0322729,-14.56374)"
           >
             <path
               v-if="node5NorthWestToSouthEastCensusComissioned"
-              id="arrow_node5_north_west_to_south_east"
+              id="arrow_knotenarm5_nord_west_to_sued_ost"
               d="m 948.14818,331.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode5NorthWestToSouthEast"
@@ -1856,7 +1856,7 @@
             />
             <path
               v-if="node5SouthEastToNorthWestCensusComissioned"
-              id="arrow_node5_south_east_to_north_west"
+              id="arrow_knotenarm5_sued_ost_to_nord_west"
               d="m 1086.6928,441.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode5SouthEastToNorthWest"
@@ -1864,7 +1864,7 @@
             />
             <text
               v-if="node5NorthWestToSouthEastCensusComissioned"
-              id="arrow_node5_north_west_to_south_east_number_text"
+              id="arrow_knotenarm5_nord_west_to_sued_ost_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(45)"
               fill="#000000"
@@ -1892,7 +1892,7 @@
               y="-1220.1736"
             >
               <tspan
-                id="arrow_node5_north_west_to_south_east_number_tspan"
+                id="arrow_knotenarm5_nord_west_to_sued_ost_zaehlwert_tspan"
                 x="993.59924"
                 y="-416"
                 :style="`
@@ -1914,7 +1914,7 @@
             </text>
             <text
               v-if="node5SouthEastToNorthWestCensusComissioned"
-              id="arrow_node5_south_east_to_north_west_number_text"
+              id="arrow_knotenarm5_sued_ost_to_nord_west_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(45)"
               fill="#000000"
@@ -1942,7 +1942,7 @@
               y="-1272.6682"
             >
               <tspan
-                id="arrow_node5_south_east_to_north_west_number_tspan"
+                id="arrow_knotenarm5_sued_ost_to_nord_west_zaehlwert_tspan"
                 x="993.59674"
                 y="-464"
                 :style="`
@@ -1966,18 +1966,18 @@
         </g>
         <g
           v-if="isKnotenarm(6)"
-          id="node6_group"
+          id="knotenarm6_group"
         >
-          <g id="node6">
+          <g id="knotenarm6">
             <path
-              id="node6_spike"
+              id="knotenarm6_spike"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
             <text
               v-if="streetnameNode6.length === 1"
-              id="node6_strassenname_text"
+              id="knotenarm6_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2005,7 +2005,7 @@
               y="-70.653908"
             >
               <tspan
-                id="node6_strassenname_tspan"
+                id="knotenarm6_strassenname_tspan"
                 x="1251.2728"
                 y="5.7888861"
                 style="stroke-width: 26.4927"
@@ -2014,11 +2014,11 @@
               </tspan>
             </text>
             <g
-              id="node6_number"
+              id="knotenarm6_number"
               transform="rotate(45,785.75,700)"
             >
               <circle
-                id="node6_circle"
+                id="knotenarm6_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2033,7 +2033,7 @@
                 r="11.951238"
               />
               <text
-                id="node6_circle_text"
+                id="knotenarm6_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -2050,7 +2050,7 @@
                 transform="rotate(-45)"
               >
                 <tspan
-                  id="node6_circle_tspan"
+                  id="knotenarm6_number_tspan"
                   style="stroke-width: 30.9229"
                   x="29.266506"
                   y="1118.2867"
@@ -2061,7 +2061,7 @@
             </g>
             <text
               v-if="streetnameNode6.length > 1"
-              id="node6_strassenname_multirow2_text"
+              id="knotenarm6_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2089,7 +2089,7 @@
               y="-56.651062"
             >
               <tspan
-                id="node6_strassenname_multirow2_tspan"
+                id="knotenarm6_strassenname_multirow2_tspan"
                 x="1251.2728"
                 y="19.791727"
                 style="stroke-width: 26.4927"
@@ -2099,7 +2099,7 @@
             </text>
             <text
               v-if="streetnameNode6.length > 1"
-              id="node6_strassenname_multirow1_text"
+              id="knotenarm6_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2127,7 +2127,7 @@
               y="-84.651779"
             >
               <tspan
-                id="node6_strassenname_multirow1_tspan"
+                id="knotenarm6_strassenname_multirow1_tspan"
                 x="1251.2728"
                 y="-8.208993"
                 style="stroke-width: 26.4927"
@@ -2136,12 +2136,12 @@
               </tspan>
             </text>
             <g
-              id="node6_sum"
+              id="knotenarm6_sum"
               style="stroke-width: 28.2205; stroke-dasharray: none"
               transform="rotate(135,706.03406,706.03209)"
             >
               <text
-                id="node6_sum_text"
+                id="knotenarm6_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -2169,7 +2169,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node6_sum_tspan"
+                  id="knotenarm6_sum_tspan"
                   x="-209"
                   y="816"
                   :style="`
@@ -2191,7 +2191,7 @@
                 </tspan>
               </text>
               <path
-                id="node6_sum_line"
+                id="knotenarm6_sum_line"
                 style="
                   fill: #000000;
                   stroke: #000000;
@@ -2204,12 +2204,12 @@
             </g>
           </g>
           <g
-            id="arrows_node6"
+            id="arrows_knotenarm6"
             transform="translate(14.564164,6.031585)"
           >
             <path
               v-if="node6SouthWestToNorthEastCensusComissioned"
-              id="arrow_node6_south_west_to_north_east"
+              id="arrow_knotenarm6_sued_west_to_nord_ost"
               d="m 963.94849,1083.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode6SouthWestToNorthEast"
@@ -2217,7 +2217,7 @@
             />
             <path
               v-if="node6NorthEastToSouthWestCensusComissioned"
-              id="arrow_node6_north_east_to_south_west"
+              id="arrow_knotenarm6_nord_ost_to_sued_west"
               d="m 1068.8925,950.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode6NorthEastToSouthWest"
@@ -2225,7 +2225,7 @@
             />
             <text
               v-if="node6NorthEastToSouthWestCensusComissioned"
-              id="arrow_node6_north_east_to_south_west_number_text"
+              id="arrow_knotenarm6_nord_ost_to_sued_west_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(-45)"
               fill="#000000"
@@ -2253,7 +2253,7 @@
               y="644.03931"
             >
               <tspan
-                id="arrow_node6_north_east_to_south_west_number_tspan"
+                id="arrow_knotenarm6_nord_ost_to_sued_west_zaehlwert_tspan"
                 x="-8.1312895"
                 y="1420.8754"
                 :style="`
@@ -2275,7 +2275,7 @@
             </text>
             <text
               v-if="node6SouthWestToNorthEastCensusComissioned"
-              id="arrow_node6_south_west_to_north_east_number_text"
+              id="arrow_knotenarm6_sued_west_to_nord_ost_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(-45)"
               fill="#000000"
@@ -2303,7 +2303,7 @@
               y="696.29114"
             >
               <tspan
-                id="arrow_node6_south_west_to_north_east_number_tspan"
+                id="arrow_knotenarm6_sued_west_to_nord_ost_zaehlwert_tspan"
                 x="-8.3763189"
                 y="1470"
                 :style="`
@@ -2327,18 +2327,18 @@
         </g>
         <g
           v-if="isKnotenarm(7)"
-          id="node7_group"
+          id="knotenarm7_group"
         >
-          <g id="node7">
+          <g id="knotenarm7">
             <path
-              id="node7_spike"
+              id="knotenarm7_spike"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
             <text
               v-if="streetnameNode7.length === 1"
-              id="node7_strassenname_text"
+              id="knotenarm7_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2366,7 +2366,7 @@
               y="995.74023"
             >
               <tspan
-                id="node7_strassenname_tspan"
+                id="knotenarm7_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2386,9 +2386,9 @@
                 {{ streetnameNode7[0] }}
               </tspan>
             </text>
-            <g id="node7_number">
+            <g id="knotenarm7_number">
               <circle
-                id="node7_circle"
+                id="knotenarm7_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2403,7 +2403,7 @@
                 r="11.951238"
               />
               <text
-                id="node7_circle_text"
+                id="knotenarm7_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -2419,7 +2419,7 @@
                 x="633.51685"
               >
                 <tspan
-                  id="node7_circle_tspan"
+                  id="knotenarm7_number_tspan"
                   style="stroke-width: 30.9229"
                   x="633.51685"
                   y="767.69238"
@@ -2430,7 +2430,7 @@
             </g>
             <text
               v-if="streetnameNode7.length > 1"
-              id="node7_strassenname_multirow2_text"
+              id="knotenarm7_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2458,7 +2458,7 @@
               y="1009.7406"
             >
               <tspan
-                id="node7_strassenname_multirow2_tspan"
+                id="knotenarm7_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2480,7 +2480,7 @@
             </text>
             <text
               v-if="streetnameNode7.length > 1"
-              id="node7_strassenname_multirow1_text"
+              id="knotenarm7_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2508,7 +2508,7 @@
               y="981.73987"
             >
               <tspan
-                id="node7_strassenname_multirow1_tspan"
+                id="knotenarm7_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2529,12 +2529,12 @@
               </tspan>
             </text>
             <g
-              id="node7_sum"
+              id="knotenarm7_sum"
               style="stroke-width: 28.2205; stroke-dasharray: none"
               transform="rotate(45,-434.15313,221.6861)"
             >
               <text
-                id="node7_sum_text"
+                id="knotenarm7_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -2562,7 +2562,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node7_sum_tspan"
+                  id="knotenarm7_sum_tspan"
                   x="-177"
                   y="821"
                   :style="`
@@ -2584,7 +2584,7 @@
                 </tspan>
               </text>
               <path
-                id="node7_sum_line"
+                id="knotenarm7_sum_line"
                 style="
                   fill: #000000;
                   stroke: #000000;
@@ -2597,12 +2597,12 @@
             </g>
           </g>
           <g
-            id="arrows_node7"
+            id="arrows_knotenarm7"
             transform="translate(-14.563392,6.0334257)"
           >
             <path
               v-if="node7NorthWestToSouthEastCensusComissioned"
-              id="arrow_node7_north_west_to_south_east"
+              id="arrow_knotenarm7_nord_west_to_sued_ost"
               d="m 318.30769,965.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode7NorthWestToSouthEast"
@@ -2610,7 +2610,7 @@
             />
             <path
               v-if="node7SouthEastToNorthWestCensusComissioned"
-              id="arrow_node7_south_east_to_north_west"
+              id="arrow_knotenarm7_sued_ost_to_nord_west"
               d="m 457.85234,1073.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode7SouthEastToNorthWest"
@@ -2618,7 +2618,7 @@
             />
             <text
               v-if="node7SouthEastToNorthWestCensusComissioned"
-              id="arrow_node7_south_east_to_north_west_number_text"
+              id="arrow_knotenarm7_sued_ost_to_nord_west_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(45)"
               fill="#000000"
@@ -2646,7 +2646,7 @@
               y="-345.38342"
             >
               <tspan
-                id="arrow_node7_south_east_to_north_west_number_tspan"
+                id="arrow_knotenarm7_sued_ost_to_nord_west_zaehlwert_tspan"
                 x="993.79614"
                 y="428"
                 :style="`
@@ -2668,7 +2668,7 @@
             </text>
             <text
               v-if="node7NorthWestToSouthEastCensusComissioned"
-              id="arrow_node7_north_west_to_south_east_number_text"
+              id="arrow_knotenarm7_nord_west_to_sued_ost_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(45)"
               fill="#000000"
@@ -2696,7 +2696,7 @@
               y="-292.88657"
             >
               <tspan
-                id="arrow_node7_north_west_to_south_east_number_tspan"
+                id="arrow_knotenarm7_nord_west_to_sued_ost_zaehlwert_tspan"
                 x="993.79614"
                 y="480"
                 :style="`
@@ -2720,18 +2720,18 @@
         </g>
         <g
           v-if="isKnotenarm(8)"
-          id="node8_group"
+          id="knotenarm8_group"
         >
-          <g id="node8">
+          <g id="knotenarm8">
             <path
-              id="node8_spike"
+              id="knotenarm8_spike"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
               stroke="none"
               style="stroke-width: 14.949; fill: #ececec"
             />
             <text
               v-if="streetnameNode8.length === 1"
-              id="node8_strassenname_text"
+              id="knotenarm8_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2759,7 +2759,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="node8_strassenname_tspan"
+                id="knotenarm8_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2779,9 +2779,9 @@
                 {{ streetnameNode8[0] }}
               </tspan>
             </text>
-            <g id="node8_number">
+            <g id="knotenarm8_number">
               <circle
-                id="node8_circle"
+                id="knotenarm8_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2796,7 +2796,7 @@
                 r="11.951238"
               />
               <text
-                id="node8_circle_text"
+                id="knotenarm8_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -2812,7 +2812,7 @@
                 x="633.36969"
               >
                 <tspan
-                  id="node8_circle_tspan"
+                  id="knotenarm8_number_tspan"
                   style="stroke-width: 30.9229"
                   x="633.36969"
                   y="646.78491"
@@ -2823,7 +2823,7 @@
             </g>
             <text
               v-if="streetnameNode8.length > 1"
-              id="node8_strassenname_multirow2_text"
+              id="knotenarm8_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2851,7 +2851,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="node8_strassenname_multirow2_tspan"
+                id="knotenarm8_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2873,7 +2873,7 @@
             </text>
             <text
               v-if="streetnameNode8.length > 1"
-              id="node8_strassenname_multirow1_text"
+              id="knotenarm8_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2901,7 +2901,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="node8_strassenname_multirow1_tspan"
+                id="knotenarm8_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2922,14 +2922,14 @@
               </tspan>
             </text>
             <g
-              id="node8_sum"
+              id="knotenarm8_sum"
               style="stroke-width: 28.2205; stroke-dasharray: none"
               transform="rotate(135,507.90765,227.71915)"
             >
               <text
                 xml:space="preserve"
                 transform="rotate(-90)"
-                id="node8_sum_text"
+                id="knotenarm8_sum_text"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2955,7 +2955,7 @@
                 y="-70.255974"
               >
                 <tspan
-                  id="node8_sum_tspan"
+                  id="knotenarm8_sum_tspan"
                   x="-175"
                   y="820"
                   :style="`
@@ -2977,7 +2977,7 @@
                 </tspan>
               </text>
               <path
-                id="node8_sum_line"
+                id="knotenarm8_sum_line"
                 style="
                   fill: #000000;
                   stroke: #000000;
@@ -2990,12 +2990,12 @@
             </g>
           </g>
           <g
-            id="arrows_node8"
+            id="arrows_knotenarm8"
             transform="translate(-6.0332912,-14.564242)"
           >
             <path
               v-if="node8SouthWestToNorthEastCensusComissioned"
-              id="arrow_node8_south_west_to_north_east"
+              id="arrow_knotenarm8_sued_west_to_nord_ost"
               d="m 328.108,456.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode8SouthWestToNorthEast"
@@ -3003,7 +3003,7 @@
             />
             <path
               v-if="node8NorthEastToSouthWestCensusComissioned"
-              id="arrow_node8_north_east_to_south_west"
+              id="arrow_knotenarm8_nord_ost_to_sued_west"
               d="m 436.04853,318.30769 -95.86454,96.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
               fill="#FFFFFF"
               :stroke="colorArrowNode8NorthEastToSouthWest"
@@ -3011,7 +3011,7 @@
             />
             <text
               v-if="node8SouthWestToNorthEastCensusComissioned"
-              id="arrow_node8_south_west_to_north_east_number_text"
+              id="arrow_knotenarm8_sued_west_to_nord_ost_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(-45)"
               fill="#000000"
@@ -3039,7 +3039,7 @@
               y="-283.24542"
             >
               <tspan
-                id="arrow_node8_south_west_to_north_east_number_tspan"
+                id="arrow_knotenarm8_sued_west_to_nord_ost_zaehlwert_tspan"
                 x="-6.8456869"
                 y="578"
                 :style="`
@@ -3061,7 +3061,7 @@
             </text>
             <text
               v-if="node8NorthEastToSouthWestCensusComissioned"
-              id="arrow_node8_north_east_to_south_west_number_text"
+              id="arrow_knotenarm8_nord_ost_to_sued_west_zaehlwert_text"
               xml:space="preserve"
               transform="rotate(-45)"
               fill="#000000"
@@ -3089,7 +3089,7 @@
               y="-231.24287"
             >
               <tspan
-                id="arrow_node8_north_east_to_south_west_number_tspan"
+                id="arrow_knotenarm8_nord_ost_to_sued_west_zaehlwert_tspan"
                 x="-8.3306265"
                 y="525"
                 :style="`
@@ -3439,10 +3439,6 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
-import {
-  existsQuerungOnKnotenarmInRichtung,
-  isQuerungOnKnotenarmInRichtungActive,
-} from "@/util/Querungspruefung";
 import { useQu } from "@/util/QuUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
 
@@ -3707,7 +3703,8 @@ const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.NO);
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
     isKnotenarm(knNumber) &&
-    isQuerungOnKnotenarmInRichtungActive(
+    qu.existsQuerungsverkehr(
+      // Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung gefiltert ist.
       optionen.value.chosenQuerungsverkehre,
       knNumber,
       direction
@@ -3722,7 +3719,8 @@ function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
   return computed(
     () =>
       isKnotenarm(knNumber) &&
-      existsQuerungOnKnotenarmInRichtung(
+      qu.existsQuerungsverkehr(
+        //Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert bzw. zur Zaehlung beauftragt ist.
         activeZaehlung.value?.querungsverkehr,
         knNumber,
         direction

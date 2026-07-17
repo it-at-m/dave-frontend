@@ -87,6 +87,7 @@ import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore"
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
+import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
 import Verkehrsart from "@/types/enum/Verkehrsart";
 import ZaehldatenIntervall, {
@@ -280,7 +281,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
   chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
   chosenOptions.value.blackPrintMode = false;
-  chosenOptions.value.werteHundertRunden = false;
+  chosenOptions.value.rounding = Rounding.NONE;
   chosenOptions.value.blocksumme = true;
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;

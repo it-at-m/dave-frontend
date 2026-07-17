@@ -30,9 +30,18 @@ export function useStrassennameUtils() {
       ];
     }
 
+    // 2) Split an existierendem Bindestrich (macht Sinn bei Komposita)
+    const hyphenPos = strasse.indexOf("-");
+    if (hyphenPos > 0 && hyphenPos < strasse.length - 1) {
+      return [
+        strasse.substring(0, hyphenPos + 1), // Bindestrich am Ende der ersten Zeile
+        strasse.substring(hyphenPos + 1),
+      ];
+    }
+
     const lower = strasse.toLowerCase();
 
-    // 2) Bekannte Suffixe (ähnlich wie bisher), wenn am Ende vorhanden
+    // 3) Bekannte Suffixe (ähnlich wie bisher), wenn am Ende vorhanden
     const suffixes = [
       "str.",
       "strasse",
@@ -58,15 +67,6 @@ export function useStrassennameUtils() {
           ];
         }
       }
-    }
-
-    // 3) Split an existierendem Bindestrich (macht Sinn bei Komposita)
-    const hyphenPos = strasse.indexOf("-");
-    if (hyphenPos > 0 && hyphenPos < strasse.length - 1) {
-      return [
-        strasse.substring(0, hyphenPos + 1), // Bindestrich am Ende der ersten Zeile
-        strasse.substring(hyphenPos + 1),
-      ];
     }
 
     // 4) Intelligentes Wort-Batching über Intl.Segmenter (wenn verfügbar)

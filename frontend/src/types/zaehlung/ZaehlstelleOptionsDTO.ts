@@ -1,3 +1,4 @@
+import type Rounding from "@/types/enum/Rounding";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
@@ -34,7 +35,7 @@ export default interface ZaehlstelleOptionsDTO {
   fahrzeugklassenStapeln: boolean;
   beschriftung: boolean;
   datentabelle: boolean;
-  werteHundertRunden: boolean;
+  rounding: Rounding;
   differenzdatenDarstellen: boolean;
   vergleichszaehlungsId: string | null;
   vonKnotenarm: number | null;
