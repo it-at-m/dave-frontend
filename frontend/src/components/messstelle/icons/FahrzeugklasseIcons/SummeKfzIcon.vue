@@ -15,7 +15,7 @@
   </svg>
 </template>
 <script setup lang="ts"></script>
-<style lang="css">
+<style scoped lang="css">
 .svg-text {
   font: bold 16px Arial;
 }
