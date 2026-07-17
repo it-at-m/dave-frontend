@@ -50,7 +50,7 @@
               <v-col>
                 <v-file-input
                   v-model="selectedFile"
-                  accept="image/*"
+                  accept=".png,.jpg,.jpeg"
                   density="compact"
                   label="Bilder vom Rechner hoch laden."
                   prepend-icon="mdi-image-plus"
