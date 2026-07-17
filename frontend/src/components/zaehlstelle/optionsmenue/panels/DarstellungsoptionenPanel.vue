@@ -246,12 +246,13 @@
           <v-checkbox
             v-model="chosenOptionsCopy.zeitreiheGesamt"
             class="mb-3"
-            :label="'Summe alle Verkehrsarten anzeigen'"
+            :label="'Summe aller Verkehrsarten anzeigen'"
             hide-details
             color="quaternary"
             density="compact"
             @mouseover="hoverZeitreiheGesamt = true"
             @mouseleave="hoverZeitreiheGesamt = false"
+            :disabled="isTypeKfzDisabled()"
           />
         </v-col>
         <v-spacer />

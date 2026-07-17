@@ -59,7 +59,7 @@ const GUETERVERKEHR = "Güterverkehr";
 const SCHWERVERKEHR = "Schwerverkehr";
 const RADVERKEHR = "Radverkehr";
 const FUSSVERKEHR = "Fußverkehr";
-const GESAMT = "Summe alle Verkehrsarten";
+const GESAMT = "Summe aller Verkehrsarten";
 
 provide(THEME_KEY, "default");
 interface Props {
