@@ -19,7 +19,7 @@ const iconText = defineModel<string>({
   required: true,
 });
 </script>
-<style lang="css">
+<style scoped lang="css">
 .svg-text {
   font: bold 23px Arial;
   font-stretch: condensed;

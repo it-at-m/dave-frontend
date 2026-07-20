@@ -375,15 +375,15 @@ function addSumNorthIfNecessary(
       SVG.SVG()
         .line(
           startX.value - 25,
-          startY.value + 80,
+          startY.value + 800,
           startX.value - 25,
-          startY.value + (1080 - (3 - numberOfChosenFahrzeugOptions.value) * 65)
+          startY.value + 800 + numberOfChosenFahrzeugOptions.value * 75
         )
         .stroke({ width: 1, color: "black" })
     );
     addTextSouthSide(
       startX.value - 20,
-      startY.value + 923,
+      startY.value + 873,
       sumMqKfz,
       sumMqGv,
       sumMqSv,

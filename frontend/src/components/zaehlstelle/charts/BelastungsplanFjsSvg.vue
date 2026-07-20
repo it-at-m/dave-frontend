@@ -313,25 +313,25 @@
         </g>
       </g>
       <g
-        id="nodes1To4"
+        id="knotenarme_1_to_4"
         class="Page"
       >
         <g
           v-if="availableKnotenarmNummern.includes(1)"
-          id="node1_group"
+          id="knotenarm1_group"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
-          <g id="node1">
+          <g id="knotenarm1">
             <path
-              id="node1_spike"
+              id="knotenarm1_spike"
               d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
               fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
-            <g id="node1_number">
+            <g id="knotenarm1_number">
               <circle
-                id="node1_number_circle"
+                id="knotenarm1_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -346,7 +346,7 @@
                 r="11.951238"
               />
               <text
-                id="node1_circle_text"
+                id="knotenarm1_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -362,7 +362,7 @@
                 x="693.53955"
               >
                 <tspan
-                  id="node1_circle_tspan"
+                  id="knotenarm1_number_tspan"
                   style="stroke-width: 30.9229"
                   x="693.53955"
                   y="622.00684"
@@ -373,7 +373,7 @@
             </g>
             <text
               v-if="streetnameNodeOne.length === 1"
-              id="node1_strassenname_text"
+              id="knotenarm1_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -401,7 +401,7 @@
               y="629.34802"
             >
               <tspan
-                id="tspan1"
+                id="knotenarm1_strassenname_tspan"
                 x="-438.67819"
                 y="705.79083"
                 style="stroke-width: 26.4927"
@@ -411,7 +411,7 @@
             </text>
             <text
               v-if="streetnameNodeOne.length > 1"
-              id="node1_strassenname_multirow2_text"
+              id="knotenarm1_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -439,7 +439,7 @@
               y="643.34802"
             >
               <tspan
-                id="tspan2"
+                id="knotenarm1_strassenname_multirow2_tspan"
                 x="-438.67819"
                 y="719.79083"
                 style="stroke-width: 26.4927"
@@ -449,7 +449,7 @@
             </text>
             <text
               v-if="streetnameNodeOne.length > 1"
-              id="node1_strassenname_multirow1_text"
+              id="knotenarm1_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -477,7 +477,7 @@
               y="615.34802"
             >
               <tspan
-                id="tspan3"
+                id="knotenarm1_strassenname_multirow1_tspan"
                 x="-438.67819"
                 y="691.79083"
                 style="stroke-width: 26.4927"
@@ -486,7 +486,7 @@
               </tspan>
             </text>
             <text
-              id="node1_sum_text"
+              id="knotenarm1_sum_text"
               xml:space="preserve"
               transform="rotate(-90)"
               :style="`
@@ -513,7 +513,7 @@
               y="-79.837906"
             >
               <tspan
-                id="node1_sum_tspan"
+                id="knotenarm1_sum_tspan"
                 x="-30.963991"
                 y="708.34723"
                 :style="`
@@ -534,11 +534,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node1">
-            <g id="arrows_node1_west">
+          <g id="arrows_knotenarm1">
+            <g id="arrows_knotenarm1_west">
               <path
                 v-if="arrowNodeOneWestOutgoingAvailable"
-                id="arrow_node1_west_outgoing"
+                id="arrow_knotenarm1_west_ausgehend"
                 d="M 627.50029,395.409 V 220.40855 H 619.5 L 633.49931,185.409 647.5,220.40855 h -7.99962 V 395.409 Z"
                 :fill="colorArrowNodeOneWestOutgoing"
                 stroke="none"
@@ -546,7 +546,7 @@
               />
               <path
                 v-if="arrowNodeOneWestIncomingAvailable"
-                id="arrow_node1_west_incoming"
+                id="arrow_knotenarm1_west_eingehend"
                 d="m 606.25,185.409 v 175.00052 h 8 L 600.25072,395.409 586.25,360.40952 h 8 V 185.409 Z"
                 :fill="colorArrowNodeOneWestIncoming"
                 stroke="none"
@@ -554,7 +554,7 @@
               />
               <text
                 v-if="arrowNodeOneWestIncomingAvailable"
-                id="arrow_node1_west_incoming_number_text"
+                id="arrow_knotenarm1_west_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -581,7 +581,7 @@
                 y="-181.45634"
               >
                 <tspan
-                  id="arrow_node1_west_incoming_number_tspan"
+                  id="arrow_knotenarm1_west_eingehend_zaehlwert_tspan"
                   x="-31.834871"
                   y="606.43726"
                   :style="`
@@ -603,7 +603,7 @@
               </text>
               <text
                 v-if="arrowNodeOneWestOutgoingAvailable"
-                id="arrow_node1_west_outgoing_number_text"
+                id="arrow_knotenarm1_west_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -630,7 +630,7 @@
                 y="-148.20622"
               >
                 <tspan
-                  id="arrow_node1_west_outgoing_number_tspan"
+                  id="arrow_knotenarm1_west_ausgehend_zaehlwert_tspan"
                   x="-31.834871"
                   y="639.68726"
                   :style="`
@@ -655,7 +655,7 @@
                   arrowNodeOneWestIncomingAvailable ||
                   arrowNodeOneWestOutgoingAvailable
                 "
-                id="arrows_node1_west_sum_text"
+                id="arrows_knotenarm1_west_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -682,7 +682,7 @@
                 y="-116.99011"
               >
                 <tspan
-                  id="arrows_node1_west_sum_tspan"
+                  id="arrows_knotenarm1_west_sum_tspan"
                   x="-30.963991"
                   y="671.1947"
                   :style="`
@@ -707,15 +707,15 @@
                   arrowNodeOneWestIncomingAvailable ||
                   arrowNodeOneWestOutgoingAvailable
                 "
-                id="arrows_node1_west_sum_line"
+                id="arrows_knotenarm1_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 644.2975,129.9655 v -98 h 2.45 v 98 z"
               />
             </g>
-            <g id="arrows_node1_east">
+            <g id="arrows_knotenarm1_ost">
               <path
                 v-if="arrowNodeOneEastOutgoingAvailable"
-                id="arrow_node1_east_outgoing"
+                id="arrow_knotenarm1_ost_ausgehend"
                 d="M 793.75028,395.409 V 220.40855 h -8.00029 l 13.99931,-34.99955 14.00069,34.99955 h -7.99962 V 395.409 Z"
                 :fill="colorArrowNodeOneEastOutgoing"
                 stroke="none"
@@ -723,7 +723,7 @@
               />
               <path
                 v-if="arrowNodeOneEastIncomingAvailable"
-                id="arrow_node1_east_incoming"
+                id="arrow_knotenarm1_ost_eingehend"
                 d="m 772.49999,185.409 v 175.00052 h 8 L 766.50071,395.409 752.49999,360.40952 h 8 V 185.409 Z"
                 :fill="colorArrowNodeOneEastIncoming"
                 stroke="none"
@@ -731,7 +731,7 @@
               />
               <text
                 v-if="arrowNodeOneEastIncomingAvailable"
-                id="arrow_node1_east_incoming_number_text"
+                id="arrow_knotenarm1_ost_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -758,7 +758,7 @@
                 y="-15.206282"
               >
                 <tspan
-                  id="arrow_node1_east_incoming_number_tspan"
+                  id="arrow_knotenarm1_ost_eingehend_zaehlwert_tspan"
                   x="-31.834871"
                   y="772.68726"
                   :style="`
@@ -780,7 +780,7 @@
               </text>
               <text
                 v-if="arrowNodeOneEastOutgoingAvailable"
-                id="arrow_node1_east_outgoing_number_text"
+                id="arrow_knotenarm1_ost_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -807,7 +807,7 @@
                 y="18.043777"
               >
                 <tspan
-                  id="arrow_node1_east_outgoing_number_tspan"
+                  id="arrow_knotenarm1_ost_ausgehend_zaehlwert_tspan"
                   x="-31.834871"
                   y="805.93726"
                   :style="`
@@ -832,7 +832,7 @@
                   arrowNodeOneEastIncomingAvailable ||
                   arrowNodeOneEastOutgoingAvailable
                 "
-                id="arrows_node1_east_sum_text"
+                id="arrows_knotenarm1_ost_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -859,7 +859,7 @@
                 y="49.25988"
               >
                 <tspan
-                  id="arrows_node1_east_sum_tspan"
+                  id="arrows_knotenarm1_ost_sum_tspan"
                   x="-30.963991"
                   y="837.4447"
                   :style="`
@@ -884,7 +884,7 @@
                   arrowNodeOneEastIncomingAvailable ||
                   arrowNodeOneEastOutgoingAvailable
                 "
-                id="arrows_node1_east_sum_line"
+                id="arrows_knotenarm1_ost_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 810.54749,129.9655 v -98 h 2.45 v 98 z"
               />
@@ -893,11 +893,11 @@
         </g>
         <g
           v-if="availableKnotenarmNummern.includes(2)"
-          id="node2_group"
+          id="knotenarm2_group"
         >
-          <g id="node2">
+          <g id="knotenarm2">
             <path
-              id="node2_spike"
+              id="knotenarm2_spike"
               d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
               fill="#ececec"
               stroke="none"
@@ -905,7 +905,7 @@
             />
             <text
               v-if="streetnameNodeTwo.length === 1"
-              id="node2_strassenname_text"
+              id="knotenarm2_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -932,7 +932,7 @@
               y="629.34802"
             >
               <tspan
-                id="tspan4"
+                id="knotenarm2_strassenname_tspan"
                 x="961.323"
                 y="705.79083"
                 style="stroke-width: 26.4927"
@@ -940,9 +940,9 @@
                 {{ streetnameNodeTwo[0] }}
               </tspan>
             </text>
-            <g id="node2_number">
+            <g id="knotenarm2_number">
               <circle
-                id="node2_number_circle"
+                id="knotenarm2_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -957,7 +957,7 @@
                 r="11.951238"
               />
               <text
-                id="node2_number_text"
+                id="knotenarm2_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -973,7 +973,7 @@
                 x="779.30457"
               >
                 <tspan
-                  id="node2_number_tspan"
+                  id="knotenarm2_number_tspan"
                   style="stroke-width: 30.9229"
                   x="779.30457"
                   y="707.33368"
@@ -984,7 +984,7 @@
             </g>
             <text
               v-if="streetnameNodeTwo.length > 1"
-              id="node2_strassenname_multirow2_text"
+              id="knotenarm2_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1011,7 +1011,7 @@
               y="643.34802"
             >
               <tspan
-                id="tspan5"
+                id="knotenarm2_strassenname_multirow2_tspan"
                 x="961.323"
                 y="719.79083"
                 style="stroke-width: 26.4927"
@@ -1021,7 +1021,7 @@
             </text>
             <text
               v-if="streetnameNodeTwo.length > 1"
-              id="node2_strassenname_multirow1_text"
+              id="knotenarm2_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1048,7 +1048,7 @@
               y="615.34802"
             >
               <tspan
-                id="tspan6"
+                id="knotenarm2_strassenname_multirow1_tspan"
                 x="961.323"
                 y="691.79083"
                 style="stroke-width: 26.4927"
@@ -1057,7 +1057,7 @@
               </tspan>
             </text>
             <text
-              id="node2_sum_text"
+              id="knotenarm2_sum_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1083,7 +1083,7 @@
               y="-79.830925"
             >
               <tspan
-                id="node2_sum_tspan"
+                id="knotenarm2_sum_tspan"
                 x="1369.0348"
                 y="708.35419"
                 :style="`
@@ -1104,11 +1104,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node2">
-            <g id="arrows_node2_north">
+          <g id="arrows_knotenarm2">
+            <g id="arrows_knotenarm2_nord">
               <path
                 v-if="arrowNodeTwoNorthIncomingAvailable"
-                id="arrow_node2_north_incoming"
+                id="arrow_knotenarm2_nord_eingehend"
                 d="m 1214.591,606.25 h -175.0005 v 8 L 1004.591,600.25072 1039.5905,586.25 v 8 h 175.0005 z"
                 :fill="colorArrowNodeTwoNorthIncoming"
                 stroke="none"
@@ -1116,7 +1116,7 @@
               />
               <path
                 v-if="arrowNodeTwoNorthOutgoingAvailable"
-                id="arrow_node2_north_outgoing"
+                id="arrow_knotenarm2_nord_ausgehend"
                 d="m 1004.591,627.5 h 175.0005 v -8 l 34.9995,13.9993 -34.9995,14.0007 v -8 H 1004.591 Z"
                 :fill="colorArrowNodeTwoNorthOutgoing"
                 stroke="none"
@@ -1124,7 +1124,7 @@
               />
               <text
                 v-if="arrowNodeTwoNorthIncomingAvailable"
-                id="arrow_node2_north_incoming_number_text"
+                id="arrow_knotenarm2_nord_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -1150,7 +1150,7 @@
                 y="-181.45631"
               >
                 <tspan
-                  id="arrow_node2_north_incoming_number_tspan"
+                  id="arrow_knotenarm2_nord_eingehend_zaehlwert_tspan"
                   x="1368.1643"
                   y="606.43726"
                   :style="`
@@ -1172,7 +1172,7 @@
               </text>
               <text
                 v-if="arrowNodeTwoNorthOutgoingAvailable"
-                id="arrow_node2_north_outgoing_number_text"
+                id="arrow_knotenarm2_nord_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -1198,7 +1198,7 @@
                 y="-148.2063"
               >
                 <tspan
-                  id="arrow_node2_north_outgoing_number_tspan"
+                  id="arrow_knotenarm2_nord_ausgehend_zaehlwert_tspan"
                   x="1368.1643"
                   y="639.68726"
                   :style="`
@@ -1223,7 +1223,7 @@
                   arrowNodeTwoNorthIncomingAvailable ||
                   arrowNodeTwoNorthOutgoingAvailable
                 "
-                id="arrows_node2_north_sum_text"
+                id="arrows_knotenarm2_nord_sum_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -1249,7 +1249,7 @@
                 y="-116.99011"
               >
                 <tspan
-                  id="arrows_node2_north_sum_tspan"
+                  id="arrows_knotenarm2_nord_sum_tspan"
                   x="1369.0348"
                   y="671.1947"
                   :style="`
@@ -1274,15 +1274,15 @@
                   arrowNodeTwoNorthIncomingAvailable ||
                   arrowNodeTwoNorthOutgoingAvailable
                 "
-                id="arrows_node2_north_sum_line"
+                id="arrows_knotenarm2_nord_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8774"
                 d="m 1270.0345,644.2975 h 98 v 2.45 h -98 z"
               />
             </g>
-            <g id="arrows_node2_south">
+            <g id="arrows_knotenarm2_sued">
               <path
                 v-if="arrowNodeTwoSouthIncomingAvailable"
-                id="arrow_node2_south_incoming"
+                id="arrow_knotenarm2_sued_eingehend"
                 d="m 1214.591,772.49999 h -175.0005 v 8 l -34.9995,-13.99928 34.9995,-14.00072 v 8 h 175.0005 z"
                 :fill="colorArrowNodeTwoSouthIncoming"
                 stroke="none"
@@ -1290,7 +1290,7 @@
               />
               <path
                 v-if="arrowNodeTwoSouthOutgoingAvailable"
-                id="arrow_node2_south_outgoing"
+                id="arrow_knotenarm2_sued_ausgehend"
                 d="m 1004.591,793.74999 h 175.0005 v -8 l 34.9995,13.9993 -34.9995,14.0007 v -8 H 1004.591 Z"
                 :fill="colorArrowNodeTwoSouthOutgoing"
                 stroke="none"
@@ -1298,7 +1298,7 @@
               />
               <text
                 v-if="arrowNodeTwoSouthIncomingAvailable"
-                id="arrow_node2_south_incoming_number_text"
+                id="arrow_knotenarm2_sued_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -1324,7 +1324,7 @@
                 y="-15.206279"
               >
                 <tspan
-                  id="arrow_node2_south_incoming_number_tspan"
+                  id="arrow_knotenarm2_sued_eingehend_zaehlwert_tspan"
                   x="1368.1643"
                   y="772.68726"
                   :style="`
@@ -1346,7 +1346,7 @@
               </text>
               <text
                 v-if="arrowNodeTwoSouthOutgoingAvailable"
-                id="arrow_node2_south_outgoing_number_text"
+                id="arrow_knotenarm2_sued_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -1372,7 +1372,7 @@
                 y="18.043781"
               >
                 <tspan
-                  id="arrow_node2_south_outgoing_number_tspan"
+                  id="arrow_knotenarm2_sued_ausgehend_zaehlwert_tspan"
                   x="1368.1643"
                   y="805.93726"
                   :style="`
@@ -1397,7 +1397,7 @@
                   arrowNodeTwoSouthIncomingAvailable ||
                   arrowNodeTwoSouthOutgoingAvailable
                 "
-                id="arrows_node2_south_sum_text"
+                id="arrows_knotenarm2_sued_sum_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -1423,7 +1423,7 @@
                 y="49.259895"
               >
                 <tspan
-                  id="arrows_node2_south_sum_tspan"
+                  id="arrows_knotenarm2_sued_sum_tspan"
                   x="1369.0348"
                   y="837.4447"
                   :style="`
@@ -1448,7 +1448,7 @@
                   arrowNodeTwoSouthIncomingAvailable ||
                   arrowNodeTwoSouthOutgoingAvailable
                 "
-                id="arrows_node2_south_sum_line"
+                id="arrows_knotenarm2_sued_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1270.0345,810.54749 h 98 v 2.45 h -98 z"
               />
@@ -1457,11 +1457,11 @@
         </g>
         <g
           v-if="availableKnotenarmNummern.includes(3)"
-          id="node3_group"
+          id="knotenarm3_group"
         >
-          <g id="node3">
+          <g id="knotenarm3">
             <path
-              id="node3_spike"
+              id="knotenarm3_spike"
               d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
               fill="#ececec"
               stroke="none"
@@ -1469,7 +1469,7 @@
             />
             <text
               v-if="streetnameNodeThree.length === 1"
-              id="node3_strassenname_text"
+              id="knotenarm3_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1497,7 +1497,7 @@
               y="705.79083"
             >
               <tspan
-                id="node3_strassenname_tspan"
+                id="knotenarm3_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1517,9 +1517,9 @@
                 {{ streetnameNodeThree[0] }}
               </tspan>
             </text>
-            <g id="node3_number">
+            <g id="knotenarm3_number">
               <circle
-                id="node3_number_circle"
+                id="knotenarm3_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -1534,7 +1534,7 @@
                 r="11.951238"
               />
               <text
-                id="node3_number_text"
+                id="knotenarm3_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -1550,7 +1550,7 @@
                 x="693.75189"
               >
                 <tspan
-                  id="node3_number_tspan"
+                  id="knotenarm3_number_tspan"
                   style="stroke-width: 30.9229"
                   x="693.75189"
                   y="792.38141"
@@ -1561,7 +1561,7 @@
             </g>
             <text
               v-if="streetnameNodeThree.length > 1"
-              id="node3_strassenname_multirow2_text"
+              id="knotenarm3_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1589,7 +1589,7 @@
               y="719.79083"
             >
               <tspan
-                id="node3_strassenname_multirow2_tspan"
+                id="knotenarm3_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1611,7 +1611,7 @@
             </text>
             <text
               v-if="streetnameNodeThree.length > 1"
-              id="node3_strassenname_multirow1_text"
+              id="knotenarm3_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -1639,7 +1639,7 @@
               y="691.79083"
             >
               <tspan
-                id="node3_strassenname_multirow1_tspan"
+                id="knotenarm3_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -1660,7 +1660,7 @@
               </tspan>
             </text>
             <text
-              id="node3_sum_text"
+              id="knotenarm3_sum_text"
               xml:space="preserve"
               transform="rotate(-90)"
               :style="`
@@ -1687,7 +1687,7 @@
               y="-79.837982"
             >
               <tspan
-                id="node3_sum_tspan"
+                id="knotenarm3_sum_tspan"
                 x="-1276.4985"
                 y="708.34723"
                 :style="`
@@ -1708,11 +1708,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node3">
-            <g id="arrows_node3_east">
+          <g id="arrows_knotenarm3">
+            <g id="arrows_knotenarm3_ost">
               <path
                 v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_incoming"
+                id="arrow_knotenarm3_ost_eingehend"
                 d="m 793.75028,1214.591 v -175.0005 h -8.00029 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
                 :fill="colorArrowNodeThreeEastIncoming"
                 stroke="none"
@@ -1720,7 +1720,7 @@
               />
               <path
                 v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_outgoing"
+                id="arrow_knotenarm3_ost_ausgehend"
                 d="m 772.49999,1004.591 v 175.0005 h 8 l -13.99928,34.9995 -14.00072,-34.9995 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeEastOutgoing"
                 stroke="none"
@@ -1728,7 +1728,7 @@
               />
               <text
                 v-if="arrowNodeThreeEastOutgoingAvailable"
-                id="arrow_node3_east_outgoing_number_text"
+                id="arrow_knotenarm3_ost_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1755,7 +1755,7 @@
                 y="-15.206213"
               >
                 <tspan
-                  id="arrow_node3_east_outgoing_number_tspan"
+                  id="arrow_knotenarm3_ost_ausgehend_zaehlwert_tspan"
                   x="-1276.2108"
                   y="772.68726"
                   :style="`
@@ -1777,7 +1777,7 @@
               </text>
               <text
                 v-if="arrowNodeThreeEastIncomingAvailable"
-                id="arrow_node3_east_incoming_number_text"
+                id="arrow_knotenarm3_ost_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1804,7 +1804,7 @@
                 y="18.043785"
               >
                 <tspan
-                  id="arrow_node3_east_incoming_number_tspan"
+                  id="arrow_knotenarm3_ost_eingehend_zaehlwert_tspan"
                   x="-1276.2108"
                   y="805.93726"
                   :style="`
@@ -1829,7 +1829,7 @@
                   arrowNodeThreeEastIncomingAvailable ||
                   arrowNodeThreeEastOutgoingAvailable
                 "
-                id="arrows_node3_east_sum_text"
+                id="arrows_knotenarm3_ost_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1856,7 +1856,7 @@
                 y="49.259911"
               >
                 <tspan
-                  id="arrows_node3_east_sum_tspan"
+                  id="arrows_knotenarm3_ost_sum_tspan"
                   x="-1276.4985"
                   y="837.4447"
                   :style="`
@@ -1881,15 +1881,15 @@
                   arrowNodeThreeEastIncomingAvailable ||
                   arrowNodeThreeEastOutgoingAvailable
                 "
-                id="arrows_node3_east_sum_line"
+                id="arrows_knotenarm3_ost_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 810.54749,1375.5 v -98 h 2.45 v 98 z"
               />
             </g>
-            <g id="arrows_node3_west">
+            <g id="arrows_knotenarm3_west">
               <path
                 v-if="arrowNodeThreeWestIncomingAvailable"
-                id="arrow_node3_west_incoming"
+                id="arrow_knotenarm3_west_eingehend"
                 d="M 627.50029,1214.591 V 1039.5905 H 619.5 l 13.99931,-34.9995 14.00069,34.9995 h -7.99962 v 175.0005 z"
                 :fill="colorArrowNodeThreeWestIncoming"
                 stroke="none"
@@ -1897,7 +1897,7 @@
               />
               <path
                 v-if="arrowNodeThreeWestOutgoingAvailable"
-                id="arrow_node3_west_outgoing"
+                id="arrow_knotenarm3_west_ausgehend"
                 d="m 606.25,1004.591 v 175.0005 h 8 L 600.25072,1214.591 586.25,1179.5915 h 8 V 1004.591 Z"
                 :fill="colorArrowNodeThreeWestOutgoing"
                 stroke="none"
@@ -1905,7 +1905,7 @@
               />
               <text
                 v-if="arrowNodeThreeWestOutgoingAvailable"
-                id="arrow_node3_west_outgoing_number_text"
+                id="arrow_knotenarm3_west_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1932,7 +1932,7 @@
                 y="-181.45621"
               >
                 <tspan
-                  id="arrow_node3_west_outgoing_number_tspan"
+                  id="arrow_knotenarm3_west_ausgehend_zaehlwert_tspan"
                   x="-1276.2108"
                   y="606.43726"
                   :style="`
@@ -1954,7 +1954,7 @@
               </text>
               <text
                 v-if="arrowNodeThreeWestIncomingAvailable"
-                id="arrow_node3_west_incoming_number_text"
+                id="arrow_knotenarm3_west_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -1981,7 +1981,7 @@
                 y="-148.20621"
               >
                 <tspan
-                  id="arrow_node3_west_incoming_number_tspan"
+                  id="arrow_knotenarm3_west_eingehend_zaehlwert_tspan"
                   x="-1276.2108"
                   y="639.68726"
                   :style="`
@@ -2006,7 +2006,7 @@
                   arrowNodeThreeWestIncomingAvailable ||
                   arrowNodeThreeWestOutgoingAvailable
                 "
-                id="arrows_node3_west_sum_text"
+                id="arrows_knotenarm3_west_sum_text"
                 xml:space="preserve"
                 transform="rotate(-90)"
                 :style="`
@@ -2033,7 +2033,7 @@
                 y="-116.99008"
               >
                 <tspan
-                  id="arrows_node3_west_sum_tspan"
+                  id="arrows_knotenarm3_west_sum_tspan"
                   x="-1276.4985"
                   y="671.1947"
                   :style="`
@@ -2058,7 +2058,7 @@
                   arrowNodeThreeWestIncomingAvailable ||
                   arrowNodeThreeWestOutgoingAvailable
                 "
-                id="arrows_node3_west_sum_line"
+                id="arrows_knotenarm3_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 644.2975,1375.5 v -98 h 2.45 v 98 z"
               />
@@ -2067,11 +2067,11 @@
         </g>
         <g
           v-if="availableKnotenarmNummern.includes(4)"
-          id="node4_group"
+          id="knotenarm4_group"
         >
-          <g id="node4">
+          <g id="knotenarm4">
             <path
-              id="node4_spike"
+              id="knotenarm4_spike"
               d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
               fill="#ececec"
               stroke="none"
@@ -2079,7 +2079,7 @@
             />
             <text
               v-if="streetnameNodeFour.length === 1"
-              id="node4_text"
+              id="knotenarm4_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2106,7 +2106,7 @@
               y="705.79083"
             >
               <tspan
-                id="node4_strassenname_tspan"
+                id="knotenarm4_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2126,9 +2126,9 @@
                 {{ streetnameNodeFour[0] }}
               </tspan>
             </text>
-            <g id="node4_number">
+            <g id="knotenarm4_number">
               <circle
-                id="node4_number_circle"
+                id="knotenarm4_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2143,7 +2143,7 @@
                 r="11.951238"
               />
               <text
-                id="node4_number_text"
+                id="knotenarm4_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -2159,7 +2159,7 @@
                 x="608.34302"
               >
                 <tspan
-                  id="node4_number_tspan"
+                  id="knotenarm4_number_tspan"
                   style="stroke-width: 30.9229"
                   x="608.34302"
                   y="707.20343"
@@ -2170,7 +2170,7 @@
             </g>
             <text
               v-if="streetnameNodeFour.length > 1"
-              id="node4_strassenname_multirow2_text"
+              id="knotenarm4_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2197,7 +2197,7 @@
               y="719.79083"
             >
               <tspan
-                id="node4_strassenname_multirow2_tspan"
+                id="knotenarm4_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2219,7 +2219,7 @@
             </text>
             <text
               v-if="streetnameNodeFour.length > 1"
-              id="node4_strassenname_multirow1_text"
+              id="knotenarm4_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2246,7 +2246,7 @@
               y="691.79083"
             >
               <tspan
-                id="node4_strassenname_multirow1_tspan"
+                id="knotenarm4_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2267,7 +2267,7 @@
               </tspan>
             </text>
             <text
-              id="node4_sum_text"
+              id="knotenarm4_sum_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2295,7 +2295,7 @@
               <tspan
                 x="123.50026"
                 y="708.35419"
-                id="node4_sum_tspan"
+                id="knotenarm4_sum_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -2314,11 +2314,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node4">
-            <g id="arrows_node4_south">
+          <g id="arrows_knotenarm4">
+            <g id="arrows_knotenarm4_sued">
               <path
                 v-if="arrowNodeFourSouthOutgoingAvailable"
-                id="arrow_node4_south_outgoing"
+                id="arrow_knotenarm4_sued_ausgehend"
                 d="M 395.409,772.49999 H 220.4085 v 8 l -34.9995,-13.99928 34.9995,-14.00072 v 8 H 395.409 Z"
                 :fill="colorArrowNodeFourSouthOutgoing"
                 stroke="none"
@@ -2326,7 +2326,7 @@
               />
               <path
                 v-if="arrowNodeFourSouthIncomingAvailable"
-                id="arrow_node4_south_incoming"
+                id="arrow_knotenarm4_sued_eingehend"
                 d="m 185.409,793.74999 h 175.0005 v -8 l 34.9995,13.9993 -34.9995,14.0007 v -8 H 185.409 Z"
                 :fill="colorArrowNodeFourSouthIncoming"
                 stroke="none"
@@ -2334,7 +2334,7 @@
               />
               <text
                 v-if="arrowNodeFourSouthOutgoingAvailable"
-                id="arrow_node4_south_outgoing_number_text"
+                id="arrow_knotenarm4_sued_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -2360,7 +2360,7 @@
                 y="-15.206355"
               >
                 <tspan
-                  id="arrow_node4_south_outgoing_number_tspan"
+                  id="arrow_knotenarm4_sued_ausgehend_zaehlwert_tspan"
                   x="123.78831"
                   y="772.68726"
                   :style="`
@@ -2382,7 +2382,7 @@
               </text>
               <text
                 v-if="arrowNodeFourSouthIncomingAvailable"
-                id="arrow_node4_south_incoming_number_text"
+                id="arrow_knotenarm4_sued_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -2408,7 +2408,7 @@
                 y="18.043804"
               >
                 <tspan
-                  id="arrow_node4_south_incoming_number_tspan"
+                  id="arrow_knotenarm4_sued_eingehend_zaehlwert_tspan"
                   x="123.78831"
                   y="805.93726"
                   :style="`
@@ -2433,7 +2433,7 @@
                   arrowNodeFourSouthIncomingAvailable ||
                   arrowNodeFourSouthOutgoingAvailable
                 "
-                id="arrows_node4_south_sum_text"
+                id="arrows_knotenarm4_sued_sum_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -2459,7 +2459,7 @@
                 y="49.259884"
               >
                 <tspan
-                  id="arrows_node4_south_sum_tspan"
+                  id="arrows_knotenarm4_sued_sum_tspan"
                   x="123.50026"
                   y="837.4447"
                   :style="`
@@ -2484,15 +2484,15 @@
                   arrowNodeFourSouthIncomingAvailable ||
                   arrowNodeFourSouthOutgoingAvailable
                 "
-                id="arrows_node4_south_sum_line"
+                id="arrows_knotenarm4_sued_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 24.5,810.54749 h 98 v 2.45 h -98 z"
               />
             </g>
-            <g id="arrows_node4_north">
+            <g id="arrows_knotenarm4_nord">
               <path
                 v-if="arrowNodeFourNorthOutgoingAvailable"
-                id="arrow_node4_north_outgoing"
+                id="arrow_knotenarm4_nord_ausgehend"
                 d="M 395.409,606.25 H 220.4085 v 8 L 185.409,600.25072 220.4085,586.25 v 8 H 395.409 Z"
                 :fill="colorArrowNodeFourNorthOutgoing"
                 stroke="none"
@@ -2500,7 +2500,7 @@
               />
               <path
                 v-if="arrowNodeFourNorthIncomingAvailable"
-                id="arrow_node4_north_incoming"
+                id="arrow_knotenarm4_nord_eingehend"
                 d="m 185.409,627.5 h 175.0005 v -8 L 395.409,633.4993 360.4095,647.5 v -8 H 185.409 Z"
                 :fill="colorArrowNodeFourNorthIncoming"
                 stroke="none"
@@ -2508,7 +2508,7 @@
               />
               <text
                 v-if="arrowNodeFourNorthOutgoingAvailable"
-                id="arrow_node4_north_outgoing_number_text"
+                id="arrow_knotenarm4_nord_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -2534,7 +2534,7 @@
                 y="-181.45634"
               >
                 <tspan
-                  id="arrow_node4_north_outgoing_number_tspan"
+                  id="arrow_knotenarm4_nord_ausgehend_zaehlwert_tspan"
                   x="123.78831"
                   y="606.43726"
                   :style="`
@@ -2556,7 +2556,7 @@
               </text>
               <text
                 v-if="arrowNodeFourNorthIncomingAvailable"
-                id="arrow_node4_north_incoming_number_text"
+                id="arrow_knotenarm4_nord_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -2582,7 +2582,7 @@
                 y="-148.20619"
               >
                 <tspan
-                  id="arrow_node4_north_incoming_number_tspan"
+                  id="arrow_knotenarm4_nord_eingehend_zaehlwert_tspan"
                   x="123.78831"
                   y="639.68726"
                   :style="`
@@ -2607,7 +2607,7 @@
                   arrowNodeFourNorthIncomingAvailable ||
                   arrowNodeFourNorthOutgoingAvailable
                 "
-                id="arrows_node4_north_sum_text"
+                id="arrows_knotenarm4_nord_sum_text"
                 xml:space="preserve"
                 :style="`
                   font-style: normal;
@@ -2633,7 +2633,7 @@
                 y="-116.99019"
               >
                 <tspan
-                  id="arrows_node4_north_sum_tspan"
+                  id="arrows_knotenarm4_nord_sum_tspan"
                   x="123.50026"
                   y="671.1947"
                   :style="`
@@ -2658,7 +2658,7 @@
                   arrowNodeFourNorthIncomingAvailable ||
                   arrowNodeFourNorthOutgoingAvailable
                 "
-                id="arrows_node4_north_sum_line"
+                id="arrows_knotenarm4_nord_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 24.5,644.2975 h 98 v 2.45 h -98 z"
               />
@@ -2666,23 +2666,23 @@
           </g>
         </g>
       </g>
-      <g id="nodes5To8">
+      <g id="knotenarme_5_to_8">
         <g
           v-if="availableKnotenarmNummern.includes(5)"
-          id="node5_group"
+          id="knotenarm5_group"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
-          <g id="node5">
+          <g id="knotenarm5">
             <path
-              id="node5_spike"
+              id="knotenarm5_spike"
               d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
               fill="#ececec"
               stroke="none"
               style="stroke-width: 14.949"
             />
-            <g id="node5_number">
+            <g id="knotenarm5_number">
               <circle
-                id="node5_number_circle"
+                id="knotenarm5_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -2697,7 +2697,7 @@
                 r="11.951238"
               />
               <text
-                id="node5_number_text"
+                id="knotenarm5_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -2713,7 +2713,7 @@
                 x="754.23737"
               >
                 <tspan
-                  id="node5_number_tspan"
+                  id="knotenarm5_number_tspan"
                   style="stroke-width: 30.9229"
                   x="754.23737"
                   y="646.03784"
@@ -2724,7 +2724,7 @@
             </g>
             <text
               v-if="streetnameNodeFive.length === 1"
-              id="node5_strassenname_text"
+              id="knotenarm5_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2752,7 +2752,7 @@
               y="919.29749"
             >
               <tspan
-                id="node5_strassenname_tspan"
+                id="knotenarm5_strassenname_tspan"
                 x="261.3215"
                 y="995.74023"
                 style="stroke-width: 26.4927"
@@ -2762,7 +2762,7 @@
             </text>
             <text
               v-if="streetnameNodeFive.length > 1"
-              id="node5_strassenname_multirow2_text"
+              id="knotenarm5_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2790,7 +2790,7 @@
               y="933.29785"
             >
               <tspan
-                id="node5_strassenname_multirow2_tspan"
+                id="knotenarm5_strassenname_multirow2_tspan"
                 x="261.32397"
                 y="1009.7406"
                 style="stroke-width: 26.4927"
@@ -2800,7 +2800,7 @@
             </text>
             <text
               v-if="streetnameNodeFive.length > 1"
-              id="node5_strassenname_multirow1_text"
+              id="knotenarm5_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -2828,7 +2828,7 @@
               y="905.2995"
             >
               <tspan
-                id="node5_strassenname_multirow1_tspan"
+                id="knotenarm5_strassenname_multirow1_tspan"
                 x="261.3215"
                 y="981.74231"
                 style="stroke-width: 26.4927"
@@ -2837,7 +2837,7 @@
               </tspan>
             </text>
             <text
-              id="node5_sum_text"
+              id="knotenarm5_sum_text"
               xml:space="preserve"
               transform="rotate(-45)"
               :style="`
@@ -2864,7 +2864,7 @@
               y="211.86259"
             >
               <tspan
-                id="node5_sum_tspan"
+                id="knotenarm5_sum_tspan"
                 x="674.005"
                 y="1000.0479"
                 :style="`
@@ -2885,11 +2885,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node5">
-            <g id="arrows_node5_north_west">
+          <g id="arrows_knotenarm5">
+            <g id="arrows_knotenarm5_nord_west">
               <path
                 v-if="arrowNodeFiveNorthWestOutgoingAvailable"
-                id="arrow_node5_north_west_outgoing"
+                id="arrow_knotenarm5_nord_west_ausgehend"
                 d="M 864.11499,433.35748 987.859,309.61347 l -5.65706,-5.65706 34.64746,-14.84941 -14.8485,34.6484 -5.65656,-5.65658 -123.744,123.744 z"
                 :fill="colorArrowNodeFiveNorthWestOutgoing"
                 stroke="none"
@@ -2897,7 +2897,7 @@
               />
               <path
                 v-if="arrowNodeFiveNorthWestIncomingAvailable"
-                id="arrow_node5_north_west_incoming"
+                id="arrow_knotenarm5_nord_west_eingehend"
                 d="m 997.57854,269.83728 -123.74405,123.74405 5.65685,5.65686 -34.64735,14.84938 14.84836,-34.64837 5.65686,5.65685 L 989.09326,261.352 Z"
                 :fill="colorArrowNodeFiveNorthWestIncoming"
                 stroke="none"
@@ -2905,7 +2905,7 @@
               />
               <text
                 v-if="arrowNodeFiveNorthWestIncomingAvailable"
-                id="arrow_node5_north_west_incoming_number_text"
+                id="arrow_knotenarm5_nord_west_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -2932,7 +2932,7 @@
                 y="110.15491"
               >
                 <tspan
-                  id="arrow_node5_north_west_incoming_number_tspan"
+                  id="arrow_knotenarm5_nord_west_eingehend_zaehlwert_tspan"
                   x="674.20111"
                   y="898.04852"
                   :style="`
@@ -2954,7 +2954,7 @@
               </text>
               <text
                 v-if="arrowNodeFiveNorthWestOutgoingAvailable"
-                id="arrow_node5_north_west_outgoing_number_text"
+                id="arrow_knotenarm5_nord_west_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -2981,7 +2981,7 @@
                 y="143.40495"
               >
                 <tspan
-                  id="arrow_node5_north_west_outgoing_number_tspan"
+                  id="arrow_knotenarm5_nord_west_ausgehend_zaehlwert_tspan"
                   x="674.19867"
                   y="931.2984"
                   :style="`
@@ -3006,7 +3006,7 @@
                   arrowNodeFiveNorthWestIncomingAvailable ||
                   arrowNodeFiveNorthWestOutgoingAvailable
                 "
-                id="arrows_node5_north_west_sum_text"
+                id="arrows_knotenarm5_nord_west_sum_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -3033,7 +3033,7 @@
                 y="174.71283"
               >
                 <tspan
-                  id="arrows_node5_north_west_sum_tspan"
+                  id="arrows_knotenarm5_nord_west_sum_tspan"
                   x="674.00256"
                   y="962.89758"
                   :style="`
@@ -3058,15 +3058,15 @@
                   arrowNodeFiveNorthWestIncomingAvailable ||
                   arrowNodeFiveNorthWestOutgoingAvailable
                 "
-                id="arrows_node5_north_west_sum_line"
+                id="arrows_knotenarm5_nord_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1068.347,256.29097 69.2965,-69.29647 1.7324,1.73241 -69.2965,69.29647 z"
               />
             </g>
-            <g id="arrows_node5_south_east">
+            <g id="arrows_knotenarm5_sued_ost">
               <path
                 v-if="arrowNodeFiveSouthEastOutgoingAvailable"
-                id="arrow_node5_south_east_outgoing"
+                id="arrow_knotenarm5_sued_ost_ausgehend"
                 d="m 981.66949,550.91198 123.74401,-123.74401 -5.6571,-5.65706 34.6475,-14.84941 -14.8485,34.6484 -5.6566,-5.65658 -123.74396,123.744 z"
                 :fill="colorArrowNodeFiveSouthEastOutgoing"
                 stroke="none"
@@ -3074,7 +3074,7 @@
               />
               <path
                 v-if="arrowNodeFiveSouthEastIncomingAvailable"
-                id="arrow_node5_south_east_incoming"
+                id="arrow_knotenarm5_sued_ost_eingehend"
                 d="m 1115.1365,387.39528 -123.74401,123.74405 5.65685,5.65686 -34.64735,14.84938 14.84836,-34.64837 5.65686,5.65685 L 1106.6513,378.91 Z"
                 :fill="colorArrowNodeFiveSouthEastIncoming"
                 stroke="none"
@@ -3082,7 +3082,7 @@
               />
               <text
                 v-if="arrowNodeFiveSouthEastIncomingAvailable"
-                id="arrow_node5_south_east_incoming_number_text"
+                id="arrow_knotenarm5_sued_ost_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -3109,7 +3109,7 @@
                 y="276.40448"
               >
                 <tspan
-                  id="arrow_node5_south_east_incoming_number_tspan"
+                  id="arrow_knotenarm5_sued_ost_eingehend_zaehlwert_tspan"
                   x="674.19867"
                   y="1064.2981"
                   :style="`
@@ -3131,7 +3131,7 @@
               </text>
               <text
                 v-if="arrowNodeFiveSouthEastOutgoingAvailable"
-                id="arrow_node5_south_east_outgoing_number_text"
+                id="arrow_knotenarm5_sued_ost_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -3158,7 +3158,7 @@
                 y="309.65457"
               >
                 <tspan
-                  id="arrow_node5_south_east_outgoing_number_tspan"
+                  id="arrow_knotenarm5_sued_ost_ausgehend_zaehlwert_tspan"
                   x="674.20111"
                   y="1097.5481"
                   :style="`
@@ -3183,7 +3183,7 @@
                   arrowNodeFiveSouthEastIncomingAvailable ||
                   arrowNodeFiveSouthEastOutgoingAvailable
                 "
-                id="arrows_node5_south_east_sum_text"
+                id="arrows_knotenarm5_sued_ost_sum_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -3210,7 +3210,7 @@
                 y="340.96234"
               >
                 <tspan
-                  id="arrows_node5_south_east_sum_tspan"
+                  id="arrows_knotenarm5_sued_ost_sum_tspan"
                   x="674.00494"
                   y="1129.1472"
                   :style="`
@@ -3235,7 +3235,7 @@
                   arrowNodeFiveSouthEastIncomingAvailable ||
                   arrowNodeFiveSouthEastOutgoingAvailable
                 "
-                id="arrows_node5_south_east_sum_line"
+                id="arrows_knotenarm5_sued_ost_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1185.9015,373.84547 69.2965,-69.29647 1.7324,1.73241 -69.2965,69.29647 z"
               />
@@ -3244,11 +3244,11 @@
         </g>
         <g
           v-if="availableKnotenarmNummern.includes(6)"
-          id="node6_group"
+          id="knotenarm6_group"
         >
-          <g id="node6">
+          <g id="knotenarm6">
             <path
-              id="node6_spike"
+              id="knotenarm6_spike"
               d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
               fill="#ececec"
               stroke="none"
@@ -3256,7 +3256,7 @@
             />
             <text
               v-if="streetnameNodeSix.length === 1"
-              id="node6_strassenname_text"
+              id="knotenarm6_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -3284,7 +3284,7 @@
               y="-70.653908"
             >
               <tspan
-                id="node6_strassenname_tspan"
+                id="knotenarm6_strassenname_tspan"
                 x="1251.2728"
                 y="5.7888861"
                 style="stroke-width: 26.4927"
@@ -3293,11 +3293,11 @@
               </tspan>
             </text>
             <g
-              id="node6_number"
+              id="knotenarm6_number"
               transform="rotate(45,785.75,700)"
             >
               <circle
-                id="node6_number_circle"
+                id="knotenarm6_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -3312,7 +3312,7 @@
                 r="11.951238"
               />
               <text
-                id="node6_number_text"
+                id="knotenarm6_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -3329,7 +3329,7 @@
                 transform="rotate(-45)"
               >
                 <tspan
-                  id="node6_number_tspan"
+                  id="knotenarm6_number_tspan"
                   style="stroke-width: 30.9229"
                   x="29.266506"
                   y="1118.2867"
@@ -3340,7 +3340,7 @@
             </g>
             <text
               v-if="streetnameNodeSix.length > 1"
-              id="node6_strassenname_multirow2_text"
+              id="knotenarm6_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -3368,7 +3368,7 @@
               y="-56.65107"
             >
               <tspan
-                id="node6_strassenname_multirow2_tspan"
+                id="knotenarm6_strassenname_multirow2_tspan"
                 x="1251.2728"
                 y="19.791721"
                 style="stroke-width: 26.4927"
@@ -3378,7 +3378,7 @@
             </text>
             <text
               v-if="streetnameNodeSix.length > 1"
-              id="node6_strassenname_multirow1_text"
+              id="knotenarm6_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -3406,7 +3406,7 @@
               y="-84.651787"
             >
               <tspan
-                id="node6_strassenname_multirow1_tspan"
+                id="knotenarm6_strassenname_multirow1_tspan"
                 x="1251.2728"
                 y="-8.2089996"
                 style="stroke-width: 26.4927"
@@ -3415,7 +3415,7 @@
               </tspan>
             </text>
             <text
-              id="node6_sum_text"
+              id="knotenarm6_sum_text"
               xml:space="preserve"
               transform="rotate(45)"
               :style="`
@@ -3442,7 +3442,7 @@
               y="-778.08771"
             >
               <tspan
-                id="node6_sum_tspan"
+                id="knotenarm6_sum_tspan"
                 x="1663.9556"
                 y="10.097366"
                 :style="`
@@ -3463,11 +3463,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node6">
-            <g id="arrows_node6_north_east">
+          <g id="arrows_knotenarm6">
+            <g id="arrows_knotenarm6_nord_ost">
               <path
                 v-if="arrowNodeSixNorthEastIncomingAvailable"
-                id="arrow_node6_north_east_incoming"
+                id="arrow_knotenarm6_nord_ost_eingehend"
                 d="m 1130.1618,997.57854 -123.7441,-123.74404 -5.6568,5.65686 -14.84941,-34.64737 34.64841,14.84838 -5.6569,5.65685 123.7441,123.74404 z"
                 :fill="colorArrowNodeSixNorthEastIncoming"
                 stroke="none"
@@ -3475,7 +3475,7 @@
               />
               <path
                 v-if="arrowNodeSixNorthEastOutgoingAvailable"
-                id="arrow_node6_north_east_outgoing"
+                id="arrow_knotenarm6_nord_ost_ausgehend"
                 d="m 966.64529,864.11149 123.74411,123.74404 5.6568,-5.65686 14.8494,34.64743 -34.6484,-14.8484 5.6569,-5.65689 -123.74411,-123.74404 z"
                 :fill="colorArrowNodeSixNorthEastOutgoing"
                 stroke="none"
@@ -3483,7 +3483,7 @@
               />
               <text
                 v-if="arrowNodeSixNorthEastIncomingAvailable"
-                id="arrow_node6_north_east_incoming_number_text"
+                id="arrow_knotenarm6_nord_ost_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -3510,7 +3510,7 @@
                 y="-879.72052"
               >
                 <tspan
-                  id="arrow_node6_north_east_incoming_number_tspan"
+                  id="arrow_knotenarm6_nord_ost_eingehend_zaehlwert_tspan"
                   x="1663.0913"
                   y="-91.826622"
                   :style="`
@@ -3532,7 +3532,7 @@
               </text>
               <text
                 v-if="arrowNodeSixNorthEastOutgoingAvailable"
-                id="arrow_node6_north_east_outgoing_number_text"
+                id="arrow_knotenarm6_nord_ost_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -3559,7 +3559,7 @@
                 y="-846.47015"
               >
                 <tspan
-                  id="arrow_node6_north_east_outgoing_number_tspan"
+                  id="arrow_knotenarm6_nord_ost_ausgehend_zaehlwert_tspan"
                   x="1663.0887"
                   y="-58.576717"
                   :style="`
@@ -3584,7 +3584,7 @@
                   arrowNodeSixNorthEastIncomingAvailable ||
                   arrowNodeSixNorthEastOutgoingAvailable
                 "
-                id="arrows_node6_north_east_sum_text"
+                id="arrows_knotenarm6_nord_ost_sum_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -3611,7 +3611,7 @@
                 y="-815.25012"
               >
                 <tspan
-                  id="arrows_node6_north_east_sum_tspan"
+                  id="arrows_knotenarm6_nord_ost_sum_tspan"
                   x="1663.9556"
                   y="-27.06534"
                   :style="`
@@ -3636,15 +3636,15 @@
                   arrowNodeSixNorthEastIncomingAvailable ||
                   arrowNodeSixNorthEastOutgoingAvailable
                 "
-                id="arrows_node6_north_east_sum_line"
+                id="arrows_knotenarm6_nord_ost_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8774"
                 d="m 1144.3774,1067.9235 69.2964,69.2965 -1.7324,1.7324 -69.2964,-69.2965 z"
               />
             </g>
-            <g id="arrows_node6_south_west">
+            <g id="arrows_knotenarm6_sued_west">
               <path
                 v-if="arrowNodeSixSouthWestIncomingAvailable"
-                id="arrow_node6_south_west_incoming"
+                id="arrow_knotenarm6_sued_west_eingehend"
                 d="m 1012.6073,1115.1365 -123.74411,-123.744 -5.6568,5.65686 -14.8494,-34.64737 34.6484,14.84838 -5.6569,5.65685 123.74411,123.74408 z"
                 :fill="colorArrowNodeSixSouthWestIncoming"
                 stroke="none"
@@ -3652,7 +3652,7 @@
               />
               <path
                 v-if="arrowNodeSixSouthWestOutgoingAvailable"
-                id="arrow_node6_south_west_outgoing"
+                id="arrow_knotenarm6_sued_west_ausgehend"
                 d="m 849.08729,981.66949 123.7441,123.74401 5.6568,-5.6568 14.8494,34.6474 -34.6484,-14.8484 5.6569,-5.6569 -123.7441,-123.74403 z"
                 :fill="colorArrowNodeSixSouthWestOutgoing"
                 stroke="none"
@@ -3660,7 +3660,7 @@
               />
               <text
                 v-if="arrowNodeSixSouthWestIncomingAvailable"
-                id="arrow_node6_south_west_incoming_number_text"
+                id="arrow_knotenarm6_sued_west_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -3687,7 +3687,7 @@
                 y="-713.47058"
               >
                 <tspan
-                  id="arrow_node6_south_west_incoming_number_tspan"
+                  id="arrow_knotenarm6_sued_west_eingehend_zaehlwert_tspan"
                   x="1663.0887"
                   y="74.422997"
                   :style="`
@@ -3709,7 +3709,7 @@
               </text>
               <text
                 v-if="arrowNodeSixSouthWestOutgoingAvailable"
-                id="arrow_node6_south_west_outgoing_number_text"
+                id="arrow_knotenarm6_sued_west_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -3736,7 +3736,7 @@
                 y="-680.22058"
               >
                 <tspan
-                  id="arrow_node6_south_west_outgoing_number_tspan"
+                  id="arrow_knotenarm6_sued_west_ausgehend_zaehlwert_tspan"
                   x="1663.0913"
                   y="107.67294"
                   :style="`
@@ -3761,7 +3761,7 @@
                   arrowNodeSixSouthWestIncomingAvailable ||
                   arrowNodeSixSouthWestOutgoingAvailable
                 "
-                id="arrows_node6_south_west_sum_text"
+                id="arrows_knotenarm6_sued_west_sum_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -3788,7 +3788,7 @@
                 y="-648.99805"
               >
                 <tspan
-                  id="arrows_node6_south_west_sum_tspan"
+                  id="arrows_knotenarm6_sued_west_sum_tspan"
                   x="1663.9556"
                   y="139.18677"
                   :style="`
@@ -3813,7 +3813,7 @@
                   arrowNodeSixSouthWestIncomingAvailable ||
                   arrowNodeSixSouthWestOutgoingAvailable
                 "
-                id="arrows_node6_south_west_sum_line"
+                id="arrows_knotenarm6_sued_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 1026.8229,1185.4815 69.2964,69.2965 -1.7324,1.7324 -69.2964,-69.2965 z"
               />
@@ -3822,11 +3822,11 @@
         </g>
         <g
           v-if="availableKnotenarmNummern.includes(7)"
-          id="node7_group"
+          id="knotenarm7_group"
         >
-          <g id="node7">
+          <g id="knotenarm7">
             <path
-              id="node7_spike"
+              id="knotenarm7_spike"
               d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
               fill="#ececec"
               stroke="none"
@@ -3834,7 +3834,7 @@
             />
             <text
               v-if="streetnameNodeSeven.length === 1"
-              id="node7_strassenname_text"
+              id="knotenarm7_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -3862,7 +3862,7 @@
               y="995.74023"
             >
               <tspan
-                id="node7_strassenname_tspan"
+                id="knotenarm7_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3882,9 +3882,9 @@
                 {{ streetnameNodeSeven[0] }}
               </tspan>
             </text>
-            <g id="node7_number">
+            <g id="knotenarm7_number">
               <circle
-                id="node7_number_circle"
+                id="knotenarm7_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -3899,7 +3899,7 @@
                 r="11.951238"
               />
               <text
-                id="node7_number_text"
+                id="knotenarm7_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -3915,7 +3915,7 @@
                 x="633.51685"
               >
                 <tspan
-                  id="node7_number_tspan"
+                  id="knotenarm7_number_tspan"
                   style="stroke-width: 30.9229"
                   x="633.51685"
                   y="767.69238"
@@ -3926,7 +3926,7 @@
             </g>
             <text
               v-if="streetnameNodeSeven.length > 1"
-              id="node7_strassenname_multirow2_text"
+              id="knotenarm7_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -3954,7 +3954,7 @@
               y="1009.7406"
             >
               <tspan
-                id="node7_strassenname_multirow2_tspan"
+                id="knotenarm7_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -3976,7 +3976,7 @@
             </text>
             <text
               v-if="streetnameNodeSeven.length > 1"
-              id="node7_strassenname_multirow1_text"
+              id="knotenarm7_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -4004,7 +4004,7 @@
               y="981.73987"
             >
               <tspan
-                id="node7_strassenname_multirow1_tspan"
+                id="knotenarm7_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4025,7 +4025,7 @@
               </tspan>
             </text>
             <text
-              id="node7_sum_text"
+              id="knotenarm7_sum_text"
               xml:space="preserve"
               transform="rotate(-45)"
               :style="`
@@ -4052,7 +4052,7 @@
               y="210.94797"
             >
               <tspan
-                id="node7_sum_tspan"
+                id="knotenarm7_sum_tspan"
                 x="-580.90033"
                 y="999.13306"
                 :style="`
@@ -4073,11 +4073,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node7">
-            <g id="arrows_node7_south_east">
+          <g id="arrows_knotenarm7">
+            <g id="arrows_knotenarm7_sued_ost">
               <path
                 v-if="arrowNodeSevenSouthEastIncomingAvailable"
-                id="arrow_node7_south_east_incoming"
+                id="arrow_knotenarm7_sued_ost_eingehend"
                 d="m 402.4195,1130.162 123.74404,-123.7441 -5.65706,-5.657 34.64739,-14.84941 -14.8484,34.64841 -5.65658,-5.6566 -123.74404,123.744 z"
                 :fill="colorArrowNodeSevenSouthEastIncoming"
                 stroke="none"
@@ -4085,7 +4085,7 @@
               />
               <path
                 v-if="arrowNodeSevenSouthEastOutgoingAvailable"
-                id="arrow_node7_south_east_outgoing"
+                id="arrow_knotenarm7_sued_ost_ausgehend"
                 d="m 535.88655,966.64529 -123.74404,123.74411 5.65686,5.6568 -34.64737,14.8494 14.84838,-34.6484 5.65685,5.6569 123.74404,-123.74411 z"
                 :fill="colorArrowNodeSevenSouthEastOutgoing"
                 stroke="none"
@@ -4093,7 +4093,7 @@
               />
               <text
                 v-if="arrowNodeSevenSouthEastOutgoingAvailable"
-                id="arrow_node7_south_east_outgoing_number_text"
+                id="arrow_knotenarm7_sued_ost_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -4120,7 +4120,7 @@
                 y="276.22891"
               >
                 <tspan
-                  id="arrow_node7_south_east_outgoing_number_tspan"
+                  id="arrow_knotenarm7_sued_ost_ausgehend_zaehlwert_tspan"
                   x="-581.4458"
                   y="1064.1224"
                   :style="`
@@ -4142,7 +4142,7 @@
               </text>
               <text
                 v-if="arrowNodeSevenSouthEastIncomingAvailable"
-                id="arrow_node7_south_east_incoming_number_text"
+                id="arrow_knotenarm7_sued_ost_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -4169,7 +4169,7 @@
                 y="309.47891"
               >
                 <tspan
-                  id="arrow_node7_south_east_incoming_number_tspan"
+                  id="arrow_knotenarm7_sued_ost_eingehend_zaehlwert_tspan"
                   x="-581.4483"
                   y="1097.3723"
                   :style="`
@@ -4194,7 +4194,7 @@
                   arrowNodeSevenSouthEastIncomingAvailable ||
                   arrowNodeSevenSouthEastOutgoingAvailable
                 "
-                id="arrows_node7_south_east_sum_text"
+                id="arrows_knotenarm7_sued_ost_sum_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -4221,7 +4221,7 @@
                 y="340.78668"
               >
                 <tspan
-                  id="arrows_node7_south_east_sum_tspan"
+                  id="arrows_knotenarm7_sued_ost_sum_tspan"
                   x="-581.64447"
                   y="1128.9714"
                   :style="`
@@ -4246,15 +4246,15 @@
                   arrowNodeSevenSouthEastIncomingAvailable ||
                   arrowNodeSevenSouthEastOutgoingAvailable
                 "
-                id="arrows_node7_south_east_sum_line"
+                id="arrows_knotenarm7_sued_ost_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 297.899,1261.5994 69.29647,-69.2964 1.73241,1.7324 -69.29647,69.2964 z"
               />
             </g>
-            <g id="arrows_node7_north_west">
+            <g id="arrows_knotenarm7_nord_west">
               <path
                 v-if="arrowNodeSevenNorthWestIncomingAvailable"
-                id="arrow_node7_north_west_incoming"
+                id="arrow_knotenarm7_nord_west_eingehend"
                 d="m 284.865,1012.6075 123.74404,-123.74411 -5.65706,-5.657 34.64739,-14.8494 -14.8484,34.6484 -5.65658,-5.6566 -123.74404,123.74401 z"
                 :fill="colorArrowNodeSevenNorthWestIncoming"
                 stroke="none"
@@ -4262,7 +4262,7 @@
               />
               <path
                 v-if="arrowNodeSevenNorthWestOutgoingAvailable"
-                id="arrow_node7_north_west_outgoing"
+                id="arrow_knotenarm7_nord_west_ausgehend"
                 d="m 418.33205,849.08729 -123.74404,123.7441 5.65686,5.6568 -34.64737,14.8494 14.84838,-34.6484 5.65685,5.6569 123.74404,-123.7441 z"
                 :fill="colorArrowNodeSevenNorthWestOutgoing"
                 stroke="none"
@@ -4270,7 +4270,7 @@
               />
               <text
                 v-if="arrowNodeSevenNorthWestOutgoingAvailable"
-                id="arrow_node7_north_west_outgoing_number_text"
+                id="arrow_knotenarm7_nord_west_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -4297,7 +4297,7 @@
                 y="109.97922"
               >
                 <tspan
-                  id="arrow_node7_north_west_outgoing_number_tspan"
+                  id="arrow_knotenarm7_nord_west_ausgehend_zaehlwert_tspan"
                   x="-581.4483"
                   y="897.87274"
                   :style="`
@@ -4319,7 +4319,7 @@
               </text>
               <text
                 v-if="arrowNodeSevenNorthWestIncomingAvailable"
-                id="arrow_node7_north_west_incoming_number_text"
+                id="arrow_knotenarm7_nord_west_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -4346,7 +4346,7 @@
                 y="143.22932"
               >
                 <tspan
-                  id="arrow_node7_north_west_incoming_number_tspan"
+                  id="arrow_knotenarm7_nord_west_eingehend_zaehlwert_tspan"
                   x="-581.44586"
                   y="931.12274"
                   :style="`
@@ -4371,7 +4371,7 @@
                   arrowNodeSevenNorthWestIncomingAvailable ||
                   arrowNodeSevenNorthWestOutgoingAvailable
                 "
-                id="arrows_node7_north_west_sum_text"
+                id="arrows_knotenarm7_nord_west_sum_text"
                 xml:space="preserve"
                 transform="rotate(-45)"
                 :style="`
@@ -4398,7 +4398,7 @@
                 y="174.53697"
               >
                 <tspan
-                  id="arrows_node7_north_west_sum_tspan"
+                  id="arrows_knotenarm7_nord_west_sum_tspan"
                   x="-581.64203"
                   y="962.72186"
                   :style="`
@@ -4423,7 +4423,7 @@
                   arrowNodeSevenNorthWestIncomingAvailable ||
                   arrowNodeSevenNorthWestOutgoingAvailable
                 "
-                id="arrows_node7_north_west_sum_line"
+                id="arrows_knotenarm7_nord_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 180.341,1144.0414 69.29647,-69.2964 1.73241,1.7324 -69.29647,69.2964 z"
               />
@@ -4432,11 +4432,11 @@
         </g>
         <g
           v-if="availableKnotenarmNummern.includes(8)"
-          id="node8_group"
+          id="knotenarm8_group"
         >
-          <g id="node8">
+          <g id="knotenarm8">
             <path
-              id="node8_spike"
+              id="knotenarm8_spike"
               d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
               fill="#ececec"
               stroke="none"
@@ -4444,7 +4444,7 @@
             />
             <text
               v-if="streetnameNodeEight.length === 1"
-              id="node8_strassenname_text"
+              id="knotenarm8_strassenname_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -4472,7 +4472,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="node8_strassenname_tspan"
+                id="knotenarm8_strassenname_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4492,9 +4492,9 @@
                 {{ streetnameNodeEight[0] }}
               </tspan>
             </text>
-            <g id="node8_number">
+            <g id="knotenarm8_number">
               <circle
-                id="node8_number_circle"
+                id="knotenarm8_number_circle"
                 style="
                   fill: none;
                   fill-opacity: 1;
@@ -4509,7 +4509,7 @@
                 r="11.951238"
               />
               <text
-                id="node8_number_text"
+                id="knotenarm8_number_text"
                 xml:space="default"
                 :style="`
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
@@ -4525,7 +4525,7 @@
                 x="633.36969"
               >
                 <tspan
-                  id="node8_number_tspan"
+                  id="knotenarm8_number_tspan"
                   style="stroke-width: 30.9229"
                   x="633.36969"
                   y="646.78491"
@@ -4536,7 +4536,7 @@
             </g>
             <text
               v-if="streetnameNodeEight.length > 1"
-              id="node8_strassenname_multirow2_text"
+              id="knotenarm8_strassenname_multirow2_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -4564,7 +4564,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="node8_strassenname_multirow2_tspan"
+                id="knotenarm8_strassenname_multirow2_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4586,7 +4586,7 @@
             </text>
             <text
               v-if="streetnameNodeEight.length > 1"
-              id="node8_strassenname_multirow1_text"
+              id="knotenarm8_strassenname_multirow1_text"
               xml:space="preserve"
               :style="`
                 font-style: normal;
@@ -4614,7 +4614,7 @@
               transform="rotate(45)"
             >
               <tspan
-                id="node8_strassenname_multirow1_tspan"
+                id="knotenarm8_strassenname_multirow1_tspan"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -4635,7 +4635,7 @@
               </tspan>
             </text>
             <text
-              id="node8_sum_text"
+              id="knotenarm8_sum_text"
               xml:space="preserve"
               transform="rotate(45)"
               :style="`
@@ -4662,7 +4662,7 @@
               y="-778.26025"
             >
               <tspan
-                id="node8_sum_tspan"
+                id="knotenarm8_sum_tspan"
                 x="408.30856"
                 y="9.9241133"
                 :style="`
@@ -4683,11 +4683,11 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_node8">
-            <g id="arrows_node8_south_west">
+          <g id="arrows_knotenarm8">
+            <g id="arrows_knotenarm8_sued_west">
               <path
                 v-if="arrowNodeEightSouthWestOutgoingAvailable"
-                id="arrow_node8_south_west_outgoing"
+                id="arrow_knotenarm8_sued_west_ausgehend"
                 d="M 433.35729,535.88655 309.61325,412.14251 303.9564,417.79937 289.107,383.152 l 34.64839,14.84838 -5.65686,5.65685 123.74404,123.74404 z"
                 :fill="colorArrowNodeEightSouthWestOutgoing"
                 stroke="none"
@@ -4695,7 +4695,7 @@
               />
               <path
                 v-if="arrowNodeEightSouthWestIncomingAvailable"
-                id="arrow_node8_south_west_incoming"
+                id="arrow_knotenarm8_sued_west_eingehend"
                 d="m 269.83728,402.4195 123.74404,123.74404 5.65685,-5.65686 14.84939,34.64739 -34.64838,-14.8484 5.65686,-5.65685 L 261.352,410.90478 Z"
                 :fill="colorArrowNodeEightSouthWestIncoming"
                 stroke="none"
@@ -4703,7 +4703,7 @@
               />
               <text
                 v-if="arrowNodeEightSouthWestOutgoingAvailable"
-                id="arrow_node8_south_west_outgoing_number_text"
+                id="arrow_knotenarm8_sued_west_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -4730,7 +4730,7 @@
                 y="-713.6413"
               >
                 <tspan
-                  id="arrow_node8_south_west_outgoing_number_tspan"
+                  id="arrow_knotenarm8_sued_west_ausgehend_zaehlwert_tspan"
                   x="407.44427"
                   y="74.252251"
                   :style="`
@@ -4752,7 +4752,7 @@
               </text>
               <text
                 v-if="arrowNodeEightSouthWestIncomingAvailable"
-                id="arrow_node8_south_west_incoming_number_text"
+                id="arrow_knotenarm8_sued_west_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -4779,7 +4779,7 @@
                 y="-680.39124"
               >
                 <tspan
-                  id="arrow_node8_south_west_incoming_number_tspan"
+                  id="arrow_knotenarm8_sued_west_eingehend_zaehlwert_tspan"
                   x="407.4418"
                   y="107.50217"
                   :style="`
@@ -4804,7 +4804,7 @@
                   arrowNodeEightSouthWestIncomingAvailable ||
                   arrowNodeEightSouthWestOutgoingAvailable
                 "
-                id="arrows_node8_south_west_sum_text"
+                id="arrows_knotenarm8_sued_west_sum_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -4831,7 +4831,7 @@
                 y="-649.1712"
               >
                 <tspan
-                  id="arrows_node8_south_west_sum_tspan"
+                  id="arrows_knotenarm8_sued_west_sum_tspan"
                   x="408.30856"
                   y="139.01353"
                   :style="`
@@ -4856,15 +4856,15 @@
                   arrowNodeEightSouthWestIncomingAvailable ||
                   arrowNodeEightSouthWestOutgoingAvailable
                 "
-                id="arrows_node8_south_west_sum_line"
+                id="arrows_knotenarm8_sued_west_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 139.47841,297.8955 69.29647,69.29647 -1.73241,1.73241 -69.29647,-69.29647 z"
               />
             </g>
-            <g id="arrows_node8_north_east">
+            <g id="arrows_knotenarm8_nord_ost">
               <path
                 v-if="arrowNodeEightNorthEastOutgoingAvailable"
-                id="arrow_node8_north_east_outgoing"
+                id="arrow_knotenarm8_nord_ost_ausgehend"
                 d="m 550.91179,418.33205 -123.74404,-123.74404 -5.65685,5.65686 -14.8494,-34.64737 34.64839,14.84838 -5.65686,5.65685 123.74404,123.74404 z"
                 :fill="colorArrowNodeEightNorthEastOutgoing"
                 stroke="none"
@@ -4872,7 +4872,7 @@
               />
               <path
                 v-if="arrowNodeEightNorthEastIncomingAvailable"
-                id="arrow_node8_north_east_incoming"
+                id="arrow_knotenarm8_nord_ost_eingehend"
                 d="m 387.39528,284.865 123.74404,123.74404 5.65685,-5.65686 14.84939,34.64739 -34.64838,-14.8484 5.65686,-5.65685 L 378.91,293.35028 Z"
                 :fill="colorArrowNodeEightNorthEastIncoming"
                 stroke="none"
@@ -4880,7 +4880,7 @@
               />
               <text
                 v-if="arrowNodeEightNorthEastOutgoingAvailable"
-                id="arrow_node8_north_east_outgoing_number_text"
+                id="arrow_knotenarm8_nord_ost_ausgehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -4907,7 +4907,7 @@
                 y="-879.89099"
               >
                 <tspan
-                  id="arrow_node8_north_east_outgoing_number_tspan"
+                  id="arrow_knotenarm8_nord_ost_ausgehend_zaehlwert_tspan"
                   x="407.4418"
                   y="-91.997398"
                   :style="`
@@ -4929,7 +4929,7 @@
               </text>
               <text
                 v-if="arrowNodeEightNorthEastIncomingAvailable"
-                id="arrow_node8_north_east_incoming_number_text"
+                id="arrow_knotenarm8_nord_ost_eingehend_zaehlwert_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -4956,7 +4956,7 @@
                 y="-846.64087"
               >
                 <tspan
-                  id="arrow_node8_north_east_incoming_number_tspan"
+                  id="arrow_knotenarm8_nord_ost_eingehend_zaehlwert_tspan"
                   x="407.44427"
                   y="-58.747467"
                   :style="`
@@ -4981,7 +4981,7 @@
                   arrowNodeEightNorthEastIncomingAvailable ||
                   arrowNodeEightNorthEastOutgoingAvailable
                 "
-                id="arrows_node8_north_east_sum_text"
+                id="arrows_knotenarm8_nord_ost_sum_text"
                 xml:space="preserve"
                 transform="rotate(45)"
                 :style="`
@@ -5008,7 +5008,7 @@
                 y="-815.41846"
               >
                 <tspan
-                  id="arrows_node8_north_east_sum_tspan"
+                  id="arrows_knotenarm8_nord_ost_sum_tspan"
                   x="408.30856"
                   y="-27.233639"
                   :style="`
@@ -5033,7 +5033,7 @@
                   arrowNodeEightNorthEastIncomingAvailable ||
                   arrowNodeEightNorthEastOutgoingAvailable
                 "
-                id="arrows_node8_north_east_sum_line"
+                id="arrows_knotenarm8_nord_ost_sum_line"
                 style="fill: #000000; fill-opacity: 1; stroke-width: 29.8746"
                 d="m 257.03641,180.3375 69.29647,69.29647 -1.73241,1.73241 -69.29647,-69.29647 z"
               />
@@ -5831,11 +5831,11 @@ function setColor(
   richtung: Bewegungsrichtung
 ) {
   return computed(() =>
-    fjs.isLaengsverkehrAvailable(
+    fjs.existsLaengsverkehr(
+      optionen.value.chosenLaengsverkehre,
       node,
       strassenseite,
-      richtung,
-      optionen.value.chosenLaengsverkehre
+      richtung
     )
       ? (BelastungsplanConstants.farben.get(node) ??
         BelastungsplanConstants.inaktivColor)
@@ -5849,11 +5849,11 @@ function isArrowAvailable(
   richtung: Bewegungsrichtung
 ) {
   return computed(() =>
-    fjs.isLaengsverkehrAvailable(
+    fjs.existsLaengsverkehr(
+      activeZaehlung.value.laengsverkehr,
       node,
       strassenseite,
-      richtung,
-      activeZaehlung.value.laengsverkehr
+      richtung
     )
   );
 }

@@ -26,6 +26,7 @@ import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
+import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
 import Verkehrsart from "@/types/enum/Verkehrsart";
 import Wetter from "@/types/enum/Wetter";
@@ -121,7 +122,7 @@ export default class DefaultObjectCreator {
       spitzenstunde: true,
       stundensumme: true,
       tagessumme: true,
-      werteHundertRunden: false,
+      rounding: Rounding.NONE,
       fahrzeuge: this.createDefaultFahrzeugOptions(),
       intervall: "" as ZaehldatenIntervall,
       messquerschnittIds: [],
@@ -254,7 +255,7 @@ export default class DefaultObjectCreator {
       beschriftung: false,
       datentabelle: false,
       fahrzeugklassenStapeln: false,
-      werteHundertRunden: false,
+      rounding: Rounding.NONE,
       differenzdatenDarstellen: false,
       vonKnotenarm: null,
       // Setzen aller möglichen Knotenarme als Defaultwert da "vonKnotenarm" gleich "null"

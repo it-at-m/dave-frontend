@@ -15,17 +15,34 @@
       xmlns:svg="http://www.w3.org/2000/svg"
     >
       <defs id="defs1" />
-      <g id="root">
-        <g
-          id="querschnitt"
-          :transform="rotateSvg"
-        >
-          <g id="description">
-            <g id="first_street">
-              <text
-                v-if="firstStreetname.length === 1"
-                xml:space="preserve"
-                :style="`
+      <g id="legend">
+        <g id="legend-compass">
+          <text
+            xml:space="default"
+            id="compass1"
+            :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: sans-serif;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                fill: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2;
+              `"
+            x="107.33477"
+            y="83.332977"
+          >
+            <tspan
+              :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: normal;
@@ -36,32 +53,40 @@
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
                   font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: middle;
-                  fill: #000000;
-                  stroke-width: 39.1848;
+                  fill: ${BelastungsplanConstants.legendColor};
+                  fill-opacity: 1;
+                  stroke-width: 2;
                 `"
-                x="697.23627"
-                y="704.51794"
-                id="singlerow"
-              >
-                <tspan
-                  id="tspan21"
-                  x="697.23627"
-                  y="704.51794"
-                >
-                  {{ firstStreetname[0] }}
-                </tspan>
-              </text>
-              <text
-                v-if="firstStreetname.length > 1"
-                xml:space="preserve"
-                :style="`
+            >
+              N
+            </tspan>
+          </text>
+          <path
+            :style="`
+                fill: none;
+                fill-opacity: 1;
+                stroke: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2;
+                stroke-linecap: butt;
+                stroke-miterlimit: 2.5;
+                stroke-dasharray: none;
+                stroke-opacity: 1;
+              `"
+            id="compass2"
+            d="m 93.333333,93.333333 h 27.999997 l -14,-63 z"
+          />
+        </g>
+        <g id="legend-zaehlstelle">
+          <g
+            id="zaehlstelle1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              xml:space="preserve"
+              :style="`
                   font-style: normal;
                   font-variant: normal;
-                  font-weight: normal;
+                  font-weight: bold;
                   font-stretch: normal;
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
                   font-family: ${BelastungsplanConstants.fontfamily};
@@ -72,37 +97,442 @@
                   text-align: start;
                   writing-mode: lr-tb;
                   direction: ltr;
-                  text-anchor: middle;
+                  text-anchor: start;
+                  white-space: pre;
+                  inline-size: 268.729;
+                  display: inline;
                   fill: #000000;
-                  stroke-width: 39.1848;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
                 `"
-                id="multirow"
-                x="699.24969"
-                y="688.33734"
+              id="zaehlstelle1-multirow"
+              x="1107.0699"
+              y="58.662277"
+            >
+              <tspan
+                x="1107.0699"
+                y="58.662277"
+                id="tspan16"
               >
-                <tspan
-                  id="tspan19"
-                  x="699.24969"
-                  y="688.33734"
-                >
-                  {{ firstStreetname[0] }}
-                </tspan>
-                <tspan
-                  id="tspan20"
-                  x="699.24969"
-                  y="713.56885"
-                >
-                  {{ firstStreetname[1] }}
-                </tspan>
-              </text>
-            </g>
+                Zählstelle
+                {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
+              </tspan>
+            </text>
           </g>
-          <g id="arrows">
-            <g id="arrow1">
+          <g
+            id="zaehlstelle2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              v-if="zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer"
+              xml:space="preserve"
+              :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  white-space: pre;
+                  inline-size: 268.729;
+                  display: inline;
+                  fill: #000000;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+              id="zaehlstelle2-multirow"
+              x="1107.0699"
+              y="84.662277"
+            >
+              <tspan
+                x="1107.0699"
+                y="84.662277"
+                id="tspan17"
+              >
+                Stadtbezirk
+                {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
+              </tspan>
+              <tspan
+                x="1107.0699"
+                y="110.83184"
+                id="tspan18"
+              >
+                Zähldatum:
+                {{
+                  dateUtils.getShortVersionOfDate(
+                    new Date(activeZaehlung.datum)
+                  )
+                }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          id="legend-zaehlinfo"
+          style="stroke-width: 28.2205; stroke-dasharray: none"
+        >
+          <g
+            id="zaehlzeit1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              xml:space="preserve"
+              :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  white-space: pre;
+                  inline-size: 268.729;
+                  display: inline;
+                  fill: #000000;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+              id="zaehlzeit1-multirow"
+              x="56"
+              y="1229.6622"
+            >
+              <tspan
+                x="56"
+                y="1229.6622"
+                id="tspan23"
+              >
+                <tspan
+                  style="font-weight: bold"
+                  id="tspan22"
+                >
+                  {{ optionen.zeitauswahl }}
+                </tspan>
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="zaehlzeit2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              xml:space="preserve"
+              :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  white-space: pre;
+                  inline-size: 268.729;
+                  display: inline;
+                  fill: #000000;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+              id="zaehlzeit2-multirow"
+              x="56"
+              y="1255.6622"
+            >
+              <tspan
+                x="56"
+                y="1255.6622"
+                id="tspan24"
+              >
+                {{ zaehlzeit2 }}
+              </tspan>
+            </text>
+          </g>
+          <text
+            xml:space="preserve"
+            :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+            id="verkehrsart"
+            x="56"
+            y="1307.6622"
+          >
+            <tspan
+              x="56"
+              y="1307.6622"
+              id="tspan26"
+            >
+              <tspan
+                style="font-weight: bold"
+                id="tspan25"
+              >
+                {{ optionen.radverkehr ? "RAD" : "FUSS" }}
+              </tspan>
+            </tspan>
+          </text>
+        </g>
+        <g id="legend-massstab">
+          <path
+            :style="`
+                fill: none;
+                stroke: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2;
+                stroke-linecap: square;
+                stroke-miterlimit: 2.5;
+                stroke-dasharray: none;
+                stroke-opacity: 1;
+              `"
+            d="M 1190.6,1295 H 1316 v -20 z"
+            id="massstab-path1"
+          />
+          <path
+            :style="`
+                fill: #000000;
+                stroke: ${BelastungsplanConstants.legendColor};
+                stroke-width: 2;
+                stroke-linecap: square;
+                stroke-miterlimit: 2.5;
+                stroke-dasharray: none;
+                stroke-opacity: 1;
+              `"
+            d="m 1253,1295 v -10"
+            id="massstab-path2"
+          />
+          <g
+            id="massstab-size1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              xml:space="preserve"
+              :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: center;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: middle;
+                  white-space: pre;
+                  inline-size: 268.729;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+              id="massstab-size1-multirow"
+              x="1253"
+              y="1315"
+            >
+              <tspan
+                x="1253"
+                y="1315"
+                id="tspan27"
+              >
+                {{ highestZaehlwertRounded / 2 }}
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="massstab-size2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              xml:space="preserve"
+              :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: center;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: middle;
+                  white-space: pre;
+                  inline-size: 268.729;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+              id="massstab-size2-multirow"
+              x="1316"
+              y="1315"
+            >
+              <tspan
+                x="1316"
+                y="1315"
+                id="tspan28"
+              >
+                {{ highestZaehlwertRounded }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+      </g>
+      <g
+        id="querschnitt"
+        :transform="rotateSvg"
+      >
+        <g id="strassenname">
+          <text
+            v-if="firstStreetname.length === 1"
+            xml:space="preserve"
+            :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: middle;
+                  fill: #000000;
+                  stroke-width: 39.1848;
+                `"
+            x="697.23627"
+            y="704.51794"
+            id="strassenname_text"
+          >
+            <tspan
+              id="strassenname_tspan"
+              x="697.23627"
+              y="704.51794"
+            >
+              {{ firstStreetname[0] }}
+            </tspan>
+          </text>
+          <text
+            v-if="firstStreetname.length > 1"
+            xml:space="preserve"
+            :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: middle;
+                  fill: #000000;
+                  stroke-width: 39.1848;
+                `"
+            id="strassenname_multirow1_text"
+            x="699.24969"
+            y="688.33734"
+          >
+            <tspan
+              id="strassenname_multirow1_tspan"
+              x="699.24969"
+              y="688.33734"
+            >
+              {{ firstStreetname[0] }}
+            </tspan>
+          </text>
+          <text
+            v-if="firstStreetname.length > 1"
+            xml:space="preserve"
+            :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: middle;
+                  fill: #000000;
+                  stroke-width: 39.1848;
+                `"
+            id="strassenname_multirow2_text"
+            x="699.24969"
+            y="720.33734"
+          >
+            <tspan
+              id="strassenname_multirow2_tspan"
+              x="699.24969"
+              y="720.33734"
+            >
+              {{ firstStreetname[1] }}
+            </tspan>
+          </text>
+        </g>
+        <g id="arrows">
+          <g v-if="isCountedArrowOne || isCountedArrowTwo" id="arrows_1_and_2">
+            <g v-if="isCountedArrowOne" id="arrow1">
               <path
                 style="stroke-width: 40.1656"
                 :d="dArrowOne"
-                id="shaft1"
+                id="arrow1_shaft"
                 ref="groupRefArrowOne"
                 :fill="colorArrowOne"
                 :transform="transformArrowOne"
@@ -115,147 +545,12 @@
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
-                id="tip1"
+                id="arrow1_tip"
                 d="m 221.73348,553.05942 19.31149,-25.58133 0.0167,51.09625 z"
               />
-            </g>
-            <g id="arrow2">
-              <path
-                style="stroke-width: 40.1708"
-                :d="dArrowTwo"
-                id="shaft2"
-                ref="groupRefArrowTwo"
-                :fill="colorArrowTwo"
-                :transform="transformArrowTwo"
-              />
-              <path
-                style="
-                  fill: none;
-                  stroke: #000000;
-                  stroke-width: 1.75545;
-                  stroke-dasharray: none;
-                  stroke-opacity: 1;
-                "
-                id="tip2"
-                d="m 1178.1206,609.06771 -18.7975,-22.45207 -0.017,44.84587 z"
-              />
-            </g>
-            <g id="arrow3">
-              <path
-                style="stroke-width: 40.1798"
-                :d="dArrowThree"
-                id="shaft3"
-                ref="groupRefArrowThree"
-                :fill="colorArrowThree"
-                :transform="transformArrowThree"
-              />
-              <path
-                style="
-                  fill: none;
-                  stroke: #000000;
-                  stroke-width: 1.7698;
-                  stroke-dasharray: none;
-                  stroke-opacity: 1;
-                "
-                id="tip3"
-                d="m 221.49329,791.09394 19.39305,-22.32164 0.0169,44.58532 z"
-              />
-            </g>
-            <g id="arrow4">
-              <path
-                style="stroke-width: 40.1798"
-                :d="dArrowFour"
-                id="shaft4"
-                ref="groupRefArrowFour"
-                :fill="colorArrowFour"
-                :transform="transformArrowFour"
-              />
-              <path
-                style="
-                  fill: none;
-                  stroke: #000000;
-                  stroke-width: 1.75413;
-                  stroke-dasharray: none;
-                  stroke-opacity: 1;
-                "
-                id="tip4"
-                d="m 1178.1774,846.90543 -18.6954,-22.33904 -0.017,44.62008 z"
-              />
-            </g>
-          </g>
-          <g id="zaehlwerte">
-            <text
-              xml:space="preserve"
-              id="sumArrowsOneToFourLeft"
-              :style="`
-                font-style: normal;
-                font-variant: normal;
-                font-weight: bold;
-                font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth}px;
-                font-family: ${BelastungsplanConstants.fontfamily};
-                font-variant-ligatures: normal;
-                font-variant-caps: normal;
-                font-variant-numeric: normal;
-                font-variant-east-asian: normal;
-                text-align: end;
-                writing-mode: rl-tb;
-                direction: rtl;
-                white-space: pre;
-                display: inline;
-                fill: #000000;
-                fill-opacity: 1;
-                stroke-width: 43.9644;
-              `"
-              x="215.22824"
-              y="707.44586"
-            >
-              <tspan
-                id="tspan32"
-                x="215.22824"
-                y="707.44586"
-              >
-                {{ sumArrowsOneToFour }}
-              </tspan>
-            </text>
-            <text
-              xml:space="preserve"
-              id="sumArrowsOneToFourRight"
-              :style="`
-                font-style: normal;
-                font-variant: normal;
-                font-weight: bold;
-                font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth}px;
-                font-family: ${BelastungsplanConstants.fontfamily};
-                font-variant-ligatures: normal;
-                font-variant-caps: normal;
-                font-variant-numeric: normal;
-                font-variant-east-asian: normal;
-                text-align: end;
-                writing-mode: rl-tb;
-                direction: rtl;
-                white-space: pre;
-                display: inline;
-                fill: #000000;
-                fill-opacity: 1;
-                stroke-width: 43.9644;
-              `"
-              x="1274.7208"
-              y="708.8515"
-            >
-              <tspan
-                id="tspan33"
-                x="1274.7208"
-                y="708.8515"
-              >
-                {{ sumArrowsOneToFour }}
-              </tspan>
-            </text>
-            <g id="zaehlwerteArrowsOneTwo">
               <text
                 xml:space="preserve"
-                id="zaehlwertArrowOne"
+                id="arrow1_zaehlwert_text"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -280,16 +575,37 @@
                 y="562.0257"
               >
                 <tspan
-                  id="tspan36"
+                  id="arrow1_zaehlwert_tspan"
                   x="215.24681"
                   y="562.0257"
                 >
                   {{ zaehlwertArrowOne }}
                 </tspan>
               </text>
+            </g>
+            <g v-if="isCountedArrowTwo" id="arrow2">
+              <path
+                style="stroke-width: 40.1708"
+                :d="dArrowTwo"
+                id="arrow2_shaft"
+                ref="groupRefArrowTwo"
+                :fill="colorArrowTwo"
+                :transform="transformArrowTwo"
+              />
+              <path
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 1.75545;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="arrow2_tip"
+                d="m 1178.1206,609.06771 -18.7975,-22.45207 -0.017,44.84587 z"
+              />
               <text
                 xml:space="preserve"
-                id="zaehlwertArrowTwo"
+                id="arrow2_zaehlwert_text"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -314,33 +630,34 @@
                 y="615.81903"
               >
                 <tspan
-                  id="tspan13"
+                  id="arrow2_zaehlwert_tspan"
                   x="215.83165"
                   y="615.81903"
                 >
                   {{ zaehlwertArrowTwo }}
                 </tspan>
               </text>
-              <path
-                style="
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 3.26332;
-                  stroke-dasharray: none;
-                "
-                d="m 133.56306,621.30263 h 80.44096 v 1.0263 h -80.44096 z"
-                id="separatorOneTwo"
-              />
-              <text
-                xml:space="preserve"
-                id="sumArrowsOneTwo"
-                :style="`
+            </g>
+            <path
+              style="
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 3.26332;
+                stroke-dasharray: none;
+              "
+              d="m 133.56306,621.30263 h 80.44096 v 1.0263 h -80.44096 z"
+              id="arrows_1_and_2_sum_line"
+            />
+            <text
+              xml:space="preserve"
+              id="arrows_1_and_2_sum_text"
+              :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
                   font-stretch: normal;
                   font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${belastungsplanMethods.maxlineWidth};
+                  font-family: ${BelastungsplanConstants.fontfamily};
                   font-variant-ligatures: normal;
                   font-variant-caps: normal;
                   font-variant-numeric: normal;
@@ -354,22 +671,42 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
+              x="215.26794"
+              y="642.70013"
+            >
+              <tspan
+                id="arrows_1_and_2_sum_tspan"
                 x="215.26794"
                 y="642.70013"
               >
-                <tspan
-                  id="tspan34"
-                  x="215.26794"
-                  y="642.70013"
-                >
-                  {{ sumArrowsOneTwo }}
-                </tspan>
-              </text>
-            </g>
-            <g id="zaehlwerteArrowsThreeFour">
+                {{ sumArrowsOneTwo }}
+              </tspan>
+            </text>
+          </g>
+          <g v-if="isCountedArrowThree || isCountedArrowFour" id="arrows_3_and_4">
+            <g v-if="isCountedArrowThree" id="arrow3">
+              <path
+                style="stroke-width: 40.1798"
+                :d="dArrowThree"
+                id="arrow3_shaft"
+                ref="groupRefArrowThree"
+                :fill="colorArrowThree"
+                :transform="transformArrowThree"
+              />
+              <path
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 1.7698;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="arrow3_tip"
+                d="m 221.49329,791.09394 19.39305,-22.32164 0.0169,44.58532 z"
+              />
               <text
                 xml:space="preserve"
-                id="zaehlwertArrowThree"
+                id="arrow3_zaehlwert_text"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -394,16 +731,37 @@
                 y="799.2951"
               >
                 <tspan
-                  id="tspan39"
+                  id="arrow3_zaehlwert_tspan"
                   x="1274.4691"
                   y="799.2951"
                 >
                   {{ zaehlwertArrowThree }}
                 </tspan>
               </text>
+            </g>
+            <g v-if="isCountedArrowFour" id="arrow4">
+              <path
+                style="stroke-width: 40.1798"
+                :d="dArrowFour"
+                id="arrow4_shaft"
+                ref="groupRefArrowFour"
+                :fill="colorArrowFour"
+                :transform="transformArrowFour"
+              />
+              <path
+                style="
+                  fill: none;
+                  stroke: #000000;
+                  stroke-width: 1.75413;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                id="arrow4_tip"
+                d="m 1178.1774,846.90543 -18.6954,-22.33904 -0.017,44.62008 z"
+              />
               <text
                 xml:space="preserve"
-                id="zaehlwertArrowFour"
+                id="arrow4_zaehlwert_text"
                 :style="`
                   font-style: normal;
                   font-variant: normal;
@@ -428,22 +786,23 @@
                 y="855.68152"
               >
                 <tspan
-                  id="tspan14"
+                  id="arrow4_zaehlwert_tspan"
                   x="1273.3658"
                   y="855.68152"
                 >
                   {{ zaehlwertArrowFour }}
                 </tspan>
               </text>
-              <path
-                style="fill: #000000; fill-opacity: 1; stroke-width: 13.4005"
-                d="m 1186.6029,862.50248 h 87.5595 v 0.55173 h -87.5595 z"
-                id="separatorThreeFour"
-              />
-              <text
-                xml:space="preserve"
-                id="sumArrowsThreeFour"
-                :style="`
+            </g>
+            <path
+              style="fill: #000000; fill-opacity: 1; stroke-width: 13.4005"
+              d="m 1186.6029,862.50248 h 87.5595 v 0.55173 h -87.5595 z"
+              id="arrows_3_and_4_sum_line"
+            />
+            <text
+              xml:space="preserve"
+              id="arrows_3_and_4_sum_text"
+              :style="`
                   font-style: normal;
                   font-variant: normal;
                   font-weight: bold;
@@ -463,277 +822,26 @@
                   fill-opacity: 1;
                   stroke-width: 43.9644;
                 `"
+              x="1274.8474"
+              y="884.09052"
+            >
+              <tspan
+                id="arrows_3_and_4_sum_tspan"
                 x="1274.8474"
                 y="884.09052"
               >
-                <tspan
-                  id="tspan37"
-                  x="1274.8474"
-                  y="884.09052"
-                >
-                  {{ sumArrowsThreeFour }}
-                </tspan>
-              </text>
-            </g>
-          </g>
-        </g>
-        <g id="legend">
-          <g id="legend-compass">
-            <text
-              xml:space="default"
-              id="compass1"
-              :style="`
-                font-style: normal;
-                font-variant: normal;
-                font-weight: normal;
-                font-stretch: normal;
-                font-size: ${belastungsplanMethods.maxlineWidth}px;
-                font-family: sans-serif;
-                font-variant-ligatures: normal;
-                font-variant-caps: normal;
-                font-variant-numeric: normal;
-                font-variant-east-asian: normal;
-                text-align: start;
-                writing-mode: lr-tb;
-                direction: ltr;
-                text-anchor: middle;
-                fill: ${BelastungsplanConstants.legendColor};
-                stroke-width: 2;
-              `"
-              x="107.33477"
-              y="83.332977"
-            >
-              <tspan
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  fill: ${BelastungsplanConstants.legendColor};
-                  fill-opacity: 1;
-                  stroke-width: 2;
-                `"
-              >
-                N
+                {{ sumArrowsThreeFour }}
               </tspan>
             </text>
-            <path
-              :style="`
-                fill: none;
-                fill-opacity: 1;
-                stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 2;
-                stroke-linecap: butt;
-                stroke-miterlimit: 2.5;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              `"
-              id="compass2"
-              d="m 93.333333,93.333333 h 27.999997 l -14,-63 z"
-            />
           </g>
-          <g id="legend-zaehlstelle">
-            <g
-              id="zaehlstelle1"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                xml:space="preserve"
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: bold;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                `"
-                id="zaehlstelle1-multirow"
-                x="1107.0699"
-                y="58.662277"
-              >
-                <tspan
-                  x="1107.0699"
-                  y="58.662277"
-                  id="tspan16"
-                >
-                  Zählstelle
-                  {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
-                </tspan>
-              </text>
-            </g>
-            <g
-              id="zaehlstelle2"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                v-if="zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer"
-                xml:space="preserve"
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                `"
-                id="zaehlstelle2-multirow"
-                x="1107.0699"
-                y="84.662277"
-              >
-                <tspan
-                  x="1107.0699"
-                  y="84.662277"
-                  id="tspan17"
-                >
-                  Stadtbezirk
-                  {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
-                </tspan>
-                <tspan
-                  x="1107.0699"
-                  y="110.83184"
-                  id="tspan18"
-                >
-                  Zähldatum:
-                  {{
-                    dateUtils.getShortVersionOfDate(
-                      new Date(activeZaehlung.datum)
-                    )
-                  }}
-                </tspan>
-              </text>
-            </g>
-          </g>
-          <g
-            id="legend-zaehlinfo"
-            style="stroke-width: 28.2205; stroke-dasharray: none"
-          >
-            <g
-              id="zaehlzeit1"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                xml:space="preserve"
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                `"
-                id="zaehlzeit1-multirow"
-                x="56"
-                y="1229.6622"
-              >
-                <tspan
-                  x="56"
-                  y="1229.6622"
-                  id="tspan23"
-                >
-                  <tspan
-                    style="font-weight: bold"
-                    id="tspan22"
-                  >
-                    {{ optionen.zeitauswahl }}
-                  </tspan>
-                </tspan>
-              </text>
-            </g>
-            <g
-              id="zaehlzeit2"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                xml:space="preserve"
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: start;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: start;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                `"
-                id="zaehlzeit2-multirow"
-                x="56"
-                y="1255.6622"
-              >
-                <tspan
-                  x="56"
-                  y="1255.6622"
-                  id="tspan24"
-                >
-                  {{ zaehlzeit2 }}
-                </tspan>
-              </text>
-            </g>
-            <text
-              xml:space="preserve"
-              :style="`
+        </g>
+        <text
+          xml:space="preserve"
+          id="arrows_1_to_4_sum_left_text"
+          :style="`
                 font-style: normal;
                 font-variant: normal;
-                font-weight: normal;
+                font-weight: bold;
                 font-stretch: normal;
                 font-size: ${belastungsplanMethods.maxlineWidth}px;
                 font-family: ${BelastungsplanConstants.fontfamily};
@@ -741,148 +849,60 @@
                 font-variant-caps: normal;
                 font-variant-numeric: normal;
                 font-variant-east-asian: normal;
-                text-align: start;
-                writing-mode: lr-tb;
-                direction: ltr;
-                text-anchor: start;
+                text-align: end;
+                writing-mode: rl-tb;
+                direction: rtl;
                 white-space: pre;
-                inline-size: 268.729;
                 display: inline;
                 fill: #000000;
-                stroke-width: 28.2205;
-                stroke-dasharray: none;
+                fill-opacity: 1;
+                stroke-width: 43.9644;
               `"
-              id="verkehrsart"
-              x="56"
-              y="1307.6622"
-            >
-              <tspan
-                x="56"
-                y="1307.6622"
-                id="tspan26"
-              >
-                <tspan
-                  style="font-weight: bold"
-                  id="tspan25"
-                >
-                  {{ optionen.radverkehr ? "RAD" : "FUSS" }}
-                </tspan>
-              </tspan>
-            </text>
-          </g>
-          <g id="legend-massstab">
-            <path
-              :style="`
-                fill: none;
-                stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 2;
-                stroke-linecap: square;
-                stroke-miterlimit: 2.5;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              `"
-              d="M 1190.6,1295 H 1316 v -20 z"
-              id="massstab-path1"
-            />
-            <path
-              :style="`
+          x="215.22824"
+          y="707.44586"
+        >
+          <tspan
+            id="arrows_1_to_4_sum_left_tspan"
+            x="215.22824"
+            y="707.44586"
+          >
+            {{ sumArrowsOneToFour }}
+          </tspan>
+        </text>
+        <text
+          xml:space="preserve"
+          id="arrows_1_to_4_sum_right_text"
+          :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: bold;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: end;
+                writing-mode: rl-tb;
+                direction: rtl;
+                white-space: pre;
+                display: inline;
                 fill: #000000;
-                stroke: ${BelastungsplanConstants.legendColor};
-                stroke-width: 2;
-                stroke-linecap: square;
-                stroke-miterlimit: 2.5;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
+                fill-opacity: 1;
+                stroke-width: 43.9644;
               `"
-              d="m 1253,1295 v -10"
-              id="massstab-path2"
-            />
-            <g
-              id="massstab-size1"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                xml:space="preserve"
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: center;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: middle;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                `"
-                id="massstab-size1-multirow"
-                x="1253"
-                y="1315"
-              >
-                <tspan
-                  x="1253"
-                  y="1315"
-                  id="tspan27"
-                >
-                  {{ highestZaehlwertRounded / 2 }}
-                </tspan>
-              </text>
-            </g>
-            <g
-              id="massstab-size2"
-              style="stroke-width: 28.2205; stroke-dasharray: none"
-            >
-              <text
-                xml:space="preserve"
-                :style="`
-                  font-style: normal;
-                  font-variant: normal;
-                  font-weight: normal;
-                  font-stretch: normal;
-                  font-size: ${belastungsplanMethods.maxlineWidth}px;
-                  font-family: ${BelastungsplanConstants.fontfamily};
-                  font-variant-ligatures: normal;
-                  font-variant-caps: normal;
-                  font-variant-numeric: normal;
-                  font-variant-east-asian: normal;
-                  text-align: center;
-                  writing-mode: lr-tb;
-                  direction: ltr;
-                  text-anchor: middle;
-                  white-space: pre;
-                  inline-size: 268.729;
-                  display: inline;
-                  fill: #000000;
-                  fill-opacity: 1;
-                  stroke-width: 28.2205;
-                  stroke-dasharray: none;
-                `"
-                id="massstab-size2-multirow"
-                x="1316"
-                y="1315"
-              >
-                <tspan
-                  x="1316"
-                  y="1315"
-                  id="tspan28"
-                >
-                  {{ highestZaehlwertRounded }}
-                </tspan>
-              </text>
-            </g>
-          </g>
-        </g>
+          x="1274.7208"
+          y="708.8515"
+        >
+          <tspan
+            id="arrows_1_to_4_sum_right_tspan"
+            x="1274.7208"
+            y="708.8515"
+          >
+            {{ sumArrowsOneToFour }}
+          </tspan>
+        </text>
       </g>
     </svg>
   </v-sheet>
@@ -1031,6 +1051,34 @@ const isSelectedArrowFour = computed(() => {
   return qjs.hasAnyArrowPatternIn(
     optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowFour
+  );
+});
+
+const isCountedArrowOne = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowOne
+  );
+});
+
+const isCountedArrowTwo = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowTwo
+  );
+});
+
+const isCountedArrowThree = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowThree
+  );
+});
+
+const isCountedArrowFour = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowFour
   );
 });
 

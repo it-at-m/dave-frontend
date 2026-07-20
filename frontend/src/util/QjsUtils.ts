@@ -111,6 +111,42 @@ export function useQjs() {
     return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
   }
 
+  /**
+   * Vergleicht zwei Arrays von QJS-Verkehrsbeziehungen.
+   * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
+   */
+  function areVerkehrsbeziehungenEqual(
+    qjsA: VerkehrsbeziehungDTO[] | undefined,
+    qjsB: VerkehrsbeziehungDTO[] | undefined
+  ): boolean {
+    const a = qjsA ?? [];
+    const b = qjsB ?? [];
+
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    // Kopiere b in ein veränderbares Array 'remaining'.
+    // Für jedes Element q aus 'a' suchen wir in 'remaining' nach einem Eintrag
+    // mit derselben Kombination aus `von`, `nach` und `strassenseite`. Wird ein Treffer
+    // gefunden, entfernen wir ihn aus 'remaining', damit doppelte Einträge
+    // korrekt berücksichtigt werden. Fehlt ein Treffer, sind die Arrays nicht gleich.
+    const remaining = [...b];
+    return a.every((q) => {
+      const idx = remaining.findIndex(
+        (r) =>
+          r.von === q.von &&
+          r.nach === q.nach &&
+          r.strassenseite === q.strassenseite
+      );
+      if (idx === -1) {
+        return false;
+      }
+      remaining.splice(idx, 1);
+      return true;
+    });
+  }
+
   return {
     rotateSvgFor,
     patternsArrowOne,
@@ -121,5 +157,6 @@ export function useQjs() {
     hasAnyArrowPatternIn,
     computeAvailableKnotenarme,
     computeAvailableKnotenarmNummernFromZaehlung,
+    areVerkehrsbeziehungenEqual,
   };
 }
