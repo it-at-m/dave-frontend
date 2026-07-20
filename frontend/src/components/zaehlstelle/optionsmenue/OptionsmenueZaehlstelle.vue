@@ -146,10 +146,7 @@ function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
-  if (
-    activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN ||
-    isTeilzaehlungFussverkehr.value
-  ) {
+  if (isTeilzaehlungFussverkehr.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_19;
