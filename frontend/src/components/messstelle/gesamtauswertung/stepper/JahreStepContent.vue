@@ -1,23 +1,23 @@
 <template>
   <v-autocomplete
-      v-model="auswertungOptions.jahre"
-      :items="jahre"
-      class="mt-4"
-      density="compact"
-      label="Jahre"
-      multiple
-      chips
-      clearable
-      closable-chips
-      variant="outlined"
+    v-model="auswertungOptions.jahre"
+    :items="jahre"
+    class="mt-4"
+    density="compact"
+    label="Jahre"
+    multiple
+    chips
+    clearable
+    closable-chips
+    variant="outlined"
   >
     <template #prepend-item>
       <v-btn
-          class="text-none"
-          width="100%"
-          variant="flat"
-          :text="buttonText"
-          @click="buttonClick"
+        class="text-none"
+        width="100%"
+        variant="flat"
+        :text="buttonText"
+        @click="buttonClick"
       />
     </template>
   </v-autocomplete>

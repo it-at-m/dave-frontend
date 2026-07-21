@@ -23,15 +23,17 @@
         dense
       >
         <v-col cols="4">
-          <v-checkbox
-            v-model="chosenOptionsCopy.werteHundertRunden"
+          <v-select
+            v-model="chosenOptionsCopy.rounding"
             class="mb-3"
-            :label="'Werte auf 100 Runden'"
-            hide-details
+            label="Rundung"
+            :items="roundingItems"
+            item-title="label"
+            item-value="key"
             color="quaternary"
             density="compact"
-            @mouseover="hoverWerteHundertRunden = true"
-            @mouseleave="hoverWerteHundertRunden = false"
+            @mouseover="hoverWerteRunden = true"
+            @mouseleave="hoverWerteRunden = false"
           />
           <v-slider
             v-model="sizeBelastungsplan"
@@ -246,12 +248,13 @@
           <v-checkbox
             v-model="chosenOptionsCopy.zeitreiheGesamt"
             class="mb-3"
-            :label="'Summe alle Verkehrsarten anzeigen'"
+            :label="'Summe aller Verkehrsarten anzeigen'"
             hide-details
             color="quaternary"
             density="compact"
             @mouseover="hoverZeitreiheGesamt = true"
             @mouseleave="hoverZeitreiheGesamt = false"
+            :disabled="isTypeKfzDisabled()"
           />
         </v-col>
         <v-spacer />
@@ -274,6 +277,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import { roundingItems } from "@/types/enum/Rounding";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -292,7 +296,7 @@ const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
 // Belastungsplan
 const sizeBelastungsplan = ref(0);
 
-const hoverWerteHundertRunden = ref(false);
+const hoverWerteRunden = ref(false);
 const hoverSizeBelastungsplan = ref(false);
 const hoverBlackPrintMode = ref(false);
 const hoverStundensumme = ref(false);
@@ -329,7 +333,7 @@ const isZeitauswahlForSpitzenstunde = computed(() => {
 });
 
 const helpTextBelastungsplan = computed(() => {
-  if (hoverWerteHundertRunden.value) {
+  if (hoverWerteRunden.value) {
     return "";
   }
   if (hoverBlackPrintMode.value) {
@@ -376,7 +380,7 @@ const helpTextDetailauswahlListenausgabe = computed(() => {
 
 const helpTextZeitreihe = computed(() => {
   if (hoverZeitreiheGesamt.value) {
-    return "";
+    return "Der Fußverkehr ist in der Summe aller Verkehrsarten nicht enthalten.";
   }
   return "";
 });
