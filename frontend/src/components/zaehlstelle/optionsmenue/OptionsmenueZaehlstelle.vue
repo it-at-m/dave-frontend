@@ -163,36 +163,6 @@ function setDefaultOptionsForZaehlung() {
     }
   }
 
-  if (
-    activeZaehlung.value.zaehlart === Zaehlart.R ||
-    activeZaehlung.value.zaehlart === Zaehlart.QR
-  ) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
-      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-      optionsCopy.zeitblock = Zeitblock.ZB_06_10;
-    }
-    // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
-  } else {
-    const zeitblockAvailable = !isEmpty(
-      activeZaehlung.value.zeitauswahl?.blocks
-    );
-    if (
-      zeitblockAvailable &&
-      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      const firstZeitblock = head(activeZaehlung.value.zeitauswahl?.blocks);
-      if (!isNil(firstZeitblock)) {
-        optionsCopy.zeitblock = firstZeitblock;
-      }
-    }
-  }
-
   activeZaehlung.value.kategorien.forEach((fahr) => {
     switch (fahr) {
       // Verkehrsarten
