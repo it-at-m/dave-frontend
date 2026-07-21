@@ -527,8 +527,8 @@
           </text>
         </g>
         <g id="arrows">
-          <g id="arrows_1_and_2">
-            <g id="arrow1">
+          <g v-if="isCountedArrowOne || isCountedArrowTwo" id="arrows_1_and_2">
+            <g v-if="isCountedArrowOne" id="arrow1">
               <path
                 style="stroke-width: 40.1656"
                 :d="dArrowOne"
@@ -583,7 +583,7 @@
                 </tspan>
               </text>
             </g>
-            <g id="arrow2">
+            <g v-if="isCountedArrowTwo" id="arrow2">
               <path
                 style="stroke-width: 40.1708"
                 :d="dArrowTwo"
@@ -683,8 +683,8 @@
               </tspan>
             </text>
           </g>
-          <g id="arrows_3_and_4">
-            <g id="arrow3">
+          <g v-if="isCountedArrowThree || isCountedArrowFour" id="arrows_3_and_4">
+            <g v-if="isCountedArrowThree" id="arrow3">
               <path
                 style="stroke-width: 40.1798"
                 :d="dArrowThree"
@@ -739,7 +739,7 @@
                 </tspan>
               </text>
             </g>
-            <g id="arrow4">
+            <g v-if="isCountedArrowFour" id="arrow4">
               <path
                 style="stroke-width: 40.1798"
                 :d="dArrowFour"
@@ -1051,6 +1051,34 @@ const isSelectedArrowFour = computed(() => {
   return qjs.hasAnyArrowPatternIn(
     optionen.value?.chosenVerkehrsbeziehungen,
     qjs.patternsArrowFour
+  );
+});
+
+const isCountedArrowOne = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowOne
+  );
+});
+
+const isCountedArrowTwo = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowTwo
+  );
+});
+
+const isCountedArrowThree = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowThree
+  );
+});
+
+const isCountedArrowFour = computed(() => {
+  return qjs.hasAnyArrowPatternIn(
+      activeZaehlung.value.verkehrsbeziehungen,
+      qjs.patternsArrowFour
   );
 });
 

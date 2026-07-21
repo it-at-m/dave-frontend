@@ -48,7 +48,7 @@
               v-model="chosenOptionsCopy.differenzdatenDarstellen"
               color="quaternary"
               :label="'Differenzdaten darstellen'"
-              :disabled="isQjsOrFjsOrQu"
+              :disabled="isQjsOrFjsOrQu || isOnlyFussverkehrSelected"
             />
           </div>
           <div v-if="chosenOptionsCopy.differenzdatenDarstellen">
@@ -167,6 +167,9 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
     return "Datum der für den Vergleich ausgewählten Zählung. Hier werden nur Zählungen mit identischer Zählart zum Basisdatum angezeigt.";
   }
   if (hoverCheckbox.value) {
+    if (isOnlyFussverkehrSelected.value) {
+      return "Für die ausgewählte Verkehrsart ist eine Differenzdatendarstellung nicht möglich.";
+    }
     return isQjsOrFjsOrQu.value
       ? "Für diese Zählung ist eine Differenzdatendarstellung nicht möglich."
       : "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
@@ -188,6 +191,18 @@ const isQjsOrFjsOrQu = computed<boolean>(() => {
     Zaehlart.FJS.toString(),
     Zaehlart.QU.toString(),
   ].includes(activeZaehlung.value.zaehlart);
+});
+
+const isOnlyFussverkehrSelected = computed<boolean>(() => {
+  return (
+    chosenOptionsCopy.value.fussverkehr &&
+    !chosenOptionsCopy.value.kraftfahrzeugverkehr &&
+    !chosenOptionsCopy.value.gueterverkehr &&
+    !chosenOptionsCopy.value.schwerverkehr &&
+    !chosenOptionsCopy.value.gueterverkehrsanteilProzent &&
+    !chosenOptionsCopy.value.schwerverkehrsanteilProzent &&
+    !chosenOptionsCopy.value.radverkehr
+  );
 });
 
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
@@ -341,4 +356,14 @@ watch(
   },
   { deep: true }
 );
+
+// Watcher: wenn nur Fußverkehr ausgewählt ist, Rücksetzen relevanter Felder
+watch(isOnlyFussverkehrSelected, (onlyFuss) => {
+  if (onlyFuss) {
+    // Checkbox deaktiviert — sicherstellen, dass sie auch aus ist
+    chosenOptionsCopy.value.differenzdatenDarstellen = false;
+    // Vergleichsselektionen zurücksetzen, damit keine ungültigen Werte verbleiben
+    chosenOptionsCopy.value.vergleichszaehlungsId = null;
+  }
+});
 </script>
