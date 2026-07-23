@@ -645,7 +645,7 @@
                 stroke-width: 3.26332;
                 stroke-dasharray: none;
               "
-              d="m 133.56306,623.4872453 h 80.44096 v 1.0263 h -80.44096 z"
+              d="m 133.56306,626.5 h 80.44096 v 1.0263 h -80.44096 z"
               id="arrows_1_and_2_sum_line"
             />
             <text
@@ -672,12 +672,12 @@
                   stroke-width: 43.9644;
                 `"
               x="215.26794"
-              y="643.40129687"
+              y="647.69934"
             >
               <tspan
                 id="arrows_1_and_2_sum_tspan"
                 x="215.26794"
-                y="643.40129687"
+                y="647.69934"
               >
                 {{ sumArrowsOneTwo }}
               </tspan>
@@ -796,7 +796,7 @@
             </g>
             <path
               style="fill: #000000; fill-opacity: 1; stroke-width: 13.4005"
-              d="m 1186.6029,862.50248 h 87.5595 v 0.55173 h -87.5595 z"
+              d="m 1186.6029,864.49999 h 87.5595 v 1.0263 h -87.5595 z"
               id="arrows_3_and_4_sum_line"
             />
             <text
@@ -823,12 +823,12 @@
                   stroke-width: 43.9644;
                 `"
               x="1274.8474"
-              y="882.1888042"
+              y="885.69934"
             >
               <tspan
                 id="arrows_3_and_4_sum_tspan"
                 x="1274.8474"
-                y="882.1888042"
+                y="885.69934"
               >
                 {{ sumArrowsThreeFour }}
               </tspan>
