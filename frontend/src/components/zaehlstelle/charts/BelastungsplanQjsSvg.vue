@@ -541,12 +541,12 @@
                 style="
                   fill: none;
                   stroke: #000000;
-                  stroke-width: 2.08902;
+                  stroke-width: 1.75545;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
                 id="arrow1_tip"
-                d="m 221.73348,553.05942 19.31149,-25.58133 0.0167,51.09625 z"
+                d="m 221.73348,557.05942 19.31149,-18.45207 0.0167,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -572,12 +572,12 @@
                   stroke-width: 43.9482;
                 `"
                 x="215.24681"
-                y="562.0257"
+                y="563.9740875"
               >
                 <tspan
                   id="arrow1_zaehlwert_tspan"
                   x="215.24681"
-                  y="562.0257"
+                  y="563.9740875"
                 >
                   {{ zaehlwertArrowOne }}
                 </tspan>
@@ -601,7 +601,7 @@
                   stroke-opacity: 1;
                 "
                 id="arrow2_tip"
-                d="m 1178.1206,609.06771 -18.7975,-22.45207 -0.017,44.84587 z"
+                d="m 1178.1206,613.06771 -19.31149,-18.45207 -0.0169,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -627,12 +627,12 @@
                   stroke-width: 43.9482;
                 `"
                 x="215.83165"
-                y="615.81903"
+                y="619.9740821"
               >
                 <tspan
                   id="arrow2_zaehlwert_tspan"
                   x="215.83165"
-                  y="615.81903"
+                  y="619.9740821"
                 >
                   {{ zaehlwertArrowTwo }}
                 </tspan>
@@ -645,7 +645,7 @@
                 stroke-width: 3.26332;
                 stroke-dasharray: none;
               "
-              d="m 133.56306,621.30263 h 80.44096 v 1.0263 h -80.44096 z"
+              d="m 133.56306,623.4872453 h 80.44096 v 1.0263 h -80.44096 z"
               id="arrows_1_and_2_sum_line"
             />
             <text
@@ -672,12 +672,12 @@
                   stroke-width: 43.9644;
                 `"
               x="215.26794"
-              y="642.70013"
+              y="643.40129687"
             >
               <tspan
                 id="arrows_1_and_2_sum_tspan"
                 x="215.26794"
-                y="642.70013"
+                y="643.40129687"
               >
                 {{ sumArrowsOneTwo }}
               </tspan>
@@ -702,7 +702,7 @@
                   stroke-opacity: 1;
                 "
                 id="arrow3_tip"
-                d="m 221.49329,791.09394 19.39305,-22.32164 0.0169,44.58532 z"
+                d="m 221.49329,795.09394 19.31149,-18.45207 0.0169,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -728,12 +728,12 @@
                   stroke-width: 43.9482;
                 `"
                 x="1274.4691"
-                y="799.2951"
+                y="801.974045"
               >
                 <tspan
                   id="arrow3_zaehlwert_tspan"
                   x="1274.4691"
-                  y="799.2951"
+                  y="801.974045"
                 >
                   {{ zaehlwertArrowThree }}
                 </tspan>
@@ -757,7 +757,7 @@
                   stroke-opacity: 1;
                 "
                 id="arrow4_tip"
-                d="m 1178.1774,846.90543 -18.6954,-22.33904 -0.017,44.62008 z"
+                d="m 1178.1774,850.90543 -19.31149,-18.45207 -0.0169,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -782,13 +782,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="1273.3658"
-                y="855.68152"
+                x="1274.4691"
+                y="857.974051"
               >
                 <tspan
                   id="arrow4_zaehlwert_tspan"
-                  x="1273.3658"
-                  y="855.68152"
+                  x="1274.4691"
+                  y="857.974051"
                 >
                   {{ zaehlwertArrowFour }}
                 </tspan>
@@ -823,12 +823,12 @@
                   stroke-width: 43.9644;
                 `"
               x="1274.8474"
-              y="884.09052"
+              y="882.1888042"
             >
               <tspan
                 id="arrows_3_and_4_sum_tspan"
                 x="1274.8474"
-                y="884.09052"
+                y="882.1888042"
               >
                 {{ sumArrowsThreeFour }}
               </tspan>
