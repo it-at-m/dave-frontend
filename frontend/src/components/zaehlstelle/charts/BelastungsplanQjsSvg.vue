@@ -1007,10 +1007,10 @@ const transformArrowFour = computed(() =>
 );
 
 // --- Pfad-Daten
-const dArrowOne = "m 245,567 v -28 h 909.4546 v 27.998 z";
-const dArrowTwo = "m 245.31124,623 v -28 h 909.68866 v 27.997 z";
-const dArrowThree = "m 245,804.99999 v -28 h 910.1007 v 27.997 z";
-const dArrowFour = "m 244.89933,860.99999 v -28 H 1155 v 27.997 z";
+const dArrowOne = `m 245,567 v -${belastungsplanMethods.maxlineWidth} h 909.4546 v ${belastungsplanMethods.maxlineWidth} z`;
+const dArrowTwo = `m 245.31124,623 v -${belastungsplanMethods.maxlineWidth} h 909.68866 v ${belastungsplanMethods.maxlineWidth} z`;
+const dArrowThree = `m 245,804.99999 v -${belastungsplanMethods.maxlineWidth} h 910.1007 v ${belastungsplanMethods.maxlineWidth} z`;
+const dArrowFour = `m 244.89933,860.99999 v -${belastungsplanMethods.maxlineWidth} H 1155 v ${belastungsplanMethods.maxlineWidth} z`;
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
