@@ -71,10 +71,7 @@ function formatYAxisLabel(value: any): string {
 function checkTwoChartsNeeded(
   zaehldatenHeatmap: LadeZaehldatenHeatmapDTO
 ): boolean {
-  return (
-    zaehldatenHeatmap.xaxisDataSecondChart !== null &&
-    zaehldatenHeatmap.seriesEntriesSecondChart !== null
-  );
+  return zaehldatenHeatmap.xaxisDataSecondChart !== null;
 }
 
 function resetData(): void {
