@@ -177,7 +177,8 @@ const areOnlyVerkehrsartenRadAndFuss = computed(() => {
  */
 const isFussPreselected = computed(() => {
   // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
-  // anderen Zählarten, wenn als einzige Verkehrsart FUSS beauftragt wurde
+  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR RAD
+  // UND FUSS beauftragt wurde
   return (
     [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
@@ -192,7 +193,8 @@ const isFussPreselected = computed(() => {
  */
 const isRadPreselected = computed(() => {
   // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
-  // Zählarten, wenn als einzige Verkehrsart RAD beauftragt wurde
+  // Zählarten, wenn als einzige Verkehrsart NUR RAD oder NUR RAD UND FUSS
+  // beauftragt wurde
   return (
     [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
