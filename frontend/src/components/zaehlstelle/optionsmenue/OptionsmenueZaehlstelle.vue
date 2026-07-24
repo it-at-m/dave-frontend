@@ -150,6 +150,17 @@ function isOnlyVerkehrsartFuss() {
 }
 
 /**
+ * Gibt {@link true} zurück, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
+ */
+function isOnlyVerkehrsartRad() {
+  return (
+    activeZaehlung.value.kategorien.length === 2 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT)
+  );
+}
+
+/**
  * Gibt an, ob die Verkehrsart FUSS im Filtermenü vorbelegt sein soll.
  */
 function isFussPreselected() {
@@ -159,6 +170,19 @@ function isFussPreselected() {
     [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
     ) || isOnlyVerkehrsartFuss()
+  );
+}
+
+/**
+ * Gibt an, ob die Verkehrsart RAD im Filtermenü vorbelegt sein soll.
+ */
+function isRadPreselected() {
+  // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
+  // Zählarten, wenn als einzige Verkehrsart RAD beauftragt wurde
+  return (
+    [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+      activeZaehlung.value.zaehlart as Zaehlart
+    ) || isOnlyVerkehrsartRad()
   );
 }
 
@@ -238,14 +262,7 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
-        // Rad soll nur bei bestimmten Zählarten aktiviert sein
-        optionsCopy.radverkehr = [
-          Zaehlart.R,
-          Zaehlart.QR,
-          Zaehlart.FJS,
-          Zaehlart.QU,
-          Zaehlart.QJS,
-        ].includes(activeZaehlung.value.zaehlart as Zaehlart);
+        optionsCopy.radverkehr = isRadPreselected();
         break;
       case Fahrzeug.FUSS:
         optionsCopy.fussverkehr = isFussPreselected();
