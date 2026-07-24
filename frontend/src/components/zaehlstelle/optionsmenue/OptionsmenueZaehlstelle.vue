@@ -161,6 +161,18 @@ const isOnlyVerkehrsartRad = computed(() => {
 });
 
 /**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten RAD und FUSS beauftragt wurden.
+ */
+const areOnlyVerkehrsartenRadAndFuss = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 3 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
+  );
+});
+
+/**
  * Gibt an, ob die Verkehrsart FUSS im Filtermenü vorbelegt sein soll.
  */
 const isFussPreselected = computed(() => {
@@ -169,7 +181,9 @@ const isFussPreselected = computed(() => {
   return (
     [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
-    ) || isOnlyVerkehrsartFuss.value
+    ) ||
+    isOnlyVerkehrsartFuss.value ||
+    areOnlyVerkehrsartenRadAndFuss.value
   );
 });
 
@@ -182,7 +196,9 @@ const isRadPreselected = computed(() => {
   return (
     [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
-    ) || isOnlyVerkehrsartRad.value
+    ) ||
+    isOnlyVerkehrsartRad.value ||
+    areOnlyVerkehrsartenRadAndFuss.value
   );
 });
 
