@@ -140,6 +140,29 @@ const isTeilzaehlungFussverkehr = computed(() => {
 });
 
 /**
+ * Gibt {@link true} zurück, wenn für die Zählung NUR die Verkehrsart FUSS beauftragt wurde.
+ */
+function isOnlyVerkehrsartFuss() {
+  return (
+    activeZaehlung.value.kategorien.length === 1 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
+  );
+}
+
+/**
+ * Gibt an, ob die Verkehrsart FUSS im Filtermenü vorbelegt sein soll.
+ */
+function isFussPreselected() {
+  // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
+  // anderen Zählarten, wenn als einzige Verkehrsart FUSS beauftragt wurde
+  return (
+    [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+      activeZaehlung.value.zaehlart as Zaehlart
+    ) || isOnlyVerkehrsartFuss()
+  );
+}
+
+/**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
@@ -222,15 +245,10 @@ function setDefaultOptionsForZaehlung() {
           Zaehlart.FJS,
           Zaehlart.QU,
           Zaehlart.QJS,
-        ].includes(activeZaehlung.value.zaehlart);
+        ].includes(activeZaehlung.value.zaehlart as Zaehlart);
         break;
       case Fahrzeug.FUSS:
-        // Fuss soll nur bei Zählarten FjS, Qu, QjS aktiviert sein
-        optionsCopy.fussverkehr = [
-          Zaehlart.FJS,
-          Zaehlart.QU,
-          Zaehlart.QJS,
-        ].includes(activeZaehlung.value.zaehlart);
+        optionsCopy.fussverkehr = isFussPreselected();
         break;
     }
   });
