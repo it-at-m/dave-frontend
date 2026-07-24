@@ -140,51 +140,51 @@ const isTeilzaehlungFussverkehr = computed(() => {
 });
 
 /**
- * Gibt {@link true} zurück, wenn für die Zählung NUR die Verkehrsart FUSS beauftragt wurde.
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart FUSS beauftragt wurde.
  */
-function isOnlyVerkehrsartFuss() {
+const isOnlyVerkehrsartFuss = computed(() => {
   return (
     activeZaehlung.value.kategorien.length === 1 &&
     activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
   );
-}
+});
 
 /**
- * Gibt {@link true} zurück, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
  */
-function isOnlyVerkehrsartRad() {
+const isOnlyVerkehrsartRad = computed(() => {
   return (
     activeZaehlung.value.kategorien.length === 2 &&
     activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
     activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT)
   );
-}
+});
 
 /**
  * Gibt an, ob die Verkehrsart FUSS im Filtermenü vorbelegt sein soll.
  */
-function isFussPreselected() {
+const isFussPreselected = computed(() => {
   // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
   // anderen Zählarten, wenn als einzige Verkehrsart FUSS beauftragt wurde
   return (
     [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
-    ) || isOnlyVerkehrsartFuss()
+    ) || isOnlyVerkehrsartFuss.value
   );
-}
+});
 
 /**
  * Gibt an, ob die Verkehrsart RAD im Filtermenü vorbelegt sein soll.
  */
-function isRadPreselected() {
+const isRadPreselected = computed(() => {
   // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
   // Zählarten, wenn als einzige Verkehrsart RAD beauftragt wurde
   return (
     [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
       activeZaehlung.value.zaehlart as Zaehlart
-    ) || isOnlyVerkehrsartRad()
+    ) || isOnlyVerkehrsartRad.value
   );
-}
+});
 
 /**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
@@ -262,10 +262,10 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
-        optionsCopy.radverkehr = isRadPreselected();
+        optionsCopy.radverkehr = isRadPreselected.value;
         break;
       case Fahrzeug.FUSS:
-        optionsCopy.fussverkehr = isFussPreselected();
+        optionsCopy.fussverkehr = isFussPreselected.value;
         break;
     }
   });
