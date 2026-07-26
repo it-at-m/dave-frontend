@@ -47,7 +47,7 @@
     "leaflet.fullscreen": "3.0.2",
     "leaflet.markercluster": "1.5.3",
     "leaflet.nontiledlayer": "1.0.9",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "prettier": "3.5.3",
     "save-svg-as-png": "1.4.17",
     "typescript": "5.8.3",
