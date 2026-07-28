@@ -527,8 +527,14 @@
           </text>
         </g>
         <g id="arrows">
-          <g v-if="isCountedArrowOne || isCountedArrowTwo" id="arrows_1_and_2">
-            <g v-if="isCountedArrowOne" id="arrow1">
+          <g
+            v-if="isCountedArrowOne || isCountedArrowTwo"
+            id="arrows_1_and_2"
+          >
+            <g
+              v-if="isCountedArrowOne"
+              id="arrow1"
+            >
               <path
                 style="stroke-width: 40.1656"
                 :d="dArrowOne"
@@ -541,12 +547,12 @@
                 style="
                   fill: none;
                   stroke: #000000;
-                  stroke-width: 2.08902;
+                  stroke-width: 1.75545;
                   stroke-dasharray: none;
                   stroke-opacity: 1;
                 "
                 id="arrow1_tip"
-                d="m 221.73348,553.05942 19.31149,-25.58133 0.0167,51.09625 z"
+                d="m 221.73348,557.05942 19.31149,-18.45207 0.0167,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -572,18 +578,21 @@
                   stroke-width: 43.9482;
                 `"
                 x="215.24681"
-                y="562.0257"
+                y="563.9740875"
               >
                 <tspan
                   id="arrow1_zaehlwert_tspan"
                   x="215.24681"
-                  y="562.0257"
+                  y="563.9740875"
                 >
                   {{ zaehlwertArrowOne }}
                 </tspan>
               </text>
             </g>
-            <g v-if="isCountedArrowTwo" id="arrow2">
+            <g
+              v-if="isCountedArrowTwo"
+              id="arrow2"
+            >
               <path
                 style="stroke-width: 40.1708"
                 :d="dArrowTwo"
@@ -601,7 +610,7 @@
                   stroke-opacity: 1;
                 "
                 id="arrow2_tip"
-                d="m 1178.1206,609.06771 -18.7975,-22.45207 -0.017,44.84587 z"
+                d="m 1178.1206,613.06771 -19.31149,-18.45207 -0.0169,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -627,12 +636,12 @@
                   stroke-width: 43.9482;
                 `"
                 x="215.83165"
-                y="615.81903"
+                y="619.9740821"
               >
                 <tspan
                   id="arrow2_zaehlwert_tspan"
                   x="215.83165"
-                  y="615.81903"
+                  y="619.9740821"
                 >
                   {{ zaehlwertArrowTwo }}
                 </tspan>
@@ -645,7 +654,7 @@
                 stroke-width: 3.26332;
                 stroke-dasharray: none;
               "
-              d="m 133.56306,621.30263 h 80.44096 v 1.0263 h -80.44096 z"
+              d="m 133.56306,626.5 h 80.44096 v 1.0263 h -80.44096 z"
               id="arrows_1_and_2_sum_line"
             />
             <text
@@ -672,19 +681,25 @@
                   stroke-width: 43.9644;
                 `"
               x="215.26794"
-              y="642.70013"
+              y="647.69934"
             >
               <tspan
                 id="arrows_1_and_2_sum_tspan"
                 x="215.26794"
-                y="642.70013"
+                y="647.69934"
               >
                 {{ sumArrowsOneTwo }}
               </tspan>
             </text>
           </g>
-          <g v-if="isCountedArrowThree || isCountedArrowFour" id="arrows_3_and_4">
-            <g v-if="isCountedArrowThree" id="arrow3">
+          <g
+            v-if="isCountedArrowThree || isCountedArrowFour"
+            id="arrows_3_and_4"
+          >
+            <g
+              v-if="isCountedArrowThree"
+              id="arrow3"
+            >
               <path
                 style="stroke-width: 40.1798"
                 :d="dArrowThree"
@@ -702,7 +717,7 @@
                   stroke-opacity: 1;
                 "
                 id="arrow3_tip"
-                d="m 221.49329,791.09394 19.39305,-22.32164 0.0169,44.58532 z"
+                d="m 221.49329,795.09394 19.31149,-18.45207 0.0169,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -728,18 +743,21 @@
                   stroke-width: 43.9482;
                 `"
                 x="1274.4691"
-                y="799.2951"
+                y="801.974045"
               >
                 <tspan
                   id="arrow3_zaehlwert_tspan"
                   x="1274.4691"
-                  y="799.2951"
+                  y="801.974045"
                 >
                   {{ zaehlwertArrowThree }}
                 </tspan>
               </text>
             </g>
-            <g v-if="isCountedArrowFour" id="arrow4">
+            <g
+              v-if="isCountedArrowFour"
+              id="arrow4"
+            >
               <path
                 style="stroke-width: 40.1798"
                 :d="dArrowFour"
@@ -757,7 +775,7 @@
                   stroke-opacity: 1;
                 "
                 id="arrow4_tip"
-                d="m 1178.1774,846.90543 -18.6954,-22.33904 -0.017,44.62008 z"
+                d="m 1178.1774,850.90543 -19.31149,-18.45207 -0.0169,36.84587 z"
               />
               <text
                 xml:space="preserve"
@@ -782,13 +800,13 @@
                   fill-opacity: 1;
                   stroke-width: 43.9482;
                 `"
-                x="1273.3658"
-                y="855.68152"
+                x="1274.4691"
+                y="857.974051"
               >
                 <tspan
                   id="arrow4_zaehlwert_tspan"
-                  x="1273.3658"
-                  y="855.68152"
+                  x="1274.4691"
+                  y="857.974051"
                 >
                   {{ zaehlwertArrowFour }}
                 </tspan>
@@ -796,7 +814,7 @@
             </g>
             <path
               style="fill: #000000; fill-opacity: 1; stroke-width: 13.4005"
-              d="m 1186.6029,862.50248 h 87.5595 v 0.55173 h -87.5595 z"
+              d="m 1186.6029,864.49999 h 87.5595 v 1.0263 h -87.5595 z"
               id="arrows_3_and_4_sum_line"
             />
             <text
@@ -823,12 +841,12 @@
                   stroke-width: 43.9644;
                 `"
               x="1274.8474"
-              y="884.09052"
+              y="885.69934"
             >
               <tspan
                 id="arrows_3_and_4_sum_tspan"
                 x="1274.8474"
-                y="884.09052"
+                y="885.69934"
               >
                 {{ sumArrowsThreeFour }}
               </tspan>
@@ -1007,10 +1025,10 @@ const transformArrowFour = computed(() =>
 );
 
 // --- Pfad-Daten
-const dArrowOne = "m 245,567 v -28 h 909.4546 v 27.998 z";
-const dArrowTwo = "m 245.31124,623 v -28 h 909.68866 v 27.997 z";
-const dArrowThree = "m 245,804.99999 v -28 h 910.1007 v 27.997 z";
-const dArrowFour = "m 244.89933,860.99999 v -28 H 1155 v 27.997 z";
+const dArrowOne = `m 245,567 v -${belastungsplanMethods.maxlineWidth} h 909.4546 v ${belastungsplanMethods.maxlineWidth} z`;
+const dArrowTwo = `m 245.31124,623 v -${belastungsplanMethods.maxlineWidth} h 909.68866 v ${belastungsplanMethods.maxlineWidth} z`;
+const dArrowThree = `m 245,804.99999 v -${belastungsplanMethods.maxlineWidth} h 910.1007 v ${belastungsplanMethods.maxlineWidth} z`;
+const dArrowFour = `m 244.89933,860.99999 v -${belastungsplanMethods.maxlineWidth} H 1155 v ${belastungsplanMethods.maxlineWidth} z`;
 
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
@@ -1056,29 +1074,29 @@ const isSelectedArrowFour = computed(() => {
 
 const isCountedArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-      activeZaehlung.value.verkehrsbeziehungen,
-      qjs.patternsArrowOne
+    activeZaehlung.value.verkehrsbeziehungen,
+    qjs.patternsArrowOne
   );
 });
 
 const isCountedArrowTwo = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-      activeZaehlung.value.verkehrsbeziehungen,
-      qjs.patternsArrowTwo
+    activeZaehlung.value.verkehrsbeziehungen,
+    qjs.patternsArrowTwo
   );
 });
 
 const isCountedArrowThree = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-      activeZaehlung.value.verkehrsbeziehungen,
-      qjs.patternsArrowThree
+    activeZaehlung.value.verkehrsbeziehungen,
+    qjs.patternsArrowThree
   );
 });
 
 const isCountedArrowFour = computed(() => {
   return qjs.hasAnyArrowPatternIn(
-      activeZaehlung.value.verkehrsbeziehungen,
-      qjs.patternsArrowFour
+    activeZaehlung.value.verkehrsbeziehungen,
+    qjs.patternsArrowFour
   );
 });
 
