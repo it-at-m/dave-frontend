@@ -93,7 +93,10 @@
       </v-row>
       <!-- Auszuwählende Zeitblöcke für Blockauswahl oder Spitzenstunde -->
       <v-row no-gutters>
-        <v-col cols="4">
+        <v-col
+          cols="4"
+          class="pe-1"
+        >
           <v-select
             v-if="isZeitauswahlZeitraum"
             v-model="tagesTyp"
@@ -127,6 +130,21 @@
             @mouseleave="hoverSelectStunde = false"
           />
 
+        </v-col>
+        <v-col
+          cols="4"
+          class="ps-1"
+        >
+          <v-select
+            v-if="isZeitauswahlZeitraum"
+            v-model="holidayOptions"
+            label="Ferien"
+            :items="holidayOptionsValues"
+            variant="filled"
+            density="compact"
+            @mouseover="hoverHolidayOptions = true"
+            @mouseleave="hoverHolidayOptions = false"
+          />
         </v-col>
         <v-spacer />
       </v-row>
@@ -201,6 +219,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import TagesTyp, { tagesTypInfo } from "@/types/enum/TagesTyp";
+import HolidayOptions, { holidayOptionsInfo } from "@/types/enum/HolidayOptions";
 import ZeitblockStuendlich, {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockStuendlich";
@@ -223,11 +242,13 @@ const emits = defineEmits<{
   (e: "zeitblock", v: string): void;
   (e: "intervall", v: ZaehldatenIntervall): void;
   (e: "tagesTyp", v: string): void;
+  (e: "holidayOptions", v: string): void;
 }>();
 
 const zeitauswahl = ref(Zeitauswahl.ZEITRAUM.valueOf());
 const zeitblock = ref(Zeitblock.ZB_00_24.valueOf());
 const tagesTyp = ref(TagesTyp.WERKTAG_MO_FR.valueOf());
+const holidayOptions = ref(HolidayOptions.WITH_SCHOOLHOLIDAYS.valueOf());
 const intervall = ref(ZaehldatenIntervall.STUNDE_VIERTEL);
 
 // Zeitauswahl
@@ -236,6 +257,7 @@ const hoverTageswert = ref(false);
 const hoverBlock = ref(false);
 const hoverStunde = ref(false);
 const hoverTagesTyp = ref(false);
+const hoverHolidayOptions = ref(false);
 const hoverSpitzenstundeKfz = ref(false);
 const hoverSpitzenstundeRad = ref(false);
 const hoverSpitzenstundeFuss = ref(false);
@@ -430,6 +452,16 @@ const tagesTypValues = computed<Array<KeyVal>>(() => {
   return result;
 });
 
+const holidayOptionsValues = computed<Array<KeyVal>>(() => {
+  const result = new Array<KeyVal>();
+  const tt = holidayOptionsInfo.values();
+    tt.forEach((holidayOptionsInfo) => {
+        result.push(holidayOptionsInfo);
+    });
+
+  return result;
+});
+
 /**
  * Gibt die ZaehldatenIntervalle zurück welche für den Intervall Select zur Anzeige relevant sind.
  */
@@ -467,6 +499,10 @@ function zeitauswahlChanged() {
     if (!tagesTyp.value && tt) {
       tagesTyp.value = tt;
     }
+    const ho = holidayOptionsInfo.get(holidayOptionsValues.value[0].value)?.value;
+    if (!holidayOptions.value && ho) {
+      holidayOptions.value = ho;
+    }
   } 
 }
 
@@ -485,6 +521,9 @@ function update(newOptions: OptionsDTO) {
   newOptions.tagesTyp === null
     ? (tagesTyp.value = TagesTyp.WERKTAG_MO_FR)
     : (tagesTyp.value = newOptions.tagesTyp);
+  newOptions.holidayOptions === null
+    ? (holidayOptions.value = HolidayOptions.WITH_SCHOOLHOLIDAYS)
+    : (holidayOptions.value = newOptions.holidayOptions);
 }
 
 /**
@@ -524,5 +563,9 @@ watch(intervall, () => {
 
 watch(tagesTyp, () => {
   emits("tagesTyp", tagesTyp.value);
+});
+
+watch(holidayOptions, () => {
+  emits("holidayOptions", holidayOptions.value);
 });
 </script>

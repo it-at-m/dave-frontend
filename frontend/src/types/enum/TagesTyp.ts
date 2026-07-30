@@ -25,7 +25,7 @@ export const tagesTypInfo = new Map<string, KeyVal>([
   [TagesTyp.WERKTAG_DI_MI_DO, { value: TagesTyp.WERKTAG_DI_MI_DO, title: "DTVw3 (Di,Mi,Do)" }],
   [TagesTyp.MO_SO, { value: TagesTyp.MO_SO, title: "DTV (Mo - So)" }],
   [TagesTyp.SAMSTAG, { value: TagesTyp.SAMSTAG, title: "Samstag" }],
-  [TagesTyp.SONNTAG_FEIERTAG, { value: TagesTyp.SONNTAG_FEIERTAG, title: "Sonntag" }]
+  [TagesTyp.SONNTAG_FEIERTAG, { value: TagesTyp.SONNTAG_FEIERTAG, title: "Sonn- und Feiertag" }]
 ]);
 
 export default TagesTyp;

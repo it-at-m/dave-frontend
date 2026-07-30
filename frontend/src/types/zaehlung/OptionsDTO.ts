@@ -6,6 +6,7 @@ export default interface OptionsDTO {
   zeitraumStartAndEndDate: StartAndEndDate;
   zeitraum: string[];
   tagesTyp: string;
+  holidayOptions: string;
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
   zeitblock: string;
