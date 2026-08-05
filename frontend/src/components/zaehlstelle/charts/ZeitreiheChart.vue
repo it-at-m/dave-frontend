@@ -508,7 +508,7 @@ function fillCsvRow(isWanted: boolean, data: number | null) {
     ) {
       row += ";nicht vorh.";
     } else if (
-      (data == null || data === 0) &&
+      data == null &&
       filterOptions.value.zeitauswahl === Zeitauswahl.TAGESWERT
     ) {
       row += ";Tageswert nicht vorh.";
