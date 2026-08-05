@@ -382,19 +382,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   if (filterOptions.value.fussverkehr) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
     const zeitreiheDatenFuss: (number | string)[] = zeitreiheDaten.fuss.map(
-      (value) => {
-        if (value == null) {
-          return "";
-        }
-        // im speziellen Fall, dass Tageswert gesetzt ist und bei Fuß Werte 0 sind, diese auch auf leer setzen
-        if (
-          filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
-          value === 0
-        ) {
-          return "";
-        }
-        return value;
-      }
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: FUSSVERKEHR,
