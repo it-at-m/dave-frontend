@@ -14,7 +14,7 @@ export default class LadeZaehldatenService {
     return FetchService.postData(
       options,
       `${this.ENDPOINT_LADE_ZAEHLDATEN_PROCESSED}?zaehlung_id=${zaehlungId}`,
-      "Beim Laden der Aufbreiteteten Zählungsdaten ist ein Fehler aufgetreten."
+      "Beim Laden der aufbereiteten Zählungsdaten ist ein Fehler aufgetreten."
     );
   }
 }
