@@ -382,19 +382,7 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
   if (filterOptions.value.fussverkehr) {
     // null-Werte auf leer setzen, da sonst die Anzeige nicht funktioniert
     const zeitreiheDatenFuss: (number | string)[] = zeitreiheDaten.fuss.map(
-      (value) => {
-        if (value == null) {
-          return "";
-        }
-        // im speziellen Fall, dass Tageswert gesetzt ist und bei Fuß Werte 0 sind, diese auch auf leer setzen
-        if (
-          filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
-          value === 0
-        ) {
-          return "";
-        }
-        return value;
-      }
+      (value) => (value == null ? "" : value)
     );
     series.push({
       name: FUSSVERKEHR,
@@ -514,10 +502,13 @@ function downloadCsv() {
 function fillCsvRow(isWanted: boolean, data: number | null) {
   let row = "";
   if (isWanted) {
-    if (data == null) {
+    if (
+      data == null &&
+      filterOptions.value.zeitauswahl !== Zeitauswahl.TAGESWERT
+    ) {
       row += ";nicht vorh.";
     } else if (
-      data === 0 &&
+      data == null &&
       filterOptions.value.zeitauswahl === Zeitauswahl.TAGESWERT
     ) {
       row += ";Tageswert nicht vorh.";
