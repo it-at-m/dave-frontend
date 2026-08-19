@@ -670,17 +670,23 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
           );
         // den höchsten und niedrigsten Wert einer Verkehrsbeziehung ermitteln
         if (
-          belastungsplanVerkehrsbeziehung.total >
-          highestVerkehrsbeziehungsValue.value
+          belastungsplanMethods.positiveNumber(
+            belastungsplanVerkehrsbeziehung.total
+          ) > highestVerkehrsbeziehungsValue.value
         )
           highestVerkehrsbeziehungsValue.value =
-            belastungsplanVerkehrsbeziehung.total;
+            belastungsplanMethods.positiveNumber(
+              belastungsplanVerkehrsbeziehung.total
+            );
         if (
-          belastungsplanVerkehrsbeziehung.total <
-          lowestVerkehrsbeziehungsValue.value
+          belastungsplanMethods.positiveNumber(
+            belastungsplanVerkehrsbeziehung.total
+          ) < lowestVerkehrsbeziehungsValue.value
         )
           lowestVerkehrsbeziehungsValue.value =
-            belastungsplanVerkehrsbeziehung.total;
+            belastungsplanMethods.positiveNumber(
+              belastungsplanVerkehrsbeziehung.total
+            );
         // Verkehrsbeziehungstyp wird gesetzt um später die Position der Linien berrechnen zu können
         knotenarmVon.addVonVerkehrsbeziehungsType(
           belastungsplanVerkehrsbeziehung.verkehrsbeziehungsTyp
