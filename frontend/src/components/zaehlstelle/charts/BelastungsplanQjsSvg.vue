@@ -1210,22 +1210,30 @@ const highestZaehlwertRounded = computed(() => {
 
 const colorArrowOne = computed<string>(() => {
   if (!isSelectedArrowOne.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowOneTwo();
+  return zaehlstelleStore.isBlackprintMode
+    ? "#000000"
+    : calculateColorArrowOneTwo();
 });
 
 const colorArrowTwo = computed<string>(() => {
   if (!isSelectedArrowTwo.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowOneTwo();
+  return zaehlstelleStore.isBlackprintMode
+    ? "#000000"
+    : calculateColorArrowOneTwo();
 });
 
 const colorArrowThree = computed<string>(() => {
   if (!isSelectedArrowThree.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowThreeFour();
+  return zaehlstelleStore.isBlackprintMode
+    ? "#000000"
+    : calculateColorArrowThreeFour();
 });
 
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowThreeFour();
+  return zaehlstelleStore.isBlackprintMode
+    ? "#000000"
+    : calculateColorArrowThreeFour();
 });
 
 function calculateColorArrowOneTwo() {
