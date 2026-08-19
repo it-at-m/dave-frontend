@@ -254,7 +254,7 @@
             density="compact"
             @mouseover="hoverZeitreiheGesamt = true"
             @mouseleave="hoverZeitreiheGesamt = false"
-            :disabled="isTypeKfzDisabled()"
+            :disabled="isCheckboxZeitreiheGesamtDisabled"
           />
         </v-col>
         <v-spacer />
@@ -385,6 +385,22 @@ const helpTextZeitreihe = computed(() => {
   return "";
 });
 
+const isCheckboxZeitreiheGesamtDisabled = computed(() => {
+  return isTypeKfzDisabled() || isOnlyFussFiltered.value;
+});
+
+const isOnlyFussFiltered = computed(() => {
+  return (
+    !chosenOptionsCopy.value.kraftfahrzeugverkehr &&
+    !chosenOptionsCopy.value.gueterverkehr &&
+    !chosenOptionsCopy.value.schwerverkehr &&
+    !chosenOptionsCopy.value.gueterverkehrsanteilProzent &&
+    !chosenOptionsCopy.value.schwerverkehrsanteilProzent &&
+    !chosenOptionsCopy.value.radverkehr &&
+    chosenOptionsCopy.value.fussverkehr
+  );
+});
+
 function isTypeKfzDisabled(): boolean {
   return isTypeDisabled("KFZ");
 }
@@ -436,6 +452,15 @@ watch(sizeBelastungsplan, () => {
 watch(sizeBelastungsplanSvg, (newSize: number) => {
   sizeBelastungsplan.value = newSize;
 });
+
+watch(
+  () => isCheckboxZeitreiheGesamtDisabled.value,
+  () => {
+    if (isCheckboxZeitreiheGesamtDisabled.value) {
+      chosenOptionsCopy.value.zeitreiheGesamt = false;
+    }
+  }
+);
 
 watch(
   () => activeZaehlung.value,
