@@ -5837,8 +5837,10 @@ function setColor(
       strassenseite,
       richtung
     )
-      ? (BelastungsplanConstants.farben.get(node) ??
-        BelastungsplanConstants.inaktivColor)
+      ? zaehlstelleStore.isBlackprintMode
+        ? "#000000"
+        : (BelastungsplanConstants.farben.get(node) ??
+          BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor
   );
 }
