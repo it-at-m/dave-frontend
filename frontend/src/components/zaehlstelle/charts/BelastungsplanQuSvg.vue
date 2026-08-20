@@ -3710,7 +3710,7 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
       direction
     )
       ? zaehlstelleStore.isBlackprintMode
-        ? "#000000"
+        ? BelastungsplanConstants.blackPrintColor
         : (BelastungsplanConstants.farben.get(knNumber) ??
           BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor

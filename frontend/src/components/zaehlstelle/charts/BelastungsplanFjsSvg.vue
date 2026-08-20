@@ -5838,7 +5838,7 @@ function setColor(
       richtung
     )
       ? zaehlstelleStore.isBlackprintMode
-        ? "#000000"
+        ? BelastungsplanConstants.blackPrintColor
         : (BelastungsplanConstants.farben.get(node) ??
           BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor

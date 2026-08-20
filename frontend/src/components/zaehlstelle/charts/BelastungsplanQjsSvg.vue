@@ -1211,28 +1211,28 @@ const highestZaehlwertRounded = computed(() => {
 const colorArrowOne = computed<string>(() => {
   if (!isSelectedArrowOne.value) return BelastungsplanConstants.inaktivColor;
   return zaehlstelleStore.isBlackprintMode
-    ? "#000000"
+    ? BelastungsplanConstants.blackPrintColor
     : calculateColorArrowOneTwo();
 });
 
 const colorArrowTwo = computed<string>(() => {
   if (!isSelectedArrowTwo.value) return BelastungsplanConstants.inaktivColor;
   return zaehlstelleStore.isBlackprintMode
-    ? "#000000"
+    ? BelastungsplanConstants.blackPrintColor
     : calculateColorArrowOneTwo();
 });
 
 const colorArrowThree = computed<string>(() => {
   if (!isSelectedArrowThree.value) return BelastungsplanConstants.inaktivColor;
   return zaehlstelleStore.isBlackprintMode
-    ? "#000000"
+    ? BelastungsplanConstants.blackPrintColor
     : calculateColorArrowThreeFour();
 });
 
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value) return BelastungsplanConstants.inaktivColor;
   return zaehlstelleStore.isBlackprintMode
-    ? "#000000"
+    ? BelastungsplanConstants.blackPrintColor
     : calculateColorArrowThreeFour();
 });
 
