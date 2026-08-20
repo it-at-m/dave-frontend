@@ -1361,6 +1361,7 @@ watch(
     () => optionen.value.chosenVerkehrsbeziehungen,
     () => optionen.value.zeitauswahl,
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     firstStreetname.value = strassennameUtils.getStreetLines(

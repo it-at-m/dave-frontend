@@ -5875,6 +5875,7 @@ watch(
     () => activeZaehlung.value.knotenarme,
     () => optionen.value.zeitauswahl,
     () => optionen.value.chosenLaengsverkehre,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     setStreetnameNodes();

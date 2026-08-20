@@ -3819,6 +3819,7 @@ watch(
     () => props.data,
     () => optionen.value.chosenQuerungsverkehre,
     () => activeZaehlung.value.knotenarme,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     setStreetnameNodes();
