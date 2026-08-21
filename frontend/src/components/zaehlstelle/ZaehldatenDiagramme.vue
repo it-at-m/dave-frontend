@@ -438,17 +438,19 @@ function loadData(): void {
   // requests abschicken
   loadProcessedChartData(o);
 
-  // Save HistoryItem
-  historyStore.addHistoryItem(
-    new ZaehlstelleHistoryItem(
-      selectedZaehlung.value.id,
-      selectedZaehlung.value.datum,
-      selectedZaehlung.value.projektName,
-      zaehlstelle.value.nummer,
-      zaehlstelle.value.id,
-      Object.assign({}, options.value)
-    )
-  );
+  if (!zaehlstelleStore.isHistory) {
+    // Save HistoryItem only if options were changed
+    historyStore.addHistoryItem(
+      new ZaehlstelleHistoryItem(
+        selectedZaehlung.value.id,
+        selectedZaehlung.value.datum,
+        selectedZaehlung.value.projektName,
+        zaehlstelle.value.nummer,
+        zaehlstelle.value.id,
+        Object.assign({}, options.value)
+      )
+    );
+  }
 }
 
 function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
