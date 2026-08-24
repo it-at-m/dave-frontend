@@ -439,7 +439,6 @@ function loadData(): void {
   loadProcessedChartData(o);
 
   if (!zaehlstelleStore.isHistory) {
-    // Save HistoryItem only if options were changed
     historyStore.addHistoryItem(
       new ZaehlstelleHistoryItem(
         selectedZaehlung.value.id,
