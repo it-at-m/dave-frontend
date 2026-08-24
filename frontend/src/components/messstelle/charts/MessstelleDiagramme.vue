@@ -353,15 +353,17 @@ function loadProcessedChartData() {
     })
     .finally(() => {
       chartDataLoading.value = false;
-      const messstelle: MessstelleInfoDTO = messstelleStore.getMessstelleInfo;
-      historyStore.addHistoryItem(
-        new MessstelleHistoryItem(
-          messstelle.id,
-          messstelle.mstId,
-          messstelle.standort,
-          cloneDeep(options.value)
-        )
-      );
+      if (!messstelleStore.isHistory) {
+        const messstelle: MessstelleInfoDTO = messstelleStore.getMessstelleInfo;
+        historyStore.addHistoryItem(
+          new MessstelleHistoryItem(
+            messstelle.id,
+            messstelle.mstId,
+            messstelle.standort,
+            cloneDeep(options.value)
+          )
+        );
+      }
     });
 }
 
