@@ -5837,8 +5837,10 @@ function setColor(
       strassenseite,
       richtung
     )
-      ? (BelastungsplanConstants.farben.get(node) ??
-        BelastungsplanConstants.inaktivColor)
+      ? zaehlstelleStore.isBlackprintMode
+        ? BelastungsplanConstants.blackPrintColor
+        : (BelastungsplanConstants.farben.get(node) ??
+          BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor
   );
 }
@@ -5873,6 +5875,7 @@ watch(
     () => activeZaehlung.value.knotenarme,
     () => optionen.value.zeitauswahl,
     () => optionen.value.chosenLaengsverkehre,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     setStreetnameNodes();
