@@ -3709,8 +3709,10 @@ function setColor(knNumber: number, direction: Himmelsrichtung) {
       knNumber,
       direction
     )
-      ? (BelastungsplanConstants.farben.get(knNumber) ??
-        BelastungsplanConstants.inaktivColor)
+      ? zaehlstelleStore.isBlackprintMode
+        ? BelastungsplanConstants.blackPrintColor
+        : (BelastungsplanConstants.farben.get(knNumber) ??
+          BelastungsplanConstants.inaktivColor)
       : BelastungsplanConstants.inaktivColor
   );
 }
@@ -3817,6 +3819,7 @@ watch(
     () => props.data,
     () => optionen.value.chosenQuerungsverkehre,
     () => activeZaehlung.value.knotenarme,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     setStreetnameNodes();

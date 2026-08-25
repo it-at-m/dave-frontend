@@ -1210,22 +1210,30 @@ const highestZaehlwertRounded = computed(() => {
 
 const colorArrowOne = computed<string>(() => {
   if (!isSelectedArrowOne.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowOneTwo();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowOneTwo();
 });
 
 const colorArrowTwo = computed<string>(() => {
   if (!isSelectedArrowTwo.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowOneTwo();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowOneTwo();
 });
 
 const colorArrowThree = computed<string>(() => {
   if (!isSelectedArrowThree.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowThreeFour();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowThreeFour();
 });
 
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowThreeFour();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowThreeFour();
 });
 
 function calculateColorArrowOneTwo() {
@@ -1353,6 +1361,7 @@ watch(
     () => optionen.value.chosenVerkehrsbeziehungen,
     () => optionen.value.zeitauswahl,
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     firstStreetname.value = strassennameUtils.getStreetLines(
