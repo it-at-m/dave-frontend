@@ -4,6 +4,7 @@ import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO"
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
+import DOMPurify from "dompurify";
 import _ from "lodash";
 import { computed } from "vue";
 
@@ -263,6 +264,43 @@ export function useReportTools() {
     }
   }
 
+  /**
+   * Entfernt schädlichen/nicht zulässigen HTML-Code aus dem übergebenen String.
+   *
+   * @param htmlText Der String, welcher bereinigt werden soll
+   */
+  function sanitizeHtml(htmlText: string | undefined): string | undefined {
+    if (!htmlText) return htmlText;
+    return DOMPurify.sanitize(htmlText, {
+      ALLOWED_TAGS: [
+        "a",
+        "b",
+        "blockquote",
+        "br",
+        "cite",
+        "code",
+        "dd",
+        "dl",
+        "dt",
+        "em",
+        "i",
+        "li",
+        "ol",
+        "p",
+        "pre",
+        "q",
+        "small",
+        "strike",
+        "strong",
+        "sub",
+        "sup",
+        "u",
+        "ul",
+      ],
+      ALLOWED_ATTR: ["href", "title"],
+    });
+  }
+
   return {
     addChartToPdfReport,
     addDatatableToPdfReport,
@@ -271,5 +309,6 @@ export function useReportTools() {
     saveGesamtauswertungAsImage,
     getFileName,
     createHeading,
+    sanitizeHtml,
   };
 }
