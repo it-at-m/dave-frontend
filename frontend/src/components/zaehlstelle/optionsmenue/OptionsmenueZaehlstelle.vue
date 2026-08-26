@@ -77,7 +77,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { isEmpty } from "lodash";
+import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -92,7 +92,7 @@ import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitblock, { zeitblockOrder } from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -225,6 +225,21 @@ function setDefaultOptionsForZaehlung() {
       activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
     ) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+      const zbMax = zeitblockOrder.find((zb) =>
+        activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
+      );
+      if (zbMax) {
+        // Zeitblock verfügbar --> Zeitblock setzen
+        optionsCopy.zeitblock = zbMax;
+      } else {
+        // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
+        const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+        if (!isNil(firstHour)) {
+          optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
+          optionsCopy.zeitblock = firstHour;
+        }
+      }
     } else {
       optionsCopy.zeitblock = Zeitblock.ZB_00_24;
     }
