@@ -298,6 +298,7 @@ export function useReportTools() {
         "ul",
       ],
       ALLOWED_ATTR: ["href", "title"],
+      ALLOWED_URI_REGEXP: /^(https?:|mailto:)/i,
     });
   }
 
