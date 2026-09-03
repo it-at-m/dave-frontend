@@ -189,6 +189,26 @@ const vergleichsZaehlung = computed(() => {
 });
 
 /**
+ * Mergt die Knotenarme der ausgewählten Zählung mit den Knotenarmen einer Vergleichszählung
+ * und gibt das Ergebnis zurück.
+ */
+function mergeKnotenarmeOfVergleichszaehlungen() {
+  const knotenarmeOfZaehlung = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  const knotenarmeOfVergleichszaehlung = vergleichsZaehlung.value
+    ?.knotenarme as LadeKnotenarmDTO[];
+
+  let merge = [...knotenarmeOfZaehlung];
+
+  knotenarmeOfVergleichszaehlung.forEach((knotenarm) => {
+    if (!merge.some((kn) => kn.nummer === knotenarm.nummer)) {
+      merge.push(knotenarm);
+    }
+  });
+
+  return merge;
+}
+
+/**
  * Diese Methode zeichnet den Belastungsplan
  */
 function draw() {
@@ -207,7 +227,11 @@ function draw() {
     });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
-  const knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  let knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  if (isDifferenzdatendarstellung.value) {
+    knotenarmeInline = mergeKnotenarmeOfVergleichszaehlungen();
+  }
+
   if (knotenarmeInline) {
     let ks = Object.assign(new Array<LadeKnotenarmDTO>(), knotenarmeInline);
     ks = ks.sort(LadeKnotenarmComperator.sortByNumber).reverse();
@@ -569,6 +593,33 @@ function legendeLinienStaerke() {
 }
 
 /**
+ * Merged die Verkehrsbeziehungen der ausgewählten Zählung mit den Verkehrsbeziehungen einer Vergleichszählung
+ * und gibt das Ergebnis zurück.
+ */
+function mergeVerkehrsbeziehungenOfVergleichszaehlungen() {
+  const verkehrsbeziehungenOfZaehlung = zaehlung.value
+    .verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  const verkehrsbeziehungenOfVergleichszaehlung = vergleichsZaehlung.value
+    ?.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+
+  const merge = [...verkehrsbeziehungenOfZaehlung];
+
+  verkehrsbeziehungenOfVergleichszaehlung.forEach((verkehrsbeziehung) => {
+    if (
+      !merge.some(
+        (vbz) =>
+          vbz.von === verkehrsbeziehung.von &&
+          vbz.nach === verkehrsbeziehung.nach
+      )
+    ) {
+      merge.push(verkehrsbeziehung);
+    }
+  });
+
+  return merge;
+}
+
+/**
  * Hier werden alle Daten gesammelt bzw. aufbereitet, die zur Anzeige des Diagramms notwendig sind. Diese
  * Methode wird aufgerufen, wenn über das Property "data" die Daten zur Darstellung des Belastungsplanes
  * erneuert werden.
@@ -589,7 +640,11 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
   prozentWerte.value.set(1, data.value2.percent);
   prozentWerte.value.set(2, data.value3.percent);
   // Aus der aktuellen Zählung (diese ist im $store) werden die Verkehrsbeziehungen geladen.
-  const fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  let fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  if (isDifferenzdatendarstellung.value) {
+    fbs = mergeVerkehrsbeziehungenOfVergleichszaehlungen();
+  }
+
   if (fbs && Array.isArray(fbs)) {
     // Für jede Verkehrsbeziehung werden die Daten aufbereitet
     fbs.forEach((fb) => {
