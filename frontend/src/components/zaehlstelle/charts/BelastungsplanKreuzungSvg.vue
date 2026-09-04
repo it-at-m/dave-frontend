@@ -18,7 +18,6 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
-import { unionBy } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -35,6 +34,7 @@ import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerk
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
+import { useVergleichszaehlungenUtils } from "@/util/VergleichszaehlungenUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -53,6 +53,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
+const vergleichszaehlungenUtils = useVergleichszaehlungenUtils();
 
 const sheetId = "belastungsplan-zaehlstelle";
 
@@ -190,22 +191,6 @@ const vergleichsZaehlung = computed(() => {
 });
 
 /**
- * Mergt die Knotenarme der ausgewählten Zählung mit den Knotenarmen einer Vergleichszählung
- * und gibt das Ergebnis zurück.
- */
-function mergeKnotenarmeOfVergleichszaehlungen() {
-  const knotenarmeOfZaehlung = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
-  const knotenarmeOfVergleichszaehlung = vergleichsZaehlung.value
-    ?.knotenarme as LadeKnotenarmDTO[];
-
-  return unionBy(
-    knotenarmeOfZaehlung,
-    knotenarmeOfVergleichszaehlung,
-    "nummer"
-  );
-}
-
-/**
  * Diese Methode zeichnet den Belastungsplan
  */
 function draw() {
@@ -226,7 +211,11 @@ function draw() {
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
   let knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
   if (isDifferenzdatendarstellung.value) {
-    knotenarmeInline = mergeKnotenarmeOfVergleichszaehlungen();
+    knotenarmeInline =
+      vergleichszaehlungenUtils.mergeKnotenarmeOfVergleichszaehlungen(
+        zaehlung.value.knotenarme,
+        vergleichsZaehlung.value?.knotenarme
+      );
   }
 
   if (knotenarmeInline) {
@@ -590,23 +579,6 @@ function legendeLinienStaerke() {
 }
 
 /**
- * Merged die Verkehrsbeziehungen der ausgewählten Zählung mit den Verkehrsbeziehungen einer Vergleichszählung
- * und gibt das Ergebnis zurück.
- */
-function mergeVerkehrsbeziehungenOfVergleichszaehlungen() {
-  const verkehrsbeziehungenOfZaehlung = zaehlung.value
-    .verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
-  const verkehrsbeziehungenOfVergleichszaehlung = vergleichsZaehlung.value
-    ?.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
-
-  return unionBy(
-    verkehrsbeziehungenOfZaehlung,
-    verkehrsbeziehungenOfVergleichszaehlung,
-    (vb) => `${vb.von}:${vb.nach}`
-  );
-}
-
-/**
  * Hier werden alle Daten gesammelt bzw. aufbereitet, die zur Anzeige des Diagramms notwendig sind. Diese
  * Methode wird aufgerufen, wenn über das Property "data" die Daten zur Darstellung des Belastungsplanes
  * erneuert werden.
@@ -629,7 +601,11 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
   // Aus der aktuellen Zählung (diese ist im $store) werden die Verkehrsbeziehungen geladen.
   let fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
   if (isDifferenzdatendarstellung.value) {
-    fbs = mergeVerkehrsbeziehungenOfVergleichszaehlungen();
+    fbs =
+      vergleichszaehlungenUtils.mergeVerkehrsbeziehungenOfVergleichszaehlungen(
+        zaehlung.value.verkehrsbeziehungen,
+        vergleichsZaehlung.value?.verkehrsbeziehungen
+      );
   }
 
   if (fbs && Array.isArray(fbs)) {
