@@ -18,6 +18,7 @@ import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
+import { unionBy } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -197,15 +198,11 @@ function mergeKnotenarmeOfVergleichszaehlungen() {
   const knotenarmeOfVergleichszaehlung = vergleichsZaehlung.value
     ?.knotenarme as LadeKnotenarmDTO[];
 
-  let merge = [...knotenarmeOfZaehlung];
-
-  knotenarmeOfVergleichszaehlung.forEach((knotenarm) => {
-    if (!merge.some((kn) => kn.nummer === knotenarm.nummer)) {
-      merge.push(knotenarm);
-    }
-  });
-
-  return merge;
+  return unionBy(
+    knotenarmeOfZaehlung,
+    knotenarmeOfVergleichszaehlung,
+    "nummer"
+  );
 }
 
 /**
@@ -602,21 +599,11 @@ function mergeVerkehrsbeziehungenOfVergleichszaehlungen() {
   const verkehrsbeziehungenOfVergleichszaehlung = vergleichsZaehlung.value
     ?.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
 
-  const merge = [...verkehrsbeziehungenOfZaehlung];
-
-  verkehrsbeziehungenOfVergleichszaehlung.forEach((verkehrsbeziehung) => {
-    if (
-      !merge.some(
-        (vbz) =>
-          vbz.von === verkehrsbeziehung.von &&
-          vbz.nach === verkehrsbeziehung.nach
-      )
-    ) {
-      merge.push(verkehrsbeziehung);
-    }
-  });
-
-  return merge;
+  return unionBy(
+    verkehrsbeziehungenOfZaehlung,
+    verkehrsbeziehungenOfVergleichszaehlung,
+    (vb) => `${vb.von}:${vb.nach}`
+  );
 }
 
 /**
