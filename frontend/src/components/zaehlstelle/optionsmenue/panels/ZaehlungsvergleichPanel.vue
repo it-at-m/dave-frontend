@@ -366,4 +366,40 @@ watch(isOnlyFussverkehrSelected, (onlyFuss) => {
     chosenOptionsCopy.value.vergleichszaehlungsId = null;
   }
 });
+
+watch(
+  () => chosenOptionsCopy.value.differenzdatenDarstellen,
+  () => {
+    if (!chosenOptionsCopy.value.differenzdatenDarstellen) {
+      // Ausgewählte Verkehrsbeziehungen auf "Alle Knotenarme" setzen, wenn der bisher
+      // ausgewählte Arm nur bei der Vergleichszählung vorhanden ist
+
+      if (
+        chosenOptionsCopy.value.vonIds.some(
+          (id) =>
+            !activeZaehlung.value.knotenarme.some(
+              (knotenarm) => knotenarm.nummer === id
+            )
+        )
+      ) {
+        // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+        chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
+        chosenOptionsCopy.value.vonKnotenarm = null;
+      }
+
+      if (
+        chosenOptionsCopy.value.nachIds.some(
+          (id) =>
+            !activeZaehlung.value.knotenarme.some(
+              (knotenarm) => knotenarm.nummer === id
+            )
+        )
+      ) {
+        // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+        chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
+        chosenOptionsCopy.value.nachKnotenarm = null;
+      }
+    }
+  }
+);
 </script>
