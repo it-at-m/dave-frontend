@@ -391,32 +391,26 @@ watch(
           chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
           chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
         }
-      }
-
-      if (
-        chosenOptionsCopy.value.vonIds.some(
-          (id) =>
-            !activeZaehlung.value.knotenarme.some(
-              (knotenarm) => knotenarm.nummer === id
-            )
-        )
-      ) {
-        // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
-        chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
-        chosenOptionsCopy.value.vonKnotenarm = null;
-      }
-
-      if (
-        chosenOptionsCopy.value.nachIds.some(
-          (id) =>
-            !activeZaehlung.value.knotenarme.some(
-              (knotenarm) => knotenarm.nummer === id
-            )
-        )
-      ) {
-        // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
-        chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
-        chosenOptionsCopy.value.nachKnotenarm = null;
+      } else if (chosenOptionsCopy.value.vonKnotenarm != null) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) => vbz.von === chosenOptionsCopy.value.vonKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.vonKnotenarm = null;
+        }
+      } else if (chosenOptionsCopy.value.nachKnotenarm != null) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) => vbz.nach === chosenOptionsCopy.value.nachKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.nachKnotenarm = null;
+        }
       }
     }
   }
