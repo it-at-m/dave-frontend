@@ -35,11 +35,11 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           if [ "$EVENT_NAME" = "repository_dispatch" ]; then
-            echo "tag=${CLIENT_TAG:-}" >> $GITHUB_OUTPUT
-            echo "branch=${CLIENT_BRANCH:-}" >> $GITHUB_OUTPUT
+            echo "tag=${CLIENT_TAG:-}" >> "$GITHUB_OUTPUT"
+            echo "branch=${CLIENT_BRANCH:-}" >> "$GITHUB_OUTPUT"
           else
-            echo "tag=${TAG:-}" >> $GITHUB_OUTPUT
-            echo "branch=${BRANCH:-}" >> $GITHUB_OUTPUT
+            echo "tag=${TAG:-}" >> "$GITHUB_OUTPUT"
+            echo "branch=${BRANCH:-}" >> "$GITHUB_OUTPUT"
           fi
 
   build-maven:
