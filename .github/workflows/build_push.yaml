@@ -1,34 +1,76 @@
 name: build maven and image
 
 on:
+  repository_dispatch:
+    types: [trigger_tag_action]
   workflow_dispatch:
     inputs:
       tag:
         description: 'What should the image be tagged as?'
         required: false
         default: 'dev'
+      branch:
+        description: 'Which branch should be built?'
+        required: true
+        default: 'sprint'
 
 env:
   IMAGE_NAME: "dave-frontend"
 
 jobs:
+  set-parameters:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      tag: ${{ steps.set-params.outputs.tag }}
+      branch: ${{ steps.set-params.outputs.branch }}
+    steps:
+      - name: set parameters
+        id: set-params
+        env:
+          TAG: ${{ github.event.inputs.tag }}
+          BRANCH: ${{ github.event.inputs.branch }}
+          CLIENT_TAG: ${{ github.event.client_payload.tag }}
+          CLIENT_BRANCH: ${{ github.event.client_payload.branch }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = "repository_dispatch" ]; then
+            echo "tag=${CLIENT_TAG:-}" >> "$GITHUB_OUTPUT"
+            echo "branch=${CLIENT_BRANCH:-}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${TAG:-}" >> "$GITHUB_OUTPUT"
+            echo "branch=${BRANCH:-}" >> "$GITHUB_OUTPUT"
+          fi
+
   build-maven:
     runs-on: ubuntu-latest
+    needs: set-parameters
     permissions:
       contents: read
     outputs:
       ARTIFACT_NAME: ${{ steps.maven.outputs.artifact-name }}
     steps:
+      - &checkout-step
+        name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          persist-credentials: true
+          ref: ${{ needs.set-parameters.outputs.branch }}
+
       - name: Build with Maven
         id: maven
         uses: it-at-m/lhm_actions/action-templates/actions/action-maven-build@v1.0.29
+        with:
+          app-path: ""
 
   build-image:
     runs-on: ubuntu-latest
-    needs: build-maven
+    needs: ["set-parameters", "build-maven"]
     permissions:
       packages: write
     steps:
+      - *checkout-step
+
       - name: Build and push Docker image
         uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@v1.0.29
         with:
@@ -38,7 +80,7 @@ jobs:
           registry-username: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           image-tags: |
-            # use tag from input only if triggered by workflow_dispatch
-            type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event_name == 'workflow_dispatch' }}
+            # For security reasons use tag from input only if triggered by workflow_dispatch / repository_dispatch 
+            type=raw,value=${{ needs.set-parameters.outputs.tag }},enable=${{ github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch' }}
           image-labels: |
             maintainer=it@m, Landeshauptstadt Muenchen (LHM)
