@@ -274,4 +274,38 @@ describe("ReportTools", () => {
       "Zählstelle - Teilauswahl"
     );
   });
+
+  it("sanitizeHtml: Harmloser HTML-Input bleibt erhalten", () => {
+    const { sanitizeHtml } = useReportTools();
+
+    const allowedHtml1 =
+      '<p>Hello <strong>World</strong>. Visit <a href="https://example.com">Link</a> or <a href="mailto:foo@example.com">Email</a></p>';
+    expect(sanitizeHtml(allowedHtml1)).toBe(allowedHtml1);
+
+    const allowedHtml2 = "Knotenarme:<br>1 1<br>2 2<br>";
+    expect(sanitizeHtml(allowedHtml2)).toBe(allowedHtml2);
+  });
+
+  it("sanitizeHtml: Schädlicher / nicht erlaubter HTML-Input wird entfernt", () => {
+    const { sanitizeHtml } = useReportTools();
+
+    const notAllowedHtml1 =
+      "<p>Click <a href=\"javascript:alert('XSS')\">here</a></p><script>alert('x')</script>";
+    const expected1 = "<p>Click <a>here</a></p>";
+    expect(sanitizeHtml(notAllowedHtml1)).toBe(expected1);
+
+    const notAllowedHtml2 =
+      '<p onclick="doEvil()" style="color:red" class="foo">Hi</p>';
+    const expected2 = "<p>Hi</p>";
+    expect(sanitizeHtml(notAllowedHtml2)).toBe(expected2);
+
+    const notAllowedHtml3 =
+      'Before<img src="https://example.com/pic.png" alt="pic">After';
+    const expected3 = "BeforeAfter";
+    expect(sanitizeHtml(notAllowedHtml3)).toBe(expected3);
+
+    const notAllowedHtml4 = '<a href="/local/path">Local</a>';
+    const expected4 = "<a>Local</a>";
+    expect(sanitizeHtml(notAllowedHtml4)).toBe(expected4);
+  });
 });
