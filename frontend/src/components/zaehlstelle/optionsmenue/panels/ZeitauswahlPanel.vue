@@ -286,10 +286,14 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
       !result.some((keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22))
     ) {
       if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
-        const zeitBlockMaximal: KeyVal = {} as KeyVal;
-        zeitBlockMaximal.value = Zeitblock.ZB_00_24;
-        zeitBlockMaximal.title = "maximal";
-        result.push(zeitBlockMaximal);
+        if (!isEmpty(result)) {
+          const zeitBlockMaximal: KeyVal = {} as KeyVal;
+          zeitBlockMaximal.value = Zeitblock.ZB_00_24;
+          zeitBlockMaximal.title = "maximal";
+          result.push(zeitBlockMaximal);
+        } else {
+          chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+        }
       } else {
         result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
       }
