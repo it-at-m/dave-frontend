@@ -1,5 +1,7 @@
 package de.muenchen.dave.exception;
 
+import java.io.Serial;
+
 import de.muenchen.dave.filter.GlobalRequestParameterPollutionFilter;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,5 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class ParameterPollutionException extends RuntimeException {
+    @Serial
+    private static final long serialVersionUID = 1L;
     // default Ctor
 }

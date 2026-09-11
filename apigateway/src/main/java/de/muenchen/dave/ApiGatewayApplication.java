@@ -2,7 +2,7 @@ package de.muenchen.dave;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import reactor.core.publisher.Hooks;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /**
  * To do some base configuration for the non blocking client-server framework
@@ -24,11 +24,12 @@ import reactor.core.publisher.Hooks;
  * @see <a href=
  *      "https://cloud.spring.io/spring-cloud-gateway/reference/html/">https://cloud.spring.io/spring-cloud-gateway/reference/html/</a>
  */
-@SpringBootApplication(scanBasePackages = { "de.muenchen.dave" })
+@SpringBootApplication
+@ConfigurationPropertiesScan
+@SuppressWarnings("PMD.UseUtilityClass")
 public class ApiGatewayApplication {
 
-    public static void main(String[] args) {
-        Hooks.enableAutomaticContextPropagation();
+    public static void main(final String... args) {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
 
