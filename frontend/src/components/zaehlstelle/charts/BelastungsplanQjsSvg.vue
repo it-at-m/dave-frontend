@@ -988,7 +988,8 @@ const centerYArrowFour = ref(0);
 
 function getArrowScale(zaehlwert: number) {
   const max = highestZaehlwert.value;
-  if (!Number.isFinite(max) || max <= 0) return 0;
+  if (!Number.isFinite(max) || max <= 0)
+    return BelastungsplanConstants.minimum_arrow_scale;
   const scale = Math.max(zaehlwert, 0) / max;
   return Math.max(BelastungsplanConstants.minimum_arrow_scale, scale);
 }
