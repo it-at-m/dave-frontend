@@ -291,6 +291,8 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
           zeitBlockMaximal.value = Zeitblock.ZB_00_24;
           zeitBlockMaximal.title = "maximal";
           result.push(zeitBlockMaximal);
+        } else {
+          chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
         }
       } else {
         result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
