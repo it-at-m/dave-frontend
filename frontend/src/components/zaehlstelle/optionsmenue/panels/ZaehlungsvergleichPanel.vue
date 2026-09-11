@@ -366,4 +366,53 @@ watch(isOnlyFussverkehrSelected, (onlyFuss) => {
     chosenOptionsCopy.value.vergleichszaehlungsId = null;
   }
 });
+
+watch(
+  () => chosenOptionsCopy.value.differenzdatenDarstellen,
+  () => {
+    if (!chosenOptionsCopy.value.differenzdatenDarstellen) {
+      // Ausgewählte Verkehrsbeziehungen auf "Alle Knotenarme" setzen, wenn der bisher
+      // ausgewählte Arm nur bei der Vergleichszählung vorhanden ist
+
+      if (
+        chosenOptionsCopy.value.vonKnotenarm != null &&
+        chosenOptionsCopy.value.nachKnotenarm != null
+      ) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) =>
+              vbz.von === chosenOptionsCopy.value.vonKnotenarm &&
+              vbz.nach === chosenOptionsCopy.value.nachKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.vonKnotenarm = null;
+          chosenOptionsCopy.value.nachKnotenarm = null;
+          chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
+        }
+      } else if (chosenOptionsCopy.value.vonKnotenarm != null) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) => vbz.von === chosenOptionsCopy.value.vonKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.vonKnotenarm = null;
+        }
+      } else if (chosenOptionsCopy.value.nachKnotenarm != null) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) => vbz.nach === chosenOptionsCopy.value.nachKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.nachKnotenarm = null;
+        }
+      }
+    }
+  }
+);
 </script>

@@ -34,6 +34,7 @@ import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerk
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
+import { useVergleichszaehlungenUtils } from "@/util/VergleichszaehlungenUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -52,6 +53,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
+const vergleichszaehlungenUtils = useVergleichszaehlungenUtils();
 
 const sheetId = "belastungsplan-zaehlstelle";
 
@@ -207,7 +209,15 @@ function draw() {
     });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
-  const knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  let knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  if (isDifferenzdatendarstellung.value) {
+    knotenarmeInline =
+      vergleichszaehlungenUtils.mergeKnotenarmeOfVergleichszaehlungen(
+        zaehlung.value.knotenarme,
+        vergleichsZaehlung.value?.knotenarme
+      );
+  }
+
   if (knotenarmeInline) {
     let ks = Object.assign(new Array<LadeKnotenarmDTO>(), knotenarmeInline);
     ks = ks.sort(LadeKnotenarmComperator.sortByNumber).reverse();
@@ -589,7 +599,15 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
   prozentWerte.value.set(1, data.value2.percent);
   prozentWerte.value.set(2, data.value3.percent);
   // Aus der aktuellen Zählung (diese ist im $store) werden die Verkehrsbeziehungen geladen.
-  const fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  let fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  if (isDifferenzdatendarstellung.value) {
+    fbs =
+      vergleichszaehlungenUtils.mergeVerkehrsbeziehungenOfVergleichszaehlungen(
+        zaehlung.value.verkehrsbeziehungen,
+        vergleichsZaehlung.value?.verkehrsbeziehungen
+      );
+  }
+
   if (fbs && Array.isArray(fbs)) {
     // Für jede Verkehrsbeziehung werden die Daten aufbereitet
     fbs.forEach((fb) => {
