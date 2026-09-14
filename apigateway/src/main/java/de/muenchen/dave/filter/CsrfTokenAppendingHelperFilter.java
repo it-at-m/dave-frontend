@@ -1,7 +1,7 @@
 package de.muenchen.dave.filter;
 
 import de.muenchen.dave.configuration.SecurityConfiguration;
-import lombok.NonNull;
+import org.jspecify.annotations.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
