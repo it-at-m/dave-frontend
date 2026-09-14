@@ -50,11 +50,11 @@ class BackendRouteTest {
     private static final String TEST_JSON = "{ \"" + TEST_KEY + "\" : \"" + TEST_VALUE + "\" }";
     public static final String TEST_KEY_EXPRESSION = "$." + TEST_KEY;
 
-    public static final String URI_PUBLIC = "/public/api/backend/test";
-    public static final String URI_PUBLIC_EXTRA_PATTERN = "/api/backend/public/test";
-    public static final String URI_CLIENTS = "/clients/api/backend/test";
-    public static final String URI_CLIENTS_EXTRA_PATTERN = "/api/backend/clients/test";
-    public static final String URI_API = "/api/backend/test";
+    public static final String URI_PUBLIC = "/public/api/dave-backend-service/test";
+    public static final String URI_PUBLIC_EXTRA_PATTERN = "/api/dave-backend-service/public/test";
+    public static final String URI_CLIENTS = "/clients/api/dave-backend-service/test";
+    public static final String URI_CLIENTS_EXTRA_PATTERN = "/api/dave-backend-service/clients/test";
+    public static final String URI_API = "/api/dave-backend-service/test";
     public static final String BACKEND_URL = "/test";
 
     @Autowired

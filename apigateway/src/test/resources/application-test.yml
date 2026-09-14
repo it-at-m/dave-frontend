@@ -7,23 +7,23 @@ spring:
             - id: public-backend
               uri: http://localhost:${wiremock.server.port}/
               predicates:
-                - Path=/public/api/backend/**
+                - Path=/public/api/dave-backend-service/**
               filters:
-                - RewritePath=/public/api/backend/(?<urlsegments>.*), /$\{urlsegments}
+                - RewritePath=/public/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
                 - RemoveResponseHeader=WWW-Authenticate
             - id: clients-backend
               uri: http://localhost:${wiremock.server.port}/
               predicates:
-                - Path=/clients/api/backend/**
+                - Path=/clients/api/dave-backend-service/**
               filters:
-                - RewritePath=/clients/api/backend/(?<urlsegments>.*), /$\{urlsegments}
+                - RewritePath=/clients/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
                 - RemoveResponseHeader=WWW-Authenticate
             - id: backend
               uri: http://localhost:${wiremock.server.port}/
               predicates:
-                - Path=/api/backend/**
+                - Path=/api/dave-backend-service/**
               filters:
-                - RewritePath=/api/backend/(?<urlsegments>.*), /$\{urlsegments}
+                - RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
                 - RemoveResponseHeader=WWW-Authenticate
 
 logging:
@@ -40,7 +40,7 @@ wiremock:
 refarch:
   security:
     public-patterns:
-      - pattern: /api/backend/public/**
+      - pattern: /api/dave-backend-service/public/**
         methods: [GET]
     client-patterns:
-      - /api/backend/clients/**
+      - /api/dave-backend-service/clients/**

@@ -51,7 +51,7 @@ class GlobalBackendErrorFilterTest {
     @Test
     @WithMockUser
     void backendError() {
-        webTestClient.get().uri("/api/backend/remote").exchange()
+        webTestClient.get().uri("/api/dave-backend-service/remote").exchange()
                 .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
                 .expectHeader().valueMatches("Content-Type", "application/json")
                 .expectHeader().doesNotExist("WWW-Authenticate")
