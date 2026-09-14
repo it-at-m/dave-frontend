@@ -6,12 +6,23 @@ spring:
   main:
     web-application-type: reactive
     banner-mode: console
-  jackson:
-    serialization:
-      indent-output: on
-  session:
-    timeout: 36000  # in seconds; Goal: same lifetime as SSO Session (e.g. 10 hours)
-
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors:
+            cors-configurations:
+              '[/public/**]':
+                allowedOriginPatterns: ${ALLOWED_ORIGINS_PUBLIC}
+              '[/clients/**]':
+                allowedOriginPatterns: ${ALLOWED_ORIGINS_CLIENTS}
+                allowedHeaders: "*"
+                allowCredentials: true
+                allowedMethods: "*"
+          default-filters:
+            - RemoveRequestHeader=cookie
+            - RemoveRequestHeader=x-xsrf-token
+            - TokenRelay=
   reactor:
     context-propagation: auto
   web:
@@ -20,22 +31,11 @@ spring:
       whitelabel:
         enabled: false
 
-server:
-  port: 8082
-
 management:
   endpoints:
     access:
       default: none
     web:
-      cors:
-        allowedOrigins:
-          - "http://localhost:8081"
-          - "http://127.0.0.1:8081"
-        allowedMethods: "*"
-        allowedHeaders: "*"
-        allowCredentials: on
-        maxAge: 3600
       exposure:
         include:
           - health
@@ -47,8 +47,6 @@ management:
   endpoint:
     health:
       access: read_only
-      probes:
-        enabled: true
     info:
       access: read_only
     prometheus:
@@ -84,6 +82,10 @@ info:
     name: ${spring.application.name}
     version: ${spring.application.version}
     group: ${spring.application.group}
+    description: "@project.description@"
   build:
     java.version: "@java.version@"
     spring-cloud.version: "@spring-cloud-dependencies.version@"
+
+config:
+  map5xxto400: true
