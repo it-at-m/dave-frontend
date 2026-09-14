@@ -1,0 +1,30 @@
+package de.muenchen.dave.filter;
+
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
+import org.springframework.security.web.server.csrf.CsrfToken;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
+
+/// This class subscribes the [ServerWebExchange] for CSRF token attachment within the classes
+/// [org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository] and
+/// [org.springframework.security.web.server.csrf.CsrfWebFilter]. The CSRF configuration done only in
+/// [SecurityConfiguration#springSecurityFilterChain] is not sufficient for CSRF token attachment to
+/// a [org.springframework.http.server.ServerHttpResponse].
+@Component
+@Slf4j
+public class CsrfTokenAppendingHelperFilter implements WebFilter {
+
+    @Override
+    @NonNull public Mono<Void> filter(final ServerWebExchange exchange, final WebFilterChain chain) {
+        log.debug("Trigger to append CSRF token to response");
+        final Mono<CsrfToken> csrfToken = exchange.getAttributeOrDefault(CsrfToken.class.getName(), Mono.empty());
+        return csrfToken.doOnSuccess(x -> {
+            // do nothing -> CSRF-Token is added as cookie in class CookieServerCsrfTokenRepository#saveToken
+        }).then(chain.filter(exchange));
+    }
+
+}

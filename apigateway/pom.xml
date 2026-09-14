@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
 
-    <groupId>de.muenchen.oss.refarch</groupId>
+    <groupId>de.muenchen.dave</groupId>
     <artifactId>refarch-gateway</artifactId>
     <version>1.11.0-SNAPSHOT</version>
 

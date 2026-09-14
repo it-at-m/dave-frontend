@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: public-backend
+              uri: http://localhost:${wiremock.server.port}/
+              predicates:
+                - Path=/public/api/backend/**
+              filters:
+                - RewritePath=/public/api/backend/(?<urlsegments>.*), /$\{urlsegments}
+                - RemoveResponseHeader=WWW-Authenticate
+            - id: clients-backend
+              uri: http://localhost:${wiremock.server.port}/
+              predicates:
+                - Path=/clients/api/backend/**
+              filters:
+                - RewritePath=/clients/api/backend/(?<urlsegments>.*), /$\{urlsegments}
+                - RemoveResponseHeader=WWW-Authenticate
+            - id: backend
+              uri: http://localhost:${wiremock.server.port}/
+              predicates:
+                - Path=/api/backend/**
+              filters:
+                - RewritePath=/api/backend/(?<urlsegments>.*), /$\{urlsegments}
+                - RemoveResponseHeader=WWW-Authenticate
+
+logging:
+  include-application-group: false # disabled because application group is only relevant when deployed
+  structured:
+    format:
+      console: # set to empty to disable structured logging for testing
+
+wiremock:
+  server:
+    port: 0
+    https-port: -1
+
+refarch:
+  security:
+    public-patterns:
+      - pattern: /api/backend/public/**
+        methods: [GET]
+    client-patterns:
+      - /api/backend/clients/**
