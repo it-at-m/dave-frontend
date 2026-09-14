@@ -9,13 +9,12 @@
         <relativePath />
     </parent>
 
-    <groupId>de.muenchen.dave</groupId>
-    <artifactId>refarch-gateway</artifactId>
-    <version>1.11.0-SNAPSHOT</version>
+    <groupId>de.muenchen.dave.apigateway</groupId>
+    <artifactId>dave-frontend-apigateway</artifactId>
+    <version>10.0.1-SNAPSHOT</version>
+    <name>dave_frontend_apigateway</name>
 
-    <name>refarch-gateway</name>
-    <description>Ready to use RefArch gateway based on Spring Cloud Gateway</description>
-    <url>https://github.com/it-at-m/refarch</url>
+    <url>https://github.com/it-at-m/dave-frontend</url>
     <licenses>
         <license>
             <name>MIT</name>
@@ -31,10 +30,10 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/it-at-m/refarch.git</connection>
-        <developerConnection>scm:git:https://github.com/it-at-m/refarch.git</developerConnection>
+        <connection>scm:git:https://github.com/it-at-m/dave-frontend.git</connection>
+        <developerConnection>scm:git:https://github.com/it-at-m/dave-frontend.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/it-at-m/refarch.git</url>
+        <url>https://github.com/it-at-m/dave-frontend.git</url>
     </scm>
 
     <properties>
@@ -46,6 +45,9 @@
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.1.3</spring-cloud-dependencies.version>
+
+        <!-- Misc -->
+        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
 
         <!-- Linting & Formatting -->
         <spotless-maven-plugin.version>3.10.1</spotless-maven-plugin.version>
@@ -180,6 +182,19 @@
             <artifactId>spotbugs-annotations</artifactId>
             <version>${spotbugs-annotations.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Frontend Lib -->
+        <dependency>
+            <groupId>de.muenchen.dave.frontend</groupId>
+            <artifactId>dave-frontend-frontend</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -188,6 +203,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
