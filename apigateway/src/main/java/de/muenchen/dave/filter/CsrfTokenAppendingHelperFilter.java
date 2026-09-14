@@ -1,5 +1,6 @@
 package de.muenchen.dave.filter;
 
+import de.muenchen.dave.configuration.SecurityConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.web.server.csrf.CsrfToken;
