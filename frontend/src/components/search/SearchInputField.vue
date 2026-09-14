@@ -22,74 +22,100 @@
         <VRow align="stretch">
           <!-- Linke Spalte: Suggestions -->
           <VCol cols="6" >
+<!--            <v-autocomplete-->
+<!--                ref="autocompleteRef"-->
+<!--                id="suchfeld"-->
+<!--                v-model:menu="autocompleteMenuOpen"-->
+<!--            :menu-props="{ closeOnContentClick: false }"-->
+<!--                :filter-keys="['text', 'type', 'zaehlstelleId']"-->
+<!--            @update:menu="onAutocompleteMenuUpdate"-->
+<!--            :items="filteredSuggestions2"-->
+<!--                density="compact"-->
+<!--                clearable-->
+<!--                flat-->
+<!--                item-title="text"-->
+<!--                hide-details-->
+<!--                placeholder="Suche"-->
+<!--                prepend-inner-icon="mdi-magnify"-->
+<!--                return-object-->
+<!--                variant="solo"-->
+<!--                @keyup.enter="searchOrShowSelectedSuggestion"-->
+<!--                @keyup.delete="deleteChar"-->
+<!--                @click:clear="clearSearch"-->
+<!--            >-->
+<!--              <template #no-data>-->
+<!--                <v-list class="pa-3">-->
+<!--                  <v-list-item-title> Keine Suchvorschläge... </v-list-item-title>-->
+<!--                </v-list>-->
+<!--              </template>-->
+<!--              <template #item="{ props, item, index }">-->
+<!--                <v-list-item-->
+<!--                    v-bind="props"-->
+<!--                    density="compact"-->
+<!--                    :prepend-icon="iconOfSuggestion(item.raw.type)"-->
+<!--                    :title="item.raw.text"-->
+<!--                    @click="searchOrShowSelectedSuggestion"-->
+<!--                    @focus="updateSearchQuery(index)"-->
+<!--                />-->
+<!--              </template>-->
+<!--              <template #append>-->
+<!--                <v-tooltip-->
+<!--                    v-model="showtooltip"-->
+<!--                    location="bottom start"-->
+<!--                    :open-on-hover="false"-->
+<!--                >-->
+<!--                  <template #activator="{ props }">-->
+<!--                    <v-btn-->
+<!--                        v-bind="props"-->
+<!--                        density="compact"-->
+<!--                        icon="mdi-information"-->
+<!--                        @click="showtooltip = !showtooltip"-->
+<!--                    >-->
+<!--                    </v-btn>-->
+<!--                  </template>-->
+<!--                  <span>-->
+<!--          <b>Beispiele, wonach gesucht werden kann:</b><br />-->
+<!--          * Zählstellnummer / -art (123456, 123456T, ...)<br />-->
+<!--          * Schlagwörter (Bahn, Isar, Tunnel, Brücke, ...)<br />-->
+<!--          * Monat (Januar, Februar, ...)<br />-->
+<!--          * Jahreszeit (Frühling, Sommer, ...)<br />-->
+<!--          * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019, ...)<br />-->
+<!--          * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />-->
+<!--          * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />-->
+<!--          * Messstellennummer / -name (4000,...)<br />-->
+<!--        </span>-->
+<!--                </v-tooltip>-->
+<!--              </template>-->
+<!--            </v-autocomplete>-->
+
+<!--            <v-autocomplete-->
+<!--                ref="autocompleteRef"-->
+<!--                :search="searchQuery3"-->
+<!--                @update:search="onUpdateSearch3"-->
+<!--                v-model:menu="autocompleteMenuOpen"-->
+<!--                :items="filteredSuggestions3"-->
+<!--                item-title="id"-->
+<!--                label="Zählstelle"-->
+<!--                :menu-props="{ closeOnContentClick: false }"-->
+<!--                open-on-focus-->
+<!--                clearable-->
+<!--                @click:clear="onClearAutocomplete"-->
+<!--            />-->
+
             <v-autocomplete
                 ref="autocompleteRef"
-                id="suchfeld"
-                v-model="selectedSuggestion"
-                v-model:search="searchQuery"
+                :search="searchQuery3"
                 v-model:menu="autocompleteMenuOpen"
-            :menu-props="{ closeOnContentClick: false }"
-            @update:menu="onAutocompleteMenuUpdate"
-            :items="suggestions"
-                density="compact"
+                @update:search="onUpdateSearch3"
+                @update:focused="onAutocompleteFocused"
+                :items="filteredSuggestions3"
+                item-title="id"
+                label="Zählstelle"
+                :menu-props="{ closeOnContentClick: false }"
+                open-on-focus
                 clearable
-                flat
-                item-title="text"
-                hide-details
-                placeholder="Suche"
-                no-filter
-                prepend-inner-icon="mdi-magnify"
-                return-object
-                variant="solo"
-                @keyup.enter="searchOrShowSelectedSuggestion"
-                @keyup.delete="deleteChar"
-                @update:search="suggest"
-                @click:clear="clearSearch"
-            >
-              <template #no-data>
-                <v-list class="pa-3">
-                  <v-list-item-title> Keine Suchvorschläge... </v-list-item-title>
-                </v-list>
-              </template>
-              <template #item="{ props, item, index }">
-                <v-list-item
-                    v-bind="props"
-                    density="compact"
-                    :prepend-icon="iconOfSuggestion(item.raw.type)"
-                    :title="item.raw.text"
-                    @click="searchOrShowSelectedSuggestion"
-                    @focus="updateSearchQuery(index)"
-                />
-              </template>
-              <template #append>
-                <v-tooltip
-                    v-model="showtooltip"
-                    location="bottom start"
-                    :open-on-hover="false"
-                >
-                  <template #activator="{ props }">
-                    <v-btn
-                        v-bind="props"
-                        density="compact"
-                        icon="mdi-information"
-                        @click="showtooltip = !showtooltip"
-                    >
-                    </v-btn>
-                  </template>
-                  <span>
-          <b>Beispiele, wonach gesucht werden kann:</b><br />
-          * Zählstellnummer / -art (123456, 123456T, ...)<br />
-          * Schlagwörter (Bahn, Isar, Tunnel, Brücke, ...)<br />
-          * Monat (Januar, Februar, ...)<br />
-          * Jahreszeit (Frühling, Sommer, ...)<br />
-          * Projektname / -nummer (U1022, VZ Stadtgrenzen 2019, ...)<br />
-          * Straßen- / Platzname (Rosenheimerplatz, Dachauer Straße, ...)<br />
-          * Datumsbereich (von TT.MM.YYYY bis TT.MM.YYYY)<br />
-          * Messstellennummer / -name (4000,...)<br />
-        </span>
-                </v-tooltip>
-              </template>
-            </v-autocomplete>
+                @click:clear="onClearAutocomplete"
+            />
 
           </VCol>
 
@@ -103,7 +129,7 @@
                   <VSelect
                       label="Zählart"
                       :items="geraetOptions"
-                      v-model="geraetSelection"
+                      v-model="zaehlartSelection"
                       density="compact"
                       clearable
                   />
@@ -212,7 +238,7 @@ import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSugge
 import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
 import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
-import { computed, ref, watch, nextTick } from "vue";
+import {computed, ref, watch, nextTick, onMounted} from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SucheService from "@/api/service/SucheService";
@@ -221,6 +247,9 @@ import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import Suggest from "@/types/suche/Suggest";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import Zaehlart from "@/types/enum/Zaehlart";
+import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 
 const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
 const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
@@ -229,7 +258,10 @@ const SUGGESTION_TYPE_ZAEHLUNG = "zaehlung";
 const SUGGESTION_TYPE_MESSSTELLE = "messstelle";
 
 const searchQuery = ref<string>("");
+const searchQuery2 = ref<string>("");
+const searchQuery3 = ref<string>("");
 const suggestions = ref<Array<Suggest>>([]);
+const suggestions2 = ref<Array<Suggest>>([]);
 const selectedSuggestion = ref<Suggest | undefined>(undefined);
 const lastSuggestQuery = ref("");
 const showtooltip = ref(false);
@@ -240,6 +272,18 @@ const searchAndFilterOptions = ref(
 const searchDialogOpen = ref(false);
 const autocompleteRef = ref<any>(null);
 
+const suggestions3 = ref([
+  { id: '328401', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.QJS, kreisverkehr: false, sonderzaehlung: false },
+  { id: '328402', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N,kreisverkehr: true, sonderzaehlung: false },
+  { id: '328403', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.T,kreisverkehr: true, sonderzaehlung: false },
+  { id: '328404', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.FJS,kreisverkehr: false, sonderzaehlung: true },
+  { id: '328405', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N, kreisverkehr: false, sonderzaehlung: false },
+  { id: '328406', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N, kreisverkehr: false, sonderzaehlung: false },
+  { id: '328407', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.QJS, kreisverkehr: false, sonderzaehlung: false },
+  { id: '328408', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.FJS, kreisverkehr: false, sonderzaehlung: false },
+  { id: '4001', type: SUGGESTION_TYPE_MESSSTELLE, zaehlart: null,kreisverkehr: false, sonderzaehlung: false },
+]);
+
 // Formularfelder im Dialog
 const dauerOptions = ["13h", "16h", "2x4"];
 const dauerSelection = ref<string | null>(null);
@@ -248,7 +292,7 @@ const sonderzaehlung = ref(false);
 const kreisverkehr = ref(false);
 
 const geraetOptions = ["FJS", "QU", "QJS", "T"];
-const geraetSelection = ref<string | null>(null);
+const zaehlartSelection = ref<string | null>(null);
 
 const zaehlDatum = ref<string | null>(null);
 const datePickerMenu = ref(false);
@@ -430,6 +474,46 @@ const isDefaultFilter = computed(() => {
   return !searchStore.areSearchAndFilterOptionsDirty;
 });
 
+const filteredSuggestions3 = computed(() => {
+  const sug = suggestions3.value.filter((s) => {
+    return s.kreisverkehr === kreisverkehr.value &&
+        s.sonderzaehlung === sonderzaehlung.value &&
+        (!zaehlartSelection.value || zaehlartSelection.value === s.zaehlart)
+  });
+  return sug;
+});
+
+const filteredSuggestions2 = computed(() => {
+  // const filteredSuggestions = suggestions2.value.filter(
+  //     (s) => {
+  //       return s.verkehr === kreisverkehr.value;
+  //     }
+  // );
+  const filteredSuggestions = [];
+  if (searchQuery2.value === "" && !kreisverkehr.value && !zaehlartSelection.value && !dauerSelection.value && !sonderzaehlung.value)
+    return [];
+  if (searchQuery2.value === "" && kreisverkehr.value && !zaehlartSelection.value && !dauerSelection.value && !sonderzaehlung.value) {
+    filteredSuggestions.push(new Suggest("Zählstelle Drei mit Kreisverkehr", SUGGESTION_TYPE_ZAEHLSTELLE, "14001", "1", ""));
+    filteredSuggestions.push(new Suggest("Noch ein Kreisverkehr Vier", SUGGESTION_TYPE_ZAEHLSTELLE, "14003", "1", ""));
+  }
+  if (searchQuery2.value === "" && !kreisverkehr.value && zaehlartSelection.value === Zaehlart.QJS && !dauerSelection.value && !sonderzaehlung.value) {
+    filteredSuggestions.push(new Suggest("Zählstelle Eins (QJS)", SUGGESTION_TYPE_ZAEHLSTELLE, "14002", "1", ""));
+    filteredSuggestions.push(new Suggest("Zählstelle Zwei (QJS)", SUGGESTION_TYPE_ZAEHLSTELLE, "14004", "1", ""));
+  }
+  if (searchQuery2.value !== "" && kreisverkehr.value && !zaehlartSelection.value && !dauerSelection.value && !sonderzaehlung.value) {
+    filteredSuggestions.push(new Suggest("Zählstelle "+ searchQuery2.value +" mit Kreisverkehr", SUGGESTION_TYPE_ZAEHLSTELLE, "14001", "1", ""));
+  }
+  if (searchQuery2.value !== "" && !kreisverkehr.value && zaehlartSelection.value === Zaehlart.QJS && !dauerSelection.value && !sonderzaehlung.value) {
+    filteredSuggestions.push(new Suggest("Zählstelle " + searchQuery2.value + " (QJS)", SUGGESTION_TYPE_ZAEHLSTELLE, "14002", "1", ""));
+  }
+  if (searchQuery2.value !== "" && !kreisverkehr.value && !zaehlartSelection.value && !dauerSelection.value && !sonderzaehlung.value) {
+    filteredSuggestions.push(new Suggest("Zählstelle " + searchQuery2.value + " (QJS)", SUGGESTION_TYPE_ZAEHLSTELLE, "14002", "1", ""));
+    filteredSuggestions.push(new Suggest("Zählstelle " + searchQuery2.value + " (FJS)", SUGGESTION_TYPE_ZAEHLSTELLE, "14002", "1", ""));
+    filteredSuggestions.push(new Suggest("Zählstelle " + searchQuery2.value, SUGGESTION_TYPE_MESSSTELLE, "14002", "1", ""));
+  }
+  return filteredSuggestions;
+});
+
 function openSearchAndFilterDialog(): void {
   searchAndFilterOptions.value = searchAndFilterOptionsStore.value;
   searchAndFilterDialogOpen.value = true;
@@ -510,6 +594,13 @@ watch(
       }
     }
 );
+
+// onMounted(() => {
+//   suggestions2.value.push({name: "Zählstelle Pasing", type: Erhebungsstelle.ZAEHLSTELLE, zaehlstelleId: "14000", kreisverkehr: false, sondernzaehlung: false, zaehlart: Zaehlart.QJS});
+//   suggestions2.value.push({name: "Zählstelle Lehel", type: Erhebungsstelle.ZAEHLSTELLE, zaehlstelleId: "14001", kreisverkehr: false, sondernzaehlung: false, zaehlart: Zaehlart.QJS});
+//   suggestions2.value.push({name: "Zählstelle Schwabing", type: Erhebungsstelle.ZAEHLSTELLE, zaehlstelleId: "14002", kreisverkehr: false, sondernzaehlung: false, zaehlart: Zaehlart.QJS});
+// });
+
 
 watch(
     () => searchDialogOpen.value,
@@ -683,29 +774,153 @@ function suggest(query: string) {
   }
 }
 
+// fokus: watch auf selection, schließe Dialog und verarbeite Auswahl
+// watch(
+//     () => zaehlartSelection.value,
+//     (newVal, oldVal) => {
+//       // nur reagieren, wenn wirklich eine Auswahl gesetzt wurde
+//       if (newVal === 'FJS')
+//         suggestions.value = [
+//           new Suggest(`Eine FJS-Zählung`, SUGGESTION_TYPE_VORSCHLAG, "", "", ""),
+//           new Suggest(`Noch eine`, SUGGESTION_TYPE_VORSCHLAG, "", "", ""),
+//         ];
+//     }
+// );
+
+
 // Optional: watch auf kreisverkehr, damit die Trefferliste sofort aktualisiert wird,
 // auch wenn gerade keine neue Eingabe gemacht wurde.
-watch(
-    () => kreisverkehr.value,
-    (isChecked) => {
-      // wenn aktiviert: erzeuge Treffer basierend auf aktueller Suche
-      if (isChecked) {
-        suggestions.value = buildKreisverkehrSuggestions(searchQuery.value);
-        suggestions.value.unshift(
-            new Suggest(searchQuery.value, SUGGESTION_TYPE_SEARCH_TEXT, "", "", "")
-        );
-        // falls Autocomplete-Menü manuell gesteuert wird: open it
-        if (typeof autocompleteMenuOpen !== "undefined") {
-          autocompleteMenuOpen.value = true;
-        }
-      } else {
-        // Wenn deaktiviert: lösche die statischen Ergebnisse oder re-suggesten
-        suggestions.value = [];
-        // optional: rufe suggest(searchQuery.value) um die API-Vorschläge wiederherzustellen
-        if (searchQuery.value) {
-          suggest(searchQuery.value);
-        }
-      }
+// watch(
+//     () => kreisverkehr.value,
+//     (isChecked) => {
+//       // wenn aktiviert: erzeuge Treffer basierend auf aktueller Suche
+//       if (isChecked) {
+//         suggestions.value = buildKreisverkehrSuggestions(searchQuery.value);
+//         suggestions.value.unshift(
+//             new Suggest(searchQuery.value, SUGGESTION_TYPE_SEARCH_TEXT, "", "", "")
+//         );
+//         // falls Autocomplete-Menü manuell gesteuert wird: open it
+//         if (typeof autocompleteMenuOpen !== "undefined") {
+//           autocompleteMenuOpen.value = true;
+//         }
+//       } else {
+//         // Wenn deaktiviert: lösche die statischen Ergebnisse oder re-suggesten
+//         suggestions.value = [];
+//         // optional: rufe suggest(searchQuery.value) um die API-Vorschläge wiederherzustellen
+//         if (searchQuery.value) {
+//           suggest(searchQuery.value);
+//         }
+//       }
+//     }
+// );
+
+
+
+function onUpdateSearch(val: string) {
+  console.log("onUpdateSearch")
+  return;
+  // Beispiel-Policy: nur setzen, wenn das Autocomplete-Menü offen ist
+  // if (autocompleteMenuOpen.value) {
+  //   searchQuery.value = val;
+  //   suggest(val);
+  //   return;
+  // }
+
+  // oder: nur setzen, wenn val nicht leer ist
+  if (val !== "") {
+    searchQuery2.value = val;
+    suggest(val);
+  }
+  // sonst: ignore (verhindert das Leeren beim Blur)
+}
+
+// Neuer Clear-Handler: entfernt nur die Auswahl, löscht nicht die Query
+function onClearAutocomplete() {
+  selectedSuggestion.value = undefined;   // Auswahl zurücksetzen
+  // searchQuery3.value beibehalten — damit das Eingabefeld erhalten bleibt
+  autocompleteMenuOpen.value = true;      // Menü offen lassen
+}
+
+watch(searchQuery3, (val, oldVal) => {
+  console.debug("searchQuery3 changed:", { oldVal, val });
+});
+watch(kreisverkehr, (v) => {
+  console.debug("kreisverkehr toggled:", v);
+});
+
+function isAutocompleteInputFocused(): boolean {
+  try {
+    const inputEl =
+        autocompleteRef.value?.$el?.querySelector?.("input") ??
+        autocompleteRef.value?.$el?.querySelector?.("input");
+    return !!inputEl && inputEl === document.activeElement;
+  } catch (e) {
+    return false;
+  }
+}
+
+function onUpdateSearch3(val: string) {
+  // Ignoriere leere Updates, die typischerweise beim Blur / Schließen / items-Update kommen,
+  // sofern das Eingabefeld nicht aktiv/fokussiert ist.
+  if (val === "") {
+    console.debug("update:search('') erhalten — focused:", isAutocompleteInputFocused(), "menuOpen:", autocompleteMenuOpen.value);
+    console.trace();
+    // Wenn Menü offen ist, darf das leere Update möglicherweise relevant sein (z. B. echte Löschung).
+    // Wir akzeptieren das leere Update nur, wenn das Eingabefeld fokussiert ist oder das Menü offen ist.
+    if (!autocompleteMenuOpen.value && !isAutocompleteInputFocused()) {
+      // Ignoriere das leere Update
+      console.debug("Ignoriere update:search(\"\") weil Menü geschlossen und Input nicht fokussiert.");
+      return;
     }
-);
+    return;
+  }
+
+  // Setze die Ref korrekt
+  searchQuery3.value = val;
+
+  // Falls Du bei jeder Änderung Vorschläge erzeugen willst:
+  // suggest(searchQuery3.value);
+}
+
+// Hilfsfunktion: Input-Element des Autocomplete sicher finden
+function getAutocompleteInputEl(): HTMLInputElement | null {
+  try {
+    // autocompleteRef kann entweder die Komponente oder deren $el sein
+    const compEl = autocompleteRef.value?.$el ?? autocompleteRef.value;
+    const input = compEl?.querySelector?.("input");
+    return input ?? null;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Funktion, die das Input sichtbar mit dem aktuellen Suchtext setzt
+function restoreAutocompleteInputValue() {
+  const input = getAutocompleteInputEl();
+  if (!input) return;
+  const val = (searchQuery3 && typeof searchQuery3 === "object" ? searchQuery3.value : searchQuery3) ?? "";
+  try {
+    input.value = val;
+    // optional: cursor ans Ende setzen
+    const len = (val?.length ?? 0);
+    input.setSelectionRange(len, len);
+  } catch (e) {
+    // ignore (z. B. wenn setSelectionRange nicht unterstützt)
+  }
+}
+
+// Handler für Fokusänderungen: bei Blur das Input mehrfach wiederherstellen
+function onAutocompleteFocused(focused: boolean) {
+  if (!focused) {
+    // Sofort versuchen
+    restoreAutocompleteInputValue();
+    // nextTick und rAF + timeout, um asynchrone Re-renders zu überdecken
+    nextTick(() => restoreAutocompleteInputValue());
+    requestAnimationFrame(() => restoreAutocompleteInputValue());
+    setTimeout(() => restoreAutocompleteInputValue(), 0);
+    // evtl. ein weiterer Timeout falls Vuetify noch später schreibt
+    setTimeout(() => restoreAutocompleteInputValue(), 50);
+  }
+}
+
 </script>
