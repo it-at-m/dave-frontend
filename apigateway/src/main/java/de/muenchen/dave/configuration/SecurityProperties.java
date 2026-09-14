@@ -1,6 +1,5 @@
 package de.muenchen.dave.configuration;
 
-import de.muenchen.dave.filter.GlobalRequestParameterPollutionFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

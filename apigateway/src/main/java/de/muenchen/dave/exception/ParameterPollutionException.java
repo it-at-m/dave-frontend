@@ -1,8 +1,6 @@
 package de.muenchen.dave.exception;
 
 import java.io.Serial;
-
-import de.muenchen.dave.filter.GlobalRequestParameterPollutionFilter;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
