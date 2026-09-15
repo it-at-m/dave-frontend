@@ -21,6 +21,12 @@ spring:
                 allowedHeaders: "*"
                 allowCredentials: true
                 allowedMethods: "*"
+              '[/api/**]':
+                allowedOriginPatterns: "http://localhost:8081"
+                allowedMethods: "*"
+                allowedHeaders: "*"
+                allowCredentials: true
+                maxAge: 3600
           default-filters:
             - RemoveRequestHeader=cookie
             - RemoveRequestHeader=x-xsrf-token
@@ -38,6 +44,14 @@ management:
     access:
       default: none
     web:
+      cors:
+        allowedOrigins:
+          - "http://localhost:8081"
+          - "http://127.0.0.1:8081"
+        allowedMethods: "*"
+        allowedHeaders: "*"
+        allowCredentials: on
+        maxAge: 3600
       exposure:
         include:
           - health
