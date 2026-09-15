@@ -6,10 +6,8 @@ spring:
   # Define the local keycloak realm here
   realm: Dave
 
-  session.timeout: 36000
-
   # spring cloud gateway config
-  cloud:
+  spring.cloud:
     gateway:
       actuator:
         verbose:
@@ -20,50 +18,28 @@ spring:
             - id: sso
               uri: ${SSO_BASE_URL}
               predicates:
-                - Path=/api/sso/userinfo
+                - "Path=/api/sso/userinfo"
               filters:
                 - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
             - id: backend
               uri: http://dave-backend:50001/
               predicates:
-                - Path=/api/dave-backend-service/**
+                - "Path=/api/dave-backend-service/**"
               filters:
-                - name: Retry
-                  args:
-                    retries: 2
-                    methods: GET,POST
-                    backoff:
-                      firstBackoff: 10ms
-                      maxBackoff: 50ms
-                      factor: 2
-                      basedOnPreviousValue: false
                 - RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
-                - RemoveResponseHeader=WWW-Authenticate
-          default-filters:
-            - RemoveResponseHeader=Expires
-            - RemoveRequestHeader=cookie
-            - RemoveRequestHeader=x-xsrf-token
-            - TokenRelay=
-          globalcors:
-            cors-configurations:
-              # The cors configuration to allow frontend developers cross origin request via this api gateway
-              '[/**]':
-                allowedOrigins:
-                  - "http://localhost:8081"
-                  - "http://127.0.0.1:8081"
-                allowedMethods: "*"
-                allowedHeaders: "*"
-                allowCredentials: true
-                maxAge: 3600
-
-  # security config
+                - "RemoveResponseHeader=WWW-Authenticate"
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SSO_BASE_URL}/auth/realms/${spring.realm}
       client:
         provider:
-          keycloak:
-            issuer-uri: ${SSO_BASE_URL}/auth/realms/${spring.realm}
+          sso:
+            issuer-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}
         registration:
-          keycloak:
+          sso:
+            provider: sso
             client-id: dave
             client-secret: ${SSO_CLIENT_SECRET}
+            scope: profile, openid, roles, basic

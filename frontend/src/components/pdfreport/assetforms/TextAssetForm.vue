@@ -22,7 +22,7 @@
           <p
             class="pt-2"
             :style="{ fontSize: asset.size }"
-            v-html="asset.text"
+            v-html="reportTools.sanitizeHtml(asset.text)"
           />
         </v-sheet>
         <v-divider />
@@ -134,6 +134,7 @@
 import { ref, watch } from "vue";
 
 import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
   text: TextAsset;
@@ -141,6 +142,8 @@ interface Props {
 
 const props = defineProps<Props>();
 const openEditTextDialog = defineModel<boolean>({ required: true });
+
+const reportTools = useReportTools();
 
 const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
@@ -152,6 +155,7 @@ const asset = ref(new TextAsset(""));
  * Um den Text im Array zu "speichern", wird es als Event an die View geschickt.
  */
 function save(): void {
+  asset.value.text = reportTools.sanitizeHtml(asset.value.text);
   if (asset.value.text && asset.value.text.length > 0) {
     emits("save", Object.assign({}, asset.value));
   } else {
