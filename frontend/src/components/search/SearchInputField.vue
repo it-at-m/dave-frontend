@@ -88,11 +88,28 @@
 <!--              </template>-->
 <!--            </v-autocomplete>-->
 
+            <v-autocomplete
+                ref="autocompleteRef"
+                :search="searchQuery3"
+                @update:search="onUpdateSearch3"
+                v-model:menu="autocompleteMenuOpen"
+                :items="filteredSuggestions3"
+                prepend-inner-icon="mdi-magnify"
+                :menu-props="{ closeOnContentClick: false }"
+                clearable
+                density="compact"
+                hide-details
+                placeholder="Suche"
+                variant="solo"
+                @click:clear="onClearAutocomplete"
+            />
+
 <!--            <v-autocomplete-->
 <!--                ref="autocompleteRef"-->
 <!--                :search="searchQuery3"-->
-<!--                @update:search="onUpdateSearch3"-->
 <!--                v-model:menu="autocompleteMenuOpen"-->
+<!--                @update:search="onUpdateSearch3"-->
+<!--                @update:focused="onAutocompleteFocused"-->
 <!--                :items="filteredSuggestions3"-->
 <!--                item-title="id"-->
 <!--                label="Zählstelle"-->
@@ -102,21 +119,6 @@
 <!--                @click:clear="onClearAutocomplete"-->
 <!--            />-->
 
-            <v-autocomplete
-                ref="autocompleteRef"
-                :search="searchQuery3"
-                v-model:menu="autocompleteMenuOpen"
-                @update:search="onUpdateSearch3"
-                @update:focused="onAutocompleteFocused"
-                :items="filteredSuggestions3"
-                item-title="id"
-                label="Zählstelle"
-                :menu-props="{ closeOnContentClick: false }"
-                open-on-focus
-                clearable
-                @click:clear="onClearAutocomplete"
-            />
-
           </VCol>
 
           <VDivider vertical class="mx-3" style="align-self: stretch;" />
@@ -125,6 +127,18 @@
           <VCol cols="5">
             <VForm>
               <VRow dense>
+                <VCol cols="6">
+                  <VCheckbox
+                      label="Zählstelle"
+                      density="compact"
+                  />
+                </VCol>
+                <VCol cols="6">
+                  <VCheckbox
+                      label="Messstelle"
+                      density="compact"
+                  />
+                </VCol>
                 <VCol cols="6">
                   <VSelect
                       label="Zählart"
@@ -158,6 +172,18 @@
                       density="compact"
                   />
                 </VCol>
+
+                <v-col cols="12">
+                  <v-autocomplete
+                      label="Verkehrsarten"
+                      v-model="verkehrsarten"
+                      multiple
+                      :items="['KFZ', 'RAD']"
+                      density="compact"
+                      chips
+                      closable-chips
+                  />
+                </v-col>
 
 
                 <VCol cols="12">
@@ -271,17 +297,18 @@ const searchAndFilterOptions = ref(
 );
 const searchDialogOpen = ref(false);
 const autocompleteRef = ref<any>(null);
+const verkehrsarten = ref(['KFZ', 'RAD']);
 
 const suggestions3 = ref([
-  { id: '328401', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.QJS, kreisverkehr: false, sonderzaehlung: false },
-  { id: '328402', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N,kreisverkehr: true, sonderzaehlung: false },
-  { id: '328403', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.T,kreisverkehr: true, sonderzaehlung: false },
-  { id: '328404', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.FJS,kreisverkehr: false, sonderzaehlung: true },
-  { id: '328405', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N, kreisverkehr: false, sonderzaehlung: false },
-  { id: '328406', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N, kreisverkehr: false, sonderzaehlung: false },
-  { id: '328407', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.QJS, kreisverkehr: false, sonderzaehlung: false },
-  { id: '328408', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.FJS, kreisverkehr: false, sonderzaehlung: false },
-  { id: '4001', type: SUGGESTION_TYPE_MESSSTELLE, zaehlart: null,kreisverkehr: false, sonderzaehlung: false },
+  { title: '328401 Leuchtenbergring', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.QJS, kreisverkehr: false, sonderzaehlung: false },
+  { title: '328402  Kieselbachplatz', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N,kreisverkehr: true, sonderzaehlung: false },
+  { title: '328403  Kieselbachplatz', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.T,kreisverkehr: true, sonderzaehlung: false },
+  { title: '328404  Harras', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.FJS,kreisverkehr: false, sonderzaehlung: true },
+  { title: '328405  Harras', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N, kreisverkehr: false, sonderzaehlung: false },
+  { title: '328406  Thalkirchen', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.N, kreisverkehr: false, sonderzaehlung: false },
+  { title: '328407  Thalkirchen', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.QJS, kreisverkehr: false, sonderzaehlung: false },
+  { title: '328408  Sendling-West', type: SUGGESTION_TYPE_ZAEHLSTELLE, zaehlart: Zaehlart.FJS, kreisverkehr: false, sonderzaehlung: false },
+  { title: '4001 Berg-am-Laim', type: SUGGESTION_TYPE_MESSSTELLE, zaehlart: null,kreisverkehr: false, sonderzaehlung: false },
 ]);
 
 // Formularfelder im Dialog
@@ -475,6 +502,8 @@ const isDefaultFilter = computed(() => {
 });
 
 const filteredSuggestions3 = computed(() => {
+  if (!searchQuery3.value && !zaehlartSelection.value && !kreisverkehr.value && !sonderzaehlung.value)
+    return [];
   const sug = suggestions3.value.filter((s) => {
     return s.kreisverkehr === kreisverkehr.value &&
         s.sonderzaehlung === sonderzaehlung.value &&
