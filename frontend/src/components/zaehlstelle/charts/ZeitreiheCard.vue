@@ -64,7 +64,7 @@ function charttypeChanged(newChartType: "line" | "bar") {
   });
 }
 
-// Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert 0 ist (wegen Teilzählung kein Tageswert vorhanden).
+// Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert null ist (wegen Teilzählung kein Tageswert vorhanden).
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
@@ -72,7 +72,7 @@ watch(
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
-      zaehldatenZeitreihe.fuss.some((value) => value == 0)
+      zaehldatenZeitreihe.fuss.some((value) => value == null)
     ) {
       snackbarStore.showInfo(
         "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
