@@ -1,0 +1,45 @@
+server:
+  port: 8082
+
+spring:
+
+  # Define the local keycloak realm here
+  realm: Dave
+
+  # spring cloud gateway config
+  spring.cloud:
+    gateway:
+      actuator:
+        verbose:
+          enabled: false
+      server:
+        webflux:
+          routes:
+            - id: sso
+              uri: ${SSO_BASE_URL}
+              predicates:
+                - "Path=/api/sso/userinfo"
+              filters:
+                - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
+            - id: backend
+              uri: http://dave-backend:50001/
+              predicates:
+                - "Path=/api/dave-backend-service/**"
+              filters:
+                - RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
+                - "RemoveResponseHeader=WWW-Authenticate"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SSO_BASE_URL}/auth/realms/${spring.realm}
+      client:
+        provider:
+          sso:
+            issuer-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}
+        registration:
+          sso:
+            provider: sso
+            client-id: dave
+            client-secret: ${SSO_CLIENT_SECRET}
+            scope: profile, openid, roles, basic
