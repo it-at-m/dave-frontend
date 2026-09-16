@@ -9,9 +9,6 @@ spring:
   # spring cloud gateway config
   spring.cloud:
     gateway:
-      actuator:
-        verbose:
-          enabled: false
       server:
         webflux:
           routes:
