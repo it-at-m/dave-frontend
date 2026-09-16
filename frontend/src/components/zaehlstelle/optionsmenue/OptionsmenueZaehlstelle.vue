@@ -204,6 +204,10 @@ const isRadPreselected = computed(() => {
   );
 });
 
+const isSonderzaehldauer = computed(() => {
+  return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+});
+
 /**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
@@ -213,7 +217,7 @@ function setDefaultOptionsForZaehlung() {
 
   optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
 
-  if (isTeilzaehlungFussverkehr.value) {
+  if (isTeilzaehlungFussverkehr.value && !isSonderzaehldauer) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_19;
@@ -225,23 +229,23 @@ function setDefaultOptionsForZaehlung() {
       activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
     ) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
-    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
-      const zbMax = zeitblockOrder.find((zb) =>
-        activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
-      );
-      if (zbMax) {
-        // Zeitblock verfügbar --> Zeitblock setzen
-        optionsCopy.zeitblock = zbMax;
-      } else {
-        // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
-        const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
-        if (!isNil(firstHour)) {
-          optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
-          optionsCopy.zeitblock = firstHour;
-        }
-      }
     } else {
       optionsCopy.zeitblock = Zeitblock.ZB_00_24;
+    }
+  } else if (isSonderzaehldauer) {
+    const zbMax = zeitblockOrder.find((zb) =>
+      activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
+    );
+    if (zbMax) {
+      // Zeitblock verfügbar --> Zeitblock setzen
+      optionsCopy.zeitblock = zbMax;
+    } else {
+      // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
+      const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+      if (!isNil(firstHour)) {
+        optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
+        optionsCopy.zeitblock = firstHour;
+      }
     }
   }
 

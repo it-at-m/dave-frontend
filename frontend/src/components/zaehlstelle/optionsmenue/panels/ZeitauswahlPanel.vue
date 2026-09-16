@@ -36,7 +36,10 @@
                 <v-radio
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
-                  :disabled="isTeilzaehlung && isOnlyFussgaengerSelected"
+                  :disabled="
+                    (isTeilzaehlung && isOnlyFussgaengerSelected) ||
+                    isSonderzaehldauer
+                  "
                   @mouseover="hoverTageswert = true"
                   @mouseleave="hoverTageswert = false"
                 />
@@ -337,6 +340,10 @@ const isTeilzaehlung = computed(() => {
   return activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
 });
 
+const isSonderzaehldauer = computed(() => {
+  return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+});
+
 const isOnlyFussgaengerSelected = computed(() => {
   return (
     chosenOptionsCopy.value.fussverkehr &&
@@ -364,7 +371,7 @@ watch(
  */
 function adaptOptionsUpdate() {
   if (
-    isOnlyFussgaengerSelected.value &&
+    (isOnlyFussgaengerSelected.value || isSonderzaehldauer) &&
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
     isTeilzaehlung.value
   ) {
