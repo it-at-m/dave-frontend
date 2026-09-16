@@ -35,6 +35,8 @@ spring:
     context-propagation: auto
   web:
     error:
+      include-exception: false
+      include-stacktrace: never
       include-message: always
       whitelabel:
         enabled: false
