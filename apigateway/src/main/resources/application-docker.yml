@@ -33,7 +33,7 @@ spring:
       client:
         provider:
           sso:
-            issuer-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}
+            issuer-uri: ${SSO_BASE_URL}/auth/realms/${spring.realm}
         registration:
           sso:
             provider: sso
