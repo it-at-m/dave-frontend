@@ -1,29 +1,23 @@
-wiremock:
-  server:
-    port: 0
-    https-port: -1
-  reset-mappings-after-each-test: true
-
 spring:
-
-  # Define the sso test realm here
-  realm: dave
-
-  # spring cloud gateway config
   cloud:
     gateway:
-      actuator:
-        verbose:
-          enabled: false
       server:
         webflux:
           routes:
-            - id: sso
-              uri: https://sso.example.com/
+            - id: public-backend
+              uri: http://localhost:${wiremock.server.port}/
               predicates:
-                - Path=/api/sso/userinfo
+                - Path=/public/api/dave-backend-service/**
               filters:
-                - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
+                - RewritePath=/public/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
+                - RemoveResponseHeader=WWW-Authenticate
+            - id: clients-backend
+              uri: http://localhost:${wiremock.server.port}/
+              predicates:
+                - Path=/clients/api/dave-backend-service/**
+              filters:
+                - RewritePath=/clients/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
+                - RemoveResponseHeader=WWW-Authenticate
             - id: backend
               uri: http://localhost:${wiremock.server.port}/
               predicates:
@@ -31,11 +25,22 @@ spring:
               filters:
                 - RewritePath=/api/dave-backend-service/(?<urlsegments>.*), /$\{urlsegments}
                 - RemoveResponseHeader=WWW-Authenticate
-          default-filters:
-            - RemoveResponseHeader=Expires
-            - RemoveRequestHeader=cookie
-            - RemoveRequestHeader=x-xsrf-token
-            - TokenRelay=
 
-  mvc:
-    log-request-details: on
+logging:
+  include-application-group: false # disabled because application group is only relevant when deployed
+  structured:
+    format:
+      console: # set to empty to disable structured logging for testing
+
+wiremock:
+  server:
+    port: 0
+    https-port: -1
+
+refarch:
+  security:
+    public-patterns:
+      - pattern: /api/dave-backend-service/public/**
+        methods: [GET]
+    client-patterns:
+      - /api/dave-backend-service/clients/**

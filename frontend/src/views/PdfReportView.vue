@@ -76,7 +76,7 @@
               <p
                 v-if="isText(asset)"
                 :style="{ fontSize: getSizeOfAsset(asset) }"
-                v-html="getTextOfAsset(asset)"
+                v-html="reportTools.sanitizeHtml(getTextOfAsset(asset))"
               />
               <v-divider v-if="isPageBreak(asset)" />
               <v-divider v-if="isNewline(asset)" />
@@ -242,6 +242,7 @@ import TextAsset from "@/types/pdfreport/assets/TextAsset";
 import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
 import { useDateUtils } from "@/util/DateUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
+import { useReportTools } from "@/util/ReportTools";
 import BaseAsset from "../types/pdfreport/assets/BaseAsset";
 import HeadingAsset from "../types/pdfreport/assets/HeadingAsset";
 
@@ -283,6 +284,7 @@ const userStore = useUserStore();
 const snackbarStore = useSnackbarStore();
 const pdfReportStore = usePdfReportStore();
 const dateUtils = useDateUtils();
+const reportTools = useReportTools();
 
 onMounted(() => {
   assets.value = assetsFromStore();
