@@ -238,6 +238,7 @@ function setDefaultOptionsForZaehlung() {
     );
     if (zbMax) {
       // Zeitblock verfügbar --> Zeitblock setzen
+      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
       optionsCopy.zeitblock = zbMax;
     } else {
       // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
