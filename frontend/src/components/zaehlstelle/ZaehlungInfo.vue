@@ -409,7 +409,11 @@ const zeitblock = computed(() => {
     zaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
     options.value.zeitblock === Zeitblock.ZB_00_24
   ) {
-    return "Tageswert";
+    if (zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+      return "0 - 24 Uhr";
+    } else {
+      return "Tageswert";
+    }
   }
 
   // Wurde ein stündlicher Zeitblock ausgewählt?
