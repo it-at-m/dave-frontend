@@ -257,6 +257,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
+import Zaehldauer from "@/types/enum/Zaehldauer";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
@@ -373,12 +374,48 @@ const isNotTabHeatmap = computed<boolean>(() => {
   return TAB_HEATMAP !== activeTab.value;
 });
 
+const isTeilzaehlung = computed(() => {
+  return selectedZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
+});
+
+const isOnlyFussverkehrSelected = computed(() => {
+  return (
+    options.value.fussverkehr &&
+    !(
+      options.value.kraftfahrzeugverkehr ||
+      options.value.schwerverkehr ||
+      options.value.gueterverkehr ||
+      options.value.radverkehr ||
+      options.value.schwerverkehrsanteilProzent ||
+      options.value.gueterverkehrsanteilProzent
+    )
+  );
+});
+
+const isSonderzaehldauer = computed(() => {
+  return selectedZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+});
+
 watch(selectedZaehlung, () => {
   changeTab();
 });
 
 watch(options, () => {
   loadData();
+  if (
+    (isTeilzaehlung.value && isOnlyFussverkehrSelected.value) ||
+    isSonderzaehldauer.value
+  ) {
+    if (isSonderzaehldauer.value) {
+      snackbarStore.showInfo(
+        "Für Sonderzähldauer ist kein Tageswert vorhanden."
+      );
+    } else if (isOnlyFussverkehrSelected.value) {
+      snackbarStore.showInfo(
+        "Für den Fußverkehr ist kein Tageswert vorhanden."
+      );
+    }
+  }
 });
 
 function changeTab() {
