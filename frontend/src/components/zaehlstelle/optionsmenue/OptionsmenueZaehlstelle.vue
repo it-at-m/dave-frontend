@@ -204,6 +204,9 @@ const isRadPreselected = computed(() => {
   );
 });
 
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ */
 const isSonderzaehldauer = computed(() => {
   return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
 });

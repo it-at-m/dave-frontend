@@ -37,7 +37,7 @@
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
                   :disabled="
-                    (isTeilzaehlung && isOnlyFussgaengerSelected) ||
+                    (isTeilzaehlung && isOnlyFussverkehrSelected) ||
                     isSonderzaehldauer
                   "
                   @mouseover="hoverTageswert = true"
@@ -340,11 +340,17 @@ const isTeilzaehlung = computed(() => {
   return activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
 });
 
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ */
 const isSonderzaehldauer = computed(() => {
   return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
 });
 
-const isOnlyFussgaengerSelected = computed(() => {
+/**
+ * Ist {@link true}, wenn im Filtermenü als einzige Verkehrsart "Fußverkehr" ausgewählt ist.
+ */
+const isOnlyFussverkehrSelected = computed(() => {
   return (
     chosenOptionsCopy.value.fussverkehr &&
     !(
@@ -371,7 +377,7 @@ watch(
  */
 function adaptOptionsUpdate() {
   if (
-    (isOnlyFussgaengerSelected.value || isSonderzaehldauer.value) &&
+    (isOnlyFussverkehrSelected.value || isSonderzaehldauer.value) &&
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
     isTeilzaehlung.value
   ) {

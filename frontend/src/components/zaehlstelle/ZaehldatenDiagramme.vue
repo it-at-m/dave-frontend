@@ -378,6 +378,9 @@ const isTeilzaehlung = computed(() => {
   return selectedZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
 });
 
+/**
+ * Ist {@link true}, wenn im Filtermenü als einzige Verkehrsart "Fußverkehr" ausgewählt ist.
+ */
 const isOnlyFussverkehrSelected = computed(() => {
   return (
     options.value.fussverkehr &&
@@ -392,6 +395,9 @@ const isOnlyFussverkehrSelected = computed(() => {
   );
 });
 
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ */
 const isSonderzaehldauer = computed(() => {
   return selectedZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
 });
