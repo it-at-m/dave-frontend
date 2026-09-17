@@ -217,7 +217,7 @@ function setDefaultOptionsForZaehlung() {
 
   optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
 
-  if (isTeilzaehlungFussverkehr.value && !isSonderzaehldauer) {
+  if (isTeilzaehlungFussverkehr.value && !isSonderzaehldauer.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_19;
@@ -232,7 +232,7 @@ function setDefaultOptionsForZaehlung() {
     } else {
       optionsCopy.zeitblock = Zeitblock.ZB_00_24;
     }
-  } else if (isSonderzaehldauer) {
+  } else if (isSonderzaehldauer.value) {
     const zbMax = zeitblockOrder.find((zb) =>
       activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
     );

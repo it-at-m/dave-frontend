@@ -371,7 +371,7 @@ watch(
  */
 function adaptOptionsUpdate() {
   if (
-    (isOnlyFussgaengerSelected.value || isSonderzaehldauer) &&
+    (isOnlyFussgaengerSelected.value || isSonderzaehldauer.value) &&
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
     isTeilzaehlung.value
   ) {
