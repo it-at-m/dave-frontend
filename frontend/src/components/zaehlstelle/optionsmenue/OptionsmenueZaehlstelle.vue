@@ -212,6 +212,22 @@ const isSonderzaehldauer = computed(() => {
 });
 
 /**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
+ * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ */
+const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
+  return (
+    isSonderzaehldauer.value &&
+    activeZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_06_10
+    ) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_15_19
+    )
+  );
+});
+
+/**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
@@ -235,7 +251,10 @@ function setDefaultOptionsForZaehlung() {
     } else {
       optionsCopy.zeitblock = Zeitblock.ZB_00_24;
     }
-  } else if (isSonderzaehldauer.value) {
+  } else if (
+    isSonderzaehldauer.value &&
+    !isSonderzaehldauerKurzzeitzaehlung.value
+  ) {
     const zbMax = zeitblockOrder.find((zb) =>
       activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
     );

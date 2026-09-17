@@ -258,6 +258,7 @@ import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zaehldauer from "@/types/enum/Zaehldauer";
+import Zeitblock from "@/types/enum/Zeitblock";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
@@ -402,6 +403,22 @@ const isSonderzaehldauer = computed(() => {
   return selectedZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
 });
 
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
+ * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ */
+const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
+  return (
+    isSonderzaehldauer.value &&
+    selectedZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_06_10
+    ) &&
+    selectedZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_15_19
+    )
+  );
+});
+
 watch(selectedZaehlung, () => {
   changeTab();
 });
@@ -412,7 +429,7 @@ watch(options, () => {
     (isTeilzaehlung.value && isOnlyFussverkehrSelected.value) ||
     isSonderzaehldauer.value
   ) {
-    if (isSonderzaehldauer.value) {
+    if (isSonderzaehldauer.value && !isSonderzaehldauerKurzzeitzaehlung.value) {
       snackbarStore.showInfo(
         "Für Sonderzähldauer ist kein Tageswert vorhanden."
       );

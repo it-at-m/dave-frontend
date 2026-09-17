@@ -38,7 +38,7 @@
                   :value="Zeitauswahl.TAGESWERT"
                   :disabled="
                     (isTeilzaehlung && isOnlyFussverkehrSelected) ||
-                    isSonderzaehldauer
+                    (isSonderzaehldauer && !isSonderzaehldauerKurzzeitzaehlung)
                   "
                   @mouseover="hoverTageswert = true"
                   @mouseleave="hoverTageswert = false"
@@ -364,6 +364,22 @@ const isOnlyFussverkehrSelected = computed(() => {
   );
 });
 
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
+ * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ */
+const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
+  return (
+    isSonderzaehldauer.value &&
+    activeZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_06_10
+    ) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_15_19
+    )
+  );
+});
+
 watch(
   () => chosenOptionsCopy.value,
   () => {
@@ -377,7 +393,9 @@ watch(
  */
 function adaptOptionsUpdate() {
   if (
-    (isOnlyFussverkehrSelected.value || isSonderzaehldauer.value) &&
+    (isOnlyFussverkehrSelected.value ||
+      (isSonderzaehldauer.value &&
+        !isSonderzaehldauerKurzzeitzaehlung.value)) &&
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
     isTeilzaehlung.value
   ) {

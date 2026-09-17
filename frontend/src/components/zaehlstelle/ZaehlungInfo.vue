@@ -401,6 +401,20 @@ function getChosenBewegungsbeziehungen() {
 }
 
 /**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
+ * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ */
+const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
+  return (
+    zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
+    zaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_06_10
+    ) &&
+    zaehlung.value.zeitauswahl?.blocks?.some((zb) => zb === Zeitblock.ZB_15_19)
+  );
+});
+
+/**
  * Holt die lesbare Schreibweise für einen Zeitblock.
  */
 const zeitblock = computed(() => {
@@ -409,7 +423,10 @@ const zeitblock = computed(() => {
     zaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
     options.value.zeitblock === Zeitblock.ZB_00_24
   ) {
-    if (zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+    if (
+      zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
+      !isSonderzaehldauerKurzzeitzaehlung.value
+    ) {
       return "0 - 24 Uhr";
     } else {
       return "Tageswert";
