@@ -256,7 +256,7 @@ function setDefaultOptionsForZaehlung() {
     !isSonderzaehldauerKurzzeitzaehlung.value
   ) {
     const zbMax = zeitblockOrder.find((zb) =>
-      activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
+      activeZaehlung.value.zeitauswahl?.blocks?.some((zbv) => zbv === zb)
     );
     if (zbMax) {
       // Zeitblock verfügbar --> Zeitblock setzen
