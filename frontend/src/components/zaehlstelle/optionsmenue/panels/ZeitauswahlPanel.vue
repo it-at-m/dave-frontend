@@ -36,7 +36,10 @@
                 <v-radio
                   label="Tageswert"
                   :value="Zeitauswahl.TAGESWERT"
-                  :disabled="isTeilzaehlung && isOnlyFussgaengerSelected"
+                  :disabled="
+                    (isTeilzaehlung && isOnlyFussverkehrSelected) ||
+                    (isSonderzaehldauer && !isSonderzaehldauerKurzzeitzaehlung)
+                  "
                   @mouseover="hoverTageswert = true"
                   @mouseleave="hoverTageswert = false"
                 />
@@ -337,7 +340,17 @@ const isTeilzaehlung = computed(() => {
   return activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
 });
 
-const isOnlyFussgaengerSelected = computed(() => {
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ */
+const isSonderzaehldauer = computed(() => {
+  return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+});
+
+/**
+ * Ist {@link true}, wenn im Filtermenü als einzige Verkehrsart "Fußverkehr" ausgewählt ist.
+ */
+const isOnlyFussverkehrSelected = computed(() => {
   return (
     chosenOptionsCopy.value.fussverkehr &&
     !(
@@ -347,6 +360,22 @@ const isOnlyFussgaengerSelected = computed(() => {
       chosenOptionsCopy.value.radverkehr ||
       chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
       chosenOptionsCopy.value.gueterverkehrsanteilProzent
+    )
+  );
+});
+
+/**
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
+ * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ */
+const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
+  return (
+    isSonderzaehldauer.value &&
+    activeZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_06_10
+    ) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.some(
+      (zb) => zb === Zeitblock.ZB_15_19
     )
   );
 });
@@ -364,7 +393,9 @@ watch(
  */
 function adaptOptionsUpdate() {
   if (
-    isOnlyFussgaengerSelected.value &&
+    (isOnlyFussverkehrSelected.value ||
+      (isSonderzaehldauer.value &&
+        !isSonderzaehldauerKurzzeitzaehlung.value)) &&
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
     isTeilzaehlung.value
   ) {
