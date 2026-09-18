@@ -73,8 +73,18 @@
                   clearable
               />
 
-              <v-checkbox v-model="criteria.kreisverkehr" label="Kreisverkehr" dense hide-details/>
-              <v-checkbox v-model="criteria.sonderzaehlung" label="Sonderzaehlung" dense/>
+
+
+              <v-checkbox v-model="criteria.kreisverkehr" label="Kreisverkehr" dense hide-details />
+              <v-checkbox v-model="criteria.sonderzaehlung" label="Sonderzählung" dense hide-details />
+
+              <v-select
+                  :items="['Altstadt-Lehel', 'Ludwigsvorstadt', 'Schwabing', 'Neuhausen']"
+                  label="Stadtbezirk"
+                  dense
+                  clearable
+              />
+
 
               <v-autocomplete
                   label="Verkehrsarten"
