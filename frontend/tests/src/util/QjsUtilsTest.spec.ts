@@ -57,6 +57,7 @@ describe("QjsUtils", () => {
     expect(nums).toEqual([2, 1]);
   });
 
+  // areQjsVerkehrsbeziehungenEqual -----------------------
   describe("areQjsVerkehrsbeziehungenEqual", () => {
     const { areVerkehrsbeziehungenEqual } = useQjs();
     it("returns true for identical verkehrsbeziehungen", () => {
@@ -113,6 +114,18 @@ describe("QjsUtils", () => {
     it("returns false when 'strassenseite' differs", () => {
       const a = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.W }] as any;
       const b = [{ von: 1, nach: 3, strassenseite: Himmelsrichtung.N }] as any; // different strassenseite
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(false);
+    });
+
+    it("returns true when 'strassenseite' is null but 'von' and 'nach' are identical", () => {
+      const a = [{ von: 1, nach: 3, strassenseite: null }] as any;
+      const b = [{ von: 1, nach: 3, strassenseite: null }] as any;
+      expect(areVerkehrsbeziehungenEqual(a, b)).toBe(true);
+    });
+
+    it("returns false when 'strassenseite' is null and 'von' and 'nach' are not identical", () => {
+      const a = [{ von: 1, nach: 3 }] as any;
+      const b = [{ von: 1, nach: 2 }] as any;
       expect(areVerkehrsbeziehungenEqual(a, b)).toBe(false);
     });
   });
