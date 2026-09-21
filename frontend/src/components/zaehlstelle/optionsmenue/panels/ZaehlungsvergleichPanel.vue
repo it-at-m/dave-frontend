@@ -252,6 +252,7 @@ function vergleichsdatumCalculator(): void {
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
  * - Bei QU, QJS, FJS: Welche übereinstimmende Bewegungsbeziehungen/Pfeile besitzt.
+ * - Bei ausgewähltem Fußverkehr: Welche übereinstimmende Verkehrsbeziehungen besitzt.
  * */
 function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
@@ -304,7 +305,8 @@ function zeitreihenVergleichsdatumCalculator(): void {
 
 /**
  * Prüfung bei Zählart QU, QJS oder FJS: Alle Bewegungsbeziehungen/Pfeile müssen mit der aktive Zählung übereinstimmen.
- * Für alle anderen Verkehrsarten wird immer true zurückgegeben.
+ * Für alle anderen Verkehrsarten wird immer true zurückgegeben, außer es ist Fußverkehr ausgewählt. Dann müssen ebenso
+ * alle Verkehrsbeziehungen mit der aktiven Zählung übereinstimmen.
  *
  * @param zaehlung zu prüfende Zaehlung
  * @param activeZaehlung aktive Zaehlung
@@ -329,6 +331,17 @@ function checkBewegungsbeziehungen(
   }
   // Bei QJS: Prüfe auf Von, Nach und Straßenseite
   if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
+    return qjs.areVerkehrsbeziehungenEqual(
+      activeZaehlung.value.verkehrsbeziehungen,
+      zaehlung.verkehrsbeziehungen
+    );
+  }
+  // Wenn Fußverkehr ausgewählt: Prüfe auf Von und Nach (QjS-Funktion nutzen; Straßenseite ist null)
+  if (
+    chosenOptionsCopy.value.fussverkehr &&
+    !isQjsOrFjsOrQu.value &&
+    !zaehlung.kreisverkehr
+  ) {
     return qjs.areVerkehrsbeziehungenEqual(
       activeZaehlung.value.verkehrsbeziehungen,
       zaehlung.verkehrsbeziehungen
