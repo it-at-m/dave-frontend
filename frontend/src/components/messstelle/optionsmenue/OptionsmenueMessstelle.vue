@@ -73,7 +73,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
 import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
-import { cloneDeep, includes, isEmpty, isNil } from "lodash";
+import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -155,22 +155,6 @@ function setChosenOptions(): void {
     chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
       (date) => !isEmpty(date)
     );
-  }
-
-  const intervals =
-    optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
-      chosenOptions.value.fahrzeuge
-    );
-
-  if (!includes(intervals, chosenOptions.value.intervall)) {
-    const intervallToSet = ZaehldatenIntervallToSelect.filter(
-      (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
-    ).pop();
-
-    chosenOptions.value.intervall = isNil(intervallToSet)
-      ? ZaehldatenIntervall.STUNDE_KOMPLETT
-      : intervallToSet.value;
   }
 
   if (areChosenOptionsValid()) {
@@ -330,6 +314,34 @@ watch(
   () => {
     resetFahrzeugOptions();
     setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+  },
+  { deep: true, immediate: true }
+);
+
+watch(
+  [
+    () => chosenOptions.value.fahrzeuge,
+    () => chosenOptions.value.zeitraumStartAndEndDate,
+  ],
+  () => {
+    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+
+    const intervals =
+      optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+        optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
+        chosenOptions.value.fahrzeuge
+      );
+
+    const intervalsToSet = ZaehldatenIntervallToSelect.filter(
+      (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
+    )
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title));
+    const firstIntervalToSet = head(intervalsToSet);
+
+    chosenOptions.value.intervall = isNil(firstIntervalToSet)
+      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      : firstIntervalToSet.value;
   },
   { deep: true, immediate: true }
 );

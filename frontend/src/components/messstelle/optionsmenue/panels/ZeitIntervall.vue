@@ -31,16 +31,11 @@
 <script setup lang="ts">
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
-import { includes, isNil } from "lodash";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import {
-  ZaehldatenIntervall,
-  ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const hoverZeitintervall = ref(false);
@@ -63,23 +58,4 @@ const messdatenIntervalle = computed(() => {
     intervals.includes(zaehldatenIntervall.value)
   );
 });
-
-watch(
-  () => messdatenIntervalle.value,
-  () => {
-    if (
-      !includes(
-        smallestCommonDenominatorOfIntervallForChosenFahrzeugOptions.value,
-        chosenOptionsCopy.value.intervall
-      )
-    ) {
-      const intervallToSet =
-        messdatenIntervalle.value[messdatenIntervalle.value.length - 1].value;
-      chosenOptionsCopy.value.intervall = isNil(intervallToSet)
-        ? ZaehldatenIntervall.STUNDE_KOMPLETT
-        : intervallToSet;
-    }
-  },
-  { deep: true, immediate: true }
-);
 </script>
