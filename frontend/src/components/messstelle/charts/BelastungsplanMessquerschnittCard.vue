@@ -23,6 +23,7 @@ import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -851,7 +852,7 @@ function storeImageForPrinting() {
 function getLineColor(mqId: string, direction: string) {
   if (chosenOptionsCopy.value.messquerschnittIds.includes(mqId)) {
     return chosenOptionsCopy.value.blackPrintMode
-      ? "#000000"
+      ? BelastungsplanConstants.blackPrintColor
       : farben.get(direction);
   } else {
     return "#E0E0E0";

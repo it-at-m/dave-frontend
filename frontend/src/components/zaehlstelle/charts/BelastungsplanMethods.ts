@@ -1328,7 +1328,7 @@ export function useBelastungsplanMethods() {
     // Wenn der schwarz weiß Modus angeschaltet ist, dann werden alle aktiven Verkehrsbeziehungen
     // schwarz gedruckt.
     if (isBlackPrintMode.value) {
-      return "#000000";
+      return BelastungsplanConstants.blackPrintColor;
     }
 
     // Wenn die Geometrieauswahl im Belastungsplan angezeigt werden soll ("Zeige von Knotenarm, nach Knotenarm"),

@@ -120,6 +120,7 @@ const dateUtils = useDateUtils();
 
 const vergleichsdatumDifferenzdarstellung = ref(new Array<KeyVal>());
 const vergleichsdatumZeitreihe = ref(new Array<KeyVal>());
+const cachedVergleichszaehlungId = ref<string | null>(null);
 
 const hoverSelectBasisdatum = ref(false);
 const hoverSelectVergleichsdatum = ref(false);
@@ -283,11 +284,21 @@ function zeitreihenVergleichsdatumCalculator(): void {
   // Setze idVergleichszaehlungZeitreihe zurück (auf null), wenn der Wert nicht im Array result enthalten ist
   const selectedVergleichszaehlungId =
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe;
+  const cachedId = cachedVergleichszaehlungId.value;
   if (
     selectedVergleichszaehlungId != null &&
     !result.some((item) => item.value === selectedVergleichszaehlungId)
   ) {
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+  } else if (cachedId == null) {
+    // ID der ausgewählten Vergleichszählung merken
+    cachedVergleichszaehlungId.value = selectedVergleichszaehlungId;
+  } else if (
+    selectedVergleichszaehlungId == null &&
+    result.some((item) => item.value === cachedId)
+  ) {
+    // ID der vorher ausgewählten Vergleichszählung wiederherstellen
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = cachedId;
   }
 }
 

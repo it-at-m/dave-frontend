@@ -988,7 +988,8 @@ const centerYArrowFour = ref(0);
 
 function getArrowScale(zaehlwert: number) {
   const max = highestZaehlwert.value;
-  if (!Number.isFinite(max) || max <= 0) return 0;
+  if (!Number.isFinite(max) || max <= 0)
+    return BelastungsplanConstants.minimum_arrow_scale;
   const scale = Math.max(zaehlwert, 0) / max;
   return Math.max(BelastungsplanConstants.minimum_arrow_scale, scale);
 }
@@ -1210,22 +1211,30 @@ const highestZaehlwertRounded = computed(() => {
 
 const colorArrowOne = computed<string>(() => {
   if (!isSelectedArrowOne.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowOneTwo();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowOneTwo();
 });
 
 const colorArrowTwo = computed<string>(() => {
   if (!isSelectedArrowTwo.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowOneTwo();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowOneTwo();
 });
 
 const colorArrowThree = computed<string>(() => {
   if (!isSelectedArrowThree.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowThreeFour();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowThreeFour();
 });
 
 const colorArrowFour = computed<string>(() => {
   if (!isSelectedArrowFour.value) return BelastungsplanConstants.inaktivColor;
-  return calculateColorArrowThreeFour();
+  return zaehlstelleStore.isBlackprintMode
+    ? BelastungsplanConstants.blackPrintColor
+    : calculateColorArrowThreeFour();
 });
 
 function calculateColorArrowOneTwo() {
@@ -1353,6 +1362,7 @@ watch(
     () => optionen.value.chosenVerkehrsbeziehungen,
     () => optionen.value.zeitauswahl,
     () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
+    () => zaehlstelleStore.isBlackprintMode,
   ],
   async () => {
     firstStreetname.value = strassennameUtils.getStreetLines(
