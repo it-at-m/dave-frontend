@@ -313,7 +313,6 @@ watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
     resetFahrzeugOptions();
-    setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
   },
   { deep: true, immediate: true }
 );
