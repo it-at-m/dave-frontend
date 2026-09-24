@@ -309,6 +309,9 @@ watch(
   { deep: true, immediate: true }
 );
 
+/**
+ * Reset der gewählten Fahrzeugklassen und Kategorien bei Änderung der Zeitraumauswahl.
+ */
 watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
@@ -317,11 +320,11 @@ watch(
   { deep: true, immediate: true }
 );
 
+/**
+ * Vorbelegung mit kleinstmöglich zu wählenden Zeitintervall bei Änderung der Zeitraumauswahl.
+ */
 watch(
-  [
-    () => chosenOptions.value.fahrzeuge,
-    () => chosenOptions.value.zeitraumStartAndEndDate,
-  ],
+  () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
     setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
 
