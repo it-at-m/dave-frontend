@@ -21,6 +21,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   );
   const direction = ref("");
   const history = ref(false);
+  const fromHistory = ref(false);
   const belastungsplanMinSize = ref(0);
   const belastungsplanMaxSize = ref("");
   const belastungsplanChosenSize = ref(1);
@@ -49,6 +50,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   const getFilteroptions = computed(() => filterOptions.value);
   const getDirection = computed(() => direction.value);
   const isHistory = computed(() => history.value);
+  const isFromHistory = computed(() => fromHistory.value);
   const getBelastungsplanMinSize = computed(() => belastungsplanMinSize.value);
   const getBelastungsplanMaxSize = computed(() => belastungsplanMinSize.value);
   const getBelastungsplanChosenSize = computed(
@@ -72,12 +74,14 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   function setFilteroptionsHistory(payload: MessstelleOptionsDTO) {
     filterOptions.value = payload;
     history.value = true;
+    fromHistory.value = true;
   }
   function setDirection(payload: string) {
     direction.value = payload;
   }
   function reloadFilteroptions() {
     filterOptions.value = cloneDeep(filterOptions.value);
+    fromHistory.value = false;
   }
   function setBelastungsplanMinSize(payload: number) {
     belastungsplanMinSize.value = payload;
@@ -157,6 +161,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     getFilteroptions,
     getDirection,
     isHistory,
+    isFromHistory,
     getBelastungsplanMinSize,
     getBelastungsplanMaxSize,
     getBelastungsplanChosenSize,
