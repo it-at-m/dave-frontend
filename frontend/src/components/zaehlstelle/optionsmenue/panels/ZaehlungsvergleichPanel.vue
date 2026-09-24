@@ -315,6 +315,7 @@ function zeitreihenVergleichsdatumCalculator(): void {
 
 /**
  * Prüfung bei Zählart QU, QJS oder FJS: Alle Bewegungsbeziehungen/Pfeile müssen mit der aktive Zählung übereinstimmen.
+ * Für alle anderen Verkehrsarten wird immer true zurückgegeben.
  *
  * @param zaehlung zu prüfende Zaehlung
  * @param activeZaehlung aktive Zaehlung
