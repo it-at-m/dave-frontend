@@ -26,6 +26,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const zeitblock = ref("");
   const zeitauswahl = ref("");
   const history = ref(false);
+  const fromHistory = ref(false);
   const sizeBelastungsplanSvg = ref(0);
   const maxSizeBelastungsplanSvg = ref(0);
   const minSizeBelastungsplanSvg = ref(0);
@@ -56,6 +57,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const getZeitblock = computed(() => zeitblock.value);
   const getZeitauswahl = computed(() => zeitauswahl.value);
   const isHistory = computed(() => history.value);
+  const isFromHistory = computed(() => fromHistory.value);
   const getSizeBelastungsplanSvg = computed(() => sizeBelastungsplanSvg.value);
   const getMaxSizeBelastungsplanSvg = computed(
     () => maxSizeBelastungsplanSvg.value
@@ -101,6 +103,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   function setFilteroptionsHistory(payload: ZaehlstelleOptionsDTO) {
     filteroptions.value = payload;
     history.value = true;
+    fromHistory.value = true;
   }
   function setZeitblock(payload: string) {
     zeitblock.value = payload;
@@ -110,6 +113,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function reloadFilteroptions() {
     filteroptions.value = Object.assign({}, filteroptions.value);
+    fromHistory.value = false;
   }
   function resetFilteroptions() {
     filteroptions.value =
@@ -205,6 +209,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     getZeitblock,
     getZeitauswahl,
     isHistory,
+    isFromHistory,
     getSizeBelastungsplanSvg,
     getMaxSizeBelastungsplanSvg,
     getMinSizeBelastungsplanSvg,
