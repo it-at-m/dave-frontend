@@ -321,10 +321,13 @@ watch(
 );
 
 /**
- * Vorbelegung mit kleinstmöglich zu wählenden Zeitintervall bei Änderung der Zeitraumauswahl.
+ * Vorbelegung mit kleinstmöglich zu wählenden Zeitintervall bei Änderung der Zeitraumauswahl bzw. der Fahrzeugoptionen.
  */
 watch(
-  () => chosenOptions.value.zeitraumStartAndEndDate,
+  [
+    () => chosenOptions.value.fahrzeuge,
+    () => chosenOptions.value.zeitraumStartAndEndDate,
+  ],
   () => {
     setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
 
