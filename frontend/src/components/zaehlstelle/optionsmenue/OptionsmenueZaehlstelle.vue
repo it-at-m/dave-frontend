@@ -362,7 +362,7 @@ watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
 watch(
   () => activeZaehlung.value,
   () => {
-    if (zaehlstelleStore.isHistory && zaehlstelleStore.isFromHistory) {
+    if (zaehlstelleStore.isInHistory && zaehlstelleStore.isCalledFromHistory) {
       zaehlstelleStore.reloadFilteroptions();
     } else {
       resetOptions();

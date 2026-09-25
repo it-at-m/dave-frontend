@@ -20,8 +20,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     DefaultObjectCreator.createDefaultMessstelleOptions()
   );
   const direction = ref("");
-  const history = ref(false);
-  const fromHistory = ref(false);
+  const inHistory = ref(false);
+  const calledFromHistory = ref(false);
   const belastungsplanMinSize = ref(0);
   const belastungsplanMaxSize = ref("");
   const belastungsplanChosenSize = ref(1);
@@ -49,8 +49,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   );
   const getFilteroptions = computed(() => filterOptions.value);
   const getDirection = computed(() => direction.value);
-  const isHistory = computed(() => history.value);
-  const isFromHistory = computed(() => fromHistory.value);
+  const isInHistory = computed(() => inHistory.value);
+  const isCalledFromHistory = computed(() => calledFromHistory.value);
   const getBelastungsplanMinSize = computed(() => belastungsplanMinSize.value);
   const getBelastungsplanMaxSize = computed(() => belastungsplanMinSize.value);
   const getBelastungsplanChosenSize = computed(
@@ -69,19 +69,19 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   }
   function setFilteroptions(payload: MessstelleOptionsDTO) {
     filterOptions.value = payload;
-    history.value = false;
+    inHistory.value = false;
   }
   function setFilteroptionsHistory(payload: MessstelleOptionsDTO) {
     filterOptions.value = payload;
-    history.value = true;
-    fromHistory.value = true;
+    inHistory.value = true;
+    calledFromHistory.value = true;
   }
   function setDirection(payload: string) {
     direction.value = payload;
   }
   function reloadFilteroptions() {
     filterOptions.value = cloneDeep(filterOptions.value);
-    fromHistory.value = false;
+    calledFromHistory.value = false;
   }
   function setBelastungsplanMinSize(payload: number) {
     belastungsplanMinSize.value = payload;
@@ -160,8 +160,8 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
     isKfzMessstelle,
     getFilteroptions,
     getDirection,
-    isHistory,
-    isFromHistory,
+    isInHistory,
+    isCalledFromHistory,
     getBelastungsplanMinSize,
     getBelastungsplanMaxSize,
     getBelastungsplanChosenSize,
