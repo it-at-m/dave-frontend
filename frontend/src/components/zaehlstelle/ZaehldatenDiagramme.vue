@@ -438,7 +438,7 @@ function loadData(): void {
   // requests abschicken
   loadProcessedChartData(o);
 
-  if (!zaehlstelleStore.isHistory) {
+  if (!zaehlstelleStore.isInHistory) {
     historyStore.addHistoryItem(
       new ZaehlstelleHistoryItem(
         selectedZaehlung.value.id,
