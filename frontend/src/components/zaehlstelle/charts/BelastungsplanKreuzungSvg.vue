@@ -33,6 +33,7 @@ import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useVergleichszaehlungenUtils } from "@/util/VergleichszaehlungenUtils";
 
@@ -53,6 +54,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
+const belastungsplanAnzeigeUtils = useBelastungsplanAnzeigeUtils();
 const vergleichszaehlungenUtils = useVergleichszaehlungenUtils();
 
 const sheetId = "belastungsplan-zaehlstelle";
@@ -400,7 +402,10 @@ function legendeSpalten() {
 
   // Zählzeit
   const zeitauswahl: string = optionen.value.zeitauswahl;
-  const zaehlzeitFirstLine: string = zeitauswahl;
+  const zaehlzeitFirstLine: string =
+    belastungsplanAnzeigeUtils
+      .zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle
+      .value;
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
