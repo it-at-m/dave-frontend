@@ -1,5 +1,6 @@
 <template>
   <v-card
+    v-if="!isZeitauswahlSpitzenstundeChosen"
     elevation="0"
     class="pt-5"
   >
@@ -15,6 +16,11 @@
       :zeitreihe-daten="zaehldatenZeitreihe"
     />
   </v-card>
+  <v-card
+    v-if="isZeitauswahlSpitzenstundeChosen"
+    elevation="0"
+    class="pt-5"
+  />
 </template>
 
 <script setup lang="ts">
@@ -39,6 +45,14 @@ const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+const isZeitauswahlSpitzenstundeChosen = computed<boolean>(() => {
+  const chosenZeitauswahl = filterOptions.value.zeitauswahl;
+  return (
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  );
 });
 const snackbarStore = useSnackbarStore();
 
@@ -68,7 +82,11 @@ function charttypeChanged(newChartType: "line" | "bar") {
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
-    if (
+    if (isZeitauswahlSpitzenstundeChosen.value) {
+      snackbarStore.showInfo(
+        `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
+      );
+    } else if (
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
