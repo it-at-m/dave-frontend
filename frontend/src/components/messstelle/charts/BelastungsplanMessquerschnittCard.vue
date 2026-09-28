@@ -765,7 +765,7 @@ function drawLinienStaerke() {
 }
 
 const getZeitauswahlText = computed(() => {
-  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle}`;
+  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle.value}`;
 });
 
 const getZeitblockText = computed(() => {
