@@ -89,13 +89,6 @@ watch(
       snackbarStore.showInfo(
         "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
       );
-    } else if (
-      dateContainsVerkehrsbeziehungNotPresent &&
-      filterOptions.value.fussverkehr
-    ) {
-      snackbarStore.showInfo(
-        "Die Darstellung des Fußverkehrs ist nicht für alle Zählungen in der Zeitreihe möglich, da nicht alle Verkehrsbeziehungen übereinstimmen."
-      );
     }
   },
   { immediate: true }
