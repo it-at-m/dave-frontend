@@ -4,11 +4,11 @@ import { computed } from "vue";
 // Verändbare Filter‑Objekte, die die Stores per Referenz zurückliefern
 let messstelleFilterOptions: Record<string, any> = {
   zeitauswahl: "",
-  zeitblock: "ZB_06_22",
+  zeitblock: Zeitblock.ZB_06_22,
 };
 let zaehlstelleFilterOptions: Record<string, any> = {
   zeitauswahl: "",
-  zeitblock: "ZB_06_22",
+  zeitblock: Zeitblock.ZB_06_22,
 };
 
 // Es werden nur die Stores gemockt. Die Enums und zeitblockInfo werden absichtlich NICHT gemockt;
@@ -23,32 +23,32 @@ vi.mock("@/store/ZaehlstelleStore", () => ({
 // Importiere das Util und die echten Enums/Info-Map erst, nachdem die Store-Mocks gesetzt wurden
 import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 
 describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen and computed props", () => {
   beforeEach(() => {
     // Standardwerte vor jedem Test zurücksetzen
     messstelleFilterOptions.zeitauswahl = "";
-    messstelleFilterOptions.zeitblock = "ZB_06_22";
+    messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
     zaehlstelleFilterOptions.zeitauswahl = "";
-    zaehlstelleFilterOptions.zeitblock = "ZB_06_22";
+    zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
   });
 
   it("adds block suffix for SPITZENSTUNDE_KFZ (messstelle computed)", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_KFZ;
-    messstelleFilterOptions.zeitblock = "ZB_06_22";
+    messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<typeof computed>;
 
     expect(computedValue.value).toBe(
-      `${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get("ZB_06_22")?.title})`
+      `${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get(Zeitblock.ZB_06_22)?.title})`
     );
   });
 
   it("adds block suffix for SPITZENSTUNDE_RAD (zaehlstelle computed)", () => {
     zaehlstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_RAD;
-    zaehlstelleFilterOptions.zeitblock = "ZB_00_24";
+    zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
@@ -56,13 +56,13 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     >;
 
     expect(computedValue.value).toBe(
-      `${Zeitauswahl.SPITZENSTUNDE_RAD} (Block ${zeitblockInfo.get("ZB_00_24")?.title})`
+      `${Zeitauswahl.SPITZENSTUNDE_RAD} (Block ${zeitblockInfo.get(Zeitblock.ZB_00_24)?.title})`
     );
   });
 
   it("adds block suffix for SPITZENSTUNDE_FUSS (messstelle)", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_FUSS;
-    messstelleFilterOptions.zeitblock = "ZB_00_24";
+    messstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
@@ -70,32 +70,32 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     >;
 
     expect(computedValue.value).toBe(
-      `${Zeitauswahl.SPITZENSTUNDE_FUSS} (Block ${zeitblockInfo.get("ZB_00_24")?.title})`
+      `${Zeitauswahl.SPITZENSTUNDE_FUSS} (Block ${zeitblockInfo.get(Zeitblock.ZB_00_24)?.title})`
     );
   });
 
   it("returns plain zeitauswahl when not a Spitzenstunde (messstelle)", () => {
-    messstelleFilterOptions.zeitauswahl = "TAGESWERT";
-    messstelleFilterOptions.zeitblock = "ZB_06_22";
+    messstelleFilterOptions.zeitauswahl = Zeitauswahl.TAGESWERT;
+    messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
       typeof computed
     >;
 
-    expect(computedValue.value).toBe("TAGESWERT");
+    expect(computedValue.value).toBe(Zeitauswahl.TAGESWERT);
   });
 
   it("returns plain zeitauswahl when not a Spitzenstunde (zaehlstelle)", () => {
-    zaehlstelleFilterOptions.zeitauswahl = "TAGESWERT";
-    zaehlstelleFilterOptions.zeitblock = "ZB_06_22";
+    zaehlstelleFilterOptions.zeitauswahl = Zeitauswahl.TAGESWERT;
+    zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
       typeof computed
     >;
 
-    expect(computedValue.value).toBe("TAGESWERT");
+    expect(computedValue.value).toBe(Zeitauswahl.TAGESWERT);
   });
 
   it("handles unknown zeitblock key (zeitblockInfo missing) - returns '(Block undefined)' suffix", () => {
@@ -126,9 +126,9 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
 
   it("handles empty zeitauswahl (returns empty string) for both computed props", () => {
     messstelleFilterOptions.zeitauswahl = "";
-    messstelleFilterOptions.zeitblock = "ZB_06_22";
+    messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
     zaehlstelleFilterOptions.zeitauswahl = "";
-    zaehlstelleFilterOptions.zeitblock = "ZB_06_22";
+    zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedValueMessstelle = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
@@ -145,10 +145,10 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
   it("computed values are independent for messstelle and zaehlstelle stores", () => {
     // Messstelle auf SPITZENSTUNDE_KFZ setzen und Zählstelle auf TAGESWERT
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_KFZ;
-    messstelleFilterOptions.zeitblock = "ZB_06_22";
+    messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
-    zaehlstelleFilterOptions.zeitauswahl = "TAGESWERT";
-    zaehlstelleFilterOptions.zeitblock = "ZB_00_24";
+    zaehlstelleFilterOptions.zeitauswahl = Zeitauswahl.TAGESWERT;
+    zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
     const utils = useBelastungsplanAnzeigeUtils();
     const computedMess = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
@@ -158,7 +158,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
       typeof computed
     >;
 
-    expect(computedMess.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get("ZB_06_22")?.title})`);
-    expect(computedZaehl.value).toBe("TAGESWERT");
+    expect(computedMess.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get(Zeitblock.ZB_06_22)?.title})`);
+    expect(computedZaehl.value).toBe(Zeitauswahl.TAGESWERT);
   });
 });
