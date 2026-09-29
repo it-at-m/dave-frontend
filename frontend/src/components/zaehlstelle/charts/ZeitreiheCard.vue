@@ -1,26 +1,22 @@
 <template>
   <v-card
-    v-if="!isZeitauswahlSpitzenstundeChosen"
     elevation="0"
     class="pt-5"
   >
     <zeitreihe-chart
+      v-if="!isZeitauswahlSpitzenstundeChosen"
       :zeitreihe-daten="zaehldatenZeitreihe"
       @charttype-changed="charttypeChanged"
     />
     <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
     <zeitreihe-chart
+      v-if="!isZeitauswahlSpitzenstundeChosen"
       ref="zeitreiheForPdf"
       style="display: none"
       :zeitreihe-daten="zaehldatenZeitreihe"
     />
   </v-card>
-  <v-card
-    v-if="isZeitauswahlSpitzenstundeChosen"
-    elevation="0"
-    class="pt-5"
-  />
 </template>
 
 <script setup lang="ts">
