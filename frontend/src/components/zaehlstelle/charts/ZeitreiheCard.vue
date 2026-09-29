@@ -72,8 +72,6 @@ function doesDateContainVerkehrsbeziehungNotPresent(date: string) {
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
-    console.log(zaehldatenZeitreihe);
-
     const dateContainsVerkehrsbeziehungNotPresent =
       zaehldatenZeitreihe.datum.some((date) =>
         doesDateContainVerkehrsbeziehungNotPresent(date)
