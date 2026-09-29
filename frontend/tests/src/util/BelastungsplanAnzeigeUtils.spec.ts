@@ -25,7 +25,7 @@ import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 
-describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen and computed props", () => {
+describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen und computed props", () => {
   beforeEach(() => {
     // Standardwerte vor jedem Test zurücksetzen
     messstelleFilterOptions.zeitauswahl = "";
@@ -34,7 +34,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
   });
 
-  it("adds block suffix for SPITZENSTUNDE_KFZ (messstelle computed)", () => {
+  it("hängt Block‑Suffix für SPITZENSTUNDE_KFZ an (Messstelle)", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_KFZ;
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
@@ -46,7 +46,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     );
   });
 
-  it("adds block suffix for SPITZENSTUNDE_RAD (zaehlstelle computed)", () => {
+  it("hängt Block‑Suffix für SPITZENSTUNDE_RAD an (Zählstelle)", () => {
     zaehlstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_RAD;
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
@@ -60,7 +60,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     );
   });
 
-  it("adds block suffix for SPITZENSTUNDE_FUSS (messstelle)", () => {
+  it("hängt Block‑Suffix für SPITZENSTUNDE_FUSS an (Messstelle)", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_FUSS;
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
@@ -74,7 +74,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     );
   });
 
-  it("returns plain zeitauswahl when not a Spitzenstunde (messstelle)", () => {
+  it("gibt die reine Zeitauswahl zurück, wenn keine Spitzenstunde (Messstelle)", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.TAGESWERT;
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
@@ -86,7 +86,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     expect(computedValue.value).toBe(Zeitauswahl.TAGESWERT);
   });
 
-  it("returns plain zeitauswahl when not a Spitzenstunde (zaehlstelle)", () => {
+  it("gibt die reine Zeitauswahl zurück, wenn keine Spitzenstunde (Zählstelle)", () => {
     zaehlstelleFilterOptions.zeitauswahl = Zeitauswahl.TAGESWERT;
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
@@ -98,7 +98,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     expect(computedValue.value).toBe(Zeitauswahl.TAGESWERT);
   });
 
-  it("handles unknown zeitblock key (zeitblockInfo missing) - returns '(Block undefined)' suffix", () => {
+  it("behandelt unbekannten Zeitblock‑Schlüssel (zeitblockInfo fehlt) und liefert '(Block undefined)'", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_KFZ;
     messstelleFilterOptions.zeitblock = "UNKNOWN_KEY";
 
@@ -111,7 +111,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     expect(computedValue.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block undefined)`);
   });
 
-  it("handles null zeitblock value gracefully", () => {
+  it("behandelt null Zeitblock‑Wert korrekt", () => {
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_KFZ;
     // @ts-ignore: test passing null
     messstelleFilterOptions.zeitblock = null;
@@ -124,7 +124,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     expect(computedValue.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block undefined)`);
   });
 
-  it("handles empty zeitauswahl (returns empty string) for both computed props", () => {
+  it("behandelt leere Zeitauswahl (gibt leeren String zurück) für beide computed Props", () => {
     messstelleFilterOptions.zeitauswahl = "";
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
     zaehlstelleFilterOptions.zeitauswahl = "";
@@ -142,7 +142,7 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     expect(computedValueZaehlstelle.value).toBe("");
   });
 
-  it("computed values are independent for messstelle and zaehlstelle stores", () => {
+  it("computed‑Werte sind unabhängig für Messstelle‑ und Zählstelle‑Stores", () => {
     // Messstelle auf SPITZENSTUNDE_KFZ setzen und Zählstelle auf TAGESWERT
     messstelleFilterOptions.zeitauswahl = Zeitauswahl.SPITZENSTUNDE_KFZ;
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
