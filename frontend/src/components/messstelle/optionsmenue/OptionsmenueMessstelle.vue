@@ -136,7 +136,7 @@ const isAnwender = computed(() => {
 });
 
 watch(messstelle, () => {
-  if (messstelleStore.isHistory) {
+  if (messstelleStore.isInHistory && messstelleStore.isCalledFromHistory) {
     chosenOptions.value = messstelleStore.getFilteroptions;
     messstelleStore.reloadFilteroptions();
   } else {

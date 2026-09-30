@@ -337,7 +337,7 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
 function loadData(): void {
   loadProcessedChartData();
 
-  if (!messstelleStore.isHistory) {
+  if (!messstelleStore.isInHistory) {
     const messstelle: MessstelleInfoDTO = messstelleStore.getMessstelleInfo;
     historyStore.addHistoryItem(
       new MessstelleHistoryItem(
