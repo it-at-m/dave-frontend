@@ -231,5 +231,5 @@ describe("StrassennamenUtils", () => {
     const res = getStreetLines({ strassenname: "Himmel-schlüsselstr." } as any);
     expect(res[0]).toBe("Himmel-");
     expect(res[1]).toBe("schlüsselstr.");
-  })
+  });
 });

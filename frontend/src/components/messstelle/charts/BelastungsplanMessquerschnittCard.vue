@@ -16,6 +16,7 @@ import _ from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
@@ -23,7 +24,6 @@ import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
-import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;

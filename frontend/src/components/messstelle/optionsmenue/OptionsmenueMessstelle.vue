@@ -73,7 +73,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
 import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
-import { cloneDeep, includes, isEmpty, isNil } from "lodash";
+import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -155,22 +155,6 @@ function setChosenOptions(): void {
     chosenOptions.value.zeitraum = [isoStartDate, isoEndDate].filter(
       (date) => !isEmpty(date)
     );
-  }
-
-  const intervals =
-    optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
-      optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
-      chosenOptions.value.fahrzeuge
-    );
-
-  if (!includes(intervals, chosenOptions.value.intervall)) {
-    const intervallToSet = ZaehldatenIntervallToSelect.filter(
-      (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
-    ).pop();
-
-    chosenOptions.value.intervall = isNil(intervallToSet)
-      ? ZaehldatenIntervall.STUNDE_KOMPLETT
-      : intervallToSet.value;
   }
 
   if (areChosenOptionsValid()) {
@@ -325,11 +309,43 @@ watch(
   { deep: true, immediate: true }
 );
 
+/**
+ * Reset der gewählten Fahrzeugklassen und Kategorien bei Änderung der Zeitraumauswahl.
+ */
 watch(
   () => chosenOptions.value.zeitraumStartAndEndDate,
   () => {
     resetFahrzeugOptions();
+  },
+  { deep: true, immediate: true }
+);
+
+/**
+ * Vorbelegung mit kleinstmöglich zu wählenden Zeitintervall bei Änderung der Zeitraumauswahl bzw. der Fahrzeugoptionen.
+ */
+watch(
+  [
+    () => chosenOptions.value.fahrzeuge,
+    () => chosenOptions.value.zeitraumStartAndEndDate,
+  ],
+  () => {
     setOptionsmenueSettingsByMessfaehigkeitenForGivenZeitraum();
+
+    const intervals =
+      optionsmenueSettingsStore.getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
+        optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten,
+        chosenOptions.value.fahrzeuge
+      );
+
+    const intervalsToSet = ZaehldatenIntervallToSelect.filter(
+      (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
+    )
+      .sort((a, b) => a.title.localeCompare(b.title));
+    const firstIntervalToSet = head(intervalsToSet);
+
+    chosenOptions.value.intervall = isNil(firstIntervalToSet)
+      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      : firstIntervalToSet.value;
   },
   { deep: true, immediate: true }
 );
