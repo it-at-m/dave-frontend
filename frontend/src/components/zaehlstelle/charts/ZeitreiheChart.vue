@@ -203,7 +203,6 @@ const options = computed(() => {
           lang: ["Datenansicht", "zurück", "refresh"],
           /* eslint-disable  @typescript-eslint/no-explicit-any */
           optionToContent: function (opt: any) {
-            /* eslint-enable  @typescript-eslint/no-explicit-any */
             const axisData = opt.xAxis[0].data;
             const series = opt.series;
 
@@ -214,20 +213,16 @@ const options = computed(() => {
               "<thead>" +
               "<tr>" +
               "<th>Zähldatum</th>";
-            /* eslint-disable  @typescript-eslint/no-explicit-any */
             series.forEach((data: any) => {
-              /* eslint-enable  @typescript-eslint/no-explicit-any */
               table += "<th>" + data.name + "</th>";
             });
             table += "</tr></thead>";
             table += "<tbody>";
             // Daten der Tabelle
             for (let i = 0, l = axisData.length; i < l; i++) {
-              table += "<tr>" + "<td>" + axisData[i] + "</td>";
-              /* eslint-disable  @typescript-eslint/no-explicit-any */
+              table += "<tr>" + "<td>" + sanitizeValue(axisData[i]) + "</td>";
               series.forEach((data: any) => {
-                /* eslint-enable  @typescript-eslint/no-explicit-any */
-                table += "<td>" + data.data[i] + "</td>";
+                table += "<td>" + cellContentFormatter(true, data.data[i]) + "</td>";
               });
               table += "</tr>";
             }
@@ -451,72 +446,107 @@ function downloadCsv() {
   rows.push(header);
 
   for (let index = 0; index < props.zeitreiheDaten.datum.length; index++) {
-    let row = "";
-    row += `${props.zeitreiheDaten.datum[index]}`;
-    row += fillCsvRow(
+    const fields: string[] = [];
+
+    fields.push(sanitizeValue(props.zeitreiheDaten.datum[index]));
+
+    // Nur die ausgewählten Spalten als Felder hinzufügen (ohne führendes ;)
+    const cellContent = (isWanted: boolean, data: number | null) =>
+      cellContentFormatter(isWanted, data);
+
+    const f1 = cellContent(
       filterOptions.value.kraftfahrzeugverkehr,
       props.zeitreiheDaten.kfz[index]
     );
-    row += fillCsvRow(
+    if (f1 !== null) fields.push(f1);
+
+    const f2 = cellContent(
       filterOptions.value.gueterverkehr,
       props.zeitreiheDaten.gv[index]
     );
-    row += fillCsvRow(
+    if (f2 !== null) fields.push(f2);
+
+    const f3 = cellContent(
       filterOptions.value.schwerverkehr,
       props.zeitreiheDaten.sv[index]
     );
-    row += fillCsvRow(
+    if (f3 !== null) fields.push(f3);
+
+    const f4 = cellContent(
       filterOptions.value.radverkehr,
       props.zeitreiheDaten.rad[index]
     );
-    row += fillCsvRow(
+    if (f4 !== null) fields.push(f4);
+
+    const f5 = cellContent(
       filterOptions.value.fussverkehr,
       props.zeitreiheDaten.fuss[index]
     );
-    row += fillCsvRow(
+    if (f5 !== null) fields.push(f5);
+
+    const f6 = cellContent(
       filterOptions.value.zeitreiheGesamt,
       props.zeitreiheDaten.gesamt[index]
     );
-    row += fillCsvRow(
+    if (f6 !== null) fields.push(f6);
+
+    const f7 = cellContent(
       filterOptions.value.schwerverkehrsanteilProzent,
       props.zeitreiheDaten.svAnteilInProzent[index]
     );
-    row += fillCsvRow(
+    if (f7 !== null) fields.push(f7);
+
+    const f8 = cellContent(
       filterOptions.value.gueterverkehrsanteilProzent,
       props.zeitreiheDaten.gvAnteilInProzent[index]
     );
-    rows.push(row);
+    if (f8 !== null) fields.push(f8);
+
+    // Zeile zusammenbauen
+    rows.push(fields.join(";"));
   }
   downloadUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
 }
 
 /**
- * Befüllt die CSV Rows, je nachdem ob in den Filtereinstellungen die Fahreugkategorie ausgewählt ist.
- * Sonderfälle:
- * - null-Werte werden durch "nicht vorh." ersetzt.
- * - Im Fall, dass Tageswert ausgewählt ist aber der Wert 0 ist, wird der Wert auf "Tageswert nicht vorh." ersetzt (für Fußverkehr nötig).
- * @param isWanted
- * @param data
- * @private
+ * Befüllt eine Feld-Zeile (ohne führendes Semikolon) oder liefert null, wenn Spalte nicht gewählt.
+ * Akzeptiert nun auch string-Werte (z. B. "") und behandelt leere Strings/undefined als fehlende Werte.
  */
-function fillCsvRow(isWanted: boolean, data: number | null) {
-  let row = "";
-  if (isWanted) {
-    if (
-      data == null &&
-      filterOptions.value.zeitauswahl !== Zeitauswahl.TAGESWERT
-    ) {
-      row += ";nicht vorh.";
-    } else if (
-      data == null &&
-      filterOptions.value.zeitauswahl === Zeitauswahl.TAGESWERT
-    ) {
-      row += ";Tageswert nicht vorh.";
+function cellContentFormatter(isWanted: boolean, data: number | string | null | undefined): string | null {
+  if (!isWanted) return null;
+
+  const isMissing = data === null || data === undefined || data === "";
+
+  if (isMissing) {
+    // fehlender Wert: abhängig von Zeitauswahl den gleichen Fallback-Text wie bei CSV verwenden
+    if (filterOptions.value.zeitauswahl !== Zeitauswahl.TAGESWERT) {
+      return sanitizeValue("nicht vorh.");
     } else {
-      row += `;${data}`;
+      return sanitizeValue("Tageswert nicht vorh.");
     }
   }
-  return row;
+
+  return sanitizeValue(String(data));
+}
+
+/**
+ * Entfernt Zeilenumbrüche aus Feldwerten (verhindert "Zeilenbruch in Zähldatum"-Problem).
+ * Entfernt Zähldatums Ergänzungen ([...] nicht vorh.)aus dem Backend (ProcessZaehldatenZeitreiheService) bei den tabellarischen Darstellungen.
+  */
+function sanitizeValue(value: string | null | undefined): string {
+  if (value == null) return "";
+
+  const str = String(value).trim();
+
+  // 1) Versuche ein Datum wie "28.09.2026" zu finden und gib dieses zurück, wenn vorhanden.
+  const dateMatch = str.match(/\b\d{1,2}\.\d{1,2}\.\d{2,4}\b/);
+  if (dateMatch) {
+    return dateMatch[0];
+  }
+
+  // 2) Kein Datum gefunden: Newlines entfernen und abschließende Klammer-Annotationen ("(...)") entfernen.
+  const noNewlines = str.replace(/(\r\n|\n|\r)/g, " ");
+  return noNewlines.replace(/\s*\(.*\)\s*$/, "").trim();
 }
 
 /**
@@ -564,8 +594,9 @@ function getMetaHeaderAndData(): string {
   data.push(`</thead>`);
   data.push(`<tbody>`);
   data.push(`<tr>`);
+  // Metadaten mit sanitizeValue ausgeben, damit Verhalten der CSV übereinstimmt
   getMetaData().forEach((metaData) => {
-    data.push(`<td>${metaData}</td>`);
+    data.push(`<td>${sanitizeValue(metaData)}</td>`);
   });
   data.push(`</tr>`);
   data.push(`<tr><td>&nbsp;</td></tr>`);
