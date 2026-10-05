@@ -29,6 +29,7 @@ import ZeitreiheChart from "@/components/zaehlstelle/charts/ZeitreiheChart.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 
 interface Props {
   zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
@@ -72,7 +73,8 @@ watch(
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
-      zaehldatenZeitreihe.fuss.some((value) => value == null)
+      zaehldatenZeitreihe.tageswertNichtVorhanden.some(
+          (missingTageswerte) => missingTageswerte.includes(Fahrzeug.FUSS))
     ) {
       snackbarStore.showInfo(
         "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."

@@ -29,6 +29,7 @@ import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -147,7 +148,9 @@ const yAxisInterval = computed(() => {
 });
 
 const xAxis = computed(() => {
-  return props.zeitreiheDaten.datum;
+  return props.zeitreiheDaten.datum.map(
+    (date, index) => date + props.zeitreiheDaten.fehlendeWerteMeldung[index]
+  );
 });
 
 const options = computed(() => {
@@ -201,11 +204,9 @@ const options = computed(() => {
           show: true,
           readOnly: true,
           lang: ["Datenansicht", "zurück", "refresh"],
-          /* eslint-disable  @typescript-eslint/no-explicit-any */
-          optionToContent: function (opt: any) {
-            /* eslint-enable  @typescript-eslint/no-explicit-any */
-            const axisData = opt.xAxis[0].data;
-            const series = opt.series;
+          optionToContent: function () {
+            const axisData = props.zeitreiheDaten.datum;
+            const columns = getDataViewColumns();
 
             // Header der Tabelle
             let table =
@@ -214,20 +215,19 @@ const options = computed(() => {
               "<thead>" +
               "<tr>" +
               "<th>Zähldatum</th>";
-            /* eslint-disable  @typescript-eslint/no-explicit-any */
-            series.forEach((data: any) => {
-              /* eslint-enable  @typescript-eslint/no-explicit-any */
-              table += "<th>" + data.name + "</th>";
+            columns.forEach((column) => {
+              table += "<th>" + column.name + "</th>";
             });
             table += "</tr></thead>";
             table += "<tbody>";
             // Daten der Tabelle
             for (let i = 0, l = axisData.length; i < l; i++) {
               table += "<tr>" + "<td>" + axisData[i] + "</td>";
-              /* eslint-disable  @typescript-eslint/no-explicit-any */
-              series.forEach((data: any) => {
-                /* eslint-enable  @typescript-eslint/no-explicit-any */
-                table += "<td>" + data.data[i] + "</td>";
+              columns.forEach((column) => {
+                table +=
+                  "<td>" +
+                  getDataViewValue(column.values[i], i, column.fahrzeug) +
+                  "</td>";
               });
               table += "</tr>";
             }
@@ -441,116 +441,106 @@ function createSeriesEntries(zeitreiheDaten: LadeZaehldatenZeitreiheDTO) {
 }
 
 function downloadCsv() {
-  const header = createHeader();
+  const columns = getDataViewColumns();
   const rows = [];
 
   rows.push(getMetaHeader().join(";"));
   rows.push(getMetaData().join(";"));
   rows.push("");
 
-  rows.push(header);
+  rows.push(["Zähldatum", ...columns.map((column) => column.name)].join(";"));
 
   for (let index = 0; index < props.zeitreiheDaten.datum.length; index++) {
-    let row = "";
-    row += `${props.zeitreiheDaten.datum[index]}`;
-    row += fillCsvRow(
-      filterOptions.value.kraftfahrzeugverkehr,
-      props.zeitreiheDaten.kfz[index]
+    rows.push(
+      [
+        props.zeitreiheDaten.datum[index],
+        ...columns.map((column) =>
+          getDataViewValue(column.values[index], index, column.fahrzeug)
+        ),
+      ].join(";")
     );
-    row += fillCsvRow(
-      filterOptions.value.gueterverkehr,
-      props.zeitreiheDaten.gv[index]
-    );
-    row += fillCsvRow(
-      filterOptions.value.schwerverkehr,
-      props.zeitreiheDaten.sv[index]
-    );
-    row += fillCsvRow(
-      filterOptions.value.radverkehr,
-      props.zeitreiheDaten.rad[index]
-    );
-    row += fillCsvRow(
-      filterOptions.value.fussverkehr,
-      props.zeitreiheDaten.fuss[index]
-    );
-    row += fillCsvRow(
-      filterOptions.value.zeitreiheGesamt,
-      props.zeitreiheDaten.gesamt[index]
-    );
-    row += fillCsvRow(
-      filterOptions.value.schwerverkehrsanteilProzent,
-      props.zeitreiheDaten.svAnteilInProzent[index]
-    );
-    row += fillCsvRow(
-      filterOptions.value.gueterverkehrsanteilProzent,
-      props.zeitreiheDaten.gvAnteilInProzent[index]
-    );
-    rows.push(row);
   }
   downloadUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
 }
 
-/**
- * Befüllt die CSV Rows, je nachdem ob in den Filtereinstellungen die Fahreugkategorie ausgewählt ist.
- * Sonderfälle:
- * - null-Werte werden durch "nicht vorh." ersetzt.
- * - Im Fall, dass Tageswert ausgewählt ist aber der Wert 0 ist, wird der Wert auf "Tageswert nicht vorh." ersetzt (für Fußverkehr nötig).
- * @param isWanted
- * @param data
- * @private
- */
-function fillCsvRow(isWanted: boolean, data: number | null) {
-  let row = "";
-  if (isWanted) {
-    if (
-      data == null &&
-      filterOptions.value.zeitauswahl !== Zeitauswahl.TAGESWERT
-    ) {
-      row += ";nicht vorh.";
-    } else if (
-      data == null &&
-      filterOptions.value.zeitauswahl === Zeitauswahl.TAGESWERT
-    ) {
-      row += ";Tageswert nicht vorh.";
-    } else {
-      row += `;${data}`;
-    }
-  }
-  return row;
-}
+type DataViewColumn = {
+  name: string;
+  values: Array<number | null>;
+  fahrzeug?: Fahrzeug;
+};
 
-/**
- * Erstellt den CSV-Header abhängig von den gewählten Filteroptionen.
- * Nicht gewählte Fahrzeugkategorien werden weggelassen.
- */
-function createHeader(): string {
-  const headers: string[] = [];
-  headers.push("Zähldatum");
+function getDataViewColumns(): DataViewColumn[] {
+  const columns: DataViewColumn[] = [];
+
   if (filterOptions.value.kraftfahrzeugverkehr) {
-    headers.push(KRAFTFAHRZEUGVERKEHR);
-  }
-  if (filterOptions.value.gueterverkehr) {
-    headers.push(GUETERVERKEHR);
+    columns.push({
+      name: KRAFTFAHRZEUGVERKEHR,
+      values: props.zeitreiheDaten.kfz,
+      fahrzeug: Fahrzeug.KFZ,
+    });
   }
   if (filterOptions.value.schwerverkehr) {
-    headers.push(SCHWERVERKEHR);
+    columns.push({
+      name: SCHWERVERKEHR,
+      values: props.zeitreiheDaten.sv,
+      fahrzeug: Fahrzeug.SV,
+    });
+  }
+  if (filterOptions.value.gueterverkehr) {
+    columns.push({
+      name: GUETERVERKEHR,
+      values: props.zeitreiheDaten.gv,
+      fahrzeug: Fahrzeug.GV,
+    });
   }
   if (filterOptions.value.radverkehr) {
-    headers.push(RADVERKEHR);
+    columns.push({
+      name: RADVERKEHR,
+      values: props.zeitreiheDaten.rad,
+      fahrzeug: Fahrzeug.RAD,
+    });
   }
   if (filterOptions.value.fussverkehr) {
-    headers.push(FUSSVERKEHR);
+    columns.push({
+      name: FUSSVERKEHR,
+      values: props.zeitreiheDaten.fuss,
+      fahrzeug: Fahrzeug.FUSS,
+    });
   }
   if (filterOptions.value.zeitreiheGesamt) {
-    headers.push(GESAMT);
+    columns.push({ name: GESAMT, values: props.zeitreiheDaten.gesamt });
   }
   if (filterOptions.value.schwerverkehrsanteilProzent) {
-    headers.push(SCHWERVERKEHRSANTEIL);
+    columns.push({
+      name: SCHWERVERKEHRSANTEIL,
+      values: props.zeitreiheDaten.svAnteilInProzent,
+      fahrzeug: Fahrzeug.SV_P,
+    });
   }
   if (filterOptions.value.gueterverkehrsanteilProzent) {
-    headers.push(GUETERVERKEHRSANTEIL);
+    columns.push({
+      name: GUETERVERKEHRSANTEIL,
+      values: props.zeitreiheDaten.gvAnteilInProzent,
+      fahrzeug: Fahrzeug.GV_P,
+    });
   }
-  return headers.join(";");
+
+  return columns;
+}
+
+function getDataViewValue(
+  value: number | null,
+  index: number,
+  fahrzeug?: Fahrzeug
+): number | string {
+  if (
+    fahrzeug &&
+    props.zeitreiheDaten.tageswertNichtVorhanden[index]?.includes(fahrzeug)
+  ) {
+    return "Tageswert nicht vorh.";
+  }
+
+  return value == null ? "nicht vorh." : value;
 }
 
 function getMetaHeaderAndData(): string {
