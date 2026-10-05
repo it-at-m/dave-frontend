@@ -493,6 +493,7 @@ watch(
       chosenOptionsCopy.value.spitzenstundeRad = false;
       chosenOptionsCopy.value.spitzenstundeFuss = false;
     }
-  }
+  },
+  { immediate: true }
 );
 </script>
