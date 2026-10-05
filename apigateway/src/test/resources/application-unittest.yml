@@ -31,6 +31,9 @@ logging:
   structured:
     format:
       console: # set to empty to disable structured logging for testing
+  level:
+    root: INFO
+    de.muenchen.dave: DEBUG
 
 wiremock:
   server:
@@ -44,3 +47,4 @@ refarch:
         methods: [GET]
     client-patterns:
       - /api/dave-backend-service/clients/**
+
