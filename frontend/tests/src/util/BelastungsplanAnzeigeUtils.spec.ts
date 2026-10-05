@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { computed } from "vue";
 
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+// Importiere das Util und die echten Enums/Info-Map erst, nachdem die Store-Mocks gesetzt wurden
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
+
 // Verändbare Filter‑Objekte, die die Stores per Referenz zurückliefern
 let messstelleFilterOptions: Record<string, any> = {
   zeitauswahl: "",
@@ -20,11 +25,6 @@ vi.mock("@/store/ZaehlstelleStore", () => ({
   useZaehlstelleStore: () => ({ getFilteroptions: zaehlstelleFilterOptions }),
 }));
 
-// Importiere das Util und die echten Enums/Info-Map erst, nachdem die Store-Mocks gesetzt wurden
-import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-
 describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen und computed props", () => {
   beforeEach(() => {
     // Standardwerte vor jedem Test zurücksetzen
@@ -39,7 +39,10 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<typeof computed>;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
 
     expect(computedValue.value).toBe(
       `${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get(Zeitblock.ZB_06_22)?.title})`
@@ -51,9 +54,10 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
+        typeof computed
+      >;
 
     expect(computedValue.value).toBe(
       `${Zeitauswahl.SPITZENSTUNDE_RAD} (Block ${zeitblockInfo.get(Zeitblock.ZB_00_24)?.title})`
@@ -65,9 +69,10 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
 
     expect(computedValue.value).toBe(
       `${Zeitauswahl.SPITZENSTUNDE_FUSS} (Block ${zeitblockInfo.get(Zeitblock.ZB_00_24)?.title})`
@@ -79,9 +84,10 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     messstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
 
     expect(computedValue.value).toBe(Zeitauswahl.TAGESWERT);
   });
@@ -91,9 +97,10 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
+        typeof computed
+      >;
 
     expect(computedValue.value).toBe(Zeitauswahl.TAGESWERT);
   });
@@ -103,12 +110,15 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     messstelleFilterOptions.zeitblock = "UNKNOWN_KEY";
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
 
     // Durch optional chaining wird title zu 'undefined', daher ergibt sich der Suffix " (Block undefined)"
-    expect(computedValue.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block undefined)`);
+    expect(computedValue.value).toBe(
+      `${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block undefined)`
+    );
   });
 
   it("behandelt null Zeitblock‑Wert korrekt", () => {
@@ -117,11 +127,14 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     messstelleFilterOptions.zeitblock = null;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValue = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValue =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
 
-    expect(computedValue.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block undefined)`);
+    expect(computedValue.value).toBe(
+      `${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block undefined)`
+    );
   });
 
   it("behandelt leere Zeitauswahl (gibt leeren String zurück) für beide computed Props", () => {
@@ -131,12 +144,14 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_06_22;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedValueMessstelle = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
-      typeof computed
-    >;
-    const computedValueZaehlstelle = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
-      typeof computed
-    >;
+    const computedValueMessstelle =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
+    const computedValueZaehlstelle =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
+        typeof computed
+      >;
 
     expect(computedValueMessstelle.value).toBe("");
     expect(computedValueZaehlstelle.value).toBe("");
@@ -151,14 +166,18 @@ describe("BelastungsplanAnzeigeUtils - getZeitauswahlAndAdditionalZeitblockWhenS
     zaehlstelleFilterOptions.zeitblock = Zeitblock.ZB_00_24;
 
     const utils = useBelastungsplanAnzeigeUtils();
-    const computedMess = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
-      typeof computed
-    >;
-    const computedZaehl = utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
-      typeof computed
-    >;
+    const computedMess =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle as ReturnType<
+        typeof computed
+      >;
+    const computedZaehl =
+      utils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle as ReturnType<
+        typeof computed
+      >;
 
-    expect(computedMess.value).toBe(`${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get(Zeitblock.ZB_06_22)?.title})`);
+    expect(computedMess.value).toBe(
+      `${Zeitauswahl.SPITZENSTUNDE_KFZ} (Block ${zeitblockInfo.get(Zeitblock.ZB_06_22)?.title})`
+    );
     expect(computedZaehl.value).toBe(Zeitauswahl.TAGESWERT);
   });
 });

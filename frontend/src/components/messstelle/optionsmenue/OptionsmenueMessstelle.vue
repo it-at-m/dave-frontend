@@ -339,8 +339,7 @@ watch(
 
     const intervalsToSet = ZaehldatenIntervallToSelect.filter(
       (zaehldatenIntervall) => intervals.includes(zaehldatenIntervall.value)
-    )
-      .sort((a, b) => a.title.localeCompare(b.title));
+    ).sort((a, b) => a.title.localeCompare(b.title));
     const firstIntervalToSet = head(intervalsToSet);
 
     chosenOptions.value.intervall = isNil(firstIntervalToSet)
