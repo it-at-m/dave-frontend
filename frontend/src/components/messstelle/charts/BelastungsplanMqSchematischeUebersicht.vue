@@ -18,7 +18,7 @@ import { useDisplay } from "vuetify";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -49,7 +49,7 @@ const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 const startX = ref(0);
 const startY = ref(0);
 const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
-  belastungsplanAnzeigeUtils();
+  useBelastungsplanAnzeigeUtils();
 
 const svgHeight = computed(() => {
   return (

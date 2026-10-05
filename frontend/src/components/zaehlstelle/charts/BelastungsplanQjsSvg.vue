@@ -220,7 +220,9 @@
                   style="font-weight: bold"
                   id="tspan22"
                 >
-                  {{ optionen.zeitauswahl }}
+                  {{
+                    belastungsplanAnzeigeUtils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle
+                  }}
                 </tspan>
               </tspan>
             </text>
@@ -947,6 +949,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
@@ -968,6 +971,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const qjs = useQjs();
+const belastungsplanAnzeigeUtils = useBelastungsplanAnzeigeUtils();
 const strassennameUtils = useStrassennameUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
 

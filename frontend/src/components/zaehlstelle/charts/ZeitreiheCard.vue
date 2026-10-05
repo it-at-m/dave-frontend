@@ -4,12 +4,14 @@
     class="pt-5"
   >
     <zeitreihe-chart
+      v-if="!isZeitauswahlSpitzenstundeChosen"
       :zeitreihe-daten="zaehldatenZeitreihe"
       @charttype-changed="charttypeChanged"
     />
     <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
     <zeitreihe-chart
+      v-if="!isZeitauswahlSpitzenstundeChosen"
       ref="zeitreiheForPdf"
       style="display: none"
       :zeitreihe-daten="zaehldatenZeitreihe"
@@ -39,6 +41,14 @@ const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+const isZeitauswahlSpitzenstundeChosen = computed<boolean>(() => {
+  const chosenZeitauswahl = filterOptions.value.zeitauswahl;
+  return (
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  );
 });
 const snackbarStore = useSnackbarStore();
 
@@ -77,7 +87,11 @@ watch(
         doesDateContainVerkehrsbeziehungNotPresent(date)
       );
 
-    if (
+    if (isZeitauswahlSpitzenstundeChosen.value) {
+      snackbarStore.showInfo(
+        `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
+      );
+    } else if (
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
