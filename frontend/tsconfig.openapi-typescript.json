@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node"
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "esnext",
+      "target": "ESNext" // to allow  top-level await expressions set it to 'ES2017' or higher
+    }
+  },
