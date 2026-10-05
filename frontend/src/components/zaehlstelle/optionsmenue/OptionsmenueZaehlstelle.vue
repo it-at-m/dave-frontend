@@ -45,7 +45,7 @@
 
               <zaehlungsvergleich-panel
                 v-model="chosenOptions"
-                :reset-token="resetToken"
+                :reset-notification="resetNotificationVergleichszaehlung"
               />
 
               <darstellungsoptionen-panel v-model="chosenOptions" />
@@ -118,7 +118,7 @@ const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
 );
-const resetToken = ref(0);
+const resetNotificationVergleichszaehlung = ref(0);
 
 const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
@@ -375,8 +375,8 @@ function resetOptions() {
   zaehlstelleStore.resetFilteroptions();
   setDefaultOptionsForZaehlung();
 
-  // Signal an Panels senden, dass ein Reset erfolgte
-  resetToken.value++;
+  // Signal an Panel senden, dass ein Reset erfolgte
+  resetNotificationVergleichszaehlung.value++;
 }
 
 function resetSizeBelastungsplan() {

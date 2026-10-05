@@ -118,7 +118,7 @@ const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 
-const props = defineProps<{ resetToken?: number }>();
+const props = defineProps<{ resetNotification?: number }>();
 
 const vergleichsdatumDifferenzdarstellung = ref(new Array<KeyVal>());
 const vergleichsdatumZeitreihe = ref(new Array<KeyVal>());
@@ -430,7 +430,7 @@ watch(
 );
 // Wenn sich Parent resetToken ändert -> cachedId löschen und Auswahl zurücksetzen
 watch(
-  () => props.resetToken,
+  () => props.resetNotification,
   () => {
     cachedVergleichszaehlungId.value = null;
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
