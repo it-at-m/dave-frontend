@@ -379,7 +379,7 @@ watch(isOnlyFussverkehrSelected, (onlyFuss) => {
     chosenOptionsCopy.value.vergleichszaehlungsId = null;
   }
 });
-
+  
 // Wenn sich Parent resetToken ändert -> cachedId löschen und Auswahl zurücksetzen
 watch(
   () => props.resetNotification,
@@ -390,4 +390,5 @@ watch(
     initData();
   }
 );
+    
 </script>
