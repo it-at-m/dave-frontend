@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import type { MessstelleAuswertungDTO } from "@/api/client";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import { head, isEmpty, toArray } from "lodash";
