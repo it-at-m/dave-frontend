@@ -7,7 +7,7 @@ import moment from "moment";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-import Verkehrsart from "@/types/enum/Verkehrsart";
+import { Verkehrsart } from "@/api/client";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
@@ -45,7 +45,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   });
   const getActiveTab = computed(() => activeTab.value);
   const isKfzMessstelle = computed(
-    () => messstelleInfo.value.detektierteVerkehrsart === Verkehrsart.KFZ
+    () => messstelleInfo.value.detektierteVerkehrsart === Verkehrsart.Kfz
   );
   const getFilteroptions = computed(() => filterOptions.value);
   const getDirection = computed(() => direction.value);

@@ -77,6 +77,7 @@ import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Verkehrsart } from "@/api/client";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
@@ -89,7 +90,6 @@ import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
-import Verkehrsart from "@/types/enum/Verkehrsart";
 import ZaehldatenIntervall, {
   ZaehldatenIntervallToSelect,
 } from "@/types/enum/ZaehldatenIntervall";
@@ -283,9 +283,9 @@ function resetFahrzeugOptions(): void {
     DefaultObjectCreator.createDefaultFahrzeugOptions();
 
   chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsart === Verkehrsart.KFZ;
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.Kfz;
   chosenOptions.value.fahrzeuge.radverkehr =
-    messstelle.value.detektierteVerkehrsart === Verkehrsart.RAD;
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.Rad;
 }
 
 /**

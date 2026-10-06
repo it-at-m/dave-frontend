@@ -1,4 +1,4 @@
-import type Verkehrsart from "@/types/enum/Verkehrsart";
+import type { Verkehrsart } from "@/api/client";
 
 export default interface SearchAndFilterOptionsDTO {
   searchInMessstellen: boolean;

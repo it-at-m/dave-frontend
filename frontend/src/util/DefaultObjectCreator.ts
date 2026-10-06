@@ -23,12 +23,12 @@ import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehlda
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
+import { Verkehrsart } from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
 import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
-import Verkehrsart from "@/types/enum/Verkehrsart";
 import Wetter from "@/types/enum/Wetter";
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
@@ -72,7 +72,7 @@ export default class DefaultObjectCreator {
   public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
     return {
       messfaehigkeiten: [],
-      detektierteVerkehrsart: Verkehrsart.KFZ,
+      detektierteVerkehrsart: Verkehrsart.Kfz,
       fahrzeugklasse: "",
       hersteller: "",
       id: "",
@@ -328,7 +328,7 @@ export default class DefaultObjectCreator {
     return {
       searchInMessstellen: true,
       searchInZaehlstellen: true,
-      messstelleVerkehrsart: [Verkehrsart.KFZ, Verkehrsart.RAD],
+      messstelleVerkehrsart: [Verkehrsart.Kfz, Verkehrsart.Rad],
     } as SearchAndFilterOptionsDTO;
   }
 
