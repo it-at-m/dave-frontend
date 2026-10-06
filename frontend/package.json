@@ -9,13 +9,11 @@
     "test:unit": "vitest run",
     "lint": "prettier . --check && eslint . && vue-tsc --noEmit --skipLibCheck",
     "fix:prettier": "prettier . --write",
-    "fix:eslint": "eslint . --fix",
-    "generate:client": "rm -rf src/api/client && npx @openapitools/openapi-generator-cli generate -i ./src/api/api-docs.json -g typescript-fetch -o ./src/api/client --global-property=apiDocs=false,modelDocs=false,apiTests=false,modelTests=false --additional-properties=supportsES6=true,usePromises=true,skipDefaultUserAgent=true,importFileExtension=.js"
+    "fix:eslint": "eslint . --fix"
   },
   "dependencies": {
     "@fontsource/roboto": "5.2.5",
     "@mdi/font": "7.4.47",
-    "@openapitools/openapi-generator-cli": "^2.41.0",
     "@vuepic/vue-datepicker": "^10.0.0",
     "dompurify": "3.4.14",
     "moment": "2.30.1",

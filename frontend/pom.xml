@@ -17,10 +17,46 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <exec.maven.plugin>3.5.0</exec.maven.plugin>
         <maven.clean.plugin>3.4.1</maven.clean.plugin>
+        <openapi.generator.version>7.14.0</openapi.generator.version>
         <sonar.sources>src,public</sonar.sources>
         <sonar.coverage.exclusions>src,public</sonar.coverage.exclusions>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi.generator.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-typescript-client</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/api/api-docs.json</inputSpec>
+                            <generatorName>typescript-fetch</generatorName>
+                            <output>${project.basedir}/src/api/client</output>
+                            <cleanupOutput>true</cleanupOutput>
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <additionalProperties>
+                                <supportsES6>true</supportsES6>
+                                <usePromises>true</usePromises>
+                                <skipDefaultUserAgent>true</skipDefaultUserAgent>
+                                <importFileExtension>.js</importFileExtension>
+                            </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
