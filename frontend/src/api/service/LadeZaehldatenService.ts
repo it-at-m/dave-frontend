@@ -1,10 +1,11 @@
+import type { LadeProcessedZaehldatenDTO, OptionsDTO } from "@/api/client";
 
-import { Configuration } from "@/api/client/runtime";
 import { LadeZaehldatenControllerApi } from "@/api/client/apis";
-import type {LadeProcessedZaehldatenDTO, OptionsDTO} from "@/api/client";
+import { Configuration } from "@/api/client/runtime";
+import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 
 export default class LadeZaehldatenService {
-  private static readonly BASE_PATH = "/api/dave-backend-service";
+  private static readonly BASE_PATH = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
 
   public static async ladeZaehldatenProcessed(
     zaehlungId: string,

@@ -181,6 +181,7 @@ models/OptionsQuerungsverkehrDTO.ts
 models/OptionsVerkehrsbeziehungDTO.ts
 models/OptionsmenueSettingsDTO.ts
 models/OptionsmenueSettingsRequestBody.ts
+models/PageMetadata.ts
 models/PagebreakAsset.ts
 models/PagedModelEntityModelChatMessage.ts
 models/PagedModelEntityModelChatMessageEmbedded.ts
