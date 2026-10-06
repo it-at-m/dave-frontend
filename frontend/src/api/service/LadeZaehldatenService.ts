@@ -1,20 +1,18 @@
-import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import FetchService from "@/api/service/FetchService";
+import { Configuration } from "@/api/client/runtime";
+import { LadeZaehldatenControllerApi } from "@/api/client/apis";
+import type {LadeProcessedZaehldatenDTO, OptionsDTO} from "@/api/client";
 
 export default class LadeZaehldatenService {
-  private static readonly ENDPOINT_LADE_ZAEHLDATEN_PROCESSED: string =
-    "api/dave-backend-service/lade-zaehldaten-processed";
+  private static readonly BASE_PATH = "/api/dave-backend-service";
 
-  public static ladeZaehldatenProcessed(
+  public static async ladeZaehldatenProcessed(
     zaehlungId: string,
-    options: ZaehlstelleOptionsDTO
+    options: OptionsDTO
   ): Promise<LadeProcessedZaehldatenDTO> {
-    return FetchService.postData(
-      options,
-      `${this.ENDPOINT_LADE_ZAEHLDATEN_PROCESSED}?zaehlung_id=${zaehlungId}`,
-      "Beim Laden der aufbereiteten Zählungsdaten ist ein Fehler aufgetreten."
-    );
+    const config = new Configuration({ basePath: this.BASE_PATH });
+    const api = new LadeZaehldatenControllerApi(config);
+
+    return api.ladeZaehldatenProcessed({ zaehlungId, optionsDTO: options });
   }
 }
