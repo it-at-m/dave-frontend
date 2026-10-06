@@ -117,17 +117,17 @@ onMounted(() => {
       );
     }
     if (selectedMessquerschnitte.value.length === 1) {
-      direction.value = selectedMessquerschnitte.value[0].fahrtrichtung;
+      direction.value = selectedMessquerschnitte.value[0].fahrtrichtung ?? "";
     } else if (selectedMessquerschnitte.value.length > 1) {
       const unique = [
         ...new Set(
           selectedMessquerschnitte.value.map(
-            (messquerschnitt) => messquerschnitt.fahrtrichtung
+            (messquerschnitt) => messquerschnitt.fahrtrichtung ?? ""
           )
         ),
       ];
       if (unique.length === 1) {
-        direction.value = selectedMessquerschnitte.value[0].fahrtrichtung;
+        direction.value = selectedMessquerschnitte.value[0].fahrtrichtung ?? "";
       } else {
         direction.value = messstelleUtils.alleRichtungen;
       }
@@ -185,9 +185,9 @@ const richtungValues = computed<Array<KeyVal>>(() => {
       (querschnitt: MessquerschnittAuswertungDTO) => {
         const keyVal: KeyVal = {
           title:
-            himmelsRichtungenTextLong.get(querschnitt.fahrtrichtung) ??
+            himmelsRichtungenTextLong.get(querschnitt.fahrtrichtung ?? "") ??
             "Fehler bei der Bestimmung der Himmelsrichtung.",
-          value: querschnitt.fahrtrichtung,
+          value: querschnitt.fahrtrichtung ?? "",
         };
         if (
           result.filter((entry) => {
@@ -208,7 +208,7 @@ const lageValues = computed<Array<KeyValObject>>(() => {
     selectedMessstellen.value[0].messquerschnitte.forEach(
       (querschnitt: MessquerschnittAuswertungDTO) => {
         if (
-          querschnitt.fahrtrichtung === direction.value ||
+          (querschnitt.fahrtrichtung ?? "") === direction.value ||
           direction.value === messstelleUtils.alleRichtungen
         ) {
           result.push({
@@ -263,7 +263,7 @@ function setDefaultDirection(): void {
   if (selectedMessstellen.value.length === 1) {
     if (selectedMessstellen.value[0].messquerschnitte.length === 1) {
       direction.value =
-        selectedMessstellen.value[0].messquerschnitte[0].fahrtrichtung;
+        selectedMessstellen.value[0].messquerschnitte[0].fahrtrichtung ?? "";
     } else if (selectedMessstellen.value[0].messquerschnitte.length > 1) {
       direction.value = messstelleUtils.alleRichtungen;
     }
