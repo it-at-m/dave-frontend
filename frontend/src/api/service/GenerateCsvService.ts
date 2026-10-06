@@ -1,8 +1,8 @@
 import type {
+  CsvDTO,
   MessstelleOptionsDTO as GeneratedMessstelleOptionsDTO,
   OptionsDTO,
 } from "@/api/client";
-import type CsvDTO from "@/types/common/CsvDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 

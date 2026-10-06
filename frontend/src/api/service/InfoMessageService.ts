@@ -1,4 +1,4 @@
-import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
+import type { InfoMessageDTO } from "@/api/client";
 
 import { InfoMessageControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";

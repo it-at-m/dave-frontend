@@ -1,8 +1,8 @@
 import type {
   AuffaelligeTageDTO,
   ValidateZeitraumAndTagestypForMessstelleDTO as GeneratedValidateZeitraumAndTagestypForMessstelleDTO,
+  ValidatedZeitraumAndTagestypDTO,
 } from "@/api/client";
-import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
 import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
 import { MessstelleOptionsmenuControllerApi } from "@/api/client/apis";

@@ -163,7 +163,7 @@
   />
 </template>
 <script setup lang="ts">
-import type CsvDTO from "@/types/common/CsvDTO";
+import type { CsvDTO } from "@/api/client";
 import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";

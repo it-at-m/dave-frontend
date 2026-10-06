@@ -86,12 +86,14 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  SucheComplexSuggestsDTO,
+  SucheWordSuggestDTO,
+  SucheZaehlstelleSuggestDTO,
+  SucheZaehlungSuggestDTO,
+} from "@/api/client";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
-import type SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
 import type SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
-import type SucheWordSuggestDTO from "@/types/suche/SucheWordSuggestDTO";
-import type SucheZaehlstelleSuggestDTO from "@/types/suche/SucheZaehlstelleSuggestDTO";
-import type SucheZaehlungSuggestDTO from "@/types/suche/SucheZaehlungSuggestDTO";
 
 import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
 import { computed, ref, watch } from "vue";

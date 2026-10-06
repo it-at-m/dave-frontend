@@ -56,10 +56,12 @@
 </template>
 
 <script setup lang="ts">
-import type { MessstelleAuswertungDTO } from "@/api/client";
+import type {
+  MessquerschnittAuswertungDTO,
+  MessstelleAuswertungDTO,
+} from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type KeyValObject from "@/types/common/KeyValObject";
-import type MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
 import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 

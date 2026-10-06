@@ -1,7 +1,9 @@
-import type { SearchAndFilterOptionsDTO as GeneratedSearchAndFilterOptionsDTO } from "@/api/client";
+import type {
+  SearchAndFilterOptionsDTO as GeneratedSearchAndFilterOptionsDTO,
+  SucheComplexSuggestsDTO,
+} from "@/api/client";
 import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
-import type SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
 
 import { SucheControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";

@@ -215,8 +215,7 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import type { LadeProcessedZaehldatenDTO } from "@/api/client";
-import type CsvDTO from "@/types/common/CsvDTO";
+import type { CsvDTO, LadeProcessedZaehldatenDTO } from "@/api/client";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";

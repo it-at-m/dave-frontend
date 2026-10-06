@@ -1,7 +1,9 @@
-import type { ConfigurationDTO } from "@/api/client";
-import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
-import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
-import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
+import type {
+  ConfigurationDTO,
+  InfoMessageDTO,
+  MapConfigurationDTO,
+  TenantConfigurationDTO,
+} from "@/api/client";
 import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
@@ -181,8 +183,6 @@ export default class DefaultObjectCreator {
       content: "",
       gueltig: false,
       id: "",
-      entityVersion: 0,
-      createdTime: "",
     };
   }
 
