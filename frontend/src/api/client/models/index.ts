@@ -188,6 +188,7 @@ export * from "./UnauffaelligerTagRequestBody";
 export * from "./UpdateStatusDTO";
 export * from "./ValidateZeitraumAndTagestypForMessstelleDTO";
 export * from "./ValidatedZeitraumAndTagestypDTO";
+export * from "./Verkehrsart";
 export * from "./Verkehrsbeziehung";
 export * from "./VerkehrsbeziehungValue";
 export * from "./VerkehrsbeziehungVisumDTO";

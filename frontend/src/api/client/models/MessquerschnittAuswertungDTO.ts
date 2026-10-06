@@ -25,7 +25,7 @@ export interface MessquerschnittAuswertungDTO {
    * @type {string}
    * @memberof MessquerschnittAuswertungDTO
    */
-  mqId?: string;
+  mqId: string;
   /**
    *
    * @type {string}
@@ -46,6 +46,7 @@ export interface MessquerschnittAuswertungDTO {
 export function instanceOfMessquerschnittAuswertungDTO(
   value: object
 ): value is MessquerschnittAuswertungDTO {
+  if (!("mqId" in value) || value["mqId"] === undefined) return false;
   return true;
 }
 
@@ -63,7 +64,7 @@ export function MessquerschnittAuswertungDTOFromJSONTyped(
     return json;
   }
   return {
-    mqId: json["mqId"] == null ? undefined : json["mqId"],
+    mqId: json["mqId"],
     fahrtrichtung:
       json["fahrtrichtung"] == null ? undefined : json["fahrtrichtung"],
     standort: json["standort"] == null ? undefined : json["standort"],

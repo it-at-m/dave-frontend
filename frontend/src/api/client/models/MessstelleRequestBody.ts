@@ -15,6 +15,7 @@
 import type { GeoPoint } from "./GeoPoint";
 import type { Messfaehigkeit } from "./Messfaehigkeit";
 import type { Messquerschnitt } from "./Messquerschnitt";
+import type { Verkehrsart } from "./Verkehrsart";
 
 import { mapValues } from "../runtime";
 import {
@@ -35,6 +36,12 @@ import {
   MessquerschnittToJSON,
   MessquerschnittToJSONTyped,
 } from "./Messquerschnitt";
+import {
+  VerkehrsartFromJSON,
+  VerkehrsartFromJSONTyped,
+  VerkehrsartToJSON,
+  VerkehrsartToJSONTyped,
+} from "./Verkehrsart";
 
 /**
  *
@@ -98,10 +105,10 @@ export interface MessstelleRequestBody {
   fahrzeugklasse?: MessstelleRequestBodyFahrzeugklasseEnum;
   /**
    *
-   * @type {string}
+   * @type {Verkehrsart}
    * @memberof MessstelleRequestBody
    */
-  detektierteVerkehrsart?: MessstelleRequestBodyDetektierteVerkehrsartEnum;
+  detektierteVerkehrsart?: Verkehrsart;
   /**
    *
    * @type {string}
@@ -202,17 +209,6 @@ export type MessstelleRequestBodyFahrzeugklasseEnum =
   (typeof MessstelleRequestBodyFahrzeugklasseEnum)[keyof typeof MessstelleRequestBodyFahrzeugklasseEnum];
 
 /**
- * @export
- */
-export const MessstelleRequestBodyDetektierteVerkehrsartEnum = {
-  Kfz: "KFZ",
-  Rad: "RAD",
-  Unbekannt: "UNBEKANNT",
-} as const;
-export type MessstelleRequestBodyDetektierteVerkehrsartEnum =
-  (typeof MessstelleRequestBodyDetektierteVerkehrsartEnum)[keyof typeof MessstelleRequestBodyDetektierteVerkehrsartEnum];
-
-/**
  * Check if a given object implements the MessstelleRequestBody interface.
  */
 export function instanceOfMessstelleRequestBody(
@@ -253,7 +249,7 @@ export function MessstelleRequestBodyFromJSONTyped(
     detektierteVerkehrsart:
       json["detektierteVerkehrsart"] == null
         ? undefined
-        : json["detektierteVerkehrsart"],
+        : VerkehrsartFromJSON(json["detektierteVerkehrsart"]),
     hersteller: json["hersteller"] == null ? undefined : json["hersteller"],
     datumLetztePlausibleMessung:
       json["datumLetztePlausibleMessung"] == null
@@ -311,7 +307,7 @@ export function MessstelleRequestBodyToJSONTyped(
     stadtbezirkNummer: value["stadtbezirkNummer"],
     bemerkung: value["bemerkung"],
     fahrzeugklasse: value["fahrzeugklasse"],
-    detektierteVerkehrsart: value["detektierteVerkehrsart"],
+    detektierteVerkehrsart: VerkehrsartToJSON(value["detektierteVerkehrsart"]),
     hersteller: value["hersteller"],
     datumLetztePlausibleMessung:
       value["datumLetztePlausibleMessung"] == null

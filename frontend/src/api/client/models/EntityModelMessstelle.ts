@@ -16,6 +16,7 @@ import type { GeoPoint } from "./GeoPoint";
 import type { Link } from "./Link";
 import type { Messfaehigkeit } from "./Messfaehigkeit";
 import type { Messquerschnitt } from "./Messquerschnitt";
+import type { Verkehrsart } from "./Verkehrsart";
 
 import { mapValues } from "../runtime";
 import {
@@ -42,6 +43,12 @@ import {
   MessquerschnittToJSON,
   MessquerschnittToJSONTyped,
 } from "./Messquerschnitt";
+import {
+  VerkehrsartFromJSON,
+  VerkehrsartFromJSONTyped,
+  VerkehrsartToJSON,
+  VerkehrsartToJSONTyped,
+} from "./Verkehrsart";
 
 /**
  *
@@ -99,10 +106,10 @@ export interface EntityModelMessstelle {
   fahrzeugklasse?: EntityModelMessstelleFahrzeugklasseEnum;
   /**
    *
-   * @type {string}
+   * @type {Verkehrsart}
    * @memberof EntityModelMessstelle
    */
-  detektierteVerkehrsart?: EntityModelMessstelleDetektierteVerkehrsartEnum;
+  detektierteVerkehrsart?: Verkehrsart;
   /**
    *
    * @type {string}
@@ -209,17 +216,6 @@ export type EntityModelMessstelleFahrzeugklasseEnum =
   (typeof EntityModelMessstelleFahrzeugklasseEnum)[keyof typeof EntityModelMessstelleFahrzeugklasseEnum];
 
 /**
- * @export
- */
-export const EntityModelMessstelleDetektierteVerkehrsartEnum = {
-  Kfz: "KFZ",
-  Rad: "RAD",
-  Unbekannt: "UNBEKANNT",
-} as const;
-export type EntityModelMessstelleDetektierteVerkehrsartEnum =
-  (typeof EntityModelMessstelleDetektierteVerkehrsartEnum)[keyof typeof EntityModelMessstelleDetektierteVerkehrsartEnum];
-
-/**
  * Check if a given object implements the EntityModelMessstelle interface.
  */
 export function instanceOfEntityModelMessstelle(
@@ -259,7 +255,7 @@ export function EntityModelMessstelleFromJSONTyped(
     detektierteVerkehrsart:
       json["detektierteVerkehrsart"] == null
         ? undefined
-        : json["detektierteVerkehrsart"],
+        : VerkehrsartFromJSON(json["detektierteVerkehrsart"]),
     hersteller: json["hersteller"] == null ? undefined : json["hersteller"],
     datumLetztePlausibleMessung:
       json["datumLetztePlausibleMessung"] == null
@@ -320,7 +316,7 @@ export function EntityModelMessstelleToJSONTyped(
     stadtbezirkNummer: value["stadtbezirkNummer"],
     bemerkung: value["bemerkung"],
     fahrzeugklasse: value["fahrzeugklasse"],
-    detektierteVerkehrsart: value["detektierteVerkehrsart"],
+    detektierteVerkehrsart: VerkehrsartToJSON(value["detektierteVerkehrsart"]),
     hersteller: value["hersteller"],
     datumLetztePlausibleMessung:
       value["datumLetztePlausibleMessung"] == null

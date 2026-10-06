@@ -14,6 +14,7 @@
 
 import type { ReadMessfaehigkeitDTO } from "./ReadMessfaehigkeitDTO";
 import type { ReadMessquerschnittDTO } from "./ReadMessquerschnittDTO";
+import type { Verkehrsart } from "./Verkehrsart";
 
 import { mapValues } from "../runtime";
 import {
@@ -28,6 +29,12 @@ import {
   ReadMessquerschnittDTOToJSON,
   ReadMessquerschnittDTOToJSONTyped,
 } from "./ReadMessquerschnittDTO";
+import {
+  VerkehrsartFromJSON,
+  VerkehrsartFromJSONTyped,
+  VerkehrsartToJSON,
+  VerkehrsartToJSONTyped,
+} from "./Verkehrsart";
 
 /**
  *
@@ -73,10 +80,10 @@ export interface ReadMessstelleInfoDTO {
   fahrzeugklasse?: ReadMessstelleInfoDTOFahrzeugklasseEnum;
   /**
    *
-   * @type {string}
+   * @type {Verkehrsart}
    * @memberof ReadMessstelleInfoDTO
    */
-  detektierteVerkehrsart?: ReadMessstelleInfoDTODetektierteVerkehrsartEnum;
+  detektierteVerkehrsart?: Verkehrsart;
   /**
    *
    * @type {string}
@@ -152,17 +159,6 @@ export type ReadMessstelleInfoDTOFahrzeugklasseEnum =
   (typeof ReadMessstelleInfoDTOFahrzeugklasseEnum)[keyof typeof ReadMessstelleInfoDTOFahrzeugklasseEnum];
 
 /**
- * @export
- */
-export const ReadMessstelleInfoDTODetektierteVerkehrsartEnum = {
-  Kfz: "KFZ",
-  Rad: "RAD",
-  Unbekannt: "UNBEKANNT",
-} as const;
-export type ReadMessstelleInfoDTODetektierteVerkehrsartEnum =
-  (typeof ReadMessstelleInfoDTODetektierteVerkehrsartEnum)[keyof typeof ReadMessstelleInfoDTODetektierteVerkehrsartEnum];
-
-/**
  * Check if a given object implements the ReadMessstelleInfoDTO interface.
  */
 export function instanceOfReadMessstelleInfoDTO(
@@ -196,7 +192,7 @@ export function ReadMessstelleInfoDTOFromJSONTyped(
     detektierteVerkehrsart:
       json["detektierteVerkehrsart"] == null
         ? undefined
-        : json["detektierteVerkehrsart"],
+        : VerkehrsartFromJSON(json["detektierteVerkehrsart"]),
     hersteller: json["hersteller"] == null ? undefined : json["hersteller"],
     longitude: json["longitude"] == null ? undefined : json["longitude"],
     latitude: json["latitude"] == null ? undefined : json["latitude"],
@@ -247,7 +243,7 @@ export function ReadMessstelleInfoDTOToJSONTyped(
     stadtbezirk: value["stadtbezirk"],
     stadtbezirkNummer: value["stadtbezirkNummer"],
     fahrzeugklasse: value["fahrzeugklasse"],
-    detektierteVerkehrsart: value["detektierteVerkehrsart"],
+    detektierteVerkehrsart: VerkehrsartToJSON(value["detektierteVerkehrsart"]),
     hersteller: value["hersteller"],
     longitude: value["longitude"],
     latitude: value["latitude"],

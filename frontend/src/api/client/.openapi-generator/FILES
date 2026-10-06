@@ -236,6 +236,7 @@ models/UnauffaelligerTagRequestBody.ts
 models/UpdateStatusDTO.ts
 models/ValidateZeitraumAndTagestypForMessstelleDTO.ts
 models/ValidatedZeitraumAndTagestypDTO.ts
+models/Verkehrsart.ts
 models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts

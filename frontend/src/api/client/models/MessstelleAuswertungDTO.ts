@@ -13,6 +13,7 @@
  */
 
 import type { MessquerschnittAuswertungDTO } from "./MessquerschnittAuswertungDTO";
+import type { Verkehrsart } from "./Verkehrsart";
 
 import { mapValues } from "../runtime";
 import {
@@ -21,6 +22,12 @@ import {
   MessquerschnittAuswertungDTOToJSON,
   MessquerschnittAuswertungDTOToJSONTyped,
 } from "./MessquerschnittAuswertungDTO";
+import {
+  VerkehrsartFromJSON,
+  VerkehrsartFromJSONTyped,
+  VerkehrsartToJSON,
+  VerkehrsartToJSONTyped,
+} from "./Verkehrsart";
 
 /**
  *
@@ -48,22 +55,11 @@ export interface MessstelleAuswertungDTO {
   messquerschnitte: Array<MessquerschnittAuswertungDTO>;
   /**
    *
-   * @type {string}
+   * @type {Verkehrsart}
    * @memberof MessstelleAuswertungDTO
    */
-  detektierteVerkehrsart?: MessstelleAuswertungDTODetektierteVerkehrsartEnum;
+  detektierteVerkehrsart?: Verkehrsart;
 }
-
-/**
- * @export
- */
-export const MessstelleAuswertungDTODetektierteVerkehrsartEnum = {
-  Kfz: "KFZ",
-  Rad: "RAD",
-  Unbekannt: "UNBEKANNT",
-} as const;
-export type MessstelleAuswertungDTODetektierteVerkehrsartEnum =
-  (typeof MessstelleAuswertungDTODetektierteVerkehrsartEnum)[keyof typeof MessstelleAuswertungDTODetektierteVerkehrsartEnum];
 
 /**
  * Check if a given object implements the MessstelleAuswertungDTO interface.
@@ -99,7 +95,7 @@ export function MessstelleAuswertungDTOFromJSONTyped(
     detektierteVerkehrsart:
       json["detektierteVerkehrsart"] == null
         ? undefined
-        : json["detektierteVerkehrsart"],
+        : VerkehrsartFromJSON(json["detektierteVerkehrsart"]),
   };
 }
 
@@ -123,6 +119,6 @@ export function MessstelleAuswertungDTOToJSONTyped(
     messquerschnitte: (value["messquerschnitte"] as Array<any>).map(
       MessquerschnittAuswertungDTOToJSON
     ),
-    detektierteVerkehrsart: value["detektierteVerkehrsart"],
+    detektierteVerkehrsart: VerkehrsartToJSON(value["detektierteVerkehrsart"]),
   };
 }
