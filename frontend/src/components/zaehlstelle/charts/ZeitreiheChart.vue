@@ -147,9 +147,10 @@ const yAxisInterval = computed(() => {
   return 5;
 });
 
+// Zusammenbauen der x-Achsen Werte aus dem Datum und dem evtl. vorhandenen FehlendeWerteMeldung
 const xAxis = computed(() => {
   return props.zeitreiheDaten.datum.map(
-    (date, index) => date + props.zeitreiheDaten.fehlendeWerteMeldung[index]
+    (date, index) => date + (props.zeitreiheDaten.fehlendeWerteMeldung?.[index] ?? "")
   );
 });
 
@@ -463,12 +464,18 @@ function downloadCsv() {
   downloadUtils.downloadCsv(rows.join("\n"), `zeitreihe.csv`);
 }
 
+/**
+ * Beschreibt eine auswählbare Zeitreihenspalte mit ihren Originalwerten.
+ */
 type DataViewColumn = {
   name: string;
   values: Array<number | null>;
   fahrzeug?: Fahrzeug;
 };
 
+/**
+ * Erstellt die ausgewählten Zeitreihen-Spalten für Datenansicht und CSV-Export.
+ */
 function getDataViewColumns(): DataViewColumn[] {
   const columns: DataViewColumn[] = [];
 
@@ -528,11 +535,17 @@ function getDataViewColumns(): DataViewColumn[] {
   return columns;
 }
 
+/**
+ * Formatiert einen Zeitreihenwert anhand seiner Verfügbarkeit für die Ausgabe.
+ * Wenn ein Eintrag für die Fahrzeugkategorie im Array tageswertNichtVorhanden existiert, dann wird der Wert "Tageswert nicht vorh." ausgegeben.
+ * Wenn kein Eintrag für die Fahrzeugkategorie existiert, der Wert aber null ist, dann wird "nicht vorh." ausgegeben.
+ */
 function getDataViewValue(
   value: number | null,
   index: number,
   fahrzeug?: Fahrzeug
 ): number | string {
+
   if (
     fahrzeug &&
     props.zeitreiheDaten.tageswertNichtVorhanden[index]?.includes(fahrzeug)
