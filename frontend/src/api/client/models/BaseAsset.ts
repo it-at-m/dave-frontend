@@ -160,36 +160,41 @@ export function BaseAssetToJSONTyped(
 
   if (!ignoreDiscriminator) {
     switch (value["type"]) {
-      case "DatatableAsset":
+      case BaseAssetTypeEnum.Datatable:
         return DatatableAssetToJSONTyped(
           value as DatatableAsset,
           ignoreDiscriminator
         );
-      case "HeadingAsset":
-        return HeadingAssetToJSONTyped(
-          value as HeadingAsset,
-          ignoreDiscriminator
-        );
-      case "ImageAsset":
-        return ImageAssetToJSONTyped(value as ImageAsset, ignoreDiscriminator);
-      case "MessstelleDatatableAsset":
+      case BaseAssetTypeEnum.DatatableMessstelle:
         return MessstelleDatatableAssetToJSONTyped(
           value as MessstelleDatatableAsset,
           ignoreDiscriminator
         );
-      case "NewlineAsset":
+      case BaseAssetTypeEnum.Heading1:
+      case BaseAssetTypeEnum.Heading2:
+      case BaseAssetTypeEnum.Heading3:
+      case BaseAssetTypeEnum.Heading4:
+      case BaseAssetTypeEnum.Heading5:
+        return HeadingAssetToJSONTyped(
+          value as HeadingAsset,
+          ignoreDiscriminator
+        );
+      case BaseAssetTypeEnum.Image:
+      case BaseAssetTypeEnum.Logo:
+        return ImageAssetToJSONTyped(value as ImageAsset, ignoreDiscriminator);
+      case BaseAssetTypeEnum.Newline:
         return NewlineAssetToJSONTyped(
           value as NewlineAsset,
           ignoreDiscriminator
         );
-      case "PagebreakAsset":
+      case BaseAssetTypeEnum.Pagebreak:
         return PagebreakAssetToJSONTyped(
           value as PagebreakAsset,
           ignoreDiscriminator
         );
-      case "TextAsset":
+      case BaseAssetTypeEnum.Text:
         return TextAssetToJSONTyped(value as TextAsset, ignoreDiscriminator);
-      case "ZaehlungskenngroessenAsset":
+      case BaseAssetTypeEnum.Zaehlungskenngroessen:
         return ZaehlungskenngroessenAssetToJSONTyped(
           value as ZaehlungskenngroessenAsset,
           ignoreDiscriminator
