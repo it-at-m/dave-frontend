@@ -25,24 +25,6 @@ export interface Hochrechnungsfaktor {
    * @type {string}
    * @memberof Hochrechnungsfaktor
    */
-  id?: string;
-  /**
-   *
-   * @type {Date}
-   * @memberof Hochrechnungsfaktor
-   */
-  createdTime?: Date;
-  /**
-   *
-   * @type {number}
-   * @memberof Hochrechnungsfaktor
-   */
-  version?: number;
-  /**
-   *
-   * @type {string}
-   * @memberof Hochrechnungsfaktor
-   */
   matrix?: string;
   /**
    *
@@ -68,18 +50,6 @@ export interface Hochrechnungsfaktor {
    * @memberof Hochrechnungsfaktor
    */
   active?: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Hochrechnungsfaktor
-   */
-  defaultFaktor?: boolean;
-  /**
-   *
-   * @type {number}
-   * @memberof Hochrechnungsfaktor
-   */
-  entityVersion?: number;
 }
 
 /**
@@ -103,19 +73,11 @@ export function HochrechnungsfaktorFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
-    version: json["version"] == null ? undefined : json["version"],
     matrix: json["matrix"] == null ? undefined : json["matrix"],
     kfz: json["kfz"] == null ? undefined : json["kfz"],
     sv: json["sv"] == null ? undefined : json["sv"],
     gv: json["gv"] == null ? undefined : json["gv"],
     active: json["active"] == null ? undefined : json["active"],
-    defaultFaktor:
-      json["defaultFaktor"] == null ? undefined : json["defaultFaktor"],
-    entityVersion:
-      json["entityVersion"] == null ? undefined : json["entityVersion"],
   };
 }
 
@@ -132,18 +94,10 @@ export function HochrechnungsfaktorToJSONTyped(
   }
 
   return {
-    id: value["id"],
-    createdTime:
-      value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
-    version: value["version"],
     matrix: value["matrix"],
     kfz: value["kfz"],
     sv: value["sv"],
     gv: value["gv"],
     active: value["active"],
-    defaultFaktor: value["defaultFaktor"],
-    entityVersion: value["entityVersion"],
   };
 }
