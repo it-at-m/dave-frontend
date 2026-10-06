@@ -77,7 +77,7 @@ watch(
           (missingTageswerte) => missingTageswerte.includes(Fahrzeug.FUSS))
     ) {
       snackbarStore.showInfo(
-        "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
+        "Für den Fußverkehr ist nur bei Ganztageszählungen ein Tageswert vorhanden"
       );
     }
   },
