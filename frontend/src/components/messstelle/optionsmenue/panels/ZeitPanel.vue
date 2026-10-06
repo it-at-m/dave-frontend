@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
+import type { AuffaelligeTageDTO } from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
@@ -90,7 +90,8 @@ onMounted(() => {
     messstelleInfo.value.mstId
   ).then(
     (response: AuffaelligeTageDTO) =>
-      (auffaelligeTage.value = response.auffaelligeTage)
+      (auffaelligeTage.value =
+        response.auffaelligeTage?.map((date) => new Date(date)) ?? [])
   );
 });
 
@@ -98,7 +99,7 @@ const messstelleInfo = computed<MessstelleInfoDTO>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
-const auffaelligeTage = ref<Array<string>>([]);
+const auffaelligeTage = ref<Array<Date>>([]);
 
 const isZeitraumGreaterThanFiveYears = computed(() => {
   return dateUtils.isGreaterThanFiveYears(
