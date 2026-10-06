@@ -1,4 +1,4 @@
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
+import type { ConfigurationDTO } from "@/api/client";
 
 import { ConfigurationControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";

@@ -1,5 +1,5 @@
+import type { ConfigurationDTO } from "@/api/client";
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
 import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
 import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";

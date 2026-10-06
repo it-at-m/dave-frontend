@@ -81,8 +81,8 @@
 </template>
 
 <script setup lang="ts">
+import type { ConfigurationDTO } from "@/api/client";
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
 import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
 
 import { ref } from "vue";

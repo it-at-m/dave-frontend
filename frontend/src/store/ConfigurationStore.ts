@@ -1,4 +1,4 @@
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
+import type { ConfigurationDTO } from "@/api/client";
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
