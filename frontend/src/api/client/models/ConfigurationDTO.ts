@@ -40,13 +40,13 @@ export interface ConfigurationDTO {
    * @type {ZaehlstelleConfigurationDTO}
    * @memberof ConfigurationDTO
    */
-  zaehlstelle?: ZaehlstelleConfigurationDTO;
+  zaehlstelle: ZaehlstelleConfigurationDTO;
   /**
    *
    * @type {TenantConfigurationDTO}
    * @memberof ConfigurationDTO
    */
-  tenant?: TenantConfigurationDTO;
+  tenant: TenantConfigurationDTO;
 }
 
 /**
@@ -55,6 +55,9 @@ export interface ConfigurationDTO {
 export function instanceOfConfigurationDTO(
   value: object
 ): value is ConfigurationDTO {
+  if (!("zaehlstelle" in value) || value["zaehlstelle"] === undefined)
+    return false;
+  if (!("tenant" in value) || value["tenant"] === undefined) return false;
   return true;
 }
 
@@ -70,14 +73,8 @@ export function ConfigurationDTOFromJSONTyped(
     return json;
   }
   return {
-    zaehlstelle:
-      json["zaehlstelle"] == null
-        ? undefined
-        : ZaehlstelleConfigurationDTOFromJSON(json["zaehlstelle"]),
-    tenant:
-      json["tenant"] == null
-        ? undefined
-        : TenantConfigurationDTOFromJSON(json["tenant"]),
+    zaehlstelle: ZaehlstelleConfigurationDTOFromJSON(json["zaehlstelle"]),
+    tenant: TenantConfigurationDTOFromJSON(json["tenant"]),
   };
 }
 

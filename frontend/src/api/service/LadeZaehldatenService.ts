@@ -3,17 +3,21 @@ import type { LadeProcessedZaehldatenDTO, OptionsDTO } from "@/api/client";
 import { LadeZaehldatenControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
+import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
-export default class LadeZaehldatenService {
-  private static readonly BASE_PATH = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+export default class {
+  private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+  private static readonly API = new LadeZaehldatenControllerApi(
+    new Configuration({ basePath: this.ENDPOINT })
+  );
 
   public static async ladeZaehldatenProcessed(
     zaehlungId: string,
     options: OptionsDTO
   ): Promise<LadeProcessedZaehldatenDTO> {
-    const config = new Configuration({ basePath: this.BASE_PATH });
-    const api = new LadeZaehldatenControllerApi(config);
-
-    return api.ladeZaehldatenProcessed({ zaehlungId, optionsDTO: options });
+    return handleOpenApiError(
+      this.API.ladeZaehldatenProcessed({ zaehlungId, optionsDTO: options }),
+      "Beim Laden der aufbereiteten Zähldaten ist ein Fehler aufgetreten."
+    );
   }
 }

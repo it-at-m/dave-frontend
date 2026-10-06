@@ -32,47 +32,47 @@ import {
 /**
  *
  * @export
- * @interface GeneratePdf1Request
+ * @interface GenerateMessstellePdfRequest
  */
-export interface GeneratePdf1Request {
+export interface GenerateMessstellePdfRequest {
   /**
    *
    * @type {string}
-   * @memberof GeneratePdf1Request
+   * @memberof GenerateMessstellePdfRequest
    */
   department: string;
   /**
    *
    * @type {MessstelleOptionsDTO}
-   * @memberof GeneratePdf1Request
+   * @memberof GenerateMessstellePdfRequest
    */
   options: MessstelleOptionsDTO;
   /**
    *
    * @type {LadeProcessedMesswerteDTO}
-   * @memberof GeneratePdf1Request
+   * @memberof GenerateMessstellePdfRequest
    */
   messswerte: LadeProcessedMesswerteDTO;
   /**
    *
    * @type {string}
-   * @memberof GeneratePdf1Request
+   * @memberof GenerateMessstellePdfRequest
    */
   chartAsBase64Png?: string;
   /**
    *
    * @type {string}
-   * @memberof GeneratePdf1Request
+   * @memberof GenerateMessstellePdfRequest
    */
   schematischeUebersichtAsBase64Png?: string;
 }
 
 /**
- * Check if a given object implements the GeneratePdf1Request interface.
+ * Check if a given object implements the GenerateMessstellePdfRequest interface.
  */
-export function instanceOfGeneratePdf1Request(
+export function instanceOfGenerateMessstellePdfRequest(
   value: object
-): value is GeneratePdf1Request {
+): value is GenerateMessstellePdfRequest {
   if (!("department" in value) || value["department"] === undefined)
     return false;
   if (!("options" in value) || value["options"] === undefined) return false;
@@ -81,14 +81,16 @@ export function instanceOfGeneratePdf1Request(
   return true;
 }
 
-export function GeneratePdf1RequestFromJSON(json: any): GeneratePdf1Request {
-  return GeneratePdf1RequestFromJSONTyped(json, false);
+export function GenerateMessstellePdfRequestFromJSON(
+  json: any
+): GenerateMessstellePdfRequest {
+  return GenerateMessstellePdfRequestFromJSONTyped(json, false);
 }
 
-export function GeneratePdf1RequestFromJSONTyped(
+export function GenerateMessstellePdfRequestFromJSONTyped(
   json: any,
   ignoreDiscriminator: boolean
-): GeneratePdf1Request {
+): GenerateMessstellePdfRequest {
   if (json == null) {
     return json;
   }
@@ -105,12 +107,14 @@ export function GeneratePdf1RequestFromJSONTyped(
   };
 }
 
-export function GeneratePdf1RequestToJSON(json: any): GeneratePdf1Request {
-  return GeneratePdf1RequestToJSONTyped(json, false);
+export function GenerateMessstellePdfRequestToJSON(
+  json: any
+): GenerateMessstellePdfRequest {
+  return GenerateMessstellePdfRequestToJSONTyped(json, false);
 }
 
-export function GeneratePdf1RequestToJSONTyped(
-  value?: GeneratePdf1Request | null,
+export function GenerateMessstellePdfRequestToJSONTyped(
+  value?: GenerateMessstellePdfRequest | null,
   ignoreDiscriminator: boolean = false
 ): any {
   if (value == null) {

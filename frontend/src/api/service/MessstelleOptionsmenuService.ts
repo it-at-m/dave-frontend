@@ -1,16 +1,24 @@
+import type { ValidateZeitraumAndTagestypForMessstelleDTO as GeneratedValidateZeitraumAndTagestypForMessstelleDTO } from "@/api/client";
 import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
 import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
 import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
-import FetchService from "@/api/service/FetchService";
+import { MessstelleOptionsmenuControllerApi } from "@/api/client/apis";
+import { Configuration } from "@/api/client/runtime";
+import BaseUrlProvider from "@/api/util/BaseUrlProvider";
+import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
 export default class MessstelleOptionsmenuService {
-  private static readonly ENDPOINT: string =
-    "api/dave-backend-service/messstelle-optionsmenu";
+  private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+  private static readonly API = new MessstelleOptionsmenuControllerApi(
+    new Configuration({ basePath: this.ENDPOINT })
+  );
 
   static getAuffaelligeTage(mstId: string): Promise<AuffaelligeTageDTO> {
-    return FetchService.getData(
-      `${this.ENDPOINT}/auffaellige-tage?mst_id=${mstId}`,
+    return handleOpenApiError(
+      this.API.getAuffaelligeTageRaw({ mstId }).then((response) =>
+        response.raw.json()
+      ),
       "Beim Laden der auffälligen Tage ist ein Fehler aufgetreten."
     );
   }
@@ -18,9 +26,11 @@ export default class MessstelleOptionsmenuService {
   static validateZeitraumAndTagestyp(
     data: ValidateZeitraumAndTagestypForMessstelleDTO
   ): Promise<ValidatedZeitraumAndTagestypDTO> {
-    return FetchService.postData(
-      data,
-      `${this.ENDPOINT}/validate-zeitraum-and-tagestyp`,
+    return handleOpenApiError(
+      this.API.validateZeitraumAndTagestypRaw({
+        validateZeitraumAndTagestypForMessstelleDTO:
+          data as unknown as GeneratedValidateZeitraumAndTagestypForMessstelleDTO,
+      }).then((response) => response.raw.json()),
       "Beim Validieren des Zeitraums und Tagestyps ist ein Fehler aufgetreten."
     );
   }

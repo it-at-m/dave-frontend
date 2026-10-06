@@ -1,16 +1,23 @@
 import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
 
-import FetchService from "@/api/service/FetchService";
+import { OptionsmenueSettingsControllerApi } from "@/api/client/apis";
+import { Configuration } from "@/api/client/runtime";
+import BaseUrlProvider from "@/api/util/BaseUrlProvider";
+import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
 export default class OptionsmenueSettingsService {
-  private static readonly ENDPOINT: string =
-    "api/dave-backend-service/settings-optionsmenue/messstelle/all";
+  private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+  private static readonly API = new OptionsmenueSettingsControllerApi(
+    new Configuration({ basePath: this.ENDPOINT })
+  );
 
   static getAllOptionsmenueSettingsForMessstellen(): Promise<
     Array<OptionsmenueSettingsDTO>
   > {
-    return FetchService.getData(
-      this.ENDPOINT,
+    return handleOpenApiError(
+      this.API.getAllOptionsmenueSettingsForMessstellenRaw().then((response) =>
+        response.raw.json()
+      ),
       "Beim Holen der Einstellungen des Optionsmenüs ist ein Fehler aufgetreten."
     );
   }

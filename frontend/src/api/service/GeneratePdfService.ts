@@ -1,19 +1,36 @@
-import FetchService from "@/api/service/FetchService";
+import type {
+  GenerateMessstellePdfRequest,
+  GeneratePdfAuswertungRequest,
+  GeneratePdfReportRequest,
+  GenerateZaehlungPdfRequest,
+} from "@/api/client";
+
+import { GeneratePdfControllerApi } from "@/api/client/apis";
+import { Configuration } from "@/api/client/runtime";
+import BaseUrlProvider from "@/api/util/BaseUrlProvider";
+import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
 export default class GeneratePdfService {
-  private static readonly ENDPOINT: string =
-    "api/dave-backend-service/generate-pdf";
+  private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+  private static readonly API = new GeneratePdfControllerApi(
+    new Configuration({ basePath: this.ENDPOINT })
+  );
 
   static postPdfCustomFetchTemplateZaehlung(
     charttype: string,
     zaehlungId: string,
     data: FormData
   ): Promise<Blob> {
-    return this.postPdfCustomFetchTemplate(
-      "zaehlung",
-      charttype,
-      zaehlungId,
-      data
+    return handleOpenApiError(
+      this.API.generateZaehlungPdfRaw(
+        {
+          fachId: zaehlungId,
+          charttype,
+          generateZaehlungPdfRequest: {} as GenerateZaehlungPdfRequest,
+        },
+        { body: data, headers: {} }
+      ).then((response) => response.raw.blob()),
+      "Beim generieren der PDF ist ein Fehler aufgetreten."
     );
   }
 
@@ -22,41 +39,37 @@ export default class GeneratePdfService {
     messstelleId: string,
     data: FormData
   ): Promise<Blob> {
-    return this.postPdfCustomFetchTemplate(
-      "messstelle",
-      charttype,
-      messstelleId,
-      data
+    return handleOpenApiError(
+      this.API.generateMessstellePdfRaw(
+        {
+          fachId: messstelleId,
+          charttype,
+          generateMessstellePdfRequest: {} as GenerateMessstellePdfRequest,
+        },
+        { body: data, headers: {} }
+      ).then((response) => response.raw.blob()),
+      "Beim Generieren der PDF ist ein Fehler aufgetreten."
     );
   }
   static postPdfCustomFetchTemplateGesamtauswertung(
     data: FormData
   ): Promise<Blob> {
-    return FetchService.postForPdf(
-      data,
-      `${this.ENDPOINT}/auswertung`,
+    return handleOpenApiError(
+      this.API.generatePdfAuswertungRaw(
+        { generatePdfAuswertungRequest: {} as GeneratePdfAuswertungRequest },
+        { body: data, headers: {} }
+      ).then((response) => response.raw.blob()),
       "Beim Generieren der PDF ist ein Fehler aufgetreten."
     );
   }
 
-  private static postPdfCustomFetchTemplate(
-    type: string,
-    charttype: string,
-    fachId: string,
-    data: FormData
-  ): Promise<Blob> {
-    return FetchService.postForPdf(
-      data,
-      `${this.ENDPOINT}/${type}?charttype=${charttype}&fach_id=${fachId}`,
-      "Beim generieren der PDF ist ein Fehler aufgetreten."
-    );
-  }
-
   static postPdfCustomFetchReport(data: FormData): Promise<Blob> {
-    return FetchService.postForPdf(
-      data,
-      `${this.ENDPOINT}/report`,
-      "Beim generieren der PDF ist ein Fehler aufgetreten."
+    return handleOpenApiError(
+      this.API.generatePdfReportRaw(
+        { generatePdfReportRequest: {} as GeneratePdfReportRequest },
+        { body: data, headers: {} }
+      ).then((response) => response.raw.blob()),
+      "Beim Generieren der PDF ist ein Fehler aufgetreten."
     );
   }
 }

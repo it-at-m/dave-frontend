@@ -1,19 +1,29 @@
+import type { SearchAndFilterOptionsDTO as GeneratedSearchAndFilterOptionsDTO } from "@/api/client";
 import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type SucheComplexSuggestsDTO from "@/types/suche/SucheComplexSuggestsDTO";
 
-import FetchService from "@/api/service/FetchService";
+import { SucheControllerApi } from "@/api/client/apis";
+import { Configuration } from "@/api/client/runtime";
+import BaseUrlProvider from "@/api/util/BaseUrlProvider";
+import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
 export default class SucheService {
-  private static readonly ENDPOINT: string = "api/dave-backend-service";
+  private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+  private static readonly API = new SucheControllerApi(
+    new Configuration({ basePath: this.ENDPOINT })
+  );
 
   static getSuggestions(
     query: string,
     searchAndFilterOptions: SearchAndFilterOptionsDTO
   ): Promise<SucheComplexSuggestsDTO> {
-    return FetchService.postData(
-      searchAndFilterOptions,
-      `${this.ENDPOINT}/suggest-datenportal?query=${query}`,
+    return handleOpenApiError(
+      this.API.suggestDatenportalRaw({
+        query,
+        searchAndFilterOptionsDTO:
+          searchAndFilterOptions as unknown as GeneratedSearchAndFilterOptionsDTO,
+      }).then((response) => response.raw.json()),
       "Beim Lesen der Vorschläge ist ein Fehler aufgetreten."
     );
   }
@@ -22,9 +32,12 @@ export default class SucheService {
     query: string,
     searchAndFilterOptions: SearchAndFilterOptionsDTO
   ): Promise<Array<AnzeigeKarteDTO>> {
-    return FetchService.postData(
-      searchAndFilterOptions,
-      `${this.ENDPOINT}/search-datenportal?query=${query}`,
+    return handleOpenApiError(
+      this.API.searchErhebungsstelleForMapDatenportalRaw({
+        query,
+        searchAndFilterOptionsDTO:
+          searchAndFilterOptions as unknown as GeneratedSearchAndFilterOptionsDTO,
+      }).then((response) => response.raw.json()),
       "Beim Suchen von Zähl-/Messstellen ist ein Fehler aufgetreten."
     );
   }

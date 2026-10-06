@@ -113,11 +113,11 @@ models/ExternalQuerungsverkehrDTO.ts
 models/ExternalVerkehrsbeziehungDTO.ts
 models/ExternalZaehlungDTO.ts
 models/FahrzeugOptionsDTO.ts
-models/GeneratePdf1Request.ts
+models/GenerateMessstellePdfRequest.ts
 models/GeneratePdfAuswertungRequest.ts
 models/GeneratePdfReportRequest.ts
 models/GeneratePdfReportRequestAssetsInner.ts
-models/GeneratePdfRequest.ts
+models/GenerateZaehlungPdfRequest.ts
 models/GeoPoint.ts
 models/HeadingAsset.ts
 models/Hochrechnung.ts

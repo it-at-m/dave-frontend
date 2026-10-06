@@ -13,34 +13,28 @@
  */
 
 import type {
-  GeneratePdf1Request,
+  GenerateMessstellePdfRequest,
   GeneratePdfAuswertungRequest,
   GeneratePdfReportRequest,
-  GeneratePdfRequest,
+  GenerateZaehlungPdfRequest,
 } from "../models/index";
 
 import {
-  GeneratePdf1RequestFromJSON,
-  GeneratePdf1RequestToJSON,
+  GenerateMessstellePdfRequestFromJSON,
+  GenerateMessstellePdfRequestToJSON,
   GeneratePdfAuswertungRequestFromJSON,
   GeneratePdfAuswertungRequestToJSON,
   GeneratePdfReportRequestFromJSON,
   GeneratePdfReportRequestToJSON,
-  GeneratePdfRequestFromJSON,
-  GeneratePdfRequestToJSON,
+  GenerateZaehlungPdfRequestFromJSON,
+  GenerateZaehlungPdfRequestToJSON,
 } from "../models/index";
 import * as runtime from "../runtime";
 
-export interface GeneratePdfOperationRequest {
+export interface GenerateMessstellePdfOperationRequest {
   fachId: string;
   charttype: string;
-  generatePdfRequest: GeneratePdfRequest;
-}
-
-export interface GeneratePdf1OperationRequest {
-  fachId: string;
-  charttype: string;
-  generatePdf1Request: GeneratePdf1Request;
+  generateMessstellePdfRequest: GenerateMessstellePdfRequest;
 }
 
 export interface GeneratePdfAuswertungOperationRequest {
@@ -51,108 +45,40 @@ export interface GeneratePdfReportOperationRequest {
   generatePdfReportRequest: GeneratePdfReportRequest;
 }
 
+export interface GenerateZaehlungPdfOperationRequest {
+  fachId: string;
+  charttype: string;
+  generateZaehlungPdfRequest: GenerateZaehlungPdfRequest;
+}
+
 /**
  *
  */
 export class GeneratePdfControllerApi extends runtime.BaseAPI {
   /**
    */
-  async generatePdfRaw(
-    requestParameters: GeneratePdfOperationRequest,
+  async generateMessstellePdfRaw(
+    requestParameters: GenerateMessstellePdfOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<string>> {
     if (requestParameters["fachId"] == null) {
       throw new runtime.RequiredError(
         "fachId",
-        'Required parameter "fachId" was null or undefined when calling generatePdf().'
+        'Required parameter "fachId" was null or undefined when calling generateMessstellePdf().'
       );
     }
 
     if (requestParameters["charttype"] == null) {
       throw new runtime.RequiredError(
         "charttype",
-        'Required parameter "charttype" was null or undefined when calling generatePdf().'
+        'Required parameter "charttype" was null or undefined when calling generateMessstellePdf().'
       );
     }
 
-    if (requestParameters["generatePdfRequest"] == null) {
+    if (requestParameters["generateMessstellePdfRequest"] == null) {
       throw new runtime.RequiredError(
-        "generatePdfRequest",
-        'Required parameter "generatePdfRequest" was null or undefined when calling generatePdf().'
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["fachId"] != null) {
-      queryParameters["fach_id"] = requestParameters["fachId"];
-    }
-
-    if (requestParameters["charttype"] != null) {
-      queryParameters["charttype"] = requestParameters["charttype"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    let urlPath = `/generate-pdf/zaehlung`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: GeneratePdfRequestToJSON(requestParameters["generatePdfRequest"]),
-      },
-      initOverrides
-    );
-
-    if (this.isJsonMime(response.headers.get("content-type"))) {
-      return new runtime.JSONApiResponse<string>(response);
-    } else {
-      return new runtime.TextApiResponse(response) as any;
-    }
-  }
-
-  /**
-   */
-  async generatePdf(
-    requestParameters: GeneratePdfOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<string> {
-    const response = await this.generatePdfRaw(
-      requestParameters,
-      initOverrides
-    );
-    return await response.value();
-  }
-
-  /**
-   */
-  async generatePdf1Raw(
-    requestParameters: GeneratePdf1OperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
-    if (requestParameters["fachId"] == null) {
-      throw new runtime.RequiredError(
-        "fachId",
-        'Required parameter "fachId" was null or undefined when calling generatePdf1().'
-      );
-    }
-
-    if (requestParameters["charttype"] == null) {
-      throw new runtime.RequiredError(
-        "charttype",
-        'Required parameter "charttype" was null or undefined when calling generatePdf1().'
-      );
-    }
-
-    if (requestParameters["generatePdf1Request"] == null) {
-      throw new runtime.RequiredError(
-        "generatePdf1Request",
-        'Required parameter "generatePdf1Request" was null or undefined when calling generatePdf1().'
+        "generateMessstellePdfRequest",
+        'Required parameter "generateMessstellePdfRequest" was null or undefined when calling generateMessstellePdf().'
       );
     }
 
@@ -178,8 +104,8 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
         method: "POST",
         headers: headerParameters,
         query: queryParameters,
-        body: GeneratePdf1RequestToJSON(
-          requestParameters["generatePdf1Request"]
+        body: GenerateMessstellePdfRequestToJSON(
+          requestParameters["generateMessstellePdfRequest"]
         ),
       },
       initOverrides
@@ -194,11 +120,11 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
 
   /**
    */
-  async generatePdf1(
-    requestParameters: GeneratePdf1OperationRequest,
+  async generateMessstellePdf(
+    requestParameters: GenerateMessstellePdfOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<string> {
-    const response = await this.generatePdf1Raw(
+    const response = await this.generateMessstellePdfRaw(
       requestParameters,
       initOverrides
     );
@@ -307,6 +233,82 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<string> {
     const response = await this.generatePdfReportRaw(
+      requestParameters,
+      initOverrides
+    );
+    return await response.value();
+  }
+
+  /**
+   */
+  async generateZaehlungPdfRaw(
+    requestParameters: GenerateZaehlungPdfOperationRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    if (requestParameters["fachId"] == null) {
+      throw new runtime.RequiredError(
+        "fachId",
+        'Required parameter "fachId" was null or undefined when calling generateZaehlungPdf().'
+      );
+    }
+
+    if (requestParameters["charttype"] == null) {
+      throw new runtime.RequiredError(
+        "charttype",
+        'Required parameter "charttype" was null or undefined when calling generateZaehlungPdf().'
+      );
+    }
+
+    if (requestParameters["generateZaehlungPdfRequest"] == null) {
+      throw new runtime.RequiredError(
+        "generateZaehlungPdfRequest",
+        'Required parameter "generateZaehlungPdfRequest" was null or undefined when calling generateZaehlungPdf().'
+      );
+    }
+
+    const queryParameters: any = {};
+
+    if (requestParameters["fachId"] != null) {
+      queryParameters["fach_id"] = requestParameters["fachId"];
+    }
+
+    if (requestParameters["charttype"] != null) {
+      queryParameters["charttype"] = requestParameters["charttype"];
+    }
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    let urlPath = `/generate-pdf/zaehlung`;
+
+    const response = await this.request(
+      {
+        path: urlPath,
+        method: "POST",
+        headers: headerParameters,
+        query: queryParameters,
+        body: GenerateZaehlungPdfRequestToJSON(
+          requestParameters["generateZaehlungPdfRequest"]
+        ),
+      },
+      initOverrides
+    );
+
+    if (this.isJsonMime(response.headers.get("content-type"))) {
+      return new runtime.JSONApiResponse<string>(response);
+    } else {
+      return new runtime.TextApiResponse(response) as any;
+    }
+  }
+
+  /**
+   */
+  async generateZaehlungPdf(
+    requestParameters: GenerateZaehlungPdfOperationRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<string> {
+    const response = await this.generateZaehlungPdfRaw(
       requestParameters,
       initOverrides
     );
