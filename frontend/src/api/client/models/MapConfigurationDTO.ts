@@ -33,31 +33,31 @@ export interface MapConfigurationDTO {
    * @type {string}
    * @memberof MapConfigurationDTO
    */
-  lat?: string;
+  lat: string;
   /**
    *
    * @type {string}
    * @memberof MapConfigurationDTO
    */
-  lng?: string;
+  lng: string;
   /**
    *
    * @type {number}
    * @memberof MapConfigurationDTO
    */
-  zoom?: number;
+  zoom: number;
   /**
    *
    * @type {Array<LayerDTO>}
    * @memberof MapConfigurationDTO
    */
-  baseLayers?: Array<LayerDTO>;
+  baseLayers: Array<LayerDTO>;
   /**
    *
    * @type {Array<LayerDTO>}
    * @memberof MapConfigurationDTO
    */
-  overlayLayers?: Array<LayerDTO>;
+  overlayLayers: Array<LayerDTO>;
 }
 
 /**
@@ -66,6 +66,13 @@ export interface MapConfigurationDTO {
 export function instanceOfMapConfigurationDTO(
   value: object
 ): value is MapConfigurationDTO {
+  if (!("lat" in value) || value["lat"] === undefined) return false;
+  if (!("lng" in value) || value["lng"] === undefined) return false;
+  if (!("zoom" in value) || value["zoom"] === undefined) return false;
+  if (!("baseLayers" in value) || value["baseLayers"] === undefined)
+    return false;
+  if (!("overlayLayers" in value) || value["overlayLayers"] === undefined)
+    return false;
   return true;
 }
 
@@ -81,17 +88,11 @@ export function MapConfigurationDTOFromJSONTyped(
     return json;
   }
   return {
-    lat: json["lat"] == null ? undefined : json["lat"],
-    lng: json["lng"] == null ? undefined : json["lng"],
-    zoom: json["zoom"] == null ? undefined : json["zoom"],
-    baseLayers:
-      json["baseLayers"] == null
-        ? undefined
-        : (json["baseLayers"] as Array<any>).map(LayerDTOFromJSON),
-    overlayLayers:
-      json["overlayLayers"] == null
-        ? undefined
-        : (json["overlayLayers"] as Array<any>).map(LayerDTOFromJSON),
+    lat: json["lat"],
+    lng: json["lng"],
+    zoom: json["zoom"],
+    baseLayers: (json["baseLayers"] as Array<any>).map(LayerDTOFromJSON),
+    overlayLayers: (json["overlayLayers"] as Array<any>).map(LayerDTOFromJSON),
   };
 }
 
@@ -111,13 +112,7 @@ export function MapConfigurationDTOToJSONTyped(
     lat: value["lat"],
     lng: value["lng"],
     zoom: value["zoom"],
-    baseLayers:
-      value["baseLayers"] == null
-        ? undefined
-        : (value["baseLayers"] as Array<any>).map(LayerDTOToJSON),
-    overlayLayers:
-      value["overlayLayers"] == null
-        ? undefined
-        : (value["overlayLayers"] as Array<any>).map(LayerDTOToJSON),
+    baseLayers: (value["baseLayers"] as Array<any>).map(LayerDTOToJSON),
+    overlayLayers: (value["overlayLayers"] as Array<any>).map(LayerDTOToJSON),
   };
 }

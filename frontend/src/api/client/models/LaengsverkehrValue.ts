@@ -25,13 +25,13 @@ export interface LaengsverkehrValue {
    * @type {string}
    * @memberof LaengsverkehrValue
    */
-  richtung?: LaengsverkehrValueRichtungEnum;
+  richtung: LaengsverkehrValueRichtungEnum;
   /**
    *
    * @type {number}
    * @memberof LaengsverkehrValue
    */
-  value?: number;
+  value: number;
 }
 
 /**
@@ -50,6 +50,8 @@ export type LaengsverkehrValueRichtungEnum =
 export function instanceOfLaengsverkehrValue(
   value: object
 ): value is LaengsverkehrValue {
+  if (!("richtung" in value) || value["richtung"] === undefined) return false;
+  if (!("value" in value) || value["value"] === undefined) return false;
   return true;
 }
 
@@ -65,8 +67,8 @@ export function LaengsverkehrValueFromJSONTyped(
     return json;
   }
   return {
-    richtung: json["richtung"] == null ? undefined : json["richtung"],
-    value: json["value"] == null ? undefined : json["value"],
+    richtung: json["richtung"],
+    value: json["value"],
   };
 }
 

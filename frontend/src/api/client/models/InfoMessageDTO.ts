@@ -25,13 +25,13 @@ export interface InfoMessageDTO {
    * @type {string}
    * @memberof InfoMessageDTO
    */
-  id?: string;
+  id: string;
   /**
    *
    * @type {string}
    * @memberof InfoMessageDTO
    */
-  content?: string;
+  content: string;
   /**
    *
    * @type {Date}
@@ -49,7 +49,7 @@ export interface InfoMessageDTO {
    * @type {boolean}
    * @memberof InfoMessageDTO
    */
-  gueltig?: boolean;
+  gueltig: boolean;
   /**
    *
    * @type {boolean}
@@ -64,6 +64,9 @@ export interface InfoMessageDTO {
 export function instanceOfInfoMessageDTO(
   value: object
 ): value is InfoMessageDTO {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (!("content" in value) || value["content"] === undefined) return false;
+  if (!("gueltig" in value) || value["gueltig"] === undefined) return false;
   return true;
 }
 
@@ -79,13 +82,13 @@ export function InfoMessageDTOFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    content: json["content"] == null ? undefined : json["content"],
+    id: json["id"],
+    content: json["content"],
     gueltigVon:
       json["gueltigVon"] == null ? undefined : new Date(json["gueltigVon"]),
     gueltigBis:
       json["gueltigBis"] == null ? undefined : new Date(json["gueltigBis"]),
-    gueltig: json["gueltig"] == null ? undefined : json["gueltig"],
+    gueltig: json["gueltig"],
     aktiv: json["aktiv"] == null ? undefined : json["aktiv"],
   };
 }

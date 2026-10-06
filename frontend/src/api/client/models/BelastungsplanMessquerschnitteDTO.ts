@@ -33,73 +33,73 @@ export interface BelastungsplanMessquerschnitteDTO {
    * @type {Array<LadeBelastungsplanMessquerschnittDataDTO>}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  ladeBelastungsplanMessquerschnittDataDTOList?: Array<LadeBelastungsplanMessquerschnittDataDTO>;
+  ladeBelastungsplanMessquerschnittDataDTOList: Array<LadeBelastungsplanMessquerschnittDataDTO>;
   /**
    *
    * @type {string}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  strassenname?: string;
+  strassenname: string;
   /**
    *
    * @type {string}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  mstId?: string;
+  mstId: string;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  stadtbezirkNummer?: number;
+  stadtbezirkNummer: number;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  totalKfz?: number;
+  totalKfz: number;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  totalSv?: number;
+  totalSv: number;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  totalGv?: number;
+  totalGv: number;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  totalRad?: number;
+  totalRad: number;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  totalPercentSv?: number;
+  totalPercentSv: number;
   /**
    *
    * @type {number}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  totalPercentGv?: number;
+  totalPercentGv: number;
   /**
    *
    * @type {string}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  startUhrzeitSpitzenstunde?: string;
+  startUhrzeitSpitzenstunde: string;
   /**
    *
    * @type {string}
    * @memberof BelastungsplanMessquerschnitteDTO
    */
-  endeUhrzeitSpitzenstunde?: string;
+  endeUhrzeitSpitzenstunde: string;
 }
 
 /**
@@ -108,6 +108,37 @@ export interface BelastungsplanMessquerschnitteDTO {
 export function instanceOfBelastungsplanMessquerschnitteDTO(
   value: object
 ): value is BelastungsplanMessquerschnitteDTO {
+  if (
+    !("ladeBelastungsplanMessquerschnittDataDTOList" in value) ||
+    value["ladeBelastungsplanMessquerschnittDataDTOList"] === undefined
+  )
+    return false;
+  if (!("strassenname" in value) || value["strassenname"] === undefined)
+    return false;
+  if (!("mstId" in value) || value["mstId"] === undefined) return false;
+  if (
+    !("stadtbezirkNummer" in value) ||
+    value["stadtbezirkNummer"] === undefined
+  )
+    return false;
+  if (!("totalKfz" in value) || value["totalKfz"] === undefined) return false;
+  if (!("totalSv" in value) || value["totalSv"] === undefined) return false;
+  if (!("totalGv" in value) || value["totalGv"] === undefined) return false;
+  if (!("totalRad" in value) || value["totalRad"] === undefined) return false;
+  if (!("totalPercentSv" in value) || value["totalPercentSv"] === undefined)
+    return false;
+  if (!("totalPercentGv" in value) || value["totalPercentGv"] === undefined)
+    return false;
+  if (
+    !("startUhrzeitSpitzenstunde" in value) ||
+    value["startUhrzeitSpitzenstunde"] === undefined
+  )
+    return false;
+  if (
+    !("endeUhrzeitSpitzenstunde" in value) ||
+    value["endeUhrzeitSpitzenstunde"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -125,33 +156,20 @@ export function BelastungsplanMessquerschnitteDTOFromJSONTyped(
     return json;
   }
   return {
-    ladeBelastungsplanMessquerschnittDataDTOList:
-      json["ladeBelastungsplanMessquerschnittDataDTOList"] == null
-        ? undefined
-        : (
-            json["ladeBelastungsplanMessquerschnittDataDTOList"] as Array<any>
-          ).map(LadeBelastungsplanMessquerschnittDataDTOFromJSON),
-    strassenname:
-      json["strassenname"] == null ? undefined : json["strassenname"],
-    mstId: json["mstId"] == null ? undefined : json["mstId"],
-    stadtbezirkNummer:
-      json["stadtbezirkNummer"] == null ? undefined : json["stadtbezirkNummer"],
-    totalKfz: json["totalKfz"] == null ? undefined : json["totalKfz"],
-    totalSv: json["totalSv"] == null ? undefined : json["totalSv"],
-    totalGv: json["totalGv"] == null ? undefined : json["totalGv"],
-    totalRad: json["totalRad"] == null ? undefined : json["totalRad"],
-    totalPercentSv:
-      json["totalPercentSv"] == null ? undefined : json["totalPercentSv"],
-    totalPercentGv:
-      json["totalPercentGv"] == null ? undefined : json["totalPercentGv"],
-    startUhrzeitSpitzenstunde:
-      json["startUhrzeitSpitzenstunde"] == null
-        ? undefined
-        : json["startUhrzeitSpitzenstunde"],
-    endeUhrzeitSpitzenstunde:
-      json["endeUhrzeitSpitzenstunde"] == null
-        ? undefined
-        : json["endeUhrzeitSpitzenstunde"],
+    ladeBelastungsplanMessquerschnittDataDTOList: (
+      json["ladeBelastungsplanMessquerschnittDataDTOList"] as Array<any>
+    ).map(LadeBelastungsplanMessquerschnittDataDTOFromJSON),
+    strassenname: json["strassenname"],
+    mstId: json["mstId"],
+    stadtbezirkNummer: json["stadtbezirkNummer"],
+    totalKfz: json["totalKfz"],
+    totalSv: json["totalSv"],
+    totalGv: json["totalGv"],
+    totalRad: json["totalRad"],
+    totalPercentSv: json["totalPercentSv"],
+    totalPercentGv: json["totalPercentGv"],
+    startUhrzeitSpitzenstunde: json["startUhrzeitSpitzenstunde"],
+    endeUhrzeitSpitzenstunde: json["endeUhrzeitSpitzenstunde"],
   };
 }
 
@@ -170,12 +188,9 @@ export function BelastungsplanMessquerschnitteDTOToJSONTyped(
   }
 
   return {
-    ladeBelastungsplanMessquerschnittDataDTOList:
-      value["ladeBelastungsplanMessquerschnittDataDTOList"] == null
-        ? undefined
-        : (
-            value["ladeBelastungsplanMessquerschnittDataDTOList"] as Array<any>
-          ).map(LadeBelastungsplanMessquerschnittDataDTOToJSON),
+    ladeBelastungsplanMessquerschnittDataDTOList: (
+      value["ladeBelastungsplanMessquerschnittDataDTOList"] as Array<any>
+    ).map(LadeBelastungsplanMessquerschnittDataDTOToJSON),
     strassenname: value["strassenname"],
     mstId: value["mstId"],
     stadtbezirkNummer: value["stadtbezirkNummer"],

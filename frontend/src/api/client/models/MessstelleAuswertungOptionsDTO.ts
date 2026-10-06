@@ -40,31 +40,31 @@ export interface MessstelleAuswertungOptionsDTO {
    * @type {Array<number>}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  jahre?: Array<number>;
+  jahre: Array<number>;
   /**
    *
    * @type {string}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  tagesTyp?: MessstelleAuswertungOptionsDTOTagesTypEnum;
+  tagesTyp: MessstelleAuswertungOptionsDTOTagesTypEnum;
   /**
    *
    * @type {Array<string>}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  zeitraum?: Array<MessstelleAuswertungOptionsDTOZeitraumEnum>;
+  zeitraum: Array<MessstelleAuswertungOptionsDTOZeitraumEnum>;
   /**
    *
    * @type {Set<MessstelleAuswertungIdDTO>}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  messstelleAuswertungIds?: Set<MessstelleAuswertungIdDTO>;
+  messstelleAuswertungIds: Set<MessstelleAuswertungIdDTO>;
   /**
    *
    * @type {FahrzeugOptionsDTO}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  fahrzeuge?: FahrzeugOptionsDTO;
+  fahrzeuge: FahrzeugOptionsDTO;
 }
 
 /**
@@ -115,6 +115,15 @@ export type MessstelleAuswertungOptionsDTOZeitraumEnum =
 export function instanceOfMessstelleAuswertungOptionsDTO(
   value: object
 ): value is MessstelleAuswertungOptionsDTO {
+  if (!("jahre" in value) || value["jahre"] === undefined) return false;
+  if (!("tagesTyp" in value) || value["tagesTyp"] === undefined) return false;
+  if (!("zeitraum" in value) || value["zeitraum"] === undefined) return false;
+  if (
+    !("messstelleAuswertungIds" in value) ||
+    value["messstelleAuswertungIds"] === undefined
+  )
+    return false;
+  if (!("fahrzeuge" in value) || value["fahrzeuge"] === undefined) return false;
   return true;
 }
 
@@ -132,21 +141,15 @@ export function MessstelleAuswertungOptionsDTOFromJSONTyped(
     return json;
   }
   return {
-    jahre: json["jahre"] == null ? undefined : json["jahre"],
-    tagesTyp: json["tagesTyp"] == null ? undefined : json["tagesTyp"],
-    zeitraum: json["zeitraum"] == null ? undefined : json["zeitraum"],
-    messstelleAuswertungIds:
-      json["messstelleAuswertungIds"] == null
-        ? undefined
-        : new Set(
-            (json["messstelleAuswertungIds"] as Array<any>).map(
-              MessstelleAuswertungIdDTOFromJSON
-            )
-          ),
-    fahrzeuge:
-      json["fahrzeuge"] == null
-        ? undefined
-        : FahrzeugOptionsDTOFromJSON(json["fahrzeuge"]),
+    jahre: json["jahre"],
+    tagesTyp: json["tagesTyp"],
+    zeitraum: json["zeitraum"],
+    messstelleAuswertungIds: new Set(
+      (json["messstelleAuswertungIds"] as Array<any>).map(
+        MessstelleAuswertungIdDTOFromJSON
+      )
+    ),
+    fahrzeuge: FahrzeugOptionsDTOFromJSON(json["fahrzeuge"]),
   };
 }
 
@@ -168,12 +171,9 @@ export function MessstelleAuswertungOptionsDTOToJSONTyped(
     jahre: value["jahre"],
     tagesTyp: value["tagesTyp"],
     zeitraum: value["zeitraum"],
-    messstelleAuswertungIds:
-      value["messstelleAuswertungIds"] == null
-        ? undefined
-        : Array.from(value["messstelleAuswertungIds"] as Set<any>).map(
-            MessstelleAuswertungIdDTOToJSON
-          ),
+    messstelleAuswertungIds: Array.from(
+      value["messstelleAuswertungIds"] as Set<any>
+    ).map(MessstelleAuswertungIdDTOToJSON),
     fahrzeuge: FahrzeugOptionsDTOToJSON(value["fahrzeuge"]),
   };
 }

@@ -25,13 +25,13 @@ export interface ZeitauswahlDTO {
    * @type {Set<string>}
    * @memberof ZeitauswahlDTO
    */
-  blocks?: Set<ZeitauswahlDTOBlocksEnum>;
+  blocks: Set<ZeitauswahlDTOBlocksEnum>;
   /**
    *
    * @type {Set<string>}
    * @memberof ZeitauswahlDTO
    */
-  hours?: Set<ZeitauswahlDTOHoursEnum>;
+  hours: Set<ZeitauswahlDTOHoursEnum>;
 }
 
 /**
@@ -218,6 +218,8 @@ export type ZeitauswahlDTOHoursEnum =
 export function instanceOfZeitauswahlDTO(
   value: object
 ): value is ZeitauswahlDTO {
+  if (!("blocks" in value) || value["blocks"] === undefined) return false;
+  if (!("hours" in value) || value["hours"] === undefined) return false;
   return true;
 }
 
@@ -233,8 +235,8 @@ export function ZeitauswahlDTOFromJSONTyped(
     return json;
   }
   return {
-    blocks: json["blocks"] == null ? undefined : new Set(json["blocks"]),
-    hours: json["hours"] == null ? undefined : new Set(json["hours"]),
+    blocks: new Set(json["blocks"]),
+    hours: new Set(json["hours"]),
   };
 }
 
@@ -251,13 +253,7 @@ export function ZeitauswahlDTOToJSONTyped(
   }
 
   return {
-    blocks:
-      value["blocks"] == null
-        ? undefined
-        : Array.from(value["blocks"] as Set<any>),
-    hours:
-      value["hours"] == null
-        ? undefined
-        : Array.from(value["hours"] as Set<any>),
+    blocks: Array.from(value["blocks"] as Set<any>),
+    hours: Array.from(value["hours"] as Set<any>),
   };
 }

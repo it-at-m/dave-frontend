@@ -49,31 +49,31 @@ export interface AbstractLadeBelastungsplanDTOObject {
    * @type {Array<string>}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  streets?: Array<string>;
+  streets: Array<string>;
   /**
    *
    * @type {boolean}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  kreisverkehr?: boolean;
+  kreisverkehr: boolean;
   /**
    *
    * @type {any}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  value1?: any | null;
+  value1: any | null;
   /**
    *
    * @type {any}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  value2?: any | null;
+  value2: any | null;
   /**
    *
    * @type {any}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  value3?: any | null;
+  value3: any | null;
   /**
    *
    * @type {string}
@@ -88,6 +88,12 @@ export interface AbstractLadeBelastungsplanDTOObject {
 export function instanceOfAbstractLadeBelastungsplanDTOObject(
   value: object
 ): value is AbstractLadeBelastungsplanDTOObject {
+  if (!("streets" in value) || value["streets"] === undefined) return false;
+  if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
+    return false;
+  if (!("value1" in value) || value["value1"] === undefined) return false;
+  if (!("value2" in value) || value["value2"] === undefined) return false;
+  if (!("value3" in value) || value["value3"] === undefined) return false;
   if (
     !("belastungsplanTyp" in value) ||
     value["belastungsplanTyp"] === undefined
@@ -124,12 +130,11 @@ export function AbstractLadeBelastungsplanDTOObjectFromJSONTyped(
     }
   }
   return {
-    streets: json["streets"] == null ? undefined : json["streets"],
-    kreisverkehr:
-      json["kreisverkehr"] == null ? undefined : json["kreisverkehr"],
-    value1: json["value1"] == null ? undefined : json["value1"],
-    value2: json["value2"] == null ? undefined : json["value2"],
-    value3: json["value3"] == null ? undefined : json["value3"],
+    streets: json["streets"],
+    kreisverkehr: json["kreisverkehr"],
+    value1: json["value1"],
+    value2: json["value2"],
+    value3: json["value3"],
     belastungsplanTyp: json["belastungsplanTyp"],
   };
 }

@@ -57,7 +57,7 @@ export interface MessstelleOptionsDTO {
    * @type {string}
    * @memberof MessstelleOptionsDTO
    */
-  tagesTyp?: MessstelleOptionsDTOTagesTypEnum;
+  tagesTyp: MessstelleOptionsDTOTagesTypEnum;
   /**
    *
    * @type {string}
@@ -240,6 +240,7 @@ export function instanceOfMessstelleOptionsDTO(
   if (!("zeitauswahl" in value) || value["zeitauswahl"] === undefined)
     return false;
   if (!("zeitblock" in value) || value["zeitblock"] === undefined) return false;
+  if (!("tagesTyp" in value) || value["tagesTyp"] === undefined) return false;
   if (!("intervall" in value) || value["intervall"] === undefined) return false;
   if (
     !("messquerschnittIds" in value) ||
@@ -274,7 +275,7 @@ export function MessstelleOptionsDTOFromJSONTyped(
     fahrzeuge: FahrzeugOptionsDTOFromJSON(json["fahrzeuge"]),
     zeitauswahl: json["zeitauswahl"],
     zeitblock: json["zeitblock"],
-    tagesTyp: json["tagesTyp"] == null ? undefined : json["tagesTyp"],
+    tagesTyp: json["tagesTyp"],
     intervall: json["intervall"],
     messquerschnittIds: new Set(json["messquerschnittIds"]),
     rounding: json["rounding"],

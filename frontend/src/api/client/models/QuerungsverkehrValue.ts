@@ -25,13 +25,13 @@ export interface QuerungsverkehrValue {
    * @type {string}
    * @memberof QuerungsverkehrValue
    */
-  richtung?: QuerungsverkehrValueRichtungEnum;
+  richtung: QuerungsverkehrValueRichtungEnum;
   /**
    *
    * @type {number}
    * @memberof QuerungsverkehrValue
    */
-  value?: number;
+  value: number;
 }
 
 /**
@@ -56,6 +56,8 @@ export type QuerungsverkehrValueRichtungEnum =
 export function instanceOfQuerungsverkehrValue(
   value: object
 ): value is QuerungsverkehrValue {
+  if (!("richtung" in value) || value["richtung"] === undefined) return false;
+  if (!("value" in value) || value["value"] === undefined) return false;
   return true;
 }
 
@@ -71,8 +73,8 @@ export function QuerungsverkehrValueFromJSONTyped(
     return json;
   }
   return {
-    richtung: json["richtung"] == null ? undefined : json["richtung"],
-    value: json["value"] == null ? undefined : json["value"],
+    richtung: json["richtung"],
+    value: json["value"],
   };
 }
 

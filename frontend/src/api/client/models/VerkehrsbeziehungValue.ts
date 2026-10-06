@@ -25,25 +25,25 @@ export interface VerkehrsbeziehungValue {
    * @type {number}
    * @memberof VerkehrsbeziehungValue
    */
-  von?: number;
+  von: number;
   /**
    *
    * @type {number}
    * @memberof VerkehrsbeziehungValue
    */
-  nach?: number;
+  nach: number;
   /**
    *
    * @type {string}
    * @memberof VerkehrsbeziehungValue
    */
-  strassenseite?: VerkehrsbeziehungValueStrassenseiteEnum;
+  strassenseite: VerkehrsbeziehungValueStrassenseiteEnum;
   /**
    *
    * @type {number}
    * @memberof VerkehrsbeziehungValue
    */
-  value?: number;
+  value: number;
 }
 
 /**
@@ -68,6 +68,11 @@ export type VerkehrsbeziehungValueStrassenseiteEnum =
 export function instanceOfVerkehrsbeziehungValue(
   value: object
 ): value is VerkehrsbeziehungValue {
+  if (!("von" in value) || value["von"] === undefined) return false;
+  if (!("nach" in value) || value["nach"] === undefined) return false;
+  if (!("strassenseite" in value) || value["strassenseite"] === undefined)
+    return false;
+  if (!("value" in value) || value["value"] === undefined) return false;
   return true;
 }
 
@@ -85,11 +90,10 @@ export function VerkehrsbeziehungValueFromJSONTyped(
     return json;
   }
   return {
-    von: json["von"] == null ? undefined : json["von"],
-    nach: json["nach"] == null ? undefined : json["nach"],
-    strassenseite:
-      json["strassenseite"] == null ? undefined : json["strassenseite"],
-    value: json["value"] == null ? undefined : json["value"],
+    von: json["von"],
+    nach: json["nach"],
+    strassenseite: json["strassenseite"],
+    value: json["value"],
   };
 }
 

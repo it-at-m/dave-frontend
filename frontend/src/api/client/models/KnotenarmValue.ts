@@ -33,19 +33,19 @@ export interface KnotenarmValue {
    * @type {number}
    * @memberof KnotenarmValue
    */
-  knotenarm?: number;
+  knotenarm: number;
   /**
    *
    * @type {number}
    * @memberof KnotenarmValue
    */
-  sumKnotenarm?: number;
+  sumKnotenarm: number;
   /**
    *
    * @type {Array<QuerungsverkehrValue>}
    * @memberof KnotenarmValue
    */
-  valuesQuerungsverkehre?: Array<QuerungsverkehrValue>;
+  valuesQuerungsverkehre: Array<QuerungsverkehrValue>;
 }
 
 /**
@@ -54,6 +54,14 @@ export interface KnotenarmValue {
 export function instanceOfKnotenarmValue(
   value: object
 ): value is KnotenarmValue {
+  if (!("knotenarm" in value) || value["knotenarm"] === undefined) return false;
+  if (!("sumKnotenarm" in value) || value["sumKnotenarm"] === undefined)
+    return false;
+  if (
+    !("valuesQuerungsverkehre" in value) ||
+    value["valuesQuerungsverkehre"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -69,15 +77,11 @@ export function KnotenarmValueFromJSONTyped(
     return json;
   }
   return {
-    knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
-    sumKnotenarm:
-      json["sumKnotenarm"] == null ? undefined : json["sumKnotenarm"],
-    valuesQuerungsverkehre:
-      json["valuesQuerungsverkehre"] == null
-        ? undefined
-        : (json["valuesQuerungsverkehre"] as Array<any>).map(
-            QuerungsverkehrValueFromJSON
-          ),
+    knotenarm: json["knotenarm"],
+    sumKnotenarm: json["sumKnotenarm"],
+    valuesQuerungsverkehre: (json["valuesQuerungsverkehre"] as Array<any>).map(
+      QuerungsverkehrValueFromJSON
+    ),
   };
 }
 
@@ -96,11 +100,8 @@ export function KnotenarmValueToJSONTyped(
   return {
     knotenarm: value["knotenarm"],
     sumKnotenarm: value["sumKnotenarm"],
-    valuesQuerungsverkehre:
-      value["valuesQuerungsverkehre"] == null
-        ? undefined
-        : (value["valuesQuerungsverkehre"] as Array<any>).map(
-            QuerungsverkehrValueToJSON
-          ),
+    valuesQuerungsverkehre: (value["valuesQuerungsverkehre"] as Array<any>).map(
+      QuerungsverkehrValueToJSON
+    ),
   };
 }

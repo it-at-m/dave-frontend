@@ -33,19 +33,19 @@ export interface StrassenseiteValue {
    * @type {string}
    * @memberof StrassenseiteValue
    */
-  strassenseite?: StrassenseiteValueStrassenseiteEnum;
+  strassenseite: StrassenseiteValueStrassenseiteEnum;
   /**
    *
    * @type {number}
    * @memberof StrassenseiteValue
    */
-  sumStrassenseite?: number;
+  sumStrassenseite: number;
   /**
    *
    * @type {Array<LaengsverkehrValue>}
    * @memberof StrassenseiteValue
    */
-  valuesLaengsverkehre?: Array<LaengsverkehrValue>;
+  valuesLaengsverkehre: Array<LaengsverkehrValue>;
 }
 
 /**
@@ -70,6 +70,15 @@ export type StrassenseiteValueStrassenseiteEnum =
 export function instanceOfStrassenseiteValue(
   value: object
 ): value is StrassenseiteValue {
+  if (!("strassenseite" in value) || value["strassenseite"] === undefined)
+    return false;
+  if (!("sumStrassenseite" in value) || value["sumStrassenseite"] === undefined)
+    return false;
+  if (
+    !("valuesLaengsverkehre" in value) ||
+    value["valuesLaengsverkehre"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -85,16 +94,11 @@ export function StrassenseiteValueFromJSONTyped(
     return json;
   }
   return {
-    strassenseite:
-      json["strassenseite"] == null ? undefined : json["strassenseite"],
-    sumStrassenseite:
-      json["sumStrassenseite"] == null ? undefined : json["sumStrassenseite"],
-    valuesLaengsverkehre:
-      json["valuesLaengsverkehre"] == null
-        ? undefined
-        : (json["valuesLaengsverkehre"] as Array<any>).map(
-            LaengsverkehrValueFromJSON
-          ),
+    strassenseite: json["strassenseite"],
+    sumStrassenseite: json["sumStrassenseite"],
+    valuesLaengsverkehre: (json["valuesLaengsverkehre"] as Array<any>).map(
+      LaengsverkehrValueFromJSON
+    ),
   };
 }
 
@@ -113,11 +117,8 @@ export function StrassenseiteValueToJSONTyped(
   return {
     strassenseite: value["strassenseite"],
     sumStrassenseite: value["sumStrassenseite"],
-    valuesLaengsverkehre:
-      value["valuesLaengsverkehre"] == null
-        ? undefined
-        : (value["valuesLaengsverkehre"] as Array<any>).map(
-            LaengsverkehrValueToJSON
-          ),
+    valuesLaengsverkehre: (value["valuesLaengsverkehre"] as Array<any>).map(
+      LaengsverkehrValueToJSON
+    ),
   };
 }

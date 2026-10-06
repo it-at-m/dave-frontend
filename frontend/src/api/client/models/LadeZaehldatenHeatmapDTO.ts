@@ -25,25 +25,25 @@ export interface LadeZaehldatenHeatmapDTO {
    * @type {Array<string>}
    * @memberof LadeZaehldatenHeatmapDTO
    */
-  legend?: Array<string>;
+  legend: Array<string>;
   /**
    *
    * @type {number}
    * @memberof LadeZaehldatenHeatmapDTO
    */
-  rangeMin?: number;
+  rangeMin: number;
   /**
    *
    * @type {number}
    * @memberof LadeZaehldatenHeatmapDTO
    */
-  rangeMax?: number;
+  rangeMax: number;
   /**
    *
    * @type {Array<Array<number>>}
    * @memberof LadeZaehldatenHeatmapDTO
    */
-  seriesEntriesFirstChart?: Array<Array<number>>;
+  seriesEntriesFirstChart: Array<Array<number>>;
   /**
    *
    * @type {Array<Array<number>>}
@@ -70,6 +70,14 @@ export interface LadeZaehldatenHeatmapDTO {
 export function instanceOfLadeZaehldatenHeatmapDTO(
   value: object
 ): value is LadeZaehldatenHeatmapDTO {
+  if (!("legend" in value) || value["legend"] === undefined) return false;
+  if (!("rangeMin" in value) || value["rangeMin"] === undefined) return false;
+  if (!("rangeMax" in value) || value["rangeMax"] === undefined) return false;
+  if (
+    !("seriesEntriesFirstChart" in value) ||
+    value["seriesEntriesFirstChart"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -87,13 +95,10 @@ export function LadeZaehldatenHeatmapDTOFromJSONTyped(
     return json;
   }
   return {
-    legend: json["legend"] == null ? undefined : json["legend"],
-    rangeMin: json["rangeMin"] == null ? undefined : json["rangeMin"],
-    rangeMax: json["rangeMax"] == null ? undefined : json["rangeMax"],
-    seriesEntriesFirstChart:
-      json["seriesEntriesFirstChart"] == null
-        ? undefined
-        : json["seriesEntriesFirstChart"],
+    legend: json["legend"],
+    rangeMin: json["rangeMin"],
+    rangeMax: json["rangeMax"],
+    seriesEntriesFirstChart: json["seriesEntriesFirstChart"],
     seriesEntriesSecondChart:
       json["seriesEntriesSecondChart"] == null
         ? undefined

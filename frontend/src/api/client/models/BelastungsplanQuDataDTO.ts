@@ -33,19 +33,19 @@ export interface BelastungsplanQuDataDTO {
    * @type {string}
    * @memberof BelastungsplanQuDataDTO
    */
-  label?: string;
+  label: string;
   /**
    *
    * @type {boolean}
    * @memberof BelastungsplanQuDataDTO
    */
-  filled?: boolean;
+  filled: boolean;
   /**
    *
    * @type {Array<KnotenarmValue>}
    * @memberof BelastungsplanQuDataDTO
    */
-  valuesKnotenarme?: Array<KnotenarmValue>;
+  valuesKnotenarme: Array<KnotenarmValue>;
 }
 
 /**
@@ -54,6 +54,10 @@ export interface BelastungsplanQuDataDTO {
 export function instanceOfBelastungsplanQuDataDTO(
   value: object
 ): value is BelastungsplanQuDataDTO {
+  if (!("label" in value) || value["label"] === undefined) return false;
+  if (!("filled" in value) || value["filled"] === undefined) return false;
+  if (!("valuesKnotenarme" in value) || value["valuesKnotenarme"] === undefined)
+    return false;
   return true;
 }
 
@@ -71,12 +75,11 @@ export function BelastungsplanQuDataDTOFromJSONTyped(
     return json;
   }
   return {
-    label: json["label"] == null ? undefined : json["label"],
-    filled: json["filled"] == null ? undefined : json["filled"],
-    valuesKnotenarme:
-      json["valuesKnotenarme"] == null
-        ? undefined
-        : (json["valuesKnotenarme"] as Array<any>).map(KnotenarmValueFromJSON),
+    label: json["label"],
+    filled: json["filled"],
+    valuesKnotenarme: (json["valuesKnotenarme"] as Array<any>).map(
+      KnotenarmValueFromJSON
+    ),
   };
 }
 
@@ -97,9 +100,8 @@ export function BelastungsplanQuDataDTOToJSONTyped(
   return {
     label: value["label"],
     filled: value["filled"],
-    valuesKnotenarme:
-      value["valuesKnotenarme"] == null
-        ? undefined
-        : (value["valuesKnotenarme"] as Array<any>).map(KnotenarmValueToJSON),
+    valuesKnotenarme: (value["valuesKnotenarme"] as Array<any>).map(
+      KnotenarmValueToJSON
+    ),
   };
 }

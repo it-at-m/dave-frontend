@@ -33,7 +33,7 @@ export interface LadeZaehldatenTableDTO {
    * @type {Array<LadeZaehldatumDTO>}
    * @memberof LadeZaehldatenTableDTO
    */
-  zaehldaten?: Array<LadeZaehldatumDTO>;
+  zaehldaten: Array<LadeZaehldatumDTO>;
 }
 
 /**
@@ -42,6 +42,8 @@ export interface LadeZaehldatenTableDTO {
 export function instanceOfLadeZaehldatenTableDTO(
   value: object
 ): value is LadeZaehldatenTableDTO {
+  if (!("zaehldaten" in value) || value["zaehldaten"] === undefined)
+    return false;
   return true;
 }
 
@@ -59,10 +61,9 @@ export function LadeZaehldatenTableDTOFromJSONTyped(
     return json;
   }
   return {
-    zaehldaten:
-      json["zaehldaten"] == null
-        ? undefined
-        : (json["zaehldaten"] as Array<any>).map(LadeZaehldatumDTOFromJSON),
+    zaehldaten: (json["zaehldaten"] as Array<any>).map(
+      LadeZaehldatumDTOFromJSON
+    ),
   };
 }
 
@@ -81,9 +82,8 @@ export function LadeZaehldatenTableDTOToJSONTyped(
   }
 
   return {
-    zaehldaten:
-      value["zaehldaten"] == null
-        ? undefined
-        : (value["zaehldaten"] as Array<any>).map(LadeZaehldatumDTOToJSON),
+    zaehldaten: (value["zaehldaten"] as Array<any>).map(
+      LadeZaehldatumDTOToJSON
+    ),
   };
 }

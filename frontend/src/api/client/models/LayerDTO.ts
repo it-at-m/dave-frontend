@@ -25,31 +25,40 @@ export interface LayerDTO {
    * @type {string}
    * @memberof LayerDTO
    */
-  baseUrl?: string;
+  baseUrl: string;
   /**
    *
    * @type {string}
    * @memberof LayerDTO
    */
-  layerName?: string;
+  layerName: string;
   /**
    *
    * @type {string}
    * @memberof LayerDTO
    */
-  layerNameToDisplay?: string;
+  layerNameToDisplay: string;
   /**
    *
    * @type {string}
    * @memberof LayerDTO
    */
-  attribution?: string;
+  attribution: string;
 }
 
 /**
  * Check if a given object implements the LayerDTO interface.
  */
 export function instanceOfLayerDTO(value: object): value is LayerDTO {
+  if (!("baseUrl" in value) || value["baseUrl"] === undefined) return false;
+  if (!("layerName" in value) || value["layerName"] === undefined) return false;
+  if (
+    !("layerNameToDisplay" in value) ||
+    value["layerNameToDisplay"] === undefined
+  )
+    return false;
+  if (!("attribution" in value) || value["attribution"] === undefined)
+    return false;
   return true;
 }
 
@@ -65,13 +74,10 @@ export function LayerDTOFromJSONTyped(
     return json;
   }
   return {
-    baseUrl: json["baseUrl"] == null ? undefined : json["baseUrl"],
-    layerName: json["layerName"] == null ? undefined : json["layerName"],
-    layerNameToDisplay:
-      json["layerNameToDisplay"] == null
-        ? undefined
-        : json["layerNameToDisplay"],
-    attribution: json["attribution"] == null ? undefined : json["attribution"],
+    baseUrl: json["baseUrl"],
+    layerName: json["layerName"],
+    layerNameToDisplay: json["layerNameToDisplay"],
+    attribution: json["attribution"],
   };
 }
 

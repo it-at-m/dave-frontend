@@ -25,25 +25,25 @@ export interface SucheZaehlungSuggestDTO {
    * @type {string}
    * @memberof SucheZaehlungSuggestDTO
    */
-  text?: string;
+  text: string;
   /**
    *
    * @type {string}
    * @memberof SucheZaehlungSuggestDTO
    */
-  id?: string;
+  id: string;
   /**
    *
    * @type {string}
    * @memberof SucheZaehlungSuggestDTO
    */
-  zaehlstelleId?: string;
+  zaehlstelleId: string;
   /**
    *
    * @type {boolean}
    * @memberof SucheZaehlungSuggestDTO
    */
-  sichtbarDatenportal?: boolean;
+  sichtbarDatenportal: boolean;
 }
 
 /**
@@ -52,6 +52,15 @@ export interface SucheZaehlungSuggestDTO {
 export function instanceOfSucheZaehlungSuggestDTO(
   value: object
 ): value is SucheZaehlungSuggestDTO {
+  if (!("text" in value) || value["text"] === undefined) return false;
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (!("zaehlstelleId" in value) || value["zaehlstelleId"] === undefined)
+    return false;
+  if (
+    !("sichtbarDatenportal" in value) ||
+    value["sichtbarDatenportal"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -69,14 +78,10 @@ export function SucheZaehlungSuggestDTOFromJSONTyped(
     return json;
   }
   return {
-    text: json["text"] == null ? undefined : json["text"],
-    id: json["id"] == null ? undefined : json["id"],
-    zaehlstelleId:
-      json["zaehlstelleId"] == null ? undefined : json["zaehlstelleId"],
-    sichtbarDatenportal:
-      json["sichtbarDatenportal"] == null
-        ? undefined
-        : json["sichtbarDatenportal"],
+    text: json["text"],
+    id: json["id"],
+    zaehlstelleId: json["zaehlstelleId"],
+    sichtbarDatenportal: json["sichtbarDatenportal"],
   };
 }
 

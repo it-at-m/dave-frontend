@@ -25,19 +25,19 @@ export interface SucheZaehlstelleSuggestDTO {
    * @type {string}
    * @memberof SucheZaehlstelleSuggestDTO
    */
-  text?: string;
+  text: string;
   /**
    *
    * @type {string}
    * @memberof SucheZaehlstelleSuggestDTO
    */
-  id?: string;
+  id: string;
   /**
    *
    * @type {boolean}
    * @memberof SucheZaehlstelleSuggestDTO
    */
-  sichtbarDatenportal?: boolean;
+  sichtbarDatenportal: boolean;
 }
 
 /**
@@ -46,6 +46,13 @@ export interface SucheZaehlstelleSuggestDTO {
 export function instanceOfSucheZaehlstelleSuggestDTO(
   value: object
 ): value is SucheZaehlstelleSuggestDTO {
+  if (!("text" in value) || value["text"] === undefined) return false;
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (
+    !("sichtbarDatenportal" in value) ||
+    value["sichtbarDatenportal"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -63,12 +70,9 @@ export function SucheZaehlstelleSuggestDTOFromJSONTyped(
     return json;
   }
   return {
-    text: json["text"] == null ? undefined : json["text"],
-    id: json["id"] == null ? undefined : json["id"],
-    sichtbarDatenportal:
-      json["sichtbarDatenportal"] == null
-        ? undefined
-        : json["sichtbarDatenportal"],
+    text: json["text"],
+    id: json["id"],
+    sichtbarDatenportal: json["sichtbarDatenportal"],
   };
 }
 

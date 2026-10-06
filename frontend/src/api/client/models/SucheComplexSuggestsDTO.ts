@@ -54,25 +54,25 @@ export interface SucheComplexSuggestsDTO {
    * @type {Array<SucheWordSuggestDTO>}
    * @memberof SucheComplexSuggestsDTO
    */
-  wordSuggests?: Array<SucheWordSuggestDTO>;
+  wordSuggests: Array<SucheWordSuggestDTO>;
   /**
    *
    * @type {Array<SucheZaehlstelleSuggestDTO>}
    * @memberof SucheComplexSuggestsDTO
    */
-  zaehlstellenSuggests?: Array<SucheZaehlstelleSuggestDTO>;
+  zaehlstellenSuggests: Array<SucheZaehlstelleSuggestDTO>;
   /**
    *
    * @type {Array<SucheZaehlungSuggestDTO>}
    * @memberof SucheComplexSuggestsDTO
    */
-  zaehlungenSuggests?: Array<SucheZaehlungSuggestDTO>;
+  zaehlungenSuggests: Array<SucheZaehlungSuggestDTO>;
   /**
    *
    * @type {Array<SucheMessstelleSuggestDTO>}
    * @memberof SucheComplexSuggestsDTO
    */
-  messstellenSuggests?: Array<SucheMessstelleSuggestDTO>;
+  messstellenSuggests: Array<SucheMessstelleSuggestDTO>;
 }
 
 /**
@@ -81,6 +81,23 @@ export interface SucheComplexSuggestsDTO {
 export function instanceOfSucheComplexSuggestsDTO(
   value: object
 ): value is SucheComplexSuggestsDTO {
+  if (!("wordSuggests" in value) || value["wordSuggests"] === undefined)
+    return false;
+  if (
+    !("zaehlstellenSuggests" in value) ||
+    value["zaehlstellenSuggests"] === undefined
+  )
+    return false;
+  if (
+    !("zaehlungenSuggests" in value) ||
+    value["zaehlungenSuggests"] === undefined
+  )
+    return false;
+  if (
+    !("messstellenSuggests" in value) ||
+    value["messstellenSuggests"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -98,28 +115,18 @@ export function SucheComplexSuggestsDTOFromJSONTyped(
     return json;
   }
   return {
-    wordSuggests:
-      json["wordSuggests"] == null
-        ? undefined
-        : (json["wordSuggests"] as Array<any>).map(SucheWordSuggestDTOFromJSON),
-    zaehlstellenSuggests:
-      json["zaehlstellenSuggests"] == null
-        ? undefined
-        : (json["zaehlstellenSuggests"] as Array<any>).map(
-            SucheZaehlstelleSuggestDTOFromJSON
-          ),
-    zaehlungenSuggests:
-      json["zaehlungenSuggests"] == null
-        ? undefined
-        : (json["zaehlungenSuggests"] as Array<any>).map(
-            SucheZaehlungSuggestDTOFromJSON
-          ),
-    messstellenSuggests:
-      json["messstellenSuggests"] == null
-        ? undefined
-        : (json["messstellenSuggests"] as Array<any>).map(
-            SucheMessstelleSuggestDTOFromJSON
-          ),
+    wordSuggests: (json["wordSuggests"] as Array<any>).map(
+      SucheWordSuggestDTOFromJSON
+    ),
+    zaehlstellenSuggests: (json["zaehlstellenSuggests"] as Array<any>).map(
+      SucheZaehlstelleSuggestDTOFromJSON
+    ),
+    zaehlungenSuggests: (json["zaehlungenSuggests"] as Array<any>).map(
+      SucheZaehlungSuggestDTOFromJSON
+    ),
+    messstellenSuggests: (json["messstellenSuggests"] as Array<any>).map(
+      SucheMessstelleSuggestDTOFromJSON
+    ),
   };
 }
 
@@ -138,27 +145,17 @@ export function SucheComplexSuggestsDTOToJSONTyped(
   }
 
   return {
-    wordSuggests:
-      value["wordSuggests"] == null
-        ? undefined
-        : (value["wordSuggests"] as Array<any>).map(SucheWordSuggestDTOToJSON),
-    zaehlstellenSuggests:
-      value["zaehlstellenSuggests"] == null
-        ? undefined
-        : (value["zaehlstellenSuggests"] as Array<any>).map(
-            SucheZaehlstelleSuggestDTOToJSON
-          ),
-    zaehlungenSuggests:
-      value["zaehlungenSuggests"] == null
-        ? undefined
-        : (value["zaehlungenSuggests"] as Array<any>).map(
-            SucheZaehlungSuggestDTOToJSON
-          ),
-    messstellenSuggests:
-      value["messstellenSuggests"] == null
-        ? undefined
-        : (value["messstellenSuggests"] as Array<any>).map(
-            SucheMessstelleSuggestDTOToJSON
-          ),
+    wordSuggests: (value["wordSuggests"] as Array<any>).map(
+      SucheWordSuggestDTOToJSON
+    ),
+    zaehlstellenSuggests: (value["zaehlstellenSuggests"] as Array<any>).map(
+      SucheZaehlstelleSuggestDTOToJSON
+    ),
+    zaehlungenSuggests: (value["zaehlungenSuggests"] as Array<any>).map(
+      SucheZaehlungSuggestDTOToJSON
+    ),
+    messstellenSuggests: (value["messstellenSuggests"] as Array<any>).map(
+      SucheMessstelleSuggestDTOToJSON
+    ),
   };
 }

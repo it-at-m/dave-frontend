@@ -41,19 +41,19 @@ export interface LadeBelastungsplanDTO
    * @type {BelastungsplanDataDTO}
    * @memberof LadeBelastungsplanDTO
    */
-  value1?: BelastungsplanDataDTO;
+  value1: BelastungsplanDataDTO;
   /**
    *
    * @type {BelastungsplanDataDTO}
    * @memberof LadeBelastungsplanDTO
    */
-  value2?: BelastungsplanDataDTO;
+  value2: BelastungsplanDataDTO;
   /**
    *
    * @type {BelastungsplanDataDTO}
    * @memberof LadeBelastungsplanDTO
    */
-  value3?: BelastungsplanDataDTO;
+  value3: BelastungsplanDataDTO;
 }
 
 /**
@@ -62,6 +62,9 @@ export interface LadeBelastungsplanDTO
 export function instanceOfLadeBelastungsplanDTO(
   value: object
 ): value is LadeBelastungsplanDTO {
+  if (!("value1" in value) || value["value1"] === undefined) return false;
+  if (!("value2" in value) || value["value2"] === undefined) return false;
+  if (!("value3" in value) || value["value3"] === undefined) return false;
   return true;
 }
 
@@ -80,18 +83,9 @@ export function LadeBelastungsplanDTOFromJSONTyped(
   }
   return {
     ...AbstractLadeBelastungsplanDTOObjectFromJSONTyped(json, true),
-    value1:
-      json["value1"] == null
-        ? undefined
-        : BelastungsplanDataDTOFromJSON(json["value1"]),
-    value2:
-      json["value2"] == null
-        ? undefined
-        : BelastungsplanDataDTOFromJSON(json["value2"]),
-    value3:
-      json["value3"] == null
-        ? undefined
-        : BelastungsplanDataDTOFromJSON(json["value3"]),
+    value1: BelastungsplanDataDTOFromJSON(json["value1"]),
+    value2: BelastungsplanDataDTOFromJSON(json["value2"]),
+    value3: BelastungsplanDataDTOFromJSON(json["value3"]),
   };
 }
 

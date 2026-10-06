@@ -54,43 +54,43 @@ export interface LadeProcessedMesswerteDTO {
    * @type {string}
    * @memberof LadeProcessedMesswerteDTO
    */
-  tagesTyp?: LadeProcessedMesswerteDTOTagesTypEnum;
+  tagesTyp: LadeProcessedMesswerteDTOTagesTypEnum;
   /**
    *
    * @type {LadeMesswerteListenausgabeDTO}
    * @memberof LadeProcessedMesswerteDTO
    */
-  zaehldatenTable?: LadeMesswerteListenausgabeDTO;
+  zaehldatenTable: LadeMesswerteListenausgabeDTO;
   /**
    *
    * @type {LadeZaehldatenSteplineDTO}
    * @memberof LadeProcessedMesswerteDTO
    */
-  zaehldatenStepline?: LadeZaehldatenSteplineDTO;
+  zaehldatenStepline: LadeZaehldatenSteplineDTO;
   /**
    *
    * @type {LadeZaehldatenHeatmapDTO}
    * @memberof LadeProcessedMesswerteDTO
    */
-  zaehldatenHeatmap?: LadeZaehldatenHeatmapDTO;
+  zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
   /**
    *
    * @type {BelastungsplanMessquerschnitteDTO}
    * @memberof LadeProcessedMesswerteDTO
    */
-  belastungsplanMessquerschnitte?: BelastungsplanMessquerschnitteDTO;
+  belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTO;
   /**
    *
    * @type {number}
    * @memberof LadeProcessedMesswerteDTO
    */
-  requestedMeasuringDays?: number;
+  requestedMeasuringDays: number;
   /**
    *
    * @type {number}
    * @memberof LadeProcessedMesswerteDTO
    */
-  includedMeasuringDays?: number;
+  includedMeasuringDays: number;
 }
 
 /**
@@ -114,6 +114,34 @@ export type LadeProcessedMesswerteDTOTagesTypEnum =
 export function instanceOfLadeProcessedMesswerteDTO(
   value: object
 ): value is LadeProcessedMesswerteDTO {
+  if (!("tagesTyp" in value) || value["tagesTyp"] === undefined) return false;
+  if (!("zaehldatenTable" in value) || value["zaehldatenTable"] === undefined)
+    return false;
+  if (
+    !("zaehldatenStepline" in value) ||
+    value["zaehldatenStepline"] === undefined
+  )
+    return false;
+  if (
+    !("zaehldatenHeatmap" in value) ||
+    value["zaehldatenHeatmap"] === undefined
+  )
+    return false;
+  if (
+    !("belastungsplanMessquerschnitte" in value) ||
+    value["belastungsplanMessquerschnitte"] === undefined
+  )
+    return false;
+  if (
+    !("requestedMeasuringDays" in value) ||
+    value["requestedMeasuringDays"] === undefined
+  )
+    return false;
+  if (
+    !("includedMeasuringDays" in value) ||
+    value["includedMeasuringDays"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -131,33 +159,21 @@ export function LadeProcessedMesswerteDTOFromJSONTyped(
     return json;
   }
   return {
-    tagesTyp: json["tagesTyp"] == null ? undefined : json["tagesTyp"],
-    zaehldatenTable:
-      json["zaehldatenTable"] == null
-        ? undefined
-        : LadeMesswerteListenausgabeDTOFromJSON(json["zaehldatenTable"]),
-    zaehldatenStepline:
-      json["zaehldatenStepline"] == null
-        ? undefined
-        : LadeZaehldatenSteplineDTOFromJSON(json["zaehldatenStepline"]),
-    zaehldatenHeatmap:
-      json["zaehldatenHeatmap"] == null
-        ? undefined
-        : LadeZaehldatenHeatmapDTOFromJSON(json["zaehldatenHeatmap"]),
-    belastungsplanMessquerschnitte:
-      json["belastungsplanMessquerschnitte"] == null
-        ? undefined
-        : BelastungsplanMessquerschnitteDTOFromJSON(
-            json["belastungsplanMessquerschnitte"]
-          ),
-    requestedMeasuringDays:
-      json["requestedMeasuringDays"] == null
-        ? undefined
-        : json["requestedMeasuringDays"],
-    includedMeasuringDays:
-      json["includedMeasuringDays"] == null
-        ? undefined
-        : json["includedMeasuringDays"],
+    tagesTyp: json["tagesTyp"],
+    zaehldatenTable: LadeMesswerteListenausgabeDTOFromJSON(
+      json["zaehldatenTable"]
+    ),
+    zaehldatenStepline: LadeZaehldatenSteplineDTOFromJSON(
+      json["zaehldatenStepline"]
+    ),
+    zaehldatenHeatmap: LadeZaehldatenHeatmapDTOFromJSON(
+      json["zaehldatenHeatmap"]
+    ),
+    belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTOFromJSON(
+      json["belastungsplanMessquerschnitte"]
+    ),
+    requestedMeasuringDays: json["requestedMeasuringDays"],
+    includedMeasuringDays: json["includedMeasuringDays"],
   };
 }
 
