@@ -4,7 +4,7 @@ import type MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/Mes
 
 export default interface MessstelleAuswertungDTO extends BaseEntity {
   mstId: string;
-  standort: string;
+  standort?: string;
   messquerschnitte: MessquerschnittAuswertungDTO[];
-  detektierteVerkehrsart: Verkehrsart;
+  detektierteVerkehrsart?: Verkehrsart;
 }

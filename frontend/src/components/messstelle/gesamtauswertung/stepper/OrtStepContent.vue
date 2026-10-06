@@ -275,6 +275,7 @@ function setVerfuegbareVerkehrsarten() {
     for (const messstelle of props.allVisibleMessstellen) {
       if (
         existsMstIdInAuswertungIds(messstelle.mstId) &&
+        messstelle.detektierteVerkehrsart &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
           messstelle.detektierteVerkehrsart
         )
