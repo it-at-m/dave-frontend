@@ -253,18 +253,20 @@
               text-align: start;
               writing-mode: lr-tb;
               direction: ltr;
-              text-anchor: start;
+              text-anchor: middle;
               fill: #000000;
               stroke-width: 52.2711;
+              dominant-baseline: central;
             "
-            y="711.73895"
-            x="465.80084"
+            x="476"
+            y="700"
+            :transform="rotateNumber1Inverse"
           >
             <tspan
               id="number1_tspan"
               style="stroke-width: 52.2711"
-              x="465.80084"
-              y="711.73895"
+              x="476"
+              y="700"
             >
               {{ firstKnotenarm?.nummer }}
             </tspan>
@@ -294,17 +296,19 @@
               text-align: start;
               writing-mode: lr-tb;
               direction: ltr;
-              text-anchor: start;
+              text-anchor: middle;
               fill: #000000;
               stroke-width: 52.2711;
+              dominant-baseline: central;
             "
-            x="913.19183"
-            y="711.73895"
+            x="924"
+            y="700"
+            :transform="rotateNumber2Inverse"
           >
             <tspan
               id="number2_tspan"
-              x="913.19183"
-              y="711.73895"
+              x="924"
+              y="700"
               style="stroke-width: 52.2711"
             >
               {{ secondKnotenarm?.nummer }}
@@ -443,6 +447,16 @@ const secondKnotenarm = computed(() => {
 });
 
 const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
+const rotateNumber1Inverse = qjs.rotateNumberInverseFor(
+  availableKnotenarmNummern,
+  476,
+  700
+);
+const rotateNumber2Inverse = qjs.rotateNumberInverseFor(
+  availableKnotenarmNummern,
+  924,
+  700
+);
 
 const isAvailableArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(

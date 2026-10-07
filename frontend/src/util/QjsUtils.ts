@@ -38,6 +38,39 @@ export function useQjs() {
     });
   }
 
+  /**
+   * Liefert ein computedRef für die inverse Rotation der Knotenarm-Nummern basierend auf den verfügbaren Knotenarm-Nummern.
+   * Die inverse Rotation ist notwendig, damit die Nummern immer horizontal dargestellt werden.
+   * @param availableKnotenarmNummern Ref oder ComputedRef mit number[]
+   * @param x x-Koordinate des Elements, um die rotiert werden soll
+   * @param y y-Koordinate des Elements, um die rotiert werden soll
+   * @returns ComputedRef<string> z.B. "rotate(90,700,700)"
+   */
+  function rotateNumberInverseFor(
+    availableKnotenarmNummern: Ref<number[]> | ComputedRef<number[]>,
+    x: number,
+    y: number
+  ): ComputedRef<string> {
+    return computed(() => {
+      // Default: keine Rotation
+      let rotation = `rotate(0, ${x}, ${y})`;
+      // Reihenfolge wie in den Komponenten: spätere Bedingungen überschreiben frühere
+      if (availableKnotenarmNummern?.value?.includes(1)) {
+        rotation = `rotate(90, ${x}, ${y})`;
+      }
+      if (availableKnotenarmNummern?.value?.includes(2)) {
+        rotation = `rotate(0, ${x}, ${y})`;
+      }
+      if (availableKnotenarmNummern?.value?.includes(5)) {
+        rotation = `rotate(45, ${x}, ${y})`;
+      }
+      if (availableKnotenarmNummern?.value?.includes(6)) {
+        rotation = `rotate(-45, ${x}, ${y})`;
+      }
+      return rotation;
+    });
+  }
+
   // --- Arrow pattern constants ---
   const patternsArrowOne: VerkehrsbeziehungDTO[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
@@ -149,6 +182,7 @@ export function useQjs() {
 
   return {
     rotateSvgFor,
+    rotateNumberInverseFor,
     patternsArrowOne,
     patternsArrowTwo,
     patternsArrowThree,
