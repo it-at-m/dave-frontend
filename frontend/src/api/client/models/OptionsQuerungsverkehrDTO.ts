@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { Himmelsrichtung } from "./Himmelsrichtung";
+
 import { mapValues } from "../runtime";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 
 /**
  *
@@ -28,27 +36,11 @@ export interface OptionsQuerungsverkehrDTO {
   knotenarm?: number;
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof OptionsQuerungsverkehrDTO
    */
-  richtung?: OptionsQuerungsverkehrDTORichtungEnum;
+  richtung?: Himmelsrichtung;
 }
-
-/**
- * @export
- */
-export const OptionsQuerungsverkehrDTORichtungEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type OptionsQuerungsverkehrDTORichtungEnum =
-  (typeof OptionsQuerungsverkehrDTORichtungEnum)[keyof typeof OptionsQuerungsverkehrDTORichtungEnum];
 
 /**
  * Check if a given object implements the OptionsQuerungsverkehrDTO interface.
@@ -74,7 +66,10 @@ export function OptionsQuerungsverkehrDTOFromJSONTyped(
   }
   return {
     knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
-    richtung: json["richtung"] == null ? undefined : json["richtung"],
+    richtung:
+      json["richtung"] == null
+        ? undefined
+        : HimmelsrichtungFromJSON(json["richtung"]),
   };
 }
 
@@ -94,6 +89,6 @@ export function OptionsQuerungsverkehrDTOToJSONTyped(
 
   return {
     knotenarm: value["knotenarm"],
-    richtung: value["richtung"],
+    richtung: HimmelsrichtungToJSON(value["richtung"]),
   };
 }

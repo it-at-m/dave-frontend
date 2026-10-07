@@ -3818,15 +3818,12 @@
           {
             "name": "richtung",
             "in": "query",
-            "schema": { "type": "string", "enum": ["EIN", "AUS"] }
+            "schema": { "$ref": "#/components/schemas/Bewegungsrichtung" }
           },
           {
             "name": "strassenseite",
             "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-            }
+            "schema": { "$ref": "#/components/schemas/Himmelsrichtung" }
           },
           {
             "name": "types",
@@ -3895,10 +3892,7 @@
           {
             "name": "richtung",
             "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-            }
+            "schema": { "$ref": "#/components/schemas/Himmelsrichtung" }
           },
           {
             "name": "types",
@@ -4190,10 +4184,7 @@
           {
             "name": "strassenseite",
             "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-            }
+            "schema": { "$ref": "#/components/schemas/Himmelsrichtung" }
           }
         ],
         "responses": {
@@ -5926,92 +5917,7 @@
             "name": "zeitblock",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ZB_00_06",
-                "ZB_06_10",
-                "ZB_10_15",
-                "ZB_15_19",
-                "ZB_19_22",
-                "ZB_19_24",
-                "ZB_00_24",
-                "ZB_06_19",
-                "ZB_06_22",
-                "ZB_00_01",
-                "ZB_01_02",
-                "ZB_02_03",
-                "ZB_03_04",
-                "ZB_04_05",
-                "ZB_05_06",
-                "ZB_06_07",
-                "ZB_07_08",
-                "ZB_08_09",
-                "ZB_09_10",
-                "ZB_10_11",
-                "ZB_11_12",
-                "ZB_12_13",
-                "ZB_13_14",
-                "ZB_14_15",
-                "ZB_15_16",
-                "ZB_16_17",
-                "ZB_17_18",
-                "ZB_18_19",
-                "ZB_19_20",
-                "ZB_20_21",
-                "ZB_21_22",
-                "ZB_22_23",
-                "ZB_23_24",
-                "ZB_0000_0030",
-                "ZB_0030_0100",
-                "ZB_0100_0130",
-                "ZB_0130_0200",
-                "ZB_0200_0230",
-                "ZB_0230_0300",
-                "ZB_0300_0330",
-                "ZB_0330_0400",
-                "ZB_0400_0430",
-                "ZB_0430_0500",
-                "ZB_0500_0530",
-                "ZB_0530_0600",
-                "ZB_0600_0630",
-                "ZB_0630_0700",
-                "ZB_0700_0730",
-                "ZB_0730_0800",
-                "ZB_0800_0830",
-                "ZB_0830_0900",
-                "ZB_0900_0930",
-                "ZB_0930_1000",
-                "ZB_1000_1030",
-                "ZB_1030_1100",
-                "ZB_1100_1130",
-                "ZB_1130_1200",
-                "ZB_1200_1230",
-                "ZB_1230_1300",
-                "ZB_1300_1330",
-                "ZB_1330_1400",
-                "ZB_1400_1430",
-                "ZB_1430_1500",
-                "ZB_1500_1530",
-                "ZB_1530_1600",
-                "ZB_1600_1630",
-                "ZB_1630_1700",
-                "ZB_1700_1730",
-                "ZB_1730_1800",
-                "ZB_1800_1830",
-                "ZB_1830_1900",
-                "ZB_1900_1930",
-                "ZB_1930_2000",
-                "ZB_2000_2030",
-                "ZB_2030_2100",
-                "ZB_2100_2130",
-                "ZB_2130_2200",
-                "ZB_2200_2230",
-                "ZB_2230_2300",
-                "ZB_2300_2330",
-                "ZB_2330_2400"
-              ]
-            }
+            "schema": { "$ref": "#/components/schemas/Zeitblock" }
           },
           {
             "name": "zeitauswahl",
@@ -6385,26 +6291,17 @@
         "type": "object",
         "properties": { "_links": { "$ref": "#/components/schemas/Links" } }
       },
-      "Completion": {
+      "EntityModelInfoMessage": {
         "type": "object",
         "properties": {
-          "input": { "type": "array", "items": { "type": "string" } },
-          "contexts": {
-            "type": ["object", "null"],
-            "additionalProperties": {
-              "type": "array",
-              "items": { "type": "string" }
-            }
-          },
-          "weight": { "type": ["integer", "null"], "format": "int32" }
-        }
-      },
-      "EntityModelCustomSuggest": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "fkid": { "type": "string" },
-          "suggest": { "$ref": "#/components/schemas/Completion" },
+          "id": { "type": "string", "format": "uuid" },
+          "createdTime": { "type": "string", "format": "date-time" },
+          "version": { "type": "integer", "format": "int64" },
+          "content": { "type": "string" },
+          "gueltigVon": { "type": "string", "format": "date" },
+          "gueltigBis": { "type": "string", "format": "date" },
+          "aktiv": { "type": "boolean" },
+          "entityVersion": { "type": "integer", "format": "int64" },
           "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
@@ -6417,16 +6314,16 @@
           "number": { "type": "integer", "format": "int64" }
         }
       },
-      "PagedModelEntityModelCustomSuggest": {
+      "PagedModelEntityModelInfoMessage": {
         "type": "object",
         "properties": {
           "_embedded": {
             "type": "object",
             "properties": {
-              "customSuggests": {
+              "infoMessages": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/EntityModelCustomSuggest"
+                  "$ref": "#/components/schemas/EntityModelInfoMessage"
                 }
               }
             }
@@ -6435,16 +6332,16 @@
           "page": { "$ref": "#/components/schemas/PageMetadata" }
         }
       },
-      "CollectionModelEntityModelCustomSuggest": {
+      "CollectionModelEntityModelInfoMessage": {
         "type": "object",
         "properties": {
           "_embedded": {
             "type": "object",
             "properties": {
-              "customSuggests": {
+              "infoMessages": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/EntityModelCustomSuggest"
+                  "$ref": "#/components/schemas/EntityModelInfoMessage"
                 }
               }
             }
@@ -6512,12 +6409,17 @@
           "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
+      "Bewegungsrichtung": { "type": "string", "enum": ["EIN", "AUS"] },
       "GeoPoint": {
         "type": "object",
         "properties": {
           "lat": { "type": "number", "format": "double" },
           "lon": { "type": "number", "format": "double" }
         }
+      },
+      "Himmelsrichtung": {
+        "type": "string",
+        "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
       },
       "Hochrechnungsfaktor": {
         "type": "object",
@@ -6545,11 +6447,8 @@
             "$ref": "#/components/schemas/Hochrechnungsfaktor"
           },
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": { "type": "string", "enum": ["EIN", "AUS"] },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Bewegungsrichtung" },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "PkwEinheit": {
@@ -6581,10 +6480,7 @@
             "$ref": "#/components/schemas/Hochrechnungsfaktor"
           },
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "Verkehrsbeziehung": {
@@ -6601,10 +6497,7 @@
           "hinein": { "type": "boolean" },
           "heraus": { "type": "boolean" },
           "vorbei": { "type": "boolean" },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" },
           "vonknotvonstrnr": { "type": "string" },
           "nachknotvonstrnr": { "type": "string" },
           "von_strnr": { "type": "string" },
@@ -6749,24 +6642,249 @@
           "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
+      "EntityModelPkwEinheit": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "createdTime": { "type": "string", "format": "date-time" },
+          "version": { "type": "integer", "format": "int64" },
+          "pkw": { "type": "number" },
+          "lkw": { "type": "number" },
+          "lastzuege": { "type": "number" },
+          "busse": { "type": "number" },
+          "kraftraeder": { "type": "number" },
+          "fahrradfahrer": { "type": "number" },
+          "fussgaenger": { "type": "number" },
+          "entityVersion": { "type": "integer", "format": "int64" },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "PagedModelEntityModelPkwEinheit": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "pkwEinheits": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelPkwEinheit"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" },
+          "page": { "$ref": "#/components/schemas/PageMetadata" }
+        }
+      },
+      "EntityModelUnauffaelligerTag": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "createdTime": { "type": "string", "format": "date-time" },
+          "version": { "type": "integer", "format": "int64" },
+          "mstId": { "type": "string" },
+          "entityVersion": { "type": "integer", "format": "int64" },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "PagedModelEntityModelUnauffaelligerTag": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "unauffaelligerTags": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelUnauffaelligerTag"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" },
+          "page": { "$ref": "#/components/schemas/PageMetadata" }
+        }
+      },
+      "CollectionModelObject": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": { "objects": { "type": "array", "items": {} } }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "CollectionModelEntityModelUnauffaelligerTag": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "unauffaelligerTags": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelUnauffaelligerTag"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "EntityModelHochrechnungsfaktor": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "createdTime": { "type": "string", "format": "date-time" },
+          "version": { "type": "integer", "format": "int64" },
+          "matrix": { "type": "string" },
+          "kfz": { "type": "number", "format": "double" },
+          "sv": { "type": "number", "format": "double" },
+          "gv": { "type": "number", "format": "double" },
+          "active": { "type": "boolean" },
+          "defaultFaktor": { "type": "boolean" },
+          "entityVersion": { "type": "integer", "format": "int64" },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "PagedModelEntityModelHochrechnungsfaktor": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "hochrechnungsfaktors": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelHochrechnungsfaktor"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" },
+          "page": { "$ref": "#/components/schemas/PageMetadata" }
+        }
+      },
+      "EntityModelDienstleister": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "createdTime": { "type": "string", "format": "date-time" },
+          "version": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "kennung": { "type": "string" },
+          "emailAddresses": { "type": "array", "items": { "type": "string" } },
+          "active": { "type": "boolean" },
+          "entityVersion": { "type": "integer", "format": "int64" },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "PagedModelEntityModelDienstleister": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "dienstleisters": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelDienstleister"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" },
+          "page": { "$ref": "#/components/schemas/PageMetadata" }
+        }
+      },
+      "CollectionModelEntityModelDienstleister": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "dienstleisters": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelDienstleister"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "Completion": {
+        "type": "object",
+        "properties": {
+          "input": { "type": "array", "items": { "type": "string" } },
+          "contexts": {
+            "type": ["object", "null"],
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "weight": { "type": ["integer", "null"], "format": "int32" }
+        }
+      },
+      "EntityModelCustomSuggest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "fkid": { "type": "string" },
+          "suggest": { "$ref": "#/components/schemas/Completion" },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "PagedModelEntityModelCustomSuggest": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "customSuggests": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelCustomSuggest"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" },
+          "page": { "$ref": "#/components/schemas/PageMetadata" }
+        }
+      },
+      "CollectionModelEntityModelCustomSuggest": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "customSuggests": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelCustomSuggest"
+                }
+              }
+            }
+          },
+          "_links": { "$ref": "#/components/schemas/Links" }
+        }
+      },
+      "Fahrzeugklasse": {
+        "type": "string",
+        "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
+      },
       "Messfaehigkeit": {
         "type": "object",
         "properties": {
           "gueltigAb": { "type": "string", "format": "date" },
           "gueltigBis": { "type": "string", "format": "date" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          }
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
         }
       },
       "Messquerschnitt": {
@@ -6784,6 +6902,15 @@
         }
       },
       "Verkehrsart": { "type": "string", "enum": ["KFZ", "RAD", "UNBEKANNT"] },
+      "ZaehldatenIntervall": {
+        "type": "string",
+        "enum": [
+          "STUNDE_VIERTEL",
+          "STUNDE_VIERTEL_EINGESCHRAENKT",
+          "STUNDE_HALB",
+          "STUNDE_KOMPLETT"
+        ]
+      },
       "EntityModelMessstelle": {
         "type": "object",
         "properties": {
@@ -6803,10 +6930,7 @@
           "abbaudatum": { "type": "string", "format": "date" },
           "stadtbezirkNummer": { "type": "integer", "format": "int32" },
           "bemerkung": { "type": "string" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
           "detektierteVerkehrsart": {
             "$ref": "#/components/schemas/Verkehrsart"
           },
@@ -6869,320 +6993,65 @@
           "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
-      "EntityModelUnauffaelligerTag": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "createdTime": { "type": "string", "format": "date-time" },
-          "version": { "type": "integer", "format": "int64" },
-          "mstId": { "type": "string" },
-          "entityVersion": { "type": "integer", "format": "int64" },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "PagedModelEntityModelUnauffaelligerTag": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "unauffaelligerTags": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelUnauffaelligerTag"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" },
-          "page": { "$ref": "#/components/schemas/PageMetadata" }
-        }
-      },
-      "CollectionModelObject": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": { "objects": { "type": "array", "items": {} } }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "CollectionModelEntityModelUnauffaelligerTag": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "unauffaelligerTags": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelUnauffaelligerTag"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "EntityModelPkwEinheit": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "createdTime": { "type": "string", "format": "date-time" },
-          "version": { "type": "integer", "format": "int64" },
-          "pkw": { "type": "number" },
-          "lkw": { "type": "number" },
-          "lastzuege": { "type": "number" },
-          "busse": { "type": "number" },
-          "kraftraeder": { "type": "number" },
-          "fahrradfahrer": { "type": "number" },
-          "fussgaenger": { "type": "number" },
-          "entityVersion": { "type": "integer", "format": "int64" },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "PagedModelEntityModelPkwEinheit": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "pkwEinheits": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelPkwEinheit"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" },
-          "page": { "$ref": "#/components/schemas/PageMetadata" }
-        }
-      },
-      "EntityModelDienstleister": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "createdTime": { "type": "string", "format": "date-time" },
-          "version": { "type": "integer", "format": "int64" },
-          "name": { "type": "string" },
-          "kennung": { "type": "string" },
-          "emailAddresses": { "type": "array", "items": { "type": "string" } },
-          "active": { "type": "boolean" },
-          "entityVersion": { "type": "integer", "format": "int64" },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "PagedModelEntityModelDienstleister": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "dienstleisters": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelDienstleister"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" },
-          "page": { "$ref": "#/components/schemas/PageMetadata" }
-        }
-      },
-      "CollectionModelEntityModelDienstleister": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "dienstleisters": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelDienstleister"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
       "EntityModelOptionsmenueSettings": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "format": "uuid" },
           "createdTime": { "type": "string", "format": "date-time" },
           "version": { "type": "integer", "format": "int64" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" },
           "kraftfahrzeugverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "schwerverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "gueterverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "schwerverkehrsanteilProzentChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "gueterverkehrsanteilProzentChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "radverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "fussverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lastkraftwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lastzuegeChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "busseChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "kraftraederChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "personenkraftwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lieferwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "entityVersion": { "type": "integer", "format": "int64" },
           "_links": { "$ref": "#/components/schemas/Links" }
@@ -7204,58 +7073,6 @@
           },
           "_links": { "$ref": "#/components/schemas/Links" },
           "page": { "$ref": "#/components/schemas/PageMetadata" }
-        }
-      },
-      "EntityModelChatMessage": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "createdTime": { "type": "string", "format": "date-time" },
-          "version": { "type": "integer", "format": "int64" },
-          "zaehlungId": { "type": "string", "format": "uuid" },
-          "content": { "type": "string" },
-          "participantId": { "type": "integer", "format": "int32" },
-          "timestamp": { "type": "string", "format": "date-time" },
-          "type": { "type": "string" },
-          "uploaded": { "type": "boolean" },
-          "viewed": { "type": "boolean" },
-          "entityVersion": { "type": "integer", "format": "int64" },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "PagedModelEntityModelChatMessage": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "chatMessages": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelChatMessage"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" },
-          "page": { "$ref": "#/components/schemas/PageMetadata" }
-        }
-      },
-      "CollectionModelEntityModelChatMessage": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "chatMessages": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelChatMessage"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
       "EntityModelEmailAddress": {
@@ -7379,30 +7196,33 @@
           "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
-      "EntityModelInfoMessage": {
+      "EntityModelChatMessage": {
         "type": "object",
         "properties": {
           "id": { "type": "string", "format": "uuid" },
           "createdTime": { "type": "string", "format": "date-time" },
           "version": { "type": "integer", "format": "int64" },
+          "zaehlungId": { "type": "string", "format": "uuid" },
           "content": { "type": "string" },
-          "gueltigVon": { "type": "string", "format": "date" },
-          "gueltigBis": { "type": "string", "format": "date" },
-          "aktiv": { "type": "boolean" },
+          "participantId": { "type": "integer", "format": "int32" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "type": { "type": "string" },
+          "uploaded": { "type": "boolean" },
+          "viewed": { "type": "boolean" },
           "entityVersion": { "type": "integer", "format": "int64" },
           "_links": { "$ref": "#/components/schemas/Links" }
         }
       },
-      "PagedModelEntityModelInfoMessage": {
+      "PagedModelEntityModelChatMessage": {
         "type": "object",
         "properties": {
           "_embedded": {
             "type": "object",
             "properties": {
-              "infoMessages": {
+              "chatMessages": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/EntityModelInfoMessage"
+                  "$ref": "#/components/schemas/EntityModelChatMessage"
                 }
               }
             }
@@ -7411,55 +7231,21 @@
           "page": { "$ref": "#/components/schemas/PageMetadata" }
         }
       },
-      "CollectionModelEntityModelInfoMessage": {
+      "CollectionModelEntityModelChatMessage": {
         "type": "object",
         "properties": {
           "_embedded": {
             "type": "object",
             "properties": {
-              "infoMessages": {
+              "chatMessages": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/EntityModelInfoMessage"
+                  "$ref": "#/components/schemas/EntityModelChatMessage"
                 }
               }
             }
           },
           "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "EntityModelHochrechnungsfaktor": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string", "format": "uuid" },
-          "createdTime": { "type": "string", "format": "date-time" },
-          "version": { "type": "integer", "format": "int64" },
-          "matrix": { "type": "string" },
-          "kfz": { "type": "number", "format": "double" },
-          "sv": { "type": "number", "format": "double" },
-          "gv": { "type": "number", "format": "double" },
-          "active": { "type": "boolean" },
-          "defaultFaktor": { "type": "boolean" },
-          "entityVersion": { "type": "integer", "format": "int64" },
-          "_links": { "$ref": "#/components/schemas/Links" }
-        }
-      },
-      "PagedModelEntityModelHochrechnungsfaktor": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "hochrechnungsfaktors": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelHochrechnungsfaktor"
-                }
-              }
-            }
-          },
-          "_links": { "$ref": "#/components/schemas/Links" },
-          "page": { "$ref": "#/components/schemas/PageMetadata" }
         }
       },
       "ChatMessageRequestBody": {
@@ -7566,10 +7352,7 @@
           "abbaudatum": { "type": "string", "format": "date" },
           "stadtbezirkNummer": { "type": "integer", "format": "int32" },
           "bemerkung": { "type": "string" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
           "detektierteVerkehrsart": {
             "$ref": "#/components/schemas/Verkehrsart"
           },
@@ -7602,174 +7385,59 @@
           "id": { "type": "string", "format": "uuid" },
           "createdTime": { "type": "string", "format": "date-time" },
           "version": { "type": "integer", "format": "int64" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" },
           "kraftfahrzeugverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "schwerverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "gueterverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "schwerverkehrsanteilProzentChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "gueterverkehrsanteilProzentChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "radverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "fussverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lastkraftwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lastzuegeChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "busseChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "kraftraederChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "personenkraftwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lieferwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "entityVersion": { "type": "integer", "format": "int64" }
         }
@@ -7932,11 +7600,8 @@
             "$ref": "#/components/schemas/HochrechnungsfaktorDTO"
           },
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": { "type": "string", "enum": ["EIN", "AUS"] },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Bewegungsrichtung" },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "BearbeiteQuerungsverkehrDTO": {
@@ -7951,10 +7616,7 @@
             "$ref": "#/components/schemas/HochrechnungsfaktorDTO"
           },
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "BearbeiteVerkehrsbeziehungDTO": {
@@ -7975,10 +7637,7 @@
           "hinein": { "type": "boolean" },
           "heraus": { "type": "boolean" },
           "vorbei": { "type": "boolean" },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" },
           "vonknotvonstrnr": { "type": "string" },
           "nachknotvonstrnr": { "type": "string" },
           "von_strnr": { "type": "string" },
@@ -8111,11 +7770,8 @@
             "$ref": "#/components/schemas/HochrechnungsfaktorDTO"
           },
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": { "type": "string", "enum": ["EIN", "AUS"] },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Bewegungsrichtung" },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "ExternalQuerungsverkehrDTO": {
@@ -8130,10 +7786,7 @@
             "$ref": "#/components/schemas/HochrechnungsfaktorDTO"
           },
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "ExternalVerkehrsbeziehungDTO": {
@@ -8154,10 +7807,7 @@
           "hinein": { "type": "boolean" },
           "heraus": { "type": "boolean" },
           "vorbei": { "type": "boolean" },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "ExternalZaehlungDTO": {
@@ -8373,101 +8023,8 @@
               "SONSTIGE"
             ]
           },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          },
-          "zeitblock": {
-            "type": "string",
-            "enum": [
-              "ZB_00_06",
-              "ZB_06_10",
-              "ZB_10_15",
-              "ZB_15_19",
-              "ZB_19_22",
-              "ZB_19_24",
-              "ZB_00_24",
-              "ZB_06_19",
-              "ZB_06_22",
-              "ZB_00_01",
-              "ZB_01_02",
-              "ZB_02_03",
-              "ZB_03_04",
-              "ZB_04_05",
-              "ZB_05_06",
-              "ZB_06_07",
-              "ZB_07_08",
-              "ZB_08_09",
-              "ZB_09_10",
-              "ZB_10_11",
-              "ZB_11_12",
-              "ZB_12_13",
-              "ZB_13_14",
-              "ZB_14_15",
-              "ZB_15_16",
-              "ZB_16_17",
-              "ZB_17_18",
-              "ZB_18_19",
-              "ZB_19_20",
-              "ZB_20_21",
-              "ZB_21_22",
-              "ZB_22_23",
-              "ZB_23_24",
-              "ZB_0000_0030",
-              "ZB_0030_0100",
-              "ZB_0100_0130",
-              "ZB_0130_0200",
-              "ZB_0200_0230",
-              "ZB_0230_0300",
-              "ZB_0300_0330",
-              "ZB_0330_0400",
-              "ZB_0400_0430",
-              "ZB_0430_0500",
-              "ZB_0500_0530",
-              "ZB_0530_0600",
-              "ZB_0600_0630",
-              "ZB_0630_0700",
-              "ZB_0700_0730",
-              "ZB_0730_0800",
-              "ZB_0800_0830",
-              "ZB_0830_0900",
-              "ZB_0900_0930",
-              "ZB_0930_1000",
-              "ZB_1000_1030",
-              "ZB_1030_1100",
-              "ZB_1100_1130",
-              "ZB_1130_1200",
-              "ZB_1200_1230",
-              "ZB_1230_1300",
-              "ZB_1300_1330",
-              "ZB_1330_1400",
-              "ZB_1400_1430",
-              "ZB_1430_1500",
-              "ZB_1500_1530",
-              "ZB_1530_1600",
-              "ZB_1600_1630",
-              "ZB_1630_1700",
-              "ZB_1700_1730",
-              "ZB_1730_1800",
-              "ZB_1800_1830",
-              "ZB_1830_1900",
-              "ZB_1900_1930",
-              "ZB_1930_2000",
-              "ZB_2000_2030",
-              "ZB_2030_2100",
-              "ZB_2100_2130",
-              "ZB_2130_2200",
-              "ZB_2200_2230",
-              "ZB_2230_2300",
-              "ZB_2300_2330",
-              "ZB_2330_2400"
-            ]
-          },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" },
+          "zeitblock": { "$ref": "#/components/schemas/Zeitblock" },
           "zeitauswahl": { "type": "string" },
           "kraftfahrzeugverkehr": { "type": "boolean" },
           "schwerverkehr": { "type": "boolean" },
@@ -8493,7 +8050,7 @@
           "fahrzeugklassenStapeln": { "type": "boolean" },
           "beschriftung": { "type": "boolean" },
           "datentabelle": { "type": "boolean" },
-          "rounding": { "type": "string", "enum": ["NONE", "R10", "R100"] },
+          "rounding": { "$ref": "#/components/schemas/Rounding" },
           "differenzdatenDarstellen": { "type": "boolean" },
           "zeitreiheGesamt": { "type": "boolean" },
           "vergleichszaehlungsId": { "type": "string" },
@@ -8556,21 +8113,15 @@
         "type": "object",
         "properties": {
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": { "type": "string", "enum": ["EIN", "AUS"] },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Bewegungsrichtung" },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "OptionsQuerungsverkehrDTO": {
         "type": "object",
         "properties": {
           "knotenarm": { "type": "integer", "format": "int32" },
-          "richtung": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "richtung": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
       },
       "OptionsVerkehrsbeziehungDTO": {
@@ -8578,11 +8129,95 @@
         "properties": {
           "von": { "type": "integer", "format": "int32" },
           "nach": { "type": "integer", "format": "int32" },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          }
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" }
         }
+      },
+      "Rounding": { "type": "string", "enum": ["NONE", "R10", "R100"] },
+      "Zeitblock": {
+        "type": "string",
+        "enum": [
+          "ZB_00_06",
+          "ZB_06_10",
+          "ZB_10_15",
+          "ZB_15_19",
+          "ZB_19_22",
+          "ZB_19_24",
+          "ZB_00_24",
+          "ZB_06_19",
+          "ZB_06_22",
+          "ZB_00_01",
+          "ZB_01_02",
+          "ZB_02_03",
+          "ZB_03_04",
+          "ZB_04_05",
+          "ZB_05_06",
+          "ZB_06_07",
+          "ZB_07_08",
+          "ZB_08_09",
+          "ZB_09_10",
+          "ZB_10_11",
+          "ZB_11_12",
+          "ZB_12_13",
+          "ZB_13_14",
+          "ZB_14_15",
+          "ZB_15_16",
+          "ZB_16_17",
+          "ZB_17_18",
+          "ZB_18_19",
+          "ZB_19_20",
+          "ZB_20_21",
+          "ZB_21_22",
+          "ZB_22_23",
+          "ZB_23_24",
+          "ZB_0000_0030",
+          "ZB_0030_0100",
+          "ZB_0100_0130",
+          "ZB_0130_0200",
+          "ZB_0200_0230",
+          "ZB_0230_0300",
+          "ZB_0300_0330",
+          "ZB_0330_0400",
+          "ZB_0400_0430",
+          "ZB_0430_0500",
+          "ZB_0500_0530",
+          "ZB_0530_0600",
+          "ZB_0600_0630",
+          "ZB_0630_0700",
+          "ZB_0700_0730",
+          "ZB_0730_0800",
+          "ZB_0800_0830",
+          "ZB_0830_0900",
+          "ZB_0900_0930",
+          "ZB_0930_1000",
+          "ZB_1000_1030",
+          "ZB_1030_1100",
+          "ZB_1100_1130",
+          "ZB_1130_1200",
+          "ZB_1200_1230",
+          "ZB_1230_1300",
+          "ZB_1300_1330",
+          "ZB_1330_1400",
+          "ZB_1400_1430",
+          "ZB_1430_1500",
+          "ZB_1500_1530",
+          "ZB_1530_1600",
+          "ZB_1600_1630",
+          "ZB_1630_1700",
+          "ZB_1700_1730",
+          "ZB_1730_1800",
+          "ZB_1800_1830",
+          "ZB_1830_1900",
+          "ZB_1900_1930",
+          "ZB_1930_2000",
+          "ZB_2000_2030",
+          "ZB_2030_2100",
+          "ZB_2100_2130",
+          "ZB_2130_2200",
+          "ZB_2200_2230",
+          "ZB_2230_2300",
+          "ZB_2300_2330",
+          "ZB_2330_2400"
+        ]
       },
       "AbstractLadeBelastungsplanDTOObject": {
         "type": "object",
@@ -8810,11 +8445,11 @@
               "items": { "type": "integer", "format": "int32" }
             }
           },
-          "xaxisDataFirstChart": {
+          "xaxisDataSecondChart": {
             "type": "array",
             "items": { "type": "string" }
           },
-          "xaxisDataSecondChart": {
+          "xaxisDataFirstChart": {
             "type": "array",
             "items": { "type": "string" }
           }
@@ -8856,11 +8491,11 @@
               ]
             }
           },
-          "xaxisDataFirstChart": {
+          "xaxisDataSecondChart": {
             "type": "array",
             "items": { "type": "string" }
           },
-          "xaxisDataSecondChart": {
+          "xaxisDataFirstChart": {
             "type": "array",
             "items": { "type": "string" }
           }
@@ -8933,11 +8568,11 @@
           "fahrradfahrer": { "type": "integer", "format": "int32" },
           "fussgaenger": { "type": "integer", "format": "int32" },
           "pkwEinheiten": { "type": "integer", "format": "int32" },
-          "anteilSchwerverkehrAnKfzProzent": { "type": "number" },
-          "anteilGueterverkehrAnKfzProzent": { "type": "number" },
           "kfz": { "type": "number" },
+          "gueterverkehr": { "type": "number" },
           "schwerverkehr": { "type": "number" },
-          "gueterverkehr": { "type": "number" }
+          "anteilGueterverkehrAnKfzProzent": { "type": "number" },
+          "anteilSchwerverkehrAnKfzProzent": { "type": "number" }
         },
         "required": [
           "anteilGueterverkehrAnKfzProzent",
@@ -8961,7 +8596,7 @@
       "LaengsverkehrValue": {
         "type": "object",
         "properties": {
-          "richtung": { "type": "string", "enum": ["EIN", "AUS"] },
+          "richtung": { "$ref": "#/components/schemas/Bewegungsrichtung" },
           "value": { "type": "number" }
         },
         "required": ["richtung", "value"]
@@ -8969,10 +8604,7 @@
       "QuerungsverkehrValue": {
         "type": "object",
         "properties": {
-          "richtung": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          },
+          "richtung": { "$ref": "#/components/schemas/Himmelsrichtung" },
           "value": { "type": "number" }
         },
         "required": ["richtung", "value"]
@@ -8982,8 +8614,8 @@
         "discriminator": { "propertyName": "type" },
         "properties": {
           "name": { "type": "string" },
-          "xaxisIndex": { "type": "integer", "format": "int32" },
           "yaxisIndex": { "type": "integer", "format": "int32" },
+          "xaxisIndex": { "type": "integer", "format": "int32" },
           "type": { "type": "string" }
         },
         "required": ["type"]
@@ -9016,10 +8648,7 @@
       "StrassenseiteValue": {
         "type": "object",
         "properties": {
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" },
           "sumStrassenseite": { "type": "number" },
           "valuesLaengsverkehre": {
             "type": "array",
@@ -9037,10 +8666,7 @@
         "properties": {
           "von": { "type": "integer", "format": "int32" },
           "nach": { "type": "integer", "format": "int32" },
-          "strassenseite": {
-            "type": "string",
-            "enum": ["N", "NO", "O", "SO", "S", "SW", "W", "NW"]
-          },
+          "strassenseite": { "$ref": "#/components/schemas/Himmelsrichtung" },
           "value": { "type": "number" }
         },
         "required": ["nach", "strassenseite", "value", "von"]
@@ -9089,109 +8715,16 @@
           },
           "fahrzeuge": { "$ref": "#/components/schemas/FahrzeugOptionsDTO" },
           "zeitauswahl": { "type": "string", "minLength": 1 },
-          "zeitblock": {
-            "type": "string",
-            "enum": [
-              "ZB_00_06",
-              "ZB_06_10",
-              "ZB_10_15",
-              "ZB_15_19",
-              "ZB_19_22",
-              "ZB_19_24",
-              "ZB_00_24",
-              "ZB_06_19",
-              "ZB_06_22",
-              "ZB_00_01",
-              "ZB_01_02",
-              "ZB_02_03",
-              "ZB_03_04",
-              "ZB_04_05",
-              "ZB_05_06",
-              "ZB_06_07",
-              "ZB_07_08",
-              "ZB_08_09",
-              "ZB_09_10",
-              "ZB_10_11",
-              "ZB_11_12",
-              "ZB_12_13",
-              "ZB_13_14",
-              "ZB_14_15",
-              "ZB_15_16",
-              "ZB_16_17",
-              "ZB_17_18",
-              "ZB_18_19",
-              "ZB_19_20",
-              "ZB_20_21",
-              "ZB_21_22",
-              "ZB_22_23",
-              "ZB_23_24",
-              "ZB_0000_0030",
-              "ZB_0030_0100",
-              "ZB_0100_0130",
-              "ZB_0130_0200",
-              "ZB_0200_0230",
-              "ZB_0230_0300",
-              "ZB_0300_0330",
-              "ZB_0330_0400",
-              "ZB_0400_0430",
-              "ZB_0430_0500",
-              "ZB_0500_0530",
-              "ZB_0530_0600",
-              "ZB_0600_0630",
-              "ZB_0630_0700",
-              "ZB_0700_0730",
-              "ZB_0730_0800",
-              "ZB_0800_0830",
-              "ZB_0830_0900",
-              "ZB_0900_0930",
-              "ZB_0930_1000",
-              "ZB_1000_1030",
-              "ZB_1030_1100",
-              "ZB_1100_1130",
-              "ZB_1130_1200",
-              "ZB_1200_1230",
-              "ZB_1230_1300",
-              "ZB_1300_1330",
-              "ZB_1330_1400",
-              "ZB_1400_1430",
-              "ZB_1430_1500",
-              "ZB_1500_1530",
-              "ZB_1530_1600",
-              "ZB_1600_1630",
-              "ZB_1630_1700",
-              "ZB_1700_1730",
-              "ZB_1730_1800",
-              "ZB_1800_1830",
-              "ZB_1830_1900",
-              "ZB_1900_1930",
-              "ZB_1930_2000",
-              "ZB_2000_2030",
-              "ZB_2030_2100",
-              "ZB_2100_2130",
-              "ZB_2130_2200",
-              "ZB_2200_2230",
-              "ZB_2230_2300",
-              "ZB_2300_2330",
-              "ZB_2330_2400"
-            ]
-          },
+          "zeitblock": { "$ref": "#/components/schemas/Zeitblock" },
           "tagesTyp": { "$ref": "#/components/schemas/TagesTyp" },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" },
           "messquerschnittIds": {
             "type": "array",
             "items": { "type": "string", "minLength": 1 },
             "minItems": 1,
             "uniqueItems": true
           },
-          "rounding": { "type": "string", "enum": ["NONE", "R10", "R100"] },
+          "rounding": { "$ref": "#/components/schemas/Rounding" },
           "stundensumme": { "type": "boolean" },
           "blocksumme": { "type": "boolean" },
           "tagessumme": { "type": "boolean" },
@@ -9412,15 +8945,15 @@
           "showSchwerverkehrsanteilProzent": { "type": "boolean" },
           "showGueterverkehrsanteilProzent": { "type": "boolean" },
           "showPkwEinheiten": { "type": "boolean" },
-          "showTabsAnteile": { "type": "boolean" },
-          "colWidthAnteile": { "type": "integer", "format": "int32" },
-          "colWidthFahrzeugtypen": { "type": "integer", "format": "int32" },
-          "showTabsFahrzeugtypen": { "type": "boolean" },
-          "colWidthFahrzeugklassen": { "type": "integer", "format": "int32" },
-          "showTabsFahrzeugklassen": { "type": "boolean" },
           "rightBorderAnteile": { "type": "string" },
-          "rightBorderFahrzeugtypen": { "type": "string" },
-          "rightBorderFahrzeugklassen": { "type": "string" }
+          "showTabsFahrzeugtypen": { "type": "boolean" },
+          "showTabsFahrzeugklassen": { "type": "boolean" },
+          "colWidthFahrzeugtypen": { "type": "integer", "format": "int32" },
+          "colWidthFahrzeugklassen": { "type": "integer", "format": "int32" },
+          "colWidthAnteile": { "type": "integer", "format": "int32" },
+          "showTabsAnteile": { "type": "boolean" },
+          "rightBorderFahrzeugklassen": { "type": "string" },
+          "rightBorderFahrzeugtypen": { "type": "string" }
         }
       },
       "DatentabellePdfZaehldatum": {
@@ -9535,6 +9068,30 @@
           "fussgaenger": { "type": "string" }
         }
       },
+      "AuswertungsZeitraum": {
+        "type": "string",
+        "enum": [
+          "JANUAR",
+          "FEBRUAR",
+          "MAERZ",
+          "APRIL",
+          "MAI",
+          "JUNI",
+          "JULI",
+          "AUGUST",
+          "SEPTEMBER",
+          "OKTOBER",
+          "NOVEMBER",
+          "DEZEMBER",
+          "QUARTAL_1",
+          "QUARTAL_2",
+          "QUARTAL_3",
+          "QUARTAL_4",
+          "HALBJAHR_1",
+          "HALBJAHR_2",
+          "JAHRE"
+        ]
+      },
       "MessstelleAuswertungIdDTO": {
         "type": "object",
         "properties": {
@@ -9557,30 +9114,7 @@
           "tagesTyp": { "$ref": "#/components/schemas/TagesTyp" },
           "zeitraum": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "JANUAR",
-                "FEBRUAR",
-                "MAERZ",
-                "APRIL",
-                "MAI",
-                "JUNI",
-                "JULI",
-                "AUGUST",
-                "SEPTEMBER",
-                "OKTOBER",
-                "NOVEMBER",
-                "DEZEMBER",
-                "QUARTAL_1",
-                "QUARTAL_2",
-                "QUARTAL_3",
-                "QUARTAL_4",
-                "HALBJAHR_1",
-                "HALBJAHR_2",
-                "JAHRE"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/AuswertungsZeitraum" }
           },
           "messstelleAuswertungIds": {
             "type": "array",
@@ -9640,19 +9174,8 @@
         "properties": {
           "gueltigBis": { "type": "string" },
           "gueltigAb": { "type": "string" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          }
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
         }
       },
       "EditMessquerschnittDTO": {
@@ -9686,10 +9209,7 @@
           "realisierungsdatum": { "type": "string" },
           "abbaudatum": { "type": "string" },
           "datumLetztePlausibleMessung": { "type": "string" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
           "detektierteVerkehrsart": {
             "$ref": "#/components/schemas/Verkehrsart"
           },
@@ -9851,182 +9371,12 @@
         "properties": {
           "blocks": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "ZB_00_06",
-                "ZB_06_10",
-                "ZB_10_15",
-                "ZB_15_19",
-                "ZB_19_22",
-                "ZB_19_24",
-                "ZB_00_24",
-                "ZB_06_19",
-                "ZB_06_22",
-                "ZB_00_01",
-                "ZB_01_02",
-                "ZB_02_03",
-                "ZB_03_04",
-                "ZB_04_05",
-                "ZB_05_06",
-                "ZB_06_07",
-                "ZB_07_08",
-                "ZB_08_09",
-                "ZB_09_10",
-                "ZB_10_11",
-                "ZB_11_12",
-                "ZB_12_13",
-                "ZB_13_14",
-                "ZB_14_15",
-                "ZB_15_16",
-                "ZB_16_17",
-                "ZB_17_18",
-                "ZB_18_19",
-                "ZB_19_20",
-                "ZB_20_21",
-                "ZB_21_22",
-                "ZB_22_23",
-                "ZB_23_24",
-                "ZB_0000_0030",
-                "ZB_0030_0100",
-                "ZB_0100_0130",
-                "ZB_0130_0200",
-                "ZB_0200_0230",
-                "ZB_0230_0300",
-                "ZB_0300_0330",
-                "ZB_0330_0400",
-                "ZB_0400_0430",
-                "ZB_0430_0500",
-                "ZB_0500_0530",
-                "ZB_0530_0600",
-                "ZB_0600_0630",
-                "ZB_0630_0700",
-                "ZB_0700_0730",
-                "ZB_0730_0800",
-                "ZB_0800_0830",
-                "ZB_0830_0900",
-                "ZB_0900_0930",
-                "ZB_0930_1000",
-                "ZB_1000_1030",
-                "ZB_1030_1100",
-                "ZB_1100_1130",
-                "ZB_1130_1200",
-                "ZB_1200_1230",
-                "ZB_1230_1300",
-                "ZB_1300_1330",
-                "ZB_1330_1400",
-                "ZB_1400_1430",
-                "ZB_1430_1500",
-                "ZB_1500_1530",
-                "ZB_1530_1600",
-                "ZB_1600_1630",
-                "ZB_1630_1700",
-                "ZB_1700_1730",
-                "ZB_1730_1800",
-                "ZB_1800_1830",
-                "ZB_1830_1900",
-                "ZB_1900_1930",
-                "ZB_1930_2000",
-                "ZB_2000_2030",
-                "ZB_2030_2100",
-                "ZB_2100_2130",
-                "ZB_2130_2200",
-                "ZB_2200_2230",
-                "ZB_2230_2300",
-                "ZB_2300_2330",
-                "ZB_2330_2400"
-              ]
-            },
+            "items": { "$ref": "#/components/schemas/Zeitblock" },
             "uniqueItems": true
           },
           "hours": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "ZB_00_06",
-                "ZB_06_10",
-                "ZB_10_15",
-                "ZB_15_19",
-                "ZB_19_22",
-                "ZB_19_24",
-                "ZB_00_24",
-                "ZB_06_19",
-                "ZB_06_22",
-                "ZB_00_01",
-                "ZB_01_02",
-                "ZB_02_03",
-                "ZB_03_04",
-                "ZB_04_05",
-                "ZB_05_06",
-                "ZB_06_07",
-                "ZB_07_08",
-                "ZB_08_09",
-                "ZB_09_10",
-                "ZB_10_11",
-                "ZB_11_12",
-                "ZB_12_13",
-                "ZB_13_14",
-                "ZB_14_15",
-                "ZB_15_16",
-                "ZB_16_17",
-                "ZB_17_18",
-                "ZB_18_19",
-                "ZB_19_20",
-                "ZB_20_21",
-                "ZB_21_22",
-                "ZB_22_23",
-                "ZB_23_24",
-                "ZB_0000_0030",
-                "ZB_0030_0100",
-                "ZB_0100_0130",
-                "ZB_0130_0200",
-                "ZB_0200_0230",
-                "ZB_0230_0300",
-                "ZB_0300_0330",
-                "ZB_0330_0400",
-                "ZB_0400_0430",
-                "ZB_0430_0500",
-                "ZB_0500_0530",
-                "ZB_0530_0600",
-                "ZB_0600_0630",
-                "ZB_0630_0700",
-                "ZB_0700_0730",
-                "ZB_0730_0800",
-                "ZB_0800_0830",
-                "ZB_0830_0900",
-                "ZB_0900_0930",
-                "ZB_0930_1000",
-                "ZB_1000_1030",
-                "ZB_1030_1100",
-                "ZB_1100_1130",
-                "ZB_1130_1200",
-                "ZB_1200_1230",
-                "ZB_1230_1300",
-                "ZB_1300_1330",
-                "ZB_1330_1400",
-                "ZB_1400_1430",
-                "ZB_1430_1500",
-                "ZB_1500_1530",
-                "ZB_1530_1600",
-                "ZB_1600_1630",
-                "ZB_1630_1700",
-                "ZB_1700_1730",
-                "ZB_1730_1800",
-                "ZB_1800_1830",
-                "ZB_1830_1900",
-                "ZB_1900_1930",
-                "ZB_1930_2000",
-                "ZB_2000_2030",
-                "ZB_2030_2100",
-                "ZB_2100_2130",
-                "ZB_2130_2200",
-                "ZB_2200_2230",
-                "ZB_2230_2300",
-                "ZB_2300_2330",
-                "ZB_2330_2400"
-              ]
-            },
+            "items": { "$ref": "#/components/schemas/Zeitblock" },
             "uniqueItems": true
           }
         },
@@ -10035,174 +9385,59 @@
       "OptionsmenueSettingsDTO": {
         "type": "object",
         "properties": {
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" },
           "kraftfahrzeugverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "schwerverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "gueterverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "schwerverkehrsanteilProzentChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "gueterverkehrsanteilProzentChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "radverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "fussverkehrChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lastkraftwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lastzuegeChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "busseChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "kraftraederChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "personenkraftwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           },
           "lieferwagenChoosableIntervals": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "STUNDE_VIERTEL",
-                "STUNDE_VIERTEL_EINGESCHRAENKT",
-                "STUNDE_HALB",
-                "STUNDE_KOMPLETT"
-              ]
-            }
+            "items": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
           }
         }
       },
@@ -10225,19 +9460,8 @@
         "properties": {
           "gueltigBis": { "type": "string" },
           "gueltigAb": { "type": "string" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
-          "intervall": {
-            "type": "string",
-            "enum": [
-              "STUNDE_VIERTEL",
-              "STUNDE_VIERTEL_EINGESCHRAENKT",
-              "STUNDE_HALB",
-              "STUNDE_KOMPLETT"
-            ]
-          }
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
+          "intervall": { "$ref": "#/components/schemas/ZaehldatenIntervall" }
         }
       },
       "ReadMessquerschnittDTO": {
@@ -10263,10 +9487,7 @@
           "standort": { "type": "string" },
           "stadtbezirk": { "type": "string" },
           "stadtbezirkNummer": { "type": "integer", "format": "int32" },
-          "fahrzeugklasse": {
-            "type": "string",
-            "enum": ["RAD", "SUMME_KFZ", "ZWEI_PLUS_EINS", "ACHT_PLUS_EINS"]
-          },
+          "fahrzeugklasse": { "$ref": "#/components/schemas/Fahrzeugklasse" },
           "detektierteVerkehrsart": {
             "$ref": "#/components/schemas/Verkehrsart"
           },
@@ -10389,11 +9610,11 @@
           "sonderzaehlung": { "type": "boolean" },
           "zaehlsituation": { "type": "string" },
           "zaehlsituationErweitert": { "type": "string" },
-          "anteilSchwerverkehrAnKfzProzent": { "type": "number" },
-          "anteilGueterverkehrAnKfzProzent": { "type": "number" },
           "kfz": { "type": "number" },
+          "gueterverkehr": { "type": "number" },
           "schwerverkehr": { "type": "number" },
-          "gueterverkehr": { "type": "number" }
+          "anteilGueterverkehrAnKfzProzent": { "type": "number" },
+          "anteilSchwerverkehrAnKfzProzent": { "type": "number" }
         },
         "required": [
           "anteilGueterverkehrAnKfzProzent",

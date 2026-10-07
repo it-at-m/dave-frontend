@@ -43,13 +43,13 @@ export interface StepLineSeriesEntryBaseDTO {
    * @type {number}
    * @memberof StepLineSeriesEntryBaseDTO
    */
-  xaxisIndex?: number;
+  yaxisIndex?: number;
   /**
    *
    * @type {number}
    * @memberof StepLineSeriesEntryBaseDTO
    */
-  yaxisIndex?: number;
+  xaxisIndex?: number;
   /**
    *
    * @type {string}
@@ -97,8 +97,8 @@ export function StepLineSeriesEntryBaseDTOFromJSONTyped(
   }
   return {
     name: json["name"] == null ? undefined : json["name"],
-    xaxisIndex: json["xaxisIndex"] == null ? undefined : json["xaxisIndex"],
     yaxisIndex: json["yaxisIndex"] == null ? undefined : json["yaxisIndex"],
+    xaxisIndex: json["xaxisIndex"] == null ? undefined : json["xaxisIndex"],
     type: json["type"],
   };
 }
@@ -136,8 +136,8 @@ export function StepLineSeriesEntryBaseDTOToJSONTyped(
 
   return {
     name: value["name"],
-    xaxisIndex: value["xaxisIndex"],
     yaxisIndex: value["yaxisIndex"],
+    xaxisIndex: value["xaxisIndex"],
     type: value["type"],
   };
 }

@@ -12,11 +12,19 @@
  * Do not edit the class manually.
  */
 
-import type { CollectionModelEntityModelZeitintervall } from "../models/index";
+import type {
+  Bewegungsrichtung,
+  CollectionModelEntityModelZeitintervall,
+  Himmelsrichtung,
+} from "../models/index";
 
 import {
+  BewegungsrichtungFromJSON,
+  BewegungsrichtungToJSON,
   CollectionModelEntityModelZeitintervallFromJSON,
   CollectionModelEntityModelZeitintervallToJSON,
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungToJSON,
 } from "../models/index";
 import * as runtime from "../runtime";
 
@@ -65,8 +73,8 @@ export interface ExecuteSearchZeitintervallGet4Request {
   startUhrzeit?: Date;
   endeUhrzeit?: Date;
   knotenarm?: number;
-  richtung?: ExecuteSearchZeitintervallGet4RichtungEnum;
-  strassenseite?: ExecuteSearchZeitintervallGet4StrassenseiteEnum;
+  richtung?: Bewegungsrichtung;
+  strassenseite?: Himmelsrichtung;
   types?: Set<ExecuteSearchZeitintervallGet4TypesEnum>;
 }
 
@@ -75,7 +83,7 @@ export interface ExecuteSearchZeitintervallGet5Request {
   startUhrzeit?: Date;
   endeUhrzeit?: Date;
   knotenarm?: number;
-  richtung?: ExecuteSearchZeitintervallGet5RichtungEnum;
+  richtung?: Himmelsrichtung;
   types?: Set<ExecuteSearchZeitintervallGet5TypesEnum>;
 }
 
@@ -110,7 +118,7 @@ export interface ExecuteSearchZeitintervallGet9Request {
   von?: number;
   nach?: number;
   types?: Set<ExecuteSearchZeitintervallGet9TypesEnum>;
-  strassenseite?: ExecuteSearchZeitintervallGet9StrassenseiteEnum;
+  strassenseite?: Himmelsrichtung;
 }
 
 /**
@@ -958,30 +966,6 @@ export type ExecuteSearchZeitintervallGet12TypeEnum =
 /**
  * @export
  */
-export const ExecuteSearchZeitintervallGet4RichtungEnum = {
-  Ein: "EIN",
-  Aus: "AUS",
-} as const;
-export type ExecuteSearchZeitintervallGet4RichtungEnum =
-  (typeof ExecuteSearchZeitintervallGet4RichtungEnum)[keyof typeof ExecuteSearchZeitintervallGet4RichtungEnum];
-/**
- * @export
- */
-export const ExecuteSearchZeitintervallGet4StrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type ExecuteSearchZeitintervallGet4StrassenseiteEnum =
-  (typeof ExecuteSearchZeitintervallGet4StrassenseiteEnum)[keyof typeof ExecuteSearchZeitintervallGet4StrassenseiteEnum];
-/**
- * @export
- */
 export const ExecuteSearchZeitintervallGet4TypesEnum = {
   Block: "BLOCK",
   BlockSpezial: "BLOCK_SPEZIAL",
@@ -996,21 +980,6 @@ export const ExecuteSearchZeitintervallGet4TypesEnum = {
 } as const;
 export type ExecuteSearchZeitintervallGet4TypesEnum =
   (typeof ExecuteSearchZeitintervallGet4TypesEnum)[keyof typeof ExecuteSearchZeitintervallGet4TypesEnum];
-/**
- * @export
- */
-export const ExecuteSearchZeitintervallGet5RichtungEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type ExecuteSearchZeitintervallGet5RichtungEnum =
-  (typeof ExecuteSearchZeitintervallGet5RichtungEnum)[keyof typeof ExecuteSearchZeitintervallGet5RichtungEnum];
 /**
  * @export
  */
@@ -1106,18 +1075,3 @@ export const ExecuteSearchZeitintervallGet9TypesEnum = {
 } as const;
 export type ExecuteSearchZeitintervallGet9TypesEnum =
   (typeof ExecuteSearchZeitintervallGet9TypesEnum)[keyof typeof ExecuteSearchZeitintervallGet9TypesEnum];
-/**
- * @export
- */
-export const ExecuteSearchZeitintervallGet9StrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type ExecuteSearchZeitintervallGet9StrassenseiteEnum =
-  (typeof ExecuteSearchZeitintervallGet9StrassenseiteEnum)[keyof typeof ExecuteSearchZeitintervallGet9StrassenseiteEnum];

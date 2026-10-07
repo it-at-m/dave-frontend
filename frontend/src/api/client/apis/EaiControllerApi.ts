@@ -16,6 +16,7 @@ import type {
   LadeAuswertungSpitzenstundeDTO,
   LadeAuswertungVisumDTO,
   LadeAuswertungZaehlstelleKoordinateDTO,
+  Zeitblock,
 } from "../models/index";
 
 import {
@@ -25,6 +26,8 @@ import {
   LadeAuswertungVisumDTOToJSON,
   LadeAuswertungZaehlstelleKoordinateDTOFromJSON,
   LadeAuswertungZaehlstelleKoordinateDTOToJSON,
+  ZeitblockFromJSON,
+  ZeitblockToJSON,
 } from "../models/index";
 import * as runtime from "../runtime";
 
@@ -32,7 +35,7 @@ export interface LadeAuswertungSpitzenstundeRequest {
   zaehlstelleNummer: string;
   zaehlart: LadeAuswertungSpitzenstundeZaehlartEnum;
   zaehldatum: Date;
-  zeitblock: LadeAuswertungSpitzenstundeZeitblockEnum;
+  zeitblock: Zeitblock;
   zeitauswahl: string;
 }
 
@@ -267,91 +270,3 @@ export const LadeAuswertungSpitzenstundeZaehlartEnum = {
 } as const;
 export type LadeAuswertungSpitzenstundeZaehlartEnum =
   (typeof LadeAuswertungSpitzenstundeZaehlartEnum)[keyof typeof LadeAuswertungSpitzenstundeZaehlartEnum];
-/**
- * @export
- */
-export const LadeAuswertungSpitzenstundeZeitblockEnum = {
-  Zb0006: "ZB_00_06",
-  Zb0610: "ZB_06_10",
-  Zb1015: "ZB_10_15",
-  Zb1519: "ZB_15_19",
-  Zb1922: "ZB_19_22",
-  Zb1924: "ZB_19_24",
-  Zb0024: "ZB_00_24",
-  Zb0619: "ZB_06_19",
-  Zb0622: "ZB_06_22",
-  Zb0001: "ZB_00_01",
-  Zb0102: "ZB_01_02",
-  Zb0203: "ZB_02_03",
-  Zb0304: "ZB_03_04",
-  Zb0405: "ZB_04_05",
-  Zb0506: "ZB_05_06",
-  Zb0607: "ZB_06_07",
-  Zb0708: "ZB_07_08",
-  Zb0809: "ZB_08_09",
-  Zb0910: "ZB_09_10",
-  Zb1011: "ZB_10_11",
-  Zb1112: "ZB_11_12",
-  Zb1213: "ZB_12_13",
-  Zb1314: "ZB_13_14",
-  Zb1415: "ZB_14_15",
-  Zb1516: "ZB_15_16",
-  Zb1617: "ZB_16_17",
-  Zb1718: "ZB_17_18",
-  Zb1819: "ZB_18_19",
-  Zb1920: "ZB_19_20",
-  Zb2021: "ZB_20_21",
-  Zb2122: "ZB_21_22",
-  Zb2223: "ZB_22_23",
-  Zb2324: "ZB_23_24",
-  Zb00000030: "ZB_0000_0030",
-  Zb00300100: "ZB_0030_0100",
-  Zb01000130: "ZB_0100_0130",
-  Zb01300200: "ZB_0130_0200",
-  Zb02000230: "ZB_0200_0230",
-  Zb02300300: "ZB_0230_0300",
-  Zb03000330: "ZB_0300_0330",
-  Zb03300400: "ZB_0330_0400",
-  Zb04000430: "ZB_0400_0430",
-  Zb04300500: "ZB_0430_0500",
-  Zb05000530: "ZB_0500_0530",
-  Zb05300600: "ZB_0530_0600",
-  Zb06000630: "ZB_0600_0630",
-  Zb06300700: "ZB_0630_0700",
-  Zb07000730: "ZB_0700_0730",
-  Zb07300800: "ZB_0730_0800",
-  Zb08000830: "ZB_0800_0830",
-  Zb08300900: "ZB_0830_0900",
-  Zb09000930: "ZB_0900_0930",
-  Zb09301000: "ZB_0930_1000",
-  Zb10001030: "ZB_1000_1030",
-  Zb10301100: "ZB_1030_1100",
-  Zb11001130: "ZB_1100_1130",
-  Zb11301200: "ZB_1130_1200",
-  Zb12001230: "ZB_1200_1230",
-  Zb12301300: "ZB_1230_1300",
-  Zb13001330: "ZB_1300_1330",
-  Zb13301400: "ZB_1330_1400",
-  Zb14001430: "ZB_1400_1430",
-  Zb14301500: "ZB_1430_1500",
-  Zb15001530: "ZB_1500_1530",
-  Zb15301600: "ZB_1530_1600",
-  Zb16001630: "ZB_1600_1630",
-  Zb16301700: "ZB_1630_1700",
-  Zb17001730: "ZB_1700_1730",
-  Zb17301800: "ZB_1730_1800",
-  Zb18001830: "ZB_1800_1830",
-  Zb18301900: "ZB_1830_1900",
-  Zb19001930: "ZB_1900_1930",
-  Zb19302000: "ZB_1930_2000",
-  Zb20002030: "ZB_2000_2030",
-  Zb20302100: "ZB_2030_2100",
-  Zb21002130: "ZB_2100_2130",
-  Zb21302200: "ZB_2130_2200",
-  Zb22002230: "ZB_2200_2230",
-  Zb22302300: "ZB_2230_2300",
-  Zb23002330: "ZB_2300_2330",
-  Zb23302400: "ZB_2330_2400",
-} as const;
-export type LadeAuswertungSpitzenstundeZeitblockEnum =
-  (typeof LadeAuswertungSpitzenstundeZeitblockEnum)[keyof typeof LadeAuswertungSpitzenstundeZeitblockEnum];

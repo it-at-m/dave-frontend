@@ -12,9 +12,16 @@
  * Do not edit the class manually.
  */
 
+import type { Himmelsrichtung } from "./Himmelsrichtung";
 import type { LaengsverkehrValue } from "./LaengsverkehrValue";
 
 import { mapValues } from "../runtime";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 import {
   LaengsverkehrValueFromJSON,
   LaengsverkehrValueFromJSONTyped,
@@ -30,10 +37,10 @@ import {
 export interface StrassenseiteValue {
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof StrassenseiteValue
    */
-  strassenseite: StrassenseiteValueStrassenseiteEnum;
+  strassenseite: Himmelsrichtung;
   /**
    *
    * @type {number}
@@ -47,22 +54,6 @@ export interface StrassenseiteValue {
    */
   valuesLaengsverkehre: Array<LaengsverkehrValue>;
 }
-
-/**
- * @export
- */
-export const StrassenseiteValueStrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type StrassenseiteValueStrassenseiteEnum =
-  (typeof StrassenseiteValueStrassenseiteEnum)[keyof typeof StrassenseiteValueStrassenseiteEnum];
 
 /**
  * Check if a given object implements the StrassenseiteValue interface.
@@ -94,7 +85,7 @@ export function StrassenseiteValueFromJSONTyped(
     return json;
   }
   return {
-    strassenseite: json["strassenseite"],
+    strassenseite: HimmelsrichtungFromJSON(json["strassenseite"]),
     sumStrassenseite: json["sumStrassenseite"],
     valuesLaengsverkehre: (json["valuesLaengsverkehre"] as Array<any>).map(
       LaengsverkehrValueFromJSON
@@ -115,7 +106,7 @@ export function StrassenseiteValueToJSONTyped(
   }
 
   return {
-    strassenseite: value["strassenseite"],
+    strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
     sumStrassenseite: value["sumStrassenseite"],
     valuesLaengsverkehre: (value["valuesLaengsverkehre"] as Array<any>).map(
       LaengsverkehrValueToJSON

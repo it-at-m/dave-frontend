@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { Himmelsrichtung } from "./Himmelsrichtung";
+
 import { mapValues } from "../runtime";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 
 /**
  *
@@ -22,10 +30,10 @@ import { mapValues } from "../runtime";
 export interface QuerungsverkehrValue {
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof QuerungsverkehrValue
    */
-  richtung: QuerungsverkehrValueRichtungEnum;
+  richtung: Himmelsrichtung;
   /**
    *
    * @type {number}
@@ -33,22 +41,6 @@ export interface QuerungsverkehrValue {
    */
   value: number;
 }
-
-/**
- * @export
- */
-export const QuerungsverkehrValueRichtungEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type QuerungsverkehrValueRichtungEnum =
-  (typeof QuerungsverkehrValueRichtungEnum)[keyof typeof QuerungsverkehrValueRichtungEnum];
 
 /**
  * Check if a given object implements the QuerungsverkehrValue interface.
@@ -73,7 +65,7 @@ export function QuerungsverkehrValueFromJSONTyped(
     return json;
   }
   return {
-    richtung: json["richtung"],
+    richtung: HimmelsrichtungFromJSON(json["richtung"]),
     value: json["value"],
   };
 }
@@ -91,7 +83,7 @@ export function QuerungsverkehrValueToJSONTyped(
   }
 
   return {
-    richtung: value["richtung"],
+    richtung: HimmelsrichtungToJSON(value["richtung"]),
     value: value["value"],
   };
 }

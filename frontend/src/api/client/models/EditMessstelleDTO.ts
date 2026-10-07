@@ -14,6 +14,7 @@
 
 import type { EditMessfaehigkeitDTO } from "./EditMessfaehigkeitDTO";
 import type { EditMessquerschnittDTO } from "./EditMessquerschnittDTO";
+import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { Verkehrsart } from "./Verkehrsart";
 
 import { mapValues } from "../runtime";
@@ -29,6 +30,12 @@ import {
   EditMessquerschnittDTOToJSON,
   EditMessquerschnittDTOToJSONTyped,
 } from "./EditMessquerschnittDTO";
+import {
+  FahrzeugklasseFromJSON,
+  FahrzeugklasseFromJSONTyped,
+  FahrzeugklasseToJSON,
+  FahrzeugklasseToJSONTyped,
+} from "./Fahrzeugklasse";
 import {
   VerkehrsartFromJSON,
   VerkehrsartFromJSONTyped,
@@ -104,10 +111,10 @@ export interface EditMessstelleDTO {
   datumLetztePlausibleMessung?: string;
   /**
    *
-   * @type {string}
+   * @type {Fahrzeugklasse}
    * @memberof EditMessstelleDTO
    */
-  fahrzeugklasse?: EditMessstelleDTOFahrzeugklasseEnum;
+  fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
    * @type {Verkehrsart}
@@ -183,18 +190,6 @@ export interface EditMessstelleDTO {
 }
 
 /**
- * @export
- */
-export const EditMessstelleDTOFahrzeugklasseEnum = {
-  Rad: "RAD",
-  SummeKfz: "SUMME_KFZ",
-  ZweiPlusEins: "ZWEI_PLUS_EINS",
-  AchtPlusEins: "ACHT_PLUS_EINS",
-} as const;
-export type EditMessstelleDTOFahrzeugklasseEnum =
-  (typeof EditMessstelleDTOFahrzeugklasseEnum)[keyof typeof EditMessstelleDTOFahrzeugklasseEnum];
-
-/**
  * Check if a given object implements the EditMessstelleDTO interface.
  */
 export function instanceOfEditMessstelleDTO(
@@ -233,7 +228,9 @@ export function EditMessstelleDTOFromJSONTyped(
         ? undefined
         : json["datumLetztePlausibleMessung"],
     fahrzeugklasse:
-      json["fahrzeugklasse"] == null ? undefined : json["fahrzeugklasse"],
+      json["fahrzeugklasse"] == null
+        ? undefined
+        : FahrzeugklasseFromJSON(json["fahrzeugklasse"]),
     detektierteVerkehrsart:
       json["detektierteVerkehrsart"] == null
         ? undefined
@@ -290,7 +287,7 @@ export function EditMessstelleDTOToJSONTyped(
     realisierungsdatum: value["realisierungsdatum"],
     abbaudatum: value["abbaudatum"],
     datumLetztePlausibleMessung: value["datumLetztePlausibleMessung"],
-    fahrzeugklasse: value["fahrzeugklasse"],
+    fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
     detektierteVerkehrsart: VerkehrsartToJSON(value["detektierteVerkehrsart"]),
     hersteller: value["hersteller"],
     longitude: value["longitude"],

@@ -12,15 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { Link } from "./Link";
+import type { ZaehldatenIntervall } from "./ZaehldatenIntervall";
 
 import { mapValues } from "../runtime";
+import {
+  FahrzeugklasseFromJSON,
+  FahrzeugklasseFromJSONTyped,
+  FahrzeugklasseToJSON,
+  FahrzeugklasseToJSONTyped,
+} from "./Fahrzeugklasse";
 import {
   LinkFromJSON,
   LinkFromJSONTyped,
   LinkToJSON,
   LinkToJSONTyped,
 } from "./Link";
+import {
+  ZaehldatenIntervallFromJSON,
+  ZaehldatenIntervallFromJSONTyped,
+  ZaehldatenIntervallToJSON,
+  ZaehldatenIntervallToJSONTyped,
+} from "./ZaehldatenIntervall";
 
 /**
  *
@@ -48,94 +62,94 @@ export interface EntityModelOptionsmenueSettings {
   version?: number;
   /**
    *
-   * @type {string}
+   * @type {Fahrzeugklasse}
    * @memberof EntityModelOptionsmenueSettings
    */
-  fahrzeugklasse?: EntityModelOptionsmenueSettingsFahrzeugklasseEnum;
+  fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {string}
+   * @type {ZaehldatenIntervall}
    * @memberof EntityModelOptionsmenueSettings
    */
-  intervall?: EntityModelOptionsmenueSettingsIntervallEnum;
+  intervall?: ZaehldatenIntervall;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  kraftfahrzeugverkehrChoosableIntervals?: Array<EntityModelOptionsmenueSettingsKraftfahrzeugverkehrChoosableIntervalsEnum>;
+  kraftfahrzeugverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  schwerverkehrChoosableIntervals?: Array<EntityModelOptionsmenueSettingsSchwerverkehrChoosableIntervalsEnum>;
+  schwerverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  gueterverkehrChoosableIntervals?: Array<EntityModelOptionsmenueSettingsGueterverkehrChoosableIntervalsEnum>;
+  gueterverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  schwerverkehrsanteilProzentChoosableIntervals?: Array<EntityModelOptionsmenueSettingsSchwerverkehrsanteilProzentChoosableIntervalsEnum>;
+  schwerverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  gueterverkehrsanteilProzentChoosableIntervals?: Array<EntityModelOptionsmenueSettingsGueterverkehrsanteilProzentChoosableIntervalsEnum>;
+  gueterverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  radverkehrChoosableIntervals?: Array<EntityModelOptionsmenueSettingsRadverkehrChoosableIntervalsEnum>;
+  radverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  fussverkehrChoosableIntervals?: Array<EntityModelOptionsmenueSettingsFussverkehrChoosableIntervalsEnum>;
+  fussverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  lastkraftwagenChoosableIntervals?: Array<EntityModelOptionsmenueSettingsLastkraftwagenChoosableIntervalsEnum>;
+  lastkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  lastzuegeChoosableIntervals?: Array<EntityModelOptionsmenueSettingsLastzuegeChoosableIntervalsEnum>;
+  lastzuegeChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  busseChoosableIntervals?: Array<EntityModelOptionsmenueSettingsBusseChoosableIntervalsEnum>;
+  busseChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  kraftraederChoosableIntervals?: Array<EntityModelOptionsmenueSettingsKraftraederChoosableIntervalsEnum>;
+  kraftraederChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  personenkraftwagenChoosableIntervals?: Array<EntityModelOptionsmenueSettingsPersonenkraftwagenChoosableIntervalsEnum>;
+  personenkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<ZaehldatenIntervall>}
    * @memberof EntityModelOptionsmenueSettings
    */
-  lieferwagenChoosableIntervals?: Array<EntityModelOptionsmenueSettingsLieferwagenChoosableIntervalsEnum>;
+  lieferwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
    * @type {number}
@@ -149,196 +163,6 @@ export interface EntityModelOptionsmenueSettings {
    */
   links?: { [key: string]: Link };
 }
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsFahrzeugklasseEnum = {
-  Rad: "RAD",
-  SummeKfz: "SUMME_KFZ",
-  ZweiPlusEins: "ZWEI_PLUS_EINS",
-  AchtPlusEins: "ACHT_PLUS_EINS",
-} as const;
-export type EntityModelOptionsmenueSettingsFahrzeugklasseEnum =
-  (typeof EntityModelOptionsmenueSettingsFahrzeugklasseEnum)[keyof typeof EntityModelOptionsmenueSettingsFahrzeugklasseEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsIntervallEnum = {
-  StundeViertel: "STUNDE_VIERTEL",
-  StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-  StundeHalb: "STUNDE_HALB",
-  StundeKomplett: "STUNDE_KOMPLETT",
-} as const;
-export type EntityModelOptionsmenueSettingsIntervallEnum =
-  (typeof EntityModelOptionsmenueSettingsIntervallEnum)[keyof typeof EntityModelOptionsmenueSettingsIntervallEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsKraftfahrzeugverkehrChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsKraftfahrzeugverkehrChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsKraftfahrzeugverkehrChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsKraftfahrzeugverkehrChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsSchwerverkehrChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsSchwerverkehrChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsSchwerverkehrChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsSchwerverkehrChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsGueterverkehrChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsGueterverkehrChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsGueterverkehrChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsGueterverkehrChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsSchwerverkehrsanteilProzentChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsSchwerverkehrsanteilProzentChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsSchwerverkehrsanteilProzentChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsSchwerverkehrsanteilProzentChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsGueterverkehrsanteilProzentChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsGueterverkehrsanteilProzentChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsGueterverkehrsanteilProzentChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsGueterverkehrsanteilProzentChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsRadverkehrChoosableIntervalsEnum = {
-  StundeViertel: "STUNDE_VIERTEL",
-  StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-  StundeHalb: "STUNDE_HALB",
-  StundeKomplett: "STUNDE_KOMPLETT",
-} as const;
-export type EntityModelOptionsmenueSettingsRadverkehrChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsRadverkehrChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsRadverkehrChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsFussverkehrChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsFussverkehrChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsFussverkehrChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsFussverkehrChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsLastkraftwagenChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsLastkraftwagenChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsLastkraftwagenChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsLastkraftwagenChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsLastzuegeChoosableIntervalsEnum = {
-  StundeViertel: "STUNDE_VIERTEL",
-  StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-  StundeHalb: "STUNDE_HALB",
-  StundeKomplett: "STUNDE_KOMPLETT",
-} as const;
-export type EntityModelOptionsmenueSettingsLastzuegeChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsLastzuegeChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsLastzuegeChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsBusseChoosableIntervalsEnum = {
-  StundeViertel: "STUNDE_VIERTEL",
-  StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-  StundeHalb: "STUNDE_HALB",
-  StundeKomplett: "STUNDE_KOMPLETT",
-} as const;
-export type EntityModelOptionsmenueSettingsBusseChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsBusseChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsBusseChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsKraftraederChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsKraftraederChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsKraftraederChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsKraftraederChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsPersonenkraftwagenChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsPersonenkraftwagenChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsPersonenkraftwagenChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsPersonenkraftwagenChoosableIntervalsEnum];
-
-/**
- * @export
- */
-export const EntityModelOptionsmenueSettingsLieferwagenChoosableIntervalsEnum =
-  {
-    StundeViertel: "STUNDE_VIERTEL",
-    StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
-    StundeHalb: "STUNDE_HALB",
-    StundeKomplett: "STUNDE_KOMPLETT",
-  } as const;
-export type EntityModelOptionsmenueSettingsLieferwagenChoosableIntervalsEnum =
-  (typeof EntityModelOptionsmenueSettingsLieferwagenChoosableIntervalsEnum)[keyof typeof EntityModelOptionsmenueSettingsLieferwagenChoosableIntervalsEnum];
 
 /**
  * Check if a given object implements the EntityModelOptionsmenueSettings interface.
@@ -368,60 +192,91 @@ export function EntityModelOptionsmenueSettingsFromJSONTyped(
       json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     fahrzeugklasse:
-      json["fahrzeugklasse"] == null ? undefined : json["fahrzeugklasse"],
-    intervall: json["intervall"] == null ? undefined : json["intervall"],
+      json["fahrzeugklasse"] == null
+        ? undefined
+        : FahrzeugklasseFromJSON(json["fahrzeugklasse"]),
+    intervall:
+      json["intervall"] == null
+        ? undefined
+        : ZaehldatenIntervallFromJSON(json["intervall"]),
     kraftfahrzeugverkehrChoosableIntervals:
       json["kraftfahrzeugverkehrChoosableIntervals"] == null
         ? undefined
-        : json["kraftfahrzeugverkehrChoosableIntervals"],
+        : (json["kraftfahrzeugverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     schwerverkehrChoosableIntervals:
       json["schwerverkehrChoosableIntervals"] == null
         ? undefined
-        : json["schwerverkehrChoosableIntervals"],
+        : (json["schwerverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     gueterverkehrChoosableIntervals:
       json["gueterverkehrChoosableIntervals"] == null
         ? undefined
-        : json["gueterverkehrChoosableIntervals"],
+        : (json["gueterverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     schwerverkehrsanteilProzentChoosableIntervals:
       json["schwerverkehrsanteilProzentChoosableIntervals"] == null
         ? undefined
-        : json["schwerverkehrsanteilProzentChoosableIntervals"],
+        : (
+            json["schwerverkehrsanteilProzentChoosableIntervals"] as Array<any>
+          ).map(ZaehldatenIntervallFromJSON),
     gueterverkehrsanteilProzentChoosableIntervals:
       json["gueterverkehrsanteilProzentChoosableIntervals"] == null
         ? undefined
-        : json["gueterverkehrsanteilProzentChoosableIntervals"],
+        : (
+            json["gueterverkehrsanteilProzentChoosableIntervals"] as Array<any>
+          ).map(ZaehldatenIntervallFromJSON),
     radverkehrChoosableIntervals:
       json["radverkehrChoosableIntervals"] == null
         ? undefined
-        : json["radverkehrChoosableIntervals"],
+        : (json["radverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     fussverkehrChoosableIntervals:
       json["fussverkehrChoosableIntervals"] == null
         ? undefined
-        : json["fussverkehrChoosableIntervals"],
+        : (json["fussverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     lastkraftwagenChoosableIntervals:
       json["lastkraftwagenChoosableIntervals"] == null
         ? undefined
-        : json["lastkraftwagenChoosableIntervals"],
+        : (json["lastkraftwagenChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     lastzuegeChoosableIntervals:
       json["lastzuegeChoosableIntervals"] == null
         ? undefined
-        : json["lastzuegeChoosableIntervals"],
+        : (json["lastzuegeChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     busseChoosableIntervals:
       json["busseChoosableIntervals"] == null
         ? undefined
-        : json["busseChoosableIntervals"],
+        : (json["busseChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     kraftraederChoosableIntervals:
       json["kraftraederChoosableIntervals"] == null
         ? undefined
-        : json["kraftraederChoosableIntervals"],
+        : (json["kraftraederChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     personenkraftwagenChoosableIntervals:
       json["personenkraftwagenChoosableIntervals"] == null
         ? undefined
-        : json["personenkraftwagenChoosableIntervals"],
+        : (json["personenkraftwagenChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     lieferwagenChoosableIntervals:
       json["lieferwagenChoosableIntervals"] == null
         ? undefined
-        : json["lieferwagenChoosableIntervals"],
+        : (json["lieferwagenChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallFromJSON
+          ),
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
     links:
@@ -452,25 +307,86 @@ export function EntityModelOptionsmenueSettingsToJSONTyped(
         ? undefined
         : value["createdTime"].toISOString(),
     version: value["version"],
-    fahrzeugklasse: value["fahrzeugklasse"],
-    intervall: value["intervall"],
+    fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
+    intervall: ZaehldatenIntervallToJSON(value["intervall"]),
     kraftfahrzeugverkehrChoosableIntervals:
-      value["kraftfahrzeugverkehrChoosableIntervals"],
-    schwerverkehrChoosableIntervals: value["schwerverkehrChoosableIntervals"],
-    gueterverkehrChoosableIntervals: value["gueterverkehrChoosableIntervals"],
+      value["kraftfahrzeugverkehrChoosableIntervals"] == null
+        ? undefined
+        : (value["kraftfahrzeugverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    schwerverkehrChoosableIntervals:
+      value["schwerverkehrChoosableIntervals"] == null
+        ? undefined
+        : (value["schwerverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    gueterverkehrChoosableIntervals:
+      value["gueterverkehrChoosableIntervals"] == null
+        ? undefined
+        : (value["gueterverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
     schwerverkehrsanteilProzentChoosableIntervals:
-      value["schwerverkehrsanteilProzentChoosableIntervals"],
+      value["schwerverkehrsanteilProzentChoosableIntervals"] == null
+        ? undefined
+        : (
+            value["schwerverkehrsanteilProzentChoosableIntervals"] as Array<any>
+          ).map(ZaehldatenIntervallToJSON),
     gueterverkehrsanteilProzentChoosableIntervals:
-      value["gueterverkehrsanteilProzentChoosableIntervals"],
-    radverkehrChoosableIntervals: value["radverkehrChoosableIntervals"],
-    fussverkehrChoosableIntervals: value["fussverkehrChoosableIntervals"],
-    lastkraftwagenChoosableIntervals: value["lastkraftwagenChoosableIntervals"],
-    lastzuegeChoosableIntervals: value["lastzuegeChoosableIntervals"],
-    busseChoosableIntervals: value["busseChoosableIntervals"],
-    kraftraederChoosableIntervals: value["kraftraederChoosableIntervals"],
+      value["gueterverkehrsanteilProzentChoosableIntervals"] == null
+        ? undefined
+        : (
+            value["gueterverkehrsanteilProzentChoosableIntervals"] as Array<any>
+          ).map(ZaehldatenIntervallToJSON),
+    radverkehrChoosableIntervals:
+      value["radverkehrChoosableIntervals"] == null
+        ? undefined
+        : (value["radverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    fussverkehrChoosableIntervals:
+      value["fussverkehrChoosableIntervals"] == null
+        ? undefined
+        : (value["fussverkehrChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    lastkraftwagenChoosableIntervals:
+      value["lastkraftwagenChoosableIntervals"] == null
+        ? undefined
+        : (value["lastkraftwagenChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    lastzuegeChoosableIntervals:
+      value["lastzuegeChoosableIntervals"] == null
+        ? undefined
+        : (value["lastzuegeChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    busseChoosableIntervals:
+      value["busseChoosableIntervals"] == null
+        ? undefined
+        : (value["busseChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    kraftraederChoosableIntervals:
+      value["kraftraederChoosableIntervals"] == null
+        ? undefined
+        : (value["kraftraederChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
     personenkraftwagenChoosableIntervals:
-      value["personenkraftwagenChoosableIntervals"],
-    lieferwagenChoosableIntervals: value["lieferwagenChoosableIntervals"],
+      value["personenkraftwagenChoosableIntervals"] == null
+        ? undefined
+        : (value["personenkraftwagenChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
+    lieferwagenChoosableIntervals:
+      value["lieferwagenChoosableIntervals"] == null
+        ? undefined
+        : (value["lieferwagenChoosableIntervals"] as Array<any>).map(
+            ZaehldatenIntervallToJSON
+          ),
     entityVersion: value["entityVersion"],
     _links:
       value["links"] == null

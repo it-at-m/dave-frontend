@@ -52,6 +52,7 @@ models/AbstractJsonSchemaPropertyObject.ts
 models/AbstractLadeBelastungsplanDTOObject.ts
 models/AuffaelligeTageDTO.ts
 models/AuswertungMessstelleWithFileDTO.ts
+models/AuswertungsZeitraum.ts
 models/BackendIdDTO.ts
 models/BaseAsset.ts
 models/BearbeiteKnotenarmDTO.ts
@@ -65,6 +66,7 @@ models/BelastungsplanFjsDataDTO.ts
 models/BelastungsplanMessquerschnitteDTO.ts
 models/BelastungsplanQjsDataDTO.ts
 models/BelastungsplanQuDataDTO.ts
+models/Bewegungsrichtung.ts
 models/ChatMessageDTO.ts
 models/ChatMessageRequestBody.ts
 models/CollectionModelEntityModelChatMessage.ts
@@ -113,6 +115,7 @@ models/ExternalQuerungsverkehrDTO.ts
 models/ExternalVerkehrsbeziehungDTO.ts
 models/ExternalZaehlungDTO.ts
 models/FahrzeugOptionsDTO.ts
+models/Fahrzeugklasse.ts
 models/GenerateMessstellePdfRequest.ts
 models/GeneratePdfAuswertungRequest.ts
 models/GeneratePdfReportRequest.ts
@@ -120,6 +123,7 @@ models/GeneratePdfReportRequestAssetsInner.ts
 models/GenerateZaehlungPdfRequest.ts
 models/GeoPoint.ts
 models/HeadingAsset.ts
+models/Himmelsrichtung.ts
 models/Hochrechnung.ts
 models/Hochrechnungsfaktor.ts
 models/HochrechnungsfaktorDTO.ts
@@ -220,6 +224,7 @@ models/ReadMessquerschnittDTO.ts
 models/ReadMessstelleInfoDTO.ts
 models/RepresentationModelObject.ts
 models/ResetAuffaelligkeitenDTO.ts
+models/Rounding.ts
 models/SearchAndFilterOptionsDTO.ts
 models/StepLineSeriesEntryBaseDTO.ts
 models/StepLineSeriesEntryBigDecimalDTO.ts
@@ -241,12 +246,14 @@ models/Verkehrsart.ts
 models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts
+models/ZaehldatenIntervall.ts
 models/ZaehlstelleConfigurationDTO.ts
 models/ZaehlstelleRequestBody.ts
 models/Zaehlung.ts
 models/ZaehlungskenngroessenAsset.ts
 models/ZaehlungskenngroessenData.ts
 models/ZeitauswahlDTO.ts
+models/Zeitblock.ts
 models/ZeitintervallDTO.ts
 models/ZeitintervallRequestBody.ts
 models/index.ts

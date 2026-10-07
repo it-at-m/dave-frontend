@@ -12,11 +12,18 @@
  * Do not edit the class manually.
  */
 
+import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { ReadMessfaehigkeitDTO } from "./ReadMessfaehigkeitDTO";
 import type { ReadMessquerschnittDTO } from "./ReadMessquerschnittDTO";
 import type { Verkehrsart } from "./Verkehrsart";
 
 import { mapValues } from "../runtime";
+import {
+  FahrzeugklasseFromJSON,
+  FahrzeugklasseFromJSONTyped,
+  FahrzeugklasseToJSON,
+  FahrzeugklasseToJSONTyped,
+} from "./Fahrzeugklasse";
 import {
   ReadMessfaehigkeitDTOFromJSON,
   ReadMessfaehigkeitDTOFromJSONTyped,
@@ -74,10 +81,10 @@ export interface ReadMessstelleInfoDTO {
   stadtbezirkNummer?: number;
   /**
    *
-   * @type {string}
+   * @type {Fahrzeugklasse}
    * @memberof ReadMessstelleInfoDTO
    */
-  fahrzeugklasse?: ReadMessstelleInfoDTOFahrzeugklasseEnum;
+  fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
    * @type {Verkehrsart}
@@ -147,18 +154,6 @@ export interface ReadMessstelleInfoDTO {
 }
 
 /**
- * @export
- */
-export const ReadMessstelleInfoDTOFahrzeugklasseEnum = {
-  Rad: "RAD",
-  SummeKfz: "SUMME_KFZ",
-  ZweiPlusEins: "ZWEI_PLUS_EINS",
-  AchtPlusEins: "ACHT_PLUS_EINS",
-} as const;
-export type ReadMessstelleInfoDTOFahrzeugklasseEnum =
-  (typeof ReadMessstelleInfoDTOFahrzeugklasseEnum)[keyof typeof ReadMessstelleInfoDTOFahrzeugklasseEnum];
-
-/**
  * Check if a given object implements the ReadMessstelleInfoDTO interface.
  */
 export function instanceOfReadMessstelleInfoDTO(
@@ -188,7 +183,9 @@ export function ReadMessstelleInfoDTOFromJSONTyped(
     stadtbezirkNummer:
       json["stadtbezirkNummer"] == null ? undefined : json["stadtbezirkNummer"],
     fahrzeugklasse:
-      json["fahrzeugklasse"] == null ? undefined : json["fahrzeugklasse"],
+      json["fahrzeugklasse"] == null
+        ? undefined
+        : FahrzeugklasseFromJSON(json["fahrzeugklasse"]),
     detektierteVerkehrsart:
       json["detektierteVerkehrsart"] == null
         ? undefined
@@ -242,7 +239,7 @@ export function ReadMessstelleInfoDTOToJSONTyped(
     standort: value["standort"],
     stadtbezirk: value["stadtbezirk"],
     stadtbezirkNummer: value["stadtbezirkNummer"],
-    fahrzeugklasse: value["fahrzeugklasse"],
+    fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
     detektierteVerkehrsart: VerkehrsartToJSON(value["detektierteVerkehrsart"]),
     hersteller: value["hersteller"],
     longitude: value["longitude"],

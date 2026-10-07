@@ -12,9 +12,16 @@
  * Do not edit the class manually.
  */
 
+import type { Himmelsrichtung } from "./Himmelsrichtung";
 import type { Hochrechnungsfaktor } from "./Hochrechnungsfaktor";
 
 import { mapValues } from "../runtime";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 import {
   HochrechnungsfaktorFromJSON,
   HochrechnungsfaktorFromJSONTyped,
@@ -84,10 +91,10 @@ export interface Verkehrsbeziehung {
   vorbei?: boolean;
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof Verkehrsbeziehung
    */
-  strassenseite?: VerkehrsbeziehungStrassenseiteEnum;
+  strassenseite?: Himmelsrichtung;
   /**
    *
    * @type {string}
@@ -127,22 +134,6 @@ export interface Verkehrsbeziehung {
 }
 
 /**
- * @export
- */
-export const VerkehrsbeziehungStrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type VerkehrsbeziehungStrassenseiteEnum =
-  (typeof VerkehrsbeziehungStrassenseiteEnum)[keyof typeof VerkehrsbeziehungStrassenseiteEnum];
-
-/**
  * Check if a given object implements the Verkehrsbeziehung interface.
  */
 export function instanceOfVerkehrsbeziehung(
@@ -176,7 +167,9 @@ export function VerkehrsbeziehungFromJSONTyped(
     heraus: json["heraus"] == null ? undefined : json["heraus"],
     vorbei: json["vorbei"] == null ? undefined : json["vorbei"],
     strassenseite:
-      json["strassenseite"] == null ? undefined : json["strassenseite"],
+      json["strassenseite"] == null
+        ? undefined
+        : HimmelsrichtungFromJSON(json["strassenseite"]),
     vonknotvonstrnr:
       json["vonknotvonstrnr"] == null ? undefined : json["vonknotvonstrnr"],
     nachknotvonstrnr:
@@ -216,7 +209,7 @@ export function VerkehrsbeziehungToJSONTyped(
     hinein: value["hinein"],
     heraus: value["heraus"],
     vorbei: value["vorbei"],
-    strassenseite: value["strassenseite"],
+    strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
     vonknotvonstrnr: value["vonknotvonstrnr"],
     nachknotvonstrnr: value["nachknotvonstrnr"],
     von_strnr: value["vonStrnr"],

@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { Himmelsrichtung } from "./Himmelsrichtung";
+
 import { mapValues } from "../runtime";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 
 /**
  *
@@ -34,10 +42,10 @@ export interface VerkehrsbeziehungValue {
   nach: number;
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof VerkehrsbeziehungValue
    */
-  strassenseite: VerkehrsbeziehungValueStrassenseiteEnum;
+  strassenseite: Himmelsrichtung;
   /**
    *
    * @type {number}
@@ -45,22 +53,6 @@ export interface VerkehrsbeziehungValue {
    */
   value: number;
 }
-
-/**
- * @export
- */
-export const VerkehrsbeziehungValueStrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type VerkehrsbeziehungValueStrassenseiteEnum =
-  (typeof VerkehrsbeziehungValueStrassenseiteEnum)[keyof typeof VerkehrsbeziehungValueStrassenseiteEnum];
 
 /**
  * Check if a given object implements the VerkehrsbeziehungValue interface.
@@ -92,7 +84,7 @@ export function VerkehrsbeziehungValueFromJSONTyped(
   return {
     von: json["von"],
     nach: json["nach"],
-    strassenseite: json["strassenseite"],
+    strassenseite: HimmelsrichtungFromJSON(json["strassenseite"]),
     value: json["value"],
   };
 }
@@ -114,7 +106,7 @@ export function VerkehrsbeziehungValueToJSONTyped(
   return {
     von: value["von"],
     nach: value["nach"],
-    strassenseite: value["strassenseite"],
+    strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
     value: value["value"],
   };
 }

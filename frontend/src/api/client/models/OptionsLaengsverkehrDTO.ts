@@ -12,7 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { Bewegungsrichtung } from "./Bewegungsrichtung";
+import type { Himmelsrichtung } from "./Himmelsrichtung";
+
 import { mapValues } from "../runtime";
+import {
+  BewegungsrichtungFromJSON,
+  BewegungsrichtungFromJSONTyped,
+  BewegungsrichtungToJSON,
+  BewegungsrichtungToJSONTyped,
+} from "./Bewegungsrichtung";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 
 /**
  *
@@ -28,43 +43,17 @@ export interface OptionsLaengsverkehrDTO {
   knotenarm?: number;
   /**
    *
-   * @type {string}
+   * @type {Bewegungsrichtung}
    * @memberof OptionsLaengsverkehrDTO
    */
-  richtung?: OptionsLaengsverkehrDTORichtungEnum;
+  richtung?: Bewegungsrichtung;
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof OptionsLaengsverkehrDTO
    */
-  strassenseite?: OptionsLaengsverkehrDTOStrassenseiteEnum;
+  strassenseite?: Himmelsrichtung;
 }
-
-/**
- * @export
- */
-export const OptionsLaengsverkehrDTORichtungEnum = {
-  Ein: "EIN",
-  Aus: "AUS",
-} as const;
-export type OptionsLaengsverkehrDTORichtungEnum =
-  (typeof OptionsLaengsverkehrDTORichtungEnum)[keyof typeof OptionsLaengsverkehrDTORichtungEnum];
-
-/**
- * @export
- */
-export const OptionsLaengsverkehrDTOStrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type OptionsLaengsverkehrDTOStrassenseiteEnum =
-  (typeof OptionsLaengsverkehrDTOStrassenseiteEnum)[keyof typeof OptionsLaengsverkehrDTOStrassenseiteEnum];
 
 /**
  * Check if a given object implements the OptionsLaengsverkehrDTO interface.
@@ -90,9 +79,14 @@ export function OptionsLaengsverkehrDTOFromJSONTyped(
   }
   return {
     knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
-    richtung: json["richtung"] == null ? undefined : json["richtung"],
+    richtung:
+      json["richtung"] == null
+        ? undefined
+        : BewegungsrichtungFromJSON(json["richtung"]),
     strassenseite:
-      json["strassenseite"] == null ? undefined : json["strassenseite"],
+      json["strassenseite"] == null
+        ? undefined
+        : HimmelsrichtungFromJSON(json["strassenseite"]),
   };
 }
 
@@ -112,7 +106,7 @@ export function OptionsLaengsverkehrDTOToJSONTyped(
 
   return {
     knotenarm: value["knotenarm"],
-    richtung: value["richtung"],
-    strassenseite: value["strassenseite"],
+    richtung: BewegungsrichtungToJSON(value["richtung"]),
+    strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
   };
 }

@@ -12,11 +12,18 @@
  * Do not edit the class manually.
  */
 
+import type { AuswertungsZeitraum } from "./AuswertungsZeitraum";
 import type { FahrzeugOptionsDTO } from "./FahrzeugOptionsDTO";
 import type { MessstelleAuswertungIdDTO } from "./MessstelleAuswertungIdDTO";
 import type { TagesTyp } from "./TagesTyp";
 
 import { mapValues } from "../runtime";
+import {
+  AuswertungsZeitraumFromJSON,
+  AuswertungsZeitraumFromJSONTyped,
+  AuswertungsZeitraumToJSON,
+  AuswertungsZeitraumToJSONTyped,
+} from "./AuswertungsZeitraum";
 import {
   FahrzeugOptionsDTOFromJSON,
   FahrzeugOptionsDTOFromJSONTyped,
@@ -56,10 +63,10 @@ export interface MessstelleAuswertungOptionsDTO {
   tagesTyp: TagesTyp;
   /**
    *
-   * @type {Array<string>}
+   * @type {Array<AuswertungsZeitraum>}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  zeitraum: Array<MessstelleAuswertungOptionsDTOZeitraumEnum>;
+  zeitraum: Array<AuswertungsZeitraum>;
   /**
    *
    * @type {Set<MessstelleAuswertungIdDTO>}
@@ -73,33 +80,6 @@ export interface MessstelleAuswertungOptionsDTO {
    */
   fahrzeuge: FahrzeugOptionsDTO;
 }
-
-/**
- * @export
- */
-export const MessstelleAuswertungOptionsDTOZeitraumEnum = {
-  Januar: "JANUAR",
-  Februar: "FEBRUAR",
-  Maerz: "MAERZ",
-  April: "APRIL",
-  Mai: "MAI",
-  Juni: "JUNI",
-  Juli: "JULI",
-  August: "AUGUST",
-  September: "SEPTEMBER",
-  Oktober: "OKTOBER",
-  November: "NOVEMBER",
-  Dezember: "DEZEMBER",
-  Quartal1: "QUARTAL_1",
-  Quartal2: "QUARTAL_2",
-  Quartal3: "QUARTAL_3",
-  Quartal4: "QUARTAL_4",
-  Halbjahr1: "HALBJAHR_1",
-  Halbjahr2: "HALBJAHR_2",
-  Jahre: "JAHRE",
-} as const;
-export type MessstelleAuswertungOptionsDTOZeitraumEnum =
-  (typeof MessstelleAuswertungOptionsDTOZeitraumEnum)[keyof typeof MessstelleAuswertungOptionsDTOZeitraumEnum];
 
 /**
  * Check if a given object implements the MessstelleAuswertungOptionsDTO interface.
@@ -135,7 +115,7 @@ export function MessstelleAuswertungOptionsDTOFromJSONTyped(
   return {
     jahre: json["jahre"],
     tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
-    zeitraum: json["zeitraum"],
+    zeitraum: (json["zeitraum"] as Array<any>).map(AuswertungsZeitraumFromJSON),
     messstelleAuswertungIds: new Set(
       (json["messstelleAuswertungIds"] as Array<any>).map(
         MessstelleAuswertungIdDTOFromJSON
@@ -162,7 +142,7 @@ export function MessstelleAuswertungOptionsDTOToJSONTyped(
   return {
     jahre: value["jahre"],
     tagesTyp: TagesTypToJSON(value["tagesTyp"]),
-    zeitraum: value["zeitraum"],
+    zeitraum: (value["zeitraum"] as Array<any>).map(AuswertungsZeitraumToJSON),
     messstelleAuswertungIds: Array.from(
       value["messstelleAuswertungIds"] as Set<any>
     ).map(MessstelleAuswertungIdDTOToJSON),

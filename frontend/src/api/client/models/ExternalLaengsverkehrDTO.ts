@@ -12,10 +12,24 @@
  * Do not edit the class manually.
  */
 
+import type { Bewegungsrichtung } from "./Bewegungsrichtung";
+import type { Himmelsrichtung } from "./Himmelsrichtung";
 import type { HochrechnungsfaktorDTO } from "./HochrechnungsfaktorDTO";
 import type { ZeitintervallDTO } from "./ZeitintervallDTO";
 
 import { mapValues } from "../runtime";
+import {
+  BewegungsrichtungFromJSON,
+  BewegungsrichtungFromJSONTyped,
+  BewegungsrichtungToJSON,
+  BewegungsrichtungToJSONTyped,
+} from "./Bewegungsrichtung";
+import {
+  HimmelsrichtungFromJSON,
+  HimmelsrichtungFromJSONTyped,
+  HimmelsrichtungToJSON,
+  HimmelsrichtungToJSONTyped,
+} from "./Himmelsrichtung";
 import {
   HochrechnungsfaktorDTOFromJSON,
   HochrechnungsfaktorDTOFromJSONTyped,
@@ -61,43 +75,17 @@ export interface ExternalLaengsverkehrDTO {
   knotenarm?: number;
   /**
    *
-   * @type {string}
+   * @type {Bewegungsrichtung}
    * @memberof ExternalLaengsverkehrDTO
    */
-  richtung?: ExternalLaengsverkehrDTORichtungEnum;
+  richtung?: Bewegungsrichtung;
   /**
    *
-   * @type {string}
+   * @type {Himmelsrichtung}
    * @memberof ExternalLaengsverkehrDTO
    */
-  strassenseite?: ExternalLaengsverkehrDTOStrassenseiteEnum;
+  strassenseite?: Himmelsrichtung;
 }
-
-/**
- * @export
- */
-export const ExternalLaengsverkehrDTORichtungEnum = {
-  Ein: "EIN",
-  Aus: "AUS",
-} as const;
-export type ExternalLaengsverkehrDTORichtungEnum =
-  (typeof ExternalLaengsverkehrDTORichtungEnum)[keyof typeof ExternalLaengsverkehrDTORichtungEnum];
-
-/**
- * @export
- */
-export const ExternalLaengsverkehrDTOStrassenseiteEnum = {
-  N: "N",
-  No: "NO",
-  O: "O",
-  So: "SO",
-  S: "S",
-  Sw: "SW",
-  W: "W",
-  Nw: "NW",
-} as const;
-export type ExternalLaengsverkehrDTOStrassenseiteEnum =
-  (typeof ExternalLaengsverkehrDTOStrassenseiteEnum)[keyof typeof ExternalLaengsverkehrDTOStrassenseiteEnum];
 
 /**
  * Check if a given object implements the ExternalLaengsverkehrDTO interface.
@@ -132,9 +120,14 @@ export function ExternalLaengsverkehrDTOFromJSONTyped(
         ? undefined
         : HochrechnungsfaktorDTOFromJSON(json["hochrechnungsfaktor"]),
     knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
-    richtung: json["richtung"] == null ? undefined : json["richtung"],
+    richtung:
+      json["richtung"] == null
+        ? undefined
+        : BewegungsrichtungFromJSON(json["richtung"]),
     strassenseite:
-      json["strassenseite"] == null ? undefined : json["strassenseite"],
+      json["strassenseite"] == null
+        ? undefined
+        : HimmelsrichtungFromJSON(json["strassenseite"]),
   };
 }
 
@@ -162,7 +155,7 @@ export function ExternalLaengsverkehrDTOToJSONTyped(
       value["hochrechnungsfaktor"]
     ),
     knotenarm: value["knotenarm"],
-    richtung: value["richtung"],
-    strassenseite: value["strassenseite"],
+    richtung: BewegungsrichtungToJSON(value["richtung"]),
+    strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
   };
 }

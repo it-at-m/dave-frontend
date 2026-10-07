@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { Bewegungsrichtung } from "./Bewegungsrichtung";
+
 import { mapValues } from "../runtime";
+import {
+  BewegungsrichtungFromJSON,
+  BewegungsrichtungFromJSONTyped,
+  BewegungsrichtungToJSON,
+  BewegungsrichtungToJSONTyped,
+} from "./Bewegungsrichtung";
 
 /**
  *
@@ -22,10 +30,10 @@ import { mapValues } from "../runtime";
 export interface LaengsverkehrValue {
   /**
    *
-   * @type {string}
+   * @type {Bewegungsrichtung}
    * @memberof LaengsverkehrValue
    */
-  richtung: LaengsverkehrValueRichtungEnum;
+  richtung: Bewegungsrichtung;
   /**
    *
    * @type {number}
@@ -33,16 +41,6 @@ export interface LaengsverkehrValue {
    */
   value: number;
 }
-
-/**
- * @export
- */
-export const LaengsverkehrValueRichtungEnum = {
-  Ein: "EIN",
-  Aus: "AUS",
-} as const;
-export type LaengsverkehrValueRichtungEnum =
-  (typeof LaengsverkehrValueRichtungEnum)[keyof typeof LaengsverkehrValueRichtungEnum];
 
 /**
  * Check if a given object implements the LaengsverkehrValue interface.
@@ -67,7 +65,7 @@ export function LaengsverkehrValueFromJSONTyped(
     return json;
   }
   return {
-    richtung: json["richtung"],
+    richtung: BewegungsrichtungFromJSON(json["richtung"]),
     value: json["value"],
   };
 }
@@ -85,7 +83,7 @@ export function LaengsverkehrValueToJSONTyped(
   }
 
   return {
-    richtung: value["richtung"],
+    richtung: BewegungsrichtungToJSON(value["richtung"]),
     value: value["value"],
   };
 }
