@@ -74,10 +74,19 @@ function charttypeChanged(newChartType: "line" | "bar") {
   });
 }
 
+function doesDateContainVerkehrsbeziehungNotPresent(date: string) {
+  return date.split("\n").some((part) => part === "(Verkehrsbez. nicht vorh.)");
+}
+
 // Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert null ist (wegen Teilzählung kein Tageswert vorhanden).
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
+    const dateContainsVerkehrsbeziehungNotPresent =
+      zaehldatenZeitreihe.datum.some((date) =>
+        doesDateContainVerkehrsbeziehungNotPresent(date)
+      );
+
     if (isZeitauswahlSpitzenstundeChosen.value) {
       snackbarStore.showInfo(
         `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
@@ -86,7 +95,8 @@ watch(
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
-      zaehldatenZeitreihe.fuss.some((value) => value == null)
+      zaehldatenZeitreihe.fuss.some((value) => value == null) &&
+      !dateContainsVerkehrsbeziehungNotPresent
     ) {
       snackbarStore.showInfo(
         "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
