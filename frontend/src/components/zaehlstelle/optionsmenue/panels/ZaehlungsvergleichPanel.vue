@@ -349,11 +349,11 @@ function containsZeitblock(
   zeitblockInOptions: string
 ): boolean {
   return (
-    zaehlung.zeitauswahl.blocks.some(
-      (zeitblock) => zeitblock.toString() === zeitblockInOptions
+    Array.from(zaehlung.zeitauswahl.blocks).some(
+      (zeitblock) => zeitblock === zeitblockInOptions
     ) ||
-    zaehlung.zeitauswahl.hours.some(
-      (zeitblockStuendl) => zeitblockStuendl.toString() === zeitblockInOptions
+    Array.from(zaehlung.zeitauswahl.hours).some(
+      (zeitblock) => zeitblock === zeitblockInOptions
     )
   );
 }

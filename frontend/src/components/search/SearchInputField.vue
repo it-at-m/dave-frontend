@@ -87,12 +87,12 @@
 
 <script setup lang="ts">
 import type {
+  SearchAndFilterOptionsDTO,
   SucheComplexSuggestsDTO,
   SucheWordSuggestDTO,
   SucheZaehlstelleSuggestDTO,
   SucheZaehlungSuggestDTO,
 } from "@/api/client";
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
 
 import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";

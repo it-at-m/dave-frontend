@@ -269,10 +269,9 @@ const helpTextZeitintervall = computed(() => {
 const zeitblockValues = computed<Array<KeyVal>>(() => {
   const result = new Array<KeyVal>();
   // die möglichen Blöcke aus der Zählung
-  const blocks: Zeitblock[] = activeZaehlung.value.zeitauswahl
-    .blocks as Zeitblock[];
+  const blocks = Array.from(activeZaehlung.value.zeitauswahl.blocks);
 
-  if (blocks && Array.isArray(blocks)) {
+  if (blocks.length > 0) {
     // Select Control mit den entsprechenden text/value Werten füllen
     blocks.forEach((block) => {
       const kv = zeitblockInfo.get(block);
@@ -315,9 +314,9 @@ const isZeitblockValuesEmpty = computed<boolean>(() => {
 const stuendlichValues = computed<Array<KeyVal>>(() => {
   const result = new Array<KeyVal>();
   // die möglichen Stunden aus der Zählung
-  const hrs = activeZaehlung.value.zeitauswahl.hours as ZeitblockStuendlich[];
+  const hrs = Array.from(activeZaehlung.value.zeitauswahl.hours);
 
-  if (hrs && Array.isArray(hrs)) {
+  if (hrs.length > 0) {
     // Select Control mit den entsprechenden text/value Werten füllen
     hrs.forEach((h) => {
       const kv = zeitblockStuendlichInfo.get(h);
@@ -371,12 +370,8 @@ const isOnlyFussverkehrSelected = computed(() => {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    activeZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_06_10
-    ) &&
-    activeZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_15_19
-    )
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
   );
 });
 
@@ -408,7 +403,9 @@ function adaptOptionsUpdate() {
       chosenOptionsCopy.value.zeitblock = zbMax;
     } else {
       // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
-      const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+      const firstHour = Array.from(
+        activeZaehlung.value.zeitauswahl?.hours ?? []
+      )[0];
       if (!isNil(firstHour)) {
         chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.STUNDE;
         chosenOptionsCopy.value.zeitblock = firstHour;

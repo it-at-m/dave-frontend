@@ -218,12 +218,8 @@ const isSonderzaehldauer = computed(() => {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    activeZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_06_10
-    ) &&
-    activeZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_15_19
-    )
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
   );
 });
 
@@ -256,7 +252,7 @@ function setDefaultOptionsForZaehlung() {
     !isSonderzaehldauerKurzzeitzaehlung.value
   ) {
     const zbMax = zeitblockOrder.find((zb) =>
-      activeZaehlung.value.zeitauswahl?.blocks?.some((zbv) => zbv === zb)
+      activeZaehlung.value.zeitauswahl?.blocks?.has(zb)
     );
     if (zbMax) {
       // Zeitblock verfügbar --> Zeitblock setzen
@@ -264,7 +260,9 @@ function setDefaultOptionsForZaehlung() {
       optionsCopy.zeitblock = zbMax;
     } else {
       // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
-      const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+      const firstHour = Array.from(
+        activeZaehlung.value.zeitauswahl?.hours ?? []
+      )[0];
       if (!isNil(firstHour)) {
         optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
         optionsCopy.zeitblock = firstHour;

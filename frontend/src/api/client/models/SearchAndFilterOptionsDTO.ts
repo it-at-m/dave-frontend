@@ -33,13 +33,13 @@ export interface SearchAndFilterOptionsDTO {
    * @type {boolean}
    * @memberof SearchAndFilterOptionsDTO
    */
-  searchInMessstellen?: boolean;
+  searchInMessstellen: boolean;
   /**
    *
    * @type {boolean}
    * @memberof SearchAndFilterOptionsDTO
    */
-  searchInZaehlstellen?: boolean;
+  searchInZaehlstellen: boolean;
   /**
    *
    * @type {Array<Verkehrsart>}

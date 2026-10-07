@@ -407,10 +407,8 @@ function getChosenBewegungsbeziehungen() {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
-    zaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_06_10
-    ) &&
-    zaehlung.value.zeitauswahl?.blocks?.some((zb) => zb === Zeitblock.ZB_15_19)
+    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
+    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
   );
 });
 

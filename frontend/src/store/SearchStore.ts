@@ -1,5 +1,5 @@
+import type { SearchAndFilterOptionsDTO } from "@/api/client";
 import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 
 import { isEqual } from "lodash";
 import { defineStore } from "pinia";

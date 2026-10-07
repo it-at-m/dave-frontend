@@ -2,7 +2,9 @@ import type {
   ConfigurationDTO,
   InfoMessageDTO,
   MapConfigurationDTO,
+  SearchAndFilterOptionsDTO,
   TenantConfigurationDTO,
+  ZeitauswahlDTO,
 } from "@/api/client";
 import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
@@ -14,7 +16,6 @@ import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMess
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
@@ -23,7 +24,6 @@ import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehl
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
-import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import { Verkehrsart } from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
