@@ -144,7 +144,7 @@ export interface ZeitintervallRequestBody {
    * @type {string}
    * @memberof ZeitintervallRequestBody
    */
-  type: ZeitintervallRequestBodyTypeEnum;
+  type?: ZeitintervallRequestBodyTypeEnum;
   /**
    *
    * @type {Hochrechnung}
@@ -205,7 +205,6 @@ export function instanceOfZeitintervallRequestBody(
     return false;
   if (!("endeUhrzeit" in value) || value["endeUhrzeit"] === undefined)
     return false;
-  if (!("type" in value) || value["type"] === undefined) return false;
   return true;
 }
 
@@ -244,7 +243,7 @@ export function ZeitintervallRequestBodyFromJSONTyped(
     fahrradfahrer:
       json["fahrradfahrer"] == null ? undefined : json["fahrradfahrer"],
     fussgaenger: json["fussgaenger"] == null ? undefined : json["fussgaenger"],
-    type: json["type"],
+    type: json["type"] == null ? undefined : json["type"],
     hochrechnung:
       json["hochrechnung"] == null
         ? undefined

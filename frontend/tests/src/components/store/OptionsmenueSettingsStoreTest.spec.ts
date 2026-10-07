@@ -631,21 +631,21 @@ describe("OptionsmenueSettingsStore.ts", () => {
       undefined,
       ZaehldatenIntervall.StundeHalb
     );
-    expected = "default-StundeHalb";
+    expected = "default-STUNDE_HALB";
     expect(expected).eq(result);
 
     result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
       Fahrzeugklasse.SummeKfz,
       undefined
     );
-    expected = "SummeKfz-default";
+    expected = "SUMME_KFZ-default";
     expect(expected).eq(result);
 
     result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
       Fahrzeugklasse.SummeKfz,
       ZaehldatenIntervall.StundeHalb
     );
-    expected = "SummeKfz-StundeHalb";
+    expected = "SUMME_KFZ-STUNDE_HALB";
     expect(expected).eq(result);
   });
 });

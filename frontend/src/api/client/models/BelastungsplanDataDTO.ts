@@ -43,7 +43,7 @@ export interface BelastungsplanDataDTO {
    * @type {boolean}
    * @memberof BelastungsplanDataDTO
    */
-  percent?: boolean;
+  percent: boolean;
   /**
    *
    * @type {Array<number>}
@@ -73,6 +73,7 @@ export function instanceOfBelastungsplanDataDTO(
   if (!("label" in value) || value["label"] === undefined) return false;
   if (!("filled" in value) || value["filled"] === undefined) return false;
   if (!("values" in value) || value["values"] === undefined) return false;
+  if (!("percent" in value) || value["percent"] === undefined) return false;
   if (!("sumIn" in value) || value["sumIn"] === undefined) return false;
   if (!("sumOut" in value) || value["sumOut"] === undefined) return false;
   if (!("sum" in value) || value["sum"] === undefined) return false;
@@ -96,7 +97,7 @@ export function BelastungsplanDataDTOFromJSONTyped(
     label: json["label"],
     filled: json["filled"],
     values: json["values"],
-    percent: json["percent"] == null ? undefined : json["percent"],
+    percent: json["percent"],
     sumIn: json["sumIn"],
     sumOut: json["sumOut"],
     sum: json["sum"],

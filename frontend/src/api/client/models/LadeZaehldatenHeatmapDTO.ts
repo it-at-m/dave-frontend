@@ -55,13 +55,13 @@ export interface LadeZaehldatenHeatmapDTO {
    * @type {Array<string>}
    * @memberof LadeZaehldatenHeatmapDTO
    */
-  xaxisDataSecondChart?: Array<string>;
+  xaxisDataFirstChart?: Array<string>;
   /**
    *
    * @type {Array<string>}
    * @memberof LadeZaehldatenHeatmapDTO
    */
-  xaxisDataFirstChart?: Array<string>;
+  xaxisDataSecondChart?: Array<string>;
 }
 
 /**
@@ -103,14 +103,14 @@ export function LadeZaehldatenHeatmapDTOFromJSONTyped(
       json["seriesEntriesSecondChart"] == null
         ? undefined
         : json["seriesEntriesSecondChart"],
-    xaxisDataSecondChart:
-      json["xaxisDataSecondChart"] == null
-        ? undefined
-        : json["xaxisDataSecondChart"],
     xaxisDataFirstChart:
       json["xaxisDataFirstChart"] == null
         ? undefined
         : json["xaxisDataFirstChart"],
+    xaxisDataSecondChart:
+      json["xaxisDataSecondChart"] == null
+        ? undefined
+        : json["xaxisDataSecondChart"],
   };
 }
 
@@ -134,7 +134,7 @@ export function LadeZaehldatenHeatmapDTOToJSONTyped(
     rangeMax: value["rangeMax"],
     seriesEntriesFirstChart: value["seriesEntriesFirstChart"],
     seriesEntriesSecondChart: value["seriesEntriesSecondChart"],
-    xaxisDataSecondChart: value["xaxisDataSecondChart"],
     xaxisDataFirstChart: value["xaxisDataFirstChart"],
+    xaxisDataSecondChart: value["xaxisDataSecondChart"],
   };
 }
