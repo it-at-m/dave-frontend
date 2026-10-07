@@ -1,17 +1,17 @@
 import type {
   ConfigurationDTO,
+  FahrzeugOptionsDTO,
   InfoMessageDTO,
   MapConfigurationDTO,
   SearchAndFilterOptionsDTO,
   TenantConfigurationDTO,
+  ZaehlstelleConfigurationDTO,
   ZeitauswahlDTO,
 } from "@/api/client";
-import type { Fahrzeugklasse, ZaehlstelleConfigurationDTO } from "@/api/client";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -25,7 +25,12 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { Rounding, Verkehrsart, ZaehldatenIntervall } from "@/api/client";
+import {
+  Fahrzeugklasse,
+  Rounding,
+  Verkehrsart,
+  ZaehldatenIntervall,
+} from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Quelle from "@/types/enum/Quelle";
 import TagesTyp from "@/types/enum/TagesTyp";
@@ -94,7 +99,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultFahrzeugOptions(): FahrzeugOptions {
+  public static createDefaultFahrzeugOptions(): FahrzeugOptionsDTO {
     return {
       kraftfahrzeugverkehr: false,
       schwerverkehr: false,
@@ -109,7 +114,7 @@ export default class DefaultObjectCreator {
       kraftraeder: false,
       personenkraftwagen: false,
       lieferwagen: false,
-    } as FahrzeugOptions;
+    } as FahrzeugOptionsDTO;
   }
 
   public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
@@ -154,7 +159,7 @@ export default class DefaultObjectCreator {
         kraftraeder: false,
         personenkraftwagen: false,
         lieferwagen: false,
-      } as FahrzeugOptions,
+      } as FahrzeugOptionsDTO,
       verfuegbareVerkehrsarten: [],
     };
   }

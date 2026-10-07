@@ -10,6 +10,7 @@ import { GenerateCsvControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
+import MessstelleOptionsMapper from "@/types/messstelle/MessstelleOptionsMapper";
 
 export default class GenerateCsvService {
   private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
@@ -33,11 +34,11 @@ export default class GenerateCsvService {
     messstelleId: string,
     options: MessstelleOptionsDTO
   ): Promise<CsvDTO> {
+    const messstelleOptionsDTO = MessstelleOptionsMapper.toBackend(options);
     return handleOpenApiError(
       this.API.generateCSVMessstelleRaw({
         messstelleId,
-        messstelleOptionsDTO:
-          options as unknown as GeneratedMessstelleOptionsDTO,
+        messstelleOptionsDTO,
       }).then((response) => response.raw.json()),
       "Beim Erzeugen der CSV ist ein Fehler aufgetreten."
     );

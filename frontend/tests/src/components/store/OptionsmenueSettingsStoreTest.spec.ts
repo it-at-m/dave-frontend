@@ -1,12 +1,10 @@
-import type { OptionsmenueSettingsDTO } from "@/api/client";
-import type { Fahrzeugklasse } from "@/api/client";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+import type { FahrzeugOptionsDTO, OptionsmenueSettingsDTO } from "@/api/client";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ZaehldatenIntervall } from "@/api/client";
+import { Fahrzeugklasse, ZaehldatenIntervall } from "@/api/client";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 
 describe("OptionsmenueSettingsStore.ts", () => {
@@ -242,7 +240,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       kraftraeder: true,
       personenkraftwagen: true,
       lieferwagen: true,
-    } as FahrzeugOptions;
+    } as FahrzeugOptionsDTO;
 
     const defaultIntervals = [
       ZaehldatenIntervall.StundeViertel,
@@ -300,7 +298,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       kraftraeder: true,
       personenkraftwagen: true,
       lieferwagen: true,
-    } as FahrzeugOptions;
+    } as FahrzeugOptionsDTO;
 
     const defaultIntervals = [
       ZaehldatenIntervall.StundeViertel,
@@ -362,7 +360,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       kraftraeder: true,
       personenkraftwagen: false,
       lieferwagen: false,
-    } as FahrzeugOptions;
+    } as FahrzeugOptionsDTO;
 
     const optionsmenueSettings = {
       intervall: undefined,

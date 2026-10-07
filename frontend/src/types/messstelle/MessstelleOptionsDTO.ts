@@ -1,11 +1,14 @@
-import type { Rounding, ZaehldatenIntervall } from "@/api/client";
+import type {
+  FahrzeugOptionsDTO,
+  Rounding,
+  ZaehldatenIntervall,
+} from "@/api/client";
 import type StartAndEndDate from "@/types/common/StartAndEndDate";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 export default interface MessstelleOptionsDTO {
-  zeitraumStartAndEndDate: StartAndEndDate; // 
+  zeitraumStartAndEndDate: StartAndEndDate; //
   zeitraum: string[];
-  fahrzeuge: FahrzeugOptions;
+  fahrzeuge: FahrzeugOptionsDTO;
   zeitauswahl: string;
   zeitblock: string;
   tagesTyp: string;

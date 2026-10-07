@@ -9,6 +9,7 @@ import { AuswertungControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
+import { MessstelleAuswertungOptionsMapper } from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsMapper";
 
 export default class MessstelleAuswertungService {
   private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
@@ -27,10 +28,11 @@ export default class MessstelleAuswertungService {
   static generate(
     options: MessstelleAuswertungOptionsDTO
   ): Promise<AuswertungMessstelleWithFileDTO> {
+    const messstelleAuswertungOptionsDTO =
+      MessstelleAuswertungOptionsMapper.toBackend(options);
     return handleOpenApiError(
       this.API.getAuswertungMessstelleRaw({
-        messstelleAuswertungOptionsDTO:
-          options as unknown as GeneratedMessstelleAuswertungOptionsDTO,
+        messstelleAuswertungOptionsDTO,
       }).then((response) => response.raw.json()),
       "Beim Laden der Auswertung ist ein Fehler aufgetreten."
     );

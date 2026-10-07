@@ -1,14 +1,15 @@
 import type {
   Fahrzeugklasse,
+  FahrzeugOptionsDTO,
   OptionsmenueSettingsDTO,
 } from "@/api/client";
-import {ZaehldatenIntervall} from "@/api/client";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 import { cloneDeep, intersection, isEmpty, isNil, toArray } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+
+import { ZaehldatenIntervall } from "@/api/client";
 
 export const useOptionsmenueSettingsStore = defineStore(
   "optionsmenueSettingsStore",
@@ -201,7 +202,7 @@ export const useOptionsmenueSettingsStore = defineStore(
 
     function getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
       optionsmenueSettings: OptionsmenueSettingsDTO,
-      fahrzeugOptions: FahrzeugOptions
+      fahrzeugOptions: FahrzeugOptionsDTO
     ): Array<ZaehldatenIntervall> {
       const defaultIntervals = [
         ZaehldatenIntervall.StundeViertel,
