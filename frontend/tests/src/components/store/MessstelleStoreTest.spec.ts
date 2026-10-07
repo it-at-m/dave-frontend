@@ -1,12 +1,12 @@
+import type { Fahrzeugklasse } from "@/api/client";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { ZaehldatenIntervall } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 describe("OptionsmenueSettingsStore.ts", () => {
   beforeEach(() => {
@@ -21,14 +21,14 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const messfaehigkeit1 = {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
-      intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeKomplett,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
 
     messstelleInfo.messfaehigkeiten = [messfaehigkeit1, messfaehigkeit2];

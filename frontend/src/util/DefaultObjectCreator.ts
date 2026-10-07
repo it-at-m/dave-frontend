@@ -6,7 +6,7 @@ import type {
   TenantConfigurationDTO,
   ZeitauswahlDTO,
 } from "@/api/client";
-import type { ZaehlstelleConfigurationDTO } from "@/api/client";
+import type { Fahrzeugklasse, ZaehlstelleConfigurationDTO } from "@/api/client";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
@@ -25,14 +25,11 @@ import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaeh
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { Verkehrsart } from "@/api/client";
+import { Rounding, Verkehrsart, ZaehldatenIntervall } from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
-import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
 import Wetter from "@/types/enum/Wetter";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
@@ -124,7 +121,7 @@ export default class DefaultObjectCreator {
       spitzenstunde: true,
       stundensumme: true,
       tagessumme: true,
-      rounding: Rounding.NONE,
+      rounding: Rounding.None,
       fahrzeuge: this.createDefaultFahrzeugOptions(),
       intervall: "" as ZaehldatenIntervall,
       messquerschnittIds: [],
@@ -228,7 +225,7 @@ export default class DefaultObjectCreator {
       beideRichtungen: false,
       vergleichszaehlungsId: null,
       zaehldauer: Zaehldauer.DAUER_24_STUNDEN,
-      intervall: ZaehldatenIntervall.STUNDE_VIERTEL,
+      intervall: ZaehldatenIntervall.StundeViertel,
       zeitblock: Zeitblock.ZB_00_24,
       zeitauswahl: Zeitauswahl.TAGESWERT,
       kraftfahrzeugverkehr: false,
@@ -255,7 +252,7 @@ export default class DefaultObjectCreator {
       beschriftung: false,
       datentabelle: false,
       fahrzeugklassenStapeln: false,
-      rounding: Rounding.NONE,
+      rounding: Rounding.None,
       differenzdatenDarstellen: false,
       vonKnotenarm: null,
       // Setzen aller möglichen Knotenarme als Defaultwert da "vonKnotenarm" gleich "null"
@@ -276,10 +273,10 @@ export default class DefaultObjectCreator {
 
   public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
     return {
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       gueltigAb: "",
       gueltigBis: "",
-      intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,
+      intervall: ZaehldatenIntervall.StundeViertelEingeschraenkt,
     } as MessfaehigkeitDTO;
   }
 

@@ -36,7 +36,7 @@ export function belastungsplanAnzeigeUtils() {
   /**
    * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
    * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
-   * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
+   * mehr wie 3 Verkehrsarten (ohne Rad und FUSS) ausgewählt sind
    */
   const isGvpInBelastungsPlan = computed(() => {
     let actualNumberOfSelectedKfzSvGvAndSvp = 0;

@@ -35,7 +35,7 @@ import { computed, ref } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const hoverZeitintervall = ref(false);

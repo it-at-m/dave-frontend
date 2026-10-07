@@ -120,7 +120,7 @@ import Himmelsrichtung, {
   himmelsRichtungenTextShort,
 } from "@/types/enum/Himmelsrichtung";
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
-import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";

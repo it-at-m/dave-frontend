@@ -1601,7 +1601,7 @@ function getDataToShow() {
 // Alle Methoden für die Triangles
 function getSymbolForTriangle(index: number) {
   // Wird nur angezeigt, wenn der Knoten vorhanden ist und auch Daten vorliegen (herausfahrende Fahrzeuge)
-  // return (props.visibleNodes[index] && getDataToShow()[index][2]) ? this.TRIANGLE : NONE;
+  // return (props.visibleNodes[index] && getDataToShow()[index][2]) ? this.TRIANGLE : None;
   return props.visibleNodes[index] ? TRIANGLE : NONE;
 }
 

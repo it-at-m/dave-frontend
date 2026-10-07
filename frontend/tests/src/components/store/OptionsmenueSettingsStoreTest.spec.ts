@@ -1,13 +1,13 @@
 import type { OptionsmenueSettingsDTO } from "@/api/client";
+import type { Fahrzeugklasse } from "@/api/client";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { ZaehldatenIntervall } from "@/api/client";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 describe("OptionsmenueSettingsStore.ts", () => {
   beforeEach(() => {
@@ -18,10 +18,10 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
     const settings1 = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.SummeKfz,
       kraftfahrzeugverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.StundeViertel,
       ],
       schwerverkehrChoosableIntervals: undefined,
       gueterverkehrChoosableIntervals: undefined,
@@ -37,12 +37,12 @@ describe("OptionsmenueSettingsStore.ts", () => {
       lieferwagenChoosableIntervals: undefined,
     } as OptionsmenueSettingsDTO;
     const settings2 = {
-      intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeKomplett,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       kraftfahrzeugverkehrChoosableIntervals: undefined,
       schwerverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       gueterverkehrChoosableIntervals: undefined,
       schwerverkehrsanteilProzentChoosableIntervals: undefined,
@@ -57,13 +57,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       lieferwagenChoosableIntervals: undefined,
     } as OptionsmenueSettingsDTO;
     const settings3 = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       kraftfahrzeugverkehrChoosableIntervals: undefined,
       schwerverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       gueterverkehrChoosableIntervals: undefined,
       schwerverkehrsanteilProzentChoosableIntervals: undefined,
@@ -71,7 +71,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       radverkehrChoosableIntervals: undefined,
       fussverkehrChoosableIntervals: undefined,
       lastkraftwagenChoosableIntervals: undefined,
-      lastzuegeChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      lastzuegeChoosableIntervals: [ZaehldatenIntervall.StundeViertel],
       busseChoosableIntervals: undefined,
       kraftraederChoosableIntervals: undefined,
       personenkraftwagenChoosableIntervals: undefined,
@@ -85,14 +85,14 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const messfaehigkeit1 = {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
-      intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeKomplett,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
@@ -107,8 +107,8 @@ describe("OptionsmenueSettingsStore.ts", () => {
       fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: [],
       schwerverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       gueterverkehrChoosableIntervals: [],
       schwerverkehrsanteilProzentChoosableIntervals: [],
@@ -133,7 +133,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       intervall: undefined,
       fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       schwerverkehrChoosableIntervals: [],
       gueterverkehrChoosableIntervals: [],
@@ -156,14 +156,14 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const messfaehigkeit1 = {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
-      intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeKomplett,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
@@ -182,14 +182,14 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const messfaehigkeit1 = {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
-      intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeKomplett,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
     } as MessfaehigkeitDTO;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
@@ -200,9 +200,9 @@ describe("OptionsmenueSettingsStore.ts", () => {
       optionsmenueSettingsStore.getOptionsmenueSettingsByMessfaehigkeiten;
 
     const defaultIntervals = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_HALB,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeHalb,
+      ZaehldatenIntervall.StundeKomplett,
     ];
     const expected = {
       intervall: undefined,
@@ -245,9 +245,9 @@ describe("OptionsmenueSettingsStore.ts", () => {
     } as FahrzeugOptions;
 
     const defaultIntervals = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_HALB,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeHalb,
+      ZaehldatenIntervall.StundeKomplett,
     ];
 
     const optionsmenueSettings = {
@@ -275,9 +275,9 @@ describe("OptionsmenueSettingsStore.ts", () => {
       );
 
     const expected = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_HALB,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeHalb,
+      ZaehldatenIntervall.StundeKomplett,
     ] as Array<ZaehldatenIntervall>;
 
     expect(result).toStrictEqual(expected);
@@ -303,9 +303,9 @@ describe("OptionsmenueSettingsStore.ts", () => {
     } as FahrzeugOptions;
 
     const defaultIntervals = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_HALB,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeHalb,
+      ZaehldatenIntervall.StundeKomplett,
     ];
 
     const optionsmenueSettings = {
@@ -315,18 +315,18 @@ describe("OptionsmenueSettingsStore.ts", () => {
       schwerverkehrChoosableIntervals: defaultIntervals,
       gueterverkehrChoosableIntervals: defaultIntervals,
       schwerverkehrsanteilProzentChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       gueterverkehrsanteilProzentChoosableIntervals: defaultIntervals,
       radverkehrChoosableIntervals: defaultIntervals,
       fussverkehrChoosableIntervals: defaultIntervals,
       lastkraftwagenChoosableIntervals: defaultIntervals,
-      lastzuegeChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      lastzuegeChoosableIntervals: [ZaehldatenIntervall.StundeViertel],
       busseChoosableIntervals: defaultIntervals,
       kraftraederChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       personenkraftwagenChoosableIntervals: defaultIntervals,
       lieferwagenChoosableIntervals: defaultIntervals,
@@ -339,7 +339,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       );
 
     const expected = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
+      ZaehldatenIntervall.StundeViertel,
     ] as Array<ZaehldatenIntervall>;
 
     expect(result).toStrictEqual(expected);
@@ -368,26 +368,26 @@ describe("OptionsmenueSettingsStore.ts", () => {
       intervall: undefined,
       fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       schwerverkehrChoosableIntervals: undefined,
       gueterverkehrChoosableIntervals: undefined,
       schwerverkehrsanteilProzentChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       gueterverkehrsanteilProzentChoosableIntervals: undefined,
       radverkehrChoosableIntervals: undefined,
       fussverkehrChoosableIntervals: undefined,
       lastkraftwagenChoosableIntervals: undefined,
-      lastzuegeChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      lastzuegeChoosableIntervals: [ZaehldatenIntervall.StundeViertel],
       busseChoosableIntervals: undefined,
       kraftraederChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       personenkraftwagenChoosableIntervals: undefined,
       lieferwagenChoosableIntervals: undefined,
@@ -400,8 +400,8 @@ describe("OptionsmenueSettingsStore.ts", () => {
       );
 
     const expected = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeKomplett,
     ] as Array<ZaehldatenIntervall>;
 
     expect(result).toStrictEqual(expected);
@@ -414,9 +414,9 @@ describe("OptionsmenueSettingsStore.ts", () => {
       optionsmenueSettingsStore.getOptionsmenueSettingsWithAllOptions();
 
     const defaultIntervals = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_HALB,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeHalb,
+      ZaehldatenIntervall.StundeKomplett,
     ];
     const expected = {
       intervall: undefined,
@@ -443,13 +443,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
     const defaultIntervals = [
-      ZaehldatenIntervall.STUNDE_VIERTEL,
-      ZaehldatenIntervall.STUNDE_HALB,
-      ZaehldatenIntervall.STUNDE_KOMPLETT,
+      ZaehldatenIntervall.StundeViertel,
+      ZaehldatenIntervall.StundeHalb,
+      ZaehldatenIntervall.StundeKomplett,
     ];
     const settings1 = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.SummeKfz,
       kraftfahrzeugverkehrChoosableIntervals: defaultIntervals,
       schwerverkehrChoosableIntervals: defaultIntervals,
       gueterverkehrChoosableIntervals: defaultIntervals,
@@ -466,31 +466,31 @@ describe("OptionsmenueSettingsStore.ts", () => {
     } as OptionsmenueSettingsDTO;
 
     const settings2 = {
-      intervall: ZaehldatenIntervall.STUNDE_VIERTEL,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeViertel,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       kraftfahrzeugverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.StundeViertel,
       ],
       schwerverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
       ],
       gueterverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       schwerverkehrsanteilProzentChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.StundeViertel,
       ],
       gueterverkehrsanteilProzentChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
       ],
       radverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       fussverkehrChoosableIntervals: [],
       lastkraftwagenChoosableIntervals: [],
@@ -498,7 +498,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       busseChoosableIntervals: undefined,
       kraftraederChoosableIntervals: undefined,
       personenkraftwagenChoosableIntervals: undefined,
-      lieferwagenChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      lieferwagenChoosableIntervals: [ZaehldatenIntervall.StundeViertel],
     } as OptionsmenueSettingsDTO;
 
     const result =
@@ -510,28 +510,28 @@ describe("OptionsmenueSettingsStore.ts", () => {
       intervall: undefined,
       fahrzeugklasse: undefined,
       kraftfahrzeugverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.StundeViertel,
       ],
       schwerverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
       ],
       gueterverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       schwerverkehrsanteilProzentChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.StundeViertel,
       ],
       gueterverkehrsanteilProzentChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
       ],
       radverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ],
       fussverkehrChoosableIntervals: [],
       lastkraftwagenChoosableIntervals: [],
@@ -539,7 +539,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
       busseChoosableIntervals: [],
       kraftraederChoosableIntervals: [],
       personenkraftwagenChoosableIntervals: [],
-      lieferwagenChoosableIntervals: [ZaehldatenIntervall.STUNDE_VIERTEL],
+      lieferwagenChoosableIntervals: [ZaehldatenIntervall.StundeViertel],
     } as OptionsmenueSettingsDTO;
 
     expect(result).toStrictEqual(expected);
@@ -549,10 +549,10 @@ describe("OptionsmenueSettingsStore.ts", () => {
     const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
     const settings1 = {
-      intervall: ZaehldatenIntervall.STUNDE_HALB,
-      fahrzeugklasse: Fahrzeugklasse.SUMME_KFZ,
+      intervall: ZaehldatenIntervall.StundeHalb,
+      fahrzeugklasse: Fahrzeugklasse.SummeKfz,
       kraftfahrzeugverkehrChoosableIntervals: [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
+        ZaehldatenIntervall.StundeViertel,
       ],
       schwerverkehrChoosableIntervals: undefined,
       gueterverkehrChoosableIntervals: undefined,
@@ -568,10 +568,10 @@ describe("OptionsmenueSettingsStore.ts", () => {
       lieferwagenChoosableIntervals: undefined,
     } as OptionsmenueSettingsDTO;
     const settings2 = {
-      intervall: ZaehldatenIntervall.STUNDE_KOMPLETT,
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      intervall: ZaehldatenIntervall.StundeKomplett,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       kraftfahrzeugverkehrChoosableIntervals: undefined,
-      schwerverkehrChoosableIntervals: [ZaehldatenIntervall.STUNDE_KOMPLETT],
+      schwerverkehrChoosableIntervals: [ZaehldatenIntervall.StundeKomplett],
       gueterverkehrChoosableIntervals: undefined,
       schwerverkehrsanteilProzentChoosableIntervals: undefined,
       gueterverkehrsanteilProzentChoosableIntervals: undefined,
@@ -591,22 +591,22 @@ describe("OptionsmenueSettingsStore.ts", () => {
 
     let expected =
       optionsmenueSettingsStore.getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
-        Fahrzeugklasse.SUMME_KFZ,
-        ZaehldatenIntervall.STUNDE_HALB
+        Fahrzeugklasse.SummeKfz,
+        ZaehldatenIntervall.StundeHalb
       );
     expect(expected).toStrictEqual(settings1);
 
     expected =
       optionsmenueSettingsStore.getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
-        Fahrzeugklasse.ACHT_PLUS_EINS,
-        ZaehldatenIntervall.STUNDE_KOMPLETT
+        Fahrzeugklasse.AchtPlusEins,
+        ZaehldatenIntervall.StundeKomplett
       );
     expect(expected).toStrictEqual(settings2);
 
     expected =
       optionsmenueSettingsStore.getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
-        Fahrzeugklasse.ZWEI_PLUS_EINS,
-        ZaehldatenIntervall.STUNDE_KOMPLETT
+        Fahrzeugklasse.ZweiPlusEins,
+        ZaehldatenIntervall.StundeKomplett
       );
     expect(expected).eq(undefined);
 
@@ -631,23 +631,23 @@ describe("OptionsmenueSettingsStore.ts", () => {
 
     result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
       undefined,
-      ZaehldatenIntervall.STUNDE_HALB
+      ZaehldatenIntervall.StundeHalb
     );
-    expected = "default-STUNDE_HALB";
+    expected = "default-StundeHalb";
     expect(expected).eq(result);
 
     result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
-      Fahrzeugklasse.SUMME_KFZ,
+      Fahrzeugklasse.SummeKfz,
       undefined
     );
-    expected = "SUMME_KFZ-default";
+    expected = "SummeKfz-default";
     expect(expected).eq(result);
 
     result = optionsmenueSettingsStore.getMapKeyOfIntervallAndFahrzeugklasse(
-      Fahrzeugklasse.SUMME_KFZ,
-      ZaehldatenIntervall.STUNDE_HALB
+      Fahrzeugklasse.SummeKfz,
+      ZaehldatenIntervall.StundeHalb
     );
-    expected = "SUMME_KFZ-STUNDE_HALB";
+    expected = "SummeKfz-StundeHalb";
     expect(expected).eq(result);
   });
 });

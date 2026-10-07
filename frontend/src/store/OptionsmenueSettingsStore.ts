@@ -1,13 +1,14 @@
-import type { OptionsmenueSettingsDTO } from "@/api/client";
+import type {
+  Fahrzeugklasse,
+  OptionsmenueSettingsDTO,
+} from "@/api/client";
+import {ZaehldatenIntervall} from "@/api/client";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
 import { cloneDeep, intersection, isEmpty, isNil, toArray } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 
 export const useOptionsmenueSettingsStore = defineStore(
   "optionsmenueSettingsStore",
@@ -86,7 +87,7 @@ export const useOptionsmenueSettingsStore = defineStore(
       let optionsmenueSettings = toArray(messfaehigkeiten)
         .map((messfaehigkeit) => {
           return getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
-            messfaehigkeit.fahrzeugklasse,
+            messfaehigkeit.fahrzeugklasse || undefined,
             messfaehigkeit.intervall
           );
         })
@@ -203,9 +204,9 @@ export const useOptionsmenueSettingsStore = defineStore(
       fahrzeugOptions: FahrzeugOptions
     ): Array<ZaehldatenIntervall> {
       const defaultIntervals = [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ];
       return intersection(
         fahrzeugOptions.kraftfahrzeugverkehr
@@ -256,9 +257,9 @@ export const useOptionsmenueSettingsStore = defineStore(
 
     function getOptionsmenueSettingsWithAllOptions(): OptionsmenueSettingsDTO {
       const defaultIntervals = [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ];
       return {
         intervall: undefined,

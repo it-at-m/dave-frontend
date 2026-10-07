@@ -77,6 +77,7 @@ export * from "./GeoPoint";
 export * from "./HeadingAsset";
 export * from "./Himmelsrichtung";
 export * from "./Hochrechnung";
+export * from "./Hochrechnungsfaktor";
 export * from "./HochrechnungsfaktorDTO";
 export * from "./HochrechnungsfaktorRequestBody";
 export * from "./ImageAsset";

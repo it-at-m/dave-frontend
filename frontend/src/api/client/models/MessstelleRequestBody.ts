@@ -79,7 +79,7 @@ export interface MessstelleRequestBody {
    * @type {string}
    * @memberof MessstelleRequestBody
    */
-  status?: MessstelleRequestBodyStatusEnum;
+  status: MessstelleRequestBodyStatusEnum;
   /**
    *
    * @type {Date}
@@ -209,6 +209,7 @@ export type MessstelleRequestBodyStatusEnum =
 export function instanceOfMessstelleRequestBody(
   value: object
 ): value is MessstelleRequestBody {
+  if (!("status" in value) || value["status"] === undefined) return false;
   return true;
 }
 
@@ -229,7 +230,7 @@ export function MessstelleRequestBodyFromJSONTyped(
     id: json["id"] == null ? undefined : json["id"],
     mstId: json["mstId"] == null ? undefined : json["mstId"],
     name: json["name"] == null ? undefined : json["name"],
-    status: json["status"] == null ? undefined : json["status"],
+    status: json["status"],
     realisierungsdatum:
       json["realisierungsdatum"] == null
         ? undefined

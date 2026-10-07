@@ -1,5 +1,4 @@
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import type { Fahrzeugklasse, ZaehldatenIntervall } from "@/api/client";
 
 export default interface MessfaehigkeitDTO {
   gueltigAb: string;

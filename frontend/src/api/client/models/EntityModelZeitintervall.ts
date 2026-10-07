@@ -151,7 +151,7 @@ export interface EntityModelZeitintervall {
    * @type {string}
    * @memberof EntityModelZeitintervall
    */
-  type?: EntityModelZeitintervallTypeEnum;
+  type: EntityModelZeitintervallTypeEnum;
   /**
    *
    * @type {Hochrechnung}
@@ -218,6 +218,7 @@ export function instanceOfEntityModelZeitintervall(
     return false;
   if (!("endeUhrzeit" in value) || value["endeUhrzeit"] === undefined)
     return false;
+  if (!("type" in value) || value["type"] === undefined) return false;
   return true;
 }
 
@@ -256,7 +257,7 @@ export function EntityModelZeitintervallFromJSONTyped(
     fahrradfahrer:
       json["fahrradfahrer"] == null ? undefined : json["fahrradfahrer"],
     fussgaenger: json["fussgaenger"] == null ? undefined : json["fussgaenger"],
-    type: json["type"] == null ? undefined : json["type"],
+    type: json["type"],
     hochrechnung:
       json["hochrechnung"] == null
         ? undefined

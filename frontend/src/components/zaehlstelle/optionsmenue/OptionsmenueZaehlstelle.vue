@@ -150,7 +150,7 @@ const isOnlyVerkehrsartFuss = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart Rad beauftragt wurde.
  */
 const isOnlyVerkehrsartRad = computed(() => {
   return (
@@ -161,7 +161,7 @@ const isOnlyVerkehrsartRad = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten RAD und FUSS beauftragt wurden.
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten Rad und FUSS beauftragt wurden.
  */
 const areOnlyVerkehrsartenRadAndFuss = computed(() => {
   return (
@@ -177,7 +177,7 @@ const areOnlyVerkehrsartenRadAndFuss = computed(() => {
  */
 const isFussPreselected = computed(() => {
   // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
-  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR RAD
+  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR Rad
   // UND FUSS beauftragt wurde
   return (
     [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
@@ -189,11 +189,11 @@ const isFussPreselected = computed(() => {
 });
 
 /**
- * Gibt an, ob die Verkehrsart RAD im Filtermenü vorbelegt sein soll.
+ * Gibt an, ob die Verkehrsart Rad im Filtermenü vorbelegt sein soll.
  */
 const isRadPreselected = computed(() => {
-  // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
-  // Zählarten, wenn als einzige Verkehrsart NUR RAD oder NUR RAD UND FUSS
+  // Rad soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
+  // Zählarten, wenn als einzige Verkehrsart NUR Rad oder NUR Rad UND FUSS
   // beauftragt wurde
   return (
     [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(

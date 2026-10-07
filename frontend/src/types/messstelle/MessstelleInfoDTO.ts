@@ -1,9 +1,7 @@
-import type { Verkehrsart } from "@/api/client";
+import type { Fahrzeugklasse, Verkehrsart } from "@/api/client";
 import type BaseEntity from "@/types/common/BaseEntity";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
-
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 
 export default interface MessstelleInfoDTO extends BaseEntity {
   mstId: string;

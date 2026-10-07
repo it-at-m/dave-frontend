@@ -77,7 +77,7 @@ import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Verkehrsart } from "@/api/client";
+import { Rounding, Verkehrsart, ZaehldatenIntervall } from "@/api/client";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
@@ -88,11 +88,8 @@ import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore"
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
-import ZaehldatenIntervall, {
-  ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
@@ -261,11 +258,11 @@ function setDefaultOptionsForMessstelle(): void {
     messstelleStore.setDirection(messstelleUtils.alleRichtungen);
   }
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-  chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
+  chosenOptions.value.intervall = ZaehldatenIntervall.StundeKomplett;
   chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
   chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
   chosenOptions.value.blackPrintMode = false;
-  chosenOptions.value.rounding = Rounding.NONE;
+  chosenOptions.value.rounding = Rounding.None;
   chosenOptions.value.blocksumme = true;
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;
@@ -343,7 +340,7 @@ watch(
     const firstIntervalToSet = head(intervalsToSet);
 
     chosenOptions.value.intervall = isNil(firstIntervalToSet)
-      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      ? ZaehldatenIntervall.StundeKomplett
       : firstIntervalToSet.value;
   },
   { deep: true, immediate: true }

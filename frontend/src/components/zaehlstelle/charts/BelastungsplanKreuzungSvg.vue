@@ -381,10 +381,10 @@ function legendeSpalten() {
     formeln.set("GV", "GV = GV (Basis) - GV (Vergleich)");
     formeln.set("SV%", "kein SV% beim Vergleich");
     formeln.set("GV%", "kein GV% beim Vergleich");
-    formeln.set("RAD", "RAD = RAD (Basis) - RAD (Vergleich)");
+    formeln.set("RAD", "Rad = Rad (Basis) - Rad (Vergleich)");
     formeln.set(
-      "RAD (KI-Hochrechnung)",
-      "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
+      "Rad (KI-Hochrechnung)",
+      "Rad-KI = Rad-KI (Basis) - Rad-KI (Vergleich)"
     );
     formeln.set("FUSS", "FUSS = KFZ (Basis) - FUSS (Vergleich)");
   } else {
@@ -394,7 +394,7 @@ function legendeSpalten() {
     formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
     formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
     formeln.set("RAD", "");
-    formeln.set("RAD (KI-Hochrechnung)", "");
+    formeln.set("Rad (KI-Hochrechnung)", "");
     formeln.set("FUSS", "");
   }
 

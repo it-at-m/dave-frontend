@@ -8,11 +8,12 @@
 </template>
 
 <script setup lang="ts">
+import type { Fahrzeugklasse } from "@/api/client";
+
 import { isNil } from "lodash";
 import { computed } from "vue";
 
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
@@ -48,18 +49,18 @@ const icon = computed<IconTooltip>(() => {
 function fahrzeugklassenIcons(): Map<Fahrzeugklasse | string, IconTooltip> {
   return new Map([
     [
-      Fahrzeugklasse.ACHT_PLUS_EINS,
+      Fahrzeugklasse.AchtPlusEins,
       new IconTooltip("$achtPlusEins", "Fahrzeugklasse: 8+1"),
     ],
     [
-      Fahrzeugklasse.SUMME_KFZ,
+      Fahrzeugklasse.SummeKfz,
       new IconTooltip("$summeKfz", "Fahrzeugklasse: Summe KFZ"),
     ],
     [
-      Fahrzeugklasse.ZWEI_PLUS_EINS,
+      Fahrzeugklasse.ZweiPlusEins,
       new IconTooltip("$zweiPlusEins", "Fahrzeugklasse: 2+1"),
     ],
-    [Fahrzeugklasse.RAD, new IconTooltip("mdi-bicycle", "Fahrzeugklasse: Rad")],
+    [Fahrzeugklasse.Rad, new IconTooltip("mdi-bicycle", "Fahrzeugklasse: Rad")],
   ]);
 }
 </script>

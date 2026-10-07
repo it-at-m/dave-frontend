@@ -303,7 +303,7 @@
                 style="font-weight: bold"
                 id="tspan25"
               >
-                {{ optionen.radverkehr ? "RAD" : "FUSS" }}
+                {{ optionen.radverkehr ? "Rad" : "FUSS" }}
               </tspan>
             </tspan>
           </text>

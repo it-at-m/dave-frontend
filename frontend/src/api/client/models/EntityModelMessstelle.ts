@@ -80,7 +80,7 @@ export interface EntityModelMessstelle {
    * @type {string}
    * @memberof EntityModelMessstelle
    */
-  status?: EntityModelMessstelleStatusEnum;
+  status: EntityModelMessstelleStatusEnum;
   /**
    *
    * @type {Date}
@@ -216,6 +216,7 @@ export type EntityModelMessstelleStatusEnum =
 export function instanceOfEntityModelMessstelle(
   value: object
 ): value is EntityModelMessstelle {
+  if (!("status" in value) || value["status"] === undefined) return false;
   return true;
 }
 
@@ -235,7 +236,7 @@ export function EntityModelMessstelleFromJSONTyped(
   return {
     mstId: json["mstId"] == null ? undefined : json["mstId"],
     name: json["name"] == null ? undefined : json["name"],
-    status: json["status"] == null ? undefined : json["status"],
+    status: json["status"],
     realisierungsdatum:
       json["realisierungsdatum"] == null
         ? undefined
