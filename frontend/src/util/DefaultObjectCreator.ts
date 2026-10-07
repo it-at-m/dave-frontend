@@ -6,7 +6,7 @@ import type {
   TenantConfigurationDTO,
   ZeitauswahlDTO,
 } from "@/api/client";
-import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
+import type { ZaehlstelleConfigurationDTO } from "@/api/client";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";

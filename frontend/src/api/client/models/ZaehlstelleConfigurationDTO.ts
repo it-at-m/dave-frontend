@@ -25,7 +25,7 @@ export interface ZaehlstelleConfigurationDTO {
    * @type {boolean}
    * @memberof ZaehlstelleConfigurationDTO
    */
-  automaticNumberAssignment?: boolean;
+  automaticNumberAssignment: boolean;
   /**
    *
    * @type {string}
@@ -40,6 +40,11 @@ export interface ZaehlstelleConfigurationDTO {
 export function instanceOfZaehlstelleConfigurationDTO(
   value: object
 ): value is ZaehlstelleConfigurationDTO {
+  if (
+    !("automaticNumberAssignment" in value) ||
+    value["automaticNumberAssignment"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -57,10 +62,7 @@ export function ZaehlstelleConfigurationDTOFromJSONTyped(
     return json;
   }
   return {
-    automaticNumberAssignment:
-      json["automaticNumberAssignment"] == null
-        ? undefined
-        : json["automaticNumberAssignment"],
+    automaticNumberAssignment: json["automaticNumberAssignment"],
     linkDocumentationCsvFileForUploadZaehlung:
       json["linkDocumentationCsvFileForUploadZaehlung"] == null
         ? undefined

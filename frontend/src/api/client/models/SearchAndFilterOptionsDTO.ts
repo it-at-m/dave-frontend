@@ -55,6 +55,16 @@ export function instanceOfSearchAndFilterOptionsDTO(
   value: object
 ): value is SearchAndFilterOptionsDTO {
   if (
+    !("searchInMessstellen" in value) ||
+    value["searchInMessstellen"] === undefined
+  )
+    return false;
+  if (
+    !("searchInZaehlstellen" in value) ||
+    value["searchInZaehlstellen"] === undefined
+  )
+    return false;
+  if (
     !("messstelleVerkehrsart" in value) ||
     value["messstelleVerkehrsart"] === undefined
   )
@@ -76,14 +86,8 @@ export function SearchAndFilterOptionsDTOFromJSONTyped(
     return json;
   }
   return {
-    searchInMessstellen:
-      json["searchInMessstellen"] == null
-        ? undefined
-        : json["searchInMessstellen"],
-    searchInZaehlstellen:
-      json["searchInZaehlstellen"] == null
-        ? undefined
-        : json["searchInZaehlstellen"],
+    searchInMessstellen: json["searchInMessstellen"],
+    searchInZaehlstellen: json["searchInZaehlstellen"],
     messstelleVerkehrsart: (json["messstelleVerkehrsart"] as Array<any>).map(
       VerkehrsartFromJSON
     ),

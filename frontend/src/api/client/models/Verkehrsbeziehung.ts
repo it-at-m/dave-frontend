@@ -13,7 +13,6 @@
  */
 
 import type { Himmelsrichtung } from "./Himmelsrichtung";
-import type { Hochrechnungsfaktor } from "./Hochrechnungsfaktor";
 
 import { mapValues } from "../runtime";
 import {
@@ -22,12 +21,6 @@ import {
   HimmelsrichtungToJSON,
   HimmelsrichtungToJSONTyped,
 } from "./Himmelsrichtung";
-import {
-  HochrechnungsfaktorFromJSON,
-  HochrechnungsfaktorFromJSONTyped,
-  HochrechnungsfaktorToJSON,
-  HochrechnungsfaktorToJSONTyped,
-} from "./Hochrechnungsfaktor";
 
 /**
  *
@@ -35,24 +28,6 @@ import {
  * @interface Verkehrsbeziehung
  */
 export interface Verkehrsbeziehung {
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  id?: string;
-  /**
-   *
-   * @type {Hochrechnungsfaktor}
-   * @memberof Verkehrsbeziehung
-   */
-  hochrechnungsfaktor?: Hochrechnungsfaktor;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Verkehrsbeziehung
-   */
-  isKreuzung?: boolean;
   /**
    *
    * @type {number}
@@ -67,71 +42,28 @@ export interface Verkehrsbeziehung {
   nach?: number;
   /**
    *
-   * @type {number}
+   * @type {string}
    * @memberof Verkehrsbeziehung
    */
-  knotenarm?: number;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Verkehrsbeziehung
-   */
-  hinein?: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Verkehrsbeziehung
-   */
-  heraus?: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Verkehrsbeziehung
-   */
-  vorbei?: boolean;
+  fahrbewegungKreisverkehr?: VerkehrsbeziehungFahrbewegungKreisverkehrEnum;
   /**
    *
    * @type {Himmelsrichtung}
    * @memberof Verkehrsbeziehung
    */
   strassenseite?: Himmelsrichtung;
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  vonknotvonstrnr?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  nachknotvonstrnr?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  vonStrnr?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  vonknotennachstrnr?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  nachknotnachstrnr?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Verkehrsbeziehung
-   */
-  nachStrnr?: string;
 }
+
+/**
+ * @export
+ */
+export const VerkehrsbeziehungFahrbewegungKreisverkehrEnum = {
+  Hinein: "HINEIN",
+  Heraus: "HERAUS",
+  Vorbei: "VORBEI",
+} as const;
+export type VerkehrsbeziehungFahrbewegungKreisverkehrEnum =
+  (typeof VerkehrsbeziehungFahrbewegungKreisverkehrEnum)[keyof typeof VerkehrsbeziehungFahrbewegungKreisverkehrEnum];
 
 /**
  * Check if a given object implements the Verkehrsbeziehung interface.
@@ -154,34 +86,16 @@ export function VerkehrsbeziehungFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    hochrechnungsfaktor:
-      json["hochrechnungsfaktor"] == null
-        ? undefined
-        : HochrechnungsfaktorFromJSON(json["hochrechnungsfaktor"]),
-    isKreuzung: json["isKreuzung"] == null ? undefined : json["isKreuzung"],
     von: json["von"] == null ? undefined : json["von"],
     nach: json["nach"] == null ? undefined : json["nach"],
-    knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
-    hinein: json["hinein"] == null ? undefined : json["hinein"],
-    heraus: json["heraus"] == null ? undefined : json["heraus"],
-    vorbei: json["vorbei"] == null ? undefined : json["vorbei"],
+    fahrbewegungKreisverkehr:
+      json["fahrbewegungKreisverkehr"] == null
+        ? undefined
+        : json["fahrbewegungKreisverkehr"],
     strassenseite:
       json["strassenseite"] == null
         ? undefined
         : HimmelsrichtungFromJSON(json["strassenseite"]),
-    vonknotvonstrnr:
-      json["vonknotvonstrnr"] == null ? undefined : json["vonknotvonstrnr"],
-    nachknotvonstrnr:
-      json["nachknotvonstrnr"] == null ? undefined : json["nachknotvonstrnr"],
-    vonStrnr: json["von_strnr"] == null ? undefined : json["von_strnr"],
-    vonknotennachstrnr:
-      json["vonknotennachstrnr"] == null
-        ? undefined
-        : json["vonknotennachstrnr"],
-    nachknotnachstrnr:
-      json["nachknotnachstrnr"] == null ? undefined : json["nachknotnachstrnr"],
-    nachStrnr: json["nach_strnr"] == null ? undefined : json["nach_strnr"],
   };
 }
 
@@ -198,23 +112,9 @@ export function VerkehrsbeziehungToJSONTyped(
   }
 
   return {
-    id: value["id"],
-    hochrechnungsfaktor: HochrechnungsfaktorToJSON(
-      value["hochrechnungsfaktor"]
-    ),
-    isKreuzung: value["isKreuzung"],
     von: value["von"],
     nach: value["nach"],
-    knotenarm: value["knotenarm"],
-    hinein: value["hinein"],
-    heraus: value["heraus"],
-    vorbei: value["vorbei"],
+    fahrbewegungKreisverkehr: value["fahrbewegungKreisverkehr"],
     strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
-    vonknotvonstrnr: value["vonknotvonstrnr"],
-    nachknotvonstrnr: value["nachknotvonstrnr"],
-    von_strnr: value["vonStrnr"],
-    vonknotennachstrnr: value["vonknotennachstrnr"],
-    nachknotnachstrnr: value["nachknotnachstrnr"],
-    nach_strnr: value["nachStrnr"],
   };
 }

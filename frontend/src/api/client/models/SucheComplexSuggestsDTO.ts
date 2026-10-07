@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import type { SucheMessstelleSuggestDTO } from "@/api/client";
+import type { SucheMessstelleSuggestDTO } from "./SucheMessstelleSuggestDTO";
 import type { SucheWordSuggestDTO } from "./SucheWordSuggestDTO";
 import type { SucheZaehlstelleSuggestDTO } from "./SucheZaehlstelleSuggestDTO";
 import type { SucheZaehlungSuggestDTO } from "./SucheZaehlungSuggestDTO";

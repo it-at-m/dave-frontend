@@ -81,8 +81,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ConfigurationDTO, MessstelleAuswertungDTO } from "@/api/client";
-import type { OptionsmenueSettingsDTO } from "@/api/client";
+import type {
+  ConfigurationDTO,
+  MessstelleAuswertungDTO,
+  OptionsmenueSettingsDTO,
+} from "@/api/client";
 
 import { ref } from "vue";
 import { useRoute } from "vue-router";
