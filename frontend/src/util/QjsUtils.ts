@@ -56,16 +56,16 @@ export function useQjs() {
       let rotation = `rotate(0, ${x}, ${y})`;
       // Reihenfolge wie in den Komponenten: spätere Bedingungen überschreiben frühere
       if (availableKnotenarmNummern?.value?.includes(1)) {
-        rotation = `rotate(90, ${x}, ${y})`;
+        rotation = `rotate(90,${x},${y})`;
       }
       if (availableKnotenarmNummern?.value?.includes(2)) {
-        rotation = `rotate(0, ${x}, ${y})`;
+        rotation = `rotate(0,${x},${y})`;
       }
       if (availableKnotenarmNummern?.value?.includes(5)) {
-        rotation = `rotate(45, ${x}, ${y})`;
+        rotation = `rotate(45,${x},${y})`;
       }
       if (availableKnotenarmNummern?.value?.includes(6)) {
-        rotation = `rotate(-45, ${x}, ${y})`;
+        rotation = `rotate(-45,${x},${y})`;
       }
       return rotation;
     });
