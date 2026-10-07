@@ -24,6 +24,25 @@ describe("QjsUtils", () => {
     expect(rCombo.value).toBe("rotate(-45,700,700)");
   });
 
+  // rotateNumberInverseFor ----------------------------------
+  it("rotateNumberInverseFor: liefert korrekte Rotationen", () => {
+    const { rotateNumberInverseFor } = useQjs();
+
+    const r1 = rotateNumberInverseFor(ref([1]), 520, 100);
+    expect(r1.value).toBe("rotate(90,520,100)");
+
+    const r2 = rotateNumberInverseFor(ref([2]), 700, 700);
+    expect(r2.value).toBe("rotate(0,700,700)");
+
+    const r5 = rotateNumberInverseFor(ref([5]), 426, 592);
+    expect(r5.value).toBe("rotate(45,426,592)");
+
+    // Kombination: spätere Bedingungen überschreiben frühere
+    const rCombo = rotateNumberInverseFor(ref([1, 6]), 92, 582);
+    // nach der Implementierung: 5 überschreibt 1 -> -45
+    expect(rCombo.value).toBe("rotate(-45,92,582)");
+  });
+
   // matchesArrowPattern ---------------------------------------
   it("matchesArrowPattern / hasAnyArrowPatternIn", () => {
     const { patternsArrowOne, matchesArrowPattern, hasAnyArrowPatternIn } =
