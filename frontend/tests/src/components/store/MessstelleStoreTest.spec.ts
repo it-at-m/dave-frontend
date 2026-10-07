@@ -1,11 +1,10 @@
-import type { Fahrzeugklasse } from "@/api/client";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ZaehldatenIntervall } from "@/api/client";
+import { Fahrzeugklasse, ZaehldatenIntervall } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 
 describe("OptionsmenueSettingsStore.ts", () => {

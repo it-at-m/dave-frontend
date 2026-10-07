@@ -927,10 +927,13 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  AbstractLadeBelastungsplanDTOObject,
+  LadeBelastungsplanQjsDTO,
+} from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
-import type { LadeBelastungsplanQjsDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first } from "lodash";
@@ -949,7 +952,6 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-import type {AbstractLadeBelastungsplanDTOObject} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanQjsDTO;

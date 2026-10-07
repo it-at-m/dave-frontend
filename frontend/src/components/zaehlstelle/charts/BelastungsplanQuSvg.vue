@@ -3419,10 +3419,13 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  AbstractLadeBelastungsplanDTOObject,
+  LadeBelastungsplanQuDTO,
+} from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type { LadeBelastungsplanQuDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -3440,7 +3443,6 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-import type {AbstractLadeBelastungsplanDTOObject} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanQuDTO;

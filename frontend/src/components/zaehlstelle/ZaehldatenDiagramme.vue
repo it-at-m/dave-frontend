@@ -217,15 +217,18 @@
 <script setup lang="ts">
 import type {
   AbstractLadeBelastungsplanDTOObject,
-  CsvDTO, LadeBelastungsplanDTO, LadeBelastungsplanFjsDTO,
+  CsvDTO,
+  LadeBelastungsplanDTO,
+  LadeBelastungsplanFjsDTO,
   LadeBelastungsplanQjsDTO,
-  LadeProcessedZaehldatenDTO
+  LadeBelastungsplanQuDTO,
+  LadeProcessedZaehldatenDTO,
+  LadeZaehldatenHeatmapDTO,
+  OptionsDTO,
 } from "@/api/client";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type { LadeBelastungsplanQuDTO } from "@/api/client";
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
@@ -513,7 +516,7 @@ function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
   chartDataLoading.value = true;
   LadeZaehldatenService.ladeZaehldatenProcessed(
     selectedZaehlung.value.id,
-    options
+    options as OptionsDTO
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
       storeStartAndEndeUhrzeitOfIntervalls(

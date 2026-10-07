@@ -8,7 +8,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 export default interface ZaehlstelleOptionsDTO {
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
-  zeitblock: string;
+  zeitblock: string; // Zeitblock
   zeitauswahl: string;
   kraftfahrzeugverkehr: boolean;
   schwerverkehr: boolean;

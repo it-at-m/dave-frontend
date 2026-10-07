@@ -5052,6 +5052,10 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  AbstractLadeBelastungsplanDTOObject,
+  LadeBelastungsplanFjsDTO,
+} from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
@@ -5073,7 +5077,6 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-import type {AbstractLadeBelastungsplanDTOObject, LadeBelastungsplanFjsDTO} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;

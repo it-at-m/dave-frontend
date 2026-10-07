@@ -37,15 +37,19 @@
 </template>
 
 <script setup lang="ts">
-import type { LadeBelastungsplanQjsDTO } from "@/api/client";
-import type { LadeBelastungsplanQuDTO } from "@/api/client";
+import type {
+  AbstractLadeBelastungsplanDTOObject,
+  LadeBelastungsplanDTO,
+  LadeBelastungsplanFjsDTO,
+  LadeBelastungsplanQjsDTO,
+  LadeBelastungsplanQuDTO,
+} from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import BelastungsplanFjsAndQuSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanFjsAndQuSvgSchematischeUebersicht.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
 import BelastungsplanQjsSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanQjsSvgSchematischeUebersicht.vue";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import type {AbstractLadeBelastungsplanDTOObject, LadeBelastungsplanDTO, LadeBelastungsplanFjsDTO} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanDTO;

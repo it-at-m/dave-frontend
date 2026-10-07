@@ -61,31 +61,31 @@ export interface LadeProcessedZaehldatenDTO {
    * @type {LadeZaehldatenTableDTO}
    * @memberof LadeProcessedZaehldatenDTO
    */
-  zaehldatenTable?: LadeZaehldatenTableDTO;
+  zaehldatenTable: LadeZaehldatenTableDTO;
   /**
    *
    * @type {LadeZaehldatenSteplineDTO}
    * @memberof LadeProcessedZaehldatenDTO
    */
-  zaehldatenStepline?: LadeZaehldatenSteplineDTO;
+  zaehldatenStepline: LadeZaehldatenSteplineDTO;
   /**
    *
    * @type {LadeZaehldatenHeatmapDTO}
    * @memberof LadeProcessedZaehldatenDTO
    */
-  zaehldatenHeatmap?: LadeZaehldatenHeatmapDTO;
+  zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
   /**
    *
    * @type {LadeProcessedZaehldatenDTOZaehldatenBelastungsplan}
    * @memberof LadeProcessedZaehldatenDTO
    */
-  zaehldatenBelastungsplan?: LadeProcessedZaehldatenDTOZaehldatenBelastungsplan;
+  zaehldatenBelastungsplan: LadeProcessedZaehldatenDTOZaehldatenBelastungsplan;
   /**
    *
    * @type {LadeZaehldatenZeitreiheDTO}
    * @memberof LadeProcessedZaehldatenDTO
    */
-  zaehldatenZeitreihe?: LadeZaehldatenZeitreiheDTO;
+  zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
 }
 
 /**
@@ -94,6 +94,28 @@ export interface LadeProcessedZaehldatenDTO {
 export function instanceOfLadeProcessedZaehldatenDTO(
   value: object
 ): value is LadeProcessedZaehldatenDTO {
+  if (!("zaehldatenTable" in value) || value["zaehldatenTable"] === undefined)
+    return false;
+  if (
+    !("zaehldatenStepline" in value) ||
+    value["zaehldatenStepline"] === undefined
+  )
+    return false;
+  if (
+    !("zaehldatenHeatmap" in value) ||
+    value["zaehldatenHeatmap"] === undefined
+  )
+    return false;
+  if (
+    !("zaehldatenBelastungsplan" in value) ||
+    value["zaehldatenBelastungsplan"] === undefined
+  )
+    return false;
+  if (
+    !("zaehldatenZeitreihe" in value) ||
+    value["zaehldatenZeitreihe"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -111,28 +133,20 @@ export function LadeProcessedZaehldatenDTOFromJSONTyped(
     return json;
   }
   return {
-    zaehldatenTable:
-      json["zaehldatenTable"] == null
-        ? undefined
-        : LadeZaehldatenTableDTOFromJSON(json["zaehldatenTable"]),
-    zaehldatenStepline:
-      json["zaehldatenStepline"] == null
-        ? undefined
-        : LadeZaehldatenSteplineDTOFromJSON(json["zaehldatenStepline"]),
-    zaehldatenHeatmap:
-      json["zaehldatenHeatmap"] == null
-        ? undefined
-        : LadeZaehldatenHeatmapDTOFromJSON(json["zaehldatenHeatmap"]),
+    zaehldatenTable: LadeZaehldatenTableDTOFromJSON(json["zaehldatenTable"]),
+    zaehldatenStepline: LadeZaehldatenSteplineDTOFromJSON(
+      json["zaehldatenStepline"]
+    ),
+    zaehldatenHeatmap: LadeZaehldatenHeatmapDTOFromJSON(
+      json["zaehldatenHeatmap"]
+    ),
     zaehldatenBelastungsplan:
-      json["zaehldatenBelastungsplan"] == null
-        ? undefined
-        : LadeProcessedZaehldatenDTOZaehldatenBelastungsplanFromJSON(
-            json["zaehldatenBelastungsplan"]
-          ),
-    zaehldatenZeitreihe:
-      json["zaehldatenZeitreihe"] == null
-        ? undefined
-        : LadeZaehldatenZeitreiheDTOFromJSON(json["zaehldatenZeitreihe"]),
+      LadeProcessedZaehldatenDTOZaehldatenBelastungsplanFromJSON(
+        json["zaehldatenBelastungsplan"]
+      ),
+    zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTOFromJSON(
+      json["zaehldatenZeitreihe"]
+    ),
   };
 }
 

@@ -247,6 +247,7 @@ models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts
 models/ZaehldatenIntervall.ts
+models/Zaehldauer.ts
 models/ZaehlstelleConfigurationDTO.ts
 models/ZaehlstelleRequestBody.ts
 models/Zaehlung.ts

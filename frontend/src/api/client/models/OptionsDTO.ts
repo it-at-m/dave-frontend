@@ -17,6 +17,7 @@ import type { OptionsQuerungsverkehrDTO } from "./OptionsQuerungsverkehrDTO";
 import type { OptionsVerkehrsbeziehungDTO } from "./OptionsVerkehrsbeziehungDTO";
 import type { Rounding } from "./Rounding";
 import type { ZaehldatenIntervall } from "./ZaehldatenIntervall";
+import type { Zaehldauer } from "./Zaehldauer";
 import type { Zeitblock } from "./Zeitblock";
 
 import { mapValues } from "../runtime";
@@ -51,6 +52,12 @@ import {
   ZaehldatenIntervallToJSONTyped,
 } from "./ZaehldatenIntervall";
 import {
+  ZaehldauerFromJSON,
+  ZaehldauerFromJSONTyped,
+  ZaehldauerToJSON,
+  ZaehldauerToJSONTyped,
+} from "./Zaehldauer";
+import {
   ZeitblockFromJSON,
   ZeitblockFromJSONTyped,
   ZeitblockToJSON,
@@ -65,10 +72,10 @@ import {
 export interface OptionsDTO {
   /**
    *
-   * @type {string}
+   * @type {Zaehldauer}
    * @memberof OptionsDTO
    */
-  zaehldauer: OptionsDTOZaehldauerEnum;
+  zaehldauer: Zaehldauer;
   /**
    *
    * @type {ZaehldatenIntervall}
@@ -300,19 +307,6 @@ export interface OptionsDTO {
 }
 
 /**
- * @export
- */
-export const OptionsDTOZaehldauerEnum = {
-  Dauer2X4Stunden: "DAUER_2_X_4_STUNDEN",
-  Dauer24Stunden: "DAUER_24_STUNDEN",
-  Dauer16Stunden: "DAUER_16_STUNDEN",
-  Dauer13Stunden: "DAUER_13_STUNDEN",
-  Sonstige: "SONSTIGE",
-} as const;
-export type OptionsDTOZaehldauerEnum =
-  (typeof OptionsDTOZaehldauerEnum)[keyof typeof OptionsDTOZaehldauerEnum];
-
-/**
  * Check if a given object implements the OptionsDTO interface.
  */
 export function instanceOfOptionsDTO(value: object): value is OptionsDTO {
@@ -409,7 +403,7 @@ export function OptionsDTOFromJSONTyped(
     return json;
   }
   return {
-    zaehldauer: json["zaehldauer"],
+    zaehldauer: ZaehldauerFromJSON(json["zaehldauer"]),
     intervall: ZaehldatenIntervallFromJSON(json["intervall"]),
     zeitblock: ZeitblockFromJSON(json["zeitblock"]),
     zeitauswahl: json["zeitauswahl"],
@@ -488,7 +482,7 @@ export function OptionsDTOToJSONTyped(
   }
 
   return {
-    zaehldauer: value["zaehldauer"],
+    zaehldauer: ZaehldauerToJSON(value["zaehldauer"]),
     intervall: ZaehldatenIntervallToJSON(value["intervall"]),
     zeitblock: ZeitblockToJSON(value["zeitblock"]),
     zeitauswahl: value["zeitauswahl"],

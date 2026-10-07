@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+import type { LadeBelastungsplanDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { GraphChart } from "echarts/charts";
@@ -25,7 +26,6 @@ import { useDisplay } from "vuetify";
 
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import type {LadeBelastungsplanDTO} from "@/api/client";
 
 /**
  * Die Berechnung der Koordinaten für die einzelnen Verkehrsbeziehungen erfolgt anhand einer Drehmatrix.

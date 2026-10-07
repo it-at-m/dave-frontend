@@ -199,6 +199,7 @@ export * from "./Verkehrsbeziehung";
 export * from "./VerkehrsbeziehungValue";
 export * from "./VerkehrsbeziehungVisumDTO";
 export * from "./ZaehldatenIntervall";
+export * from "./Zaehldauer";
 export * from "./ZaehlstelleConfigurationDTO";
 export * from "./ZaehlstelleRequestBody";
 export * from "./Zaehlung";

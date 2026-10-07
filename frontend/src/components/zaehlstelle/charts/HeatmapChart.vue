@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import type { LadeZaehldatenHeatmapDTO } from "@/api/client";
 
 import { HeatmapChart } from "echarts/charts";
 import {

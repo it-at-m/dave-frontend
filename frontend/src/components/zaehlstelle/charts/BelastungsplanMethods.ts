@@ -1,3 +1,4 @@
+import type { LadeBelastungsplanDTO } from "@/api/client";
 import type BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import type BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
@@ -12,7 +13,6 @@ import Fahrtrichtungsarten from "@/types/enum/Fahrtrichtungsarten";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BelastungsplanVerkehrsbeziehungComperator from "@/types/zaehlung/BelastungsplanVerkehrsbeziehungComperator";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
-import type {LadeBelastungsplanDTO} from "@/api/client";
 
 export function useBelastungsplanMethods() {
   const zaehlstelleStore = useZaehlstelleStore();

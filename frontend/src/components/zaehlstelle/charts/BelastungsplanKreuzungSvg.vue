@@ -7,6 +7,10 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  AbstractLadeBelastungsplanDTOObject,
+  LadeBelastungsplanDTO,
+} from "@/api/client";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
@@ -33,7 +37,6 @@ import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useDateUtils } from "@/util/DateUtils";
 import { useVergleichszaehlungenUtils } from "@/util/VergleichszaehlungenUtils";
-import type {AbstractLadeBelastungsplanDTOObject, LadeBelastungsplanDTO} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanDTO;

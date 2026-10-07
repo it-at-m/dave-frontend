@@ -1400,11 +1400,14 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  LadeBelastungsplanFjsDTO,
+  LadeBelastungsplanQuDTO,
+} from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
-import type { LadeBelastungsplanQuDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, ref, watch } from "vue";
@@ -1414,7 +1417,6 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zaehlart from "@/types/enum/Zaehlart";
-import type {LadeBelastungsplanFjsDTO} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO | LadeBelastungsplanQuDTO;

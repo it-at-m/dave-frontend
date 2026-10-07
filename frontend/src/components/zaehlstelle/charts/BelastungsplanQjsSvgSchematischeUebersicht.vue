@@ -180,9 +180,9 @@
 </template>
 
 <script setup lang="ts">
+import type { LadeBelastungsplanQjsDTO } from "@/api/client";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type { LadeBelastungsplanQjsDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first, last } from "lodash";
