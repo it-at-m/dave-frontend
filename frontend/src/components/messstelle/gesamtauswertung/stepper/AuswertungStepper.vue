@@ -176,7 +176,7 @@ function isOrtMessquerschnittSelected(): boolean {
   );
   return !(
     messstelleAuswertungIdDTOS.length === 1 &&
-    head(messstelleAuswertungIdDTOS)!.mqIds.length === 0 &&
+    head(messstelleAuswertungIdDTOS)!.mqIds.size === 0 &&
     activeStep.value > 3
   );
 }

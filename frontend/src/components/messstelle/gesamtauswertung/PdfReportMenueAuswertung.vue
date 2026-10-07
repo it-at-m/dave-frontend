@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
+import type { MessstelleAuswertungIdDTO } from "@/api/client";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
@@ -197,7 +197,7 @@ function createMessstelleInfo(
 
     const messquerschnitteInfo =
       selectedMessstelle.value.messquerschnitte.filter((value) =>
-        selectedAuswertungId.mqIds.includes(value.mqId)
+        selectedAuswertungId.mqIds.has(value.mqId)
       );
     if (messquerschnitteInfo.length > 0) {
       let text = "Messquerschnitt(e):<br/>";

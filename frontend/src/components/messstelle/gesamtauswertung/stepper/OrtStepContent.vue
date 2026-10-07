@@ -59,10 +59,10 @@
 import type {
   MessquerschnittAuswertungDTO,
   MessstelleAuswertungDTO,
+  MessstelleAuswertungIdDTO,
 } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type KeyValObject from "@/types/common/KeyValObject";
-import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 
 import { isEmpty, toArray } from "lodash";
@@ -104,8 +104,8 @@ onMounted(() => {
       }
     });
     const selectedMessquerschnitteIds =
-      auswertungOptions.value.messstelleAuswertungIds.flatMap(
-        (value) => value.mqIds
+      auswertungOptions.value.messstelleAuswertungIds.flatMap((value) =>
+        Array.from(value.mqIds)
       );
     if (selectedMessstellen.value.length === 1) {
       selectedMessquerschnitte.value =
@@ -144,8 +144,8 @@ function selectMessstellen() {
     selectedMessstellen.value.forEach((messstelleAuswertungId) => {
       const item = {
         mstId: messstelleAuswertungId.mstId,
-        mqIds: toArray(messstelleAuswertungId.messquerschnitte).map(
-          (mq) => mq.mqId
+        mqIds: new Set(
+          toArray(messstelleAuswertungId.messquerschnitte).map((mq) => mq.mqId)
         ),
       } as MessstelleAuswertungIdDTO;
       auswertungOptions.value.messstelleAuswertungIds.push(item);
@@ -157,7 +157,9 @@ function selectMessstellen() {
 function saveSelectedMqIdsOfSelectedMst() {
   const item = {
     mstId: selectedMessstellen.value[0].mstId,
-    mqIds: toArray(selectedMessquerschnitte.value).map((mq) => mq.mqId),
+    mqIds: new Set(
+      toArray(selectedMessquerschnitte.value).map((mq) => mq.mqId)
+    ),
   } as MessstelleAuswertungIdDTO;
   auswertungOptions.value.messstelleAuswertungIds = [item];
 }

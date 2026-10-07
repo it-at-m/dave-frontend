@@ -1,4 +1,4 @@
-import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
+import type { MessstelleAuswertungIdDTO } from "@/api/client";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 import { AuswertungsZeitraum } from "@/types/enum/AuswertungCategories";
