@@ -93,7 +93,7 @@ import type {
   SucheZaehlstelleSuggestDTO,
   SucheZaehlungSuggestDTO,
 } from "@/api/client";
-import type SucheMessstelleSuggestDTO from "@/types/suche/SucheMessstelleSuggestDTO";
+import type { SucheMessstelleSuggestDTO } from "@/api/client";
 
 import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
