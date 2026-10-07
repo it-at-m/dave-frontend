@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { TagesTyp } from "./TagesTyp";
+
 import { mapValues } from "../runtime";
+import {
+  TagesTypFromJSON,
+  TagesTypFromJSONTyped,
+  TagesTypToJSON,
+  TagesTypToJSONTyped,
+} from "./TagesTyp";
 
 /**
  *
@@ -46,10 +54,10 @@ export interface KalendertagRequestBody {
   datum?: Date;
   /**
    *
-   * @type {string}
+   * @type {TagesTyp}
    * @memberof KalendertagRequestBody
    */
-  tagestyp?: KalendertagRequestBodyTagestypEnum;
+  tagestyp?: TagesTyp;
   /**
    *
    * @type {boolean}
@@ -63,21 +71,6 @@ export interface KalendertagRequestBody {
    */
   entityVersion?: number;
 }
-
-/**
- * @export
- */
-export const KalendertagRequestBodyTagestypEnum = {
-  Unspecified: "UNSPECIFIED",
-  WerktagDiMiDo: "WERKTAG_DI_MI_DO",
-  WerktagMoFr: "WERKTAG_MO_FR",
-  Samstag: "SAMSTAG",
-  SonntagFeiertag: "SONNTAG_FEIERTAG",
-  WerktagFerien: "WERKTAG_FERIEN",
-  MoSo: "MO_SO",
-} as const;
-export type KalendertagRequestBodyTagestypEnum =
-  (typeof KalendertagRequestBodyTagestypEnum)[keyof typeof KalendertagRequestBodyTagestypEnum];
 
 /**
  * Check if a given object implements the KalendertagRequestBody interface.
@@ -107,7 +100,8 @@ export function KalendertagRequestBodyFromJSONTyped(
       json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     datum: json["datum"] == null ? undefined : new Date(json["datum"]),
-    tagestyp: json["tagestyp"] == null ? undefined : json["tagestyp"],
+    tagestyp:
+      json["tagestyp"] == null ? undefined : TagesTypFromJSON(json["tagestyp"]),
     nextStartDateToLoadUnauffaelligeTage:
       json["nextStartDateToLoadUnauffaelligeTage"] == null
         ? undefined
@@ -142,7 +136,7 @@ export function KalendertagRequestBodyToJSONTyped(
       value["datum"] == null
         ? undefined
         : value["datum"].toISOString().substring(0, 10),
-    tagestyp: value["tagestyp"],
+    tagestyp: TagesTypToJSON(value["tagestyp"]),
     nextStartDateToLoadUnauffaelligeTage:
       value["nextStartDateToLoadUnauffaelligeTage"],
     entityVersion: value["entityVersion"],

@@ -230,6 +230,7 @@ models/SucheMessstelleSuggestDTO.ts
 models/SucheWordSuggestDTO.ts
 models/SucheZaehlstelleSuggestDTO.ts
 models/SucheZaehlungSuggestDTO.ts
+models/TagesTyp.ts
 models/TenantConfigurationDTO.ts
 models/TextAsset.ts
 models/UnauffaelligerTagRequestBody.ts

@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { TagesTyp } from "./TagesTyp";
+
 import { mapValues } from "../runtime";
+import {
+  TagesTypFromJSON,
+  TagesTypFromJSONTyped,
+  TagesTypToJSON,
+  TagesTypToJSONTyped,
+} from "./TagesTyp";
 
 /**
  *
@@ -34,26 +42,11 @@ export interface ValidateZeitraumAndTagestypForMessstelleDTO {
   mstId: string;
   /**
    *
-   * @type {string}
+   * @type {TagesTyp}
    * @memberof ValidateZeitraumAndTagestypForMessstelleDTO
    */
-  tagesTyp: ValidateZeitraumAndTagestypForMessstelleDTOTagesTypEnum;
+  tagesTyp: TagesTyp;
 }
-
-/**
- * @export
- */
-export const ValidateZeitraumAndTagestypForMessstelleDTOTagesTypEnum = {
-  Unspecified: "UNSPECIFIED",
-  WerktagDiMiDo: "WERKTAG_DI_MI_DO",
-  WerktagMoFr: "WERKTAG_MO_FR",
-  Samstag: "SAMSTAG",
-  SonntagFeiertag: "SONNTAG_FEIERTAG",
-  WerktagFerien: "WERKTAG_FERIEN",
-  MoSo: "MO_SO",
-} as const;
-export type ValidateZeitraumAndTagestypForMessstelleDTOTagesTypEnum =
-  (typeof ValidateZeitraumAndTagestypForMessstelleDTOTagesTypEnum)[keyof typeof ValidateZeitraumAndTagestypForMessstelleDTOTagesTypEnum];
 
 /**
  * Check if a given object implements the ValidateZeitraumAndTagestypForMessstelleDTO interface.
@@ -83,7 +76,7 @@ export function ValidateZeitraumAndTagestypForMessstelleDTOFromJSONTyped(
   return {
     zeitraum: json["zeitraum"],
     mstId: json["mstId"],
-    tagesTyp: json["tagesTyp"],
+    tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
   };
 }
 
@@ -104,6 +97,6 @@ export function ValidateZeitraumAndTagestypForMessstelleDTOToJSONTyped(
   return {
     zeitraum: value["zeitraum"],
     mstId: value["mstId"],
-    tagesTyp: value["tagesTyp"],
+    tagesTyp: TagesTypToJSON(value["tagesTyp"]),
   };
 }

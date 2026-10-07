@@ -16,6 +16,7 @@ import type { BelastungsplanMessquerschnitteDTO } from "./BelastungsplanMessquer
 import type { LadeMesswerteListenausgabeDTO } from "./LadeMesswerteListenausgabeDTO";
 import type { LadeZaehldatenHeatmapDTO } from "./LadeZaehldatenHeatmapDTO";
 import type { LadeZaehldatenSteplineDTO } from "./LadeZaehldatenSteplineDTO";
+import type { TagesTyp } from "./TagesTyp";
 
 import { mapValues } from "../runtime";
 import {
@@ -42,6 +43,12 @@ import {
   LadeZaehldatenSteplineDTOToJSON,
   LadeZaehldatenSteplineDTOToJSONTyped,
 } from "./LadeZaehldatenSteplineDTO";
+import {
+  TagesTypFromJSON,
+  TagesTypFromJSONTyped,
+  TagesTypToJSON,
+  TagesTypToJSONTyped,
+} from "./TagesTyp";
 
 /**
  *
@@ -51,10 +58,10 @@ import {
 export interface LadeProcessedMesswerteDTO {
   /**
    *
-   * @type {string}
+   * @type {TagesTyp}
    * @memberof LadeProcessedMesswerteDTO
    */
-  tagesTyp: LadeProcessedMesswerteDTOTagesTypEnum;
+  tagesTyp: TagesTyp;
   /**
    *
    * @type {LadeMesswerteListenausgabeDTO}
@@ -92,21 +99,6 @@ export interface LadeProcessedMesswerteDTO {
    */
   includedMeasuringDays: number;
 }
-
-/**
- * @export
- */
-export const LadeProcessedMesswerteDTOTagesTypEnum = {
-  Unspecified: "UNSPECIFIED",
-  WerktagDiMiDo: "WERKTAG_DI_MI_DO",
-  WerktagMoFr: "WERKTAG_MO_FR",
-  Samstag: "SAMSTAG",
-  SonntagFeiertag: "SONNTAG_FEIERTAG",
-  WerktagFerien: "WERKTAG_FERIEN",
-  MoSo: "MO_SO",
-} as const;
-export type LadeProcessedMesswerteDTOTagesTypEnum =
-  (typeof LadeProcessedMesswerteDTOTagesTypEnum)[keyof typeof LadeProcessedMesswerteDTOTagesTypEnum];
 
 /**
  * Check if a given object implements the LadeProcessedMesswerteDTO interface.
@@ -159,7 +151,7 @@ export function LadeProcessedMesswerteDTOFromJSONTyped(
     return json;
   }
   return {
-    tagesTyp: json["tagesTyp"],
+    tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
     zaehldatenTable: LadeMesswerteListenausgabeDTOFromJSON(
       json["zaehldatenTable"]
     ),
@@ -192,7 +184,7 @@ export function LadeProcessedMesswerteDTOToJSONTyped(
   }
 
   return {
-    tagesTyp: value["tagesTyp"],
+    tagesTyp: TagesTypToJSON(value["tagesTyp"]),
     zaehldatenTable: LadeMesswerteListenausgabeDTOToJSON(
       value["zaehldatenTable"]
     ),

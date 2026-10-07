@@ -13,6 +13,7 @@
  */
 
 import type { FahrzeugOptionsDTO } from "./FahrzeugOptionsDTO";
+import type { TagesTyp } from "./TagesTyp";
 
 import { mapValues } from "../runtime";
 import {
@@ -21,6 +22,12 @@ import {
   FahrzeugOptionsDTOToJSON,
   FahrzeugOptionsDTOToJSONTyped,
 } from "./FahrzeugOptionsDTO";
+import {
+  TagesTypFromJSON,
+  TagesTypFromJSONTyped,
+  TagesTypToJSON,
+  TagesTypToJSONTyped,
+} from "./TagesTyp";
 
 /**
  *
@@ -54,10 +61,10 @@ export interface MessstelleOptionsDTO {
   zeitblock: MessstelleOptionsDTOZeitblockEnum;
   /**
    *
-   * @type {string}
+   * @type {TagesTyp}
    * @memberof MessstelleOptionsDTO
    */
-  tagesTyp: MessstelleOptionsDTOTagesTypEnum;
+  tagesTyp: TagesTyp;
   /**
    *
    * @type {string}
@@ -194,21 +201,6 @@ export type MessstelleOptionsDTOZeitblockEnum =
 /**
  * @export
  */
-export const MessstelleOptionsDTOTagesTypEnum = {
-  Unspecified: "UNSPECIFIED",
-  WerktagDiMiDo: "WERKTAG_DI_MI_DO",
-  WerktagMoFr: "WERKTAG_MO_FR",
-  Samstag: "SAMSTAG",
-  SonntagFeiertag: "SONNTAG_FEIERTAG",
-  WerktagFerien: "WERKTAG_FERIEN",
-  MoSo: "MO_SO",
-} as const;
-export type MessstelleOptionsDTOTagesTypEnum =
-  (typeof MessstelleOptionsDTOTagesTypEnum)[keyof typeof MessstelleOptionsDTOTagesTypEnum];
-
-/**
- * @export
- */
 export const MessstelleOptionsDTOIntervallEnum = {
   StundeViertel: "STUNDE_VIERTEL",
   StundeViertelEingeschraenkt: "STUNDE_VIERTEL_EINGESCHRAENKT",
@@ -275,7 +267,7 @@ export function MessstelleOptionsDTOFromJSONTyped(
     fahrzeuge: FahrzeugOptionsDTOFromJSON(json["fahrzeuge"]),
     zeitauswahl: json["zeitauswahl"],
     zeitblock: json["zeitblock"],
-    tagesTyp: json["tagesTyp"],
+    tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
     intervall: json["intervall"],
     messquerschnittIds: new Set(json["messquerschnittIds"]),
     rounding: json["rounding"],
@@ -303,7 +295,7 @@ export function MessstelleOptionsDTOToJSONTyped(
     fahrzeuge: FahrzeugOptionsDTOToJSON(value["fahrzeuge"]),
     zeitauswahl: value["zeitauswahl"],
     zeitblock: value["zeitblock"],
-    tagesTyp: value["tagesTyp"],
+    tagesTyp: TagesTypToJSON(value["tagesTyp"]),
     intervall: value["intervall"],
     messquerschnittIds: Array.from(value["messquerschnittIds"] as Set<any>),
     rounding: value["rounding"],

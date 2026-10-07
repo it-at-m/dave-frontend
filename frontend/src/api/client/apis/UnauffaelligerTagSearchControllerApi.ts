@@ -15,6 +15,7 @@
 import type {
   CollectionModelEntityModelUnauffaelligerTag,
   EntityModelUnauffaelligerTag,
+  TagesTyp,
 } from "../models/index";
 
 import {
@@ -22,6 +23,8 @@ import {
   CollectionModelEntityModelUnauffaelligerTagToJSON,
   EntityModelUnauffaelligerTagFromJSON,
   EntityModelUnauffaelligerTagToJSON,
+  TagesTypFromJSON,
+  TagesTypToJSON,
 } from "../models/index";
 import * as runtime from "../runtime";
 
@@ -29,7 +32,7 @@ export interface ExecuteSearchUnauffaelligertagGetRequest {
   mstId?: string;
   startDateIncluded?: Date;
   endDateIncluded?: Date;
-  tagesTyp?: Array<ExecuteSearchUnauffaelligertagGetTagesTypEnum>;
+  tagesTyp?: Array<TagesTyp>;
 }
 
 export interface ExecuteSearchUnauffaelligertagGet1Request {
@@ -247,18 +250,3 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
     return await response.value();
   }
 }
-
-/**
- * @export
- */
-export const ExecuteSearchUnauffaelligertagGetTagesTypEnum = {
-  Unspecified: "UNSPECIFIED",
-  WerktagDiMiDo: "WERKTAG_DI_MI_DO",
-  WerktagMoFr: "WERKTAG_MO_FR",
-  Samstag: "SAMSTAG",
-  SonntagFeiertag: "SONNTAG_FEIERTAG",
-  WerktagFerien: "WERKTAG_FERIEN",
-  MoSo: "MO_SO",
-} as const;
-export type ExecuteSearchUnauffaelligertagGetTagesTypEnum =
-  (typeof ExecuteSearchUnauffaelligertagGetTagesTypEnum)[keyof typeof ExecuteSearchUnauffaelligertagGetTagesTypEnum];

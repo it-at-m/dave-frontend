@@ -14,6 +14,7 @@
 
 import type { FahrzeugOptionsDTO } from "./FahrzeugOptionsDTO";
 import type { MessstelleAuswertungIdDTO } from "./MessstelleAuswertungIdDTO";
+import type { TagesTyp } from "./TagesTyp";
 
 import { mapValues } from "../runtime";
 import {
@@ -28,6 +29,12 @@ import {
   MessstelleAuswertungIdDTOToJSON,
   MessstelleAuswertungIdDTOToJSONTyped,
 } from "./MessstelleAuswertungIdDTO";
+import {
+  TagesTypFromJSON,
+  TagesTypFromJSONTyped,
+  TagesTypToJSON,
+  TagesTypToJSONTyped,
+} from "./TagesTyp";
 
 /**
  *
@@ -43,10 +50,10 @@ export interface MessstelleAuswertungOptionsDTO {
   jahre: Array<number>;
   /**
    *
-   * @type {string}
+   * @type {TagesTyp}
    * @memberof MessstelleAuswertungOptionsDTO
    */
-  tagesTyp: MessstelleAuswertungOptionsDTOTagesTypEnum;
+  tagesTyp: TagesTyp;
   /**
    *
    * @type {Array<string>}
@@ -66,21 +73,6 @@ export interface MessstelleAuswertungOptionsDTO {
    */
   fahrzeuge: FahrzeugOptionsDTO;
 }
-
-/**
- * @export
- */
-export const MessstelleAuswertungOptionsDTOTagesTypEnum = {
-  Unspecified: "UNSPECIFIED",
-  WerktagDiMiDo: "WERKTAG_DI_MI_DO",
-  WerktagMoFr: "WERKTAG_MO_FR",
-  Samstag: "SAMSTAG",
-  SonntagFeiertag: "SONNTAG_FEIERTAG",
-  WerktagFerien: "WERKTAG_FERIEN",
-  MoSo: "MO_SO",
-} as const;
-export type MessstelleAuswertungOptionsDTOTagesTypEnum =
-  (typeof MessstelleAuswertungOptionsDTOTagesTypEnum)[keyof typeof MessstelleAuswertungOptionsDTOTagesTypEnum];
 
 /**
  * @export
@@ -142,7 +134,7 @@ export function MessstelleAuswertungOptionsDTOFromJSONTyped(
   }
   return {
     jahre: json["jahre"],
-    tagesTyp: json["tagesTyp"],
+    tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
     zeitraum: json["zeitraum"],
     messstelleAuswertungIds: new Set(
       (json["messstelleAuswertungIds"] as Array<any>).map(
@@ -169,7 +161,7 @@ export function MessstelleAuswertungOptionsDTOToJSONTyped(
 
   return {
     jahre: value["jahre"],
-    tagesTyp: value["tagesTyp"],
+    tagesTyp: TagesTypToJSON(value["tagesTyp"]),
     zeitraum: value["zeitraum"],
     messstelleAuswertungIds: Array.from(
       value["messstelleAuswertungIds"] as Set<any>

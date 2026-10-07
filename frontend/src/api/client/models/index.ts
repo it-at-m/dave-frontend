@@ -182,6 +182,7 @@ export * from "./SucheMessstelleSuggestDTO";
 export * from "./SucheWordSuggestDTO";
 export * from "./SucheZaehlstelleSuggestDTO";
 export * from "./SucheZaehlungSuggestDTO";
+export * from "./TagesTyp";
 export * from "./TenantConfigurationDTO";
 export * from "./TextAsset";
 export * from "./UnauffaelligerTagRequestBody";
