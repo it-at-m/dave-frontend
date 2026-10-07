@@ -1,4 +1,4 @@
-import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
+import type { OptionsmenueSettingsDTO } from "@/api/client";
 
 import { OptionsmenueSettingsControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";

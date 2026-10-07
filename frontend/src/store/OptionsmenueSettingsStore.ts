@@ -1,4 +1,4 @@
-import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
+import type { OptionsmenueSettingsDTO } from "@/api/client";
 import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 
