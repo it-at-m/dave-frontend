@@ -11,11 +11,11 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 
 import { computed, ref } from "vue";
 
 import BelastungsplanKreisverkehr from "@/components/zaehlstelle/charts/BelastungsplanKreisverkehr.vue";
+import type {LadeBelastungsplanDTO} from "@/api/client";
 
 interface Props {
   belastungsplanData: LadeBelastungsplanDTO;

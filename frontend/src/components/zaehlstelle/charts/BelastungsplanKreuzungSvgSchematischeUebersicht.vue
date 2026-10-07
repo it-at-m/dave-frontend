@@ -10,8 +10,6 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -25,6 +23,7 @@ import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
+import type {AbstractLadeBelastungsplanDTOObject, LadeBelastungsplanDTO} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -445,7 +444,7 @@ function redraw() {
 }
 
 function isDefaultBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTOObject | undefined
 ): data is LadeBelastungsplanDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }

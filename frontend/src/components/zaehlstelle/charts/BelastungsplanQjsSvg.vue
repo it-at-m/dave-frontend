@@ -930,8 +930,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
+import type { LadeBelastungsplanQjsDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first } from "lodash";
@@ -950,6 +949,7 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
+import type {AbstractLadeBelastungsplanDTOObject} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanQjsDTO;
@@ -1418,7 +1418,7 @@ function emitSvgAsBlob(): void {
 }
 
 function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTOObject | undefined
 ): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }

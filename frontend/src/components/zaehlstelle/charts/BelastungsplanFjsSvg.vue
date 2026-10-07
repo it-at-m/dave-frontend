@@ -5055,8 +5055,6 @@
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -5075,6 +5073,7 @@ import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
+import type {AbstractLadeBelastungsplanDTOObject, LadeBelastungsplanFjsDTO} from "@/api/client";
 
 interface Props {
   data: LadeBelastungsplanFjsDTO;
@@ -5943,7 +5942,7 @@ function emitSvgAsBlob(): void {
 }
 
 function isFjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTOObject | undefined
 ): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }

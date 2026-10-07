@@ -215,15 +215,16 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import type { CsvDTO, LadeProcessedZaehldatenDTO } from "@/api/client";
+import type {
+  AbstractLadeBelastungsplanDTOObject,
+  CsvDTO, LadeBelastungsplanDTO, LadeBelastungsplanFjsDTO,
+  LadeBelastungsplanQjsDTO,
+  LadeProcessedZaehldatenDTO
+} from "@/api/client";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
-import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
+import type { LadeBelastungsplanQuDTO } from "@/api/client";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
@@ -908,19 +909,19 @@ const drawSchematischeUebersicht = computed(() => {
 });
 
 function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTOObject | undefined
 ): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 
 function isFjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTOObject | undefined
 ): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 
 function isQuBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
+  data: AbstractLadeBelastungsplanDTOObject | undefined
 ): data is LadeBelastungsplanQuDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
