@@ -33,8 +33,8 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            cx="376"
-            cy="700"
+            :cx="xCoordNumberOne"
+            :cy="yCoordNumberOne"
             r="32"
           />
           <text
@@ -51,15 +51,15 @@
                 stroke-width: 52.2711;
                 dominant-baseline: central;
               `"
-            x="376"
-            y="700"
-            :transform="rotateNumber1Inverse"
+            :x="xCoordNumberOne"
+            :y="yCoordNumberOne"
+            :transform="rotateNumberOneInverse"
           >
             <tspan
               id="number1_tspan"
               style="stroke-width: 52.2711"
-              x="376"
-              y="700"
+              :x="xCoordNumberOne"
+              :y="yCoordNumberOne"
             >
               {{ firstKnotenarm?.nummer }}
             </tspan>
@@ -76,8 +76,8 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            cx="1024"
-            cy="700"
+            :cx="xCoordNumberTwo"
+            :cy="yCoordNumberTwo"
             r="32"
           />
           <text
@@ -94,14 +94,14 @@
                 stroke-width: 52.2711;
                 dominant-baseline: central;
               `"
-            x="1024"
-            y="700"
-            :transform="rotateNumber2Inverse"
+            :x="xCoordNumberTwo"
+            :y="yCoordNumberTwo"
+            :transform="rotateNumberTwoInverse"
           >
             <tspan
               id="number2_tspan"
-              x="1024"
-              y="700"
+              :x="xCoordNumberTwo"
+              :y="yCoordNumberTwo"
               style="stroke-width: 52.2711"
             >
               {{ secondKnotenarm?.nummer }}
@@ -218,6 +218,11 @@ const svgRef = ref<SVGSVGElement | null>(null);
 const activeColor = "#000000";
 const passiveColor = "#9E9E9E";
 
+const xCoordNumberOne = 376;
+const yCoordNumberOne = 700;
+const xCoordNumberTwo = 1024;
+const yCoordNumberTwo = 700;
+
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
@@ -239,15 +244,15 @@ const secondKnotenarm = computed(() => {
 });
 
 const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
-const rotateNumber1Inverse = qjs.rotateNumberInverseFor(
+const rotateNumberOneInverse = qjs.rotateNumberInverseFor(
   availableKnotenarmNummern,
-  376,
-  700
+  xCoordNumberOne,
+  yCoordNumberOne
 );
-const rotateNumber2Inverse = qjs.rotateNumberInverseFor(
+const rotateNumberTwoInverse = qjs.rotateNumberInverseFor(
   availableKnotenarmNummern,
-  1024,
-  700
+  xCoordNumberTwo,
+  yCoordNumberTwo
 );
 
 const isAvailableArrowOne = computed(() => {
