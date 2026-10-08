@@ -1346,14 +1346,7 @@ onMounted(() => {
   );
 
   // Berechnet Anker aus der gesamten Gruppe (Rumpf + Spitze)
-  if (groupRefArrowOne.value)
-    centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value);
-  if (groupRefArrowTwo.value)
-    centerYArrowTwo.value = computeAnchorY(groupRefArrowTwo.value);
-  if (groupRefArrowThree.value)
-    centerYArrowThree.value = computeAnchorY(groupRefArrowThree.value);
-  if (groupRefArrowFour.value)
-    centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value);
+  setCenterYForArrows();
 });
 
 watch(
@@ -1363,18 +1356,7 @@ watch(
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
     // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
     await nextTick();
-    if (groupRefArrowOne.value) {
-      centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value);
-    }
-    if (groupRefArrowTwo.value) {
-      centerYArrowTwo.value = computeAnchorY(groupRefArrowTwo.value);
-    }
-    if (groupRefArrowThree.value) {
-      centerYArrowThree.value = computeAnchorY(groupRefArrowThree.value);
-    }
-    if (groupRefArrowFour.value) {
-      centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value);
-    }
+    setCenterYForArrows();
 
     await nextTick();
     emitSvgAsBlob();
@@ -1394,12 +1376,33 @@ watch(
     firstStreetname.value = strassennameUtils.getStreetLines(
       first(availableKnotenarme.value)
     );
+    // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
+    // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
     await nextTick();
+    if (props.isActiveTab) {
+      setCenterYForArrows();
+    }
 
+    await nextTick();
     emitSvgAsBlob();
   },
   { deep: true, immediate: true }
 );
+
+function setCenterYForArrows() {
+  if (groupRefArrowOne.value) {
+    centerYArrowOne.value = computeAnchorY(groupRefArrowOne.value);
+  }
+  if (groupRefArrowTwo.value) {
+    centerYArrowTwo.value = computeAnchorY(groupRefArrowTwo.value);
+  }
+  if (groupRefArrowThree.value) {
+    centerYArrowThree.value = computeAnchorY(groupRefArrowThree.value);
+  }
+  if (groupRefArrowFour.value) {
+    centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value);
+  }
+}
 
 /**
  * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
