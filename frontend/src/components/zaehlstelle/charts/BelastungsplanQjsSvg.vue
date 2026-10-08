@@ -954,6 +954,7 @@ import { useStrassennameUtils } from "@/util/StrassennameUtils";
 interface Props {
   data: LadeBelastungsplanQjsDTO;
   dimension?: string;
+  isActiveTab: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -1356,18 +1357,9 @@ onMounted(() => {
 });
 
 watch(
-  [
-    () => activeZaehlung.value.knotenarme,
-    () => props.data,
-    () => optionen.value.chosenVerkehrsbeziehungen,
-    () => optionen.value.zeitauswahl,
-    () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
-    () => zaehlstelleStore.isBlackprintMode,
-  ],
-  async () => {
-    firstStreetname.value = strassennameUtils.getStreetLines(
-      first(availableKnotenarme.value)
-    );
+  () => props.isActiveTab,
+  async (isActive) => {
+    if (!isActive) return;
     // Warte auf DOM-Update, damit arrowOneGroupRef / arrowTwoGroupRef gesetzt/aktualisiert wird
     // Andernfalls wird nur rotateSvg ausgeführt, was zur Verschiebung der Pfeile führt.
     await nextTick();
@@ -1383,6 +1375,26 @@ watch(
     if (groupRefArrowFour.value) {
       centerYArrowFour.value = computeAnchorY(groupRefArrowFour.value);
     }
+
+    await nextTick();
+    emitSvgAsBlob();
+  }
+);
+
+watch(
+  [
+    () => activeZaehlung.value.knotenarme,
+    () => props.data,
+    () => optionen.value.chosenVerkehrsbeziehungen,
+    () => optionen.value.zeitauswahl,
+    () => zaehlstelleStore.getStartEndeUhrzeitIntervalls,
+    () => zaehlstelleStore.isBlackprintMode,
+  ],
+  async () => {
+    firstStreetname.value = strassennameUtils.getStreetLines(
+      first(availableKnotenarme.value)
+    );
+    await nextTick();
 
     emitSvgAsBlob();
   },
