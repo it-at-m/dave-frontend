@@ -162,7 +162,7 @@ import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
-import { isEmpty } from "lodash";
+import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
@@ -286,10 +286,14 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
       !result.some((keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22))
     ) {
       if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
-        const zeitBlockMaximal: KeyVal = {} as KeyVal;
-        zeitBlockMaximal.value = Zeitblock.ZB_00_24;
-        zeitBlockMaximal.title = "maximal";
-        result.push(zeitBlockMaximal);
+        if (!isEmpty(result)) {
+          const zeitBlockMaximal: KeyVal = {} as KeyVal;
+          zeitBlockMaximal.value = Zeitblock.ZB_00_24;
+          zeitBlockMaximal.title = "maximal";
+          result.push(zeitBlockMaximal);
+        } else {
+          chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+        }
       } else {
         result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
       }
@@ -364,12 +368,21 @@ function adaptOptionsUpdate() {
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
     isTeilzaehlung.value
   ) {
-    chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
-    const zbMax =
-      zeitblockOrder.find((zb) =>
-        zeitblockValues.value.some((zbv) => zbv.value === zb)
-      ) || "";
-    chosenOptionsCopy.value.zeitblock = zbMax;
+    const zbMax = zeitblockOrder.find((zb) =>
+      zeitblockValues.value.some((zbv) => zbv.value === zb)
+    );
+    if (zbMax) {
+      // Zeitblock verfügbar --> Zeitblock setzen
+      chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.BLOCK;
+      chosenOptionsCopy.value.zeitblock = zbMax;
+    } else {
+      // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
+      const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+      if (!isNil(firstHour)) {
+        chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.STUNDE;
+        chosenOptionsCopy.value.zeitblock = firstHour;
+      }
+    }
   }
 }
 

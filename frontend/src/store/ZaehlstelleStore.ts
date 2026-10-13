@@ -25,7 +25,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   );
   const zeitblock = ref("");
   const zeitauswahl = ref("");
-  const history = ref(false);
+  const inHistory = ref(false);
+  const calledFromHistory = ref(false);
   const sizeBelastungsplanSvg = ref(0);
   const maxSizeBelastungsplanSvg = ref(0);
   const minSizeBelastungsplanSvg = ref(0);
@@ -55,7 +56,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const isBlackprintMode = computed(() => filteroptions.value.blackPrintMode);
   const getZeitblock = computed(() => zeitblock.value);
   const getZeitauswahl = computed(() => zeitauswahl.value);
-  const isHistory = computed(() => history.value);
+  const isInHistory = computed(() => inHistory.value);
+  const isCalledFromHistory = computed(() => calledFromHistory.value);
   const getSizeBelastungsplanSvg = computed(() => sizeBelastungsplanSvg.value);
   const getMaxSizeBelastungsplanSvg = computed(
     () => maxSizeBelastungsplanSvg.value
@@ -96,11 +98,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function setFilteroptions(payload: ZaehlstelleOptionsDTO) {
     filteroptions.value = payload;
-    history.value = false;
+    inHistory.value = false;
   }
   function setFilteroptionsHistory(payload: ZaehlstelleOptionsDTO) {
     filteroptions.value = payload;
-    history.value = true;
+    inHistory.value = true;
+    calledFromHistory.value = true;
   }
   function setZeitblock(payload: string) {
     zeitblock.value = payload;
@@ -110,6 +113,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function reloadFilteroptions() {
     filteroptions.value = Object.assign({}, filteroptions.value);
+    calledFromHistory.value = false;
   }
   function resetFilteroptions() {
     filteroptions.value =
@@ -204,7 +208,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     isBlackprintMode,
     getZeitblock,
     getZeitauswahl,
-    isHistory,
+    isInHistory,
+    isCalledFromHistory,
     getSizeBelastungsplanSvg,
     getMaxSizeBelastungsplanSvg,
     getMinSizeBelastungsplanSvg,

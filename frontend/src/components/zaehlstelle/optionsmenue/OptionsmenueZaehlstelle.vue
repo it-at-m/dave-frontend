@@ -43,7 +43,10 @@
 
               <verkehrsbeziehungen-panel v-model="chosenOptions" />
 
-              <zaehlungsvergleich-panel v-model="chosenOptions" />
+              <zaehlungsvergleich-panel
+                v-model="chosenOptions"
+                :reset-notification="resetNotificationVergleichszaehlung"
+              />
 
               <darstellungsoptionen-panel v-model="chosenOptions" />
             </v-expansion-panels>
@@ -92,7 +95,7 @@ import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitblock, { zeitblockOrder } from "@/types/enum/Zeitblock";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -115,6 +118,7 @@ const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
 );
+const resetNotificationVergleichszaehlung = ref(0);
 
 const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
@@ -140,16 +144,80 @@ const isTeilzaehlungFussverkehr = computed(() => {
 });
 
 /**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart FUSS beauftragt wurde.
+ */
+const isOnlyVerkehrsartFuss = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 1 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
+  );
+});
+
+/**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
+ */
+const isOnlyVerkehrsartRad = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 2 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT)
+  );
+});
+
+/**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten RAD und FUSS beauftragt wurden.
+ */
+const areOnlyVerkehrsartenRadAndFuss = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 3 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
+  );
+});
+
+/**
+ * Gibt an, ob die Verkehrsart FUSS im Filtermenü vorbelegt sein soll.
+ */
+const isFussPreselected = computed(() => {
+  // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
+  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR RAD
+  // UND FUSS beauftragt wurde
+  return (
+    [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+      activeZaehlung.value.zaehlart as Zaehlart
+    ) ||
+    isOnlyVerkehrsartFuss.value ||
+    areOnlyVerkehrsartenRadAndFuss.value
+  );
+});
+
+/**
+ * Gibt an, ob die Verkehrsart RAD im Filtermenü vorbelegt sein soll.
+ */
+const isRadPreselected = computed(() => {
+  // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
+  // Zählarten, wenn als einzige Verkehrsart NUR RAD oder NUR RAD UND FUSS
+  // beauftragt wurde
+  return (
+    [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+      activeZaehlung.value.zaehlart as Zaehlart
+    ) ||
+    isOnlyVerkehrsartRad.value ||
+    areOnlyVerkehrsartenRadAndFuss.value
+  );
+});
+
+/**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
   const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
-  if (
-    activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN ||
-    isTeilzaehlungFussverkehr.value
-  ) {
+  optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
+
+  if (isTeilzaehlungFussverkehr.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_19;
@@ -161,38 +229,23 @@ function setDefaultOptionsForZaehlung() {
       activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
     ) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+      const zbMax = zeitblockOrder.find((zb) =>
+        activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
+      );
+      if (zbMax) {
+        // Zeitblock verfügbar --> Zeitblock setzen
+        optionsCopy.zeitblock = zbMax;
+      } else {
+        // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
+        const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+        if (!isNil(firstHour)) {
+          optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
+          optionsCopy.zeitblock = firstHour;
+        }
+      }
     } else {
       optionsCopy.zeitblock = Zeitblock.ZB_00_24;
-    }
-  }
-
-  if (
-    activeZaehlung.value.zaehlart === Zaehlart.R ||
-    activeZaehlung.value.zaehlart === Zaehlart.QR
-  ) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
-      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-      optionsCopy.zeitblock = Zeitblock.ZB_06_10;
-    }
-    // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
-  } else {
-    const zeitblockAvailable = !isEmpty(
-      activeZaehlung.value.zeitauswahl?.blocks
-    );
-    if (
-      zeitblockAvailable &&
-      activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      const firstZeitblock = head(activeZaehlung.value.zeitauswahl?.blocks);
-      if (!isNil(firstZeitblock)) {
-        optionsCopy.zeitblock = firstZeitblock;
-      }
     }
   }
 
@@ -215,22 +268,10 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
-        // Rad soll nur bei bestimmten Zählarten aktiviert sein
-        optionsCopy.radverkehr = [
-          Zaehlart.R,
-          Zaehlart.QR,
-          Zaehlart.FJS,
-          Zaehlart.QU,
-          Zaehlart.QJS,
-        ].includes(activeZaehlung.value.zaehlart);
+        optionsCopy.radverkehr = isRadPreselected.value;
         break;
       case Fahrzeug.FUSS:
-        // Fuss soll nur bei Zählarten FjS, Qu, QjS aktiviert sein
-        optionsCopy.fussverkehr = [
-          Zaehlart.FJS,
-          Zaehlart.QU,
-          Zaehlart.QJS,
-        ].includes(activeZaehlung.value.zaehlart);
+        optionsCopy.fussverkehr = isFussPreselected.value;
         break;
     }
   });
@@ -249,6 +290,8 @@ function setDefaultOptionsForZaehlung() {
     nach: vb.nach,
     strassenseite: vb.strassenseite,
   }));
+
+  optionsCopy.idVergleichszaehlungZeitreihe = null;
 
   chosenOptions.value = optionsCopy;
   saveOptions();
@@ -304,6 +347,9 @@ function resetOptionsmenu() {
 function resetOptions() {
   zaehlstelleStore.resetFilteroptions();
   setDefaultOptionsForZaehlung();
+
+  // Signal an Panel senden, dass ein Reset erfolgte
+  resetNotificationVergleichszaehlung.value++;
 }
 
 function resetSizeBelastungsplan() {
@@ -325,7 +371,7 @@ watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
 watch(
   () => activeZaehlung.value,
   () => {
-    if (zaehlstelleStore.isHistory) {
+    if (zaehlstelleStore.isInHistory && zaehlstelleStore.isCalledFromHistory) {
       zaehlstelleStore.reloadFilteroptions();
     } else {
       resetOptions();

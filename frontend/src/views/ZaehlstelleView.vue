@@ -201,7 +201,7 @@ onMounted(() => {
       hasZaehlungen.value = false;
     }
     // die Zählungsoptionen werden zurück gesetzt
-    if (!zaehlstelleStore.isHistory) {
+    if (!zaehlstelleStore.isInHistory) {
       zaehlstelleStore.resetFilteroptions();
     }
   });

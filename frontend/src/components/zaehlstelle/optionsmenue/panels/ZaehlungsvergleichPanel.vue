@@ -118,8 +118,11 @@ const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 
+const props = defineProps<{ resetNotification?: number }>();
+
 const vergleichsdatumDifferenzdarstellung = ref(new Array<KeyVal>());
 const vergleichsdatumZeitreihe = ref(new Array<KeyVal>());
+const cachedVergleichszaehlungId = ref<string | null>(null);
 
 const hoverSelectBasisdatum = ref(false);
 const hoverSelectVergleichsdatum = ref(false);
@@ -283,11 +286,21 @@ function zeitreihenVergleichsdatumCalculator(): void {
   // Setze idVergleichszaehlungZeitreihe zurück (auf null), wenn der Wert nicht im Array result enthalten ist
   const selectedVergleichszaehlungId =
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe;
+  const cachedId = cachedVergleichszaehlungId.value;
   if (
     selectedVergleichszaehlungId != null &&
     !result.some((item) => item.value === selectedVergleichszaehlungId)
   ) {
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+  } else if (cachedId == null) {
+    // ID der ausgewählten Vergleichszählung merken
+    cachedVergleichszaehlungId.value = selectedVergleichszaehlungId;
+  } else if (
+    selectedVergleichszaehlungId == null &&
+    result.some((item) => item.value === cachedId)
+  ) {
+    // ID der vorher ausgewählten Vergleichszählung wiederherstellen
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = cachedId;
   }
 }
 
@@ -366,4 +379,15 @@ watch(isOnlyFussverkehrSelected, (onlyFuss) => {
     chosenOptionsCopy.value.vergleichszaehlungsId = null;
   }
 });
+
+// Wenn sich Parent resetToken ändert -> cachedId löschen und Auswahl zurücksetzen
+watch(
+  () => props.resetNotification,
+  () => {
+    cachedVergleichszaehlungId.value = null;
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+    // neu berechnen der Auswahlmöglichkeiten
+    initData();
+  }
+);
 </script>

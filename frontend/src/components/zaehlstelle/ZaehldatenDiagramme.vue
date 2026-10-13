@@ -92,6 +92,7 @@
               "
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
+              :is-active-tab="activeTab === TAB_BELASTUNGSPLAN"
               @print="storeSvg($event)"
             />
 
@@ -438,17 +439,18 @@ function loadData(): void {
   // requests abschicken
   loadProcessedChartData(o);
 
-  // Save HistoryItem
-  historyStore.addHistoryItem(
-    new ZaehlstelleHistoryItem(
-      selectedZaehlung.value.id,
-      selectedZaehlung.value.datum,
-      selectedZaehlung.value.projektName,
-      zaehlstelle.value.nummer,
-      zaehlstelle.value.id,
-      Object.assign({}, options.value)
-    )
-  );
+  if (!zaehlstelleStore.isInHistory) {
+    historyStore.addHistoryItem(
+      new ZaehlstelleHistoryItem(
+        selectedZaehlung.value.id,
+        selectedZaehlung.value.datum,
+        selectedZaehlung.value.projektName,
+        zaehlstelle.value.nummer,
+        zaehlstelle.value.id,
+        Object.assign({}, options.value)
+      )
+    );
+  }
 }
 
 function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
