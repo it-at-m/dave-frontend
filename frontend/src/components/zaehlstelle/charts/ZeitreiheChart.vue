@@ -150,7 +150,8 @@ const yAxisInterval = computed(() => {
 // Zusammenbauen der x-Achsen Werte aus dem Datum und dem evtl. vorhandenen FehlendeWerteMeldung
 const xAxis = computed(() => {
   return props.zeitreiheDaten.datum.map(
-    (date, index) => date + (props.zeitreiheDaten.fehlendeWerteMeldung?.[index] ?? "")
+    (date, index) =>
+      date + (props.zeitreiheDaten.fehlendeWerteMeldung?.[index] ?? "")
   );
 });
 
@@ -545,7 +546,6 @@ function getDataViewValue(
   index: number,
   fahrzeug?: Fahrzeug
 ): number | string {
-
   if (
     fahrzeug &&
     props.zeitreiheDaten.tageswertNichtVorhanden[index]?.includes(fahrzeug)
