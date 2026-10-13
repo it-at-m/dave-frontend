@@ -3240,7 +3240,9 @@
                   id="tspan37"
                   style="font-weight: bold"
                 >
-                  {{ optionen.zeitauswahl }}
+                  {{
+                    belastungsplanAnzeigeUtils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle
+                  }}
                 </tspan>
               </tspan>
             </text>
@@ -3438,6 +3440,7 @@ import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
@@ -3501,6 +3504,7 @@ const zaehlzeit2 = computed(() => {
 });
 
 const qu = useQu();
+const belastungsplanAnzeigeUtils = useBelastungsplanAnzeigeUtils();
 const strassennameUtils = useStrassennameUtils();
 
 const streetnameNode1 = ref<Array<string>>([]);
