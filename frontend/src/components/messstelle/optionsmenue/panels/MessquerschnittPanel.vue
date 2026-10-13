@@ -78,9 +78,9 @@ import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtungen, {
+import Himmelsrichtung, {
   himmelsRichtungenTextLong,
-} from "@/types/enum/Himmelsrichtungen";
+} from "@/types/enum/Himmelsrichtung";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
@@ -111,7 +111,7 @@ const direction = computed({
 
 const richtungValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
-  const exisitingDirection: Array<Himmelsrichtungen> = [];
+  const exisitingDirection: Array<Himmelsrichtung> = [];
   if (messstelle.value.messquerschnitte.length > 1) {
     result.push({
       title: messstelleUtils.alleRichtungen,

@@ -40,18 +40,22 @@
             font-weight="normal"
             header-text="(Anzeige nur im Belastungsplan)"
           />
-          <v-checkbox
-            v-model="differenzdatenDarstellen"
-            color="quaternary"
-            :label="'Differenzdaten darstellen'"
+          <div
             @mouseover="hoverCheckbox = true"
             @mouseleave="hoverCheckbox = false"
-          />
-          <div v-if="differenzdatenDarstellen">
+          >
+            <v-checkbox
+              v-model="chosenOptionsCopy.differenzdatenDarstellen"
+              color="quaternary"
+              :label="'Differenzdaten darstellen'"
+              :disabled="isQjsOrFjsOrQu || isOnlyFussverkehrSelected"
+            />
+          </div>
+          <div v-if="chosenOptionsCopy.differenzdatenDarstellen">
             <v-select
-              v-model="vergleichszaehlungsId"
+              v-model="chosenOptionsCopy.vergleichszaehlungsId"
               :items="vergleichsdatum"
-              :disabled="!differenzdatenDarstellen"
+              :disabled="!chosenOptionsCopy.differenzdatenDarstellen"
               no-data-text="Keine Vergleichszählungen vorhanden"
               label="Vergleichsdatum Differenzdaten"
               variant="filled"
@@ -69,7 +73,7 @@
           />
 
           <v-select
-            v-model="idVergleichszaehlungZeitreihe"
+            v-model="chosenOptionsCopy.idVergleichszaehlungZeitreihe"
             :items="vergleichsdatumZeitreihe"
             no-data-text="Keine Vergleichszählungen vorhanden"
             label="Vergleichsdatum Zeitreihe"
@@ -93,58 +97,48 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { ComputedRef } from "vue";
 
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useDateUtils } from "@/util/DateUtils";
+import { useFjs } from "@/util/FjsUtils";
+import { useQjs } from "@/util/QjsUtils";
+import { useQu } from "@/util/QuUtils";
 
-interface Props {
-  zaehlung: LadeZaehlungDTO;
-}
+const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+  required: true,
+});
 
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
-const emits = defineEmits<{
-  (e: "vergleichszaehlungsId", v: string): void;
-  (e: "differenzdatenDarstellen", v: boolean): void;
-  (e: "idVergleichszaehlungZeitreihe", v: string): void;
-}>();
 
-const vergleichszaehlungsId = ref("");
-const differenzdatenDarstellen = ref(false);
+const props = defineProps<{ resetNotification?: number }>();
+
 const vergleichsdatumDifferenzdarstellung = ref(new Array<KeyVal>());
-
-// Zeitreihe
 const vergleichsdatumZeitreihe = ref(new Array<KeyVal>());
-const idVergleichszaehlungZeitreihe = ref("");
-
-const currentZeitblock = ref("");
-const currentZeitauswahl = ref(Zeitauswahl.TAGESWERT.valueOf());
+const cachedVergleichszaehlungId = ref<string | null>(null);
 
 const hoverSelectBasisdatum = ref(false);
 const hoverSelectVergleichsdatum = ref(false);
 const hoverCheckbox = ref(false);
 const hoverSelectVergleichsdatumZeitreihe = ref(false);
 
+const qu = useQu();
+const fjs = useFjs();
+const qjs = useQjs();
+
 onMounted(() => {
-  update(options.value);
+  initData();
 });
 
-const options = computed<OptionsDTO>(() => {
-  return zaehlstelleStore.getFilteroptions;
-});
-
-const zeitblock = computed(() => {
-  return zaehlstelleStore.getZeitblock;
-});
-
-const zeitauswahl = computed(() => {
-  return zaehlstelleStore.getZeitauswahl;
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
 });
 
 /**
@@ -152,9 +146,9 @@ const zeitauswahl = computed(() => {
  */
 const basisdatum = computed(() => {
   let result = "";
-  if (props.zaehlung.datum) {
+  if (activeZaehlung.value.datum) {
     result = dateUtils.getShortVersionOfDate(
-      dateUtils.getDatumOfString(props.zaehlung.datum)
+      dateUtils.getDatumOfString(activeZaehlung.value.datum)
     );
   }
   return result;
@@ -176,35 +170,49 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
     return "Datum der für den Vergleich ausgewählten Zählung. Hier werden nur Zählungen mit identischer Zählart zum Basisdatum angezeigt.";
   }
   if (hoverCheckbox.value) {
-    return "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
+    if (isOnlyFussverkehrSelected.value) {
+      return "Für die ausgewählte Verkehrsart ist eine Differenzdatendarstellung nicht möglich.";
+    }
+    return isQjsOrFjsOrQu.value
+      ? "Für diese Zählung ist eine Differenzdatendarstellung nicht möglich."
+      : "Für den Differenzdatenvergleich muss das Kontrollkästchen aktiviert werden.";
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
-    return (
-      "Datum der Zählung, bis zu der die Zeitreihe angezeigt werden soll (inklusive).\n" +
-      "Es können nur Zählungen gleicher Zählart verglichen werden. Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein."
-    );
+    const part: string =
+      "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein. ";
+    return isQjsOrFjsOrQu.value
+      ? "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden." +
+          part
+      : "Es können nur Zählungen gleicher Zählart verglichen werden." + part;
   }
   return "";
 });
 
+const isQjsOrFjsOrQu = computed<boolean>(() => {
+  return [
+    Zaehlart.QJS.toString(),
+    Zaehlart.FJS.toString(),
+    Zaehlart.QU.toString(),
+  ].includes(activeZaehlung.value.zaehlart);
+});
+
+const isOnlyFussverkehrSelected = computed<boolean>(() => {
+  return (
+    chosenOptionsCopy.value.fussverkehr &&
+    !chosenOptionsCopy.value.kraftfahrzeugverkehr &&
+    !chosenOptionsCopy.value.gueterverkehr &&
+    !chosenOptionsCopy.value.schwerverkehr &&
+    !chosenOptionsCopy.value.gueterverkehrsanteilProzent &&
+    !chosenOptionsCopy.value.schwerverkehrsanteilProzent &&
+    !chosenOptionsCopy.value.radverkehr
+  );
+});
+
 // Setzt die Auswahlelemente auf der Oberfläche zurück, oder mit den
 //  übergebenen Werten im Optionsobjekt
-function update(newOptions: OptionsDTO) {
-  vergleichsdatumCalculator(newOptions.zeitblock, newOptions.zeitauswahl);
-  zeitreihenVergleichsdatumCalculator(
-    newOptions.zeitblock,
-    newOptions.zeitauswahl
-  );
-  newOptions.vergleichszaehlungsId === null
-    ? (vergleichszaehlungsId.value = "")
-    : (vergleichszaehlungsId.value = newOptions.vergleichszaehlungsId);
-  newOptions.differenzdatenDarstellen === null
-    ? (differenzdatenDarstellen.value = false)
-    : (differenzdatenDarstellen.value = newOptions.differenzdatenDarstellen);
-  newOptions.idVergleichszaehlungZeitreihe === null
-    ? (idVergleichszaehlungZeitreihe.value = "")
-    : (idVergleichszaehlungZeitreihe.value =
-        newOptions.idVergleichszaehlungZeitreihe);
+function initData() {
+  vergleichsdatumCalculator();
+  zeitreihenVergleichsdatumCalculator();
 }
 
 /**
@@ -213,24 +221,19 @@ function update(newOptions: OptionsDTO) {
  * - Welche nicht die selbe ID bezsitzt wie die Basiszählung.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
- *
- * @param newZeitblock zur Ermittlung der relevanten Zählungen.
- * @param newZeitauswahl zur Ermittlung der relevanten Zählungen.
  */
-function vergleichsdatumCalculator(
-  newZeitblock: string,
-  newZeitauswahl: string
-): void {
+function vergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
   const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
-  if (props.zaehlung.id) {
+  if (activeZaehlung.value.id) {
     zaehlungen.forEach((zaehl) => {
       if (
-        zaehl.id !== props.zaehlung.id &&
-        zaehl.zaehlart === props.zaehlung.zaehlart &&
-        zaehl.sonderzaehlung === props.zaehlung.sonderzaehlung &&
-        (containsZeitblock(zaehl, newZeitblock) ||
-          newZeitauswahl.toString() === Zeitauswahl.TAGESWERT.toString())
+        zaehl.id !== activeZaehlung.value.id &&
+        zaehl.zaehlart === activeZaehlung.value.zaehlart &&
+        zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
+        (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
+          chosenOptionsCopy.value.zeitauswahl.toString() ===
+            Zeitauswahl.TAGESWERT.toString())
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -246,26 +249,29 @@ function vergleichsdatumCalculator(
 
 /**
  * Diese Methode ermittelt alle Zählungen für die Zeitreihendarstellung.
- * Die für die Differenzendarstellung relevanten Zählungen sind:
+ * Die für die Zeitreihendarstellung relevanten Zählungen sind:
  * - Welche älter als oder gleich alt wie die Basiszählung sind.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
+ * - Bei QU, QJS, FJS: Welche übereinstimmende Bewegungsbeziehungen/Pfeile besitzt.
  * */
-function zeitreihenVergleichsdatumCalculator(
-  newZeitblock: string,
-  newZeitauswahl: string
-): void {
+function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
   const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
-  if (props.zaehlung.id != undefined && props.zaehlung.datum != undefined) {
+  if (
+    activeZaehlung.value.id != undefined &&
+    activeZaehlung.value.datum != undefined
+  ) {
     zaehlungen.forEach((zaehl) => {
       if (
-        zaehl.id !== props.zaehlung.id &&
-        zaehl.datum <= props.zaehlung!.datum &&
-        zaehl.zaehlart === props.zaehlung.zaehlart &&
-        zaehl.sonderzaehlung === props.zaehlung.sonderzaehlung &&
-        (containsZeitblock(zaehl, newZeitblock) ||
-          newZeitauswahl.toString() === Zeitauswahl.TAGESWERT.toString())
+        zaehl.id !== activeZaehlung.value.id &&
+        zaehl.datum <= activeZaehlung.value!.datum &&
+        zaehl.zaehlart === activeZaehlung.value.zaehlart &&
+        zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
+        (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
+          chosenOptionsCopy.value.zeitauswahl.toString() ===
+            Zeitauswahl.TAGESWERT.toString()) &&
+        checkBewegungsbeziehungen(zaehl, activeZaehlung)
       ) {
         result.push({
           title: dateUtils.getShortVersionOfDate(
@@ -277,6 +283,60 @@ function zeitreihenVergleichsdatumCalculator(
     });
   }
   vergleichsdatumZeitreihe.value = result;
+  // Setze idVergleichszaehlungZeitreihe zurück (auf null), wenn der Wert nicht im Array result enthalten ist
+  const selectedVergleichszaehlungId =
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe;
+  const cachedId = cachedVergleichszaehlungId.value;
+  if (
+    selectedVergleichszaehlungId != null &&
+    !result.some((item) => item.value === selectedVergleichszaehlungId)
+  ) {
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+  } else if (cachedId == null) {
+    // ID der ausgewählten Vergleichszählung merken
+    cachedVergleichszaehlungId.value = selectedVergleichszaehlungId;
+  } else if (
+    selectedVergleichszaehlungId == null &&
+    result.some((item) => item.value === cachedId)
+  ) {
+    // ID der vorher ausgewählten Vergleichszählung wiederherstellen
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = cachedId;
+  }
+}
+
+/**
+ * Prüfung bei Zählart QU, QJS oder FJS: Alle Bewegungsbeziehungen/Pfeile müssen mit der aktive Zählung übereinstimmen.
+ * Für alle anderen Verkehrsarten wird immer true zurückgegeben.
+ *
+ * @param zaehlung zu prüfende Zaehlung
+ * @param activeZaehlung aktive Zaehlung
+ */
+function checkBewegungsbeziehungen(
+  zaehlung: LadeZaehlungDTO,
+  activeZaehlung: ComputedRef<LadeZaehlungDTO>
+): boolean {
+  // Bei QU: Prüfe auf Knotenarm und Richtung
+  if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
+    return qu.areQuerungsverkehreEqual(
+      activeZaehlung.value.querungsverkehr,
+      zaehlung.querungsverkehr
+    );
+  }
+  // Bei FJS: Prüfe auf Knotenarm, Richtung und Straßenseite
+  if (zaehlung.zaehlart === Zaehlart.FJS.toString()) {
+    return fjs.areLaengsverkehreEqual(
+      activeZaehlung.value.laengsverkehr,
+      zaehlung.laengsverkehr
+    );
+  }
+  // Bei QJS: Prüfe auf Von, Nach und Straßenseite
+  if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
+    return qjs.areVerkehrsbeziehungenEqual(
+      activeZaehlung.value.verkehrsbeziehungen,
+      zaehlung.verkehrsbeziehungen
+    );
+  }
+  return true; // Standard-Rückgabewert, wenn andere Zaehlart
 }
 
 /**
@@ -302,37 +362,32 @@ function containsZeitblock(
 
 // Wenn sich die Optionen ändern, dann soll sich auch die Auswahl auf der
 // Oberfläche ändern.
-watch(options, (newOptions: OptionsDTO) => {
-  update(newOptions);
+watch(
+  chosenOptionsCopy,
+  () => {
+    initData();
+  },
+  { deep: true }
+);
+
+// Watcher: wenn nur Fußverkehr ausgewählt ist, Rücksetzen relevanter Felder
+watch(isOnlyFussverkehrSelected, (onlyFuss) => {
+  if (onlyFuss) {
+    // Checkbox deaktiviert — sicherstellen, dass sie auch aus ist
+    chosenOptionsCopy.value.differenzdatenDarstellen = false;
+    // Vergleichsselektionen zurücksetzen, damit keine ungültigen Werte verbleiben
+    chosenOptionsCopy.value.vergleichszaehlungsId = null;
+  }
 });
 
-watch(vergleichszaehlungsId, () => {
-  emits("vergleichszaehlungsId", vergleichszaehlungsId.value);
-});
-
-watch(differenzdatenDarstellen, () => {
-  emits("differenzdatenDarstellen", differenzdatenDarstellen.value);
-});
-
-watch(idVergleichszaehlungZeitreihe, () => {
-  emits("idVergleichszaehlungZeitreihe", idVergleichszaehlungZeitreihe.value);
-});
-
-watch(zeitblock, (newZeitblock: string) => {
-  currentZeitblock.value = newZeitblock;
-  vergleichsdatumCalculator(currentZeitblock.value, currentZeitauswahl.value);
-  zeitreihenVergleichsdatumCalculator(
-    currentZeitblock.value,
-    currentZeitauswahl.value
-  );
-});
-
-watch(zeitauswahl, (newZeitauswahl: string) => {
-  currentZeitauswahl.value = newZeitauswahl;
-  vergleichsdatumCalculator(currentZeitblock.value, currentZeitauswahl.value);
-  zeitreihenVergleichsdatumCalculator(
-    currentZeitblock.value,
-    currentZeitauswahl.value
-  );
-});
+// Wenn sich Parent resetToken ändert -> cachedId löschen und Auswahl zurücksetzen
+watch(
+  () => props.resetNotification,
+  () => {
+    cachedVergleichszaehlungId.value = null;
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+    // neu berechnen der Auswahlmöglichkeiten
+    initData();
+  }
+);
 </script>

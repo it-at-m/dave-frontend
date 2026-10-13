@@ -292,7 +292,7 @@ function changeTab() {
 }
 
 watch(options, () => {
-  loadProcessedChartData();
+  loadData();
 });
 watch(belastungsplanSvg, () => {
   if (belastungsplanSvg.value) {
@@ -334,6 +334,22 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
   }
 });
 
+function loadData(): void {
+  loadProcessedChartData();
+
+  if (!messstelleStore.isInHistory) {
+    const messstelle: MessstelleInfoDTO = messstelleStore.getMessstelleInfo;
+    historyStore.addHistoryItem(
+      new MessstelleHistoryItem(
+        messstelle.id,
+        messstelle.mstId,
+        messstelle.standort,
+        cloneDeep(options.value)
+      )
+    );
+  }
+}
+
 function loadProcessedChartData() {
   chartDataLoading.value = true;
   resetData();
@@ -353,15 +369,6 @@ function loadProcessedChartData() {
     })
     .finally(() => {
       chartDataLoading.value = false;
-      const messstelle: MessstelleInfoDTO = messstelleStore.getMessstelleInfo;
-      historyStore.addHistoryItem(
-        new MessstelleHistoryItem(
-          messstelle.id,
-          messstelle.mstId,
-          messstelle.standort,
-          cloneDeep(options.value)
-        )
-      );
     });
 }
 

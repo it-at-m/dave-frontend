@@ -14,7 +14,7 @@ import { Svg } from "@svgdotjs/svg.js";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
 interface Props {
   height?: number;
@@ -100,7 +100,7 @@ function drawArrowsPointingSouth() {
       )
       .stroke({
         width: strokeSize,
-        color: calculateColor(Himmelsrichtungen.SUED, Himmelsrichtungen.WEST),
+        color: calculateColor(Himmelsrichtung.S, Himmelsrichtung.W),
       })
   );
   querschnittGroup.value.add(
@@ -112,12 +112,9 @@ function drawArrowsPointingSouth() {
       )
       .stroke({
         width: strokeSize,
-        color: calculateColor(Himmelsrichtungen.SUED, Himmelsrichtungen.WEST),
+        color: calculateColor(Himmelsrichtung.S, Himmelsrichtung.W),
       })
-      .attr(
-        "fill",
-        calculateColor(Himmelsrichtungen.SUED, Himmelsrichtungen.WEST)
-      )
+      .attr("fill", calculateColor(Himmelsrichtung.S, Himmelsrichtung.W))
   );
   startX.value += 50;
 }
@@ -133,7 +130,7 @@ function drawArrowsPointingNorth() {
       )
       .stroke({
         width: strokeSize,
-        color: calculateColor(Himmelsrichtungen.OST, Himmelsrichtungen.NORD),
+        color: calculateColor(Himmelsrichtung.O, Himmelsrichtung.N),
       })
   );
   querschnittGroup.value.add(
@@ -145,29 +142,23 @@ function drawArrowsPointingNorth() {
       )
       .stroke({
         width: strokeSize,
-        color: calculateColor(Himmelsrichtungen.OST, Himmelsrichtungen.NORD),
+        color: calculateColor(Himmelsrichtung.O, Himmelsrichtung.N),
       })
-      .attr(
-        "fill",
-        calculateColor(Himmelsrichtungen.OST, Himmelsrichtungen.NORD)
-      )
+      .attr("fill", calculateColor(Himmelsrichtung.O, Himmelsrichtung.N))
   );
   startX.value += 50;
 }
 
 function rotateArrowsIfNecessary() {
   const direction = props.messquerschnitte[0]?.fahrtrichtung;
-  if (
-    direction === Himmelsrichtungen.OST ||
-    direction === Himmelsrichtungen.WEST
-  ) {
+  if (direction === Himmelsrichtung.O || direction === Himmelsrichtung.W) {
     querschnittGroup.value.rotate(90).translate(100, -50);
   }
 }
 
 function calculateColor(
-  himmelsrichtung1: Himmelsrichtungen,
-  himmelsrichtung2: Himmelsrichtungen
+  himmelsrichtung1: Himmelsrichtung,
+  himmelsrichtung2: Himmelsrichtung
 ): string | undefined {
   // Wenn selected dann active
   const selectedKnotenarm = selectedMessquerschnitte.value.filter(

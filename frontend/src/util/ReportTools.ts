@@ -2,7 +2,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import _ from "lodash";
 import { computed } from "vue";
@@ -12,6 +12,7 @@ import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
+import Zaehlart from "@/types/enum/Zaehlart";
 import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
 import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
 import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
@@ -38,7 +39,7 @@ export function useReportTools() {
   const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
     return zaehlstelleStore.getAktiveZaehlung;
   });
-  const zaehlstelleOptions = computed<OptionsDTO>(() => {
+  const zaehlstelleOptions = computed<ZaehlstelleOptionsDTO>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
 
@@ -98,27 +99,47 @@ export function useReportTools() {
         }
         break;
       case Erhebungsstelle.ZAEHLSTELLE:
-        if (zaehlstelleOptions.value.vonKnotenarm !== null) {
-          selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
-            if (knotenarm.nummer === zaehlstelleOptions.value.vonKnotenarm) {
-              if (!selectedZaehlung.value.kreisverkehr) {
-                chartTitle = "von ";
+        if (
+          selectedZaehlung.value.zaehlart === Zaehlart.QJS ||
+          selectedZaehlung.value.zaehlart === Zaehlart.FJS ||
+          selectedZaehlung.value.zaehlart === Zaehlart.QU
+        ) {
+          if (
+            (zaehlstelleOptions.value.chosenVerkehrsbeziehungen?.length ??
+              0) !==
+              (selectedZaehlung.value.verkehrsbeziehungen?.length ?? 0) ||
+            (zaehlstelleOptions.value.chosenLaengsverkehre?.length ?? 0) !==
+              (selectedZaehlung.value.laengsverkehr?.length ?? 0) ||
+            (zaehlstelleOptions.value.chosenQuerungsverkehre?.length ?? 0) !==
+              (selectedZaehlung.value.querungsverkehr?.length ?? 0)
+          ) {
+            chartTitle = "Zählstelle - Teilauswahl";
+          } else {
+            chartTitle = "Gesamte Zählstelle";
+          }
+        } else {
+          if (zaehlstelleOptions.value.vonKnotenarm !== null) {
+            selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
+              if (knotenarm.nummer === zaehlstelleOptions.value.vonKnotenarm) {
+                if (!selectedZaehlung.value.kreisverkehr) {
+                  chartTitle = "von ";
+                }
+                chartTitle = `${chartTitle}${knotenarm.strassenname} (${knotenarm.nummer}) `;
               }
-              chartTitle = `${chartTitle} ${knotenarm.strassenname} (${knotenarm.nummer}) `;
-            }
-          });
-        }
+            });
+          }
 
-        if (zaehlstelleOptions.value.nachKnotenarm !== null) {
-          selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
-            if (knotenarm.nummer === zaehlstelleOptions.value.nachKnotenarm) {
-              chartTitle = `${chartTitle} nach ${knotenarm.strassenname} (${knotenarm.nummer})`;
-            }
-          });
+          if (zaehlstelleOptions.value.nachKnotenarm !== null) {
+            selectedZaehlung.value.knotenarme.forEach((knotenarm) => {
+              if (knotenarm.nummer === zaehlstelleOptions.value.nachKnotenarm) {
+                chartTitle = `${chartTitle}nach ${knotenarm.strassenname} (${knotenarm.nummer})`;
+              }
+            });
+          }
         }
         break;
     }
-    return chartTitle;
+    return chartTitle.trim();
   }
 
   // von außen aufrufbar
@@ -249,5 +270,6 @@ export function useReportTools() {
     saveGraphAsImage,
     saveGesamtauswertungAsImage,
     getFileName,
+    createHeading,
   };
 }

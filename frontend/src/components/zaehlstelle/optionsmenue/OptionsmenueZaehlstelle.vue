@@ -37,56 +37,18 @@
               focusable
               elevation="0"
             >
-              <zeitauswahl-panel
-                :zaehlung="zaehlung"
-                @zeitauswahl="setZeitauswahl($event)"
-                @zeitblock="setZeitblock($event)"
-                @intervall="setIntervall($event)"
-              />
+              <zeitauswahl-panel v-model="chosenOptions" />
 
-              <fahrzeug-panel
-                :actual-zeitauswahl="chosenOptions.zeitauswahl"
-                :is-differenzdatenvergleich-active="
-                  chosenOptions.differenzdatenDarstellen
-                "
-                @fahrzeug-options="updateOptions($event)"
-              />
+              <fahrzeug-panel v-model="chosenOptions" />
 
-              <geometrie-panel
-                :zaehlung="zaehlung"
-                @von="setVon($event)"
-                @nach="setNach($event)"
-                @beide-richtungen="setBeideRichtungen($event)"
-              />
+              <verkehrsbeziehungen-panel v-model="chosenOptions" />
 
               <zaehlungsvergleich-panel
-                :zaehlung="zaehlung"
-                @vergleichszaehlungs-id="setVergleichszaehlungsId($event)"
-                @differenzdaten-darstellen="setDifferenzdatenDarstellen($event)"
-                @id-vergleichszaehlung-zeitreihe="
-                  setIdVergleichszaehlungZeitreihe($event)
-                "
+                v-model="chosenOptions"
+                :reset-notification="resetNotificationVergleichszaehlung"
               />
 
-              <darstellungsoptionen-panel
-                @werte-hundert-runden="setWerteHundertRunden($event)"
-                @black-print-mode="setBlackPrintMode($event)"
-                @mittelwert="setMittelwert($event)"
-                @stundensumme="setStundensumme($event)"
-                @blocksumme="setBlocksumme($event)"
-                @tagessumme="setTagessumme($event)"
-                @spitzenstunde="setSpitzenstunde($event)"
-                @spitzenstunde-kfz="setSpitzenstundeKfz($event)"
-                @spitzenstunde-rad="setSpitzenstundeRad($event)"
-                @spitzenstunde-fuss="setSpitzenstundeFuss($event)"
-                @ganglinie-y-achse1-max-value="
-                  setGanglinieYAchse1MaxValue($event)
-                "
-                @ganglinie-y-achse2-max-value="
-                  setGanglinieYAchse2MaxValue($event)
-                "
-                @zeitreihe-gesamt="setZeitreiheGesamt($event)"
-              />
+              <darstellungsoptionen-panel v-model="chosenOptions" />
             </v-expansion-panels>
           </v-sheet>
         </v-card-text>
@@ -116,7 +78,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -124,17 +86,17 @@ import { useDisplay } from "vuetify";
 
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
-import GeometriePanel from "@/components/zaehlstelle/optionsmenue/panels/GeometriePanel.vue";
+import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
 import ZaehlungsvergleichPanel from "@/components/zaehlstelle/optionsmenue/panels/ZaehlungsvergleichPanel.vue";
 import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/ZeitauswahlPanel.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
+import Zeitblock, { zeitblockOrder } from "@/types/enum/Zeitblock";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 /**
@@ -146,11 +108,6 @@ import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
  * - Per Default werden anfangs nur KFZ, SV, GV, SV% und GV% angezeigt. Alle anderen Werte müssen vom Nutzer selbständig aktiviert werden.
  */
 
-interface Props {
-  zaehlung: LadeZaehlungDTO;
-}
-
-const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const snackbarStore = useSnackbarStore();
@@ -158,9 +115,12 @@ const display = useDisplay();
 
 const dialog = ref(false);
 const activePanel = ref(-1);
-const chosenOptions = ref({} as OptionsDTO);
+const chosenOptions = ref(
+  DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
+);
+const resetNotificationVergleichszaehlung = ref(0);
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<ZaehlstelleOptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -171,47 +131,125 @@ const getContentSheetHeight = computed(() => {
   return "500px";
 });
 
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
+});
+
+const isTeilzaehlungFussverkehr = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 1 &&
+    activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
+    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+  );
+});
+
+/**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart FUSS beauftragt wurde.
+ */
+const isOnlyVerkehrsartFuss = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 1 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
+  );
+});
+
+/**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
+ */
+const isOnlyVerkehrsartRad = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 2 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT)
+  );
+});
+
+/**
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten RAD und FUSS beauftragt wurden.
+ */
+const areOnlyVerkehrsartenRadAndFuss = computed(() => {
+  return (
+    activeZaehlung.value.kategorien.length === 3 &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.RAD) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.PKW_EINHEIT) &&
+    activeZaehlung.value.kategorien.includes(Fahrzeug.FUSS)
+  );
+});
+
+/**
+ * Gibt an, ob die Verkehrsart FUSS im Filtermenü vorbelegt sein soll.
+ */
+const isFussPreselected = computed(() => {
+  // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
+  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR RAD
+  // UND FUSS beauftragt wurde
+  return (
+    [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+      activeZaehlung.value.zaehlart as Zaehlart
+    ) ||
+    isOnlyVerkehrsartFuss.value ||
+    areOnlyVerkehrsartenRadAndFuss.value
+  );
+});
+
+/**
+ * Gibt an, ob die Verkehrsart RAD im Filtermenü vorbelegt sein soll.
+ */
+const isRadPreselected = computed(() => {
+  // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
+  // Zählarten, wenn als einzige Verkehrsart NUR RAD oder NUR RAD UND FUSS
+  // beauftragt wurde
+  return (
+    [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+      activeZaehlung.value.zaehlart as Zaehlart
+    ) ||
+    isOnlyVerkehrsartRad.value ||
+    areOnlyVerkehrsartenRadAndFuss.value
+  );
+});
+
 /**
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
-  const optionsCopy = {} as OptionsDTO;
+  const optionsCopy = {} as ZaehlstelleOptionsDTO;
   Object.assign(optionsCopy, options.value);
 
-  if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
-    optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-  }
+  optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
 
-  if (
-    props.zaehlung.zaehlart === Zaehlart.R ||
-    props.zaehlung.zaehlart === Zaehlart.QR
-  ) {
-    if (props.zaehlung.zaehldauer === Zaehldauer.DAUER_16_STUNDEN) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
+  if (isTeilzaehlungFussverkehr.value) {
+    optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+      optionsCopy.zeitblock = Zeitblock.ZB_06_19;
+    } else if (
+      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN
+    ) {
       optionsCopy.zeitblock = Zeitblock.ZB_06_22;
     } else if (
-      props.zaehlung.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN ||
-      props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
+      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
     ) {
-      optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
       optionsCopy.zeitblock = Zeitblock.ZB_06_10;
-    }
-    // Bei Zaehldauer.DAUER_24_STUNDEN nichts zu tun
-  } else {
-    const zeitblockAvailable = !isEmpty(props.zaehlung.zeitauswahl?.blocks);
-    if (
-      zeitblockAvailable &&
-      props.zaehlung.zaehldauer === Zaehldauer.SONSTIGE
-    ) {
-      const firstZeitblock = head(props.zaehlung.zeitauswahl?.blocks);
-      if (!isNil(firstZeitblock)) {
-        optionsCopy.zeitblock = firstZeitblock;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+      const zbMax = zeitblockOrder.find((zb) =>
+        activeZaehlung.value.zeitauswahl?.blocks.some((zbv) => zbv === zb)
+      );
+      if (zbMax) {
+        // Zeitblock verfügbar --> Zeitblock setzen
+        optionsCopy.zeitblock = zbMax;
+      } else {
+        // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
+        const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+        if (!isNil(firstHour)) {
+          optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
+          optionsCopy.zeitblock = firstHour;
+        }
       }
+    } else {
+      optionsCopy.zeitblock = Zeitblock.ZB_00_24;
     }
   }
 
-  props.zaehlung.kategorien.forEach((fahr) => {
+  activeZaehlung.value.kategorien.forEach((fahr) => {
     switch (fahr) {
       // Verkehrsarten
       case Fahrzeug.KFZ:
@@ -230,180 +268,33 @@ function setDefaultOptionsForZaehlung() {
         optionsCopy.gueterverkehrsanteilProzent = true;
         break;
       case Fahrzeug.RAD:
-        // Rad soll nur bei reinen Radzählungen aktiviert sein
-        optionsCopy.radverkehr = ["R", "QR"].includes(props.zaehlung.zaehlart);
+        optionsCopy.radverkehr = isRadPreselected.value;
+        break;
+      case Fahrzeug.FUSS:
+        optionsCopy.fussverkehr = isFussPreselected.value;
         break;
     }
   });
   optionsCopy.beideRichtungen = false;
+
+  optionsCopy.chosenLaengsverkehre = (
+    activeZaehlung.value.laengsverkehr ?? []
+  ).map((lv) => ({ ...lv }));
+  optionsCopy.chosenQuerungsverkehre = (
+    activeZaehlung.value.querungsverkehr ?? []
+  ).map((qv) => ({ ...qv }));
+  optionsCopy.chosenVerkehrsbeziehungen = (
+    activeZaehlung.value.verkehrsbeziehungen ?? []
+  ).map((vb) => ({
+    von: vb.von,
+    nach: vb.nach,
+    strassenseite: vb.strassenseite,
+  }));
+
+  optionsCopy.idVergleichszaehlungZeitreihe = null;
+
   chosenOptions.value = optionsCopy;
   saveOptions();
-}
-
-// Event Methoden für die Zeitauswahl Komponente
-function setZeitauswahl(event: string) {
-  chosenOptions.value.zeitauswahl = event;
-  zaehlstelleStore.setZeitauswahl(event);
-}
-
-function setZeitblock(event: string) {
-  chosenOptions.value.zeitblock = event;
-  zaehlstelleStore.setZeitblock(event);
-}
-
-function setIntervall(event: ZaehldatenIntervall) {
-  if (event) {
-    chosenOptions.value.intervall = event;
-  }
-}
-
-// Event Methode für die Fahrzeug Komponente
-function updateOptions(event: OptionsDTO) {
-  if (event) {
-    chosenOptions.value.kraftfahrzeugverkehr = event.kraftfahrzeugverkehr;
-    chosenOptions.value.schwerverkehr = event.schwerverkehr;
-    chosenOptions.value.gueterverkehr = event.gueterverkehr;
-    chosenOptions.value.schwerverkehrsanteilProzent =
-      event.schwerverkehrsanteilProzent;
-    chosenOptions.value.gueterverkehrsanteilProzent =
-      event.gueterverkehrsanteilProzent;
-    chosenOptions.value.radverkehr = event.radverkehr;
-    chosenOptions.value.fussverkehr = event.fussverkehr;
-
-    chosenOptions.value.personenkraftwagen = event.personenkraftwagen;
-    chosenOptions.value.lastkraftwagen = event.lastkraftwagen;
-    chosenOptions.value.lastzuege = event.lastzuege;
-    chosenOptions.value.busse = event.busse;
-    chosenOptions.value.kraftraeder = event.kraftraeder;
-    chosenOptions.value.pkwEinheiten = event.pkwEinheiten;
-  }
-}
-
-// Event-Methoden für die Geometrie Komponente
-function setVon(event: Array<number>) {
-  if (Array.isArray(event)) {
-    if (event.length > 1) {
-      chosenOptions.value.vonKnotenarm = null;
-    } else {
-      chosenOptions.value.vonKnotenarm = event[0];
-    }
-    chosenOptions.value.vonIds = event.filter((value) => value !== 0);
-  }
-}
-
-function setNach(event: Array<number>) {
-  if (Array.isArray(event)) {
-    if (event.length > 1) {
-      chosenOptions.value.nachKnotenarm = null;
-    } else {
-      chosenOptions.value.nachKnotenarm = event[0];
-    }
-    chosenOptions.value.nachIds = event.filter((value) => value !== 0);
-  }
-}
-
-function setBeideRichtungen(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.beideRichtungen = event;
-  }
-}
-
-// Event-Methoden für die Vergleichs Komponente
-function setVergleichszaehlungsId(event: string) {
-  if (event) {
-    chosenOptions.value.vergleichszaehlungsId = event;
-  }
-}
-
-function setIdVergleichszaehlungZeitreihe(event: string) {
-  if (event) {
-    chosenOptions.value.idVergleichszaehlungZeitreihe = event;
-  }
-}
-
-function setDifferenzdatenDarstellen(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.differenzdatenDarstellen = event;
-  }
-}
-
-// Event-Methoden für die Darstellungsoptionen Komponente
-function setWerteHundertRunden(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.werteHundertRunden = event;
-  }
-}
-
-function setBlackPrintMode(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.blackPrintMode = event;
-  }
-}
-
-function setMittelwert(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.mittelwert = event;
-  }
-}
-
-function setStundensumme(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.stundensumme = event;
-  }
-}
-
-function setBlocksumme(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.blocksumme = event;
-  }
-}
-
-function setTagessumme(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.tagessumme = event;
-  }
-}
-
-function setSpitzenstunde(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstunde = event;
-  }
-}
-
-function setSpitzenstundeKfz(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstundeKfz = event;
-  }
-}
-
-function setSpitzenstundeRad(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstundeRad = event;
-  }
-}
-
-function setSpitzenstundeFuss(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.spitzenstundeFuss = event;
-  }
-}
-
-function setGanglinieYAchse1MaxValue(event: number | null) {
-  if (event != undefined) {
-    chosenOptions.value.ganglinieYAchse1MaxValue = event;
-  }
-}
-
-function setGanglinieYAchse2MaxValue(event: number | null) {
-  if (event != undefined) {
-    chosenOptions.value.ganglinieYAchse2MaxValue = event;
-  }
-}
-
-function setZeitreiheGesamt(event: boolean) {
-  if (event !== undefined) {
-    chosenOptions.value.zeitreiheGesamt = event;
-  }
 }
 
 /**
@@ -413,16 +304,29 @@ function setZeitreiheGesamt(event: boolean) {
  */
 function setOptions() {
   if (
-    zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) ||
-    zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
+    !zaehlstelleUtils.hasSelectedVerkehrsarten(chosenOptions.value) &&
+    !zaehlstelleUtils.hasSelectedFahrzeugkategorie(chosenOptions.value)
   ) {
-    saveOptions();
-    dialog.value = false;
-  } else {
     snackbarStore.showError(
       "Es muss mindestens eine Verkehrsart oder Fahrzeugkategorie ausgewählt sein."
     );
+    return;
   }
+  if (
+    (activeZaehlung.value.zaehlart === Zaehlart.FJS &&
+      isEmpty(chosenOptions.value.chosenLaengsverkehre)) ||
+    (activeZaehlung.value.zaehlart === Zaehlart.QU &&
+      isEmpty(chosenOptions.value.chosenQuerungsverkehre)) ||
+    (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
+      isEmpty(chosenOptions.value.chosenVerkehrsbeziehungen))
+  ) {
+    snackbarStore.showError(
+      "Es muss mindestens eine Verkehrsbeziehung ausgewählt sein."
+    );
+    return;
+  }
+  saveOptions();
+  dialog.value = false;
 }
 
 /**
@@ -443,6 +347,9 @@ function resetOptionsmenu() {
 function resetOptions() {
   zaehlstelleStore.resetFilteroptions();
   setDefaultOptionsForZaehlung();
+
+  // Signal an Panel senden, dass ein Reset erfolgte
+  resetNotificationVergleichszaehlung.value++;
 }
 
 function resetSizeBelastungsplan() {
@@ -450,21 +357,21 @@ function resetSizeBelastungsplan() {
 }
 
 /**
- * Da das OptionsDTO für die Auswahlfelder im Formular als
+ * Da das ZaehlstelleOptionsDTO für die Auswahlfelder im Formular als
  * v-model genutzt wird, muss hier eine Kopie erzeugt werden. Andernfalls
  * würde es zu einer dirketen Veränderung des Stores kommen - was dieser
  * nicht mag.
  */
-watch(options, (newOptions: OptionsDTO) => {
-  const options = {} as OptionsDTO;
+watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
+  const options = {} as ZaehlstelleOptionsDTO;
   Object.assign(options, newOptions);
   chosenOptions.value = options;
 });
 
 watch(
-  () => props.zaehlung,
+  () => activeZaehlung.value,
   () => {
-    if (zaehlstelleStore.isHistory) {
+    if (zaehlstelleStore.isInHistory && zaehlstelleStore.isCalledFromHistory) {
       zaehlstelleStore.reloadFilteroptions();
     } else {
       resetOptions();
@@ -472,10 +379,3 @@ watch(
   }
 );
 </script>
-
-<!--<style lang="sass">-->
-<!--@import 'vuetify/lib/components/VExpansionPanel/_variables.scss'-->
-<!--.v-expansion-panel-->
-<!--  &::before-->
-<!--    +elevation(0)-->
-<!--</style>-->

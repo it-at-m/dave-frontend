@@ -20,16 +20,19 @@ import zweiPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/Zwei
 // SearchAndFilter
 import searchAndFilter from "@/components/search/filter/SearchAndFilterIcon.vue";
 // Zaehlart
+import artFJS from "@/components/zaehlstelle/icons/ArtIcons/ArtFJS.vue";
 import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
 import artN from "@/components/zaehlstelle/icons/ArtIcons/ArtN.vue";
 import artQ from "@/components/zaehlstelle/icons/ArtIcons/ArtQ.vue";
 import artQB from "@/components/zaehlstelle/icons/ArtIcons/ArtQB.vue";
 import artQH from "@/components/zaehlstelle/icons/ArtIcons/ArtQH.vue";
 import artQI from "@/components/zaehlstelle/icons/ArtIcons/ArtQI.vue";
+import artQJS from "@/components/zaehlstelle/icons/ArtIcons/ArtQJS.vue";
 import artQR from "@/components/zaehlstelle/icons/ArtIcons/ArtQR.vue";
 import artQS from "@/components/zaehlstelle/icons/ArtIcons/ArtQS.vue";
 import artQSt from "@/components/zaehlstelle/icons/ArtIcons/ArtQSt.vue";
 import artQT from "@/components/zaehlstelle/icons/ArtIcons/ArtQT.vue";
+import artQU from "@/components/zaehlstelle/icons/ArtIcons/ArtQU.vue";
 import artR from "@/components/zaehlstelle/icons/ArtIcons/ArtR.vue";
 import artT from "@/components/zaehlstelle/icons/ArtIcons/ArtT.vue";
 import artTK from "@/components/zaehlstelle/icons/ArtIcons/ArtTK.vue";
@@ -83,6 +86,9 @@ export default createVuetify({
       artQSt,
       artQT,
       artR,
+      artQJS,
+      artFJS,
+      artQU,
       artT,
       artTK,
       //Fahrzeugklasse

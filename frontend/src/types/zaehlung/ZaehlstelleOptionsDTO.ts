@@ -1,7 +1,12 @@
+import type Rounding from "@/types/enum/Rounding";
+import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+
 import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 
-export default interface OptionsDTO {
+export default interface ZaehlstelleOptionsDTO {
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
   zeitblock: string;
@@ -30,7 +35,7 @@ export default interface OptionsDTO {
   fahrzeugklassenStapeln: boolean;
   beschriftung: boolean;
   datentabelle: boolean;
-  werteHundertRunden: boolean;
+  rounding: Rounding;
   differenzdatenDarstellen: boolean;
   vergleichszaehlungsId: string | null;
   vonKnotenarm: number | null;
@@ -43,4 +48,7 @@ export default interface OptionsDTO {
   ganglinieYAchse2MaxValue: number | null;
   idVergleichszaehlungZeitreihe: string | null;
   zeitreiheGesamt: boolean;
+  chosenLaengsverkehre: Array<LaengsverkehrDTO>;
+  chosenQuerungsverkehre: Array<QuerungsverkehrDTO>;
+  chosenVerkehrsbeziehungen: Array<VerkehrsbeziehungDTO>;
 }

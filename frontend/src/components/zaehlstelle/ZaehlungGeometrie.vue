@@ -17,7 +17,7 @@
     >
       <g class="Page">
         <g
-          id="node5"
+          id="knotenarm5"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
           <rect
@@ -37,7 +37,7 @@
         </g>
 
         <g
-          id="node6"
+          id="knotenarm6"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
           <rect
@@ -57,7 +57,7 @@
         </g>
 
         <g
-          id="node7"
+          id="knotenarm7"
           class="com.sun.star.drawing.PolyPolygonShape"
         >
           <rect
@@ -77,7 +77,7 @@
         </g>
 
         <g
-          id="node8"
+          id="knotenarm8"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
           <rect
@@ -97,7 +97,7 @@
         </g>
 
         <g
-          id="node1"
+          id="knotenarm1"
           class="com.sun.star.drawing.PolyPolygonShape"
         >
           <rect
@@ -117,7 +117,7 @@
         </g>
 
         <g
-          id="node2"
+          id="knotenarm2"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
           <rect
@@ -137,7 +137,7 @@
         </g>
 
         <g
-          id="node3"
+          id="knotenarm3"
           class="com.sun.star.drawing.ClosedBezierShape"
         >
           <rect
@@ -157,7 +157,7 @@
         </g>
 
         <g
-          id="node4"
+          id="knotenarm4"
           class="com.sun.star.drawing.PolyPolygonShape"
         >
           <rect
@@ -177,7 +177,7 @@
         </g>
 
         <g
-          id="nodeCenter"
+          id="center"
           class="com.sun.star.drawing.PolyPolygonShape"
         >
           <rect

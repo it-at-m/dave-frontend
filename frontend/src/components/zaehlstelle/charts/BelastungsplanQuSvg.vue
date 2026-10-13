@@ -1,0 +1,3840 @@
+<template>
+  <v-sheet id="belastungsplan-zaehlstelle">
+    <svg
+      ref="svgRef"
+      id="svg1"
+      :width="sizeBelastungsplan"
+      :height="sizeBelastungsplan"
+      viewBox="0 0 1400 1400"
+      version="1.1"
+      fill-rule="evenodd"
+      stroke-width="28.222"
+      stroke-linejoin="round"
+      preserveAspectRatio="xMidYMid"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:svg="http://www.w3.org/2000/svg"
+    >
+      <defs id="defs1" />
+      <g
+        id="knotenarme_1_to_4"
+        class="Page"
+        style="stroke-width: 28.22049979; stroke-dasharray: none"
+      >
+        <g
+          v-if="isKnotenarm(1)"
+          id="knotenarm1_group"
+          class="com.sun.star.drawing.ClosedBezierShape"
+          style="stroke-width: 28.22049979; stroke-dasharray: none"
+        >
+          <g
+            id="knotenarm1"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              id="knotenarm1_spike"
+              d="M 664.99999,665 V 185.409 L 699.99947,140 734.99999,185.4058 V 665 Z"
+              stroke="none"
+              style="
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+                fill: #ececec;
+              "
+            />
+            <g
+              id="knotenarm1_number"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            >
+              <circle
+                id="knotenarm1_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="700"
+                cy="614.25"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm1_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                y="622.00684"
+                x="693.53955"
+              >
+                <tspan
+                  id="knotenarm1_number_tspan"
+                  style="stroke-width: 28.22049979; stroke-dasharray: none"
+                  x="693.53955"
+                  y="622.00684"
+                >
+                  1
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode1.length === 1"
+              id="knotenarm1_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              transform="rotate(-90)"
+              x="-671.03851"
+              y="629.34802"
+            >
+              <tspan
+                id="knotenarm1_strassenname_tspan"
+                x="-438.67819"
+                y="705.79083"
+                style="stroke-width: 28.22049979; stroke-dasharray: none"
+              >
+                {{ streetnameNode1[0] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode1.length > 1"
+              id="knotenarm1_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              transform="rotate(-90)"
+              x="-671.03851"
+              y="615.34802"
+            >
+              <tspan
+                id="knotenarm1_strassenname_multirow1_tspan"
+                x="-438.67819"
+                y="691.79083"
+                style="stroke-width: 28.22049979; stroke-dasharray: none"
+              >
+                {{ streetnameNode1[0] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode1.length > 1"
+              id="knotenarm1_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              transform="rotate(-90)"
+              x="-671.03851"
+              y="643.34802"
+            >
+              <tspan
+                id="knotenarm1_strassenname_multirow2_tspan"
+                x="-438.67819"
+                y="719.79083"
+                style="stroke-width: 28.22049979; stroke-dasharray: none"
+              >
+                {{ streetnameNode1[1] }}
+              </tspan>
+            </text>
+            <g id="knotenarm1_sum">
+              <text
+                id="knotenarm1_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                x="-1347.4354"
+                y="37.009502"
+              >
+                <tspan
+                  id="knotenarm1_sum_tspan"
+                  x="-200"
+                  y="818"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode1Arrows }}
+                </tspan>
+              </text>
+              <path
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,299.49696 796.16212,193.00269"
+                id="knotenarm1_sum_line"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm1"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              v-if="node1WestToEastCensusComissioned"
+              id="arrow_knotenarm1_west_to_ost"
+              d="M 612.5,252.424 H 745.2445 V 239.5 l 42.2555,28 -42.2555,28 V 282.576 H 612.5 Z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode1WestToEast"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node1EastToWestCensusComissioned"
+              id="arrow_knotenarm1_ost_to_west"
+              d="M 787.5,230.076 H 654.7555 V 243 L 612.5,215 654.7555,187 v 12.924 H 787.5 Z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode1EastToWest"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node1WestToEastCensusComissioned"
+              id="arrow_knotenarm1_west_to_ost_zaehlwert_text"
+              xml:space="preserve"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.22049989;
+                stroke-dasharray: none;
+              "
+              x="-465.17621"
+              y="-520.35779"
+            >
+              <tspan
+                id="arrow_knotenarm1_west_to_ost_zaehlwert_tspan"
+                x="699.1098"
+                y="272.47839"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049989;
+                  stroke-dasharray: none;
+                `"
+              >
+                {{ zaehlwertArrowNode1WestToEast }}
+              </tspan>
+            </text>
+            <text
+              v-if="node1EastToWestCensusComissioned"
+              id="arrow_knotenarm1_ost_to_west_zaehlwert_text"
+              xml:space="preserve"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.22049989;
+                stroke-dasharray: none;
+              "
+              x="-465.17548"
+              y="-572.85791"
+            >
+              <tspan
+                id="arrow_knotenarm1_ost_to_west_zaehlwert_tspan"
+                x="699.1098"
+                y="219.97839"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.2204997;
+                  stroke-dasharray: none;
+                `"
+              >
+                {{ zaehlwertArrowNode1EastToWest }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="isKnotenarm(2)"
+          id="knotenarm2_group"
+          style="stroke-width: 28.22049979; stroke-dasharray: none"
+        >
+          <g
+            id="knotenarm2"
+            style="
+              display: inline;
+              stroke-width: 28.2205;
+              stroke-dasharray: none;
+            "
+          >
+            <path
+              id="knotenarm2_spike"
+              d="M 734.99999,664.99999 H 1214.591 l 45.409,34.99948 -45.4058,35.00052 H 734.99999 Z"
+              stroke="none"
+              style="
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+                fill: #ececec;
+              "
+            />
+            <text
+              v-if="streetnameNode2.length === 1"
+              id="knotenarm2_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="728.96271"
+              y="629.34802"
+            >
+              <tspan
+                id="knotenarm2_strassenname_tspan"
+                x="961.323"
+                y="705.79083"
+                style="stroke-width: 28.2205; stroke-dasharray: none"
+              >
+                {{ streetnameNode2[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm2_number"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+            >
+              <circle
+                id="knotenarm2_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="785.75"
+                cy="700"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm2_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                y="707.33368"
+                x="779.30457"
+              >
+                <tspan
+                  id="knotenarm2_number_tspan"
+                  style="stroke-width: 28.2205; stroke-dasharray: none"
+                  x="779.30457"
+                  y="707.33368"
+                >
+                  2
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode2.length > 1"
+              id="knotenarm2_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="728.96271"
+              y="643.34802"
+            >
+              <tspan
+                id="knotenarm2_strassenname_multirow2_tspan"
+                x="961.323"
+                y="719.79083"
+                style="stroke-width: 28.2205; stroke-dasharray: none"
+              >
+                {{ streetnameNode2[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode2.length > 1"
+              id="knotenarm2_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="728.96271"
+              y="615.34802"
+            >
+              <tspan
+                id="knotenarm2_strassenname_multirow1_tspan"
+                x="961.323"
+                y="691.79083"
+                style="stroke-width: 28.2205; stroke-dasharray: none"
+              >
+                {{ streetnameNode2[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm2_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(90,699.99982,699.99982)"
+            >
+              <text
+                id="knotenarm2_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm2_sum_tspan"
+                  x="-195"
+                  y="818"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode2Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm2_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm2"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              v-if="node2NorthToSouthCensusComissioned"
+              id="arrow_knotenarm2_nord_to_sued"
+              d="m 1147.576,612.49999 v 132.74447 h 12.924 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode2NorthToSouth"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node2SouthToNorthCensusComissioned"
+              id="arrow_knotenarm2_sued_to_nord"
+              d="M 1170.924,787.49999 V 654.75552 H 1158 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode2SouthToNorth"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node2NorthToSouthCensusComissioned"
+              id="arrow_knotenarm2_nord_to_sued_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(-90)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              "
+              x="-1857.6315"
+              y="359.45795"
+            >
+              <tspan
+                id="arrow_knotenarm2_nord_to_sued_zaehlwert_tspan"
+                x="-700.60413"
+                y="1140.3517"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+              >
+                {{ zaehlwertArrowNode2NorthToSouth }}
+              </tspan>
+            </text>
+            <text
+              v-if="node2SouthToNorthCensusComissioned"
+              id="arrow_knotenarm2_sued_to_nord_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(-90)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              "
+              x="-1857.6313"
+              y="411.95795"
+            >
+              <tspan
+                id="arrow_knotenarm2_sued_to_nord_zaehlwert_tspan"
+                x="-700.60413"
+                y="1194"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                 `"
+              >
+                {{ zaehlwertArrowNode2SouthToNorth }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="isKnotenarm(3)"
+          id="knotenarm3_group"
+          style="stroke-width: 28.22049979; stroke-dasharray: none"
+        >
+          <g
+            id="knotenarm3"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              id="knotenarm3_spike"
+              d="M 734.99999,734.99999 V 1214.591 L 700.00051,1260 664.99999,1214.5942 V 734.99999 Z"
+              stroke="none"
+              style="
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+                fill: #ececec;
+              "
+            />
+            <text
+              v-if="streetnameNode3.length === 1"
+              id="knotenarm3_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              transform="rotate(-90)"
+              x="-962.48126"
+              y="705.79083"
+            >
+              <tspan
+                id="knotenarm3_strassenname_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                x="-962.48126"
+                y="705.79083"
+              >
+                {{ streetnameNode3[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm3_number"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            >
+              <circle
+                id="knotenarm3_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="700"
+                cy="785.75"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm3_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                y="792.38141"
+                x="693.75189"
+              >
+                <tspan
+                  id="knotenarm3_number_tspan"
+                  style="stroke-width: 28.22049979; stroke-dasharray: none"
+                  x="693.75189"
+                  y="792.38141"
+                >
+                  3
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode3.length > 1"
+              id="knotenarm3_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              transform="rotate(-90)"
+              x="-962.48126"
+              y="719.79083"
+            >
+              <tspan
+                id="knotenarm3_strassenname_multirow2_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                x="-962.48126"
+                y="719.79083"
+              >
+                {{ streetnameNode3[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode3.length > 1"
+              id="knotenarm3_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              transform="rotate(-90)"
+              x="-962.48126"
+              y="691.79083"
+            >
+              <tspan
+                id="knotenarm3_strassenname_multirow1_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                x="-962.48126"
+                y="691.79083"
+              >
+                {{ streetnameNode3[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm3_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="translate(-3.251155e-6,927.49999)"
+            >
+              <text
+                id="knotenarm3_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2204997;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm3_sum_tspan"
+                  x="-195"
+                  y="818"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2204997;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode3Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm3_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm3"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              v-if="node3WestToEastCensusComissioned"
+              id="arrow_knotenarm3_west_to_ost"
+              d="M 612.5,1174.924 H 745.2445 V 1162 l 42.2555,28 -42.2555,28 v -12.924 H 612.5 Z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode3WestToEast"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node3EastToWestCensusComissioned"
+              id="arrow_knotenarm3_ost_to_west"
+              d="M 787.5,1152.576 H 654.7555 v 12.924 l -42.2555,-28 42.2555,-28 v 12.924 H 787.5 Z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode3EastToWest"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node3WestToEastCensusComissioned"
+              id="arrow_knotenarm3_west_to_ost_zaehlwert_text"
+              xml:space="preserve"
+              fill="#000000"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.22049989;
+                stroke-dasharray: none;
+              `"
+              x="-465.17621"
+              y="407.14215"
+            >
+              <tspan
+                id="arrow_knotenarm3_west_to_ost_zaehlwert_tspan"
+                x="699.1098"
+                y="1196"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049989;
+                  stroke-dasharray: none;
+                `"
+              >
+                {{ zaehlwertArrowNode3WestToEast }}
+              </tspan>
+            </text>
+            <text
+              v-if="node3EastToWestCensusComissioned"
+              id="arrow_knotenarm3_ost_to_west_zaehlwert_text"
+              xml:space="preserve"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.22049989;
+                stroke-dasharray: none;
+              "
+              x="-465.17545"
+              y="354.64206"
+            >
+              <tspan
+                id="arrow_knotenarm3_ost_to_west_zaehlwert_tspan"
+                x="699.1098"
+                y="1144"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049989;
+                  stroke-dasharray: none;
+                `"
+              >
+                {{ zaehlwertArrowNode3EastToWest }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="isKnotenarm(4)"
+          id="knotenarm4_group"
+          style="stroke-width: 28.22049979; stroke-dasharray: none"
+        >
+          <g
+            id="knotenarm4"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              id="knotenarm4_spike"
+              d="M 664.99998,734.99999 H 185.409 L 140,700.00052 185.4058,664.99999 h 479.59418 z"
+              stroke="none"
+              style="
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+                fill: #ececec;
+              "
+            />
+            <text
+              v-if="streetnameNode4.length === 1"
+              id="knotenarm4_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              x="437.52008"
+              y="705.79083"
+            >
+              <tspan
+                id="knotenarm4_strassenname_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                x="437.52008"
+                y="705.79083"
+              >
+                {{ streetnameNode4[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm4_number"
+              style="stroke-width: 28.22049979; stroke-dasharray: none"
+            >
+              <circle
+                id="knotenarm4_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="614.25"
+                cy="700"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm4_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                y="707.20343"
+                x="608.34302"
+              >
+                <tspan
+                  id="knotenarm4_number_tspan"
+                  style="stroke-width: 28.22049979; stroke-dasharray: none"
+                  x="608.34302"
+                  y="707.20343"
+                >
+                  4
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode4.length > 1"
+              id="knotenarm4_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              x="437.52008"
+              y="719.79083"
+            >
+              <tspan
+                id="knotenarm4_strassenname_multirow2_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                x="437.52008"
+                y="719.79083"
+              >
+                {{ streetnameNode4[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode4.length > 1"
+              id="knotenarm4_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 28.22049979;
+                stroke-dasharray: none;
+              `"
+              x="437.52008"
+              y="691.79083"
+            >
+              <tspan
+                id="knotenarm4_strassenname_multirow1_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.22049979;
+                  stroke-dasharray: none;
+                `"
+                x="437.52008"
+                y="691.79083"
+              >
+                {{ streetnameNode4[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm4_sum"
+              style="
+                display: inline;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              transform="rotate(90,236.24983,236.24982)"
+            >
+              <text
+                id="knotenarm4_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.22049972;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm4_sum_tspan"
+                  x="-190"
+                  y="817"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.22049972;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode4Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm4_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,290.49696 796.16212,182.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm4"
+            style="stroke-width: 28.22049979; stroke-dasharray: none"
+          >
+            <path
+              v-if="node4NorthToSouthCensusComissioned"
+              id="arrow_knotenarm4_nord_to_sued"
+              d="M 225.076,612.49999 V 745.24446 H 238 l -28,42.25553 -28,-42.25553 h 12.924 V 612.49999 Z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode4NorthToSouth"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node4SouthToNorthCensusComissioned"
+              id="arrow_knotenarm4_sued_to_nord"
+              d="M 247.424,787.49999 V 654.75552 H 234.5 l 28,-42.25553 28,42.25553 h -12.924 v 132.74447 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode4SouthToNorth"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node4NorthToSouthCensusComissioned"
+              xml:space="preserve"
+              id="arrow_knotenarm4_nord_to_sued_zaehlwert_text"
+              transform="rotate(-90)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="-1857.6313"
+              y="-568.04199"
+            >
+              <tspan
+                x="-700.60413"
+                y="217"
+                id="arrow_knotenarm4_nord_to_sued_zaehlwert_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+               `"
+              >
+                {{ zaehlwertArrowNode4NorthToSouth }}
+              </tspan>
+            </text>
+            <text
+              v-if="node4SouthToNorthCensusComissioned"
+              xml:space="preserve"
+              transform="rotate(-90)"
+              id="arrow_knotenarm4_sued_to_nord_zaehlwert_text"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.0866px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              x="-1857.6316"
+              y="-515.54205"
+            >
+              <tspan
+                x="-700.60413"
+                y="271"
+                id="arrow_knotenarm4_sued_to_nord_zaehlwert_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+              >
+                {{ zaehlwertArrowNode4SouthToNorth }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+      </g>
+      <g id="knotenarme_5_to_8">
+        <g
+          v-if="isKnotenarm(5)"
+          id="knotenarm5_group"
+          class="com.sun.star.drawing.ClosedBezierShape"
+        >
+          <g id="knotenarm5">
+            <path
+              id="knotenarm5_spike"
+              d="m 699.99999,650.50319 339.12201,-339.12205 56.8574,-7.36064 -7.3576,56.85586 -339.12433,339.12431 z"
+              stroke="none"
+              style="stroke-width: 14.949; fill: #ececec"
+            />
+            <g id="knotenarm5_number">
+              <circle
+                id="knotenarm5_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="760.63751"
+                cy="639.36597"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm5_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                `"
+                y="646.03784"
+                x="754.23737"
+              >
+                <tspan
+                  id="knotenarm5_number_tspan"
+                  style="stroke-width: 30.9229"
+                  x="754.23737"
+                  y="646.03784"
+                >
+                  5
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode5.length === 1"
+              id="knotenarm5_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(-45)"
+              x="28.961172"
+              y="919.29742"
+            >
+              <tspan
+                id="knotenarm5_strassenname_tspan"
+                x="261.3215"
+                y="995.74023"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnameNode5[0] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode5.length > 1"
+              id="knotenarm5_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(-45)"
+              x="28.963634"
+              y="933.29785"
+            >
+              <tspan
+                id="knotenarm5_strassenname_multirow2_tspan"
+                x="261.32397"
+                y="1009.7406"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnameNode5[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode5.length > 1"
+              id="knotenarm5_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(-45)"
+              x="28.961161"
+              y="905.2995"
+            >
+              <tspan
+                id="knotenarm5_strassenname_multirow1_tspan"
+                x="261.32147"
+                y="981.74231"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnameNode5[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm5_sum"
+              style="
+                display: inline;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              "
+              transform="rotate(45,720.59848,699.99663)"
+            >
+              <text
+                id="knotenarm5_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm5_sum_tspan"
+                  x="-210"
+                  y="818"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode5Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm5_sum_line"
+                style="
+                  display: inline;
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 796.33788,310.49696 796.16212,204.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm5"
+            transform="translate(6.0322729,-14.56374)"
+          >
+            <path
+              v-if="node5NorthWestToSouthEastCensusComissioned"
+              id="arrow_knotenarm5_nord_west_to_sued_ost"
+              d="m 948.14818,331.108 93.86452,93.86454 9.1387,-9.13865 10.0801,49.67814 -49.6781,-10.08016 9.1386,-9.13865 -93.86451,-93.86453 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode5NorthWestToSouthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node5SouthEastToNorthWestCensusComissioned"
+              id="arrow_knotenarm5_sued_ost_to_nord_west"
+              d="m 1086.6928,441.04853 -93.8645,-93.86454 -9.13865,9.13865 -10.08016,-49.67814 49.67811,10.08016 -9.1386,9.13865 93.8645,93.86453 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode5SouthEastToNorthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node5NorthWestToSouthEastCensusComissioned"
+              id="arrow_knotenarm5_nord_west_to_sued_ost_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-170.68669"
+              y="-1220.1736"
+            >
+              <tspan
+                id="arrow_knotenarm5_nord_west_to_sued_ost_zaehlwert_tspan"
+                x="993.59924"
+                y="-416"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode5NorthWestToSouthEast }}
+              </tspan>
+            </text>
+            <text
+              v-if="node5SouthEastToNorthWestCensusComissioned"
+              id="arrow_knotenarm5_sued_ost_to_nord_west_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-170.68846"
+              y="-1272.6682"
+            >
+              <tspan
+                id="arrow_knotenarm5_sued_ost_to_nord_west_zaehlwert_tspan"
+                x="993.59674"
+                y="-464"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode5SouthEastToNorthWest }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="isKnotenarm(6)"
+          id="knotenarm6_group"
+        >
+          <g id="knotenarm6">
+            <path
+              id="knotenarm6_spike"
+              d="m 749.49747,699.99999 339.12213,339.12201 7.3606,56.8574 -56.8559,-7.3576 -339.12431,-339.12434 z"
+              stroke="none"
+              style="stroke-width: 14.949; fill: #ececec"
+            />
+            <text
+              v-if="streetnameNode6.length === 1"
+              id="knotenarm6_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(45)"
+              x="1018.9124"
+              y="-70.653908"
+            >
+              <tspan
+                id="knotenarm6_strassenname_tspan"
+                x="1251.2728"
+                y="5.7888861"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnameNode6[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm6_number"
+              transform="rotate(45,785.75,700)"
+            >
+              <circle
+                id="knotenarm6_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="810.86731"
+                cy="760.6344"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm6_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                `"
+                y="1118.2867"
+                x="29.266506"
+                transform="rotate(-45)"
+              >
+                <tspan
+                  id="knotenarm6_number_tspan"
+                  style="stroke-width: 30.9229"
+                  x="29.266506"
+                  y="1118.2867"
+                >
+                  6
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode6.length > 1"
+              id="knotenarm6_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(45)"
+              x="1018.9124"
+              y="-56.651062"
+            >
+              <tspan
+                id="knotenarm6_strassenname_multirow2_tspan"
+                x="1251.2728"
+                y="19.791727"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnameNode6[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode6.length > 1"
+              id="knotenarm6_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(45)"
+              x="1018.9124"
+              y="-84.651779"
+            >
+              <tspan
+                id="knotenarm6_strassenname_multirow1_tspan"
+                x="1251.2728"
+                y="-8.208993"
+                style="stroke-width: 26.4927"
+              >
+                {{ streetnameNode6[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm6_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(135,706.03406,706.03209)"
+            >
+              <text
+                id="knotenarm6_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm6_sum_tspan"
+                  x="-209"
+                  y="816"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode6Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm6_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 797.33788,290.49696 795.16212,198.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm6"
+            transform="translate(14.564164,6.031585)"
+          >
+            <path
+              v-if="node6SouthWestToNorthEastCensusComissioned"
+              id="arrow_knotenarm6_sued_west_to_nord_ost"
+              d="m 963.94849,1083.6928 93.86451,-93.8645 -9.1386,-9.13865 49.6781,-10.08016 -10.0801,49.67811 -9.1387,-9.1386 -93.86452,93.8645 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode6SouthWestToNorthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node6NorthEastToSouthWestCensusComissioned"
+              id="arrow_knotenarm6_nord_ost_to_sued_west"
+              d="m 1068.8925,950.14818 -93.86452,93.86452 9.13865,9.1387 -49.67814,10.0801 10.08016,-49.6781 9.13865,9.1386 93.8645,-93.86451 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode6NorthEastToSouthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node6NorthEastToSouthWestCensusComissioned"
+              id="arrow_knotenarm6_nord_ost_to_sued_west_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(-45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1172.4175"
+              y="644.03931"
+            >
+              <tspan
+                id="arrow_knotenarm6_nord_ost_to_sued_west_zaehlwert_tspan"
+                x="-8.1312895"
+                y="1420.8754"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode6NorthEastToSouthWest }}
+              </tspan>
+            </text>
+            <text
+              v-if="node6SouthWestToNorthEastCensusComissioned"
+              id="arrow_knotenarm6_sued_west_to_nord_ost_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(-45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1172.6617"
+              y="696.29114"
+            >
+              <tspan
+                id="arrow_knotenarm6_sued_west_to_nord_ost_zaehlwert_tspan"
+                x="-8.3763189"
+                y="1470"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode6SouthWestToNorthEast }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="isKnotenarm(7)"
+          id="knotenarm7_group"
+        >
+          <g id="knotenarm7">
+            <path
+              id="knotenarm7_spike"
+              d="m 699.99994,749.49747 -339.12205,339.12213 -56.85739,7.3606 7.35765,-56.8559 339.12432,-339.12431 z"
+              stroke="none"
+              style="stroke-width: 14.949; fill: #ececec"
+            />
+            <text
+              v-if="streetnameNode7.length === 1"
+              id="knotenarm7_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(-45)"
+              x="-262.48056"
+              y="995.74023"
+            >
+              <tspan
+                id="knotenarm7_strassenname_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                `"
+                x="-262.48056"
+                y="995.74023"
+              >
+                {{ streetnameNode7[0] }}
+              </tspan>
+            </text>
+            <g id="knotenarm7_number">
+              <circle
+                id="knotenarm7_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="639.36597"
+                cy="760.63751"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm7_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                `"
+                y="767.69238"
+                x="633.51685"
+              >
+                <tspan
+                  id="knotenarm7_number_tspan"
+                  style="stroke-width: 30.9229"
+                  x="633.51685"
+                  y="767.69238"
+                >
+                  7
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode7.length > 1"
+              id="knotenarm7_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(-45)"
+              x="-262.48306"
+              y="1009.7406"
+            >
+              <tspan
+                id="knotenarm7_strassenname_multirow2_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                `"
+                x="-262.48306"
+                y="1009.7406"
+              >
+                {{ streetnameNode7[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode7.length > 1"
+              id="knotenarm7_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              transform="rotate(-45)"
+              x="-262.48306"
+              y="981.73987"
+            >
+              <tspan
+                id="knotenarm7_strassenname_multirow1_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                `"
+                x="-262.48306"
+                y="981.73987"
+              >
+                {{ streetnameNode7[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm7_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(45,-434.15313,221.6861)"
+            >
+              <text
+                id="knotenarm7_sum_text"
+                xml:space="preserve"
+                transform="rotate(-90)"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm7_sum_tspan"
+                  x="-177"
+                  y="821"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode7Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm7_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 800.33788,282.49696 800.16212,169.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm7"
+            transform="translate(-14.563392,6.0334257)"
+          >
+            <path
+              v-if="node7NorthWestToSouthEastCensusComissioned"
+              id="arrow_knotenarm7_nord_west_to_sued_ost"
+              d="m 318.30769,965.94849 93.86453,93.86451 9.13865,-9.1386 10.08016,49.6781 -49.67814,-10.0801 9.13865,-9.1387 -93.86454,-93.86452 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode7NorthWestToSouthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node7SouthEastToNorthWestCensusComissioned"
+              id="arrow_knotenarm7_sued_ost_to_nord_west"
+              d="m 457.85234,1073.8925 -93.86453,-93.8645 -9.13865,9.1386 -10.08016,-49.67811 49.67814,10.08016 -9.13865,9.13865 93.86454,93.8645 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode7SouthEastToNorthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node7SouthEastToNorthWestCensusComissioned"
+              id="arrow_knotenarm7_sued_ost_to_nord_west_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-170.48979"
+              y="-345.38342"
+            >
+              <tspan
+                id="arrow_knotenarm7_sued_ost_to_nord_west_zaehlwert_tspan"
+                x="993.79614"
+                y="428"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode7SouthEastToNorthWest }}
+              </tspan>
+            </text>
+            <text
+              v-if="node7NorthWestToSouthEastCensusComissioned"
+              id="arrow_knotenarm7_nord_west_to_sued_ost_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-170.48906"
+              y="-292.88657"
+            >
+              <tspan
+                id="arrow_knotenarm7_nord_west_to_sued_ost_zaehlwert_tspan"
+                x="993.79614"
+                y="480"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode7NorthWestToSouthEast }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          v-if="isKnotenarm(8)"
+          id="knotenarm8_group"
+        >
+          <g id="knotenarm8">
+            <path
+              id="knotenarm8_spike"
+              d="M 650.50319,699.99991 311.38115,360.87788 304.0205,304.0205 l 56.85586,7.35764 339.1243,339.1243 z"
+              stroke="none"
+              style="stroke-width: 14.949; fill: #ececec"
+            />
+            <text
+              v-if="streetnameNode8.length === 1"
+              id="knotenarm8_strassenname_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              x="727.46826"
+              y="5.7913613"
+              transform="rotate(45)"
+            >
+              <tspan
+                id="knotenarm8_strassenname_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                `"
+                x="727.46826"
+                y="5.7913613"
+              >
+                {{ streetnameNode8[0] }}
+              </tspan>
+            </text>
+            <g id="knotenarm8_number">
+              <circle
+                id="knotenarm8_number_circle"
+                style="
+                  fill: none;
+                  fill-opacity: 1;
+                  stroke: #000000;
+                  stroke-width: 0.597525;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                  paint-order: normal;
+                "
+                cx="639.36597"
+                cy="639.36597"
+                r="11.951238"
+              />
+              <text
+                id="knotenarm8_number_text"
+                xml:space="default"
+                :style="`
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  text-align: start;
+                  writing-mode: lr-tb;
+                  direction: ltr;
+                  text-anchor: start;
+                  fill: #000000;
+                  stroke-width: 30.9229;
+                `"
+                y="646.78491"
+                x="633.36969"
+              >
+                <tspan
+                  id="knotenarm8_number_tspan"
+                  style="stroke-width: 30.9229"
+                  x="633.36969"
+                  y="646.78491"
+                >
+                  8
+                </tspan>
+              </text>
+            </g>
+            <text
+              v-if="streetnameNode8.length > 1"
+              id="knotenarm8_strassenname_multirow2_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              x="727.47076"
+              y="19.791721"
+              transform="rotate(45)"
+            >
+              <tspan
+                id="knotenarm8_strassenname_multirow2_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                `"
+                x="727.47076"
+                y="19.791721"
+              >
+                {{ streetnameNode8[1] }}
+              </tspan>
+            </text>
+            <text
+              v-if="streetnameNode8.length > 1"
+              id="knotenarm8_strassenname_multirow1_text"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: ltr;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill: #000000;
+                fill-opacity: 1;
+                stroke-width: 26.4927;
+              `"
+              x="727.47076"
+              y="-8.2089996"
+              transform="rotate(45)"
+            >
+              <tspan
+                id="knotenarm8_strassenname_multirow1_tspan"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 26.4927;
+                `"
+                x="727.47076"
+                y="-8.2089996"
+              >
+                {{ streetnameNode8[0] }}
+              </tspan>
+            </text>
+            <g
+              id="knotenarm8_sum"
+              style="stroke-width: 28.2205; stroke-dasharray: none"
+              transform="rotate(135,507.90765,227.71915)"
+            >
+              <text
+                xml:space="preserve"
+                transform="rotate(-90)"
+                id="knotenarm8_sum_text"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  text-align: start;
+                  writing-mode: rl-tb;
+                  direction: rtl;
+                  white-space: pre;
+                  display: inline;
+                  fill: #000000;
+                  fill-opacity: 1;
+                  stroke-width: 28.2205;
+                  stroke-dasharray: none;
+                `"
+                x="-1383.7572"
+                y="-70.255974"
+              >
+                <tspan
+                  id="knotenarm8_sum_tspan"
+                  x="-175"
+                  y="820"
+                  :style="`
+                    font-style: normal;
+                    font-variant: normal;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-size: ${belastungsplanMethods.maxlineWidth}px;
+                    font-family: ${BelastungsplanConstants.fontfamily};
+                    font-variant-ligatures: normal;
+                    font-variant-caps: normal;
+                    font-variant-numeric: normal;
+                    font-variant-east-asian: normal;
+                    stroke-width: 28.2205;
+                    stroke-dasharray: none;
+                  `"
+                >
+                  {{ sumNode8Arrows }}
+                </tspan>
+              </text>
+              <path
+                id="knotenarm8_sum_line"
+                style="
+                  fill: #000000;
+                  stroke: #000000;
+                  stroke-width: 3.32425;
+                  stroke-dasharray: none;
+                  stroke-opacity: 1;
+                "
+                d="M 800.33788,275.49696 798.16212,170.00269"
+              />
+            </g>
+          </g>
+          <g
+            id="arrows_knotenarm8"
+            transform="translate(-6.0332912,-14.564242)"
+          >
+            <path
+              v-if="node8SouthWestToNorthEastCensusComissioned"
+              id="arrow_knotenarm8_sued_west_to_nord_ost"
+              d="m 328.108,456.85234 93.86454,-93.86453 -9.13865,-9.13865 49.67814,-10.08016 -10.08016,49.67814 -9.13865,-9.13865 -93.86453,93.86454 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode8SouthWestToNorthEast"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <path
+              v-if="node8NorthEastToSouthWestCensusComissioned"
+              id="arrow_knotenarm8_nord_ost_to_sued_west"
+              d="m 436.04853,318.30769 -95.86454,96.86453 9.13865,9.13865 -49.67814,10.08016 10.08016,-49.67814 9.13865,9.13865 93.86453,-93.86454 z"
+              fill="#FFFFFF"
+              :stroke="colorArrowNode8NorthEastToSouthWest"
+              style="stroke-width: 3; stroke-dasharray: none"
+            />
+            <text
+              v-if="node8SouthWestToNorthEastCensusComissioned"
+              id="arrow_knotenarm8_sued_west_to_nord_ost_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(-45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1171.1313"
+              y="-283.24542"
+            >
+              <tspan
+                id="arrow_knotenarm8_sued_west_to_nord_ost_zaehlwert_tspan"
+                x="-6.8456869"
+                y="578"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode8SouthWestToNorthEast }}
+              </tspan>
+            </text>
+            <text
+              v-if="node8NorthEastToSouthWestCensusComissioned"
+              id="arrow_knotenarm8_nord_ost_to_sued_west_zaehlwert_text"
+              xml:space="preserve"
+              transform="rotate(-45)"
+              fill="#000000"
+              style="
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: 28.2628px;
+                font-family: Arial;
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: rl-tb;
+                direction: rtl;
+                text-anchor: middle;
+                white-space: pre;
+                display: inline;
+                fill-opacity: 1;
+                stroke-width: 44.2239;
+              "
+              x="-1172.6158"
+              y="-231.24287"
+            >
+              <tspan
+                id="arrow_knotenarm8_nord_ost_to_sued_west_zaehlwert_tspan"
+                x="-8.3306265"
+                y="525"
+                :style="`
+                  font-style: normal;
+                  font-variant: normal;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-size: ${belastungsplanMethods.maxlineWidth}px;
+                  font-family: ${BelastungsplanConstants.fontfamily};
+                  font-variant-ligatures: normal;
+                  font-variant-caps: normal;
+                  font-variant-numeric: normal;
+                  font-variant-east-asian: normal;
+                  stroke-width: 44.2239;
+                `"
+              >
+                {{ zaehlwertArrowNode8NorthEastToSouthWest }}
+              </tspan>
+            </text>
+          </g>
+        </g>
+      </g>
+      <g id="legend">
+        <g
+          id="legend-zaehlinfo"
+          style="stroke-width: 28.2205; stroke-dasharray: none"
+        >
+          <text
+            id="verkehrsart"
+            xml:space="preserve"
+            :style="`
+              font-style: normal;
+              font-variant: normal;
+              font-weight: normal;
+              font-stretch: normal;
+              font-size: ${belastungsplanMethods.maxlineWidth}px;
+              font-family: ${BelastungsplanConstants.fontfamily};
+              font-variant-ligatures: normal;
+              font-variant-caps: normal;
+              font-variant-numeric: normal;
+              font-variant-east-asian: normal;
+              text-align: start;
+              writing-mode: lr-tb;
+              direction: ltr;
+              text-anchor: start;
+              white-space: pre;
+              inline-size: 268.729;
+              display: inline;
+              fill: #000000;
+              stroke-width: 28.2205;
+              stroke-dasharray: none;
+            `"
+            x="56"
+            y="1307.6622"
+          >
+            <tspan
+              id="tspan35"
+              x="56"
+              y="1307.6622"
+            >
+              <tspan
+                id="tspan34"
+                style="font-weight: bold"
+              >
+                {{ optionen.radverkehr ? "RAD" : "FUSS" }}
+              </tspan>
+            </tspan>
+          </text>
+          <g
+            id="zaehlzeit2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              id="zaehlzeit2-multirow"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="56"
+              y="1255.6622"
+            >
+              <tspan
+                id="tspan36"
+                x="56"
+                y="1255.6622"
+              >
+                {{ zaehlzeit2 }}
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="zaehlzeit1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              id="zaehlzeit1-multirow"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="56"
+              y="1229.6622"
+            >
+              <tspan
+                id="tspan38"
+                x="56"
+                y="1229.6622"
+              >
+                <tspan
+                  id="tspan37"
+                  style="font-weight: bold"
+                >
+                  {{ optionen.zeitauswahl }}
+                </tspan>
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g id="legend-compass">
+          <path
+            id="compass2"
+            :style="`
+              fill: none;
+              fill-opacity: 1;
+              stroke: ${BelastungsplanConstants.legendColor};
+              stroke-width: 2;
+              stroke-linecap: butt;
+              stroke-miterlimit: 2.5;
+              stroke-dasharray: none;
+              stroke-opacity: 1;
+            `"
+            d="m 93.333333,93.333333 h 27.999997 l -14,-63 z"
+          />
+          <text
+            id="compass1"
+            xml:space="default"
+            :style="`
+              font-style: normal;
+              font-variant: normal;
+              font-weight: normal;
+              font-stretch: normal;
+              font-size: ${belastungsplanMethods.maxlineWidth}px;
+              font-family: ${BelastungsplanConstants.fontfamily};
+              font-variant-ligatures: normal;
+              font-variant-caps: normal;
+              font-variant-numeric: normal;
+              font-variant-east-asian: normal;
+              text-align: start;
+              writing-mode: lr-tb;
+              direction: ltr;
+              text-anchor: middle;
+              fill: ${BelastungsplanConstants.legendColor};
+              stroke-width: 2;
+            `"
+            x="107.33477"
+            y="83.332977"
+          >
+            <tspan
+              id="tspan6"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                stroke-width: 2;
+              `"
+            >
+              N
+            </tspan>
+          </text>
+        </g>
+        <g id="legend-zaehlstelle">
+          <g
+            id="zaehlstelle2"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              id="zaehlstelle2-multirow"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="1107.0699"
+              y="84.662277"
+            >
+              <tspan
+                id="tspan39"
+                x="1107.0699"
+                y="84.662277"
+              >
+                Stadtbezirk
+                {{ zaehlstelleStore.getZaehlstelleHeader.stadtbezirkNummer }}
+              </tspan>
+              <tspan
+                id="tspan40"
+                x="1107.0699"
+                y="110.83184"
+              >
+                Zähldatum:
+                {{
+                  dateUtils.getShortVersionOfDate(
+                    new Date(activeZaehlung.datum)
+                  )
+                }}
+              </tspan>
+            </text>
+          </g>
+          <g
+            id="zaehlstelle1"
+            style="stroke-width: 28.2205; stroke-dasharray: none"
+          >
+            <text
+              id="zaehlstelle1-multirow"
+              xml:space="preserve"
+              :style="`
+                font-style: normal;
+                font-variant: normal;
+                font-weight: normal;
+                font-stretch: normal;
+                font-size: ${belastungsplanMethods.maxlineWidth}px;
+                font-family: ${BelastungsplanConstants.fontfamily};
+                font-variant-ligatures: normal;
+                font-variant-caps: normal;
+                font-variant-numeric: normal;
+                font-variant-east-asian: normal;
+                text-align: start;
+                writing-mode: lr-tb;
+                direction: ltr;
+                text-anchor: start;
+                white-space: pre;
+                inline-size: 268.729;
+                display: inline;
+                fill: #000000;
+                stroke-width: 28.2205;
+                stroke-dasharray: none;
+              `"
+              x="1107.0699"
+              y="58.662277"
+            >
+              <tspan
+                id="tspan42"
+                x="1107.0699"
+                y="58.662277"
+              >
+                <tspan
+                  id="tspan41"
+                  style="font-weight: bold"
+                >
+                  Zählstelle {{ zaehlstelleStore.getZaehlstelleHeader.nummer }}
+                </tspan>
+              </tspan>
+            </text>
+          </g>
+        </g>
+      </g>
+      <path
+        id="center"
+        d="m 14253.004,17465.11 166.703,0 117.876,117.877 0,166.702 -117.876,117.877 -166.703,0 -117.876,-117.877 0,-166.702 z"
+        fill="#ececec"
+        transform="matrix(0.31493043,0,0,0.31493043,-3814.9546,-4863.6674)"
+      />
+    </svg>
+  </v-sheet>
+</template>
+
+<script setup lang="ts">
+import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+
+import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { useDisplay } from "vuetify/framework";
+
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
+import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import Zaehldauer from "@/types/enum/Zaehldauer";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import { useDateUtils } from "@/util/DateUtils";
+import { useQu } from "@/util/QuUtils";
+import { useStrassennameUtils } from "@/util/StrassennameUtils";
+
+interface Props {
+  data: LadeBelastungsplanQuDTO;
+  dimension?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  dimension: "600vh",
+});
+
+const zaehlstelleStore = useZaehlstelleStore();
+const display = useDisplay();
+const dateUtils = useDateUtils();
+const belastungsplanMethods = useBelastungsplanMethods();
+
+const sizeBelastungsplan = computed(() => {
+  let sizeBelastungsplanSvg: number = zaehlstelleStore.getSizeBelastungsplanSvg;
+  if (sizeBelastungsplanSvg === 0) {
+    sizeBelastungsplanSvg = minSizeBelastungsplan.value;
+  }
+  return sizeBelastungsplanSvg + "px";
+});
+
+const minSizeBelastungsplan = computed(() => {
+  return (
+    (parseInt(props.dimension.trim().replace("vh", "")) *
+      display.height.value) /
+    100
+  );
+});
+
+const maxSizeBelastungsplan = computed(() => {
+  return (
+    (parseInt(props.dimension.trim().replace("vh", "")) * display.width.value) /
+    100
+  );
+});
+
+const zaehlzeit2 = computed(() => {
+  if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN) {
+      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+    } else {
+      return "hochgerechnet";
+    }
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+  } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+  } else if (
+    optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  ) {
+    const startEndeUhrzeitIntervalls: StartEndeUhrzeitIntervalls =
+      zaehlstelleStore.getStartEndeUhrzeitIntervalls;
+    return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
+  }
+});
+
+const qu = useQu();
+const strassennameUtils = useStrassennameUtils();
+
+const streetnameNode1 = ref<Array<string>>([]);
+const streetnameNode2 = ref<Array<string>>([]);
+const streetnameNode3 = ref<Array<string>>([]);
+const streetnameNode4 = ref<Array<string>>([]);
+const streetnameNode5 = ref<Array<string>>([]);
+const streetnameNode6 = ref<Array<string>>([]);
+const streetnameNode7 = ref<Array<string>>([]);
+const streetnameNode8 = ref<Array<string>>([]);
+
+const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+  return zaehlstelleStore.getAktiveZaehlung;
+});
+
+const availableKnotenarme = computed(() => {
+  return qu.computeAvailableKnotenarme(activeZaehlung.value);
+});
+
+/**
+ * Auslesen des Zählwertes aus dem {@link LadeBelastungsplanQuDTO} für den angegebenen Knotenarm und Richtung.
+ * Wird eines davon nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundener Zählwert oder 0
+ */
+function getArrowZaehlwertOrZero(knotenarm: number, richtung: Himmelsrichtung) {
+  if (!isQuBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  if (!kn) return 0;
+  const querungsverkehr = kn.valuesQuerungsverkehre.find(
+    (l) => l.richtung === richtung
+  );
+  return querungsverkehr?.value ?? 0;
+}
+
+/**
+ * Auslesen der Zählwert-Summe aus dem {@link LadeBelastungsplanQuDTO} für den angegebenen Knotenarm.
+ * Wird dieser nicht gefunden, wird 0 als anzuzeigender Wert zurückgegeben.
+ *
+ * @return Gefundene Summe oder 0
+ */
+function getSumArrowsKnotenarmOrZero(knotenarm: number) {
+  if (!isQuBelastungsplan(props.data) || !props.data.value1) {
+    return 0;
+  }
+  const kn = props.data.value1.valuesKnotenarme.find(
+    (k) => k.knotenarm === knotenarm
+  );
+  return kn?.sumKnotenarm ?? 0;
+}
+
+// Zaehlwerte of Node1/North
+const zaehlwertArrowNode1WestToEast = computed(() =>
+  getArrowZaehlwertOrZero(1, Himmelsrichtung.O)
+);
+const zaehlwertArrowNode1EastToWest = computed(() =>
+  getArrowZaehlwertOrZero(1, Himmelsrichtung.W)
+);
+const sumNode1Arrows = computed(() => getSumArrowsKnotenarmOrZero(1));
+
+const node1WestToEastCensusComissioned = isCommissioned(1, Himmelsrichtung.O);
+const node1EastToWestCensusComissioned = isCommissioned(1, Himmelsrichtung.W);
+
+const colorArrowNode1WestToEast = setColor(1, Himmelsrichtung.O);
+const colorArrowNode1EastToWest = setColor(1, Himmelsrichtung.W);
+
+// Zaehlwerte of Node2/East
+const zaehlwertArrowNode2SouthToNorth = computed(() =>
+  getArrowZaehlwertOrZero(2, Himmelsrichtung.N)
+);
+const zaehlwertArrowNode2NorthToSouth = computed(() =>
+  getArrowZaehlwertOrZero(2, Himmelsrichtung.S)
+);
+const sumNode2Arrows = computed(() => getSumArrowsKnotenarmOrZero(2));
+
+const node2NorthToSouthCensusComissioned = isCommissioned(2, Himmelsrichtung.S);
+const node2SouthToNorthCensusComissioned = isCommissioned(2, Himmelsrichtung.N);
+
+const colorArrowNode2NorthToSouth = setColor(2, Himmelsrichtung.S);
+const colorArrowNode2SouthToNorth = setColor(2, Himmelsrichtung.N);
+
+// Zaehlwerte of Node3/South
+const zaehlwertArrowNode3WestToEast = computed(() =>
+  getArrowZaehlwertOrZero(3, Himmelsrichtung.O)
+);
+const zaehlwertArrowNode3EastToWest = computed(() =>
+  getArrowZaehlwertOrZero(3, Himmelsrichtung.W)
+);
+const sumNode3Arrows = computed(() => getSumArrowsKnotenarmOrZero(3));
+
+const node3WestToEastCensusComissioned = isCommissioned(3, Himmelsrichtung.O);
+const node3EastToWestCensusComissioned = isCommissioned(3, Himmelsrichtung.W);
+
+const colorArrowNode3WestToEast = setColor(3, Himmelsrichtung.O);
+const colorArrowNode3EastToWest = setColor(3, Himmelsrichtung.W);
+
+// Zaehlwerte of Node4/West
+const zaehlwertArrowNode4SouthToNorth = computed(() =>
+  getArrowZaehlwertOrZero(4, Himmelsrichtung.N)
+);
+const zaehlwertArrowNode4NorthToSouth = computed(() =>
+  getArrowZaehlwertOrZero(4, Himmelsrichtung.S)
+);
+const sumNode4Arrows = computed(() => getSumArrowsKnotenarmOrZero(4));
+
+const node4NorthToSouthCensusComissioned = isCommissioned(4, Himmelsrichtung.S);
+const node4SouthToNorthCensusComissioned = isCommissioned(4, Himmelsrichtung.N);
+
+const colorArrowNode4NorthToSouth = setColor(4, Himmelsrichtung.S);
+const colorArrowNode4SouthToNorth = setColor(4, Himmelsrichtung.N);
+
+// Zaehlwerte of Node5
+const zaehlwertArrowNode5NorthWestToSouthEast = computed(() =>
+  getArrowZaehlwertOrZero(5, Himmelsrichtung.SO)
+);
+const zaehlwertArrowNode5SouthEastToNorthWest = computed(() =>
+  getArrowZaehlwertOrZero(5, Himmelsrichtung.NW)
+);
+const sumNode5Arrows = computed(() => getSumArrowsKnotenarmOrZero(5));
+
+const node5NorthWestToSouthEastCensusComissioned = isCommissioned(
+  5,
+  Himmelsrichtung.SO
+);
+const node5SouthEastToNorthWestCensusComissioned = isCommissioned(
+  5,
+  Himmelsrichtung.NW
+);
+
+const colorArrowNode5NorthWestToSouthEast = setColor(5, Himmelsrichtung.SO);
+const colorArrowNode5SouthEastToNorthWest = setColor(5, Himmelsrichtung.NW);
+
+// Zaehlwerte of Node6
+const zaehlwertArrowNode6NorthEastToSouthWest = computed(() =>
+  getArrowZaehlwertOrZero(6, Himmelsrichtung.SW)
+);
+const zaehlwertArrowNode6SouthWestToNorthEast = computed(() =>
+  getArrowZaehlwertOrZero(6, Himmelsrichtung.NO)
+);
+const sumNode6Arrows = computed(() => getSumArrowsKnotenarmOrZero(6));
+
+const node6NorthEastToSouthWestCensusComissioned = isCommissioned(
+  6,
+  Himmelsrichtung.SW
+);
+const node6SouthWestToNorthEastCensusComissioned = isCommissioned(
+  6,
+  Himmelsrichtung.NO
+);
+
+const colorArrowNode6NorthEastToSouthWest = setColor(6, Himmelsrichtung.SW);
+const colorArrowNode6SouthWestToNorthEast = setColor(6, Himmelsrichtung.NO);
+
+// Zaehlwerte of Node7
+const zaehlwertArrowNode7NorthWestToSouthEast = computed(() =>
+  getArrowZaehlwertOrZero(7, Himmelsrichtung.SO)
+);
+const zaehlwertArrowNode7SouthEastToNorthWest = computed(() =>
+  getArrowZaehlwertOrZero(7, Himmelsrichtung.NW)
+);
+const sumNode7Arrows = computed(() => getSumArrowsKnotenarmOrZero(7));
+
+const node7NorthWestToSouthEastCensusComissioned = isCommissioned(
+  7,
+  Himmelsrichtung.SO
+);
+const node7SouthEastToNorthWestCensusComissioned = isCommissioned(
+  7,
+  Himmelsrichtung.NW
+);
+
+const colorArrowNode7NorthWestToSouthEast = setColor(7, Himmelsrichtung.SO);
+const colorArrowNode7SouthEastToNorthWest = setColor(7, Himmelsrichtung.NW);
+
+// Zaehlwerte of Node8
+const zaehlwertArrowNode8NorthEastToSouthWest = computed(() =>
+  getArrowZaehlwertOrZero(8, Himmelsrichtung.SW)
+);
+const zaehlwertArrowNode8SouthWestToNorthEast = computed(() =>
+  getArrowZaehlwertOrZero(8, Himmelsrichtung.NO)
+);
+const sumNode8Arrows = computed(() => getSumArrowsKnotenarmOrZero(8));
+
+const node8NorthEastToSouthWestCensusComissioned = isCommissioned(
+  8,
+  Himmelsrichtung.SW
+);
+const node8SouthWestToNorthEastCensusComissioned = isCommissioned(
+  8,
+  Himmelsrichtung.NO
+);
+
+const colorArrowNode8NorthEastToSouthWest = setColor(8, Himmelsrichtung.SW);
+const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.NO);
+
+function setColor(knNumber: number, direction: Himmelsrichtung) {
+  return computed(() =>
+    isKnotenarm(knNumber) &&
+    qu.existsQuerungsverkehr(
+      // Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung gefiltert ist.
+      optionen.value.chosenQuerungsverkehre,
+      knNumber,
+      direction
+    )
+      ? zaehlstelleStore.isBlackprintMode
+        ? BelastungsplanConstants.blackPrintColor
+        : (BelastungsplanConstants.farben.get(knNumber) ??
+          BelastungsplanConstants.inaktivColor)
+      : BelastungsplanConstants.inaktivColor
+  );
+}
+
+function isCommissioned(knNumber: number, direction: Himmelsrichtung) {
+  return computed(
+    () =>
+      isKnotenarm(knNumber) &&
+      qu.existsQuerungsverkehr(
+        //Prüft, ob eine Querung für eine bestimmte Knotenarmnummer und Richtung existiert bzw. zur Zaehlung beauftragt ist.
+        activeZaehlung.value?.querungsverkehr,
+        knNumber,
+        direction
+      )
+  );
+}
+
+/**
+ * Prüft, ob ein Knotenarm mit der gegebenen Nummer existiert.
+ * @param {number} knNummer - Die Nummer des Knotenarms, nach der gesucht werden soll.
+ * @returns {boolean} - True, wenn ein Eintrag gefunden wurde, sonst false.
+ */
+function isKnotenarm(knNummer: number) {
+  return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
+}
+
+const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+  return zaehlstelleStore.getFilteroptions;
+});
+
+const emits = defineEmits<{
+  (e: "print", v: Blob): void;
+}>();
+
+const svgRef = ref<SVGSVGElement | null>(null);
+
+/**
+ * Erzeugt einen Blob aus dem aktuellen SVG und emittiert ihn.
+ */
+function emitSvgAsBlob(): void {
+  const svgEl = svgRef.value;
+  if (!svgEl) {
+    return;
+  }
+  const svgString = serializeSvgElement(svgEl);
+  const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+  emits("print", blob);
+}
+
+/**
+ * Serialisiert das SVG Element, um einen Blob für die Print-Funktion zu erstellen.
+ */
+function serializeSvgElement(svgEl: SVGSVGElement): string {
+  const clone = svgEl.cloneNode(true) as SVGSVGElement;
+
+  const serializer = new XMLSerializer();
+  let svgString = serializer.serializeToString(clone);
+
+  const xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  if (!svgString.startsWith("<?xml")) {
+    svgString = xmlDeclaration + svgString;
+  }
+  return svgString;
+}
+
+function setStreetnameNodes() {
+  streetnameNode1.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+  );
+  streetnameNode2.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+  );
+  streetnameNode3.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+  );
+  streetnameNode4.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+  );
+  streetnameNode5.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+  );
+  streetnameNode6.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+  );
+  streetnameNode7.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+  );
+  streetnameNode8.value = strassennameUtils.getStreetLines(
+    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+  );
+}
+
+onMounted(() => {
+  setStreetnameNodes();
+  zaehlstelleStore.setSizeBelastungsplanSvg(
+    Number.parseInt(sizeBelastungsplan.value.replace("px", ""))
+  );
+  zaehlstelleStore.setMaxSizeBelastungsplanSvg(maxSizeBelastungsplan.value);
+  zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
+});
+
+watch(
+  [
+    () => props.data,
+    () => optionen.value.chosenQuerungsverkehre,
+    () => activeZaehlung.value.knotenarme,
+    () => zaehlstelleStore.isBlackprintMode,
+  ],
+  async () => {
+    setStreetnameNodes();
+    await nextTick();
+
+    emitSvgAsBlob();
+  },
+  { deep: true, immediate: true }
+);
+
+function isQuBelastungsplan(
+  data: AbstractLadeBelastungsplanDTO | undefined
+): data is LadeBelastungsplanQuDTO {
+  return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
+}
+</script>
+
+<style scoped lang="css"></style>

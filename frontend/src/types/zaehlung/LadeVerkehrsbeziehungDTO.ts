@@ -1,6 +1,6 @@
 import type BaseEntity from "@/types/common/BaseEntity";
 
-export default interface LadeFahrbeziehungDTO extends BaseEntity {
+export default interface LadeVerkehrsbeziehungDTO extends BaseEntity {
   // Kreuzung
   von: number;
   nach: number;
@@ -10,6 +10,7 @@ export default interface LadeFahrbeziehungDTO extends BaseEntity {
   vonknotennachstrnr: string;
   nachknotnachstrnr: string;
   nach_strnr: string;
+  strassenseite: string;
 
   // Kreisverkehr
   knotenarm: number;

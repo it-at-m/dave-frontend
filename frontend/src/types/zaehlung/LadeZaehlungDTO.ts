@@ -1,7 +1,9 @@
 import type BaseEntity from "@/types/common/BaseEntity";
-import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
-import type LadeFahrbeziehungDTO from "@/types/zaehlung/LadeFahrbeziehungDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
+import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import Quelle from "@/types/enum/Quelle";
@@ -33,8 +35,10 @@ export default interface LadeZaehlungDTO extends BaseEntity {
   schulZeiten: string;
   kommentar: string;
   knotenarme: LadeKnotenarmDTO[];
-  fahrbeziehungen: LadeFahrbeziehungDTO[];
-  auswaehlbareFahrbeziehungen: FahrbeziehungenDTO;
+  verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[];
+  laengsverkehr: LaengsverkehrDTO[];
+  querungsverkehr: QuerungsverkehrDTO[];
+  auswaehlbareVerkehrsbeziehungen: VerkehrsbeziehungenDTO;
   zeitauswahl: ZeitauswahlDTO;
   kategorien: string[];
   pkwEinheit: string[];

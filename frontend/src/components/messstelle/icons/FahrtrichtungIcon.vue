@@ -14,7 +14,7 @@ import { isNil } from "lodash";
 import { computed } from "vue";
 
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import Himmelsrichtungen from "@/types/enum/Himmelsrichtungen";
+import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
@@ -44,19 +44,19 @@ const icon = computed<IconTooltip>(() => {
 function himmelsrichtungIcons(): Map<string, IconTooltip> {
   return new Map([
     [
-      Himmelsrichtungen.NORD,
+      Himmelsrichtung.N,
       new IconTooltip("mdi-arrow-up-thin-circle-outline", "Nord"),
     ],
     [
-      Himmelsrichtungen.SUED,
+      Himmelsrichtung.S,
       new IconTooltip("mdi-arrow-down-thin-circle-outline", "Süd"),
     ],
     [
-      Himmelsrichtungen.OST,
+      Himmelsrichtung.O,
       new IconTooltip("mdi-arrow-right-thin-circle-outline", "Ost"),
     ],
     [
-      Himmelsrichtungen.WEST,
+      Himmelsrichtung.W,
       new IconTooltip("mdi-arrow-left-thin-circle-outline", "West"),
     ],
   ]);

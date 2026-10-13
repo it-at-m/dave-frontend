@@ -1,5 +1,5 @@
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import FetchService from "@/api/service/FetchService";
 
@@ -9,12 +9,12 @@ export default class LadeZaehldatenService {
 
   public static ladeZaehldatenProcessed(
     zaehlungId: string,
-    options: OptionsDTO
+    options: ZaehlstelleOptionsDTO
   ): Promise<LadeProcessedZaehldatenDTO> {
     return FetchService.postData(
       options,
       `${this.ENDPOINT_LADE_ZAEHLDATEN_PROCESSED}?zaehlung_id=${zaehlungId}`,
-      "Beim Laden der Aufbreiteteten Zählungsdaten ist ein Fehler aufgetreten."
+      "Beim Laden der aufbereiteten Zählungsdaten ist ein Fehler aufgetreten."
     );
   }
 }

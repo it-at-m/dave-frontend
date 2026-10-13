@@ -66,7 +66,7 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref } from "vue";
 
-import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtungen";
+import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtung";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({

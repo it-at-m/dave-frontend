@@ -67,6 +67,3 @@ spring:
           keycloak:
             client-id: dave
             client-secret: ${SSO_CLIENT_SECRET}
-
-  mvc:
-    log-request-details: on

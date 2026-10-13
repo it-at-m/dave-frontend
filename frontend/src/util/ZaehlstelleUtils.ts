@@ -1,5 +1,7 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+
+import { isEmpty } from "lodash";
 
 export function useZaehlstelleUtils() {
   /**
@@ -13,7 +15,20 @@ export function useZaehlstelleUtils() {
     return !zaehlung.kategorien.includes(type);
   }
 
-  function hasSelectedVerkehrsarten(options: OptionsDTO) {
+  function hasSelectedVerkehrsarten(options: ZaehlstelleOptionsDTO) {
+    // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart KEIN Anteil sein
+    if (
+      options.differenzdatenDarstellen &&
+      !isEmpty(options.vergleichszaehlungsId)
+    ) {
+      return (
+        options.kraftfahrzeugverkehr ||
+        options.schwerverkehr ||
+        options.gueterverkehr ||
+        options.radverkehr ||
+        options.fussverkehr
+      );
+    }
     return (
       options.kraftfahrzeugverkehr ||
       options.schwerverkehr ||
@@ -25,7 +40,7 @@ export function useZaehlstelleUtils() {
     );
   }
 
-  function hasSelectedFahrzeugkategorie(options: OptionsDTO) {
+  function hasSelectedFahrzeugkategorie(options: ZaehlstelleOptionsDTO) {
     return (
       options.pkwEinheiten ||
       options.kraftraeder ||

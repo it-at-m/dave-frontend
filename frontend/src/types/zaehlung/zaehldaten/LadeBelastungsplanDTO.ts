@@ -1,9 +1,9 @@
-import type BelastungsplanData from "@/types/zaehlung/zaehldaten/BelastungsplanData";
+import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
+import type BelastungsplanDataDTO from "@/types/zaehlung/zaehldaten/BelastungsplanDataDTO";
 
-export default interface LadeBelastungsplanDTO {
-  value1: BelastungsplanData;
-  value2: BelastungsplanData;
-  value3: BelastungsplanData;
-  streets: string[];
-  kreisverkehr: boolean;
+export default interface LadeBelastungsplanDTO
+  extends AbstractLadeBelastungsplanDTO {
+  value1: BelastungsplanDataDTO;
+  value2: BelastungsplanDataDTO;
+  value3: BelastungsplanDataDTO;
 }

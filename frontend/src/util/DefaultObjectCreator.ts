@@ -1,5 +1,8 @@
 import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
-import type MapConfigDTO from "@/types/karte/MapConfigDTO";
+import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
+import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
+import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
+import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
@@ -11,18 +14,19 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type FahrbeziehungenDTO from "@/types/zaehlung/FahrbeziehungenDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
+import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
 import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
+import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
 
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
+import Rounding from "@/types/enum/Rounding";
 import TagesTyp from "@/types/enum/TagesTyp";
 import Verkehrsart from "@/types/enum/Verkehrsart";
 import Wetter from "@/types/enum/Wetter";
@@ -118,7 +122,7 @@ export default class DefaultObjectCreator {
       spitzenstunde: true,
       stundensumme: true,
       tagessumme: true,
-      werteHundertRunden: false,
+      rounding: Rounding.NONE,
       fahrzeuge: this.createDefaultFahrzeugOptions(),
       intervall: "" as ZaehldatenIntervall,
       messquerschnittIds: [],
@@ -206,18 +210,20 @@ export default class DefaultObjectCreator {
       schulZeiten: "",
       kommentar: "",
       knotenarme: [],
-      fahrbeziehungen: [],
-      auswaehlbareFahrbeziehungen: {} as FahrbeziehungenDTO,
+      verkehrsbeziehungen: [],
+      auswaehlbareVerkehrsbeziehungen: {} as VerkehrsbeziehungenDTO,
       zeitauswahl: {} as ZeitauswahlDTO,
       kategorien: [],
       pkwEinheit: [],
       id: "",
       entityVersion: 0,
       createdTime: "",
+      laengsverkehr: [],
+      querungsverkehr: [],
     };
   }
 
-  public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
+  public static createDefaultZaehlstelleOptionsDto(): ZaehlstelleOptionsDTO {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,
@@ -249,7 +255,7 @@ export default class DefaultObjectCreator {
       beschriftung: false,
       datentabelle: false,
       fahrzeugklassenStapeln: false,
-      werteHundertRunden: false,
+      rounding: Rounding.NONE,
       differenzdatenDarstellen: false,
       vonKnotenarm: null,
       // Setzen aller möglichen Knotenarme als Defaultwert da "vonKnotenarm" gleich "null"
@@ -262,6 +268,9 @@ export default class DefaultObjectCreator {
       ganglinieYAchse2MaxValue: null,
       idVergleichszaehlungZeitreihe: null,
       zeitreiheGesamt: false,
+      chosenLaengsverkehre: [],
+      chosenQuerungsverkehre: [],
+      chosenVerkehrsbeziehungen: [],
     };
   }
 
@@ -323,7 +332,20 @@ export default class DefaultObjectCreator {
     } as SearchAndFilterOptionsDTO;
   }
 
-  public static createDefaultMapConfigDTO(): MapConfigDTO {
+  public static createDefaultConfigurationDTO(): ConfigurationDTO {
+    return {
+      zaehlstelle: this.createDefaultZaehlstelleConfigurationDTO(),
+      tenant: this.createDefaultTenantConfigurationDTO(),
+    };
+  }
+
+  public static createDefaultZaehlstelleConfigurationDTO(): ZaehlstelleConfigurationDTO {
+    return {
+      automaticNumberAssignment: true,
+    };
+  }
+
+  public static createDefaultMapConfigurationDTO(): MapConfigurationDTO {
     return {
       // München Zentrum
       lat: "48.137227",
@@ -336,6 +358,13 @@ export default class DefaultObjectCreator {
 
   public static createDefaultLadeZaehldatenTableDTO(): LadeZaehldatenTableDTO {
     return { zaehldaten: [] } as LadeZaehldatenTableDTO;
+  }
+
+  public static createDefaultTenantConfigurationDTO(): TenantConfigurationDTO {
+    return {
+      datenportalHeader: "Datenportal",
+      mapConfiguration: this.createDefaultMapConfigurationDTO(),
+    };
   }
 
   public static createDefaultLadeProcessedMessdatenDTO(): LadeProcessedMesswerteDTO {
