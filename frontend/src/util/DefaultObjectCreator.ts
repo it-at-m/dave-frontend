@@ -3,6 +3,7 @@ import type {
   ConfigurationDTO,
   FahrzeugOptionsDTO,
   InfoMessageDTO,
+  LadeProcessedMesswerteDTO,
   LadeZaehldatenHeatmapDTO,
   LadeZaehldatenSteplineDTO,
   LadeZaehldatenTableDTO,
@@ -15,7 +16,6 @@ import type {
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
 import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";

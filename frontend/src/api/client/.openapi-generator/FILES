@@ -125,6 +125,7 @@ models/GeoPoint.ts
 models/HeadingAsset.ts
 models/Himmelsrichtung.ts
 models/Hochrechnung.ts
+models/Hochrechnungsfaktor.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
 models/ImageAsset.ts
