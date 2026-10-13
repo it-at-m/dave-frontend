@@ -224,14 +224,14 @@ import type {
   LadeBelastungsplanQuDTO,
   LadeProcessedZaehldatenDTO,
   LadeZaehldatenHeatmapDTO,
+  LadeZaehldatenSteplineDTO,
+  LadeZaehldatenZeitreiheDTO,
+  LadeZaehldatumDTO,
   OptionsDTO,
 } from "@/api/client";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first, isEmpty, last } from "lodash";

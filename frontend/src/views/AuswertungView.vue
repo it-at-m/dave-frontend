@@ -93,12 +93,12 @@
 </template>
 <script setup lang="ts">
 import type {
+  LadeZaehldatenSteplineDTO,
   MessstelleAuswertungDTO,
   MessstelleAuswertungIdDTO,
 } from "@/api/client";
 import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
 import {
   cloneDeep,

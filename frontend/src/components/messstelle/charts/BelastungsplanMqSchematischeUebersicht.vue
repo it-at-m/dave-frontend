@@ -6,8 +6,7 @@
   />
 </template>
 <script setup lang="ts">
-import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
-import type LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
+import type { BelastungsplanMessquerschnitteDTO } from "@/api/client";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";

@@ -25,49 +25,49 @@ export interface LadeBelastungsplanMessquerschnittDataDTO {
    * @type {string}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  mqId?: string;
+  mqId: string;
   /**
    *
    * @type {number}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  sumKfz?: number;
+  sumKfz: number;
   /**
    *
    * @type {number}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  sumSv?: number;
+  sumSv: number;
   /**
    *
    * @type {number}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  sumGv?: number;
+  sumGv: number;
   /**
    *
    * @type {number}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  sumRad?: number;
+  sumRad: number;
   /**
    *
    * @type {string}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  direction?: string;
+  direction: string;
   /**
    *
    * @type {number}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  percentSv?: number;
+  percentSv: number;
   /**
    *
    * @type {number}
    * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
-  percentGV?: number;
+  percentGV: number;
 }
 
 /**
@@ -76,6 +76,14 @@ export interface LadeBelastungsplanMessquerschnittDataDTO {
 export function instanceOfLadeBelastungsplanMessquerschnittDataDTO(
   value: object
 ): value is LadeBelastungsplanMessquerschnittDataDTO {
+  if (!("mqId" in value) || value["mqId"] === undefined) return false;
+  if (!("sumKfz" in value) || value["sumKfz"] === undefined) return false;
+  if (!("sumSv" in value) || value["sumSv"] === undefined) return false;
+  if (!("sumGv" in value) || value["sumGv"] === undefined) return false;
+  if (!("sumRad" in value) || value["sumRad"] === undefined) return false;
+  if (!("direction" in value) || value["direction"] === undefined) return false;
+  if (!("percentSv" in value) || value["percentSv"] === undefined) return false;
+  if (!("percentGV" in value) || value["percentGV"] === undefined) return false;
   return true;
 }
 
@@ -93,14 +101,14 @@ export function LadeBelastungsplanMessquerschnittDataDTOFromJSONTyped(
     return json;
   }
   return {
-    mqId: json["mqId"] == null ? undefined : json["mqId"],
-    sumKfz: json["sumKfz"] == null ? undefined : json["sumKfz"],
-    sumSv: json["sumSv"] == null ? undefined : json["sumSv"],
-    sumGv: json["sumGv"] == null ? undefined : json["sumGv"],
-    sumRad: json["sumRad"] == null ? undefined : json["sumRad"],
-    direction: json["direction"] == null ? undefined : json["direction"],
-    percentSv: json["percentSv"] == null ? undefined : json["percentSv"],
-    percentGV: json["percentGV"] == null ? undefined : json["percentGV"],
+    mqId: json["mqId"],
+    sumKfz: json["sumKfz"],
+    sumSv: json["sumSv"],
+    sumGv: json["sumGv"],
+    sumRad: json["sumRad"],
+    direction: json["direction"],
+    percentSv: json["percentSv"],
+    percentGV: json["percentGV"],
   };
 }
 

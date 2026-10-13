@@ -1,4 +1,4 @@
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
+import type { LadeZaehldatumDTO } from "@/api/client";
 
 export default class DataManipulatorUtil {
   private static readonly TIME_VALUE_FOUND_END_OF_DAY: string = "23:59";

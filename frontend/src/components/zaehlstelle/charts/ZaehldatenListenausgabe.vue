@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
+import type { LadeZaehldatumDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, watch } from "vue";

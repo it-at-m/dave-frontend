@@ -1,5 +1,5 @@
+import type { LadeZaehldatenSteplineDTO } from "@/api/client";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
 
 import { cloneDeep } from "lodash";
 import { defineStore } from "pinia";

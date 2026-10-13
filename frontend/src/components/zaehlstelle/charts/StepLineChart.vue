@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type { LadeZaehldatenSteplineDTO } from "@/api/client";
 import type StepLineSeriesEntryDTO from "@/types/zaehlung/zaehldaten/StepLineSeriesEntryDTO";
 
 import { BarChart, LineChart } from "echarts/charts";

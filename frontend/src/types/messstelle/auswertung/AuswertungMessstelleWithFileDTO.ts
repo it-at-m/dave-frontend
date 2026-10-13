@@ -1,4 +1,4 @@
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type { LadeZaehldatenSteplineDTO } from "@/api/client";
 
 export default interface AuswertungMessstelleWithFileDTO {
   zaehldatenMessstellen: LadeZaehldatenSteplineDTO;

@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
+import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { SeriesOption } from "echarts";
 import type { ResizeOpts } from "echarts/core";

@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
+import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
 import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { BarChart, LineChart } from "echarts/charts";
