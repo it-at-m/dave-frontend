@@ -89,8 +89,8 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import type { ImageAsset } from "@/api/client";
+import type { TextAsset } from "@/api/client";
 
 interface Props {
   image: ImageAsset;
@@ -103,7 +103,8 @@ const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
 }>();
 
-const asset = ref(new ImageAsset("", ""));
+const assetUtil = useAssetUtil();
+const asset = ref(assetUtil.createImageAsset("", ""));
 
 const selectedFile = ref<File | undefined>(undefined);
 

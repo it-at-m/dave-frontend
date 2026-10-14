@@ -97,7 +97,7 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { ComputedRef } from "vue";
 
 import { computed, onMounted, ref, watch } from "vue";
@@ -111,7 +111,7 @@ import { useFjs } from "@/util/FjsUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useQu } from "@/util/QuUtils";
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<OptionsDTO>({
   required: true,
 });
 

@@ -60,7 +60,7 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import TagesTyp from "@/types/enum/TagesTyp";
+import TagesTyp from "@/types/enum/TagesTypText";
 import { useDateUtils } from "@/util/DateUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });

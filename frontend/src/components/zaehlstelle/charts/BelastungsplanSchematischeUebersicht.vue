@@ -44,7 +44,7 @@ import type {
   LadeBelastungsplanQjsDTO,
   LadeBelastungsplanQuDTO,
 } from "@/api/client";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import BelastungsplanFjsAndQuSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanFjsAndQuSvgSchematischeUebersicht.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
@@ -54,7 +54,7 @@ import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 interface Props {
   data: LadeBelastungsplanDTO;
   dimension?: string;
-  options: ZaehlstelleOptionsDTO;
+  options: OptionsDTO;
   drawSchematischeUebersicht: boolean;
 }
 

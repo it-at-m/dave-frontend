@@ -84,12 +84,13 @@ import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListI
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
+import type { BaseAssetTypeEnum } from "@/api/client";
+import type { BaseAsset } from "@/api/client";
+import type { HeadingAsset } from "@/api/client";
+import type { TextAsset } from "@/api/client";
 import { useDateUtils } from "@/util/DateUtils";
+import {useAssetUtil} from "@/util/AssetUtil";
 
 const dialog = defineModel<boolean>({ required: true });
 
@@ -97,6 +98,7 @@ const messstelleStore = useMessstelleStore();
 const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const dateUtils = useDateUtils();
+const assetUtil = useAssetUtil();
 
 const messstelleninfo = ref(false);
 const messinfo = ref(false);
@@ -148,9 +150,9 @@ function saveItems(): void {
 
 function createMessstelleInfo(): void {
   const assets: Array<BaseAsset> = [];
-  const headline = new HeadingAsset(
+  const headline = assetUtil.createHeadingAsset(
     `Info für Messstelle Id ${messstelle.value.mstId}`,
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
   assets.push(headline);
 
@@ -167,13 +169,13 @@ function createMessstelleInfo(): void {
       }
       text += "<br/>\n";
     });
-    assets.push(new TextAsset(text));
+    assets.push(assetUtil.createTextAsset(text));
   }
-  const stadtbezirk = new TextAsset(
+  const stadtbezirk = assetUtil.createTextAsset(
     `Stadtbezirk: ${messstelle.value.stadtbezirk} (${messstelle.value.stadtbezirkNummer})`
   );
   assets.push(stadtbezirk);
-  const kommentar = new TextAsset(
+  const kommentar = assetUtil.createTextAsset(
     `Messstellenkommentar: ${messstelle.value.kommentar ?? "---"}`
   );
   assets.push(kommentar);
@@ -189,19 +191,19 @@ function createMessInfo(): void {
     header += ` bis ${dateUtils.formatDate(zeitraum[1])}`;
   }
   header += ` (Mst-Id ${messstelle.value.mstId})`;
-  assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
+  assets.push(assetUtil.createHeadingAsset(header, BaseAssetTypeEnum.Heading3));
 
   if (
     dateUtils.isDateRange(options.value.zeitraum) &&
     options.value.tagesTyp !== TagesTyp.UNSPECIFIED
   ) {
-    const wochentag = new TextAsset(
+    const wochentag = assetUtil.createTextAsset(
       `Wochentag: ${tagesTypText.get(options.value.tagesTyp)}`
     );
     assets.push(wochentag);
   }
   if (dateUtils.isDateRange(options.value.zeitraum)) {
-    const statistikAuswertung = new TextAsset(
+    const statistikAuswertung = assetUtil.createTextAsset(
       `Auswertungsstatistik: Von den ausgewählten ${messstelleStore.getRequestedMeasuringDays} Tagen ${getChosenWochentageNumberText.value} in die Auswertung eingeflossen.`
     );
     assets.push(statistikAuswertung);
@@ -219,11 +221,11 @@ const getChosenWochentageNumberText = computed(() => {
 });
 
 function createLegende(): void {
-  const ueberschrift = new HeadingAsset(
+  const ueberschrift = assetUtil.createHeadingAsset(
     "Legende zu den Kennzahlen",
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const legende = new TextAsset(
+  const legende = assetUtil.createTextAsset(
     "<p>- <b>Kraftfahrzeugverkehr (KFZ)</b>: Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lieferwagen, Lastkraftwagen und Lastzüge.</p>\n" +
       "<p>- <b>Schwerverkehr\t(SV)</b>: Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).</p>\n" +
       "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +

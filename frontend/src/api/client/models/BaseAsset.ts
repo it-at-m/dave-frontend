@@ -73,7 +73,13 @@ export interface BaseAsset {
    * @type {string}
    * @memberof BaseAsset
    */
-  type?: BaseAssetTypeEnum;
+  type: BaseAssetTypeEnum;
+  /**
+   *
+   * @type {number}
+   * @memberof BaseAsset
+   */
+  id: number;
 }
 
 /**
@@ -101,6 +107,8 @@ export type BaseAssetTypeEnum =
  * Check if a given object implements the BaseAsset interface.
  */
 export function instanceOfBaseAsset(value: object): value is BaseAsset {
+  if (!("type" in value) || value["type"] === undefined) return false;
+  if (!("id" in value) || value["id"] === undefined) return false;
   return true;
 }
 
@@ -142,7 +150,8 @@ export function BaseAssetFromJSONTyped(
     }
   }
   return {
-    type: json["type"] == null ? undefined : json["type"],
+    type: json["type"],
+    id: json["id"],
   };
 }
 
@@ -201,5 +210,6 @@ export function BaseAssetToJSONTyped(
 
   return {
     type: value["type"],
+    id: value["id"],
   };
 }

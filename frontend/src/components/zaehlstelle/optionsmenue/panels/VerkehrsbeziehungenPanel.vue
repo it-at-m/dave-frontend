@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { computed, ref } from "vue";
 
@@ -61,7 +61,7 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<OptionsDTO>({
   required: true,
 });
 

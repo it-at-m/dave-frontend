@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { BarChart, LineChart } from "echarts/charts";
 import {
@@ -91,7 +91,7 @@ const zeitreiheHeightAndWidth = computed(() => {
   }
   return `width: 100%; height: ${height}`;
 });
-const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
+const filterOptions = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

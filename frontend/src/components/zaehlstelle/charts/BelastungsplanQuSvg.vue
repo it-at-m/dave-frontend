@@ -3426,7 +3426,7 @@ import type {
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
@@ -3741,7 +3741,7 @@ function isKnotenarm(knNummer: number) {
   return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
 }
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

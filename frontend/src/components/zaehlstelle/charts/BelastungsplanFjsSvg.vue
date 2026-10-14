@@ -5059,7 +5059,7 @@ import type {
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
@@ -5779,7 +5779,7 @@ const arrowNodeEightSouthWestIncomingAvailable = isArrowAvailable(
   Bewegungsrichtung.EIN
 );
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

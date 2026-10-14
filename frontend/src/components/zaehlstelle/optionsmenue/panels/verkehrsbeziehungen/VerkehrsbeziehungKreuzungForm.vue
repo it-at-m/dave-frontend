@@ -58,7 +58,7 @@ import type KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { isNil, union } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -67,7 +67,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
 import { useVergleichszaehlungenUtils } from "@/util/VergleichszaehlungenUtils";
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<OptionsDTO>({
   required: true,
 });
 
@@ -143,7 +143,7 @@ const beideRichtungenAnzeigen = computed(() => {
   return von.value > 0 || nach.value > 0;
 });
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

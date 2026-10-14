@@ -53,7 +53,7 @@ import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import { computed } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {

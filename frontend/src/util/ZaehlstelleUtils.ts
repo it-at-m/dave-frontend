@@ -1,5 +1,5 @@
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { OptionsDTO } from "@/api/client";
 
 import { isEmpty } from "lodash";
 
@@ -15,7 +15,7 @@ export function useZaehlstelleUtils() {
     return !zaehlung.kategorien.includes(type);
   }
 
-  function hasSelectedVerkehrsarten(options: ZaehlstelleOptionsDTO) {
+  function hasSelectedVerkehrsarten(options: OptionsDTO) {
     // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart KEIN Anteil sein
     if (
       options.differenzdatenDarstellen &&
@@ -40,7 +40,7 @@ export function useZaehlstelleUtils() {
     );
   }
 
-  function hasSelectedFahrzeugkategorie(options: ZaehlstelleOptionsDTO) {
+  function hasSelectedFahrzeugkategorie(options: OptionsDTO) {
     return (
       options.pkwEinheiten ||
       options.kraftraeder ||

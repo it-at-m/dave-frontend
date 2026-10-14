@@ -4,7 +4,7 @@ import type {
   OptionsDTO,
 } from "@/api/client";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { OptionsDTO } from "@/api/client";
 
 import { GenerateCsvControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -20,7 +20,7 @@ export default class GenerateCsvService {
 
   public static generateCsv(
     zaehlungId: string,
-    options: ZaehlstelleOptionsDTO
+    options: OptionsDTO
   ): Promise<CsvDTO> {
     return handleOpenApiError(
       this.API.generateCSVRaw({

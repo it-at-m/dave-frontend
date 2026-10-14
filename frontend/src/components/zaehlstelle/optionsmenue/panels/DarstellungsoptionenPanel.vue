@@ -270,7 +270,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -289,7 +289,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useValidationRules();
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<OptionsDTO>({
   required: true,
 });
 

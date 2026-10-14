@@ -232,7 +232,7 @@ import type {
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -346,7 +346,7 @@ const isFJSZaehlung = computed<boolean>(() => {
   return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.FJS;
 });
 
-const options = computed<ZaehlstelleOptionsDTO>(() => {
+const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
@@ -492,7 +492,7 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
 });
 
 function loadData(): void {
-  const o = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
+  const o = Object.assign({}, options.value) as OptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
   // requests abschicken
   loadProcessedChartData(o);
@@ -511,7 +511,7 @@ function loadData(): void {
   }
 }
 
-function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
+function loadProcessedChartData(options: OptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
   LadeZaehldatenService.ladeZaehldatenProcessed(
@@ -765,7 +765,7 @@ function generatePdf() {
   const formData = new FormData();
   loadingFile.value = true;
 
-  const o = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
+  const o = Object.assign({}, options.value) as OptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   formData.append(
@@ -863,7 +863,7 @@ function fetchPdf(formData: FormData, type: string) {
 
 function generateCsv() {
   loadingFile.value = true;
-  const optionsDTO = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
+  const optionsDTO = Object.assign({}, options.value) as OptionsDTO;
   optionsDTO.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)

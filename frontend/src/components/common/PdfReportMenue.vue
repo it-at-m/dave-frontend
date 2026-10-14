@@ -93,11 +93,12 @@ import { quelleText } from "@/types/enum/Quelle";
 import { wetterText } from "@/types/enum/Wetter";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
-import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
+import type { BaseAssetTypeEnum } from "@/api/client";
+import type { HeadingAsset } from "@/api/client";
+import type { TextAsset } from "@/api/client";
+import type { ZaehlungskenngroessenAsset } from "@/api/client";
 import { useDateUtils } from "@/util/DateUtils";
+import {useAssetUtil} from "@/util/AssetUtil";
 
 const dialog = defineModel<boolean>({ required: true });
 
@@ -105,6 +106,7 @@ const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
+const assetUtil = useAssetUtil();
 
 const zaehlstelleinfo = ref(false);
 const zaehlungsinfo = ref(false);
@@ -159,15 +161,15 @@ function saveItems(): void {
 function createZaehlstelleInfo() {
   const zs = zaehlstelleStore.getZaehlstelleHeader;
   const zl = zaehlstelleStore.getAktiveZaehlung;
-  const headline = new HeadingAsset(
+  const headline = assetUtil.createHeadingAsset(
     `Info für Zählstelle Nr. ${zs.nummer}`,
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const platz = new TextAsset(`Knoten-/Platzname: ${zl.kreuzungsname}`);
-  const stadtbezirk = new TextAsset(
+  const platz = assetUtil.createTextAsset(`Knoten-/Platzname: ${zl.kreuzungsname}`);
+  const stadtbezirk = assetUtil.createTextAsset(
     `Stadtbezirk: ${zs.stadtbezirk} (${zs.stadtbezirkNummer})`
   );
-  const kommentar = new TextAsset(
+  const kommentar = assetUtil.createTextAsset(
     `Zählstellenkommentar: ${checkForNull(zs.kommentar)}`
   );
   pdfReportStore.addAssets([headline, platz, stadtbezirk, kommentar]);
@@ -180,32 +182,32 @@ function createZaehlungsInfo() {
   const zs = zaehlstelleStore.getZaehlstelleHeader;
   const zl = zaehlstelleStore.getAktiveZaehlung;
   const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
-  const headline = new HeadingAsset(
+  const headline = assetUtil.createHeadingAsset(
     `Info zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const projektname = new TextAsset(`Projektname: ${zl.projektName}`);
-  const zaehlart = new TextAsset(
+  const projektname = assetUtil.createTextAsset(`Projektname: ${zl.projektName}`);
+  const zaehlart = assetUtil.createTextAsset(
     `Zählart: ${zl.zaehlart} (${zaehlartText.get(zl.zaehlart)})`
   );
-  const zaehldauer = new TextAsset(
+  const zaehldauer = assetUtil.createTextAsset(
     `Zähldauer: ${zaehldauerText.get(zl.zaehldauer)}`
   );
-  const zaehlsituation = new TextAsset(
+  const zaehlsituation = assetUtil.createTextAsset(
     `Zählsituation/ erweiterte Zählsituation: ${checkForNull(
       zl.zaehlsituation
     )} / ${checkForNull(zl.zaehlsituationErweitert)}`
   );
-  const wetter = new TextAsset(`Wetter: ${wetterText.get(zl.wetter)}`);
-  const quelle = new TextAsset(`Quelle: ${quelleText.get(zl.quelle)}`);
-  const kommentar = new TextAsset(
+  const wetter = assetUtil.createTextAsset(`Wetter: ${wetterText.get(zl.wetter)}`);
+  const quelle = assetUtil.createTextAsset(`Quelle: ${quelleText.get(zl.quelle)}`);
+  const kommentar = assetUtil.createTextAsset(
     `Zählungskommentar: ${checkForNull(zl.kommentar)}`
   );
   let knotenarmListe = "Knotenarme:<br/>";
   zl.knotenarme.forEach((k) => {
     knotenarmListe = knotenarmListe + `${k.nummer} ${k.strassenname}<br/>\n`;
   });
-  const knotenarme = new TextAsset(knotenarmListe);
+  const knotenarme = assetUtil.createTextAsset(knotenarmListe);
   pdfReportStore.addAssets([
     headline,
     projektname,
@@ -228,11 +230,11 @@ function createZaehlungskenngroessen() {
   const zl = zaehlstelleStore.getAktiveZaehlung;
   const datum = dateUtils.getShortVersionOfDate(new Date(zl.datum));
 
-  const headline = new HeadingAsset(
+  const headline = assetUtil.createHeadingAsset(
     `Kenngrößen zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const zaehlungskenngroessen = new ZaehlungskenngroessenAsset(
+  const zaehlungskenngroessen = assetUtil.createZaehlungskenngroessenAsset(
     `Zählungskenngrößen (Zählstelle ${zs.nummer}, ${datum})`,
     zl.id
   );
@@ -244,11 +246,11 @@ function createZaehlungskenngroessen() {
  * Erstellt die Legende und übermittelt diese an den PDF Report.
  */
 function createLegende() {
-  const ueberschrift = new HeadingAsset(
+  const ueberschrift = assetUtil.createHeadingAsset(
     "Legende zu den Kennzahlen",
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const legende = new TextAsset(
+  const legende = assetUtil.createTextAsset(
     "<p>- <b>Kraftfahrzeugverkehr (KFZ)</b>: Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lastkraftwagen und Lastzüge.</p>\n" +
       "<p>- <b>Schwerverkehr\t(SV)</b>: Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).</p>\n" +
       "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +

@@ -1408,7 +1408,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { computed, nextTick, ref, watch } from "vue";
 
@@ -1421,7 +1421,7 @@ import Zaehlart from "@/types/enum/Zaehlart";
 interface Props {
   data: LadeBelastungsplanFjsDTO | LadeBelastungsplanQuDTO;
   dimension: string;
-  options: ZaehlstelleOptionsDTO;
+  options: OptionsDTO;
 }
 
 const props = withDefaults(defineProps<Props>(), {

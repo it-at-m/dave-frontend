@@ -1493,7 +1493,7 @@ import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { cloneDeep, isEmpty, remove, toArray } from "lodash";
 import { computed } from "vue";
@@ -1510,7 +1510,7 @@ defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<OptionsDTO>({
   required: true,
 });
 

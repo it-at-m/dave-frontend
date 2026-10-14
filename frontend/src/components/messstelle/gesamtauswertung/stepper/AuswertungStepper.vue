@@ -78,7 +78,7 @@ import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/Ort
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import { tagesTypText } from "@/types/enum/TagesTyp";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
 
 interface Props {

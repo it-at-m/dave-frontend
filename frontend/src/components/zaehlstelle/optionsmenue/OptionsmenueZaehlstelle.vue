@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -116,7 +116,7 @@ const chosenOptions = ref(
   DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
 );
 
-const options = computed<ZaehlstelleOptionsDTO>(() => {
+const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -227,7 +227,7 @@ const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
-  const optionsCopy = {} as ZaehlstelleOptionsDTO;
+  const optionsCopy = {} as OptionsDTO;
   Object.assign(optionsCopy, options.value);
 
   optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
@@ -373,13 +373,13 @@ function resetSizeBelastungsplan() {
 }
 
 /**
- * Da das ZaehlstelleOptionsDTO für die Auswahlfelder im Formular als
+ * Da das OptionsDTO für die Auswahlfelder im Formular als
  * v-model genutzt wird, muss hier eine Kopie erzeugt werden. Andernfalls
  * würde es zu einer dirketen Veränderung des Stores kommen - was dieser
  * nicht mag.
  */
-watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
-  const options = {} as ZaehlstelleOptionsDTO;
+watch(options, (newOptions: OptionsDTO) => {
+  const options = {} as OptionsDTO;
   Object.assign(options, newOptions);
   chosenOptions.value = options;
 });

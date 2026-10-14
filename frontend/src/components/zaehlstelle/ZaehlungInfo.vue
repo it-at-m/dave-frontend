@@ -235,7 +235,7 @@
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import _ from "lodash";
 import { computed, ref, watch } from "vue";
@@ -318,7 +318,7 @@ const sortedFilteredKnotenarme = computed(() => {
 /**
  * Die aktuell eingestellten Optionen werden aus dem Store geladen.
  */
-const options = computed<ZaehlstelleOptionsDTO>(() => {
+const options = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

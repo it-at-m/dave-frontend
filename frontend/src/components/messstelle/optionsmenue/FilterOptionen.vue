@@ -119,7 +119,7 @@ import Himmelsrichtung, {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
 } from "@/types/enum/Himmelsrichtung";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";

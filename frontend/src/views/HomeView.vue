@@ -67,7 +67,7 @@ import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
+import type { ImageAsset } from "@/api/client";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const pdfReportStore = usePdfReportStore();
@@ -79,6 +79,7 @@ const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
+const assetUtil = useAssetUtil();
 
 onMounted(() => {
   window.scrollTo(0, 0);
@@ -89,7 +90,7 @@ function takePicture() {
     creatingPicture.value = true;
     html2canvas(map.value.$el, { useCORS: true })
       .then((canvas) => {
-        const image = new ImageAsset(
+        const image = assetUtil.createImageAsset(
           "Hauptkarte",
           canvas.toDataURL("image/jpeg")
         );

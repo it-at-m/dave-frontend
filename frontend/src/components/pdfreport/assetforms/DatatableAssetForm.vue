@@ -59,12 +59,13 @@
 </template>
 
 <script setup lang="ts">
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { ref, watch } from "vue";
 
-import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import type { DatatableAsset } from "@/api/client";
+import type { TextAsset } from "@/api/client";
+import {useAssetUtil} from "@/util/AssetUtil";
 
 interface Props {
   datatable: DatatableAsset;
@@ -77,7 +78,9 @@ const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
 }>();
 
-const asset = ref(new DatatableAsset({} as ZaehlstelleOptionsDTO, "", ""));
+const assetUtil = useAssetUtil();
+
+const asset = ref(assetUtil.createDatatableAsset({} as OptionsDTO, "", ""));
 
 /**
  * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.

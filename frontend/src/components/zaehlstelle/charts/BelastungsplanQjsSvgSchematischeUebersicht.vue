@@ -183,7 +183,7 @@
 import type { LadeBelastungsplanQjsDTO } from "@/api/client";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { first, last } from "lodash";
 import { computed, nextTick, ref, watch } from "vue";
@@ -195,7 +195,7 @@ import { useQjs } from "@/util/QjsUtils";
 interface Props {
   data: LadeBelastungsplanQjsDTO;
   dimension: string;
-  options: ZaehlstelleOptionsDTO;
+  options: OptionsDTO;
 }
 
 const props = withDefaults(defineProps<Props>(), {

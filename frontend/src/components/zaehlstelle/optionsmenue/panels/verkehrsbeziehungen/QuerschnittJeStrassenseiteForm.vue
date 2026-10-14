@@ -393,7 +393,7 @@
 <script setup lang="ts">
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { first, last } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -412,7 +412,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const qjs = useQjs();
 const strassennameUtils = useStrassennameUtils();
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<OptionsDTO>({
   required: true,
 });
 

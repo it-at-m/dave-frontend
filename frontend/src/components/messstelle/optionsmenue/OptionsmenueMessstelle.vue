@@ -70,14 +70,20 @@
 </template>
 <script setup lang="ts">
 import type { ValidatedZeitraumAndTagestypDTO } from "@/api/client";
+import type { ValidateZeitraumAndTagestypForMessstelleDTO } from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
 
 import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Rounding, Verkehrsart, ZaehldatenIntervall } from "@/api/client";
+import {
+  instanceOfTagesTyp,
+  Rounding,
+  TagesTyp,
+  Verkehrsart,
+  ZaehldatenIntervall,
+} from "@/api/client";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
@@ -88,7 +94,6 @@ import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore"
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import TagesTyp from "@/types/enum/TagesTyp";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
@@ -367,7 +372,9 @@ watch(
       const request = {
         zeitraum: [isoStartDate, isoEndDate],
         mstId: messstelle.value.mstId,
-        tagesTyp: chosenOptions.value.tagesTyp,
+        tagesTyp: instanceOfTagesTyp(chosenOptions.value.tagesTyp)
+          ? (chosenOptions.value.tagesTyp as TagesTyp)
+          : TagesTyp.Unspecified,
       } as ValidateZeitraumAndTagestypForMessstelleDTO;
 
       MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)

@@ -5,7 +5,7 @@ import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
 import Zaehldauer from "@/types/enum/Zaehldauer";
 
-export default interface ZaehlstelleOptionsDTO {
+export default interface OptionsDTO {
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
   zeitblock: string; // Zeitblock

@@ -4,7 +4,7 @@ import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { OptionsDTO } from "@/api/client";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -41,7 +41,7 @@ function createOptions() {
     chosenVerkehrsbeziehungen: [] as VerkehrsbeziehungDTO[],
     chosenLaengsverkehre: [] as LaengsverkehrDTO[],
     chosenQuerungsverkehre: [] as QuerungsverkehrDTO[],
-  } as ZaehlstelleOptionsDTO;
+  } as OptionsDTO;
 }
 
 describe("ReportTools", () => {

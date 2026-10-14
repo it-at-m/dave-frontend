@@ -23,7 +23,6 @@ import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO"
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import {
   Fahrzeugklasse,
@@ -33,12 +32,13 @@ import {
 } from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Quelle from "@/types/enum/Quelle";
-import TagesTyp from "@/types/enum/TagesTyp";
+import TagesTyp from "@/types/enum/TagesTypText";
 import Wetter from "@/types/enum/Wetter";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 export default class DefaultObjectCreator {
   public static createDefaultZaehlstelleKarte(): ZaehlstelleKarteDTO {
@@ -225,7 +225,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultZaehlstelleOptionsDto(): ZaehlstelleOptionsDTO {
+  public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,

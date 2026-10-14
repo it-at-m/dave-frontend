@@ -934,7 +934,7 @@ import type {
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { first } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -1287,7 +1287,7 @@ function calculateColorArrowThreeFour() {
   return BelastungsplanConstants.inaktivColor;
 }
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

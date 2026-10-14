@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import type { LadeBelastungsplanDTO } from "@/api/client";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { GraphChart } from "echarts/charts";
 import {
@@ -254,7 +254,7 @@ const belastungsplanHeightAndWidth = computed(() => {
   return `width: 100%; height: ${height}`;
 });
 
-const selectedOptions = computed<ZaehlstelleOptionsDTO>(() => {
+const selectedOptions = computed<OptionsDTO>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

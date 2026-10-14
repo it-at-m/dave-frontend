@@ -15,7 +15,7 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 
 import { computed } from "vue";
 
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
+import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
 
 const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
   required: true,
