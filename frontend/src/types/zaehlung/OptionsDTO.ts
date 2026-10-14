@@ -3,7 +3,7 @@ import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
-import Zaehldauer from "@/types/enum/Zaehldauer";
+import { Zaehldauer } from "@/api/client";
 
 export default interface OptionsDTO {
   zaehldauer: Zaehldauer;

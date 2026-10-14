@@ -105,6 +105,7 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import type { Himmelsrichtung } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
@@ -115,15 +116,17 @@ import { useDisplay } from "vuetify";
 
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung, {
+import {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
-} from "@/types/enum/Himmelsrichtung";
+} from "@/types/enum/HimmelsrichtungText";
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useDateUtils } from "@/util/DateUtils";
 
 const messstelleStore = useMessstelleStore();

@@ -1,8 +1,8 @@
 import type BaseEntity from "@/types/common/BaseEntity";
 
+import { Zaehldauer } from "@/api/client";
 import Quelle from "@/types/enum/Quelle";
 import Wetter from "@/types/enum/Wetter";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 
 export default interface ZaehlungTimelineDTO extends BaseEntity {
   datum: string;

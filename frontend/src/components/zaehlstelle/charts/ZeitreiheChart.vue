@@ -31,8 +31,10 @@ import { useDisplay } from "vuetify";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useFjs } from "@/util/FjsUtils";

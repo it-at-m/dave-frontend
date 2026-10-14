@@ -13,8 +13,8 @@
 import { isNil } from "lodash";
 import { computed } from "vue";
 
-import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import { Himmelsrichtung } from "@/api/client";
+import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {

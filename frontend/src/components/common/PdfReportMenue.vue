@@ -99,7 +99,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { quelleText } from "@/types/enum/Quelle";
 import { wetterText } from "@/types/enum/Wetter";
 import { zaehlartText } from "@/types/enum/Zaehlart";
-import { zaehldauerText } from "@/types/enum/Zaehldauer";
+import { zaehldauerText } from "@/types/enum/ZaehldauerText";
 import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
 

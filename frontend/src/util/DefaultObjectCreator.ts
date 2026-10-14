@@ -30,14 +30,14 @@ import {
   Rounding,
   Verkehrsart,
   ZaehldatenIntervall,
+  Zaehldauer,
+  Zeitblock,
 } from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Quelle from "@/types/enum/Quelle";
 import TagesTyp from "@/types/enum/TagesTypText";
 import Wetter from "@/types/enum/Wetter";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
 
 export default class DefaultObjectCreator {
@@ -229,9 +229,9 @@ export default class DefaultObjectCreator {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,
-      zaehldauer: Zaehldauer.DAUER_24_STUNDEN,
+      zaehldauer: Zaehldauer.Dauer24Stunden,
       intervall: ZaehldatenIntervall.StundeViertel,
-      zeitblock: Zeitblock.ZB_00_24,
+      zeitblock: Zeitblock.Zb0024,
       zeitauswahl: Zeitauswahl.TAGESWERT,
       kraftfahrzeugverkehr: false,
       schwerverkehr: false,

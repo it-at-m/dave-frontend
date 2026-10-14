@@ -241,6 +241,7 @@ import _ from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Zaehldauer } from "@/api/client";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
@@ -252,10 +253,11 @@ import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
@@ -401,14 +403,14 @@ function getChosenBewegungsbeziehungen() {
 }
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
-    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
-    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
+    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
+    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
 });
 
@@ -418,8 +420,8 @@ const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
 const zeitblock = computed(() => {
   // Wenn es sich um keine 24h Zählung handelt, dann darf nicht der Zeitblock 0 - 24 Uhr angezeigt werden, sondern Tageswert
   if (
-    zaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
-    options.value.zeitblock === Zeitblock.ZB_00_24
+    zaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden &&
+    options.value.zeitblock === Zeitblock.Zb0024
   ) {
     if (
       zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
@@ -441,7 +443,7 @@ const zeitblock = computed(() => {
     return zeitblockInfo.get(options.value.zeitblock)?.title;
   }
 
-  return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+  return zeitblockInfo.get(Zeitblock.Zb0024)?.title;
 });
 
 /**

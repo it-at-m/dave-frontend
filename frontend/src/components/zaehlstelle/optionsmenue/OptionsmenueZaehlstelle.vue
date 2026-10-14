@@ -81,6 +81,7 @@ import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Zaehldauer } from "@/api/client";
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
 import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
@@ -90,9 +91,8 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockOrder } from "@/types/enum/Zeitblock";
+import { zeitblockOrder } from "@/types/enum/ZeitblockText";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -135,7 +135,7 @@ const isTeilzaehlungFussverkehr = computed(() => {
   return (
     activeZaehlung.value.kategorien.length === 1 &&
     activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+    activeZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden
   );
 });
 
@@ -212,14 +212,14 @@ const isSonderzaehldauer = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
-    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
 });
 
@@ -235,17 +235,13 @@ function setDefaultOptionsForZaehlung() {
   if (isTeilzaehlungFussverkehr.value && !isSonderzaehldauer.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
     if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
-      optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN
-    ) {
-      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
-    ) {
-      optionsCopy.zeitblock = Zeitblock.ZB_06_10;
+      optionsCopy.zeitblock = Zeitblock.Zb0619;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer16Stunden) {
+      optionsCopy.zeitblock = Zeitblock.Zb0622;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer2X4Stunden) {
+      optionsCopy.zeitblock = Zeitblock.Zb0610;
     } else {
-      optionsCopy.zeitblock = Zeitblock.ZB_00_24;
+      optionsCopy.zeitblock = Zeitblock.Zb0024;
     }
   } else if (
     isSonderzaehldauer.value &&

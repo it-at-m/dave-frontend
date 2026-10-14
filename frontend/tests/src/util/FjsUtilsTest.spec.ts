@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { Bewegungsrichtung } from "@/api/client";
-import { Himmelsrichtung } from "@/api/client";
+import { Bewegungsrichtung, Himmelsrichtung } from "@/api/client";
 import { useFjs } from "@/util/FjsUtils";
 
 describe("FjsUtils", () => {

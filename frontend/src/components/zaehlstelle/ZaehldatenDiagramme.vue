@@ -236,6 +236,7 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
 
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import LadeZaehldatenService from "@/api/service/LadeZaehldatenService";
@@ -259,8 +260,6 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
-import Zaehldauer from "@/types/enum/Zaehldauer";
-import Zeitblock from "@/types/enum/Zeitblock";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
@@ -378,7 +377,7 @@ const isNotTabHeatmap = computed<boolean>(() => {
 });
 
 const isTeilzaehlung = computed(() => {
-  return selectedZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
+  return selectedZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden;
 });
 
 /**
@@ -406,14 +405,14 @@ const isSonderzaehldauer = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
+    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
+    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
 });
 

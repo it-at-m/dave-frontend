@@ -68,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Himmelsrichtung } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -78,9 +79,7 @@ import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung, {
-  himmelsRichtungenTextLong,
-} from "@/types/enum/Himmelsrichtung";
+import { himmelsRichtungenTextLong } from "@/types/enum/HimmelsrichtungText";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });

@@ -15,8 +15,8 @@ import { chain } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { useMessstelleStore } from "@/store/MessstelleStore";
 import { Himmelsrichtung } from "@/api/client";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 
 interface Props {

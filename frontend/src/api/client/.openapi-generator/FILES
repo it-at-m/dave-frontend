@@ -123,7 +123,7 @@ models/GeneratePdfReportRequestAssetsInner.ts
 models/GenerateZaehlungPdfRequest.ts
 models/GeoPoint.ts
 models/HeadingAsset.ts
-models/Himmelsrichtung.ts
+models/HimmelsrichtungText.ts
 models/Hochrechnung.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
@@ -246,14 +246,14 @@ models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts
 models/ZaehldatenIntervall.ts
-models/Zaehldauer.ts
+models/ZaehldauerText.ts
 models/ZaehlstelleConfigurationDTO.ts
 models/ZaehlstelleRequestBody.ts
 models/Zaehlung.ts
 models/ZaehlungskenngroessenAsset.ts
 models/ZaehlungskenngroessenData.ts
 models/ZeitauswahlDTO.ts
-models/Zeitblock.ts
+models/ZeitblockText.ts
 models/ZeitintervallDTO.ts
 models/ZeitintervallRequestBody.ts
 models/index.ts

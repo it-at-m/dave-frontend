@@ -13,8 +13,8 @@ import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 
-import { useMessstelleStore } from "@/store/MessstelleStore";
 import { Himmelsrichtung } from "@/api/client";
+import { useMessstelleStore } from "@/store/MessstelleStore";
 
 interface Props {
   height?: number;

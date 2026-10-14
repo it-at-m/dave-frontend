@@ -1413,9 +1413,9 @@ import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 
 import { computed, nextTick, ref, watch } from "vue";
 
+import { Himmelsrichtung } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import { Himmelsrichtung } from "@/api/client";
 import Zaehlart from "@/types/enum/Zaehlart";
 
 interface Props {

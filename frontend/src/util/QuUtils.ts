@@ -1,6 +1,6 @@
 // Hilfsfunktion für die Darstellung von Qu-Zählungen
 
-import type Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import type { Himmelsrichtung } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";

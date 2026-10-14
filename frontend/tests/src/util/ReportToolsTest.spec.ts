@@ -9,10 +9,9 @@ import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Bewegungsrichtung } from "@/api/client";
+import { Bewegungsrichtung, Himmelsrichtung } from "@/api/client";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-import { Himmelsrichtung } from "@/api/client";
 import Zaehlart from "@/types/enum/Zaehlart";
 import { useReportTools } from "@/util/ReportTools";
 

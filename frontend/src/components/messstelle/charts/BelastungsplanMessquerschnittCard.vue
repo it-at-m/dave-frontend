@@ -18,12 +18,14 @@ import _ from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Himmelsrichtung } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import { Himmelsrichtung } from "@/api/client";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 

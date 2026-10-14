@@ -3431,15 +3431,16 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
+import { Himmelsrichtung, Zaehldauer } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import { Himmelsrichtung } from "@/api/client";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
@@ -3483,8 +3484,8 @@ const maxSizeBelastungsplan = computed(() => {
 
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN) {
-      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden) {
+      return zeitblockInfo.get(Zeitblock.Zb0024)?.title;
     } else {
       return "hochgerechnet";
     }

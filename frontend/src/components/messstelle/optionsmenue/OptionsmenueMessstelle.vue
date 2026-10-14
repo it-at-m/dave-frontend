@@ -85,6 +85,7 @@ import {
   TagesTyp,
   Verkehrsart,
   ZaehldatenIntervall,
+  Zeitblock,
 } from "@/api/client";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
@@ -98,7 +99,6 @@ import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
@@ -266,7 +266,7 @@ function setDefaultOptionsForMessstelle(): void {
   }
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
   chosenOptions.value.intervall = ZaehldatenIntervall.StundeKomplett;
-  chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
+  chosenOptions.value.zeitblock = Zeitblock.Zb0024;
   chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
   chosenOptions.value.blackPrintMode = false;
   chosenOptions.value.rounding = Rounding.None;

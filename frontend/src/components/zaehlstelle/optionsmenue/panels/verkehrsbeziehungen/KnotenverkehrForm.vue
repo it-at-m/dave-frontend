@@ -1499,8 +1499,8 @@ import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import { cloneDeep, isEmpty, remove, toArray } from "lodash";
 import { computed } from "vue";
 
-import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { Himmelsrichtung } from "@/api/client";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 
 interface Props {

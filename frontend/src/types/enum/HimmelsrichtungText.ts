@@ -1,4 +1,4 @@
-import {Himmelsrichtung} from "@/api/client";
+import { Himmelsrichtung } from "@/api/client";
 
 export const himmelsRichtungenTextLong: Map<string, string> = new Map<
   string,

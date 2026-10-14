@@ -23,14 +23,16 @@ import * as SVG from "@svgdotjs/svg.js";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Zaehldauer } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
@@ -406,8 +408,8 @@ function legendeSpalten() {
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
-      zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
-        ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+      zaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden
+        ? zeitblockInfo.get(Zeitblock.Zb0024)?.title
         : "hochgerechnet"
     }`;
   } else if (zeitauswahl === Zeitauswahl.BLOCK) {

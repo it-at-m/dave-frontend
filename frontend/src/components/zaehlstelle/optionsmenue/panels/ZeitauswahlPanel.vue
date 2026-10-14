@@ -168,18 +168,12 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 
+import { Zaehldauer } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, {
-  zeitblockInfo,
-  zeitblockOrder,
-} from "@/types/enum/Zeitblock";
-import ZeitblockStuendlich, {
-  zeitblockStuendlichInfo,
-} from "@/types/enum/ZeitblockStuendlich";
+import { zeitblockInfo, zeitblockOrder } from "@/types/enum/ZeitblockText";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 const chosenOptionsCopy = defineModel<OptionsDTO>({
@@ -279,25 +273,25 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
         result.push(kv);
       }
     });
-    // Block 0-24 bei Zeitauswahl Spitzenstunde hinzufügen falls kein Zeitblock ZB_06_19 oder ZB_06_22 existiert.
+    // Block 0-24 bei Zeitauswahl Spitzenstunde hinzufügen falls kein Zeitblock Zb0619 oder Zb0622 existiert.
     if (
       isZeitauswahlSpitzenstunde.value &&
       !result.some(
-        (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_19)
+        (keyVal) => keyVal === zeitblockInfo.get(Zeitblock.Zb0619)
       ) &&
-      !result.some((keyVal) => keyVal === zeitblockInfo.get(Zeitblock.ZB_06_22))
+      !result.some((keyVal) => keyVal === zeitblockInfo.get(Zeitblock.Zb0622))
     ) {
       if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
         if (!isEmpty(result)) {
           const zeitBlockMaximal: KeyVal = {} as KeyVal;
-          zeitBlockMaximal.value = Zeitblock.ZB_00_24;
+          zeitBlockMaximal.value = Zeitblock.Zb0024;
           zeitBlockMaximal.title = "maximal";
           result.push(zeitBlockMaximal);
         } else {
-          chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+          chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0024;
         }
       } else {
-        result.push(zeitblockInfo.get(Zeitblock.ZB_00_24) as KeyVal);
+        result.push(zeitblockInfo.get(Zeitblock.Zb0024) as KeyVal);
       }
     }
   }
@@ -336,7 +330,7 @@ const zaehldatenIntervalle = computed<Array<KeyVal>>(() => {
 });
 
 const isTeilzaehlung = computed(() => {
-  return activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
+  return activeZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden;
 });
 
 /**
@@ -364,14 +358,14 @@ const isOnlyFussverkehrSelected = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_06_10) &&
-    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.ZB_15_19)
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
 });
 
@@ -421,7 +415,7 @@ function adaptOptionsUpdate() {
  */
 function zeitauswahlChanged() {
   if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0024;
   }
   // Der erste Eintrag wird als ausgewählt gesetzt
   if (

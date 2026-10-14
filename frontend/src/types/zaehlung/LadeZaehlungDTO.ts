@@ -6,9 +6,9 @@ import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 
+import { Zaehldauer } from "@/api/client";
 import Quelle from "@/types/enum/Quelle";
 import Wetter from "@/types/enum/Wetter";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 
 export default interface LadeZaehlungDTO extends BaseEntity {
   // Zeit

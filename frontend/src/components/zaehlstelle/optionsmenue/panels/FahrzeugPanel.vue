@@ -420,10 +420,10 @@ import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
+import { Zaehldauer } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
@@ -469,7 +469,7 @@ const activeZaehlung = computed<LadeZaehlungDTO>(() => {
 const isTageswertAndNot24h = computed(() => {
   return (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
-    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+    activeZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden
   );
 });
 
