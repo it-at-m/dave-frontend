@@ -6,7 +6,7 @@ import type { ComputedRef, Ref } from "vue";
 
 import { computed } from "vue";
 
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import KnotenarmComparator from "@/util/KnotenarmComparator";
 
 export function useQjs() {
@@ -42,29 +42,29 @@ export function useQjs() {
   const patternsArrowOne: VerkehrsbeziehungDTO[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
     { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
-    { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
-    { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO },
+    { von: 5, nach: 7, strassenseite: Himmelsrichtung.Nw },
+    { von: 6, nach: 8, strassenseite: Himmelsrichtung.No },
   ];
 
   const patternsArrowTwo: VerkehrsbeziehungDTO[] = [
     { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
     { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
-    { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
-    { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO },
+    { von: 7, nach: 5, strassenseite: Himmelsrichtung.Nw },
+    { von: 8, nach: 6, strassenseite: Himmelsrichtung.No },
   ];
 
   const patternsArrowThree: VerkehrsbeziehungDTO[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
     { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
-    { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
-    { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW },
+    { von: 5, nach: 7, strassenseite: Himmelsrichtung.So },
+    { von: 6, nach: 8, strassenseite: Himmelsrichtung.Sw },
   ];
 
   const patternsArrowFour: VerkehrsbeziehungDTO[] = [
     { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
     { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-    { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
-    { von: 8, nach: 6, strassenseite: Himmelsrichtung.SW },
+    { von: 7, nach: 5, strassenseite: Himmelsrichtung.So },
+    { von: 8, nach: 6, strassenseite: Himmelsrichtung.Sw },
   ];
 
   function matchesArrowPattern(

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Bewegungsrichtung } from "@/api/client";
+import { Himmelsrichtung } from "@/api/client";
 import { useFjs } from "@/util/FjsUtils";
 
 describe("FjsUtils", () => {
@@ -39,7 +39,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         1,
         Himmelsrichtung.W,
-        Bewegungsrichtung.AUS
+        Bewegungsrichtung.Aus
       )
     ).toBe(true);
     expect(
@@ -47,7 +47,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         1,
         Himmelsrichtung.O,
-        Bewegungsrichtung.AUS
+        Bewegungsrichtung.Aus
       )
     ).toBe(true);
     expect(
@@ -55,7 +55,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         1,
         Himmelsrichtung.W,
-        Bewegungsrichtung.EIN
+        Bewegungsrichtung.Ein
       )
     ).toBe(true);
     expect(
@@ -63,7 +63,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         1,
         Himmelsrichtung.O,
-        Bewegungsrichtung.EIN
+        Bewegungsrichtung.Ein
       )
     ).toBe(true);
     expect(
@@ -71,7 +71,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         3,
         Himmelsrichtung.O,
-        Bewegungsrichtung.AUS
+        Bewegungsrichtung.Aus
       )
     ).toBe(true);
     expect(
@@ -79,7 +79,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         3,
         Himmelsrichtung.W,
-        Bewegungsrichtung.EIN
+        Bewegungsrichtung.Ein
       )
     ).toBe(true);
 
@@ -88,7 +88,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         3,
         Himmelsrichtung.W,
-        Bewegungsrichtung.AUS
+        Bewegungsrichtung.Aus
       )
     ).toBe(false);
   });
@@ -106,7 +106,7 @@ describe("FjsUtils", () => {
         laengsverkehr,
         2,
         Himmelsrichtung.W,
-        Bewegungsrichtung.AUS
+        Bewegungsrichtung.Aus
       )
     ).toBe(false);
   });
@@ -118,24 +118,24 @@ describe("FjsUtils", () => {
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
         {
           knotenarm: 2,
           strassenseite: Himmelsrichtung.N,
-          richtung: Bewegungsrichtung.AUS,
+          richtung: Bewegungsrichtung.Aus,
         },
       ] as any;
       const b = [
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
         {
           knotenarm: 2,
           strassenseite: Himmelsrichtung.N,
-          richtung: Bewegungsrichtung.AUS,
+          richtung: Bewegungsrichtung.Aus,
         },
       ] as any;
       expect(areLaengsverkehreEqual(a, b)).toBe(true);
@@ -146,24 +146,24 @@ describe("FjsUtils", () => {
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
         {
           knotenarm: 2,
           strassenseite: Himmelsrichtung.N,
-          richtung: Bewegungsrichtung.AUS,
+          richtung: Bewegungsrichtung.Aus,
         },
       ] as any;
       const b = [
         {
           knotenarm: 2,
           strassenseite: Himmelsrichtung.N,
-          richtung: Bewegungsrichtung.AUS,
+          richtung: Bewegungsrichtung.Aus,
         },
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       expect(areLaengsverkehreEqual(a, b)).toBe(true);
@@ -180,19 +180,19 @@ describe("FjsUtils", () => {
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       const b = [
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
         {
           knotenarm: 2,
           strassenseite: Himmelsrichtung.N,
-          richtung: Bewegungsrichtung.AUS,
+          richtung: Bewegungsrichtung.Aus,
         },
       ] as any;
       expect(areLaengsverkehreEqual(a, b)).toBe(false);
@@ -203,14 +203,14 @@ describe("FjsUtils", () => {
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       const b = [
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.AUS,
+          richtung: Bewegungsrichtung.Aus,
         },
       ] as any;
       expect(areLaengsverkehreEqual(a, b)).toBe(false);
@@ -221,14 +221,14 @@ describe("FjsUtils", () => {
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       const b = [
         {
           knotenarm: 2,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       expect(areLaengsverkehreEqual(a, b)).toBe(false);
@@ -239,14 +239,14 @@ describe("FjsUtils", () => {
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.W,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       const b = [
         {
           knotenarm: 1,
           strassenseite: Himmelsrichtung.N,
-          richtung: Bewegungsrichtung.EIN,
+          richtung: Bewegungsrichtung.Ein,
         },
       ] as any;
       expect(areLaengsverkehreEqual(a, b)).toBe(false);

@@ -80,7 +80,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     1,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.W
                   )
                 "
@@ -90,7 +90,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     1,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.W
                   )
                 "
@@ -99,7 +99,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     1,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.W
                   )
                 "
@@ -109,7 +109,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     1,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.W
                   )
                 "
@@ -123,7 +123,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     1,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.O
                   )
                 "
@@ -133,7 +133,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     1,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.O
                   )
                 "
@@ -142,7 +142,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     1,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.O
                   )
                 "
@@ -152,7 +152,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     1,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.O
                   )
                 "
@@ -251,7 +251,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     2,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.N
                   )
                 "
@@ -261,7 +261,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     2,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.N
                   )
                 "
@@ -270,7 +270,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     2,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.N
                   )
                 "
@@ -280,7 +280,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     2,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.N
                   )
                 "
@@ -294,7 +294,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     2,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.S
                   )
                 "
@@ -304,7 +304,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     2,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.S
                   )
                 "
@@ -313,7 +313,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     2,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.S
                   )
                 "
@@ -323,7 +323,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     2,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.S
                   )
                 "
@@ -421,7 +421,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     3,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.O
                   )
                 "
@@ -431,7 +431,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     3,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.O
                   )
                 "
@@ -440,7 +440,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     3,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.O
                   )
                 "
@@ -450,7 +450,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     3,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.O
                   )
                 "
@@ -464,7 +464,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     3,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.W
                   )
                 "
@@ -474,7 +474,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     3,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.W
                   )
                 "
@@ -483,7 +483,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     3,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.W
                   )
                 "
@@ -493,7 +493,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     3,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.W
                   )
                 "
@@ -592,7 +592,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     4,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.S
                   )
                 "
@@ -602,7 +602,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     4,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.S
                   )
                 "
@@ -611,7 +611,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     4,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.S
                   )
                 "
@@ -621,7 +621,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     4,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.S
                   )
                 "
@@ -635,7 +635,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     4,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.N
                   )
                 "
@@ -645,7 +645,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     4,
-                    Bewegungsrichtung.AUS,
+                    Bewegungsrichtung.Aus,
                     Himmelsrichtung.N
                   )
                 "
@@ -654,7 +654,7 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     4,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.N
                   )
                 "
@@ -664,7 +664,7 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     4,
-                    Bewegungsrichtung.EIN,
+                    Bewegungsrichtung.Ein,
                     Himmelsrichtung.N
                   )
                 "
@@ -767,8 +767,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     5,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Nw
                   )
                 "
                 id="arrow_knotenarm5_nord_west_ausgehend"
@@ -777,8 +777,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     5,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Nw
                   )
                 "
               />
@@ -786,8 +786,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     5,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Nw
                   )
                 "
                 id="arrow_knotenarm5_nord_west_eingehend"
@@ -796,8 +796,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     5,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Nw
                   )
                 "
               />
@@ -810,8 +810,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     5,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.So
                   )
                 "
                 id="arrow_knotenarm5_sued_ost_ausgehend"
@@ -820,8 +820,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     5,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.So
                   )
                 "
               />
@@ -829,8 +829,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     5,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.So
                   )
                 "
                 id="arrow_knotenarm5_sued_ost_eingehend"
@@ -839,8 +839,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     5,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.So
                   )
                 "
               />
@@ -850,28 +850,28 @@
               id="arrows_knotenarm5_crossing"
             >
               <path
-                v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.SO)"
+                v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.So)"
                 id="arrow_knotenarm5_crossing_sued_ost"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.SO, true)
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.So, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.SO, false)
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.So, false)
                 "
                 transform="translate(140,110) scale(0.8)"
               />
               <path
-                v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.NW)"
+                v-if="isQuerungsverkehrAvailable(5, Himmelsrichtung.Nw)"
                 id="arrow_knotenarm5_crossing_nord_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.NW, true)
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.Nw, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.NW, false)
+                  calculateColorOfQuerungsverkehr(5, Himmelsrichtung.Nw, false)
                 "
                 transform="translate(140,110) scale(0.8)"
               />
@@ -937,8 +937,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     6,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.No
                   )
                 "
                 id="arrow_knotenarm6_nord_ost_ausgehend"
@@ -947,8 +947,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     6,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.No
                   )
                 "
               />
@@ -956,8 +956,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     6,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.No
                   )
                 "
                 id="arrow_knotenarm6_nord_ost_eingehend"
@@ -966,8 +966,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     6,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.No
                   )
                 "
               />
@@ -980,8 +980,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     6,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Sw
                   )
                 "
                 id="arrow_knotenarm6_sued_west_ausgehend"
@@ -990,8 +990,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     6,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Sw
                   )
                 "
               />
@@ -999,8 +999,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     6,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Sw
                   )
                 "
                 id="arrow_knotenarm6_sued_west_eingehend"
@@ -1009,8 +1009,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     6,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Sw
                   )
                 "
               />
@@ -1020,28 +1020,28 @@
               id="arrows_knotenarm6_crossing"
             >
               <path
-                v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.SW)"
+                v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.Sw)"
                 id="arrow_knotenarm6_crossing_sued_west"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.SW, true)
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.Sw, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.SW, false)
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.Sw, false)
                 "
                 transform="translate(140,110) scale(0.8)"
               />
               <path
-                v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.NO)"
+                v-if="isQuerungsverkehrAvailable(6, Himmelsrichtung.No)"
                 id="arrow_knotenarm6_crossing_nord_ost"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.NO, true)
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.No, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.NO, false)
+                  calculateColorOfQuerungsverkehr(6, Himmelsrichtung.No, false)
                 "
                 transform="translate(140,110) scale(0.8)"
               />
@@ -1106,8 +1106,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     7,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.So
                   )
                 "
                 id="arrow_knotenarm7_sued_ost_ausgehend"
@@ -1116,8 +1116,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     7,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.So
                   )
                 "
               />
@@ -1125,8 +1125,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     7,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.So
                   )
                 "
                 id="arrow_knotenarm7_sued_ost_eingehend"
@@ -1135,8 +1135,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     7,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.So
                   )
                 "
               />
@@ -1149,8 +1149,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     7,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Nw
                   )
                 "
                 id="arrow_knotenarm7_nord_west_ausgehend"
@@ -1159,8 +1159,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     7,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Nw
                   )
                 "
               />
@@ -1168,8 +1168,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     7,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Nw
                   )
                 "
                 id="arrow_knotenarm7_nord_west_eingehend"
@@ -1178,8 +1178,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     7,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Nw
                   )
                 "
               />
@@ -1189,28 +1189,28 @@
               id="arrows_knotenarm7_crossing"
             >
               <path
-                v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.NW)"
+                v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.Nw)"
                 id="arrow_knotenarm7_crossing_nord_west"
                 d="M 808.33025,1077.7756 H 613.88531 v 11.1116 l -38.8884,-19.4435 38.8884,-19.4454 v 11.1105 h 194.44494 z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.NW, true)
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.Nw, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.NW, false)
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.Nw, false)
                 "
                 transform="translate(140,160) scale(0.8)"
               />
               <path
-                v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.SO)"
+                v-if="isQuerungsverkehrAvailable(7, Himmelsrichtung.So)"
                 id="arrow_knotenarm7_crossing_sued_ost"
                 d="m 575.66231,1099.9989 h 194.44506 v -11.1112 l 38.8883,19.4435 -38.8883,19.4454 v -11.1111 H 575.66231 Z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO, true)
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.So, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.SO, false)
+                  calculateColorOfQuerungsverkehr(7, Himmelsrichtung.So, false)
                 "
                 transform="translate(140,160) scale(0.8)"
               />
@@ -1276,8 +1276,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     8,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Sw
                   )
                 "
                 id="arrow_knotenarm8_sued_west_ausgehend"
@@ -1286,8 +1286,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     8,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.Sw
                   )
                 "
               />
@@ -1295,8 +1295,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     8,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Sw
                   )
                 "
                 id="arrow_knotenarm8_sued_west_eingehend"
@@ -1305,8 +1305,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     8,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.SW
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.Sw
                   )
                 "
               />
@@ -1319,8 +1319,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     8,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.No
                   )
                 "
                 id="arrow_knotenarm8_nord_ost_ausgehend"
@@ -1329,8 +1329,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     8,
-                    Bewegungsrichtung.AUS,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Aus,
+                    Himmelsrichtung.No
                   )
                 "
               />
@@ -1338,8 +1338,8 @@
                 v-if="
                   isLaengsverkehrAvailable(
                     8,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.No
                   )
                 "
                 id="arrow_knotenarm8_nord_ost_eingehend"
@@ -1348,8 +1348,8 @@
                 :fill="
                   calculateColorOfLaengsverkehr(
                     8,
-                    Bewegungsrichtung.EIN,
-                    Himmelsrichtung.NO
+                    Bewegungsrichtung.Ein,
+                    Himmelsrichtung.No
                   )
                 "
               />
@@ -1359,28 +1359,28 @@
               id="arrows_knotenarm8_crossing"
             >
               <path
-                v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.NO)"
+                v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.No)"
                 id="arrow_knotenarm8_crossing_nord_ost"
                 d="m 583.33335,322.22223 h 194.44503 v -11.11111 l 38.88831,19.44345 -38.88831,19.44544 V 338.88889 H 583.33335 Z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.NO, true)
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.No, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.NO, false)
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.No, false)
                 "
                 transform="translate(140,110) scale(0.8)"
               />
               <path
-                v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.SW)"
+                v-if="isQuerungsverkehrAvailable(8, Himmelsrichtung.Sw)"
                 id="arrow_knotenarm8_crossing_sued_west"
                 d="M 816.66669,299.99959 H 622.22175 v 11.11153 l -38.8884,-19.4435 38.8884,-19.44539 v 11.11057 h 194.44494 z"
                 :stroke="
-                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.SW, true)
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.Sw, true)
                 "
                 stroke-width="3"
                 :fill="
-                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.SW, false)
+                  calculateColorOfQuerungsverkehr(8, Himmelsrichtung.Sw, false)
                 "
                 transform="translate(140,110) scale(0.8)"
               />
@@ -1401,6 +1401,7 @@
 
 <script setup lang="ts">
 import type {
+  Bewegungsrichtung,
   LadeBelastungsplanFjsDTO,
   LadeBelastungsplanQuDTO,
 } from "@/api/client";
@@ -1414,8 +1415,7 @@ import { computed, nextTick, ref, watch } from "vue";
 
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import Zaehlart from "@/types/enum/Zaehlart";
 
 interface Props {

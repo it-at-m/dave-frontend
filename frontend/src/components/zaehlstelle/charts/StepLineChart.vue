@@ -422,7 +422,7 @@ watch(
     if (zaehldatenStepline.xaxisDataSecondChart !== null) {
       xAxisDataSecondChart.value = zaehldatenStepline.xaxisDataSecondChart;
     }
-    if (zaehldatenStepline.seriesEntriesSecondChart !== null) {
+    if (zaehldatenStepline.seriesEntriesSecondChart) {
       seriesEntriesChart.value = createSeriesDataForChart([
         ...zaehldatenStepline.seriesEntriesFirstChart,
         ...zaehldatenStepline.seriesEntriesSecondChart,

@@ -1,28 +1,17 @@
-enum Himmelsrichtung {
-  N = "N",
-  NO = "NO",
-  O = "O",
-  SO = "SO",
-  S = "S",
-  SW = "SW",
-  W = "W",
-  NW = "NW",
-}
-
-export default Himmelsrichtung;
+import {Himmelsrichtung} from "@/api/client";
 
 export const himmelsRichtungenTextLong: Map<string, string> = new Map<
   string,
   string
 >([
   [Himmelsrichtung.N, "Nord"],
-  [Himmelsrichtung.NO, "Nordost"],
+  [Himmelsrichtung.No, "Nordost"],
   [Himmelsrichtung.O, "Ost"],
-  [Himmelsrichtung.SO, "Südost"],
+  [Himmelsrichtung.So, "Südost"],
   [Himmelsrichtung.S, "Süd"],
-  [Himmelsrichtung.SW, "Südwest"],
+  [Himmelsrichtung.Sw, "Südwest"],
   [Himmelsrichtung.W, "West"],
-  [Himmelsrichtung.NW, "Nordwest"],
+  [Himmelsrichtung.Nw, "Nordwest"],
 ]);
 
 export const himmelsRichtungenTextShort: Map<string, string> = new Map<
@@ -30,11 +19,11 @@ export const himmelsRichtungenTextShort: Map<string, string> = new Map<
   string
 >([
   [Himmelsrichtung.N, "N"],
-  [Himmelsrichtung.NO, "NO"],
+  [Himmelsrichtung.No, "NO"],
   [Himmelsrichtung.O, "O"],
-  [Himmelsrichtung.SO, "SO"],
+  [Himmelsrichtung.So, "SO"],
   [Himmelsrichtung.S, "S"],
-  [Himmelsrichtung.SW, "SW"],
+  [Himmelsrichtung.Sw, "SW"],
   [Himmelsrichtung.W, "W"],
-  [Himmelsrichtung.NW, "NW"],
+  [Himmelsrichtung.Nw, "NW"],
 ]);

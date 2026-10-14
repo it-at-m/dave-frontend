@@ -8,11 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Fahrzeugklasse } from "@/api/client";
-
 import { isNil } from "lodash";
 import { computed } from "vue";
 
+import { Fahrzeugklasse } from "@/api/client";
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
 import IconTooltip from "@/types/util/IconTooltip";
 

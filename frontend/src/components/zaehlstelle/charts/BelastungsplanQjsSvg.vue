@@ -944,7 +944,7 @@ import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/Belastu
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -1154,11 +1154,11 @@ const sumArrowsOneTwo = computed(() => {
     )?.value;
   } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.NW
+      (k) => k.strassenseite === Himmelsrichtung.Nw
     )?.value;
   } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.NO
+      (k) => k.strassenseite === Himmelsrichtung.No
     )?.value;
   }
   return sum ?? 0;
@@ -1179,11 +1179,11 @@ const sumArrowsThreeFour = computed(() => {
     )?.value;
   } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.SO
+      (k) => k.strassenseite === Himmelsrichtung.So
     )?.value;
   } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.SW
+      (k) => k.strassenseite === Himmelsrichtung.Sw
     )?.value;
   }
   return sum ?? 0;

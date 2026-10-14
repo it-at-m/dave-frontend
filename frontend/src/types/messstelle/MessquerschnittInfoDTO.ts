@@ -1,4 +1,4 @@
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 
 export default interface MessquerschnittInfoDTO {
   mstId: string;

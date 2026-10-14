@@ -5054,6 +5054,7 @@
 <script setup lang="ts">
 import type {
   AbstractLadeBelastungsplanDTOObject,
+  Bewegungsrichtung,
   LadeBelastungsplanFjsDTO,
 } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
@@ -5068,8 +5069,7 @@ import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/Belastu
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
@@ -5189,19 +5189,19 @@ function getSumArrowsKnotenarmOrZero(knotenarm: number) {
 
 // Zaehlwerte of Node 1
 const zaehlwertArrowNodeOneWestOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.AUS, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.Aus, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeOneWestIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.EIN, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.Ein, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeOneEastOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.AUS, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.Aus, Himmelsrichtung.O);
 });
 
 const zaehlwertArrowNodeOneEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.EIN, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(1, Bewegungsrichtung.Ein, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeOneWest = computed(() => {
@@ -5218,19 +5218,19 @@ const sumNodeOneArrows = computed(() => {
 
 // Zaehlwerte of Node 2
 const zaehlwertArrowNodeTwoNorthIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.EIN, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.Ein, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeTwoNorthOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.AUS, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.Aus, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeTwoSouthIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.EIN, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.Ein, Himmelsrichtung.S);
 });
 
 const zaehlwertArrowNodeTwoSouthOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.AUS, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(2, Bewegungsrichtung.Aus, Himmelsrichtung.S);
 });
 
 const sumArrowsNodeTwoNorth = computed(() => {
@@ -5247,19 +5247,19 @@ const sumNodeTwoArrows = computed(() => {
 
 // Zaehlwerte of Node 3
 const zaehlwertArrowNodeThreeWestIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.Ein, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeThreeWestOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.AUS, Himmelsrichtung.W);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.Aus, Himmelsrichtung.W);
 });
 
 const zaehlwertArrowNodeThreeEastOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.AUS, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.Aus, Himmelsrichtung.O);
 });
 
 const zaehlwertArrowNodeThreeEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.EIN, Himmelsrichtung.O);
+  return getArrowZaehlwertOrZero(3, Bewegungsrichtung.Ein, Himmelsrichtung.O);
 });
 
 const sumArrowsNodeThreeWest = computed(() => {
@@ -5276,19 +5276,19 @@ const sumNodeThreeArrows = computed(() => {
 
 // Zaehlwerte of Node 4
 const zaehlwertArrowNodeFourNorthOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.AUS, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.Aus, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeFourNorthIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.EIN, Himmelsrichtung.N);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.Ein, Himmelsrichtung.N);
 });
 
 const zaehlwertArrowNodeFourSouthOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.AUS, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.Aus, Himmelsrichtung.S);
 });
 
 const zaehlwertArrowNodeFourSouthIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.EIN, Himmelsrichtung.S);
+  return getArrowZaehlwertOrZero(4, Bewegungsrichtung.Ein, Himmelsrichtung.S);
 });
 
 const sumArrowsNodeFourNorth = computed(() => {
@@ -5305,27 +5305,27 @@ const sumNodeFourArrows = computed(() => {
 
 // Zaehlwerte of Node 5
 const zaehlwertArrowNodeFiveNorthWestOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.Aus, Himmelsrichtung.Nw);
 });
 
 const zaehlwertArrowNodeFiveNorthWestIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.Ein, Himmelsrichtung.Nw);
 });
 
 const zaehlwertArrowNodeFiveSouthEastOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.Aus, Himmelsrichtung.So);
 });
 
 const zaehlwertArrowNodeFiveSouthEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(5, Bewegungsrichtung.Ein, Himmelsrichtung.So);
 });
 
 const sumArrowsNodeFiveNorthWest = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.NW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.Nw);
 });
 
 const sumArrowsNodeFiveSouthEast = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.SO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(5, Himmelsrichtung.So);
 });
 
 const sumNodeFiveArrows = computed(() => {
@@ -5334,27 +5334,27 @@ const sumNodeFiveArrows = computed(() => {
 
 // Zaehlwerte of Node 6
 const zaehlwertArrowNodeSixNorthEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.Ein, Himmelsrichtung.No);
 });
 
 const zaehlwertArrowNodeSixNorthEastOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.Aus, Himmelsrichtung.No);
 });
 
 const zaehlwertArrowNodeSixSouthWestIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.Ein, Himmelsrichtung.Sw);
 });
 
 const zaehlwertArrowNodeSixSouthWestOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(6, Bewegungsrichtung.Aus, Himmelsrichtung.Sw);
 });
 
 const sumArrowsNodeSixNorthEast = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.NO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.No);
 });
 
 const sumArrowsNodeSixSouthWest = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.SW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(6, Himmelsrichtung.Sw);
 });
 
 const sumNodeSixArrows = computed(() => {
@@ -5363,27 +5363,27 @@ const sumNodeSixArrows = computed(() => {
 
 // Zaehlwerte of Node 7
 const zaehlwertArrowNodeSevenNorthWestIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.EIN, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.Ein, Himmelsrichtung.Nw);
 });
 
 const zaehlwertArrowNodeSevenNorthWestOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.AUS, Himmelsrichtung.NW);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.Aus, Himmelsrichtung.Nw);
 });
 
 const zaehlwertArrowNodeSevenSouthEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.EIN, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.Ein, Himmelsrichtung.So);
 });
 
 const zaehlwertArrowNodeSevenSouthEastOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.AUS, Himmelsrichtung.SO);
+  return getArrowZaehlwertOrZero(7, Bewegungsrichtung.Aus, Himmelsrichtung.So);
 });
 
 const sumArrowsNodeSevenNorthWest = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.NW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.Nw);
 });
 
 const sumArrowsNodeSevenSouthEast = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.SO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(7, Himmelsrichtung.So);
 });
 
 const sumNodeSevenArrows = computed(() => {
@@ -5392,27 +5392,27 @@ const sumNodeSevenArrows = computed(() => {
 
 // Zaehlwerte of Node 8
 const zaehlwertArrowNodeEightNorthEastOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.AUS, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.Aus, Himmelsrichtung.No);
 });
 
 const zaehlwertArrowNodeEightNorthEastIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.EIN, Himmelsrichtung.NO);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.Ein, Himmelsrichtung.No);
 });
 
 const zaehlwertArrowNodeEightSouthWestOutgoing = computed(() => {
-  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.AUS, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.Aus, Himmelsrichtung.Sw);
 });
 
 const zaehlwertArrowNodeEightSouthWestIncoming = computed(() => {
-  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.EIN, Himmelsrichtung.SW);
+  return getArrowZaehlwertOrZero(8, Bewegungsrichtung.Ein, Himmelsrichtung.Sw);
 });
 
 const sumArrowsNodeEightNorthEast = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.NO);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.No);
 });
 
 const sumArrowsNodeEightSouthWest = computed(() => {
-  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.SW);
+  return getSumArrowsKnotenarmStrassenseiteOrZero(8, Himmelsrichtung.Sw);
 });
 
 const sumNodeEightArrows = computed(() => {
@@ -5423,360 +5423,360 @@ const sumNodeEightArrows = computed(() => {
 const colorArrowNodeOneWestOutgoing = setColor(
   1,
   Himmelsrichtung.W,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeOneWestOutgoingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.W,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeOneWestIncoming = setColor(
   1,
   Himmelsrichtung.W,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeOneWestIncomingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.W,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeOneEastOutgoing = setColor(
   1,
   Himmelsrichtung.O,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeOneEastOutgoingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.O,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeOneEastIncoming = setColor(
   1,
   Himmelsrichtung.O,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeOneEastIncomingAvailable = isArrowAvailable(
   1,
   Himmelsrichtung.O,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 // Arrows of Node 2
 const colorArrowNodeTwoNorthIncoming = setColor(
   2,
   Himmelsrichtung.N,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeTwoNorthIncomingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.N,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeTwoNorthOutgoing = setColor(
   2,
   Himmelsrichtung.N,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeTwoNorthOutgoingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.N,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeTwoSouthIncoming = setColor(
   2,
   Himmelsrichtung.S,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeTwoSouthIncomingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.S,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeTwoSouthOutgoing = setColor(
   2,
   Himmelsrichtung.S,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeTwoSouthOutgoingAvailable = isArrowAvailable(
   2,
   Himmelsrichtung.S,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 // Arrows of Node 3
 const colorArrowNodeThreeWestIncoming = setColor(
   3,
   Himmelsrichtung.W,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeThreeWestIncomingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.W,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeThreeWestOutgoing = setColor(
   3,
   Himmelsrichtung.W,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeThreeWestOutgoingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.W,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeThreeEastOutgoing = setColor(
   3,
   Himmelsrichtung.O,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeThreeEastOutgoingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.O,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeThreeEastIncoming = setColor(
   3,
   Himmelsrichtung.O,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeThreeEastIncomingAvailable = isArrowAvailable(
   3,
   Himmelsrichtung.O,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 // Arrows of Node 4
 const colorArrowNodeFourNorthOutgoing = setColor(
   4,
   Himmelsrichtung.N,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeFourNorthOutgoingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.N,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeFourNorthIncoming = setColor(
   4,
   Himmelsrichtung.N,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeFourNorthIncomingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.N,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeFourSouthOutgoing = setColor(
   4,
   Himmelsrichtung.S,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 const arrowNodeFourSouthOutgoingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.S,
-  Bewegungsrichtung.AUS
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeFourSouthIncoming = setColor(
   4,
   Himmelsrichtung.S,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 const arrowNodeFourSouthIncomingAvailable = isArrowAvailable(
   4,
   Himmelsrichtung.S,
-  Bewegungsrichtung.EIN
+  Bewegungsrichtung.Ein
 );
 
 // Arrows of Node 5
 const colorArrowNodeFiveNorthWestOutgoing = setColor(
   5,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeFiveNorthWestOutgoingAvailable = isArrowAvailable(
   5,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeFiveNorthWestIncoming = setColor(
   5,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeFiveNorthWestIncomingAvailable = isArrowAvailable(
   5,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeFiveSouthEastOutgoing = setColor(
   5,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeFiveSouthEastOutgoingAvailable = isArrowAvailable(
   5,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeFiveSouthEastIncoming = setColor(
   5,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeFiveSouthEastIncomingAvailable = isArrowAvailable(
   5,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Ein
 );
 
 // Arrows of Node 6
 const colorArrowNodeSixNorthEastIncoming = setColor(
   6,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeSixNorthEastIncomingAvailable = isArrowAvailable(
   6,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeSixNorthEastOutgoing = setColor(
   6,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeSixNorthEastOutgoingAvailable = isArrowAvailable(
   6,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeSixSouthWestIncoming = setColor(
   6,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeSixSouthWestIncomingAvailable = isArrowAvailable(
   6,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeSixSouthWestOutgoing = setColor(
   6,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeSixSouthWestOutgoingAvailable = isArrowAvailable(
   6,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Aus
 );
 
 // Arrows of Node 7
 const colorArrowNodeSevenNorthWestIncoming = setColor(
   7,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeSevenNorthWestIncomingAvailable = isArrowAvailable(
   7,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeSevenNorthWestOutgoing = setColor(
   7,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeSevenNorthWestOutgoingAvailable = isArrowAvailable(
   7,
-  Himmelsrichtung.NW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Nw,
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeSevenSouthEastIncoming = setColor(
   7,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeSevenSouthEastIncomingAvailable = isArrowAvailable(
   7,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeSevenSouthEastOutgoing = setColor(
   7,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeSevenSouthEastOutgoingAvailable = isArrowAvailable(
   7,
-  Himmelsrichtung.SO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.So,
+  Bewegungsrichtung.Aus
 );
 
 // Arrows of Node 8
 const colorArrowNodeEightNorthEastOutgoing = setColor(
   8,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeEightNorthEastOutgoingAvailable = isArrowAvailable(
   8,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeEightNorthEastIncoming = setColor(
   8,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeEightNorthEastIncomingAvailable = isArrowAvailable(
   8,
-  Himmelsrichtung.NO,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.No,
+  Bewegungsrichtung.Ein
 );
 
 const colorArrowNodeEightSouthWestOutgoing = setColor(
   8,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Aus
 );
 const arrowNodeEightSouthWestOutgoingAvailable = isArrowAvailable(
   8,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.AUS
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Aus
 );
 
 const colorArrowNodeEightSouthWestIncoming = setColor(
   8,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Ein
 );
 const arrowNodeEightSouthWestIncomingAvailable = isArrowAvailable(
   8,
-  Himmelsrichtung.SW,
-  Bewegungsrichtung.EIN
+  Himmelsrichtung.Sw,
+  Bewegungsrichtung.Ein
 );
 
 const optionen = computed<OptionsDTO>(() => {

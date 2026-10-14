@@ -9,10 +9,10 @@ import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { Bewegungsrichtung } from "@/api/client";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import Zaehlart from "@/types/enum/Zaehlart";
 import { useReportTools } from "@/util/ReportTools";
 
@@ -174,12 +174,12 @@ describe("ReportTools", () => {
     const lv1 = {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.N,
-      richtung: Bewegungsrichtung.EIN,
+      richtung: Bewegungsrichtung.Ein,
     } as LaengsverkehrDTO;
     const lv2 = {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.S,
-      richtung: Bewegungsrichtung.EIN,
+      richtung: Bewegungsrichtung.Ein,
     } as LaengsverkehrDTO;
 
     const zaehlung = createZaehlung(Zaehlart.FJS);
@@ -202,12 +202,12 @@ describe("ReportTools", () => {
     const lv1 = {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.N,
-      richtung: Bewegungsrichtung.EIN,
+      richtung: Bewegungsrichtung.Ein,
     } as LaengsverkehrDTO;
     const lv2 = {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.S,
-      richtung: Bewegungsrichtung.EIN,
+      richtung: Bewegungsrichtung.Ein,
     } as LaengsverkehrDTO;
 
     const zaehlung = createZaehlung(Zaehlart.FJS);
