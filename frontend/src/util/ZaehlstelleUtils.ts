@@ -1,5 +1,5 @@
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { OptionsDTO } from "@/api/client";
+import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 
 import { isEmpty } from "lodash";
 

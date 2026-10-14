@@ -131,9 +131,10 @@
 </template>
 
 <script setup lang="ts">
+import type { TextAsset } from "@/api/client";
+
 import { ref, watch } from "vue";
 
-import type { TextAsset } from "@/api/client";
 import { useReportTools } from "@/util/ReportTools";
 
 interface Props {

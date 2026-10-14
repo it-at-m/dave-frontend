@@ -962,9 +962,7 @@ function calculateSelectOrDeselectVerkehrsarten() {
 /**
  * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im OptionsDTO entsprechend der gewählten Zeitauswahl.
  */
-function adaptFahrzeugauswahl(
-  options: OptionsDTO
-): OptionsDTO {
+function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
   // Alles Zurücksetzten, wenn es sich um die Spitzenstunde handelt
   if (
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||

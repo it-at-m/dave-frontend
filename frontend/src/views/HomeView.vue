@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { ImageAsset } from "@/api/client";
 import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
@@ -67,7 +68,6 @@ import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import type { ImageAsset } from "@/api/client";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const pdfReportStore = usePdfReportStore();

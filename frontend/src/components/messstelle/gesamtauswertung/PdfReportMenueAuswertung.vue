@@ -81,7 +81,13 @@
 </template>
 
 <script setup lang="ts">
-import type { MessstelleAuswertungIdDTO } from "@/api/client";
+import type {
+  BaseAsset,
+  BaseAssetTypeEnum,
+  HeadingAsset,
+  MessstelleAuswertungIdDTO,
+  TextAsset,
+} from "@/api/client";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
@@ -95,12 +101,8 @@ import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { tagesTypText } from "@/types/enum/TagesTypText";
-import type { BaseAssetTypeEnum } from "@/api/client";
-import type { BaseAsset } from "@/api/client";
-import type { HeadingAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
-import {useAssetUtil} from "@/util/AssetUtil";
 
 const dialog = defineModel<boolean>({ required: true });
 
@@ -239,7 +241,9 @@ function createMessInfo(): void {
         .join(", ");
       header = `Info zur Messung an den Messstellen ${mstIds}`;
     }
-    assets.push(assetUtil.createHeadingAsset(header, BaseAssetTypeEnum.Heading3));
+    assets.push(
+      assetUtil.createHeadingAsset(header, BaseAssetTypeEnum.Heading3)
+    );
 
     const verkehrsarten = assetUtil.createTextAsset(
       `Verkehrsarten: ${gesamtauswertungUtils.getFahrzeugOptionsAsText(options.value.fahrzeuge)}`
@@ -283,7 +287,9 @@ function createStatistik(): void {
     "Auswertungsstatistik",
     BaseAssetTypeEnum.Heading3
   );
-  const statistikAuswertung = assetUtil.createTextAsset(`Exisitiert noch nicht.`);
+  const statistikAuswertung = assetUtil.createTextAsset(
+    `Exisitiert noch nicht.`
+  );
   pdfReportStore.addAssets([ueberschrift, statistikAuswertung]);
 }
 </script>

@@ -217,11 +217,21 @@
 </template>
 
 <script lang="ts" setup>
+import type { DatatableAsset } from "@/api/client";
+import type {
+  BaseAsset,
+  HeadingAsset,
+  ImageAsset,
+  MessstelleDatatableAsset,
+  TextAsset,
+  ZaehlungskenngroessenAsset,
+} from "@/api/client";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import DatatableAssetForm from "@/components/pdfreport/assetforms/DatatableAssetForm.vue";
 import DeleteDialog from "@/components/pdfreport/assetforms/DeleteDialog.vue";
@@ -232,20 +242,10 @@ import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.v
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
-import type { BaseAssetTypeEnum } from "@/api/client";
-import {BaseAssetTypeEnum, type DatatableAsset} from "@/api/client";
-import type { ImageAsset } from "@/api/client";
-import type { MessstelleDatatableAsset } from "@/api/client";
-import type { NewlineAsset } from "@/api/client";
-import type { PagebreakAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
-import type { ZaehlungskenngroessenAsset } from "@/api/client";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useReportTools } from "@/util/ReportTools";
-import type { BaseAsset } from "@/api/client";
-import type { HeadingAsset } from "@/api/client";
-import {useAssetUtil} from "@/util/AssetUtil";
 
 const clickable = ref(0);
 
@@ -255,9 +255,10 @@ const editText = ref(false);
 const editDatatable = ref(false);
 const openDeleteDialog = ref(false);
 
+const assetUtil = useAssetUtil();
 const imageAsset = ref<ImageAsset>(assetUtil.createImageAsset("", ""));
 const headingAsset = ref<HeadingAsset>(
-    assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading1)
+  assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading1)
 );
 const textAsset = ref<TextAsset>(assetUtil.createTextAsset(""));
 const datatableAsset = ref<DatatableAsset>(
@@ -286,7 +287,6 @@ const snackbarStore = useSnackbarStore();
 const pdfReportStore = usePdfReportStore();
 const dateUtils = useDateUtils();
 const reportTools = useReportTools();
-const assetUtil = useAssetUtil();
 
 onMounted(() => {
   assets.value = assetsFromStore();
@@ -310,7 +310,7 @@ function createFirstPage(): void {
   assets.value.push(assetUtil.createPagebreakAsset());
   // Datum
   save(
-      assetUtil.createHeadingAsset(
+    assetUtil.createHeadingAsset(
       "erstellt am " + dateUtils.getShortVersionOfDate(new Date()),
       BaseAssetTypeEnum.Heading3
     )
@@ -318,11 +318,18 @@ function createFirstPage(): void {
   // Autor
   const name = userStore.getName;
   const department = getDepartment.value;
-  save(assetUtil.createHeadingAsset(`${name} (${department})`, BaseAssetTypeEnum.Heading3));
+  save(
+    assetUtil.createHeadingAsset(
+      `${name} (${department})`,
+      BaseAssetTypeEnum.Heading3
+    )
+  );
   // Untertitel
   save(assetUtil.createHeadingAsset("Untertitel", BaseAssetTypeEnum.Heading2));
   // Titel
-  save(assetUtil.createHeadingAsset("Zählungsreport", BaseAssetTypeEnum.Heading1));
+  save(
+    assetUtil.createHeadingAsset("Zählungsreport", BaseAssetTypeEnum.Heading1)
+  );
   assets.value.reverse();
 
   // Titel wurde erstellt
@@ -421,19 +428,34 @@ function fetchPdf(formData: FormData) {
 
 function createHeadingAsset(type: string): void {
   if (type === "h1") {
-    headingAsset.value = assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading1);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading1
+    );
   }
   if (type === "h2") {
-    headingAsset.value = assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading2);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading2
+    );
   }
   if (type === "h3") {
-    headingAsset.value = assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading3);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading3
+    );
   }
   if (type === "h4") {
-    headingAsset.value = assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading4);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading4
+    );
   }
   if (type === "h5") {
-    headingAsset.value = assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading5);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading5
+    );
   }
   editHeading.value = true;
 }

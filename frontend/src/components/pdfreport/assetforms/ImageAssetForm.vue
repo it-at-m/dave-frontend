@@ -87,10 +87,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import type { ImageAsset, TextAsset } from "@/api/client";
 
-import type { ImageAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
+import { ref, watch } from "vue";
 
 interface Props {
   image: ImageAsset;

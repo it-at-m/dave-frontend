@@ -59,13 +59,12 @@
 </template>
 
 <script setup lang="ts">
+import type { DatatableAsset, TextAsset } from "@/api/client";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { ref, watch } from "vue";
 
-import type { DatatableAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
-import {useAssetUtil} from "@/util/AssetUtil";
+import { useAssetUtil } from "@/util/AssetUtil";
 
 interface Props {
   datatable: DatatableAsset;

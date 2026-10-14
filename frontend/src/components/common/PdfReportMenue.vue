@@ -82,6 +82,13 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  BaseAssetTypeEnum,
+  HeadingAsset,
+  TextAsset,
+  ZaehlungskenngroessenAsset,
+} from "@/api/client";
+
 import _ from "lodash";
 import { computed, ref } from "vue";
 
@@ -93,12 +100,8 @@ import { quelleText } from "@/types/enum/Quelle";
 import { wetterText } from "@/types/enum/Wetter";
 import { zaehlartText } from "@/types/enum/Zaehlart";
 import { zaehldauerText } from "@/types/enum/Zaehldauer";
-import type { BaseAssetTypeEnum } from "@/api/client";
-import type { HeadingAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
-import type { ZaehlungskenngroessenAsset } from "@/api/client";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
-import {useAssetUtil} from "@/util/AssetUtil";
 
 const dialog = defineModel<boolean>({ required: true });
 
@@ -165,7 +168,9 @@ function createZaehlstelleInfo() {
     `Info für Zählstelle Nr. ${zs.nummer}`,
     BaseAssetTypeEnum.Heading3
   );
-  const platz = assetUtil.createTextAsset(`Knoten-/Platzname: ${zl.kreuzungsname}`);
+  const platz = assetUtil.createTextAsset(
+    `Knoten-/Platzname: ${zl.kreuzungsname}`
+  );
   const stadtbezirk = assetUtil.createTextAsset(
     `Stadtbezirk: ${zs.stadtbezirk} (${zs.stadtbezirkNummer})`
   );
@@ -186,7 +191,9 @@ function createZaehlungsInfo() {
     `Info zur Zählung vom ${datum} (Zs-Nr. ${zs.nummer})`,
     BaseAssetTypeEnum.Heading3
   );
-  const projektname = assetUtil.createTextAsset(`Projektname: ${zl.projektName}`);
+  const projektname = assetUtil.createTextAsset(
+    `Projektname: ${zl.projektName}`
+  );
   const zaehlart = assetUtil.createTextAsset(
     `Zählart: ${zl.zaehlart} (${zaehlartText.get(zl.zaehlart)})`
   );
@@ -198,8 +205,12 @@ function createZaehlungsInfo() {
       zl.zaehlsituation
     )} / ${checkForNull(zl.zaehlsituationErweitert)}`
   );
-  const wetter = assetUtil.createTextAsset(`Wetter: ${wetterText.get(zl.wetter)}`);
-  const quelle = assetUtil.createTextAsset(`Quelle: ${quelleText.get(zl.quelle)}`);
+  const wetter = assetUtil.createTextAsset(
+    `Wetter: ${wetterText.get(zl.wetter)}`
+  );
+  const quelle = assetUtil.createTextAsset(
+    `Quelle: ${quelleText.get(zl.quelle)}`
+  );
   const kommentar = assetUtil.createTextAsset(
     `Zählungskommentar: ${checkForNull(zl.kommentar)}`
   );

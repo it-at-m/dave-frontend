@@ -234,8 +234,8 @@
 </template>
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 import _ from "lodash";
 import { computed, ref, watch } from "vue";

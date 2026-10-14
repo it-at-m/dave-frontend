@@ -1,7 +1,8 @@
 import type {
   FahrzeugOptionsDTO,
   Rounding,
-  ZaehldatenIntervall, Zaehldauer,
+  ZaehldatenIntervall,
+  Zaehldauer,
 } from "@/api/client";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
@@ -59,7 +60,6 @@ export default class ZaehlstelleOptionsMapper {
     chosenQuerungsverkehre: Array<QuerungsverkehrDTO>;
     chosenVerkehrsbeziehungen: Array<VerkehrsbeziehungDTO>;
   }): any {
-
     return {
       zaehldauer,
       intervall,

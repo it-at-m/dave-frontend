@@ -932,9 +932,9 @@ import type {
   LadeBelastungsplanQjsDTO,
 } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { first } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";

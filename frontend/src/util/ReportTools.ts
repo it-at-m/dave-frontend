@@ -1,8 +1,15 @@
+import type {
+  BaseAssetTypeEnum,
+  DatatableAsset,
+  HeadingAsset,
+  ImageAsset,
+  MessstelleDatatableAsset,
+  OptionsDTO,
+} from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type { OptionsDTO } from "@/api/client";
 
 import DOMPurify from "dompurify";
 import _ from "lodash";
@@ -14,13 +21,8 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
-import type { BaseAssetTypeEnum } from "@/api/client";
-import type { DatatableAsset } from "@/api/client";
-import type { HeadingAsset } from "@/api/client";
-import type { ImageAsset } from "@/api/client";
-import type { MessstelleDatatableAsset } from "@/api/client";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
-import {useAssetUtil} from "@/util/AssetUtil";
 
 export function useReportTools() {
   const messstelleStore = useMessstelleStore();
@@ -55,7 +57,10 @@ export function useReportTools() {
   function addHeadingToReport(erhebungsstelle: Erhebungsstelle): void {
     const heading = createHeading(erhebungsstelle);
     if (heading) {
-      const headingAsset = assetUtil.createHeadingAsset(heading, BaseAssetTypeEnum.Heading5);
+      const headingAsset = assetUtil.createHeadingAsset(
+        heading,
+        BaseAssetTypeEnum.Heading5
+      );
       pdfReportStore.addAsset(headingAsset);
     }
   }

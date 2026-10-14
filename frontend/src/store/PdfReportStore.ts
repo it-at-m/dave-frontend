@@ -1,7 +1,7 @@
+import type { BaseAsset } from "@/api/client";
+
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-
-import type { BaseAsset } from "@/api/client";
 
 /**
  * Dieser Store ist eine Art Queue, um ein oder mehrere Assets in die ReportView zu bringen. Die Datenhaltung erfolgt

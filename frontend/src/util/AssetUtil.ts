@@ -1,44 +1,48 @@
-
-import type {HeadingAsset} from "@/api/client";
-import { BaseAssetTypeEnum } from "@/api/client";
-import type { OptionsDTO } from "@/api/client";
-import type { DatatableAsset } from "@/api/client";
-import type { ImageAsset } from "@/api/client";
+import type {
+  DatatableAsset,
+  HeadingAsset,
+  ImageAsset,
+  MessstelleDatatableAsset,
+  NewlineAsset,
+  OptionsDTO,
+  PagebreakAsset,
+  TextAsset,
+  ZaehlungskenngroessenAsset,
+} from "@/api/client";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type { MessstelleDatatableAsset } from "@/api/client";
-import type { NewlineAsset } from "@/api/client";
-import type { PagebreakAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
-import type { ZaehlungskenngroessenAsset } from "@/api/client";
+
+import { BaseAssetTypeEnum } from "@/api/client";
 import MessstelleOptionsMapper from "@/types/messstelle/MessstelleOptionsMapper";
 
 export function useAssetUtil() {
+  function generateId() {
+    return Date.now() * Math.random();
+  }
 
-  function createHeadingAsset(date: string, type: BaseAssetTypeEnum): HeadingAsset {
+  function createHeadingAsset(
+    date: string,
+    type: BaseAssetTypeEnum
+  ): HeadingAsset {
     const asset: HeadingAsset = {
       id: generateId(),
       type,
-      text: 'Mein Überschriftentext',
+      text: "Mein Überschriftentext",
     };
     return asset;
   }
 
-  function generateId(){
-    return Date.now() * Math.random();
-  }
-
   function createDatatableAsset(
-      options?: OptionsDTO,
-      zaehlungId?: string,
-      text?: string
-): DatatableAsset {
+    options: OptionsDTO,
+    zaehlungId: string,
+    text: string
+  ): DatatableAsset {
     const asset: DatatableAsset = {
       id: generateId(),
       type: BaseAssetTypeEnum.Datatable,
       options: options,
       zaehlungId,
-      text
-    }
+      text,
+    };
     return asset;
   }
 
@@ -47,19 +51,23 @@ export function useAssetUtil() {
       id: generateId(),
       type: BaseAssetTypeEnum.Image,
       caption: caption,
-      image: image
-    }
+      image: image,
+    };
     return asset;
   }
 
-  function createMessstelleDatatableAsset(options?: MessstelleOptionsDTO, mstId?: string, text?: string): MessstelleDatatableAsset {
+  function createMessstelleDatatableAsset(
+    options: MessstelleOptionsDTO,
+    mstId: string,
+    text: string
+  ): MessstelleDatatableAsset {
     const asset: MessstelleDatatableAsset = {
       id: generateId(),
       type: BaseAssetTypeEnum.DatatableMessstelle,
       options: options ? MessstelleOptionsMapper.toBackend(options) : undefined,
       mstId: mstId,
-      text: text
-    }
+      text: text,
+    };
     return asset;
   }
 
@@ -67,7 +75,7 @@ export function useAssetUtil() {
     const asset: NewlineAsset = {
       id: generateId(),
       type: BaseAssetTypeEnum.Newline,
-    }
+    };
     return asset;
   }
 
@@ -75,7 +83,7 @@ export function useAssetUtil() {
     const asset: PagebreakAsset = {
       id: generateId(),
       type: BaseAssetTypeEnum.Pagebreak,
-    }
+    };
     return asset;
   }
 
@@ -84,18 +92,21 @@ export function useAssetUtil() {
       id: generateId(),
       type: BaseAssetTypeEnum.Text,
       text,
-      size: size ? size : "medium"
-    }
+      size: size ? size : "medium",
+    };
     return asset;
   }
 
-  function createZaehlungskenngroessenAsset(text: string, zaehlungId: string): ZaehlungskenngroessenAsset {
+  function createZaehlungskenngroessenAsset(
+    text: string,
+    zaehlungId: string
+  ): ZaehlungskenngroessenAsset {
     const asset: ZaehlungskenngroessenAsset = {
       id: generateId(),
       type: BaseAssetTypeEnum.Zaehlungskenngroessen,
       text,
-      zaehlungId
-    }
+      zaehlungId,
+    };
     return asset;
   }
 
@@ -107,6 +118,6 @@ export function useAssetUtil() {
     createNewlineAsset,
     createPagebreakAsset,
     createTextAsset,
-    createZaehlungskenngroessenAsset
+    createZaehlungskenngroessenAsset,
   };
 }

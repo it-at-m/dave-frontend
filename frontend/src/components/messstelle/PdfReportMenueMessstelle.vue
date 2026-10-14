@@ -75,6 +75,12 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  BaseAsset,
+  BaseAssetTypeEnum,
+  HeadingAsset,
+  TextAsset,
+} from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 
@@ -85,12 +91,8 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
-import type { BaseAssetTypeEnum } from "@/api/client";
-import type { BaseAsset } from "@/api/client";
-import type { HeadingAsset } from "@/api/client";
-import type { TextAsset } from "@/api/client";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
-import {useAssetUtil} from "@/util/AssetUtil";
 
 const dialog = defineModel<boolean>({ required: true });
 

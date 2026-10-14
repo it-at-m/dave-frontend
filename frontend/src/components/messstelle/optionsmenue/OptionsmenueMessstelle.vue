@@ -69,8 +69,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { ValidatedZeitraumAndTagestypDTO } from "@/api/client";
-import type { ValidateZeitraumAndTagestypForMessstelleDTO } from "@/api/client";
+import type {
+  ValidatedZeitraumAndTagestypDTO,
+  ValidateZeitraumAndTagestypForMessstelleDTO,
+} from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 
 import { cloneDeep, head, isEmpty, isNil } from "lodash";

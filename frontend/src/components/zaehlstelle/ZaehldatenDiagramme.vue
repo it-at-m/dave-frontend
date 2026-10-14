@@ -232,7 +232,6 @@ import type {
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
 
 import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
