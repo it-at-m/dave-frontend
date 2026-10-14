@@ -217,9 +217,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { DatatableAsset } from "@/api/client";
 import type {
   BaseAsset,
+  DatatableAsset,
   HeadingAsset,
   ImageAsset,
   MessstelleDatatableAsset,

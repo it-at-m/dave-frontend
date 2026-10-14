@@ -91,6 +91,8 @@ import type { ImageAsset, TextAsset } from "@/api/client";
 
 import { ref, watch } from "vue";
 
+import { useAssetUtil } from "@/util/AssetUtil";
+
 interface Props {
   image: ImageAsset;
 }

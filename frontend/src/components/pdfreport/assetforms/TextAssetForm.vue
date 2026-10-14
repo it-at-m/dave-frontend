@@ -135,6 +135,7 @@ import type { TextAsset } from "@/api/client";
 
 import { ref, watch } from "vue";
 
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
