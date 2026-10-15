@@ -1,20 +1,20 @@
-import type {
-  BelastungsplanMessquerschnitteDTO,
-  ConfigurationDTO,
-  FahrzeugOptionsDTO,
-  InfoMessageDTO,
-  LadeProcessedMesswerteDTO,
-  LadeZaehldatenHeatmapDTO,
-  LadeZaehldatenSteplineDTO,
-  LadeZaehldatenTableDTO,
-  MapConfigurationDTO,
-  SearchAndFilterOptionsDTO,
-  TenantConfigurationDTO,
-  ZaehlstelleConfigurationDTO,
-  ZeitauswahlDTO,
+import {
+  type BelastungsplanMessquerschnitteDTO,
+  type ConfigurationDTO,
+  type FahrzeugOptionsDTO,
+  type InfoMessageDTO,
+  type LadeProcessedMesswerteDTO,
+  type LadeZaehldatenHeatmapDTO,
+  type LadeZaehldatenSteplineDTO,
+  type LadeZaehldatenTableDTO,
+  type MapConfigurationDTO,
+  type SearchAndFilterOptionsDTO,
+  type TenantConfigurationDTO,
+  type ZaehlstelleConfigurationDTO,
+  type ZaehlstelleTooltipDTO,
+  type ZaehlstelleKarteDTO,
+  type ZeitauswahlDTO, TagesTyp,
 } from "@/api/client";
-import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
-import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
@@ -35,7 +35,6 @@ import {
 } from "@/api/client";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Quelle from "@/types/enum/Quelle";
-import TagesTyp from "@/types/enum/TagesTypText";
 import Wetter from "@/types/enum/Wetter";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Suggest from "@/types/suche/Suggest";
@@ -47,10 +46,10 @@ export default class DefaultObjectCreator {
       type: "",
       id: "",
       letzteZaehlungId: "",
-      tooltip: {} as TooltipZaehlstelleDTO,
+      tooltip: {} as ZaehlstelleTooltipDTO,
       latitude: 0,
       longitude: 0,
-      zaehlartenKarte: [],
+      zaehlartenKarte: new Set(),
       sichtbarDatenportal: true,
     };
   }
@@ -130,7 +129,7 @@ export default class DefaultObjectCreator {
       fahrzeuge: this.createDefaultFahrzeugOptions(),
       intervall: "" as ZaehldatenIntervall,
       messquerschnittIds: [],
-      tagesTyp: TagesTyp.UNSPECIFIED,
+      tagesTyp: TagesTyp.Unspecified,
       zeitauswahl: "",
       zeitblock: "",
       zeitraumStartAndEndDate: new StartAndEndDate(undefined, undefined),
@@ -207,7 +206,7 @@ export default class DefaultObjectCreator {
       zaehlsituationErweitert: "",
       zaehlIntervall: "",
       wetter: Wetter.NO_INFORMATION,
-      zaehldauer: Zaehldauer.SONSTIGE,
+      zaehldauer: Zaehldauer.Sonstige,
       quelle: Quelle.MANUALLY,
       schulZeiten: "",
       kommentar: "",
@@ -289,7 +288,7 @@ export default class DefaultObjectCreator {
     return {
       ladeBelastungsplanMessquerschnittDataDTOList: [],
       strassenname: "",
-      stadtbezirkNummer: "",
+      stadtbezirkNummer: 0,
       mstId: "",
       totalKfz: 0,
       totalSv: 0,
@@ -308,9 +307,7 @@ export default class DefaultObjectCreator {
       rangeMax: 0,
       rangeMaxPercent: 0,
       xaxisDataFirstChart: [],
-      xaxisDataSecondChart: null,
       seriesEntriesFirstChart: [],
-      seriesEntriesSecondChart: null,
     } as LadeZaehldatenSteplineDTO;
   }
 
@@ -321,8 +318,6 @@ export default class DefaultObjectCreator {
       rangeMax: 0,
       xaxisDataFirstChart: [],
       seriesEntriesFirstChart: [],
-      xaxisDataSecondChart: null,
-      seriesEntriesSecondChart: null,
     } as LadeZaehldatenHeatmapDTO;
   }
 
@@ -378,7 +373,7 @@ export default class DefaultObjectCreator {
         this.createDefaultBelastungsplanMessquerschnitteDTO(),
       requestedMeasuringDays: -1,
       includedMeasuringDays: -1,
-      tagesTyp: TagesTyp.UNSPECIFIED,
+      tagesTyp: TagesTyp.Unspecified,
     } as LadeProcessedMesswerteDTO;
   }
 }

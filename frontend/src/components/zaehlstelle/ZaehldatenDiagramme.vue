@@ -398,10 +398,10 @@ const isOnlyFussverkehrSelected = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.Sonstige hat.
  */
 const isSonderzaehldauer = computed(() => {
-  return selectedZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+  return selectedZaehlung.value.zaehldauer === Zaehldauer.Sonstige;
 });
 
 /**

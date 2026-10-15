@@ -281,7 +281,7 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
       ) &&
       !result.some((keyVal) => keyVal === zeitblockInfo.get(Zeitblock.Zb0622))
     ) {
-      if (activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE) {
+      if (activeZaehlung.value.zaehldauer === Zaehldauer.Sonstige) {
         if (!isEmpty(result)) {
           const zeitBlockMaximal: KeyVal = {} as KeyVal;
           zeitBlockMaximal.value = Zeitblock.Zb0024;
@@ -334,10 +334,10 @@ const isTeilzaehlung = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.Sonstige hat.
  */
 const isSonderzaehldauer = computed(() => {
-  return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+  return activeZaehlung.value.zaehldauer === Zaehldauer.Sonstige;
 });
 
 /**

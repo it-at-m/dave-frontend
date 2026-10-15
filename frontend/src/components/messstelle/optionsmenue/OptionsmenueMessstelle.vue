@@ -193,7 +193,7 @@ function areChosenOptionsValid(): boolean {
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
     (!chosenOptions.value.tagesTyp ||
-      chosenOptions.value.tagesTyp === TagesTyp.UNSPECIFIED)
+      chosenOptions.value.tagesTyp === TagesTyp.Unspecified)
   ) {
     result = false;
     snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
@@ -267,7 +267,7 @@ function setDefaultOptionsForMessstelle(): void {
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
   chosenOptions.value.intervall = ZaehldatenIntervall.StundeKomplett;
   chosenOptions.value.zeitblock = Zeitblock.Zb0024;
-  chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
+  chosenOptions.value.tagesTyp = TagesTyp.Unspecified;
   chosenOptions.value.blackPrintMode = false;
   chosenOptions.value.rounding = Rounding.None;
   chosenOptions.value.blocksumme = true;
@@ -363,7 +363,7 @@ watch(
       !isNil(chosenOptions.value.zeitraumStartAndEndDate) &&
       !isNil(chosenOptions.value.zeitraumStartAndEndDate.startDate) &&
       !isNil(chosenOptions.value.zeitraumStartAndEndDate.endDate) &&
-      chosenOptions.value.tagesTyp !== TagesTyp.UNSPECIFIED
+      chosenOptions.value.tagesTyp !== TagesTyp.Unspecified
     ) {
       const isoStartDate = dateUtils.formatDateToISO(
         chosenOptions.value.zeitraumStartAndEndDate.startDate

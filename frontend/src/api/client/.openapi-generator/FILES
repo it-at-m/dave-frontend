@@ -127,6 +127,7 @@ models/GeoPoint.ts
 models/HeadingAsset.ts
 models/Himmelsrichtung.ts
 models/Hochrechnung.ts
+models/Hochrechnungsfaktor.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
 models/ImageAsset.ts
@@ -174,6 +175,7 @@ models/MessstelleAuswertungDTO.ts
 models/MessstelleAuswertungIdDTO.ts
 models/MessstelleAuswertungOptionsDTO.ts
 models/MessstelleDatatableAsset.ts
+models/MessstelleKarteDTO.ts
 models/MessstelleOptionsDTO.ts
 models/MessstelleOverviewDTO.ts
 models/MessstelleRequestBody.ts
@@ -248,9 +250,11 @@ models/Verkehrsart.ts
 models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts
+models/ZaehlartenKarteDTO.ts
 models/ZaehldatenIntervall.ts
 models/Zaehldauer.ts
 models/ZaehlstelleConfigurationDTO.ts
+models/ZaehlstelleKarteDTO.ts
 models/ZaehlstelleRequestBody.ts
 models/ZaehlstelleTooltipDTO.ts
 models/Zaehlung.ts

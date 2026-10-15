@@ -13,11 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ErhebungsstelleKarteDTO } from "@/api/client";
-import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
-import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
-import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
-import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import type {ErhebungsstelleKarteDTO, MessstelleTooltipDTO, MessstelleKarteDTO, ZaehlstelleKarteDTO } from "@/api/client";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
@@ -497,7 +493,7 @@ function createTooltipZaehlstelle(
 }
 
 function createTooltipMessstelle(
-  tooltipDto: TooltipMessstelleDTO
+  tooltipDto: MessstelleTooltipDTO
 ): HTMLElement {
   const tooltip = document.createElement("div");
   if (!tooltipDto) {

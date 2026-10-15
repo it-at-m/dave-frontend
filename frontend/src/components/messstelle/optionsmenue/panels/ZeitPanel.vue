@@ -173,7 +173,7 @@ watch(
   chosenOptionsCopyStartAndEndDatum,
   () => {
     if (!isDateRange.value) {
-      chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
+      chosenOptionsCopy.value.tagesTyp = TagesTyp.Unspecified;
     }
   },
   { deep: true }

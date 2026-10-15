@@ -150,7 +150,7 @@ const wochentag = computed<string | undefined>(() => {
 const showWochentag = computed<boolean>(() => {
   return (
     filterOptionsMessstelle.value.zeitraum.length === 2 &&
-    filterOptionsMessstelle.value.tagesTyp !== TagesTyp.UNSPECIFIED
+    filterOptionsMessstelle.value.tagesTyp !== TagesTyp.Unspecified
   );
 });
 

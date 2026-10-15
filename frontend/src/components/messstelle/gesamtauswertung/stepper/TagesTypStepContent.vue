@@ -24,7 +24,7 @@ const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
 const selectableTagesTypen = computed(() => {
   const tagestypen: Array<KeyVal> = [];
   tagesTypText.forEach((value, key) => {
-    if (key !== TagesTyp.UNSPECIFIED) {
+    if (key !== TagesTyp.Unspecified) {
       tagestypen.push({
         title: value,
         value: key,

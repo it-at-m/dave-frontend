@@ -197,7 +197,7 @@ function createMessInfo(): void {
 
   if (
     dateUtils.isDateRange(options.value.zeitraum) &&
-    options.value.tagesTyp !== TagesTyp.UNSPECIFIED
+    options.value.tagesTyp !== TagesTyp.Unspecified
   ) {
     const wochentag = assetUtil.createTextAsset(
       `Wochentag: ${tagesTypText.get(options.value.tagesTyp)}`

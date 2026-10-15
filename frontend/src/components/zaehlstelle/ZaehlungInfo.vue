@@ -408,7 +408,7 @@ function getChosenBewegungsbeziehungen() {
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
-    zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
+    zaehlung.value.zaehldauer === Zaehldauer.Sonstige &&
     zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
     zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
@@ -424,7 +424,7 @@ const zeitblock = computed(() => {
     options.value.zeitblock === Zeitblock.Zb0024
   ) {
     if (
-      zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
+      zaehlung.value.zaehldauer === Zaehldauer.Sonstige &&
       !isSonderzaehldauerKurzzeitzaehlung.value
     ) {
       return "0 - 24 Uhr";
