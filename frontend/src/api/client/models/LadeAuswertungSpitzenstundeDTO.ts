@@ -169,12 +169,6 @@ export interface LadeAuswertungSpitzenstundeDTO {
    * @type {number}
    * @memberof LadeAuswertungSpitzenstundeDTO
    */
-  kfz: number;
-  /**
-   *
-   * @type {number}
-   * @memberof LadeAuswertungSpitzenstundeDTO
-   */
   anteilSchwerverkehrAnKfzProzent: number;
   /**
    *
@@ -182,6 +176,12 @@ export interface LadeAuswertungSpitzenstundeDTO {
    * @memberof LadeAuswertungSpitzenstundeDTO
    */
   anteilGueterverkehrAnKfzProzent: number;
+  /**
+   *
+   * @type {number}
+   * @memberof LadeAuswertungSpitzenstundeDTO
+   */
+  kfz: number;
 }
 
 /**
@@ -211,7 +211,6 @@ export function instanceOfLadeAuswertungSpitzenstundeDTO(
     return false;
   if (!("schwerverkehr" in value) || value["schwerverkehr"] === undefined)
     return false;
-  if (!("kfz" in value) || value["kfz"] === undefined) return false;
   if (
     !("anteilSchwerverkehrAnKfzProzent" in value) ||
     value["anteilSchwerverkehrAnKfzProzent"] === undefined
@@ -222,6 +221,7 @@ export function instanceOfLadeAuswertungSpitzenstundeDTO(
     value["anteilGueterverkehrAnKfzProzent"] === undefined
   )
     return false;
+  if (!("kfz" in value) || value["kfz"] === undefined) return false;
   return true;
 }
 
@@ -271,9 +271,9 @@ export function LadeAuswertungSpitzenstundeDTOFromJSONTyped(
         : json["zaehlsituationErweitert"],
     gueterverkehr: json["gueterverkehr"],
     schwerverkehr: json["schwerverkehr"],
-    kfz: json["kfz"],
     anteilSchwerverkehrAnKfzProzent: json["anteilSchwerverkehrAnKfzProzent"],
     anteilGueterverkehrAnKfzProzent: json["anteilGueterverkehrAnKfzProzent"],
+    kfz: json["kfz"],
   };
 }
 
@@ -319,8 +319,8 @@ export function LadeAuswertungSpitzenstundeDTOToJSONTyped(
     zaehlsituationErweitert: value["zaehlsituationErweitert"],
     gueterverkehr: value["gueterverkehr"],
     schwerverkehr: value["schwerverkehr"],
-    kfz: value["kfz"],
     anteilSchwerverkehrAnKfzProzent: value["anteilSchwerverkehrAnKfzProzent"],
     anteilGueterverkehrAnKfzProzent: value["anteilGueterverkehrAnKfzProzent"],
+    kfz: value["kfz"],
   };
 }

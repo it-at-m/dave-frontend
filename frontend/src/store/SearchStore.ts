@@ -1,4 +1,7 @@
-import type {ErhebungsstelleKarteDTO, SearchAndFilterOptionsDTO} from "@/api/client";
+import type {
+  ErhebungsstelleKarteDTO,
+  SearchAndFilterOptionsDTO,
+} from "@/api/client";
 
 import { isEqual } from "lodash";
 import { defineStore } from "pinia";

@@ -58,22 +58,22 @@ export interface AbstractLadeBelastungsplanDTOObject {
   kreisverkehr: boolean;
   /**
    *
-   * @type {any}
+   * @type {object}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  value1: any | null;
+  value1: object;
   /**
    *
-   * @type {any}
+   * @type {object}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  value2: any | null;
+  value2: object;
   /**
    *
-   * @type {any}
+   * @type {object}
    * @memberof AbstractLadeBelastungsplanDTOObject
    */
-  value3: any | null;
+  value3: object;
   /**
    *
    * @type {string}

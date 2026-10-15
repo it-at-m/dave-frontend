@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { ErhebungsstelleTooltipDTO } from "./ErhebungsstelleTooltipDTO";
+
 import { mapValues } from "../runtime";
+import {
+  ErhebungsstelleTooltipDTOFromJSON,
+  ErhebungsstelleTooltipDTOFromJSONTyped,
+  ErhebungsstelleTooltipDTOToJSON,
+  ErhebungsstelleTooltipDTOToJSONTyped,
+} from "./ErhebungsstelleTooltipDTO";
 
 /**
  *
@@ -25,43 +33,43 @@ export interface ErhebungsstelleKarteDTO {
    * @type {string}
    * @memberof ErhebungsstelleKarteDTO
    */
-  id?: string;
+  id: string;
   /**
    *
    * @type {string}
    * @memberof ErhebungsstelleKarteDTO
    */
-  fachId?: string;
+  fachId: string;
   /**
    *
    * @type {string}
    * @memberof ErhebungsstelleKarteDTO
    */
-  type?: string;
+  type: string;
   /**
    *
    * @type {number}
    * @memberof ErhebungsstelleKarteDTO
    */
-  longitude?: number;
+  longitude: number;
   /**
    *
    * @type {number}
    * @memberof ErhebungsstelleKarteDTO
    */
-  latitude?: number;
+  latitude: number;
   /**
    *
-   * @type {any}
+   * @type {ErhebungsstelleTooltipDTO}
    * @memberof ErhebungsstelleKarteDTO
    */
-  tooltip?: any | null;
+  tooltip: ErhebungsstelleTooltipDTO;
   /**
    *
    * @type {boolean}
    * @memberof ErhebungsstelleKarteDTO
    */
-  sichtbarDatenportal?: boolean;
+  sichtbarDatenportal: boolean;
 }
 
 /**
@@ -70,6 +78,17 @@ export interface ErhebungsstelleKarteDTO {
 export function instanceOfErhebungsstelleKarteDTO(
   value: object
 ): value is ErhebungsstelleKarteDTO {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (!("fachId" in value) || value["fachId"] === undefined) return false;
+  if (!("type" in value) || value["type"] === undefined) return false;
+  if (!("longitude" in value) || value["longitude"] === undefined) return false;
+  if (!("latitude" in value) || value["latitude"] === undefined) return false;
+  if (!("tooltip" in value) || value["tooltip"] === undefined) return false;
+  if (
+    !("sichtbarDatenportal" in value) ||
+    value["sichtbarDatenportal"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -87,16 +106,13 @@ export function ErhebungsstelleKarteDTOFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    fachId: json["fachId"] == null ? undefined : json["fachId"],
-    type: json["type"] == null ? undefined : json["type"],
-    longitude: json["longitude"] == null ? undefined : json["longitude"],
-    latitude: json["latitude"] == null ? undefined : json["latitude"],
-    tooltip: json["tooltip"] == null ? undefined : json["tooltip"],
-    sichtbarDatenportal:
-      json["sichtbarDatenportal"] == null
-        ? undefined
-        : json["sichtbarDatenportal"],
+    id: json["id"],
+    fachId: json["fachId"],
+    type: json["type"],
+    longitude: json["longitude"],
+    latitude: json["latitude"],
+    tooltip: ErhebungsstelleTooltipDTOFromJSON(json["tooltip"]),
+    sichtbarDatenportal: json["sichtbarDatenportal"],
   };
 }
 
@@ -120,7 +136,7 @@ export function ErhebungsstelleKarteDTOToJSONTyped(
     type: value["type"],
     longitude: value["longitude"],
     latitude: value["latitude"],
-    tooltip: value["tooltip"],
+    tooltip: ErhebungsstelleTooltipDTOToJSON(value["tooltip"]),
     sichtbarDatenportal: value["sichtbarDatenportal"],
   };
 }

@@ -31,7 +31,7 @@ export interface Completion {
    * @type {{ [key: string]: Array<string>; }}
    * @memberof Completion
    */
-  contexts?: { [key: string]: Array<string> };
+  contexts?: { [key: string]: Array<string> } | null;
   /**
    *
    * @type {number}

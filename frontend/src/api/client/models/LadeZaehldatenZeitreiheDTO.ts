@@ -28,6 +28,20 @@ export interface LadeZaehldatenZeitreiheDTO {
   datum: Array<string>;
   /**
    *
+   * @type {Array<string>}
+   * @memberof LadeZaehldatenZeitreiheDTO
+   */
+  fehlendeWerteMeldung: Array<string>;
+  /**
+   *
+   * @type {Array<Array<string>>}
+   * @memberof LadeZaehldatenZeitreiheDTO
+   */
+  tageswertNichtVorhanden: Array<
+    Array<LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum>
+  >;
+  /**
+   *
    * @type {Array<number>}
    * @memberof LadeZaehldatenZeitreiheDTO
    */
@@ -77,12 +91,43 @@ export interface LadeZaehldatenZeitreiheDTO {
 }
 
 /**
+ * @export
+ */
+export const LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum = {
+  Kfz: "KFZ",
+  Sv: "SV",
+  Gv: "GV",
+  SvP: "SV_P",
+  GvP: "GV_P",
+  Pkw: "PKW",
+  Lkw: "LKW",
+  Lz: "LZ",
+  Bus: "BUS",
+  Krad: "KRAD",
+  Rad: "RAD",
+  Fuss: "FUSS",
+  PkwEinheit: "PKW_EINHEIT",
+} as const;
+export type LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum =
+  (typeof LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum)[keyof typeof LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum];
+
+/**
  * Check if a given object implements the LadeZaehldatenZeitreiheDTO interface.
  */
 export function instanceOfLadeZaehldatenZeitreiheDTO(
   value: object
 ): value is LadeZaehldatenZeitreiheDTO {
   if (!("datum" in value) || value["datum"] === undefined) return false;
+  if (
+    !("fehlendeWerteMeldung" in value) ||
+    value["fehlendeWerteMeldung"] === undefined
+  )
+    return false;
+  if (
+    !("tageswertNichtVorhanden" in value) ||
+    value["tageswertNichtVorhanden"] === undefined
+  )
+    return false;
   if (!("kfz" in value) || value["kfz"] === undefined) return false;
   if (!("sv" in value) || value["sv"] === undefined) return false;
   if (!("gv" in value) || value["gv"] === undefined) return false;
@@ -117,6 +162,8 @@ export function LadeZaehldatenZeitreiheDTOFromJSONTyped(
   }
   return {
     datum: json["datum"],
+    fehlendeWerteMeldung: json["fehlendeWerteMeldung"],
+    tageswertNichtVorhanden: json["tageswertNichtVorhanden"],
     kfz: json["kfz"],
     sv: json["sv"],
     gv: json["gv"],
@@ -144,6 +191,8 @@ export function LadeZaehldatenZeitreiheDTOToJSONTyped(
 
   return {
     datum: value["datum"],
+    fehlendeWerteMeldung: value["fehlendeWerteMeldung"],
+    tageswertNichtVorhanden: value["tageswertNichtVorhanden"],
     kfz: value["kfz"],
     sv: value["sv"],
     gv: value["gv"],

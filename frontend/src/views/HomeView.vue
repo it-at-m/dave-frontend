@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import type {ErhebungsstelleKarteDTO, ImageAsset} from "@/api/client";
+import type { ErhebungsstelleKarteDTO, ImageAsset } from "@/api/client";
 import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";

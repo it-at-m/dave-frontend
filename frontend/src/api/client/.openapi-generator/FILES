@@ -1,4 +1,5 @@
 .openapi-generator-ignore
+apis/ActuatorApi.ts
 apis/AdministrationControllerApi.ts
 apis/AuswertungControllerApi.ts
 apis/ChatMessageControllerApi.ts
@@ -109,6 +110,7 @@ models/EntityModelUnauffaelligerTag.ts
 models/EntityModelZaehlstelle.ts
 models/EntityModelZeitintervall.ts
 models/ErhebungsstelleKarteDTO.ts
+models/ErhebungsstelleTooltipDTO.ts
 models/ExternalKnotenarmDTO.ts
 models/ExternalLaengsverkehrDTO.ts
 models/ExternalQuerungsverkehrDTO.ts
@@ -123,7 +125,7 @@ models/GeneratePdfReportRequestAssetsInner.ts
 models/GenerateZaehlungPdfRequest.ts
 models/GeoPoint.ts
 models/HeadingAsset.ts
-models/HimmelsrichtungText.ts
+models/Himmelsrichtung.ts
 models/Hochrechnung.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
@@ -175,6 +177,7 @@ models/MessstelleDatatableAsset.ts
 models/MessstelleOptionsDTO.ts
 models/MessstelleOverviewDTO.ts
 models/MessstelleRequestBody.ts
+models/MessstelleTooltipDTO.ts
 models/NewlineAsset.ts
 models/NextZaehlstellennummerDTO.ts
 models/OpenZaehlungDTO.ts
@@ -246,14 +249,15 @@ models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts
 models/ZaehldatenIntervall.ts
-models/ZaehldauerText.ts
+models/Zaehldauer.ts
 models/ZaehlstelleConfigurationDTO.ts
 models/ZaehlstelleRequestBody.ts
+models/ZaehlstelleTooltipDTO.ts
 models/Zaehlung.ts
 models/ZaehlungskenngroessenAsset.ts
 models/ZaehlungskenngroessenData.ts
 models/ZeitauswahlDTO.ts
-models/ZeitblockText.ts
+models/Zeitblock.ts
 models/ZeitintervallDTO.ts
 models/ZeitintervallRequestBody.ts
 models/index.ts

@@ -22,10 +22,10 @@ import { mapValues } from "../runtime";
 export interface CollectionModelObjectEmbedded {
   /**
    *
-   * @type {Array<any>}
+   * @type {Array<object>}
    * @memberof CollectionModelObjectEmbedded
    */
-  objects?: Array<any>;
+  objects?: Array<object>;
 }
 
 /**

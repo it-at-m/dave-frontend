@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import type { ErhebungsstelleKarteDTO } from "@/api/client";
 import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
@@ -36,7 +37,6 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
-import type {ErhebungsstelleKarteDTO} from "@/api/client";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;

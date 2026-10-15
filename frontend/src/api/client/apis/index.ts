@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from "./ActuatorApi";
 export * from "./AdministrationControllerApi";
 export * from "./AuswertungControllerApi";
 export * from "./ChatMessageControllerApi";
