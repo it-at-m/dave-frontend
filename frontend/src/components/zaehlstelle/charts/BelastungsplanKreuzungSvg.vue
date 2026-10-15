@@ -15,7 +15,7 @@ import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO"
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type { Ref } from "vue";
 
@@ -108,7 +108,7 @@ const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 
-const optionen = computed<OptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

@@ -226,7 +226,7 @@ import type {
   TextAsset,
   ZaehlungskenngroessenAsset,
 } from "@/api/client";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -262,7 +262,7 @@ const headingAsset = ref<HeadingAsset>(
 );
 const textAsset = ref<TextAsset>(assetUtil.createTextAsset(""));
 const datatableAsset = ref<DatatableAsset>(
-  assetUtil.createDatatableAsset({} as OptionsDTO, "", "")
+  assetUtil.createDatatableAsset({} as Options, "", "")
 );
 
 const assetId = ref(0);

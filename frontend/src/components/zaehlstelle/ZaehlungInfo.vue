@@ -234,14 +234,14 @@
 </template>
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 import _ from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Zaehldauer } from "@/api/client";
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
@@ -320,7 +320,7 @@ const sortedFilteredKnotenarme = computed(() => {
 /**
  * Die aktuell eingestellten Optionen werden aus dem Store geladen.
  */
-const options = computed<OptionsDTO>(() => {
+const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

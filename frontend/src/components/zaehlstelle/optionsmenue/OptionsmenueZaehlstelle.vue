@@ -75,13 +75,13 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Zaehldauer } from "@/api/client";
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
 import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
@@ -116,7 +116,7 @@ const chosenOptions = ref(
   DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
 );
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -227,14 +227,14 @@ const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
-  const optionsCopy = {} as OptionsDTO;
+  const optionsCopy = {} as Options;
   Object.assign(optionsCopy, options.value);
 
   optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
 
   if (isTeilzaehlungFussverkehr.value && !isSonderzaehldauer.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer13Stunden) {
       optionsCopy.zeitblock = Zeitblock.Zb0619;
     } else if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer16Stunden) {
       optionsCopy.zeitblock = Zeitblock.Zb0622;
@@ -369,13 +369,13 @@ function resetSizeBelastungsplan() {
 }
 
 /**
- * Da das OptionsDTO für die Auswahlfelder im Formular als
+ * Da das Options für die Auswahlfelder im Formular als
  * v-model genutzt wird, muss hier eine Kopie erzeugt werden. Andernfalls
  * würde es zu einer dirketen Veränderung des Stores kommen - was dieser
  * nicht mag.
  */
-watch(options, (newOptions: OptionsDTO) => {
-  const options = {} as OptionsDTO;
+watch(options, (newOptions: Options) => {
+  const options = {} as Options;
   Object.assign(options, newOptions);
   chosenOptions.value = options;
 });

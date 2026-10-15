@@ -1,10 +1,5 @@
-import type {
-  CsvDTO,
-  MessstelleOptionsDTO as GeneratedMessstelleOptionsDTO,
-  OptionsDTO,
-} from "@/api/client";
+import type { CsvDTO, OptionsDTO } from "@/api/client";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type { OptionsDTO } from "@/api/client";
 
 import { GenerateCsvControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";

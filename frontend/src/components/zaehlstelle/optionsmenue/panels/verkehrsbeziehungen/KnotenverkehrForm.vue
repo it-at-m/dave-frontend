@@ -1489,17 +1489,16 @@
 </template>
 
 <script setup lang="ts">
-import type { Bewegungsrichtung } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 
 import { cloneDeep, isEmpty, remove, toArray } from "lodash";
 import { computed } from "vue";
 
-import { Himmelsrichtung } from "@/api/client";
+import { Bewegungsrichtung, Himmelsrichtung } from "@/api/client";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 
@@ -1510,7 +1509,7 @@ defineProps<Props>();
 
 const zaehlstelleStore = useZaehlstelleStore();
 
-const chosenOptionsCopy = defineModel<OptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 

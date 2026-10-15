@@ -17,10 +17,10 @@ import type {
   ErhebungsstelleKarteDTO,
   MessstelleKarteDTO,
   MessstelleTooltipDTO,
+  ZaehlartenKarteDTO,
   ZaehlstelleKarteDTO,
   ZaehlstelleTooltipDTO,
 } from "@/api/client";
-import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
 import { defaultTo } from "lodash";

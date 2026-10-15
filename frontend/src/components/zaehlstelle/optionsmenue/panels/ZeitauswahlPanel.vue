@@ -163,7 +163,7 @@
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import { head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -176,7 +176,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo, zeitblockOrder } from "@/types/enum/ZeitblockText";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-const chosenOptionsCopy = defineModel<OptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 

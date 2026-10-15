@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import type { DatatableAsset, TextAsset } from "@/api/client";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import { ref, watch } from "vue";
 
@@ -79,7 +79,7 @@ const emits = defineEmits<{
 
 const assetUtil = useAssetUtil();
 
-const asset = ref(assetUtil.createDatatableAsset({} as OptionsDTO, "", ""));
+const asset = ref(assetUtil.createDatatableAsset({} as Options, "", ""));
 
 /**
  * Um das Bild im Array zu "speichern", wird es als Event an die View geschickt.

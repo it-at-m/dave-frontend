@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { SeriesOption } from "echarts";
 import type { ResizeOpts } from "echarts/core";
 
@@ -37,7 +37,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
-const filterOptions = computed<OptionsDTO>(() => {
+const filterOptions = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const snackbarStore = useSnackbarStore();

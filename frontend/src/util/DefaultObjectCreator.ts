@@ -21,7 +21,7 @@ import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
 
@@ -225,7 +225,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultZaehlstelleOptionsDto(): OptionsDTO {
+  public static createDefaultZaehlstelleOptionsDto(): Options {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,

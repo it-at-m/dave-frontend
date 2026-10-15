@@ -1,20 +1,15 @@
-import type {
-  BaseAssetTypeEnum,
-  DatatableAsset,
-  HeadingAsset,
-  ImageAsset,
-  MessstelleDatatableAsset,
-  OptionsDTO,
-} from "@/api/client";
+import type { OptionsDTO } from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import DOMPurify from "dompurify";
 import _ from "lodash";
 import { computed } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
@@ -44,7 +39,7 @@ export function useReportTools() {
   const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
     return zaehlstelleStore.getAktiveZaehlung;
   });
-  const zaehlstelleOptions = computed<OptionsDTO>(() => {
+  const zaehlstelleOptions = computed<Options>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
 
@@ -193,7 +188,7 @@ export function useReportTools() {
       case Erhebungsstelle.ZAEHLSTELLE:
         pdfReportStore.addAsset(
           assetUtil.createDatatableAsset(
-            _.cloneDeep(zaehlstelleOptions.value),
+            _.cloneDeep(zaehlstelleOptions.value) as OptionsDTO,
             selectedZaehlung.value.id,
             createCaption(erhebungsstelle, "Datentabelle")
           )

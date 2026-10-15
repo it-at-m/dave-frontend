@@ -25,19 +25,19 @@ export interface ZaehlartenKarteDTO {
    * @type {number}
    * @memberof ZaehlartenKarteDTO
    */
-  longitude?: number;
+  longitude: number;
   /**
    *
    * @type {number}
    * @memberof ZaehlartenKarteDTO
    */
-  latitude?: number;
+  latitude: number;
   /**
    *
    * @type {Set<string>}
    * @memberof ZaehlartenKarteDTO
    */
-  zaehlarten?: Set<string>;
+  zaehlarten: Set<string>;
 }
 
 /**
@@ -46,6 +46,10 @@ export interface ZaehlartenKarteDTO {
 export function instanceOfZaehlartenKarteDTO(
   value: object
 ): value is ZaehlartenKarteDTO {
+  if (!("longitude" in value) || value["longitude"] === undefined) return false;
+  if (!("latitude" in value) || value["latitude"] === undefined) return false;
+  if (!("zaehlarten" in value) || value["zaehlarten"] === undefined)
+    return false;
   return true;
 }
 
@@ -61,10 +65,9 @@ export function ZaehlartenKarteDTOFromJSONTyped(
     return json;
   }
   return {
-    longitude: json["longitude"] == null ? undefined : json["longitude"],
-    latitude: json["latitude"] == null ? undefined : json["latitude"],
-    zaehlarten:
-      json["zaehlarten"] == null ? undefined : new Set(json["zaehlarten"]),
+    longitude: json["longitude"],
+    latitude: json["latitude"],
+    zaehlarten: new Set(json["zaehlarten"]),
   };
 }
 
@@ -83,9 +86,6 @@ export function ZaehlartenKarteDTOToJSONTyped(
   return {
     longitude: value["longitude"],
     latitude: value["latitude"],
-    zaehlarten:
-      value["zaehlarten"] == null
-        ? undefined
-        : Array.from(value["zaehlarten"] as Set<any>),
+    zaehlarten: Array.from(value["zaehlarten"] as Set<any>),
   };
 }

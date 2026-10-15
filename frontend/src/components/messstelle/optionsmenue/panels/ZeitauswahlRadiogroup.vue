@@ -137,7 +137,7 @@ function zeitauswahlChanged() {
   } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK) {
     chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0006;
   } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_01;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0001;
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ
   ) {

@@ -1,4 +1,4 @@
-import type { OptionsDTO } from "@/api/client";
+import type Options from "@/types/zaehlung/Options";
 
 import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 
@@ -8,7 +8,7 @@ export default class ZaehlstelleHistoryItem extends AbstractHistoryItem {
   zaehlungProjektName: string;
   zaehlstelleNr: string;
   zaehlstelleId: string;
-  optionsEinstellungen?: OptionsDTO;
+  optionsEinstellungen?: Options;
 
   constructor(
     zaehlungId: string,
@@ -16,7 +16,7 @@ export default class ZaehlstelleHistoryItem extends AbstractHistoryItem {
     zaehlungProjektName: string,
     zaehlstelleNr: string,
     zaehlstellId: string,
-    options?: OptionsDTO
+    options?: Options
   ) {
     super(zaehlungId, "mdi-map-marker");
     this.zaehlungId = zaehlungId;

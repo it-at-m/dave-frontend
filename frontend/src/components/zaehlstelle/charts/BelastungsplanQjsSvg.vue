@@ -932,7 +932,7 @@ import type {
   LadeBelastungsplanQjsDTO,
 } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
@@ -1288,7 +1288,7 @@ function calculateColorArrowThreeFour() {
   return BelastungsplanConstants.inaktivColor;
 }
 
-const optionen = computed<OptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

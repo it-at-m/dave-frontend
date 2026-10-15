@@ -415,7 +415,7 @@
 
 <script setup lang="ts">
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -428,7 +428,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-const chosenOptionsCopy = defineModel<OptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
@@ -960,9 +960,9 @@ function calculateSelectOrDeselectVerkehrsarten() {
 }
 
 /**
- * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im OptionsDTO entsprechend der gewählten Zeitauswahl.
+ * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im Options entsprechend der gewählten Zeitauswahl.
  */
-function adaptFahrzeugauswahl(options: OptionsDTO): OptionsDTO {
+function adaptFahrzeugauswahl(options: Options): Options {
   // Alles Zurücksetzten, wenn es sich um die Spitzenstunde handelt
   if (
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||

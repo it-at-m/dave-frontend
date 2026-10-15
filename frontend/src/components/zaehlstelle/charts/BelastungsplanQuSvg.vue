@@ -3425,7 +3425,7 @@ import type {
 } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -3742,7 +3742,7 @@ function isKnotenarm(knNummer: number) {
   return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
 }
 
-const optionen = computed<OptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

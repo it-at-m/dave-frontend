@@ -1,14 +1,14 @@
-import type { Rounding, ZaehldatenIntervall } from "@/api/client";
+import type { Rounding, ZaehldatenIntervall, Zeitblock } from "@/api/client";
 import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
 import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
 import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
 
 import { Zaehldauer } from "@/api/client";
 
-export default interface OptionsDTO {
+export default interface Options {
   zaehldauer: Zaehldauer;
   intervall: ZaehldatenIntervall;
-  zeitblock: string; // Zeitblock
+  zeitblock: Zeitblock;
   zeitauswahl: string;
   kraftfahrzeugverkehr: boolean;
   schwerverkehr: boolean;
@@ -36,18 +36,19 @@ export default interface OptionsDTO {
   datentabelle: boolean;
   rounding: Rounding;
   differenzdatenDarstellen: boolean;
+  zeitreiheGesamt: boolean;
   vergleichszaehlungsId: string | null;
-  vonKnotenarm: number | null;
-  vonIds: Array<number>;
-  nachKnotenarm: number | null;
-  nachIds: Array<number>;
   beideRichtungen: boolean;
+  vonKnotenarm: number | null;
+  nachKnotenarm: number | null;
+  chosenVerkehrsbeziehungen: Array<VerkehrsbeziehungDTO>;
+  chosenLaengsverkehre: Array<LaengsverkehrDTO>;
+  chosenQuerungsverkehre: Array<QuerungsverkehrDTO>;
+  idVergleichszaehlungZeitreihe: string | null;
+
+  vonIds: Array<number>;
+  nachIds: Array<number>;
   blackPrintMode: boolean;
   ganglinieYAchse1MaxValue: number | null;
   ganglinieYAchse2MaxValue: number | null;
-  idVergleichszaehlungZeitreihe: string | null;
-  zeitreiheGesamt: boolean;
-  chosenLaengsverkehre: Array<LaengsverkehrDTO>;
-  chosenQuerungsverkehre: Array<QuerungsverkehrDTO>;
-  chosenVerkehrsbeziehungen: Array<VerkehrsbeziehungDTO>;
 }

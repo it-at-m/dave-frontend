@@ -6,10 +6,8 @@
   />
 </template>
 <script setup lang="ts">
-import type {
-  BelastungsplanMessquerschnitteDTO,
-  LadeBelastungsplanMessqueschnittDataDTO,
-} from "@/api/client";
+import type { BelastungsplanMessquerschnitteDTO } from "@/api/client";
+import type { LadeBelastungsplanMessquerschnittDataDTO } from "@/api/client/models/LadeBelastungsplanMessquerschnittDataDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -158,7 +156,7 @@ function draw() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -207,7 +205,7 @@ function drawArrowsPointingSouth(
 
 function addSumSouthIfNecessary(
   arrayOfDataForDirectionSouth:
-    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -301,7 +299,7 @@ function drawTotal() {
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -350,7 +348,7 @@ function drawArrowsPointingNorth(
 
 function addSumNorthIfNecessary(
   arrayOfDataForDirectionNorth:
-    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -822,7 +820,7 @@ function calcLineWidth() {
   );
 }
 
-function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
+function calcStrokeSize(mq: LadeBelastungsplanMessquerschnittDataDTO): number {
   const maxLineWidth = 20;
   const mqData = vehiclesPerMq.value.get(mq.mqId);
 

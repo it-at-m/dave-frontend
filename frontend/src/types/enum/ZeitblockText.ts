@@ -1,5 +1,6 @@
 import type KeyVal from "@/types/common/KeyVal";
-import {Zeitblock} from "@/api/client";
+
+import { Zeitblock } from "@/api/client";
 
 export const zeitblockInfo = new Map<string, KeyVal>([
   [Zeitblock.Zb0006, { title: "0 - 6 Uhr", value: Zeitblock.Zb0006 }],
@@ -28,30 +29,30 @@ export const zeitblockOrder = [
 export const BeschreibungToZeitblock = new Map([...zeitblockInfo].reverse());
 
 export const zeitblockStuendlichInfo = new Map<string, KeyVal>([
-  [Zeitblock.ZB_00_01, { value: Zeitblock.ZB_00_01, title: "0 - 1 Uhr" }],
-  [Zeitblock.ZB_01_02, { value: Zeitblock.ZB_01_02, title: "1 - 2 Uhr" }],
-  [Zeitblock.ZB_02_03, { value: Zeitblock.ZB_02_03, title: "2 - 3 Uhr" }],
-  [Zeitblock.ZB_03_04, { value: Zeitblock.ZB_03_04, title: "3 - 4 Uhr" }],
-  [Zeitblock.ZB_04_05, { value: Zeitblock.ZB_04_05, title: "4 - 5 Uhr" }],
-  [Zeitblock.ZB_05_06, { value: Zeitblock.ZB_05_06, title: "5 - 6 Uhr" }],
-  [Zeitblock.ZB_06_07, { value: Zeitblock.ZB_06_07, title: "6 - 7 Uhr" }],
-  [Zeitblock.ZB_07_08, { value: Zeitblock.ZB_07_08, title: "7 - 8 Uhr" }],
-  [Zeitblock.ZB_08_09, { value: Zeitblock.ZB_08_09, title: "8 - 9 Uhr" }],
-  [Zeitblock.ZB_09_10, { value: Zeitblock.ZB_09_10, title: "9 - 10 Uhr" }],
-  [Zeitblock.ZB_10_11, { value: Zeitblock.ZB_10_11, title: "10 - 11 Uhr" }],
-  [Zeitblock.ZB_11_12, { value: Zeitblock.ZB_11_12, title: "11 - 12 Uhr" }],
-  [Zeitblock.ZB_12_13, { value: Zeitblock.ZB_12_13, title: "12 - 13 Uhr" }],
-  [Zeitblock.ZB_13_14, { value: Zeitblock.ZB_13_14, title: "13 - 14 Uhr" }],
-  [Zeitblock.ZB_14_15, { value: Zeitblock.ZB_14_15, title: "14 - 15 Uhr" }],
-  [Zeitblock.ZB_15_16, { value: Zeitblock.ZB_15_16, title: "15 - 16 Uhr" }],
-  [Zeitblock.ZB_16_17, { value: Zeitblock.ZB_16_17, title: "16 - 17 Uhr" }],
-  [Zeitblock.ZB_17_18, { value: Zeitblock.ZB_17_18, title: "17 - 18 Uhr" }],
-  [Zeitblock.ZB_18_19, { value: Zeitblock.ZB_18_19, title: "18 - 19 Uhr" }],
-  [Zeitblock.ZB_19_20, { value: Zeitblock.ZB_19_20, title: "19 - 20 Uhr" }],
-  [Zeitblock.ZB_20_21, { value: Zeitblock.ZB_20_21, title: "20 - 21 Uhr" }],
-  [Zeitblock.ZB_21_22, { value: Zeitblock.ZB_21_22, title: "21 - 22 Uhr" }],
-  [Zeitblock.ZB_22_23, { value: Zeitblock.ZB_22_23, title: "22 - 23 Uhr" }],
-  [Zeitblock.ZB_23_24, { value: Zeitblock.ZB_23_24, title: "23 - 24 Uhr" }],
+  [Zeitblock.Zb0001, { value: Zeitblock.Zb0001, title: "0 - 1 Uhr" }],
+  [Zeitblock.Zb0102, { value: Zeitblock.Zb0102, title: "1 - 2 Uhr" }],
+  [Zeitblock.Zb0203, { value: Zeitblock.Zb0203, title: "2 - 3 Uhr" }],
+  [Zeitblock.Zb0304, { value: Zeitblock.Zb0304, title: "3 - 4 Uhr" }],
+  [Zeitblock.Zb0405, { value: Zeitblock.Zb0405, title: "4 - 5 Uhr" }],
+  [Zeitblock.Zb0506, { value: Zeitblock.Zb0506, title: "5 - 6 Uhr" }],
+  [Zeitblock.Zb0607, { value: Zeitblock.Zb0607, title: "6 - 7 Uhr" }],
+  [Zeitblock.Zb0708, { value: Zeitblock.Zb0708, title: "7 - 8 Uhr" }],
+  [Zeitblock.Zb0809, { value: Zeitblock.Zb0809, title: "8 - 9 Uhr" }],
+  [Zeitblock.Zb0910, { value: Zeitblock.Zb0910, title: "9 - 10 Uhr" }],
+  [Zeitblock.Zb1011, { value: Zeitblock.Zb1011, title: "10 - 11 Uhr" }],
+  [Zeitblock.Zb1112, { value: Zeitblock.Zb1112, title: "11 - 12 Uhr" }],
+  [Zeitblock.Zb1213, { value: Zeitblock.Zb1213, title: "12 - 13 Uhr" }],
+  [Zeitblock.Zb1314, { value: Zeitblock.Zb1314, title: "13 - 14 Uhr" }],
+  [Zeitblock.Zb1415, { value: Zeitblock.Zb1415, title: "14 - 15 Uhr" }],
+  [Zeitblock.Zb1516, { value: Zeitblock.Zb1516, title: "15 - 16 Uhr" }],
+  [Zeitblock.Zb1617, { value: Zeitblock.Zb1617, title: "16 - 17 Uhr" }],
+  [Zeitblock.Zb1718, { value: Zeitblock.Zb1718, title: "17 - 18 Uhr" }],
+  [Zeitblock.Zb1819, { value: Zeitblock.Zb1819, title: "18 - 19 Uhr" }],
+  [Zeitblock.Zb1920, { value: Zeitblock.Zb1920, title: "19 - 20 Uhr" }],
+  [Zeitblock.Zb2021, { value: Zeitblock.Zb2021, title: "20 - 21 Uhr" }],
+  [Zeitblock.Zb2122, { value: Zeitblock.Zb2122, title: "21 - 22 Uhr" }],
+  [Zeitblock.Zb2223, { value: Zeitblock.Zb2223, title: "22 - 23 Uhr" }],
+  [Zeitblock.Zb2324, { value: Zeitblock.Zb2324, title: "23 - 24 Uhr" }],
 ]);
 
 export const BeschreibungToZeitblockStuendlich = new Map(

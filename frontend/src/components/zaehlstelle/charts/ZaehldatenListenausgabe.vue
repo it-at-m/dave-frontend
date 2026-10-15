@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import type { LadeZaehldatumDTO } from "@/api/client";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import { computed, watch } from "vue";
 
@@ -113,7 +113,7 @@ const activeAnteil = computed(() => {
   return activeAnteil;
 });
 
-const optionen = computed<OptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 

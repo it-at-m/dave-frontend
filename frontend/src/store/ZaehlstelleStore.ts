@@ -1,7 +1,7 @@
 import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type OptionsDTO from "@/types/zaehlung/OptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 import { defineStore } from "pinia";
@@ -20,7 +20,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
   );
   const activeTab = ref(0);
-  const filteroptions = ref<OptionsDTO>(
+  const filteroptions = ref<Options>(
     DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
   );
   const zeitblock = ref("");
@@ -96,11 +96,11 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   function setActiveTab(payload: number) {
     activeTab.value = payload;
   }
-  function setFilteroptions(payload: OptionsDTO) {
+  function setFilteroptions(payload: Options) {
     filteroptions.value = payload;
     inHistory.value = false;
   }
-  function setFilteroptionsHistory(payload: OptionsDTO) {
+  function setFilteroptionsHistory(payload: Options) {
     filteroptions.value = payload;
     inHistory.value = true;
     calledFromHistory.value = true;
