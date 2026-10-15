@@ -11,7 +11,7 @@ import type {
   AbstractLadeBelastungsplanDTOObject,
   LadeBelastungsplanDTO,
 } from "@/api/client";
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
@@ -104,7 +104,7 @@ const zaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
+const zaehlstelle = computed<LeseZaehlstelleDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 

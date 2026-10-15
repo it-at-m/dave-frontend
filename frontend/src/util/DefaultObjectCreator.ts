@@ -19,7 +19,7 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
@@ -164,7 +164,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultZaehlstelleHeaderDTO(): ZaehlstelleHeaderDTO {
+  public static createDefaultZaehlstelleHeaderDTO(): LeseZaehlstelleDTO {
     return {
       id: "",
       entityVersion: 0,

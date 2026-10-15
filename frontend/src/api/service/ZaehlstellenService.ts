@@ -1,4 +1,4 @@
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import type { LeseZaehlstelleDTO } from "@/api/client";
 
 import { ZaehlstelleControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -11,7 +11,7 @@ export default class ZaehlstellenService {
     new Configuration({ basePath: this.ENDPOINT })
   );
 
-  static getById(id: string): Promise<ZaehlstelleHeaderDTO> {
+  static getById(id: string): Promise<LeseZaehlstelleDTO> {
     return handleOpenApiError(
       this.API.getZaehlstelleHeaderRaw({ id }).then((response) =>
         response.raw.json()

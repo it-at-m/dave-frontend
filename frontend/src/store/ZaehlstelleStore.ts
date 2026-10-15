@@ -1,4 +1,4 @@
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type Options from "@/types/zaehlung/Options";
@@ -16,7 +16,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const route = useRoute();
 
-  const zaehlstelleHeader = ref<ZaehlstelleHeaderDTO>(
+  const zaehlstelleHeader = ref<LeseZaehlstelleDTO>(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
   );
   const activeTab = ref(0);
@@ -89,7 +89,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     () => startEndeUhrzeitIntervalls.value
   );
 
-  function setZaehlstelleHeader(payload: ZaehlstelleHeaderDTO) {
+  function setZaehlstelleHeader(payload: LeseZaehlstelleDTO) {
     payload.zaehlungen = [];
     zaehlstelleHeader.value = payload;
   }

@@ -229,7 +229,7 @@ import type {
   LadeZaehldatumDTO,
   OptionsDTO,
 } from "@/api/client";
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
+import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
@@ -366,7 +366,7 @@ const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
+const zaehlstelle = computed<LeseZaehlstelleDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 const isTabListenausgabe = computed<boolean>(() => {
