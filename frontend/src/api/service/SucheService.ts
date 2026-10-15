@@ -1,9 +1,9 @@
 import type {
+  ErhebungsstelleKarteDTO,
   SearchAndFilterOptionsDTO as GeneratedSearchAndFilterOptionsDTO,
   SearchAndFilterOptionsDTO,
   SucheComplexSuggestsDTO,
 } from "@/api/client";
-import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 
 import { SucheControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -33,7 +33,7 @@ export default class SucheService {
   static searchErhebungsstelle(
     query: string,
     searchAndFilterOptions: SearchAndFilterOptionsDTO
-  ): Promise<Array<AnzeigeKarteDTO>> {
+  ): Promise<Array<ErhebungsstelleKarteDTO>> {
     return handleOpenApiError(
       this.API.searchErhebungsstelleForMapDatenportalRaw({
         query,

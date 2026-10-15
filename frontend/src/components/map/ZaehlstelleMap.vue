@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
 import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
@@ -37,6 +36,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
+import type {ErhebungsstelleKarteDTO} from "@/api/client";
 
 const ICON_ANCHOR_INITIAL_OFFSET_PIXELS_ZAEHLART_MARKER = -4;
 const ICON_ANCHOR_OFFSET_PIXELS_ZAEHLART_MARKER = -32;
@@ -247,7 +247,7 @@ function setMarkerToMap() {
   selectedZaehlstelleKarte.value =
     DefaultObjectCreator.createDefaultZaehlstelleKarte();
 
-  const zaehlstellenKarte: Array<AnzeigeKarteDTO> = searchResult.value;
+  const zaehlstellenKarte: Array<ErhebungsstelleKarteDTO> = searchResult.value;
   const markers: Array<Marker> = [];
   zaehlstellenKarte.forEach((zaehlstelleKarte) => {
     if (zaehlstelleKarte.type != "messstelle") {
@@ -370,7 +370,7 @@ function routeToMessstelle(id: string) {
   router.push(`/messstelle/${id}`);
 }
 
-function createLatLng(anzeigeKarte: AnzeigeKarteDTO): LatLng {
+function createLatLng(anzeigeKarte: ErhebungsstelleKarteDTO): LatLng {
   return latLng(anzeigeKarte.latitude, anzeigeKarte.longitude);
 }
 

@@ -52,8 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ImageAsset } from "@/api/client";
-import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
+import type {ErhebungsstelleKarteDTO, ImageAsset} from "@/api/client";
 import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
 import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
 import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
@@ -118,15 +117,15 @@ function takePicture() {
  */
 function printSearchResult(): void {
   printingSearchResult.value = true;
-  const searchResult: Array<AnzeigeKarteDTO> = getSearchResult.value;
+  const searchResult: Array<ErhebungsstelleKarteDTO> = getSearchResult.value;
   const searchQuery: string = getSearchQuery.value;
 
   const zaehlstellenResult = searchResult.filter(
-    (value: AnzeigeKarteDTO) => value.type === "zaehlstelle"
+    (value: ErhebungsstelleKarteDTO) => value.type === "zaehlstelle"
   ) as Array<ZaehlstelleKarteDTO>;
 
   const messstellenResult = searchResult.filter(
-    (value: AnzeigeKarteDTO) => value.type === "messstelle"
+    (value: ErhebungsstelleKarteDTO) => value.type === "messstelle"
   ) as Array<MessstelleKarteDTO>;
 
   if (zaehlstellenResult.length > 0) {
