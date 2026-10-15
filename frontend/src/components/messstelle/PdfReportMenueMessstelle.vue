@@ -78,8 +78,6 @@
 import type {
   BaseAsset,
   BaseAssetTypeEnum,
-  HeadingAsset,
-  TextAsset,
 } from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";

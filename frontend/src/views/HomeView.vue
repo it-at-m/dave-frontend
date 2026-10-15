@@ -54,11 +54,8 @@
 <script lang="ts" setup>
 import type {
   ErhebungsstelleKarteDTO,
-  ImageAsset,
   MessstelleKarteDTO,
-  MessstelleTooltipDTO,
   ZaehlstelleKarteDTO,
-  ZaehlstelleTooltipDTO,
 } from "@/api/client";
 
 import html2canvas from "html2canvas";
