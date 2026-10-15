@@ -40,6 +40,12 @@ export interface ZaehlungskenngroessenAsset extends BaseAsset {
    * @type {string}
    * @memberof ZaehlungskenngroessenAsset
    */
+  text?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ZaehlungskenngroessenAsset
+   */
   zaehlungId?: string;
   /**
    *
@@ -91,6 +97,7 @@ export function ZaehlungskenngroessenAssetFromJSONTyped(
   }
   return {
     ...BaseAssetFromJSONTyped(json, true),
+    text: json["text"] == null ? undefined : json["text"],
     zaehlungId: json["zaehlungId"] == null ? undefined : json["zaehlungId"],
     zaehldaten:
       json["zaehldaten"] == null
@@ -120,6 +127,7 @@ export function ZaehlungskenngroessenAssetToJSONTyped(
 
   return {
     ...BaseAssetToJSONTyped(value, true),
+    text: value["text"],
     zaehlungId: value["zaehlungId"],
     zaehldaten:
       value["zaehldaten"] == null

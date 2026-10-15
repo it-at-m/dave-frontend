@@ -18,6 +18,7 @@ import type {
   MessstelleKarteDTO,
   MessstelleTooltipDTO,
   ZaehlstelleKarteDTO,
+  ZaehlstelleTooltipDTO,
 } from "@/api/client";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
@@ -442,7 +443,7 @@ function createMarkerForZaehlart(
  *  - datumLetzteZaehlung
  */
 function createTooltipZaehlstelle(
-  tooltipDto: TooltipZaehlstelleDTO
+  tooltipDto: ZaehlstelleTooltipDTO
 ): HTMLElement {
   const tooltip = document.createElement("div");
   if (!tooltipDto) {

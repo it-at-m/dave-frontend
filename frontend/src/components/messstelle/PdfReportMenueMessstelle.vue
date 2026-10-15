@@ -75,10 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  BaseAsset,
-  BaseAssetTypeEnum,
-} from "@/api/client";
+import type { BaseAsset, BaseAssetTypeEnum } from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
 

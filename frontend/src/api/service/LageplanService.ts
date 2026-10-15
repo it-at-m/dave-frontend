@@ -1,4 +1,4 @@
-import type {DocumentDto} from "@/api/client";
+import type { DocumentDto } from "@/api/client";
 
 import { LageplanControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";

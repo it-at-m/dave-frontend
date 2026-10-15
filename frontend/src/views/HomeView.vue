@@ -54,8 +54,11 @@
 <script lang="ts" setup>
 import type {
   ErhebungsstelleKarteDTO,
+  ErhebungsstelleTooltipDTO,
   MessstelleKarteDTO,
+  MessstelleTooltipDTO,
   ZaehlstelleKarteDTO,
+  ZaehlstelleTooltipDTO,
 } from "@/api/client";
 
 import html2canvas from "html2canvas";
@@ -158,23 +161,27 @@ function printMessstellenOfSearchResult(
 
   // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
   searchResult.forEach((element: MessstelleKarteDTO) => {
-    const tooltip: TooltipMessstelleDTO = element.tooltip;
+    const tooltip: ErhebungsstelleTooltipDTO = element.tooltip;
     const elementAsCsvString: Array<string> = [];
-    elementAsCsvString.push(tooltip.mstId);
+    elementAsCsvString.push((tooltip as MessstelleTooltipDTO).mstId);
     elementAsCsvString.push(`${element.longitude}`);
     elementAsCsvString.push(`${element.latitude}`);
     elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
     elementAsCsvString.push(tooltip.stadtbezirk);
-    elementAsCsvString.push(tooltip.standort);
+    elementAsCsvString.push((tooltip as MessstelleTooltipDTO).standort);
     const statusAsText = messstelleStatusText.get(element.status);
     if (statusAsText) {
       elementAsCsvString.push(statusAsText);
     } else {
       elementAsCsvString.push(element.status);
     }
-    elementAsCsvString.push(tooltip.realisierungsdatum);
-    elementAsCsvString.push(tooltip.abbaudatum);
-    elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
+    elementAsCsvString.push(
+      (tooltip as MessstelleTooltipDTO).realisierungsdatum
+    );
+    elementAsCsvString.push((tooltip as MessstelleTooltipDTO).abbaudatum);
+    elementAsCsvString.push(
+      (tooltip as MessstelleTooltipDTO).datumLetztePlausibleMessung
+    );
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
   downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
@@ -200,16 +207,22 @@ function printZaehlstellenOfSearchResult(
 
   // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
   searchResult.forEach((element: ZaehlstelleKarteDTO) => {
-    const tooltip: TooltipZaehlstelleDTO = element.tooltip;
+    const tooltip: ErhebungsstelleTooltipDTO = element.tooltip;
     const elementAsCsvString: Array<string> = [];
-    elementAsCsvString.push(tooltip.zaehlstellennnummer);
+    elementAsCsvString.push(
+      (tooltip as ZaehlstelleTooltipDTO).zaehlstellennnummer
+    );
     elementAsCsvString.push(element.longitude.toString());
     elementAsCsvString.push(element.latitude.toString());
     elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
     elementAsCsvString.push(tooltip.stadtbezirk);
-    elementAsCsvString.push(tooltip.kreuzungsname);
-    elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
-    elementAsCsvString.push(tooltip.datumLetzteZaehlung);
+    elementAsCsvString.push((tooltip as ZaehlstelleTooltipDTO).kreuzungsname);
+    elementAsCsvString.push(
+      `${(tooltip as ZaehlstelleTooltipDTO).anzahlZaehlungen}`
+    );
+    elementAsCsvString.push(
+      (tooltip as ZaehlstelleTooltipDTO).datumLetzteZaehlung
+    );
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
   downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);

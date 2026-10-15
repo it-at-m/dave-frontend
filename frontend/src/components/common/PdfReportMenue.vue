@@ -82,16 +82,10 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  BaseAssetTypeEnum,
-  HeadingAsset,
-  TextAsset,
-  ZaehlungskenngroessenAsset,
-} from "@/api/client";
-
 import _ from "lodash";
 import { computed, ref } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";

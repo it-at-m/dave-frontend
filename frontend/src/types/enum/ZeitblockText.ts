@@ -1,4 +1,5 @@
 import type KeyVal from "@/types/common/KeyVal";
+import {Zeitblock} from "@/api/client";
 
 export const zeitblockInfo = new Map<string, KeyVal>([
   [Zeitblock.Zb0006, { title: "0 - 6 Uhr", value: Zeitblock.Zb0006 }],
