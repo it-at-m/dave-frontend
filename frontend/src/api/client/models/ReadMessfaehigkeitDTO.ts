@@ -40,25 +40,25 @@ export interface ReadMessfaehigkeitDTO {
    * @type {string}
    * @memberof ReadMessfaehigkeitDTO
    */
-  gueltigBis?: string;
+  gueltigBis: string;
   /**
    *
    * @type {string}
    * @memberof ReadMessfaehigkeitDTO
    */
-  gueltigAb?: string;
+  gueltigAb: string;
   /**
    *
    * @type {Fahrzeugklasse}
    * @memberof ReadMessfaehigkeitDTO
    */
-  fahrzeugklasse?: Fahrzeugklasse;
+  fahrzeugklasse: Fahrzeugklasse;
   /**
    *
    * @type {ZaehldatenIntervall}
    * @memberof ReadMessfaehigkeitDTO
    */
-  intervall?: ZaehldatenIntervall;
+  intervall: ZaehldatenIntervall;
 }
 
 /**
@@ -67,6 +67,12 @@ export interface ReadMessfaehigkeitDTO {
 export function instanceOfReadMessfaehigkeitDTO(
   value: object
 ): value is ReadMessfaehigkeitDTO {
+  if (!("gueltigBis" in value) || value["gueltigBis"] === undefined)
+    return false;
+  if (!("gueltigAb" in value) || value["gueltigAb"] === undefined) return false;
+  if (!("fahrzeugklasse" in value) || value["fahrzeugklasse"] === undefined)
+    return false;
+  if (!("intervall" in value) || value["intervall"] === undefined) return false;
   return true;
 }
 
@@ -84,16 +90,10 @@ export function ReadMessfaehigkeitDTOFromJSONTyped(
     return json;
   }
   return {
-    gueltigBis: json["gueltigBis"] == null ? undefined : json["gueltigBis"],
-    gueltigAb: json["gueltigAb"] == null ? undefined : json["gueltigAb"],
-    fahrzeugklasse:
-      json["fahrzeugklasse"] == null
-        ? undefined
-        : FahrzeugklasseFromJSON(json["fahrzeugklasse"]),
-    intervall:
-      json["intervall"] == null
-        ? undefined
-        : ZaehldatenIntervallFromJSON(json["intervall"]),
+    gueltigBis: json["gueltigBis"],
+    gueltigAb: json["gueltigAb"],
+    fahrzeugklasse: FahrzeugklasseFromJSON(json["fahrzeugklasse"]),
+    intervall: ZaehldatenIntervallFromJSON(json["intervall"]),
   };
 }
 

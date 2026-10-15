@@ -1,10 +1,10 @@
 import type {
   FahrzeugOptionsDTO,
   MessstelleAuswertungIdDTO,
+  TagesTyp,
 } from "@/api/client";
 
 import { AuswertungsZeitraum } from "@/types/enum/AuswertungCategories";
-import TagesTyp from "@/types/enum/TagesTypText";
 
 export default interface MessstelleAuswertungOptionsDTO {
   jahre: Array<string>; // Array<number>

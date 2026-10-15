@@ -52,7 +52,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { ZaehlstelleKarteDTO,ZaehlstelleTooltipDTO,MessstelleTooltipDTO,ErhebungsstelleKarteDTO, ImageAsset, MessstelleKarteDTO } from "@/api/client";
+import type {
+  ErhebungsstelleKarteDTO,
+  ImageAsset,
+  MessstelleKarteDTO,
+  MessstelleTooltipDTO,
+  ZaehlstelleKarteDTO,
+  ZaehlstelleTooltipDTO,
+} from "@/api/client";
 
 import html2canvas from "html2canvas";
 import { computed, onMounted, ref } from "vue";

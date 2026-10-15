@@ -1,19 +1,19 @@
-import {
-  type BelastungsplanMessquerschnitteDTO,
-  type ConfigurationDTO,
-  type FahrzeugOptionsDTO,
-  type InfoMessageDTO,
-  type LadeProcessedMesswerteDTO,
-  type LadeZaehldatenHeatmapDTO,
-  type LadeZaehldatenSteplineDTO,
-  type LadeZaehldatenTableDTO,
-  type MapConfigurationDTO,
-  type SearchAndFilterOptionsDTO,
-  type TenantConfigurationDTO,
-  type ZaehlstelleConfigurationDTO,
-  type ZaehlstelleTooltipDTO,
-  type ZaehlstelleKarteDTO,
-  type ZeitauswahlDTO, TagesTyp,
+import type {
+  BelastungsplanMessquerschnitteDTO,
+  ConfigurationDTO,
+  FahrzeugOptionsDTO,
+  InfoMessageDTO,
+  LadeProcessedMesswerteDTO,
+  LadeZaehldatenHeatmapDTO,
+  LadeZaehldatenSteplineDTO,
+  LadeZaehldatenTableDTO,
+  MapConfigurationDTO,
+  SearchAndFilterOptionsDTO,
+  TenantConfigurationDTO,
+  ZaehlstelleConfigurationDTO,
+  ZaehlstelleKarteDTO,
+  ZaehlstelleTooltipDTO,
+  ZeitauswahlDTO,
 } from "@/api/client";
 import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
@@ -28,6 +28,7 @@ import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO
 import {
   Fahrzeugklasse,
   Rounding,
+  TagesTyp,
   Verkehrsart,
   ZaehldatenIntervall,
   Zaehldauer,

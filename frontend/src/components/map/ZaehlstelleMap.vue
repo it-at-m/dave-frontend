@@ -13,7 +13,12 @@
 </template>
 
 <script setup lang="ts">
-import type {ErhebungsstelleKarteDTO, MessstelleTooltipDTO, MessstelleKarteDTO, ZaehlstelleKarteDTO } from "@/api/client";
+import type {
+  ErhebungsstelleKarteDTO,
+  MessstelleKarteDTO,
+  MessstelleTooltipDTO,
+  ZaehlstelleKarteDTO,
+} from "@/api/client";
 import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
