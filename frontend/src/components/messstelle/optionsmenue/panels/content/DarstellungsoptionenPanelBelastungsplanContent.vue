@@ -66,7 +66,7 @@ import { computed, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import { roundingItems } from "@/types/enum/RoundingUtil";
+import { roundingItems } from "@/types/enum/RoundingText";
 
 const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
 const messstelleStore = useMessstelleStore();

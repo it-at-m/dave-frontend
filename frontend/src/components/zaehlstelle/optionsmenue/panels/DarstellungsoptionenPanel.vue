@@ -277,7 +277,7 @@ import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import { roundingItems } from "@/types/enum/RoundingUtil";
+import { roundingItems } from "@/types/enum/RoundingText";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 

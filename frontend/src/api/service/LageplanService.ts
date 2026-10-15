@@ -1,4 +1,4 @@
-import type LageplanDTO from "@/types/messstelle/lageplan/LageplanDTO";
+import type {DocumentDto} from "@/api/client";
 
 import { LageplanControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -11,7 +11,7 @@ export default class LageplanService {
     new Configuration({ basePath: this.ENDPOINT })
   );
 
-  static loadLageplan(messstelleId: string): Promise<LageplanDTO> {
+  static loadLageplan(messstelleId: string): Promise<DocumentDto> {
     return handleOpenApiError(
       this.API.loadLageplanRaw({ mstId: messstelleId }).then((response) =>
         response.raw.json()
