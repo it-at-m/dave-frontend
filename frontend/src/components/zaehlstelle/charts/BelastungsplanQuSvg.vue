@@ -3421,10 +3421,10 @@
 <script setup lang="ts">
 import type {
   AbstractLadeBelastungsplanDTOObject,
+  BearbeiteKnotenarmDTO,
   LadeBelastungsplanQuDTO,
 } from "@/api/client";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
@@ -3515,7 +3515,7 @@ const streetnameNode6 = ref<Array<string>>([]);
 const streetnameNode7 = ref<Array<string>>([]);
 const streetnameNode8 = ref<Array<string>>([]);
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -3783,28 +3783,44 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
 
 function setStreetnameNodes() {
   streetnameNode1.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 1
+    )
   );
   streetnameNode2.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 2
+    )
   );
   streetnameNode3.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 3
+    )
   );
   streetnameNode4.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 4
+    )
   );
   streetnameNode5.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 5
+    )
   );
   streetnameNode6.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 6
+    )
   );
   streetnameNode7.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 7
+    )
   );
   streetnameNode8.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 8
+    )
   );
 }
 

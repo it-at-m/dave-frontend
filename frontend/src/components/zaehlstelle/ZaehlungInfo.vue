@@ -233,7 +233,7 @@
   </v-container>
 </template>
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
@@ -276,7 +276,7 @@ const showSpitzenstundeInfo = ref(false);
 const startUhrzeitIntervalls = ref("");
 const endeUhrzeitIntervalls = ref("");
 
-const zaehlung = computed<LadeZaehlungDTO>(() => {
+const zaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 

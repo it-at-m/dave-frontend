@@ -47,8 +47,8 @@
 
 <script setup lang="ts">
 import type { AuffaelligeTageDTO } from "@/api/client";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -63,7 +63,7 @@ import { useMessstelleStore } from "@/store/MessstelleStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import { useDateUtils } from "@/util/DateUtils";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 
 interface Props {
   isZeitraumAndTagestypValid: boolean;
@@ -95,7 +95,7 @@ onMounted(() => {
   );
 });
 
-const messstelleInfo = computed<MessstelleInfoDTO>(() => {
+const messstelleInfo = computed<MessstelleInfo>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 

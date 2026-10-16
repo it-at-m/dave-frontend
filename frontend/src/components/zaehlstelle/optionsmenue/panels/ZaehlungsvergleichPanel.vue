@@ -96,7 +96,7 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { ComputedRef } from "vue";
 
@@ -135,7 +135,7 @@ onMounted(() => {
   initData();
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -222,7 +222,7 @@ function initData() {
  */
 function vergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
-  const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
+  const zaehlungen: Array<LadeZaehlung> = zaehlstelleStore.getZaehlungen;
   if (activeZaehlung.value.id) {
     zaehlungen.forEach((zaehl) => {
       if (
@@ -255,7 +255,7 @@ function vergleichsdatumCalculator(): void {
  * */
 function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
-  const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
+  const zaehlungen: Array<LadeZaehlung> = zaehlstelleStore.getZaehlungen;
   if (
     activeZaehlung.value.id != undefined &&
     activeZaehlung.value.datum != undefined
@@ -310,8 +310,8 @@ function zeitreihenVergleichsdatumCalculator(): void {
  * @param activeZaehlung aktive Zaehlung
  */
 function checkBewegungsbeziehungen(
-  zaehlung: LadeZaehlungDTO,
-  activeZaehlung: ComputedRef<LadeZaehlungDTO>
+  zaehlung: LadeZaehlung,
+  activeZaehlung: ComputedRef<LadeZaehlung>
 ): boolean {
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
@@ -345,7 +345,7 @@ function checkBewegungsbeziehungen(
  * @return true falls die Zählung den Zeitblock im zweiten Parameter besitzt, anderfalls false.
  */
 function containsZeitblock(
-  zaehlung: LadeZaehlungDTO,
+  zaehlung: LadeZaehlung,
   zeitblockInOptions: string
 ): boolean {
   return (

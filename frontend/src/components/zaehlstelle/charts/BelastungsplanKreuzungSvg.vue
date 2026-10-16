@@ -9,12 +9,12 @@
 <script setup lang="ts">
 import type {
   AbstractLadeBelastungsplanDTOObject,
+  BearbeiteKnotenarmDTO,
   LadeBelastungsplanDTO,
   LeseZaehlstelleDTO,
 } from "@/api/client";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type { Ref } from "vue";
@@ -100,7 +100,7 @@ onMounted(() => {
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 });
 
-const zaehlung = computed<LadeZaehlungDTO>(() => {
+const zaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -213,7 +213,7 @@ function draw() {
     });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
-  let knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  let knotenarmeInline = zaehlung.value.knotenarme as BearbeiteKnotenarmDTO[];
   if (isDifferenzdatendarstellung.value) {
     knotenarmeInline =
       vergleichszaehlungenUtils.mergeKnotenarmeOfVergleichszaehlungen(
@@ -223,7 +223,10 @@ function draw() {
   }
 
   if (knotenarmeInline) {
-    let ks = Object.assign(new Array<LadeKnotenarmDTO>(), knotenarmeInline);
+    let ks = Object.assign(
+      new Array<BearbeiteKnotenarmDTO>(),
+      knotenarmeInline
+    );
     ks = ks.sort(LadeKnotenarmComperator.sortByNumber).reverse();
     ks.forEach((k) => {
       const r = belastungsplanMethods.calcRotation(k.nummer);
@@ -603,7 +606,7 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
   prozentWerte.value.set(1, data.value2.percent);
   prozentWerte.value.set(2, data.value3.percent);
   // Aus der aktuellen Zählung (diese ist im $store) werden die Verkehrsbeziehungen geladen.
-  let fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  let fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehung[];
   if (isDifferenzdatendarstellung.value) {
     fbs =
       vergleichszaehlungenUtils.mergeVerkehrsbeziehungenOfVergleichszaehlungen(

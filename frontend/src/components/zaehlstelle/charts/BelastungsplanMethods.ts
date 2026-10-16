@@ -1,7 +1,10 @@
-import type { LadeBelastungsplanDTO, OptionsDTO } from "@/api/client";
+import type {
+  BearbeiteKnotenarmDTO,
+  LadeBelastungsplanDTO,
+  OptionsDTO,
+} from "@/api/client";
 import type BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import type BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { computed } from "vue";
@@ -1129,7 +1132,7 @@ export function useBelastungsplanMethods() {
     lineWidth: number,
     line: number
   ) {
-    const ladeKnotenarmWrapper: LadeKnotenarmDTO = {
+    const ladeKnotenarmWrapper: BearbeiteKnotenarmDTO = {
       nummer: knotenarm.knotenarmNummer,
       strassenname: knotenarm.strasse,
     };

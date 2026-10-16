@@ -269,7 +269,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import _ from "lodash";
@@ -324,7 +324,7 @@ const minSizeBelastungsplanSvg = computed(() => {
   return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 

@@ -1,5 +1,5 @@
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -15,20 +15,20 @@ describe("OptionsmenueSettingsStore.ts", () => {
   it("getMessfaehigkeitenForGivenZeitraum", () => {
     const messstelleStore = useMessstelleStore();
 
-    const messstelleInfo = {} as MessstelleInfoDTO;
+    const messstelleInfo = {} as MessstelleInfo;
 
     const messfaehigkeit1 = {
       gueltigAb: "2025-02-01",
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.StundeKomplett,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.StundeHalb,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
 
     messstelleInfo.messfaehigkeiten = [messfaehigkeit1, messfaehigkeit2];
     messstelleStore.setMessstelleInfo(messstelleInfo);

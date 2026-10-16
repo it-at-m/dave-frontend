@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 import type { MessstelleAuswertungDTO } from "@/api/client";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { head, isEmpty, toArray } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -89,7 +89,7 @@ interface Props {
 
 defineProps<Props>();
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 

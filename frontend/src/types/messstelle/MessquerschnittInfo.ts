@@ -1,6 +1,6 @@
 import { Himmelsrichtung } from "@/api/client";
 
-export default interface MessquerschnittInfoDTO {
+export default interface MessquerschnittInfo {
   mstId: string;
   mqId: string;
   strassenname: string;

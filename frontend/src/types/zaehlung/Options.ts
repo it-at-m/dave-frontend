@@ -1,7 +1,7 @@
 import type { Rounding, ZaehldatenIntervall, Zeitblock } from "@/api/client";
-import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
-import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
-import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+import type Laengsverkehr from "@/types/zaehlung/Laengsverkehr";
+import type Querungsverkehr from "@/types/zaehlung/Querungsverkehr";
+import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 
 import { Zaehldauer } from "@/api/client";
 
@@ -41,9 +41,9 @@ export default interface Options {
   beideRichtungen: boolean;
   vonKnotenarm: number | null;
   nachKnotenarm: number | null;
-  chosenVerkehrsbeziehungen: Array<VerkehrsbeziehungDTO>;
-  chosenLaengsverkehre: Array<LaengsverkehrDTO>;
-  chosenQuerungsverkehre: Array<QuerungsverkehrDTO>;
+  chosenVerkehrsbeziehungen: Array<Verkehrsbeziehung>;
+  chosenLaengsverkehre: Array<Laengsverkehr>;
+  chosenQuerungsverkehre: Array<Querungsverkehr>;
   idVergleichszaehlungZeitreihe: string | null;
 
   vonIds: Array<number>;

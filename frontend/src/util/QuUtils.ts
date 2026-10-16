@@ -1,16 +1,15 @@
 // Hilfsfunktion für die Darstellung von Qu-Zählungen
 
-import type { Himmelsrichtung } from "@/api/client";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+import type { BearbeiteKnotenarmDTO, Himmelsrichtung } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Querungsverkehr from "@/types/zaehlung/Querungsverkehr";
 
 import KnotenarmComparator from "./KnotenarmComparator";
 
 export function useQu() {
   function computeAvailableKnotenarme(
-    activeZaehlung: LadeZaehlungDTO
-  ): LadeKnotenarmDTO[] {
+    activeZaehlung: LadeZaehlung
+  ): BearbeiteKnotenarmDTO[] {
     const knotenarmeByNumber = new Map(
       activeZaehlung.knotenarme.map((kn) => [kn.nummer, kn] as const)
     );
@@ -27,7 +26,7 @@ export function useQu() {
    * @returns Boolean, ob der Querungsverkehr existiert
    */
   function existsQuerungsverkehr(
-    querungsverkehr: QuerungsverkehrDTO[] | undefined,
+    querungsverkehr: Querungsverkehr[] | undefined,
     knNummer: number,
     richtung: Himmelsrichtung
   ): boolean {
@@ -44,8 +43,8 @@ export function useQu() {
    * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
    */
   function areQuerungsverkehreEqual(
-    querungsA: QuerungsverkehrDTO[] | undefined,
-    querungsB: QuerungsverkehrDTO[] | undefined
+    querungsA: Querungsverkehr[] | undefined,
+    querungsB: Querungsverkehr[] | undefined
   ): boolean {
     const a = querungsA ?? [];
     const b = querungsB ?? [];

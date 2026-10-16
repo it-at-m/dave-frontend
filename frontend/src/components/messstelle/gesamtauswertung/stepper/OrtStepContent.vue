@@ -63,7 +63,7 @@ import type {
 } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type KeyValObject from "@/types/common/KeyValObject";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref } from "vue";
@@ -71,7 +71,7 @@ import { computed, onMounted, ref } from "vue";
 import { himmelsRichtungenTextLong } from "@/types/enum/HimmelsrichtungText";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 

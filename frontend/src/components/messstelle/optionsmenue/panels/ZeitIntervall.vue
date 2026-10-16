@@ -29,7 +29,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, ref } from "vue";
 
@@ -37,7 +37,7 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 const hoverZeitintervall = ref(false);
 
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();

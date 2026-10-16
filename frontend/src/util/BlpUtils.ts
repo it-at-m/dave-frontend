@@ -1,5 +1,5 @@
 // Hilfsfunktion für die Darstellung von Qjs-Zählungen
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 
 export function useBlp() {
   /**
@@ -8,7 +8,7 @@ export function useBlp() {
    * @returns Array<string> mit einem oder zwei Elementen (falls gesplittet)
    */
   function getStreetname(
-    knotenarm: LadeKnotenarmDTO | undefined
+    knotenarm: BearbeiteKnotenarmDTO | undefined
   ): Array<string> {
     let strasse = "";
     if (knotenarm && knotenarm.strassenname) {

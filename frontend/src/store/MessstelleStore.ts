@@ -1,6 +1,6 @@
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { cloneDeep, isNil, toArray } from "lodash";
 import moment from "moment";
@@ -14,9 +14,9 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 export const useMessstelleStore = defineStore("messstelleStore", () => {
   const dateUtils = useDateUtils();
 
-  const messstelleInfo = ref<MessstelleInfoDTO>({} as MessstelleInfoDTO);
+  const messstelleInfo = ref<MessstelleInfo>({} as MessstelleInfo);
   const activeTab = ref(0);
-  const filterOptions = ref<MessstelleOptionsDTO>(
+  const filterOptions = ref<MessstelleOptions>(
     DefaultObjectCreator.createDefaultMessstelleOptions()
   );
   const direction = ref("");
@@ -64,14 +64,14 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   function setActiveTab(payload: number) {
     activeTab.value = payload;
   }
-  function setMessstelleInfo(payload: MessstelleInfoDTO) {
+  function setMessstelleInfo(payload: MessstelleInfo) {
     messstelleInfo.value = payload;
   }
-  function setFilteroptions(payload: MessstelleOptionsDTO) {
+  function setFilteroptions(payload: MessstelleOptions) {
     filterOptions.value = payload;
     inHistory.value = false;
   }
-  function setFilteroptionsHistory(payload: MessstelleOptionsDTO) {
+  function setFilteroptionsHistory(payload: MessstelleOptions) {
     filterOptions.value = payload;
     inHistory.value = true;
     calledFromHistory.value = true;
@@ -95,7 +95,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   function getMessfaehigkeitenForGivenZeitraum(
     start: Date | undefined,
     end: Date | undefined
-  ): Array<MessfaehigkeitDTO> {
+  ): Array<Messfaehigkeit> {
     return toArray(messstelleInfo.value.messfaehigkeiten).filter(
       (messfaehigkeit) => {
         const gueltigAb = isNil(messfaehigkeit.gueltigAb)

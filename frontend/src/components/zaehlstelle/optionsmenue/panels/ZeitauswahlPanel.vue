@@ -162,7 +162,7 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import { head, isEmpty, isNil } from "lodash";
@@ -197,7 +197,7 @@ const hoverSelectStunde = ref(false);
 // Zeitintervall
 const hoverSelectZeitintervall = ref(false);
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 

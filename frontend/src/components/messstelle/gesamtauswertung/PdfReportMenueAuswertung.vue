@@ -81,19 +81,14 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  BaseAsset,
-  BaseAssetTypeEnum,
-  HeadingAsset,
-  MessstelleAuswertungIdDTO,
-  TextAsset,
-} from "@/api/client";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type { BaseAsset, MessstelleAuswertungIdDTO } from "@/api/client";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
 
 import { head } from "lodash";
 import { computed, ref, watch } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import { ApiError } from "@/api/error";
 import MessstelleService from "@/api/service/MessstelleService";
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
@@ -116,7 +111,7 @@ const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
 const statistik = ref(false);
-const selectedMessstelle = ref<MessstelleInfoDTO | undefined>(undefined);
+const selectedMessstelle = ref<MessstelleInfo | undefined>(undefined);
 
 const isSingeleMessstelleSelected = computed(() => {
   return options.value.messstelleAuswertungIds.length === 1;
@@ -126,7 +121,7 @@ const somethingToAdd = computed(() => {
     messstelleninfo.value || messinfo.value || legende.value || statistik.value
   );
 });
-const options = computed<MessstelleAuswertungOptionsDTO>(() => {
+const options = computed<MessstelleAuswertungOptions>(() => {
   return gesamtauswertungStore.getAuswertungMessstelleOptions;
 });
 

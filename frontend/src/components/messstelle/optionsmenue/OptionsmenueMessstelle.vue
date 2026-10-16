@@ -73,7 +73,7 @@ import type {
   ValidatedZeitraumAndTagestypDTO,
   ValidateZeitraumAndTagestypForMessstelleDTO,
 } from "@/api/client";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
 
 import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -124,7 +124,7 @@ const isZeitraumAndTagestypValid = ref(false);
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
 
-const messstelle = computed<MessstelleInfoDTO>(() => {
+const messstelle = computed<MessstelleInfo>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 

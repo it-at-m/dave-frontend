@@ -1,5 +1,6 @@
 import type {
   FahrzeugOptionsDTO,
+  MessstelleOptionsDTO,
   Rounding,
   ZaehldatenIntervall,
 } from "@/api/client";
@@ -28,7 +29,7 @@ export default class MessstelleOptionsMapper {
     blocksumme: boolean;
     tagessumme: boolean;
     spitzenstunde: boolean;
-  }): any {
+  }): MessstelleOptionsDTO {
     const { startDate, endDate } = frontendData.zeitraumStartAndEndDate;
 
     if (!startDate || !endDate) {

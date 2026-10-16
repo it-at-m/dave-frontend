@@ -1,6 +1,6 @@
 import type { Fahrzeugklasse, ZaehldatenIntervall } from "@/api/client";
 
-export default interface MessfaehigkeitDTO {
+export default interface Messfaehigkeit {
   gueltigAb: string;
   gueltigBis: string;
   intervall: ZaehldatenIntervall;

@@ -1,6 +1,5 @@
-import type { LeseZaehlstelleDTO } from "@/api/client";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type { BearbeiteKnotenarmDTO, LeseZaehlstelleDTO } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
@@ -34,12 +33,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const maxSizeBelastungsplanSvgSchematischeUebersicht = ref(0);
   const minSizeBelastungsplanSvgSchematischeUebersicht = ref(0);
 
-  const aktiveZaehlung = ref<LadeZaehlungDTO>(
+  const aktiveZaehlung = ref<LadeZaehlung>(
     DefaultObjectCreator.createDefaultLadeZaehlungDto()
   );
-  const zaehlungen = ref<Array<LadeZaehlungDTO>>([]);
-  const inaktiveZaehlungen = ref<Array<LadeZaehlungDTO>>([]);
-  const sortedKnotenarme = ref<Array<LadeKnotenarmDTO>>([]);
+  const zaehlungen = ref<Array<LadeZaehlung>>([]);
+  const inaktiveZaehlungen = ref<Array<LadeZaehlung>>([]);
+  const sortedKnotenarme = ref<Array<BearbeiteKnotenarmDTO>>([]);
   const inaktiveZaehlungenVorhanden = ref(false);
   const startEndeUhrzeitIntervalls = ref<StartEndeUhrzeitIntervalls>(
     DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
@@ -144,7 +143,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     sizeBelastungsplanSvgSchematischeUebersicht.value =
       minSizeBelastungsplanSvgSchematischeUebersicht.value;
   }
-  function setZaehlungen(payload: Array<LadeZaehlungDTO>) {
+  function setZaehlungen(payload: Array<LadeZaehlung>) {
     const userStore = useUserStore();
     if (userStore.hasAuthorities && userStore.isAnwender) {
       zaehlungen.value = payload.filter((value) => !value.sonderzaehlung);
@@ -155,12 +154,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function setZaehlungAlsAktiv(payload: string) {
     if (zaehlungen.value.length > 0) {
-      let aktiv = [] as LadeZaehlungDTO[];
+      let aktiv = [] as LadeZaehlung[];
       if (payload) {
         // wenn eine ID übergeben wird, dann nimm diese als aktive Zählung
         aktiv = zaehlungen.value.filter(
-          (z: LadeZaehlungDTO) => z.id === payload
-        ) as LadeZaehlungDTO[];
+          (z: LadeZaehlung) => z.id === payload
+        ) as LadeZaehlung[];
       } else {
         // ansonsten ist es die neuste Zählung
         aktiv.push(
@@ -177,8 +176,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         );
         // inaktive Zählungen aktualisieren und sortieren
         const iz = zaehlungen.value.filter(
-          (z: LadeZaehlungDTO) => z.id != aktiveZaehlung.value.id
-        ) as LadeZaehlungDTO[];
+          (z: LadeZaehlung) => z.id != aktiveZaehlung.value.id
+        ) as LadeZaehlung[];
         inaktiveZaehlungen.value = iz.sort(LadeZaehlungComperator.sortByDatum);
         // Wenn inaktive Zählungen vorhanden sind, dann Wert auf true setzen
         inaktiveZaehlungenVorhanden.value = iz.length > 0;
@@ -190,8 +189,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function getZaehlungById(id: string) {
     const selected = zaehlungen.value.filter(
-      (z: LadeZaehlungDTO) => z.id === id
-    ) as LadeZaehlungDTO[];
+      (z: LadeZaehlung) => z.id === id
+    ) as LadeZaehlung[];
     if (selected.length === 1) {
       return selected[0];
     } else if (selected.length > 1) {

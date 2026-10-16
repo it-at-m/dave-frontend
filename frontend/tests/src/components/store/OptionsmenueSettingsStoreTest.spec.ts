@@ -1,5 +1,5 @@
 import type { FahrzeugOptionsDTO, OptionsmenueSettingsDTO } from "@/api/client";
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -85,13 +85,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.StundeKomplett,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.StundeHalb,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
       messfaehigkeit2,
@@ -156,13 +156,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.StundeKomplett,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.StundeHalb,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
       messfaehigkeit2,
@@ -182,13 +182,13 @@ describe("OptionsmenueSettingsStore.ts", () => {
       gueltigBis: "2025-02-05",
       intervall: ZaehldatenIntervall.StundeKomplett,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     const messfaehigkeit2 = {
       gueltigAb: "2025-02-06",
       gueltigBis: "2025-02-08",
       intervall: ZaehldatenIntervall.StundeHalb,
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
     optionsmenueSettingsStore.setOptionsmenueSettingsByMessfaehigkeiten([
       messfaehigkeit1,
       messfaehigkeit2,

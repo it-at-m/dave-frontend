@@ -1401,15 +1401,15 @@
 
 <script setup lang="ts">
 import type {
+  BearbeiteKnotenarmDTO,
   Bewegungsrichtung,
   LadeBelastungsplanFjsDTO,
   LadeBelastungsplanQuDTO,
 } from "@/api/client";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Laengsverkehr from "@/types/zaehlung/Laengsverkehr";
 import type Options from "@/types/zaehlung/Options";
-import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
+import type Querungsverkehr from "@/types/zaehlung/Querungsverkehr";
 
 import { computed, nextTick, ref, watch } from "vue";
 
@@ -1438,13 +1438,13 @@ const svgRef = ref<SVGSVGElement | null>(null);
 
 const activeColor = "#000000";
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const availableKnotenarme = computed(() => {
   return (activeZaehlung.value.knotenarme ?? []).map(
-    (arm: LadeKnotenarmDTO) => arm.nummer
+    (arm: BearbeiteKnotenarmDTO) => arm.nummer
   );
 });
 const hasAvailableKnotenarme = computed(() => {
@@ -1498,7 +1498,7 @@ function calculateColorOfLaengsverkehr(
   strassenseite: Himmelsrichtung
 ): string | undefined {
   let color = "#E0E0E0";
-  const clickedLaengsverkehr: LaengsverkehrDTO = createLaengsverkehr(
+  const clickedLaengsverkehr: Laengsverkehr = createLaengsverkehr(
     knotenarm,
     richtung,
     strassenseite
@@ -1526,7 +1526,7 @@ function calculateColorOfQuerungsverkehr(
   isStroke: boolean
 ): string | undefined {
   let color = isStroke ? BelastungsplanConstants.inaktivColor : "#FFFFFF";
-  const clickedQuerungsverkehr: QuerungsverkehrDTO = createQuerungsverkehr(
+  const clickedQuerungsverkehr: Querungsverkehr = createQuerungsverkehr(
     knotenarm,
     richtung
   );
@@ -1541,11 +1541,11 @@ function calculateColorOfQuerungsverkehr(
 }
 
 function findIndexInSelectedLaengsverkehreForClickedLaengsverkehr(
-  clickedLaengsverkehr: LaengsverkehrDTO
+  clickedLaengsverkehr: Laengsverkehr
 ) {
   if (!selectedLaengsverkehre.value) return -1;
   return selectedLaengsverkehre.value.findIndex(
-    (laengsverkehr: LaengsverkehrDTO) => {
+    (laengsverkehr: Laengsverkehr) => {
       return (
         laengsverkehr.knotenarm === clickedLaengsverkehr.knotenarm &&
         laengsverkehr.richtung === clickedLaengsverkehr.richtung &&
@@ -1556,11 +1556,11 @@ function findIndexInSelectedLaengsverkehreForClickedLaengsverkehr(
 }
 
 function findIndexInSelectedQuerungsverkehreForClickedQuerungsverkehr(
-  clickedQuerungsverkehr: QuerungsverkehrDTO
+  clickedQuerungsverkehr: Querungsverkehr
 ) {
   if (!selectedQuerungsverkehre.value) return -1;
   return selectedQuerungsverkehre.value.findIndex(
-    (querungsverkehr: QuerungsverkehrDTO) => {
+    (querungsverkehr: Querungsverkehr) => {
       return (
         querungsverkehr.knotenarm === clickedQuerungsverkehr.knotenarm &&
         querungsverkehr.richtung === clickedQuerungsverkehr.richtung
@@ -1573,8 +1573,8 @@ function createLaengsverkehr(
   knotenarm: number,
   richtung: Bewegungsrichtung,
   strassenseite: Himmelsrichtung
-): LaengsverkehrDTO {
-  const laengsverkehr = {} as LaengsverkehrDTO;
+): Laengsverkehr {
+  const laengsverkehr = {} as Laengsverkehr;
   laengsverkehr.knotenarm = knotenarm;
   laengsverkehr.richtung = richtung;
   laengsverkehr.strassenseite = strassenseite;
@@ -1584,8 +1584,8 @@ function createLaengsverkehr(
 function createQuerungsverkehr(
   knotenarm: number,
   richtung: Himmelsrichtung
-): QuerungsverkehrDTO {
-  const querungsverkehr = {} as QuerungsverkehrDTO;
+): Querungsverkehr {
+  const querungsverkehr = {} as Querungsverkehr;
   querungsverkehr.knotenarm = knotenarm;
   querungsverkehr.richtung = richtung;
   return querungsverkehr;

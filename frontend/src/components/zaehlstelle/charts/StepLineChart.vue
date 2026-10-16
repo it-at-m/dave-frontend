@@ -9,8 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import type { LadeZaehldatenSteplineDTO } from "@/api/client";
-import type StepLineSeriesEntryDTO from "@/types/zaehlung/zaehldaten/StepLineSeriesEntryDTO";
+import type {
+  LadeZaehldatenSteplineDTO,
+  StepLineSeriesEntryBaseDTO,
+} from "@/api/client";
 
 import { BarChart, LineChart } from "echarts/charts";
 import {
@@ -335,7 +337,7 @@ function checkTwoChartsNeeded(
 }
 
 function createSeriesDataForChart(
-  seriesEntriesChart: Array<StepLineSeriesEntryDTO>
+  seriesEntriesChart: Array<StepLineSeriesEntryBaseDTO>
 ): Array<unknown> {
   const seriesEntries: Array<unknown> = [];
   seriesEntriesChart.forEach((seriesEntryChart, index) => {
@@ -419,7 +421,7 @@ watch(
     rangeMax.value = zaehldatenStepline.rangeMax;
     rangeMaxPercent.value = zaehldatenStepline.rangeMaxPercent;
     xAxisDataFirstChart.value = zaehldatenStepline.xaxisDataFirstChart;
-    if (zaehldatenStepline.xaxisDataSecondChart !== null) {
+    if (zaehldatenStepline.xaxisDataSecondChart) {
       xAxisDataSecondChart.value = zaehldatenStepline.xaxisDataSecondChart;
     }
     if (zaehldatenStepline.seriesEntriesSecondChart) {

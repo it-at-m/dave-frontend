@@ -16,14 +16,14 @@ import type {
   ZaehlstelleTooltipDTO,
   ZeitauswahlDTO,
 } from "@/api/client";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
+import type Verkehrsbeziehungen from "@/types/zaehlung/Verkehrsbeziehungen";
 
 import {
   Fahrzeugklasse,
@@ -73,7 +73,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
+  public static createDefaultMessstelleInfoDTO(): MessstelleInfo {
     return {
       messfaehigkeiten: [],
       detektierteVerkehrsart: Verkehrsart.Kfz,
@@ -117,7 +117,7 @@ export default class DefaultObjectCreator {
     } as FahrzeugOptionsDTO;
   }
 
-  public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
+  public static createDefaultMessstelleOptions(): MessstelleOptions {
     return {
       blackPrintMode: false,
       blocksumme: true,
@@ -138,7 +138,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptionsDTO {
+  public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptions {
     return {
       jahre: [],
       tagesTyp: "" as TagesTyp,
@@ -175,7 +175,7 @@ export default class DefaultObjectCreator {
       stadtbezirkNummer: "",
       lat: "",
       lng: "",
-      zaehlungen: [] as Array<LadeZaehlungDTO>,
+      zaehlungen: [] as Array<LadeZaehlung>,
       kommentar: "",
     };
   }
@@ -188,7 +188,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultLadeZaehlungDto(): LadeZaehlungDTO {
+  public static createDefaultLadeZaehlungDto(): LadeZaehlung {
     return {
       datum: "",
       jahr: "",
@@ -213,7 +213,7 @@ export default class DefaultObjectCreator {
       kommentar: "",
       knotenarme: [],
       verkehrsbeziehungen: [],
-      auswaehlbareVerkehrsbeziehungen: {} as VerkehrsbeziehungenDTO,
+      auswaehlbareVerkehrsbeziehungen: {} as Verkehrsbeziehungen,
       zeitauswahl: {} as ZeitauswahlDTO,
       kategorien: [],
       pkwEinheit: [],
@@ -276,13 +276,13 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
+  public static createDefaultMessfaehigkeitDTO(): Messfaehigkeit {
     return {
       fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       gueltigAb: "",
       gueltigBis: "",
       intervall: ZaehldatenIntervall.StundeViertelEingeschraenkt,
-    } as MessfaehigkeitDTO;
+    } as Messfaehigkeit;
   }
 
   public static createDefaultBelastungsplanMessquerschnitteDTO(): BelastungsplanMessquerschnitteDTO {

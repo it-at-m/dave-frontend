@@ -181,8 +181,8 @@
 
 <script setup lang="ts">
 import type { LadeBelastungsplanQjsDTO } from "@/api/client";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import { first, last } from "lodash";
@@ -214,7 +214,7 @@ const svgRef = ref<SVGSVGElement | null>(null);
 const activeColor = "#000000";
 const passiveColor = "#9E9E9E";
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -293,7 +293,7 @@ const isSelectedArrowFour = computed(() => {
 });
 
 function convertToVerkehrsbeziehungenQjs(
-  verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined
+  verkehrsbeziehungen: LadeVerkehrsbeziehung[] | undefined
 ) {
   return (
     verkehrsbeziehungen?.map(({ von, nach, strassenseite }) => ({

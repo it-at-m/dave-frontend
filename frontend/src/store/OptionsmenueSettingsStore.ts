@@ -3,7 +3,7 @@ import type {
   FahrzeugOptionsDTO,
   OptionsmenueSettingsDTO,
 } from "@/api/client";
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
 
 import { cloneDeep, intersection, isEmpty, isNil, toArray } from "lodash";
 import { defineStore } from "pinia";
@@ -83,7 +83,7 @@ export const useOptionsmenueSettingsStore = defineStore(
     }
 
     function setOptionsmenueSettingsByMessfaehigkeiten(
-      messfaehigkeiten: Array<MessfaehigkeitDTO> | undefined
+      messfaehigkeiten: Array<Messfaehigkeit> | undefined
     ): void {
       let optionsmenueSettings = toArray(messfaehigkeiten)
         .map((messfaehigkeit) => {

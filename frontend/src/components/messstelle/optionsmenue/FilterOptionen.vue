@@ -107,8 +107,8 @@
 <script setup lang="ts">
 import type { Himmelsrichtung } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { isEmpty } from "lodash";
 import { computed } from "vue";
@@ -134,12 +134,12 @@ const dateUtils = useDateUtils();
 const display = useDisplay();
 
 interface Props {
-  messstelle: MessstelleInfoDTO;
+  messstelle: MessstelleInfo;
 }
 
 defineProps<Props>();
 
-const filterOptionsMessstelle = computed<MessstelleOptionsDTO>(() => {
+const filterOptionsMessstelle = computed<MessstelleOptions>(() => {
   return messstelleStore.getFilteroptions;
 });
 

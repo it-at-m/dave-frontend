@@ -5,7 +5,7 @@ import type {
 } from "@/api/client";
 import type StartAndEndDate from "@/types/common/StartAndEndDate";
 
-export default interface MessstelleOptionsDTO {
+export default interface MessstelleOptions {
   zeitraumStartAndEndDate: StartAndEndDate; //
   zeitraum: string[];
   fahrzeuge: FahrzeugOptionsDTO;

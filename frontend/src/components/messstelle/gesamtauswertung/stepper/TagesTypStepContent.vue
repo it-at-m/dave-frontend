@@ -11,13 +11,14 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { computed } from "vue";
 
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
+import { TagesTyp } from "@/api/client";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 

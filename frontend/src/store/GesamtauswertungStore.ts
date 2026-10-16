@@ -1,5 +1,5 @@
 import type { LadeZaehldatenSteplineDTO } from "@/api/client";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { cloneDeep } from "lodash";
 import { defineStore } from "pinia";
@@ -10,7 +10,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 export const useGesamtauswertungStore = defineStore(
   "gesamtauswertungStore",
   () => {
-    const auswertungMessstelleOptions = ref<MessstelleAuswertungOptionsDTO>(
+    const auswertungMessstelleOptions = ref<MessstelleAuswertungOptions>(
       DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
     );
     const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
@@ -25,7 +25,7 @@ export const useGesamtauswertungStore = defineStore(
     );
 
     function setAuswertungMessstelleOptions(
-      payload: MessstelleAuswertungOptionsDTO
+      payload: MessstelleAuswertungOptions
     ) {
       auswertungMessstelleOptions.value = cloneDeep(payload);
     }

@@ -2,7 +2,7 @@ import type {
   MessstelleOptionsDTO as GeneratedMessstelleOptionsDTO,
   LadeProcessedMesswerteDTO,
 } from "@/api/client";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { MesswerteMessquerschnittControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -18,7 +18,7 @@ export default class LadeMessdatenService {
 
   public static ladeMessdatenProcessed(
     messstelleId: string,
-    options: MessstelleOptionsDTO
+    options: MessstelleOptions
   ): Promise<LadeProcessedMesswerteDTO> {
     const messstelleOptionsDTO = MessstelleOptionsMapper.toBackend(options);
     return handleOpenApiError(

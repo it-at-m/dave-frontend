@@ -76,8 +76,8 @@
 
 <script setup lang="ts">
 import type { BaseAsset, BaseAssetTypeEnum } from "@/api/client";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, ref } from "vue";
 
@@ -101,11 +101,11 @@ const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
 
-const messstelle = computed<MessstelleInfoDTO>(() => {
+const messstelle = computed<MessstelleInfo>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
-const options = computed<MessstelleOptionsDTO>(() => {
+const options = computed<MessstelleOptions>(() => {
   return messstelleStore.getFilteroptions;
 });
 

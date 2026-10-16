@@ -48,7 +48,7 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
 
 import { computed, onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
@@ -68,7 +68,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
-const messstelle = ref<MessstelleInfoDTO>(
+const messstelle = ref<MessstelleInfo>(
   DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
 const display = useDisplay();

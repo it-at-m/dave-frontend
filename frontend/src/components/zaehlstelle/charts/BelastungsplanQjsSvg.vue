@@ -931,10 +931,10 @@ import type {
   AbstractLadeBelastungsplanDTOObject,
   LadeBelastungsplanQjsDTO,
 } from "@/api/client";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 
 import { first } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -1034,7 +1034,7 @@ const dArrowTwo = `m 245.31124,623 v -${belastungsplanMethods.maxlineWidth} h 90
 const dArrowThree = `m 245,804.99999 v -${belastungsplanMethods.maxlineWidth} h 910.1007 v ${belastungsplanMethods.maxlineWidth} z`;
 const dArrowFour = `m 244.89933,860.99999 v -${belastungsplanMethods.maxlineWidth} H 1155 v ${belastungsplanMethods.maxlineWidth} z`;
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -1104,7 +1104,7 @@ const isCountedArrowFour = computed(() => {
   );
 });
 
-function getArrowZaehlwert(patterns: VerkehrsbeziehungDTO[]) {
+function getArrowZaehlwert(patterns: Verkehrsbeziehung[]) {
   if (!isQjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }

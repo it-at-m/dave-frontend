@@ -248,7 +248,7 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -259,7 +259,7 @@ import Fahrzeug from "@/types/enum/Fahrzeug";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 const messstelleUtils = useMessstelleUtils();

@@ -54,10 +54,10 @@
 </template>
 
 <script setup lang="ts">
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 import type KnotenarmVerbindungen from "@/types/zaehlung/KnotenarmVerbindungen";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import { isNil, union } from "lodash";
@@ -99,12 +99,12 @@ const hoverSelectVon = ref(false);
 const hoverSelectNach = ref(false);
 const hoverBeideRichtungen = ref(false);
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 // Lädt die "von" Knotenarme für den aktuell gewählten "nach" Knotenarm
-const vonKnotenarme = computed<Array<LadeKnotenarmDTO>>(() => {
+const vonKnotenarme = computed<Array<BearbeiteKnotenarmDTO>>(() => {
   const k = moeglicheBeziehungenNach.value.get(nach.value);
   if (k) {
     return k.moeglicheVerbindungen.sort(LadeKnotenarmComperator.sortByNumber);
@@ -113,7 +113,7 @@ const vonKnotenarme = computed<Array<LadeKnotenarmDTO>>(() => {
   }
 });
 // Lädt die "nach" Knotenarme für den aktuell gewählten "von" Knotenarm
-const nachKnotenarme = computed<Array<LadeKnotenarmDTO>>(() => {
+const nachKnotenarme = computed<Array<BearbeiteKnotenarmDTO>>(() => {
   const k = moeglicheBeziehungenVon.value.get(von.value);
   if (k) {
     return k.moeglicheVerbindungen.sort(LadeKnotenarmComperator.sortByNumber);
@@ -188,7 +188,7 @@ function reset() {
  * Jeder wählbare von-Knotenarm wird mit den möglichen nach-Knotearmen befüllt.
  * Jeder wählbare nach-Knotenarm wird mit den möglichen von-Knotearmen befüllt.
  *
- * Als Basis zur Ermittlung der relevanten Knotenarme dient die Klasse "LadeVerkehrsbeziehungDTO"
+ * Als Basis zur Ermittlung der relevanten Knotenarme dient die Klasse "LadeVerkehrsbeziehung"
  * welche als relevante Attribute "von" und "nach" für Kreuzungen sowie "knotenarmKreisverkehr"
  * und "hinein" vorhält.
  */
@@ -211,10 +211,10 @@ function initVerkehrsbeziehungen(): void {
   );
 
   // Wird für die Erstellung der Zielknotenarme und eingehenden Knotenarme bei Auswahl "alle" benötigt.
-  const alleZielknotenarmeVon: Set<LadeKnotenarmDTO> =
-    new Set<LadeKnotenarmDTO>();
-  const alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO> =
-    new Set<LadeKnotenarmDTO>();
+  const alleZielknotenarmeVon: Set<BearbeiteKnotenarmDTO> =
+    new Set<BearbeiteKnotenarmDTO>();
+  const alleEingehendeKnotenarmeNach: Set<BearbeiteKnotenarmDTO> =
+    new Set<BearbeiteKnotenarmDTO>();
 
   // Befüllung der wählbaren von-Knotenarme mit den möglichen nach-Knotenarmen
   // sowie Befüllung der wählbaren nach-Knotenarme mit den möglichen von-Knotenarmen
@@ -312,8 +312,8 @@ function initVerkehrsbeziehungen(): void {
  * die möglichen nach-Knotenarme an.
  */
 function addVonKnotenarmWithPossibleNachKnotenarm(
-  verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
-  alleZielknotenarmeVon: Set<LadeKnotenarmDTO>,
+  verkehrsbeziehung: LadeVerkehrsbeziehung,
+  alleZielknotenarmeVon: Set<BearbeiteKnotenarmDTO>,
   knotenarme: Map<number, string>
 ): void {
   if (moeglicheBeziehungenVon.value.has(verkehrsbeziehung.von)) {
@@ -368,8 +368,8 @@ function addVonKnotenarmWithPossibleNachKnotenarm(
  * die möglichen von-Knotenarme an.
  */
 function addNachKnotenarmWithPossibleVonKnotenarm(
-  verkehrsbeziehung: LadeVerkehrsbeziehungDTO,
-  alleEingehendeKnotenarmeNach: Set<LadeKnotenarmDTO>,
+  verkehrsbeziehung: LadeVerkehrsbeziehung,
+  alleEingehendeKnotenarmeNach: Set<BearbeiteKnotenarmDTO>,
   knotenarme: Map<number, string>
 ): void {
   if (moeglicheBeziehungenNach.value.has(verkehrsbeziehung.nach)) {

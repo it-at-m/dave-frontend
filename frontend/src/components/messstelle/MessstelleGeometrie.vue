@@ -7,7 +7,7 @@
   />
 </template>
 <script setup lang="ts">
-import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
+import type MessquerschnittInfo from "@/types/messstelle/MessquerschnittInfo";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
@@ -21,7 +21,7 @@ interface Props {
   width?: number;
   activeColor?: string;
   passiveColor?: string;
-  messquerschnitte: MessquerschnittInfoDTO[];
+  messquerschnitte: MessquerschnittInfo[];
 }
 
 const props = withDefaults(defineProps<Props>(), {

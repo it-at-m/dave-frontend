@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import { BarChart, LineChart } from "echarts/charts";
@@ -97,7 +97,7 @@ const filterOptions = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 

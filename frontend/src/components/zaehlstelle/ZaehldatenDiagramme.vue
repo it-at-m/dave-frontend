@@ -230,7 +230,7 @@ import type {
   LeseZaehlstelleDTO,
   OptionsDTO,
 } from "@/api/client";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 import { first, isEmpty, last } from "lodash";
@@ -362,7 +362,7 @@ const hasSelectedVerkehrsarten = computed<boolean>(() => {
 const zaehlungsId = computed(() => {
   return zaehlstelleStore.getZaehlungsId;
 });
-const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
+const selectedZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 

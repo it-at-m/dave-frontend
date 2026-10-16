@@ -98,7 +98,7 @@ import type {
   MessstelleAuswertungDTO,
   MessstelleAuswertungIdDTO,
 } from "@/api/client";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import {
   cloneDeep,
@@ -150,7 +150,7 @@ const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
 );
 
-const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
+const auswertungsOptions = ref<MessstelleAuswertungOptions>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
 );
 

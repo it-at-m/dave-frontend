@@ -6,7 +6,7 @@ import type {
 
 import { AuswertungsZeitraum } from "@/types/enum/AuswertungCategories";
 
-export default interface MessstelleAuswertungOptionsDTO {
+export default interface MessstelleAuswertungOptions {
   jahre: Array<string>; // Array<number>
   tagesTyp: TagesTyp;
   zeitraumCategorie: string; // gibts nicht

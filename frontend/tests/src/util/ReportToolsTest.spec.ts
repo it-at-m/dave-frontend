@@ -1,10 +1,9 @@
-import type { OptionsDTO } from "@/api/client";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
-import type QuerungsverkehrDTO from "@/types/zaehlung/QuerungsverkehrDTO";
-import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+import type { BearbeiteKnotenarmDTO, OptionsDTO } from "@/api/client";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Laengsverkehr from "@/types/zaehlung/Laengsverkehr";
+import type Querungsverkehr from "@/types/zaehlung/Querungsverkehr";
+import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -28,18 +27,18 @@ function createZaehlung(zaehlart: Zaehlart) {
     knotenarme: [
       { nummer: 2, strassenname: "Zweistraße" },
       { nummer: 4, strassenname: "Vierstraße" },
-    ] as LadeKnotenarmDTO[],
-    verkehrsbeziehungen: [] as LadeVerkehrsbeziehungDTO[],
-    laengsverkehr: [] as LaengsverkehrDTO[],
-    querungsverkehr: [] as QuerungsverkehrDTO[],
-  } as LadeZaehlungDTO;
+    ] as BearbeiteKnotenarmDTO[],
+    verkehrsbeziehungen: [] as LadeVerkehrsbeziehung[],
+    laengsverkehr: [] as Laengsverkehr[],
+    querungsverkehr: [] as Querungsverkehr[],
+  } as LadeZaehlung;
 }
 
 function createOptions() {
   return {
-    chosenVerkehrsbeziehungen: [] as VerkehrsbeziehungDTO[],
-    chosenLaengsverkehre: [] as LaengsverkehrDTO[],
-    chosenQuerungsverkehre: [] as QuerungsverkehrDTO[],
+    chosenVerkehrsbeziehungen: [] as Verkehrsbeziehung[],
+    chosenLaengsverkehre: [] as Laengsverkehr[],
+    chosenQuerungsverkehre: [] as Querungsverkehr[],
   } as OptionsDTO;
 }
 
@@ -118,15 +117,15 @@ describe("ReportTools", () => {
       von: 2,
       nach: 4,
       strassenseite: Himmelsrichtung.N,
-    } as LadeVerkehrsbeziehungDTO as VerkehrsbeziehungDTO;
+    } as LadeVerkehrsbeziehung as Verkehrsbeziehung;
     const vb2 = {
       von: 2,
       nach: 4,
       strassenseite: Himmelsrichtung.S,
-    } as LadeVerkehrsbeziehungDTO as VerkehrsbeziehungDTO;
+    } as LadeVerkehrsbeziehung as Verkehrsbeziehung;
 
     const zaehlung = createZaehlung(Zaehlart.QJS);
-    zaehlung.verkehrsbeziehungen = [vb1, vb2] as LadeVerkehrsbeziehungDTO[];
+    zaehlung.verkehrsbeziehungen = [vb1, vb2] as LadeVerkehrsbeziehung[];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
     const options = createOptions();
@@ -146,15 +145,15 @@ describe("ReportTools", () => {
       von: 2,
       nach: 4,
       strassenseite: Himmelsrichtung.N,
-    } as LadeVerkehrsbeziehungDTO as VerkehrsbeziehungDTO;
+    } as LadeVerkehrsbeziehung as Verkehrsbeziehung;
     const vb2 = {
       von: 2,
       nach: 4,
       strassenseite: Himmelsrichtung.S,
-    } as LadeVerkehrsbeziehungDTO as VerkehrsbeziehungDTO;
+    } as LadeVerkehrsbeziehung as Verkehrsbeziehung;
 
     const zaehlung = createZaehlung(Zaehlart.QJS);
-    zaehlung.verkehrsbeziehungen = [vb1, vb2] as LadeVerkehrsbeziehungDTO[];
+    zaehlung.verkehrsbeziehungen = [vb1, vb2] as LadeVerkehrsbeziehung[];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
     const options = createOptions();
@@ -174,12 +173,12 @@ describe("ReportTools", () => {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.N,
       richtung: Bewegungsrichtung.Ein,
-    } as LaengsverkehrDTO;
+    } as Laengsverkehr;
     const lv2 = {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.S,
       richtung: Bewegungsrichtung.Ein,
-    } as LaengsverkehrDTO;
+    } as Laengsverkehr;
 
     const zaehlung = createZaehlung(Zaehlart.FJS);
     zaehlung.laengsverkehr = [lv1, lv2];
@@ -202,12 +201,12 @@ describe("ReportTools", () => {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.N,
       richtung: Bewegungsrichtung.Ein,
-    } as LaengsverkehrDTO;
+    } as Laengsverkehr;
     const lv2 = {
       knotenarm: 2,
       strassenseite: Himmelsrichtung.S,
       richtung: Bewegungsrichtung.Ein,
-    } as LaengsverkehrDTO;
+    } as Laengsverkehr;
 
     const zaehlung = createZaehlung(Zaehlart.FJS);
     zaehlung.laengsverkehr = [lv1, lv2];
@@ -229,11 +228,11 @@ describe("ReportTools", () => {
     const qv1 = {
       knotenarm: 2,
       richtung: Himmelsrichtung.N,
-    } as QuerungsverkehrDTO;
+    } as Querungsverkehr;
     const qv2 = {
       knotenarm: 2,
       richtung: Himmelsrichtung.S,
-    } as QuerungsverkehrDTO;
+    } as Querungsverkehr;
 
     const zaehlung = createZaehlung(Zaehlart.QU);
     zaehlung.querungsverkehr = [qv1, qv2];
@@ -255,11 +254,11 @@ describe("ReportTools", () => {
     const qv1 = {
       knotenarm: 2,
       richtung: Himmelsrichtung.N,
-    } as QuerungsverkehrDTO;
+    } as Querungsverkehr;
     const qv2 = {
       knotenarm: 2,
       richtung: Himmelsrichtung.S,
-    } as QuerungsverkehrDTO;
+    } as Querungsverkehr;
 
     const zaehlung = createZaehlung(Zaehlart.QU);
     zaehlung.querungsverkehr = [qv1, qv2];

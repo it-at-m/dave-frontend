@@ -3,7 +3,7 @@ import type {
   MessstelleAuswertungOptionsDTO as GeneratedMessstelleAuswertungOptionsDTO,
   MessstelleAuswertungDTO,
 } from "@/api/client";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { AuswertungControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -26,7 +26,7 @@ export default class MessstelleAuswertungService {
     );
   }
   static generate(
-    options: MessstelleAuswertungOptionsDTO
+    options: MessstelleAuswertungOptions
   ): Promise<AuswertungMessstelleWithFileDTO> {
     const messstelleAuswertungOptionsDTO =
       MessstelleAuswertungOptionsMapper.toBackend(options);

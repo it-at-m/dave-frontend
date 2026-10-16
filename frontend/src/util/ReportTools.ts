@@ -1,7 +1,7 @@
 import type { LeseZaehlstelleDTO, OptionsDTO } from "@/api/client";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import DOMPurify from "dompurify";
@@ -26,16 +26,16 @@ export function useReportTools() {
   const dateUtils = useDateUtils();
   const assetUtil = useAssetUtil();
 
-  const messstelle = computed<MessstelleInfoDTO>(() => {
+  const messstelle = computed<MessstelleInfo>(() => {
     return messstelleStore.getMessstelleInfo;
   });
-  const messstelleOptions = computed<MessstelleOptionsDTO>(() => {
+  const messstelleOptions = computed<MessstelleOptions>(() => {
     return messstelleStore.getFilteroptions;
   });
   const zaehlstelle = computed<LeseZaehlstelleDTO>(() => {
     return zaehlstelleStore.getZaehlstelleHeader;
   });
-  const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
+  const selectedZaehlung = computed<LadeZaehlung>(() => {
     return zaehlstelleStore.getAktiveZaehlung;
   });
   const zaehlstelleOptions = computed<Options>(() => {

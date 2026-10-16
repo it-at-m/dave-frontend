@@ -1,5 +1,5 @@
 import type { CsvDTO, OptionsDTO } from "@/api/client";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { GenerateCsvControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -27,7 +27,7 @@ export default class GenerateCsvService {
   }
   public static generateCsvMst(
     messstelleId: string,
-    options: MessstelleOptionsDTO
+    options: MessstelleOptions
   ): Promise<CsvDTO> {
     const messstelleOptionsDTO = MessstelleOptionsMapper.toBackend(options);
     return handleOpenApiError(

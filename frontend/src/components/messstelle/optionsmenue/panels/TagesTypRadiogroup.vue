@@ -48,7 +48,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed } from "vue";
 
@@ -62,7 +62,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 
 const dateUtils = useDateUtils();
 

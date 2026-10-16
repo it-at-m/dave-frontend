@@ -9,7 +9,7 @@ import type {
   TextAsset,
   ZaehlungskenngroessenAsset,
 } from "@/api/client";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { BaseAssetTypeEnum } from "@/api/client";
 import MessstelleOptionsMapper from "@/types/messstelle/MessstelleOptionsMapper";
@@ -57,7 +57,7 @@ export function useAssetUtil() {
   }
 
   function createMessstelleDatatableAsset(
-    options: MessstelleOptionsDTO,
+    options: MessstelleOptions,
     mstId: string,
     text: string
   ): MessstelleDatatableAsset {

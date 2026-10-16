@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed } from "vue";
 
@@ -37,7 +37,7 @@ import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/ZeitblockText";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 const messstelleUtils = useMessstelleUtils();
 
 const zeitblockValues = computed(() => {

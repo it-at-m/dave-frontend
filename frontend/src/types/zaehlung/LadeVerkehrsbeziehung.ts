@@ -1,6 +1,6 @@
 import type BaseEntity from "@/types/common/BaseEntity";
 
-export default interface LadeVerkehrsbeziehungDTO extends BaseEntity {
+export default interface LadeVerkehrsbeziehung extends BaseEntity {
   // Kreuzung
   von: number;
   nach: number;

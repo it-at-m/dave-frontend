@@ -391,8 +391,8 @@
 </template>
 
 <script setup lang="ts">
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
 import { first, last } from "lodash";
@@ -422,7 +422,7 @@ const passiveColor = "#9E9E9E";
 const firstStreetname = ref<Array<string>>([]);
 const secondStreetname = ref<Array<string>>([]);
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -501,7 +501,7 @@ const isSelectedArrowFour = computed(() => {
 });
 
 function convertToVerkehrsbeziehungenQjs(
-  verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined
+  verkehrsbeziehungen: LadeVerkehrsbeziehung[] | undefined
 ) {
   return (
     verkehrsbeziehungen?.map(({ von, nach, strassenseite }) => ({
