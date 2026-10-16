@@ -10,8 +10,8 @@
 import type {
   AbstractLadeBelastungsplanDTOObject,
   LadeBelastungsplanDTO,
+  LeseZaehlstelleDTO,
 } from "@/api/client";
-import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
 import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";

@@ -227,9 +227,9 @@ import type {
   LadeZaehldatenSteplineDTO,
   LadeZaehldatenZeitreiheDTO,
   LadeZaehldatumDTO,
+  LeseZaehlstelleDTO,
   OptionsDTO,
 } from "@/api/client";
-import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 

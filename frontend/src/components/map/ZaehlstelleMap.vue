@@ -160,6 +160,10 @@ function createLatLngFromString(lat: string, lng: string): LatLng {
   return latLng(parseFloat(lat), parseFloat(lng));
 }
 
+function createLatLngFromNumber(lat: number, lng: number): LatLng {
+  return latLng(lat, lng);
+}
+
 function createLayersAndAddToMap(): void {
   layerControl = L.control.layers().addTo(map);
   addBaseLayers();
@@ -304,7 +308,8 @@ function setZaehlartenmarkerToMap() {
   const zaehlarten: Array<string> = [];
 
   zaehlartenKarte.forEach((zaehlartenKarteDto: ZaehlartenKarteDTO) => {
-    zaehlartenKarteDto.zaehlarten.forEach((zaehlart: string, index: number) => {
+    const index: number = 0;
+    zaehlartenKarteDto.zaehlarten.forEach((zaehlart: string) => {
       if (!zaehlarten.includes(zaehlart)) {
         markers.push(
           createMarkerForZaehlart(zaehlartenKarteDto, zaehlart, index)
@@ -383,10 +388,13 @@ function createMarkerForZaehlstelle(
     createLatLng(zaehlstelleKarte),
     markerOptionsZaehlstelle(zaehlstelleKarte)
   );
-  marker.bindTooltip(createTooltipZaehlstelle(zaehlstelleKarte.tooltip), {
-    direction: "top",
-    offset: [-14, 0],
-  });
+  marker.bindTooltip(
+    createTooltipZaehlstelle(zaehlstelleKarte.tooltip as ZaehlstelleTooltipDTO),
+    {
+      direction: "top",
+      offset: [-14, 0],
+    }
+  );
 
   marker.on("click", () => {
     // Zeige alle Zaehlungen zur Zaehlstelle an.
@@ -403,10 +411,13 @@ function createMarkerForMessstelle(
     createLatLng(messstelleKarteDto),
     markerOptionsMessstelle(messstelleKarteDto)
   );
-  marker.bindTooltip(createTooltipMessstelle(messstelleKarteDto.tooltip), {
-    direction: "top",
-    offset: [0, -25],
-  });
+  marker.bindTooltip(
+    createTooltipMessstelle(messstelleKarteDto.tooltip as MessstelleTooltipDTO),
+    {
+      direction: "top",
+      offset: [0, -25],
+    }
+  );
   marker.on("click", () => {
     routeToMessstelle(messstelleKarteDto.id);
   });
@@ -419,7 +430,7 @@ function createMarkerForZaehlart(
   index: number
 ): Marker {
   const marker: Marker = new Marker(
-    createLatLngFromString(
+    createLatLngFromNumber(
       zaehlartenKarteDto.latitude,
       zaehlartenKarteDto.longitude
     ),

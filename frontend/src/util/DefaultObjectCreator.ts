@@ -7,6 +7,7 @@ import type {
   LadeZaehldatenHeatmapDTO,
   LadeZaehldatenSteplineDTO,
   LadeZaehldatenTableDTO,
+  LeseZaehlstelleDTO,
   MapConfigurationDTO,
   SearchAndFilterOptionsDTO,
   TenantConfigurationDTO,
@@ -19,7 +20,6 @@ import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/M
 import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";

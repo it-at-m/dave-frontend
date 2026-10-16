@@ -1,7 +1,6 @@
-import type { OptionsDTO } from "@/api/client";
+import type { LeseZaehlstelleDTO, OptionsDTO } from "@/api/client";
 import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
 import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type { LeseZaehlstelleDTO } from "@/api/client";
 import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
 import type Options from "@/types/zaehlung/Options";
 

@@ -6,7 +6,10 @@
   />
 </template>
 <script setup lang="ts">
-import type { BelastungsplanMessquerschnitteDTO } from "@/api/client";
+import type {
+  BelastungsplanMessquerschnitteDTO,
+  LadeBelastungsplanMessquerschnittDataDTO,
+} from "@/api/client";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -149,7 +152,7 @@ function drawStreetName() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -187,7 +190,7 @@ function drawArrowsPointingSouth(
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
