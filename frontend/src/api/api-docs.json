@@ -8758,7 +8758,8 @@
           "legend",
           "rangeMax",
           "rangeMaxPercent",
-          "seriesEntriesFirstChart"
+          "seriesEntriesFirstChart",
+          "xaxisDataFirstChart"
         ],
         "type": "object",
         "properties": {
@@ -8908,11 +8909,11 @@
           "fahrradfahrer": { "type": "integer", "format": "int32" },
           "fussgaenger": { "type": "integer", "format": "int32" },
           "pkwEinheiten": { "type": "integer", "format": "int32" },
+          "kfz": { "type": "number" },
           "gueterverkehr": { "type": "number" },
           "schwerverkehr": { "type": "number" },
-          "anteilGueterverkehrAnKfzProzent": { "type": "number" },
           "anteilSchwerverkehrAnKfzProzent": { "type": "number" },
-          "kfz": { "type": "number" }
+          "anteilGueterverkehrAnKfzProzent": { "type": "number" }
         }
       },
       "LaengsverkehrValue": {
@@ -9286,11 +9287,11 @@
           "showPkwEinheiten": { "type": "boolean" },
           "rightBorderFahrzeugtypen": { "type": "string" },
           "rightBorderFahrzeugklassen": { "type": "string" },
-          "colWidthFahrzeugklassen": { "type": "integer", "format": "int32" },
-          "showTabsFahrzeugtypen": { "type": "boolean" },
-          "rightBorderAnteile": { "type": "string" },
           "showTabsFahrzeugklassen": { "type": "boolean" },
           "colWidthFahrzeugtypen": { "type": "integer", "format": "int32" },
+          "showTabsFahrzeugtypen": { "type": "boolean" },
+          "colWidthFahrzeugklassen": { "type": "integer", "format": "int32" },
+          "rightBorderAnteile": { "type": "string" },
           "colWidthAnteile": { "type": "integer", "format": "int32" },
           "showTabsAnteile": { "type": "boolean" }
         }
@@ -10013,11 +10014,11 @@
           "sonderzaehlung": { "type": "boolean" },
           "zaehlsituation": { "type": "string" },
           "zaehlsituationErweitert": { "type": "string" },
+          "kfz": { "type": "number" },
           "gueterverkehr": { "type": "number" },
           "schwerverkehr": { "type": "number" },
-          "anteilGueterverkehrAnKfzProzent": { "type": "number" },
           "anteilSchwerverkehrAnKfzProzent": { "type": "number" },
-          "kfz": { "type": "number" }
+          "anteilGueterverkehrAnKfzProzent": { "type": "number" }
         }
       },
       "ConfigurationDTO": {

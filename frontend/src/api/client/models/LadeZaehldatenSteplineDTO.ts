@@ -63,7 +63,7 @@ export interface LadeZaehldatenSteplineDTO {
    * @type {Array<string>}
    * @memberof LadeZaehldatenSteplineDTO
    */
-  xaxisDataFirstChart?: Array<string>;
+  xaxisDataFirstChart: Array<string>;
   /**
    *
    * @type {Array<string>}
@@ -85,6 +85,11 @@ export function instanceOfLadeZaehldatenSteplineDTO(
   if (
     !("seriesEntriesFirstChart" in value) ||
     value["seriesEntriesFirstChart"] === undefined
+  )
+    return false;
+  if (
+    !("xaxisDataFirstChart" in value) ||
+    value["xaxisDataFirstChart"] === undefined
   )
     return false;
   return true;
@@ -116,10 +121,7 @@ export function LadeZaehldatenSteplineDTOFromJSONTyped(
         : (json["seriesEntriesSecondChart"] as Array<any>).map(
             LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInnerFromJSON
           ),
-    xaxisDataFirstChart:
-      json["xaxisDataFirstChart"] == null
-        ? undefined
-        : json["xaxisDataFirstChart"],
+    xaxisDataFirstChart: json["xaxisDataFirstChart"],
     xaxisDataSecondChart:
       json["xaxisDataSecondChart"] == null
         ? undefined
