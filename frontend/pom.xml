@@ -141,7 +141,7 @@
 
         </profile>
         <profile>
-            <id>openapi-generate</id>
+            <id>openapi</id>
             <build>
                 <plugins>
                     <plugin>
