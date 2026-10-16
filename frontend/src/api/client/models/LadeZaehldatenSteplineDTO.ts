@@ -63,13 +63,13 @@ export interface LadeZaehldatenSteplineDTO {
    * @type {Array<string>}
    * @memberof LadeZaehldatenSteplineDTO
    */
-  xaxisDataFirstChart: Array<string>;
+  xaxisDataSecondChart?: Array<string>;
   /**
    *
    * @type {Array<string>}
    * @memberof LadeZaehldatenSteplineDTO
    */
-  xaxisDataSecondChart?: Array<string>;
+  xaxisDataFirstChart: Array<string>;
 }
 
 /**
@@ -121,11 +121,11 @@ export function LadeZaehldatenSteplineDTOFromJSONTyped(
         : (json["seriesEntriesSecondChart"] as Array<any>).map(
             LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInnerFromJSON
           ),
-    xaxisDataFirstChart: json["xaxisDataFirstChart"],
     xaxisDataSecondChart:
       json["xaxisDataSecondChart"] == null
         ? undefined
         : json["xaxisDataSecondChart"],
+    xaxisDataFirstChart: json["xaxisDataFirstChart"],
   };
 }
 
@@ -156,7 +156,7 @@ export function LadeZaehldatenSteplineDTOToJSONTyped(
         : (value["seriesEntriesSecondChart"] as Array<any>).map(
             LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInnerToJSON
           ),
-    xaxisDataFirstChart: value["xaxisDataFirstChart"],
     xaxisDataSecondChart: value["xaxisDataSecondChart"],
+    xaxisDataFirstChart: value["xaxisDataFirstChart"],
   };
 }

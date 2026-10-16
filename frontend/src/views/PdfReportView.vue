@@ -223,6 +223,7 @@ import type {
   HeadingAsset,
   ImageAsset,
   MessstelleDatatableAsset,
+  OptionsDTO,
   TextAsset,
   ZaehlungskenngroessenAsset,
 } from "@/api/client";
@@ -262,7 +263,7 @@ const headingAsset = ref<HeadingAsset>(
 );
 const textAsset = ref<TextAsset>(assetUtil.createTextAsset(""));
 const datatableAsset = ref<DatatableAsset>(
-  assetUtil.createDatatableAsset({} as Options, "", "")
+  assetUtil.createDatatableAsset({} as OptionsDTO, "", "")
 );
 
 const assetId = ref(0);

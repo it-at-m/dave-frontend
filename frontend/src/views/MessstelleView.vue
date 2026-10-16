@@ -60,7 +60,6 @@ import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagra
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
-import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
