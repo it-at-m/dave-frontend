@@ -118,6 +118,7 @@ models/ExternalVerkehrsbeziehungDTO.ts
 models/ExternalZaehlungDTO.ts
 models/FahrzeugOptionsDTO.ts
 models/Fahrzeugklasse.ts
+models/FjsKnotenarmValue.ts
 models/GenerateMessstellePdfRequest.ts
 models/GeneratePdfAuswertungRequest.ts
 models/GeneratePdfReportRequest.ts
@@ -136,7 +137,6 @@ models/Item.ts
 models/JsonSchema.ts
 models/KalendertagRequestBody.ts
 models/Knotenarm.ts
-models/KnotenarmValue.ts
 models/LadeAuswertungSpitzenstundeDTO.ts
 models/LadeAuswertungVisumDTO.ts
 models/LadeAuswertungZaehlstelleKoordinateDTO.ts
@@ -220,6 +220,7 @@ models/PkwEinheit.ts
 models/PkwEinheitDTO.ts
 models/PkwEinheitRequestBody.ts
 models/PositionUTM.ts
+models/QuKnotenarmValue.ts
 models/Querungsverkehr.ts
 models/QuerungsverkehrValue.ts
 models/ReadMessfaehigkeitDTO.ts

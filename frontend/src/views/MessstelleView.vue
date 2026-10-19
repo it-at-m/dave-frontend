@@ -126,7 +126,10 @@ const rightContentHeightVh = computed(() => {
 
 const latlng = computed(() => {
   if (messstelle.value.latitude && messstelle.value.longitude) {
-    return [messstelle.value.latitude, messstelle.value.longitude];
+    return [
+      parseFloat(messstelle.value.latitude),
+      parseFloat(messstelle.value.longitude),
+    ];
   }
   return [];
 });

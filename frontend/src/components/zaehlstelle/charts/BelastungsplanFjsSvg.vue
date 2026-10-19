@@ -5055,8 +5055,10 @@
 import type {
   AbstractLadeBelastungsplanDTOObject,
   BearbeiteKnotenarmDTO,
-  Bewegungsrichtung,
+  FjsKnotenarmValue,
   LadeBelastungsplanFjsDTO,
+  LaengsverkehrValue,
+  StrassenseiteValue,
 } from "@/api/client";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
@@ -5065,7 +5067,12 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Himmelsrichtung, Zaehldauer } from "@/api/client";
+import {
+  Bewegungsrichtung,
+  Himmelsrichtung,
+  Zaehldauer,
+  Zeitblock,
+} from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -5135,16 +5142,16 @@ function getArrowZaehlwertOrZero(
   if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
-  const kn = props.data.value1.valuesKnotenarme.find(
+  const kn = (props.data.value1.valuesKnotenarme as FjsKnotenarmValue[]).find(
     (k) => k.knotenarm === knotenarm
   );
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
-    (s) => s.strassenseite === strassenseite
+    (s: StrassenseiteValue) => s.strassenseite === strassenseite
   );
   if (!seite) return 0;
   const laengsverkehr = seite.valuesLaengsverkehre.find(
-    (l) => l.richtung === richtung
+    (l: LaengsverkehrValue) => l.richtung === richtung
   );
   return laengsverkehr?.value ?? 0;
 }
@@ -5162,12 +5169,12 @@ function getSumArrowsKnotenarmStrassenseiteOrZero(
   if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
-  const kn = props.data.value1.valuesKnotenarme.find(
+  const kn = (props.data.value1.valuesKnotenarme as FjsKnotenarmValue[]).find(
     (k) => k.knotenarm === knotenarm
   );
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
-    (s) => s.strassenseite === strassenseite
+    (s: StrassenseiteValue) => s.strassenseite === strassenseite
   );
   return seite?.sumStrassenseite ?? 0;
 }
@@ -5182,7 +5189,7 @@ function getSumArrowsKnotenarmOrZero(knotenarm: number) {
   if (!isFjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
-  const kn = props.data.value1.valuesKnotenarme.find(
+  const kn = (props.data.value1.valuesKnotenarme as FjsKnotenarmValue[]).find(
     (k) => k.knotenarm === knotenarm
   );
   return kn?.sumKnotenarm ?? 0;
@@ -5810,14 +5817,14 @@ const maxSizeBelastungsplan = computed(() => {
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
     if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden) {
-      return zeitblockInfo.get(Zeitblock.Zb0024)?.title;
+      return zeitblockInfo.get(Zeitblock.Zb0024)?.title || "";
     } else {
       return "hochgerechnet";
     }
   } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title || "";
   } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title || "";
   } else if (
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
@@ -5826,6 +5833,7 @@ const zaehlzeit2 = computed(() => {
       zaehlstelleStore.getStartEndeUhrzeitIntervalls;
     return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
+  return "";
 });
 
 function setColor(

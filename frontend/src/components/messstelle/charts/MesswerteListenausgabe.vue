@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { LadeZaehldatumDTO } from "@/api/client";
+import type { LadeMesswerteDTO, LadeZaehldatumDTO } from "@/api/client";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, watch } from "vue";
@@ -31,7 +31,7 @@ const TYPE_SP_STD_BLOCK = "SpStdBlock";
 const TYPE_SP_STD_TAG = "SpStdTag";
 
 interface Props {
-  listenausgabeData: Array<LadeZaehldatumDTO>;
+  listenausgabeData: Array<LadeMesswerteDTO>;
   height?: string;
 }
 
@@ -45,10 +45,10 @@ const optionen = computed<MessstelleOptions>(() => {
 
 watch(
   () => props.listenausgabeData,
-  (listenausgabeData: Array<LadeZaehldatumDTO>) => {
+  (listenausgabeData: Array<LadeMesswerteDTO>) => {
     listenausgabeData.forEach((zaehldatum) => {
       zaehldatum.endeUhrzeit =
-        DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
+        DataManipulatorUtil.manipulateEndeUhrzeitForMesswerte(zaehldatum);
       // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0
       const anteilGueterverkehrAnKfzProzent =
         zaehldatum.anteilGueterverkehrAnKfzProzent;

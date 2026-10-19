@@ -72,10 +72,11 @@
 </template>
 
 <script setup lang="ts">
-import type { BaseAssetTypeEnum, HeadingAsset, TextAsset } from "@/api/client";
+import type { HeadingAsset, TextAsset } from "@/api/client";
 
 import { ref, watch } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import { useAssetUtil } from "@/util/AssetUtil";
 
 interface Props {

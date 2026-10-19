@@ -1402,7 +1402,6 @@
 <script setup lang="ts">
 import type {
   BearbeiteKnotenarmDTO,
-  Bewegungsrichtung,
   LadeBelastungsplanFjsDTO,
   LadeBelastungsplanQuDTO,
 } from "@/api/client";
@@ -1413,7 +1412,7 @@ import type Querungsverkehr from "@/types/zaehlung/Querungsverkehr";
 
 import { computed, nextTick, ref, watch } from "vue";
 
-import { Himmelsrichtung } from "@/api/client";
+import { Bewegungsrichtung, Himmelsrichtung } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";

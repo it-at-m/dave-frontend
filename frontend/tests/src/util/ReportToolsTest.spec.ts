@@ -1,7 +1,8 @@
-import type { BearbeiteKnotenarmDTO, OptionsDTO } from "@/api/client";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Laengsverkehr from "@/types/zaehlung/Laengsverkehr";
+import type Options from "@/types/zaehlung/Options";
 import type Querungsverkehr from "@/types/zaehlung/Querungsverkehr";
 import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 
@@ -39,7 +40,7 @@ function createOptions() {
     chosenVerkehrsbeziehungen: [] as Verkehrsbeziehung[],
     chosenLaengsverkehre: [] as Laengsverkehr[],
     chosenQuerungsverkehre: [] as Querungsverkehr[],
-  } as OptionsDTO;
+  } as Options;
 }
 
 describe("ReportTools", () => {

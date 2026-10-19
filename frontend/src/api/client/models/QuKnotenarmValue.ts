@@ -25,35 +25,35 @@ import {
 /**
  *
  * @export
- * @interface KnotenarmValue
+ * @interface QuKnotenarmValue
  */
-export interface KnotenarmValue {
+export interface QuKnotenarmValue {
   /**
    *
    * @type {number}
-   * @memberof KnotenarmValue
+   * @memberof QuKnotenarmValue
    */
   knotenarm: number;
   /**
    *
    * @type {number}
-   * @memberof KnotenarmValue
+   * @memberof QuKnotenarmValue
    */
   sumKnotenarm: number;
   /**
    *
    * @type {Array<QuerungsverkehrValue>}
-   * @memberof KnotenarmValue
+   * @memberof QuKnotenarmValue
    */
   valuesQuerungsverkehre: Array<QuerungsverkehrValue>;
 }
 
 /**
- * Check if a given object implements the KnotenarmValue interface.
+ * Check if a given object implements the QuKnotenarmValue interface.
  */
-export function instanceOfKnotenarmValue(
+export function instanceOfQuKnotenarmValue(
   value: object
-): value is KnotenarmValue {
+): value is QuKnotenarmValue {
   if (!("knotenarm" in value) || value["knotenarm"] === undefined) return false;
   if (!("sumKnotenarm" in value) || value["sumKnotenarm"] === undefined)
     return false;
@@ -65,14 +65,14 @@ export function instanceOfKnotenarmValue(
   return true;
 }
 
-export function KnotenarmValueFromJSON(json: any): KnotenarmValue {
-  return KnotenarmValueFromJSONTyped(json, false);
+export function QuKnotenarmValueFromJSON(json: any): QuKnotenarmValue {
+  return QuKnotenarmValueFromJSONTyped(json, false);
 }
 
-export function KnotenarmValueFromJSONTyped(
+export function QuKnotenarmValueFromJSONTyped(
   json: any,
   ignoreDiscriminator: boolean
-): KnotenarmValue {
+): QuKnotenarmValue {
   if (json == null) {
     return json;
   }
@@ -85,12 +85,12 @@ export function KnotenarmValueFromJSONTyped(
   };
 }
 
-export function KnotenarmValueToJSON(json: any): KnotenarmValue {
-  return KnotenarmValueToJSONTyped(json, false);
+export function QuKnotenarmValueToJSON(json: any): QuKnotenarmValue {
+  return QuKnotenarmValueToJSONTyped(json, false);
 }
 
-export function KnotenarmValueToJSONTyped(
-  value?: KnotenarmValue | null,
+export function QuKnotenarmValueToJSONTyped(
+  value?: QuKnotenarmValue | null,
   ignoreDiscriminator: boolean = false
 ): any {
   if (value == null) {

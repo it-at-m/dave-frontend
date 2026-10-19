@@ -1,4 +1,4 @@
-import type { LadeZaehldatumDTO } from "@/api/client";
+import type { LadeMesswerteDTO, LadeZaehldatumDTO } from "@/api/client";
 
 export default class DataManipulatorUtil {
   private static readonly TIME_VALUE_FOUND_END_OF_DAY: string = "23:59";
@@ -8,6 +8,24 @@ export default class DataManipulatorUtil {
   private static readonly TIME_VALUE_TARGET_END_OF_DAY: string = "24:00";
 
   public static manipulateEndeUhrzeit(zaehldatum: LadeZaehldatumDTO): string {
+    let manipualtedEndeUhrzeit: string;
+    if (
+      zaehldatum.endeUhrzeit ===
+        DataManipulatorUtil.TIME_VALUE_FOUND_END_OF_DAY ||
+      (zaehldatum.endeUhrzeit < zaehldatum.startUhrzeit &&
+        zaehldatum.endeUhrzeit ===
+          DataManipulatorUtil.TIME_VALUE_FOUND_START_OF_DAY)
+    ) {
+      manipualtedEndeUhrzeit = DataManipulatorUtil.TIME_VALUE_TARGET_END_OF_DAY;
+    } else {
+      manipualtedEndeUhrzeit = zaehldatum.endeUhrzeit;
+    }
+    return manipualtedEndeUhrzeit;
+  }
+
+  public static manipulateEndeUhrzeitForMesswerte(
+    zaehldatum: LadeMesswerteDTO
+  ): string {
     let manipualtedEndeUhrzeit: string;
     if (
       zaehldatum.endeUhrzeit ===

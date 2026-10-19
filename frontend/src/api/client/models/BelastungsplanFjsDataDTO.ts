@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
-import type { KnotenarmValue } from "./KnotenarmValue";
+import type { FjsKnotenarmValue } from "./FjsKnotenarmValue";
 
 import { mapValues } from "../runtime";
 import {
-  KnotenarmValueFromJSON,
-  KnotenarmValueFromJSONTyped,
-  KnotenarmValueToJSON,
-  KnotenarmValueToJSONTyped,
-} from "./KnotenarmValue";
+  FjsKnotenarmValueFromJSON,
+  FjsKnotenarmValueFromJSONTyped,
+  FjsKnotenarmValueToJSON,
+  FjsKnotenarmValueToJSONTyped,
+} from "./FjsKnotenarmValue";
 
 /**
  *
@@ -42,10 +42,10 @@ export interface BelastungsplanFjsDataDTO {
   filled: boolean;
   /**
    *
-   * @type {Array<KnotenarmValue>}
+   * @type {Array<FjsKnotenarmValue>}
    * @memberof BelastungsplanFjsDataDTO
    */
-  valuesKnotenarme: Array<KnotenarmValue>;
+  valuesKnotenarme: Array<FjsKnotenarmValue>;
 }
 
 /**
@@ -78,7 +78,7 @@ export function BelastungsplanFjsDataDTOFromJSONTyped(
     label: json["label"],
     filled: json["filled"],
     valuesKnotenarme: (json["valuesKnotenarme"] as Array<any>).map(
-      KnotenarmValueFromJSON
+      FjsKnotenarmValueFromJSON
     ),
   };
 }
@@ -101,7 +101,7 @@ export function BelastungsplanFjsDataDTOToJSONTyped(
     label: value["label"],
     filled: value["filled"],
     valuesKnotenarme: (value["valuesKnotenarme"] as Array<any>).map(
-      KnotenarmValueToJSON
+      FjsKnotenarmValueToJSON
     ),
   };
 }

@@ -231,6 +231,7 @@ import type {
   OptionsDTO,
 } from "@/api/client";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 
 import { first, isEmpty, last } from "lodash";
@@ -344,7 +345,7 @@ const isFJSZaehlung = computed<boolean>(() => {
   return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.FJS;
 });
 
-const options = computed<OptionsDTO>(() => {
+const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const hasSelectedVerkehrsarten = computed<boolean>(() => {

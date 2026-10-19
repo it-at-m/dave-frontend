@@ -227,7 +227,6 @@ import type {
   TextAsset,
   ZaehlungskenngroessenAsset,
 } from "@/api/client";
-import type Options from "@/types/zaehlung/Options";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -269,7 +268,7 @@ const datatableAsset = ref<DatatableAsset>(
 const assetId = ref(0);
 const loadingPdf = ref(false);
 
-const editables = ref([
+const editables = ref<BaseAssetTypeEnum[]>([
   BaseAssetTypeEnum.Text,
   BaseAssetTypeEnum.Image,
   BaseAssetTypeEnum.Heading1,

@@ -49,7 +49,7 @@ const ICON_COLOR_RED = "red";
 interface Props {
   minheight?: string;
   zId?: string;
-  latlng?: Array<string>;
+  latlng?: Array<number>;
   height?: string;
   width?: string;
   showMarker?: boolean;
@@ -138,7 +138,7 @@ const zoomValue = computed(() => {
  */
 const center = computed<LatLng>(() => {
   if (props.latlng && props.latlng.length > 0) {
-    return createLatLngFromString(props.latlng[0], props.latlng[1]);
+    return createLatLngFromNumber(props.latlng[0], props.latlng[1]);
   } else if (
     mapOptionsStore.getMapOptions &&
     mapOptionsStore.getMapOptions.latitude &&

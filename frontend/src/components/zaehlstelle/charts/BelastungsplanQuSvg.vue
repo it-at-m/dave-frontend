@@ -3485,14 +3485,20 @@ const maxSizeBelastungsplan = computed(() => {
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
     if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden) {
-      return zeitblockInfo.get(Zeitblock.Zb0024) ? zeitblockInfo.get(Zeitblock.Zb0024)?.title : "";
+      return zeitblockInfo.get(Zeitblock.Zb0024)
+        ? zeitblockInfo.get(Zeitblock.Zb0024)?.title
+        : "";
     } else {
       return "hochgerechnet";
     }
   } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(optionen.value.zeitblock) ? zeitblockInfo.get(optionen.value.zeitblock)?.title : "";
+    return zeitblockInfo.get(optionen.value.zeitblock)
+      ? zeitblockInfo.get(optionen.value.zeitblock)?.title
+      : "";
   } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(optionen.value.zeitblock) ? zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title : "";
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)
+      ? zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
+      : "";
   } else if (
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS

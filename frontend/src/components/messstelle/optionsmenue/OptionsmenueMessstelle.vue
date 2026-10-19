@@ -365,14 +365,11 @@ watch(
       !isNil(chosenOptions.value.zeitraumStartAndEndDate.endDate) &&
       chosenOptions.value.tagesTyp !== TagesTyp.Unspecified
     ) {
-      const isoStartDate = dateUtils.formatDateToISO(
-        chosenOptions.value.zeitraumStartAndEndDate.startDate
-      );
-      const isoEndDate = dateUtils.formatDateToISO(
-        chosenOptions.value.zeitraumStartAndEndDate.endDate
-      );
       const request = {
-        zeitraum: [isoStartDate, isoEndDate],
+        zeitraum: [
+          chosenOptions.value.zeitraumStartAndEndDate.startDate,
+          chosenOptions.value.zeitraumStartAndEndDate.endDate,
+        ],
         mstId: messstelle.value.mstId,
         tagesTyp: instanceOfTagesTyp(chosenOptions.value.tagesTyp)
           ? (chosenOptions.value.tagesTyp as TagesTyp)

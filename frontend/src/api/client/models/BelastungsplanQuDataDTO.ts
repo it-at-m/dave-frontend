@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
-import type { KnotenarmValue } from "./KnotenarmValue";
+import type { QuKnotenarmValue } from "./QuKnotenarmValue";
 
 import { mapValues } from "../runtime";
 import {
-  KnotenarmValueFromJSON,
-  KnotenarmValueFromJSONTyped,
-  KnotenarmValueToJSON,
-  KnotenarmValueToJSONTyped,
-} from "./KnotenarmValue";
+  QuKnotenarmValueFromJSON,
+  QuKnotenarmValueFromJSONTyped,
+  QuKnotenarmValueToJSON,
+  QuKnotenarmValueToJSONTyped,
+} from "./QuKnotenarmValue";
 
 /**
  *
@@ -42,10 +42,10 @@ export interface BelastungsplanQuDataDTO {
   filled: boolean;
   /**
    *
-   * @type {Array<KnotenarmValue>}
+   * @type {Array<QuKnotenarmValue>}
    * @memberof BelastungsplanQuDataDTO
    */
-  valuesKnotenarme: Array<KnotenarmValue>;
+  valuesKnotenarme: Array<QuKnotenarmValue>;
 }
 
 /**
@@ -78,7 +78,7 @@ export function BelastungsplanQuDataDTOFromJSONTyped(
     label: json["label"],
     filled: json["filled"],
     valuesKnotenarme: (json["valuesKnotenarme"] as Array<any>).map(
-      KnotenarmValueFromJSON
+      QuKnotenarmValueFromJSON
     ),
   };
 }
@@ -101,7 +101,7 @@ export function BelastungsplanQuDataDTOToJSONTyped(
     label: value["label"],
     filled: value["filled"],
     valuesKnotenarme: (value["valuesKnotenarme"] as Array<any>).map(
-      KnotenarmValueToJSON
+      QuKnotenarmValueToJSON
     ),
   };
 }

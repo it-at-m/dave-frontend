@@ -75,19 +75,21 @@
 </template>
 
 <script setup lang="ts">
-import type { BaseAsset, BaseAssetTypeEnum } from "@/api/client";
+import type { BaseAsset } from "@/api/client";
 import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, ref } from "vue";
 
+import { BaseAssetTypeEnum, TagesTyp } from "@/api/client";
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 const dialog = defineModel<boolean>({ required: true });
 
@@ -194,8 +196,9 @@ function createMessInfo(): void {
     dateUtils.isDateRange(options.value.zeitraum) &&
     options.value.tagesTyp !== TagesTyp.Unspecified
   ) {
+    const t = useEnumUtils().toTagesTyp(options.value.tagesTyp);
     const wochentag = assetUtil.createTextAsset(
-      `Wochentag: ${tagesTypText.get(options.value.tagesTyp)}`
+      t ? `Wochentag: ${tagesTypText.get(t)}` : `Wochentag: unbekannt`
     );
     assets.push(wochentag);
   }
