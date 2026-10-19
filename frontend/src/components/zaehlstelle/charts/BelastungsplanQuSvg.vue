@@ -3431,7 +3431,7 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
-import { Himmelsrichtung, Zaehldauer } from "@/api/client";
+import { Himmelsrichtung, Zaehldauer, Zeitblock } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
@@ -3485,14 +3485,14 @@ const maxSizeBelastungsplan = computed(() => {
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
     if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden) {
-      return zeitblockInfo.get(Zeitblock.Zb0024)?.title;
+      return zeitblockInfo.get(Zeitblock.Zb0024) ? zeitblockInfo.get(Zeitblock.Zb0024)?.title : "";
     } else {
       return "hochgerechnet";
     }
   } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockInfo.get(optionen.value.zeitblock) ? zeitblockInfo.get(optionen.value.zeitblock)?.title : "";
   } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock) ? zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title : "";
   } else if (
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
@@ -3501,6 +3501,7 @@ const zaehlzeit2 = computed(() => {
       zaehlstelleStore.getStartEndeUhrzeitIntervalls;
     return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
+  return "";
 });
 
 const qu = useQu();

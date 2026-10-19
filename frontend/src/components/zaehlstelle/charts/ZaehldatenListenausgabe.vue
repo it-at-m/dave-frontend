@@ -423,13 +423,6 @@ watch(
     listenausgabeData.forEach((zaehldatum) => {
       zaehldatum.endeUhrzeit =
         DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
-      // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0
-      zaehldatum.anteilGueterverkehrAnKfzProzent = parseFloat(
-        zaehldatum.anteilGueterverkehrAnKfzProzent
-      ).toFixed(1);
-      zaehldatum.anteilSchwerverkehrAnKfzProzent = parseFloat(
-        zaehldatum.anteilSchwerverkehrAnKfzProzent
-      ).toFixed(1);
     });
   },
   { immediate: true }

@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import type {
   LadeZaehldatenSteplineDTO,
-  StepLineSeriesEntryBaseDTO,
+  StepLineSeriesEntryBigDecimalDTO,
 } from "@/api/client";
 
 import { BarChart, LineChart } from "echarts/charts";
@@ -337,7 +337,7 @@ function checkTwoChartsNeeded(
 }
 
 function createSeriesDataForChart(
-  seriesEntriesChart: Array<StepLineSeriesEntryBaseDTO>
+  seriesEntriesChart: Array<StepLineSeriesEntryBigDecimalDTO>
 ): Array<unknown> {
   const seriesEntries: Array<unknown> = [];
   seriesEntriesChart.forEach((seriesEntryChart, index) => {

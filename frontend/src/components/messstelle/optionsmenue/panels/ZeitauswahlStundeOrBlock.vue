@@ -34,7 +34,10 @@ import { computed } from "vue";
 
 import { Zeitblock } from "@/api/client";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/ZeitblockText";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
 const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });

@@ -157,12 +157,6 @@ export interface LadeAuswertungSpitzenstundeDTO {
    * @type {number}
    * @memberof LadeAuswertungSpitzenstundeDTO
    */
-  anteilGueterverkehrAnKfzProzent: number;
-  /**
-   *
-   * @type {number}
-   * @memberof LadeAuswertungSpitzenstundeDTO
-   */
   schwerverkehr: number;
   /**
    *
@@ -170,6 +164,12 @@ export interface LadeAuswertungSpitzenstundeDTO {
    * @memberof LadeAuswertungSpitzenstundeDTO
    */
   gueterverkehr: number;
+  /**
+   *
+   * @type {number}
+   * @memberof LadeAuswertungSpitzenstundeDTO
+   */
+  anteilGueterverkehrAnKfzProzent: number;
   /**
    *
    * @type {number}
@@ -213,14 +213,14 @@ export function instanceOfLadeAuswertungSpitzenstundeDTO(
     return false;
   if (!("pkwEinheiten" in value) || value["pkwEinheiten"] === undefined)
     return false;
+  if (!("schwerverkehr" in value) || value["schwerverkehr"] === undefined)
+    return false;
+  if (!("gueterverkehr" in value) || value["gueterverkehr"] === undefined)
+    return false;
   if (
     !("anteilGueterverkehrAnKfzProzent" in value) ||
     value["anteilGueterverkehrAnKfzProzent"] === undefined
   )
-    return false;
-  if (!("schwerverkehr" in value) || value["schwerverkehr"] === undefined)
-    return false;
-  if (!("gueterverkehr" in value) || value["gueterverkehr"] === undefined)
     return false;
   if (
     !("anteilSchwerverkehrAnKfzProzent" in value) ||
@@ -276,9 +276,9 @@ export function LadeAuswertungSpitzenstundeDTOFromJSONTyped(
       json["zaehlsituationErweitert"] == null
         ? undefined
         : json["zaehlsituationErweitert"],
-    anteilGueterverkehrAnKfzProzent: json["anteilGueterverkehrAnKfzProzent"],
     schwerverkehr: json["schwerverkehr"],
     gueterverkehr: json["gueterverkehr"],
+    anteilGueterverkehrAnKfzProzent: json["anteilGueterverkehrAnKfzProzent"],
     anteilSchwerverkehrAnKfzProzent: json["anteilSchwerverkehrAnKfzProzent"],
     kfz: json["kfz"],
     gesamt: json["gesamt"],
@@ -325,9 +325,9 @@ export function LadeAuswertungSpitzenstundeDTOToJSONTyped(
     sonderzaehlung: value["sonderzaehlung"],
     zaehlsituation: value["zaehlsituation"],
     zaehlsituationErweitert: value["zaehlsituationErweitert"],
-    anteilGueterverkehrAnKfzProzent: value["anteilGueterverkehrAnKfzProzent"],
     schwerverkehr: value["schwerverkehr"],
     gueterverkehr: value["gueterverkehr"],
+    anteilGueterverkehrAnKfzProzent: value["anteilGueterverkehrAnKfzProzent"],
     anteilSchwerverkehrAnKfzProzent: value["anteilSchwerverkehrAnKfzProzent"],
     kfz: value["kfz"],
     gesamt: value["gesamt"],

@@ -43,13 +43,13 @@ export interface StepLineSeriesEntryBaseDTO {
    * @type {number}
    * @memberof StepLineSeriesEntryBaseDTO
    */
-  yaxisIndex?: number;
+  yaxisIndex: number;
   /**
    *
    * @type {number}
    * @memberof StepLineSeriesEntryBaseDTO
    */
-  xaxisIndex?: number;
+  xaxisIndex: number;
   /**
    *
    * @type {string}
@@ -65,6 +65,10 @@ export function instanceOfStepLineSeriesEntryBaseDTO(
   value: object
 ): value is StepLineSeriesEntryBaseDTO {
   if (!("name" in value) || value["name"] === undefined) return false;
+  if (!("yaxisIndex" in value) || value["yaxisIndex"] === undefined)
+    return false;
+  if (!("xaxisIndex" in value) || value["xaxisIndex"] === undefined)
+    return false;
   if (!("type" in value) || value["type"] === undefined) return false;
   return true;
 }
@@ -98,8 +102,8 @@ export function StepLineSeriesEntryBaseDTOFromJSONTyped(
   }
   return {
     name: json["name"],
-    yaxisIndex: json["yaxisIndex"] == null ? undefined : json["yaxisIndex"],
-    xaxisIndex: json["xaxisIndex"] == null ? undefined : json["xaxisIndex"],
+    yaxisIndex: json["yaxisIndex"],
+    xaxisIndex: json["xaxisIndex"],
     type: json["type"],
   };
 }

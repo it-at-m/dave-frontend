@@ -34,10 +34,7 @@ const zaehldauerIcons: Map<string, IconTooltip> = new Map([
   ],
   [Zaehldauer.Dauer24Stunden, new IconTooltip("$zaehldauer24h", "24h Zählung")],
   [Zaehldauer.Dauer16Stunden, new IconTooltip("$zaehldauer16h", "16h Zählung")],
-  [
-    Zaehldauer.DAUER_13_STUNDEN,
-    new IconTooltip("$zaehldauer13h", "13h Zählung"),
-  ],
+  [Zaehldauer.Dauer13Stunden, new IconTooltip("$zaehldauer13h", "13h Zählung")],
   [Zaehldauer.Sonstige, new IconTooltip("$zaehldauerSoZ", "Sonstige Zählung")],
 ]);
 

@@ -165,15 +165,20 @@ import type KeyVal from "@/types/common/KeyVal";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
-import { head, isEmpty, isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 
-import { Zaehldauer } from "@/api/client";
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo, zeitblockOrder } from "@/types/enum/ZeitblockText";
+import {
+  zeitblockInfo,
+  zeitblockOrder,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
+import { useEnumUtils } from "@/util/EnumUtils";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
 const chosenOptionsCopy = defineModel<Options>({
@@ -182,6 +187,7 @@ const chosenOptionsCopy = defineModel<Options>({
 
 const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
+const enumUtils = useEnumUtils();
 
 // Zeitauswahl
 const hoverTageswert = ref(false);
@@ -422,7 +428,8 @@ function zeitauswahlChanged() {
     isZeitauswahlSpitzenstundeOrBlock.value &&
     zeitblockValues.value.length > 0
   ) {
-    const zb = zeitblockInfo.get(zeitblockValues.value[0].value)?.value;
+    const val = zeitblockValues.value[0].value;
+    const zb = enumUtils.toZeitblock(zeitblockInfo.get(val)?.value);
     if (zb) {
       chosenOptionsCopy.value.zeitblock = zb;
     }
@@ -432,9 +439,7 @@ function zeitauswahlChanged() {
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE &&
     stuendlichValues.value.length > 0
   ) {
-    const zs = zeitblockStuendlichInfo.get(
-      stuendlichValues.value[0].value
-    )?.value;
+    const zs = enumUtils.toZeitblock(stuendlichValues.value[0].value);
     if (zs) {
       chosenOptionsCopy.value.zeitblock = zs;
     }

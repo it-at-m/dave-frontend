@@ -114,13 +114,14 @@ import { isEmpty } from "lodash";
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
+import { TagesTyp } from "@/api/client";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
 } from "@/types/enum/HimmelsrichtungText";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTypText";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import {
@@ -128,10 +129,12 @@ import {
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockText";
 import { useDateUtils } from "@/util/DateUtils";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
 const display = useDisplay();
+const enumUtils = useEnumUtils();
 
 interface Props {
   messstelle: MessstelleInfo;
@@ -144,7 +147,8 @@ const filterOptionsMessstelle = computed<MessstelleOptions>(() => {
 });
 
 const wochentag = computed<string | undefined>(() => {
-  return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
+  const tagestyp = enumUtils.toTagesTyp(filterOptionsMessstelle.value.tagesTyp);
+  return tagestyp ? tagesTypText.get(tagestyp) : "";
 });
 
 const showWochentag = computed<boolean>(() => {

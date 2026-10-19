@@ -1,3 +1,5 @@
+import { Zaehldauer } from "@/api/client";
+
 export const zaehldauerText = new Map<string, string>([
   [
     Zaehldauer.Dauer2X4Stunden,
@@ -5,6 +7,6 @@ export const zaehldauerText = new Map<string, string>([
   ],
   [Zaehldauer.Dauer24Stunden, "24 Stunden"],
   [Zaehldauer.Dauer16Stunden, "16 Stunden"],
-  [Zaehldauer.DAUER_13_STUNDEN, "13 Stunden (Kurzzeiterhebung 6 bis 19Uhr)"],
+  [Zaehldauer.Dauer13Stunden, "13 Stunden (Kurzzeiterhebung 6 bis 19Uhr)"],
   [Zaehldauer.Sonstige, "Sonstige"],
 ]);
