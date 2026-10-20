@@ -172,6 +172,7 @@
             density="compact"
             @mouseover="hoverSpitzenstunde = true"
             @mouseleave="hoverSpitzenstunde = false"
+            :disabled="isZeitauswahlStunde"
           />
         </v-col>
         <v-col cols="4">
@@ -278,6 +279,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { roundingItems } from "@/types/enum/Rounding";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -385,6 +387,10 @@ const helpTextZeitreihe = computed(() => {
   return "";
 });
 
+const isZeitauswahlStunde = computed(() => {
+  return chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE;
+});
+
 const isCheckboxZeitreiheGesamtDisabled = computed(() => {
   return isTypeKfzDisabled() || isOnlyFussFiltered.value;
 });
@@ -472,6 +478,19 @@ watch(
       chosenOptionsCopy.value.spitzenstundeRad = false;
     }
     if (isTypeDisabled("FUSS")) {
+      chosenOptionsCopy.value.spitzenstundeFuss = false;
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => chosenOptionsCopy.value.zeitauswahl,
+  () => {
+    if (isZeitauswahlStunde.value) {
+      chosenOptionsCopy.value.spitzenstunde = false;
+      chosenOptionsCopy.value.spitzenstundeKfz = false;
+      chosenOptionsCopy.value.spitzenstundeRad = false;
       chosenOptionsCopy.value.spitzenstundeFuss = false;
     }
   },

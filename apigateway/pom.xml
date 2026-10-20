@@ -11,7 +11,8 @@
 
     <groupId>de.muenchen.dave.apigateway</groupId>
     <artifactId>dave-frontend-apigateway</artifactId>
-    <version>10.0.1-SNAPSHOT</version>
+    <version>11.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>dave_frontend_apigateway</name>
 
     <url>https://github.com/it-at-m/dave-frontend</url>
@@ -390,4 +391,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

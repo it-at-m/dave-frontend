@@ -16,14 +16,14 @@ import _ from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockInfo } from "@/types/enum/Zeitblock";
 import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
-import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -56,8 +56,11 @@ const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 
 const startX = ref(0);
 const startY = ref(0);
-const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
-  belastungsplanAnzeigeUtils();
+const {
+  isSvpInBelastungsPlan,
+  isGvpInBelastungsPlan,
+  zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle,
+} = useBelastungsplanAnzeigeUtils();
 const props = defineProps<Props>();
 
 const svgHeight = computed(() => {
@@ -762,7 +765,7 @@ function drawLinienStaerke() {
 }
 
 const getZeitauswahlText = computed(() => {
-  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${chosenOptionsCopy.value.zeitauswahl}`;
+  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle.value}`;
 });
 
 const getZeitblockText = computed(() => {

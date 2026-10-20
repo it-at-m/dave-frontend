@@ -240,8 +240,8 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            cx="476"
-            cy="700"
+            :cx="xCoordNumberOne"
+            :cy="yCoordNumberOne"
             r="20.487822"
           />
           <text
@@ -253,18 +253,20 @@
               text-align: start;
               writing-mode: lr-tb;
               direction: ltr;
-              text-anchor: start;
+              text-anchor: middle;
               fill: #000000;
               stroke-width: 52.2711;
+              dominant-baseline: central;
             "
-            y="711.73895"
-            x="465.80084"
+            :x="xCoordNumberOne"
+            :y="yCoordNumberOne"
+            :transform="rotateNumberOneInverse"
           >
             <tspan
               id="number1_tspan"
               style="stroke-width: 52.2711"
-              x="465.80084"
-              y="711.73895"
+              :x="xCoordNumberOne"
+              :y="yCoordNumberOne"
             >
               {{ firstKnotenarm?.nummer }}
             </tspan>
@@ -281,8 +283,8 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            cx="924"
-            cy="700"
+            :cx="xCoordNumberTwo"
+            :cy="yCoordNumberTwo"
             r="20.487822"
           />
           <text
@@ -294,17 +296,19 @@
               text-align: start;
               writing-mode: lr-tb;
               direction: ltr;
-              text-anchor: start;
+              text-anchor: middle;
               fill: #000000;
               stroke-width: 52.2711;
+              dominant-baseline: central;
             "
-            x="913.19183"
-            y="711.73895"
+            :x="xCoordNumberTwo"
+            :y="yCoordNumberTwo"
+            :transform="rotateNumberTwoInverse"
           >
             <tspan
               id="number2_tspan"
-              x="913.19183"
-              y="711.73895"
+              :x="xCoordNumberTwo"
+              :y="yCoordNumberTwo"
               style="stroke-width: 52.2711"
             >
               {{ secondKnotenarm?.nummer }}
@@ -422,6 +426,11 @@ const passiveColor = "#9E9E9E";
 const firstStreetname = ref<Array<string>>([]);
 const secondStreetname = ref<Array<string>>([]);
 
+const xCoordNumberOne = 476;
+const yCoordNumberOne = 700;
+const xCoordNumberTwo = 924;
+const yCoordNumberTwo = 700;
+
 const activeZaehlung = computed<LadeZaehlungDTO>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
@@ -443,6 +452,16 @@ const secondKnotenarm = computed(() => {
 });
 
 const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
+const rotateNumberOneInverse = qjs.rotateNumberInverseFor(
+  availableKnotenarmNummern,
+  xCoordNumberOne,
+  yCoordNumberOne
+);
+const rotateNumberTwoInverse = qjs.rotateNumberInverseFor(
+  availableKnotenarmNummern,
+  xCoordNumberTwo,
+  yCoordNumberTwo
+);
 
 const isAvailableArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(
