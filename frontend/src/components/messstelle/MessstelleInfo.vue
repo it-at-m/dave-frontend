@@ -96,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { computed } from "vue";
 
@@ -109,7 +109,7 @@ import IconTooltip from "@/types/util/IconTooltip";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-  messstelle: MessstelleInfo;
+  messstelle: MessstelleInfoType;
 }
 
 const props = defineProps<Props>();

@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import type { AuffaelligeTageDTO } from "@/api/client";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, onMounted, ref, watch } from "vue";
@@ -95,7 +95,7 @@ onMounted(() => {
   );
 });
 
-const messstelleInfo = computed<MessstelleInfo>(() => {
+const messstelleInfo = computed<MessstelleInfoType>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 

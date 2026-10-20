@@ -11,56 +11,57 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { DatatableAsset } from "./DatatableAsset";
+import type { HeadingAsset } from "./HeadingAsset";
+import type { ImageAsset } from "./ImageAsset";
+import type { MessstelleDatatableAsset } from "./MessstelleDatatableAsset";
+import type { NewlineAsset } from "./NewlineAsset";
+import type { PagebreakAsset } from "./PagebreakAsset";
+import type { TextAsset } from "./TextAsset";
+import type { ZaehlungskenngroessenAsset } from "./ZaehlungskenngroessenAsset";
 
 import { mapValues } from "../runtime";
 import {
-  type DatatableAsset,
   DatatableAssetFromJSONTyped,
   DatatableAssetToJSON,
   DatatableAssetToJSONTyped,
 } from "./DatatableAsset";
 import {
-  type MessstelleDatatableAsset,
-  MessstelleDatatableAssetFromJSONTyped,
-  MessstelleDatatableAssetToJSON,
-  MessstelleDatatableAssetToJSONTyped,
-} from "./MessstelleDatatableAsset";
-import {
-  type HeadingAsset,
   HeadingAssetFromJSONTyped,
   HeadingAssetToJSON,
   HeadingAssetToJSONTyped,
 } from "./HeadingAsset";
 import {
-  type ImageAsset,
   ImageAssetFromJSONTyped,
   ImageAssetToJSON,
   ImageAssetToJSONTyped,
 } from "./ImageAsset";
 import {
-  type NewlineAsset,
+  MessstelleDatatableAssetFromJSONTyped,
+  MessstelleDatatableAssetToJSON,
+  MessstelleDatatableAssetToJSONTyped,
+} from "./MessstelleDatatableAsset";
+import {
   NewlineAssetFromJSONTyped,
   NewlineAssetToJSON,
   NewlineAssetToJSONTyped,
 } from "./NewlineAsset";
 import {
-  type PagebreakAsset,
   PagebreakAssetFromJSONTyped,
   PagebreakAssetToJSON,
   PagebreakAssetToJSONTyped,
 } from "./PagebreakAsset";
 import {
-  type TextAsset,
   TextAssetFromJSONTyped,
   TextAssetToJSON,
   TextAssetToJSONTyped,
 } from "./TextAsset";
 import {
-  type ZaehlungskenngroessenAsset,
   ZaehlungskenngroessenAssetFromJSONTyped,
   ZaehlungskenngroessenAssetToJSON,
   ZaehlungskenngroessenAssetToJSONTyped,
 } from "./ZaehlungskenngroessenAsset";
+
 /**
  *
  * @export

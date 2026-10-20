@@ -48,7 +48,7 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { computed, onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
@@ -60,6 +60,7 @@ import MessstelleDiagramme from "@/components/messstelle/charts/MessstelleDiagra
 import MessquerschnittAnzahlInfo from "@/components/messstelle/MessquerschnittAnzahlInfo.vue";
 import MessquerschnittInfo from "@/components/messstelle/MessquerschnittInfo.vue";
 import MessstelleHeaderInfo from "@/components/messstelle/MessstelleHeaderInfo.vue";
+import MessstelleInfo from "@/components/messstelle/MessstelleInfo.vue";
 import FilterOptionen from "@/components/messstelle/optionsmenue/FilterOptionen.vue";
 import ValidWochentage from "@/components/messstelle/ValidWochentage.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
@@ -67,7 +68,7 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
-const messstelle = ref<MessstelleInfo>(
+const messstelle = ref<MessstelleInfoType>(
   DefaultObjectCreator.createDefaultMessstelleInfoDTO()
 );
 const display = useDisplay();

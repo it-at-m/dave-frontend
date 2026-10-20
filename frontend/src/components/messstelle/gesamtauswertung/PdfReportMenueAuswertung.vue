@@ -83,7 +83,7 @@
 <script setup lang="ts">
 import type { BaseAsset, MessstelleAuswertungIdDTO } from "@/api/client";
 import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { head } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -111,7 +111,7 @@ const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
 const statistik = ref(false);
-const selectedMessstelle = ref<MessstelleInfo | undefined>(undefined);
+const selectedMessstelle = ref<MessstelleInfoType | undefined>(undefined);
 
 const isSingeleMessstelleSelected = computed(() => {
   return options.value.messstelleAuswertungIds.length === 1;

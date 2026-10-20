@@ -2,11 +2,9 @@ import type {
   AuswertungsZeitraum,
   FahrzeugOptionsDTO,
   MessstelleAuswertungIdDTO,
+  MessstelleAuswertungOptionsDTO,
   TagesTyp,
 } from "@/api/client";
-
-import { AuswertungsZeitraumFromJSON } from "@/api/client";
-import { useEnumUtils } from "@/util/EnumUtils";
 
 export class MessstelleAuswertungOptionsMapper {
   static toBackend(frontendData: {
@@ -15,17 +13,11 @@ export class MessstelleAuswertungOptionsMapper {
     zeitraum: Array<AuswertungsZeitraum>;
     messstelleAuswertungIds: Array<MessstelleAuswertungIdDTO>;
     fahrzeuge: FahrzeugOptionsDTO;
-  }): any {
-    frontendData.zeitraum.forEach((z) => {
-      console.log(z);
-      const z1 = AuswertungsZeitraumFromJSON(z);
-      console.log("z1: " + z1);
-    });
-
+  }): MessstelleAuswertungOptionsDTO {
     return {
       jahre: frontendData.jahre.map((jahr) => parseInt(jahr, 10)), // falls jahre als string
-      tagesTyp: useEnumUtils().toTagesTyp(frontendData.tagesTyp),
-      zeitraum: frontendData.zeitraum, // bereits Array<AuswertungsZeitraum>
+      tagesTyp: frontendData.tagesTyp,
+      zeitraum: frontendData.zeitraum,
       messstelleAuswertungIds: new Set(frontendData.messstelleAuswertungIds),
       fahrzeuge: frontendData.fahrzeuge,
     };

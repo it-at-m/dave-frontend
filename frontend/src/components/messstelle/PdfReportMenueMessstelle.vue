@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import type { BaseAsset } from "@/api/client";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, ref } from "vue";
@@ -103,7 +103,7 @@ const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
 
-const messstelle = computed<MessstelleInfo>(() => {
+const messstelle = computed<MessstelleInfoType>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 

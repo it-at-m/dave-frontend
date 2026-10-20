@@ -1,6 +1,5 @@
 import type {
   AuswertungMessstelleWithFileDTO,
-  MessstelleAuswertungOptionsDTO as GeneratedMessstelleAuswertungOptionsDTO,
   MessstelleAuswertungDTO,
 } from "@/api/client";
 import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";

@@ -1,4 +1,4 @@
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { MessstelleControllerApi } from "@/api/client/apis";
 import { Configuration } from "@/api/client/runtime";
@@ -11,7 +11,7 @@ export default class MessstelleService {
     new Configuration({ basePath: this.ENDPOINT })
   );
 
-  static getMessstelleById(id: string): Promise<MessstelleInfo> {
+  static getMessstelleById(id: string): Promise<MessstelleInfoType> {
     return handleOpenApiError(
       this.API.readMessstelleInfoByIdRaw({ id }).then((response) =>
         response.raw.json()
@@ -20,7 +20,7 @@ export default class MessstelleService {
     );
   }
 
-  static getMessstelleByMstId(mstid: string): Promise<MessstelleInfo> {
+  static getMessstelleByMstId(mstid: string): Promise<MessstelleInfoType> {
     return handleOpenApiError(
       this.API.readMessstelleInfoByMstIdRaw({ mstid }).then((response) =>
         response.raw.json()

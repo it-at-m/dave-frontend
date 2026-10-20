@@ -71,7 +71,7 @@
 import type { Himmelsrichtung } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type MessquerschnittInfo from "@/types/messstelle/MessquerschnittInfo";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { cloneDeep } from "lodash";
@@ -92,7 +92,7 @@ const messstelleUtils = useMessstelleUtils();
 const MIND_EIN_MESSQUERSCHNITT =
   "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
 
-const messstelle = computed<MessstelleInfo>(() => {
+const messstelle = computed<MessstelleInfoType>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 

@@ -563,7 +563,7 @@ const helpTextFahrzeugkategorien = computed(() => {
  * Im Fall der Differenzdatendarstellung wird SV% nie angezeigt.
  */
 const isSvpInBelastungsPlan = computed(() => {
-  if (isDifferenzdatenDarstellung) {
+  if (isDifferenzdatenDarstellung.value) {
     return false;
   }
   let actualNumberOfSelectedKfzSvAndGv = 0;
@@ -592,7 +592,7 @@ const isSvpInBelastungsPlan = computed(() => {
  * Im Fall der Differenzdatendarstellung wird GV% nie angezeigt.
  */
 const isGvpInBelastungsPlan = computed(() => {
-  if (isDifferenzdatenDarstellung) {
+  if (isDifferenzdatenDarstellung.value) {
     return false;
   }
   let actualNumberOfSelectedKfzSvGvAndSV_P = 0;

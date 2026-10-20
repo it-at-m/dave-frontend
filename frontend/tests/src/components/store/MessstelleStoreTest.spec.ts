@@ -1,5 +1,5 @@
 import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -15,7 +15,7 @@ describe("OptionsmenueSettingsStore.ts", () => {
   it("getMessfaehigkeitenForGivenZeitraum", () => {
     const messstelleStore = useMessstelleStore();
 
-    const messstelleInfo = {} as MessstelleInfo;
+    const messstelleInfo = {} as MessstelleInfoType;
 
     const messfaehigkeit1 = {
       gueltigAb: "2025-02-01",

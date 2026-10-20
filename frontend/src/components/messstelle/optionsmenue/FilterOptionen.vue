@@ -107,7 +107,7 @@
 <script setup lang="ts">
 import type { Himmelsrichtung, Zeitblock } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { isEmpty } from "lodash";
@@ -137,7 +137,7 @@ const display = useDisplay();
 const enumUtils = useEnumUtils();
 
 interface Props {
-  messstelle: MessstelleInfo;
+  messstelle: MessstelleInfoType;
 }
 
 defineProps<Props>();
