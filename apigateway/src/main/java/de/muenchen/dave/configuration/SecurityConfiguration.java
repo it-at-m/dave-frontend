@@ -1,11 +1,15 @@
 package de.muenchen.dave.configuration;
 
-import de.muenchen.dave.util.GatewayUtils;
-import java.time.Duration;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
+import org.springframework.boot.session.autoconfigure.SessionTimeout;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -14,58 +18,101 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
-import org.springframework.security.web.server.csrf.ServerCsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import reactor.core.publisher.Mono;
 
 @Configuration
 @Profile("!no-security")
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+    private static final String CLIENT_ROUTES_PREFIX = "/clients/**";
+    private static final String PUBLIC_ROUTES_PREFIX = "/public/**";
 
-    private static final String LOGOUT_URL = "/logout";
-
-    private static final String LOGOUT_SUCCESS_URL = "/loggedout.html";
-
-    /**
-     * Same lifetime as SSO Session (e.g. 10 hours).
-     */
-    @Value("${spring.session.timeout:36000}")
-    private long springSessionTimeoutSeconds;
+    private final CsrfProtectionMatcher csrfProtectionMatcher;
+    private final SecurityProperties securityProperties;
+    private final SessionTimeout sessionTimeout;
 
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(final ServerHttpSecurity http) {
-        return http
-                .logout(logout -> logout
-                        .logoutSuccessHandler(GatewayUtils.createLogoutSuccessHandler(LOGOUT_SUCCESS_URL))
-                        .logoutUrl(LOGOUT_URL)
-                        .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, LOGOUT_URL)))
-                .authorizeExchange(exchange -> exchange
-                        .pathMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-                        .pathMatchers(LOGOUT_SUCCESS_URL).permitAll()
-                        .pathMatchers(
-                                "/api/*/info",
-                                "/actuator/health",
-                                "/actuator/info",
-                                "/actuator/metrics")
-                        .permitAll()
+    @Order(0)
+    public SecurityWebFilterChain clientAccessFilterChain(final ServerHttpSecurity http) {
+        // build patterns
+        final List<String> patternsList = new ArrayList<>();
+        patternsList.add(CLIENT_ROUTES_PREFIX);
+        if (!securityProperties.getClientPatterns().isEmpty()) {
+            patternsList.addAll(securityProperties.getClientPatterns());
+        }
+        final String[] patterns = patternsList.toArray(new String[0]);
+        // security config
+        http.securityMatcher(ServerWebExchangeMatchers.pathMatchers(patterns))
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
+                        .pathMatchers(HttpMethod.OPTIONS, patterns).permitAll()
                         .anyExchange().authenticated())
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
-                        .csrfTokenRequestHandler(new ServerCsrfTokenRequestAttributeHandler()))
-                .cors(Customizer.withDefaults())
-                .oauth2Login(oauth2Login -> oauth2Login.authenticationSuccessHandler(
-                        new RedirectServerAuthenticationSuccessHandler() {
-                            @Override
-                            public Mono<Void> onAuthenticationSuccess(
-                                    WebFilterExchange webFilterExchange,
-                                    Authentication authentication) {
-                                webFilterExchange
-                                        .getExchange()
-                                        .getSession()
-                                        .subscribe(webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
-                                return super.onAuthenticationSuccess(webFilterExchange, authentication);
-                            }
-                        }))
-                .build();
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    @Order(1)
+    public SecurityWebFilterChain springSecurityFilterChain(final ServerHttpSecurity http) {
+        http
+                .logout(ServerHttpSecurity.LogoutSpec::disable)
+                .authorizeExchange(authorizeExchangeSpec -> {
+                    // permitAll
+                    authorizeExchangeSpec.pathMatchers(HttpMethod.OPTIONS, "/api/**").permitAll();
+                    authorizeExchangeSpec.pathMatchers(
+                            "/api/*/actuator/info",
+                            "/actuator/health",
+                            "/actuator/health/liveness",
+                            "/actuator/health/readiness",
+                            "/actuator/info",
+                            "/actuator/metrics",
+                            "/actuator/sbom",
+                            "/actuator/sbom/application",
+                            PUBLIC_ROUTES_PREFIX)
+                            .permitAll();
+                    // dynamic permitAll from properties
+                    this.applyDynamicPermitAll(authorizeExchangeSpec);
+                    // only authenticated
+                    authorizeExchangeSpec.anyExchange().authenticated();
+                })
+                .csrf(csrfSpec -> {
+                    /*
+                     * Custom csrf request handler for spa and BREACH attack protection.
+                     * https://docs.spring.io/spring-security/reference/6.1-SNAPSHOT/servlet/exploits/csrf.html#csrf-
+                     * integration-javascript-spa
+                     */
+                    csrfSpec.csrfTokenRequestHandler(new SpaServerCsrfTokenRequestHandler());
+                    /*
+                     * The necessary subscription for csrf token attachment to {@link ServerHttpResponse}
+                     * is done in class {@link CsrfTokenAppendingHelperFilter}.
+                     */
+                    csrfSpec.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse());
+                    csrfSpec.requireCsrfProtectionMatcher(csrfProtectionMatcher);
+                })
+                .oauth2Login(oAuth2LoginSpec -> oAuth2LoginSpec.authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler() {
+                    @Override
+                    @NonNull public Mono<Void> onAuthenticationSuccess(@NonNull final WebFilterExchange webFilterExchange,
+                            @NonNull final Authentication authentication) {
+                        return webFilterExchange.getExchange().getSession()
+                                .flatMap(webSession -> {
+                                    if (sessionTimeout.getTimeout() != null) {
+                                        webSession.setMaxIdleTime(sessionTimeout.getTimeout());
+                                    }
+                                    return super.onAuthenticationSuccess(webFilterExchange, authentication);
+                                });
+                    }
+                }));
+
+        return http.build();
+    }
+
+    /// Apply dynamic permitAll rules based on properties.
+    private void applyDynamicPermitAll(final ServerHttpSecurity.AuthorizeExchangeSpec authorize) {
+        for (final SecurityProperties.PermitRule rule : securityProperties.getPublicPatterns()) {
+            for (final HttpMethod method : rule.getMethods()) {
+                authorize.pathMatchers(method, rule.getPattern()).permitAll();
+            }
+        }
     }
 }

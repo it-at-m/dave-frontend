@@ -20,7 +20,7 @@ import { useDisplay } from "vuetify";
 
 import { Himmelsrichtung } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -51,7 +51,7 @@ const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 const startX = ref(0);
 const startY = ref(0);
 const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
-  belastungsplanAnzeigeUtils();
+  useBelastungsplanAnzeigeUtils();
 
 const svgHeight = computed(() => {
   return (
@@ -152,7 +152,7 @@ function drawStreetName() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessquerschnittDataDTO[];
+    data: LadeBelastungsplanMessqueschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -190,7 +190,7 @@ function drawArrowsPointingSouth(
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessquerschnittDataDTO[];
+    data: LadeBelastungsplanMessqueschnittDataDTO[];
     direction: string;
   }[]
 ) {

@@ -172,6 +172,7 @@
             density="compact"
             @mouseover="hoverSpitzenstunde = true"
             @mouseleave="hoverSpitzenstunde = false"
+            :disabled="isZeitauswahlStunde"
           />
         </v-col>
         <v-col cols="4">
@@ -385,6 +386,10 @@ const helpTextZeitreihe = computed(() => {
   return "";
 });
 
+const isZeitauswahlStunde = computed(() => {
+  return chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE;
+});
+
 const isCheckboxZeitreiheGesamtDisabled = computed(() => {
   return isTypeKfzDisabled() || isOnlyFussFiltered.value;
 });
@@ -472,6 +477,19 @@ watch(
       chosenOptionsCopy.value.spitzenstundeRad = false;
     }
     if (isTypeDisabled("FUSS")) {
+      chosenOptionsCopy.value.spitzenstundeFuss = false;
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => chosenOptionsCopy.value.zeitauswahl,
+  () => {
+    if (isZeitauswahlStunde.value) {
+      chosenOptionsCopy.value.spitzenstunde = false;
+      chosenOptionsCopy.value.spitzenstundeKfz = false;
+      chosenOptionsCopy.value.spitzenstundeRad = false;
       chosenOptionsCopy.value.spitzenstundeFuss = false;
     }
   },

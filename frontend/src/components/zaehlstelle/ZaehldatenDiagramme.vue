@@ -92,6 +92,7 @@
               "
               :dimension="contentHeight"
               :data="belastungsplanDTO as LadeBelastungsplanQjsDTO"
+              :is-active-tab="activeTab === TAB_BELASTUNGSPLAN"
               @print="storeSvg($event)"
             />
 
