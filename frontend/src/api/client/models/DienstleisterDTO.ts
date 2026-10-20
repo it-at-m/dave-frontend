@@ -37,19 +37,19 @@ export interface DienstleisterDTO {
    * @type {string}
    * @memberof DienstleisterDTO
    */
-  name?: string;
+  name: string;
   /**
    *
    * @type {string}
    * @memberof DienstleisterDTO
    */
-  kennung?: string;
+  kennung: string;
   /**
    *
    * @type {Array<string>}
    * @memberof DienstleisterDTO
    */
-  emailAddresses?: Array<string>;
+  emailAddresses: Array<string>;
   /**
    *
    * @type {boolean}
@@ -76,6 +76,10 @@ export interface DienstleisterDTO {
 export function instanceOfDienstleisterDTO(
   value: object
 ): value is DienstleisterDTO {
+  if (!("name" in value) || value["name"] === undefined) return false;
+  if (!("kennung" in value) || value["kennung"] === undefined) return false;
+  if (!("emailAddresses" in value) || value["emailAddresses"] === undefined)
+    return false;
   return true;
 }
 
@@ -94,10 +98,9 @@ export function DienstleisterDTOFromJSONTyped(
     id: json["id"] == null ? undefined : json["id"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    name: json["name"] == null ? undefined : json["name"],
-    kennung: json["kennung"] == null ? undefined : json["kennung"],
-    emailAddresses:
-      json["emailAddresses"] == null ? undefined : json["emailAddresses"],
+    name: json["name"],
+    kennung: json["kennung"],
+    emailAddresses: json["emailAddresses"],
     active: json["active"] == null ? undefined : json["active"],
     erasable: json["erasable"] == null ? undefined : json["erasable"],
     emailAddressesAsString:

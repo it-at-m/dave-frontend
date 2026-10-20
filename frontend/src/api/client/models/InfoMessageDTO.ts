@@ -37,13 +37,13 @@ export interface InfoMessageDTO {
    * @type {Date}
    * @memberof InfoMessageDTO
    */
-  gueltigVon?: Date;
+  gueltigVon: Date;
   /**
    *
    * @type {Date}
    * @memberof InfoMessageDTO
    */
-  gueltigBis?: Date;
+  gueltigBis: Date;
   /**
    *
    * @type {boolean}
@@ -66,6 +66,10 @@ export function instanceOfInfoMessageDTO(
 ): value is InfoMessageDTO {
   if (!("id" in value) || value["id"] === undefined) return false;
   if (!("content" in value) || value["content"] === undefined) return false;
+  if (!("gueltigVon" in value) || value["gueltigVon"] === undefined)
+    return false;
+  if (!("gueltigBis" in value) || value["gueltigBis"] === undefined)
+    return false;
   if (!("gueltig" in value) || value["gueltig"] === undefined) return false;
   return true;
 }
@@ -84,10 +88,8 @@ export function InfoMessageDTOFromJSONTyped(
   return {
     id: json["id"],
     content: json["content"],
-    gueltigVon:
-      json["gueltigVon"] == null ? undefined : new Date(json["gueltigVon"]),
-    gueltigBis:
-      json["gueltigBis"] == null ? undefined : new Date(json["gueltigBis"]),
+    gueltigVon: new Date(json["gueltigVon"]),
+    gueltigBis: new Date(json["gueltigBis"]),
     gueltig: json["gueltig"],
     aktiv: json["aktiv"] == null ? undefined : json["aktiv"],
   };
@@ -108,14 +110,8 @@ export function InfoMessageDTOToJSONTyped(
   return {
     id: value["id"],
     content: value["content"],
-    gueltigVon:
-      value["gueltigVon"] == null
-        ? undefined
-        : value["gueltigVon"].toISOString().substring(0, 10),
-    gueltigBis:
-      value["gueltigBis"] == null
-        ? undefined
-        : value["gueltigBis"].toISOString().substring(0, 10),
+    gueltigVon: value["gueltigVon"].toISOString().substring(0, 10),
+    gueltigBis: value["gueltigBis"].toISOString().substring(0, 10),
     gueltig: value["gueltig"],
     aktiv: value["aktiv"],
   };

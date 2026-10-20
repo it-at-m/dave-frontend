@@ -6,11 +6,7 @@
   />
 </template>
 <script setup lang="ts">
-
-
-import type {
-  BelastungsplanMessquerschnitteDTO,
-} from "@/api/client";
+import type { BelastungsplanMessquerschnitteDTO } from "@/api/client";
 import type { LadeBelastungsplanMessquerschnittDataDTO } from "@/api/client/models/LadeBelastungsplanMessquerschnittDataDTO";
 import type { Ref } from "vue";
 

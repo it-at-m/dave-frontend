@@ -1,6 +1,5 @@
 import { Himmelsrichtung } from "@/api/client";
 
-
 export const himmelsRichtungenTextLong: Map<Himmelsrichtung, string> = new Map<
   Himmelsrichtung,
   string

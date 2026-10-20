@@ -181,6 +181,8 @@ export default class DefaultObjectCreator {
       content: "",
       gueltig: false,
       id: "",
+      gueltigVon: new Date(),
+      gueltigBis: new Date(),
     };
   }
 

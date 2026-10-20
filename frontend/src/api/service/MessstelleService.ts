@@ -13,8 +13,8 @@ export default class MessstelleService {
 
   static getMessstelleById(id: string): Promise<MessstelleInfo> {
     return handleOpenApiError(
-      this.API.readMessstelleInfoByMstIdRaw({ id, mstid: "" }).then(
-        (response) => response.raw.json()
+      this.API.readMessstelleInfoByIdRaw({ id }).then((response) =>
+        response.raw.json()
       ),
       "Beim Holen der Messstelle ist ein Fehler aufgetreten."
     );
@@ -22,8 +22,8 @@ export default class MessstelleService {
 
   static getMessstelleByMstId(mstid: string): Promise<MessstelleInfo> {
     return handleOpenApiError(
-      this.API.readMessstelleInfoByMstIdRaw({ id: "", mstid }).then(
-        (response) => response.raw.json()
+      this.API.readMessstelleInfoByMstIdRaw({ mstid }).then((response) =>
+        response.raw.json()
       ),
       "Beim Holen der Messstelle ist ein Fehler aufgetreten."
     );

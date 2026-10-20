@@ -79,13 +79,13 @@ export interface MessstelleOptionsDTO {
    * @type {Zeitblock}
    * @memberof MessstelleOptionsDTO
    */
-  zeitblock: Zeitblock;
+  zeitblock?: Zeitblock;
   /**
    *
    * @type {TagesTyp}
    * @memberof MessstelleOptionsDTO
    */
-  tagesTyp: TagesTyp;
+  tagesTyp?: TagesTyp;
   /**
    *
    * @type {ZaehldatenIntervall}
@@ -140,8 +140,6 @@ export function instanceOfMessstelleOptionsDTO(
   if (!("fahrzeuge" in value) || value["fahrzeuge"] === undefined) return false;
   if (!("zeitauswahl" in value) || value["zeitauswahl"] === undefined)
     return false;
-  if (!("zeitblock" in value) || value["zeitblock"] === undefined) return false;
-  if (!("tagesTyp" in value) || value["tagesTyp"] === undefined) return false;
   if (!("intervall" in value) || value["intervall"] === undefined) return false;
   if (
     !("messquerschnittIds" in value) ||
@@ -175,8 +173,12 @@ export function MessstelleOptionsDTOFromJSONTyped(
     zeitraum: json["zeitraum"],
     fahrzeuge: FahrzeugOptionsDTOFromJSON(json["fahrzeuge"]),
     zeitauswahl: json["zeitauswahl"],
-    zeitblock: ZeitblockFromJSON(json["zeitblock"]),
-    tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
+    zeitblock:
+      json["zeitblock"] == null
+        ? undefined
+        : ZeitblockFromJSON(json["zeitblock"]),
+    tagesTyp:
+      json["tagesTyp"] == null ? undefined : TagesTypFromJSON(json["tagesTyp"]),
     intervall: ZaehldatenIntervallFromJSON(json["intervall"]),
     messquerschnittIds: new Set(json["messquerschnittIds"]),
     rounding: RoundingFromJSON(json["rounding"]),
