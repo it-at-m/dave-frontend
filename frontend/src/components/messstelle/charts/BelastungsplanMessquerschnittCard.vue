@@ -6,7 +6,11 @@
   />
 </template>
 <script setup lang="ts">
-import type { BelastungsplanMessquerschnitteDTO } from "@/api/client";
+
+
+import type {
+  BelastungsplanMessquerschnitteDTO,
+} from "@/api/client";
 import type { LadeBelastungsplanMessquerschnittDataDTO } from "@/api/client/models/LadeBelastungsplanMessquerschnittDataDTO";
 import type { Ref } from "vue";
 
@@ -26,6 +30,7 @@ import {
 } from "@/types/enum/ZeitblockText";
 import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -771,10 +776,17 @@ const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
     return "0 - 24 Uhr";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
+    const zeitblock = useEnumUtils().toZeitblock(
+      chosenOptionsCopy.value.zeitblock
+    );
+    return zeitblock ? (zeitblockInfo.get(zeitblock)?.title ?? "") : "";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(chosenOptionsCopy.value.zeitblock)
-      ?.title;
+    const zeitblock = useEnumUtils().toZeitblock(
+      chosenOptionsCopy.value.zeitblock
+    );
+    return zeitblock
+      ? (zeitblockStuendlichInfo.get(zeitblock)?.title ?? "")
+      : "";
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||

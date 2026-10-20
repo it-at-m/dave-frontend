@@ -2,7 +2,7 @@ import type KeyVal from "@/types/common/KeyVal";
 
 import { Zeitblock } from "@/api/client";
 
-export const zeitblockInfo = new Map<string, KeyVal>([
+export const zeitblockInfo = new Map<Zeitblock, KeyVal>([
   [Zeitblock.Zb0006, { title: "0 - 6 Uhr", value: Zeitblock.Zb0006 }],
   [Zeitblock.Zb0610, { title: "6 - 10 Uhr", value: Zeitblock.Zb0610 }],
   [Zeitblock.Zb1015, { title: "10 - 15 Uhr", value: Zeitblock.Zb1015 }],
@@ -28,7 +28,7 @@ export const zeitblockOrder = [
 
 export const BeschreibungToZeitblock = new Map([...zeitblockInfo].reverse());
 
-export const zeitblockStuendlichInfo = new Map<string, KeyVal>([
+export const zeitblockStuendlichInfo = new Map<Zeitblock, KeyVal>([
   [Zeitblock.Zb0001, { value: Zeitblock.Zb0001, title: "0 - 1 Uhr" }],
   [Zeitblock.Zb0102, { value: Zeitblock.Zb0102, title: "1 - 2 Uhr" }],
   [Zeitblock.Zb0203, { value: Zeitblock.Zb0203, title: "2 - 3 Uhr" }],
