@@ -1,6 +1,9 @@
 import { ZaehldatenIntervall } from "@/api/client";
 
-export const ZaehldatenIntervallToBeschreibung = new Map<string, string>([
+export const ZaehldatenIntervallToBeschreibung = new Map<
+  ZaehldatenIntervall,
+  string
+>([
   [ZaehldatenIntervall.StundeViertel, "15 Min"],
   [ZaehldatenIntervall.StundeHalb, "30 Min"],
   [ZaehldatenIntervall.StundeKomplett, "60 Min"],
