@@ -5972,9 +5972,7 @@ function emitSvgAsBlob(): void {
   emits("print", blob);
 }
 
-function isFjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanFjsDTO {
+function isFjsBelastungsplan(data: any): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 </script>

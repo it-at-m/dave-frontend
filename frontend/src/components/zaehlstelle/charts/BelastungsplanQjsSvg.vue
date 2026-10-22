@@ -1437,9 +1437,7 @@ function emitSvgAsBlob(): void {
   emits("print", blob);
 }
 
-function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanQjsDTO {
+function isQjsBelastungsplan(data: any): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 </script>

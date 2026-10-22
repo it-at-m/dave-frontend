@@ -160,7 +160,7 @@ function draw() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -209,7 +209,7 @@ function drawArrowsPointingSouth(
 
 function addSumSouthIfNecessary(
   arrayOfDataForDirectionSouth:
-    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -303,7 +303,7 @@ function drawTotal() {
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -352,7 +352,7 @@ function drawArrowsPointingNorth(
 
 function addSumNorthIfNecessary(
   arrayOfDataForDirectionNorth:
-    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (

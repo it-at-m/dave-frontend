@@ -152,7 +152,7 @@ function drawStreetName() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -190,7 +190,7 @@ function drawArrowsPointingSouth(
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
