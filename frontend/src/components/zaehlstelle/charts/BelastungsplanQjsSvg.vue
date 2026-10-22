@@ -927,10 +927,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  AbstractLadeBelastungsplanDTOObject,
-  LadeBelastungsplanQjsDTO,
-} from "@/api/client";
+import type { LadeBelastungsplanQjsDTO } from "@/api/client";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
@@ -1421,9 +1418,7 @@ function emitSvgAsBlob(): void {
   emits("print", blob);
 }
 
-function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanQjsDTO {
+function isQjsBelastungsplan(data: any): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 </script>

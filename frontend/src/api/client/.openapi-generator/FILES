@@ -50,7 +50,6 @@ apis/ZeitintervallSearchControllerApi.ts
 apis/index.ts
 index.ts
 models/AbstractJsonSchemaPropertyObject.ts
-models/AbstractLadeBelastungsplanDTOObject.ts
 models/AuffaelligeTageDTO.ts
 models/AuswertungMessstelleWithFileDTO.ts
 models/AuswertungsZeitraum.ts
@@ -148,8 +147,8 @@ models/LadeBelastungsplanQuDTO.ts
 models/LadeMesswerteDTO.ts
 models/LadeMesswerteListenausgabeDTO.ts
 models/LadeProcessedMesswerteDTO.ts
+models/LadeProcessedZaehldatenBelastungsplanDTO.ts
 models/LadeProcessedZaehldatenDTO.ts
-models/LadeProcessedZaehldatenDTOZaehldatenBelastungsplan.ts
 models/LadeZaehldatenHeatmapDTO.ts
 models/LadeZaehldatenSteplineDTO.ts
 models/LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInner.ts

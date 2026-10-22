@@ -43,7 +43,7 @@ export interface EmailAddressDTO {
    * @type {string}
    * @memberof EmailAddressDTO
    */
-  emailAddress?: string;
+  emailAddress: string;
 }
 
 /**
@@ -52,6 +52,8 @@ export interface EmailAddressDTO {
 export function instanceOfEmailAddressDTO(
   value: object
 ): value is EmailAddressDTO {
+  if (!("emailAddress" in value) || value["emailAddress"] === undefined)
+    return false;
   return true;
 }
 
@@ -72,8 +74,7 @@ export function EmailAddressDTOFromJSONTyped(
       json["entityVersion"] == null ? undefined : json["entityVersion"],
     participantId:
       json["participantId"] == null ? undefined : json["participantId"],
-    emailAddress:
-      json["emailAddress"] == null ? undefined : json["emailAddress"],
+    emailAddress: json["emailAddress"],
   };
 }
 

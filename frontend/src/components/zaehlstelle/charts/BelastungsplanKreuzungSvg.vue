@@ -8,7 +8,6 @@
 
 <script setup lang="ts">
 import type {
-  AbstractLadeBelastungsplanDTOObject,
   BearbeiteKnotenarmDTO,
   LadeBelastungsplanDTO,
   LeseZaehlstelleDTO,
@@ -831,9 +830,7 @@ function redraw() {
   });
 }
 
-function isDefaultBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanDTO {
+function isDefaultBelastungsplan(data: any): data is LadeBelastungsplanDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 

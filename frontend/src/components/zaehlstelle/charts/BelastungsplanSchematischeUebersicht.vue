@@ -38,7 +38,6 @@
 
 <script setup lang="ts">
 import type {
-  AbstractLadeBelastungsplanDTOObject,
   LadeBelastungsplanDTO,
   LadeBelastungsplanFjsDTO,
   LadeBelastungsplanQjsDTO,
@@ -70,21 +69,15 @@ function emitPrint(event: any) {
   emits("print", event);
 }
 
-function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanQjsDTO {
+function isQjsBelastungsplan(data: any): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 
-function isFjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanFjsDTO {
+function isFjsBelastungsplan(data: any): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 
-function isQuBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanQuDTO {
+function isQuBelastungsplan(data: any): data is LadeBelastungsplanQuDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>

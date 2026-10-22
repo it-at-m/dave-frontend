@@ -35,9 +35,12 @@ export interface GetBearbeiteMessstelleRequest {
   id: string;
 }
 
+export interface ReadMessstelleInfoByIdRequest {
+  id: string;
+}
+
 export interface ReadMessstelleInfoByMstIdRequest {
   mstid: string;
-  id: string;
 }
 
 export interface UpdateMessstelleRequest {
@@ -136,6 +139,57 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
 
   /**
    */
+  async readMessstelleInfoByIdRaw(
+    requestParameters: ReadMessstelleInfoByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ReadMessstelleInfoDTO>> {
+    if (requestParameters["id"] == null) {
+      throw new runtime.RequiredError(
+        "id",
+        'Required parameter "id" was null or undefined when calling readMessstelleInfoById().'
+      );
+    }
+
+    const queryParameters: any = {};
+
+    if (requestParameters["id"] != null) {
+      queryParameters["id"] = requestParameters["id"];
+    }
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    let urlPath = `/messstelle/info/byId`;
+
+    const response = await this.request(
+      {
+        path: urlPath,
+        method: "GET",
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides
+    );
+
+    return new runtime.JSONApiResponse(response, (jsonValue) =>
+      ReadMessstelleInfoDTOFromJSON(jsonValue)
+    );
+  }
+
+  /**
+   */
+  async readMessstelleInfoById(
+    requestParameters: ReadMessstelleInfoByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<ReadMessstelleInfoDTO> {
+    const response = await this.readMessstelleInfoByIdRaw(
+      requestParameters,
+      initOverrides
+    );
+    return await response.value();
+  }
+
+  /**
+   */
   async readMessstelleInfoByMstIdRaw(
     requestParameters: ReadMessstelleInfoByMstIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
@@ -147,26 +201,15 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
       );
     }
 
-    if (requestParameters["id"] == null) {
-      throw new runtime.RequiredError(
-        "id",
-        'Required parameter "id" was null or undefined when calling readMessstelleInfoByMstId().'
-      );
-    }
-
     const queryParameters: any = {};
 
     if (requestParameters["mstid"] != null) {
       queryParameters["mstid"] = requestParameters["mstid"];
     }
 
-    if (requestParameters["id"] != null) {
-      queryParameters["id"] = requestParameters["id"];
-    }
-
     const headerParameters: runtime.HTTPHeaders = {};
 
-    let urlPath = `/messstelle/info`;
+    let urlPath = `/messstelle/info/ByMstId`;
 
     const response = await this.request(
       {

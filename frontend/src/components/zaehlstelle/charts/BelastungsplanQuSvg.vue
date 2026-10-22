@@ -3420,7 +3420,6 @@
 
 <script setup lang="ts">
 import type {
-  AbstractLadeBelastungsplanDTOObject,
   BearbeiteKnotenarmDTO,
   LadeBelastungsplanQuDTO,
 } from "@/api/client";
@@ -3557,6 +3556,7 @@ function getArrowZaehlwertOrZero(knotenarm: number, richtung: Himmelsrichtung) {
  * @return Gefundene Summe oder 0
  */
 function getSumArrowsKnotenarmOrZero(knotenarm: number) {
+  console.log("getSumArrowsKnotenarmOrZero");
   if (!isQuBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
@@ -3856,9 +3856,7 @@ watch(
   { deep: true, immediate: true }
 );
 
-function isQuBelastungsplan(
-  data: AbstractLadeBelastungsplanDTOObject | undefined
-): data is LadeBelastungsplanQuDTO {
+function isQuBelastungsplan(data: any): data is LadeBelastungsplanQuDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>

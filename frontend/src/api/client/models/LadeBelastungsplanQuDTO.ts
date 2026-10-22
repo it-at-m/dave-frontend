@@ -12,16 +12,9 @@
  * Do not edit the class manually.
  */
 
-import type { AbstractLadeBelastungsplanDTOObject } from "./AbstractLadeBelastungsplanDTOObject";
 import type { BelastungsplanQuDataDTO } from "./BelastungsplanQuDataDTO";
 
 import { mapValues } from "../runtime";
-import {
-  AbstractLadeBelastungsplanDTOObjectFromJSON,
-  AbstractLadeBelastungsplanDTOObjectFromJSONTyped,
-  AbstractLadeBelastungsplanDTOObjectToJSON,
-  AbstractLadeBelastungsplanDTOObjectToJSONTyped,
-} from "./AbstractLadeBelastungsplanDTOObject";
 import {
   BelastungsplanQuDataDTOFromJSON,
   BelastungsplanQuDataDTOFromJSONTyped,
@@ -34,8 +27,25 @@ import {
  * @export
  * @interface LadeBelastungsplanQuDTO
  */
-export interface LadeBelastungsplanQuDTO
-  extends AbstractLadeBelastungsplanDTOObject {
+export interface LadeBelastungsplanQuDTO {
+  /**
+   *
+   * @type {string}
+   * @memberof LadeBelastungsplanQuDTO
+   */
+  belastungsplanTyp: LadeBelastungsplanQuDTOBelastungsplanTypEnum;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof LadeBelastungsplanQuDTO
+   */
+  streets: Array<string>;
+  /**
+   *
+   * @type {boolean}
+   * @memberof LadeBelastungsplanQuDTO
+   */
+  kreisverkehr: boolean;
   /**
    *
    * @type {BelastungsplanQuDataDTO}
@@ -57,11 +67,28 @@ export interface LadeBelastungsplanQuDTO
 }
 
 /**
+ * @export
+ */
+export const LadeBelastungsplanQuDTOBelastungsplanTypEnum = {
+  Qu: "QU",
+} as const;
+export type LadeBelastungsplanQuDTOBelastungsplanTypEnum =
+  (typeof LadeBelastungsplanQuDTOBelastungsplanTypEnum)[keyof typeof LadeBelastungsplanQuDTOBelastungsplanTypEnum];
+
+/**
  * Check if a given object implements the LadeBelastungsplanQuDTO interface.
  */
 export function instanceOfLadeBelastungsplanQuDTO(
   value: object
 ): value is LadeBelastungsplanQuDTO {
+  if (
+    !("belastungsplanTyp" in value) ||
+    value["belastungsplanTyp"] === undefined
+  )
+    return false;
+  if (!("streets" in value) || value["streets"] === undefined) return false;
+  if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
+    return false;
   if (!("value1" in value) || value["value1"] === undefined) return false;
   if (!("value2" in value) || value["value2"] === undefined) return false;
   if (!("value3" in value) || value["value3"] === undefined) return false;
@@ -82,7 +109,9 @@ export function LadeBelastungsplanQuDTOFromJSONTyped(
     return json;
   }
   return {
-    ...AbstractLadeBelastungsplanDTOObjectFromJSONTyped(json, true),
+    belastungsplanTyp: json["belastungsplanTyp"],
+    streets: json["streets"],
+    kreisverkehr: json["kreisverkehr"],
     value1: BelastungsplanQuDataDTOFromJSON(json["value1"]),
     value2: BelastungsplanQuDataDTOFromJSON(json["value2"]),
     value3: BelastungsplanQuDataDTOFromJSON(json["value3"]),
@@ -104,7 +133,9 @@ export function LadeBelastungsplanQuDTOToJSONTyped(
   }
 
   return {
-    ...AbstractLadeBelastungsplanDTOObjectToJSONTyped(value, true),
+    belastungsplanTyp: value["belastungsplanTyp"],
+    streets: value["streets"],
+    kreisverkehr: value["kreisverkehr"],
     value1: BelastungsplanQuDataDTOToJSON(value["value1"]),
     value2: BelastungsplanQuDataDTOToJSON(value["value2"]),
     value3: BelastungsplanQuDataDTOToJSON(value["value3"]),

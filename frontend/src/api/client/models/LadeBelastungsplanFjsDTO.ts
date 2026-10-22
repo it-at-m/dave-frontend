@@ -12,16 +12,9 @@
  * Do not edit the class manually.
  */
 
-import type { AbstractLadeBelastungsplanDTOObject } from "./AbstractLadeBelastungsplanDTOObject";
 import type { BelastungsplanFjsDataDTO } from "./BelastungsplanFjsDataDTO";
 
 import { mapValues } from "../runtime";
-import {
-  AbstractLadeBelastungsplanDTOObjectFromJSON,
-  AbstractLadeBelastungsplanDTOObjectFromJSONTyped,
-  AbstractLadeBelastungsplanDTOObjectToJSON,
-  AbstractLadeBelastungsplanDTOObjectToJSONTyped,
-} from "./AbstractLadeBelastungsplanDTOObject";
 import {
   BelastungsplanFjsDataDTOFromJSON,
   BelastungsplanFjsDataDTOFromJSONTyped,
@@ -34,8 +27,25 @@ import {
  * @export
  * @interface LadeBelastungsplanFjsDTO
  */
-export interface LadeBelastungsplanFjsDTO
-  extends AbstractLadeBelastungsplanDTOObject {
+export interface LadeBelastungsplanFjsDTO {
+  /**
+   *
+   * @type {string}
+   * @memberof LadeBelastungsplanFjsDTO
+   */
+  belastungsplanTyp: LadeBelastungsplanFjsDTOBelastungsplanTypEnum;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof LadeBelastungsplanFjsDTO
+   */
+  streets: Array<string>;
+  /**
+   *
+   * @type {boolean}
+   * @memberof LadeBelastungsplanFjsDTO
+   */
+  kreisverkehr: boolean;
   /**
    *
    * @type {BelastungsplanFjsDataDTO}
@@ -57,11 +67,28 @@ export interface LadeBelastungsplanFjsDTO
 }
 
 /**
+ * @export
+ */
+export const LadeBelastungsplanFjsDTOBelastungsplanTypEnum = {
+  Fjs: "FJS",
+} as const;
+export type LadeBelastungsplanFjsDTOBelastungsplanTypEnum =
+  (typeof LadeBelastungsplanFjsDTOBelastungsplanTypEnum)[keyof typeof LadeBelastungsplanFjsDTOBelastungsplanTypEnum];
+
+/**
  * Check if a given object implements the LadeBelastungsplanFjsDTO interface.
  */
 export function instanceOfLadeBelastungsplanFjsDTO(
   value: object
 ): value is LadeBelastungsplanFjsDTO {
+  if (
+    !("belastungsplanTyp" in value) ||
+    value["belastungsplanTyp"] === undefined
+  )
+    return false;
+  if (!("streets" in value) || value["streets"] === undefined) return false;
+  if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
+    return false;
   if (!("value1" in value) || value["value1"] === undefined) return false;
   if (!("value2" in value) || value["value2"] === undefined) return false;
   if (!("value3" in value) || value["value3"] === undefined) return false;
@@ -82,7 +109,9 @@ export function LadeBelastungsplanFjsDTOFromJSONTyped(
     return json;
   }
   return {
-    ...AbstractLadeBelastungsplanDTOObjectFromJSONTyped(json, true),
+    belastungsplanTyp: json["belastungsplanTyp"],
+    streets: json["streets"],
+    kreisverkehr: json["kreisverkehr"],
     value1: BelastungsplanFjsDataDTOFromJSON(json["value1"]),
     value2: BelastungsplanFjsDataDTOFromJSON(json["value2"]),
     value3: BelastungsplanFjsDataDTOFromJSON(json["value3"]),
@@ -104,7 +133,9 @@ export function LadeBelastungsplanFjsDTOToJSONTyped(
   }
 
   return {
-    ...AbstractLadeBelastungsplanDTOObjectToJSONTyped(value, true),
+    belastungsplanTyp: value["belastungsplanTyp"],
+    streets: value["streets"],
+    kreisverkehr: value["kreisverkehr"],
     value1: BelastungsplanFjsDataDTOToJSON(value["value1"]),
     value2: BelastungsplanFjsDataDTOToJSON(value["value2"]),
     value3: BelastungsplanFjsDataDTOToJSON(value["value3"]),
