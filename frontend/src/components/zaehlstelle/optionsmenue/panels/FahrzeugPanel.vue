@@ -223,6 +223,7 @@
                 v-model="chosenOptionsCopy.radverkehr"
                 :label="'Radverkehr (Rad)'"
                 :hint="getHintToDisplay('RAD')"
+                class="checkbox-rad"
                 :color="getCheckboxColor('RAD')"
                 :persistent-hint="showHintForCheckboxRad"
                 :disabled="isTypeDisabled('RAD')"
@@ -740,9 +741,6 @@ function selectOrDeselectAllVerkehrsarten() {
 function getHintToDisplay(type: string): string {
   // KFZ, SV und GV werden immer im Belastungsplan angezeigt, wenn aktiv
   let hint = "";
-  if (isTypeDisabled(type)) {
-    return ``;
-  }
   switch (type) {
     case "RAD": {
       /**
@@ -1035,5 +1033,13 @@ watch(
 /* Verschiebt den Hint der Checkboxen in der zweiten Spalte leicht nach rechts */
 .checkbox-2column .v-messages {
   padding-left: 5px;
+}
+
+/* Hint trotz deaktivierter Radverkehr-Checkbox vollständig lesbar lassen */
+.checkbox-rad.v-input--disabled .v-input__details {
+  opacity: 1;
+}
+.checkbox-rad.v-input--disabled .v-input__details .v-messages {
+  opacity: 0.6;
 }
 </style>
