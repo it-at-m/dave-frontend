@@ -3,7 +3,8 @@ import { computed } from "vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
+import { zeitblockInfo } from "@/types/enum/ZeitblockText";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 export function useBelastungsplanAnzeigeUtils() {
   const zaehlstelleStore = useZaehlstelleStore();
@@ -91,11 +92,10 @@ export function useBelastungsplanAnzeigeUtils() {
       zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
       zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
     ) {
+      const zb = useEnumUtils().toZeitblock(zeitblock);
+      const title = zb ? zeitblockInfo.get(zb)?.title : "Unbekannt";
       zeitauswahlWithZeitblock =
-        zeitauswahlWithZeitblock +
-        " (Block " +
-        zeitblockInfo.get(zeitblock)?.title +
-        ")";
+        zeitauswahlWithZeitblock + " (Block " + title + ")";
     }
     return zeitauswahlWithZeitblock;
   }
