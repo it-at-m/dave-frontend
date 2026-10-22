@@ -121,6 +121,7 @@
                 v-model="chosenOptionsCopy.schwerverkehrsanteilProzent"
                 :label="'Schwerverkehrsanteil [%]'"
                 :hint="getHintToDisplay('SV_P')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('SV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.schwerverkehrsanteilProzent ||
@@ -184,6 +185,7 @@
                 v-model="chosenOptionsCopy.gueterverkehrsanteilProzent"
                 :label="'Güterverkehrsanteil [%]'"
                 :hint="getHintToDisplay('GV_P')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('GV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.gueterverkehrsanteilProzent ||
@@ -244,6 +246,7 @@
                 v-model="chosenOptionsCopy.fussverkehr"
                 :label="'Fußverkehr'"
                 :hint="getHintToDisplay('FUSS')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('FUSS')"
                 :persistent-hint="
                   isOnlyRadAndFussSelected ||
@@ -1027,3 +1030,10 @@ watch(
   }
 );
 </script>
+
+<style>
+/* Verschiebt den Hint der Checkboxen in der zweiten Spalte leicht nach rechts */
+.checkbox-2column .v-messages {
+  padding-left: 5px;
+}
+</style>
