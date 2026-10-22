@@ -6,6 +6,8 @@ import type {
 } from "@/api/client";
 import type StartAndEndDate from "@/types/common/StartAndEndDate";
 
+import { useEnumUtils } from "@/util/EnumUtils";
+
 export default class MessstelleOptionsMapper {
   /**
    * Wandelt das Frontend-Objekt in das Backend-DTO um.
@@ -37,13 +39,15 @@ export default class MessstelleOptionsMapper {
     }
 
     const zeitraum: Date[] = [startDate, endDate];
+    const zeitblock = useEnumUtils().toZeitblock(frontendData.zeitblock);
+    const tagesTyp = useEnumUtils().toTagesTyp(frontendData.tagesTyp);
 
     return {
       zeitraum: zeitraum,
       fahrzeuge: frontendData.fahrzeuge,
       zeitauswahl: frontendData.zeitauswahl,
-      zeitblock: JSON.parse(frontendData.zeitblock),
-      tagesTyp: JSON.parse(frontendData.tagesTyp),
+      zeitblock: zeitblock ? zeitblock : undefined,
+      tagesTyp: tagesTyp ? tagesTyp : undefined,
       intervall: frontendData.intervall,
       messquerschnittIds: new Set(frontendData.messquerschnittIds),
       rounding: frontendData.rounding,

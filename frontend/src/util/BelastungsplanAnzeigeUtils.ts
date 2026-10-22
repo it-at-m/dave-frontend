@@ -1,8 +1,12 @@
 import { computed } from "vue";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { zeitblockInfo } from "@/types/enum/Zeitblock";
 
-export function belastungsplanAnzeigeUtils() {
+export function useBelastungsplanAnzeigeUtils() {
+  const zaehlstelleStore = useZaehlstelleStore();
   const messstelleStore = useMessstelleStore();
 
   const chosenOptionsCopy = computed(() => {
@@ -61,5 +65,45 @@ export function belastungsplanAnzeigeUtils() {
     );
   });
 
-  return { isGvpInBelastungsPlan, isSvpInBelastungsPlan };
+  const zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle =
+    computed<string>(() => {
+      return getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen(
+        zaehlstelleStore.getFilteroptions.zeitauswahl,
+        zaehlstelleStore.getFilteroptions.zeitblock
+      );
+    });
+
+  const zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle =
+    computed<string>(() => {
+      return getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen(
+        messstelleStore.getFilteroptions.zeitauswahl,
+        messstelleStore.getFilteroptions.zeitblock
+      );
+    });
+
+  function getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen(
+    zeitauswahl: string,
+    zeitblock: string
+  ): string {
+    let zeitauswahlWithZeitblock = zeitauswahl;
+    if (
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    ) {
+      zeitauswahlWithZeitblock =
+        zeitauswahlWithZeitblock +
+        " (Block " +
+        zeitblockInfo.get(zeitblock)?.title +
+        ")";
+    }
+    return zeitauswahlWithZeitblock;
+  }
+
+  return {
+    isGvpInBelastungsPlan,
+    isSvpInBelastungsPlan,
+    zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle,
+    zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle,
+  };
 }

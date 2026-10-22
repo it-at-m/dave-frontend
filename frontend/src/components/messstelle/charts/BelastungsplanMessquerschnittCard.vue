@@ -24,8 +24,9 @@ import {
   zeitblockInfo,
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockText";
-import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -58,8 +59,11 @@ const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 
 const startX = ref(0);
 const startY = ref(0);
-const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
-  belastungsplanAnzeigeUtils();
+const {
+  isSvpInBelastungsPlan,
+  isGvpInBelastungsPlan,
+  zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle,
+} = useBelastungsplanAnzeigeUtils();
 const props = defineProps<Props>();
 
 const svgHeight = computed(() => {
@@ -156,7 +160,7 @@ function draw() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessquerschnittDataDTO[];
+    data: LadeBelastungsplanMessqueschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -205,7 +209,7 @@ function drawArrowsPointingSouth(
 
 function addSumSouthIfNecessary(
   arrayOfDataForDirectionSouth:
-    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -299,7 +303,7 @@ function drawTotal() {
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessquerschnittDataDTO[];
+    data: LadeBelastungsplanMessqueschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -348,7 +352,7 @@ function drawArrowsPointingNorth(
 
 function addSumNorthIfNecessary(
   arrayOfDataForDirectionNorth:
-    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -764,17 +768,24 @@ function drawLinienStaerke() {
 }
 
 const getZeitauswahlText = computed(() => {
-  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${chosenOptionsCopy.value.zeitauswahl}`;
+  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle.value}`;
 });
 
 const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
     return "0 - 24 Uhr";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
+    const zeitblock = useEnumUtils().toZeitblock(
+      chosenOptionsCopy.value.zeitblock
+    );
+    return zeitblock ? (zeitblockInfo.get(zeitblock)?.title ?? "") : "";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(chosenOptionsCopy.value.zeitblock)
-      ?.title;
+    const zeitblock = useEnumUtils().toZeitblock(
+      chosenOptionsCopy.value.zeitblock
+    );
+    return zeitblock
+      ? (zeitblockStuendlichInfo.get(zeitblock)?.title ?? "")
+      : "";
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||

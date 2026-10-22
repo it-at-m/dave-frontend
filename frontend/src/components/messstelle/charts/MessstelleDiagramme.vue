@@ -164,7 +164,7 @@
 </template>
 <script setup lang="ts">
 import type { CsvDTO, LadeProcessedMesswerteDTO } from "@/api/client";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { cloneDeep } from "lodash";
@@ -337,7 +337,7 @@ function loadData(): void {
   loadProcessedChartData();
 
   if (!messstelleStore.isInHistory) {
-    const messstelle: MessstelleInfo = messstelleStore.getMessstelleInfo;
+    const messstelle: MessstelleInfoType = messstelleStore.getMessstelleInfo;
     historyStore.addHistoryItem(
       new MessstelleHistoryItem(
         messstelle.id,

@@ -105,9 +105,9 @@
   </v-container>
 </template>
 <script setup lang="ts">
-import type { Himmelsrichtung } from "@/api/client";
+import type { Himmelsrichtung, Zeitblock } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { isEmpty } from "lodash";
@@ -137,7 +137,7 @@ const display = useDisplay();
 const enumUtils = useEnumUtils();
 
 interface Props {
-  messstelle: MessstelleInfo;
+  messstelle: MessstelleInfoType;
 }
 
 defineProps<Props>();
@@ -174,12 +174,15 @@ const zeitraum = computed(() => {
 
 const zeitauswahl = computed(() => {
   let text = Zeitauswahl.TAGESWERT.valueOf();
-  const chosenBlock: KeyVal | undefined = zeitblockInfo.get(
+  const zeitblock: Zeitblock | undefined = useEnumUtils().toZeitblock(
     filterOptionsMessstelle.value.zeitblock
   );
-  const chosenStunde = zeitblockStuendlichInfo.get(
-    filterOptionsMessstelle.value.zeitblock
-  );
+  const chosenBlock: KeyVal | undefined = zeitblock
+    ? zeitblockInfo.get(zeitblock)
+    : undefined;
+  const chosenStunde: KeyVal | undefined = zeitblock
+    ? zeitblockStuendlichInfo.get(zeitblock)
+    : undefined;
   if (
     Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
     chosenBlock

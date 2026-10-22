@@ -2,6 +2,7 @@ import type {
   AuswertungsZeitraum,
   FahrzeugOptionsDTO,
   MessstelleAuswertungIdDTO,
+  MessstelleAuswertungOptionsDTO,
   TagesTyp,
 } from "@/api/client";
 
@@ -12,11 +13,11 @@ export class MessstelleAuswertungOptionsMapper {
     zeitraum: Array<AuswertungsZeitraum>;
     messstelleAuswertungIds: Array<MessstelleAuswertungIdDTO>;
     fahrzeuge: FahrzeugOptionsDTO;
-  }): any {
+  }): MessstelleAuswertungOptionsDTO {
     return {
       jahre: frontendData.jahre.map((jahr) => parseInt(jahr, 10)), // falls jahre als string
       tagesTyp: frontendData.tagesTyp,
-      zeitraum: frontendData.zeitraum, // bereits Array<AuswertungsZeitraum>
+      zeitraum: frontendData.zeitraum,
       messstelleAuswertungIds: new Set(frontendData.messstelleAuswertungIds),
       fahrzeuge: frontendData.fahrzeuge,
     };

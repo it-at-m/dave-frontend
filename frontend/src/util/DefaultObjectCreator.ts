@@ -20,7 +20,7 @@ import type { ZaehlstelleTooltipDTO } from "@/api/client/models/ZaehlstelleToolt
 import type { ZeitauswahlDTO } from "@/api/client/models/ZeitauswahlDTO";
 import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
@@ -71,7 +71,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessstelleInfoDTO(): MessstelleInfo {
+  public static createDefaultMessstelleInfoDTO(): MessstelleInfoType {
     return {
       messfaehigkeiten: [],
       detektierteVerkehrsart: Verkehrsart.Kfz,
@@ -181,6 +181,8 @@ export default class DefaultObjectCreator {
       content: "",
       gueltig: false,
       id: "",
+      gueltigVon: new Date(),
+      gueltigBis: new Date(),
     };
   }
 

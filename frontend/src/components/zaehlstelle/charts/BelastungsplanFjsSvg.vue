@@ -57,7 +57,7 @@
                 id="tspan12"
                 style="font-weight: bold"
               >
-                {{ optionen.radverkehr ? "Rad" : "FUSS" }}
+                {{ optionen.radverkehr ? "RAD" : "FUSS" }}
               </tspan>
             </tspan>
           </text>
@@ -143,7 +143,9 @@
                   id="tspan19"
                   style="font-weight: bold"
                 >
-                  {{ optionen.zeitauswahl }}
+                  {{
+                    belastungsplanAnzeigeUtils.zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle
+                  }}
                 </tspan>
               </tspan>
             </text>
@@ -5081,6 +5083,7 @@ import {
   zeitblockInfo,
   zeitblockStuendlichInfo,
 } from "@/types/enum/ZeitblockText";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
 import { useStrassennameUtils } from "@/util/StrassennameUtils";
@@ -5102,6 +5105,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const fjs = useFjs();
+const belastungsplanAnzeigeUtils = useBelastungsplanAnzeigeUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
 const strassennameUtils = useStrassennameUtils();
 
@@ -5968,7 +5972,9 @@ function emitSvgAsBlob(): void {
   emits("print", blob);
 }
 
-function isFjsBelastungsplan(data: any): data is LadeBelastungsplanFjsDTO {
+function isFjsBelastungsplan(
+  data: AbstractLadeBelastungsplanDTOObject | undefined
+): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 </script>

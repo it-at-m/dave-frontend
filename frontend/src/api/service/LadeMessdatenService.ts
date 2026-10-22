@@ -1,7 +1,4 @@
-import type {
-  MessstelleOptionsDTO as GeneratedMessstelleOptionsDTO,
-  LadeProcessedMesswerteDTO,
-} from "@/api/client";
+import type { LadeProcessedMesswerteDTO } from "@/api/client";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { MesswerteMessquerschnittControllerApi } from "@/api/client/apis";

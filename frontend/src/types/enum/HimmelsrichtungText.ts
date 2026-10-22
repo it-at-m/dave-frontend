@@ -1,7 +1,7 @@
 import { Himmelsrichtung } from "@/api/client";
 
-export const himmelsRichtungenTextLong: Map<string, string> = new Map<
-  string,
+export const himmelsRichtungenTextLong: Map<Himmelsrichtung, string> = new Map<
+  Himmelsrichtung,
   string
 >([
   [Himmelsrichtung.N, "Nord"],
@@ -14,8 +14,8 @@ export const himmelsRichtungenTextLong: Map<string, string> = new Map<
   [Himmelsrichtung.Nw, "Nordwest"],
 ]);
 
-export const himmelsRichtungenTextShort: Map<string, string> = new Map<
-  string,
+export const himmelsRichtungenTextShort: Map<Himmelsrichtung, string> = new Map<
+  Himmelsrichtung,
   string
 >([
   [Himmelsrichtung.N, "N"],

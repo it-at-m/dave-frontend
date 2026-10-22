@@ -1,5 +1,5 @@
 import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { cloneDeep, isNil, toArray } from "lodash";
@@ -14,7 +14,7 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 export const useMessstelleStore = defineStore("messstelleStore", () => {
   const dateUtils = useDateUtils();
 
-  const messstelleInfo = ref<MessstelleInfo>({} as MessstelleInfo);
+  const messstelleInfo = ref<MessstelleInfoType>({} as MessstelleInfoType);
   const activeTab = ref(0);
   const filterOptions = ref<MessstelleOptions>(
     DefaultObjectCreator.createDefaultMessstelleOptions()
@@ -64,7 +64,7 @@ export const useMessstelleStore = defineStore("messstelleStore", () => {
   function setActiveTab(payload: number) {
     activeTab.value = payload;
   }
-  function setMessstelleInfo(payload: MessstelleInfo) {
+  function setMessstelleInfo(payload: MessstelleInfoType) {
     messstelleInfo.value = payload;
   }
   function setFilteroptions(payload: MessstelleOptions) {

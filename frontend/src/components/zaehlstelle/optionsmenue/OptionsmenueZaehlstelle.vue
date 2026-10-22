@@ -43,7 +43,10 @@
 
               <verkehrsbeziehungen-panel v-model="chosenOptions" />
 
-              <zaehlungsvergleich-panel v-model="chosenOptions" />
+              <zaehlungsvergleich-panel
+                v-model="chosenOptions"
+                :reset-notification="resetNotificationVergleichszaehlung"
+              />
 
               <darstellungsoptionen-panel v-model="chosenOptions" />
             </v-expansion-panels>
@@ -115,6 +118,7 @@ const activePanel = ref(-1);
 const chosenOptions = ref(
   DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
 );
+const resetNotificationVergleichszaehlung = ref(0);
 
 const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
@@ -308,6 +312,8 @@ function setDefaultOptionsForZaehlung() {
     strassenseite: vb.strassenseite,
   }));
 
+  optionsCopy.idVergleichszaehlungZeitreihe = null;
+
   chosenOptions.value = optionsCopy;
   saveOptions();
 }
@@ -362,6 +368,9 @@ function resetOptionsmenu() {
 function resetOptions() {
   zaehlstelleStore.resetFilteroptions();
   setDefaultOptionsForZaehlung();
+
+  // Signal an Panel senden, dass ein Reset erfolgte
+  resetNotificationVergleichszaehlung.value++;
 }
 
 function resetSizeBelastungsplan() {

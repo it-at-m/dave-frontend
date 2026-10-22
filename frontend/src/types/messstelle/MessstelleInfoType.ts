@@ -3,7 +3,7 @@ import type BaseEntity from "@/types/common/BaseEntity";
 import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
 import type MessquerschnittInfo from "@/types/messstelle/MessquerschnittInfo";
 
-export default interface MessstelleInfo extends BaseEntity {
+export default interface MessstelleInfoType extends BaseEntity {
   mstId: string;
   standort: string;
   name: string;

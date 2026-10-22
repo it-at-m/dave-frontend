@@ -274,7 +274,8 @@ const zeitblockValues = computed<Array<KeyVal>>(() => {
   if (blocks.length > 0) {
     // Select Control mit den entsprechenden text/value Werten füllen
     blocks.forEach((block) => {
-      const kv = zeitblockInfo.get(block);
+      const zb = enumUtils.toZeitblock(block);
+      const kv = zb ? zeitblockInfo.get(zb) : null;
       if (kv) {
         result.push(kv);
       }
@@ -428,10 +429,9 @@ function zeitauswahlChanged() {
     isZeitauswahlSpitzenstundeOrBlock.value &&
     zeitblockValues.value.length > 0
   ) {
-    const val = zeitblockValues.value[0].value;
-    const zb = enumUtils.toZeitblock(zeitblockInfo.get(val)?.value);
-    if (zb) {
-      chosenOptionsCopy.value.zeitblock = zb;
+    const zeitblock = enumUtils.toZeitblock(zeitblockValues.value[0]?.value);
+    if (zeitblock) {
+      chosenOptionsCopy.value.zeitblock = zeitblock;
     }
   }
   //Der erste Eintrag wird als ausgewählt gesetzt

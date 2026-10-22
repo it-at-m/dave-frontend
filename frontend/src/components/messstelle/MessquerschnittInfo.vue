@@ -33,14 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import FahrspurenAnzeige from "@/components/messstelle/FahrspurenAnzeige.vue";
 import FahrtrichtungIcon from "@/components/messstelle/icons/FahrtrichtungIcon.vue";
 import { useAlternateRowColor } from "@/util/AlternateRowColorUtil";
 
 interface Props {
-  messstelle: MessstelleInfo;
+  messstelle: MessstelleInfoType;
 }
 
 const props = defineProps<Props>();

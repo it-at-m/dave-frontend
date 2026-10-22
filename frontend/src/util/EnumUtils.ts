@@ -10,9 +10,9 @@ export function useEnumUtils() {
     }
 
     // Alle Schlüssel in Zeitblock durchgehen
-    for (const key in Zeitblock) {
-      if (Zeitblock[key as keyof typeof Zeitblock] === input) {
-        return key as Zeitblock;
+    for (const value of Object.values(Zeitblock)) {
+      if (value === input) {
+        return value;
       }
     }
     // Falls kein Match gefunden wird, undefined zurückgeben
@@ -28,9 +28,9 @@ export function useEnumUtils() {
     }
 
     // Alle Schlüssel in Zeitblock durchgehen
-    for (const key in TagesTyp) {
-      if (TagesTyp[key as keyof typeof TagesTyp] === input) {
-        return key as TagesTyp;
+    for (const value of Object.values(TagesTyp)) {
+      if (value === input) {
+        return value;
       }
     }
     // Falls kein Match gefunden wird, undefined zurückgeben

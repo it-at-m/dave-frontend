@@ -1,5 +1,5 @@
 import type { LeseZaehlstelleDTO, OptionsDTO } from "@/api/client";
-import type MessstelleInfo from "@/types/messstelle/MessstelleInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
@@ -26,7 +26,7 @@ export function useReportTools() {
   const dateUtils = useDateUtils();
   const assetUtil = useAssetUtil();
 
-  const messstelle = computed<MessstelleInfo>(() => {
+  const messstelle = computed<MessstelleInfoType>(() => {
     return messstelleStore.getMessstelleInfo;
   });
   const messstelleOptions = computed<MessstelleOptions>(() => {
