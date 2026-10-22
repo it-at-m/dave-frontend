@@ -121,6 +121,7 @@
                 v-model="chosenOptionsCopy.schwerverkehrsanteilProzent"
                 :label="'Schwerverkehrsanteil [%]'"
                 :hint="getHintToDisplay('SV_P')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('SV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.schwerverkehrsanteilProzent ||
@@ -184,6 +185,7 @@
                 v-model="chosenOptionsCopy.gueterverkehrsanteilProzent"
                 :label="'Güterverkehrsanteil [%]'"
                 :hint="getHintToDisplay('GV_P')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('GV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.gueterverkehrsanteilProzent ||
@@ -221,19 +223,12 @@
                 v-model="chosenOptionsCopy.radverkehr"
                 :label="'Radverkehr (Rad)'"
                 :hint="getHintToDisplay('RAD')"
+                class="checkbox-rad"
                 :color="getCheckboxColor('RAD')"
-                :persistent-hint="
-                  chosenOptionsCopy.radverkehr ||
-                  isTypeDisabled('RAD') ||
-                  isTageswertAndNot24h
-                "
+                :persistent-hint="showHintForCheckboxRad"
                 :disabled="isTypeDisabled('RAD')"
-                :hide-details="
-                  !(isTageswertAndNot24h && chosenOptionsCopy.radverkehr)
-                "
+                :hide-details="!showHintForCheckboxRad"
                 density="compact"
-                @mouseover="hoverRad = true"
-                @mouseleave="hoverRad = false"
               >
                 <template
                   v-if="getIcon('RAD')"
@@ -252,19 +247,18 @@
                 v-model="chosenOptionsCopy.fussverkehr"
                 :label="'Fußverkehr'"
                 :hint="getHintToDisplay('FUSS')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('FUSS')"
                 :persistent-hint="
-                  chosenOptionsCopy.fussverkehr ||
+                  isOnlyRadAndFussSelected ||
                   isTypeDisabled('FUSS') ||
                   isTageswertAndNot24h
                 "
                 :disabled="isTypeDisabled('FUSS')"
                 :hide-details="
-                  !(isTageswertAndNot24h && chosenOptionsCopy.fussverkehr)
+                  !(isTageswertAndNot24h && isOnlyRadAndFussSelected)
                 "
                 density="compact"
-                @mouseover="hoverFuss = true"
-                @mouseleave="hoverFuss = false"
               >
                 <template
                   v-if="getIcon('FUSS')"
@@ -447,8 +441,6 @@ const hoverSv = ref(false);
 const hoverGv = ref(false);
 const hoverSv_p = ref(false);
 const hoverGv_p = ref(false);
-const hoverRad = ref(false);
-const hoverFuss = ref(false);
 // Fahrzeugkategorien
 const hoverPkw = ref(false);
 const hoverLkw = ref(false);
@@ -473,6 +465,20 @@ const isTageswertAndNot24h = computed(() => {
   );
 });
 
+const isOnlyRadAndFussSelected = computed(() => {
+  return (
+    chosenOptionsCopy.value.fussverkehr &&
+    chosenOptionsCopy.value.radverkehr &&
+    !isAnyKFZselected.value
+  );
+});
+
+const isRadOrFussSelected = computed(() => {
+  return (
+    chosenOptionsCopy.value.radverkehr || chosenOptionsCopy.value.fussverkehr
+  );
+});
+
 const isAnyKFZselected = computed(() => {
   return (
     chosenOptionsCopy.value.kraftfahrzeugverkehr ||
@@ -481,6 +487,16 @@ const isAnyKFZselected = computed(() => {
     chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
     chosenOptionsCopy.value.gueterverkehrsanteilProzent
   );
+});
+
+/**
+ * Gibt an, ob der Hint der Checkbox Rad angezeigt werden soll.
+ */
+const showHintForCheckboxRad = computed(() => {
+  return isTageswertAndNot24h.value
+    ? chosenOptionsCopy.value.radverkehr || chosenOptionsCopy.value.fussverkehr
+    : isOnlyRadAndFussSelected.value ||
+        (isAnyKFZselected.value && isRadOrFussSelected.value);
 });
 
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
@@ -506,12 +522,6 @@ const helpTextVerkehrsarten = computed(() => {
   }
   if (hoverGv_p.value) {
     return "Anteil des Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
-  }
-  if (hoverRad.value) {
-    return "Hinweis: Um den Radverkehr im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
-  }
-  if (hoverFuss.value) {
-    return "Hinweis: Um die Fußgänger im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
   }
   if (hoverSelectOrDeselectAllVerkehrsarten.value) {
     let text = "Aktiviert alle Verkehrsarten.";
@@ -731,28 +741,24 @@ function selectOrDeselectAllVerkehrsarten() {
 function getHintToDisplay(type: string): string {
   // KFZ, SV und GV werden immer im Belastungsplan angezeigt, wenn aktiv
   let hint = "";
-  if (isTypeDisabled(type)) {
-    return ``;
-  }
   switch (type) {
     case "RAD": {
       /**
        * Durch die KI-Aufbereitung hat der Radverkehr hochgerechnete Werte
        */
-      if (isTageswertAndNot24h.value) {
+      if (isTageswertAndNot24h.value && !isAnyKFZselected.value) {
         hint =
           "Hinweis: Die Tageswerte für den Radverkehr wurden vom KI-Modul hochgerechnet.";
-        if (isAnyKFZselected.value) {
-          hint =
-            "Der Tageswert für den Radverkehr kann nicht gleichzeitg mit KFZ-Werten im Belastungsplan zusammen angezeigt werden.";
-        }
+      } else {
+        hint =
+          "Es kann nur eine Verkehrsart gleichzeitig im Belastungsplan angezeigt werden.";
       }
       break;
     }
     case "FUSS": {
       if (isTageswertAndNot24h.value) {
         hint =
-          "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
+          "Es kann nur eine Verkehrsart gleichzeitig im Belastungsplan angezeigt werden.";
       }
       break;
     }
@@ -1022,3 +1028,18 @@ watch(
   }
 );
 </script>
+
+<style>
+/* Verschiebt den Hint der Checkboxen in der zweiten Spalte leicht nach rechts */
+.checkbox-2column .v-messages {
+  padding-left: 5px;
+}
+
+/* Hint trotz deaktivierter Radverkehr-Checkbox vollständig lesbar lassen */
+.checkbox-rad.v-input--disabled .v-input__details {
+  opacity: 1;
+}
+.checkbox-rad.v-input--disabled .v-input__details .v-messages {
+  opacity: 0.6;
+}
+</style>
