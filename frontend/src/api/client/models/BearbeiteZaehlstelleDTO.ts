@@ -52,7 +52,7 @@ export interface BearbeiteZaehlstelleDTO {
    * @type {number}
    * @memberof BearbeiteZaehlstelleDTO
    */
-  stadtbezirkNummer?: number;
+  stadtbezirkNummer: number;
   /**
    *
    * @type {string}
@@ -64,7 +64,7 @@ export interface BearbeiteZaehlstelleDTO {
    * @type {GeoPoint}
    * @memberof BearbeiteZaehlstelleDTO
    */
-  punkt?: GeoPoint;
+  punkt: GeoPoint;
   /**
    *
    * @type {number}
@@ -109,6 +109,12 @@ export interface BearbeiteZaehlstelleDTO {
 export function instanceOfBearbeiteZaehlstelleDTO(
   value: object
 ): value is BearbeiteZaehlstelleDTO {
+  if (
+    !("stadtbezirkNummer" in value) ||
+    value["stadtbezirkNummer"] === undefined
+  )
+    return false;
+  if (!("punkt" in value) || value["punkt"] === undefined) return false;
   return true;
 }
 
@@ -128,10 +134,9 @@ export function BearbeiteZaehlstelleDTOFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     nummer: json["nummer"] == null ? undefined : json["nummer"],
-    stadtbezirkNummer:
-      json["stadtbezirkNummer"] == null ? undefined : json["stadtbezirkNummer"],
+    stadtbezirkNummer: json["stadtbezirkNummer"],
     stadtbezirk: json["stadtbezirk"] == null ? undefined : json["stadtbezirk"],
-    punkt: json["punkt"] == null ? undefined : GeoPointFromJSON(json["punkt"]),
+    punkt: GeoPointFromJSON(json["punkt"]),
     lat: json["lat"] == null ? undefined : json["lat"],
     lng: json["lng"] == null ? undefined : json["lng"],
     customSuchwoerter:

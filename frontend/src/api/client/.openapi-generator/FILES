@@ -14,7 +14,6 @@ apis/DienstleisterSearchControllerApi.ts
 apis/EaiControllerApi.ts
 apis/EmailAddressControllerApi.ts
 apis/EmailAddressEntityControllerApi.ts
-apis/EmailAddressSearchControllerApi.ts
 apis/GenerateCsvControllerApi.ts
 apis/GeneratePdfControllerApi.ts
 apis/HochrechnungsfaktorControllerApi.ts
@@ -118,6 +117,7 @@ models/ExternalZaehlungDTO.ts
 models/FahrzeugOptionsDTO.ts
 models/Fahrzeugklasse.ts
 models/FjsKnotenarmValue.ts
+models/FjsStrassenseiteValue.ts
 models/GenerateMessstellePdfRequest.ts
 models/GeneratePdfAuswertungRequest.ts
 models/GeneratePdfReportRequest.ts
@@ -220,6 +220,7 @@ models/PkwEinheit.ts
 models/PkwEinheitDTO.ts
 models/PkwEinheitRequestBody.ts
 models/PositionUTM.ts
+models/QjsStrassenseiteValue.ts
 models/QuKnotenarmValue.ts
 models/Querungsverkehr.ts
 models/QuerungsverkehrValue.ts
@@ -233,7 +234,6 @@ models/SearchAndFilterOptionsDTO.ts
 models/StepLineSeriesEntryBaseDTO.ts
 models/StepLineSeriesEntryBigDecimalDTO.ts
 models/StepLineSeriesEntryIntegerDTO.ts
-models/StrassenseiteValue.ts
 models/SucheComplexSuggestsDTO.ts
 models/SucheMessstelleSuggestDTO.ts
 models/SucheWordSuggestDTO.ts

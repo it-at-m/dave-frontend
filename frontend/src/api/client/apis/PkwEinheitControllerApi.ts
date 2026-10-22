@@ -17,10 +17,6 @@ import type { PkwEinheitDTO } from "../models/index";
 import { PkwEinheitDTOFromJSON, PkwEinheitDTOToJSON } from "../models/index";
 import * as runtime from "../runtime";
 
-export interface SavePkwEinheitRequest {
-  pkwEinheitDTO: PkwEinheitDTO;
-}
-
 /**
  *
  */
@@ -57,56 +53,6 @@ export class PkwEinheitControllerApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<PkwEinheitDTO> {
     const response = await this.getLatestPkwEinheitenRaw(initOverrides);
-    return await response.value();
-  }
-
-  /**
-   */
-  async savePkwEinheitRaw(
-    requestParameters: SavePkwEinheitRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PkwEinheitDTO>> {
-    if (requestParameters["pkwEinheitDTO"] == null) {
-      throw new runtime.RequiredError(
-        "pkwEinheitDTO",
-        'Required parameter "pkwEinheitDTO" was null or undefined when calling savePkwEinheit().'
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    let urlPath = `/pkw-einheit/save`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: PkwEinheitDTOToJSON(requestParameters["pkwEinheitDTO"]),
-      },
-      initOverrides
-    );
-
-    return new runtime.JSONApiResponse(response, (jsonValue) =>
-      PkwEinheitDTOFromJSON(jsonValue)
-    );
-  }
-
-  /**
-   */
-  async savePkwEinheit(
-    requestParameters: SavePkwEinheitRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<PkwEinheitDTO> {
-    const response = await this.savePkwEinheitRaw(
-      requestParameters,
-      initOverrides
-    );
     return await response.value();
   }
 }

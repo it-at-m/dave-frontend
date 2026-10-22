@@ -24,10 +24,6 @@ export interface DeleteDienstleisterRequest {
   id: string;
 }
 
-export interface GetDienstleisterByKennungRequest {
-  kennung: string;
-}
-
 export interface SaveDienstleisterRequest {
   dienstleisterDTO: DienstleisterDTO;
 }
@@ -156,57 +152,6 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<Array<DienstleisterDTO>> {
     const response = await this.getAllDienstleisterRaw(initOverrides);
-    return await response.value();
-  }
-
-  /**
-   */
-  async getDienstleisterByKennungRaw(
-    requestParameters: GetDienstleisterByKennungRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<DienstleisterDTO>> {
-    if (requestParameters["kennung"] == null) {
-      throw new runtime.RequiredError(
-        "kennung",
-        'Required parameter "kennung" was null or undefined when calling getDienstleisterByKennung().'
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["kennung"] != null) {
-      queryParameters["kennung"] = requestParameters["kennung"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    let urlPath = `/dienstleister/getByDienstleisterkennung`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
-
-    return new runtime.JSONApiResponse(response, (jsonValue) =>
-      DienstleisterDTOFromJSON(jsonValue)
-    );
-  }
-
-  /**
-   */
-  async getDienstleisterByKennung(
-    requestParameters: GetDienstleisterByKennungRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<DienstleisterDTO> {
-    const response = await this.getDienstleisterByKennungRaw(
-      requestParameters,
-      initOverrides
-    );
     return await response.value();
   }
 

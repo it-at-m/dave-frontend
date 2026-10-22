@@ -56,6 +56,12 @@ export function handleOpenApiError<T>(
       );
     }
 
-    throw error;
+    // eslint-disable-next-line no-console
+    console.error(error); // TODO: remove
+    throw new ApiError(
+      Levels.ERROR,
+      "Es ist ein Fehler bei der Verarbeitung der Antwort aufgetreten",
+      ""
+    );
   });
 }

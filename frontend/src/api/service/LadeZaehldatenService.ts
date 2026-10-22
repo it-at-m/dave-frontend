@@ -15,7 +15,6 @@ export default class {
     zaehlungId: string,
     options: OptionsDTO
   ): Promise<LadeProcessedZaehldatenDTO> {
-    console.log("ladeZaehldatenProcessed");
     return handleOpenApiError(
       this.API.ladeZaehldatenProcessed({ zaehlungId, optionsDTO: options }),
       "Beim Laden der aufbereiteten Zähldaten ist ein Fehler aufgetreten."

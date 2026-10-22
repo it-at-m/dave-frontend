@@ -61,7 +61,7 @@ export interface EditMessquerschnittDTO {
    * @type {string}
    * @memberof EditMessquerschnittDTO
    */
-  fahrtrichtung?: string;
+  fahrtrichtung: string;
   /**
    *
    * @type {number}
@@ -106,6 +106,8 @@ export interface EditMessquerschnittDTO {
 export function instanceOfEditMessquerschnittDTO(
   value: object
 ): value is EditMessquerschnittDTO {
+  if (!("fahrtrichtung" in value) || value["fahrtrichtung"] === undefined)
+    return false;
   return true;
 }
 
@@ -133,8 +135,7 @@ export function EditMessquerschnittDTOFromJSONTyped(
       json["lageMessquerschnitt"] == null
         ? undefined
         : json["lageMessquerschnitt"],
-    fahrtrichtung:
-      json["fahrtrichtung"] == null ? undefined : json["fahrtrichtung"],
+    fahrtrichtung: json["fahrtrichtung"],
     anzahlFahrspuren:
       json["anzahlFahrspuren"] == null ? undefined : json["anzahlFahrspuren"],
     fahrzeugklasse:

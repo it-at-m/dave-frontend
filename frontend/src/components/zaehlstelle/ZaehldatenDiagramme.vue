@@ -217,6 +217,7 @@
 </template>
 <script setup lang="ts">
 import type {
+  BelastungsplanDataDTO,
   CsvDTO,
   LadeBelastungsplanDTO,
   LadeBelastungsplanFjsDTO,
@@ -412,8 +413,8 @@ const isSonderzaehldauer = computed(() => {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
+    selectedZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
+    selectedZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
   );
 });
 
@@ -511,7 +512,6 @@ function loadData(): void {
 }
 
 function loadProcessedChartData(options: OptionsDTO) {
-  console.log("loadProcessedChartData");
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
   LadeZaehldatenService.ladeZaehldatenProcessed(
@@ -906,8 +906,9 @@ const drawSchematischeUebersicht = computed(() => {
     );
   } else
     return (
-      belastungsplanDTO.value.value1.values &&
-      belastungsplanDTO.value.value1.values.length > 0
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values &&
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values.length >
+        0
     );
 });
 

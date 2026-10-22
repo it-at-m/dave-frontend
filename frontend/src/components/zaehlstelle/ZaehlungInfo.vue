@@ -205,7 +205,7 @@
             </v-col>
           </v-row>
           <v-row
-            v-for="(k, index) in sortedFilteredKnotenarme"
+            v-for="(k) in sortedFilteredKnotenarme"
             :key="k.nummer"
             no-gutters
             class="ma-0"
@@ -409,8 +409,8 @@ function getChosenBewegungsbeziehungen() {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     zaehlung.value.zaehldauer === Zaehldauer.Sonstige &&
-    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
-    zaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
+    zaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
+    zaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
   );
 });
 

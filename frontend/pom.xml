@@ -169,6 +169,8 @@
                                         <supportsES6>true</supportsES6>
                                         <usePromises>true</usePromises>
                                         <skipDefaultUserAgent>true</skipDefaultUserAgent>
+                                        <legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>
+                                        <useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>
                                     </additionalProperties>
                                 </configuration>
                             </execution>

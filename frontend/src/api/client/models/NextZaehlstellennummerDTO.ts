@@ -25,7 +25,7 @@ export interface NextZaehlstellennummerDTO {
    * @type {string}
    * @memberof NextZaehlstellennummerDTO
    */
-  nummer?: string;
+  nummer: string;
 }
 
 /**
@@ -34,6 +34,7 @@ export interface NextZaehlstellennummerDTO {
 export function instanceOfNextZaehlstellennummerDTO(
   value: object
 ): value is NextZaehlstellennummerDTO {
+  if (!("nummer" in value) || value["nummer"] === undefined) return false;
   return true;
 }
 
@@ -51,7 +52,7 @@ export function NextZaehlstellennummerDTOFromJSONTyped(
     return json;
   }
   return {
-    nummer: json["nummer"] == null ? undefined : json["nummer"],
+    nummer: json["nummer"],
   };
 }
 

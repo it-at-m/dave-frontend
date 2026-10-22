@@ -12,16 +12,16 @@
  * Do not edit the class manually.
  */
 
-import type { StrassenseiteValue } from "./StrassenseiteValue";
+import type { QjsStrassenseiteValue } from "./QjsStrassenseiteValue";
 import type { VerkehrsbeziehungValue } from "./VerkehrsbeziehungValue";
 
 import { mapValues } from "../runtime";
 import {
-  StrassenseiteValueFromJSON,
-  StrassenseiteValueFromJSONTyped,
-  StrassenseiteValueToJSON,
-  StrassenseiteValueToJSONTyped,
-} from "./StrassenseiteValue";
+  QjsStrassenseiteValueFromJSON,
+  QjsStrassenseiteValueFromJSONTyped,
+  QjsStrassenseiteValueToJSON,
+  QjsStrassenseiteValueToJSONTyped,
+} from "./QjsStrassenseiteValue";
 import {
   VerkehrsbeziehungValueFromJSON,
   VerkehrsbeziehungValueFromJSONTyped,
@@ -55,10 +55,10 @@ export interface BelastungsplanQjsDataDTO {
   sumAll: number;
   /**
    *
-   * @type {Array<StrassenseiteValue>}
+   * @type {Array<QjsStrassenseiteValue>}
    * @memberof BelastungsplanQjsDataDTO
    */
-  valuesStrassenseite: Array<StrassenseiteValue>;
+  valuesStrassenseite: Array<QjsStrassenseiteValue>;
   /**
    *
    * @type {Array<VerkehrsbeziehungValue>}
@@ -107,7 +107,7 @@ export function BelastungsplanQjsDataDTOFromJSONTyped(
     filled: json["filled"],
     sumAll: json["sumAll"],
     valuesStrassenseite: (json["valuesStrassenseite"] as Array<any>).map(
-      StrassenseiteValueFromJSON
+      QjsStrassenseiteValueFromJSON
     ),
     valuesVerkehrsbeziehungen: (
       json["valuesVerkehrsbeziehungen"] as Array<any>
@@ -134,7 +134,7 @@ export function BelastungsplanQjsDataDTOToJSONTyped(
     filled: value["filled"],
     sumAll: value["sumAll"],
     valuesStrassenseite: (value["valuesStrassenseite"] as Array<any>).map(
-      StrassenseiteValueToJSON
+      QjsStrassenseiteValueToJSON
     ),
     valuesVerkehrsbeziehungen: (
       value["valuesVerkehrsbeziehungen"] as Array<any>

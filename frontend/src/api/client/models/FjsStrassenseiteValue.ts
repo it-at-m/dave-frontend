@@ -32,35 +32,35 @@ import {
 /**
  *
  * @export
- * @interface StrassenseiteValue
+ * @interface FjsStrassenseiteValue
  */
-export interface StrassenseiteValue {
+export interface FjsStrassenseiteValue {
   /**
    *
    * @type {Himmelsrichtung}
-   * @memberof StrassenseiteValue
+   * @memberof FjsStrassenseiteValue
    */
   strassenseite: Himmelsrichtung;
   /**
    *
    * @type {number}
-   * @memberof StrassenseiteValue
+   * @memberof FjsStrassenseiteValue
    */
   sumStrassenseite: number;
   /**
    *
    * @type {Array<LaengsverkehrValue>}
-   * @memberof StrassenseiteValue
+   * @memberof FjsStrassenseiteValue
    */
   valuesLaengsverkehre: Array<LaengsverkehrValue>;
 }
 
 /**
- * Check if a given object implements the StrassenseiteValue interface.
+ * Check if a given object implements the FjsStrassenseiteValue interface.
  */
-export function instanceOfStrassenseiteValue(
+export function instanceOfFjsStrassenseiteValue(
   value: object
-): value is StrassenseiteValue {
+): value is FjsStrassenseiteValue {
   if (!("strassenseite" in value) || value["strassenseite"] === undefined)
     return false;
   if (!("sumStrassenseite" in value) || value["sumStrassenseite"] === undefined)
@@ -73,14 +73,16 @@ export function instanceOfStrassenseiteValue(
   return true;
 }
 
-export function StrassenseiteValueFromJSON(json: any): StrassenseiteValue {
-  return StrassenseiteValueFromJSONTyped(json, false);
+export function FjsStrassenseiteValueFromJSON(
+  json: any
+): FjsStrassenseiteValue {
+  return FjsStrassenseiteValueFromJSONTyped(json, false);
 }
 
-export function StrassenseiteValueFromJSONTyped(
+export function FjsStrassenseiteValueFromJSONTyped(
   json: any,
   ignoreDiscriminator: boolean
-): StrassenseiteValue {
+): FjsStrassenseiteValue {
   if (json == null) {
     return json;
   }
@@ -93,12 +95,12 @@ export function StrassenseiteValueFromJSONTyped(
   };
 }
 
-export function StrassenseiteValueToJSON(json: any): StrassenseiteValue {
-  return StrassenseiteValueToJSONTyped(json, false);
+export function FjsStrassenseiteValueToJSON(json: any): FjsStrassenseiteValue {
+  return FjsStrassenseiteValueToJSONTyped(json, false);
 }
 
-export function StrassenseiteValueToJSONTyped(
-  value?: StrassenseiteValue | null,
+export function FjsStrassenseiteValueToJSONTyped(
+  value?: FjsStrassenseiteValue | null,
   ignoreDiscriminator: boolean = false
 ): any {
   if (value == null) {

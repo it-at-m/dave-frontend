@@ -47,10 +47,6 @@ export interface GetZaehlstelleHeaderRequest {
   id: string;
 }
 
-export interface GetZaehlstellenByUnreadMessagesRequest {
-  participant: number;
-}
-
 export interface SaveZaehlstelleRequest {
   bearbeiteZaehlstelleDTO: BearbeiteZaehlstelleDTO;
 }
@@ -218,57 +214,6 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<LeseZaehlstelleDTO> {
     const response = await this.getZaehlstelleHeaderRaw(
-      requestParameters,
-      initOverrides
-    );
-    return await response.value();
-  }
-
-  /**
-   */
-  async getZaehlstellenByUnreadMessagesRaw(
-    requestParameters: GetZaehlstellenByUnreadMessagesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<LadeZaehlstelleWithUnreadMessageDTO>>> {
-    if (requestParameters["participant"] == null) {
-      throw new runtime.RequiredError(
-        "participant",
-        'Required parameter "participant" was null or undefined when calling getZaehlstellenByUnreadMessages().'
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["participant"] != null) {
-      queryParameters["participant"] = requestParameters["participant"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    let urlPath = `/zaehlstelle/byUnreadMessages`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
-
-    return new runtime.JSONApiResponse(response, (jsonValue) =>
-      jsonValue.map(LadeZaehlstelleWithUnreadMessageDTOFromJSON)
-    );
-  }
-
-  /**
-   */
-  async getZaehlstellenByUnreadMessages(
-    requestParameters: GetZaehlstellenByUnreadMessagesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<Array<LadeZaehlstelleWithUnreadMessageDTO>> {
-    const response = await this.getZaehlstellenByUnreadMessagesRaw(
       requestParameters,
       initOverrides
     );

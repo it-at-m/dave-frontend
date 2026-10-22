@@ -60,7 +60,7 @@ export interface EditMessstelleDTO {
    * @type {string}
    * @memberof EditMessstelleDTO
    */
-  mstId?: string;
+  mstId: string;
   /**
    *
    * @type {string}
@@ -72,7 +72,7 @@ export interface EditMessstelleDTO {
    * @type {string}
    * @memberof EditMessstelleDTO
    */
-  status?: string;
+  status: string;
   /**
    *
    * @type {string}
@@ -195,6 +195,8 @@ export interface EditMessstelleDTO {
 export function instanceOfEditMessstelleDTO(
   value: object
 ): value is EditMessstelleDTO {
+  if (!("mstId" in value) || value["mstId"] === undefined) return false;
+  if (!("status" in value) || value["status"] === undefined) return false;
   return true;
 }
 
@@ -211,9 +213,9 @@ export function EditMessstelleDTOFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    mstId: json["mstId"] == null ? undefined : json["mstId"],
+    mstId: json["mstId"],
     name: json["name"] == null ? undefined : json["name"],
-    status: json["status"] == null ? undefined : json["status"],
+    status: json["status"],
     bemerkung: json["bemerkung"] == null ? undefined : json["bemerkung"],
     stadtbezirk: json["stadtbezirk"] == null ? undefined : json["stadtbezirk"],
     stadtbezirkNummer:

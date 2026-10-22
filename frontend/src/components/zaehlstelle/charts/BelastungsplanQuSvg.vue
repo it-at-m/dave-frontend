@@ -3560,7 +3560,6 @@ function getArrowZaehlwertOrZero(knotenarm: number, richtung: Himmelsrichtung) {
  * @return Gefundene Summe oder 0
  */
 function getSumArrowsKnotenarmOrZero(knotenarm: number) {
-  console.log("getSumArrowsKnotenarmOrZero");
   if (!isQuBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }

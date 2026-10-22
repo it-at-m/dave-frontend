@@ -31,7 +31,7 @@ export interface MessstelleOverviewDTO {
    * @type {string}
    * @memberof MessstelleOverviewDTO
    */
-  mstId?: string;
+  mstId: string;
   /**
    *
    * @type {string}
@@ -82,6 +82,7 @@ export interface MessstelleOverviewDTO {
 export function instanceOfMessstelleOverviewDTO(
   value: object
 ): value is MessstelleOverviewDTO {
+  if (!("mstId" in value) || value["mstId"] === undefined) return false;
   return true;
 }
 
@@ -100,7 +101,7 @@ export function MessstelleOverviewDTOFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    mstId: json["mstId"] == null ? undefined : json["mstId"],
+    mstId: json["mstId"],
     name: json["name"] == null ? undefined : json["name"],
     status: json["status"] == null ? undefined : json["status"],
     sichtbarDatenportal:

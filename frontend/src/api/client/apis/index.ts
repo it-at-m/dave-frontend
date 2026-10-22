@@ -15,7 +15,6 @@ export * from "./DienstleisterSearchControllerApi";
 export * from "./EaiControllerApi";
 export * from "./EmailAddressControllerApi";
 export * from "./EmailAddressEntityControllerApi";
-export * from "./EmailAddressSearchControllerApi";
 export * from "./GenerateCsvControllerApi";
 export * from "./GeneratePdfControllerApi";
 export * from "./HochrechnungsfaktorControllerApi";

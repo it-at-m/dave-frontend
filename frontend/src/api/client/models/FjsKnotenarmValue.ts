@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
-import type { StrassenseiteValue } from "./StrassenseiteValue";
+import type { FjsStrassenseiteValue } from "./FjsStrassenseiteValue";
 
 import { mapValues } from "../runtime";
 import {
-  StrassenseiteValueFromJSON,
-  StrassenseiteValueFromJSONTyped,
-  StrassenseiteValueToJSON,
-  StrassenseiteValueToJSONTyped,
-} from "./StrassenseiteValue";
+  FjsStrassenseiteValueFromJSON,
+  FjsStrassenseiteValueFromJSONTyped,
+  FjsStrassenseiteValueToJSON,
+  FjsStrassenseiteValueToJSONTyped,
+} from "./FjsStrassenseiteValue";
 
 /**
  *
@@ -42,10 +42,10 @@ export interface FjsKnotenarmValue {
   sumKnotenarm: number;
   /**
    *
-   * @type {Array<StrassenseiteValue>}
+   * @type {Array<FjsStrassenseiteValue>}
    * @memberof FjsKnotenarmValue
    */
-  valuesStrassenseiten: Array<StrassenseiteValue>;
+  valuesStrassenseiten: Array<FjsStrassenseiteValue>;
 }
 
 /**
@@ -80,7 +80,7 @@ export function FjsKnotenarmValueFromJSONTyped(
     knotenarm: json["knotenarm"],
     sumKnotenarm: json["sumKnotenarm"],
     valuesStrassenseiten: (json["valuesStrassenseiten"] as Array<any>).map(
-      StrassenseiteValueFromJSON
+      FjsStrassenseiteValueFromJSON
     ),
   };
 }
@@ -101,7 +101,7 @@ export function FjsKnotenarmValueToJSONTyped(
     knotenarm: value["knotenarm"],
     sumKnotenarm: value["sumKnotenarm"],
     valuesStrassenseiten: (value["valuesStrassenseiten"] as Array<any>).map(
-      StrassenseiteValueToJSON
+      FjsStrassenseiteValueToJSON
     ),
   };
 }
