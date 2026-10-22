@@ -226,8 +226,6 @@
                 :disabled="isTypeDisabled('RAD')"
                 :hide-details="!showHintForCheckboxRad"
                 density="compact"
-                @mouseover="hoverRad = true"
-                @mouseleave="hoverRad = false"
               >
                 <template
                   v-if="getIcon('RAD')"
@@ -257,8 +255,6 @@
                   !(isTageswertAndNot24h && isOnlyRadAndFussSelected)
                 "
                 density="compact"
-                @mouseover="hoverFuss = true"
-                @mouseleave="hoverFuss = false"
               >
                 <template
                   v-if="getIcon('FUSS')"
@@ -441,8 +437,6 @@ const hoverSv = ref(false);
 const hoverGv = ref(false);
 const hoverSv_p = ref(false);
 const hoverGv_p = ref(false);
-const hoverRad = ref(false);
-const hoverFuss = ref(false);
 // Fahrzeugkategorien
 const hoverPkw = ref(false);
 const hoverLkw = ref(false);
@@ -524,12 +518,6 @@ const helpTextVerkehrsarten = computed(() => {
   }
   if (hoverGv_p.value) {
     return "Anteil des Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
-  }
-  if (hoverRad.value) {
-    return "Hinweis: Um den Radverkehr im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
-  }
-  if (hoverFuss.value) {
-    return "Hinweis: Um die Fußgänger im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
   }
   if (hoverSelectOrDeselectAllVerkehrsarten.value) {
     let text = "Aktiviert alle Verkehrsarten.";
