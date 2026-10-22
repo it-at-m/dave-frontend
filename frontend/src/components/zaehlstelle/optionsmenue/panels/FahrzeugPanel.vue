@@ -222,15 +222,9 @@
                 :label="'Radverkehr (Rad)'"
                 :hint="getHintToDisplay('RAD')"
                 :color="getCheckboxColor('RAD')"
-                :persistent-hint="
-                  chosenOptionsCopy.radverkehr ||
-                  isTypeDisabled('RAD') ||
-                  isTageswertAndNot24h
-                "
+                :persistent-hint="showHintForCheckboxRad"
                 :disabled="isTypeDisabled('RAD')"
-                :hide-details="
-                  !(isTageswertAndNot24h && chosenOptionsCopy.radverkehr)
-                "
+                :hide-details="!showHintForCheckboxRad"
                 density="compact"
                 @mouseover="hoverRad = true"
                 @mouseleave="hoverRad = false"
@@ -254,13 +248,13 @@
                 :hint="getHintToDisplay('FUSS')"
                 :color="getCheckboxColor('FUSS')"
                 :persistent-hint="
-                  chosenOptionsCopy.fussverkehr ||
+                  isOnlyRadAndFussSelected ||
                   isTypeDisabled('FUSS') ||
                   isTageswertAndNot24h
                 "
                 :disabled="isTypeDisabled('FUSS')"
                 :hide-details="
-                  !(isTageswertAndNot24h && chosenOptionsCopy.fussverkehr)
+                  !(isTageswertAndNot24h && isOnlyRadAndFussSelected)
                 "
                 density="compact"
                 @mouseover="hoverFuss = true"
@@ -473,6 +467,20 @@ const isTageswertAndNot24h = computed(() => {
   );
 });
 
+const isOnlyRadAndFussSelected = computed(() => {
+  return (
+    chosenOptionsCopy.value.fussverkehr &&
+    chosenOptionsCopy.value.radverkehr &&
+    !isAnyKFZselected.value
+  );
+});
+
+const isRadOrFussSelected = computed(() => {
+  return (
+    chosenOptionsCopy.value.radverkehr || chosenOptionsCopy.value.fussverkehr
+  );
+});
+
 const isAnyKFZselected = computed(() => {
   return (
     chosenOptionsCopy.value.kraftfahrzeugverkehr ||
@@ -481,6 +489,16 @@ const isAnyKFZselected = computed(() => {
     chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
     chosenOptionsCopy.value.gueterverkehrsanteilProzent
   );
+});
+
+/**
+ * Gibt an, ob der Hint der Checkbox Rad angezeigt werden soll.
+ */
+const showHintForCheckboxRad = computed(() => {
+  return isTageswertAndNot24h.value
+    ? chosenOptionsCopy.value.radverkehr || chosenOptionsCopy.value.fussverkehr
+    : isOnlyRadAndFussSelected.value ||
+        (isAnyKFZselected.value && isRadOrFussSelected.value);
 });
 
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
@@ -739,20 +757,19 @@ function getHintToDisplay(type: string): string {
       /**
        * Durch die KI-Aufbereitung hat der Radverkehr hochgerechnete Werte
        */
-      if (isTageswertAndNot24h.value) {
+      if (isTageswertAndNot24h.value && !isAnyKFZselected.value) {
         hint =
           "Hinweis: Die Tageswerte für den Radverkehr wurden vom KI-Modul hochgerechnet.";
-        if (isAnyKFZselected.value) {
-          hint =
-            "Der Tageswert für den Radverkehr kann nicht gleichzeitg mit KFZ-Werten im Belastungsplan zusammen angezeigt werden.";
-        }
+      } else {
+        hint =
+          "Es kann nur eine Verkehrsart gleichzeitig im Belastungsplan angezeigt werden.";
       }
       break;
     }
     case "FUSS": {
       if (isTageswertAndNot24h.value) {
         hint =
-          "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
+          "Es kann nur eine Verkehrsart gleichzeitig im Belastungsplan angezeigt werden.";
       }
       break;
     }
