@@ -124,10 +124,13 @@ models/GeneratePdfReportRequest.ts
 models/GeneratePdfReportRequestAssetsInner.ts
 models/GenerateZaehlungPdfRequest.ts
 models/GeoPoint.ts
-models/HeadingAsset.ts
+models/Heading1Asset.ts
+models/Heading2Asset.ts
+models/Heading3Asset.ts
+models/Heading4Asset.ts
+models/Heading5Asset.ts
 models/Himmelsrichtung.ts
 models/Hochrechnung.ts
-models/Hochrechnungsfaktor.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
 models/ImageAsset.ts

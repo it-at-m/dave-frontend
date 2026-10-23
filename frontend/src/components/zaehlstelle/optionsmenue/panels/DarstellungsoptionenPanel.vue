@@ -279,9 +279,9 @@ import { computed, onMounted, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { roundingItems } from "@/types/enum/RoundingText";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;

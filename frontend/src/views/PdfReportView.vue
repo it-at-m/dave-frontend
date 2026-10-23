@@ -220,13 +220,13 @@
 import type {
   BaseAsset,
   DatatableAsset,
-  HeadingAsset,
   ImageAsset,
   MessstelleDatatableAsset,
   OptionsDTO,
   TextAsset,
   ZaehlungskenngroessenAsset,
 } from "@/api/client";
+import type { HeadingAsset } from "@/util/AssetUtil";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";

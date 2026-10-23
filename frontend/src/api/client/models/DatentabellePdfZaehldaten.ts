@@ -153,7 +153,7 @@ export interface DatentabellePdfZaehldaten {
    * @type {number}
    * @memberof DatentabellePdfZaehldaten
    */
-  colWidthFahrzeugtypen?: number;
+  colWidthFahrzeugklassen?: number;
   /**
    *
    * @type {string}
@@ -165,19 +165,13 @@ export interface DatentabellePdfZaehldaten {
    * @type {number}
    * @memberof DatentabellePdfZaehldaten
    */
-  colWidthFahrzeugklassen?: number;
+  colWidthFahrzeugtypen?: number;
   /**
    *
-   * @type {string}
+   * @type {boolean}
    * @memberof DatentabellePdfZaehldaten
    */
-  rightBorderFahrzeugtypen?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  rightBorderFahrzeugklassen?: string;
+  showTabsAnteile?: boolean;
   /**
    *
    * @type {number}
@@ -186,10 +180,16 @@ export interface DatentabellePdfZaehldaten {
   colWidthAnteile?: number;
   /**
    *
-   * @type {boolean}
+   * @type {string}
    * @memberof DatentabellePdfZaehldaten
    */
-  showTabsAnteile?: boolean;
+  rightBorderFahrzeugklassen?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof DatentabellePdfZaehldaten
+   */
+  rightBorderFahrzeugtypen?: string;
 }
 
 /**
@@ -276,30 +276,30 @@ export function DatentabellePdfZaehldatenFromJSONTyped(
       json["showTabsFahrzeugklassen"] == null
         ? undefined
         : json["showTabsFahrzeugklassen"],
-    colWidthFahrzeugtypen:
-      json["colWidthFahrzeugtypen"] == null
-        ? undefined
-        : json["colWidthFahrzeugtypen"],
-    rightBorderAnteile:
-      json["rightBorderAnteile"] == null
-        ? undefined
-        : json["rightBorderAnteile"],
     colWidthFahrzeugklassen:
       json["colWidthFahrzeugklassen"] == null
         ? undefined
         : json["colWidthFahrzeugklassen"],
-    rightBorderFahrzeugtypen:
-      json["rightBorderFahrzeugtypen"] == null
+    rightBorderAnteile:
+      json["rightBorderAnteile"] == null
         ? undefined
-        : json["rightBorderFahrzeugtypen"],
+        : json["rightBorderAnteile"],
+    colWidthFahrzeugtypen:
+      json["colWidthFahrzeugtypen"] == null
+        ? undefined
+        : json["colWidthFahrzeugtypen"],
+    showTabsAnteile:
+      json["showTabsAnteile"] == null ? undefined : json["showTabsAnteile"],
+    colWidthAnteile:
+      json["colWidthAnteile"] == null ? undefined : json["colWidthAnteile"],
     rightBorderFahrzeugklassen:
       json["rightBorderFahrzeugklassen"] == null
         ? undefined
         : json["rightBorderFahrzeugklassen"],
-    colWidthAnteile:
-      json["colWidthAnteile"] == null ? undefined : json["colWidthAnteile"],
-    showTabsAnteile:
-      json["showTabsAnteile"] == null ? undefined : json["showTabsAnteile"],
+    rightBorderFahrzeugtypen:
+      json["rightBorderFahrzeugtypen"] == null
+        ? undefined
+        : json["rightBorderFahrzeugtypen"],
   };
 }
 
@@ -343,12 +343,12 @@ export function DatentabellePdfZaehldatenToJSONTyped(
     showPkwEinheiten: value["showPkwEinheiten"],
     showTabsFahrzeugtypen: value["showTabsFahrzeugtypen"],
     showTabsFahrzeugklassen: value["showTabsFahrzeugklassen"],
-    colWidthFahrzeugtypen: value["colWidthFahrzeugtypen"],
-    rightBorderAnteile: value["rightBorderAnteile"],
     colWidthFahrzeugklassen: value["colWidthFahrzeugklassen"],
-    rightBorderFahrzeugtypen: value["rightBorderFahrzeugtypen"],
-    rightBorderFahrzeugklassen: value["rightBorderFahrzeugklassen"],
-    colWidthAnteile: value["colWidthAnteile"],
+    rightBorderAnteile: value["rightBorderAnteile"],
+    colWidthFahrzeugtypen: value["colWidthFahrzeugtypen"],
     showTabsAnteile: value["showTabsAnteile"],
+    colWidthAnteile: value["colWidthAnteile"],
+    rightBorderFahrzeugklassen: value["rightBorderFahrzeugklassen"],
+    rightBorderFahrzeugtypen: value["rightBorderFahrzeugtypen"],
   };
 }

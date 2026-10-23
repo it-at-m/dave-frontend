@@ -1,6 +1,10 @@
 import type {
   DatatableAsset,
-  HeadingAsset,
+  Heading1Asset,
+  Heading2Asset,
+  Heading3Asset,
+  Heading4Asset,
+  Heading5Asset,
   ImageAsset,
   MessstelleDatatableAsset,
   NewlineAsset,
@@ -14,19 +18,33 @@ import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 import { BaseAssetTypeEnum } from "@/api/client";
 import MessstelleOptionsMapper from "@/types/messstelle/MessstelleOptionsMapper";
 
+export type HeadingAsset =
+  | Heading1Asset
+  | Heading2Asset
+  | Heading3Asset
+  | Heading4Asset
+  | Heading5Asset;
+
+export type HeadingAssetType =
+  | typeof BaseAssetTypeEnum.Heading1
+  | typeof BaseAssetTypeEnum.Heading2
+  | typeof BaseAssetTypeEnum.Heading3
+  | typeof BaseAssetTypeEnum.Heading4
+  | typeof BaseAssetTypeEnum.Heading5;
+
 export function useAssetUtil() {
   function generateId() {
     return Date.now() * Math.random();
   }
 
   function createHeadingAsset(
-    date: string,
-    type: BaseAssetTypeEnum
+    text: string,
+    type: HeadingAssetType
   ): HeadingAsset {
     const asset: HeadingAsset = {
       id: generateId(),
       type,
-      text: "Mein Überschriftentext",
+      text,
     };
     return asset;
   }

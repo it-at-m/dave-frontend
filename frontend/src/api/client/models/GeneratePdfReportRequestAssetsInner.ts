@@ -14,7 +14,11 @@
 
 import type { BaseAsset } from "./BaseAsset";
 import type { DatatableAsset } from "./DatatableAsset";
-import type { HeadingAsset } from "./HeadingAsset";
+import type { Heading1Asset } from "./Heading1Asset";
+import type { Heading2Asset } from "./Heading2Asset";
+import type { Heading3Asset } from "./Heading3Asset";
+import type { Heading4Asset } from "./Heading4Asset";
+import type { Heading5Asset } from "./Heading5Asset";
 import type { ImageAsset } from "./ImageAsset";
 import type { MessstelleDatatableAsset } from "./MessstelleDatatableAsset";
 import type { NewlineAsset } from "./NewlineAsset";
@@ -35,11 +39,35 @@ import {
   instanceOfDatatableAsset,
 } from "./DatatableAsset";
 import {
-  HeadingAssetFromJSON,
-  HeadingAssetFromJSONTyped,
-  HeadingAssetToJSON,
-  instanceOfHeadingAsset,
-} from "./HeadingAsset";
+  Heading1AssetFromJSON,
+  Heading1AssetFromJSONTyped,
+  Heading1AssetToJSON,
+  instanceOfHeading1Asset,
+} from "./Heading1Asset";
+import {
+  Heading2AssetFromJSON,
+  Heading2AssetFromJSONTyped,
+  Heading2AssetToJSON,
+  instanceOfHeading2Asset,
+} from "./Heading2Asset";
+import {
+  Heading3AssetFromJSON,
+  Heading3AssetFromJSONTyped,
+  Heading3AssetToJSON,
+  instanceOfHeading3Asset,
+} from "./Heading3Asset";
+import {
+  Heading4AssetFromJSON,
+  Heading4AssetFromJSONTyped,
+  Heading4AssetToJSON,
+  instanceOfHeading4Asset,
+} from "./Heading4Asset";
+import {
+  Heading5AssetFromJSON,
+  Heading5AssetFromJSONTyped,
+  Heading5AssetToJSON,
+  instanceOfHeading5Asset,
+} from "./Heading5Asset";
 import {
   ImageAssetFromJSON,
   ImageAssetFromJSONTyped,
@@ -85,7 +113,11 @@ import {
 export type GeneratePdfReportRequestAssetsInner =
   | BaseAsset
   | DatatableAsset
-  | HeadingAsset
+  | Heading1Asset
+  | Heading2Asset
+  | Heading3Asset
+  | Heading4Asset
+  | Heading5Asset
   | ImageAsset
   | MessstelleDatatableAsset
   | NewlineAsset
@@ -115,8 +147,20 @@ export function GeneratePdfReportRequestAssetsInnerFromJSONTyped(
   if (instanceOfDatatableAsset(json)) {
     return DatatableAssetFromJSONTyped(json, true);
   }
-  if (instanceOfHeadingAsset(json)) {
-    return HeadingAssetFromJSONTyped(json, true);
+  if (instanceOfHeading1Asset(json)) {
+    return Heading1AssetFromJSONTyped(json, true);
+  }
+  if (instanceOfHeading2Asset(json)) {
+    return Heading2AssetFromJSONTyped(json, true);
+  }
+  if (instanceOfHeading3Asset(json)) {
+    return Heading3AssetFromJSONTyped(json, true);
+  }
+  if (instanceOfHeading4Asset(json)) {
+    return Heading4AssetFromJSONTyped(json, true);
+  }
+  if (instanceOfHeading5Asset(json)) {
+    return Heading5AssetFromJSONTyped(json, true);
   }
   if (instanceOfImageAsset(json)) {
     return ImageAssetFromJSONTyped(json, true);
@@ -160,8 +204,20 @@ export function GeneratePdfReportRequestAssetsInnerToJSONTyped(
   if (instanceOfDatatableAsset(value)) {
     return DatatableAssetToJSON(value as DatatableAsset);
   }
-  if (instanceOfHeadingAsset(value)) {
-    return HeadingAssetToJSON(value as HeadingAsset);
+  if (instanceOfHeading1Asset(value)) {
+    return Heading1AssetToJSON(value as Heading1Asset);
+  }
+  if (instanceOfHeading2Asset(value)) {
+    return Heading2AssetToJSON(value as Heading2Asset);
+  }
+  if (instanceOfHeading3Asset(value)) {
+    return Heading3AssetToJSON(value as Heading3Asset);
+  }
+  if (instanceOfHeading4Asset(value)) {
+    return Heading4AssetToJSON(value as Heading4Asset);
+  }
+  if (instanceOfHeading5Asset(value)) {
+    return Heading5AssetToJSON(value as Heading5Asset);
   }
   if (instanceOfImageAsset(value)) {
     return ImageAssetToJSON(value as ImageAsset);

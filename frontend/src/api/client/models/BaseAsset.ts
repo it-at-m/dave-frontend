@@ -12,7 +12,11 @@
  * Do not edit the class manually.
  */
 import type { DatatableAsset } from "./DatatableAsset";
-import type { HeadingAsset } from "./HeadingAsset";
+import type { Heading1Asset } from "./Heading1Asset";
+import type { Heading2Asset } from "./Heading2Asset";
+import type { Heading3Asset } from "./Heading3Asset";
+import type { Heading4Asset } from "./Heading4Asset";
+import type { Heading5Asset } from "./Heading5Asset";
 import type { ImageAsset } from "./ImageAsset";
 import type { MessstelleDatatableAsset } from "./MessstelleDatatableAsset";
 import type { NewlineAsset } from "./NewlineAsset";
@@ -27,10 +31,30 @@ import {
   DatatableAssetToJSONTyped,
 } from "./DatatableAsset";
 import {
-  HeadingAssetFromJSONTyped,
-  HeadingAssetToJSON,
-  HeadingAssetToJSONTyped,
-} from "./HeadingAsset";
+  Heading1AssetFromJSONTyped,
+  Heading1AssetToJSON,
+  Heading1AssetToJSONTyped,
+} from "./Heading1Asset";
+import {
+  Heading2AssetFromJSONTyped,
+  Heading2AssetToJSON,
+  Heading2AssetToJSONTyped,
+} from "./Heading2Asset";
+import {
+  Heading3AssetFromJSONTyped,
+  Heading3AssetToJSON,
+  Heading3AssetToJSONTyped,
+} from "./Heading3Asset";
+import {
+  Heading4AssetFromJSONTyped,
+  Heading4AssetToJSON,
+  Heading4AssetToJSONTyped,
+} from "./Heading4Asset";
+import {
+  Heading5AssetFromJSONTyped,
+  Heading5AssetToJSON,
+  Heading5AssetToJSONTyped,
+} from "./Heading5Asset";
 import {
   ImageAssetFromJSONTyped,
   ImageAssetToJSON,
@@ -131,19 +155,19 @@ export function BaseAssetFromJSONTyped(
       return MessstelleDatatableAssetFromJSONTyped(json, ignoreDiscriminator);
     }
     if (json["type"] === "HEADING1") {
-      return HeadingAssetFromJSONTyped(json, ignoreDiscriminator);
+      return Heading1AssetFromJSONTyped(json, ignoreDiscriminator);
     }
     if (json["type"] === "HEADING2") {
-      return HeadingAssetFromJSONTyped(json, ignoreDiscriminator);
+      return Heading2AssetFromJSONTyped(json, ignoreDiscriminator);
     }
     if (json["type"] === "HEADING3") {
-      return HeadingAssetFromJSONTyped(json, ignoreDiscriminator);
+      return Heading3AssetFromJSONTyped(json, ignoreDiscriminator);
     }
     if (json["type"] === "HEADING4") {
-      return HeadingAssetFromJSONTyped(json, ignoreDiscriminator);
+      return Heading4AssetFromJSONTyped(json, ignoreDiscriminator);
     }
     if (json["type"] === "HEADING5") {
-      return HeadingAssetFromJSONTyped(json, ignoreDiscriminator);
+      return Heading5AssetFromJSONTyped(json, ignoreDiscriminator);
     }
     if (json["type"] === "IMAGE") {
       return ImageAssetFromJSONTyped(json, ignoreDiscriminator);
@@ -192,28 +216,28 @@ export function BaseAssetToJSONTyped(
           ignoreDiscriminator
         );
       case "HEADING1":
-        return HeadingAssetToJSONTyped(
-          value as HeadingAsset,
+        return Heading1AssetToJSONTyped(
+          value as Heading1Asset,
           ignoreDiscriminator
         );
       case "HEADING2":
-        return HeadingAssetToJSONTyped(
-          value as HeadingAsset,
+        return Heading2AssetToJSONTyped(
+          value as Heading2Asset,
           ignoreDiscriminator
         );
       case "HEADING3":
-        return HeadingAssetToJSONTyped(
-          value as HeadingAsset,
+        return Heading3AssetToJSONTyped(
+          value as Heading3Asset,
           ignoreDiscriminator
         );
       case "HEADING4":
-        return HeadingAssetToJSONTyped(
-          value as HeadingAsset,
+        return Heading4AssetToJSONTyped(
+          value as Heading4Asset,
           ignoreDiscriminator
         );
       case "HEADING5":
-        return HeadingAssetToJSONTyped(
-          value as HeadingAsset,
+        return Heading5AssetToJSONTyped(
+          value as Heading5Asset,
           ignoreDiscriminator
         );
       case "IMAGE":

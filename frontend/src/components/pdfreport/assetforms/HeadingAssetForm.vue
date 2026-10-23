@@ -72,7 +72,8 @@
 </template>
 
 <script setup lang="ts">
-import type { HeadingAsset, TextAsset } from "@/api/client";
+import type { TextAsset } from "@/api/client";
+import type { HeadingAsset } from "@/util/AssetUtil";
 
 import { ref, watch } from "vue";
 

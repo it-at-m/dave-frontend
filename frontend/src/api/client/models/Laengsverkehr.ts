@@ -14,7 +14,6 @@
 
 import type { Bewegungsrichtung } from "./Bewegungsrichtung";
 import type { Himmelsrichtung } from "./Himmelsrichtung";
-import type { Hochrechnungsfaktor } from "./Hochrechnungsfaktor";
 
 import { mapValues } from "../runtime";
 import {
@@ -29,12 +28,6 @@ import {
   HimmelsrichtungToJSON,
   HimmelsrichtungToJSONTyped,
 } from "./Himmelsrichtung";
-import {
-  HochrechnungsfaktorFromJSON,
-  HochrechnungsfaktorFromJSONTyped,
-  HochrechnungsfaktorToJSON,
-  HochrechnungsfaktorToJSONTyped,
-} from "./Hochrechnungsfaktor";
 
 /**
  *
@@ -44,44 +37,28 @@ import {
 export interface Laengsverkehr {
   /**
    *
-   * @type {string}
-   * @memberof Laengsverkehr
-   */
-  id?: string;
-  /**
-   *
-   * @type {Hochrechnungsfaktor}
-   * @memberof Laengsverkehr
-   */
-  hochrechnungsfaktor?: Hochrechnungsfaktor;
-  /**
-   *
    * @type {number}
    * @memberof Laengsverkehr
    */
-  knotenarm: number;
+  knotenarm?: number;
   /**
    *
    * @type {Bewegungsrichtung}
    * @memberof Laengsverkehr
    */
-  richtung: Bewegungsrichtung;
+  richtung?: Bewegungsrichtung;
   /**
    *
    * @type {Himmelsrichtung}
    * @memberof Laengsverkehr
    */
-  strassenseite: Himmelsrichtung;
+  strassenseite?: Himmelsrichtung;
 }
 
 /**
  * Check if a given object implements the Laengsverkehr interface.
  */
 export function instanceOfLaengsverkehr(value: object): value is Laengsverkehr {
-  if (!("knotenarm" in value) || value["knotenarm"] === undefined) return false;
-  if (!("richtung" in value) || value["richtung"] === undefined) return false;
-  if (!("strassenseite" in value) || value["strassenseite"] === undefined)
-    return false;
   return true;
 }
 
@@ -97,14 +74,15 @@ export function LaengsverkehrFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    hochrechnungsfaktor:
-      json["hochrechnungsfaktor"] == null
+    knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
+    richtung:
+      json["richtung"] == null
         ? undefined
-        : HochrechnungsfaktorFromJSON(json["hochrechnungsfaktor"]),
-    knotenarm: json["knotenarm"],
-    richtung: BewegungsrichtungFromJSON(json["richtung"]),
-    strassenseite: HimmelsrichtungFromJSON(json["strassenseite"]),
+        : BewegungsrichtungFromJSON(json["richtung"]),
+    strassenseite:
+      json["strassenseite"] == null
+        ? undefined
+        : HimmelsrichtungFromJSON(json["strassenseite"]),
   };
 }
 
@@ -121,10 +99,6 @@ export function LaengsverkehrToJSONTyped(
   }
 
   return {
-    id: value["id"],
-    hochrechnungsfaktor: HochrechnungsfaktorToJSON(
-      value["hochrechnungsfaktor"]
-    ),
     knotenarm: value["knotenarm"],
     richtung: BewegungsrichtungToJSON(value["richtung"]),
     strassenseite: HimmelsrichtungToJSON(value["strassenseite"]),
