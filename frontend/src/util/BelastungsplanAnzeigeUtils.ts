@@ -93,7 +93,7 @@ export function useBelastungsplanAnzeigeUtils() {
       zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
     ) {
       const zb = useEnumUtils().toZeitblock(zeitblock);
-      const title = zb ? zeitblockInfo.get(zb)?.title : "Unbekannt";
+      const title = zb ? zeitblockInfo.get(zb)?.title : undefined;
       zeitauswahlWithZeitblock =
         zeitauswahlWithZeitblock + " (Block " + title + ")";
     }
