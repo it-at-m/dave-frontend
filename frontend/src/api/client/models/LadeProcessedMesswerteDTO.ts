@@ -91,13 +91,13 @@ export interface LadeProcessedMesswerteDTO {
    * @type {number}
    * @memberof LadeProcessedMesswerteDTO
    */
-  requestedMeasuringDays: number;
+  requestedMeasuringDays?: number;
   /**
    *
    * @type {number}
    * @memberof LadeProcessedMesswerteDTO
    */
-  includedMeasuringDays: number;
+  includedMeasuringDays?: number;
 }
 
 /**
@@ -121,16 +121,6 @@ export function instanceOfLadeProcessedMesswerteDTO(
   if (
     !("belastungsplanMessquerschnitte" in value) ||
     value["belastungsplanMessquerschnitte"] === undefined
-  )
-    return false;
-  if (
-    !("requestedMeasuringDays" in value) ||
-    value["requestedMeasuringDays"] === undefined
-  )
-    return false;
-  if (
-    !("includedMeasuringDays" in value) ||
-    value["includedMeasuringDays"] === undefined
   )
     return false;
   return true;
@@ -164,8 +154,14 @@ export function LadeProcessedMesswerteDTOFromJSONTyped(
     belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTOFromJSON(
       json["belastungsplanMessquerschnitte"]
     ),
-    requestedMeasuringDays: json["requestedMeasuringDays"],
-    includedMeasuringDays: json["includedMeasuringDays"],
+    requestedMeasuringDays:
+      json["requestedMeasuringDays"] == null
+        ? undefined
+        : json["requestedMeasuringDays"],
+    includedMeasuringDays:
+      json["includedMeasuringDays"] == null
+        ? undefined
+        : json["includedMeasuringDays"],
   };
 }
 
