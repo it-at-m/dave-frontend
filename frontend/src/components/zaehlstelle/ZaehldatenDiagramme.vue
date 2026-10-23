@@ -519,6 +519,7 @@ function loadProcessedChartData(options: OptionsDTO) {
     options as OptionsDTO
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
+      console.log("loadProcessedChartData loaded"); // TODO: remove
       storeStartAndEndeUhrzeitOfIntervalls(
         processedZaehldaten.zaehldatenTable.zaehldaten
       );

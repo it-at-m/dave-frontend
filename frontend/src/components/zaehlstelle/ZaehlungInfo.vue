@@ -205,7 +205,7 @@
             </v-col>
           </v-row>
           <v-row
-            v-for="(k) in sortedFilteredKnotenarme"
+            v-for="k in sortedFilteredKnotenarme"
             :key="k.nummer"
             no-gutters
             class="ma-0"

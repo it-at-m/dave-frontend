@@ -348,7 +348,7 @@ function createSeriesDataForChart(
       seriesEntries.push({
         name: seriesEntryChart.name,
         type: chartType.value,
-        data: seriesEntryChart.yaxisData,
+        data: seriesEntryChart.yAxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
@@ -360,7 +360,7 @@ function createSeriesDataForChart(
         name: seriesEntryChart.name,
         type: chartType.value,
         step: CHART_STEP_X_AXIS,
-        data: seriesEntryChart.yaxisData,
+        data: seriesEntryChart.yAxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
