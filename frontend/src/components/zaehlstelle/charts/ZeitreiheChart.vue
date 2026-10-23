@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { BarChart, LineChart } from "echarts/charts";
 import {
@@ -32,8 +32,10 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import ChartUtils from "@/util/ChartUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useFjs } from "@/util/FjsUtils";
@@ -92,11 +94,11 @@ const zeitreiheHeightAndWidth = computed(() => {
   }
   return `width: 100%; height: ${height}`;
 });
-const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
+const filterOptions = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 

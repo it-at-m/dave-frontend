@@ -1,8 +1,10 @@
+import type {
+  BearbeiteKnotenarmDTO,
+  LadeBelastungsplanDTO,
+} from "@/api/client";
 import type BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import type BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type Options from "@/types/zaehlung/Options";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { computed } from "vue";
@@ -68,7 +70,7 @@ export function useBelastungsplanMethods() {
   const prozentSpalt = 0.05;
   const prozentMaxFahrtrichtungWidth = 0.12;
 
-  const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+  const optionen = computed<Options>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
 
@@ -1130,7 +1132,7 @@ export function useBelastungsplanMethods() {
     lineWidth: number,
     line: number
   ) {
-    const ladeKnotenarmWrapper: LadeKnotenarmDTO = {
+    const ladeKnotenarmWrapper: BearbeiteKnotenarmDTO = {
       nummer: knotenarm.knotenarmNummer,
       strassenname: knotenarm.strasse,
     };

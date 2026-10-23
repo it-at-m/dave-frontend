@@ -26,12 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { computed } from "vue";
 
 interface Props {
-  messstelle: MessstelleInfoDTO;
+  messstelle: MessstelleInfoType;
 }
 
 const props = defineProps<Props>();

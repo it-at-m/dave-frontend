@@ -184,10 +184,10 @@
 </template>
 
 <script setup lang="ts">
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeBelastungsplanQjsDTO } from "@/api/client";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { first, last } from "lodash";
 import { computed, nextTick, ref, watch } from "vue";
@@ -199,7 +199,7 @@ import { useQjs } from "@/util/QjsUtils";
 interface Props {
   data: LadeBelastungsplanQjsDTO;
   dimension: string;
-  options: ZaehlstelleOptionsDTO;
+  options: Options;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -223,7 +223,7 @@ const yCoordNumberOne = 700;
 const xCoordNumberTwo = 1024;
 const yCoordNumberTwo = 700;
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -312,7 +312,7 @@ const isSelectedArrowFour = computed(() => {
 });
 
 function convertToVerkehrsbeziehungenQjs(
-  verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined
+  verkehrsbeziehungen: LadeVerkehrsbeziehung[] | undefined
 ) {
   return (
     verkehrsbeziehungen?.map(({ von, nach, strassenseite }) => ({

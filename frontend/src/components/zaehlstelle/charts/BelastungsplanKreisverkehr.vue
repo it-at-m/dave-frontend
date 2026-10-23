@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeBelastungsplanDTO } from "@/api/client";
+import type Options from "@/types/zaehlung/Options";
 
 import { GraphChart } from "echarts/charts";
 import {
@@ -254,7 +254,7 @@ const belastungsplanHeightAndWidth = computed(() => {
   return `width: 100%; height: ${height}`;
 });
 
-const selectedOptions = computed<ZaehlstelleOptionsDTO>(() => {
+const selectedOptions = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -1601,7 +1601,7 @@ function getDataToShow() {
 // Alle Methoden für die Triangles
 function getSymbolForTriangle(index: number) {
   // Wird nur angezeigt, wenn der Knoten vorhanden ist und auch Daten vorliegen (herausfahrende Fahrzeuge)
-  // return (props.visibleNodes[index] && getDataToShow()[index][2]) ? this.TRIANGLE : NONE;
+  // return (props.visibleNodes[index] && getDataToShow()[index][2]) ? this.TRIANGLE : None;
   return props.visibleNodes[index] ? TRIANGLE : NONE;
 }
 

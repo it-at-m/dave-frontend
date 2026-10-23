@@ -1,4 +1,4 @@
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import AbstractHistoryItem from "@/types/history/AbstractHistoryItem";
 
@@ -6,13 +6,13 @@ export default class MessstelleHistoryItem extends AbstractHistoryItem {
   id: string;
   mstId: string;
   standortMs: string;
-  optionsEinstellungen?: MessstelleOptionsDTO;
+  optionsEinstellungen?: MessstelleOptions;
 
   constructor(
     id: string,
     mstId: string,
     standortMs: string,
-    options?: MessstelleOptionsDTO
+    options?: MessstelleOptions
   ) {
     super(id, "mdi-cards-diamond");
     this.id = id;

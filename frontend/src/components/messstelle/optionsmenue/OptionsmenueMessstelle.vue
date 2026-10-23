@@ -69,14 +69,24 @@
   </div>
 </template>
 <script setup lang="ts">
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type ValidatedZeitraumAndTagestypDTO from "@/types/messstelle/ValidatedZeitraumAndTagestypDTO";
-import type ValidateZeitraumAndTagestypForMessstelleDTO from "@/types/messstelle/ValidateZeitraumAndTagestypForMessstelleDTO";
+import type {
+  ValidatedZeitraumAndTagestypDTO,
+  ValidateZeitraumAndTagestypForMessstelleDTO,
+} from "@/api/client";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { cloneDeep, head, isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import {
+  instanceOfTagesTyp,
+  Rounding,
+  TagesTyp,
+  Verkehrsart,
+  ZaehldatenIntervall,
+  Zeitblock,
+} from "@/api/client";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DarstellungsoptionenPanelMessstelle from "@/components/messstelle/optionsmenue/panels/DarstellungsoptionenPanelMessstelle.vue";
 import FahrzeugPanel from "@/components/messstelle/optionsmenue/panels/FahrzeugPanelMessstelle.vue";
@@ -87,14 +97,8 @@ import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore"
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import Rounding from "@/types/enum/Rounding";
-import TagesTyp from "@/types/enum/TagesTyp";
-import Verkehrsart from "@/types/enum/Verkehrsart";
-import ZaehldatenIntervall, {
-  ZaehldatenIntervallToSelect,
-} from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervallToSelect } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
 import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
@@ -120,7 +124,7 @@ const isZeitraumAndTagestypValid = ref(false);
 const userStore = useUserStore();
 const dateUtils = useDateUtils();
 
-const messstelle = computed<MessstelleInfoDTO>(() => {
+const messstelle = computed<MessstelleInfoType>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
@@ -189,7 +193,7 @@ function areChosenOptionsValid(): boolean {
   if (
     dateUtils.isDateRange(chosenOptions.value.zeitraum) &&
     (!chosenOptions.value.tagesTyp ||
-      chosenOptions.value.tagesTyp === TagesTyp.UNSPECIFIED)
+      chosenOptions.value.tagesTyp === TagesTyp.Unspecified)
   ) {
     result = false;
     snackbarStore.showError("Es muss ein Wochentag ausgewählt sein.");
@@ -261,11 +265,11 @@ function setDefaultOptionsForMessstelle(): void {
     messstelleStore.setDirection(messstelleUtils.alleRichtungen);
   }
   chosenOptions.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-  chosenOptions.value.intervall = ZaehldatenIntervall.STUNDE_KOMPLETT;
-  chosenOptions.value.zeitblock = Zeitblock.ZB_00_24;
-  chosenOptions.value.tagesTyp = TagesTyp.UNSPECIFIED;
+  chosenOptions.value.intervall = ZaehldatenIntervall.StundeKomplett;
+  chosenOptions.value.zeitblock = Zeitblock.Zb0024;
+  chosenOptions.value.tagesTyp = TagesTyp.Unspecified;
   chosenOptions.value.blackPrintMode = false;
-  chosenOptions.value.rounding = Rounding.NONE;
+  chosenOptions.value.rounding = Rounding.None;
   chosenOptions.value.blocksumme = true;
   chosenOptions.value.stundensumme = true;
   chosenOptions.value.tagessumme = true;
@@ -283,9 +287,9 @@ function resetFahrzeugOptions(): void {
     DefaultObjectCreator.createDefaultFahrzeugOptions();
 
   chosenOptions.value.fahrzeuge.kraftfahrzeugverkehr =
-    messstelle.value.detektierteVerkehrsart === Verkehrsart.KFZ;
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.Kfz;
   chosenOptions.value.fahrzeuge.radverkehr =
-    messstelle.value.detektierteVerkehrsart === Verkehrsart.RAD;
+    messstelle.value.detektierteVerkehrsart === Verkehrsart.Rad;
 }
 
 /**
@@ -343,7 +347,7 @@ watch(
     const firstIntervalToSet = head(intervalsToSet);
 
     chosenOptions.value.intervall = isNil(firstIntervalToSet)
-      ? ZaehldatenIntervall.STUNDE_KOMPLETT
+      ? ZaehldatenIntervall.StundeKomplett
       : firstIntervalToSet.value;
   },
   { deep: true, immediate: true }
@@ -359,18 +363,17 @@ watch(
       !isNil(chosenOptions.value.zeitraumStartAndEndDate) &&
       !isNil(chosenOptions.value.zeitraumStartAndEndDate.startDate) &&
       !isNil(chosenOptions.value.zeitraumStartAndEndDate.endDate) &&
-      chosenOptions.value.tagesTyp !== TagesTyp.UNSPECIFIED
+      chosenOptions.value.tagesTyp !== TagesTyp.Unspecified
     ) {
-      const isoStartDate = dateUtils.formatDateToISO(
-        chosenOptions.value.zeitraumStartAndEndDate.startDate
-      );
-      const isoEndDate = dateUtils.formatDateToISO(
-        chosenOptions.value.zeitraumStartAndEndDate.endDate
-      );
       const request = {
-        zeitraum: [isoStartDate, isoEndDate],
+        zeitraum: [
+          chosenOptions.value.zeitraumStartAndEndDate.startDate,
+          chosenOptions.value.zeitraumStartAndEndDate.endDate,
+        ],
         mstId: messstelle.value.mstId,
-        tagesTyp: chosenOptions.value.tagesTyp,
+        tagesTyp: instanceOfTagesTyp(chosenOptions.value.tagesTyp)
+          ? (chosenOptions.value.tagesTyp as TagesTyp)
+          : TagesTyp.Unspecified,
       } as ValidateZeitraumAndTagestypForMessstelleDTO;
 
       MessstelleOptionsmenuService.validateZeitraumAndTagestyp(request)

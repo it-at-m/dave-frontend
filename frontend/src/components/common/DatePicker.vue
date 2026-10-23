@@ -69,7 +69,7 @@ interface Props {
   label?: string; // Bezeichnung des Datumsfelds
   required?: boolean; // Ist das Datumsfeld ein Pflichtfeld
   disabled?: boolean; // Ob das Datumsfeld deaktiviert sein soll
-  auffaelligeTage?: Array<string>;
+  auffaelligeTage?: Array<Date>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -134,7 +134,7 @@ const markers = computed(() => {
   return markers;
 });
 
-function getMarker(datum: string) {
+function getMarker(datum: Date) {
   return {
     date: datum,
     type: "line",

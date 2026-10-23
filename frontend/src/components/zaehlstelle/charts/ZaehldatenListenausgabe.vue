@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeZaehldatumDTO } from "@/api/client";
+import type Options from "@/types/zaehlung/Options";
 
 import { computed, watch } from "vue";
 
@@ -113,7 +113,7 @@ const activeAnteil = computed(() => {
   return activeAnteil;
 });
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -423,13 +423,6 @@ watch(
     listenausgabeData.forEach((zaehldatum) => {
       zaehldatum.endeUhrzeit =
         DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
-      // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0
-      zaehldatum.anteilGueterverkehrAnKfzProzent = parseFloat(
-        zaehldatum.anteilGueterverkehrAnKfzProzent
-      ).toFixed(1);
-      zaehldatum.anteilSchwerverkehrAnKfzProzent = parseFloat(
-        zaehldatum.anteilSchwerverkehrAnKfzProzent
-      ).toFixed(1);
     });
   },
   { immediate: true }

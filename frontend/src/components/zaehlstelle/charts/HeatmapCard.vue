@@ -14,7 +14,7 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import type { LadeZaehldatenHeatmapDTO } from "@/api/client";
 import type { ResizeOpts } from "echarts/core";
 
 import { onMounted, ref } from "vue";

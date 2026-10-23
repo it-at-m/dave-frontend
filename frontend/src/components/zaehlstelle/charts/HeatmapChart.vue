@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import type { LadeZaehldatenHeatmapDTO } from "@/api/client";
 
 import { HeatmapChart } from "echarts/charts";
 import {
@@ -312,11 +312,11 @@ watch(
     twoChartsNeeded.value = checkTwoChartsNeeded(zaehldatenHeatmap);
     chartLegend.value = zaehldatenHeatmap.legend;
     xAxisDataFirstChart.value = zaehldatenHeatmap.xaxisDataFirstChart;
-    if (zaehldatenHeatmap.xaxisDataSecondChart !== null) {
+    if (zaehldatenHeatmap.xaxisDataSecondChart) {
       xAxisDataSecondChart.value = zaehldatenHeatmap.xaxisDataSecondChart;
     }
     seriesEntriesFirstChart.value = zaehldatenHeatmap.seriesEntriesFirstChart;
-    if (zaehldatenHeatmap.seriesEntriesSecondChart !== null) {
+    if (zaehldatenHeatmap.seriesEntriesSecondChart) {
       seriesEntriesSecondChart.value =
         zaehldatenHeatmap.seriesEntriesSecondChart;
     }

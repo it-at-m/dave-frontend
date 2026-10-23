@@ -1,4 +1,4 @@
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 
 export function useStrassennameUtils() {
   /**
@@ -8,7 +8,7 @@ export function useStrassennameUtils() {
    * @returns Array<string> mit einem oder zwei Elementen (falls gesplittet)
    */
   function getStreetname(
-    knotenarm: LadeKnotenarmDTO | undefined,
+    knotenarm: BearbeiteKnotenarmDTO | undefined,
     maxChars = 17
   ): Array<string> {
     const strasse = (knotenarm?.strassenname ?? "").trim();
@@ -194,7 +194,7 @@ export function useStrassennameUtils() {
    * balanceLines auf.
    */
   function getStreetLines(
-    knotenarm: LadeKnotenarmDTO | undefined,
+    knotenarm: BearbeiteKnotenarmDTO | undefined,
     maxChars?: number
   ): Array<string> {
     const pieces = getStreetname(knotenarm, maxChars);

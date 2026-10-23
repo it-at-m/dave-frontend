@@ -96,8 +96,8 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { ComputedRef } from "vue";
 
 import { computed, onMounted, ref, watch } from "vue";
@@ -111,7 +111,7 @@ import { useFjs } from "@/util/FjsUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useQu } from "@/util/QuUtils";
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
@@ -137,7 +137,7 @@ onMounted(() => {
   initData();
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -235,7 +235,7 @@ function initData() {
  */
 function vergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
-  const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
+  const zaehlungen: Array<LadeZaehlung> = zaehlstelleStore.getZaehlungen;
   if (activeZaehlung.value.id) {
     zaehlungen.forEach((zaehl) => {
       if (
@@ -268,7 +268,7 @@ function vergleichsdatumCalculator(): void {
  * */
 function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
-  const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
+  const zaehlungen: Array<LadeZaehlung> = zaehlstelleStore.getZaehlungen;
   if (
     activeZaehlung.value.id != undefined &&
     activeZaehlung.value.datum != undefined
@@ -323,8 +323,8 @@ function zeitreihenVergleichsdatumCalculator(): void {
  * @param activeZaehlung aktive Zaehlung
  */
 function checkBewegungsbeziehungen(
-  zaehlung: LadeZaehlungDTO,
-  activeZaehlung: ComputedRef<LadeZaehlungDTO>
+  zaehlung: LadeZaehlung,
+  activeZaehlung: ComputedRef<LadeZaehlung>
 ): boolean {
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
@@ -358,15 +358,15 @@ function checkBewegungsbeziehungen(
  * @return true falls die Zählung den Zeitblock im zweiten Parameter besitzt, anderfalls false.
  */
 function containsZeitblock(
-  zaehlung: LadeZaehlungDTO,
+  zaehlung: LadeZaehlung,
   zeitblockInOptions: string
 ): boolean {
   return (
-    zaehlung.zeitauswahl.blocks.some(
-      (zeitblock) => zeitblock.toString() === zeitblockInOptions
+    Array.from(zaehlung.zeitauswahl.blocks).some(
+      (zeitblock) => zeitblock === zeitblockInOptions
     ) ||
-    zaehlung.zeitauswahl.hours.some(
-      (zeitblockStuendl) => zeitblockStuendl.toString() === zeitblockInOptions
+    Array.from(zaehlung.zeitauswahl.hours).some(
+      (zeitblock) => zeitblock === zeitblockInOptions
     )
   );
 }

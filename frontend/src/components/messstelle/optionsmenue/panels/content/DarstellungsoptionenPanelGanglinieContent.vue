@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { inRange } from "lodash";
 import { computed, ref } from "vue";
@@ -65,7 +65,7 @@ import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useDateUtils } from "@/util/DateUtils";
 import { useValidationRules } from "@/util/ValidationRules";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 const rules = useValidationRules();
 
 const hoverYAchse1 = ref(false);
