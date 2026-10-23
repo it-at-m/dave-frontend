@@ -48,16 +48,19 @@ In der Datei LadeProcessedZaehldatenBelastungsplanDTO.ts fehlen einige Imports f
 LadeBelastungsplanDTO,
 ```
 
-Ausserdem ist in der Funktion _LadeProcessedZaehldatenBelastungsplanDTOToJSONTyped_ falsch verwendet. 
+Ausserdem ist in der Funktion _LadeProcessedZaehldatenBelastungsplanDTOToJSONTyped_ falsch verwendet.
 Richtige Lösung:
+
 ```
   default:
     return value;
 ```
 
 Die Ursache ist eine Einschränkung des verwendeten typescript-fetch-Generators:
+
 - LadeProcessedZaehldatenBelastungsplanDTO ist ein reines oneOf-Alias.
 - Der Generator erzeugt daraus zwar den Union-Typ, aber keine Imports für die referenzierten Modelle.
 - generateAliasAsModel wird von der verwendeten Generator-Version nicht wirksam unterstützt.
 - anyOf erzeugt zwar Imports, aber ein falsches gemeinsames Interface und kaputte Typzuweisungen.
+ 
 Zu lösen wäre das nur mit einem eigenen OpenAPI-Generator-Template.

@@ -25,7 +25,7 @@ export interface InfoMessageDTO {
    * @type {string}
    * @memberof InfoMessageDTO
    */
-  id: string;
+  id?: string;
   /**
    *
    * @type {string}
@@ -64,7 +64,6 @@ export interface InfoMessageDTO {
 export function instanceOfInfoMessageDTO(
   value: object
 ): value is InfoMessageDTO {
-  if (!("id" in value) || value["id"] === undefined) return false;
   if (!("content" in value) || value["content"] === undefined) return false;
   if (!("gueltigVon" in value) || value["gueltigVon"] === undefined)
     return false;
@@ -86,7 +85,7 @@ export function InfoMessageDTOFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"],
+    id: json["id"] == null ? undefined : json["id"],
     content: json["content"],
     gueltigVon: new Date(json["gueltigVon"]),
     gueltigBis: new Date(json["gueltigBis"]),
