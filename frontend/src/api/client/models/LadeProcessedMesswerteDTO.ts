@@ -61,7 +61,7 @@ export interface LadeProcessedMesswerteDTO {
    * @type {TagesTyp}
    * @memberof LadeProcessedMesswerteDTO
    */
-  tagesTyp: TagesTyp;
+  tagesTyp?: TagesTyp;
   /**
    *
    * @type {LadeMesswerteListenausgabeDTO}
@@ -106,7 +106,6 @@ export interface LadeProcessedMesswerteDTO {
 export function instanceOfLadeProcessedMesswerteDTO(
   value: object
 ): value is LadeProcessedMesswerteDTO {
-  if (!("tagesTyp" in value) || value["tagesTyp"] === undefined) return false;
   if (!("zaehldatenTable" in value) || value["zaehldatenTable"] === undefined)
     return false;
   if (
@@ -151,7 +150,8 @@ export function LadeProcessedMesswerteDTOFromJSONTyped(
     return json;
   }
   return {
-    tagesTyp: TagesTypFromJSON(json["tagesTyp"]),
+    tagesTyp:
+      json["tagesTyp"] == null ? undefined : TagesTypFromJSON(json["tagesTyp"]),
     zaehldatenTable: LadeMesswerteListenausgabeDTOFromJSON(
       json["zaehldatenTable"]
     ),
