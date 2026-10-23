@@ -281,6 +281,7 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import { roundingItems } from "@/types/enum/RoundingText";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 const SPITZENSTUNDE = "Spitzenstunde";
 const MIN_VALUE = 0;
