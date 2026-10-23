@@ -22,6 +22,24 @@ import { mapValues } from "../runtime";
 export interface PkwEinheit {
   /**
    *
+   * @type {string}
+   * @memberof PkwEinheit
+   */
+  id?: string;
+  /**
+   *
+   * @type {Date}
+   * @memberof PkwEinheit
+   */
+  createdTime?: Date;
+  /**
+   *
+   * @type {number}
+   * @memberof PkwEinheit
+   */
+  version?: number;
+  /**
+   *
    * @type {number}
    * @memberof PkwEinheit
    */
@@ -62,6 +80,12 @@ export interface PkwEinheit {
    * @memberof PkwEinheit
    */
   fussgaenger?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof PkwEinheit
+   */
+  entityVersion?: number;
 }
 
 /**
@@ -83,6 +107,10 @@ export function PkwEinheitFromJSONTyped(
     return json;
   }
   return {
+    id: json["id"] == null ? undefined : json["id"],
+    createdTime:
+      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+    version: json["version"] == null ? undefined : json["version"],
     pkw: json["pkw"] == null ? undefined : json["pkw"],
     lkw: json["lkw"] == null ? undefined : json["lkw"],
     lastzuege: json["lastzuege"] == null ? undefined : json["lastzuege"],
@@ -91,6 +119,8 @@ export function PkwEinheitFromJSONTyped(
     fahrradfahrer:
       json["fahrradfahrer"] == null ? undefined : json["fahrradfahrer"],
     fussgaenger: json["fussgaenger"] == null ? undefined : json["fussgaenger"],
+    entityVersion:
+      json["entityVersion"] == null ? undefined : json["entityVersion"],
   };
 }
 
@@ -107,6 +137,12 @@ export function PkwEinheitToJSONTyped(
   }
 
   return {
+    id: value["id"],
+    createdTime:
+      value["createdTime"] == null
+        ? undefined
+        : value["createdTime"].toISOString(),
+    version: value["version"],
     pkw: value["pkw"],
     lkw: value["lkw"],
     lastzuege: value["lastzuege"],
@@ -114,5 +150,6 @@ export function PkwEinheitToJSONTyped(
     kraftraeder: value["kraftraeder"],
     fahrradfahrer: value["fahrradfahrer"],
     fussgaenger: value["fussgaenger"],
+    entityVersion: value["entityVersion"],
   };
 }

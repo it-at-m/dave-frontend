@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PagedModelEntityModelKalendertagEmbedded } from "./PagedModelEntityModelKalendertagEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PagedModelEntityModelKalendertagEmbeddedFromJSON,
   PagedModelEntityModelKalendertagEmbeddedFromJSONTyped,
@@ -50,10 +50,10 @@ export interface PagedModelEntityModelKalendertag {
   embedded?: PagedModelEntityModelKalendertagEmbedded;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof PagedModelEntityModelKalendertag
    */
-  links?: { [key: string]: Link };
+  links?: Links;
   /**
    *
    * @type {PageMetadata}
@@ -89,10 +89,7 @@ export function PagedModelEntityModelKalendertagFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelKalendertagEmbeddedFromJSON(json["_embedded"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -115,10 +112,7 @@ export function PagedModelEntityModelKalendertagToJSONTyped(
     _embedded: PagedModelEntityModelKalendertagEmbeddedToJSON(
       value["embedded"]
     ),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
     page: PageMetadataToJSON(value["page"]),
   };
 }

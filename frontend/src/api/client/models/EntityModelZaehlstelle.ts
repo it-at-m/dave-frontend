@@ -13,7 +13,7 @@
  */
 
 import type { GeoPoint } from "./GeoPoint";
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PositionUTM } from "./PositionUTM";
 import type { Zaehlung } from "./Zaehlung";
 
@@ -25,11 +25,11 @@ import {
   GeoPointToJSONTyped,
 } from "./GeoPoint";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PositionUTMFromJSON,
   PositionUTMFromJSONTyped,
@@ -135,10 +135,10 @@ export interface EntityModelZaehlstelle {
   punktUtm?: PositionUTM;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelZaehlstelle
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -201,10 +201,7 @@ export function EntityModelZaehlstelleFromJSONTyped(
       json["punktUtm"] == null
         ? undefined
         : PositionUTMFromJSON(json["punktUtm"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -240,9 +237,6 @@ export function EntityModelZaehlstelleToJSONTyped(
         : (value["zaehlungen"] as Array<any>).map(ZaehlungToJSON),
     sichtbarDatenportal: value["sichtbarDatenportal"],
     punktUtm: PositionUTMToJSON(value["punktUtm"]),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

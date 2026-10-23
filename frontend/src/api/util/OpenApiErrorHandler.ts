@@ -58,7 +58,7 @@ export function handleOpenApiError<T>(
 
     // Da die genaue technische Fehlermelung nicht in der GUI ausgegeben wird,
     // muss man ihn auf der console ausgeben, um ihn zu analysieren.
-    console.error(error);
+    // console.error(error);
     throw new ApiError(
       Levels.ERROR,
       "Es ist ein Fehler bei der Verarbeitung der Antwort aufgetreten",

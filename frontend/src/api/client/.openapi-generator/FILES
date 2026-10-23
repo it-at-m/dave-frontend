@@ -131,6 +131,7 @@ models/Heading4Asset.ts
 models/Heading5Asset.ts
 models/Himmelsrichtung.ts
 models/Hochrechnung.ts
+models/Hochrechnungsfaktor.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
 models/ImageAsset.ts
@@ -169,6 +170,7 @@ models/LayerDTO.ts
 models/LeseZaehlstelleDTO.ts
 models/LeseZaehlungDTO.ts
 models/Link.ts
+models/Links.ts
 models/MapConfigurationDTO.ts
 models/Messfaehigkeit.ts
 models/Messquerschnitt.ts

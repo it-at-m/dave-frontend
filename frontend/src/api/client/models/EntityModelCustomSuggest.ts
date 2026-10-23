@@ -13,7 +13,7 @@
  */
 
 import type { Completion } from "./Completion";
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 
 import { mapValues } from "../runtime";
 import {
@@ -23,11 +23,11 @@ import {
   CompletionToJSONTyped,
 } from "./Completion";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 
 /**
  *
@@ -55,10 +55,10 @@ export interface EntityModelCustomSuggest {
   suggest?: Completion;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelCustomSuggest
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -88,10 +88,7 @@ export function EntityModelCustomSuggestFromJSONTyped(
     fkid: json["fkid"] == null ? undefined : json["fkid"],
     suggest:
       json["suggest"] == null ? undefined : CompletionFromJSON(json["suggest"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -113,9 +110,6 @@ export function EntityModelCustomSuggestToJSONTyped(
     name: value["name"],
     fkid: value["fkid"],
     suggest: CompletionToJSON(value["suggest"]),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

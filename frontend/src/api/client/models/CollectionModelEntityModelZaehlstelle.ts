@@ -12,16 +12,16 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PagedModelEntityModelZaehlstelleEmbedded } from "./PagedModelEntityModelZaehlstelleEmbedded";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PagedModelEntityModelZaehlstelleEmbeddedFromJSON,
   PagedModelEntityModelZaehlstelleEmbeddedFromJSONTyped,
@@ -43,10 +43,10 @@ export interface CollectionModelEntityModelZaehlstelle {
   embedded?: PagedModelEntityModelZaehlstelleEmbedded;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof CollectionModelEntityModelZaehlstelle
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -76,10 +76,7 @@ export function CollectionModelEntityModelZaehlstelleFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelZaehlstelleEmbeddedFromJSON(json["_embedded"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -101,9 +98,6 @@ export function CollectionModelEntityModelZaehlstelleToJSONTyped(
     _embedded: PagedModelEntityModelZaehlstelleEmbeddedToJSON(
       value["embedded"]
     ),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

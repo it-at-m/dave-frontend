@@ -12,16 +12,16 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PagedModelEntityModelCustomSuggestEmbedded } from "./PagedModelEntityModelCustomSuggestEmbedded";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PagedModelEntityModelCustomSuggestEmbeddedFromJSON,
   PagedModelEntityModelCustomSuggestEmbeddedFromJSONTyped,
@@ -43,10 +43,10 @@ export interface CollectionModelEntityModelCustomSuggest {
   embedded?: PagedModelEntityModelCustomSuggestEmbedded;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof CollectionModelEntityModelCustomSuggest
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -76,10 +76,7 @@ export function CollectionModelEntityModelCustomSuggestFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelCustomSuggestEmbeddedFromJSON(json["_embedded"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -101,9 +98,6 @@ export function CollectionModelEntityModelCustomSuggestToJSONTyped(
     _embedded: PagedModelEntityModelCustomSuggestEmbeddedToJSON(
       value["embedded"]
     ),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

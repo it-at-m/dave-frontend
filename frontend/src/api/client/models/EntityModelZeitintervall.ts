@@ -14,7 +14,7 @@
 
 import type { Hochrechnung } from "./Hochrechnung";
 import type { Laengsverkehr } from "./Laengsverkehr";
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { Querungsverkehr } from "./Querungsverkehr";
 import type { Verkehrsbeziehung } from "./Verkehrsbeziehung";
 
@@ -32,11 +32,11 @@ import {
   LaengsverkehrToJSONTyped,
 } from "./Laengsverkehr";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   QuerungsverkehrFromJSON,
   QuerungsverkehrFromJSONTyped,
@@ -184,10 +184,10 @@ export interface EntityModelZeitintervall {
   entityVersion?: number;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelZeitintervall
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -275,10 +275,7 @@ export function EntityModelZeitintervallFromJSONTyped(
         : VerkehrsbeziehungFromJSON(json["verkehrsbeziehung"]),
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -321,9 +318,6 @@ export function EntityModelZeitintervallToJSONTyped(
     laengsverkehr: LaengsverkehrToJSON(value["laengsverkehr"]),
     verkehrsbeziehung: VerkehrsbeziehungToJSON(value["verkehrsbeziehung"]),
     entityVersion: value["entityVersion"],
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

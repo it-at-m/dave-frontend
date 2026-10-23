@@ -13,7 +13,7 @@
  */
 
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { ZaehldatenIntervall } from "./ZaehldatenIntervall";
 
 import { mapValues } from "../runtime";
@@ -24,11 +24,11 @@ import {
   FahrzeugklasseToJSONTyped,
 } from "./Fahrzeugklasse";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   ZaehldatenIntervallFromJSON,
   ZaehldatenIntervallFromJSONTyped,
@@ -158,10 +158,10 @@ export interface EntityModelOptionsmenueSettings {
   entityVersion?: number;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelOptionsmenueSettings
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -279,10 +279,7 @@ export function EntityModelOptionsmenueSettingsFromJSONTyped(
           ),
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -388,9 +385,6 @@ export function EntityModelOptionsmenueSettingsToJSONTyped(
             ZaehldatenIntervallToJSON
           ),
     entityVersion: value["entityVersion"],
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

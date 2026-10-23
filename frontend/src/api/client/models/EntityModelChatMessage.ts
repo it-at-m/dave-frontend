@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 
 /**
  *
@@ -96,10 +96,10 @@ export interface EntityModelChatMessage {
   entityVersion?: number;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelChatMessage
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -140,10 +140,7 @@ export function EntityModelChatMessageFromJSONTyped(
     viewed: json["viewed"] == null ? undefined : json["viewed"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -177,9 +174,6 @@ export function EntityModelChatMessageToJSONTyped(
     uploaded: value["uploaded"],
     viewed: value["viewed"],
     entityVersion: value["entityVersion"],
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

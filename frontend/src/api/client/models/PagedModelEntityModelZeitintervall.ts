@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PagedModelEntityModelZeitintervallEmbedded } from "./PagedModelEntityModelZeitintervallEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PagedModelEntityModelZeitintervallEmbeddedFromJSON,
   PagedModelEntityModelZeitintervallEmbeddedFromJSONTyped,
@@ -50,10 +50,10 @@ export interface PagedModelEntityModelZeitintervall {
   embedded?: PagedModelEntityModelZeitintervallEmbedded;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof PagedModelEntityModelZeitintervall
    */
-  links?: { [key: string]: Link };
+  links?: Links;
   /**
    *
    * @type {PageMetadata}
@@ -89,10 +89,7 @@ export function PagedModelEntityModelZeitintervallFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelZeitintervallEmbeddedFromJSON(json["_embedded"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -115,10 +112,7 @@ export function PagedModelEntityModelZeitintervallToJSONTyped(
     _embedded: PagedModelEntityModelZeitintervallEmbeddedToJSON(
       value["embedded"]
     ),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
     page: PageMetadataToJSON(value["page"]),
   };
 }

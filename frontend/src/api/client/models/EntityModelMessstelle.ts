@@ -14,7 +14,7 @@
 
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { GeoPoint } from "./GeoPoint";
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { Messfaehigkeit } from "./Messfaehigkeit";
 import type { Messquerschnitt } from "./Messquerschnitt";
 import type { Verkehrsart } from "./Verkehrsart";
@@ -33,11 +33,11 @@ import {
   GeoPointToJSONTyped,
 } from "./GeoPoint";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   MessfaehigkeitFromJSON,
   MessfaehigkeitFromJSONTyped,
@@ -191,10 +191,10 @@ export interface EntityModelMessstelle {
   lageplanVorhanden?: boolean;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelMessstelle
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -279,10 +279,7 @@ export function EntityModelMessstelleFromJSONTyped(
         : (json["messfaehigkeiten"] as Array<any>).map(MessfaehigkeitFromJSON),
     lageplanVorhanden:
       json["lageplanVorhanden"] == null ? undefined : json["lageplanVorhanden"],
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -335,9 +332,6 @@ export function EntityModelMessstelleToJSONTyped(
         ? undefined
         : (value["messfaehigkeiten"] as Array<any>).map(MessfaehigkeitToJSON),
     lageplanVorhanden: value["lageplanVorhanden"],
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

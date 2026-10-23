@@ -12,16 +12,16 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PagedModelEntityModelMessstelleEmbedded } from "./PagedModelEntityModelMessstelleEmbedded";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PagedModelEntityModelMessstelleEmbeddedFromJSON,
   PagedModelEntityModelMessstelleEmbeddedFromJSONTyped,
@@ -43,10 +43,10 @@ export interface CollectionModelEntityModelMessstelle {
   embedded?: PagedModelEntityModelMessstelleEmbedded;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof CollectionModelEntityModelMessstelle
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -76,10 +76,7 @@ export function CollectionModelEntityModelMessstelleFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelMessstelleEmbeddedFromJSON(json["_embedded"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -99,9 +96,6 @@ export function CollectionModelEntityModelMessstelleToJSONTyped(
 
   return {
     _embedded: PagedModelEntityModelMessstelleEmbeddedToJSON(value["embedded"]),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }

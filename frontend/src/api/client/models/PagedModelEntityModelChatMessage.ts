@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 import type { PagedModelEntityModelChatMessageEmbedded } from "./PagedModelEntityModelChatMessageEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 import {
   PagedModelEntityModelChatMessageEmbeddedFromJSON,
   PagedModelEntityModelChatMessageEmbeddedFromJSONTyped,
@@ -50,10 +50,10 @@ export interface PagedModelEntityModelChatMessage {
   embedded?: PagedModelEntityModelChatMessageEmbedded;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof PagedModelEntityModelChatMessage
    */
-  links?: { [key: string]: Link };
+  links?: Links;
   /**
    *
    * @type {PageMetadata}
@@ -89,10 +89,7 @@ export function PagedModelEntityModelChatMessageFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelChatMessageEmbeddedFromJSON(json["_embedded"]),
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -115,10 +112,7 @@ export function PagedModelEntityModelChatMessageToJSONTyped(
     _embedded: PagedModelEntityModelChatMessageEmbeddedToJSON(
       value["embedded"]
     ),
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
     page: PageMetadataToJSON(value["page"]),
   };
 }

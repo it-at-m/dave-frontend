@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
-import type { Link } from "./Link";
+import type { Links } from "./Links";
 
 import { mapValues } from "../runtime";
 import {
-  LinkFromJSON,
-  LinkFromJSONTyped,
-  LinkToJSON,
-  LinkToJSONTyped,
-} from "./Link";
+  LinksFromJSON,
+  LinksFromJSONTyped,
+  LinksToJSON,
+  LinksToJSONTyped,
+} from "./Links";
 
 /**
  *
@@ -78,10 +78,10 @@ export interface EntityModelDienstleister {
   entityVersion?: number;
   /**
    *
-   * @type {{ [key: string]: Link; }}
+   * @type {Links}
    * @memberof EntityModelDienstleister
    */
-  links?: { [key: string]: Link };
+  links?: Links;
 }
 
 /**
@@ -118,10 +118,7 @@ export function EntityModelDienstleisterFromJSONTyped(
     active: json["active"] == null ? undefined : json["active"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links:
-      json["_links"] == null
-        ? undefined
-        : mapValues(json["_links"], LinkFromJSON),
+    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
   };
 }
 
@@ -151,9 +148,6 @@ export function EntityModelDienstleisterToJSONTyped(
     emailAddresses: value["emailAddresses"],
     active: value["active"],
     entityVersion: value["entityVersion"],
-    _links:
-      value["links"] == null
-        ? undefined
-        : mapValues(value["links"], LinkToJSON),
+    _links: LinksToJSON(value["links"]),
   };
 }
