@@ -397,6 +397,8 @@ const isOnlyFussverkehrSelected = computed(() => {
   );
 });
 
+const wasInfoSnackbarShown = ref<boolean>(false);
+
 /**
  * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
  */
@@ -428,17 +430,14 @@ watch(options, () => {
   loadData();
   if (
     (isTeilzaehlung.value && isOnlyFussverkehrSelected.value) ||
-    isSonderzaehldauer.value
+    (isSonderzaehldauer.value && !isSonderzaehldauerKurzzeitzaehlung.value)
   ) {
-    if (isSonderzaehldauer.value && !isSonderzaehldauerKurzzeitzaehlung.value) {
-      snackbarStore.showInfo(
-        "Für Sonderzähldauer ist kein Tageswert vorhanden."
-      );
-    } else if (isOnlyFussverkehrSelected.value) {
-      snackbarStore.showInfo(
-        "Für den Fußverkehr ist kein Tageswert vorhanden."
-      );
+    if (!wasInfoSnackbarShown.value) {
+      snackbarStore.showInfo("Für diese Zählung ist kein Tageswert vorhanden.");
+      wasInfoSnackbarShown.value = true;
     }
+  } else {
+    wasInfoSnackbarShown.value = false;
   }
 });
 
