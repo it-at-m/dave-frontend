@@ -108,3 +108,10 @@ info:
 
 config:
   map5xxto400: true
+
+refarch:
+  hazelcast:
+    cluster-name: ${spring.application.name}-service-session_replication_group
+    instance-name: ${spring.application.name}-service-hazl_instance
+    service-name: ${spring.application.name}-service
+
