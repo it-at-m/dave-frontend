@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
+import type { SearchAndFilterOptionsDTO } from "@/api/client";
 
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";

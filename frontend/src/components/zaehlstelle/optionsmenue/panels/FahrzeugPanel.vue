@@ -414,21 +414,21 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
+import { Zaehldauer } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
@@ -462,14 +462,14 @@ onMounted(() => {
   calculateSelectOrDeselectVerkehrsarten();
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isTageswertAndNot24h = computed(() => {
   return (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
-    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+    activeZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden
   );
 });
 
@@ -559,11 +559,11 @@ const helpTextFahrzeugkategorien = computed(() => {
 /**
  * Hilfsmethode, um zu schauen, ob der Wert SV% im Belastungsplan angezeigt wird.
  * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive SV_P nicht
- * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind.
+ * mehr wie 3 Verkehrsarten (ohne Rad und FUSS) ausgewählt sind.
  * Im Fall der Differenzdatendarstellung wird SV% nie angezeigt.
  */
 const isSvpInBelastungsPlan = computed(() => {
-  if (isDifferenzdatenDarstellung) {
+  if (isDifferenzdatenDarstellung.value) {
     return false;
   }
   let actualNumberOfSelectedKfzSvAndGv = 0;
@@ -588,11 +588,11 @@ const isSvpInBelastungsPlan = computed(() => {
 /**
  * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
  * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
- * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind.
+ * mehr wie 3 Verkehrsarten (ohne Rad und FUSS) ausgewählt sind.
  * Im Fall der Differenzdatendarstellung wird GV% nie angezeigt.
  */
 const isGvpInBelastungsPlan = computed(() => {
-  if (isDifferenzdatenDarstellung) {
+  if (isDifferenzdatenDarstellung.value) {
     return false;
   }
   let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
@@ -856,7 +856,7 @@ function getIcon(type: string): string {
       break;
     }
     case "RAD": {
-      // Angezeigt, wenn RAD oder RAD && FUSS
+      // Angezeigt, wenn Rad oder Rad && FUSS
       if (isRadInBelastungsplan.value) {
         icon = `mdi-arrow-decision`;
       }
@@ -960,11 +960,9 @@ function calculateSelectOrDeselectVerkehrsarten() {
 }
 
 /**
- * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im ZaehlstelleOptionsDTO entsprechend der gewählten Zeitauswahl.
+ * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im Options entsprechend der gewählten Zeitauswahl.
  */
-function adaptFahrzeugauswahl(
-  options: ZaehlstelleOptionsDTO
-): ZaehlstelleOptionsDTO {
+function adaptFahrzeugauswahl(options: Options): Options {
   // Alles Zurücksetzten, wenn es sich um die Spitzenstunde handelt
   if (
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||

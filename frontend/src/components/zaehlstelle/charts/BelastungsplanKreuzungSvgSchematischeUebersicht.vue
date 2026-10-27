@@ -7,11 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type {
+  BearbeiteKnotenarmDTO,
+  LadeBelastungsplanDTO,
+} from "@/api/client";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -84,7 +85,7 @@ onMounted(() => {
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 });
 
-const zaehlung = computed<LadeZaehlungDTO>(() => {
+const zaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -138,9 +139,12 @@ function draw() {
     });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
-  const knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  const knotenarmeInline = zaehlung.value.knotenarme as BearbeiteKnotenarmDTO[];
   if (knotenarmeInline) {
-    let ks = Object.assign(new Array<LadeKnotenarmDTO>(), knotenarmeInline);
+    let ks = Object.assign(
+      new Array<BearbeiteKnotenarmDTO>(),
+      knotenarmeInline
+    );
     ks = ks.sort(LadeKnotenarmComperator.sortByNumber).reverse();
     ks.forEach((k) => {
       const r = belastungsplanMethods.calcRotation(k.nummer);
@@ -232,7 +236,7 @@ function calcVerkehrsbeziehungen(data: LadeBelastungsplanDTO) {
   prozentWerte.value.set(1, data.value2.percent);
   prozentWerte.value.set(2, data.value3.percent);
   // Aus der aktuellen Zählung (diese ist im $store) werden die Verkehrsbeziehungen geladen.
-  const fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  const fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehung[];
   if (fbs && Array.isArray(fbs)) {
     // Für jede Verkehrsbeziehung werden die Daten aufbereitet
     fbs.forEach((fb) => {
@@ -444,9 +448,7 @@ function redraw() {
   });
 }
 
-function isDefaultBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanDTO {
+function isDefaultBelastungsplan(data: any): data is LadeBelastungsplanDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 

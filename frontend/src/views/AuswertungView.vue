@@ -92,11 +92,13 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import type AuswertungMessstelleWithFileDTO from "@/types/messstelle/auswertung/AuswertungMessstelleWithFileDTO";
-import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
-import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type {
+  AuswertungMessstelleWithFileDTO,
+  LadeZaehldatenSteplineDTO,
+  MessstelleAuswertungDTO,
+  MessstelleAuswertungIdDTO,
+} from "@/api/client";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import {
   cloneDeep,
@@ -148,7 +150,7 @@ const zaehldatenMessstellen = ref<LadeZaehldatenSteplineDTO>(
   DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
 );
 
-const auswertungsOptions = ref<MessstelleAuswertungOptionsDTO>(
+const auswertungsOptions = ref<MessstelleAuswertungOptions>(
   DefaultObjectCreator.createDefaultMessstelleAuswertungOptions()
 );
 
@@ -448,9 +450,10 @@ function getFilenameSingleMessstelleAndMessquerschnitte(
     );
     if (
       messstelle &&
-      messstelleAuswertungId.mqIds.length < messstelle.messquerschnitte.length
+      messstelleAuswertungId.mqIds.size < messstelle.messquerschnitte.length
     ) {
-      return `${filenamePart1}_${messstelleAuswertungId.mqIds.length > 1 ? "Messquerschnitte" : "Messquerschnitt"}_${messstelleAuswertungId.mqIds.join("_")}`;
+      const mqIds = Array.from(messstelleAuswertungId.mqIds);
+      return `${filenamePart1}_${mqIds.length > 1 ? "Messquerschnitte" : "Messquerschnitt"}_${mqIds.join("_")}`;
     }
   }
   return filenamePart1;

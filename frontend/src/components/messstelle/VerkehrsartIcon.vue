@@ -10,8 +10,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import { Verkehrsart } from "@/api/client";
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import Verkehrsart from "@/types/enum/Verkehrsart";
 import IconOptions from "@/types/util/IconOptions";
 
 interface Props {
@@ -25,9 +25,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const iconOptions = computed(() => {
-  if (props.detektierteVerkehrsart === Verkehrsart.RAD) {
+  if (props.detektierteVerkehrsart === Verkehrsart.Rad) {
     return new IconOptions("mdi-bicycle", "Verkehrsart: Fahrrad");
-  } else if (props.detektierteVerkehrsart === Verkehrsart.KFZ) {
+  } else if (props.detektierteVerkehrsart === Verkehrsart.Kfz) {
     return new IconOptions("mdi-car", "Verkehrsart: KFZ");
   } else {
     return new IconOptions(

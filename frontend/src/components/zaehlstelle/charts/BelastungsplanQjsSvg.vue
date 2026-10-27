@@ -929,26 +929,26 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type { LadeBelastungsplanQjsDTO } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 
 import { first } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Himmelsrichtung, Zaehldauer, Zeitblock } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQjs } from "@/util/QjsUtils";
@@ -1036,7 +1036,7 @@ const dArrowTwo = `m 245.31124,623 v -${belastungsplanMethods.maxlineWidth} h 90
 const dArrowThree = `m 245,804.99999 v -${belastungsplanMethods.maxlineWidth} h 910.1007 v ${belastungsplanMethods.maxlineWidth} z`;
 const dArrowFour = `m 244.89933,860.99999 v -${belastungsplanMethods.maxlineWidth} H 1155 v ${belastungsplanMethods.maxlineWidth} z`;
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -1106,7 +1106,7 @@ const isCountedArrowFour = computed(() => {
   );
 });
 
-function getArrowZaehlwert(patterns: VerkehrsbeziehungDTO[]) {
+function getArrowZaehlwert(patterns: Verkehrsbeziehung[]) {
   if (!isQjsBelastungsplan(props.data) || !props.data.value1) {
     return 0;
   }
@@ -1150,19 +1150,19 @@ const sumArrowsOneTwo = computed(() => {
   if (availableKnotenarmNummern.value.includes(1)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.W
-    )?.value;
+    )?.sumStrassenseite;
   } else if (availableKnotenarmNummern.value.includes(2)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.N
-    )?.value;
+    )?.sumStrassenseite;
   } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.NW
-    )?.value;
+      (k) => k.strassenseite === Himmelsrichtung.Nw
+    )?.sumStrassenseite;
   } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.NO
-    )?.value;
+      (k) => k.strassenseite === Himmelsrichtung.No
+    )?.sumStrassenseite;
   }
   return sum ?? 0;
 });
@@ -1175,19 +1175,19 @@ const sumArrowsThreeFour = computed(() => {
   if (availableKnotenarmNummern.value.includes(1)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.O
-    )?.value;
+    )?.sumStrassenseite;
   } else if (availableKnotenarmNummern.value.includes(2)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.S
-    )?.value;
+    )?.sumStrassenseite;
   } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.SO
-    )?.value;
+      (k) => k.strassenseite === Himmelsrichtung.So
+    )?.sumStrassenseite;
   } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
-      (k) => k.strassenseite === Himmelsrichtung.SW
-    )?.value;
+      (k) => k.strassenseite === Himmelsrichtung.Sw
+    )?.sumStrassenseite;
   }
   return sum ?? 0;
 });
@@ -1290,7 +1290,7 @@ function calculateColorArrowThreeFour() {
   return BelastungsplanConstants.inaktivColor;
 }
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -1319,15 +1319,15 @@ const maxSizeBelastungsplan = computed(() => {
 
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN) {
-      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden) {
+      return zeitblockInfo.get(Zeitblock.Zb0024)?.title ?? "";
     } else {
       return "hochgerechnet";
     }
   } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockInfo.get(optionen.value.zeitblock)?.title ?? "";
   } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title ?? "";
   } else if (
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
@@ -1336,6 +1336,7 @@ const zaehlzeit2 = computed(() => {
       zaehlstelleStore.getStartEndeUhrzeitIntervalls;
     return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
+  return "";
 });
 
 onMounted(() => {
@@ -1436,9 +1437,7 @@ function emitSvgAsBlob(): void {
   emits("print", blob);
 }
 
-function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQjsDTO {
+function isQjsBelastungsplan(data: any): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 </script>

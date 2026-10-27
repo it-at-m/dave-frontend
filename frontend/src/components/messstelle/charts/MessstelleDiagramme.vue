@@ -163,10 +163,9 @@
   />
 </template>
 <script setup lang="ts">
-import type CsvDTO from "@/types/common/CsvDTO";
-import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type { CsvDTO, LadeProcessedMesswerteDTO } from "@/api/client";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { cloneDeep } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -272,7 +271,7 @@ const messstelleId = computed(() => {
   return route.params.messstelleId as string;
 });
 
-const options = computed<MessstelleOptionsDTO>(() => {
+const options = computed<MessstelleOptions>(() => {
   return messstelleStore.getFilteroptions;
 });
 
@@ -338,7 +337,7 @@ function loadData(): void {
   loadProcessedChartData();
 
   if (!messstelleStore.isInHistory) {
-    const messstelle: MessstelleInfoDTO = messstelleStore.getMessstelleInfo;
+    const messstelle: MessstelleInfoType = messstelleStore.getMessstelleInfo;
     historyStore.addHistoryItem(
       new MessstelleHistoryItem(
         messstelle.id,

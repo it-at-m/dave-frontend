@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
+import type { InfoMessageDTO } from "@/api/client";
 
 import { computed, onMounted, ref } from "vue";
 

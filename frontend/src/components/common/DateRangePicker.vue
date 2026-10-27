@@ -97,7 +97,7 @@ interface Props {
   minDateDescription?: string;
   maxDate?: Date;
   maxDateDescription?: string;
-  auffaelligeTage?: Array<string>;
+  auffaelligeTage?: Array<Date>;
 }
 
 const props = withDefaults(defineProps<Props>(), {

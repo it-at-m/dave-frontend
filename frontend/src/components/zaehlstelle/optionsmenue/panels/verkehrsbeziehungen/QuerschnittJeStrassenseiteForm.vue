@@ -395,9 +395,9 @@
 </template>
 
 <script setup lang="ts">
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { first, last } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -416,7 +416,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const qjs = useQjs();
 const strassennameUtils = useStrassennameUtils();
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
@@ -431,7 +431,7 @@ const yCoordNumberOne = 700;
 const xCoordNumberTwo = 924;
 const yCoordNumberTwo = 700;
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -520,7 +520,7 @@ const isSelectedArrowFour = computed(() => {
 });
 
 function convertToVerkehrsbeziehungenQjs(
-  verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined
+  verkehrsbeziehungen: LadeVerkehrsbeziehung[] | undefined
 ) {
   return (
     verkehrsbeziehungen?.map(({ von, nach, strassenseite }) => ({

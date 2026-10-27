@@ -14,28 +14,28 @@
           density="compact"
         >
           <v-radio
-            :value="TagesTyp.WERKTAG_DI_MI_DO"
-            :label="getTagesTypText(TagesTyp.WERKTAG_DI_MI_DO)"
+            :value="TagesTyp.WerktagDiMiDo"
+            :label="getTagesTypText(TagesTyp.WerktagDiMiDo)"
           />
           <v-radio
-            :value="TagesTyp.WERKTAG_MO_FR"
-            :label="getTagesTypText(TagesTyp.WERKTAG_MO_FR)"
+            :value="TagesTyp.WerktagMoFr"
+            :label="getTagesTypText(TagesTyp.WerktagMoFr)"
           />
           <v-radio
-            :value="TagesTyp.SAMSTAG"
-            :label="getTagesTypText(TagesTyp.SAMSTAG)"
+            :value="TagesTyp.SonntagFeiertag"
+            :label="getTagesTypText(TagesTyp.SonntagFeiertag)"
           />
           <v-radio
-            :value="TagesTyp.SONNTAG_FEIERTAG"
-            :label="getTagesTypText(TagesTyp.SONNTAG_FEIERTAG)"
+            :value="TagesTyp.Samstag"
+            :label="getTagesTypText(TagesTyp.Samstag)"
           />
           <v-radio
-            :value="TagesTyp.WERKTAG_FERIEN"
-            :label="getTagesTypText(TagesTyp.WERKTAG_FERIEN)"
+            :value="TagesTyp.WerktagFerien"
+            :label="getTagesTypText(TagesTyp.WerktagFerien)"
           />
           <v-radio
-            :value="TagesTyp.MO_SO"
-            :label="getTagesTypText(TagesTyp.MO_SO)"
+            :value="TagesTyp.MoSo"
+            :label="getTagesTypText(TagesTyp.MoSo)"
           />
         </v-radio-group>
       </v-col>
@@ -48,12 +48,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed } from "vue";
 
+import { TagesTyp } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
@@ -62,11 +63,11 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 
 const dateUtils = useDateUtils();
 
-function getTagesTypText(key: string): string | undefined {
+function getTagesTypText(key: TagesTyp): string | undefined {
   return tagesTypText.get(key);
 }
 
@@ -75,32 +76,32 @@ const helperText = computed(() => {
   if (
     dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) &&
     (!chosenOptionsCopy.value.tagesTyp ||
-      chosenOptionsCopy.value.tagesTyp === TagesTyp.UNSPECIFIED)
+      chosenOptionsCopy.value.tagesTyp === TagesTyp.Unspecified)
   ) {
     helpText = "Bei einem Zeitraum muss ein Wochentag ausgewählt werden.";
   } else if (!props.isZeitraumAndTagestypValid) {
     switch (chosenOptionsCopy.value.tagesTyp) {
-      case TagesTyp.WERKTAG_DI_MI_DO:
+      case TagesTyp.WerktagDiMiDo:
         helpText =
           "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Di,Mi,Do) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
-      case TagesTyp.WERKTAG_MO_FR:
+      case TagesTyp.WerktagMoFr:
         helpText =
           "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
-      case TagesTyp.SAMSTAG:
+      case TagesTyp.Samstag:
         helpText =
           "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Sa) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
-      case TagesTyp.SONNTAG_FEIERTAG:
+      case TagesTyp.SonntagFeiertag:
         helpText =
           "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (So/Feiertag) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
-      case TagesTyp.WERKTAG_FERIEN:
+      case TagesTyp.WerktagFerien:
         helpText =
           "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (Mo,Di,Mi,Do,Fr Ferien) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;
-      case TagesTyp.MO_SO:
+      case TagesTyp.MoSo:
         helpText =
           "Der ausgewählte Zeitraum ist zu kurz. Für die Durchschnittswertberechnung sind mind. 2 Tage (beliebige Wochentage) und mind. 50% der Tage mit plausiblen Daten nötig.";
         break;

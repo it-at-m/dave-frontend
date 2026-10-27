@@ -1,7 +1,7 @@
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 
 export default interface KnotenarmVerbindungen {
-  knotenarm: LadeKnotenarmDTO;
-  moeglicheVerbindungen: Array<LadeKnotenarmDTO>;
+  knotenarm: BearbeiteKnotenarmDTO;
+  moeglicheVerbindungen: Array<BearbeiteKnotenarmDTO>;
   moeglicheVerbindungenIds: Array<number>;
 }

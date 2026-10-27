@@ -46,12 +46,13 @@
 </template>
 
 <script setup lang="ts">
-import type AuffaelligeTageDTO from "@/types/messstelle/AuffaelligeTageDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type { AuffaelligeTageDTO } from "@/api/client";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, onMounted, ref, watch } from "vue";
 
+import { TagesTyp } from "@/api/client";
 import MessstelleOptionsmenuService from "@/api/service/MessstelleOptionsmenuService";
 import DateRangePicker from "@/components/common/DateRangePicker.vue";
 import TagesTypRadiogroup from "@/components/messstelle/optionsmenue/panels/TagesTypRadiogroup.vue";
@@ -60,10 +61,9 @@ import ZeitauswahlStundeOrBlock from "@/components/messstelle/optionsmenue/panel
 import ZeitIntervall from "@/components/messstelle/optionsmenue/panels/ZeitIntervall.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import TagesTyp from "@/types/enum/TagesTyp";
 import { useDateUtils } from "@/util/DateUtils";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 
 interface Props {
   isZeitraumAndTagestypValid: boolean;
@@ -90,15 +90,16 @@ onMounted(() => {
     messstelleInfo.value.mstId
   ).then(
     (response: AuffaelligeTageDTO) =>
-      (auffaelligeTage.value = response.auffaelligeTage)
+      (auffaelligeTage.value =
+        response.auffaelligeTage?.map((date) => new Date(date)) ?? [])
   );
 });
 
-const messstelleInfo = computed<MessstelleInfoDTO>(() => {
+const messstelleInfo = computed<MessstelleInfoType>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
-const auffaelligeTage = ref<Array<string>>([]);
+const auffaelligeTage = ref<Array<Date>>([]);
 
 const isZeitraumGreaterThanFiveYears = computed(() => {
   return dateUtils.isGreaterThanFiveYears(
@@ -172,7 +173,7 @@ watch(
   chosenOptionsCopyStartAndEndDatum,
   () => {
     if (!isDateRange.value) {
-      chosenOptionsCopy.value.tagesTyp = TagesTyp.UNSPECIFIED;
+      chosenOptionsCopy.value.tagesTyp = TagesTyp.Unspecified;
     }
   },
   { deep: true }

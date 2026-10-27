@@ -1,13 +1,15 @@
-import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
+import type {
+  Fahrzeugklasse,
+  FahrzeugOptionsDTO,
+  OptionsmenueSettingsDTO,
+} from "@/api/client";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
 
 import { cloneDeep, intersection, isEmpty, isNil, toArray } from "lodash";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
+import { ZaehldatenIntervall } from "@/api/client";
 
 export const useOptionsmenueSettingsStore = defineStore(
   "optionsmenueSettingsStore",
@@ -81,12 +83,12 @@ export const useOptionsmenueSettingsStore = defineStore(
     }
 
     function setOptionsmenueSettingsByMessfaehigkeiten(
-      messfaehigkeiten: Array<MessfaehigkeitDTO> | undefined
+      messfaehigkeiten: Array<Messfaehigkeit> | undefined
     ): void {
       let optionsmenueSettings = toArray(messfaehigkeiten)
         .map((messfaehigkeit) => {
           return getOptionsmenueSettingsByIntervallAndFahrzeugklasse(
-            messfaehigkeit.fahrzeugklasse,
+            messfaehigkeit.fahrzeugklasse || undefined,
             messfaehigkeit.intervall
           );
         })
@@ -200,12 +202,12 @@ export const useOptionsmenueSettingsStore = defineStore(
 
     function getSmallestCommonDenominatorOfIntervallForChosenFahrzeugOptions(
       optionsmenueSettings: OptionsmenueSettingsDTO,
-      fahrzeugOptions: FahrzeugOptions
+      fahrzeugOptions: FahrzeugOptionsDTO
     ): Array<ZaehldatenIntervall> {
       const defaultIntervals = [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ];
       return intersection(
         fahrzeugOptions.kraftfahrzeugverkehr
@@ -256,9 +258,9 @@ export const useOptionsmenueSettingsStore = defineStore(
 
     function getOptionsmenueSettingsWithAllOptions(): OptionsmenueSettingsDTO {
       const defaultIntervals = [
-        ZaehldatenIntervall.STUNDE_VIERTEL,
-        ZaehldatenIntervall.STUNDE_HALB,
-        ZaehldatenIntervall.STUNDE_KOMPLETT,
+        ZaehldatenIntervall.StundeViertel,
+        ZaehldatenIntervall.StundeHalb,
+        ZaehldatenIntervall.StundeKomplett,
       ];
       return {
         intervall: undefined,

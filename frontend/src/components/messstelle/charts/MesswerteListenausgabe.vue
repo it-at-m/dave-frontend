@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
+import type { LadeMesswerteDTO, LadeZaehldatumDTO } from "@/api/client";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, watch } from "vue";
 
@@ -31,7 +31,7 @@ const TYPE_SP_STD_BLOCK = "SpStdBlock";
 const TYPE_SP_STD_TAG = "SpStdTag";
 
 interface Props {
-  listenausgabeData: Array<LadeZaehldatumDTO>;
+  listenausgabeData: Array<LadeMesswerteDTO>;
   height?: string;
 }
 
@@ -39,33 +39,31 @@ const props = withDefaults(defineProps<Props>(), {
   height: "100%",
 });
 
-const optionen = computed<MessstelleOptionsDTO>(() => {
+const optionen = computed<MessstelleOptions>(() => {
   return messstelleStore.getFilteroptions;
 });
 
 watch(
   () => props.listenausgabeData,
-  (listenausgabeData: Array<LadeZaehldatumDTO>) => {
+  (listenausgabeData: Array<LadeMesswerteDTO>) => {
     listenausgabeData.forEach((zaehldatum) => {
       zaehldatum.endeUhrzeit =
-        DataManipulatorUtil.manipulateEndeUhrzeit(zaehldatum);
+        DataManipulatorUtil.manipulateEndeUhrzeitForMesswerte(zaehldatum);
       // Muss gemacht werden, damit immer eine Nachkommastelle existiert, auch bei 1.0
-      const anteilGueterverkehrAnKfzProzent = parseFloat(
-        zaehldatum.anteilGueterverkehrAnKfzProzent
-      );
+      const anteilGueterverkehrAnKfzProzent =
+        zaehldatum.anteilGueterverkehrAnKfzProzent;
       zaehldatum.anteilGueterverkehrAnKfzProzent = Number.isFinite(
         anteilGueterverkehrAnKfzProzent
       )
-        ? anteilGueterverkehrAnKfzProzent.toFixed(1)
-        : "0.0";
-      const anteilSchwerverkehrAnKfzProzent = parseFloat(
-        zaehldatum.anteilSchwerverkehrAnKfzProzent
-      );
+        ? parseFloat(anteilGueterverkehrAnKfzProzent.toFixed(1))
+        : 0;
+      const anteilSchwerverkehrAnKfzProzent =
+        zaehldatum.anteilSchwerverkehrAnKfzProzent;
       zaehldatum.anteilSchwerverkehrAnKfzProzent = Number.isFinite(
         anteilSchwerverkehrAnKfzProzent
       )
-        ? anteilSchwerverkehrAnKfzProzent.toFixed(1)
-        : "0.0";
+        ? parseFloat(anteilSchwerverkehrAnKfzProzent.toFixed(1))
+        : 0;
     });
   },
   { immediate: true }

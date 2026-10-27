@@ -1,20 +1,23 @@
-import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeProcessedZaehldatenDTO, OptionsDTO } from "@/api/client";
 
-import FetchService from "@/api/service/FetchService";
+import { LadeZaehldatenControllerApi } from "@/api/client/apis";
+import { Configuration } from "@/api/client/runtime";
+import BaseUrlProvider from "@/api/util/BaseUrlProvider";
+import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
-export default class LadeZaehldatenService {
-  private static readonly ENDPOINT_LADE_ZAEHLDATEN_PROCESSED: string =
-    "api/dave-backend-service/lade-zaehldaten-processed";
+export default class {
+  private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
+  private static readonly API = new LadeZaehldatenControllerApi(
+    new Configuration({ basePath: this.ENDPOINT })
+  );
 
-  public static ladeZaehldatenProcessed(
+  public static async ladeZaehldatenProcessed(
     zaehlungId: string,
-    options: ZaehlstelleOptionsDTO
+    options: OptionsDTO
   ): Promise<LadeProcessedZaehldatenDTO> {
-    return FetchService.postData(
-      options,
-      `${this.ENDPOINT_LADE_ZAEHLDATEN_PROCESSED}?zaehlung_id=${zaehlungId}`,
-      "Beim Laden der aufbereiteten Zählungsdaten ist ein Fehler aufgetreten."
+    return handleOpenApiError(
+      this.API.ladeZaehldatenProcessed({ zaehlungId, optionsDTO: options }),
+      "Beim Laden der aufbereiteten Zähldaten ist ein Fehler aufgetreten."
     );
   }
 }
