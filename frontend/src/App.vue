@@ -218,6 +218,7 @@ function resetMapAndSearch() {
 /* Alle Hinweise werden nun rot eingefärbt */
 .v-messages {
   color: #e57373 !important;
+  padding-bottom: 5px;
 }
 
 .dave-default {
