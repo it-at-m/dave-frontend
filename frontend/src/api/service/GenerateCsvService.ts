@@ -2,7 +2,7 @@ import type { CsvDTO, OptionsDTO } from "@/api/client";
 import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { GenerateCsvControllerApi } from "@/api/client/apis";
-import { Configuration } from "@/api/client/runtime";
+import createBackendApiConfiguration from "@/api/util/BackendApiConfiguration";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 import MessstelleOptionsMapper from "@/types/messstelle/MessstelleOptionsMapper";
@@ -10,7 +10,7 @@ import MessstelleOptionsMapper from "@/types/messstelle/MessstelleOptionsMapper"
 export default class GenerateCsvService {
   private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
   private static readonly API = new GenerateCsvControllerApi(
-    new Configuration({ basePath: this.ENDPOINT })
+    createBackendApiConfiguration(this.ENDPOINT)
   );
 
   public static generateCsv(

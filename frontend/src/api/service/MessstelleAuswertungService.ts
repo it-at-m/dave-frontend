@@ -5,7 +5,7 @@ import type {
 import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { AuswertungControllerApi } from "@/api/client/apis";
-import { Configuration } from "@/api/client/runtime";
+import createBackendApiConfiguration from "@/api/util/BackendApiConfiguration";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 import { MessstelleAuswertungOptionsMapper } from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsMapper";
@@ -13,7 +13,7 @@ import { MessstelleAuswertungOptionsMapper } from "@/types/messstelle/auswertung
 export default class MessstelleAuswertungService {
   private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
   private static readonly API = new AuswertungControllerApi(
-    new Configuration({ basePath: this.ENDPOINT })
+    createBackendApiConfiguration(this.ENDPOINT)
   );
 
   static getAllVisibleMessstellen(): Promise<Array<MessstelleAuswertungDTO>> {
