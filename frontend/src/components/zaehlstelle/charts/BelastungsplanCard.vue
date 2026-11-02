@@ -11,7 +11,7 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
+import type { LadeBelastungsplanDTO } from "@/api/client";
 
 import { computed, ref } from "vue";
 

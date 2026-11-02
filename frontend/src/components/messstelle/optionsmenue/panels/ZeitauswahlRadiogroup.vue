@@ -79,15 +79,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { computed, watch } from "vue";
 
+import { Zeitblock } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
-import ZeitblockStuendlich from "@/types/enum/ZeitblockStuendlich";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
@@ -95,7 +94,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 const snackbarStore = useSnackbarStore();
 const dateUtils = useDateUtils();
 
@@ -134,27 +133,27 @@ const helpText = computed(() => {
 
 function zeitauswahlChanged() {
   if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0024;
   } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0006;
   } else if (chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    chosenOptionsCopy.value.zeitblock = ZeitblockStuendlich.ZB_00_01;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0001;
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ
   ) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0006;
     resetFahrzeuge();
     chosenOptionsCopy.value.fahrzeuge.kraftfahrzeugverkehr = true;
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD
   ) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0006;
     resetFahrzeuge();
     chosenOptionsCopy.value.fahrzeuge.radverkehr = true;
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
   ) {
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_06;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0006;
     resetFahrzeuge();
     chosenOptionsCopy.value.fahrzeuge.fussverkehr = true;
   }

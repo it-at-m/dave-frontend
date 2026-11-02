@@ -9,8 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import type StepLineSeriesEntryDTO from "@/types/zaehlung/zaehldaten/StepLineSeriesEntryDTO";
+import type {
+  LadeZaehldatenSteplineDTO,
+  StepLineSeriesEntryBigDecimalDTO,
+} from "@/api/client";
 
 import { BarChart, LineChart } from "echarts/charts";
 import {
@@ -335,7 +337,7 @@ function checkTwoChartsNeeded(
 }
 
 function createSeriesDataForChart(
-  seriesEntriesChart: Array<StepLineSeriesEntryDTO>
+  seriesEntriesChart: Array<StepLineSeriesEntryBigDecimalDTO>
 ): Array<unknown> {
   const seriesEntries: Array<unknown> = [];
   seriesEntriesChart.forEach((seriesEntryChart, index) => {
@@ -346,7 +348,7 @@ function createSeriesDataForChart(
       seriesEntries.push({
         name: seriesEntryChart.name,
         type: chartType.value,
-        data: seriesEntryChart.yaxisData,
+        data: seriesEntryChart.yAxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
@@ -358,7 +360,7 @@ function createSeriesDataForChart(
         name: seriesEntryChart.name,
         type: chartType.value,
         step: CHART_STEP_X_AXIS,
-        data: seriesEntryChart.yaxisData,
+        data: seriesEntryChart.yAxisData,
         xAxisIndex: seriesEntryChart.xaxisIndex,
         yAxisIndex: seriesEntryChart.yaxisIndex,
         symbol: ChartUtils.CHART_SYMBOLS.get(seriesEntryChart.name),
@@ -419,10 +421,10 @@ watch(
     rangeMax.value = zaehldatenStepline.rangeMax;
     rangeMaxPercent.value = zaehldatenStepline.rangeMaxPercent;
     xAxisDataFirstChart.value = zaehldatenStepline.xaxisDataFirstChart;
-    if (zaehldatenStepline.xaxisDataSecondChart !== null) {
+    if (zaehldatenStepline.xaxisDataSecondChart) {
       xAxisDataSecondChart.value = zaehldatenStepline.xaxisDataSecondChart;
     }
-    if (zaehldatenStepline.seriesEntriesSecondChart !== null) {
+    if (zaehldatenStepline.seriesEntriesSecondChart) {
       seriesEntriesChart.value = createSeriesDataForChart([
         ...zaehldatenStepline.seriesEntriesFirstChart,
         ...zaehldatenStepline.seriesEntriesSecondChart,

@@ -19,7 +19,7 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
+import type { LadeZaehldatenSteplineDTO } from "@/api/client";
 import type { SeriesOption } from "echarts";
 import type { ResizeOpts } from "echarts/core";
 

@@ -11,20 +11,21 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { computed } from "vue";
 
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
+import { TagesTyp } from "@/api/client";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 
 const selectableTagesTypen = computed(() => {
   const tagestypen: Array<KeyVal> = [];
   tagesTypText.forEach((value, key) => {
-    if (key !== TagesTyp.UNSPECIFIED) {
+    if (key !== TagesTyp.Unspecified) {
       tagestypen.push({
         title: value,
         value: key,

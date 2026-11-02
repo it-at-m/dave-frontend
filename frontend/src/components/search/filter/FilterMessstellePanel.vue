@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts" setup>
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
+import type { SearchAndFilterOptionsDTO } from "@/api/client";
 
 import { computed } from "vue";
 
+import { Verkehrsart } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
-import Verkehrsart from "@/types/enum/Verkehrsart";
 
 const searchAndFilterOptions = defineModel<SearchAndFilterOptionsDTO>({
   required: true,
@@ -47,11 +47,11 @@ const selectableVerkehrsarten = computed<Array<unknown>>(() => {
   const result: Array<unknown> = [];
   result.push({
     title: `Kfz`,
-    value: Verkehrsart.KFZ,
+    value: Verkehrsart.Kfz,
   });
   result.push({
     title: `Rad`,
-    value: Verkehrsart.RAD,
+    value: Verkehrsart.Rad,
   });
   return result;
 });

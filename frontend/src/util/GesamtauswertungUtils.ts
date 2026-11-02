@@ -1,5 +1,5 @@
+import type { FahrzeugOptionsDTO } from "@/api/client";
 import type KeyValSortable from "@/types/common/KeyValSortable";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
 
 import {
   AuswertungsZeitraum,
@@ -7,7 +7,7 @@ import {
 } from "@/types/enum/AuswertungCategories";
 
 export function useGesamtauswertungUtils() {
-  function getFahrzeugOptionsAsText(fahrzeuge: FahrzeugOptions) {
+  function getFahrzeugOptionsAsText(fahrzeuge: FahrzeugOptionsDTO) {
     const selectedValues: Array<string> = [];
     if (fahrzeuge.kraftfahrzeugverkehr) {
       selectedValues.push(`KFZ`);

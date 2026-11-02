@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 
 import { computed, onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
@@ -188,7 +188,7 @@ const timelineHeightVh = computed(() => {
 onMounted(() => {
   // Die Informationen zur Zählstelle werden geladen
   ZaehlstellenService.getById(props.zaehlstelleId).then((loadedZaehlstelle) => {
-    const zaehlungen = new Array<LadeZaehlungDTO>();
+    const zaehlungen = new Array<LadeZaehlung>();
     Object.assign(zaehlungen, loadedZaehlstelle.zaehlungen);
     // Die Zählungen und id der aktiven Zählung werden an den Store übergeben.
     // Dort werden die Daten weiter verarbeitet.
@@ -209,7 +209,7 @@ onMounted(() => {
 
 const kreuzungsname = computed(() => {
   let kreuzungsname = "";
-  const aktiveZaehlung: LadeZaehlungDTO = zaehlstelleStore.getAktiveZaehlung;
+  const aktiveZaehlung: LadeZaehlung = zaehlstelleStore.getAktiveZaehlung;
   if (aktiveZaehlung) {
     kreuzungsname = aktiveZaehlung.kreuzungsname;
   }

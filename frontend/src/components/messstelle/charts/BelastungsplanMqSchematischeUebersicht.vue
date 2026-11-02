@@ -6,8 +6,10 @@
   />
 </template>
 <script setup lang="ts">
-import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
-import type LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
+import type {
+  BelastungsplanMessquerschnitteDTO,
+  LadeBelastungsplanMessquerschnittDataDTO,
+} from "@/api/client";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -16,8 +18,8 @@ import { chain } from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Himmelsrichtung } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 
 interface Props {
@@ -150,7 +152,7 @@ function drawStreetName() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -188,7 +190,7 @@ function drawArrowsPointingSouth(
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {

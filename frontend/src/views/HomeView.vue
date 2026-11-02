@@ -52,11 +52,14 @@
 </template>
 
 <script lang="ts" setup>
-import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
-import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
-import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
-import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
-import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
+import type {
+  ErhebungsstelleKarteDTO,
+  ErhebungsstelleTooltipDTO,
+  MessstelleKarteDTO,
+  MessstelleTooltipDTO,
+  ZaehlstelleKarteDTO,
+  ZaehlstelleTooltipDTO,
+} from "@/api/client";
 
 import html2canvas from "html2canvas";
 import { computed, onMounted, ref } from "vue";
@@ -67,7 +70,7 @@ import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { messstelleStatusText } from "@/types/enum/MessstelleStatus";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 
 const pdfReportStore = usePdfReportStore();
@@ -79,6 +82,7 @@ const map = ref<InstanceType<typeof ZaehlstelleMap> | null>();
 const speedDialOpen = ref(false);
 const creatingPicture = ref(false);
 const printingSearchResult = ref(false);
+const assetUtil = useAssetUtil();
 
 onMounted(() => {
   window.scrollTo(0, 0);
@@ -89,7 +93,7 @@ function takePicture() {
     creatingPicture.value = true;
     html2canvas(map.value.$el, { useCORS: true })
       .then((canvas) => {
-        const image = new ImageAsset(
+        const image = assetUtil.createImageAsset(
           "Hauptkarte",
           canvas.toDataURL("image/jpeg")
         );
@@ -116,15 +120,15 @@ function takePicture() {
  */
 function printSearchResult(): void {
   printingSearchResult.value = true;
-  const searchResult: Array<AnzeigeKarteDTO> = getSearchResult.value;
+  const searchResult: Array<ErhebungsstelleKarteDTO> = getSearchResult.value;
   const searchQuery: string = getSearchQuery.value;
 
   const zaehlstellenResult = searchResult.filter(
-    (value: AnzeigeKarteDTO) => value.type === "zaehlstelle"
+    (value: ErhebungsstelleKarteDTO) => value.type === "zaehlstelle"
   ) as Array<ZaehlstelleKarteDTO>;
 
   const messstellenResult = searchResult.filter(
-    (value: AnzeigeKarteDTO) => value.type === "messstelle"
+    (value: ErhebungsstelleKarteDTO) => value.type === "messstelle"
   ) as Array<MessstelleKarteDTO>;
 
   if (zaehlstellenResult.length > 0) {
@@ -157,23 +161,27 @@ function printMessstellenOfSearchResult(
 
   // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
   searchResult.forEach((element: MessstelleKarteDTO) => {
-    const tooltip: TooltipMessstelleDTO = element.tooltip;
+    const tooltip: ErhebungsstelleTooltipDTO = element.tooltip;
     const elementAsCsvString: Array<string> = [];
-    elementAsCsvString.push(tooltip.mstId);
+    elementAsCsvString.push((tooltip as MessstelleTooltipDTO).mstId);
     elementAsCsvString.push(`${element.longitude}`);
     elementAsCsvString.push(`${element.latitude}`);
     elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
     elementAsCsvString.push(tooltip.stadtbezirk);
-    elementAsCsvString.push(tooltip.standort);
+    elementAsCsvString.push((tooltip as MessstelleTooltipDTO).standort);
     const statusAsText = messstelleStatusText.get(element.status);
     if (statusAsText) {
       elementAsCsvString.push(statusAsText);
     } else {
       elementAsCsvString.push(element.status);
     }
-    elementAsCsvString.push(tooltip.realisierungsdatum);
-    elementAsCsvString.push(tooltip.abbaudatum);
-    elementAsCsvString.push(tooltip.datumLetztePlausibleMessung);
+    elementAsCsvString.push(
+      (tooltip as MessstelleTooltipDTO).realisierungsdatum
+    );
+    elementAsCsvString.push((tooltip as MessstelleTooltipDTO).abbaudatum);
+    elementAsCsvString.push(
+      (tooltip as MessstelleTooltipDTO).datumLetztePlausibleMessung
+    );
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
   downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);
@@ -199,16 +207,22 @@ function printZaehlstellenOfSearchResult(
 
   // Baut für jede Zählstelle auf der karte eine eigene Zeile in der CSV zusammen
   searchResult.forEach((element: ZaehlstelleKarteDTO) => {
-    const tooltip: TooltipZaehlstelleDTO = element.tooltip;
+    const tooltip: ErhebungsstelleTooltipDTO = element.tooltip;
     const elementAsCsvString: Array<string> = [];
-    elementAsCsvString.push(tooltip.zaehlstellennnummer);
+    elementAsCsvString.push(
+      (tooltip as ZaehlstelleTooltipDTO).zaehlstellennnummer
+    );
     elementAsCsvString.push(element.longitude.toString());
     elementAsCsvString.push(element.latitude.toString());
     elementAsCsvString.push(`${tooltip.stadtbezirknummer}`);
     elementAsCsvString.push(tooltip.stadtbezirk);
-    elementAsCsvString.push(tooltip.kreuzungsname);
-    elementAsCsvString.push(`${tooltip.anzahlZaehlungen}`);
-    elementAsCsvString.push(tooltip.datumLetzteZaehlung);
+    elementAsCsvString.push((tooltip as ZaehlstelleTooltipDTO).kreuzungsname);
+    elementAsCsvString.push(
+      `${(tooltip as ZaehlstelleTooltipDTO).anzahlZaehlungen}`
+    );
+    elementAsCsvString.push(
+      (tooltip as ZaehlstelleTooltipDTO).datumLetzteZaehlung
+    );
     searchResultAsCsvString.push(elementAsCsvString.join(";"));
   });
   downloadUtils.downloadCsv(searchResultAsCsvString.join("\n"), filename);

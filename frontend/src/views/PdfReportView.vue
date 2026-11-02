@@ -217,11 +217,21 @@
 </template>
 
 <script lang="ts" setup>
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type {
+  BaseAsset,
+  DatatableAsset,
+  ImageAsset,
+  MessstelleDatatableAsset,
+  OptionsDTO,
+  TextAsset,
+  ZaehlungskenngroessenAsset,
+} from "@/api/client";
+import type { HeadingAsset } from "@/util/AssetUtil";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import DatatableAssetForm from "@/components/pdfreport/assetforms/DatatableAssetForm.vue";
 import DeleteDialog from "@/components/pdfreport/assetforms/DeleteDialog.vue";
@@ -232,19 +242,10 @@ import DisplayImageAsset from "@/components/pdfreport/assets/DisplayImageAsset.v
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
-import NewlineAsset from "@/types/pdfreport/assets/NewlineAsset";
-import PagebreakAsset from "@/types/pdfreport/assets/PagebreakAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
-import ZaehlungskenngroessenAsset from "@/types/pdfreport/assets/ZaehlungskenngroessenAsset";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useReportTools } from "@/util/ReportTools";
-import BaseAsset from "../types/pdfreport/assets/BaseAsset";
-import HeadingAsset from "../types/pdfreport/assets/HeadingAsset";
 
 const clickable = ref(0);
 
@@ -254,28 +255,29 @@ const editText = ref(false);
 const editDatatable = ref(false);
 const openDeleteDialog = ref(false);
 
-const imageAsset = ref<ImageAsset>(new ImageAsset("", ""));
+const assetUtil = useAssetUtil();
+const imageAsset = ref<ImageAsset>(assetUtil.createImageAsset("", ""));
 const headingAsset = ref<HeadingAsset>(
-  new HeadingAsset("", AssetTypesEnum.HEADING1)
+  assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading1)
 );
-const textAsset = ref<TextAsset>(new TextAsset(""));
+const textAsset = ref<TextAsset>(assetUtil.createTextAsset(""));
 const datatableAsset = ref<DatatableAsset>(
-  new DatatableAsset({} as ZaehlstelleOptionsDTO, "", "")
+  assetUtil.createDatatableAsset({} as OptionsDTO, "", "")
 );
 
 const assetId = ref(0);
 const loadingPdf = ref(false);
 
-const editables = ref([
-  AssetTypesEnum.TEXT,
-  AssetTypesEnum.IMAGE,
-  AssetTypesEnum.HEADING1,
-  AssetTypesEnum.HEADING2,
-  AssetTypesEnum.HEADING3,
-  AssetTypesEnum.HEADING4,
-  AssetTypesEnum.HEADING5,
-  AssetTypesEnum.DATATABLE,
-  AssetTypesEnum.DATATABLE_MESSSTELLE,
+const editables = ref<BaseAssetTypeEnum[]>([
+  BaseAssetTypeEnum.Text,
+  BaseAssetTypeEnum.Image,
+  BaseAssetTypeEnum.Heading1,
+  BaseAssetTypeEnum.Heading2,
+  BaseAssetTypeEnum.Heading3,
+  BaseAssetTypeEnum.Heading4,
+  BaseAssetTypeEnum.Heading5,
+  BaseAssetTypeEnum.Datatable,
+  BaseAssetTypeEnum.DatatableMessstelle,
 ]);
 
 const pdfSourceAsBlob = ref<Blob>(new Blob());
@@ -305,22 +307,29 @@ function createFirstPage(): void {
   // Assets reversen, Titelpage in umgekehrter Reihenfolge hinzufügen und Assets nochmals reversen
   assets.value.reverse();
   // Seitenumbruch
-  assets.value.push(new PagebreakAsset());
+  assets.value.push(assetUtil.createPagebreakAsset());
   // Datum
   save(
-    new HeadingAsset(
+    assetUtil.createHeadingAsset(
       "erstellt am " + dateUtils.getShortVersionOfDate(new Date()),
-      AssetTypesEnum.HEADING3
+      BaseAssetTypeEnum.Heading3
     )
   );
   // Autor
   const name = userStore.getName;
   const department = getDepartment.value;
-  save(new HeadingAsset(`${name} (${department})`, AssetTypesEnum.HEADING3));
+  save(
+    assetUtil.createHeadingAsset(
+      `${name} (${department})`,
+      BaseAssetTypeEnum.Heading3
+    )
+  );
   // Untertitel
-  save(new HeadingAsset("Untertitel", AssetTypesEnum.HEADING2));
+  save(assetUtil.createHeadingAsset("Untertitel", BaseAssetTypeEnum.Heading2));
   // Titel
-  save(new HeadingAsset("Zählungsreport", AssetTypesEnum.HEADING1));
+  save(
+    assetUtil.createHeadingAsset("Zählungsreport", BaseAssetTypeEnum.Heading1)
+  );
   assets.value.reverse();
 
   // Titel wurde erstellt
@@ -343,7 +352,7 @@ function save(asset: BaseAsset) {
   // ist nur beim Image notwendig, da hier in der Dialog Componente ein Reset
   // durchgeführt wird.
   if (isImage(asset)) {
-    imageAsset.value = new ImageAsset("", "");
+    imageAsset.value = assetUtil.createImageAsset("", "");
   }
 }
 
@@ -419,34 +428,49 @@ function fetchPdf(formData: FormData) {
 
 function createHeadingAsset(type: string): void {
   if (type === "h1") {
-    headingAsset.value = new HeadingAsset("", AssetTypesEnum.HEADING1);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading1
+    );
   }
   if (type === "h2") {
-    headingAsset.value = new HeadingAsset("", AssetTypesEnum.HEADING2);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading2
+    );
   }
   if (type === "h3") {
-    headingAsset.value = new HeadingAsset("", AssetTypesEnum.HEADING3);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading3
+    );
   }
   if (type === "h4") {
-    headingAsset.value = new HeadingAsset("", AssetTypesEnum.HEADING4);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading4
+    );
   }
   if (type === "h5") {
-    headingAsset.value = new HeadingAsset("", AssetTypesEnum.HEADING5);
+    headingAsset.value = assetUtil.createHeadingAsset(
+      "",
+      BaseAssetTypeEnum.Heading5
+    );
   }
   editHeading.value = true;
 }
 
 function createTextAsset(): void {
-  textAsset.value = new TextAsset("");
+  textAsset.value = assetUtil.createTextAsset("");
   editText.value = true;
 }
 
 function createPagebreakAsset(): void {
-  assets.value.push(new PagebreakAsset());
+  assets.value.push(assetUtil.createPagebreakAsset());
 }
 
 function createNewlineAsset(): void {
-  assets.value.push(new NewlineAsset());
+  assets.value.push(assetUtil.createNewlineAsset());
 }
 
 function getSizeOfAsset(asset: BaseAsset): string | undefined {
@@ -497,56 +521,56 @@ function deleteIt(id: number): void {
 
 function createImageAsset(): void {
   editImage.value = true;
-  imageAsset.value = new ImageAsset(" ", "");
+  imageAsset.value = assetUtil.createImageAsset(" ", "");
   imageAsset.value.width = 80;
 }
 
 function isHeading1(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.HEADING1;
+  return asset.type === BaseAssetTypeEnum.Heading1;
 }
 
 function isText(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.TEXT;
+  return asset.type === BaseAssetTypeEnum.Text;
 }
 
 function isHeading2(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.HEADING2;
+  return asset.type === BaseAssetTypeEnum.Heading2;
 }
 
 function isHeading3(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.HEADING3;
+  return asset.type === BaseAssetTypeEnum.Heading3;
 }
 
 function isHeading4(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.HEADING4;
+  return asset.type === BaseAssetTypeEnum.Heading4;
 }
 
 function isHeading5(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.HEADING5;
+  return asset.type === BaseAssetTypeEnum.Heading5;
 }
 
 function isImage(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.IMAGE;
+  return asset.type === BaseAssetTypeEnum.Image;
 }
 
 function isPageBreak(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.PAGEBREAK;
+  return asset.type === BaseAssetTypeEnum.Pagebreak;
 }
 
 function isNewline(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.NEWLINE;
+  return asset.type === BaseAssetTypeEnum.Newline;
 }
 
 function isDatatable(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.DATATABLE;
+  return asset.type === BaseAssetTypeEnum.Datatable;
 }
 
 function isDatatableMessstelle(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.DATATABLE_MESSSTELLE;
+  return asset.type === BaseAssetTypeEnum.DatatableMessstelle;
 }
 
 function isZaehlungskenngroesse(asset: BaseAsset): boolean {
-  return asset.type === AssetTypesEnum.ZAEHLUNGSKENNGROESSEN;
+  return asset.type === BaseAssetTypeEnum.Zaehlungskenngroessen;
 }
 
 function icon(asset: BaseAsset): string {

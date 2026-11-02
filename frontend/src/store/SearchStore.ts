@@ -1,5 +1,7 @@
-import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
+import type {
+  ErhebungsstelleKarteDTO,
+  SearchAndFilterOptionsDTO,
+} from "@/api/client";
 
 import { isEqual } from "lodash";
 import { defineStore } from "pinia";
@@ -8,7 +10,7 @@ import { computed, ref } from "vue";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 export const useSearchStore = defineStore("searchStore", () => {
-  const searchResult = ref<Array<AnzeigeKarteDTO>>([]);
+  const searchResult = ref<Array<ErhebungsstelleKarteDTO>>([]);
   const lastSearchQuery = ref("");
   const isSearchTriggered = ref(false);
   const searchAndFilterOptions = ref(
@@ -28,7 +30,7 @@ export const useSearchStore = defineStore("searchStore", () => {
     );
   });
 
-  function setSearchResult(payload: Array<AnzeigeKarteDTO>) {
+  function setSearchResult(payload: Array<ErhebungsstelleKarteDTO>) {
     searchResult.value = payload;
   }
   function setLastSearchQuery(payload: string) {

@@ -1,4 +1,4 @@
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 
 import { describe, expect, it } from "vitest";
 
@@ -32,14 +32,20 @@ describe("StrassennamenUtils", () => {
   it("getStreetLines: Straßename mit genau Länge 20", () => {
     const { getStreetLines } = useStrassennameUtils();
     const long = "Marienklausenbrücke";
-    const res = getStreetLines({ strassenname: long } as LadeKnotenarmDTO, 20);
+    const res = getStreetLines(
+      { strassenname: long } as BearbeiteKnotenarmDTO,
+      20
+    );
     expect(res[0]).toBe("Marienklausenbrücke");
   });
 
   it("getStreetLines: Straßename mit genau Länge 17", () => {
     const { getStreetLines } = useStrassennameUtils();
     const long = "Marienklausenbrücke";
-    const res = getStreetLines({ strassenname: long } as LadeKnotenarmDTO, 17);
+    const res = getStreetLines(
+      { strassenname: long } as BearbeiteKnotenarmDTO,
+      17
+    );
     expect(res[0]).toBe("Marienklausen-");
     expect(res[1]).toBe("brücke");
   });

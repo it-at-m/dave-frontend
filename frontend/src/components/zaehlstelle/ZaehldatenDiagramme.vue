@@ -98,7 +98,7 @@
 
             <belastungsplan-fjs-svg
               v-if="
-                !belastungsplanDTO.kreisverkehr &&
+                !(belastungsplanDTO as LadeBelastungsplanDTO).kreisverkehr &&
                 !isQJSZaehlung &&
                 !isQUZaehlung &&
                 isFJSZaehlung &&
@@ -216,25 +216,29 @@
   </v-sheet>
 </template>
 <script setup lang="ts">
-import type CsvDTO from "@/types/common/CsvDTO";
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type {
+  BelastungsplanDataDTO,
+  CsvDTO,
+  LadeBelastungsplanDTO,
+  LadeBelastungsplanFjsDTO,
+  LadeBelastungsplanQjsDTO,
+  LadeBelastungsplanQuDTO,
+  LadeProcessedZaehldatenDTO,
+  LadeZaehldatenHeatmapDTO,
+  LadeZaehldatenSteplineDTO,
+  LadeZaehldatenZeitreiheDTO,
+  LadeZaehldatumDTO,
+  LeseZaehlstelleDTO,
+  OptionsDTO,
+} from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
-import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
-import type LadeProcessedZaehldatenDTO from "@/types/zaehlung/zaehldaten/LadeProcessedZaehldatenDTO";
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-import type LadeZaehldatumDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatumDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
 
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import LadeZaehldatenService from "@/api/service/LadeZaehldatenService";
@@ -258,8 +262,6 @@ import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
-import Zaehldauer from "@/types/enum/Zaehldauer";
-import Zeitblock from "@/types/enum/Zeitblock";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
@@ -344,7 +346,7 @@ const isFJSZaehlung = computed<boolean>(() => {
   return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.FJS;
 });
 
-const options = computed<ZaehlstelleOptionsDTO>(() => {
+const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
@@ -362,11 +364,11 @@ const hasSelectedVerkehrsarten = computed<boolean>(() => {
 const zaehlungsId = computed(() => {
   return zaehlstelleStore.getZaehlungsId;
 });
-const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
+const selectedZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
+const zaehlstelle = computed<LeseZaehlstelleDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 const isTabListenausgabe = computed<boolean>(() => {
@@ -377,7 +379,7 @@ const isNotTabHeatmap = computed<boolean>(() => {
 });
 
 const isTeilzaehlung = computed(() => {
-  return selectedZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN;
+  return selectedZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden;
 });
 
 /**
@@ -398,25 +400,21 @@ const isOnlyFussverkehrSelected = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.Sonstige hat.
  */
 const isSonderzaehldauer = computed(() => {
-  return selectedZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+  return selectedZaehlung.value.zaehldauer === Zaehldauer.Sonstige;
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_06_10
-    ) &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_15_19
-    )
+    selectedZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
+    selectedZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
   );
 });
 
@@ -494,7 +492,7 @@ watch(belastungsplanSchematischeUebersichtSvg, () => {
 });
 
 function loadData(): void {
-  const o = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
+  const o = Object.assign({}, options.value) as OptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
   // requests abschicken
   loadProcessedChartData(o);
@@ -513,12 +511,12 @@ function loadData(): void {
   }
 }
 
-function loadProcessedChartData(options: ZaehlstelleOptionsDTO) {
+function loadProcessedChartData(options: OptionsDTO) {
   resetStartEndeUhrzeitIntervallsInStore();
   chartDataLoading.value = true;
   LadeZaehldatenService.ladeZaehldatenProcessed(
     selectedZaehlung.value.id,
-    options
+    options as OptionsDTO
   )
     .then((processedZaehldaten: LadeProcessedZaehldatenDTO) => {
       storeStartAndEndeUhrzeitOfIntervalls(
@@ -767,7 +765,7 @@ function generatePdf() {
   const formData = new FormData();
   loadingFile.value = true;
 
-  const o = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
+  const o = Object.assign({}, options.value) as OptionsDTO;
   o.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   formData.append(
@@ -865,7 +863,7 @@ function fetchPdf(formData: FormData, type: string) {
 
 function generateCsv() {
   loadingFile.value = true;
-  const optionsDTO = Object.assign({}, options.value) as ZaehlstelleOptionsDTO;
+  const optionsDTO = Object.assign({}, options.value) as OptionsDTO;
   optionsDTO.zaehldauer = selectedZaehlung.value.zaehldauer;
 
   GenerateCsvService.generateCsv(selectedZaehlung.value.id, optionsDTO)
@@ -908,26 +906,21 @@ const drawSchematischeUebersicht = computed(() => {
     );
   } else
     return (
-      belastungsplanDTO.value.value1.values &&
-      belastungsplanDTO.value.value1.values.length > 0
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values &&
+      (belastungsplanDTO.value.value1 as BelastungsplanDataDTO).values.length >
+        0
     );
 });
 
-function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQjsDTO {
+function isQjsBelastungsplan(data: any): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 
-function isFjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanFjsDTO {
+function isFjsBelastungsplan(data: any): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 
-function isQuBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQuDTO {
+function isQuBelastungsplan(data: any): data is LadeBelastungsplanQuDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>

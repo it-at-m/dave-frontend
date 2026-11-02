@@ -1,39 +1,41 @@
-import type InfoMessageDTO from "@/types/app/InfoMessageDTO";
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
-import type MapConfigurationDTO from "@/types/configuration/MapConfigurationDTO";
-import type TenantConfigurationDTO from "@/types/configuration/TenantConfigurationDTO";
-import type ZaehlstelleConfigurationDTO from "@/types/configuration/ZaehlstelleConfigurationDTO";
-import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
-import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
-import type LadeProcessedMesswerteDTO from "@/types/messstelle/LadeProcessedMesswerteDTO";
-import type MessfaehigkeitDTO from "@/types/messstelle/MessfaehigkeitDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type {
+  BelastungsplanMessquerschnitteDTO,
+  LadeMesswerteListenausgabeDTO,
+  LadeProcessedMesswerteDTO,
+  MapConfigurationDTO,
+  TenantConfigurationDTO,
+  ZaehlstelleConfigurationDTO,
+} from "@/api/client";
+import type { ConfigurationDTO } from "@/api/client/models/ConfigurationDTO";
+import type { FahrzeugOptionsDTO } from "@/api/client/models/FahrzeugOptionsDTO";
+import type { InfoMessageDTO } from "@/api/client/models/InfoMessageDTO";
+import type { LadeZaehldatenHeatmapDTO } from "@/api/client/models/LadeZaehldatenHeatmapDTO";
+import type { LadeZaehldatenSteplineDTO } from "@/api/client/models/LadeZaehldatenSteplineDTO";
+import type { LadeZaehldatenTableDTO } from "@/api/client/models/LadeZaehldatenTableDTO";
+import type { LeseZaehlstelleDTO } from "@/api/client/models/LeseZaehlstelleDTO";
+import type { LeseZaehlungDTO } from "@/api/client/models/LeseZaehlungDTO";
+import type { SearchAndFilterOptionsDTO } from "@/api/client/models/SearchAndFilterOptionsDTO";
+import type { ZaehlstelleKarteDTO } from "@/api/client/models/ZaehlstelleKarteDTO";
+import type { ZaehlstelleTooltipDTO } from "@/api/client/models/ZaehlstelleTooltipDTO";
+import type { ZeitauswahlDTO } from "@/api/client/models/ZeitauswahlDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
+import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type VerkehrsbeziehungenDTO from "@/types/zaehlung/VerkehrsbeziehungenDTO";
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
-import type LadeZaehldatenSteplineDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenSteplineDTO";
-import type LadeZaehldatenTableDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenTableDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
-import type ZeitauswahlDTO from "@/types/zaehlung/ZeitauswahlDTO";
+import type Verkehrsbeziehungen from "@/types/zaehlung/Verkehrsbeziehungen";
 
+import { Fahrzeugklasse, ZaehldatenIntervall, Zaehldauer } from "@/api/client";
+import { Rounding } from "@/api/client/models/Rounding";
+import { TagesTyp } from "@/api/client/models/TagesTyp";
+import { Verkehrsart } from "@/api/client/models/Verkehrsart";
+import { Zeitblock } from "@/api/client/models/Zeitblock";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
-import Fahrzeugklasse from "@/types/enum/Fahrzeugklasse";
 import Quelle from "@/types/enum/Quelle";
-import Rounding from "@/types/enum/Rounding";
-import TagesTyp from "@/types/enum/TagesTyp";
-import Verkehrsart from "@/types/enum/Verkehrsart";
 import Wetter from "@/types/enum/Wetter";
-import ZaehldatenIntervall from "@/types/enum/ZaehldatenIntervall";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock from "@/types/enum/Zeitblock";
 import Suggest from "@/types/suche/Suggest";
 
 export default class DefaultObjectCreator {
@@ -43,10 +45,10 @@ export default class DefaultObjectCreator {
       type: "",
       id: "",
       letzteZaehlungId: "",
-      tooltip: {} as TooltipZaehlstelleDTO,
+      tooltip: {} as ZaehlstelleTooltipDTO,
       latitude: 0,
       longitude: 0,
-      zaehlartenKarte: [],
+      zaehlartenKarte: new Set(),
       sichtbarDatenportal: true,
     };
   }
@@ -69,10 +71,10 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessstelleInfoDTO(): MessstelleInfoDTO {
+  public static createDefaultMessstelleInfoDTO(): MessstelleInfoType {
     return {
       messfaehigkeiten: [],
-      detektierteVerkehrsart: Verkehrsart.KFZ,
+      detektierteVerkehrsart: Verkehrsart.Kfz,
       fahrzeugklasse: "",
       hersteller: "",
       id: "",
@@ -95,7 +97,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultFahrzeugOptions(): FahrzeugOptions {
+  public static createDefaultFahrzeugOptions(): FahrzeugOptionsDTO {
     return {
       kraftfahrzeugverkehr: false,
       schwerverkehr: false,
@@ -110,10 +112,10 @@ export default class DefaultObjectCreator {
       kraftraeder: false,
       personenkraftwagen: false,
       lieferwagen: false,
-    } as FahrzeugOptions;
+    } as FahrzeugOptionsDTO;
   }
 
-  public static createDefaultMessstelleOptions(): MessstelleOptionsDTO {
+  public static createDefaultMessstelleOptions(): MessstelleOptions {
     return {
       blackPrintMode: false,
       blocksumme: true,
@@ -122,11 +124,11 @@ export default class DefaultObjectCreator {
       spitzenstunde: true,
       stundensumme: true,
       tagessumme: true,
-      rounding: Rounding.NONE,
+      rounding: Rounding.None,
       fahrzeuge: this.createDefaultFahrzeugOptions(),
       intervall: "" as ZaehldatenIntervall,
       messquerschnittIds: [],
-      tagesTyp: TagesTyp.UNSPECIFIED,
+      tagesTyp: TagesTyp.Unspecified,
       zeitauswahl: "",
       zeitblock: "",
       zeitraumStartAndEndDate: new StartAndEndDate(undefined, undefined),
@@ -134,7 +136,7 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptionsDTO {
+  public static createDefaultMessstelleAuswertungOptions(): MessstelleAuswertungOptions {
     return {
       jahre: [],
       tagesTyp: "" as TagesTyp,
@@ -155,23 +157,21 @@ export default class DefaultObjectCreator {
         kraftraeder: false,
         personenkraftwagen: false,
         lieferwagen: false,
-      } as FahrzeugOptions,
+      } as FahrzeugOptionsDTO,
       verfuegbareVerkehrsarten: [],
     };
   }
 
-  public static createDefaultZaehlstelleHeaderDTO(): ZaehlstelleHeaderDTO {
+  public static createDefaultZaehlstelleHeaderDTO(): LeseZaehlstelleDTO {
     return {
       id: "",
-      entityVersion: 0,
-      createdTime: "",
       nummer: "",
       name: "",
       stadtbezirk: "",
-      stadtbezirkNummer: "",
-      lat: "",
-      lng: "",
-      zaehlungen: [] as Array<LadeZaehlungDTO>,
+      stadtbezirkNummer: 0,
+      lat: 0,
+      lng: 0,
+      zaehlungen: [] as Array<LeseZaehlungDTO>,
       kommentar: "",
     };
   }
@@ -181,12 +181,12 @@ export default class DefaultObjectCreator {
       content: "",
       gueltig: false,
       id: "",
-      entityVersion: 0,
-      createdTime: "",
+      gueltigVon: new Date(),
+      gueltigBis: new Date(),
     };
   }
 
-  public static createDefaultLadeZaehlungDto(): LadeZaehlungDTO {
+  public static createDefaultLadeZaehlungDto(): LadeZaehlung {
     return {
       datum: "",
       jahr: "",
@@ -205,13 +205,13 @@ export default class DefaultObjectCreator {
       zaehlsituationErweitert: "",
       zaehlIntervall: "",
       wetter: Wetter.NO_INFORMATION,
-      zaehldauer: Zaehldauer.SONSTIGE,
+      zaehldauer: Zaehldauer.Sonstige,
       quelle: Quelle.MANUALLY,
       schulZeiten: "",
       kommentar: "",
       knotenarme: [],
       verkehrsbeziehungen: [],
-      auswaehlbareVerkehrsbeziehungen: {} as VerkehrsbeziehungenDTO,
+      auswaehlbareVerkehrsbeziehungen: {} as Verkehrsbeziehungen,
       zeitauswahl: {} as ZeitauswahlDTO,
       kategorien: [],
       pkwEinheit: [],
@@ -223,13 +223,13 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultZaehlstelleOptionsDto(): ZaehlstelleOptionsDTO {
+  public static createDefaultZaehlstelleOptionsDto(): Options {
     return {
       beideRichtungen: false,
       vergleichszaehlungsId: null,
-      zaehldauer: Zaehldauer.DAUER_24_STUNDEN,
-      intervall: ZaehldatenIntervall.STUNDE_VIERTEL,
-      zeitblock: Zeitblock.ZB_00_24,
+      zaehldauer: Zaehldauer.Dauer24Stunden,
+      intervall: ZaehldatenIntervall.StundeViertel,
+      zeitblock: Zeitblock.Zb0024,
       zeitauswahl: Zeitauswahl.TAGESWERT,
       kraftfahrzeugverkehr: false,
       schwerverkehr: false,
@@ -255,7 +255,7 @@ export default class DefaultObjectCreator {
       beschriftung: false,
       datentabelle: false,
       fahrzeugklassenStapeln: false,
-      rounding: Rounding.NONE,
+      rounding: Rounding.None,
       differenzdatenDarstellen: false,
       vonKnotenarm: null,
       // Setzen aller möglichen Knotenarme als Defaultwert da "vonKnotenarm" gleich "null"
@@ -274,20 +274,20 @@ export default class DefaultObjectCreator {
     };
   }
 
-  public static createDefaultMessfaehigkeitDTO(): MessfaehigkeitDTO {
+  public static createDefaultMessfaehigkeitDTO(): Messfaehigkeit {
     return {
-      fahrzeugklasse: Fahrzeugklasse.ACHT_PLUS_EINS,
+      fahrzeugklasse: Fahrzeugklasse.AchtPlusEins,
       gueltigAb: "",
       gueltigBis: "",
-      intervall: ZaehldatenIntervall.STUNDE_VIERTEL_EINGESCHRAENKT,
-    } as MessfaehigkeitDTO;
+      intervall: ZaehldatenIntervall.StundeViertelEingeschraenkt,
+    } as Messfaehigkeit;
   }
 
   public static createDefaultBelastungsplanMessquerschnitteDTO(): BelastungsplanMessquerschnitteDTO {
     return {
       ladeBelastungsplanMessquerschnittDataDTOList: [],
       strassenname: "",
-      stadtbezirkNummer: "",
+      stadtbezirkNummer: 0,
       mstId: "",
       totalKfz: 0,
       totalSv: 0,
@@ -306,9 +306,7 @@ export default class DefaultObjectCreator {
       rangeMax: 0,
       rangeMaxPercent: 0,
       xaxisDataFirstChart: [],
-      xaxisDataSecondChart: null,
       seriesEntriesFirstChart: [],
-      seriesEntriesSecondChart: null,
     } as LadeZaehldatenSteplineDTO;
   }
 
@@ -319,8 +317,6 @@ export default class DefaultObjectCreator {
       rangeMax: 0,
       xaxisDataFirstChart: [],
       seriesEntriesFirstChart: [],
-      xaxisDataSecondChart: null,
-      seriesEntriesSecondChart: null,
     } as LadeZaehldatenHeatmapDTO;
   }
 
@@ -328,7 +324,7 @@ export default class DefaultObjectCreator {
     return {
       searchInMessstellen: true,
       searchInZaehlstellen: true,
-      messstelleVerkehrsart: [Verkehrsart.KFZ, Verkehrsart.RAD],
+      messstelleVerkehrsart: [Verkehrsart.Kfz, Verkehrsart.Rad],
     } as SearchAndFilterOptionsDTO;
   }
 
@@ -369,14 +365,15 @@ export default class DefaultObjectCreator {
 
   public static createDefaultLadeProcessedMessdatenDTO(): LadeProcessedMesswerteDTO {
     return {
-      zaehldatenTable: this.createDefaultLadeZaehldatenTableDTO(),
+      zaehldatenTable:
+        this.createDefaultLadeZaehldatenTableDTO() as unknown as LadeMesswerteListenausgabeDTO,
       zaehldatenStepline: this.createDefaultLadeZaehldatenSteplineDTO(),
       zaehldatenHeatmap: this.createDefaultLadeZaehldatenHeatmapDTO(),
       belastungsplanMessquerschnitte:
         this.createDefaultBelastungsplanMessquerschnitteDTO(),
       requestedMeasuringDays: -1,
       includedMeasuringDays: -1,
-      tagesTyp: TagesTyp.UNSPECIFIED,
+      tagesTyp: TagesTyp.Unspecified,
     } as LadeProcessedMesswerteDTO;
   }
 }

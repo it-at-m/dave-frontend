@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
+import type { SearchAndFilterOptionsDTO } from "@/api/client";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 

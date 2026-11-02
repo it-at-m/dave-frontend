@@ -56,20 +56,22 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  MessquerschnittAuswertungDTO,
+  MessstelleAuswertungDTO,
+  MessstelleAuswertungIdDTO,
+} from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 import type KeyValObject from "@/types/common/KeyValObject";
-import type MessquerschnittAuswertungDTO from "@/types/messstelle/auswertung/MessquerschnittAuswertungDTO";
-import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
-import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { isEmpty, toArray } from "lodash";
 import { computed, onMounted, ref } from "vue";
 
-import { himmelsRichtungenTextLong } from "@/types/enum/Himmelsrichtung";
+import { himmelsRichtungenTextLong } from "@/types/enum/HimmelsrichtungText";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 
@@ -102,8 +104,8 @@ onMounted(() => {
       }
     });
     const selectedMessquerschnitteIds =
-      auswertungOptions.value.messstelleAuswertungIds.flatMap(
-        (value) => value.mqIds
+      auswertungOptions.value.messstelleAuswertungIds.flatMap((value) =>
+        Array.from(value.mqIds)
       );
     if (selectedMessstellen.value.length === 1) {
       selectedMessquerschnitte.value =
@@ -117,17 +119,17 @@ onMounted(() => {
       );
     }
     if (selectedMessquerschnitte.value.length === 1) {
-      direction.value = selectedMessquerschnitte.value[0].fahrtrichtung;
+      direction.value = selectedMessquerschnitte.value[0].fahrtrichtung ?? "";
     } else if (selectedMessquerschnitte.value.length > 1) {
       const unique = [
         ...new Set(
           selectedMessquerschnitte.value.map(
-            (messquerschnitt) => messquerschnitt.fahrtrichtung
+            (messquerschnitt) => messquerschnitt.fahrtrichtung ?? ""
           )
         ),
       ];
       if (unique.length === 1) {
-        direction.value = selectedMessquerschnitte.value[0].fahrtrichtung;
+        direction.value = selectedMessquerschnitte.value[0].fahrtrichtung ?? "";
       } else {
         direction.value = messstelleUtils.alleRichtungen;
       }
@@ -142,8 +144,8 @@ function selectMessstellen() {
     selectedMessstellen.value.forEach((messstelleAuswertungId) => {
       const item = {
         mstId: messstelleAuswertungId.mstId,
-        mqIds: toArray(messstelleAuswertungId.messquerschnitte).map(
-          (mq) => mq.mqId
+        mqIds: new Set(
+          toArray(messstelleAuswertungId.messquerschnitte).map((mq) => mq.mqId)
         ),
       } as MessstelleAuswertungIdDTO;
       auswertungOptions.value.messstelleAuswertungIds.push(item);
@@ -155,7 +157,9 @@ function selectMessstellen() {
 function saveSelectedMqIdsOfSelectedMst() {
   const item = {
     mstId: selectedMessstellen.value[0].mstId,
-    mqIds: toArray(selectedMessquerschnitte.value).map((mq) => mq.mqId),
+    mqIds: new Set(
+      toArray(selectedMessquerschnitte.value).map((mq) => mq.mqId)
+    ),
   } as MessstelleAuswertungIdDTO;
   auswertungOptions.value.messstelleAuswertungIds = [item];
 }
@@ -185,9 +189,9 @@ const richtungValues = computed<Array<KeyVal>>(() => {
       (querschnitt: MessquerschnittAuswertungDTO) => {
         const keyVal: KeyVal = {
           title:
-            himmelsRichtungenTextLong.get(querschnitt.fahrtrichtung) ??
+            himmelsRichtungenTextLong.get(querschnitt.fahrtrichtung ?? "") ??
             "Fehler bei der Bestimmung der Himmelsrichtung.",
-          value: querschnitt.fahrtrichtung,
+          value: querschnitt.fahrtrichtung ?? "",
         };
         if (
           result.filter((entry) => {
@@ -208,11 +212,13 @@ const lageValues = computed<Array<KeyValObject>>(() => {
     selectedMessstellen.value[0].messquerschnitte.forEach(
       (querschnitt: MessquerschnittAuswertungDTO) => {
         if (
-          querschnitt.fahrtrichtung === direction.value ||
+          (querschnitt.fahrtrichtung ?? "") === direction.value ||
           direction.value === messstelleUtils.alleRichtungen
         ) {
           result.push({
-            title: `${querschnitt.mqId} - ${querschnitt.standort}`,
+            title: `${querschnitt.mqId}${
+              querschnitt.standort ? ` - ${querschnitt.standort}` : ""
+            }`,
             value: querschnitt,
           });
         }
@@ -261,7 +267,7 @@ function setDefaultDirection(): void {
   if (selectedMessstellen.value.length === 1) {
     if (selectedMessstellen.value[0].messquerschnitte.length === 1) {
       direction.value =
-        selectedMessstellen.value[0].messquerschnitte[0].fahrtrichtung;
+        selectedMessstellen.value[0].messquerschnitte[0].fahrtrichtung ?? "";
     } else if (selectedMessstellen.value[0].messquerschnitte.length > 1) {
       direction.value = messstelleUtils.alleRichtungen;
     }
@@ -275,6 +281,7 @@ function setVerfuegbareVerkehrsarten() {
     for (const messstelle of props.allVisibleMessstellen) {
       if (
         existsMstIdInAuswertungIds(messstelle.mstId) &&
+        messstelle.detektierteVerkehrsart &&
         !auswertungOptions.value.verfuegbareVerkehrsarten.includes(
           messstelle.detektierteVerkehrsart
         )

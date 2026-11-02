@@ -105,49 +105,56 @@
   </v-container>
 </template>
 <script setup lang="ts">
+import type { Himmelsrichtung, Zeitblock } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { isEmpty } from "lodash";
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
+import { TagesTyp } from "@/api/client";
 import OptionsmenueMessstelle from "@/components/messstelle/optionsmenue/OptionsmenueMessstelle.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung, {
+import {
   himmelsRichtungenTextLong,
   himmelsRichtungenTextShort,
-} from "@/types/enum/Himmelsrichtung";
-import TagesTyp, { tagesTypText } from "@/types/enum/TagesTyp";
-import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
+} from "@/types/enum/HimmelsrichtungText";
+import { tagesTypText } from "@/types/enum/TagesTypText";
+import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useDateUtils } from "@/util/DateUtils";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 const messstelleStore = useMessstelleStore();
 const dateUtils = useDateUtils();
 const display = useDisplay();
+const enumUtils = useEnumUtils();
 
 interface Props {
-  messstelle: MessstelleInfoDTO;
+  messstelle: MessstelleInfoType;
 }
 
 defineProps<Props>();
 
-const filterOptionsMessstelle = computed<MessstelleOptionsDTO>(() => {
+const filterOptionsMessstelle = computed<MessstelleOptions>(() => {
   return messstelleStore.getFilteroptions;
 });
 
 const wochentag = computed<string | undefined>(() => {
-  return tagesTypText.get(filterOptionsMessstelle.value.tagesTyp);
+  const tagestyp = enumUtils.toTagesTyp(filterOptionsMessstelle.value.tagesTyp);
+  return tagestyp ? tagesTypText.get(tagestyp) : "";
 });
 
 const showWochentag = computed<boolean>(() => {
   return (
     filterOptionsMessstelle.value.zeitraum.length === 2 &&
-    filterOptionsMessstelle.value.tagesTyp !== TagesTyp.UNSPECIFIED
+    filterOptionsMessstelle.value.tagesTyp !== TagesTyp.Unspecified
   );
 });
 
@@ -167,12 +174,15 @@ const zeitraum = computed(() => {
 
 const zeitauswahl = computed(() => {
   let text = Zeitauswahl.TAGESWERT.valueOf();
-  const chosenBlock: KeyVal | undefined = zeitblockInfo.get(
+  const zeitblock: Zeitblock | undefined = useEnumUtils().toZeitblock(
     filterOptionsMessstelle.value.zeitblock
   );
-  const chosenStunde = zeitblockStuendlichInfo.get(
-    filterOptionsMessstelle.value.zeitblock
-  );
+  const chosenBlock: KeyVal | undefined = zeitblock
+    ? zeitblockInfo.get(zeitblock)
+    : undefined;
+  const chosenStunde: KeyVal | undefined = zeitblock
+    ? zeitblockStuendlichInfo.get(zeitblock)
+    : undefined;
   if (
     Zeitauswahl.BLOCK === filterOptionsMessstelle.value.zeitauswahl &&
     chosenBlock

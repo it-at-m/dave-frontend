@@ -37,12 +37,13 @@
 </template>
 
 <script setup lang="ts">
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type LadeBelastungsplanFjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanFjsDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
-import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type {
+  LadeBelastungsplanDTO,
+  LadeBelastungsplanFjsDTO,
+  LadeBelastungsplanQjsDTO,
+  LadeBelastungsplanQuDTO,
+} from "@/api/client";
+import type Options from "@/types/zaehlung/Options";
 
 import BelastungsplanFjsAndQuSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanFjsAndQuSvgSchematischeUebersicht.vue";
 import BelastungsplanKreuzungSvgSchematischeUebersicht from "@/components/zaehlstelle/charts/BelastungsplanKreuzungSvgSchematischeUebersicht.vue";
@@ -52,7 +53,7 @@ import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 interface Props {
   data: LadeBelastungsplanDTO;
   dimension?: string;
-  options: ZaehlstelleOptionsDTO;
+  options: Options;
   drawSchematischeUebersicht: boolean;
 }
 
@@ -68,21 +69,15 @@ function emitPrint(event: any) {
   emits("print", event);
 }
 
-function isQjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQjsDTO {
+function isQjsBelastungsplan(data: any): data is LadeBelastungsplanQjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QJS;
 }
 
-function isFjsBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanFjsDTO {
+function isFjsBelastungsplan(data: any): data is LadeBelastungsplanFjsDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.FJS;
 }
 
-function isQuBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQuDTO {
+function isQuBelastungsplan(data: any): data is LadeBelastungsplanQuDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import type SearchAndFilterOptionsDTO from "@/types/suche/SearchAndFilterOptionsDTO";
+import type { SearchAndFilterOptionsDTO } from "@/api/client";
 
 import FilterMessstellePanel from "@/components/search/filter/FilterMessstellePanel.vue";
 
