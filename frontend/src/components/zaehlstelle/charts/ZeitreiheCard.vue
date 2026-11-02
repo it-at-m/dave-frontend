@@ -94,7 +94,7 @@ watch(
         )
       );
 
-    if (isZeitauswahlSpitzenstundeChosen.value) {
+    if (props.isTabZeitreiheActive && isZeitauswahlSpitzenstundeChosen.value) {
       snackbarStore.showInfo(
         `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
       );
