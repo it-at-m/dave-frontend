@@ -423,6 +423,7 @@ const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
 });
 
 watch(selectedZaehlung, () => {
+  wasInfoSnackbarShown.value = false;
   changeTab();
 });
 
