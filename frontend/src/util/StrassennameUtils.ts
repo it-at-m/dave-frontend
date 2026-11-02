@@ -9,7 +9,7 @@ export function useStrassennameUtils() {
    */
   function getStreetname(
     knotenarm: LadeKnotenarmDTO | undefined,
-    maxChars = 17
+    maxChars = 15
   ): Array<string> {
     const strasse = (knotenarm?.strassenname ?? "").trim();
     if (!strasse) {
