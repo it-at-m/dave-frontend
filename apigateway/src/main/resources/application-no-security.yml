@@ -1,14 +1,13 @@
 spring:
   autoconfigure:
     exclude:
-      - org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration
+      - org.springframework.boot.security.oauth2.client.autoconfigure.reactive.ReactiveOAuth2ClientAutoConfiguration
   cloud:
     gateway:
       # The whole list need to be overridden to remove CustomTokenRelayGatewayFilter
       server:
         webflux:
           default-filters:
-            - RemoveResponseHeader=Expires
             - RemoveRequestHeader=cookie
             - RemoveRequestHeader=x-xsrf-token
 

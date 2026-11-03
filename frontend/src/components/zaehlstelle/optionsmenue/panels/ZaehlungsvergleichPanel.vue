@@ -182,17 +182,17 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
       "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein. ";
     if (isQjsOrFjsOrQu.value) {
       return (
-        "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden." +
+        "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden. " +
         part
       );
     } else if (chosenOptionsCopy.value.fussverkehr) {
       return (
-        "Es können nur Zählungen gleicher Zählart und im Fußverkehr weiterhin mit gleichen Verkehrsbeziehungen verglichen werden." +
+        "Es können nur Zählungen gleicher Zählart und im Fußverkehr weiterhin mit gleichen Verkehrsbeziehungen verglichen werden. " +
         part
       );
     } else {
       return (
-        "Es können nur Zählungen gleicher Zählart verglichen werden." + part
+        "Es können nur Zählungen gleicher Zählart verglichen werden. " + part
       );
     }
   }

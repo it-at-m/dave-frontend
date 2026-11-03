@@ -81,9 +81,12 @@ function selectItem(item: AbstractHistoryItem): void {
           DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
       )
     );
-    router.push(
-      `/zaehlstelle/${historyItem.zaehlstelleId}/${historyItem.zaehlungId}`
-    );
+    const path = `/zaehlstelle/${historyItem.zaehlstelleId}/${historyItem.zaehlungId}`;
+    if (router.currentRoute.value.path === path) {
+      zaehlstelleStore.setZaehlungAlsAktiv(historyItem.zaehlungId);
+    } else {
+      router.push(path);
+    }
   }
 }
 
