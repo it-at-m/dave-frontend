@@ -156,25 +156,53 @@ describe("StrassennamenUtils", () => {
     expect(res[1]).toBe("Stifter-Str.");
   });
 
-  it("getStreetLines: Name mit Blank am Ende 18 Zeichen bleibt ein Element", () => {
+  it("getStreetLines: Name mit Blank am Ende 18 Zeichen wird geplittet", () => {
     const { getStreetLines } = useStrassennameUtils();
     const res = getStreetLines({ strassenname: "Genau18ZeichMiBla " } as any);
-    expect(res.length).toEqual(1);
-    expect(res).toEqual(["Genau18ZeichMiBla"]);
+    expect(res.length).toEqual(2);
+    expect(res).toEqual(["Genau18Ze-", "ichMiBla"]);
   });
 
-  it("getStreetLines: Name ohne Blank am Ende 17 Zeichen bleibt ein Element", () => {
+  it("getStreetLines: Name ohne Blank am Ende 17 Zeichen wird geplittet", () => {
     const { getStreetLines } = useStrassennameUtils();
     const res = getStreetLines({ strassenname: "Genau17ZeichenOhn" } as any);
+    expect(res.length).toEqual(2);
+    expect(res).toEqual(["Genau17Ze-", "ichenOhn"]);
+  });
+
+  it("getStreetLines: Name ohne Blank am Ende 15 Zeichen bleibt ein Element", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau15ZeichOhn" } as any);
     expect(res.length).toEqual(1);
-    expect(res).toEqual(["Genau17ZeichenOhn"]);
+    expect(res).toEqual(["Genau15ZeichOhn"]);
+  });
+
+  it("getStreetLines: Name mit Blank am Ende 15 Zeichen bleibt ein Element", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau15ZeichOhn " } as any);
+    expect(res.length).toEqual(1);
+    expect(res).toEqual(["Genau15ZeichOhn"]);
+  });
+
+  it("getStreetLines: Name ohne Blank am Ende 16 Zeichen wird geplittet", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau15ZeichOhnB" } as any);
+    expect(res.length).toEqual(2);
+    expect(res).toEqual(["Genau15Z-", "eichOhnB"]);
+  });
+
+  it("getStreetLines: Name mit Blank am Ende 16 Zeichen wird geplittet", () => {
+    const { getStreetLines } = useStrassennameUtils();
+    const res = getStreetLines({ strassenname: "Genau15ZeichMitB " } as any);
+    expect(res.length).toEqual(2);
+    expect(res).toEqual(["Genau15Z-", "eichMitB"]);
   });
 
   it("getStreetLines: Name mit Leerzeichentrenner und Blank am Ende 18 Zeichen bleibt ein Element", () => {
     const { getStreetLines } = useStrassennameUtils();
     const res = getStreetLines({ strassenname: "Genau18Zeic MiBla " } as any);
-    expect(res.length).toEqual(1);
-    expect(res).toEqual(["Genau18Zeic MiBla"]);
+    expect(res.length).toEqual(2);
+    expect(res).toEqual(["Genau18Zeic ", "MiBla"]);
   });
 
   it("getStreetLines: Name mit Leerzeichentrenner und Blank am Ende 20 Zeichen wird getrennt", () => {
