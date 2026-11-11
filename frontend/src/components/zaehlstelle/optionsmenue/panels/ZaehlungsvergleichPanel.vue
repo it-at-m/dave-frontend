@@ -179,7 +179,8 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
     const part: string =
-      "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein. ";
+      "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählte Zeitblock bzw. die gewählte Stunde vorhanden sein. " +
+      "Vergleichszählungen mit demselben Zähldatum wie die Ausgangszählung werden nicht dargestellt. ";
     if (isQjsOrFjsOrQu.value) {
       return (
         "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden. " +
@@ -261,7 +262,7 @@ function vergleichsdatumCalculator(): void {
 /**
  * Diese Methode ermittelt alle Zählungen für die Zeitreihendarstellung.
  * Die für die Zeitreihendarstellung relevanten Zählungen sind:
- * - Welche älter als oder gleich alt wie die Basiszählung sind.
+ * - Welche älter als die Basiszählung sind.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
  * - Bei QU, QJS, FJS: Welche übereinstimmende Bewegungsbeziehungen/Pfeile besitzt.
@@ -276,7 +277,7 @@ function zeitreihenVergleichsdatumCalculator(): void {
     zaehlungen.forEach((zaehl) => {
       if (
         zaehl.id !== activeZaehlung.value.id &&
-        zaehl.datum <= activeZaehlung.value!.datum &&
+        zaehl.datum < activeZaehlung.value!.datum &&
         zaehl.zaehlart === activeZaehlung.value.zaehlart &&
         zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
         (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
