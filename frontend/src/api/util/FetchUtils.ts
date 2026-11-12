@@ -22,7 +22,7 @@ export default class FetchUtils {
     return {
       method: "POST",
       body: JSON.stringify(body),
-      headers: FetchUtils.getHeaders(),
+      headers: FetchUtils.getHeaders("application/json"),
       mode: "cors",
       credentials: "include",
       redirect: "manual",
@@ -36,7 +36,7 @@ export default class FetchUtils {
    * @param body zu übertragender Body
    */
   static getPUTConfig(body: any): RequestInit {
-    const headers = FetchUtils.getHeaders();
+    const headers = FetchUtils.getHeaders("application/json");
     if (body.entityVersion) {
       headers.append("If-Match", body.entityVersion);
     }
@@ -57,7 +57,7 @@ export default class FetchUtils {
    * @param body zu übertragender Body
    */
   static getPATCHConfig(body: any): RequestInit {
-    const headers = FetchUtils.getHeaders();
+    const headers = FetchUtils.getHeaders("application/json");
     if (body.entityVersion) {
       headers.append("If-Match", body.entityVersion);
     }
@@ -85,15 +85,20 @@ export default class FetchUtils {
   }
 
   /**
-   *  Baut den Header fuer den Request auf
+   * Baut gemeinsame Request-Header auf und setzt optional den Content-Type.
+   * Bei FormData muss der Content-Type leer bleiben, damit fetch die Boundary ergänzt.
+   * @param contentType Content-Type für den Request-Body
    * @returns {Headers}
    */
-  static getHeaders(): Headers {
-    return new Headers({
-      "Content-Type": "application/json",
+  static getHeaders(contentType?: string): Headers {
+    const headers = new Headers({
       "Accept-Language": "de-DE",
       "X-XSRF-TOKEN": XsrfTokenExtractor.getXsrfToken().toString(),
     });
+    if (contentType) {
+      headers.set("Content-Type", contentType);
+    }
+    return headers;
   }
 
   static getOpenApiFetch(): typeof fetch {
@@ -128,9 +133,6 @@ export default class FetchUtils {
    * Baut den Header für ein PDF-Request auf
    */
   static getPdfHeaders(): Headers {
-    return new Headers({
-      "Accept-Language": "de-DE",
-      "X-XSRF-TOKEN": XsrfTokenExtractor.getXsrfToken().toString(),
-    });
+    return FetchUtils.getHeaders();
   }
 }
