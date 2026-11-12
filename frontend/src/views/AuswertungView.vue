@@ -112,6 +112,7 @@ import {
 import { computed, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { MessstelleAuswertungOptionsDTOToJSON } from "@/api/client";
 import { ApiError, Levels } from "@/api/error";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import MessstelleAuswertungService from "@/api/service/MessstelleAuswertungService";
@@ -123,6 +124,7 @@ import StepLineCard from "@/components/zaehlstelle/charts/StepLineCard.vue";
 import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useUserStore } from "@/store/UserStore";
+import { MessstelleAuswertungOptionsMapper } from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsMapper";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
@@ -346,11 +348,17 @@ function getGanglinieBase64(): string | undefined {
 
 function createPdf() {
   const formData = new FormData();
+  const optionsForBackend = MessstelleAuswertungOptionsMapper.toBackend(
+    auswertungsOptions.value
+  );
   formData.append(
     "options",
-    new Blob([JSON.stringify(auswertungsOptions.value)], {
-      type: "application/json",
-    })
+    new Blob(
+      [JSON.stringify(MessstelleAuswertungOptionsDTOToJSON(optionsForBackend))],
+      {
+        type: "application/json",
+      }
+    )
   );
   formData.append(
     "chartAsBase64Png",

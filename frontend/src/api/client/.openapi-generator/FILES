@@ -118,11 +118,7 @@ models/FahrzeugOptionsDTO.ts
 models/Fahrzeugklasse.ts
 models/FjsKnotenarmValue.ts
 models/FjsStrassenseiteValue.ts
-models/GenerateMessstellePdfRequest.ts
-models/GeneratePdfAuswertungRequest.ts
-models/GeneratePdfReportRequest.ts
-models/GeneratePdfReportRequestAssetsInner.ts
-models/GenerateZaehlungPdfRequest.ts
+models/GeneratePdfReportAsset.ts
 models/GeoPoint.ts
 models/Heading1Asset.ts
 models/Heading2Asset.ts
@@ -170,7 +166,6 @@ models/LayerDTO.ts
 models/LeseZaehlstelleDTO.ts
 models/LeseZaehlungDTO.ts
 models/Link.ts
-models/Links.ts
 models/MapConfigurationDTO.ts
 models/Messfaehigkeit.ts
 models/Messquerschnitt.ts

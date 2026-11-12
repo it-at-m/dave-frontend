@@ -10,6 +10,36 @@ import createBackendApiConfiguration from "@/api/util/BackendApiConfiguration";
 import BaseUrlProvider from "@/api/util/BaseUrlProvider";
 import { handleOpenApiError } from "@/api/util/OpenApiErrorHandler";
 
+function getRequiredFormDataString(data: FormData, key: string): string {
+  const value = data.get(key);
+  if (typeof value !== "string") {
+    throw new Error(`PDF-Requestfeld "${key}" fehlt.`);
+  }
+  return value;
+}
+
+async function getRequiredFormDataJson<T>(
+  data: FormData,
+  key: string
+): Promise<T> {
+  const value = data.get(key);
+  if (!(value instanceof Blob)) {
+    throw new Error(`PDF-Requestfeld "${key}" fehlt oder ist kein JSON-Blob.`);
+  }
+  return JSON.parse(await value.text()) as T;
+}
+
+async function getOptionalFormDataText(
+  data: FormData,
+  key: string
+): Promise<string | undefined> {
+  const value = data.get(key);
+  if (value == null) {
+    return undefined;
+  }
+  return typeof value === "string" ? value : value.text();
+}
+
 export default class GeneratePdfService {
   private static readonly ENDPOINT = `${BaseUrlProvider.getBaseUrl()}/api/dave-backend-service`;
   private static readonly API = new GeneratePdfControllerApi(
@@ -22,14 +52,29 @@ export default class GeneratePdfService {
     data: FormData
   ): Promise<Blob> {
     return handleOpenApiError(
-      this.API.generateZaehlungPdfRaw(
-        {
+      (async () => {
+        const generateZaehlungPdfRequest: GenerateZaehlungPdfRequest = {
           fachId: zaehlungId,
           charttype,
-          generateZaehlungPdfRequest: {} as GenerateZaehlungPdfRequest,
-        },
-        { body: data, headers: {} }
-      ).then((response) => response.raw.blob()),
+          department: getRequiredFormDataString(data, "department"),
+          options: await getRequiredFormDataJson<
+            GenerateZaehlungPdfRequest["options"]
+          >(data, "options"),
+          chartAsBase64Png: await getOptionalFormDataText(
+            data,
+            "chartAsBase64Png"
+          ),
+          schematischeUebersichtAsBase64Png: await getOptionalFormDataText(
+            data,
+            "schematischeUebersichtAsBase64Png"
+          ),
+        };
+        const response = await this.API.generateZaehlungPdfRaw(
+          generateZaehlungPdfRequest,
+          { body: data, headers: {} }
+        );
+        return response.raw.blob();
+      })(),
       "Beim generieren der PDF ist ein Fehler aufgetreten."
     );
   }
@@ -40,14 +85,32 @@ export default class GeneratePdfService {
     data: FormData
   ): Promise<Blob> {
     return handleOpenApiError(
-      this.API.generateMessstellePdfRaw(
-        {
+      (async () => {
+        const generateMessstellePdfRequest: GenerateMessstellePdfRequest = {
           fachId: messstelleId,
           charttype,
-          generateMessstellePdfRequest: {} as GenerateMessstellePdfRequest,
-        },
-        { body: data, headers: {} }
-      ).then((response) => response.raw.blob()),
+          department: getRequiredFormDataString(data, "department"),
+          options: await getRequiredFormDataJson<
+            GenerateMessstellePdfRequest["options"]
+          >(data, "options"),
+          messswerte: await getRequiredFormDataJson<
+            GenerateMessstellePdfRequest["messswerte"]
+          >(data, "messswerte"),
+          chartAsBase64Png: await getOptionalFormDataText(
+            data,
+            "chartAsBase64Png"
+          ),
+          schematischeUebersichtAsBase64Png: await getOptionalFormDataText(
+            data,
+            "schematischeUebersichtAsBase64Png"
+          ),
+        };
+        const response = await this.API.generateMessstellePdfRaw(
+          generateMessstellePdfRequest,
+          { body: data, headers: {} }
+        );
+        return response.raw.blob();
+      })(),
       "Beim Generieren der PDF ist ein Fehler aufgetreten."
     );
   }
@@ -55,20 +118,59 @@ export default class GeneratePdfService {
     data: FormData
   ): Promise<Blob> {
     return handleOpenApiError(
-      this.API.generatePdfAuswertungRaw(
-        { generatePdfAuswertungRequest: {} as GeneratePdfAuswertungRequest },
-        { body: data, headers: {} }
-      ).then((response) => response.raw.blob()),
+      (async () => {
+        const generatePdfAuswertungRequest: GeneratePdfAuswertungRequest = {
+          department: getRequiredFormDataString(data, "department"),
+          options: await getRequiredFormDataJson<
+            GeneratePdfAuswertungRequest["options"]
+          >(data, "options"),
+          auswertung: await getRequiredFormDataJson<
+            GeneratePdfAuswertungRequest["auswertung"]
+          >(data, "auswertung"),
+          chartAsBase64Png: await getOptionalFormDataText(
+            data,
+            "chartAsBase64Png"
+          ),
+        };
+        const response = await this.API.generatePdfAuswertungRaw(
+          generatePdfAuswertungRequest,
+          { body: data, headers: {} }
+        );
+        return response.raw.blob();
+      })(),
       "Beim Generieren der PDF ist ein Fehler aufgetreten."
     );
   }
 
   static postPdfCustomFetchReport(data: FormData): Promise<Blob> {
     return handleOpenApiError(
-      this.API.generatePdfReportRaw(
-        { generatePdfReportRequest: {} as GeneratePdfReportRequest },
-        { body: data, headers: {} }
-      ).then((response) => response.raw.blob()),
+      (async () => {
+        const assets = await getRequiredFormDataJson<
+          GeneratePdfReportRequest["assets"]
+        >(data, "assets");
+        if (!Array.isArray(assets)) {
+          throw new Error("Die Assets des PDF-Reports müssen ein Array sein.");
+        }
+
+        const generatePdfReportRequest: GeneratePdfReportRequest = {
+          assets,
+          department: getRequiredFormDataString(data, "department"),
+        };
+
+        const requestBody = new FormData();
+        requestBody.append(
+          "assets",
+          new Blob([JSON.stringify(generatePdfReportRequest.assets)], {
+            type: "application/json",
+          })
+        );
+        requestBody.append("department", generatePdfReportRequest.department);
+
+        return this.API.generatePdfReport(generatePdfReportRequest, {
+          body: requestBody,
+          headers: {},
+        });
+      })(),
       "Beim Generieren der PDF ist ein Fehler aufgetreten."
     );
   }
