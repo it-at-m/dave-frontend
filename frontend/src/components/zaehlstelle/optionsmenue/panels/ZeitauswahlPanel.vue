@@ -389,6 +389,24 @@ watch(
 );
 
 /**
+ * Wechselt zurück auf Tageswert, wenn neben/statt Fussverkehr noch andere Verkehrsarten ausgewählt werden,
+ * für die ein Tageswert vorhanden ist.
+ */
+watch(isOnlyFussverkehrSelected, (isOnlyFuss, wasOnlyFuss) => {
+  if (
+    wasOnlyFuss &&
+    !isOnlyFuss &&
+    chosenOptionsCopy.value.zeitauswahl !== Zeitauswahl.TAGESWERT &&
+    isTeilzaehlung.value &&
+    ((isSonderzaehldauer.value && isSonderzaehldauerKurzzeitzaehlung.value) ||
+      !isSonderzaehldauer.value)
+  ) {
+    chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.TAGESWERT;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+  }
+});
+
+/**
  * Passt die Controls anhand ihrer Abhängigkeiten zu anderen Optionen an.
  */
 function adaptOptionsUpdate() {
