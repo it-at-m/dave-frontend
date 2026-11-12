@@ -331,8 +331,8 @@ function checkTwoChartsNeeded(
   zaehldatenStepline: LadeZaehldatenSteplineDTO
 ): boolean {
   return (
-    zaehldatenStepline.xaxisDataSecondChart !== null &&
-    zaehldatenStepline.seriesEntriesSecondChart !== null
+    (zaehldatenStepline.xaxisDataSecondChart?.length ?? 0) > 0 &&
+    (zaehldatenStepline.seriesEntriesSecondChart?.length ?? 0) > 0
   );
 }
 
