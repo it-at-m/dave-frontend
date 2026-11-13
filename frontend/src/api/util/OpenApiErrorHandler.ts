@@ -8,7 +8,6 @@ export function handleOpenApiError<T>(
   errorMessage: string
 ): Promise<T> {
   return request.catch((error: unknown) => {
-    console.error(error);
     if (error instanceof FetchError) {
       throw new ApiError(
         Levels.ERROR,
