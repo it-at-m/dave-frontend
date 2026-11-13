@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,50 +28,34 @@ import { mapValues } from "../runtime";
 export interface DienstleisterRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof DienstleisterRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof DienstleisterRequestBody
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterRequestBody
    */
   name?: string;
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterRequestBody
    */
   kennung?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof DienstleisterRequestBody
    */
   emailAddresses?: Array<string>;
   /**
    *
-   * @type {boolean}
-   * @memberof DienstleisterRequestBody
    */
   active?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof DienstleisterRequestBody
    */
   entityVersion?: number;
 }
@@ -95,7 +85,9 @@ export function DienstleisterRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     name: json["name"] == null ? undefined : json["name"],
     kennung: json["kennung"] == null ? undefined : json["kennung"],
@@ -125,8 +117,8 @@ export function DienstleisterRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     name: value["name"],
     kennung: value["kennung"],

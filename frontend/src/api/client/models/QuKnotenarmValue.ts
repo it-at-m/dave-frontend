@@ -30,20 +30,14 @@ import {
 export interface QuKnotenarmValue {
   /**
    *
-   * @type {number}
-   * @memberof QuKnotenarmValue
    */
   knotenarm: number;
   /**
    *
-   * @type {number}
-   * @memberof QuKnotenarmValue
    */
   sumKnotenarm: number;
   /**
    *
-   * @type {Array<QuerungsverkehrValue>}
-   * @memberof QuKnotenarmValue
    */
   valuesQuerungsverkehre: Array<QuerungsverkehrValue>;
 }

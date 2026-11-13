@@ -13,10 +13,16 @@
  */
 
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { ZaehldatenIntervall } from "./ZaehldatenIntervall";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   FahrzeugklasseFromJSON,
   FahrzeugklasseFromJSONTyped,
@@ -24,11 +30,11 @@ import {
   FahrzeugklasseToJSONTyped,
 } from "./Fahrzeugklasse";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   ZaehldatenIntervallFromJSON,
   ZaehldatenIntervallFromJSONTyped,
@@ -44,124 +50,84 @@ import {
 export interface EntityModelOptionsmenueSettings {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelOptionsmenueSettings
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelOptionsmenueSettings
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelOptionsmenueSettings
    */
   version?: number;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof EntityModelOptionsmenueSettings
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof EntityModelOptionsmenueSettings
    */
   intervall?: ZaehldatenIntervall;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   kraftfahrzeugverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   schwerverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   gueterverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   schwerverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   gueterverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   radverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   fussverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   lastkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   lastzuegeChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   busseChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   kraftraederChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   personenkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof EntityModelOptionsmenueSettings
    */
   lieferwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelOptionsmenueSettings
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelOptionsmenueSettings
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -189,7 +155,9 @@ export function EntityModelOptionsmenueSettingsFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     fahrzeugklasse:
       json["fahrzeugklasse"] == null
@@ -279,7 +247,10 @@ export function EntityModelOptionsmenueSettingsFromJSONTyped(
           ),
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -301,8 +272,8 @@ export function EntityModelOptionsmenueSettingsToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
     intervall: ZaehldatenIntervallToJSON(value["intervall"]),
@@ -385,6 +356,9 @@ export function EntityModelOptionsmenueSettingsToJSONTyped(
             ZaehldatenIntervallToJSON
           ),
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

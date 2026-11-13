@@ -22,44 +22,30 @@ import { mapValues } from "../runtime";
 export interface Hochrechnung {
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   faktorKfz?: number;
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   faktorSv?: number;
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   faktorGv?: number;
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   hochrechnungKfz?: number;
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   hochrechnungSv?: number;
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   hochrechnungGv?: number;
   /**
    *
-   * @type {number}
-   * @memberof Hochrechnung
    */
   hochrechnungRad?: number;
 }

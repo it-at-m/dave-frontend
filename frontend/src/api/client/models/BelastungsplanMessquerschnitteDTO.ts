@@ -30,74 +30,50 @@ import {
 export interface BelastungsplanMessquerschnitteDTO {
   /**
    *
-   * @type {Array<LadeBelastungsplanMessquerschnittDataDTO>}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   ladeBelastungsplanMessquerschnittDataDTOList: Array<LadeBelastungsplanMessquerschnittDataDTO>;
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   strassenname: string;
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   mstId: string;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   stadtbezirkNummer: number;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   totalKfz: number;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   totalSv: number;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   totalGv: number;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   totalRad: number;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   totalPercentSv: number;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   totalPercentGv: number;
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   startUhrzeitSpitzenstunde: string;
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanMessquerschnitteDTO
    */
   endeUhrzeitSpitzenstunde: string;
 }

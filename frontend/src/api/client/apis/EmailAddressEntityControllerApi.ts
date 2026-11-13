@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EmailAddressRequestBody,
-  EntityModelEmailAddress,
-  PagedModelEntityModelEmailAddress,
-} from "../models/index";
+import type { EmailAddressRequestBody } from "../models/EmailAddressRequestBody";
+import type { EntityModelEmailAddress } from "../models/EntityModelEmailAddress";
+import type { PagedModelEntityModelEmailAddress } from "../models/PagedModelEntityModelEmailAddress";
 
 import {
   EmailAddressRequestBodyFromJSON,
   EmailAddressRequestBodyToJSON,
+} from "../models/EmailAddressRequestBody";
+import {
   EntityModelEmailAddressFromJSON,
   EntityModelEmailAddressToJSON,
+} from "../models/EntityModelEmailAddress";
+import {
   PagedModelEntityModelEmailAddressFromJSON,
   PagedModelEntityModelEmailAddressToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelEmailAddress";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceEmailaddressDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceEmailaddressGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceEmailaddressGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceEmailaddressPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   emailAddressRequestBody: EmailAddressRequestBody;
 }
 
 export interface PostCollectionResourceEmailaddressPostRequest {
+  /**
+   *
+   */
   emailAddressRequestBody: EmailAddressRequestBody;
 }
 
 export interface PutItemResourceEmailaddressPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   emailAddressRequestBody: EmailAddressRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceEmailaddressPutRequest {
  */
 export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-emailaddress
+   * Creates request options for deleteItemResourceEmailaddressDelete without sending the request
    */
-  async deleteItemResourceEmailaddressDeleteRaw(
-    requestParameters: DeleteItemResourceEmailaddressDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceEmailaddressDeleteRequestOpts(
+    requestParameters: DeleteItemResourceEmailaddressDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/emailAddresses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-emailaddress
+   */
+  async deleteItemResourceEmailaddressDeleteRaw(
+    requestParameters: DeleteItemResourceEmailaddressDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceEmailaddressDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-emailaddress
+   * Creates request options for getCollectionResourceEmailaddressGet without sending the request
    */
-  async getCollectionResourceEmailaddressGetRaw(
-    requestParameters: GetCollectionResourceEmailaddressGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelEmailAddress>> {
+  async getCollectionResourceEmailaddressGetRequestOpts(
+    requestParameters: GetCollectionResourceEmailaddressGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/emailAddresses`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-emailaddress
+   */
+  async getCollectionResourceEmailaddressGetRaw(
+    requestParameters: GetCollectionResourceEmailaddressGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelEmailAddress>> {
+    const requestOptions =
+      await this.getCollectionResourceEmailaddressGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelEmailAddressFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-emailaddress
+   * Creates request options for getItemResourceEmailaddressGet without sending the request
    */
-  async getItemResourceEmailaddressGetRaw(
-    requestParameters: GetItemResourceEmailaddressGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+  async getItemResourceEmailaddressGetRequestOpts(
+    requestParameters: GetItemResourceEmailaddressGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/emailAddresses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-emailaddress
+   */
+  async getItemResourceEmailaddressGetRaw(
+    requestParameters: GetItemResourceEmailaddressGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+    const requestOptions =
+      await this.getItemResourceEmailaddressGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelEmailAddressFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-emailaddress
+   * Creates request options for patchItemResourceEmailaddressPatch without sending the request
    */
-  async patchItemResourceEmailaddressPatchRaw(
-    requestParameters: PatchItemResourceEmailaddressPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+  async patchItemResourceEmailaddressPatchRequestOpts(
+    requestParameters: PatchItemResourceEmailaddressPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/emailAddresses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: EmailAddressRequestBodyToJSON(
-          requestParameters["emailAddressRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: EmailAddressRequestBodyToJSON(
+        requestParameters["emailAddressRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-emailaddress
+   */
+  async patchItemResourceEmailaddressPatchRaw(
+    requestParameters: PatchItemResourceEmailaddressPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+    const requestOptions =
+      await this.patchItemResourceEmailaddressPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelEmailAddressFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-emailaddress
+   * Creates request options for postCollectionResourceEmailaddressPost without sending the request
    */
-  async postCollectionResourceEmailaddressPostRaw(
-    requestParameters: PostCollectionResourceEmailaddressPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+  async postCollectionResourceEmailaddressPostRequestOpts(
+    requestParameters: PostCollectionResourceEmailaddressPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["emailAddressRequestBody"] == null) {
       throw new runtime.RequiredError(
         "emailAddressRequestBody",
@@ -311,18 +379,29 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/emailAddresses`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: EmailAddressRequestBodyToJSON(
-          requestParameters["emailAddressRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: EmailAddressRequestBodyToJSON(
+        requestParameters["emailAddressRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-emailaddress
+   */
+  async postCollectionResourceEmailaddressPostRaw(
+    requestParameters: PostCollectionResourceEmailaddressPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+    const requestOptions =
+      await this.postCollectionResourceEmailaddressPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelEmailAddressFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-emailaddress
+   * Creates request options for putItemResourceEmailaddressPut without sending the request
    */
-  async putItemResourceEmailaddressPutRaw(
-    requestParameters: PutItemResourceEmailaddressPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+  async putItemResourceEmailaddressPutRequestOpts(
+    requestParameters: PutItemResourceEmailaddressPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class EmailAddressEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/emailAddresses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: EmailAddressRequestBodyToJSON(
-          requestParameters["emailAddressRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: EmailAddressRequestBodyToJSON(
+        requestParameters["emailAddressRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-emailaddress
+   */
+  async putItemResourceEmailaddressPutRaw(
+    requestParameters: PutItemResourceEmailaddressPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelEmailAddress>> {
+    const requestOptions =
+      await this.putItemResourceEmailaddressPutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelEmailAddressFromJSON(jsonValue)

@@ -30,166 +30,112 @@ import {
 export interface DatentabellePdfZaehldaten {
   /**
    *
-   * @type {Array<DatentabellePdfZaehldatum>}
-   * @memberof DatentabellePdfZaehldaten
    */
   zaehldatenList?: Array<DatentabellePdfZaehldatum>;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldaten
    */
   activeTabsFahrzeugtypen?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldaten
    */
   activeTabsFahrzeugklassen?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldaten
    */
   activeTabsAnteile?: number;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showPersonenkraftwagen?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showLastkraftwagen?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showLastzuege?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showLieferwagen?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showBusse?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showKraftraeder?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showRadverkehr?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showFussverkehr?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showKraftfahrzeugverkehr?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showSchwerverkehr?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showGueterverkehr?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showSchwerverkehrsanteilProzent?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showGueterverkehrsanteilProzent?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
   showPkwEinheiten?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
    */
-  showTabsAnteile?: boolean;
+  rightBorderFahrzeugtypen?: string;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  colWidthAnteile?: number;
-  /**
-   *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  showTabsFahrzeugtypen?: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  showTabsFahrzeugklassen?: boolean;
-  /**
-   *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  colWidthFahrzeugklassen?: number;
-  /**
-   *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  colWidthFahrzeugtypen?: number;
-  /**
-   *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldaten
-   */
-  rightBorderAnteile?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldaten
    */
   rightBorderFahrzeugklassen?: string;
   /**
    *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldaten
    */
-  rightBorderFahrzeugtypen?: string;
+  colWidthAnteile?: number;
+  /**
+   *
+   */
+  showTabsAnteile?: boolean;
+  /**
+   *
+   */
+  showTabsFahrzeugtypen?: boolean;
+  /**
+   *
+   */
+  showTabsFahrzeugklassen?: boolean;
+  /**
+   *
+   */
+  colWidthFahrzeugtypen?: number;
+  /**
+   *
+   */
+  colWidthFahrzeugklassen?: number;
+  /**
+   *
+   */
+  rightBorderAnteile?: string;
 }
 
 /**
@@ -268,10 +214,18 @@ export function DatentabellePdfZaehldatenFromJSONTyped(
         : json["showGueterverkehrsanteilProzent"],
     showPkwEinheiten:
       json["showPkwEinheiten"] == null ? undefined : json["showPkwEinheiten"],
-    showTabsAnteile:
-      json["showTabsAnteile"] == null ? undefined : json["showTabsAnteile"],
+    rightBorderFahrzeugtypen:
+      json["rightBorderFahrzeugtypen"] == null
+        ? undefined
+        : json["rightBorderFahrzeugtypen"],
+    rightBorderFahrzeugklassen:
+      json["rightBorderFahrzeugklassen"] == null
+        ? undefined
+        : json["rightBorderFahrzeugklassen"],
     colWidthAnteile:
       json["colWidthAnteile"] == null ? undefined : json["colWidthAnteile"],
+    showTabsAnteile:
+      json["showTabsAnteile"] == null ? undefined : json["showTabsAnteile"],
     showTabsFahrzeugtypen:
       json["showTabsFahrzeugtypen"] == null
         ? undefined
@@ -280,26 +234,18 @@ export function DatentabellePdfZaehldatenFromJSONTyped(
       json["showTabsFahrzeugklassen"] == null
         ? undefined
         : json["showTabsFahrzeugklassen"],
-    colWidthFahrzeugklassen:
-      json["colWidthFahrzeugklassen"] == null
-        ? undefined
-        : json["colWidthFahrzeugklassen"],
     colWidthFahrzeugtypen:
       json["colWidthFahrzeugtypen"] == null
         ? undefined
         : json["colWidthFahrzeugtypen"],
+    colWidthFahrzeugklassen:
+      json["colWidthFahrzeugklassen"] == null
+        ? undefined
+        : json["colWidthFahrzeugklassen"],
     rightBorderAnteile:
       json["rightBorderAnteile"] == null
         ? undefined
         : json["rightBorderAnteile"],
-    rightBorderFahrzeugklassen:
-      json["rightBorderFahrzeugklassen"] == null
-        ? undefined
-        : json["rightBorderFahrzeugklassen"],
-    rightBorderFahrzeugtypen:
-      json["rightBorderFahrzeugtypen"] == null
-        ? undefined
-        : json["rightBorderFahrzeugtypen"],
   };
 }
 
@@ -341,14 +287,14 @@ export function DatentabellePdfZaehldatenToJSONTyped(
     showSchwerverkehrsanteilProzent: value["showSchwerverkehrsanteilProzent"],
     showGueterverkehrsanteilProzent: value["showGueterverkehrsanteilProzent"],
     showPkwEinheiten: value["showPkwEinheiten"],
-    showTabsAnteile: value["showTabsAnteile"],
+    rightBorderFahrzeugtypen: value["rightBorderFahrzeugtypen"],
+    rightBorderFahrzeugklassen: value["rightBorderFahrzeugklassen"],
     colWidthAnteile: value["colWidthAnteile"],
+    showTabsAnteile: value["showTabsAnteile"],
     showTabsFahrzeugtypen: value["showTabsFahrzeugtypen"],
     showTabsFahrzeugklassen: value["showTabsFahrzeugklassen"],
-    colWidthFahrzeugklassen: value["colWidthFahrzeugklassen"],
     colWidthFahrzeugtypen: value["colWidthFahrzeugtypen"],
+    colWidthFahrzeugklassen: value["colWidthFahrzeugklassen"],
     rightBorderAnteile: value["rightBorderAnteile"],
-    rightBorderFahrzeugklassen: value["rightBorderFahrzeugklassen"],
-    rightBorderFahrzeugtypen: value["rightBorderFahrzeugtypen"],
   };
 }

@@ -22,14 +22,10 @@ import { mapValues } from "../runtime";
 export interface ZaehlstelleConfigurationDTO {
   /**
    *
-   * @type {boolean}
-   * @memberof ZaehlstelleConfigurationDTO
    */
   automaticNumberAssignment: boolean;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleConfigurationDTO
    */
   linkDocumentationCsvFileForUploadZaehlung?: string;
 }

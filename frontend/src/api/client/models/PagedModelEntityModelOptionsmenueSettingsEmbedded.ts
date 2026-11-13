@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelOptionsmenueSettingsEmbedded {
   /**
    *
-   * @type {Array<EntityModelOptionsmenueSettings>}
-   * @memberof PagedModelEntityModelOptionsmenueSettingsEmbedded
    */
   optionsmenueSettingses?: Array<EntityModelOptionsmenueSettings>;
 }

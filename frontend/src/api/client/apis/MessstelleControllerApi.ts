@@ -11,39 +11,54 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  BackendIdDTO,
-  EditMessstelleDTO,
-  MessstelleOverviewDTO,
-  ReadMessstelleInfoDTO,
-} from "../models/index";
+import type { BackendIdDTO } from "../models/BackendIdDTO";
+import type { EditMessstelleDTO } from "../models/EditMessstelleDTO";
+import type { MessstelleOverviewDTO } from "../models/MessstelleOverviewDTO";
+import type { ReadMessstelleInfoDTO } from "../models/ReadMessstelleInfoDTO";
 
 import {
   BackendIdDTOFromJSON,
   BackendIdDTOToJSON,
+} from "../models/BackendIdDTO";
+import {
   EditMessstelleDTOFromJSON,
   EditMessstelleDTOToJSON,
+} from "../models/EditMessstelleDTO";
+import {
   MessstelleOverviewDTOFromJSON,
   MessstelleOverviewDTOToJSON,
+} from "../models/MessstelleOverviewDTO";
+import {
   ReadMessstelleInfoDTOFromJSON,
   ReadMessstelleInfoDTOToJSON,
-} from "../models/index";
+} from "../models/ReadMessstelleInfoDTO";
 import * as runtime from "../runtime";
 
 export interface GetBearbeiteMessstelleRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface ReadMessstelleInfoByIdRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface ReadMessstelleInfoByMstIdRequest {
+  /**
+   *
+   */
   mstid: string;
 }
 
 export interface UpdateMessstelleRequest {
+  /**
+   *
+   */
   editMessstelleDTO: EditMessstelleDTO;
 }
 
@@ -52,25 +67,30 @@ export interface UpdateMessstelleRequest {
  */
 export class MessstelleControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getAllMessstellenForOverview without sending the request
    */
-  async getAllMessstellenForOverviewRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<MessstelleOverviewDTO>>> {
+  async getAllMessstellenForOverviewRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/messstelle/loadAllMessstellenForOverview`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllMessstellenForOverviewRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<MessstelleOverviewDTO>>> {
+    const requestOptions = await this.getAllMessstellenForOverviewRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(MessstelleOverviewDTOFromJSON)
@@ -87,11 +107,11 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getBearbeiteMessstelle without sending the request
    */
-  async getBearbeiteMessstelleRaw(
-    requestParameters: GetBearbeiteMessstelleRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EditMessstelleDTO>> {
+  async getBearbeiteMessstelleRequestOpts(
+    requestParameters: GetBearbeiteMessstelleRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -109,15 +129,23 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelle/edit`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getBearbeiteMessstelleRaw(
+    requestParameters: GetBearbeiteMessstelleRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EditMessstelleDTO>> {
+    const requestOptions =
+      await this.getBearbeiteMessstelleRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EditMessstelleDTOFromJSON(jsonValue)
@@ -138,11 +166,11 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for readMessstelleInfoById without sending the request
    */
-  async readMessstelleInfoByIdRaw(
-    requestParameters: ReadMessstelleInfoByIdRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<ReadMessstelleInfoDTO>> {
+  async readMessstelleInfoByIdRequestOpts(
+    requestParameters: ReadMessstelleInfoByIdRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -160,15 +188,23 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelle/info/byId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async readMessstelleInfoByIdRaw(
+    requestParameters: ReadMessstelleInfoByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ReadMessstelleInfoDTO>> {
+    const requestOptions =
+      await this.readMessstelleInfoByIdRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       ReadMessstelleInfoDTOFromJSON(jsonValue)
@@ -189,11 +225,11 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for readMessstelleInfoByMstId without sending the request
    */
-  async readMessstelleInfoByMstIdRaw(
-    requestParameters: ReadMessstelleInfoByMstIdRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<ReadMessstelleInfoDTO>> {
+  async readMessstelleInfoByMstIdRequestOpts(
+    requestParameters: ReadMessstelleInfoByMstIdRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["mstid"] == null) {
       throw new runtime.RequiredError(
         "mstid",
@@ -211,15 +247,23 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelle/info/ByMstId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async readMessstelleInfoByMstIdRaw(
+    requestParameters: ReadMessstelleInfoByMstIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ReadMessstelleInfoDTO>> {
+    const requestOptions =
+      await this.readMessstelleInfoByMstIdRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       ReadMessstelleInfoDTOFromJSON(jsonValue)
@@ -240,11 +284,11 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for updateMessstelle without sending the request
    */
-  async updateMessstelleRaw(
-    requestParameters: UpdateMessstelleRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+  async updateMessstelleRequestOpts(
+    requestParameters: UpdateMessstelleRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["editMessstelleDTO"] == null) {
       throw new runtime.RequiredError(
         "editMessstelleDTO",
@@ -260,16 +304,24 @@ export class MessstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelle/update`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: EditMessstelleDTOToJSON(requestParameters["editMessstelleDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: EditMessstelleDTOToJSON(requestParameters["editMessstelleDTO"]),
+    };
+  }
+
+  /**
+   */
+  async updateMessstelleRaw(
+    requestParameters: UpdateMessstelleRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+    const requestOptions =
+      await this.updateMessstelleRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BackendIdDTOFromJSON(jsonValue)

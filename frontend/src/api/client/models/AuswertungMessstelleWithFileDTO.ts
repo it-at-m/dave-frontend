@@ -30,14 +30,10 @@ import {
 export interface AuswertungMessstelleWithFileDTO {
   /**
    *
-   * @type {LadeZaehldatenSteplineDTO}
-   * @memberof AuswertungMessstelleWithFileDTO
    */
   zaehldatenMessstellen: LadeZaehldatenSteplineDTO;
   /**
    *
-   * @type {string}
-   * @memberof AuswertungMessstelleWithFileDTO
    */
   spreadsheetBase64Encoded: string;
 }

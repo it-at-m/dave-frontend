@@ -22,14 +22,10 @@ import { mapValues } from "../runtime";
 export interface BearbeiteKnotenarmDTO {
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteKnotenarmDTO
    */
   nummer: number;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteKnotenarmDTO
    */
   strassenname?: string;
 }

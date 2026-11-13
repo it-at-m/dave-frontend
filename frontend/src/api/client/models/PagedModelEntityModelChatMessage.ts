@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { PagedModelEntityModelChatMessageEmbedded } from "./PagedModelEntityModelChatMessageEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   PagedModelEntityModelChatMessageEmbeddedFromJSON,
   PagedModelEntityModelChatMessageEmbeddedFromJSONTyped,
@@ -44,20 +44,14 @@ import {
 export interface PagedModelEntityModelChatMessage {
   /**
    *
-   * @type {PagedModelEntityModelChatMessageEmbedded}
-   * @memberof PagedModelEntityModelChatMessage
    */
   embedded?: PagedModelEntityModelChatMessageEmbedded;
   /**
    *
-   * @type {Links}
-   * @memberof PagedModelEntityModelChatMessage
    */
-  links?: Links;
+  links?: { [key: string]: Link };
   /**
    *
-   * @type {PageMetadata}
-   * @memberof PagedModelEntityModelChatMessage
    */
   page?: PageMetadata;
 }
@@ -89,7 +83,10 @@ export function PagedModelEntityModelChatMessageFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelChatMessageEmbeddedFromJSON(json["_embedded"]),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -112,7 +109,10 @@ export function PagedModelEntityModelChatMessageToJSONTyped(
     _embedded: PagedModelEntityModelChatMessageEmbeddedToJSON(
       value["embedded"]
     ),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
     page: PageMetadataToJSON(value["page"]),
   };
 }

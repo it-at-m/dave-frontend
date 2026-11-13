@@ -51,26 +51,18 @@ import {
 export interface SucheComplexSuggestsDTO {
   /**
    *
-   * @type {Array<SucheWordSuggestDTO>}
-   * @memberof SucheComplexSuggestsDTO
    */
   wordSuggests: Array<SucheWordSuggestDTO>;
   /**
    *
-   * @type {Array<SucheZaehlstelleSuggestDTO>}
-   * @memberof SucheComplexSuggestsDTO
    */
   zaehlstellenSuggests: Array<SucheZaehlstelleSuggestDTO>;
   /**
    *
-   * @type {Array<SucheZaehlungSuggestDTO>}
-   * @memberof SucheComplexSuggestsDTO
    */
   zaehlungenSuggests: Array<SucheZaehlungSuggestDTO>;
   /**
    *
-   * @type {Array<SucheMessstelleSuggestDTO>}
-   * @memberof SucheComplexSuggestsDTO
    */
   messstellenSuggests: Array<SucheMessstelleSuggestDTO>;
 }

@@ -94,14 +94,10 @@ import {
 export interface BaseAsset {
   /**
    *
-   * @type {string}
-   * @memberof BaseAsset
    */
   type: BaseAssetTypeEnum;
   /**
    *
-   * @type {number}
-   * @memberof BaseAsset
    */
   id: number;
 }

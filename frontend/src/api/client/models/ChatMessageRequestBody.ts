@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,68 +28,46 @@ import { mapValues } from "../runtime";
 export interface ChatMessageRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof ChatMessageRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof ChatMessageRequestBody
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageRequestBody
    */
   zaehlungId?: string;
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageRequestBody
    */
   content?: string;
   /**
    *
-   * @type {number}
-   * @memberof ChatMessageRequestBody
    */
   participantId?: number;
   /**
    *
-   * @type {Date}
-   * @memberof ChatMessageRequestBody
    */
   timestamp?: Date;
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageRequestBody
    */
   type?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof ChatMessageRequestBody
    */
   uploaded?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ChatMessageRequestBody
    */
   viewed?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof ChatMessageRequestBody
    */
   entityVersion?: number;
 }
@@ -113,14 +97,16 @@ export function ChatMessageRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     zaehlungId: json["zaehlungId"] == null ? undefined : json["zaehlungId"],
     content: json["content"] == null ? undefined : json["content"],
     participantId:
       json["participantId"] == null ? undefined : json["participantId"],
     timestamp:
-      json["timestamp"] == null ? undefined : new Date(json["timestamp"]),
+      json["timestamp"] == null ? undefined : parseDateTime(json["timestamp"]),
     type: json["type"] == null ? undefined : json["type"],
     uploaded: json["uploaded"] == null ? undefined : json["uploaded"],
     viewed: json["viewed"] == null ? undefined : json["viewed"],
@@ -147,14 +133,16 @@ export function ChatMessageRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     zaehlungId: value["zaehlungId"],
     content: value["content"],
     participantId: value["participantId"],
     timestamp:
-      value["timestamp"] == null ? undefined : value["timestamp"].toISOString(),
+      value["timestamp"] == null
+        ? value["timestamp"]
+        : serializeDateTime(value["timestamp"]),
     type: value["type"],
     uploaded: value["uploaded"],
     viewed: value["viewed"],

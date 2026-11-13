@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,32 +28,22 @@ import { mapValues } from "../runtime";
 export interface LadeAuswertungZaehlstelleKoordinateDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeAuswertungZaehlstelleKoordinateDTO
    */
   nummer?: string;
   /**
    *
-   * @type {Date}
-   * @memberof LadeAuswertungZaehlstelleKoordinateDTO
    */
   letzteZaehlung?: Date;
   /**
    *
-   * @type {string}
-   * @memberof LadeAuswertungZaehlstelleKoordinateDTO
    */
   kommentar?: string;
   /**
    *
-   * @type {number}
-   * @memberof LadeAuswertungZaehlstelleKoordinateDTO
    */
   lat?: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeAuswertungZaehlstelleKoordinateDTO
    */
   lng?: number;
 }
@@ -79,7 +75,7 @@ export function LadeAuswertungZaehlstelleKoordinateDTOFromJSONTyped(
     letzteZaehlung:
       json["letzteZaehlung"] == null
         ? undefined
-        : new Date(json["letzteZaehlung"]),
+        : parseDate(json["letzteZaehlung"]),
     kommentar: json["kommentar"] == null ? undefined : json["kommentar"],
     lat: json["lat"] == null ? undefined : json["lat"],
     lng: json["lng"] == null ? undefined : json["lng"],
@@ -104,8 +100,8 @@ export function LadeAuswertungZaehlstelleKoordinateDTOToJSONTyped(
     nummer: value["nummer"],
     letzteZaehlung:
       value["letzteZaehlung"] == null
-        ? undefined
-        : value["letzteZaehlung"].toISOString().substring(0, 10),
+        ? value["letzteZaehlung"]
+        : serializeDate(value["letzteZaehlung"]),
     kommentar: value["kommentar"],
     lat: value["lat"],
     lng: value["lng"],

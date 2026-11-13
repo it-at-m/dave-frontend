@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CustomSuggestRequestBody,
-  EntityModelCustomSuggest,
-  PagedModelEntityModelCustomSuggest,
-} from "../models/index";
+import type { CustomSuggestRequestBody } from "../models/CustomSuggestRequestBody";
+import type { EntityModelCustomSuggest } from "../models/EntityModelCustomSuggest";
+import type { PagedModelEntityModelCustomSuggest } from "../models/PagedModelEntityModelCustomSuggest";
 
 import {
   CustomSuggestRequestBodyFromJSON,
   CustomSuggestRequestBodyToJSON,
+} from "../models/CustomSuggestRequestBody";
+import {
   EntityModelCustomSuggestFromJSON,
   EntityModelCustomSuggestToJSON,
+} from "../models/EntityModelCustomSuggest";
+import {
   PagedModelEntityModelCustomSuggestFromJSON,
   PagedModelEntityModelCustomSuggestToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelCustomSuggest";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceCustomsuggestDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceCustomsuggestGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceCustomsuggestGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceCustomsuggestPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   customSuggestRequestBody: CustomSuggestRequestBody;
 }
 
 export interface PostCollectionResourceCustomsuggestPostRequest {
+  /**
+   *
+   */
   customSuggestRequestBody: CustomSuggestRequestBody;
 }
 
 export interface PutItemResourceCustomsuggestPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   customSuggestRequestBody: CustomSuggestRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceCustomsuggestPutRequest {
  */
 export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-customsuggest
+   * Creates request options for deleteItemResourceCustomsuggestDelete without sending the request
    */
-  async deleteItemResourceCustomsuggestDeleteRaw(
-    requestParameters: DeleteItemResourceCustomsuggestDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceCustomsuggestDeleteRequestOpts(
+    requestParameters: DeleteItemResourceCustomsuggestDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-customsuggest
+   */
+  async deleteItemResourceCustomsuggestDeleteRaw(
+    requestParameters: DeleteItemResourceCustomsuggestDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceCustomsuggestDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-customsuggest
+   * Creates request options for getCollectionResourceCustomsuggestGet without sending the request
    */
-  async getCollectionResourceCustomsuggestGetRaw(
-    requestParameters: GetCollectionResourceCustomsuggestGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelCustomSuggest>> {
+  async getCollectionResourceCustomsuggestGetRequestOpts(
+    requestParameters: GetCollectionResourceCustomsuggestGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-customsuggest
+   */
+  async getCollectionResourceCustomsuggestGetRaw(
+    requestParameters: GetCollectionResourceCustomsuggestGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelCustomSuggest>> {
+    const requestOptions =
+      await this.getCollectionResourceCustomsuggestGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelCustomSuggestFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-customsuggest
+   * Creates request options for getItemResourceCustomsuggestGet without sending the request
    */
-  async getItemResourceCustomsuggestGetRaw(
-    requestParameters: GetItemResourceCustomsuggestGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+  async getItemResourceCustomsuggestGetRequestOpts(
+    requestParameters: GetItemResourceCustomsuggestGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-customsuggest
+   */
+  async getItemResourceCustomsuggestGetRaw(
+    requestParameters: GetItemResourceCustomsuggestGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+    const requestOptions =
+      await this.getItemResourceCustomsuggestGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelCustomSuggestFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-customsuggest
+   * Creates request options for patchItemResourceCustomsuggestPatch without sending the request
    */
-  async patchItemResourceCustomsuggestPatchRaw(
-    requestParameters: PatchItemResourceCustomsuggestPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+  async patchItemResourceCustomsuggestPatchRequestOpts(
+    requestParameters: PatchItemResourceCustomsuggestPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: CustomSuggestRequestBodyToJSON(
-          requestParameters["customSuggestRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: CustomSuggestRequestBodyToJSON(
+        requestParameters["customSuggestRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-customsuggest
+   */
+  async patchItemResourceCustomsuggestPatchRaw(
+    requestParameters: PatchItemResourceCustomsuggestPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+    const requestOptions =
+      await this.patchItemResourceCustomsuggestPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelCustomSuggestFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-customsuggest
+   * Creates request options for postCollectionResourceCustomsuggestPost without sending the request
    */
-  async postCollectionResourceCustomsuggestPostRaw(
-    requestParameters: PostCollectionResourceCustomsuggestPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+  async postCollectionResourceCustomsuggestPostRequestOpts(
+    requestParameters: PostCollectionResourceCustomsuggestPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["customSuggestRequestBody"] == null) {
       throw new runtime.RequiredError(
         "customSuggestRequestBody",
@@ -311,18 +379,29 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: CustomSuggestRequestBodyToJSON(
-          requestParameters["customSuggestRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: CustomSuggestRequestBodyToJSON(
+        requestParameters["customSuggestRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-customsuggest
+   */
+  async postCollectionResourceCustomsuggestPostRaw(
+    requestParameters: PostCollectionResourceCustomsuggestPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+    const requestOptions =
+      await this.postCollectionResourceCustomsuggestPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelCustomSuggestFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-customsuggest
+   * Creates request options for putItemResourceCustomsuggestPut without sending the request
    */
-  async putItemResourceCustomsuggestPutRaw(
-    requestParameters: PutItemResourceCustomsuggestPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+  async putItemResourceCustomsuggestPutRequestOpts(
+    requestParameters: PutItemResourceCustomsuggestPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class CustomSuggestEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: CustomSuggestRequestBodyToJSON(
-          requestParameters["customSuggestRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: CustomSuggestRequestBodyToJSON(
+        requestParameters["customSuggestRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-customsuggest
+   */
+  async putItemResourceCustomsuggestPutRaw(
+    requestParameters: PutItemResourceCustomsuggestPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelCustomSuggest>> {
+    const requestOptions =
+      await this.putItemResourceCustomsuggestPutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelCustomSuggestFromJSON(jsonValue)

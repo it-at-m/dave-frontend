@@ -72,236 +72,158 @@ import {
 export interface OptionsDTO {
   /**
    *
-   * @type {Zaehldauer}
-   * @memberof OptionsDTO
    */
   zaehldauer: Zaehldauer;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof OptionsDTO
    */
   intervall: ZaehldatenIntervall;
   /**
    *
-   * @type {Zeitblock}
-   * @memberof OptionsDTO
    */
   zeitblock: Zeitblock;
   /**
    *
-   * @type {string}
-   * @memberof OptionsDTO
    */
   zeitauswahl: string;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   kraftfahrzeugverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   schwerverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   gueterverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   radverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   fussverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   schwerverkehrsanteilProzent: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   gueterverkehrsanteilProzent: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   pkwEinheiten: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   personenkraftwagen: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   lastkraftwagen: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   lastzuege: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   busse: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   kraftraeder: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   stundensumme: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   blocksumme: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   tagessumme: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   spitzenstunde: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   spitzenstundeKfz: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   spitzenstundeRad: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   spitzenstundeFuss: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   mittelwert: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   fahrzeugklassenStapeln: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   beschriftung: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   datentabelle: boolean;
   /**
    *
-   * @type {Rounding}
-   * @memberof OptionsDTO
    */
   rounding: Rounding;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   differenzdatenDarstellen: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   zeitreiheGesamt: boolean;
   /**
    *
-   * @type {string}
-   * @memberof OptionsDTO
    */
   vergleichszaehlungsId?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof OptionsDTO
    */
   beideRichtungen?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof OptionsDTO
    */
   vonKnotenarm?: number;
   /**
    *
-   * @type {number}
-   * @memberof OptionsDTO
    */
   nachKnotenarm?: number;
   /**
    *
-   * @type {Array<OptionsVerkehrsbeziehungDTO>}
-   * @memberof OptionsDTO
    */
   chosenVerkehrsbeziehungen?: Array<OptionsVerkehrsbeziehungDTO>;
   /**
    *
-   * @type {Array<OptionsLaengsverkehrDTO>}
-   * @memberof OptionsDTO
    */
   chosenLaengsverkehre?: Array<OptionsLaengsverkehrDTO>;
   /**
    *
-   * @type {Array<OptionsQuerungsverkehrDTO>}
-   * @memberof OptionsDTO
    */
   chosenQuerungsverkehre?: Array<OptionsQuerungsverkehrDTO>;
   /**
    *
-   * @type {string}
-   * @memberof OptionsDTO
    */
   idVergleichszaehlungZeitreihe?: string;
 }

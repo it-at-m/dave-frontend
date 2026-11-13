@@ -44,92 +44,62 @@ import {
 export interface ZaehlstelleRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleRequestBody
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleRequestBody
    */
   nummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleRequestBody
    */
   stadtbezirk?: string;
   /**
    *
-   * @type {number}
-   * @memberof ZaehlstelleRequestBody
    */
   stadtbezirkNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleRequestBody
    */
   kommentar?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof ZaehlstelleRequestBody
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {number}
-   * @memberof ZaehlstelleRequestBody
    */
   letzteZaehlungMonatNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleRequestBody
    */
   letzteZaehlungMonat?: string;
   /**
    *
-   * @type {number}
-   * @memberof ZaehlstelleRequestBody
    */
   letzteZaehlungJahr?: number;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleRequestBody
    */
   grundLetzteZaehlung?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof ZaehlstelleRequestBody
    */
   suchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof ZaehlstelleRequestBody
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<Zaehlung>}
-   * @memberof ZaehlstelleRequestBody
    */
   zaehlungen?: Array<Zaehlung>;
   /**
    *
-   * @type {boolean}
-   * @memberof ZaehlstelleRequestBody
    */
   sichtbarDatenportal?: boolean;
   /**
    *
-   * @type {PositionUTM}
-   * @memberof ZaehlstelleRequestBody
    */
   punktUtm?: PositionUTM;
 }

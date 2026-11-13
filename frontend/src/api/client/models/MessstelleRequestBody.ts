@@ -18,7 +18,13 @@ import type { Messfaehigkeit } from "./Messfaehigkeit";
 import type { Messquerschnitt } from "./Messquerschnitt";
 import type { Verkehrsart } from "./Verkehrsart";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   FahrzeugklasseFromJSON,
   FahrzeugklasseFromJSONTyped,
@@ -58,134 +64,90 @@ import {
 export interface MessstelleRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   mstId?: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   name?: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   status?: MessstelleRequestBodyStatusEnum;
   /**
    *
-   * @type {Date}
-   * @memberof MessstelleRequestBody
    */
   realisierungsdatum?: Date;
   /**
    *
-   * @type {Date}
-   * @memberof MessstelleRequestBody
    */
   abbaudatum?: Date;
   /**
    *
-   * @type {number}
-   * @memberof MessstelleRequestBody
    */
   stadtbezirkNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   bemerkung?: string;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof MessstelleRequestBody
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {Verkehrsart}
-   * @memberof MessstelleRequestBody
    */
   detektierteVerkehrsart?: Verkehrsart;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   hersteller?: string;
   /**
    *
-   * @type {Date}
-   * @memberof MessstelleRequestBody
    */
   datumLetztePlausibleMessung?: Date;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof MessstelleRequestBody
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleRequestBody
    */
   sichtbarDatenportal?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleRequestBody
    */
   geprueft?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   kommentar?: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleRequestBody
    */
   standort?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof MessstelleRequestBody
    */
   suchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof MessstelleRequestBody
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<Messquerschnitt>}
-   * @memberof MessstelleRequestBody
    */
   messquerschnitte?: Array<Messquerschnitt>;
   /**
    *
-   * @type {Array<Messfaehigkeit>}
-   * @memberof MessstelleRequestBody
    */
   messfaehigkeiten?: Array<Messfaehigkeit>;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleRequestBody
    */
   lageplanVorhanden?: boolean;
 }
@@ -233,9 +195,9 @@ export function MessstelleRequestBodyFromJSONTyped(
     realisierungsdatum:
       json["realisierungsdatum"] == null
         ? undefined
-        : new Date(json["realisierungsdatum"]),
+        : parseDate(json["realisierungsdatum"]),
     abbaudatum:
-      json["abbaudatum"] == null ? undefined : new Date(json["abbaudatum"]),
+      json["abbaudatum"] == null ? undefined : parseDate(json["abbaudatum"]),
     stadtbezirkNummer:
       json["stadtbezirkNummer"] == null ? undefined : json["stadtbezirkNummer"],
     bemerkung: json["bemerkung"] == null ? undefined : json["bemerkung"],
@@ -251,7 +213,7 @@ export function MessstelleRequestBodyFromJSONTyped(
     datumLetztePlausibleMessung:
       json["datumLetztePlausibleMessung"] == null
         ? undefined
-        : new Date(json["datumLetztePlausibleMessung"]),
+        : parseDate(json["datumLetztePlausibleMessung"]),
     punkt: json["punkt"] == null ? undefined : GeoPointFromJSON(json["punkt"]),
     sichtbarDatenportal:
       json["sichtbarDatenportal"] == null
@@ -295,12 +257,12 @@ export function MessstelleRequestBodyToJSONTyped(
     status: value["status"],
     realisierungsdatum:
       value["realisierungsdatum"] == null
-        ? undefined
-        : value["realisierungsdatum"].toISOString().substring(0, 10),
+        ? value["realisierungsdatum"]
+        : serializeDate(value["realisierungsdatum"]),
     abbaudatum:
       value["abbaudatum"] == null
-        ? undefined
-        : value["abbaudatum"].toISOString().substring(0, 10),
+        ? value["abbaudatum"]
+        : serializeDate(value["abbaudatum"]),
     stadtbezirkNummer: value["stadtbezirkNummer"],
     bemerkung: value["bemerkung"],
     fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
@@ -308,8 +270,8 @@ export function MessstelleRequestBodyToJSONTyped(
     hersteller: value["hersteller"],
     datumLetztePlausibleMessung:
       value["datumLetztePlausibleMessung"] == null
-        ? undefined
-        : value["datumLetztePlausibleMessung"].toISOString().substring(0, 10),
+        ? value["datumLetztePlausibleMessung"]
+        : serializeDate(value["datumLetztePlausibleMessung"]),
     punkt: GeoPointToJSON(value["punkt"]),
     sichtbarDatenportal: value["sichtbarDatenportal"],
     geprueft: value["geprueft"],

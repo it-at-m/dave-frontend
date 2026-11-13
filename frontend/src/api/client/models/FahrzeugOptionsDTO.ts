@@ -22,80 +22,54 @@ import { mapValues } from "../runtime";
 export interface FahrzeugOptionsDTO {
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   kraftfahrzeugverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   schwerverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   gueterverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   schwerverkehrsanteilProzent: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   gueterverkehrsanteilProzent: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   radverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   fussverkehr: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   lastkraftwagen: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   lastzuege: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   busse: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   kraftraeder: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   personenkraftwagen: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof FahrzeugOptionsDTO
    */
   lieferwagen: boolean;
 }

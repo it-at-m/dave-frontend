@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelInfoMessageEmbedded {
   /**
    *
-   * @type {Array<EntityModelInfoMessage>}
-   * @memberof PagedModelEntityModelInfoMessageEmbedded
    */
   infoMessages?: Array<EntityModelInfoMessage>;
 }

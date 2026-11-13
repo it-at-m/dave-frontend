@@ -30,14 +30,10 @@ import {
 export interface ZeitauswahlDTO {
   /**
    *
-   * @type {Set<Zeitblock>}
-   * @memberof ZeitauswahlDTO
    */
   blocks: Set<Zeitblock>;
   /**
    *
-   * @type {Set<Zeitblock>}
-   * @memberof ZeitauswahlDTO
    */
   hours: Set<Zeitblock>;
 }

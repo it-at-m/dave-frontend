@@ -44,32 +44,22 @@ import {
 export interface DatatableAsset extends BaseAsset {
   /**
    *
-   * @type {DatentabellePdfZaehldaten}
-   * @memberof DatatableAsset
    */
   datentabelleZaehldaten?: DatentabellePdfZaehldaten;
   /**
    *
-   * @type {string}
-   * @memberof DatatableAsset
    */
   randomTableId?: string;
   /**
    *
-   * @type {string}
-   * @memberof DatatableAsset
    */
   text?: string;
   /**
    *
-   * @type {OptionsDTO}
-   * @memberof DatatableAsset
    */
   options?: OptionsDTO;
   /**
    *
-   * @type {string}
-   * @memberof DatatableAsset
    */
   zaehlungId?: string;
 }

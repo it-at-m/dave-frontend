@@ -11,13 +11,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { ConfigurationDTO } from "../models/index";
+import type { ConfigurationDTO } from "../models/ConfigurationDTO";
 
 import {
   ConfigurationDTOFromJSON,
   ConfigurationDTOToJSON,
-} from "../models/index";
+} from "../models/ConfigurationDTO";
 import * as runtime from "../runtime";
 
 /**
@@ -25,25 +24,30 @@ import * as runtime from "../runtime";
  */
 export class ConfigurationControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getConfiguration without sending the request
    */
-  async getConfigurationRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<ConfigurationDTO>> {
+  async getConfigurationRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/configuration`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getConfigurationRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ConfigurationDTO>> {
+    const requestOptions = await this.getConfigurationRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       ConfigurationDTOFromJSON(jsonValue)

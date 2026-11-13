@@ -18,7 +18,13 @@ import type { ExternalQuerungsverkehrDTO } from "./ExternalQuerungsverkehrDTO";
 import type { ExternalVerkehrsbeziehungDTO } from "./ExternalVerkehrsbeziehungDTO";
 import type { GeoPoint } from "./GeoPoint";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   ExternalKnotenarmDTOFromJSON,
   ExternalKnotenarmDTOFromJSONTyped,
@@ -58,170 +64,114 @@ import {
 export interface ExternalZaehlungDTO {
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof ExternalZaehlungDTO
    */
   datum?: Date;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlart?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof ExternalZaehlungDTO
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   projektNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   projektName?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   kreuzungsname?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalZaehlungDTO
    */
   sonderzaehlung?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalZaehlungDTO
    */
   kreisverkehr?: boolean;
   /**
    *
-   * @type {Array<string>}
-   * @memberof ExternalZaehlungDTO
    */
   kategorien?: Array<ExternalZaehlungDTOKategorienEnum>;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlsituation?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlsituationErweitert?: string;
   /**
    *
-   * @type {number}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlIntervall?: number;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   wetter?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   status?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   quelle?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehldauer?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   kommentar?: string;
   /**
    *
-   * @type {Array<ExternalKnotenarmDTO>}
-   * @memberof ExternalZaehlungDTO
    */
   knotenarme?: Array<ExternalKnotenarmDTO>;
   /**
    *
-   * @type {Array<ExternalLaengsverkehrDTO>}
-   * @memberof ExternalZaehlungDTO
    */
   laengsverkehr?: Array<ExternalLaengsverkehrDTO>;
   /**
    *
-   * @type {Array<ExternalQuerungsverkehrDTO>}
-   * @memberof ExternalZaehlungDTO
    */
   querungsverkehr?: Array<ExternalQuerungsverkehrDTO>;
   /**
    *
-   * @type {Array<ExternalVerkehrsbeziehungDTO>}
-   * @memberof ExternalZaehlungDTO
    */
   verkehrsbeziehungen?: Array<ExternalVerkehrsbeziehungDTO>;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlstelleNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlstelleStadtbezirk?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlstellePunkt?: GeoPoint;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   zaehlstelleKommentar?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalZaehlungDTO
    */
   unreadMessagesDienstleister?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof ExternalZaehlungDTO
    */
   dienstleisterkennung?: string;
 }
@@ -269,7 +219,7 @@ export function ExternalZaehlungDTOFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     zaehlart: json["zaehlart"] == null ? undefined : json["zaehlart"],
     punkt: json["punkt"] == null ? undefined : GeoPointFromJSON(json["punkt"]),
     projektNummer:
@@ -357,9 +307,7 @@ export function ExternalZaehlungDTOToJSONTyped(
   return {
     id: value["id"],
     datum:
-      value["datum"] == null
-        ? undefined
-        : value["datum"].toISOString().substring(0, 10),
+      value["datum"] == null ? value["datum"] : serializeDate(value["datum"]),
     zaehlart: value["zaehlart"],
     punkt: GeoPointToJSON(value["punkt"]),
     projektNummer: value["projektNummer"],

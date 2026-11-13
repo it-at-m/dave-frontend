@@ -13,7 +13,7 @@
  */
 
 import type { GeoPoint } from "./GeoPoint";
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { PositionUTM } from "./PositionUTM";
 import type { Zaehlung } from "./Zaehlung";
 
@@ -25,11 +25,11 @@ import {
   GeoPointToJSONTyped,
 } from "./GeoPoint";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   PositionUTMFromJSON,
   PositionUTMFromJSONTyped,
@@ -51,94 +51,64 @@ import {
 export interface EntityModelZaehlstelle {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelZaehlstelle
    */
   nummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelZaehlstelle
    */
   stadtbezirk?: string;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelZaehlstelle
    */
   stadtbezirkNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelZaehlstelle
    */
   kommentar?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof EntityModelZaehlstelle
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelZaehlstelle
    */
   letzteZaehlungMonatNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelZaehlstelle
    */
   letzteZaehlungMonat?: string;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelZaehlstelle
    */
   letzteZaehlungJahr?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelZaehlstelle
    */
   grundLetzteZaehlung?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof EntityModelZaehlstelle
    */
   suchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof EntityModelZaehlstelle
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<Zaehlung>}
-   * @memberof EntityModelZaehlstelle
    */
   zaehlungen?: Array<Zaehlung>;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelZaehlstelle
    */
   sichtbarDatenportal?: boolean;
   /**
    *
-   * @type {PositionUTM}
-   * @memberof EntityModelZaehlstelle
    */
   punktUtm?: PositionUTM;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelZaehlstelle
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -201,7 +171,10 @@ export function EntityModelZaehlstelleFromJSONTyped(
       json["punktUtm"] == null
         ? undefined
         : PositionUTMFromJSON(json["punktUtm"]),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -237,6 +210,9 @@ export function EntityModelZaehlstelleToJSONTyped(
         : (value["zaehlungen"] as Array<any>).map(ZaehlungToJSON),
     sichtbarDatenportal: value["sichtbarDatenportal"],
     punktUtm: PositionUTMToJSON(value["punktUtm"]),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

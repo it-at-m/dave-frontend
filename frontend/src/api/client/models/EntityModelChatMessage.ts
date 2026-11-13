@@ -12,15 +12,21 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
-import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -30,76 +36,52 @@ import {
 export interface EntityModelChatMessage {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelChatMessage
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelChatMessage
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelChatMessage
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelChatMessage
    */
   zaehlungId?: string;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelChatMessage
    */
   content?: string;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelChatMessage
    */
   participantId?: number;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelChatMessage
    */
   timestamp?: Date;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelChatMessage
    */
   type?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelChatMessage
    */
   uploaded?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelChatMessage
    */
   viewed?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelChatMessage
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelChatMessage
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -127,20 +109,25 @@ export function EntityModelChatMessageFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     zaehlungId: json["zaehlungId"] == null ? undefined : json["zaehlungId"],
     content: json["content"] == null ? undefined : json["content"],
     participantId:
       json["participantId"] == null ? undefined : json["participantId"],
     timestamp:
-      json["timestamp"] == null ? undefined : new Date(json["timestamp"]),
+      json["timestamp"] == null ? undefined : parseDateTime(json["timestamp"]),
     type: json["type"] == null ? undefined : json["type"],
     uploaded: json["uploaded"] == null ? undefined : json["uploaded"],
     viewed: json["viewed"] == null ? undefined : json["viewed"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -162,18 +149,23 @@ export function EntityModelChatMessageToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     zaehlungId: value["zaehlungId"],
     content: value["content"],
     participantId: value["participantId"],
     timestamp:
-      value["timestamp"] == null ? undefined : value["timestamp"].toISOString(),
+      value["timestamp"] == null
+        ? value["timestamp"]
+        : serializeDateTime(value["timestamp"]),
     type: value["type"],
     uploaded: value["uploaded"],
     viewed: value["viewed"],
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

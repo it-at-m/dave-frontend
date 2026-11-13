@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface MessquerschnittAuswertungDTO {
   /**
    *
-   * @type {string}
-   * @memberof MessquerschnittAuswertungDTO
    */
   mqId: string;
   /**
    *
-   * @type {string}
-   * @memberof MessquerschnittAuswertungDTO
    */
   fahrtrichtung?: string;
   /**
    *
-   * @type {string}
-   * @memberof MessquerschnittAuswertungDTO
    */
   standort?: string;
 }

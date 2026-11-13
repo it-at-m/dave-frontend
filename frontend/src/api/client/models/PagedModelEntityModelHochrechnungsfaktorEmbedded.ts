@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelHochrechnungsfaktorEmbedded {
   /**
    *
-   * @type {Array<EntityModelHochrechnungsfaktor>}
-   * @memberof PagedModelEntityModelHochrechnungsfaktorEmbedded
    */
   hochrechnungsfaktors?: Array<EntityModelHochrechnungsfaktor>;
 }

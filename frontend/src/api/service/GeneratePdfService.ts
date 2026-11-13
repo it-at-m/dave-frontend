@@ -75,7 +75,7 @@ export default class GeneratePdfService {
         );
         return response.raw.blob();
       })(),
-      "Beim generieren der PDF ist ein Fehler aufgetreten."
+      "Beim Generieren des PDF ist ein Fehler aufgetreten."
     );
   }
 
@@ -111,7 +111,7 @@ export default class GeneratePdfService {
         );
         return response.raw.blob();
       })(),
-      "Beim Generieren der PDF ist ein Fehler aufgetreten."
+      "Beim Generieren des PDF ist ein Fehler aufgetreten."
     );
   }
   static postPdfCustomFetchTemplateGesamtauswertung(
@@ -138,40 +138,27 @@ export default class GeneratePdfService {
         );
         return response.raw.blob();
       })(),
-      "Beim Generieren der PDF ist ein Fehler aufgetreten."
+      "Beim Generieren des PDF ist ein Fehler aufgetreten."
     );
   }
 
   static postPdfCustomFetchReport(data: FormData): Promise<Blob> {
     return handleOpenApiError(
       (async () => {
-        const assets = await getRequiredFormDataJson<
-          GeneratePdfReportRequest["assets"]
-        >(data, "assets");
-        if (!Array.isArray(assets)) {
-          throw new Error("Die Assets des PDF-Reports müssen ein Array sein.");
-        }
-
         const generatePdfReportRequest: GeneratePdfReportRequest = {
-          assets,
           department: getRequiredFormDataString(data, "department"),
+          assets: await getRequiredFormDataJson<
+            GeneratePdfReportRequest["assets"]
+          >(data, "assets"),
         };
 
-        const requestBody = new FormData();
-        requestBody.append(
-          "assets",
-          new Blob([JSON.stringify(generatePdfReportRequest.assets)], {
-            type: "application/json",
-          })
+        const response = await this.API.generatePdfReportRaw(
+          generatePdfReportRequest,
+          { body: data, headers: {} }
         );
-        requestBody.append("department", generatePdfReportRequest.department);
-
-        return this.API.generatePdfReport(generatePdfReportRequest, {
-          body: requestBody,
-          headers: {},
-        });
+        return response.raw.blob();
       })(),
-      "Beim Generieren der PDF ist ein Fehler aufgetreten."
+      "Beim Generieren des PDF ist ein Fehler aufgetreten."
     );
   }
 }

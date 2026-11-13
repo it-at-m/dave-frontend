@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { PagedModelEntityModelOptionsmenueSettingsEmbedded } from "./PagedModelEntityModelOptionsmenueSettingsEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   PagedModelEntityModelOptionsmenueSettingsEmbeddedFromJSON,
   PagedModelEntityModelOptionsmenueSettingsEmbeddedFromJSONTyped,
@@ -44,20 +44,14 @@ import {
 export interface PagedModelEntityModelOptionsmenueSettings {
   /**
    *
-   * @type {PagedModelEntityModelOptionsmenueSettingsEmbedded}
-   * @memberof PagedModelEntityModelOptionsmenueSettings
    */
   embedded?: PagedModelEntityModelOptionsmenueSettingsEmbedded;
   /**
    *
-   * @type {Links}
-   * @memberof PagedModelEntityModelOptionsmenueSettings
    */
-  links?: Links;
+  links?: { [key: string]: Link };
   /**
    *
-   * @type {PageMetadata}
-   * @memberof PagedModelEntityModelOptionsmenueSettings
    */
   page?: PageMetadata;
 }
@@ -91,7 +85,10 @@ export function PagedModelEntityModelOptionsmenueSettingsFromJSONTyped(
         : PagedModelEntityModelOptionsmenueSettingsEmbeddedFromJSON(
             json["_embedded"]
           ),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -114,7 +111,10 @@ export function PagedModelEntityModelOptionsmenueSettingsToJSONTyped(
     _embedded: PagedModelEntityModelOptionsmenueSettingsEmbeddedToJSON(
       value["embedded"]
     ),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
     page: PageMetadataToJSON(value["page"]),
   };
 }

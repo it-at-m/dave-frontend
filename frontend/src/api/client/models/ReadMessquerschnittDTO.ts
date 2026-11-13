@@ -22,62 +22,42 @@ import { mapValues } from "../runtime";
 export interface ReadMessquerschnittDTO {
   /**
    *
-   * @type {string}
-   * @memberof ReadMessquerschnittDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessquerschnittDTO
    */
   mqId?: string;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessquerschnittDTO
    */
   longitude?: number;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessquerschnittDTO
    */
   latitude?: number;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessquerschnittDTO
    */
   strassenname?: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessquerschnittDTO
    */
   lageMessquerschnitt?: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessquerschnittDTO
    */
   fahrtrichtung?: string;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessquerschnittDTO
    */
   anzahlFahrspuren?: number;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessquerschnittDTO
    */
   anzahlDetektoren?: number;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessquerschnittDTO
    */
   standort?: string;
 }

@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { PagedModelEntityModelUnauffaelligerTagEmbedded } from "./PagedModelEntityModelUnauffaelligerTagEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   PagedModelEntityModelUnauffaelligerTagEmbeddedFromJSON,
   PagedModelEntityModelUnauffaelligerTagEmbeddedFromJSONTyped,
@@ -44,20 +44,14 @@ import {
 export interface PagedModelEntityModelUnauffaelligerTag {
   /**
    *
-   * @type {PagedModelEntityModelUnauffaelligerTagEmbedded}
-   * @memberof PagedModelEntityModelUnauffaelligerTag
    */
   embedded?: PagedModelEntityModelUnauffaelligerTagEmbedded;
   /**
    *
-   * @type {Links}
-   * @memberof PagedModelEntityModelUnauffaelligerTag
    */
-  links?: Links;
+  links?: { [key: string]: Link };
   /**
    *
-   * @type {PageMetadata}
-   * @memberof PagedModelEntityModelUnauffaelligerTag
    */
   page?: PageMetadata;
 }
@@ -91,7 +85,10 @@ export function PagedModelEntityModelUnauffaelligerTagFromJSONTyped(
         : PagedModelEntityModelUnauffaelligerTagEmbeddedFromJSON(
             json["_embedded"]
           ),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -114,7 +111,10 @@ export function PagedModelEntityModelUnauffaelligerTagToJSONTyped(
     _embedded: PagedModelEntityModelUnauffaelligerTagEmbeddedToJSON(
       value["embedded"]
     ),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
     page: PageMetadataToJSON(value["page"]),
   };
 }

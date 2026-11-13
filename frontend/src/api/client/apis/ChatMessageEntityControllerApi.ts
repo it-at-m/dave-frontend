@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  ChatMessageRequestBody,
-  EntityModelChatMessage,
-  PagedModelEntityModelChatMessage,
-} from "../models/index";
+import type { ChatMessageRequestBody } from "../models/ChatMessageRequestBody";
+import type { EntityModelChatMessage } from "../models/EntityModelChatMessage";
+import type { PagedModelEntityModelChatMessage } from "../models/PagedModelEntityModelChatMessage";
 
 import {
   ChatMessageRequestBodyFromJSON,
   ChatMessageRequestBodyToJSON,
+} from "../models/ChatMessageRequestBody";
+import {
   EntityModelChatMessageFromJSON,
   EntityModelChatMessageToJSON,
+} from "../models/EntityModelChatMessage";
+import {
   PagedModelEntityModelChatMessageFromJSON,
   PagedModelEntityModelChatMessageToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelChatMessage";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceChatmessageDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceChatmessageGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceChatmessageGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceChatmessagePatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   chatMessageRequestBody: ChatMessageRequestBody;
 }
 
 export interface PostCollectionResourceChatmessagePostRequest {
+  /**
+   *
+   */
   chatMessageRequestBody: ChatMessageRequestBody;
 }
 
 export interface PutItemResourceChatmessagePutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   chatMessageRequestBody: ChatMessageRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceChatmessagePutRequest {
  */
 export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-chatmessage
+   * Creates request options for deleteItemResourceChatmessageDelete without sending the request
    */
-  async deleteItemResourceChatmessageDeleteRaw(
-    requestParameters: DeleteItemResourceChatmessageDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceChatmessageDeleteRequestOpts(
+    requestParameters: DeleteItemResourceChatmessageDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-chatmessage
+   */
+  async deleteItemResourceChatmessageDeleteRaw(
+    requestParameters: DeleteItemResourceChatmessageDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceChatmessageDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-chatmessage
+   * Creates request options for getCollectionResourceChatmessageGet without sending the request
    */
-  async getCollectionResourceChatmessageGetRaw(
-    requestParameters: GetCollectionResourceChatmessageGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelChatMessage>> {
+  async getCollectionResourceChatmessageGetRequestOpts(
+    requestParameters: GetCollectionResourceChatmessageGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-chatmessage
+   */
+  async getCollectionResourceChatmessageGetRaw(
+    requestParameters: GetCollectionResourceChatmessageGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelChatMessage>> {
+    const requestOptions =
+      await this.getCollectionResourceChatmessageGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelChatMessageFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-chatmessage
+   * Creates request options for getItemResourceChatmessageGet without sending the request
    */
-  async getItemResourceChatmessageGetRaw(
-    requestParameters: GetItemResourceChatmessageGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+  async getItemResourceChatmessageGetRequestOpts(
+    requestParameters: GetItemResourceChatmessageGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-chatmessage
+   */
+  async getItemResourceChatmessageGetRaw(
+    requestParameters: GetItemResourceChatmessageGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+    const requestOptions =
+      await this.getItemResourceChatmessageGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelChatMessageFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-chatmessage
+   * Creates request options for patchItemResourceChatmessagePatch without sending the request
    */
-  async patchItemResourceChatmessagePatchRaw(
-    requestParameters: PatchItemResourceChatmessagePatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+  async patchItemResourceChatmessagePatchRequestOpts(
+    requestParameters: PatchItemResourceChatmessagePatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ChatMessageRequestBodyToJSON(
-          requestParameters["chatMessageRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ChatMessageRequestBodyToJSON(
+        requestParameters["chatMessageRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-chatmessage
+   */
+  async patchItemResourceChatmessagePatchRaw(
+    requestParameters: PatchItemResourceChatmessagePatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+    const requestOptions =
+      await this.patchItemResourceChatmessagePatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelChatMessageFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-chatmessage
+   * Creates request options for postCollectionResourceChatmessagePost without sending the request
    */
-  async postCollectionResourceChatmessagePostRaw(
-    requestParameters: PostCollectionResourceChatmessagePostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+  async postCollectionResourceChatmessagePostRequestOpts(
+    requestParameters: PostCollectionResourceChatmessagePostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["chatMessageRequestBody"] == null) {
       throw new runtime.RequiredError(
         "chatMessageRequestBody",
@@ -311,18 +379,29 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ChatMessageRequestBodyToJSON(
-          requestParameters["chatMessageRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ChatMessageRequestBodyToJSON(
+        requestParameters["chatMessageRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-chatmessage
+   */
+  async postCollectionResourceChatmessagePostRaw(
+    requestParameters: PostCollectionResourceChatmessagePostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+    const requestOptions =
+      await this.postCollectionResourceChatmessagePostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelChatMessageFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-chatmessage
+   * Creates request options for putItemResourceChatmessagePut without sending the request
    */
-  async putItemResourceChatmessagePutRaw(
-    requestParameters: PutItemResourceChatmessagePutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+  async putItemResourceChatmessagePutRequestOpts(
+    requestParameters: PutItemResourceChatmessagePutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class ChatMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ChatMessageRequestBodyToJSON(
-          requestParameters["chatMessageRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ChatMessageRequestBodyToJSON(
+        requestParameters["chatMessageRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-chatmessage
+   */
+  async putItemResourceChatmessagePutRaw(
+    requestParameters: PutItemResourceChatmessagePutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelChatMessage>> {
+    const requestOptions =
+      await this.putItemResourceChatmessagePutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelChatMessageFromJSON(jsonValue)

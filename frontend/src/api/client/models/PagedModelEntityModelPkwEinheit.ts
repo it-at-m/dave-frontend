@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { PagedModelEntityModelPkwEinheitEmbedded } from "./PagedModelEntityModelPkwEinheitEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   PagedModelEntityModelPkwEinheitEmbeddedFromJSON,
   PagedModelEntityModelPkwEinheitEmbeddedFromJSONTyped,
@@ -44,20 +44,14 @@ import {
 export interface PagedModelEntityModelPkwEinheit {
   /**
    *
-   * @type {PagedModelEntityModelPkwEinheitEmbedded}
-   * @memberof PagedModelEntityModelPkwEinheit
    */
   embedded?: PagedModelEntityModelPkwEinheitEmbedded;
   /**
    *
-   * @type {Links}
-   * @memberof PagedModelEntityModelPkwEinheit
    */
-  links?: Links;
+  links?: { [key: string]: Link };
   /**
    *
-   * @type {PageMetadata}
-   * @memberof PagedModelEntityModelPkwEinheit
    */
   page?: PageMetadata;
 }
@@ -89,7 +83,10 @@ export function PagedModelEntityModelPkwEinheitFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelPkwEinheitEmbeddedFromJSON(json["_embedded"]),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -110,7 +107,10 @@ export function PagedModelEntityModelPkwEinheitToJSONTyped(
 
   return {
     _embedded: PagedModelEntityModelPkwEinheitEmbeddedToJSON(value["embedded"]),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
     page: PageMetadataToJSON(value["page"]),
   };
 }

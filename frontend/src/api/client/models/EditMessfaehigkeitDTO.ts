@@ -37,26 +37,18 @@ import {
 export interface EditMessfaehigkeitDTO {
   /**
    *
-   * @type {string}
-   * @memberof EditMessfaehigkeitDTO
    */
   gueltigBis?: string;
   /**
    *
-   * @type {string}
-   * @memberof EditMessfaehigkeitDTO
    */
   gueltigAb?: string;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof EditMessfaehigkeitDTO
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof EditMessfaehigkeitDTO
    */
   intervall?: ZaehldatenIntervall;
 }

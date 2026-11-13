@@ -22,70 +22,48 @@ import { mapValues } from "../runtime";
 export interface LadeZaehldatenZeitreiheDTO {
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   datum: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   fehlendeWerteMeldung: Array<string>;
   /**
    *
-   * @type {Array<Array<string>>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   tageswertNichtVorhanden: Array<
     Array<LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum>
   >;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   kfz: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   sv: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   gv: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   rad: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   fuss: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   svAnteilInProzent: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   gvAnteilInProzent: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof LadeZaehldatenZeitreiheDTO
    */
   gesamt: Array<number>;
 }

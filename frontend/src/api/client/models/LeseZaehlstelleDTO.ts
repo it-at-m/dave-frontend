@@ -30,68 +30,46 @@ import {
 export interface LeseZaehlstelleDTO {
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlstelleDTO
    */
   id: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlstelleDTO
    */
   nummer: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlstelleDTO
    */
   name: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlstelleDTO
    */
   stadtbezirk: string;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlstelleDTO
    */
   stadtbezirkNummer: number;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlstelleDTO
    */
   lat: number;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlstelleDTO
    */
   lng: number;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlstelleDTO
    */
   kommentar: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LeseZaehlstelleDTO
    */
   suchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<LeseZaehlungDTO>}
-   * @memberof LeseZaehlstelleDTO
    */
   zaehlungen: Array<LeseZaehlungDTO>;
   /**
    *
-   * @type {boolean}
-   * @memberof LeseZaehlstelleDTO
    */
   sichtbarDatenportal?: boolean;
 }

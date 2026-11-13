@@ -37,38 +37,26 @@ import {
 export interface ZaehlungskenngroessenAsset extends BaseAsset {
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenAsset
    */
   text?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenAsset
    */
   zaehlungId?: string;
   /**
    *
-   * @type {Array<ZaehlungskenngroessenData>}
-   * @memberof ZaehlungskenngroessenAsset
    */
   zaehldaten?: Array<ZaehlungskenngroessenData>;
   /**
    *
-   * @type {boolean}
-   * @memberof ZaehlungskenngroessenAsset
    */
   printFuss?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ZaehlungskenngroessenAsset
    */
   printRad?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ZaehlungskenngroessenAsset
    */
   printKfz?: boolean;
 }

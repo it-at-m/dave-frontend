@@ -13,7 +13,7 @@
  */
 
 import type { CollectionModelObjectEmbedded } from "./CollectionModelObjectEmbedded";
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
 import { mapValues } from "../runtime";
 import {
@@ -23,11 +23,11 @@ import {
   CollectionModelObjectEmbeddedToJSONTyped,
 } from "./CollectionModelObjectEmbedded";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -37,16 +37,12 @@ import {
 export interface CollectionModelObject {
   /**
    *
-   * @type {CollectionModelObjectEmbedded}
-   * @memberof CollectionModelObject
    */
   embedded?: CollectionModelObjectEmbedded;
   /**
    *
-   * @type {Links}
-   * @memberof CollectionModelObject
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -76,7 +72,10 @@ export function CollectionModelObjectFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : CollectionModelObjectEmbeddedFromJSON(json["_embedded"]),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -94,6 +93,9 @@ export function CollectionModelObjectToJSONTyped(
 
   return {
     _embedded: CollectionModelObjectEmbeddedToJSON(value["embedded"]),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

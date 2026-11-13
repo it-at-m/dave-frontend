@@ -30,8 +30,6 @@ import {
 export interface LadeZaehldatenTableDTO {
   /**
    *
-   * @type {Array<LadeZaehldatumDTO>}
-   * @memberof LadeZaehldatenTableDTO
    */
   zaehldaten: Array<LadeZaehldatumDTO>;
 }

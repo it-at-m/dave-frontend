@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
 import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -30,10 +30,8 @@ import {
 export interface RepresentationModelObject {
   /**
    *
-   * @type {Links}
-   * @memberof RepresentationModelObject
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -59,7 +57,10 @@ export function RepresentationModelObjectFromJSONTyped(
     return json;
   }
   return {
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -78,6 +79,9 @@ export function RepresentationModelObjectToJSONTyped(
   }
 
   return {
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

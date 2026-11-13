@@ -22,26 +22,18 @@ import { mapValues } from "../runtime";
 export interface PositionUTM {
   /**
    *
-   * @type {number}
-   * @memberof PositionUTM
    */
   zone?: number;
   /**
    *
-   * @type {string}
-   * @memberof PositionUTM
    */
   letter?: string;
   /**
    *
-   * @type {number}
-   * @memberof PositionUTM
    */
   easting?: number;
   /**
    *
-   * @type {number}
-   * @memberof PositionUTM
    */
   northing?: number;
 }

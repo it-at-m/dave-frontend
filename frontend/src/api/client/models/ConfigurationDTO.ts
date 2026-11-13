@@ -37,14 +37,10 @@ import {
 export interface ConfigurationDTO {
   /**
    *
-   * @type {ZaehlstelleConfigurationDTO}
-   * @memberof ConfigurationDTO
    */
   zaehlstelle: ZaehlstelleConfigurationDTO;
   /**
    *
-   * @type {TenantConfigurationDTO}
-   * @memberof ConfigurationDTO
    */
   tenant: TenantConfigurationDTO;
 }

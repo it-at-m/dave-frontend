@@ -31,8 +31,6 @@ export interface StepLineSeriesEntryIntegerDTO
   extends StepLineSeriesEntryBaseDTO {
   /**
    *
-   * @type {Array<number>}
-   * @memberof StepLineSeriesEntryIntegerDTO
    */
   yAxisData?: Array<number>;
 }

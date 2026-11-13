@@ -30,14 +30,10 @@ import {
 export interface OptionsQuerungsverkehrDTO {
   /**
    *
-   * @type {number}
-   * @memberof OptionsQuerungsverkehrDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof OptionsQuerungsverkehrDTO
    */
   richtung?: Himmelsrichtung;
 }

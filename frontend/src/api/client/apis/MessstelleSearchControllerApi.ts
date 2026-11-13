@@ -11,35 +11,54 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelEntityModelMessstelle,
-  EntityModelMessstelle,
-  PagedModelEntityModelMessstelle,
-} from "../models/index";
+import type { CollectionModelEntityModelMessstelle } from "../models/CollectionModelEntityModelMessstelle";
+import type { EntityModelMessstelle } from "../models/EntityModelMessstelle";
+import type { PagedModelEntityModelMessstelle } from "../models/PagedModelEntityModelMessstelle";
 
 import {
   CollectionModelEntityModelMessstelleFromJSON,
   CollectionModelEntityModelMessstelleToJSON,
+} from "../models/CollectionModelEntityModelMessstelle";
+import {
   EntityModelMessstelleFromJSON,
   EntityModelMessstelleToJSON,
+} from "../models/EntityModelMessstelle";
+import {
   PagedModelEntityModelMessstelleFromJSON,
   PagedModelEntityModelMessstelleToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelMessstelle";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchMessstelleGet1Request {
+  /**
+   *
+   */
   id?: string;
 }
 
 export interface ExecuteSearchMessstelleGet2Request {
+  /**
+   *
+   */
   mstId?: string;
 }
 
 export interface ExecuteSearchMessstelleGet3Request {
+  /**
+   *
+   */
   query?: string;
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
@@ -48,25 +67,30 @@ export interface ExecuteSearchMessstelleGet3Request {
  */
 export class MessstelleSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchMessstelleGet without sending the request
    */
-  async executeSearchMessstelleGetRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelMessstelle>> {
+  async executeSearchMessstelleGetRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/messstelles/search/findAllBySichtbarDatenportalIsTrue`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchMessstelleGetRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelMessstelle>> {
+    const requestOptions = await this.executeSearchMessstelleGetRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelMessstelleFromJSON(jsonValue)
@@ -83,11 +107,11 @@ export class MessstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchMessstelleGet1 without sending the request
    */
-  async executeSearchMessstelleGet1Raw(
-    requestParameters: ExecuteSearchMessstelleGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+  async executeSearchMessstelleGet1RequestOpts(
+    requestParameters: ExecuteSearchMessstelleGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["id"] != null) {
@@ -98,15 +122,23 @@ export class MessstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/search/findByMessquerschnitteId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchMessstelleGet1Raw(
+    requestParameters: ExecuteSearchMessstelleGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+    const requestOptions =
+      await this.executeSearchMessstelleGet1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelMessstelleFromJSON(jsonValue)
@@ -127,11 +159,11 @@ export class MessstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchMessstelleGet2 without sending the request
    */
-  async executeSearchMessstelleGet2Raw(
-    requestParameters: ExecuteSearchMessstelleGet2Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+  async executeSearchMessstelleGet2RequestOpts(
+    requestParameters: ExecuteSearchMessstelleGet2Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["mstId"] != null) {
@@ -142,15 +174,23 @@ export class MessstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/search/findByMstId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchMessstelleGet2Raw(
+    requestParameters: ExecuteSearchMessstelleGet2Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+    const requestOptions =
+      await this.executeSearchMessstelleGet2RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelMessstelleFromJSON(jsonValue)
@@ -171,11 +211,11 @@ export class MessstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchMessstelleGet3 without sending the request
    */
-  async executeSearchMessstelleGet3Raw(
-    requestParameters: ExecuteSearchMessstelleGet3Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelMessstelle>> {
+  async executeSearchMessstelleGet3RequestOpts(
+    requestParameters: ExecuteSearchMessstelleGet3Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["query"] != null) {
@@ -198,15 +238,23 @@ export class MessstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/search/suggestSearch`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchMessstelleGet3Raw(
+    requestParameters: ExecuteSearchMessstelleGet3Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelMessstelle>> {
+    const requestOptions =
+      await this.executeSearchMessstelleGet3RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelMessstelleFromJSON(jsonValue)

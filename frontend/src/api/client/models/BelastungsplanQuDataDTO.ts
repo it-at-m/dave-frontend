@@ -30,20 +30,14 @@ import {
 export interface BelastungsplanQuDataDTO {
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanQuDataDTO
    */
   label: string;
   /**
    *
-   * @type {boolean}
-   * @memberof BelastungsplanQuDataDTO
    */
   filled: boolean;
   /**
    *
-   * @type {Array<QuKnotenarmValue>}
-   * @memberof BelastungsplanQuDataDTO
    */
   valuesKnotenarme: Array<QuKnotenarmValue>;
 }

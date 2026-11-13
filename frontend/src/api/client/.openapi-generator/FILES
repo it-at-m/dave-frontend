@@ -118,7 +118,7 @@ models/FahrzeugOptionsDTO.ts
 models/Fahrzeugklasse.ts
 models/FjsKnotenarmValue.ts
 models/FjsStrassenseiteValue.ts
-models/GeneratePdfReportAsset.ts
+models/GeneratePdfReportRequestAssetsInner.ts
 models/GeoPoint.ts
 models/Heading1Asset.ts
 models/Heading2Asset.ts
@@ -127,7 +127,6 @@ models/Heading4Asset.ts
 models/Heading5Asset.ts
 models/Himmelsrichtung.ts
 models/Hochrechnung.ts
-models/Hochrechnungsfaktor.ts
 models/HochrechnungsfaktorDTO.ts
 models/HochrechnungsfaktorRequestBody.ts
 models/ImageAsset.ts

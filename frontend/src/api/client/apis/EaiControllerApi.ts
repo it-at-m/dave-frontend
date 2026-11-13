@@ -11,36 +11,57 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  LadeAuswertungSpitzenstundeDTO,
-  LadeAuswertungVisumDTO,
-  LadeAuswertungZaehlstelleKoordinateDTO,
-  Zeitblock,
-} from "../models/index";
+import type { LadeAuswertungSpitzenstundeDTO } from "../models/LadeAuswertungSpitzenstundeDTO";
+import type { LadeAuswertungVisumDTO } from "../models/LadeAuswertungVisumDTO";
+import type { LadeAuswertungZaehlstelleKoordinateDTO } from "../models/LadeAuswertungZaehlstelleKoordinateDTO";
+import type { Zeitblock } from "../models/Zeitblock";
 
 import {
   LadeAuswertungSpitzenstundeDTOFromJSON,
   LadeAuswertungSpitzenstundeDTOToJSON,
+} from "../models/LadeAuswertungSpitzenstundeDTO";
+import {
   LadeAuswertungVisumDTOFromJSON,
   LadeAuswertungVisumDTOToJSON,
+} from "../models/LadeAuswertungVisumDTO";
+import {
   LadeAuswertungZaehlstelleKoordinateDTOFromJSON,
   LadeAuswertungZaehlstelleKoordinateDTOToJSON,
-  ZeitblockFromJSON,
-  ZeitblockToJSON,
-} from "../models/index";
+} from "../models/LadeAuswertungZaehlstelleKoordinateDTO";
+import { ZeitblockFromJSON, ZeitblockToJSON } from "../models/Zeitblock";
 import * as runtime from "../runtime";
 
 export interface LadeAuswertungSpitzenstundeRequest {
+  /**
+   *
+   */
   zaehlstelleNummer: string;
+  /**
+   *
+   */
   zaehlart: LadeAuswertungSpitzenstundeZaehlartEnum;
+  /**
+   *
+   */
   zaehldatum: Date;
+  /**
+   *
+   */
   zeitblock: Zeitblock;
+  /**
+   *
+   */
   zeitauswahl: string;
 }
 
 export interface LadeAuswertungVisumRequest {
+  /**
+   *
+   */
   jahr: number;
+  /**
+   *
+   */
   monat: number;
 }
 
@@ -49,11 +70,11 @@ export interface LadeAuswertungVisumRequest {
  */
 export class EaiControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for ladeAuswertungSpitzenstunde without sending the request
    */
-  async ladeAuswertungSpitzenstundeRaw(
-    requestParameters: LadeAuswertungSpitzenstundeRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<LadeAuswertungSpitzenstundeDTO>>> {
+  async ladeAuswertungSpitzenstundeRequestOpts(
+    requestParameters: LadeAuswertungSpitzenstundeRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlstelleNummer"] == null) {
       throw new runtime.RequiredError(
         "zaehlstelleNummer",
@@ -101,9 +122,9 @@ export class EaiControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["zaehldatum"] != null) {
-      queryParameters["zaehldatum"] = (requestParameters["zaehldatum"] as any)
-        .toISOString()
-        .substring(0, 10);
+      queryParameters["zaehldatum"] = runtime.serializeDate(
+        requestParameters["zaehldatum"] as any
+      );
     }
 
     if (requestParameters["zeitblock"] != null) {
@@ -118,15 +139,23 @@ export class EaiControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/lade-auswertung-spitzenstunde`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async ladeAuswertungSpitzenstundeRaw(
+    requestParameters: LadeAuswertungSpitzenstundeRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<LadeAuswertungSpitzenstundeDTO>>> {
+    const requestOptions =
+      await this.ladeAuswertungSpitzenstundeRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(LadeAuswertungSpitzenstundeDTOFromJSON)
@@ -147,11 +176,11 @@ export class EaiControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for ladeAuswertungVisum without sending the request
    */
-  async ladeAuswertungVisumRaw(
-    requestParameters: LadeAuswertungVisumRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<LadeAuswertungVisumDTO>> {
+  async ladeAuswertungVisumRequestOpts(
+    requestParameters: LadeAuswertungVisumRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["jahr"] == null) {
       throw new runtime.RequiredError(
         "jahr",
@@ -180,15 +209,23 @@ export class EaiControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/lade-auswertung-visum`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async ladeAuswertungVisumRaw(
+    requestParameters: LadeAuswertungVisumRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<LadeAuswertungVisumDTO>> {
+    const requestOptions =
+      await this.ladeAuswertungVisumRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       LadeAuswertungVisumDTOFromJSON(jsonValue)
@@ -209,27 +246,33 @@ export class EaiControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for ladeAuswertungZaehlstellenKoordinate without sending the request
    */
-  async ladeAuswertungZaehlstellenKoordinateRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<
-    runtime.ApiResponse<Array<LadeAuswertungZaehlstelleKoordinateDTO>>
-  > {
+  async ladeAuswertungZaehlstellenKoordinateRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/lade-auswertung-zaehlstellen-koordinate`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async ladeAuswertungZaehlstellenKoordinateRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<
+    runtime.ApiResponse<Array<LadeAuswertungZaehlstelleKoordinateDTO>>
+  > {
+    const requestOptions =
+      await this.ladeAuswertungZaehlstellenKoordinateRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(LadeAuswertungZaehlstelleKoordinateDTOFromJSON)

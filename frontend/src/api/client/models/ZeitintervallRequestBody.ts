@@ -17,7 +17,13 @@ import type { Laengsverkehr } from "./Laengsverkehr";
 import type { Querungsverkehr } from "./Querungsverkehr";
 import type { Verkehrsbeziehung } from "./Verkehrsbeziehung";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   HochrechnungFromJSON,
   HochrechnungFromJSONTyped,
@@ -51,128 +57,86 @@ import {
 export interface ZeitintervallRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof ZeitintervallRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof ZeitintervallRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof ZeitintervallRequestBody
    */
   zaehlungId?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZeitintervallRequestBody
    */
   bewegungsbeziehungId?: string;
   /**
    *
-   * @type {Date}
-   * @memberof ZeitintervallRequestBody
    */
   startUhrzeit: Date;
   /**
    *
-   * @type {Date}
-   * @memberof ZeitintervallRequestBody
    */
   endeUhrzeit: Date;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   sortingIndex?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   pkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   lkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   lastzuege?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   busse?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   kraftraeder?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   fahrradfahrer?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   fussgaenger?: number;
   /**
    *
-   * @type {string}
-   * @memberof ZeitintervallRequestBody
    */
   type?: ZeitintervallRequestBodyTypeEnum;
   /**
    *
-   * @type {Hochrechnung}
-   * @memberof ZeitintervallRequestBody
    */
   hochrechnung?: Hochrechnung;
   /**
    *
-   * @type {Querungsverkehr}
-   * @memberof ZeitintervallRequestBody
    */
   querungsverkehr?: Querungsverkehr;
   /**
    *
-   * @type {Laengsverkehr}
-   * @memberof ZeitintervallRequestBody
    */
   laengsverkehr?: Laengsverkehr;
   /**
    *
-   * @type {Verkehrsbeziehung}
-   * @memberof ZeitintervallRequestBody
    */
   verkehrsbeziehung?: Verkehrsbeziehung;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallRequestBody
    */
   entityVersion?: number;
 }
@@ -224,15 +188,23 @@ export function ZeitintervallRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     zaehlungId: json["zaehlungId"] == null ? undefined : json["zaehlungId"],
     bewegungsbeziehungId:
       json["bewegungsbeziehungId"] == null
         ? undefined
         : json["bewegungsbeziehungId"],
-    startUhrzeit: new Date(json["startUhrzeit"]),
-    endeUhrzeit: new Date(json["endeUhrzeit"]),
+    startUhrzeit:
+      json["startUhrzeit"] == null
+        ? json["startUhrzeit"]
+        : parseDateTime(json["startUhrzeit"]),
+    endeUhrzeit:
+      json["endeUhrzeit"] == null
+        ? json["endeUhrzeit"]
+        : parseDateTime(json["endeUhrzeit"]),
     sortingIndex:
       json["sortingIndex"] == null ? undefined : json["sortingIndex"],
     pkw: json["pkw"] == null ? undefined : json["pkw"],
@@ -283,13 +255,19 @@ export function ZeitintervallRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     zaehlungId: value["zaehlungId"],
     bewegungsbeziehungId: value["bewegungsbeziehungId"],
-    startUhrzeit: value["startUhrzeit"].toISOString(),
-    endeUhrzeit: value["endeUhrzeit"].toISOString(),
+    startUhrzeit:
+      value["startUhrzeit"] == null
+        ? value["startUhrzeit"]
+        : serializeDateTime(value["startUhrzeit"]),
+    endeUhrzeit:
+      value["endeUhrzeit"] == null
+        ? value["endeUhrzeit"]
+        : serializeDateTime(value["endeUhrzeit"]),
     sortingIndex: value["sortingIndex"],
     pkw: value["pkw"],
     lkw: value["lkw"],

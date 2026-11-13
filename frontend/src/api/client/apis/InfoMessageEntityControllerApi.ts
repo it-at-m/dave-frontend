@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelInfoMessage,
-  InfoMessageRequestBody,
-  PagedModelEntityModelInfoMessage,
-} from "../models/index";
+import type { EntityModelInfoMessage } from "../models/EntityModelInfoMessage";
+import type { InfoMessageRequestBody } from "../models/InfoMessageRequestBody";
+import type { PagedModelEntityModelInfoMessage } from "../models/PagedModelEntityModelInfoMessage";
 
 import {
   EntityModelInfoMessageFromJSON,
   EntityModelInfoMessageToJSON,
+} from "../models/EntityModelInfoMessage";
+import {
   InfoMessageRequestBodyFromJSON,
   InfoMessageRequestBodyToJSON,
+} from "../models/InfoMessageRequestBody";
+import {
   PagedModelEntityModelInfoMessageFromJSON,
   PagedModelEntityModelInfoMessageToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelInfoMessage";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceInfomessageDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceInfomessageGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceInfomessageGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceInfomessagePatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   infoMessageRequestBody: InfoMessageRequestBody;
 }
 
 export interface PostCollectionResourceInfomessagePostRequest {
+  /**
+   *
+   */
   infoMessageRequestBody: InfoMessageRequestBody;
 }
 
 export interface PutItemResourceInfomessagePutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   infoMessageRequestBody: InfoMessageRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceInfomessagePutRequest {
  */
 export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-infomessage
+   * Creates request options for deleteItemResourceInfomessageDelete without sending the request
    */
-  async deleteItemResourceInfomessageDeleteRaw(
-    requestParameters: DeleteItemResourceInfomessageDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceInfomessageDeleteRequestOpts(
+    requestParameters: DeleteItemResourceInfomessageDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infoMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-infomessage
+   */
+  async deleteItemResourceInfomessageDeleteRaw(
+    requestParameters: DeleteItemResourceInfomessageDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceInfomessageDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-infomessage
+   * Creates request options for getCollectionResourceInfomessageGet without sending the request
    */
-  async getCollectionResourceInfomessageGetRaw(
-    requestParameters: GetCollectionResourceInfomessageGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelInfoMessage>> {
+  async getCollectionResourceInfomessageGetRequestOpts(
+    requestParameters: GetCollectionResourceInfomessageGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infoMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-infomessage
+   */
+  async getCollectionResourceInfomessageGetRaw(
+    requestParameters: GetCollectionResourceInfomessageGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelInfoMessage>> {
+    const requestOptions =
+      await this.getCollectionResourceInfomessageGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelInfoMessageFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-infomessage
+   * Creates request options for getItemResourceInfomessageGet without sending the request
    */
-  async getItemResourceInfomessageGetRaw(
-    requestParameters: GetItemResourceInfomessageGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+  async getItemResourceInfomessageGetRequestOpts(
+    requestParameters: GetItemResourceInfomessageGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infoMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-infomessage
+   */
+  async getItemResourceInfomessageGetRaw(
+    requestParameters: GetItemResourceInfomessageGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+    const requestOptions =
+      await this.getItemResourceInfomessageGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelInfoMessageFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-infomessage
+   * Creates request options for patchItemResourceInfomessagePatch without sending the request
    */
-  async patchItemResourceInfomessagePatchRaw(
-    requestParameters: PatchItemResourceInfomessagePatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+  async patchItemResourceInfomessagePatchRequestOpts(
+    requestParameters: PatchItemResourceInfomessagePatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infoMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: InfoMessageRequestBodyToJSON(
-          requestParameters["infoMessageRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: InfoMessageRequestBodyToJSON(
+        requestParameters["infoMessageRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-infomessage
+   */
+  async patchItemResourceInfomessagePatchRaw(
+    requestParameters: PatchItemResourceInfomessagePatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+    const requestOptions =
+      await this.patchItemResourceInfomessagePatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelInfoMessageFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-infomessage
+   * Creates request options for postCollectionResourceInfomessagePost without sending the request
    */
-  async postCollectionResourceInfomessagePostRaw(
-    requestParameters: PostCollectionResourceInfomessagePostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+  async postCollectionResourceInfomessagePostRequestOpts(
+    requestParameters: PostCollectionResourceInfomessagePostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["infoMessageRequestBody"] == null) {
       throw new runtime.RequiredError(
         "infoMessageRequestBody",
@@ -311,18 +379,29 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infoMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: InfoMessageRequestBodyToJSON(
-          requestParameters["infoMessageRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: InfoMessageRequestBodyToJSON(
+        requestParameters["infoMessageRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-infomessage
+   */
+  async postCollectionResourceInfomessagePostRaw(
+    requestParameters: PostCollectionResourceInfomessagePostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+    const requestOptions =
+      await this.postCollectionResourceInfomessagePostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelInfoMessageFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-infomessage
+   * Creates request options for putItemResourceInfomessagePut without sending the request
    */
-  async putItemResourceInfomessagePutRaw(
-    requestParameters: PutItemResourceInfomessagePutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+  async putItemResourceInfomessagePutRequestOpts(
+    requestParameters: PutItemResourceInfomessagePutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class InfoMessageEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infoMessages/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: InfoMessageRequestBodyToJSON(
-          requestParameters["infoMessageRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: InfoMessageRequestBodyToJSON(
+        requestParameters["infoMessageRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-infomessage
+   */
+  async putItemResourceInfomessagePutRaw(
+    requestParameters: PutItemResourceInfomessagePutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+    const requestOptions =
+      await this.putItemResourceInfomessagePutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelInfoMessageFromJSON(jsonValue)

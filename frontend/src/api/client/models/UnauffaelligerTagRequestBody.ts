@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,38 +28,26 @@ import { mapValues } from "../runtime";
 export interface UnauffaelligerTagRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof UnauffaelligerTagRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof UnauffaelligerTagRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof UnauffaelligerTagRequestBody
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof UnauffaelligerTagRequestBody
    */
   mstId?: string;
   /**
    *
-   * @type {string}
-   * @memberof UnauffaelligerTagRequestBody
    */
   kalendertag?: string;
   /**
    *
-   * @type {number}
-   * @memberof UnauffaelligerTagRequestBody
    */
   entityVersion?: number;
 }
@@ -83,7 +77,9 @@ export function UnauffaelligerTagRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     mstId: json["mstId"] == null ? undefined : json["mstId"],
     kalendertag: json["kalendertag"] == null ? undefined : json["kalendertag"],
@@ -110,8 +106,8 @@ export function UnauffaelligerTagRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     mstId: value["mstId"],
     kalendertag: value["kalendertag"],

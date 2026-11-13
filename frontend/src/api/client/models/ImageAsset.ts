@@ -30,20 +30,14 @@ import {
 export interface ImageAsset extends BaseAsset {
   /**
    *
-   * @type {string}
-   * @memberof ImageAsset
    */
   caption?: string;
   /**
    *
-   * @type {string}
-   * @memberof ImageAsset
    */
   image?: string;
   /**
    *
-   * @type {number}
-   * @memberof ImageAsset
    */
   width?: number;
 }

@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,56 +28,38 @@ import { mapValues } from "../runtime";
 export interface OpenZaehlungDTO {
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   zaehlstellenNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   zaehlstellenId?: string;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   stadtbezirk?: string;
   /**
    *
-   * @type {Date}
-   * @memberof OpenZaehlungDTO
    */
   datum?: Date;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   zaehlart?: string;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   projektNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   projektName?: string;
   /**
    *
-   * @type {string}
-   * @memberof OpenZaehlungDTO
    */
   status?: string;
 }
@@ -105,7 +93,7 @@ export function OpenZaehlungDTOFromJSONTyped(
     zaehlstellenId:
       json["zaehlstellenId"] == null ? undefined : json["zaehlstellenId"],
     stadtbezirk: json["stadtbezirk"] == null ? undefined : json["stadtbezirk"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDateTime(json["datum"]),
     zaehlart: json["zaehlart"] == null ? undefined : json["zaehlart"],
     projektNummer:
       json["projektNummer"] == null ? undefined : json["projektNummer"],
@@ -131,7 +119,10 @@ export function OpenZaehlungDTOToJSONTyped(
     zaehlstellenNummer: value["zaehlstellenNummer"],
     zaehlstellenId: value["zaehlstellenId"],
     stadtbezirk: value["stadtbezirk"],
-    datum: value["datum"] == null ? undefined : value["datum"].toISOString(),
+    datum:
+      value["datum"] == null
+        ? value["datum"]
+        : serializeDateTime(value["datum"]),
     zaehlart: value["zaehlart"],
     projektNummer: value["projektNummer"],
     projektName: value["projektName"],

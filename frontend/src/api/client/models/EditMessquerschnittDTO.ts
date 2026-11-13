@@ -22,80 +22,54 @@ import { mapValues } from "../runtime";
 export interface EditMessquerschnittDTO {
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   mqId?: string;
   /**
    *
-   * @type {number}
-   * @memberof EditMessquerschnittDTO
    */
   longitude?: number;
   /**
    *
-   * @type {number}
-   * @memberof EditMessquerschnittDTO
    */
   latitude?: number;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   strassenname?: string;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   lageMessquerschnitt?: string;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   fahrtrichtung: string;
   /**
    *
-   * @type {number}
-   * @memberof EditMessquerschnittDTO
    */
   anzahlFahrspuren?: number;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   fahrzeugklasse?: string;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   detektierteVerkehrsart?: string;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   hersteller?: string;
   /**
    *
-   * @type {number}
-   * @memberof EditMessquerschnittDTO
    */
   anzahlDetektoren?: number;
   /**
    *
-   * @type {string}
-   * @memberof EditMessquerschnittDTO
    */
   standort?: string;
 }

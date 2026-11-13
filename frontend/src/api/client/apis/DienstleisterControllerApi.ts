@@ -11,24 +11,32 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { DienstleisterDTO } from "../models/index";
+import type { DienstleisterDTO } from "../models/DienstleisterDTO";
 
 import {
   DienstleisterDTOFromJSON,
   DienstleisterDTOToJSON,
-} from "../models/index";
+} from "../models/DienstleisterDTO";
 import * as runtime from "../runtime";
 
 export interface DeleteDienstleisterRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface SaveDienstleisterRequest {
+  /**
+   *
+   */
   dienstleisterDTO: DienstleisterDTO;
 }
 
 export interface SaveDienstleister1Request {
+  /**
+   *
+   */
   dienstleisterDTO: DienstleisterDTO;
 }
 
@@ -37,11 +45,11 @@ export interface SaveDienstleister1Request {
  */
 export class DienstleisterControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for deleteDienstleister without sending the request
    */
-  async deleteDienstleisterRaw(
-    requestParameters: DeleteDienstleisterRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  async deleteDienstleisterRequestOpts(
+    requestParameters: DeleteDienstleisterRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -55,19 +63,27 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleister/delete/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async deleteDienstleisterRaw(
+    requestParameters: DeleteDienstleisterRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<object>> {
+    const requestOptions =
+      await this.deleteDienstleisterRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }
@@ -86,25 +102,30 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getAllActiveDienstleister without sending the request
    */
-  async getAllActiveDienstleisterRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<DienstleisterDTO>>> {
+  async getAllActiveDienstleisterRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/dienstleister/getAllActive`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllActiveDienstleisterRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<DienstleisterDTO>>> {
+    const requestOptions = await this.getAllActiveDienstleisterRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(DienstleisterDTOFromJSON)
@@ -121,25 +142,30 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getAllDienstleister without sending the request
    */
-  async getAllDienstleisterRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<DienstleisterDTO>>> {
+  async getAllDienstleisterRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/dienstleister/getAll`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllDienstleisterRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<DienstleisterDTO>>> {
+    const requestOptions = await this.getAllDienstleisterRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(DienstleisterDTOFromJSON)
@@ -156,11 +182,11 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveDienstleister without sending the request
    */
-  async saveDienstleisterRaw(
-    requestParameters: SaveDienstleisterRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<DienstleisterDTO>> {
+  async saveDienstleisterRequestOpts(
+    requestParameters: SaveDienstleisterRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["dienstleisterDTO"] == null) {
       throw new runtime.RequiredError(
         "dienstleisterDTO",
@@ -176,16 +202,24 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleister/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: DienstleisterDTOToJSON(requestParameters["dienstleisterDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: DienstleisterDTOToJSON(requestParameters["dienstleisterDTO"]),
+    };
+  }
+
+  /**
+   */
+  async saveDienstleisterRaw(
+    requestParameters: SaveDienstleisterRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<DienstleisterDTO>> {
+    const requestOptions =
+      await this.saveDienstleisterRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       DienstleisterDTOFromJSON(jsonValue)
@@ -206,11 +240,11 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveDienstleister1 without sending the request
    */
-  async saveDienstleister1Raw(
-    requestParameters: SaveDienstleister1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<DienstleisterDTO>> {
+  async saveDienstleister1RequestOpts(
+    requestParameters: SaveDienstleister1Request
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["dienstleisterDTO"] == null) {
       throw new runtime.RequiredError(
         "dienstleisterDTO",
@@ -226,16 +260,24 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleister/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: DienstleisterDTOToJSON(requestParameters["dienstleisterDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: DienstleisterDTOToJSON(requestParameters["dienstleisterDTO"]),
+    };
+  }
+
+  /**
+   */
+  async saveDienstleister1Raw(
+    requestParameters: SaveDienstleister1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<DienstleisterDTO>> {
+    const requestOptions =
+      await this.saveDienstleister1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       DienstleisterDTOFromJSON(jsonValue)

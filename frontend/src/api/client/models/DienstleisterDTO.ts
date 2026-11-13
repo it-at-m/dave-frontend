@@ -22,50 +22,34 @@ import { mapValues } from "../runtime";
 export interface DienstleisterDTO {
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterDTO
    */
   id?: string;
   /**
    *
-   * @type {number}
-   * @memberof DienstleisterDTO
    */
   entityVersion?: number;
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterDTO
    */
   name: string;
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterDTO
    */
   kennung: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof DienstleisterDTO
    */
   emailAddresses: Array<string>;
   /**
    *
-   * @type {boolean}
-   * @memberof DienstleisterDTO
    */
   active?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof DienstleisterDTO
    */
   erasable?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof DienstleisterDTO
    */
   emailAddressesAsString?: string;
 }

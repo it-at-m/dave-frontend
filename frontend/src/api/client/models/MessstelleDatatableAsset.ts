@@ -44,32 +44,22 @@ import {
 export interface MessstelleDatatableAsset extends BaseAsset {
   /**
    *
-   * @type {DatentabellePdfZaehldaten}
-   * @memberof MessstelleDatatableAsset
    */
   datentabelleZaehldaten?: DatentabellePdfZaehldaten;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleDatatableAsset
    */
   randomTableId?: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleDatatableAsset
    */
   text?: string;
   /**
    *
-   * @type {MessstelleOptionsDTO}
-   * @memberof MessstelleDatatableAsset
    */
   options?: MessstelleOptionsDTO;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleDatatableAsset
    */
   mstId?: string;
 }

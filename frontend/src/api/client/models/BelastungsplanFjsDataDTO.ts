@@ -30,20 +30,14 @@ import {
 export interface BelastungsplanFjsDataDTO {
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanFjsDataDTO
    */
   label: string;
   /**
    *
-   * @type {boolean}
-   * @memberof BelastungsplanFjsDataDTO
    */
   filled: boolean;
   /**
    *
-   * @type {Array<FjsKnotenarmValue>}
-   * @memberof BelastungsplanFjsDataDTO
    */
   valuesKnotenarme: Array<FjsKnotenarmValue>;
 }

@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface ValidatedZeitraumAndTagestypDTO {
   /**
    *
-   * @type {boolean}
-   * @memberof ValidatedZeitraumAndTagestypDTO
    */
   isValid: boolean;
 }

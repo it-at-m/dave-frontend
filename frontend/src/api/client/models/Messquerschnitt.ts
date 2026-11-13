@@ -30,56 +30,38 @@ import {
 export interface Messquerschnitt {
   /**
    *
-   * @type {string}
-   * @memberof Messquerschnitt
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof Messquerschnitt
    */
   mqId?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof Messquerschnitt
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {string}
-   * @memberof Messquerschnitt
    */
   strassenname?: string;
   /**
    *
-   * @type {string}
-   * @memberof Messquerschnitt
    */
   lageMessquerschnitt?: string;
   /**
    *
-   * @type {string}
-   * @memberof Messquerschnitt
    */
   fahrtrichtung?: string;
   /**
    *
-   * @type {number}
-   * @memberof Messquerschnitt
    */
   anzahlFahrspuren?: number;
   /**
    *
-   * @type {number}
-   * @memberof Messquerschnitt
    */
   anzahlDetektoren?: number;
   /**
    *
-   * @type {string}
-   * @memberof Messquerschnitt
    */
   standort?: string;
 }

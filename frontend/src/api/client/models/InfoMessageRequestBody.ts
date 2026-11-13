@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,50 +28,34 @@ import { mapValues } from "../runtime";
 export interface InfoMessageRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof InfoMessageRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof InfoMessageRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof InfoMessageRequestBody
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof InfoMessageRequestBody
    */
   content?: string;
   /**
    *
-   * @type {Date}
-   * @memberof InfoMessageRequestBody
    */
   gueltigVon?: Date;
   /**
    *
-   * @type {Date}
-   * @memberof InfoMessageRequestBody
    */
   gueltigBis?: Date;
   /**
    *
-   * @type {boolean}
-   * @memberof InfoMessageRequestBody
    */
   aktiv?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof InfoMessageRequestBody
    */
   entityVersion?: number;
 }
@@ -95,13 +85,15 @@ export function InfoMessageRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     content: json["content"] == null ? undefined : json["content"],
     gueltigVon:
-      json["gueltigVon"] == null ? undefined : new Date(json["gueltigVon"]),
+      json["gueltigVon"] == null ? undefined : parseDate(json["gueltigVon"]),
     gueltigBis:
-      json["gueltigBis"] == null ? undefined : new Date(json["gueltigBis"]),
+      json["gueltigBis"] == null ? undefined : parseDate(json["gueltigBis"]),
     aktiv: json["aktiv"] == null ? undefined : json["aktiv"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
@@ -126,18 +118,18 @@ export function InfoMessageRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     content: value["content"],
     gueltigVon:
       value["gueltigVon"] == null
-        ? undefined
-        : value["gueltigVon"].toISOString().substring(0, 10),
+        ? value["gueltigVon"]
+        : serializeDate(value["gueltigVon"]),
     gueltigBis:
       value["gueltigBis"] == null
-        ? undefined
-        : value["gueltigBis"].toISOString().substring(0, 10),
+        ? value["gueltigBis"]
+        : serializeDate(value["gueltigBis"]),
     aktiv: value["aktiv"],
     entityVersion: value["entityVersion"],
   };

@@ -22,50 +22,34 @@ import { mapValues } from "../runtime";
 export interface MessstelleTooltipDTO {
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   mstId: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   standort: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   stadtbezirk: string;
   /**
    *
-   * @type {number}
-   * @memberof MessstelleTooltipDTO
    */
   stadtbezirknummer: number;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   realisierungsdatum: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   abbaudatum: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   datumLetztePlausibleMessung: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleTooltipDTO
    */
   detektierteVerkehrsart: string;
 }

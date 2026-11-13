@@ -12,16 +12,22 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { TagesTyp } from "./TagesTyp";
 
-import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   TagesTypFromJSON,
   TagesTypFromJSONTyped,
@@ -37,52 +43,36 @@ import {
 export interface EntityModelKalendertag {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelKalendertag
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelKalendertag
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelKalendertag
    */
   version?: number;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelKalendertag
    */
   datum?: Date;
   /**
    *
-   * @type {TagesTyp}
-   * @memberof EntityModelKalendertag
    */
   tagestyp?: TagesTyp;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelKalendertag
    */
   nextStartDateToLoadUnauffaelligeTage?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelKalendertag
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelKalendertag
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -110,9 +100,11 @@ export function EntityModelKalendertagFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     tagestyp:
       json["tagestyp"] == null ? undefined : TagesTypFromJSON(json["tagestyp"]),
     nextStartDateToLoadUnauffaelligeTage:
@@ -121,7 +113,10 @@ export function EntityModelKalendertagFromJSONTyped(
         : json["nextStartDateToLoadUnauffaelligeTage"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -143,17 +138,18 @@ export function EntityModelKalendertagToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     datum:
-      value["datum"] == null
-        ? undefined
-        : value["datum"].toISOString().substring(0, 10),
+      value["datum"] == null ? value["datum"] : serializeDate(value["datum"]),
     tagestyp: TagesTypToJSON(value["tagestyp"]),
     nextStartDateToLoadUnauffaelligeTage:
       value["nextStartDateToLoadUnauffaelligeTage"],
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

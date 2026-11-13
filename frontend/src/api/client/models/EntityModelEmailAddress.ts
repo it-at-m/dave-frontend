@@ -12,15 +12,21 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
-import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -30,46 +36,32 @@ import {
 export interface EntityModelEmailAddress {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelEmailAddress
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelEmailAddress
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelEmailAddress
    */
   version?: number;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelEmailAddress
    */
   participantId?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelEmailAddress
    */
   emailAddress?: string;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelEmailAddress
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelEmailAddress
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -97,7 +89,9 @@ export function EntityModelEmailAddressFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     participantId:
       json["participantId"] == null ? undefined : json["participantId"],
@@ -105,7 +99,10 @@ export function EntityModelEmailAddressFromJSONTyped(
       json["emailAddress"] == null ? undefined : json["emailAddress"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -127,12 +124,15 @@ export function EntityModelEmailAddressToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     participantId: value["participantId"],
     emailAddress: value["emailAddress"],
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

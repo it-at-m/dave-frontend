@@ -11,22 +11,36 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { ChatMessageDTO } from "../models/ChatMessageDTO";
 
-import type { ChatMessageDTO } from "../models/index";
-
-import { ChatMessageDTOFromJSON, ChatMessageDTOToJSON } from "../models/index";
+import {
+  ChatMessageDTOFromJSON,
+  ChatMessageDTOToJSON,
+} from "../models/ChatMessageDTO";
 import * as runtime from "../runtime";
 
 export interface GetAllChatMessagesByZaehlungIdRequest {
+  /**
+   *
+   */
   zaehlungId: string;
 }
 
 export interface SaveChatMessageRequest {
+  /**
+   *
+   */
   chatMessageDTO: ChatMessageDTO;
 }
 
 export interface UpdateUnreadMessagesRequest {
+  /**
+   *
+   */
   zaehlungId: string;
+  /**
+   *
+   */
   callingParticipantId: number;
 }
 
@@ -35,11 +49,11 @@ export interface UpdateUnreadMessagesRequest {
  */
 export class ChatMessageControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getAllChatMessagesByZaehlungId without sending the request
    */
-  async getAllChatMessagesByZaehlungIdRaw(
-    requestParameters: GetAllChatMessagesByZaehlungIdRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<ChatMessageDTO>>> {
+  async getAllChatMessagesByZaehlungIdRequestOpts(
+    requestParameters: GetAllChatMessagesByZaehlungIdRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlungId"] == null) {
       throw new runtime.RequiredError(
         "zaehlungId",
@@ -57,15 +71,23 @@ export class ChatMessageControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chat-message/allChatMessagesByZaehlungId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllChatMessagesByZaehlungIdRaw(
+    requestParameters: GetAllChatMessagesByZaehlungIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<ChatMessageDTO>>> {
+    const requestOptions =
+      await this.getAllChatMessagesByZaehlungIdRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(ChatMessageDTOFromJSON)
@@ -86,11 +108,11 @@ export class ChatMessageControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveChatMessage without sending the request
    */
-  async saveChatMessageRaw(
-    requestParameters: SaveChatMessageRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<ChatMessageDTO>> {
+  async saveChatMessageRequestOpts(
+    requestParameters: SaveChatMessageRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["chatMessageDTO"] == null) {
       throw new runtime.RequiredError(
         "chatMessageDTO",
@@ -106,16 +128,24 @@ export class ChatMessageControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chat-message/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ChatMessageDTOToJSON(requestParameters["chatMessageDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ChatMessageDTOToJSON(requestParameters["chatMessageDTO"]),
+    };
+  }
+
+  /**
+   */
+  async saveChatMessageRaw(
+    requestParameters: SaveChatMessageRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ChatMessageDTO>> {
+    const requestOptions =
+      await this.saveChatMessageRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       ChatMessageDTOFromJSON(jsonValue)
@@ -136,11 +166,11 @@ export class ChatMessageControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for updateUnreadMessages without sending the request
    */
-  async updateUnreadMessagesRaw(
-    requestParameters: UpdateUnreadMessagesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async updateUnreadMessagesRequestOpts(
+    requestParameters: UpdateUnreadMessagesRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlungId"] == null) {
       throw new runtime.RequiredError(
         "zaehlungId",
@@ -170,15 +200,23 @@ export class ChatMessageControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chat-message/updateUnreadMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async updateUnreadMessagesRaw(
+    requestParameters: UpdateUnreadMessagesRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions =
+      await this.updateUnreadMessagesRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);

@@ -11,21 +11,23 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelEntityModelDienstleister,
-  EntityModelDienstleister,
-} from "../models/index";
+import type { CollectionModelEntityModelDienstleister } from "../models/CollectionModelEntityModelDienstleister";
+import type { EntityModelDienstleister } from "../models/EntityModelDienstleister";
 
 import {
   CollectionModelEntityModelDienstleisterFromJSON,
   CollectionModelEntityModelDienstleisterToJSON,
+} from "../models/CollectionModelEntityModelDienstleister";
+import {
   EntityModelDienstleisterFromJSON,
   EntityModelDienstleisterToJSON,
-} from "../models/index";
+} from "../models/EntityModelDienstleister";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchDienstleisterGet1Request {
+  /**
+   *
+   */
   kennung?: string;
 }
 
@@ -34,25 +36,31 @@ export interface ExecuteSearchDienstleisterGet1Request {
  */
 export class DienstleisterSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchDienstleisterGet without sending the request
    */
-  async executeSearchDienstleisterGetRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelDienstleister>> {
+  async executeSearchDienstleisterGetRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/dienstleisters/search/findAllByActiveIsTrue`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchDienstleisterGetRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelDienstleister>> {
+    const requestOptions =
+      await this.executeSearchDienstleisterGetRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelDienstleisterFromJSON(jsonValue)
@@ -69,11 +77,11 @@ export class DienstleisterSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchDienstleisterGet1 without sending the request
    */
-  async executeSearchDienstleisterGet1Raw(
-    requestParameters: ExecuteSearchDienstleisterGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+  async executeSearchDienstleisterGet1RequestOpts(
+    requestParameters: ExecuteSearchDienstleisterGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["kennung"] != null) {
@@ -84,15 +92,23 @@ export class DienstleisterSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters/search/findByKennung`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchDienstleisterGet1Raw(
+    requestParameters: ExecuteSearchDienstleisterGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+    const requestOptions =
+      await this.executeSearchDienstleisterGet1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelDienstleisterFromJSON(jsonValue)

@@ -22,50 +22,34 @@ import { mapValues } from "../runtime";
 export interface HochrechnungsfaktorDTO {
   /**
    *
-   * @type {string}
-   * @memberof HochrechnungsfaktorDTO
    */
   id?: string;
   /**
    *
-   * @type {number}
-   * @memberof HochrechnungsfaktorDTO
    */
   entityVersion?: number;
   /**
    *
-   * @type {string}
-   * @memberof HochrechnungsfaktorDTO
    */
   matrix: string;
   /**
    *
-   * @type {number}
-   * @memberof HochrechnungsfaktorDTO
    */
   kfz?: number;
   /**
    *
-   * @type {number}
-   * @memberof HochrechnungsfaktorDTO
    */
   sv?: number;
   /**
    *
-   * @type {number}
-   * @memberof HochrechnungsfaktorDTO
    */
   gv?: number;
   /**
    *
-   * @type {boolean}
-   * @memberof HochrechnungsfaktorDTO
    */
   active: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof HochrechnungsfaktorDTO
    */
   defaultFaktor: boolean;
 }

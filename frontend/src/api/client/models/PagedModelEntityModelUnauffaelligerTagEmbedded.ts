@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelUnauffaelligerTagEmbedded {
   /**
    *
-   * @type {Array<EntityModelUnauffaelligerTag>}
-   * @memberof PagedModelEntityModelUnauffaelligerTagEmbedded
    */
   unauffaelligerTags?: Array<EntityModelUnauffaelligerTag>;
 }

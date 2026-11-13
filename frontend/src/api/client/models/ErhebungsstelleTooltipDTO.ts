@@ -16,6 +16,12 @@ import type { MessstelleTooltipDTO } from "./MessstelleTooltipDTO";
 import type { ZaehlstelleTooltipDTO } from "./ZaehlstelleTooltipDTO";
 
 import {
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
   instanceOfMessstelleTooltipDTO,
   MessstelleTooltipDTOFromJSON,
   MessstelleTooltipDTOFromJSONTyped,
@@ -59,7 +65,6 @@ export function ErhebungsstelleTooltipDTOFromJSONTyped(
   if (instanceOfZaehlstelleTooltipDTO(json)) {
     return ZaehlstelleTooltipDTOFromJSONTyped(json, true);
   }
-
   return {} as any;
 }
 
@@ -83,6 +88,5 @@ export function ErhebungsstelleTooltipDTOToJSONTyped(
   if (instanceOfZaehlstelleTooltipDTO(value)) {
     return ZaehlstelleTooltipDTOToJSON(value as ZaehlstelleTooltipDTO);
   }
-
   return {};
 }

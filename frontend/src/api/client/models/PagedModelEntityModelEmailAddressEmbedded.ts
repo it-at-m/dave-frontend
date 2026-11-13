@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelEmailAddressEmbedded {
   /**
    *
-   * @type {Array<EntityModelEmailAddress>}
-   * @memberof PagedModelEntityModelEmailAddressEmbedded
    */
   emailAddresses?: Array<EntityModelEmailAddress>;
 }

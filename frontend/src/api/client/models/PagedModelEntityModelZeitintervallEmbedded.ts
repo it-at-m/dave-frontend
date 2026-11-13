@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelZeitintervallEmbedded {
   /**
    *
-   * @type {Array<EntityModelZeitintervall>}
-   * @memberof PagedModelEntityModelZeitintervallEmbedded
    */
   zeitintervalls?: Array<EntityModelZeitintervall>;
 }

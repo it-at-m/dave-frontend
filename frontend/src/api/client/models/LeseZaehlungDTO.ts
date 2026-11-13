@@ -19,7 +19,13 @@ import type { Querungsverkehr } from "./Querungsverkehr";
 import type { Verkehrsbeziehung } from "./Verkehrsbeziehung";
 import type { ZeitauswahlDTO } from "./ZeitauswahlDTO";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   KnotenarmFromJSON,
   KnotenarmFromJSONTyped,
@@ -65,200 +71,134 @@ import {
 export interface LeseZaehlungDTO {
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof LeseZaehlungDTO
    */
   datum?: Date;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlungDTO
    */
   jahr?: number;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   monat?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   jahreszeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   zaehlart?: string;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlungDTO
    */
   lat?: number;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlungDTO
    */
   lng?: number;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   tagesTyp?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   projektNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   projektName?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   kreuzungsname?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof LeseZaehlungDTO
    */
   sonderzaehlung?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof LeseZaehlungDTO
    */
   kreisverkehr?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   status?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   zaehlsituation?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   zaehlsituationErweitert?: string;
   /**
    *
-   * @type {number}
-   * @memberof LeseZaehlungDTO
    */
   zaehlIntervall?: number;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   wetter?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   zaehldauer?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   quelle?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   kommentar?: string;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   schulZeiten?: string;
   /**
    *
-   * @type {PkwEinheit}
-   * @memberof LeseZaehlungDTO
    */
   pkwEinheit?: PkwEinheit;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LeseZaehlungDTO
    */
   kategorien?: Array<LeseZaehlungDTOKategorienEnum>;
   /**
    *
-   * @type {Array<Knotenarm>}
-   * @memberof LeseZaehlungDTO
    */
   knotenarme?: Array<Knotenarm>;
   /**
    *
-   * @type {Array<Laengsverkehr>}
-   * @memberof LeseZaehlungDTO
    */
   laengsverkehr?: Array<Laengsverkehr>;
   /**
    *
-   * @type {Array<Querungsverkehr>}
-   * @memberof LeseZaehlungDTO
    */
   querungsverkehr?: Array<Querungsverkehr>;
   /**
    *
-   * @type {Array<Verkehrsbeziehung>}
-   * @memberof LeseZaehlungDTO
    */
   verkehrsbeziehungen?: Array<Verkehrsbeziehung>;
   /**
    *
-   * @type {ZeitauswahlDTO}
-   * @memberof LeseZaehlungDTO
    */
   zeitauswahl?: ZeitauswahlDTO;
   /**
    *
-   * @type {boolean}
-   * @memberof LeseZaehlungDTO
    */
   unreadMessagesMobilitaetsreferat?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof LeseZaehlungDTO
    */
   unreadMessagesDienstleister?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof LeseZaehlungDTO
    */
   dienstleisterkennung?: string;
 }
@@ -306,7 +246,7 @@ export function LeseZaehlungDTOFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDateTime(json["datum"]),
     jahr: json["jahr"] == null ? undefined : json["jahr"],
     monat: json["monat"] == null ? undefined : json["monat"],
     jahreszeit: json["jahreszeit"] == null ? undefined : json["jahreszeit"],
@@ -393,7 +333,10 @@ export function LeseZaehlungDTOToJSONTyped(
 
   return {
     id: value["id"],
-    datum: value["datum"] == null ? undefined : value["datum"].toISOString(),
+    datum:
+      value["datum"] == null
+        ? value["datum"]
+        : serializeDateTime(value["datum"]),
     jahr: value["jahr"],
     monat: value["monat"],
     jahreszeit: value["jahreszeit"],

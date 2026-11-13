@@ -1,21 +1,3 @@
-import type {
-  LadeBelastungsplanDTO,
-  LadeBelastungsplanFjsDTO,
-  LadeBelastungsplanQjsDTO,
-  LadeBelastungsplanQuDTO,
-} from "@/api/client";
-
-import {
-  LadeBelastungsplanDTOFromJSONTyped,
-  LadeBelastungsplanDTOToJSON,
-  LadeBelastungsplanFjsDTOFromJSONTyped,
-  LadeBelastungsplanFjsDTOToJSON,
-  LadeBelastungsplanQjsDTOFromJSONTyped,
-  LadeBelastungsplanQjsDTOToJSON,
-  LadeBelastungsplanQuDTOFromJSONTyped,
-  LadeBelastungsplanQuDTOToJSON,
-} from "@/api/client";
-
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -29,6 +11,42 @@ import {
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
+import type { LadeBelastungsplanDTO } from "./LadeBelastungsplanDTO";
+import type { LadeBelastungsplanFjsDTO } from "./LadeBelastungsplanFjsDTO";
+import type { LadeBelastungsplanQjsDTO } from "./LadeBelastungsplanQjsDTO";
+import type { LadeBelastungsplanQuDTO } from "./LadeBelastungsplanQuDTO";
+
+import {
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  instanceOfLadeBelastungsplanDTO,
+  LadeBelastungsplanDTOFromJSON,
+  LadeBelastungsplanDTOFromJSONTyped,
+  LadeBelastungsplanDTOToJSON,
+} from "./LadeBelastungsplanDTO";
+import {
+  instanceOfLadeBelastungsplanFjsDTO,
+  LadeBelastungsplanFjsDTOFromJSON,
+  LadeBelastungsplanFjsDTOFromJSONTyped,
+  LadeBelastungsplanFjsDTOToJSON,
+} from "./LadeBelastungsplanFjsDTO";
+import {
+  instanceOfLadeBelastungsplanQjsDTO,
+  LadeBelastungsplanQjsDTOFromJSON,
+  LadeBelastungsplanQjsDTOFromJSONTyped,
+  LadeBelastungsplanQjsDTOToJSON,
+} from "./LadeBelastungsplanQjsDTO";
+import {
+  instanceOfLadeBelastungsplanQuDTO,
+  LadeBelastungsplanQuDTOFromJSON,
+  LadeBelastungsplanQuDTOFromJSONTyped,
+  LadeBelastungsplanQuDTOToJSON,
+} from "./LadeBelastungsplanQuDTO";
 
 /**
  * @type LadeProcessedZaehldatenBelastungsplanDTO

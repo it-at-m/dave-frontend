@@ -15,7 +15,13 @@
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { ZaehldatenIntervall } from "./ZaehldatenIntervall";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   FahrzeugklasseFromJSON,
   FahrzeugklasseFromJSONTyped,
@@ -37,116 +43,78 @@ import {
 export interface OptionsmenueSettingsRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   version?: number;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   intervall?: ZaehldatenIntervall;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   kraftfahrzeugverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   schwerverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   gueterverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   schwerverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   gueterverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   radverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   fussverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   lastkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   lastzuegeChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   busseChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   kraftraederChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   personenkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   lieferwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {number}
-   * @memberof OptionsmenueSettingsRequestBody
    */
   entityVersion?: number;
 }
@@ -176,7 +144,9 @@ export function OptionsmenueSettingsRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     fahrzeugklasse:
       json["fahrzeugklasse"] == null
@@ -287,8 +257,8 @@ export function OptionsmenueSettingsRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
     intervall: ZaehldatenIntervallToJSON(value["intervall"]),

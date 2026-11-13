@@ -22,44 +22,30 @@ import { mapValues } from "../runtime";
 export interface BelastungsplanDataDTO {
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanDataDTO
    */
   label: string;
   /**
    *
-   * @type {boolean}
-   * @memberof BelastungsplanDataDTO
    */
   filled: boolean;
   /**
    *
-   * @type {Array<Array<number>>}
-   * @memberof BelastungsplanDataDTO
    */
   values: Array<Array<number>>;
   /**
    *
-   * @type {boolean}
-   * @memberof BelastungsplanDataDTO
    */
   percent: boolean;
   /**
    *
-   * @type {Array<number>}
-   * @memberof BelastungsplanDataDTO
    */
   sumIn: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof BelastungsplanDataDTO
    */
   sumOut: Array<number>;
   /**
    *
-   * @type {Array<number>}
-   * @memberof BelastungsplanDataDTO
    */
   sum: Array<number>;
 }

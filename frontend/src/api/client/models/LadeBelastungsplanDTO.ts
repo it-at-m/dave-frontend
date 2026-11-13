@@ -30,38 +30,26 @@ import {
 export interface LadeBelastungsplanDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeBelastungsplanDTO
    */
   belastungsplanTyp: LadeBelastungsplanDTOBelastungsplanTypEnum;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeBelastungsplanDTO
    */
   streets: Array<string>;
   /**
    *
-   * @type {boolean}
-   * @memberof LadeBelastungsplanDTO
    */
   kreisverkehr: boolean;
   /**
    *
-   * @type {BelastungsplanDataDTO}
-   * @memberof LadeBelastungsplanDTO
    */
   value1: BelastungsplanDataDTO;
   /**
    *
-   * @type {BelastungsplanDataDTO}
-   * @memberof LadeBelastungsplanDTO
    */
   value2: BelastungsplanDataDTO;
   /**
    *
-   * @type {BelastungsplanDataDTO}
-   * @memberof LadeBelastungsplanDTO
    */
   value3: BelastungsplanDataDTO;
 }
@@ -86,6 +74,8 @@ export function instanceOfLadeBelastungsplanDTO(
     value["belastungsplanTyp"] === undefined
   )
     return false;
+  if (value["belastungsplanTyp"] !== "DEFAULT") return false;
+
   if (!("streets" in value) || value["streets"] === undefined) return false;
   if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
     return false;

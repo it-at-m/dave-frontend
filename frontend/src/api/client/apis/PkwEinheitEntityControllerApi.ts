@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelPkwEinheit,
-  PagedModelEntityModelPkwEinheit,
-  PkwEinheitRequestBody,
-} from "../models/index";
+import type { EntityModelPkwEinheit } from "../models/EntityModelPkwEinheit";
+import type { PagedModelEntityModelPkwEinheit } from "../models/PagedModelEntityModelPkwEinheit";
+import type { PkwEinheitRequestBody } from "../models/PkwEinheitRequestBody";
 
 import {
   EntityModelPkwEinheitFromJSON,
   EntityModelPkwEinheitToJSON,
+} from "../models/EntityModelPkwEinheit";
+import {
   PagedModelEntityModelPkwEinheitFromJSON,
   PagedModelEntityModelPkwEinheitToJSON,
+} from "../models/PagedModelEntityModelPkwEinheit";
+import {
   PkwEinheitRequestBodyFromJSON,
   PkwEinheitRequestBodyToJSON,
-} from "../models/index";
+} from "../models/PkwEinheitRequestBody";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourcePkweinheitDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourcePkweinheitGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourcePkweinheitGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourcePkweinheitPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   pkwEinheitRequestBody: PkwEinheitRequestBody;
 }
 
 export interface PostCollectionResourcePkweinheitPostRequest {
+  /**
+   *
+   */
   pkwEinheitRequestBody: PkwEinheitRequestBody;
 }
 
 export interface PutItemResourcePkweinheitPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   pkwEinheitRequestBody: PkwEinheitRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourcePkweinheitPutRequest {
  */
 export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-pkweinheit
+   * Creates request options for deleteItemResourcePkweinheitDelete without sending the request
    */
-  async deleteItemResourcePkweinheitDeleteRaw(
-    requestParameters: DeleteItemResourcePkweinheitDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourcePkweinheitDeleteRequestOpts(
+    requestParameters: DeleteItemResourcePkweinheitDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/pkwEinheits/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-pkweinheit
+   */
+  async deleteItemResourcePkweinheitDeleteRaw(
+    requestParameters: DeleteItemResourcePkweinheitDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourcePkweinheitDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-pkweinheit
+   * Creates request options for getCollectionResourcePkweinheitGet without sending the request
    */
-  async getCollectionResourcePkweinheitGetRaw(
-    requestParameters: GetCollectionResourcePkweinheitGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelPkwEinheit>> {
+  async getCollectionResourcePkweinheitGetRequestOpts(
+    requestParameters: GetCollectionResourcePkweinheitGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/pkwEinheits`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-pkweinheit
+   */
+  async getCollectionResourcePkweinheitGetRaw(
+    requestParameters: GetCollectionResourcePkweinheitGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelPkwEinheit>> {
+    const requestOptions =
+      await this.getCollectionResourcePkweinheitGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelPkwEinheitFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-pkweinheit
+   * Creates request options for getItemResourcePkweinheitGet without sending the request
    */
-  async getItemResourcePkweinheitGetRaw(
-    requestParameters: GetItemResourcePkweinheitGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+  async getItemResourcePkweinheitGetRequestOpts(
+    requestParameters: GetItemResourcePkweinheitGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/pkwEinheits/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-pkweinheit
+   */
+  async getItemResourcePkweinheitGetRaw(
+    requestParameters: GetItemResourcePkweinheitGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+    const requestOptions =
+      await this.getItemResourcePkweinheitGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelPkwEinheitFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-pkweinheit
+   * Creates request options for patchItemResourcePkweinheitPatch without sending the request
    */
-  async patchItemResourcePkweinheitPatchRaw(
-    requestParameters: PatchItemResourcePkweinheitPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+  async patchItemResourcePkweinheitPatchRequestOpts(
+    requestParameters: PatchItemResourcePkweinheitPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,31 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/pkwEinheits/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: PkwEinheitRequestBodyToJSON(
-          requestParameters["pkwEinheitRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: PkwEinheitRequestBodyToJSON(
+        requestParameters["pkwEinheitRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-pkweinheit
+   */
+  async patchItemResourcePkweinheitPatchRaw(
+    requestParameters: PatchItemResourcePkweinheitPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+    const requestOptions =
+      await this.patchItemResourcePkweinheitPatchRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelPkwEinheitFromJSON(jsonValue)
@@ -290,12 +357,11 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-pkweinheit
+   * Creates request options for postCollectionResourcePkweinheitPost without sending the request
    */
-  async postCollectionResourcePkweinheitPostRaw(
-    requestParameters: PostCollectionResourcePkweinheitPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+  async postCollectionResourcePkweinheitPostRequestOpts(
+    requestParameters: PostCollectionResourcePkweinheitPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["pkwEinheitRequestBody"] == null) {
       throw new runtime.RequiredError(
         "pkwEinheitRequestBody",
@@ -311,18 +377,29 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/pkwEinheits`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: PkwEinheitRequestBodyToJSON(
-          requestParameters["pkwEinheitRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: PkwEinheitRequestBodyToJSON(
+        requestParameters["pkwEinheitRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-pkweinheit
+   */
+  async postCollectionResourcePkweinheitPostRaw(
+    requestParameters: PostCollectionResourcePkweinheitPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+    const requestOptions =
+      await this.postCollectionResourcePkweinheitPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelPkwEinheitFromJSON(jsonValue)
@@ -344,12 +421,11 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-pkweinheit
+   * Creates request options for putItemResourcePkweinheitPut without sending the request
    */
-  async putItemResourcePkweinheitPutRaw(
-    requestParameters: PutItemResourcePkweinheitPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+  async putItemResourcePkweinheitPutRequestOpts(
+    requestParameters: PutItemResourcePkweinheitPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +448,31 @@ export class PkwEinheitEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/pkwEinheits/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: PkwEinheitRequestBodyToJSON(
-          requestParameters["pkwEinheitRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: PkwEinheitRequestBodyToJSON(
+        requestParameters["pkwEinheitRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-pkweinheit
+   */
+  async putItemResourcePkweinheitPutRaw(
+    requestParameters: PutItemResourcePkweinheitPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+    const requestOptions =
+      await this.putItemResourcePkweinheitPutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelPkwEinheitFromJSON(jsonValue)

@@ -51,32 +51,22 @@ import {
 export interface MessstelleAuswertungOptionsDTO {
   /**
    *
-   * @type {Array<number>}
-   * @memberof MessstelleAuswertungOptionsDTO
    */
   jahre: Array<number>;
   /**
    *
-   * @type {TagesTyp}
-   * @memberof MessstelleAuswertungOptionsDTO
    */
   tagesTyp: TagesTyp;
   /**
    *
-   * @type {Array<AuswertungsZeitraum>}
-   * @memberof MessstelleAuswertungOptionsDTO
    */
   zeitraum: Array<AuswertungsZeitraum>;
   /**
    *
-   * @type {Set<MessstelleAuswertungIdDTO>}
-   * @memberof MessstelleAuswertungOptionsDTO
    */
   messstelleAuswertungIds: Set<MessstelleAuswertungIdDTO>;
   /**
    *
-   * @type {FahrzeugOptionsDTO}
-   * @memberof MessstelleAuswertungOptionsDTO
    */
   fahrzeuge: FahrzeugOptionsDTO;
 }

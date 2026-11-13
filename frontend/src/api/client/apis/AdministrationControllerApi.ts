@@ -11,16 +11,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { ResetAuffaelligkeitenDTO } from "../models/index";
+import type { ResetAuffaelligkeitenDTO } from "../models/ResetAuffaelligkeitenDTO";
 
 import {
   ResetAuffaelligkeitenDTOFromJSON,
   ResetAuffaelligkeitenDTOToJSON,
-} from "../models/index";
+} from "../models/ResetAuffaelligkeitenDTO";
 import * as runtime from "../runtime";
 
 export interface ResetUnauffaelligerTagRequest {
+  /**
+   *
+   */
   resetAuffaelligkeitenDTO: ResetAuffaelligkeitenDTO;
 }
 
@@ -29,11 +31,11 @@ export interface ResetUnauffaelligerTagRequest {
  */
 export class AdministrationControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for resetUnauffaelligerTag without sending the request
    */
-  async resetUnauffaelligerTagRaw(
-    requestParameters: ResetUnauffaelligerTagRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async resetUnauffaelligerTagRequestOpts(
+    requestParameters: ResetUnauffaelligerTagRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["resetAuffaelligkeitenDTO"] == null) {
       throw new runtime.RequiredError(
         "resetAuffaelligkeitenDTO",
@@ -49,18 +51,26 @@ export class AdministrationControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/administration/reset-unauffaelliger-tag`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ResetAuffaelligkeitenDTOToJSON(
-          requestParameters["resetAuffaelligkeitenDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ResetAuffaelligkeitenDTOToJSON(
+        requestParameters["resetAuffaelligkeitenDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async resetUnauffaelligerTagRaw(
+    requestParameters: ResetUnauffaelligerTagRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.resetUnauffaelligerTagRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }

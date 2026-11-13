@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelZaehlstelleEmbedded {
   /**
    *
-   * @type {Array<EntityModelZaehlstelle>}
-   * @memberof PagedModelEntityModelZaehlstelleEmbedded
    */
   zaehlstelles?: Array<EntityModelZaehlstelle>;
 }

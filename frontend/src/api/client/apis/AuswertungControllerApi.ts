@@ -11,24 +11,28 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  AuswertungMessstelleWithFileDTO,
-  MessstelleAuswertungDTO,
-  MessstelleAuswertungOptionsDTO,
-} from "../models/index";
+import type { AuswertungMessstelleWithFileDTO } from "../models/AuswertungMessstelleWithFileDTO";
+import type { MessstelleAuswertungDTO } from "../models/MessstelleAuswertungDTO";
+import type { MessstelleAuswertungOptionsDTO } from "../models/MessstelleAuswertungOptionsDTO";
 
 import {
   AuswertungMessstelleWithFileDTOFromJSON,
   AuswertungMessstelleWithFileDTOToJSON,
+} from "../models/AuswertungMessstelleWithFileDTO";
+import {
   MessstelleAuswertungDTOFromJSON,
   MessstelleAuswertungDTOToJSON,
+} from "../models/MessstelleAuswertungDTO";
+import {
   MessstelleAuswertungOptionsDTOFromJSON,
   MessstelleAuswertungOptionsDTOToJSON,
-} from "../models/index";
+} from "../models/MessstelleAuswertungOptionsDTO";
 import * as runtime from "../runtime";
 
 export interface GetAuswertungMessstelleRequest {
+  /**
+   *
+   */
   messstelleAuswertungOptionsDTO: MessstelleAuswertungOptionsDTO;
 }
 
@@ -37,25 +41,30 @@ export interface GetAuswertungMessstelleRequest {
  */
 export class AuswertungControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getAllVisibleMessstellen without sending the request
    */
-  async getAllVisibleMessstellenRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<MessstelleAuswertungDTO>>> {
+  async getAllVisibleMessstellenRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/auswertung/messstelle/getAllVisibleMessstellen`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllVisibleMessstellenRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<MessstelleAuswertungDTO>>> {
+    const requestOptions = await this.getAllVisibleMessstellenRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(MessstelleAuswertungDTOFromJSON)
@@ -72,11 +81,11 @@ export class AuswertungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getAuswertungMessstelle without sending the request
    */
-  async getAuswertungMessstelleRaw(
-    requestParameters: GetAuswertungMessstelleRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<AuswertungMessstelleWithFileDTO>> {
+  async getAuswertungMessstelleRequestOpts(
+    requestParameters: GetAuswertungMessstelleRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["messstelleAuswertungOptionsDTO"] == null) {
       throw new runtime.RequiredError(
         "messstelleAuswertungOptionsDTO",
@@ -92,18 +101,26 @@ export class AuswertungControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/auswertung/messstelle`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: MessstelleAuswertungOptionsDTOToJSON(
-          requestParameters["messstelleAuswertungOptionsDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: MessstelleAuswertungOptionsDTOToJSON(
+        requestParameters["messstelleAuswertungOptionsDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async getAuswertungMessstelleRaw(
+    requestParameters: GetAuswertungMessstelleRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<AuswertungMessstelleWithFileDTO>> {
+    const requestOptions =
+      await this.getAuswertungMessstelleRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       AuswertungMessstelleWithFileDTOFromJSON(jsonValue)

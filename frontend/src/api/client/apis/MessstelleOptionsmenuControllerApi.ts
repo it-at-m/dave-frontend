@@ -11,28 +11,35 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  AuffaelligeTageDTO,
-  ValidatedZeitraumAndTagestypDTO,
-  ValidateZeitraumAndTagestypForMessstelleDTO,
-} from "../models/index";
+import type { AuffaelligeTageDTO } from "../models/AuffaelligeTageDTO";
+import type { ValidatedZeitraumAndTagestypDTO } from "../models/ValidatedZeitraumAndTagestypDTO";
+import type { ValidateZeitraumAndTagestypForMessstelleDTO } from "../models/ValidateZeitraumAndTagestypForMessstelleDTO";
 
 import {
   AuffaelligeTageDTOFromJSON,
   AuffaelligeTageDTOToJSON,
+} from "../models/AuffaelligeTageDTO";
+import {
   ValidatedZeitraumAndTagestypDTOFromJSON,
   ValidatedZeitraumAndTagestypDTOToJSON,
+} from "../models/ValidatedZeitraumAndTagestypDTO";
+import {
   ValidateZeitraumAndTagestypForMessstelleDTOFromJSON,
   ValidateZeitraumAndTagestypForMessstelleDTOToJSON,
-} from "../models/index";
+} from "../models/ValidateZeitraumAndTagestypForMessstelleDTO";
 import * as runtime from "../runtime";
 
 export interface GetAuffaelligeTageRequest {
+  /**
+   *
+   */
   mstId: string;
 }
 
 export interface ValidateZeitraumAndTagestypRequest {
+  /**
+   *
+   */
   validateZeitraumAndTagestypForMessstelleDTO: ValidateZeitraumAndTagestypForMessstelleDTO;
 }
 
@@ -41,11 +48,11 @@ export interface ValidateZeitraumAndTagestypRequest {
  */
 export class MessstelleOptionsmenuControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getAuffaelligeTage without sending the request
    */
-  async getAuffaelligeTageRaw(
-    requestParameters: GetAuffaelligeTageRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<AuffaelligeTageDTO>> {
+  async getAuffaelligeTageRequestOpts(
+    requestParameters: GetAuffaelligeTageRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["mstId"] == null) {
       throw new runtime.RequiredError(
         "mstId",
@@ -63,15 +70,23 @@ export class MessstelleOptionsmenuControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelle-optionsmenu/auffaellige-tage`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAuffaelligeTageRaw(
+    requestParameters: GetAuffaelligeTageRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<AuffaelligeTageDTO>> {
+    const requestOptions =
+      await this.getAuffaelligeTageRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       AuffaelligeTageDTOFromJSON(jsonValue)
@@ -92,11 +107,11 @@ export class MessstelleOptionsmenuControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for validateZeitraumAndTagestyp without sending the request
    */
-  async validateZeitraumAndTagestypRaw(
-    requestParameters: ValidateZeitraumAndTagestypRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<ValidatedZeitraumAndTagestypDTO>> {
+  async validateZeitraumAndTagestypRequestOpts(
+    requestParameters: ValidateZeitraumAndTagestypRequest
+  ): Promise<runtime.RequestOpts> {
     if (
       requestParameters["validateZeitraumAndTagestypForMessstelleDTO"] == null
     ) {
@@ -114,18 +129,26 @@ export class MessstelleOptionsmenuControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelle-optionsmenu/validate-zeitraum-and-tagestyp`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ValidateZeitraumAndTagestypForMessstelleDTOToJSON(
-          requestParameters["validateZeitraumAndTagestypForMessstelleDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ValidateZeitraumAndTagestypForMessstelleDTOToJSON(
+        requestParameters["validateZeitraumAndTagestypForMessstelleDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async validateZeitraumAndTagestypRaw(
+    requestParameters: ValidateZeitraumAndTagestypRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<ValidatedZeitraumAndTagestypDTO>> {
+    const requestOptions =
+      await this.validateZeitraumAndTagestypRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       ValidatedZeitraumAndTagestypDTOFromJSON(jsonValue)

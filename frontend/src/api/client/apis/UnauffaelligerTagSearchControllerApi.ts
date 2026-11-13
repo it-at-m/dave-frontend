@@ -11,39 +11,58 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelEntityModelUnauffaelligerTag,
-  EntityModelUnauffaelligerTag,
-  TagesTyp,
-} from "../models/index";
+import type { CollectionModelEntityModelUnauffaelligerTag } from "../models/CollectionModelEntityModelUnauffaelligerTag";
+import type { EntityModelUnauffaelligerTag } from "../models/EntityModelUnauffaelligerTag";
+import type { TagesTyp } from "../models/TagesTyp";
 
 import {
   CollectionModelEntityModelUnauffaelligerTagFromJSON,
   CollectionModelEntityModelUnauffaelligerTagToJSON,
+} from "../models/CollectionModelEntityModelUnauffaelligerTag";
+import {
   EntityModelUnauffaelligerTagFromJSON,
   EntityModelUnauffaelligerTagToJSON,
-  TagesTypFromJSON,
-  TagesTypToJSON,
-} from "../models/index";
+} from "../models/EntityModelUnauffaelligerTag";
+import { TagesTypFromJSON, TagesTypToJSON } from "../models/TagesTyp";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchUnauffaelligertagGetRequest {
+  /**
+   *
+   */
   mstId?: string;
+  /**
+   *
+   */
   startDateIncluded?: Date;
+  /**
+   *
+   */
   endDateIncluded?: Date;
+  /**
+   *
+   */
   tagesTyp?: Array<TagesTyp>;
 }
 
 export interface ExecuteSearchUnauffaelligertagGet1Request {
+  /**
+   *
+   */
   kalendertagDatum?: Date;
 }
 
 export interface ExecuteSearchUnauffaelligertagGet2Request {
+  /**
+   *
+   */
   mstId?: string;
 }
 
 export interface ExecuteSearchUnauffaelligertagGet3Request {
+  /**
+   *
+   */
   mstId?: string;
 }
 
@@ -52,11 +71,11 @@ export interface ExecuteSearchUnauffaelligertagGet3Request {
  */
 export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchUnauffaelligertagGet without sending the request
    */
-  async executeSearchUnauffaelligertagGetRaw(
-    requestParameters: ExecuteSearchUnauffaelligertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<number>> {
+  async executeSearchUnauffaelligertagGetRequestOpts(
+    requestParameters: ExecuteSearchUnauffaelligertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["mstId"] != null) {
@@ -64,19 +83,15 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startDateIncluded"] != null) {
-      queryParameters["startDateIncluded"] = (
+      queryParameters["startDateIncluded"] = runtime.serializeDate(
         requestParameters["startDateIncluded"] as any
-      )
-        .toISOString()
-        .substring(0, 10);
+      );
     }
 
     if (requestParameters["endDateIncluded"] != null) {
-      queryParameters["endDateIncluded"] = (
+      queryParameters["endDateIncluded"] = runtime.serializeDate(
         requestParameters["endDateIncluded"] as any
-      )
-        .toISOString()
-        .substring(0, 10);
+      );
     }
 
     if (requestParameters["tagesTyp"] != null) {
@@ -87,15 +102,25 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/search/countAllByMstIdAndKalendertagDatumGreaterThanEqualAndKalendertagDatumLessThanEqualAndKalendertagTagestypIn`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchUnauffaelligertagGetRaw(
+    requestParameters: ExecuteSearchUnauffaelligertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<number>> {
+    const requestOptions =
+      await this.executeSearchUnauffaelligertagGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<number>(response);
@@ -118,34 +143,42 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchUnauffaelligertagGet1 without sending the request
    */
-  async executeSearchUnauffaelligertagGet1Raw(
-    requestParameters: ExecuteSearchUnauffaelligertagGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async executeSearchUnauffaelligertagGet1RequestOpts(
+    requestParameters: ExecuteSearchUnauffaelligertagGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["kalendertagDatum"] != null) {
-      queryParameters["kalendertagDatum"] = (
+      queryParameters["kalendertagDatum"] = runtime.serializeDate(
         requestParameters["kalendertagDatum"] as any
-      )
-        .toISOString()
-        .substring(0, 10);
+      );
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/unauffaelligerTags/search/deleteAllByKalendertagDatum`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchUnauffaelligertagGet1Raw(
+    requestParameters: ExecuteSearchUnauffaelligertagGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.executeSearchUnauffaelligertagGet1RequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -163,11 +196,11 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchUnauffaelligertagGet2 without sending the request
    */
-  async executeSearchUnauffaelligertagGet2Raw(
-    requestParameters: ExecuteSearchUnauffaelligertagGet2Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelUnauffaelligerTag>> {
+  async executeSearchUnauffaelligertagGet2RequestOpts(
+    requestParameters: ExecuteSearchUnauffaelligertagGet2Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["mstId"] != null) {
@@ -178,15 +211,25 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/search/findByMstId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchUnauffaelligertagGet2Raw(
+    requestParameters: ExecuteSearchUnauffaelligertagGet2Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.executeSearchUnauffaelligertagGet2RequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelUnauffaelligerTagFromJSON(jsonValue)
@@ -207,11 +250,11 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchUnauffaelligertagGet3 without sending the request
    */
-  async executeSearchUnauffaelligertagGet3Raw(
-    requestParameters: ExecuteSearchUnauffaelligertagGet3Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+  async executeSearchUnauffaelligertagGet3RequestOpts(
+    requestParameters: ExecuteSearchUnauffaelligertagGet3Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["mstId"] != null) {
@@ -222,15 +265,25 @@ export class UnauffaelligerTagSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/search/findFirstByMstIdOrderByKalendertagDatumDesc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchUnauffaelligertagGet3Raw(
+    requestParameters: ExecuteSearchUnauffaelligertagGet3Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.executeSearchUnauffaelligertagGet3RequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelUnauffaelligerTagFromJSON(jsonValue)

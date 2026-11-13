@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface ZaehlartenKarteDTO {
   /**
    *
-   * @type {number}
-   * @memberof ZaehlartenKarteDTO
    */
   longitude: number;
   /**
    *
-   * @type {number}
-   * @memberof ZaehlartenKarteDTO
    */
   latitude: number;
   /**
    *
-   * @type {Set<string>}
-   * @memberof ZaehlartenKarteDTO
    */
   zaehlarten: Set<string>;
 }

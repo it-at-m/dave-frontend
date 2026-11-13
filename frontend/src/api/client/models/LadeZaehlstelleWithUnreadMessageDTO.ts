@@ -30,32 +30,22 @@ import {
 export interface LadeZaehlstelleWithUnreadMessageDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlstelleWithUnreadMessageDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlstelleWithUnreadMessageDTO
    */
   nummer?: string;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehlstelleWithUnreadMessageDTO
    */
   lat?: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehlstelleWithUnreadMessageDTO
    */
   lng?: number;
   /**
    *
-   * @type {Array<LadeZaehlungWithUnreadMessageDTO>}
-   * @memberof LadeZaehlstelleWithUnreadMessageDTO
    */
   zaehlungen?: Array<LadeZaehlungWithUnreadMessageDTO>;
 }

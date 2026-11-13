@@ -22,50 +22,34 @@ import { mapValues } from "../runtime";
 export interface LadeBelastungsplanMessquerschnittDataDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   mqId: string;
   /**
    *
-   * @type {number}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   sumKfz: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   sumSv: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   sumGv: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   sumRad: number;
   /**
    *
-   * @type {string}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   direction: string;
   /**
    *
-   * @type {number}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   percentSv: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeBelastungsplanMessquerschnittDataDTO
    */
   percentGV: number;
 }

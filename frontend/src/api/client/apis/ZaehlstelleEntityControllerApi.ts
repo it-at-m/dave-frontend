@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelZaehlstelle,
-  PagedModelEntityModelZaehlstelle,
-  ZaehlstelleRequestBody,
-} from "../models/index";
+import type { EntityModelZaehlstelle } from "../models/EntityModelZaehlstelle";
+import type { PagedModelEntityModelZaehlstelle } from "../models/PagedModelEntityModelZaehlstelle";
+import type { ZaehlstelleRequestBody } from "../models/ZaehlstelleRequestBody";
 
 import {
   EntityModelZaehlstelleFromJSON,
   EntityModelZaehlstelleToJSON,
+} from "../models/EntityModelZaehlstelle";
+import {
   PagedModelEntityModelZaehlstelleFromJSON,
   PagedModelEntityModelZaehlstelleToJSON,
+} from "../models/PagedModelEntityModelZaehlstelle";
+import {
   ZaehlstelleRequestBodyFromJSON,
   ZaehlstelleRequestBodyToJSON,
-} from "../models/index";
+} from "../models/ZaehlstelleRequestBody";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceZaehlstelleDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceZaehlstelleGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceZaehlstelleGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceZaehlstellePatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   zaehlstelleRequestBody: ZaehlstelleRequestBody;
 }
 
 export interface PostCollectionResourceZaehlstellePostRequest {
+  /**
+   *
+   */
   zaehlstelleRequestBody: ZaehlstelleRequestBody;
 }
 
 export interface PutItemResourceZaehlstellePutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   zaehlstelleRequestBody: ZaehlstelleRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceZaehlstellePutRequest {
  */
 export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-zaehlstelle
+   * Creates request options for deleteItemResourceZaehlstelleDelete without sending the request
    */
-  async deleteItemResourceZaehlstelleDeleteRaw(
-    requestParameters: DeleteItemResourceZaehlstelleDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceZaehlstelleDeleteRequestOpts(
+    requestParameters: DeleteItemResourceZaehlstelleDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-zaehlstelle
+   */
+  async deleteItemResourceZaehlstelleDeleteRaw(
+    requestParameters: DeleteItemResourceZaehlstelleDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceZaehlstelleDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-zaehlstelle
+   * Creates request options for getCollectionResourceZaehlstelleGet without sending the request
    */
-  async getCollectionResourceZaehlstelleGetRaw(
-    requestParameters: GetCollectionResourceZaehlstelleGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelZaehlstelle>> {
+  async getCollectionResourceZaehlstelleGetRequestOpts(
+    requestParameters: GetCollectionResourceZaehlstelleGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-zaehlstelle
+   */
+  async getCollectionResourceZaehlstelleGetRaw(
+    requestParameters: GetCollectionResourceZaehlstelleGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.getCollectionResourceZaehlstelleGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-zaehlstelle
+   * Creates request options for getItemResourceZaehlstelleGet without sending the request
    */
-  async getItemResourceZaehlstelleGetRaw(
-    requestParameters: GetItemResourceZaehlstelleGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+  async getItemResourceZaehlstelleGetRequestOpts(
+    requestParameters: GetItemResourceZaehlstelleGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-zaehlstelle
+   */
+  async getItemResourceZaehlstelleGetRaw(
+    requestParameters: GetItemResourceZaehlstelleGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.getItemResourceZaehlstelleGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZaehlstelleFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-zaehlstelle
+   * Creates request options for patchItemResourceZaehlstellePatch without sending the request
    */
-  async patchItemResourceZaehlstellePatchRaw(
-    requestParameters: PatchItemResourceZaehlstellePatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+  async patchItemResourceZaehlstellePatchRequestOpts(
+    requestParameters: PatchItemResourceZaehlstellePatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ZaehlstelleRequestBodyToJSON(
-          requestParameters["zaehlstelleRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ZaehlstelleRequestBodyToJSON(
+        requestParameters["zaehlstelleRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-zaehlstelle
+   */
+  async patchItemResourceZaehlstellePatchRaw(
+    requestParameters: PatchItemResourceZaehlstellePatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.patchItemResourceZaehlstellePatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZaehlstelleFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-zaehlstelle
+   * Creates request options for postCollectionResourceZaehlstellePost without sending the request
    */
-  async postCollectionResourceZaehlstellePostRaw(
-    requestParameters: PostCollectionResourceZaehlstellePostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+  async postCollectionResourceZaehlstellePostRequestOpts(
+    requestParameters: PostCollectionResourceZaehlstellePostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlstelleRequestBody"] == null) {
       throw new runtime.RequiredError(
         "zaehlstelleRequestBody",
@@ -311,18 +379,29 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ZaehlstelleRequestBodyToJSON(
-          requestParameters["zaehlstelleRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ZaehlstelleRequestBodyToJSON(
+        requestParameters["zaehlstelleRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-zaehlstelle
+   */
+  async postCollectionResourceZaehlstellePostRaw(
+    requestParameters: PostCollectionResourceZaehlstellePostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.postCollectionResourceZaehlstellePostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZaehlstelleFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-zaehlstelle
+   * Creates request options for putItemResourceZaehlstellePut without sending the request
    */
-  async putItemResourceZaehlstellePutRaw(
-    requestParameters: PutItemResourceZaehlstellePutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+  async putItemResourceZaehlstellePutRequestOpts(
+    requestParameters: PutItemResourceZaehlstellePutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class ZaehlstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ZaehlstelleRequestBodyToJSON(
-          requestParameters["zaehlstelleRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ZaehlstelleRequestBodyToJSON(
+        requestParameters["zaehlstelleRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-zaehlstelle
+   */
+  async putItemResourceZaehlstellePutRaw(
+    requestParameters: PutItemResourceZaehlstellePutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.putItemResourceZaehlstellePutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZaehlstelleFromJSON(jsonValue)

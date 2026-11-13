@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  DienstleisterRequestBody,
-  EntityModelDienstleister,
-  PagedModelEntityModelDienstleister,
-} from "../models/index";
+import type { DienstleisterRequestBody } from "../models/DienstleisterRequestBody";
+import type { EntityModelDienstleister } from "../models/EntityModelDienstleister";
+import type { PagedModelEntityModelDienstleister } from "../models/PagedModelEntityModelDienstleister";
 
 import {
   DienstleisterRequestBodyFromJSON,
   DienstleisterRequestBodyToJSON,
+} from "../models/DienstleisterRequestBody";
+import {
   EntityModelDienstleisterFromJSON,
   EntityModelDienstleisterToJSON,
+} from "../models/EntityModelDienstleister";
+import {
   PagedModelEntityModelDienstleisterFromJSON,
   PagedModelEntityModelDienstleisterToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelDienstleister";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceDienstleisterDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceDienstleisterGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceDienstleisterGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceDienstleisterPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   dienstleisterRequestBody: DienstleisterRequestBody;
 }
 
 export interface PostCollectionResourceDienstleisterPostRequest {
+  /**
+   *
+   */
   dienstleisterRequestBody: DienstleisterRequestBody;
 }
 
 export interface PutItemResourceDienstleisterPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   dienstleisterRequestBody: DienstleisterRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceDienstleisterPutRequest {
  */
 export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-dienstleister
+   * Creates request options for deleteItemResourceDienstleisterDelete without sending the request
    */
-  async deleteItemResourceDienstleisterDeleteRaw(
-    requestParameters: DeleteItemResourceDienstleisterDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceDienstleisterDeleteRequestOpts(
+    requestParameters: DeleteItemResourceDienstleisterDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-dienstleister
+   */
+  async deleteItemResourceDienstleisterDeleteRaw(
+    requestParameters: DeleteItemResourceDienstleisterDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceDienstleisterDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-dienstleister
+   * Creates request options for getCollectionResourceDienstleisterGet without sending the request
    */
-  async getCollectionResourceDienstleisterGetRaw(
-    requestParameters: GetCollectionResourceDienstleisterGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelDienstleister>> {
+  async getCollectionResourceDienstleisterGetRequestOpts(
+    requestParameters: GetCollectionResourceDienstleisterGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-dienstleister
+   */
+  async getCollectionResourceDienstleisterGetRaw(
+    requestParameters: GetCollectionResourceDienstleisterGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelDienstleister>> {
+    const requestOptions =
+      await this.getCollectionResourceDienstleisterGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelDienstleisterFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-dienstleister
+   * Creates request options for getItemResourceDienstleisterGet without sending the request
    */
-  async getItemResourceDienstleisterGetRaw(
-    requestParameters: GetItemResourceDienstleisterGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+  async getItemResourceDienstleisterGetRequestOpts(
+    requestParameters: GetItemResourceDienstleisterGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-dienstleister
+   */
+  async getItemResourceDienstleisterGetRaw(
+    requestParameters: GetItemResourceDienstleisterGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+    const requestOptions =
+      await this.getItemResourceDienstleisterGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelDienstleisterFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-dienstleister
+   * Creates request options for patchItemResourceDienstleisterPatch without sending the request
    */
-  async patchItemResourceDienstleisterPatchRaw(
-    requestParameters: PatchItemResourceDienstleisterPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+  async patchItemResourceDienstleisterPatchRequestOpts(
+    requestParameters: PatchItemResourceDienstleisterPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: DienstleisterRequestBodyToJSON(
-          requestParameters["dienstleisterRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: DienstleisterRequestBodyToJSON(
+        requestParameters["dienstleisterRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-dienstleister
+   */
+  async patchItemResourceDienstleisterPatchRaw(
+    requestParameters: PatchItemResourceDienstleisterPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+    const requestOptions =
+      await this.patchItemResourceDienstleisterPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelDienstleisterFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-dienstleister
+   * Creates request options for postCollectionResourceDienstleisterPost without sending the request
    */
-  async postCollectionResourceDienstleisterPostRaw(
-    requestParameters: PostCollectionResourceDienstleisterPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+  async postCollectionResourceDienstleisterPostRequestOpts(
+    requestParameters: PostCollectionResourceDienstleisterPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["dienstleisterRequestBody"] == null) {
       throw new runtime.RequiredError(
         "dienstleisterRequestBody",
@@ -311,18 +379,29 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: DienstleisterRequestBodyToJSON(
-          requestParameters["dienstleisterRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: DienstleisterRequestBodyToJSON(
+        requestParameters["dienstleisterRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-dienstleister
+   */
+  async postCollectionResourceDienstleisterPostRaw(
+    requestParameters: PostCollectionResourceDienstleisterPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+    const requestOptions =
+      await this.postCollectionResourceDienstleisterPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelDienstleisterFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-dienstleister
+   * Creates request options for putItemResourceDienstleisterPut without sending the request
    */
-  async putItemResourceDienstleisterPutRaw(
-    requestParameters: PutItemResourceDienstleisterPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+  async putItemResourceDienstleisterPutRequestOpts(
+    requestParameters: PutItemResourceDienstleisterPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class DienstleisterEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/dienstleisters/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: DienstleisterRequestBodyToJSON(
-          requestParameters["dienstleisterRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: DienstleisterRequestBodyToJSON(
+        requestParameters["dienstleisterRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-dienstleister
+   */
+  async putItemResourceDienstleisterPutRaw(
+    requestParameters: PutItemResourceDienstleisterPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelDienstleister>> {
+    const requestOptions =
+      await this.putItemResourceDienstleisterPutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelDienstleisterFromJSON(jsonValue)

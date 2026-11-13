@@ -44,68 +44,46 @@ import {
 export interface ExternalVerkehrsbeziehungDTO {
   /**
    *
-   * @type {string}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   id?: string;
   /**
    *
-   * @type {Array<ZeitintervallDTO>}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   zeitintervalle?: Array<ZeitintervallDTO>;
   /**
    *
-   * @type {HochrechnungsfaktorDTO}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   hochrechnungsfaktor?: HochrechnungsfaktorDTO;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   isKreuzung?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   von?: number;
   /**
    *
-   * @type {number}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   nach?: number;
   /**
    *
-   * @type {number}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   hinein?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   heraus?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   vorbei?: boolean;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof ExternalVerkehrsbeziehungDTO
    */
   strassenseite?: Himmelsrichtung;
 }

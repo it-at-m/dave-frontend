@@ -11,26 +11,37 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { CsvDTO } from "../models/CsvDTO";
+import type { MessstelleOptionsDTO } from "../models/MessstelleOptionsDTO";
+import type { OptionsDTO } from "../models/OptionsDTO";
 
-import type { CsvDTO, MessstelleOptionsDTO, OptionsDTO } from "../models/index";
-
+import { CsvDTOFromJSON, CsvDTOToJSON } from "../models/CsvDTO";
 import {
-  CsvDTOFromJSON,
-  CsvDTOToJSON,
   MessstelleOptionsDTOFromJSON,
   MessstelleOptionsDTOToJSON,
-  OptionsDTOFromJSON,
-  OptionsDTOToJSON,
-} from "../models/index";
+} from "../models/MessstelleOptionsDTO";
+import { OptionsDTOFromJSON, OptionsDTOToJSON } from "../models/OptionsDTO";
 import * as runtime from "../runtime";
 
 export interface GenerateCSVRequest {
+  /**
+   *
+   */
   zaehlungId: string;
+  /**
+   *
+   */
   optionsDTO: OptionsDTO;
 }
 
 export interface GenerateCSVMessstelleRequest {
+  /**
+   *
+   */
   messstelleId: string;
+  /**
+   *
+   */
   messstelleOptionsDTO: MessstelleOptionsDTO;
 }
 
@@ -39,11 +50,11 @@ export interface GenerateCSVMessstelleRequest {
  */
 export class GenerateCsvControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for generateCSV without sending the request
    */
-  async generateCSVRaw(
-    requestParameters: GenerateCSVRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CsvDTO>> {
+  async generateCSVRequestOpts(
+    requestParameters: GenerateCSVRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlungId"] == null) {
       throw new runtime.RequiredError(
         "zaehlungId",
@@ -70,16 +81,23 @@ export class GenerateCsvControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/generate-csv`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: OptionsDTOToJSON(requestParameters["optionsDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: OptionsDTOToJSON(requestParameters["optionsDTO"]),
+    };
+  }
+
+  /**
+   */
+  async generateCSVRaw(
+    requestParameters: GenerateCSVRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CsvDTO>> {
+    const requestOptions = await this.generateCSVRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CsvDTOFromJSON(jsonValue)
@@ -100,11 +118,11 @@ export class GenerateCsvControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for generateCSVMessstelle without sending the request
    */
-  async generateCSVMessstelleRaw(
-    requestParameters: GenerateCSVMessstelleRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CsvDTO>> {
+  async generateCSVMessstelleRequestOpts(
+    requestParameters: GenerateCSVMessstelleRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["messstelleId"] == null) {
       throw new runtime.RequiredError(
         "messstelleId",
@@ -131,18 +149,26 @@ export class GenerateCsvControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/generate-csv-mst`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: MessstelleOptionsDTOToJSON(
-          requestParameters["messstelleOptionsDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: MessstelleOptionsDTOToJSON(
+        requestParameters["messstelleOptionsDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async generateCSVMessstelleRaw(
+    requestParameters: GenerateCSVMessstelleRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CsvDTO>> {
+    const requestOptions =
+      await this.generateCSVMessstelleRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CsvDTOFromJSON(jsonValue)

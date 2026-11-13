@@ -37,26 +37,18 @@ import {
 export interface MessstelleAuswertungDTO {
   /**
    *
-   * @type {string}
-   * @memberof MessstelleAuswertungDTO
    */
   mstId: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleAuswertungDTO
    */
   standort?: string;
   /**
    *
-   * @type {Array<MessquerschnittAuswertungDTO>}
-   * @memberof MessstelleAuswertungDTO
    */
   messquerschnitte: Array<MessquerschnittAuswertungDTO>;
   /**
    *
-   * @type {Verkehrsart}
-   * @memberof MessstelleAuswertungDTO
    */
   detektierteVerkehrsart?: Verkehrsart;
 }

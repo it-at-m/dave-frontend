@@ -12,15 +12,21 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
-import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -30,58 +36,40 @@ import {
 export interface EntityModelDienstleister {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelDienstleister
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelDienstleister
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelDienstleister
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelDienstleister
    */
   name?: string;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelDienstleister
    */
   kennung?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof EntityModelDienstleister
    */
   emailAddresses?: Array<string>;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelDienstleister
    */
   active?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelDienstleister
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelDienstleister
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -109,7 +97,9 @@ export function EntityModelDienstleisterFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     name: json["name"] == null ? undefined : json["name"],
     kennung: json["kennung"] == null ? undefined : json["kennung"],
@@ -118,7 +108,10 @@ export function EntityModelDienstleisterFromJSONTyped(
     active: json["active"] == null ? undefined : json["active"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -140,14 +133,17 @@ export function EntityModelDienstleisterToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     name: value["name"],
     kennung: value["kennung"],
     emailAddresses: value["emailAddresses"],
     active: value["active"],
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

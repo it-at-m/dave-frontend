@@ -30,26 +30,18 @@ import {
 export interface CustomSuggestRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof CustomSuggestRequestBody
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof CustomSuggestRequestBody
    */
   name?: string;
   /**
    *
-   * @type {string}
-   * @memberof CustomSuggestRequestBody
    */
   fkid?: string;
   /**
    *
-   * @type {Completion}
-   * @memberof CustomSuggestRequestBody
    */
   suggest?: Completion;
 }

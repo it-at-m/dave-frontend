@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelPkwEinheitEmbedded {
   /**
    *
-   * @type {Array<EntityModelPkwEinheit>}
-   * @memberof PagedModelEntityModelPkwEinheitEmbedded
    */
   pkwEinheits?: Array<EntityModelPkwEinheit>;
 }

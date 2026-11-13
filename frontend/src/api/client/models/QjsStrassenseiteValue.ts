@@ -30,14 +30,10 @@ import {
 export interface QjsStrassenseiteValue {
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof QjsStrassenseiteValue
    */
   strassenseite: Himmelsrichtung;
   /**
    *
-   * @type {number}
-   * @memberof QjsStrassenseiteValue
    */
   value: number;
 }

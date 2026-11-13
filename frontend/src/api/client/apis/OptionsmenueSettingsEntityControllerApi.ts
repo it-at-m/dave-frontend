@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelOptionsmenueSettings,
-  OptionsmenueSettingsRequestBody,
-  PagedModelEntityModelOptionsmenueSettings,
-} from "../models/index";
+import type { EntityModelOptionsmenueSettings } from "../models/EntityModelOptionsmenueSettings";
+import type { OptionsmenueSettingsRequestBody } from "../models/OptionsmenueSettingsRequestBody";
+import type { PagedModelEntityModelOptionsmenueSettings } from "../models/PagedModelEntityModelOptionsmenueSettings";
 
 import {
   EntityModelOptionsmenueSettingsFromJSON,
   EntityModelOptionsmenueSettingsToJSON,
+} from "../models/EntityModelOptionsmenueSettings";
+import {
   OptionsmenueSettingsRequestBodyFromJSON,
   OptionsmenueSettingsRequestBodyToJSON,
+} from "../models/OptionsmenueSettingsRequestBody";
+import {
   PagedModelEntityModelOptionsmenueSettingsFromJSON,
   PagedModelEntityModelOptionsmenueSettingsToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelOptionsmenueSettings";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceOptionsmenuesettingsDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceOptionsmenuesettingsGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceOptionsmenuesettingsGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceOptionsmenuesettingsPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   optionsmenueSettingsRequestBody: OptionsmenueSettingsRequestBody;
 }
 
 export interface PostCollectionResourceOptionsmenuesettingsPostRequest {
+  /**
+   *
+   */
   optionsmenueSettingsRequestBody: OptionsmenueSettingsRequestBody;
 }
 
 export interface PutItemResourceOptionsmenuesettingsPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   optionsmenueSettingsRequestBody: OptionsmenueSettingsRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceOptionsmenuesettingsPutRequest {
  */
 export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-optionsmenuesettings
+   * Creates request options for deleteItemResourceOptionsmenuesettingsDelete without sending the request
    */
-  async deleteItemResourceOptionsmenuesettingsDeleteRaw(
-    requestParameters: DeleteItemResourceOptionsmenuesettingsDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceOptionsmenuesettingsDeleteRequestOpts(
+    requestParameters: DeleteItemResourceOptionsmenuesettingsDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/optionsmenueSettingses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-optionsmenuesettings
+   */
+  async deleteItemResourceOptionsmenuesettingsDeleteRaw(
+    requestParameters: DeleteItemResourceOptionsmenuesettingsDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceOptionsmenuesettingsDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-optionsmenuesettings
+   * Creates request options for getCollectionResourceOptionsmenuesettingsGet without sending the request
    */
-  async getCollectionResourceOptionsmenuesettingsGetRaw(
-    requestParameters: GetCollectionResourceOptionsmenuesettingsGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelOptionsmenueSettings>> {
+  async getCollectionResourceOptionsmenuesettingsGetRequestOpts(
+    requestParameters: GetCollectionResourceOptionsmenuesettingsGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/optionsmenueSettingses`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-optionsmenuesettings
+   */
+  async getCollectionResourceOptionsmenuesettingsGetRaw(
+    requestParameters: GetCollectionResourceOptionsmenuesettingsGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelOptionsmenueSettings>> {
+    const requestOptions =
+      await this.getCollectionResourceOptionsmenuesettingsGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelOptionsmenueSettingsFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-optionsmenuesettings
+   * Creates request options for getItemResourceOptionsmenuesettingsGet without sending the request
    */
-  async getItemResourceOptionsmenuesettingsGetRaw(
-    requestParameters: GetItemResourceOptionsmenuesettingsGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+  async getItemResourceOptionsmenuesettingsGetRequestOpts(
+    requestParameters: GetItemResourceOptionsmenuesettingsGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,30 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/optionsmenueSettingses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-optionsmenuesettings
+   */
+  async getItemResourceOptionsmenuesettingsGetRaw(
+    requestParameters: GetItemResourceOptionsmenuesettingsGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+    const requestOptions =
+      await this.getItemResourceOptionsmenuesettingsGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelOptionsmenueSettingsFromJSON(jsonValue)
@@ -218,12 +279,11 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-optionsmenuesettings
+   * Creates request options for patchItemResourceOptionsmenuesettingsPatch without sending the request
    */
-  async patchItemResourceOptionsmenuesettingsPatchRaw(
-    requestParameters: PatchItemResourceOptionsmenuesettingsPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+  async patchItemResourceOptionsmenuesettingsPatchRequestOpts(
+    requestParameters: PatchItemResourceOptionsmenuesettingsPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +306,33 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/optionsmenueSettingses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: OptionsmenueSettingsRequestBodyToJSON(
-          requestParameters["optionsmenueSettingsRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: OptionsmenueSettingsRequestBodyToJSON(
+        requestParameters["optionsmenueSettingsRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-optionsmenuesettings
+   */
+  async patchItemResourceOptionsmenuesettingsPatchRaw(
+    requestParameters: PatchItemResourceOptionsmenuesettingsPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+    const requestOptions =
+      await this.patchItemResourceOptionsmenuesettingsPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelOptionsmenueSettingsFromJSON(jsonValue)
@@ -290,12 +361,11 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-optionsmenuesettings
+   * Creates request options for postCollectionResourceOptionsmenuesettingsPost without sending the request
    */
-  async postCollectionResourceOptionsmenuesettingsPostRaw(
-    requestParameters: PostCollectionResourceOptionsmenuesettingsPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+  async postCollectionResourceOptionsmenuesettingsPostRequestOpts(
+    requestParameters: PostCollectionResourceOptionsmenuesettingsPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["optionsmenueSettingsRequestBody"] == null) {
       throw new runtime.RequiredError(
         "optionsmenueSettingsRequestBody",
@@ -311,18 +381,29 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/optionsmenueSettingses`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: OptionsmenueSettingsRequestBodyToJSON(
-          requestParameters["optionsmenueSettingsRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: OptionsmenueSettingsRequestBodyToJSON(
+        requestParameters["optionsmenueSettingsRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-optionsmenuesettings
+   */
+  async postCollectionResourceOptionsmenuesettingsPostRaw(
+    requestParameters: PostCollectionResourceOptionsmenuesettingsPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+    const requestOptions =
+      await this.postCollectionResourceOptionsmenuesettingsPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelOptionsmenueSettingsFromJSON(jsonValue)
@@ -345,12 +426,11 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-optionsmenuesettings
+   * Creates request options for putItemResourceOptionsmenuesettingsPut without sending the request
    */
-  async putItemResourceOptionsmenuesettingsPutRaw(
-    requestParameters: PutItemResourceOptionsmenuesettingsPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+  async putItemResourceOptionsmenuesettingsPutRequestOpts(
+    requestParameters: PutItemResourceOptionsmenuesettingsPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -373,22 +453,33 @@ export class OptionsmenueSettingsEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/optionsmenueSettingses/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: OptionsmenueSettingsRequestBodyToJSON(
-          requestParameters["optionsmenueSettingsRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: OptionsmenueSettingsRequestBodyToJSON(
+        requestParameters["optionsmenueSettingsRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-optionsmenuesettings
+   */
+  async putItemResourceOptionsmenuesettingsPutRaw(
+    requestParameters: PutItemResourceOptionsmenuesettingsPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelOptionsmenueSettings>> {
+    const requestOptions =
+      await this.putItemResourceOptionsmenuesettingsPutRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelOptionsmenueSettingsFromJSON(jsonValue)

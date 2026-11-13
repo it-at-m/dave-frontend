@@ -30,26 +30,18 @@ import {
 export interface VerkehrsbeziehungValue {
   /**
    *
-   * @type {number}
-   * @memberof VerkehrsbeziehungValue
    */
   von: number;
   /**
    *
-   * @type {number}
-   * @memberof VerkehrsbeziehungValue
    */
   nach: number;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof VerkehrsbeziehungValue
    */
   strassenseite: Himmelsrichtung;
   /**
    *
-   * @type {number}
-   * @memberof VerkehrsbeziehungValue
    */
   value: number;
 }

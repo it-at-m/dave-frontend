@@ -58,32 +58,22 @@ import {
 export interface LadeProcessedZaehldatenDTO {
   /**
    *
-   * @type {LadeZaehldatenTableDTO}
-   * @memberof LadeProcessedZaehldatenDTO
    */
   zaehldatenTable: LadeZaehldatenTableDTO;
   /**
    *
-   * @type {LadeZaehldatenSteplineDTO}
-   * @memberof LadeProcessedZaehldatenDTO
    */
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
   /**
    *
-   * @type {LadeZaehldatenHeatmapDTO}
-   * @memberof LadeProcessedZaehldatenDTO
    */
   zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
   /**
    *
-   * @type {LadeProcessedZaehldatenBelastungsplanDTO}
-   * @memberof LadeProcessedZaehldatenDTO
    */
   zaehldatenBelastungsplan: LadeProcessedZaehldatenBelastungsplanDTO;
   /**
    *
-   * @type {LadeZaehldatenZeitreiheDTO}
-   * @memberof LadeProcessedZaehldatenDTO
    */
   zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO;
 }

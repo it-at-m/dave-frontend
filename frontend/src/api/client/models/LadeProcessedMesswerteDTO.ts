@@ -58,44 +58,30 @@ import {
 export interface LadeProcessedMesswerteDTO {
   /**
    *
-   * @type {TagesTyp}
-   * @memberof LadeProcessedMesswerteDTO
    */
   tagesTyp?: TagesTyp;
   /**
    *
-   * @type {LadeMesswerteListenausgabeDTO}
-   * @memberof LadeProcessedMesswerteDTO
    */
   zaehldatenTable: LadeMesswerteListenausgabeDTO;
   /**
    *
-   * @type {LadeZaehldatenSteplineDTO}
-   * @memberof LadeProcessedMesswerteDTO
    */
   zaehldatenStepline: LadeZaehldatenSteplineDTO;
   /**
    *
-   * @type {LadeZaehldatenHeatmapDTO}
-   * @memberof LadeProcessedMesswerteDTO
    */
   zaehldatenHeatmap: LadeZaehldatenHeatmapDTO;
   /**
    *
-   * @type {BelastungsplanMessquerschnitteDTO}
-   * @memberof LadeProcessedMesswerteDTO
    */
   belastungsplanMessquerschnitte: BelastungsplanMessquerschnitteDTO;
   /**
    *
-   * @type {number}
-   * @memberof LadeProcessedMesswerteDTO
    */
   requestedMeasuringDays?: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeProcessedMesswerteDTO
    */
   includedMeasuringDays?: number;
 }

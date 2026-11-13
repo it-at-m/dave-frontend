@@ -19,7 +19,13 @@ import type { BearbeiteVerkehrsbeziehungDTO } from "./BearbeiteVerkehrsbeziehung
 import type { GeoPoint } from "./GeoPoint";
 import type { PkwEinheitDTO } from "./PkwEinheitDTO";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   BearbeiteKnotenarmDTOFromJSON,
   BearbeiteKnotenarmDTOFromJSONTyped,
@@ -65,194 +71,130 @@ import {
 export interface BearbeiteZaehlungDTO {
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof BearbeiteZaehlungDTO
    */
   datum?: Date;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   zaehlart?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof BearbeiteZaehlungDTO
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteZaehlungDTO
    */
   lat?: number;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteZaehlungDTO
    */
   lng?: number;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   tagesTyp?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   monat?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   jahreszeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   projektNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   projektName?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   kreuzungsname?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteZaehlungDTO
    */
   sonderzaehlung?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteZaehlungDTO
    */
   kreisverkehr?: boolean;
   /**
    *
-   * @type {Array<string>}
-   * @memberof BearbeiteZaehlungDTO
    */
   kategorien?: Array<BearbeiteZaehlungDTOKategorienEnum>;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   zaehlsituation?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   zaehlsituationErweitert?: string;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteZaehlungDTO
    */
   zaehlIntervall?: number;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   wetter?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   status?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   quelle?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   zaehldauer?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   schulZeiten?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   kommentar?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof BearbeiteZaehlungDTO
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {PkwEinheitDTO}
-   * @memberof BearbeiteZaehlungDTO
    */
   pkwEinheit?: PkwEinheitDTO;
   /**
    *
-   * @type {Array<BearbeiteKnotenarmDTO>}
-   * @memberof BearbeiteZaehlungDTO
    */
   knotenarme?: Array<BearbeiteKnotenarmDTO>;
   /**
    *
-   * @type {Array<BearbeiteLaengsverkehrDTO>}
-   * @memberof BearbeiteZaehlungDTO
    */
   laengsverkehr?: Array<BearbeiteLaengsverkehrDTO>;
   /**
    *
-   * @type {Array<BearbeiteQuerungsverkehrDTO>}
-   * @memberof BearbeiteZaehlungDTO
    */
   querungsverkehr?: Array<BearbeiteQuerungsverkehrDTO>;
   /**
    *
-   * @type {Array<BearbeiteVerkehrsbeziehungDTO>}
-   * @memberof BearbeiteZaehlungDTO
    */
   verkehrsbeziehungen?: Array<BearbeiteVerkehrsbeziehungDTO>;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteZaehlungDTO
    */
   unreadMessagesMobilitaetsreferat?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlungDTO
    */
   dienstleisterkennung?: string;
 }
@@ -300,7 +242,7 @@ export function BearbeiteZaehlungDTOFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     zaehlart: json["zaehlart"] == null ? undefined : json["zaehlart"],
     punkt: json["punkt"] == null ? undefined : GeoPointFromJSON(json["punkt"]),
     lat: json["lat"] == null ? undefined : json["lat"],
@@ -386,9 +328,7 @@ export function BearbeiteZaehlungDTOToJSONTyped(
   return {
     id: value["id"],
     datum:
-      value["datum"] == null
-        ? undefined
-        : value["datum"].toISOString().substring(0, 10),
+      value["datum"] == null ? value["datum"] : serializeDate(value["datum"]),
     zaehlart: value["zaehlart"],
     punkt: GeoPointToJSON(value["punkt"]),
     lat: value["lat"],

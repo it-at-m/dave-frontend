@@ -30,20 +30,14 @@ import {
 export interface VerkehrsbeziehungVisumDTO {
   /**
    *
-   * @type {number}
-   * @memberof VerkehrsbeziehungVisumDTO
    */
   von?: number;
   /**
    *
-   * @type {number}
-   * @memberof VerkehrsbeziehungVisumDTO
    */
   nach?: number;
   /**
    *
-   * @type {Array<LadeZaehldatumDTO>}
-   * @memberof VerkehrsbeziehungVisumDTO
    */
   zaehldaten?: Array<LadeZaehldatumDTO>;
 }

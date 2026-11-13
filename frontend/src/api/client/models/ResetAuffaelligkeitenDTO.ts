@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,14 +28,10 @@ import { mapValues } from "../runtime";
 export interface ResetAuffaelligkeitenDTO {
   /**
    *
-   * @type {Date}
-   * @memberof ResetAuffaelligkeitenDTO
    */
   startDateToReset: Date;
   /**
    *
-   * @type {Date}
-   * @memberof ResetAuffaelligkeitenDTO
    */
   endDateToReset: Date;
 }
@@ -61,8 +63,14 @@ export function ResetAuffaelligkeitenDTOFromJSONTyped(
     return json;
   }
   return {
-    startDateToReset: new Date(json["startDateToReset"]),
-    endDateToReset: new Date(json["endDateToReset"]),
+    startDateToReset:
+      json["startDateToReset"] == null
+        ? json["startDateToReset"]
+        : parseDate(json["startDateToReset"]),
+    endDateToReset:
+      json["endDateToReset"] == null
+        ? json["endDateToReset"]
+        : parseDate(json["endDateToReset"]),
   };
 }
 
@@ -81,7 +89,13 @@ export function ResetAuffaelligkeitenDTOToJSONTyped(
   }
 
   return {
-    startDateToReset: value["startDateToReset"].toISOString().substring(0, 10),
-    endDateToReset: value["endDateToReset"].toISOString().substring(0, 10),
+    startDateToReset:
+      value["startDateToReset"] == null
+        ? value["startDateToReset"]
+        : serializeDate(value["startDateToReset"]),
+    endDateToReset:
+      value["endDateToReset"] == null
+        ? value["endDateToReset"]
+        : serializeDate(value["endDateToReset"]),
   };
 }

@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelKalendertagEmbedded {
   /**
    *
-   * @type {Array<EntityModelKalendertag>}
-   * @memberof PagedModelEntityModelKalendertagEmbedded
    */
   kalendertags?: Array<EntityModelKalendertag>;
 }

@@ -30,8 +30,6 @@ import {
 export interface LadeAuswertungVisumDTO {
   /**
    *
-   * @type {Array<LadeZaehlstelleVisumDTO>}
-   * @memberof LadeAuswertungVisumDTO
    */
   zaehlstellen?: Array<LadeZaehlstelleVisumDTO>;
 }

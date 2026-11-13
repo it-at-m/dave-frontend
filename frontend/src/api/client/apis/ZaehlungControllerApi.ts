@@ -11,51 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  BackendIdDTO,
-  BearbeiteZaehlungDTO,
-  DienstleisterDTO,
-  ExternalZaehlungDTO,
-  OpenZaehlungDTO,
-  UpdateStatusDTO,
-} from "../models/index";
+import type { BackendIdDTO } from "../models/BackendIdDTO";
+import type { BearbeiteZaehlungDTO } from "../models/BearbeiteZaehlungDTO";
+import type { DienstleisterDTO } from "../models/DienstleisterDTO";
+import type { ExternalZaehlungDTO } from "../models/ExternalZaehlungDTO";
+import type { OpenZaehlungDTO } from "../models/OpenZaehlungDTO";
+import type { UpdateStatusDTO } from "../models/UpdateStatusDTO";
 
 import {
   BackendIdDTOFromJSON,
   BackendIdDTOToJSON,
+} from "../models/BackendIdDTO";
+import {
   BearbeiteZaehlungDTOFromJSON,
   BearbeiteZaehlungDTOToJSON,
+} from "../models/BearbeiteZaehlungDTO";
+import {
   DienstleisterDTOFromJSON,
   DienstleisterDTOToJSON,
+} from "../models/DienstleisterDTO";
+import {
   ExternalZaehlungDTOFromJSON,
   ExternalZaehlungDTOToJSON,
+} from "../models/ExternalZaehlungDTO";
+import {
   OpenZaehlungDTOFromJSON,
   OpenZaehlungDTOToJSON,
+} from "../models/OpenZaehlungDTO";
+import {
   UpdateStatusDTOFromJSON,
   UpdateStatusDTOToJSON,
-} from "../models/index";
+} from "../models/UpdateStatusDTO";
 import * as runtime from "../runtime";
 
 export interface DeleteZaehlungRequest {
+  /**
+   *
+   */
   zaehlungId: string;
 }
 
 export interface SaveExternalZaehlungRequest {
+  /**
+   *
+   */
   externalZaehlungDTO: ExternalZaehlungDTO;
 }
 
 export interface SaveZaehlungRequest {
+  /**
+   *
+   */
   zaehlstelleId: string;
+  /**
+   *
+   */
   bearbeiteZaehlungDTO: BearbeiteZaehlungDTO;
 }
 
 export interface UpdateDienstleisterkennungRequest {
+  /**
+   *
+   */
   zaehlungId: string;
+  /**
+   *
+   */
   dienstleisterDTO: DienstleisterDTO;
 }
 
 export interface UpdateStatusRequest {
+  /**
+   *
+   */
   updateStatusDTO: UpdateStatusDTO;
 }
 
@@ -64,11 +92,11 @@ export interface UpdateStatusRequest {
  */
 export class ZaehlungControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for deleteZaehlung without sending the request
    */
-  async deleteZaehlungRaw(
-    requestParameters: DeleteZaehlungRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<boolean>> {
+  async deleteZaehlungRequestOpts(
+    requestParameters: DeleteZaehlungRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlungId"] == null) {
       throw new runtime.RequiredError(
         "zaehlungId",
@@ -86,15 +114,23 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlung/delete`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async deleteZaehlungRaw(
+    requestParameters: DeleteZaehlungRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<boolean>> {
+    const requestOptions =
+      await this.deleteZaehlungRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<boolean>(response);
@@ -117,25 +153,30 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getZaehlungenForExternal without sending the request
    */
-  async getZaehlungenForExternalRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<ExternalZaehlungDTO>>> {
+  async getZaehlungenForExternalRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/zaehlung/getZaehlungenForExternal`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getZaehlungenForExternalRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<ExternalZaehlungDTO>>> {
+    const requestOptions = await this.getZaehlungenForExternalRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(ExternalZaehlungDTOFromJSON)
@@ -152,25 +193,30 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for loadAllOpenZaehlungen without sending the request
    */
-  async loadAllOpenZaehlungenRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<OpenZaehlungDTO>>> {
+  async loadAllOpenZaehlungenRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/zaehlung/loadAllOpenZaehlungen`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async loadAllOpenZaehlungenRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<OpenZaehlungDTO>>> {
+    const requestOptions = await this.loadAllOpenZaehlungenRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(OpenZaehlungDTOFromJSON)
@@ -187,11 +233,11 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveExternalZaehlung without sending the request
    */
-  async saveExternalZaehlungRaw(
-    requestParameters: SaveExternalZaehlungRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+  async saveExternalZaehlungRequestOpts(
+    requestParameters: SaveExternalZaehlungRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["externalZaehlungDTO"] == null) {
       throw new runtime.RequiredError(
         "externalZaehlungDTO",
@@ -207,18 +253,24 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlung/saveExternal`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ExternalZaehlungDTOToJSON(
-          requestParameters["externalZaehlungDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ExternalZaehlungDTOToJSON(requestParameters["externalZaehlungDTO"]),
+    };
+  }
+
+  /**
+   */
+  async saveExternalZaehlungRaw(
+    requestParameters: SaveExternalZaehlungRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+    const requestOptions =
+      await this.saveExternalZaehlungRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BackendIdDTOFromJSON(jsonValue)
@@ -239,11 +291,11 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveZaehlung without sending the request
    */
-  async saveZaehlungRaw(
-    requestParameters: SaveZaehlungRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+  async saveZaehlungRequestOpts(
+    requestParameters: SaveZaehlungRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlstelleId"] == null) {
       throw new runtime.RequiredError(
         "zaehlstelleId",
@@ -270,18 +322,26 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlung/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: BearbeiteZaehlungDTOToJSON(
-          requestParameters["bearbeiteZaehlungDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: BearbeiteZaehlungDTOToJSON(
+        requestParameters["bearbeiteZaehlungDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async saveZaehlungRaw(
+    requestParameters: SaveZaehlungRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+    const requestOptions =
+      await this.saveZaehlungRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BackendIdDTOFromJSON(jsonValue)
@@ -302,11 +362,11 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for updateDienstleisterkennung without sending the request
    */
-  async updateDienstleisterkennungRaw(
-    requestParameters: UpdateDienstleisterkennungRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+  async updateDienstleisterkennungRequestOpts(
+    requestParameters: UpdateDienstleisterkennungRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlungId"] == null) {
       throw new runtime.RequiredError(
         "zaehlungId",
@@ -333,16 +393,24 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlung/updateDienstleisterkennung`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: DienstleisterDTOToJSON(requestParameters["dienstleisterDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: DienstleisterDTOToJSON(requestParameters["dienstleisterDTO"]),
+    };
+  }
+
+  /**
+   */
+  async updateDienstleisterkennungRaw(
+    requestParameters: UpdateDienstleisterkennungRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+    const requestOptions =
+      await this.updateDienstleisterkennungRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BackendIdDTOFromJSON(jsonValue)
@@ -363,11 +431,11 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for updateStatus without sending the request
    */
-  async updateStatusRaw(
-    requestParameters: UpdateStatusRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+  async updateStatusRequestOpts(
+    requestParameters: UpdateStatusRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["updateStatusDTO"] == null) {
       throw new runtime.RequiredError(
         "updateStatusDTO",
@@ -383,16 +451,24 @@ export class ZaehlungControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlung/updateStatus`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: UpdateStatusDTOToJSON(requestParameters["updateStatusDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: UpdateStatusDTOToJSON(requestParameters["updateStatusDTO"]),
+    };
+  }
+
+  /**
+   */
+  async updateStatusRaw(
+    requestParameters: UpdateStatusRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+    const requestOptions =
+      await this.updateStatusRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BackendIdDTOFromJSON(jsonValue)

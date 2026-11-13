@@ -11,45 +11,74 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelObject,
-  EntityModelKalendertag,
-} from "../models/index";
+import type { CollectionModelObject } from "../models/CollectionModelObject";
+import type { EntityModelKalendertag } from "../models/EntityModelKalendertag";
 
 import {
   CollectionModelObjectFromJSON,
   CollectionModelObjectToJSON,
+} from "../models/CollectionModelObject";
+import {
   EntityModelKalendertagFromJSON,
   EntityModelKalendertagToJSON,
-} from "../models/index";
+} from "../models/EntityModelKalendertag";
 import * as runtime from "../runtime";
 
 export interface CreatePropertyReferenceUnauffaelligertagPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   collectionModelObject: CollectionModelObject;
 }
 
 export interface CreatePropertyReferenceUnauffaelligertagPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   collectionModelObject: CollectionModelObject;
 }
 
 export interface DeletePropertyReferenceIdUnauffaelligertagDeleteRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   propertyId: string;
 }
 
 export interface DeletePropertyReferenceUnauffaelligertagDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface FollowPropertyReferenceUnauffaelligertagGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface FollowPropertyReferenceUnauffaelligertagGet1Request {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   propertyId: string;
 }
 
@@ -58,12 +87,11 @@ export interface FollowPropertyReferenceUnauffaelligertagGet1Request {
  */
 export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.BaseAPI {
   /**
-   * patch-kalendertag-by-unauffaelligertag-Id
+   * Creates request options for createPropertyReferenceUnauffaelligertagPatch without sending the request
    */
-  async createPropertyReferenceUnauffaelligertagPatchRaw(
-    requestParameters: CreatePropertyReferenceUnauffaelligertagPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async createPropertyReferenceUnauffaelligertagPatchRequestOpts(
+    requestParameters: CreatePropertyReferenceUnauffaelligertagPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -86,22 +114,33 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
 
     let urlPath = `/unauffaelligerTags/{id}/kalendertag`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: CollectionModelObjectToJSON(
-          requestParameters["collectionModelObject"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: CollectionModelObjectToJSON(
+        requestParameters["collectionModelObject"]
+      ),
+    };
+  }
+
+  /**
+   * patch-kalendertag-by-unauffaelligertag-Id
+   */
+  async createPropertyReferenceUnauffaelligertagPatchRaw(
+    requestParameters: CreatePropertyReferenceUnauffaelligertagPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.createPropertyReferenceUnauffaelligertagPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -131,12 +170,11 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
   }
 
   /**
-   * update-kalendertag-by-unauffaelligertag-Id
+   * Creates request options for createPropertyReferenceUnauffaelligertagPut without sending the request
    */
-  async createPropertyReferenceUnauffaelligertagPutRaw(
-    requestParameters: CreatePropertyReferenceUnauffaelligertagPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async createPropertyReferenceUnauffaelligertagPutRequestOpts(
+    requestParameters: CreatePropertyReferenceUnauffaelligertagPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -159,22 +197,33 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
 
     let urlPath = `/unauffaelligerTags/{id}/kalendertag`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: CollectionModelObjectToJSON(
-          requestParameters["collectionModelObject"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: CollectionModelObjectToJSON(
+        requestParameters["collectionModelObject"]
+      ),
+    };
+  }
+
+  /**
+   * update-kalendertag-by-unauffaelligertag-Id
+   */
+  async createPropertyReferenceUnauffaelligertagPutRaw(
+    requestParameters: CreatePropertyReferenceUnauffaelligertagPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.createPropertyReferenceUnauffaelligertagPutRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -205,12 +254,11 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
   }
 
   /**
-   * delete-kalendertag-by-unauffaelligertag-Id
+   * Creates request options for deletePropertyReferenceIdUnauffaelligertagDelete without sending the request
    */
-  async deletePropertyReferenceIdUnauffaelligertagDeleteRaw(
-    requestParameters: DeletePropertyReferenceIdUnauffaelligertagDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deletePropertyReferenceIdUnauffaelligertagDeleteRequestOpts(
+    requestParameters: DeletePropertyReferenceIdUnauffaelligertagDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -231,23 +279,34 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
 
     let urlPath = `/unauffaelligerTags/{id}/kalendertag/{propertyId}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
     urlPath = urlPath.replace(
-      `{${"propertyId"}}`,
+      "{propertyId}",
       encodeURIComponent(String(requestParameters["propertyId"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-kalendertag-by-unauffaelligertag-Id
+   */
+  async deletePropertyReferenceIdUnauffaelligertagDeleteRaw(
+    requestParameters: DeletePropertyReferenceIdUnauffaelligertagDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deletePropertyReferenceIdUnauffaelligertagDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -266,12 +325,11 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
   }
 
   /**
-   * delete-kalendertag-by-unauffaelligertag-Id
+   * Creates request options for deletePropertyReferenceUnauffaelligertagDelete without sending the request
    */
-  async deletePropertyReferenceUnauffaelligertagDeleteRaw(
-    requestParameters: DeletePropertyReferenceUnauffaelligertagDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deletePropertyReferenceUnauffaelligertagDeleteRequestOpts(
+    requestParameters: DeletePropertyReferenceUnauffaelligertagDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -285,19 +343,30 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
 
     let urlPath = `/unauffaelligerTags/{id}/kalendertag`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-kalendertag-by-unauffaelligertag-Id
+   */
+  async deletePropertyReferenceUnauffaelligertagDeleteRaw(
+    requestParameters: DeletePropertyReferenceUnauffaelligertagDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deletePropertyReferenceUnauffaelligertagDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -316,12 +385,11 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
   }
 
   /**
-   * get-kalendertag-by-unauffaelligertag-Id
+   * Creates request options for followPropertyReferenceUnauffaelligertagGet without sending the request
    */
-  async followPropertyReferenceUnauffaelligertagGetRaw(
-    requestParameters: FollowPropertyReferenceUnauffaelligertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async followPropertyReferenceUnauffaelligertagGetRequestOpts(
+    requestParameters: FollowPropertyReferenceUnauffaelligertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -335,19 +403,30 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
 
     let urlPath = `/unauffaelligerTags/{id}/kalendertag`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-kalendertag-by-unauffaelligertag-Id
+   */
+  async followPropertyReferenceUnauffaelligertagGetRaw(
+    requestParameters: FollowPropertyReferenceUnauffaelligertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.followPropertyReferenceUnauffaelligertagGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -369,12 +448,11 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
   }
 
   /**
-   * get-kalendertag-by-unauffaelligertag-Id
+   * Creates request options for followPropertyReferenceUnauffaelligertagGet1 without sending the request
    */
-  async followPropertyReferenceUnauffaelligertagGet1Raw(
-    requestParameters: FollowPropertyReferenceUnauffaelligertagGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async followPropertyReferenceUnauffaelligertagGet1RequestOpts(
+    requestParameters: FollowPropertyReferenceUnauffaelligertagGet1Request
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -395,23 +473,34 @@ export class UnauffaelligerTagPropertyReferenceControllerApi extends runtime.Bas
 
     let urlPath = `/unauffaelligerTags/{id}/kalendertag/{propertyId}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
     urlPath = urlPath.replace(
-      `{${"propertyId"}}`,
+      "{propertyId}",
       encodeURIComponent(String(requestParameters["propertyId"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-kalendertag-by-unauffaelligertag-Id
+   */
+  async followPropertyReferenceUnauffaelligertagGet1Raw(
+    requestParameters: FollowPropertyReferenceUnauffaelligertagGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.followPropertyReferenceUnauffaelligertagGet1RequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)

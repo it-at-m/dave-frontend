@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface SucheMessstelleSuggestDTO {
   /**
    *
-   * @type {string}
-   * @memberof SucheMessstelleSuggestDTO
    */
   text: string;
   /**
    *
-   * @type {string}
-   * @memberof SucheMessstelleSuggestDTO
    */
   id: string;
   /**
    *
-   * @type {boolean}
-   * @memberof SucheMessstelleSuggestDTO
    */
   sichtbarDatenportal: boolean;
 }

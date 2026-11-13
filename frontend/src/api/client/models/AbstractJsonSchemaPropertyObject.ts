@@ -22,14 +22,10 @@ import { mapValues } from "../runtime";
 export interface AbstractJsonSchemaPropertyObject {
   /**
    *
-   * @type {string}
-   * @memberof AbstractJsonSchemaPropertyObject
    */
   title?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof AbstractJsonSchemaPropertyObject
    */
   readOnly?: boolean;
 }

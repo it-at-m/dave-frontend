@@ -11,15 +11,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { JsonSchema } from "../models/JsonSchema";
+import type { RepresentationModelObject } from "../models/RepresentationModelObject";
 
-import type { JsonSchema, RepresentationModelObject } from "../models/index";
-
+import { JsonSchemaFromJSON, JsonSchemaToJSON } from "../models/JsonSchema";
 import {
-  JsonSchemaFromJSON,
-  JsonSchemaToJSON,
   RepresentationModelObjectFromJSON,
   RepresentationModelObjectToJSON,
-} from "../models/index";
+} from "../models/RepresentationModelObject";
 import * as runtime from "../runtime";
 
 /**
@@ -27,25 +26,30 @@ import * as runtime from "../runtime";
  */
 export class ProfileControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for descriptor without sending the request
    */
-  async descriptorRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptorRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/chatMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptorRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptorRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -64,25 +68,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor1 without sending the request
    */
-  async descriptor1Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor1RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/customSuggests`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor1Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor1RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -101,25 +110,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor10 without sending the request
    */
-  async descriptor10Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor10RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/unauffaelligerTags`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor10Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor10RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -138,25 +152,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor11 without sending the request
    */
-  async descriptor11Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor11RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/zaehlstelles`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor11Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor11RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -175,25 +194,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor12 without sending the request
    */
-  async descriptor12Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor12RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/zeitintervalls`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor12Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor12RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -212,25 +236,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor2 without sending the request
    */
-  async descriptor2Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor2RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/dienstleisters`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor2Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor2RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -249,25 +278,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor3 without sending the request
    */
-  async descriptor3Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor3RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/emailAddresses`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor3Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor3RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -286,25 +320,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor4 without sending the request
    */
-  async descriptor4Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor4RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/hochrechnungsfaktors`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor4Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor4RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -323,25 +362,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor5 without sending the request
    */
-  async descriptor5Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor5RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/infoMessages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor5Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor5RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -360,25 +404,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor6 without sending the request
    */
-  async descriptor6Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor6RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/kalendertags`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor6Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor6RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -397,25 +446,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor7 without sending the request
    */
-  async descriptor7Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor7RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/messstelles`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor7Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor7RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -434,25 +488,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor8 without sending the request
    */
-  async descriptor8Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor8RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/optionsmenueSettingses`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor8Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor8RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -471,25 +530,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for descriptor9 without sending the request
    */
-  async descriptor9Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<string>> {
+  async descriptor9RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile/pkwEinheits`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async descriptor9Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<string>> {
+    const requestOptions = await this.descriptor9RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<string>(response);
@@ -508,25 +572,30 @@ export class ProfileControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for listAllFormsOfMetadata without sending the request
    */
-  async listAllFormsOfMetadataRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<RepresentationModelObject>> {
+  async listAllFormsOfMetadataRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/profile`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async listAllFormsOfMetadataRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<RepresentationModelObject>> {
+    const requestOptions = await this.listAllFormsOfMetadataRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       RepresentationModelObjectFromJSON(jsonValue)

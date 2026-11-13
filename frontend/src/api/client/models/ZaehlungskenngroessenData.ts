@@ -22,50 +22,34 @@ import { mapValues } from "../runtime";
 export interface ZaehlungskenngroessenData {
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   type?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   startUhrzeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   endeUhrzeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   kfz?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   schwerverkehr?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   gueterverkehr?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   fahrradfahrer?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlungskenngroessenData
    */
   fussgaenger?: string;
 }

@@ -11,14 +11,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { Link } from "../models/Link";
 
-import type { Link } from "../models/index";
-
-import { LinkFromJSON, LinkToJSON } from "../models/index";
+import { LinkFromJSON, LinkToJSON } from "../models/Link";
 import * as runtime from "../runtime";
 
 export interface ScrapeRequest {
+  /**
+   *
+   */
   format?: ScrapeFormatEnum;
+  /**
+   *
+   */
   includedNames?: string;
 }
 
@@ -27,26 +32,31 @@ export interface ScrapeRequest {
  */
 export class ActuatorApi extends runtime.BaseAPI {
   /**
-   * Actuator web endpoint \'health\'
+   * Creates request options for health without sending the request
    */
-  async healthRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  async healthRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/actuator/health`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * Actuator web endpoint \'health\'
+   */
+  async healthRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<object>> {
+    const requestOptions = await this.healthRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }
@@ -62,26 +72,31 @@ export class ActuatorApi extends runtime.BaseAPI {
   }
 
   /**
-   * Actuator web endpoint \'info\'
+   * Creates request options for info without sending the request
    */
-  async infoRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  async infoRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/actuator/info`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * Actuator web endpoint \'info\'
+   */
+  async infoRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<object>> {
+    const requestOptions = await this.infoRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }
@@ -97,26 +112,31 @@ export class ActuatorApi extends runtime.BaseAPI {
   }
 
   /**
-   * Actuator root web endpoint
+   * Creates request options for links without sending the request
    */
-  async linksRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<{ [key: string]: { [key: string]: Link } }>> {
+  async linksRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/actuator`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * Actuator root web endpoint
+   */
+  async linksRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<{ [key: string]: { [key: string]: Link } }>> {
+    const requestOptions = await this.linksRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }
@@ -132,12 +152,11 @@ export class ActuatorApi extends runtime.BaseAPI {
   }
 
   /**
-   * Actuator web endpoint \'prometheus\'
+   * Creates request options for scrape without sending the request
    */
-  async scrapeRaw(
-    requestParameters: ScrapeRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  async scrapeRequestOpts(
+    requestParameters: ScrapeRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["format"] != null) {
@@ -152,15 +171,23 @@ export class ActuatorApi extends runtime.BaseAPI {
 
     let urlPath = `/actuator/metrics`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * Actuator web endpoint \'prometheus\'
+   */
+  async scrapeRaw(
+    requestParameters: ScrapeRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<object>> {
+    const requestOptions = await this.scrapeRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }

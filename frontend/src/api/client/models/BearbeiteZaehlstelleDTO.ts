@@ -37,68 +37,46 @@ import {
 export interface BearbeiteZaehlstelleDTO {
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   nummer?: string;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   stadtbezirkNummer: number;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   stadtbezirk?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   punkt: GeoPoint;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   lat?: number;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   lng?: number;
   /**
    *
-   * @type {Array<string>}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<BearbeiteZaehlungDTO>}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   zaehlungen?: Array<BearbeiteZaehlungDTO>;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   kommentar?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteZaehlstelleDTO
    */
   sichtbarDatenportal?: boolean;
 }

@@ -11,21 +11,29 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { CollectionModelEntityModelCustomSuggest } from "../models/index";
+import type { CollectionModelEntityModelCustomSuggest } from "../models/CollectionModelEntityModelCustomSuggest";
 
 import {
   CollectionModelEntityModelCustomSuggestFromJSON,
   CollectionModelEntityModelCustomSuggestToJSON,
-} from "../models/index";
+} from "../models/CollectionModelEntityModelCustomSuggest";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchCustomsuggestGetRequest {
+  /**
+   *
+   */
   fkid?: string;
 }
 
 export interface ExecuteSearchCustomsuggestGet1Request {
+  /**
+   *
+   */
   name?: string;
+  /**
+   *
+   */
   fkid?: string;
 }
 
@@ -34,11 +42,11 @@ export interface ExecuteSearchCustomsuggestGet1Request {
  */
 export class CustomSuggestSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchCustomsuggestGet without sending the request
    */
-  async executeSearchCustomsuggestGetRaw(
-    requestParameters: ExecuteSearchCustomsuggestGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async executeSearchCustomsuggestGetRequestOpts(
+    requestParameters: ExecuteSearchCustomsuggestGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["fkid"] != null) {
@@ -49,15 +57,23 @@ export class CustomSuggestSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests/search/deleteAllByFkid`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchCustomsuggestGetRaw(
+    requestParameters: ExecuteSearchCustomsuggestGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.executeSearchCustomsuggestGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -75,11 +91,11 @@ export class CustomSuggestSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchCustomsuggestGet1 without sending the request
    */
-  async executeSearchCustomsuggestGet1Raw(
-    requestParameters: ExecuteSearchCustomsuggestGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelCustomSuggest>> {
+  async executeSearchCustomsuggestGet1RequestOpts(
+    requestParameters: ExecuteSearchCustomsuggestGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["name"] != null) {
@@ -94,15 +110,23 @@ export class CustomSuggestSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/customSuggests/search/findAllByNameAndFkid`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchCustomsuggestGet1Raw(
+    requestParameters: ExecuteSearchCustomsuggestGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelCustomSuggest>> {
+    const requestOptions =
+      await this.executeSearchCustomsuggestGet1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelCustomSuggestFromJSON(jsonValue)

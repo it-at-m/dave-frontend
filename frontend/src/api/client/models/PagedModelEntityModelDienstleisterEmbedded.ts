@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelDienstleisterEmbedded {
   /**
    *
-   * @type {Array<EntityModelDienstleister>}
-   * @memberof PagedModelEntityModelDienstleisterEmbedded
    */
   dienstleisters?: Array<EntityModelDienstleister>;
 }

@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,68 +28,46 @@ import { mapValues } from "../runtime";
 export interface PkwEinheit {
   /**
    *
-   * @type {string}
-   * @memberof PkwEinheit
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof PkwEinheit
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   version?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   pkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   lkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   lastzuege?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   busse?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   kraftraeder?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   fahrradfahrer?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   fussgaenger?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheit
    */
   entityVersion?: number;
 }
@@ -109,7 +93,9 @@ export function PkwEinheitFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     pkw: json["pkw"] == null ? undefined : json["pkw"],
     lkw: json["lkw"] == null ? undefined : json["lkw"],
@@ -140,8 +126,8 @@ export function PkwEinheitToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     pkw: value["pkw"],
     lkw: value["lkw"],

@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelUnauffaelligerTag,
-  PagedModelEntityModelUnauffaelligerTag,
-  UnauffaelligerTagRequestBody,
-} from "../models/index";
+import type { EntityModelUnauffaelligerTag } from "../models/EntityModelUnauffaelligerTag";
+import type { PagedModelEntityModelUnauffaelligerTag } from "../models/PagedModelEntityModelUnauffaelligerTag";
+import type { UnauffaelligerTagRequestBody } from "../models/UnauffaelligerTagRequestBody";
 
 import {
   EntityModelUnauffaelligerTagFromJSON,
   EntityModelUnauffaelligerTagToJSON,
+} from "../models/EntityModelUnauffaelligerTag";
+import {
   PagedModelEntityModelUnauffaelligerTagFromJSON,
   PagedModelEntityModelUnauffaelligerTagToJSON,
+} from "../models/PagedModelEntityModelUnauffaelligerTag";
+import {
   UnauffaelligerTagRequestBodyFromJSON,
   UnauffaelligerTagRequestBodyToJSON,
-} from "../models/index";
+} from "../models/UnauffaelligerTagRequestBody";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceUnauffaelligertagDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceUnauffaelligertagGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceUnauffaelligertagGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceUnauffaelligertagPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   unauffaelligerTagRequestBody: UnauffaelligerTagRequestBody;
 }
 
 export interface PostCollectionResourceUnauffaelligertagPostRequest {
+  /**
+   *
+   */
   unauffaelligerTagRequestBody: UnauffaelligerTagRequestBody;
 }
 
 export interface PutItemResourceUnauffaelligertagPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   unauffaelligerTagRequestBody: UnauffaelligerTagRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceUnauffaelligertagPutRequest {
  */
 export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-unauffaelligertag
+   * Creates request options for deleteItemResourceUnauffaelligertagDelete without sending the request
    */
-  async deleteItemResourceUnauffaelligertagDeleteRaw(
-    requestParameters: DeleteItemResourceUnauffaelligertagDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceUnauffaelligertagDeleteRequestOpts(
+    requestParameters: DeleteItemResourceUnauffaelligertagDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-unauffaelligertag
+   */
+  async deleteItemResourceUnauffaelligertagDeleteRaw(
+    requestParameters: DeleteItemResourceUnauffaelligertagDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceUnauffaelligertagDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-unauffaelligertag
+   * Creates request options for getCollectionResourceUnauffaelligertagGet without sending the request
    */
-  async getCollectionResourceUnauffaelligertagGetRaw(
-    requestParameters: GetCollectionResourceUnauffaelligertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelUnauffaelligerTag>> {
+  async getCollectionResourceUnauffaelligertagGetRequestOpts(
+    requestParameters: GetCollectionResourceUnauffaelligertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-unauffaelligertag
+   */
+  async getCollectionResourceUnauffaelligertagGetRaw(
+    requestParameters: GetCollectionResourceUnauffaelligertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.getCollectionResourceUnauffaelligertagGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelUnauffaelligerTagFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-unauffaelligertag
+   * Creates request options for getItemResourceUnauffaelligertagGet without sending the request
    */
-  async getItemResourceUnauffaelligertagGetRaw(
-    requestParameters: GetItemResourceUnauffaelligertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+  async getItemResourceUnauffaelligertagGetRequestOpts(
+    requestParameters: GetItemResourceUnauffaelligertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,30 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-unauffaelligertag
+   */
+  async getItemResourceUnauffaelligertagGetRaw(
+    requestParameters: GetItemResourceUnauffaelligertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.getItemResourceUnauffaelligertagGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelUnauffaelligerTagFromJSON(jsonValue)
@@ -218,12 +279,11 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-unauffaelligertag
+   * Creates request options for patchItemResourceUnauffaelligertagPatch without sending the request
    */
-  async patchItemResourceUnauffaelligertagPatchRaw(
-    requestParameters: PatchItemResourceUnauffaelligertagPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+  async patchItemResourceUnauffaelligertagPatchRequestOpts(
+    requestParameters: PatchItemResourceUnauffaelligertagPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +306,33 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: UnauffaelligerTagRequestBodyToJSON(
-          requestParameters["unauffaelligerTagRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: UnauffaelligerTagRequestBodyToJSON(
+        requestParameters["unauffaelligerTagRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-unauffaelligertag
+   */
+  async patchItemResourceUnauffaelligertagPatchRaw(
+    requestParameters: PatchItemResourceUnauffaelligertagPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.patchItemResourceUnauffaelligertagPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelUnauffaelligerTagFromJSON(jsonValue)
@@ -290,12 +361,11 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-unauffaelligertag
+   * Creates request options for postCollectionResourceUnauffaelligertagPost without sending the request
    */
-  async postCollectionResourceUnauffaelligertagPostRaw(
-    requestParameters: PostCollectionResourceUnauffaelligertagPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+  async postCollectionResourceUnauffaelligertagPostRequestOpts(
+    requestParameters: PostCollectionResourceUnauffaelligertagPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["unauffaelligerTagRequestBody"] == null) {
       throw new runtime.RequiredError(
         "unauffaelligerTagRequestBody",
@@ -311,18 +381,29 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: UnauffaelligerTagRequestBodyToJSON(
-          requestParameters["unauffaelligerTagRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: UnauffaelligerTagRequestBodyToJSON(
+        requestParameters["unauffaelligerTagRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-unauffaelligertag
+   */
+  async postCollectionResourceUnauffaelligertagPostRaw(
+    requestParameters: PostCollectionResourceUnauffaelligertagPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.postCollectionResourceUnauffaelligertagPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelUnauffaelligerTagFromJSON(jsonValue)
@@ -344,12 +425,11 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-unauffaelligertag
+   * Creates request options for putItemResourceUnauffaelligertagPut without sending the request
    */
-  async putItemResourceUnauffaelligertagPutRaw(
-    requestParameters: PutItemResourceUnauffaelligertagPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+  async putItemResourceUnauffaelligertagPutRequestOpts(
+    requestParameters: PutItemResourceUnauffaelligertagPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +452,33 @@ export class UnauffaelligerTagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/unauffaelligerTags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: UnauffaelligerTagRequestBodyToJSON(
-          requestParameters["unauffaelligerTagRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: UnauffaelligerTagRequestBodyToJSON(
+        requestParameters["unauffaelligerTagRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-unauffaelligertag
+   */
+  async putItemResourceUnauffaelligertagPutRaw(
+    requestParameters: PutItemResourceUnauffaelligertagPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelUnauffaelligerTag>> {
+    const requestOptions =
+      await this.putItemResourceUnauffaelligertagPutRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelUnauffaelligerTagFromJSON(jsonValue)

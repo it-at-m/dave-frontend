@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface Knotenarm {
   /**
    *
-   * @type {number}
-   * @memberof Knotenarm
    */
   nummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof Knotenarm
    */
   filename?: string;
   /**
    *
-   * @type {string}
-   * @memberof Knotenarm
    */
   strassenname?: string;
 }

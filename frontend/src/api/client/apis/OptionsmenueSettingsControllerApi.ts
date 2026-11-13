@@ -11,13 +11,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { OptionsmenueSettingsDTO } from "../models/index";
+import type { OptionsmenueSettingsDTO } from "../models/OptionsmenueSettingsDTO";
 
 import {
   OptionsmenueSettingsDTOFromJSON,
   OptionsmenueSettingsDTOToJSON,
-} from "../models/index";
+} from "../models/OptionsmenueSettingsDTO";
 import * as runtime from "../runtime";
 
 /**
@@ -25,25 +24,31 @@ import * as runtime from "../runtime";
  */
 export class OptionsmenueSettingsControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getAllOptionsmenueSettingsForMessstellen without sending the request
    */
-  async getAllOptionsmenueSettingsForMessstellenRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<OptionsmenueSettingsDTO>>> {
+  async getAllOptionsmenueSettingsForMessstellenRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/settings-optionsmenue/messstelle/all`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllOptionsmenueSettingsForMessstellenRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<OptionsmenueSettingsDTO>>> {
+    const requestOptions =
+      await this.getAllOptionsmenueSettingsForMessstellenRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(OptionsmenueSettingsDTOFromJSON)

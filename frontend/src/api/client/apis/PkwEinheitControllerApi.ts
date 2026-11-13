@@ -11,10 +11,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { PkwEinheitDTO } from "../models/PkwEinheitDTO";
 
-import type { PkwEinheitDTO } from "../models/index";
-
-import { PkwEinheitDTOFromJSON, PkwEinheitDTOToJSON } from "../models/index";
+import {
+  PkwEinheitDTOFromJSON,
+  PkwEinheitDTOToJSON,
+} from "../models/PkwEinheitDTO";
 import * as runtime from "../runtime";
 
 /**
@@ -22,25 +24,30 @@ import * as runtime from "../runtime";
  */
 export class PkwEinheitControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getLatestPkwEinheiten without sending the request
    */
-  async getLatestPkwEinheitenRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PkwEinheitDTO>> {
+  async getLatestPkwEinheitenRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/pkw-einheit/latest`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getLatestPkwEinheitenRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PkwEinheitDTO>> {
+    const requestOptions = await this.getLatestPkwEinheitenRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PkwEinheitDTOFromJSON(jsonValue)

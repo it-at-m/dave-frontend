@@ -11,35 +11,51 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelEntityModelKalendertag,
-  EntityModelKalendertag,
-  TagesTyp,
-} from "../models/index";
+import type { CollectionModelEntityModelKalendertag } from "../models/CollectionModelEntityModelKalendertag";
+import type { EntityModelKalendertag } from "../models/EntityModelKalendertag";
+import type { TagesTyp } from "../models/TagesTyp";
 
 import {
   CollectionModelEntityModelKalendertagFromJSON,
   CollectionModelEntityModelKalendertagToJSON,
+} from "../models/CollectionModelEntityModelKalendertag";
+import {
   EntityModelKalendertagFromJSON,
   EntityModelKalendertagToJSON,
-  TagesTypFromJSON,
-  TagesTypToJSON,
-} from "../models/index";
+} from "../models/EntityModelKalendertag";
+import { TagesTypFromJSON, TagesTypToJSON } from "../models/TagesTyp";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchKalendertagGetRequest {
+  /**
+   *
+   */
   startDateIncluded?: Date;
+  /**
+   *
+   */
   endDateIncluded?: Date;
+  /**
+   *
+   */
   tagestypen?: Array<TagesTyp>;
 }
 
 export interface ExecuteSearchKalendertagGet1Request {
+  /**
+   *
+   */
   excludedDates?: Array<Date>;
+  /**
+   *
+   */
   latestDate?: Date;
 }
 
 export interface ExecuteSearchKalendertagGet2Request {
+  /**
+   *
+   */
   datum?: Date;
 }
 
@@ -48,27 +64,23 @@ export interface ExecuteSearchKalendertagGet2Request {
  */
 export class KalendertagSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchKalendertagGet without sending the request
    */
-  async executeSearchKalendertagGetRaw(
-    requestParameters: ExecuteSearchKalendertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<number>> {
+  async executeSearchKalendertagGetRequestOpts(
+    requestParameters: ExecuteSearchKalendertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["startDateIncluded"] != null) {
-      queryParameters["startDateIncluded"] = (
+      queryParameters["startDateIncluded"] = runtime.serializeDate(
         requestParameters["startDateIncluded"] as any
-      )
-        .toISOString()
-        .substring(0, 10);
+      );
     }
 
     if (requestParameters["endDateIncluded"] != null) {
-      queryParameters["endDateIncluded"] = (
+      queryParameters["endDateIncluded"] = runtime.serializeDate(
         requestParameters["endDateIncluded"] as any
-      )
-        .toISOString()
-        .substring(0, 10);
+      );
     }
 
     if (requestParameters["tagestypen"] != null) {
@@ -79,15 +91,23 @@ export class KalendertagSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags/search/countAllByDatumGreaterThanEqualAndDatumLessThanEqualAndTagestypIn`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchKalendertagGetRaw(
+    requestParameters: ExecuteSearchKalendertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<number>> {
+    const requestOptions =
+      await this.executeSearchKalendertagGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<number>(response);
@@ -110,11 +130,11 @@ export class KalendertagSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchKalendertagGet1 without sending the request
    */
-  async executeSearchKalendertagGet1Raw(
-    requestParameters: ExecuteSearchKalendertagGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelKalendertag>> {
+  async executeSearchKalendertagGet1RequestOpts(
+    requestParameters: ExecuteSearchKalendertagGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["excludedDates"] != null) {
@@ -122,24 +142,32 @@ export class KalendertagSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["latestDate"] != null) {
-      queryParameters["latestDate"] = (requestParameters["latestDate"] as any)
-        .toISOString()
-        .substring(0, 10);
+      queryParameters["latestDate"] = runtime.serializeDate(
+        requestParameters["latestDate"] as any
+      );
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/kalendertags/search/findAllByDatumNotInAndDatumIsBefore`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchKalendertagGet1Raw(
+    requestParameters: ExecuteSearchKalendertagGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelKalendertag>> {
+    const requestOptions =
+      await this.executeSearchKalendertagGet1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelKalendertagFromJSON(jsonValue)
@@ -160,32 +188,40 @@ export class KalendertagSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchKalendertagGet2 without sending the request
    */
-  async executeSearchKalendertagGet2Raw(
-    requestParameters: ExecuteSearchKalendertagGet2Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async executeSearchKalendertagGet2RequestOpts(
+    requestParameters: ExecuteSearchKalendertagGet2Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["datum"] != null) {
-      queryParameters["datum"] = (requestParameters["datum"] as any)
-        .toISOString()
-        .substring(0, 10);
+      queryParameters["datum"] = runtime.serializeDate(
+        requestParameters["datum"] as any
+      );
     }
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/kalendertags/search/findByDatum`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchKalendertagGet2Raw(
+    requestParameters: ExecuteSearchKalendertagGet2Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.executeSearchKalendertagGet2RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -206,25 +242,30 @@ export class KalendertagSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchKalendertagGet3 without sending the request
    */
-  async executeSearchKalendertagGet3Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async executeSearchKalendertagGet3RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/kalendertags/search/findByNextStartDateToLoadUnauffaelligeTageIsTrue`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchKalendertagGet3Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions = await this.executeSearchKalendertagGet3RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)

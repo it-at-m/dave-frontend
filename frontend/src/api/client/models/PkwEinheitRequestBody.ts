@@ -22,44 +22,30 @@ import { mapValues } from "../runtime";
 export interface PkwEinheitRequestBody {
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   pkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   lkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   lastzuege?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   busse?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   kraftraeder?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   fahrradfahrer?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitRequestBody
    */
   fussgaenger?: number;
 }

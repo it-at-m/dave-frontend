@@ -51,38 +51,26 @@ import {
 export interface BearbeiteLaengsverkehrDTO {
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteLaengsverkehrDTO
    */
   id?: string;
   /**
    *
-   * @type {Array<ZeitintervallDTO>}
-   * @memberof BearbeiteLaengsverkehrDTO
    */
   zeitintervalle?: Array<ZeitintervallDTO>;
   /**
    *
-   * @type {HochrechnungsfaktorDTO}
-   * @memberof BearbeiteLaengsverkehrDTO
    */
   hochrechnungsfaktor?: HochrechnungsfaktorDTO;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteLaengsverkehrDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {Bewegungsrichtung}
-   * @memberof BearbeiteLaengsverkehrDTO
    */
   richtung?: Bewegungsrichtung;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof BearbeiteLaengsverkehrDTO
    */
   strassenseite?: Himmelsrichtung;
 }

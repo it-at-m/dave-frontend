@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,38 +28,26 @@ import { mapValues } from "../runtime";
 export interface EmailAddressRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof EmailAddressRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EmailAddressRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EmailAddressRequestBody
    */
   version?: number;
   /**
    *
-   * @type {number}
-   * @memberof EmailAddressRequestBody
    */
   participantId?: number;
   /**
    *
-   * @type {string}
-   * @memberof EmailAddressRequestBody
    */
   emailAddress?: string;
   /**
    *
-   * @type {number}
-   * @memberof EmailAddressRequestBody
    */
   entityVersion?: number;
 }
@@ -83,7 +77,9 @@ export function EmailAddressRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     participantId:
       json["participantId"] == null ? undefined : json["participantId"],
@@ -112,8 +108,8 @@ export function EmailAddressRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     participantId: value["participantId"],
     emailAddress: value["emailAddress"],

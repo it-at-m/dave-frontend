@@ -22,44 +22,30 @@ import { mapValues } from "../runtime";
 export interface LadeZaehldatenHeatmapDTO {
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   legend: Array<string>;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   rangeMin: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   rangeMax: number;
   /**
    *
-   * @type {Array<Array<number>>}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   seriesEntriesFirstChart: Array<Array<number>>;
   /**
    *
-   * @type {Array<Array<number>>}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   seriesEntriesSecondChart?: Array<Array<number>>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   xaxisDataFirstChart: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenHeatmapDTO
    */
   xaxisDataSecondChart?: Array<string>;
 }

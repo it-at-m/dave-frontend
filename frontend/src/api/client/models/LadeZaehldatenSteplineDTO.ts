@@ -30,44 +30,30 @@ import {
 export interface LadeZaehldatenSteplineDTO {
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   legend: Array<string>;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   rangeMax: number;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   rangeMaxPercent: number;
   /**
    *
-   * @type {Array<LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInner>}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   seriesEntriesFirstChart: Array<LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInner>;
   /**
    *
-   * @type {Array<LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInner>}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   seriesEntriesSecondChart?: Array<LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInner>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   xaxisDataFirstChart: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeZaehldatenSteplineDTO
    */
   xaxisDataSecondChart?: Array<string>;
 }

@@ -11,16 +11,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { CollectionModelEntityModelChatMessage } from "../models/index";
+import type { CollectionModelEntityModelChatMessage } from "../models/CollectionModelEntityModelChatMessage";
 
 import {
   CollectionModelEntityModelChatMessageFromJSON,
   CollectionModelEntityModelChatMessageToJSON,
-} from "../models/index";
+} from "../models/CollectionModelEntityModelChatMessage";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchChatmessageGetRequest {
+  /**
+   *
+   */
   zaehlungId?: string;
 }
 
@@ -29,11 +31,11 @@ export interface ExecuteSearchChatmessageGetRequest {
  */
 export class ChatMessageSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchChatmessageGet without sending the request
    */
-  async executeSearchChatmessageGetRaw(
-    requestParameters: ExecuteSearchChatmessageGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelChatMessage>> {
+  async executeSearchChatmessageGetRequestOpts(
+    requestParameters: ExecuteSearchChatmessageGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -44,15 +46,23 @@ export class ChatMessageSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/chatMessages/search/findAllByZaehlungIdOrderByTimestampAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchChatmessageGetRaw(
+    requestParameters: ExecuteSearchChatmessageGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelChatMessage>> {
+    const requestOptions =
+      await this.executeSearchChatmessageGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelChatMessageFromJSON(jsonValue)

@@ -30,14 +30,10 @@ import {
 export interface QuerungsverkehrValue {
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof QuerungsverkehrValue
    */
   richtung: Himmelsrichtung;
   /**
    *
-   * @type {number}
-   * @memberof QuerungsverkehrValue
    */
   value: number;
 }

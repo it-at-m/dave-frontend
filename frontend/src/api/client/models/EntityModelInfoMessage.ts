@@ -12,15 +12,21 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
-import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -30,58 +36,40 @@ import {
 export interface EntityModelInfoMessage {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelInfoMessage
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelInfoMessage
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelInfoMessage
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelInfoMessage
    */
   content?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelInfoMessage
    */
   gueltigVon?: Date;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelInfoMessage
    */
   gueltigBis?: Date;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelInfoMessage
    */
   aktiv?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelInfoMessage
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelInfoMessage
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -109,17 +97,22 @@ export function EntityModelInfoMessageFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     content: json["content"] == null ? undefined : json["content"],
     gueltigVon:
-      json["gueltigVon"] == null ? undefined : new Date(json["gueltigVon"]),
+      json["gueltigVon"] == null ? undefined : parseDate(json["gueltigVon"]),
     gueltigBis:
-      json["gueltigBis"] == null ? undefined : new Date(json["gueltigBis"]),
+      json["gueltigBis"] == null ? undefined : parseDate(json["gueltigBis"]),
     aktiv: json["aktiv"] == null ? undefined : json["aktiv"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -141,20 +134,23 @@ export function EntityModelInfoMessageToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     content: value["content"],
     gueltigVon:
       value["gueltigVon"] == null
-        ? undefined
-        : value["gueltigVon"].toISOString().substring(0, 10),
+        ? value["gueltigVon"]
+        : serializeDate(value["gueltigVon"]),
     gueltigBis:
       value["gueltigBis"] == null
-        ? undefined
-        : value["gueltigBis"].toISOString().substring(0, 10),
+        ? value["gueltigBis"]
+        : serializeDate(value["gueltigBis"]),
     aktiv: value["aktiv"],
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

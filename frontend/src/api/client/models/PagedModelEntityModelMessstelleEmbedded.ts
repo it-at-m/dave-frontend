@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelMessstelleEmbedded {
   /**
    *
-   * @type {Array<EntityModelMessstelle>}
-   * @memberof PagedModelEntityModelMessstelleEmbedded
    */
   messstelles?: Array<EntityModelMessstelle>;
 }

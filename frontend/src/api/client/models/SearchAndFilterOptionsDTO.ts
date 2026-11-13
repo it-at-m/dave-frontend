@@ -30,20 +30,14 @@ import {
 export interface SearchAndFilterOptionsDTO {
   /**
    *
-   * @type {boolean}
-   * @memberof SearchAndFilterOptionsDTO
    */
   searchInMessstellen: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof SearchAndFilterOptionsDTO
    */
   searchInZaehlstellen: boolean;
   /**
    *
-   * @type {Array<Verkehrsart>}
-   * @memberof SearchAndFilterOptionsDTO
    */
   messstelleVerkehrsart: Array<Verkehrsart>;
 }

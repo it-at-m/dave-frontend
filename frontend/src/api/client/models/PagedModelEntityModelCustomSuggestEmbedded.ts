@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelCustomSuggestEmbedded {
   /**
    *
-   * @type {Array<EntityModelCustomSuggest>}
-   * @memberof PagedModelEntityModelCustomSuggestEmbedded
    */
   customSuggests?: Array<EntityModelCustomSuggest>;
 }

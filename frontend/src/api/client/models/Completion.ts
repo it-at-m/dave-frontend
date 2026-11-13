@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface Completion {
   /**
    *
-   * @type {Array<string>}
-   * @memberof Completion
    */
   input?: Array<string>;
   /**
    *
-   * @type {{ [key: string]: Array<string>; }}
-   * @memberof Completion
    */
   contexts?: { [key: string]: Array<string> } | null;
   /**
    *
-   * @type {number}
-   * @memberof Completion
    */
   weight?: number | null;
 }
@@ -60,8 +54,18 @@ export function CompletionFromJSONTyped(
   }
   return {
     input: json["input"] == null ? undefined : json["input"],
-    contexts: json["contexts"] == null ? undefined : json["contexts"],
-    weight: json["weight"] == null ? undefined : json["weight"],
+    contexts:
+      json["contexts"] === undefined
+        ? undefined
+        : json["contexts"] === null
+          ? null
+          : json["contexts"],
+    weight:
+      json["weight"] === undefined
+        ? undefined
+        : json["weight"] === null
+          ? null
+          : json["weight"],
   };
 }
 

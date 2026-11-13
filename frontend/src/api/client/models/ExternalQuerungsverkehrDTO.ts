@@ -44,32 +44,22 @@ import {
 export interface ExternalQuerungsverkehrDTO {
   /**
    *
-   * @type {string}
-   * @memberof ExternalQuerungsverkehrDTO
    */
   id?: string;
   /**
    *
-   * @type {Array<ZeitintervallDTO>}
-   * @memberof ExternalQuerungsverkehrDTO
    */
   zeitintervalle?: Array<ZeitintervallDTO>;
   /**
    *
-   * @type {HochrechnungsfaktorDTO}
-   * @memberof ExternalQuerungsverkehrDTO
    */
   hochrechnungsfaktor?: HochrechnungsfaktorDTO;
   /**
    *
-   * @type {number}
-   * @memberof ExternalQuerungsverkehrDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof ExternalQuerungsverkehrDTO
    */
   richtung?: Himmelsrichtung;
 }

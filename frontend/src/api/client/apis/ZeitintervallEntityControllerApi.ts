@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelZeitintervall,
-  PagedModelEntityModelZeitintervall,
-  ZeitintervallRequestBody,
-} from "../models/index";
+import type { EntityModelZeitintervall } from "../models/EntityModelZeitintervall";
+import type { PagedModelEntityModelZeitintervall } from "../models/PagedModelEntityModelZeitintervall";
+import type { ZeitintervallRequestBody } from "../models/ZeitintervallRequestBody";
 
 import {
   EntityModelZeitintervallFromJSON,
   EntityModelZeitintervallToJSON,
+} from "../models/EntityModelZeitintervall";
+import {
   PagedModelEntityModelZeitintervallFromJSON,
   PagedModelEntityModelZeitintervallToJSON,
+} from "../models/PagedModelEntityModelZeitintervall";
+import {
   ZeitintervallRequestBodyFromJSON,
   ZeitintervallRequestBodyToJSON,
-} from "../models/index";
+} from "../models/ZeitintervallRequestBody";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceZeitintervallDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceZeitintervallGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceZeitintervallGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceZeitintervallPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   zeitintervallRequestBody: ZeitintervallRequestBody;
 }
 
 export interface PostCollectionResourceZeitintervallPostRequest {
+  /**
+   *
+   */
   zeitintervallRequestBody: ZeitintervallRequestBody;
 }
 
 export interface PutItemResourceZeitintervallPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   zeitintervallRequestBody: ZeitintervallRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceZeitintervallPutRequest {
  */
 export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-zeitintervall
+   * Creates request options for deleteItemResourceZeitintervallDelete without sending the request
    */
-  async deleteItemResourceZeitintervallDeleteRaw(
-    requestParameters: DeleteItemResourceZeitintervallDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceZeitintervallDeleteRequestOpts(
+    requestParameters: DeleteItemResourceZeitintervallDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-zeitintervall
+   */
+  async deleteItemResourceZeitintervallDeleteRaw(
+    requestParameters: DeleteItemResourceZeitintervallDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceZeitintervallDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-zeitintervall
+   * Creates request options for getCollectionResourceZeitintervallGet without sending the request
    */
-  async getCollectionResourceZeitintervallGetRaw(
-    requestParameters: GetCollectionResourceZeitintervallGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelZeitintervall>> {
+  async getCollectionResourceZeitintervallGetRequestOpts(
+    requestParameters: GetCollectionResourceZeitintervallGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-zeitintervall
+   */
+  async getCollectionResourceZeitintervallGetRaw(
+    requestParameters: GetCollectionResourceZeitintervallGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.getCollectionResourceZeitintervallGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-zeitintervall
+   * Creates request options for getItemResourceZeitintervallGet without sending the request
    */
-  async getItemResourceZeitintervallGetRaw(
-    requestParameters: GetItemResourceZeitintervallGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+  async getItemResourceZeitintervallGetRequestOpts(
+    requestParameters: GetItemResourceZeitintervallGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-zeitintervall
+   */
+  async getItemResourceZeitintervallGetRaw(
+    requestParameters: GetItemResourceZeitintervallGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+    const requestOptions =
+      await this.getItemResourceZeitintervallGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZeitintervallFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-zeitintervall
+   * Creates request options for patchItemResourceZeitintervallPatch without sending the request
    */
-  async patchItemResourceZeitintervallPatchRaw(
-    requestParameters: PatchItemResourceZeitintervallPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+  async patchItemResourceZeitintervallPatchRequestOpts(
+    requestParameters: PatchItemResourceZeitintervallPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ZeitintervallRequestBodyToJSON(
-          requestParameters["zeitintervallRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ZeitintervallRequestBodyToJSON(
+        requestParameters["zeitintervallRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-zeitintervall
+   */
+  async patchItemResourceZeitintervallPatchRaw(
+    requestParameters: PatchItemResourceZeitintervallPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+    const requestOptions =
+      await this.patchItemResourceZeitintervallPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZeitintervallFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-zeitintervall
+   * Creates request options for postCollectionResourceZeitintervallPost without sending the request
    */
-  async postCollectionResourceZeitintervallPostRaw(
-    requestParameters: PostCollectionResourceZeitintervallPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+  async postCollectionResourceZeitintervallPostRequestOpts(
+    requestParameters: PostCollectionResourceZeitintervallPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zeitintervallRequestBody"] == null) {
       throw new runtime.RequiredError(
         "zeitintervallRequestBody",
@@ -311,18 +379,29 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ZeitintervallRequestBodyToJSON(
-          requestParameters["zeitintervallRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ZeitintervallRequestBodyToJSON(
+        requestParameters["zeitintervallRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-zeitintervall
+   */
+  async postCollectionResourceZeitintervallPostRaw(
+    requestParameters: PostCollectionResourceZeitintervallPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+    const requestOptions =
+      await this.postCollectionResourceZeitintervallPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZeitintervallFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-zeitintervall
+   * Creates request options for putItemResourceZeitintervallPut without sending the request
    */
-  async putItemResourceZeitintervallPutRaw(
-    requestParameters: PutItemResourceZeitintervallPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+  async putItemResourceZeitintervallPutRequestOpts(
+    requestParameters: PutItemResourceZeitintervallPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class ZeitintervallEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: ZeitintervallRequestBodyToJSON(
-          requestParameters["zeitintervallRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: ZeitintervallRequestBodyToJSON(
+        requestParameters["zeitintervallRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-zeitintervall
+   */
+  async putItemResourceZeitintervallPutRaw(
+    requestParameters: PutItemResourceZeitintervallPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZeitintervall>> {
+    const requestOptions =
+      await this.putItemResourceZeitintervallPutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZeitintervallFromJSON(jsonValue)

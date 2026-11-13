@@ -34,32 +34,22 @@ import {
 export interface StepLineSeriesEntryBaseDTO {
   /**
    *
-   * @type {string}
-   * @memberof StepLineSeriesEntryBaseDTO
    */
   name: string;
   /**
    *
-   * @type {number}
-   * @memberof StepLineSeriesEntryBaseDTO
-   */
-  xaxisIndex: number;
-  /**
-   *
-   * @type {number}
-   * @memberof StepLineSeriesEntryBaseDTO
    */
   yaxisIndex: number;
   /**
    *
-   * @type {Array<number>}
-   * @memberof StepLineSeriesEntryBaseDTO
+   */
+  xaxisIndex: number;
+  /**
+   *
    */
   yAxisData?: Array<number>;
   /**
    *
-   * @type {string}
-   * @memberof StepLineSeriesEntryBaseDTO
    */
   type: string;
 }
@@ -71,9 +61,9 @@ export function instanceOfStepLineSeriesEntryBaseDTO(
   value: object
 ): value is StepLineSeriesEntryBaseDTO {
   if (!("name" in value) || value["name"] === undefined) return false;
-  if (!("xaxisIndex" in value) || value["xaxisIndex"] === undefined)
-    return false;
   if (!("yaxisIndex" in value) || value["yaxisIndex"] === undefined)
+    return false;
+  if (!("xaxisIndex" in value) || value["xaxisIndex"] === undefined)
     return false;
   if (!("type" in value) || value["type"] === undefined) return false;
   return true;
@@ -108,8 +98,8 @@ export function StepLineSeriesEntryBaseDTOFromJSONTyped(
   }
   return {
     name: json["name"],
-    xaxisIndex: json["xaxisIndex"],
     yaxisIndex: json["yaxisIndex"],
+    xaxisIndex: json["xaxisIndex"],
     yAxisData: json["yAxisData"] == null ? undefined : json["yAxisData"],
     type: json["type"],
   };
@@ -148,8 +138,8 @@ export function StepLineSeriesEntryBaseDTOToJSONTyped(
 
   return {
     name: value["name"],
-    xaxisIndex: value["xaxisIndex"],
     yaxisIndex: value["yaxisIndex"],
+    xaxisIndex: value["xaxisIndex"],
     yAxisData: value["yAxisData"],
     type: value["type"],
   };

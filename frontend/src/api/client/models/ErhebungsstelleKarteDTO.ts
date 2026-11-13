@@ -16,6 +16,12 @@ import type { MessstelleKarteDTO } from "./MessstelleKarteDTO";
 import type { ZaehlstelleKarteDTO } from "./ZaehlstelleKarteDTO";
 
 import {
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
   instanceOfMessstelleKarteDTO,
   MessstelleKarteDTOFromJSON,
   MessstelleKarteDTOFromJSONTyped,
@@ -57,7 +63,6 @@ export function ErhebungsstelleKarteDTOFromJSONTyped(
   if (instanceOfZaehlstelleKarteDTO(json)) {
     return ZaehlstelleKarteDTOFromJSONTyped(json, true);
   }
-
   return {} as any;
 }
 
@@ -81,6 +86,5 @@ export function ErhebungsstelleKarteDTOToJSONTyped(
   if (instanceOfZaehlstelleKarteDTO(value)) {
     return ZaehlstelleKarteDTOToJSON(value as ZaehlstelleKarteDTO);
   }
-
   return {};
 }

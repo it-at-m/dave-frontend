@@ -37,26 +37,18 @@ import {
 export interface ReadMessfaehigkeitDTO {
   /**
    *
-   * @type {string}
-   * @memberof ReadMessfaehigkeitDTO
    */
   gueltigBis: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessfaehigkeitDTO
    */
   gueltigAb: string;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof ReadMessfaehigkeitDTO
    */
   fahrzeugklasse: Fahrzeugklasse;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof ReadMessfaehigkeitDTO
    */
   intervall: ZaehldatenIntervall;
 }

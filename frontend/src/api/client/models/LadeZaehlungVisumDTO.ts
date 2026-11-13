@@ -15,7 +15,13 @@
 import type { PositionUTM } from "./PositionUTM";
 import type { VerkehrsbeziehungVisumDTO } from "./VerkehrsbeziehungVisumDTO";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   PositionUTMFromJSON,
   PositionUTMFromJSONTyped,
@@ -37,56 +43,38 @@ import {
 export interface LadeZaehlungVisumDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlungVisumDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlungVisumDTO
    */
   zaehlart?: string;
   /**
    *
-   * @type {Date}
-   * @memberof LadeZaehlungVisumDTO
    */
   datum?: Date;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlungVisumDTO
    */
   zaehldauer?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof LadeZaehlungVisumDTO
    */
   sonderzaehlung?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof LadeZaehlungVisumDTO
    */
   kreisverkehr?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlungVisumDTO
    */
   kreuzungsname?: string;
   /**
    *
-   * @type {PositionUTM}
-   * @memberof LadeZaehlungVisumDTO
    */
   punktUtm?: PositionUTM;
   /**
    *
-   * @type {Array<VerkehrsbeziehungVisumDTO>}
-   * @memberof LadeZaehlungVisumDTO
    */
   verkehrsbeziehungen?: Array<VerkehrsbeziehungVisumDTO>;
 }
@@ -114,7 +102,7 @@ export function LadeZaehlungVisumDTOFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     zaehlart: json["zaehlart"] == null ? undefined : json["zaehlart"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     zaehldauer: json["zaehldauer"] == null ? undefined : json["zaehldauer"],
     sonderzaehlung:
       json["sonderzaehlung"] == null ? undefined : json["sonderzaehlung"],
@@ -151,9 +139,7 @@ export function LadeZaehlungVisumDTOToJSONTyped(
     id: value["id"],
     zaehlart: value["zaehlart"],
     datum:
-      value["datum"] == null
-        ? undefined
-        : value["datum"].toISOString().substring(0, 10),
+      value["datum"] == null ? value["datum"] : serializeDate(value["datum"]),
     zaehldauer: value["zaehldauer"],
     sonderzaehlung: value["sonderzaehlung"],
     kreisverkehr: value["kreisverkehr"],

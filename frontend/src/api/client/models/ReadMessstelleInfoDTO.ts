@@ -17,7 +17,13 @@ import type { ReadMessfaehigkeitDTO } from "./ReadMessfaehigkeitDTO";
 import type { ReadMessquerschnittDTO } from "./ReadMessquerschnittDTO";
 import type { Verkehrsart } from "./Verkehrsart";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   FahrzeugklasseFromJSON,
   FahrzeugklasseFromJSONTyped,
@@ -51,104 +57,70 @@ import {
 export interface ReadMessstelleInfoDTO {
   /**
    *
-   * @type {string}
-   * @memberof ReadMessstelleInfoDTO
    */
   id: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessstelleInfoDTO
    */
   mstId: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessstelleInfoDTO
    */
   standort: string;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessstelleInfoDTO
    */
   stadtbezirk: string;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessstelleInfoDTO
    */
   stadtbezirkNummer: number;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof ReadMessstelleInfoDTO
    */
   fahrzeugklasse: Fahrzeugklasse;
   /**
    *
-   * @type {Verkehrsart}
-   * @memberof ReadMessstelleInfoDTO
    */
   detektierteVerkehrsart: Verkehrsart;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessstelleInfoDTO
    */
   hersteller: string;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessstelleInfoDTO
    */
   longitude: number;
   /**
    *
-   * @type {number}
-   * @memberof ReadMessstelleInfoDTO
    */
   latitude: number;
   /**
    *
-   * @type {Date}
-   * @memberof ReadMessstelleInfoDTO
    */
   datumLetztePlausibleMessung: Date;
   /**
    *
-   * @type {Date}
-   * @memberof ReadMessstelleInfoDTO
    */
   realisierungsdatum: Date;
   /**
    *
-   * @type {Date}
-   * @memberof ReadMessstelleInfoDTO
    */
   abbaudatum: Date;
   /**
    *
-   * @type {string}
-   * @memberof ReadMessstelleInfoDTO
    */
   kommentar: string;
   /**
    *
-   * @type {Array<ReadMessquerschnittDTO>}
-   * @memberof ReadMessstelleInfoDTO
    */
   messquerschnitte: Array<ReadMessquerschnittDTO>;
   /**
    *
-   * @type {Array<ReadMessfaehigkeitDTO>}
-   * @memberof ReadMessstelleInfoDTO
    */
   messfaehigkeiten: Array<ReadMessfaehigkeitDTO>;
   /**
    *
-   * @type {boolean}
-   * @memberof ReadMessstelleInfoDTO
    */
   lageplanVorhanden: boolean;
 }
@@ -229,9 +201,18 @@ export function ReadMessstelleInfoDTOFromJSONTyped(
     hersteller: json["hersteller"],
     longitude: json["longitude"],
     latitude: json["latitude"],
-    datumLetztePlausibleMessung: new Date(json["datumLetztePlausibleMessung"]),
-    realisierungsdatum: new Date(json["realisierungsdatum"]),
-    abbaudatum: new Date(json["abbaudatum"]),
+    datumLetztePlausibleMessung:
+      json["datumLetztePlausibleMessung"] == null
+        ? json["datumLetztePlausibleMessung"]
+        : parseDate(json["datumLetztePlausibleMessung"]),
+    realisierungsdatum:
+      json["realisierungsdatum"] == null
+        ? json["realisierungsdatum"]
+        : parseDate(json["realisierungsdatum"]),
+    abbaudatum:
+      json["abbaudatum"] == null
+        ? json["abbaudatum"]
+        : parseDate(json["abbaudatum"]),
     kommentar: json["kommentar"],
     messquerschnitte: (json["messquerschnitte"] as Array<any>).map(
       ReadMessquerschnittDTOFromJSON
@@ -266,13 +247,18 @@ export function ReadMessstelleInfoDTOToJSONTyped(
     hersteller: value["hersteller"],
     longitude: value["longitude"],
     latitude: value["latitude"],
-    datumLetztePlausibleMessung: value["datumLetztePlausibleMessung"]
-      .toISOString()
-      .substring(0, 10),
-    realisierungsdatum: value["realisierungsdatum"]
-      .toISOString()
-      .substring(0, 10),
-    abbaudatum: value["abbaudatum"].toISOString().substring(0, 10),
+    datumLetztePlausibleMessung:
+      value["datumLetztePlausibleMessung"] == null
+        ? value["datumLetztePlausibleMessung"]
+        : serializeDate(value["datumLetztePlausibleMessung"]),
+    realisierungsdatum:
+      value["realisierungsdatum"] == null
+        ? value["realisierungsdatum"]
+        : serializeDate(value["realisierungsdatum"]),
+    abbaudatum:
+      value["abbaudatum"] == null
+        ? value["abbaudatum"]
+        : serializeDate(value["abbaudatum"]),
     kommentar: value["kommentar"],
     messquerschnitte: (value["messquerschnitte"] as Array<any>).map(
       ReadMessquerschnittDTOToJSON

@@ -30,14 +30,10 @@ import {
 export interface LaengsverkehrValue {
   /**
    *
-   * @type {Bewegungsrichtung}
-   * @memberof LaengsverkehrValue
    */
   richtung: Bewegungsrichtung;
   /**
    *
-   * @type {number}
-   * @memberof LaengsverkehrValue
    */
   value: number;
 }

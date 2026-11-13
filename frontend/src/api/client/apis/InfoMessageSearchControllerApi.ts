@@ -11,18 +11,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelEntityModelInfoMessage,
-  EntityModelInfoMessage,
-} from "../models/index";
+import type { CollectionModelEntityModelInfoMessage } from "../models/CollectionModelEntityModelInfoMessage";
+import type { EntityModelInfoMessage } from "../models/EntityModelInfoMessage";
 
 import {
   CollectionModelEntityModelInfoMessageFromJSON,
   CollectionModelEntityModelInfoMessageToJSON,
+} from "../models/CollectionModelEntityModelInfoMessage";
+import {
   EntityModelInfoMessageFromJSON,
   EntityModelInfoMessageToJSON,
-} from "../models/index";
+} from "../models/EntityModelInfoMessage";
 import * as runtime from "../runtime";
 
 /**
@@ -30,25 +29,30 @@ import * as runtime from "../runtime";
  */
 export class InfoMessageSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchInfomessageGet without sending the request
    */
-  async executeSearchInfomessageGetRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelInfoMessage>> {
+  async executeSearchInfomessageGetRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/infoMessages/search/findAllByAktivIsTrue`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchInfomessageGetRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelInfoMessage>> {
+    const requestOptions = await this.executeSearchInfomessageGetRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelInfoMessageFromJSON(jsonValue)
@@ -65,25 +69,30 @@ export class InfoMessageSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchInfomessageGet1 without sending the request
    */
-  async executeSearchInfomessageGet1Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelInfoMessage>> {
+  async executeSearchInfomessageGet1RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/infoMessages/search/findAllByOrderByCreatedTimeDesc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchInfomessageGet1Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelInfoMessage>> {
+    const requestOptions = await this.executeSearchInfomessageGet1RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelInfoMessageFromJSON(jsonValue)
@@ -100,25 +109,30 @@ export class InfoMessageSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchInfomessageGet2 without sending the request
    */
-  async executeSearchInfomessageGet2Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+  async executeSearchInfomessageGet2RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/infoMessages/search/findTopByAktivIsTrueOrderByCreatedTimeDesc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchInfomessageGet2Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelInfoMessage>> {
+    const requestOptions = await this.executeSearchInfomessageGet2RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelInfoMessageFromJSON(jsonValue)

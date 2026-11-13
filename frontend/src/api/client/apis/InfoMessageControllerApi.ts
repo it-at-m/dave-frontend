@@ -11,13 +11,18 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { InfoMessageDTO } from "../models/InfoMessageDTO";
 
-import type { InfoMessageDTO } from "../models/index";
-
-import { InfoMessageDTOFromJSON, InfoMessageDTOToJSON } from "../models/index";
+import {
+  InfoMessageDTOFromJSON,
+  InfoMessageDTOToJSON,
+} from "../models/InfoMessageDTO";
 import * as runtime from "../runtime";
 
 export interface SaveInfoMessageRequest {
+  /**
+   *
+   */
   infoMessageDTO: InfoMessageDTO;
 }
 
@@ -26,25 +31,30 @@ export interface SaveInfoMessageRequest {
  */
 export class InfoMessageControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getActiveInfoMessage without sending the request
    */
-  async getActiveInfoMessageRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<InfoMessageDTO>> {
+  async getActiveInfoMessageRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/infomessage/active`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getActiveInfoMessageRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<InfoMessageDTO>> {
+    const requestOptions = await this.getActiveInfoMessageRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       InfoMessageDTOFromJSON(jsonValue)
@@ -61,25 +71,30 @@ export class InfoMessageControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getAllInfoMessages without sending the request
    */
-  async getAllInfoMessagesRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<InfoMessageDTO>>> {
+  async getAllInfoMessagesRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/infomessage/all`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllInfoMessagesRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<InfoMessageDTO>>> {
+    const requestOptions = await this.getAllInfoMessagesRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(InfoMessageDTOFromJSON)
@@ -96,11 +111,11 @@ export class InfoMessageControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveInfoMessage without sending the request
    */
-  async saveInfoMessageRaw(
-    requestParameters: SaveInfoMessageRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<InfoMessageDTO>>> {
+  async saveInfoMessageRequestOpts(
+    requestParameters: SaveInfoMessageRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["infoMessageDTO"] == null) {
       throw new runtime.RequiredError(
         "infoMessageDTO",
@@ -116,16 +131,24 @@ export class InfoMessageControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/infomessage/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: InfoMessageDTOToJSON(requestParameters["infoMessageDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: InfoMessageDTOToJSON(requestParameters["infoMessageDTO"]),
+    };
+  }
+
+  /**
+   */
+  async saveInfoMessageRaw(
+    requestParameters: SaveInfoMessageRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<InfoMessageDTO>>> {
+    const requestOptions =
+      await this.saveInfoMessageRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(InfoMessageDTOFromJSON)
@@ -146,25 +169,30 @@ export class InfoMessageControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for setAllInfoMessagesInactive without sending the request
    */
-  async setAllInfoMessagesInactiveRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  async setAllInfoMessagesInactiveRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/infomessage/set-all-inactive`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async setAllInfoMessagesInactiveRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<object>> {
+    const requestOptions = await this.setAllInfoMessagesInactiveRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }

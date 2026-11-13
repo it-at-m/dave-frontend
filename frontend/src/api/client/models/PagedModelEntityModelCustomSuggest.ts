@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { PagedModelEntityModelCustomSuggestEmbedded } from "./PagedModelEntityModelCustomSuggestEmbedded";
 import type { PageMetadata } from "./PageMetadata";
 
 import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   PagedModelEntityModelCustomSuggestEmbeddedFromJSON,
   PagedModelEntityModelCustomSuggestEmbeddedFromJSONTyped,
@@ -44,20 +44,14 @@ import {
 export interface PagedModelEntityModelCustomSuggest {
   /**
    *
-   * @type {PagedModelEntityModelCustomSuggestEmbedded}
-   * @memberof PagedModelEntityModelCustomSuggest
    */
   embedded?: PagedModelEntityModelCustomSuggestEmbedded;
   /**
    *
-   * @type {Links}
-   * @memberof PagedModelEntityModelCustomSuggest
    */
-  links?: Links;
+  links?: { [key: string]: Link };
   /**
    *
-   * @type {PageMetadata}
-   * @memberof PagedModelEntityModelCustomSuggest
    */
   page?: PageMetadata;
 }
@@ -89,7 +83,10 @@ export function PagedModelEntityModelCustomSuggestFromJSONTyped(
       json["_embedded"] == null
         ? undefined
         : PagedModelEntityModelCustomSuggestEmbeddedFromJSON(json["_embedded"]),
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
     page: json["page"] == null ? undefined : PageMetadataFromJSON(json["page"]),
   };
 }
@@ -112,7 +109,10 @@ export function PagedModelEntityModelCustomSuggestToJSONTyped(
     _embedded: PagedModelEntityModelCustomSuggestEmbeddedToJSON(
       value["embedded"]
     ),
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
     page: PageMetadataToJSON(value["page"]),
   };
 }

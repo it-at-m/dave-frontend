@@ -22,14 +22,10 @@ import { mapValues } from "../runtime";
 export interface GeoPoint {
   /**
    *
-   * @type {number}
-   * @memberof GeoPoint
    */
   lat?: number;
   /**
    *
-   * @type {number}
-   * @memberof GeoPoint
    */
   lon?: number;
 }

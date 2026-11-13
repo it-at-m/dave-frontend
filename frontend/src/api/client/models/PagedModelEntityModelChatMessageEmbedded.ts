@@ -30,8 +30,6 @@ import {
 export interface PagedModelEntityModelChatMessageEmbedded {
   /**
    *
-   * @type {Array<EntityModelChatMessage>}
-   * @memberof PagedModelEntityModelChatMessageEmbedded
    */
   chatMessages?: Array<EntityModelChatMessage>;
 }

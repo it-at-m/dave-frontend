@@ -12,15 +12,21 @@
  * Do not edit the class manually.
  */
 
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 
-import { mapValues } from "../runtime";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 
 /**
  *
@@ -30,70 +36,48 @@ import {
 export interface EntityModelHochrechnungsfaktor {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   version?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   matrix?: string;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   kfz?: number;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   sv?: number;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   gv?: number;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   active?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   defaultFaktor?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelHochrechnungsfaktor
    */
   entityVersion?: number;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelHochrechnungsfaktor
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -121,7 +105,9 @@ export function EntityModelHochrechnungsfaktorFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
     matrix: json["matrix"] == null ? undefined : json["matrix"],
     kfz: json["kfz"] == null ? undefined : json["kfz"],
@@ -132,7 +118,10 @@ export function EntityModelHochrechnungsfaktorFromJSONTyped(
       json["defaultFaktor"] == null ? undefined : json["defaultFaktor"],
     entityVersion:
       json["entityVersion"] == null ? undefined : json["entityVersion"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -154,8 +143,8 @@ export function EntityModelHochrechnungsfaktorToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     matrix: value["matrix"],
     kfz: value["kfz"],
@@ -164,6 +153,9 @@ export function EntityModelHochrechnungsfaktorToJSONTyped(
     active: value["active"],
     defaultFaktor: value["defaultFaktor"],
     entityVersion: value["entityVersion"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

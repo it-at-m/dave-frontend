@@ -30,20 +30,14 @@ import {
 export interface Item {
   /**
    *
-   * @type {string}
-   * @memberof Item
    */
   type?: string;
   /**
    *
-   * @type {{ [key: string]: AbstractJsonSchemaPropertyObject; }}
-   * @memberof Item
    */
   properties?: { [key: string]: AbstractJsonSchemaPropertyObject };
   /**
    *
-   * @type {Array<string>}
-   * @memberof Item
    */
   requiredProperties?: Array<string>;
 }

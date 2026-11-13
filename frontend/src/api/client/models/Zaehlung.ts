@@ -20,7 +20,13 @@ import type { PositionUTM } from "./PositionUTM";
 import type { Querungsverkehr } from "./Querungsverkehr";
 import type { Verkehrsbeziehung } from "./Verkehrsbeziehung";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   GeoPointFromJSON,
   GeoPointFromJSONTyped,
@@ -72,212 +78,142 @@ import {
 export interface Zaehlung {
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof Zaehlung
    */
   datum?: Date;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   jahr?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   monat?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   jahreszeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   zaehlart?: string;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof Zaehlung
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   tagesTyp?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   projektNummer?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   projektName?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   kreuzungsname?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof Zaehlung
    */
   sonderzaehlung?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof Zaehlung
    */
   kreisverkehr?: boolean;
   /**
    *
-   * @type {Array<string>}
-   * @memberof Zaehlung
    */
   kategorien?: Array<ZaehlungKategorienEnum>;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   status?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   zaehlsituation?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   zaehlsituationErweitert?: string;
   /**
    *
-   * @type {number}
-   * @memberof Zaehlung
    */
   zaehlIntervall?: number;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   wetter?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   zaehldauer?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   quelle?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   kommentar?: string;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   schulZeiten?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof Zaehlung
    */
   suchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof Zaehlung
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {PkwEinheit}
-   * @memberof Zaehlung
    */
   pkwEinheit?: PkwEinheit;
   /**
    *
-   * @type {Array<string>}
-   * @memberof Zaehlung
    */
   geographie?: Array<string>;
   /**
    *
-   * @type {Array<Knotenarm>}
-   * @memberof Zaehlung
    */
   knotenarme?: Array<Knotenarm>;
   /**
    *
-   * @type {Array<Laengsverkehr>}
-   * @memberof Zaehlung
    */
   laengsverkehr?: Array<Laengsverkehr>;
   /**
    *
-   * @type {Array<Querungsverkehr>}
-   * @memberof Zaehlung
    */
   querungsverkehr?: Array<Querungsverkehr>;
   /**
    *
-   * @type {Array<Verkehrsbeziehung>}
-   * @memberof Zaehlung
    */
   verkehrsbeziehungen?: Array<Verkehrsbeziehung>;
   /**
    *
-   * @type {boolean}
-   * @memberof Zaehlung
    */
   unreadMessagesMobilitaetsreferat?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof Zaehlung
    */
   unreadMessagesDienstleister?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof Zaehlung
    */
   dienstleisterkennung?: string;
   /**
    *
-   * @type {PositionUTM}
-   * @memberof Zaehlung
    */
   punktUtm?: PositionUTM;
 }
@@ -323,7 +259,7 @@ export function ZaehlungFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     jahr: json["jahr"] == null ? undefined : json["jahr"],
     monat: json["monat"] == null ? undefined : json["monat"],
     jahreszeit: json["jahreszeit"] == null ? undefined : json["jahreszeit"],
@@ -414,9 +350,7 @@ export function ZaehlungToJSONTyped(
   return {
     id: value["id"],
     datum:
-      value["datum"] == null
-        ? undefined
-        : value["datum"].toISOString().substring(0, 10),
+      value["datum"] == null ? value["datum"] : serializeDate(value["datum"]),
     jahr: value["jahr"],
     monat: value["monat"],
     jahreszeit: value["jahreszeit"],

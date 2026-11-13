@@ -22,44 +22,30 @@ import { mapValues } from "../runtime";
 export interface PkwEinheitDTO {
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   pkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   lkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   lastzuege?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   busse?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   kraftraeder?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   fahrradfahrer?: number;
   /**
    *
-   * @type {number}
-   * @memberof PkwEinheitDTO
    */
   fussgaenger?: number;
 }

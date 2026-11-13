@@ -37,20 +37,14 @@ import {
 export interface FjsStrassenseiteValue {
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof FjsStrassenseiteValue
    */
   strassenseite: Himmelsrichtung;
   /**
    *
-   * @type {number}
-   * @memberof FjsStrassenseiteValue
    */
   sumStrassenseite: number;
   /**
    *
-   * @type {Array<LaengsverkehrValue>}
-   * @memberof FjsStrassenseiteValue
    */
   valuesLaengsverkehre: Array<LaengsverkehrValue>;
 }

@@ -14,7 +14,13 @@
 
 import type { TagesTyp } from "./TagesTyp";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   TagesTypFromJSON,
   TagesTypFromJSONTyped,
@@ -30,44 +36,30 @@ import {
 export interface KalendertagRequestBody {
   /**
    *
-   * @type {string}
-   * @memberof KalendertagRequestBody
    */
   id?: string;
   /**
    *
-   * @type {Date}
-   * @memberof KalendertagRequestBody
    */
   createdTime?: Date;
   /**
    *
-   * @type {number}
-   * @memberof KalendertagRequestBody
    */
   version?: number;
   /**
    *
-   * @type {Date}
-   * @memberof KalendertagRequestBody
    */
   datum?: Date;
   /**
    *
-   * @type {TagesTyp}
-   * @memberof KalendertagRequestBody
    */
   tagestyp?: TagesTyp;
   /**
    *
-   * @type {boolean}
-   * @memberof KalendertagRequestBody
    */
   nextStartDateToLoadUnauffaelligeTage?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof KalendertagRequestBody
    */
   entityVersion?: number;
 }
@@ -97,9 +89,11 @@ export function KalendertagRequestBodyFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     createdTime:
-      json["createdTime"] == null ? undefined : new Date(json["createdTime"]),
+      json["createdTime"] == null
+        ? undefined
+        : parseDateTime(json["createdTime"]),
     version: json["version"] == null ? undefined : json["version"],
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     tagestyp:
       json["tagestyp"] == null ? undefined : TagesTypFromJSON(json["tagestyp"]),
     nextStartDateToLoadUnauffaelligeTage:
@@ -129,13 +123,11 @@ export function KalendertagRequestBodyToJSONTyped(
     id: value["id"],
     createdTime:
       value["createdTime"] == null
-        ? undefined
-        : value["createdTime"].toISOString(),
+        ? value["createdTime"]
+        : serializeDateTime(value["createdTime"]),
     version: value["version"],
     datum:
-      value["datum"] == null
-        ? undefined
-        : value["datum"].toISOString().substring(0, 10),
+      value["datum"] == null ? value["datum"] : serializeDate(value["datum"]),
     tagestyp: TagesTypToJSON(value["tagestyp"]),
     nextStartDateToLoadUnauffaelligeTage:
       value["nextStartDateToLoadUnauffaelligeTage"],

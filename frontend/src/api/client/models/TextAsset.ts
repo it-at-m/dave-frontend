@@ -30,14 +30,10 @@ import {
 export interface TextAsset extends BaseAsset {
   /**
    *
-   * @type {string}
-   * @memberof TextAsset
    */
   text?: string;
   /**
    *
-   * @type {string}
-   * @memberof TextAsset
    */
   size?: string;
 }

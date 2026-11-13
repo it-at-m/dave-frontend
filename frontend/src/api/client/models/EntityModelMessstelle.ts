@@ -14,12 +14,18 @@
 
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { GeoPoint } from "./GeoPoint";
-import type { Links } from "./Links";
+import type { Link } from "./Link";
 import type { Messfaehigkeit } from "./Messfaehigkeit";
 import type { Messquerschnitt } from "./Messquerschnitt";
 import type { Verkehrsart } from "./Verkehrsart";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   FahrzeugklasseFromJSON,
   FahrzeugklasseFromJSONTyped,
@@ -33,11 +39,11 @@ import {
   GeoPointToJSONTyped,
 } from "./GeoPoint";
 import {
-  LinksFromJSON,
-  LinksFromJSONTyped,
-  LinksToJSON,
-  LinksToJSONTyped,
-} from "./Links";
+  LinkFromJSON,
+  LinkFromJSONTyped,
+  LinkToJSON,
+  LinkToJSONTyped,
+} from "./Link";
 import {
   MessfaehigkeitFromJSON,
   MessfaehigkeitFromJSONTyped,
@@ -65,136 +71,92 @@ import {
 export interface EntityModelMessstelle {
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   mstId?: string;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   name?: string;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   status?: EntityModelMessstelleStatusEnum;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelMessstelle
    */
   realisierungsdatum?: Date;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelMessstelle
    */
   abbaudatum?: Date;
   /**
    *
-   * @type {number}
-   * @memberof EntityModelMessstelle
    */
   stadtbezirkNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   bemerkung?: string;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof EntityModelMessstelle
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {Verkehrsart}
-   * @memberof EntityModelMessstelle
    */
   detektierteVerkehrsart?: Verkehrsart;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   hersteller?: string;
   /**
    *
-   * @type {Date}
-   * @memberof EntityModelMessstelle
    */
   datumLetztePlausibleMessung?: Date;
   /**
    *
-   * @type {GeoPoint}
-   * @memberof EntityModelMessstelle
    */
   punkt?: GeoPoint;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelMessstelle
    */
   sichtbarDatenportal?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelMessstelle
    */
   geprueft?: boolean;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   kommentar?: string;
   /**
    *
-   * @type {string}
-   * @memberof EntityModelMessstelle
    */
   standort?: string;
   /**
    *
-   * @type {Array<string>}
-   * @memberof EntityModelMessstelle
    */
   suchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<string>}
-   * @memberof EntityModelMessstelle
    */
   customSuchwoerter?: Array<string>;
   /**
    *
-   * @type {Array<Messquerschnitt>}
-   * @memberof EntityModelMessstelle
    */
   messquerschnitte?: Array<Messquerschnitt>;
   /**
    *
-   * @type {Array<Messfaehigkeit>}
-   * @memberof EntityModelMessstelle
    */
   messfaehigkeiten?: Array<Messfaehigkeit>;
   /**
    *
-   * @type {boolean}
-   * @memberof EntityModelMessstelle
    */
   lageplanVorhanden?: boolean;
   /**
    *
-   * @type {Links}
-   * @memberof EntityModelMessstelle
    */
-  links?: Links;
+  links?: { [key: string]: Link };
 }
 
 /**
@@ -239,9 +201,9 @@ export function EntityModelMessstelleFromJSONTyped(
     realisierungsdatum:
       json["realisierungsdatum"] == null
         ? undefined
-        : new Date(json["realisierungsdatum"]),
+        : parseDate(json["realisierungsdatum"]),
     abbaudatum:
-      json["abbaudatum"] == null ? undefined : new Date(json["abbaudatum"]),
+      json["abbaudatum"] == null ? undefined : parseDate(json["abbaudatum"]),
     stadtbezirkNummer:
       json["stadtbezirkNummer"] == null ? undefined : json["stadtbezirkNummer"],
     bemerkung: json["bemerkung"] == null ? undefined : json["bemerkung"],
@@ -257,7 +219,7 @@ export function EntityModelMessstelleFromJSONTyped(
     datumLetztePlausibleMessung:
       json["datumLetztePlausibleMessung"] == null
         ? undefined
-        : new Date(json["datumLetztePlausibleMessung"]),
+        : parseDate(json["datumLetztePlausibleMessung"]),
     punkt: json["punkt"] == null ? undefined : GeoPointFromJSON(json["punkt"]),
     sichtbarDatenportal:
       json["sichtbarDatenportal"] == null
@@ -279,7 +241,10 @@ export function EntityModelMessstelleFromJSONTyped(
         : (json["messfaehigkeiten"] as Array<any>).map(MessfaehigkeitFromJSON),
     lageplanVorhanden:
       json["lageplanVorhanden"] == null ? undefined : json["lageplanVorhanden"],
-    links: json["_links"] == null ? undefined : LinksFromJSON(json["_links"]),
+    links:
+      json["_links"] == null
+        ? undefined
+        : mapValues(json["_links"], LinkFromJSON),
   };
 }
 
@@ -301,12 +266,12 @@ export function EntityModelMessstelleToJSONTyped(
     status: value["status"],
     realisierungsdatum:
       value["realisierungsdatum"] == null
-        ? undefined
-        : value["realisierungsdatum"].toISOString().substring(0, 10),
+        ? value["realisierungsdatum"]
+        : serializeDate(value["realisierungsdatum"]),
     abbaudatum:
       value["abbaudatum"] == null
-        ? undefined
-        : value["abbaudatum"].toISOString().substring(0, 10),
+        ? value["abbaudatum"]
+        : serializeDate(value["abbaudatum"]),
     stadtbezirkNummer: value["stadtbezirkNummer"],
     bemerkung: value["bemerkung"],
     fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
@@ -314,8 +279,8 @@ export function EntityModelMessstelleToJSONTyped(
     hersteller: value["hersteller"],
     datumLetztePlausibleMessung:
       value["datumLetztePlausibleMessung"] == null
-        ? undefined
-        : value["datumLetztePlausibleMessung"].toISOString().substring(0, 10),
+        ? value["datumLetztePlausibleMessung"]
+        : serializeDate(value["datumLetztePlausibleMessung"]),
     punkt: GeoPointToJSON(value["punkt"]),
     sichtbarDatenportal: value["sichtbarDatenportal"],
     geprueft: value["geprueft"],
@@ -332,6 +297,9 @@ export function EntityModelMessstelleToJSONTyped(
         ? undefined
         : (value["messfaehigkeiten"] as Array<any>).map(MessfaehigkeitToJSON),
     lageplanVorhanden: value["lageplanVorhanden"],
-    _links: LinksToJSON(value["links"]),
+    _links:
+      value["links"] == null
+        ? undefined
+        : mapValues(value["links"], LinkToJSON),
   };
 }

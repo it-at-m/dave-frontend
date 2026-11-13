@@ -30,20 +30,14 @@ import {
 export interface ValidateZeitraumAndTagestypForMessstelleDTO {
   /**
    *
-   * @type {Array<Date>}
-   * @memberof ValidateZeitraumAndTagestypForMessstelleDTO
    */
   zeitraum: Array<Date>;
   /**
    *
-   * @type {string}
-   * @memberof ValidateZeitraumAndTagestypForMessstelleDTO
    */
   mstId: string;
   /**
    *
-   * @type {TagesTyp}
-   * @memberof ValidateZeitraumAndTagestypForMessstelleDTO
    */
   tagesTyp: TagesTyp;
 }

@@ -22,26 +22,18 @@ import { mapValues } from "../runtime";
 export interface EmailAddressDTO {
   /**
    *
-   * @type {string}
-   * @memberof EmailAddressDTO
    */
   id?: string;
   /**
    *
-   * @type {number}
-   * @memberof EmailAddressDTO
    */
   entityVersion?: number;
   /**
    *
-   * @type {number}
-   * @memberof EmailAddressDTO
    */
   participantId?: number;
   /**
    *
-   * @type {string}
-   * @memberof EmailAddressDTO
    */
   emailAddress: string;
 }

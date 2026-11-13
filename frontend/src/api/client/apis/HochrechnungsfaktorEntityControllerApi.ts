@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelHochrechnungsfaktor,
-  HochrechnungsfaktorRequestBody,
-  PagedModelEntityModelHochrechnungsfaktor,
-} from "../models/index";
+import type { EntityModelHochrechnungsfaktor } from "../models/EntityModelHochrechnungsfaktor";
+import type { HochrechnungsfaktorRequestBody } from "../models/HochrechnungsfaktorRequestBody";
+import type { PagedModelEntityModelHochrechnungsfaktor } from "../models/PagedModelEntityModelHochrechnungsfaktor";
 
 import {
   EntityModelHochrechnungsfaktorFromJSON,
   EntityModelHochrechnungsfaktorToJSON,
+} from "../models/EntityModelHochrechnungsfaktor";
+import {
   HochrechnungsfaktorRequestBodyFromJSON,
   HochrechnungsfaktorRequestBodyToJSON,
+} from "../models/HochrechnungsfaktorRequestBody";
+import {
   PagedModelEntityModelHochrechnungsfaktorFromJSON,
   PagedModelEntityModelHochrechnungsfaktorToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelHochrechnungsfaktor";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceHochrechnungsfaktorDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceHochrechnungsfaktorGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceHochrechnungsfaktorGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceHochrechnungsfaktorPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   hochrechnungsfaktorRequestBody: HochrechnungsfaktorRequestBody;
 }
 
 export interface PostCollectionResourceHochrechnungsfaktorPostRequest {
+  /**
+   *
+   */
   hochrechnungsfaktorRequestBody: HochrechnungsfaktorRequestBody;
 }
 
 export interface PutItemResourceHochrechnungsfaktorPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   hochrechnungsfaktorRequestBody: HochrechnungsfaktorRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceHochrechnungsfaktorPutRequest {
  */
 export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-hochrechnungsfaktor
+   * Creates request options for deleteItemResourceHochrechnungsfaktorDelete without sending the request
    */
-  async deleteItemResourceHochrechnungsfaktorDeleteRaw(
-    requestParameters: DeleteItemResourceHochrechnungsfaktorDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceHochrechnungsfaktorDeleteRequestOpts(
+    requestParameters: DeleteItemResourceHochrechnungsfaktorDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktors/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-hochrechnungsfaktor
+   */
+  async deleteItemResourceHochrechnungsfaktorDeleteRaw(
+    requestParameters: DeleteItemResourceHochrechnungsfaktorDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceHochrechnungsfaktorDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-hochrechnungsfaktor
+   * Creates request options for getCollectionResourceHochrechnungsfaktorGet without sending the request
    */
-  async getCollectionResourceHochrechnungsfaktorGetRaw(
-    requestParameters: GetCollectionResourceHochrechnungsfaktorGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelHochrechnungsfaktor>> {
+  async getCollectionResourceHochrechnungsfaktorGetRequestOpts(
+    requestParameters: GetCollectionResourceHochrechnungsfaktorGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktors`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-hochrechnungsfaktor
+   */
+  async getCollectionResourceHochrechnungsfaktorGetRaw(
+    requestParameters: GetCollectionResourceHochrechnungsfaktorGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelHochrechnungsfaktor>> {
+    const requestOptions =
+      await this.getCollectionResourceHochrechnungsfaktorGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelHochrechnungsfaktorFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-hochrechnungsfaktor
+   * Creates request options for getItemResourceHochrechnungsfaktorGet without sending the request
    */
-  async getItemResourceHochrechnungsfaktorGetRaw(
-    requestParameters: GetItemResourceHochrechnungsfaktorGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+  async getItemResourceHochrechnungsfaktorGetRequestOpts(
+    requestParameters: GetItemResourceHochrechnungsfaktorGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,30 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktors/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-hochrechnungsfaktor
+   */
+  async getItemResourceHochrechnungsfaktorGetRaw(
+    requestParameters: GetItemResourceHochrechnungsfaktorGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+    const requestOptions =
+      await this.getItemResourceHochrechnungsfaktorGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelHochrechnungsfaktorFromJSON(jsonValue)
@@ -218,12 +279,11 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-hochrechnungsfaktor
+   * Creates request options for patchItemResourceHochrechnungsfaktorPatch without sending the request
    */
-  async patchItemResourceHochrechnungsfaktorPatchRaw(
-    requestParameters: PatchItemResourceHochrechnungsfaktorPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+  async patchItemResourceHochrechnungsfaktorPatchRequestOpts(
+    requestParameters: PatchItemResourceHochrechnungsfaktorPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +306,33 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktors/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: HochrechnungsfaktorRequestBodyToJSON(
-          requestParameters["hochrechnungsfaktorRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: HochrechnungsfaktorRequestBodyToJSON(
+        requestParameters["hochrechnungsfaktorRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-hochrechnungsfaktor
+   */
+  async patchItemResourceHochrechnungsfaktorPatchRaw(
+    requestParameters: PatchItemResourceHochrechnungsfaktorPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+    const requestOptions =
+      await this.patchItemResourceHochrechnungsfaktorPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelHochrechnungsfaktorFromJSON(jsonValue)
@@ -290,12 +361,11 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-hochrechnungsfaktor
+   * Creates request options for postCollectionResourceHochrechnungsfaktorPost without sending the request
    */
-  async postCollectionResourceHochrechnungsfaktorPostRaw(
-    requestParameters: PostCollectionResourceHochrechnungsfaktorPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+  async postCollectionResourceHochrechnungsfaktorPostRequestOpts(
+    requestParameters: PostCollectionResourceHochrechnungsfaktorPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["hochrechnungsfaktorRequestBody"] == null) {
       throw new runtime.RequiredError(
         "hochrechnungsfaktorRequestBody",
@@ -311,18 +381,29 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktors`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: HochrechnungsfaktorRequestBodyToJSON(
-          requestParameters["hochrechnungsfaktorRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: HochrechnungsfaktorRequestBodyToJSON(
+        requestParameters["hochrechnungsfaktorRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-hochrechnungsfaktor
+   */
+  async postCollectionResourceHochrechnungsfaktorPostRaw(
+    requestParameters: PostCollectionResourceHochrechnungsfaktorPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+    const requestOptions =
+      await this.postCollectionResourceHochrechnungsfaktorPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelHochrechnungsfaktorFromJSON(jsonValue)
@@ -345,12 +426,11 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-hochrechnungsfaktor
+   * Creates request options for putItemResourceHochrechnungsfaktorPut without sending the request
    */
-  async putItemResourceHochrechnungsfaktorPutRaw(
-    requestParameters: PutItemResourceHochrechnungsfaktorPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+  async putItemResourceHochrechnungsfaktorPutRequestOpts(
+    requestParameters: PutItemResourceHochrechnungsfaktorPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -373,22 +453,33 @@ export class HochrechnungsfaktorEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktors/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: HochrechnungsfaktorRequestBodyToJSON(
-          requestParameters["hochrechnungsfaktorRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: HochrechnungsfaktorRequestBodyToJSON(
+        requestParameters["hochrechnungsfaktorRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-hochrechnungsfaktor
+   */
+  async putItemResourceHochrechnungsfaktorPutRaw(
+    requestParameters: PutItemResourceHochrechnungsfaktorPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelHochrechnungsfaktor>> {
+    const requestOptions =
+      await this.putItemResourceHochrechnungsfaktorPutRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelHochrechnungsfaktorFromJSON(jsonValue)

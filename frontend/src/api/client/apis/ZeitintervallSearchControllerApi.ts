@@ -11,113 +11,276 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  Bewegungsrichtung,
-  CollectionModelEntityModelZeitintervall,
-  Himmelsrichtung,
-} from "../models/index";
+import type { Bewegungsrichtung } from "../models/Bewegungsrichtung";
+import type { CollectionModelEntityModelZeitintervall } from "../models/CollectionModelEntityModelZeitintervall";
+import type { Himmelsrichtung } from "../models/Himmelsrichtung";
 
 import {
   BewegungsrichtungFromJSON,
   BewegungsrichtungToJSON,
+} from "../models/Bewegungsrichtung";
+import {
   CollectionModelEntityModelZeitintervallFromJSON,
   CollectionModelEntityModelZeitintervallToJSON,
+} from "../models/CollectionModelEntityModelZeitintervall";
+import {
   HimmelsrichtungFromJSON,
   HimmelsrichtungToJSON,
-} from "../models/index";
+} from "../models/Himmelsrichtung";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchZeitintervallGetRequest {
+  /**
+   *
+   */
   zaehlungId?: string;
 }
 
 export interface ExecuteSearchZeitintervallGet1Request {
+  /**
+   *
+   */
   bewegungsbeziehungIds?: Array<string>;
 }
 
 export interface ExecuteSearchZeitintervallGet10Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   von?: number;
+  /**
+   *
+   */
   nach?: number;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet10TypesEnum>;
 }
 
 export interface ExecuteSearchZeitintervallGet11Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   fahrbewegungKreisverkehr?: ExecuteSearchZeitintervallGet11FahrbewegungKreisverkehrEnum;
+  /**
+   *
+   */
   type?: ExecuteSearchZeitintervallGet11TypeEnum;
 }
 
 export interface ExecuteSearchZeitintervallGet12Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   type?: ExecuteSearchZeitintervallGet12TypeEnum;
 }
 
 export interface ExecuteSearchZeitintervallGet2Request {
+  /**
+   *
+   */
   zaehlungId?: string;
 }
 
 export interface ExecuteSearchZeitintervallGet3Request {
+  /**
+   *
+   */
   zaehlungId?: string;
 }
 
 export interface ExecuteSearchZeitintervallGet4Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   knotenarm?: number;
+  /**
+   *
+   */
   richtung?: Bewegungsrichtung;
+  /**
+   *
+   */
   strassenseite?: Himmelsrichtung;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet4TypesEnum>;
 }
 
 export interface ExecuteSearchZeitintervallGet5Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   knotenarm?: number;
+  /**
+   *
+   */
   richtung?: Himmelsrichtung;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet5TypesEnum>;
 }
 
 export interface ExecuteSearchZeitintervallGet6Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet6TypesEnum>;
 }
 
 export interface ExecuteSearchZeitintervallGet7Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   nach?: number;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet7TypesEnum>;
 }
 
 export interface ExecuteSearchZeitintervallGet8Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   von?: number;
+  /**
+   *
+   */
   fahrbewegungKreisverkehr?: ExecuteSearchZeitintervallGet8FahrbewegungKreisverkehrEnum;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet8TypesEnum>;
 }
 
 export interface ExecuteSearchZeitintervallGet9Request {
+  /**
+   *
+   */
   zaehlungId?: string;
+  /**
+   *
+   */
   startUhrzeit?: Date;
+  /**
+   *
+   */
   endeUhrzeit?: Date;
+  /**
+   *
+   */
   von?: number;
+  /**
+   *
+   */
   nach?: number;
+  /**
+   *
+   */
   types?: Set<ExecuteSearchZeitintervallGet9TypesEnum>;
+  /**
+   *
+   */
   strassenseite?: Himmelsrichtung;
 }
 
@@ -126,11 +289,11 @@ export interface ExecuteSearchZeitintervallGet9Request {
  */
 export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchZeitintervallGet without sending the request
    */
-  async executeSearchZeitintervallGetRaw(
-    requestParameters: ExecuteSearchZeitintervallGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<number>> {
+  async executeSearchZeitintervallGetRequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -141,15 +304,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/deleteAllByZaehlungId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGetRaw(
+    requestParameters: ExecuteSearchZeitintervallGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<number>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<number>(response);
@@ -172,11 +343,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet1 without sending the request
    */
-  async executeSearchZeitintervallGet1Raw(
-    requestParameters: ExecuteSearchZeitintervallGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async executeSearchZeitintervallGet1RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["bewegungsbeziehungIds"] != null) {
@@ -188,15 +359,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/deleteByBewegungsbeziehungIdIn`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet1Raw(
+    requestParameters: ExecuteSearchZeitintervallGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -214,11 +393,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet10 without sending the request
    */
-  async executeSearchZeitintervallGet10Raw(
-    requestParameters: ExecuteSearchZeitintervallGet10Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet10RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet10Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -226,15 +405,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["von"] != null) {
@@ -253,15 +432,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndVerkehrsbeziehungVonAndVerkehrsbeziehungNachAndTypeInOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet10Raw(
+    requestParameters: ExecuteSearchZeitintervallGet10Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet10RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -282,11 +469,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet11 without sending the request
    */
-  async executeSearchZeitintervallGet11Raw(
-    requestParameters: ExecuteSearchZeitintervallGet11Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet11RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet11Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -294,15 +481,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["fahrbewegungKreisverkehr"] != null) {
@@ -318,15 +505,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndVerkehrsbeziehungVonNotNullAndVerkehrsbeziehungFahrbewegungKreisverkehrAndTypeOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet11Raw(
+    requestParameters: ExecuteSearchZeitintervallGet11Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet11RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -347,11 +542,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet12 without sending the request
    */
-  async executeSearchZeitintervallGet12Raw(
-    requestParameters: ExecuteSearchZeitintervallGet12Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet12RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet12Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -359,15 +554,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["type"] != null) {
@@ -378,15 +573,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndVerkehrsbeziehungVonNotNullAndVerkehrsbeziehungNachNotNullAndTypeOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet12Raw(
+    requestParameters: ExecuteSearchZeitintervallGet12Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet12RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -407,11 +610,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet2 without sending the request
    */
-  async executeSearchZeitintervallGet2Raw(
-    requestParameters: ExecuteSearchZeitintervallGet2Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<boolean>> {
+  async executeSearchZeitintervallGet2RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet2Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -422,15 +625,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/existsByZaehlungId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet2Raw(
+    requestParameters: ExecuteSearchZeitintervallGet2Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<boolean>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet2RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     if (this.isJsonMime(response.headers.get("content-type"))) {
       return new runtime.JSONApiResponse<boolean>(response);
@@ -453,11 +664,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet3 without sending the request
    */
-  async executeSearchZeitintervallGet3Raw(
-    requestParameters: ExecuteSearchZeitintervallGet3Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet3RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet3Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -468,15 +679,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet3Raw(
+    requestParameters: ExecuteSearchZeitintervallGet3Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet3RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -497,11 +716,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet4 without sending the request
    */
-  async executeSearchZeitintervallGet4Raw(
-    requestParameters: ExecuteSearchZeitintervallGet4Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet4RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet4Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -509,15 +728,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["knotenarm"] != null) {
@@ -540,15 +759,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndLaengsverkehrKnotenarmAndLaengsverkehrRichtungAndLaengsverkehrStrassenseiteAndTypeInOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet4Raw(
+    requestParameters: ExecuteSearchZeitintervallGet4Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet4RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -569,11 +796,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet5 without sending the request
    */
-  async executeSearchZeitintervallGet5Raw(
-    requestParameters: ExecuteSearchZeitintervallGet5Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet5RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet5Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -581,15 +808,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["knotenarm"] != null) {
@@ -608,15 +835,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndQuerungsverkehrKnotenarmAndQuerungsverkehrRichtungAndTypeInOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet5Raw(
+    requestParameters: ExecuteSearchZeitintervallGet5Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet5RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -637,11 +872,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet6 without sending the request
    */
-  async executeSearchZeitintervallGet6Raw(
-    requestParameters: ExecuteSearchZeitintervallGet6Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet6RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet6Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -649,15 +884,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["types"] != null) {
@@ -668,15 +903,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndTypeInOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet6Raw(
+    requestParameters: ExecuteSearchZeitintervallGet6Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet6RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -697,11 +940,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet7 without sending the request
    */
-  async executeSearchZeitintervallGet7Raw(
-    requestParameters: ExecuteSearchZeitintervallGet7Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet7RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet7Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -709,15 +952,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["nach"] != null) {
@@ -732,15 +975,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndVerkehrsbeziehungNachAndTypeInOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet7Raw(
+    requestParameters: ExecuteSearchZeitintervallGet7Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet7RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -761,11 +1012,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet8 without sending the request
    */
-  async executeSearchZeitintervallGet8Raw(
-    requestParameters: ExecuteSearchZeitintervallGet8Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet8RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet8Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -773,15 +1024,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["von"] != null) {
@@ -801,15 +1052,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndVerkehrsbeziehungVonAndVerkehrsbeziehungFahrbewegungKreisverkehrAndTypeInOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet8Raw(
+    requestParameters: ExecuteSearchZeitintervallGet8Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet8RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)
@@ -830,11 +1089,11 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZeitintervallGet9 without sending the request
    */
-  async executeSearchZeitintervallGet9Raw(
-    requestParameters: ExecuteSearchZeitintervallGet9Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+  async executeSearchZeitintervallGet9RequestOpts(
+    requestParameters: ExecuteSearchZeitintervallGet9Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["zaehlungId"] != null) {
@@ -842,15 +1101,15 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
     }
 
     if (requestParameters["startUhrzeit"] != null) {
-      queryParameters["startUhrzeit"] = (
+      queryParameters["startUhrzeit"] = runtime.serializeDateTime(
         requestParameters["startUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["endeUhrzeit"] != null) {
-      queryParameters["endeUhrzeit"] = (
+      queryParameters["endeUhrzeit"] = runtime.serializeDateTime(
         requestParameters["endeUhrzeit"] as any
-      ).toISOString();
+      );
     }
 
     if (requestParameters["von"] != null) {
@@ -873,15 +1132,23 @@ export class ZeitintervallSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zeitintervalls/search/findByZaehlungIdAndStartUhrzeitGreaterThanEqualAndEndeUhrzeitLessThanEqualAndVerkehrsbeziehungVonAndVerkehrsbeziehungNachAndTypeInAndVerkehrsbeziehungStrassenseiteOrderBySortingIndexAsc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZeitintervallGet9Raw(
+    requestParameters: ExecuteSearchZeitintervallGet9Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZeitintervall>> {
+    const requestOptions =
+      await this.executeSearchZeitintervallGet9RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZeitintervallFromJSON(jsonValue)

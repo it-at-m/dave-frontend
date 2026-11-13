@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,38 +28,26 @@ import { mapValues } from "../runtime";
 export interface InfoMessageDTO {
   /**
    *
-   * @type {string}
-   * @memberof InfoMessageDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof InfoMessageDTO
    */
   content: string;
   /**
    *
-   * @type {Date}
-   * @memberof InfoMessageDTO
    */
   gueltigVon: Date;
   /**
    *
-   * @type {Date}
-   * @memberof InfoMessageDTO
    */
   gueltigBis: Date;
   /**
    *
-   * @type {boolean}
-   * @memberof InfoMessageDTO
    */
   gueltig: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof InfoMessageDTO
    */
   aktiv?: boolean;
 }
@@ -87,8 +81,14 @@ export function InfoMessageDTOFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     content: json["content"],
-    gueltigVon: new Date(json["gueltigVon"]),
-    gueltigBis: new Date(json["gueltigBis"]),
+    gueltigVon:
+      json["gueltigVon"] == null
+        ? json["gueltigVon"]
+        : parseDate(json["gueltigVon"]),
+    gueltigBis:
+      json["gueltigBis"] == null
+        ? json["gueltigBis"]
+        : parseDate(json["gueltigBis"]),
     gueltig: json["gueltig"],
     aktiv: json["aktiv"] == null ? undefined : json["aktiv"],
   };
@@ -109,8 +109,14 @@ export function InfoMessageDTOToJSONTyped(
   return {
     id: value["id"],
     content: value["content"],
-    gueltigVon: value["gueltigVon"].toISOString().substring(0, 10),
-    gueltigBis: value["gueltigBis"].toISOString().substring(0, 10),
+    gueltigVon:
+      value["gueltigVon"] == null
+        ? value["gueltigVon"]
+        : serializeDate(value["gueltigVon"]),
+    gueltigBis:
+      value["gueltigBis"] == null
+        ? value["gueltigBis"]
+        : serializeDate(value["gueltigBis"]),
     gueltig: value["gueltig"],
     aktiv: value["aktiv"],
   };

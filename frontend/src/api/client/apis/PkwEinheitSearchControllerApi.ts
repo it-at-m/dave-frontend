@@ -11,13 +11,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { EntityModelPkwEinheit } from "../models/index";
+import type { EntityModelPkwEinheit } from "../models/EntityModelPkwEinheit";
 
 import {
   EntityModelPkwEinheitFromJSON,
   EntityModelPkwEinheitToJSON,
-} from "../models/index";
+} from "../models/EntityModelPkwEinheit";
 import * as runtime from "../runtime";
 
 /**
@@ -25,25 +24,30 @@ import * as runtime from "../runtime";
  */
 export class PkwEinheitSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchPkweinheitGet without sending the request
    */
-  async executeSearchPkweinheitGetRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+  async executeSearchPkweinheitGetRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/pkwEinheits/search/findTopByOrderByCreatedTimeDesc`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchPkweinheitGetRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelPkwEinheit>> {
+    const requestOptions = await this.executeSearchPkweinheitGetRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelPkwEinheitFromJSON(jsonValue)

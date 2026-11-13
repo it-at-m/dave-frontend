@@ -58,74 +58,50 @@ import {
 export interface MessstelleOptionsDTO {
   /**
    *
-   * @type {Array<Date>}
-   * @memberof MessstelleOptionsDTO
    */
   zeitraum: Array<Date>;
   /**
    *
-   * @type {FahrzeugOptionsDTO}
-   * @memberof MessstelleOptionsDTO
    */
   fahrzeuge: FahrzeugOptionsDTO;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleOptionsDTO
    */
   zeitauswahl: string;
   /**
    *
-   * @type {Zeitblock}
-   * @memberof MessstelleOptionsDTO
    */
   zeitblock?: Zeitblock;
   /**
    *
-   * @type {TagesTyp}
-   * @memberof MessstelleOptionsDTO
    */
   tagesTyp?: TagesTyp;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof MessstelleOptionsDTO
    */
   intervall: ZaehldatenIntervall;
   /**
    *
-   * @type {Set<string>}
-   * @memberof MessstelleOptionsDTO
    */
   messquerschnittIds: Set<string>;
   /**
    *
-   * @type {Rounding}
-   * @memberof MessstelleOptionsDTO
    */
   rounding: Rounding;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleOptionsDTO
    */
   stundensumme: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleOptionsDTO
    */
   blocksumme: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleOptionsDTO
    */
   tagessumme: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleOptionsDTO
    */
   spitzenstunde: boolean;
 }

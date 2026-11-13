@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface UpdateStatusDTO {
   /**
    *
-   * @type {string}
-   * @memberof UpdateStatusDTO
    */
   zaehlungId?: string;
   /**
    *
-   * @type {string}
-   * @memberof UpdateStatusDTO
    */
   status?: string;
   /**
    *
-   * @type {string}
-   * @memberof UpdateStatusDTO
    */
   dienstleisterkennung?: string;
 }

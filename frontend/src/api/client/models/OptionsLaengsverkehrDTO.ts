@@ -37,20 +37,14 @@ import {
 export interface OptionsLaengsverkehrDTO {
   /**
    *
-   * @type {number}
-   * @memberof OptionsLaengsverkehrDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {Bewegungsrichtung}
-   * @memberof OptionsLaengsverkehrDTO
    */
   richtung?: Bewegungsrichtung;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof OptionsLaengsverkehrDTO
    */
   strassenseite?: Himmelsrichtung;
 }

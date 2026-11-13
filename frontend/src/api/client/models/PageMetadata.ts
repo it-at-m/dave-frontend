@@ -22,26 +22,18 @@ import { mapValues } from "../runtime";
 export interface PageMetadata {
   /**
    *
-   * @type {number}
-   * @memberof PageMetadata
    */
   size?: number;
   /**
    *
-   * @type {number}
-   * @memberof PageMetadata
    */
   totalElements?: number;
   /**
    *
-   * @type {number}
-   * @memberof PageMetadata
    */
   totalPages?: number;
   /**
    *
-   * @type {number}
-   * @memberof PageMetadata
    */
   number?: number;
 }

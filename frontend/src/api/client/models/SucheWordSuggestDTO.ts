@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface SucheWordSuggestDTO {
   /**
    *
-   * @type {string}
-   * @memberof SucheWordSuggestDTO
    */
   text: string;
 }

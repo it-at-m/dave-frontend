@@ -37,38 +37,26 @@ import {
 export interface LadeZaehlstelleVisumDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlstelleVisumDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlstelleVisumDTO
    */
   nummer?: string;
   /**
    *
-   * @type {number}
-   * @memberof LadeZaehlstelleVisumDTO
    */
   stadtbezirkNummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlstelleVisumDTO
    */
   kommentar?: string;
   /**
    *
-   * @type {PositionUTM}
-   * @memberof LadeZaehlstelleVisumDTO
    */
   punktUtm?: PositionUTM;
   /**
    *
-   * @type {Array<LadeZaehlungVisumDTO>}
-   * @memberof LadeZaehlstelleVisumDTO
    */
   zaehlungen?: Array<LadeZaehlungVisumDTO>;
 }

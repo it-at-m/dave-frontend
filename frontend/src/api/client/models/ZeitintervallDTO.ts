@@ -22,56 +22,38 @@ import { mapValues } from "../runtime";
 export interface ZeitintervallDTO {
   /**
    *
-   * @type {string}
-   * @memberof ZeitintervallDTO
    */
   startUhrzeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof ZeitintervallDTO
    */
   endeUhrzeit?: string;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   pkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   lkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   lastzuege?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   busse?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   kraftraeder?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   fahrradfahrer?: number;
   /**
    *
-   * @type {number}
-   * @memberof ZeitintervallDTO
    */
   fussgaenger?: number;
 }

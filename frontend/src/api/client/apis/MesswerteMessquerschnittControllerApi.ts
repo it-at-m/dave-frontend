@@ -11,22 +11,27 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  LadeProcessedMesswerteDTO,
-  MessstelleOptionsDTO,
-} from "../models/index";
+import type { LadeProcessedMesswerteDTO } from "../models/LadeProcessedMesswerteDTO";
+import type { MessstelleOptionsDTO } from "../models/MessstelleOptionsDTO";
 
 import {
   LadeProcessedMesswerteDTOFromJSON,
   LadeProcessedMesswerteDTOToJSON,
+} from "../models/LadeProcessedMesswerteDTO";
+import {
   MessstelleOptionsDTOFromJSON,
   MessstelleOptionsDTOToJSON,
-} from "../models/index";
+} from "../models/MessstelleOptionsDTO";
 import * as runtime from "../runtime";
 
 export interface LadeMesswerteRequest {
+  /**
+   *
+   */
   messstelleId: string;
+  /**
+   *
+   */
   messstelleOptionsDTO: MessstelleOptionsDTO;
 }
 
@@ -35,11 +40,11 @@ export interface LadeMesswerteRequest {
  */
 export class MesswerteMessquerschnittControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for ladeMesswerte without sending the request
    */
-  async ladeMesswerteRaw(
-    requestParameters: LadeMesswerteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<LadeProcessedMesswerteDTO>> {
+  async ladeMesswerteRequestOpts(
+    requestParameters: LadeMesswerteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["messstelleId"] == null) {
       throw new runtime.RequiredError(
         "messstelleId",
@@ -66,18 +71,26 @@ export class MesswerteMessquerschnittControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/lade-messwerte`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: MessstelleOptionsDTOToJSON(
-          requestParameters["messstelleOptionsDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: MessstelleOptionsDTOToJSON(
+        requestParameters["messstelleOptionsDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async ladeMesswerteRaw(
+    requestParameters: LadeMesswerteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<LadeProcessedMesswerteDTO>> {
+    const requestOptions =
+      await this.ladeMesswerteRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       LadeProcessedMesswerteDTOFromJSON(jsonValue)

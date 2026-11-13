@@ -13,7 +13,6 @@
  */
 
 import type { Himmelsrichtung } from "./Himmelsrichtung";
-import type { Hochrechnungsfaktor } from "./Hochrechnungsfaktor";
 
 import { mapValues } from "../runtime";
 import {
@@ -22,12 +21,6 @@ import {
   HimmelsrichtungToJSON,
   HimmelsrichtungToJSONTyped,
 } from "./Himmelsrichtung";
-import {
-  HochrechnungsfaktorFromJSON,
-  HochrechnungsfaktorFromJSONTyped,
-  HochrechnungsfaktorToJSON,
-  HochrechnungsfaktorToJSONTyped,
-} from "./Hochrechnungsfaktor";
 
 /**
  *
@@ -37,28 +30,12 @@ import {
 export interface Querungsverkehr {
   /**
    *
-   * @type {string}
-   * @memberof Querungsverkehr
    */
-  id?: string;
+  knotenarm?: number;
   /**
    *
-   * @type {Hochrechnungsfaktor}
-   * @memberof Querungsverkehr
    */
-  hochrechnungsfaktor?: Hochrechnungsfaktor;
-  /**
-   *
-   * @type {number}
-   * @memberof Querungsverkehr
-   */
-  knotenarm: number;
-  /**
-   *
-   * @type {Himmelsrichtung}
-   * @memberof Querungsverkehr
-   */
-  richtung: Himmelsrichtung;
+  richtung?: Himmelsrichtung;
 }
 
 /**
@@ -67,8 +44,6 @@ export interface Querungsverkehr {
 export function instanceOfQuerungsverkehr(
   value: object
 ): value is Querungsverkehr {
-  if (!("knotenarm" in value) || value["knotenarm"] === undefined) return false;
-  if (!("richtung" in value) || value["richtung"] === undefined) return false;
   return true;
 }
 
@@ -84,13 +59,11 @@ export function QuerungsverkehrFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    hochrechnungsfaktor:
-      json["hochrechnungsfaktor"] == null
+    knotenarm: json["knotenarm"] == null ? undefined : json["knotenarm"],
+    richtung:
+      json["richtung"] == null
         ? undefined
-        : HochrechnungsfaktorFromJSON(json["hochrechnungsfaktor"]),
-    knotenarm: json["knotenarm"],
-    richtung: HimmelsrichtungFromJSON(json["richtung"]),
+        : HimmelsrichtungFromJSON(json["richtung"]),
   };
 }
 
@@ -107,10 +80,6 @@ export function QuerungsverkehrToJSONTyped(
   }
 
   return {
-    id: value["id"],
-    hochrechnungsfaktor: HochrechnungsfaktorToJSON(
-      value["hochrechnungsfaktor"]
-    ),
     knotenarm: value["knotenarm"],
     richtung: HimmelsrichtungToJSON(value["richtung"]),
   };

@@ -30,32 +30,22 @@ import {
 export interface MapConfigurationDTO {
   /**
    *
-   * @type {string}
-   * @memberof MapConfigurationDTO
    */
   lat: string;
   /**
    *
-   * @type {string}
-   * @memberof MapConfigurationDTO
    */
   lng: string;
   /**
    *
-   * @type {number}
-   * @memberof MapConfigurationDTO
    */
   zoom: number;
   /**
    *
-   * @type {Array<LayerDTO>}
-   * @memberof MapConfigurationDTO
    */
   baseLayers: Array<LayerDTO>;
   /**
    *
-   * @type {Array<LayerDTO>}
-   * @memberof MapConfigurationDTO
    */
   overlayLayers: Array<LayerDTO>;
 }

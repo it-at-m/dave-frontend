@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface BackendIdDTO {
   /**
    *
-   * @type {string}
-   * @memberof BackendIdDTO
    */
   id: string;
 }

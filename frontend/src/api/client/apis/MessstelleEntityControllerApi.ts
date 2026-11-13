@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelMessstelle,
-  MessstelleRequestBody,
-  PagedModelEntityModelMessstelle,
-} from "../models/index";
+import type { EntityModelMessstelle } from "../models/EntityModelMessstelle";
+import type { MessstelleRequestBody } from "../models/MessstelleRequestBody";
+import type { PagedModelEntityModelMessstelle } from "../models/PagedModelEntityModelMessstelle";
 
 import {
   EntityModelMessstelleFromJSON,
   EntityModelMessstelleToJSON,
+} from "../models/EntityModelMessstelle";
+import {
   MessstelleRequestBodyFromJSON,
   MessstelleRequestBodyToJSON,
+} from "../models/MessstelleRequestBody";
+import {
   PagedModelEntityModelMessstelleFromJSON,
   PagedModelEntityModelMessstelleToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelMessstelle";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceMessstelleDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceMessstelleGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceMessstelleGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceMessstellePatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   messstelleRequestBody: MessstelleRequestBody;
 }
 
 export interface PostCollectionResourceMessstellePostRequest {
+  /**
+   *
+   */
   messstelleRequestBody: MessstelleRequestBody;
 }
 
 export interface PutItemResourceMessstellePutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   messstelleRequestBody: MessstelleRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceMessstellePutRequest {
  */
 export class MessstelleEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-messstelle
+   * Creates request options for deleteItemResourceMessstelleDelete without sending the request
    */
-  async deleteItemResourceMessstelleDeleteRaw(
-    requestParameters: DeleteItemResourceMessstelleDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceMessstelleDeleteRequestOpts(
+    requestParameters: DeleteItemResourceMessstelleDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-messstelle
+   */
+  async deleteItemResourceMessstelleDeleteRaw(
+    requestParameters: DeleteItemResourceMessstelleDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceMessstelleDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-messstelle
+   * Creates request options for getCollectionResourceMessstelleGet without sending the request
    */
-  async getCollectionResourceMessstelleGetRaw(
-    requestParameters: GetCollectionResourceMessstelleGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelMessstelle>> {
+  async getCollectionResourceMessstelleGetRequestOpts(
+    requestParameters: GetCollectionResourceMessstelleGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-messstelle
+   */
+  async getCollectionResourceMessstelleGetRaw(
+    requestParameters: GetCollectionResourceMessstelleGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelMessstelle>> {
+    const requestOptions =
+      await this.getCollectionResourceMessstelleGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelMessstelleFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-messstelle
+   * Creates request options for getItemResourceMessstelleGet without sending the request
    */
-  async getItemResourceMessstelleGetRaw(
-    requestParameters: GetItemResourceMessstelleGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+  async getItemResourceMessstelleGetRequestOpts(
+    requestParameters: GetItemResourceMessstelleGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-messstelle
+   */
+  async getItemResourceMessstelleGetRaw(
+    requestParameters: GetItemResourceMessstelleGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+    const requestOptions =
+      await this.getItemResourceMessstelleGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelMessstelleFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-messstelle
+   * Creates request options for patchItemResourceMessstellePatch without sending the request
    */
-  async patchItemResourceMessstellePatchRaw(
-    requestParameters: PatchItemResourceMessstellePatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+  async patchItemResourceMessstellePatchRequestOpts(
+    requestParameters: PatchItemResourceMessstellePatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,31 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: MessstelleRequestBodyToJSON(
-          requestParameters["messstelleRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: MessstelleRequestBodyToJSON(
+        requestParameters["messstelleRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-messstelle
+   */
+  async patchItemResourceMessstellePatchRaw(
+    requestParameters: PatchItemResourceMessstellePatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+    const requestOptions =
+      await this.patchItemResourceMessstellePatchRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelMessstelleFromJSON(jsonValue)
@@ -290,12 +357,11 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-messstelle
+   * Creates request options for postCollectionResourceMessstellePost without sending the request
    */
-  async postCollectionResourceMessstellePostRaw(
-    requestParameters: PostCollectionResourceMessstellePostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+  async postCollectionResourceMessstellePostRequestOpts(
+    requestParameters: PostCollectionResourceMessstellePostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["messstelleRequestBody"] == null) {
       throw new runtime.RequiredError(
         "messstelleRequestBody",
@@ -311,18 +377,29 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: MessstelleRequestBodyToJSON(
-          requestParameters["messstelleRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: MessstelleRequestBodyToJSON(
+        requestParameters["messstelleRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-messstelle
+   */
+  async postCollectionResourceMessstellePostRaw(
+    requestParameters: PostCollectionResourceMessstellePostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+    const requestOptions =
+      await this.postCollectionResourceMessstellePostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelMessstelleFromJSON(jsonValue)
@@ -344,12 +421,11 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-messstelle
+   * Creates request options for putItemResourceMessstellePut without sending the request
    */
-  async putItemResourceMessstellePutRaw(
-    requestParameters: PutItemResourceMessstellePutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+  async putItemResourceMessstellePutRequestOpts(
+    requestParameters: PutItemResourceMessstellePutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +448,31 @@ export class MessstelleEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/messstelles/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: MessstelleRequestBodyToJSON(
-          requestParameters["messstelleRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: MessstelleRequestBodyToJSON(
+        requestParameters["messstelleRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-messstelle
+   */
+  async putItemResourceMessstellePutRaw(
+    requestParameters: PutItemResourceMessstellePutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelMessstelle>> {
+    const requestOptions =
+      await this.putItemResourceMessstellePutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelMessstelleFromJSON(jsonValue)

@@ -22,110 +22,74 @@ import { mapValues } from "../runtime";
 export interface DatentabellePdfZaehldatum {
   /**
    *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldatum
    */
   type?: string;
   /**
    *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldatum
    */
   startUhrzeit?: string;
   /**
    *
-   * @type {string}
-   * @memberof DatentabellePdfZaehldatum
    */
   endeUhrzeit?: string;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   pkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   lkw?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   lastzuege?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   lfw?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   busse?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   kraftraeder?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   fahrradfahrer?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   fussgaenger?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   pkwEinheiten?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   gesamt?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   kfz?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   schwerverkehr?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   gueterverkehr?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   anteilSchwerverkehrAnKfzProzent?: number;
   /**
    *
-   * @type {number}
-   * @memberof DatentabellePdfZaehldatum
    */
   anteilGueterverkehrAnKfzProzent?: number;
 }

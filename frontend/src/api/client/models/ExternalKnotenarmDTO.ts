@@ -22,20 +22,14 @@ import { mapValues } from "../runtime";
 export interface ExternalKnotenarmDTO {
   /**
    *
-   * @type {number}
-   * @memberof ExternalKnotenarmDTO
    */
   nummer?: number;
   /**
    *
-   * @type {string}
-   * @memberof ExternalKnotenarmDTO
    */
   filename?: string;
   /**
    *
-   * @type {string}
-   * @memberof ExternalKnotenarmDTO
    */
   strassenname?: string;
 }

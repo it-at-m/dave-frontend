@@ -37,32 +37,22 @@ import {
 export interface BelastungsplanQjsDataDTO {
   /**
    *
-   * @type {string}
-   * @memberof BelastungsplanQjsDataDTO
    */
   label: string;
   /**
    *
-   * @type {boolean}
-   * @memberof BelastungsplanQjsDataDTO
    */
   filled: boolean;
   /**
    *
-   * @type {number}
-   * @memberof BelastungsplanQjsDataDTO
    */
   sumAll: number;
   /**
    *
-   * @type {Array<QjsStrassenseiteValue>}
-   * @memberof BelastungsplanQjsDataDTO
    */
   valuesStrassenseite: Array<QjsStrassenseiteValue>;
   /**
    *
-   * @type {Array<VerkehrsbeziehungValue>}
-   * @memberof BelastungsplanQjsDataDTO
    */
   valuesVerkehrsbeziehungen: Array<VerkehrsbeziehungValue>;
 }

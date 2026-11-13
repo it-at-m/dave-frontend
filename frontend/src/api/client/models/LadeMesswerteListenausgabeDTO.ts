@@ -30,8 +30,6 @@ import {
 export interface LadeMesswerteListenausgabeDTO {
   /**
    *
-   * @type {Array<LadeMesswerteDTO>}
-   * @memberof LadeMesswerteListenausgabeDTO
    */
   zaehldaten: Array<LadeMesswerteDTO>;
 }

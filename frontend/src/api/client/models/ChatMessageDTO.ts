@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,50 +28,34 @@ import { mapValues } from "../runtime";
 export interface ChatMessageDTO {
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageDTO
    */
   id?: string;
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageDTO
    */
   zaehlungId?: string;
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageDTO
    */
   content?: string;
   /**
    *
-   * @type {number}
-   * @memberof ChatMessageDTO
    */
   participantId?: number;
   /**
    *
-   * @type {Date}
-   * @memberof ChatMessageDTO
    */
   timestamp: Date;
   /**
    *
-   * @type {string}
-   * @memberof ChatMessageDTO
    */
   type?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof ChatMessageDTO
    */
   uploaded?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof ChatMessageDTO
    */
   viewed?: boolean;
 }
@@ -97,7 +87,10 @@ export function ChatMessageDTOFromJSONTyped(
     content: json["content"] == null ? undefined : json["content"],
     participantId:
       json["participantId"] == null ? undefined : json["participantId"],
-    timestamp: new Date(json["timestamp"]),
+    timestamp:
+      json["timestamp"] == null
+        ? json["timestamp"]
+        : parseDateTime(json["timestamp"]),
     type: json["type"] == null ? undefined : json["type"],
     uploaded: json["uploaded"] == null ? undefined : json["uploaded"],
     viewed: json["viewed"] == null ? undefined : json["viewed"],
@@ -121,7 +114,10 @@ export function ChatMessageDTOToJSONTyped(
     zaehlungId: value["zaehlungId"],
     content: value["content"],
     participantId: value["participantId"],
-    timestamp: value["timestamp"].toISOString(),
+    timestamp:
+      value["timestamp"] == null
+        ? value["timestamp"]
+        : serializeDateTime(value["timestamp"]),
     type: value["type"],
     uploaded: value["uploaded"],
     viewed: value["viewed"],

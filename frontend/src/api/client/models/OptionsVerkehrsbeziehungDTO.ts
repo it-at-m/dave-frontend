@@ -30,20 +30,14 @@ import {
 export interface OptionsVerkehrsbeziehungDTO {
   /**
    *
-   * @type {number}
-   * @memberof OptionsVerkehrsbeziehungDTO
    */
   von?: number;
   /**
    *
-   * @type {number}
-   * @memberof OptionsVerkehrsbeziehungDTO
    */
   nach?: number;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof OptionsVerkehrsbeziehungDTO
    */
   strassenseite?: Himmelsrichtung;
 }

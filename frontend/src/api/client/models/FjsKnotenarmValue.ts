@@ -30,20 +30,14 @@ import {
 export interface FjsKnotenarmValue {
   /**
    *
-   * @type {number}
-   * @memberof FjsKnotenarmValue
    */
   knotenarm: number;
   /**
    *
-   * @type {number}
-   * @memberof FjsKnotenarmValue
    */
   sumKnotenarm: number;
   /**
    *
-   * @type {Array<FjsStrassenseiteValue>}
-   * @memberof FjsKnotenarmValue
    */
   valuesStrassenseiten: Array<FjsStrassenseiteValue>;
 }

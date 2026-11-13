@@ -44,104 +44,70 @@ import {
 export interface BearbeiteVerkehrsbeziehungDTO {
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   id?: string;
   /**
    *
-   * @type {Array<ZeitintervallDTO>}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   zeitintervalle?: Array<ZeitintervallDTO>;
   /**
    *
-   * @type {HochrechnungsfaktorDTO}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   hochrechnungsfaktor?: HochrechnungsfaktorDTO;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   isKreuzung?: boolean;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   von?: number;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   nach?: number;
   /**
    *
-   * @type {number}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   hinein?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   heraus?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   vorbei?: boolean;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   strassenseite?: Himmelsrichtung;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   vonknotvonstrnr?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   nachknotvonstrnr?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   vonStrnr?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   vonknotennachstrnr?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   nachknotnachstrnr?: string;
   /**
    *
-   * @type {string}
-   * @memberof BearbeiteVerkehrsbeziehungDTO
    */
   nachStrnr?: string;
 }

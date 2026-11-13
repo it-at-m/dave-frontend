@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface DocumentDto {
   /**
    *
-   * @type {string}
-   * @memberof DocumentDto
    */
   url?: string | null;
 }
@@ -47,7 +45,12 @@ export function DocumentDtoFromJSONTyped(
     return json;
   }
   return {
-    url: json["url"] == null ? undefined : json["url"],
+    url:
+      json["url"] === undefined
+        ? undefined
+        : json["url"] === null
+          ? null
+          : json["url"],
   };
 }
 

@@ -30,50 +30,34 @@ import {
 export interface MessstelleKarteDTO {
   /**
    *
-   * @type {string}
-   * @memberof MessstelleKarteDTO
    */
   id: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleKarteDTO
    */
   fachId: string;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleKarteDTO
    */
   type: string;
   /**
    *
-   * @type {number}
-   * @memberof MessstelleKarteDTO
    */
   longitude: number;
   /**
    *
-   * @type {number}
-   * @memberof MessstelleKarteDTO
    */
   latitude: number;
   /**
    *
-   * @type {ErhebungsstelleTooltipDTO}
-   * @memberof MessstelleKarteDTO
    */
   tooltip: ErhebungsstelleTooltipDTO;
   /**
    *
-   * @type {boolean}
-   * @memberof MessstelleKarteDTO
    */
   sichtbarDatenportal: boolean;
   /**
    *
-   * @type {string}
-   * @memberof MessstelleKarteDTO
    */
   status: MessstelleKarteDTOStatusEnum;
 }

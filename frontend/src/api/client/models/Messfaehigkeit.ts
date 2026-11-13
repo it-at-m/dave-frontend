@@ -15,7 +15,13 @@
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { ZaehldatenIntervall } from "./ZaehldatenIntervall";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 import {
   FahrzeugklasseFromJSON,
   FahrzeugklasseFromJSONTyped,
@@ -37,26 +43,18 @@ import {
 export interface Messfaehigkeit {
   /**
    *
-   * @type {Date}
-   * @memberof Messfaehigkeit
    */
   gueltigAb?: Date;
   /**
    *
-   * @type {Date}
-   * @memberof Messfaehigkeit
    */
   gueltigBis?: Date;
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof Messfaehigkeit
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof Messfaehigkeit
    */
   intervall?: ZaehldatenIntervall;
 }
@@ -83,9 +81,9 @@ export function MessfaehigkeitFromJSONTyped(
   }
   return {
     gueltigAb:
-      json["gueltigAb"] == null ? undefined : new Date(json["gueltigAb"]),
+      json["gueltigAb"] == null ? undefined : parseDate(json["gueltigAb"]),
     gueltigBis:
-      json["gueltigBis"] == null ? undefined : new Date(json["gueltigBis"]),
+      json["gueltigBis"] == null ? undefined : parseDate(json["gueltigBis"]),
     fahrzeugklasse:
       json["fahrzeugklasse"] == null
         ? undefined
@@ -112,12 +110,12 @@ export function MessfaehigkeitToJSONTyped(
   return {
     gueltigAb:
       value["gueltigAb"] == null
-        ? undefined
-        : value["gueltigAb"].toISOString().substring(0, 10),
+        ? value["gueltigAb"]
+        : serializeDate(value["gueltigAb"]),
     gueltigBis:
       value["gueltigBis"] == null
-        ? undefined
-        : value["gueltigBis"].toISOString().substring(0, 10),
+        ? value["gueltigBis"]
+        : serializeDate(value["gueltigBis"]),
     fahrzeugklasse: FahrzeugklasseToJSON(value["fahrzeugklasse"]),
     intervall: ZaehldatenIntervallToJSON(value["intervall"]),
   };

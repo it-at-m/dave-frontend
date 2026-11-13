@@ -11,43 +11,63 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  BackendIdDTO,
-  BearbeiteZaehlstelleDTO,
-  LadeZaehlstelleWithUnreadMessageDTO,
-  LeseZaehlstelleDTO,
-  NextZaehlstellennummerDTO,
-} from "../models/index";
+import type { BackendIdDTO } from "../models/BackendIdDTO";
+import type { BearbeiteZaehlstelleDTO } from "../models/BearbeiteZaehlstelleDTO";
+import type { LadeZaehlstelleWithUnreadMessageDTO } from "../models/LadeZaehlstelleWithUnreadMessageDTO";
+import type { LeseZaehlstelleDTO } from "../models/LeseZaehlstelleDTO";
+import type { NextZaehlstellennummerDTO } from "../models/NextZaehlstellennummerDTO";
 
 import {
   BackendIdDTOFromJSON,
   BackendIdDTOToJSON,
+} from "../models/BackendIdDTO";
+import {
   BearbeiteZaehlstelleDTOFromJSON,
   BearbeiteZaehlstelleDTOToJSON,
+} from "../models/BearbeiteZaehlstelleDTO";
+import {
   LadeZaehlstelleWithUnreadMessageDTOFromJSON,
   LadeZaehlstelleWithUnreadMessageDTOToJSON,
+} from "../models/LadeZaehlstelleWithUnreadMessageDTO";
+import {
   LeseZaehlstelleDTOFromJSON,
   LeseZaehlstelleDTOToJSON,
+} from "../models/LeseZaehlstelleDTO";
+import {
   NextZaehlstellennummerDTOFromJSON,
   NextZaehlstellennummerDTOToJSON,
-} from "../models/index";
+} from "../models/NextZaehlstellennummerDTO";
 import * as runtime from "../runtime";
 
 export interface GetEditZaehlstelleRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetNextCurrentNumberRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   stadtbezirksnummer: number;
 }
 
 export interface GetZaehlstelleHeaderRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface SaveZaehlstelleRequest {
+  /**
+   *
+   */
   bearbeiteZaehlstelleDTO: BearbeiteZaehlstelleDTO;
 }
 
@@ -56,11 +76,11 @@ export interface SaveZaehlstelleRequest {
  */
 export class ZaehlstelleControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for getEditZaehlstelle without sending the request
    */
-  async getEditZaehlstelleRaw(
-    requestParameters: GetEditZaehlstelleRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BearbeiteZaehlstelleDTO>> {
+  async getEditZaehlstelleRequestOpts(
+    requestParameters: GetEditZaehlstelleRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -78,15 +98,23 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelle/editZaehlstelle`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getEditZaehlstelleRaw(
+    requestParameters: GetEditZaehlstelleRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BearbeiteZaehlstelleDTO>> {
+    const requestOptions =
+      await this.getEditZaehlstelleRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BearbeiteZaehlstelleDTOFromJSON(jsonValue)
@@ -107,11 +135,11 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getNextCurrentNumber without sending the request
    */
-  async getNextCurrentNumberRaw(
-    requestParameters: GetNextCurrentNumberRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<NextZaehlstellennummerDTO>> {
+  async getNextCurrentNumberRequestOpts(
+    requestParameters: GetNextCurrentNumberRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -141,15 +169,23 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelle/nextZaehlstellennummer`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getNextCurrentNumberRaw(
+    requestParameters: GetNextCurrentNumberRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<NextZaehlstellennummerDTO>> {
+    const requestOptions =
+      await this.getNextCurrentNumberRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       NextZaehlstellennummerDTOFromJSON(jsonValue)
@@ -170,11 +206,11 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getZaehlstelleHeader without sending the request
    */
-  async getZaehlstelleHeaderRaw(
-    requestParameters: GetZaehlstelleHeaderRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<LeseZaehlstelleDTO>> {
+  async getZaehlstelleHeaderRequestOpts(
+    requestParameters: GetZaehlstelleHeaderRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -192,15 +228,23 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelle/byId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getZaehlstelleHeaderRaw(
+    requestParameters: GetZaehlstelleHeaderRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<LeseZaehlstelleDTO>> {
+    const requestOptions =
+      await this.getZaehlstelleHeaderRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       LeseZaehlstelleDTOFromJSON(jsonValue)
@@ -221,25 +265,31 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getZaehlstellenWithUnreadMessages without sending the request
    */
-  async getZaehlstellenWithUnreadMessagesRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<LadeZaehlstelleWithUnreadMessageDTO>>> {
+  async getZaehlstellenWithUnreadMessagesRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/zaehlstelle/unread-messages`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getZaehlstellenWithUnreadMessagesRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<LadeZaehlstelleWithUnreadMessageDTO>>> {
+    const requestOptions =
+      await this.getZaehlstellenWithUnreadMessagesRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(LadeZaehlstelleWithUnreadMessageDTOFromJSON)
@@ -257,11 +307,11 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveZaehlstelle without sending the request
    */
-  async saveZaehlstelleRaw(
-    requestParameters: SaveZaehlstelleRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+  async saveZaehlstelleRequestOpts(
+    requestParameters: SaveZaehlstelleRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["bearbeiteZaehlstelleDTO"] == null) {
       throw new runtime.RequiredError(
         "bearbeiteZaehlstelleDTO",
@@ -277,18 +327,26 @@ export class ZaehlstelleControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelle/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: BearbeiteZaehlstelleDTOToJSON(
-          requestParameters["bearbeiteZaehlstelleDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: BearbeiteZaehlstelleDTOToJSON(
+        requestParameters["bearbeiteZaehlstelleDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async saveZaehlstelleRaw(
+    requestParameters: SaveZaehlstelleRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<BackendIdDTO>> {
+    const requestOptions =
+      await this.saveZaehlstelleRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       BackendIdDTOFromJSON(jsonValue)

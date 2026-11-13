@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface CollectionModelObjectEmbedded {
   /**
    *
-   * @type {Array<object>}
-   * @memberof CollectionModelObjectEmbedded
    */
   objects?: Array<object>;
 }

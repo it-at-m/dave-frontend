@@ -37,44 +37,30 @@ import {
 export interface JsonSchema {
   /**
    *
-   * @type {string}
-   * @memberof JsonSchema
    */
   title?: string;
   /**
    *
-   * @type {string}
-   * @memberof JsonSchema
    */
   description?: string;
   /**
    *
-   * @type {{ [key: string]: AbstractJsonSchemaPropertyObject; }}
-   * @memberof JsonSchema
    */
   properties?: { [key: string]: AbstractJsonSchemaPropertyObject };
   /**
    *
-   * @type {Array<string>}
-   * @memberof JsonSchema
    */
   requiredProperties?: Array<string>;
   /**
    *
-   * @type {{ [key: string]: Item; }}
-   * @memberof JsonSchema
    */
   definitions?: { [key: string]: Item };
   /**
    *
-   * @type {string}
-   * @memberof JsonSchema
    */
   type?: string;
   /**
    *
-   * @type {string}
-   * @memberof JsonSchema
    */
   $schema?: string;
 }

@@ -51,38 +51,26 @@ import {
 export interface ExternalLaengsverkehrDTO {
   /**
    *
-   * @type {string}
-   * @memberof ExternalLaengsverkehrDTO
    */
   id?: string;
   /**
    *
-   * @type {Array<ZeitintervallDTO>}
-   * @memberof ExternalLaengsverkehrDTO
    */
   zeitintervalle?: Array<ZeitintervallDTO>;
   /**
    *
-   * @type {HochrechnungsfaktorDTO}
-   * @memberof ExternalLaengsverkehrDTO
    */
   hochrechnungsfaktor?: HochrechnungsfaktorDTO;
   /**
    *
-   * @type {number}
-   * @memberof ExternalLaengsverkehrDTO
    */
   knotenarm?: number;
   /**
    *
-   * @type {Bewegungsrichtung}
-   * @memberof ExternalLaengsverkehrDTO
    */
   richtung?: Bewegungsrichtung;
   /**
    *
-   * @type {Himmelsrichtung}
-   * @memberof ExternalLaengsverkehrDTO
    */
   strassenseite?: Himmelsrichtung;
 }

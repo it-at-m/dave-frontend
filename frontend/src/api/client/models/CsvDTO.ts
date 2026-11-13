@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface CsvDTO {
   /**
    *
-   * @type {string}
-   * @memberof CsvDTO
    */
   csvAsString: string;
 }

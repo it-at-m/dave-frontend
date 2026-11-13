@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface NextZaehlstellennummerDTO {
   /**
    *
-   * @type {string}
-   * @memberof NextZaehlstellennummerDTO
    */
   nummer: string;
 }

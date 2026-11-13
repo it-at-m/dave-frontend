@@ -11,55 +11,98 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  CollectionModelEntityModelZaehlstelle,
-  EntityModelZaehlstelle,
-  PagedModelEntityModelZaehlstelle,
-} from "../models/index";
+import type { CollectionModelEntityModelZaehlstelle } from "../models/CollectionModelEntityModelZaehlstelle";
+import type { EntityModelZaehlstelle } from "../models/EntityModelZaehlstelle";
+import type { PagedModelEntityModelZaehlstelle } from "../models/PagedModelEntityModelZaehlstelle";
 
 import {
   CollectionModelEntityModelZaehlstelleFromJSON,
   CollectionModelEntityModelZaehlstelleToJSON,
+} from "../models/CollectionModelEntityModelZaehlstelle";
+import {
   EntityModelZaehlstelleFromJSON,
   EntityModelZaehlstelleToJSON,
+} from "../models/EntityModelZaehlstelle";
+import {
   PagedModelEntityModelZaehlstelleFromJSON,
   PagedModelEntityModelZaehlstelleToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelZaehlstelle";
 import * as runtime from "../runtime";
 
 export interface ExecuteSearchZaehlstelleGetRequest {
+  /**
+   *
+   */
   nummer?: string;
+  /**
+   *
+   */
   stadtbezirksnummer?: number;
 }
 
 export interface ExecuteSearchZaehlstelleGet1Request {
+  /**
+   *
+   */
   query?: string;
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface ExecuteSearchZaehlstelleGet2Request {
+  /**
+   *
+   */
   jahr?: string;
 }
 
 export interface ExecuteSearchZaehlstelleGet3Request {
+  /**
+   *
+   */
   status?: string;
 }
 
 export interface ExecuteSearchZaehlstelleGet6Request {
+  /**
+   *
+   */
   nummer?: string;
 }
 
 export interface ExecuteSearchZaehlstelleGet7Request {
+  /**
+   *
+   */
   id?: string;
 }
 
 export interface ExecuteSearchZaehlstelleGet8Request {
+  /**
+   *
+   */
   query?: string;
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
@@ -68,11 +111,11 @@ export interface ExecuteSearchZaehlstelleGet8Request {
  */
 export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for executeSearchZaehlstelleGet without sending the request
    */
-  async executeSearchZaehlstelleGetRaw(
-    requestParameters: ExecuteSearchZaehlstelleGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGetRequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["nummer"] != null) {
@@ -88,15 +131,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/findAllByNummerStartsWithAndStadtbezirkNummer`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGetRaw(
+    requestParameters: ExecuteSearchZaehlstelleGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -117,11 +168,11 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet1 without sending the request
    */
-  async executeSearchZaehlstelleGet1Raw(
-    requestParameters: ExecuteSearchZaehlstelleGet1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet1RequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGet1Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["query"] != null) {
@@ -144,15 +195,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/findAllByStatus`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet1Raw(
+    requestParameters: ExecuteSearchZaehlstelleGet1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGet1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -173,11 +232,11 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet2 without sending the request
    */
-  async executeSearchZaehlstelleGet2Raw(
-    requestParameters: ExecuteSearchZaehlstelleGet2Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet2RequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGet2Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["jahr"] != null) {
@@ -188,15 +247,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/findAllByZaehlungenJahr`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet2Raw(
+    requestParameters: ExecuteSearchZaehlstelleGet2Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGet2RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -217,11 +284,11 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet3 without sending the request
    */
-  async executeSearchZaehlstelleGet3Raw(
-    requestParameters: ExecuteSearchZaehlstelleGet3Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet3RequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGet3Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["status"] != null) {
@@ -232,15 +299,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/findAllByZaehlungenStatus`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet3Raw(
+    requestParameters: ExecuteSearchZaehlstelleGet3Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGet3RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -261,25 +336,30 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet4 without sending the request
    */
-  async executeSearchZaehlstelleGet4Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet4RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/zaehlstelles/search/findAllByZaehlungenUnreadMessagesDienstleisterTrue`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet4Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+    const requestOptions = await this.executeSearchZaehlstelleGet4RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -296,25 +376,30 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet5 without sending the request
    */
-  async executeSearchZaehlstelleGet5Raw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet5RequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/zaehlstelles/search/findAllByZaehlungenUnreadMessagesMobilitaetsreferatTrue`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet5Raw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<CollectionModelEntityModelZaehlstelle>> {
+    const requestOptions = await this.executeSearchZaehlstelleGet5RequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       CollectionModelEntityModelZaehlstelleFromJSON(jsonValue)
@@ -331,11 +416,11 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet6 without sending the request
    */
-  async executeSearchZaehlstelleGet6Raw(
-    requestParameters: ExecuteSearchZaehlstelleGet6Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet6RequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGet6Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["nummer"] != null) {
@@ -346,15 +431,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/findByNummer`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet6Raw(
+    requestParameters: ExecuteSearchZaehlstelleGet6Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGet6RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZaehlstelleFromJSON(jsonValue)
@@ -375,11 +468,11 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet7 without sending the request
    */
-  async executeSearchZaehlstelleGet7Raw(
-    requestParameters: ExecuteSearchZaehlstelleGet7Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet7RequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGet7Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["id"] != null) {
@@ -390,15 +483,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/findByZaehlungenId`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet7Raw(
+    requestParameters: ExecuteSearchZaehlstelleGet7Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGet7RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelZaehlstelleFromJSON(jsonValue)
@@ -419,11 +520,11 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for executeSearchZaehlstelleGet8 without sending the request
    */
-  async executeSearchZaehlstelleGet8Raw(
-    requestParameters: ExecuteSearchZaehlstelleGet8Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelZaehlstelle>> {
+  async executeSearchZaehlstelleGet8RequestOpts(
+    requestParameters: ExecuteSearchZaehlstelleGet8Request
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["query"] != null) {
@@ -446,15 +547,23 @@ export class ZaehlstelleSearchControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/zaehlstelles/search/suggestSearch`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async executeSearchZaehlstelleGet8Raw(
+    requestParameters: ExecuteSearchZaehlstelleGet8Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelZaehlstelle>> {
+    const requestOptions =
+      await this.executeSearchZaehlstelleGet8RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelZaehlstelleFromJSON(jsonValue)

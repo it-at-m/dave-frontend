@@ -12,7 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
 
 /**
  *
@@ -22,26 +28,18 @@ import { mapValues } from "../runtime";
 export interface LadeZaehlungWithUnreadMessageDTO {
   /**
    *
-   * @type {Date}
-   * @memberof LadeZaehlungWithUnreadMessageDTO
    */
   datum?: Date;
   /**
    *
-   * @type {string}
-   * @memberof LadeZaehlungWithUnreadMessageDTO
    */
   projektName?: string;
   /**
    *
-   * @type {boolean}
-   * @memberof LadeZaehlungWithUnreadMessageDTO
    */
   unreadMessagesMobilitaetsreferat?: boolean;
   /**
    *
-   * @type {boolean}
-   * @memberof LadeZaehlungWithUnreadMessageDTO
    */
   unreadMessagesDienstleister?: boolean;
 }
@@ -69,7 +67,7 @@ export function LadeZaehlungWithUnreadMessageDTOFromJSONTyped(
     return json;
   }
   return {
-    datum: json["datum"] == null ? undefined : new Date(json["datum"]),
+    datum: json["datum"] == null ? undefined : parseDateTime(json["datum"]),
     projektName: json["projektName"] == null ? undefined : json["projektName"],
     unreadMessagesMobilitaetsreferat:
       json["unreadMessagesMobilitaetsreferat"] == null
@@ -97,7 +95,10 @@ export function LadeZaehlungWithUnreadMessageDTOToJSONTyped(
   }
 
   return {
-    datum: value["datum"] == null ? undefined : value["datum"].toISOString(),
+    datum:
+      value["datum"] == null
+        ? value["datum"]
+        : serializeDateTime(value["datum"]),
     projektName: value["projektName"],
     unreadMessagesMobilitaetsreferat: value["unreadMessagesMobilitaetsreferat"],
     unreadMessagesDienstleister: value["unreadMessagesDienstleister"],

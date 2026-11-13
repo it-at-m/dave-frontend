@@ -22,26 +22,18 @@ import { mapValues } from "../runtime";
 export interface LayerDTO {
   /**
    *
-   * @type {string}
-   * @memberof LayerDTO
    */
   baseUrl: string;
   /**
    *
-   * @type {string}
-   * @memberof LayerDTO
    */
   layerName: string;
   /**
    *
-   * @type {string}
-   * @memberof LayerDTO
    */
   layerNameToDisplay: string;
   /**
    *
-   * @type {string}
-   * @memberof LayerDTO
    */
   attribution: string;
 }

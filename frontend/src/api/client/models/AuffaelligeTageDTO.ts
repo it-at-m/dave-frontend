@@ -22,8 +22,6 @@ import { mapValues } from "../runtime";
 export interface AuffaelligeTageDTO {
   /**
    *
-   * @type {Array<Date>}
-   * @memberof AuffaelligeTageDTO
    */
   auffaelligeTage?: Array<Date>;
 }

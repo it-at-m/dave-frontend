@@ -37,56 +37,38 @@ import {
 export interface ZaehlstelleKarteDTO {
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleKarteDTO
    */
   id: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleKarteDTO
    */
   fachId: string;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleKarteDTO
    */
   type: string;
   /**
    *
-   * @type {number}
-   * @memberof ZaehlstelleKarteDTO
    */
   longitude: number;
   /**
    *
-   * @type {number}
-   * @memberof ZaehlstelleKarteDTO
    */
   latitude: number;
   /**
    *
-   * @type {ErhebungsstelleTooltipDTO}
-   * @memberof ZaehlstelleKarteDTO
    */
   tooltip: ErhebungsstelleTooltipDTO;
   /**
    *
-   * @type {boolean}
-   * @memberof ZaehlstelleKarteDTO
    */
   sichtbarDatenportal: boolean;
   /**
    *
-   * @type {string}
-   * @memberof ZaehlstelleKarteDTO
    */
   letzteZaehlungId: string;
   /**
    *
-   * @type {Set<ZaehlartenKarteDTO>}
-   * @memberof ZaehlstelleKarteDTO
    */
   zaehlartenKarte: Set<ZaehlartenKarteDTO>;
 }

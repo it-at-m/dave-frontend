@@ -11,48 +11,79 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type {
-  EntityModelKalendertag,
-  KalendertagRequestBody,
-  PagedModelEntityModelKalendertag,
-} from "../models/index";
+import type { EntityModelKalendertag } from "../models/EntityModelKalendertag";
+import type { KalendertagRequestBody } from "../models/KalendertagRequestBody";
+import type { PagedModelEntityModelKalendertag } from "../models/PagedModelEntityModelKalendertag";
 
 import {
   EntityModelKalendertagFromJSON,
   EntityModelKalendertagToJSON,
+} from "../models/EntityModelKalendertag";
+import {
   KalendertagRequestBodyFromJSON,
   KalendertagRequestBodyToJSON,
+} from "../models/KalendertagRequestBody";
+import {
   PagedModelEntityModelKalendertagFromJSON,
   PagedModelEntityModelKalendertagToJSON,
-} from "../models/index";
+} from "../models/PagedModelEntityModelKalendertag";
 import * as runtime from "../runtime";
 
 export interface DeleteItemResourceKalendertagDeleteRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface GetCollectionResourceKalendertagGetRequest {
+  /**
+   * Zero-based page index (0..N)
+   */
   page?: number;
+  /**
+   * The size of the page to be returned
+   */
   size?: number;
+  /**
+   * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   */
   sort?: Array<string>;
 }
 
 export interface GetItemResourceKalendertagGetRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface PatchItemResourceKalendertagPatchRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   kalendertagRequestBody: KalendertagRequestBody;
 }
 
 export interface PostCollectionResourceKalendertagPostRequest {
+  /**
+   *
+   */
   kalendertagRequestBody: KalendertagRequestBody;
 }
 
 export interface PutItemResourceKalendertagPutRequest {
+  /**
+   *
+   */
   id: string;
+  /**
+   *
+   */
   kalendertagRequestBody: KalendertagRequestBody;
 }
 
@@ -61,12 +92,11 @@ export interface PutItemResourceKalendertagPutRequest {
  */
 export class KalendertagEntityControllerApi extends runtime.BaseAPI {
   /**
-   * delete-kalendertag
+   * Creates request options for deleteItemResourceKalendertagDelete without sending the request
    */
-  async deleteItemResourceKalendertagDeleteRaw(
-    requestParameters: DeleteItemResourceKalendertagDeleteRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<void>> {
+  async deleteItemResourceKalendertagDeleteRequestOpts(
+    requestParameters: DeleteItemResourceKalendertagDeleteRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -80,19 +110,30 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * delete-kalendertag
+   */
+  async deleteItemResourceKalendertagDeleteRaw(
+    requestParameters: DeleteItemResourceKalendertagDeleteRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<void>> {
+    const requestOptions =
+      await this.deleteItemResourceKalendertagDeleteRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.VoidApiResponse(response);
   }
@@ -111,12 +152,11 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-kalendertag
+   * Creates request options for getCollectionResourceKalendertagGet without sending the request
    */
-  async getCollectionResourceKalendertagGetRaw(
-    requestParameters: GetCollectionResourceKalendertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<PagedModelEntityModelKalendertag>> {
+  async getCollectionResourceKalendertagGetRequestOpts(
+    requestParameters: GetCollectionResourceKalendertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     if (requestParameters["page"] != null) {
@@ -135,15 +175,26 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-kalendertag
+   */
+  async getCollectionResourceKalendertagGetRaw(
+    requestParameters: GetCollectionResourceKalendertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<PagedModelEntityModelKalendertag>> {
+    const requestOptions =
+      await this.getCollectionResourceKalendertagGetRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       PagedModelEntityModelKalendertagFromJSON(jsonValue)
@@ -165,12 +216,11 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * get-kalendertag
+   * Creates request options for getItemResourceKalendertagGet without sending the request
    */
-  async getItemResourceKalendertagGetRaw(
-    requestParameters: GetItemResourceKalendertagGetRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async getItemResourceKalendertagGetRequestOpts(
+    requestParameters: GetItemResourceKalendertagGetRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -184,19 +234,28 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   * get-kalendertag
+   */
+  async getItemResourceKalendertagGetRaw(
+    requestParameters: GetItemResourceKalendertagGetRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.getItemResourceKalendertagGetRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -218,12 +277,11 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * patch-kalendertag
+   * Creates request options for patchItemResourceKalendertagPatch without sending the request
    */
-  async patchItemResourceKalendertagPatchRaw(
-    requestParameters: PatchItemResourceKalendertagPatchRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async patchItemResourceKalendertagPatchRequestOpts(
+    requestParameters: PatchItemResourceKalendertagPatchRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -246,22 +304,33 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PATCH",
-        headers: headerParameters,
-        query: queryParameters,
-        body: KalendertagRequestBodyToJSON(
-          requestParameters["kalendertagRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PATCH",
+      headers: headerParameters,
+      query: queryParameters,
+      body: KalendertagRequestBodyToJSON(
+        requestParameters["kalendertagRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * patch-kalendertag
+   */
+  async patchItemResourceKalendertagPatchRaw(
+    requestParameters: PatchItemResourceKalendertagPatchRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.patchItemResourceKalendertagPatchRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -290,12 +359,11 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * create-kalendertag
+   * Creates request options for postCollectionResourceKalendertagPost without sending the request
    */
-  async postCollectionResourceKalendertagPostRaw(
-    requestParameters: PostCollectionResourceKalendertagPostRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async postCollectionResourceKalendertagPostRequestOpts(
+    requestParameters: PostCollectionResourceKalendertagPostRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["kalendertagRequestBody"] == null) {
       throw new runtime.RequiredError(
         "kalendertagRequestBody",
@@ -311,18 +379,29 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: KalendertagRequestBodyToJSON(
-          requestParameters["kalendertagRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: KalendertagRequestBodyToJSON(
+        requestParameters["kalendertagRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * create-kalendertag
+   */
+  async postCollectionResourceKalendertagPostRaw(
+    requestParameters: PostCollectionResourceKalendertagPostRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.postCollectionResourceKalendertagPostRequestOpts(
+        requestParameters
+      );
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)
@@ -344,12 +423,11 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
   }
 
   /**
-   * update-kalendertag
+   * Creates request options for putItemResourceKalendertagPut without sending the request
    */
-  async putItemResourceKalendertagPutRaw(
-    requestParameters: PutItemResourceKalendertagPutRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+  async putItemResourceKalendertagPutRequestOpts(
+    requestParameters: PutItemResourceKalendertagPutRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -372,22 +450,31 @@ export class KalendertagEntityControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/kalendertags/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: KalendertagRequestBodyToJSON(
-          requestParameters["kalendertagRequestBody"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: KalendertagRequestBodyToJSON(
+        requestParameters["kalendertagRequestBody"]
+      ),
+    };
+  }
+
+  /**
+   * update-kalendertag
+   */
+  async putItemResourceKalendertagPutRaw(
+    requestParameters: PutItemResourceKalendertagPutRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<EntityModelKalendertag>> {
+    const requestOptions =
+      await this.putItemResourceKalendertagPutRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       EntityModelKalendertagFromJSON(jsonValue)

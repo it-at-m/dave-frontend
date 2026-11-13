@@ -30,8 +30,6 @@ import {
 export interface Heading3Asset extends BaseAsset {
   /**
    *
-   * @type {string}
-   * @memberof Heading3Asset
    */
   text?: string;
 }

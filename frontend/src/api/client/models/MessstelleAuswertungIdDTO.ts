@@ -22,14 +22,10 @@ import { mapValues } from "../runtime";
 export interface MessstelleAuswertungIdDTO {
   /**
    *
-   * @type {string}
-   * @memberof MessstelleAuswertungIdDTO
    */
   mstId: string;
   /**
    *
-   * @type {Set<string>}
-   * @memberof MessstelleAuswertungIdDTO
    */
   mqIds: Set<string>;
 }

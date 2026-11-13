@@ -11,19 +11,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { LadeProcessedZaehldatenDTO, OptionsDTO } from "../models/index";
+import type { LadeProcessedZaehldatenDTO } from "../models/LadeProcessedZaehldatenDTO";
+import type { OptionsDTO } from "../models/OptionsDTO";
 
 import {
   LadeProcessedZaehldatenDTOFromJSON,
   LadeProcessedZaehldatenDTOToJSON,
-  OptionsDTOFromJSON,
-  OptionsDTOToJSON,
-} from "../models/index";
+} from "../models/LadeProcessedZaehldatenDTO";
+import { OptionsDTOFromJSON, OptionsDTOToJSON } from "../models/OptionsDTO";
 import * as runtime from "../runtime";
 
 export interface LadeZaehldatenProcessedRequest {
+  /**
+   *
+   */
   zaehlungId: string;
+  /**
+   *
+   */
   optionsDTO: OptionsDTO;
 }
 
@@ -32,11 +37,11 @@ export interface LadeZaehldatenProcessedRequest {
  */
 export class LadeZaehldatenControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for ladeZaehldatenProcessed without sending the request
    */
-  async ladeZaehldatenProcessedRaw(
-    requestParameters: LadeZaehldatenProcessedRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<LadeProcessedZaehldatenDTO>> {
+  async ladeZaehldatenProcessedRequestOpts(
+    requestParameters: LadeZaehldatenProcessedRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["zaehlungId"] == null) {
       throw new runtime.RequiredError(
         "zaehlungId",
@@ -63,16 +68,24 @@ export class LadeZaehldatenControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/lade-zaehldaten-processed`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: OptionsDTOToJSON(requestParameters["optionsDTO"]),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: OptionsDTOToJSON(requestParameters["optionsDTO"]),
+    };
+  }
+
+  /**
+   */
+  async ladeZaehldatenProcessedRaw(
+    requestParameters: LadeZaehldatenProcessedRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<LadeProcessedZaehldatenDTO>> {
+    const requestOptions =
+      await this.ladeZaehldatenProcessedRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       LadeProcessedZaehldatenDTOFromJSON(jsonValue)

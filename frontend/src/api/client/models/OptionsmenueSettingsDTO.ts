@@ -37,92 +37,62 @@ import {
 export interface OptionsmenueSettingsDTO {
   /**
    *
-   * @type {Fahrzeugklasse}
-   * @memberof OptionsmenueSettingsDTO
    */
   fahrzeugklasse?: Fahrzeugklasse;
   /**
    *
-   * @type {ZaehldatenIntervall}
-   * @memberof OptionsmenueSettingsDTO
    */
   intervall?: ZaehldatenIntervall;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   kraftfahrzeugverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   schwerverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   gueterverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   schwerverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   gueterverkehrsanteilProzentChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   radverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   fussverkehrChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   lastkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   lastzuegeChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   busseChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   kraftraederChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   personenkraftwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
   /**
    *
-   * @type {Array<ZaehldatenIntervall>}
-   * @memberof OptionsmenueSettingsDTO
    */
   lieferwagenChoosableIntervals?: Array<ZaehldatenIntervall>;
 }

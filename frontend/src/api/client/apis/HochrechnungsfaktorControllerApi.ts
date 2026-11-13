@@ -11,24 +11,32 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import type { HochrechnungsfaktorDTO } from "../models/index";
+import type { HochrechnungsfaktorDTO } from "../models/HochrechnungsfaktorDTO";
 
 import {
   HochrechnungsfaktorDTOFromJSON,
   HochrechnungsfaktorDTOToJSON,
-} from "../models/index";
+} from "../models/HochrechnungsfaktorDTO";
 import * as runtime from "../runtime";
 
 export interface DeleteHochrechnungsfaktorRequest {
+  /**
+   *
+   */
   id: string;
 }
 
 export interface SaveHochrechnungsfaktorRequest {
+  /**
+   *
+   */
   hochrechnungsfaktorDTO: HochrechnungsfaktorDTO;
 }
 
 export interface SaveHochrechnungsfaktor1Request {
+  /**
+   *
+   */
   hochrechnungsfaktorDTO: HochrechnungsfaktorDTO;
 }
 
@@ -37,11 +45,11 @@ export interface SaveHochrechnungsfaktor1Request {
  */
 export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for deleteHochrechnungsfaktor without sending the request
    */
-  async deleteHochrechnungsfaktorRaw(
-    requestParameters: DeleteHochrechnungsfaktorRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  async deleteHochrechnungsfaktorRequestOpts(
+    requestParameters: DeleteHochrechnungsfaktorRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["id"] == null) {
       throw new runtime.RequiredError(
         "id",
@@ -55,19 +63,27 @@ export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktor/delete/{id}`;
     urlPath = urlPath.replace(
-      `{${"id"}}`,
+      "{id}",
       encodeURIComponent(String(requestParameters["id"]))
     );
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async deleteHochrechnungsfaktorRaw(
+    requestParameters: DeleteHochrechnungsfaktorRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<object>> {
+    const requestOptions =
+      await this.deleteHochrechnungsfaktorRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse<any>(response);
   }
@@ -86,25 +102,30 @@ export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getAllHochrechnungsfaktoren without sending the request
    */
-  async getAllHochrechnungsfaktorenRaw(
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<Array<HochrechnungsfaktorDTO>>> {
+  async getAllHochrechnungsfaktorenRequestOpts(): Promise<runtime.RequestOpts> {
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
     let urlPath = `/hochrechnungsfaktor/getAll`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async getAllHochrechnungsfaktorenRaw(
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<Array<HochrechnungsfaktorDTO>>> {
+    const requestOptions = await this.getAllHochrechnungsfaktorenRequestOpts();
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       jsonValue.map(HochrechnungsfaktorDTOFromJSON)
@@ -121,11 +142,11 @@ export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveHochrechnungsfaktor without sending the request
    */
-  async saveHochrechnungsfaktorRaw(
-    requestParameters: SaveHochrechnungsfaktorRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<HochrechnungsfaktorDTO>> {
+  async saveHochrechnungsfaktorRequestOpts(
+    requestParameters: SaveHochrechnungsfaktorRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["hochrechnungsfaktorDTO"] == null) {
       throw new runtime.RequiredError(
         "hochrechnungsfaktorDTO",
@@ -141,18 +162,26 @@ export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktor/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: HochrechnungsfaktorDTOToJSON(
-          requestParameters["hochrechnungsfaktorDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: HochrechnungsfaktorDTOToJSON(
+        requestParameters["hochrechnungsfaktorDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async saveHochrechnungsfaktorRaw(
+    requestParameters: SaveHochrechnungsfaktorRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<HochrechnungsfaktorDTO>> {
+    const requestOptions =
+      await this.saveHochrechnungsfaktorRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       HochrechnungsfaktorDTOFromJSON(jsonValue)
@@ -173,11 +202,11 @@ export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for saveHochrechnungsfaktor1 without sending the request
    */
-  async saveHochrechnungsfaktor1Raw(
-    requestParameters: SaveHochrechnungsfaktor1Request,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<HochrechnungsfaktorDTO>> {
+  async saveHochrechnungsfaktor1RequestOpts(
+    requestParameters: SaveHochrechnungsfaktor1Request
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["hochrechnungsfaktorDTO"] == null) {
       throw new runtime.RequiredError(
         "hochrechnungsfaktorDTO",
@@ -193,18 +222,26 @@ export class HochrechnungsfaktorControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/hochrechnungsfaktor/save`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: HochrechnungsfaktorDTOToJSON(
-          requestParameters["hochrechnungsfaktorDTO"]
-        ),
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "PUT",
+      headers: headerParameters,
+      query: queryParameters,
+      body: HochrechnungsfaktorDTOToJSON(
+        requestParameters["hochrechnungsfaktorDTO"]
+      ),
+    };
+  }
+
+  /**
+   */
+  async saveHochrechnungsfaktor1Raw(
+    requestParameters: SaveHochrechnungsfaktor1Request,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<HochrechnungsfaktorDTO>> {
+    const requestOptions =
+      await this.saveHochrechnungsfaktor1RequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       HochrechnungsfaktorDTOFromJSON(jsonValue)

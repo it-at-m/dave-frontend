@@ -11,13 +11,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { DocumentDto } from "../models/DocumentDto";
 
-import type { DocumentDto } from "../models/index";
-
-import { DocumentDtoFromJSON, DocumentDtoToJSON } from "../models/index";
+import { DocumentDtoFromJSON, DocumentDtoToJSON } from "../models/DocumentDto";
 import * as runtime from "../runtime";
 
 export interface LoadLageplanRequest {
+  /**
+   *
+   */
   mstId: string;
 }
 
@@ -26,11 +28,11 @@ export interface LoadLageplanRequest {
  */
 export class LageplanControllerApi extends runtime.BaseAPI {
   /**
+   * Creates request options for loadLageplan without sending the request
    */
-  async loadLageplanRaw(
-    requestParameters: LoadLageplanRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<DocumentDto>> {
+  async loadLageplanRequestOpts(
+    requestParameters: LoadLageplanRequest
+  ): Promise<runtime.RequestOpts> {
     if (requestParameters["mstId"] == null) {
       throw new runtime.RequiredError(
         "mstId",
@@ -48,15 +50,23 @@ export class LageplanControllerApi extends runtime.BaseAPI {
 
     let urlPath = `/lageplan`;
 
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides
-    );
+    return {
+      path: urlPath,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    };
+  }
+
+  /**
+   */
+  async loadLageplanRaw(
+    requestParameters: LoadLageplanRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
+  ): Promise<runtime.ApiResponse<DocumentDto>> {
+    const requestOptions =
+      await this.loadLageplanRequestOpts(requestParameters);
+    const response = await this.request(requestOptions, initOverrides);
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
       DocumentDtoFromJSON(jsonValue)

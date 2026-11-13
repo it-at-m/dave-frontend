@@ -30,38 +30,26 @@ import {
 export interface LadeBelastungsplanQjsDTO {
   /**
    *
-   * @type {string}
-   * @memberof LadeBelastungsplanQjsDTO
    */
   belastungsplanTyp: LadeBelastungsplanQjsDTOBelastungsplanTypEnum;
   /**
    *
-   * @type {Array<string>}
-   * @memberof LadeBelastungsplanQjsDTO
    */
   streets: Array<string>;
   /**
    *
-   * @type {boolean}
-   * @memberof LadeBelastungsplanQjsDTO
    */
   kreisverkehr: boolean;
   /**
    *
-   * @type {BelastungsplanQjsDataDTO}
-   * @memberof LadeBelastungsplanQjsDTO
    */
   value1: BelastungsplanQjsDataDTO;
   /**
    *
-   * @type {BelastungsplanQjsDataDTO}
-   * @memberof LadeBelastungsplanQjsDTO
    */
   value2: BelastungsplanQjsDataDTO;
   /**
    *
-   * @type {BelastungsplanQjsDataDTO}
-   * @memberof LadeBelastungsplanQjsDTO
    */
   value3: BelastungsplanQjsDataDTO;
 }
@@ -86,6 +74,8 @@ export function instanceOfLadeBelastungsplanQjsDTO(
     value["belastungsplanTyp"] === undefined
   )
     return false;
+  if (value["belastungsplanTyp"] !== "QJS") return false;
+
   if (!("streets" in value) || value["streets"] === undefined) return false;
   if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
     return false;

@@ -16,6 +16,12 @@ import type { StepLineSeriesEntryBigDecimalDTO } from "./StepLineSeriesEntryBigD
 import type { StepLineSeriesEntryIntegerDTO } from "./StepLineSeriesEntryIntegerDTO";
 
 import {
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
   instanceOfStepLineSeriesEntryBigDecimalDTO,
   StepLineSeriesEntryBigDecimalDTOFromJSON,
   StepLineSeriesEntryBigDecimalDTOFromJSONTyped,
@@ -62,7 +68,6 @@ export function LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInnerFromJSONTyp
   if (instanceOfStepLineSeriesEntryIntegerDTO(json)) {
     return StepLineSeriesEntryIntegerDTOFromJSONTyped(json, true);
   }
-
   return {} as any;
 }
 
@@ -95,6 +100,5 @@ export function LadeZaehldatenSteplineDTOSeriesEntriesFirstChartInnerToJSONTyped
       value as StepLineSeriesEntryIntegerDTO
     );
   }
-
   return {};
 }
