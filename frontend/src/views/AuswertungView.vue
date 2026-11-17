@@ -311,8 +311,8 @@ function auswertungStarten() {
             DefaultObjectCreator.createDefaultLadeZaehldatenSteplineDTO()
           )
         : cloneDeep(result.zaehldatenMessstellen);
-      const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.xlsx`;
-      downloadUtils.downloadXlsx(result.spreadsheetBase64Encoded, filename);
+      const filename = `Gesamtauswertung_${new Date().toISOString().split("T")[0]}.ods`;
+      downloadUtils.downloadOds(result.spreadsheetBase64Encoded, filename);
       auswertungLoaded.value = true;
     })
     .catch((error) => {
