@@ -83,6 +83,19 @@ function doesMissingValueMessageContainVerkehrsbeziehungNotPresent(
     .some((part) => part === "(Verkehrsbez. nicht vorh.)");
 }
 
+// Zeige den Spitzenstunden-Hinweis bei Reiterwechseln und Änderungen der Zeitauswahl.
+watch(
+  [() => props.isTabZeitreiheActive, () => filterOptions.value.zeitauswahl],
+  () => {
+    if (props.isTabZeitreiheActive && isZeitauswahlSpitzenstundeChosen.value) {
+      snackbarStore.showInfo(
+        `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
+      );
+    }
+  },
+  { immediate: true }
+);
+
 // Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert null ist (wegen Teilzählung kein Tageswert vorhanden).
 watch(
   () => props.zaehldatenZeitreihe,
@@ -94,11 +107,7 @@ watch(
         )
       );
 
-    if (props.isTabZeitreiheActive && isZeitauswahlSpitzenstundeChosen.value) {
-      snackbarStore.showInfo(
-        `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
-      );
-    } else if (
+    if (
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
