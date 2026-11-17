@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "test:unit": "vitest run",
     "lint": "prettier . --check && eslint . && vue-tsc --noEmit --skipLibCheck",
+    "check:prettier": "prettier . --check",
     "fix:prettier": "prettier . --write",
     "fix:eslint": "eslint . --fix"
   },
