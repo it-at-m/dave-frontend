@@ -1,5 +1,5 @@
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
 
 import { unionBy } from "lodash";
 
@@ -9,8 +9,8 @@ export function useVergleichszaehlungenUtils() {
    * und gibt das Ergebnis zurück.
    */
   function mergeKnotenarmeOfVergleichszaehlungen(
-    knotenarmeOfZaehlung: LadeKnotenarmDTO[],
-    knotenarmeOfVergleichszaehlung?: LadeKnotenarmDTO[]
+    knotenarmeOfZaehlung: BearbeiteKnotenarmDTO[],
+    knotenarmeOfVergleichszaehlung?: BearbeiteKnotenarmDTO[]
   ) {
     return unionBy(
       knotenarmeOfZaehlung,
@@ -24,8 +24,8 @@ export function useVergleichszaehlungenUtils() {
    * und gibt das Ergebnis zurück.
    */
   function mergeVerkehrsbeziehungenOfVergleichszaehlungen(
-    verkehrsbeziehungenOfZaehlung: LadeVerkehrsbeziehungDTO[],
-    verkehrsbeziehungenOfVergleichszaehlung?: LadeVerkehrsbeziehungDTO[]
+    verkehrsbeziehungenOfZaehlung: LadeVerkehrsbeziehung[],
+    verkehrsbeziehungenOfVergleichszaehlung?: LadeVerkehrsbeziehung[]
   ) {
     return unionBy(
       verkehrsbeziehungenOfZaehlung,

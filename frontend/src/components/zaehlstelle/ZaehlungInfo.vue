@@ -205,7 +205,7 @@
             </v-col>
           </v-row>
           <v-row
-            v-for="(k, index) in sortedFilteredKnotenarme"
+            v-for="k in sortedFilteredKnotenarme"
             :key="k.nummer"
             no-gutters
             class="ma-0"
@@ -233,14 +233,15 @@
   </v-container>
 </template>
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import _ from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
@@ -251,11 +252,12 @@ import OptionsmenueZaehlstelle from "@/components/zaehlstelle/optionsmenue/Optio
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Zaehlart from "@/types/enum/Zaehlart";
-import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervall";
-import Zaehldauer from "@/types/enum/Zaehldauer";
+import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
@@ -274,7 +276,7 @@ const showSpitzenstundeInfo = ref(false);
 const startUhrzeitIntervalls = ref("");
 const endeUhrzeitIntervalls = ref("");
 
-const zaehlung = computed<LadeZaehlungDTO>(() => {
+const zaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -318,7 +320,7 @@ const sortedFilteredKnotenarme = computed(() => {
 /**
  * Die aktuell eingestellten Optionen werden aus dem Store geladen.
  */
-const options = computed<ZaehlstelleOptionsDTO>(() => {
+const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -401,16 +403,14 @@ function getChosenBewegungsbeziehungen() {
 }
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
-    zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
-    zaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_06_10
-    ) &&
-    zaehlung.value.zeitauswahl?.blocks?.some((zb) => zb === Zeitblock.ZB_15_19)
+    zaehlung.value.zaehldauer === Zaehldauer.Sonstige &&
+    zaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
+    zaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
   );
 });
 
@@ -420,11 +420,11 @@ const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
 const zeitblock = computed(() => {
   // Wenn es sich um keine 24h Zählung handelt, dann darf nicht der Zeitblock 0 - 24 Uhr angezeigt werden, sondern Tageswert
   if (
-    zaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN &&
-    options.value.zeitblock === Zeitblock.ZB_00_24
+    zaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden &&
+    options.value.zeitblock === Zeitblock.Zb0024
   ) {
     if (
-      zaehlung.value.zaehldauer === Zaehldauer.SONSTIGE &&
+      zaehlung.value.zaehldauer === Zaehldauer.Sonstige &&
       !isSonderzaehldauerKurzzeitzaehlung.value
     ) {
       return "0 - 24 Uhr";
@@ -443,7 +443,7 @@ const zeitblock = computed(() => {
     return zeitblockInfo.get(options.value.zeitblock)?.title;
   }
 
-  return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+  return zeitblockInfo.get(Zeitblock.Zb0024)?.title;
 });
 
 /**

@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
@@ -124,7 +124,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useOptionsmenueSettingsStore } from "@/store/OptionsmenueSettingsStore";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 const optionsmenueSettingsStore = useOptionsmenueSettingsStore();
 
 const selectOrDeselectAllVmodel = ref(false);

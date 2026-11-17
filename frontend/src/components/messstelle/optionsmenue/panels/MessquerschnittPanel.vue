@@ -68,22 +68,21 @@
 </template>
 
 <script setup lang="ts">
+import type { Himmelsrichtung } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
-import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
+import type MessquerschnittInfo from "@/types/messstelle/MessquerschnittInfo";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
 
 import { cloneDeep } from "lodash";
 import { computed, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung, {
-  himmelsRichtungenTextLong,
-} from "@/types/enum/Himmelsrichtung";
+import { himmelsRichtungenTextLong } from "@/types/enum/HimmelsrichtungText";
 import { useMessstelleUtils } from "@/util/MessstelleUtils";
 
-const chosenOptionsCopy = defineModel<MessstelleOptionsDTO>({ required: true });
+const chosenOptionsCopy = defineModel<MessstelleOptions>({ required: true });
 
 const hoverDirection = ref(false);
 const hoverLage = ref(false);
@@ -93,7 +92,7 @@ const messstelleUtils = useMessstelleUtils();
 const MIND_EIN_MESSQUERSCHNITT =
   "Es muss mindestens ein Messquerschnitt ausgewählt sein.";
 
-const messstelle = computed<MessstelleInfoDTO>(() => {
+const messstelle = computed<MessstelleInfoType>(() => {
   return messstelleStore.getMessstelleInfo;
 });
 
@@ -119,7 +118,7 @@ const richtungValues = computed<Array<KeyVal>>(() => {
     });
   }
   messstelle.value.messquerschnitte.forEach(
-    (querschnitt: MessquerschnittInfoDTO) => {
+    (querschnitt: MessquerschnittInfo) => {
       let himmelsrichtungAsText = himmelsRichtungenTextLong.get(
         querschnitt.fahrtrichtung
       );
@@ -144,7 +143,7 @@ const lageValues = computed<Array<KeyVal>>(() => {
   const result: Array<KeyVal> = [];
   if (messstelle.value.messquerschnitte) {
     messstelle.value.messquerschnitte.forEach(
-      (querschnitt: MessquerschnittInfoDTO) => {
+      (querschnitt: MessquerschnittInfo) => {
         if (
           querschnitt.fahrtrichtung === direction.value ||
           direction.value === messstelleUtils.alleRichtungen

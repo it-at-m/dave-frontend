@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import { useQu } from "@/util/QuUtils";
 
 describe("QuUtils", () => {

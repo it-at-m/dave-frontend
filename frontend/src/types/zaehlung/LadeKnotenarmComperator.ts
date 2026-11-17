@@ -1,4 +1,4 @@
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 
 export default class LadeKnotenarmComperator {
   /**
@@ -7,7 +7,10 @@ export default class LadeKnotenarmComperator {
    * @param a
    * @param b
    */
-  public static sortByNumber(a: LadeKnotenarmDTO, b: LadeKnotenarmDTO): number {
+  public static sortByNumber(
+    a: BearbeiteKnotenarmDTO,
+    b: BearbeiteKnotenarmDTO
+  ): number {
     if (a.nummer < b.nummer) {
       return -1;
     }

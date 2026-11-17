@@ -1,12 +1,12 @@
 // Hilfsfunktion für die Darstellung von Qjs-Zählungen
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type VerkehrsbeziehungDTO from "@/types/zaehlung/VerkehrsbeziehungDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 import type { ComputedRef, Ref } from "vue";
 
 import { computed } from "vue";
 
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import KnotenarmComparator from "@/util/KnotenarmComparator";
 
 export function useQjs() {
@@ -72,37 +72,37 @@ export function useQjs() {
   }
 
   // --- Arrow pattern constants ---
-  const patternsArrowOne: VerkehrsbeziehungDTO[] = [
+  const patternsArrowOne: Verkehrsbeziehung[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.W },
     { von: 2, nach: 4, strassenseite: Himmelsrichtung.N },
-    { von: 5, nach: 7, strassenseite: Himmelsrichtung.NW },
-    { von: 6, nach: 8, strassenseite: Himmelsrichtung.NO },
+    { von: 5, nach: 7, strassenseite: Himmelsrichtung.Nw },
+    { von: 6, nach: 8, strassenseite: Himmelsrichtung.No },
   ];
 
-  const patternsArrowTwo: VerkehrsbeziehungDTO[] = [
+  const patternsArrowTwo: Verkehrsbeziehung[] = [
     { von: 3, nach: 1, strassenseite: Himmelsrichtung.W },
     { von: 4, nach: 2, strassenseite: Himmelsrichtung.N },
-    { von: 7, nach: 5, strassenseite: Himmelsrichtung.NW },
-    { von: 8, nach: 6, strassenseite: Himmelsrichtung.NO },
+    { von: 7, nach: 5, strassenseite: Himmelsrichtung.Nw },
+    { von: 8, nach: 6, strassenseite: Himmelsrichtung.No },
   ];
 
-  const patternsArrowThree: VerkehrsbeziehungDTO[] = [
+  const patternsArrowThree: Verkehrsbeziehung[] = [
     { von: 1, nach: 3, strassenseite: Himmelsrichtung.O },
     { von: 2, nach: 4, strassenseite: Himmelsrichtung.S },
-    { von: 5, nach: 7, strassenseite: Himmelsrichtung.SO },
-    { von: 6, nach: 8, strassenseite: Himmelsrichtung.SW },
+    { von: 5, nach: 7, strassenseite: Himmelsrichtung.So },
+    { von: 6, nach: 8, strassenseite: Himmelsrichtung.Sw },
   ];
 
-  const patternsArrowFour: VerkehrsbeziehungDTO[] = [
+  const patternsArrowFour: Verkehrsbeziehung[] = [
     { von: 3, nach: 1, strassenseite: Himmelsrichtung.O },
     { von: 4, nach: 2, strassenseite: Himmelsrichtung.S },
-    { von: 7, nach: 5, strassenseite: Himmelsrichtung.SO },
-    { von: 8, nach: 6, strassenseite: Himmelsrichtung.SW },
+    { von: 7, nach: 5, strassenseite: Himmelsrichtung.So },
+    { von: 8, nach: 6, strassenseite: Himmelsrichtung.Sw },
   ];
 
   function matchesArrowPattern(
-    verkehrsbeziehung: VerkehrsbeziehungDTO,
-    arrowPattern: VerkehrsbeziehungDTO
+    verkehrsbeziehung: Verkehrsbeziehung,
+    arrowPattern: Verkehrsbeziehung
   ) {
     return (
       verkehrsbeziehung.von === arrowPattern.von &&
@@ -112,8 +112,8 @@ export function useQjs() {
   }
 
   function hasAnyArrowPatternIn(
-    verkehrsbeziehungen: Array<VerkehrsbeziehungDTO>,
-    arrowPatterns: VerkehrsbeziehungDTO[]
+    verkehrsbeziehungen: Array<Verkehrsbeziehung>,
+    arrowPatterns: Verkehrsbeziehung[]
   ) {
     return !!verkehrsbeziehungen?.some((vb) =>
       arrowPatterns.some((p) => matchesArrowPattern(vb, p))
@@ -121,12 +121,12 @@ export function useQjs() {
   }
 
   function computeAvailableKnotenarme(
-    activeZaehlung: LadeZaehlungDTO
-  ): LadeKnotenarmDTO[] {
+    activeZaehlung: LadeZaehlung
+  ): BearbeiteKnotenarmDTO[] {
     const knotenarmeByNumber = new Map(
       activeZaehlung.knotenarme.map((kn) => [kn.nummer, kn] as const)
     );
-    const nodes = new Map<number, LadeKnotenarmDTO>();
+    const nodes = new Map<number, BearbeiteKnotenarmDTO>();
     activeZaehlung.verkehrsbeziehungen.forEach((vb) => {
       const kn = knotenarmeByNumber.get(vb.von);
       if (kn) {
@@ -139,7 +139,7 @@ export function useQjs() {
   }
 
   function computeAvailableKnotenarmNummernFromZaehlung(
-    activeZaehlung: LadeZaehlungDTO
+    activeZaehlung: LadeZaehlung
   ): number[] {
     return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
   }
@@ -149,8 +149,8 @@ export function useQjs() {
    * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
    */
   function areVerkehrsbeziehungenEqual(
-    qjsA: VerkehrsbeziehungDTO[] | undefined,
-    qjsB: VerkehrsbeziehungDTO[] | undefined
+    qjsA: Verkehrsbeziehung[] | undefined,
+    qjsB: Verkehrsbeziehung[] | undefined
   ): boolean {
     const a = qjsA ?? [];
     const b = qjsB ?? [];

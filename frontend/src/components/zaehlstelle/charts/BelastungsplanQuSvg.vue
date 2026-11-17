@@ -3421,25 +3421,27 @@
 </template>
 
 <script setup lang="ts">
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type {
+  BearbeiteKnotenarmDTO,
+  LadeBelastungsplanQuDTO,
+} from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanQuDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQuDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify/framework";
 
+import { Himmelsrichtung, Zaehldauer, Zeitblock } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
 import { useQu } from "@/util/QuUtils";
@@ -3484,15 +3486,21 @@ const maxSizeBelastungsplan = computed(() => {
 
 const zaehlzeit2 = computed(() => {
   if (optionen.value.zeitauswahl === Zeitauswahl.TAGESWERT) {
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN) {
-      return zeitblockInfo.get(Zeitblock.ZB_00_24)?.title;
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden) {
+      return zeitblockInfo.get(Zeitblock.Zb0024)
+        ? zeitblockInfo.get(Zeitblock.Zb0024)?.title
+        : "";
     } else {
       return "hochgerechnet";
     }
   } else if (optionen.value.zeitauswahl === Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockInfo.get(optionen.value.zeitblock)
+      ? zeitblockInfo.get(optionen.value.zeitblock)?.title
+      : "";
   } else if (optionen.value.zeitauswahl === Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title;
+    return zeitblockStuendlichInfo.get(optionen.value.zeitblock)
+      ? zeitblockStuendlichInfo.get(optionen.value.zeitblock)?.title
+      : "";
   } else if (
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
     optionen.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
@@ -3501,6 +3509,7 @@ const zaehlzeit2 = computed(() => {
       zaehlstelleStore.getStartEndeUhrzeitIntervalls;
     return `${startEndeUhrzeitIntervalls.startUhrzeitIntervalls} - ${startEndeUhrzeitIntervalls.endeUhrzeitIntervalls} Uhr`;
   }
+  return "";
 });
 
 const qu = useQu();
@@ -3516,7 +3525,7 @@ const streetnameNode6 = ref<Array<string>>([]);
 const streetnameNode7 = ref<Array<string>>([]);
 const streetnameNode8 = ref<Array<string>>([]);
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -3622,87 +3631,87 @@ const colorArrowNode4SouthToNorth = setColor(4, Himmelsrichtung.N);
 
 // Zaehlwerte of Node5
 const zaehlwertArrowNode5NorthWestToSouthEast = computed(() =>
-  getArrowZaehlwertOrZero(5, Himmelsrichtung.SO)
+  getArrowZaehlwertOrZero(5, Himmelsrichtung.So)
 );
 const zaehlwertArrowNode5SouthEastToNorthWest = computed(() =>
-  getArrowZaehlwertOrZero(5, Himmelsrichtung.NW)
+  getArrowZaehlwertOrZero(5, Himmelsrichtung.Nw)
 );
 const sumNode5Arrows = computed(() => getSumArrowsKnotenarmOrZero(5));
 
 const node5NorthWestToSouthEastCensusComissioned = isCommissioned(
   5,
-  Himmelsrichtung.SO
+  Himmelsrichtung.So
 );
 const node5SouthEastToNorthWestCensusComissioned = isCommissioned(
   5,
-  Himmelsrichtung.NW
+  Himmelsrichtung.Nw
 );
 
-const colorArrowNode5NorthWestToSouthEast = setColor(5, Himmelsrichtung.SO);
-const colorArrowNode5SouthEastToNorthWest = setColor(5, Himmelsrichtung.NW);
+const colorArrowNode5NorthWestToSouthEast = setColor(5, Himmelsrichtung.So);
+const colorArrowNode5SouthEastToNorthWest = setColor(5, Himmelsrichtung.Nw);
 
 // Zaehlwerte of Node6
 const zaehlwertArrowNode6NorthEastToSouthWest = computed(() =>
-  getArrowZaehlwertOrZero(6, Himmelsrichtung.SW)
+  getArrowZaehlwertOrZero(6, Himmelsrichtung.Sw)
 );
 const zaehlwertArrowNode6SouthWestToNorthEast = computed(() =>
-  getArrowZaehlwertOrZero(6, Himmelsrichtung.NO)
+  getArrowZaehlwertOrZero(6, Himmelsrichtung.No)
 );
 const sumNode6Arrows = computed(() => getSumArrowsKnotenarmOrZero(6));
 
 const node6NorthEastToSouthWestCensusComissioned = isCommissioned(
   6,
-  Himmelsrichtung.SW
+  Himmelsrichtung.Sw
 );
 const node6SouthWestToNorthEastCensusComissioned = isCommissioned(
   6,
-  Himmelsrichtung.NO
+  Himmelsrichtung.No
 );
 
-const colorArrowNode6NorthEastToSouthWest = setColor(6, Himmelsrichtung.SW);
-const colorArrowNode6SouthWestToNorthEast = setColor(6, Himmelsrichtung.NO);
+const colorArrowNode6NorthEastToSouthWest = setColor(6, Himmelsrichtung.Sw);
+const colorArrowNode6SouthWestToNorthEast = setColor(6, Himmelsrichtung.No);
 
 // Zaehlwerte of Node7
 const zaehlwertArrowNode7NorthWestToSouthEast = computed(() =>
-  getArrowZaehlwertOrZero(7, Himmelsrichtung.SO)
+  getArrowZaehlwertOrZero(7, Himmelsrichtung.So)
 );
 const zaehlwertArrowNode7SouthEastToNorthWest = computed(() =>
-  getArrowZaehlwertOrZero(7, Himmelsrichtung.NW)
+  getArrowZaehlwertOrZero(7, Himmelsrichtung.Nw)
 );
 const sumNode7Arrows = computed(() => getSumArrowsKnotenarmOrZero(7));
 
 const node7NorthWestToSouthEastCensusComissioned = isCommissioned(
   7,
-  Himmelsrichtung.SO
+  Himmelsrichtung.So
 );
 const node7SouthEastToNorthWestCensusComissioned = isCommissioned(
   7,
-  Himmelsrichtung.NW
+  Himmelsrichtung.Nw
 );
 
-const colorArrowNode7NorthWestToSouthEast = setColor(7, Himmelsrichtung.SO);
-const colorArrowNode7SouthEastToNorthWest = setColor(7, Himmelsrichtung.NW);
+const colorArrowNode7NorthWestToSouthEast = setColor(7, Himmelsrichtung.So);
+const colorArrowNode7SouthEastToNorthWest = setColor(7, Himmelsrichtung.Nw);
 
 // Zaehlwerte of Node8
 const zaehlwertArrowNode8NorthEastToSouthWest = computed(() =>
-  getArrowZaehlwertOrZero(8, Himmelsrichtung.SW)
+  getArrowZaehlwertOrZero(8, Himmelsrichtung.Sw)
 );
 const zaehlwertArrowNode8SouthWestToNorthEast = computed(() =>
-  getArrowZaehlwertOrZero(8, Himmelsrichtung.NO)
+  getArrowZaehlwertOrZero(8, Himmelsrichtung.No)
 );
 const sumNode8Arrows = computed(() => getSumArrowsKnotenarmOrZero(8));
 
 const node8NorthEastToSouthWestCensusComissioned = isCommissioned(
   8,
-  Himmelsrichtung.SW
+  Himmelsrichtung.Sw
 );
 const node8SouthWestToNorthEastCensusComissioned = isCommissioned(
   8,
-  Himmelsrichtung.NO
+  Himmelsrichtung.No
 );
 
-const colorArrowNode8NorthEastToSouthWest = setColor(8, Himmelsrichtung.SW);
-const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.NO);
+const colorArrowNode8NorthEastToSouthWest = setColor(8, Himmelsrichtung.Sw);
+const colorArrowNode8SouthWestToNorthEast = setColor(8, Himmelsrichtung.No);
 
 function setColor(knNumber: number, direction: Himmelsrichtung) {
   return computed(() =>
@@ -3743,7 +3752,7 @@ function isKnotenarm(knNummer: number) {
   return availableKnotenarme.value.some((kn) => kn.nummer === knNummer);
 }
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -3784,28 +3793,44 @@ function serializeSvgElement(svgEl: SVGSVGElement): string {
 
 function setStreetnameNodes() {
   streetnameNode1.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 1)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 1
+    )
   );
   streetnameNode2.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 2)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 2
+    )
   );
   streetnameNode3.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 3)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 3
+    )
   );
   streetnameNode4.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 4)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 4
+    )
   );
   streetnameNode5.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 5)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 5
+    )
   );
   streetnameNode6.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 6)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 6
+    )
   );
   streetnameNode7.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 7)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 7
+    )
   );
   streetnameNode8.value = strassennameUtils.getStreetLines(
-    availableKnotenarme.value.find((kn: LadeKnotenarmDTO) => kn.nummer === 8)
+    availableKnotenarme.value.find(
+      (kn: BearbeiteKnotenarmDTO) => kn.nummer === 8
+    )
   );
 }
 
@@ -3834,9 +3859,7 @@ watch(
   { deep: true, immediate: true }
 );
 
-function isQuBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanQuDTO {
+function isQuBelastungsplan(data: any): data is LadeBelastungsplanQuDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.QU;
 }
 </script>

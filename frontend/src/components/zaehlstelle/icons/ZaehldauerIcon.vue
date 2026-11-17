@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import { Zaehldauer } from "@/api/client";
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
@@ -29,22 +29,13 @@ const props = withDefaults(defineProps<Props>(), {
  */
 const zaehldauerIcons: Map<string, IconTooltip> = new Map([
   [
-    Zaehldauer.DAUER_2_X_4_STUNDEN,
+    Zaehldauer.Dauer2X4Stunden,
     new IconTooltip("$zaehldauer2x4h", "2x4h Zählung"),
   ],
-  [
-    Zaehldauer.DAUER_24_STUNDEN,
-    new IconTooltip("$zaehldauer24h", "24h Zählung"),
-  ],
-  [
-    Zaehldauer.DAUER_16_STUNDEN,
-    new IconTooltip("$zaehldauer16h", "16h Zählung"),
-  ],
-  [
-    Zaehldauer.DAUER_13_STUNDEN,
-    new IconTooltip("$zaehldauer13h", "13h Zählung"),
-  ],
-  [Zaehldauer.SONSTIGE, new IconTooltip("$zaehldauerSoZ", "Sonstige Zählung")],
+  [Zaehldauer.Dauer24Stunden, new IconTooltip("$zaehldauer24h", "24h Zählung")],
+  [Zaehldauer.Dauer16Stunden, new IconTooltip("$zaehldauer16h", "16h Zählung")],
+  [Zaehldauer.Dauer13Stunden, new IconTooltip("$zaehldauer13h", "13h Zählung")],
+  [Zaehldauer.Sonstige, new IconTooltip("$zaehldauerSoZ", "Sonstige Zählung")],
 ]);
 
 /**

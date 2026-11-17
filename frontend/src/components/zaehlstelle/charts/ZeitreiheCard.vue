@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
+import type Options from "@/types/zaehlung/Options";
 import type { SeriesOption } from "echarts";
 import type { ResizeOpts } from "echarts/core";
 
@@ -40,7 +40,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
-const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
+const filterOptions = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 const isZeitauswahlSpitzenstundeChosen = computed<boolean>(() => {

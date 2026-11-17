@@ -131,9 +131,11 @@
 </template>
 
 <script setup lang="ts">
+import type { TextAsset } from "@/api/client";
+
 import { ref, watch } from "vue";
 
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useReportTools } from "@/util/ReportTools";
 
 interface Props {
@@ -144,12 +146,13 @@ const props = defineProps<Props>();
 const openEditTextDialog = defineModel<boolean>({ required: true });
 
 const reportTools = useReportTools();
+const assetUtil = useAssetUtil();
 
 const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
 }>();
 
-const asset = ref(new TextAsset(""));
+const asset = ref(assetUtil.createTextAsset(""));
 
 /**
  * Um den Text im Array zu "speichern", wird es als Event an die View geschickt.
@@ -159,7 +162,7 @@ function save(): void {
   if (asset.value.text && asset.value.text.length > 0) {
     emits("save", Object.assign({}, asset.value));
   } else {
-    asset.value = new TextAsset("");
+    asset.value = assetUtil.createTextAsset("");
     openEditTextDialog.value = false;
   }
 }

@@ -1,5 +1,5 @@
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { isEmpty } from "lodash";
 
@@ -8,14 +8,14 @@ export function useZaehlstelleUtils() {
    * Überprüft, ob eine Verkehrsart bei der Zählung erfasst wurde.
    * Wenn nicht, so wird die dazugehörige Checkbox deaktiviert.
    */
-  function isTypeDisabled(type: string, zaehlung: LadeZaehlungDTO): boolean {
+  function isTypeDisabled(type: string, zaehlung: LadeZaehlung): boolean {
     if (zaehlung === undefined || zaehlung.kategorien === undefined) {
       return true;
     }
     return !zaehlung.kategorien.includes(type);
   }
 
-  function hasSelectedVerkehrsarten(options: ZaehlstelleOptionsDTO) {
+  function hasSelectedVerkehrsarten(options: Options) {
     // Im Fall der Auswahl von Differenzdatendarstellung muss mind. eine Verkehrsart KEIN Anteil sein
     if (
       options.differenzdatenDarstellen &&
@@ -40,7 +40,7 @@ export function useZaehlstelleUtils() {
     );
   }
 
-  function hasSelectedFahrzeugkategorie(options: ZaehlstelleOptionsDTO) {
+  function hasSelectedFahrzeugkategorie(options: Options) {
     return (
       options.pkwEinheiten ||
       options.kraftraeder ||

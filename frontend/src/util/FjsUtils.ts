@@ -1,17 +1,16 @@
 // Hilfsfunktion für die Darstellung von Fjs-Zählungen
 
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LaengsverkehrDTO from "@/types/zaehlung/LaengsverkehrDTO";
+import type { BearbeiteKnotenarmDTO, Bewegungsrichtung } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Laengsverkehr from "@/types/zaehlung/Laengsverkehr";
 
-import Bewegungsrichtung from "@/types/enum/Bewegungsrichtung";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
+import { Himmelsrichtung } from "@/api/client";
 import KnotenarmComparator from "./KnotenarmComparator";
 
 export function useFjs() {
   function computeAvailableKnotenarme(
-    activeZaehlung: LadeZaehlungDTO
-  ): LadeKnotenarmDTO[] {
+    activeZaehlung: LadeZaehlung
+  ): BearbeiteKnotenarmDTO[] {
     const knotenarmeByNumber = new Map(
       activeZaehlung.knotenarme.map((kn) => [kn.nummer, kn] as const)
     );
@@ -21,7 +20,7 @@ export function useFjs() {
   }
 
   function computeAvailableKnotenarmNummernFromZaehlung(
-    activeZaehlung: LadeZaehlungDTO
+    activeZaehlung: LadeZaehlung
   ): number[] {
     return computeAvailableKnotenarme(activeZaehlung).map((a) => a.nummer);
   }
@@ -35,7 +34,7 @@ export function useFjs() {
    * @returns Boolean, ob der Laengsverkehr existiert
    */
   function existsLaengsverkehr(
-    laengsverkehr: LaengsverkehrDTO[] | undefined,
+    laengsverkehr: Laengsverkehr[] | undefined,
     knNummer: number,
     strassenseite: Himmelsrichtung,
     richtung: Bewegungsrichtung
@@ -56,8 +55,8 @@ export function useFjs() {
    * Rückgabe true, wenn beide Arrays dieselben Einträgen enthalten (Reihenfolge wird ignoriert).
    */
   function areLaengsverkehreEqual(
-    laengsA: LaengsverkehrDTO[] | undefined,
-    laengsB: LaengsverkehrDTO[] | undefined
+    laengsA: Laengsverkehr[] | undefined,
+    laengsB: Laengsverkehr[] | undefined
   ): boolean {
     const a = laengsA ?? [];
     const b = laengsB ?? [];

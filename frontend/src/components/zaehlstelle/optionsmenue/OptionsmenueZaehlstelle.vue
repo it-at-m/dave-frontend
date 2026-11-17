@@ -77,13 +77,14 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
-import { head, isEmpty, isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
 import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
@@ -93,9 +94,8 @@ import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zaehlart from "@/types/enum/Zaehlart";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockOrder } from "@/types/enum/Zeitblock";
+import { zeitblockOrder } from "@/types/enum/ZeitblockText";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -120,7 +120,7 @@ const chosenOptions = ref(
 );
 const resetNotificationVergleichszaehlung = ref(0);
 
-const options = computed<ZaehlstelleOptionsDTO>(() => {
+const options = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -131,7 +131,7 @@ const getContentSheetHeight = computed(() => {
   return "500px";
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -139,7 +139,7 @@ const isTeilzaehlungFussverkehr = computed(() => {
   return (
     activeZaehlung.value.kategorien.length === 1 &&
     activeZaehlung.value.kategorien[0] === Fahrzeug.FUSS &&
-    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+    activeZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden
   );
 });
 
@@ -154,7 +154,7 @@ const isOnlyVerkehrsartFuss = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart RAD beauftragt wurde.
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsart Rad beauftragt wurde.
  */
 const isOnlyVerkehrsartRad = computed(() => {
   return (
@@ -165,7 +165,7 @@ const isOnlyVerkehrsartRad = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten RAD und FUSS beauftragt wurden.
+ * Ist {@link true}, wenn für die Zählung NUR die Verkehrsarten Rad und FUSS beauftragt wurden.
  */
 const areOnlyVerkehrsartenRadAndFuss = computed(() => {
   return (
@@ -181,7 +181,7 @@ const areOnlyVerkehrsartenRadAndFuss = computed(() => {
  */
 const isFussPreselected = computed(() => {
   // FUSS soll nur bei Zählarten FjS, Qu, QjS aktiviert sein oder bei
-  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR RAD
+  // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR Rad
   // UND FUSS beauftragt wurde
   return (
     [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
@@ -193,11 +193,11 @@ const isFussPreselected = computed(() => {
 });
 
 /**
- * Gibt an, ob die Verkehrsart RAD im Filtermenü vorbelegt sein soll.
+ * Gibt an, ob die Verkehrsart Rad im Filtermenü vorbelegt sein soll.
  */
 const isRadPreselected = computed(() => {
-  // RAD soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
-  // Zählarten, wenn als einzige Verkehrsart NUR RAD oder NUR RAD UND FUSS
+  // Rad soll nur bei bestimmten Zählarten aktiviert sein oder bei anderen
+  // Zählarten, wenn als einzige Verkehrsart NUR Rad oder NUR Rad UND FUSS
   // beauftragt wurde
   return (
     [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
@@ -209,25 +209,21 @@ const isRadPreselected = computed(() => {
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.SONSTIGE hat.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" bzw. Zaehldauer.Sonstige hat.
  */
 const isSonderzaehldauer = computed(() => {
-  return activeZaehlung.value.zaehldauer === Zaehldauer.SONSTIGE;
+  return activeZaehlung.value.zaehldauer === Zaehldauer.Sonstige;
 });
 
 /**
- * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.ZB_06_10 und
- * Zeitblock.ZB_15_19 vollständig enthalten sind.
+ * Ist {@link true}, wenn die Zählung die Zähldauer "Sonderzähldauer" hat und die Zeitblöcke Zeitblock.Zb0610 und
+ * Zeitblock.Zb1519 vollständig enthalten sind.
  */
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    activeZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_06_10
-    ) &&
-    activeZaehlung.value.zeitauswahl?.blocks?.some(
-      (zb) => zb === Zeitblock.ZB_15_19
-    )
+    activeZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
   );
 });
 
@@ -235,32 +231,28 @@ const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
  * Setzt die Default-Einstellungen für das Optionsmenü je nach Zählung
  */
 function setDefaultOptionsForZaehlung() {
-  const optionsCopy = {} as ZaehlstelleOptionsDTO;
+  const optionsCopy = {} as Options;
   Object.assign(optionsCopy, options.value);
 
   optionsCopy.zaehldauer = activeZaehlung.value.zaehldauer;
 
   if (isTeilzaehlungFussverkehr.value && !isSonderzaehldauer.value) {
     optionsCopy.zeitauswahl = Zeitauswahl.BLOCK;
-    if (activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_13_STUNDEN) {
-      optionsCopy.zeitblock = Zeitblock.ZB_06_19;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_16_STUNDEN
-    ) {
-      optionsCopy.zeitblock = Zeitblock.ZB_06_22;
-    } else if (
-      activeZaehlung.value.zaehldauer === Zaehldauer.DAUER_2_X_4_STUNDEN
-    ) {
-      optionsCopy.zeitblock = Zeitblock.ZB_06_10;
+    if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer13Stunden) {
+      optionsCopy.zeitblock = Zeitblock.Zb0619;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer16Stunden) {
+      optionsCopy.zeitblock = Zeitblock.Zb0622;
+    } else if (activeZaehlung.value.zaehldauer === Zaehldauer.Dauer2X4Stunden) {
+      optionsCopy.zeitblock = Zeitblock.Zb0610;
     } else {
-      optionsCopy.zeitblock = Zeitblock.ZB_00_24;
+      optionsCopy.zeitblock = Zeitblock.Zb0024;
     }
   } else if (
     isSonderzaehldauer.value &&
     !isSonderzaehldauerKurzzeitzaehlung.value
   ) {
     const zbMax = zeitblockOrder.find((zb) =>
-      activeZaehlung.value.zeitauswahl?.blocks?.some((zbv) => zbv === zb)
+      activeZaehlung.value.zeitauswahl?.blocks?.includes(zb)
     );
     if (zbMax) {
       // Zeitblock verfügbar --> Zeitblock setzen
@@ -268,7 +260,9 @@ function setDefaultOptionsForZaehlung() {
       optionsCopy.zeitblock = zbMax;
     } else {
       // Kein Zeitblock verfügbar --> Erste verfügbare Stunde setzen
-      const firstHour = head(activeZaehlung.value.zeitauswahl?.hours);
+      const firstHour = Array.from(
+        activeZaehlung.value.zeitauswahl?.hours ?? []
+      )[0];
       if (!isNil(firstHour)) {
         optionsCopy.zeitauswahl = Zeitauswahl.STUNDE;
         optionsCopy.zeitblock = firstHour;
@@ -384,13 +378,13 @@ function resetSizeBelastungsplan() {
 }
 
 /**
- * Da das ZaehlstelleOptionsDTO für die Auswahlfelder im Formular als
+ * Da das Options für die Auswahlfelder im Formular als
  * v-model genutzt wird, muss hier eine Kopie erzeugt werden. Andernfalls
  * würde es zu einer dirketen Veränderung des Stores kommen - was dieser
  * nicht mag.
  */
-watch(options, (newOptions: ZaehlstelleOptionsDTO) => {
-  const options = {} as ZaehlstelleOptionsDTO;
+watch(options, (newOptions: Options) => {
+  const options = {} as Options;
   Object.assign(options, newOptions);
   chosenOptions.value = options;
 });
