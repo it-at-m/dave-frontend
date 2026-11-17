@@ -96,8 +96,8 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { ComputedRef } from "vue";
 
 import { computed, onMounted, ref, watch } from "vue";
@@ -111,15 +111,18 @@ import { useFjs } from "@/util/FjsUtils";
 import { useQjs } from "@/util/QjsUtils";
 import { useQu } from "@/util/QuUtils";
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
 const zaehlstelleStore = useZaehlstelleStore();
 const dateUtils = useDateUtils();
 
+const props = defineProps<{ resetNotification?: number }>();
+
 const vergleichsdatumDifferenzdarstellung = ref(new Array<KeyVal>());
 const vergleichsdatumZeitreihe = ref(new Array<KeyVal>());
+const cachedVergleichszaehlungId = ref<string | null>(null);
 
 const hoverSelectBasisdatum = ref(false);
 const hoverSelectVergleichsdatum = ref(false);
@@ -134,7 +137,7 @@ onMounted(() => {
   initData();
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -176,11 +179,23 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
   }
   if (hoverSelectVergleichsdatumZeitreihe.value) {
     const part: string =
-      "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählten Zeitblock bzw. die gewählte Stunde vorhanden sein. ";
-    return isQjsOrFjsOrQu.value
-      ? "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden." +
-          part
-      : "Es können nur Zählungen gleicher Zählart verglichen werden." + part;
+      "Der Tageswert kann immer verglichen werden, ansonsten muss in den Vergleichszählungen der gewählte Zeitblock bzw. die gewählte Stunde vorhanden sein. " +
+      "Vergleichszählungen mit demselben Zähldatum wie die Ausgangszählung werden nicht dargestellt. ";
+    if (isQjsOrFjsOrQu.value) {
+      return (
+        "Es können nur Zählungen gleicher Zählart und mit gleichen Verkehrsbeziehungen verglichen werden. " +
+        part
+      );
+    } else if (chosenOptionsCopy.value.fussverkehr) {
+      return (
+        "Es können nur Zählungen gleicher Zählart und im Fußverkehr weiterhin mit gleichen Verkehrsbeziehungen verglichen werden. " +
+        part
+      );
+    } else {
+      return (
+        "Es können nur Zählungen gleicher Zählart verglichen werden. " + part
+      );
+    }
   }
   return "";
 });
@@ -221,7 +236,7 @@ function initData() {
  */
 function vergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
-  const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
+  const zaehlungen: Array<LadeZaehlung> = zaehlstelleStore.getZaehlungen;
   if (activeZaehlung.value.id) {
     zaehlungen.forEach((zaehl) => {
       if (
@@ -247,14 +262,14 @@ function vergleichsdatumCalculator(): void {
 /**
  * Diese Methode ermittelt alle Zählungen für die Zeitreihendarstellung.
  * Die für die Zeitreihendarstellung relevanten Zählungen sind:
- * - Welche älter als oder gleich alt wie die Basiszählung sind.
+ * - Welche älter als die Basiszählung sind.
  * - Welche die selbe Zählart besitzt.
  * - Welche den gewählten Zeitblock besitzt.
  * - Bei QU, QJS, FJS: Welche übereinstimmende Bewegungsbeziehungen/Pfeile besitzt.
  * */
 function zeitreihenVergleichsdatumCalculator(): void {
   const result: Array<KeyVal> = new Array<KeyVal>();
-  const zaehlungen: Array<LadeZaehlungDTO> = zaehlstelleStore.getZaehlungen;
+  const zaehlungen: Array<LadeZaehlung> = zaehlstelleStore.getZaehlungen;
   if (
     activeZaehlung.value.id != undefined &&
     activeZaehlung.value.datum != undefined
@@ -262,7 +277,7 @@ function zeitreihenVergleichsdatumCalculator(): void {
     zaehlungen.forEach((zaehl) => {
       if (
         zaehl.id !== activeZaehlung.value.id &&
-        zaehl.datum <= activeZaehlung.value!.datum &&
+        zaehl.datum < activeZaehlung.value!.datum &&
         zaehl.zaehlart === activeZaehlung.value.zaehlart &&
         zaehl.sonderzaehlung === activeZaehlung.value.sonderzaehlung &&
         (containsZeitblock(zaehl, chosenOptionsCopy.value.zeitblock) ||
@@ -283,11 +298,21 @@ function zeitreihenVergleichsdatumCalculator(): void {
   // Setze idVergleichszaehlungZeitreihe zurück (auf null), wenn der Wert nicht im Array result enthalten ist
   const selectedVergleichszaehlungId =
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe;
+  const cachedId = cachedVergleichszaehlungId.value;
   if (
     selectedVergleichszaehlungId != null &&
     !result.some((item) => item.value === selectedVergleichszaehlungId)
   ) {
     chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+  } else if (cachedId == null) {
+    // ID der ausgewählten Vergleichszählung merken
+    cachedVergleichszaehlungId.value = selectedVergleichszaehlungId;
+  } else if (
+    selectedVergleichszaehlungId == null &&
+    result.some((item) => item.value === cachedId)
+  ) {
+    // ID der vorher ausgewählten Vergleichszählung wiederherstellen
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = cachedId;
   }
 }
 
@@ -299,8 +324,8 @@ function zeitreihenVergleichsdatumCalculator(): void {
  * @param activeZaehlung aktive Zaehlung
  */
 function checkBewegungsbeziehungen(
-  zaehlung: LadeZaehlungDTO,
-  activeZaehlung: ComputedRef<LadeZaehlungDTO>
+  zaehlung: LadeZaehlung,
+  activeZaehlung: ComputedRef<LadeZaehlung>
 ): boolean {
   // Bei QU: Prüfe auf Knotenarm und Richtung
   if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
@@ -334,15 +359,15 @@ function checkBewegungsbeziehungen(
  * @return true falls die Zählung den Zeitblock im zweiten Parameter besitzt, anderfalls false.
  */
 function containsZeitblock(
-  zaehlung: LadeZaehlungDTO,
+  zaehlung: LadeZaehlung,
   zeitblockInOptions: string
 ): boolean {
   return (
-    zaehlung.zeitauswahl.blocks.some(
-      (zeitblock) => zeitblock.toString() === zeitblockInOptions
+    Array.from(zaehlung.zeitauswahl.blocks).some(
+      (zeitblock) => zeitblock === zeitblockInOptions
     ) ||
-    zaehlung.zeitauswahl.hours.some(
-      (zeitblockStuendl) => zeitblockStuendl.toString() === zeitblockInOptions
+    Array.from(zaehlung.zeitauswahl.hours).some(
+      (zeitblock) => zeitblock === zeitblockInOptions
     )
   );
 }
@@ -366,4 +391,64 @@ watch(isOnlyFussverkehrSelected, (onlyFuss) => {
     chosenOptionsCopy.value.vergleichszaehlungsId = null;
   }
 });
+
+watch(
+  () => chosenOptionsCopy.value.differenzdatenDarstellen,
+  () => {
+    if (!chosenOptionsCopy.value.differenzdatenDarstellen) {
+      // Ausgewählte Verkehrsbeziehungen auf "Alle Knotenarme" setzen, wenn der bisher
+      // ausgewählte Arm nur bei der Vergleichszählung vorhanden ist
+
+      if (
+        chosenOptionsCopy.value.vonKnotenarm != null &&
+        chosenOptionsCopy.value.nachKnotenarm != null
+      ) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) =>
+              vbz.von === chosenOptionsCopy.value.vonKnotenarm &&
+              vbz.nach === chosenOptionsCopy.value.nachKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.vonKnotenarm = null;
+          chosenOptionsCopy.value.nachKnotenarm = null;
+          chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
+        }
+      } else if (chosenOptionsCopy.value.vonKnotenarm != null) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) => vbz.von === chosenOptionsCopy.value.vonKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.vonIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.vonKnotenarm = null;
+        }
+      } else if (chosenOptionsCopy.value.nachKnotenarm != null) {
+        if (
+          !activeZaehlung.value.verkehrsbeziehungen.some(
+            (vbz) => vbz.nach === chosenOptionsCopy.value.nachKnotenarm
+          )
+        ) {
+          // Aktuell im Filtermenü gewählte Verkehrsbeziehung ist bei der Ausgangszählung nicht vorhanden
+          chosenOptionsCopy.value.nachIds = [1, 2, 3, 4, 5, 6, 7, 8];
+          chosenOptionsCopy.value.nachKnotenarm = null;
+        }
+      }
+    }
+  }
+);
+
+// Wenn sich Parent resetToken ändert -> cachedId löschen und Auswahl zurücksetzen
+watch(
+  () => props.resetNotification,
+  () => {
+    cachedVergleichszaehlungId.value = null;
+    chosenOptionsCopy.value.idVergleichszaehlungZeitreihe = null;
+    // neu berechnen der Auswahlmöglichkeiten
+    initData();
+  }
+);
 </script>

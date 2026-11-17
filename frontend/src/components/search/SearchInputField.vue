@@ -141,25 +141,53 @@
 </template>
 
 <script setup lang="ts">
-// src/components/SearchDialog.vue
-import {
-  reactive,
-  ref,
-  watch,
-    computed
-} from "vue";
+import type {
+  SearchAndFilterOptionsDTO,
+  SucheComplexSuggestsDTO,
+  SucheMessstelleSuggestDTO,
+  SucheWordSuggestDTO,
+  SucheZaehlstelleSuggestDTO,
+  SucheZaehlungSuggestDTO,
+} from "@/api/client";
+
+import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
+import { reactive, computed, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+import SucheService from "@/api/service/SucheService";
+import SearchAndFilterOptionsCard from "@/components/search/filter/SearchAndFilterOptionsCard.vue";
+import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import Zaehlart from "@/types/enum/Zaehlart";
 import Zaehldauer from "@/types/enum/Zaehldauer";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-// import { storeToRefs } from "pinia"
+import { useSnackbarStore } from "@/store/SnackbarStore";
+import Suggest from "@/types/suche/Suggest";
+import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
-// const props = defineProps({
-//   modelValue: { type: Boolean, required: true }
-// })
+const SUGGESTION_TYPE_SEARCH_TEXT = "searchtext";
+const SUGGESTION_TYPE_VORSCHLAG = "vorschlag";
+const SUGGESTION_TYPE_ZAEHLSTELLE = "zaehlstelle";
+const SUGGESTION_TYPE_ZAEHLUNG = "zaehlung";
+const SUGGESTION_TYPE_MESSSTELLE = "messstelle";
+
 const emit = defineEmits(['update:modelValue', 'select'])
 
-const store= useSearchStore();
+const searchQuery = ref<string>("");
+const suggestions = ref<Array<Suggest>>([]);
+const selectedSuggestion = ref<Suggest | undefined>(undefined);
+const lastSuggestQuery = ref("");
+const showtooltip = ref(false);
+const searchAndFilterDialogOpen = ref(false);
+const searchAndFilterOptions = ref(
+  DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO()
+);
+
+const route = useRoute();
+const router = useRouter();
+const snackbarStore = useSnackbarStore();
+const searchStore = useSearchStore();
+const mapOptionsStore = useMapOptionsStore();
 
 const isOpen = ref(false)
 // watch(() => (props as any).modelValue, v => isOpen.value = v)
@@ -219,6 +247,152 @@ const zaehlDatumFormatted = computed({
 let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null
 const DEBOUNCE_MS = 300
 
+function suggest(query: string) {
+  if (!isEmpty(query)) {
+    lastSuggestQuery.value = query;
+    SucheService.getSuggestions(query, searchStore.getSearchAndFilterOptions)
+      .then((response: SucheComplexSuggestsDTO) => {
+        suggestions.value = [];
+
+        suggestions.value.push(
+          new Suggest(query, SUGGESTION_TYPE_SEARCH_TEXT, "", "", "")
+        );
+
+        response.wordSuggests.forEach((word: SucheWordSuggestDTO) => {
+          suggestions.value.push(
+            new Suggest(word.text, SUGGESTION_TYPE_VORSCHLAG, "", "", "")
+          );
+        });
+
+        response.zaehlungenSuggests.forEach(
+          (zaehlung: SucheZaehlungSuggestDTO) => {
+            suggestions.value.push(
+              new Suggest(
+                zaehlung.text,
+                SUGGESTION_TYPE_ZAEHLUNG,
+                zaehlung.zaehlstelleId,
+                zaehlung.id,
+                ""
+              )
+            );
+          }
+        );
+
+        response.zaehlstellenSuggests.forEach(
+          (zaehlstelle: SucheZaehlstelleSuggestDTO) => {
+            suggestions.value.push(
+              new Suggest(
+                zaehlstelle.text,
+                SUGGESTION_TYPE_ZAEHLSTELLE,
+                zaehlstelle.id,
+                "",
+                ""
+              )
+            );
+          }
+        );
+
+        response.messstellenSuggests.forEach(
+          (messstelle: SucheMessstelleSuggestDTO) => {
+            suggestions.value.push(
+              new Suggest(
+                messstelle.text,
+                SUGGESTION_TYPE_MESSSTELLE,
+                "",
+                "",
+                messstelle.id
+              )
+            );
+          }
+        );
+      })
+      .catch((error) => snackbarStore.showApiError(error));
+  } else if (!isEmpty(lastSuggestQuery.value)) {
+    lastSuggestQuery.value = query;
+    suggestions.value = [];
+  }
+}
+
+function clearSearch(): void {
+  searchQuery.value = "";
+  selectedSuggestion.value = undefined;
+  searchStore.resetAndTriggerSearch();
+}
+
+function searchOrShowSelectedSuggestion() {
+  mapOptionsStore.resetMapOptions();
+  if (isNil(selectedSuggestion.value)) {
+    selectSuggestionTypeSearchText();
+    search();
+  } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_VORSCHLAG) {
+    searchForSuggestion(selectedSuggestion.value.text);
+  } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_ZAEHLSTELLE) {
+    showZaehlstelle(selectedSuggestion.value);
+  } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_ZAEHLUNG) {
+    showZaehlung(selectedSuggestion.value);
+  } else if (selectedSuggestion.value.type === SUGGESTION_TYPE_MESSSTELLE) {
+    showMessstelle(selectedSuggestion.value);
+  } else {
+    selectSuggestionTypeSearchText();
+    search();
+  }
+}
+
+function selectSuggestionTypeSearchText() {
+  // Es wurde keine Suggestion ausgewählt, also wird zur Anzeige der Suggestion-Type Text genutzt
+  selectedSuggestion.value = suggestions.value.filter(
+    (value) => value.type === SUGGESTION_TYPE_SEARCH_TEXT
+  )[0];
+}
+
+function search() {
+  if (isNil(searchQuery.value)) {
+    searchQuery.value = "";
+  }
+  searchStore.setLastSearchQuery(searchQuery.value);
+  const routeName = route.name;
+  if (
+    (routeName === "zaehlstelle" ||
+      routeName === "messstelle" ||
+      routeName === "pdfreport" ||
+      routeName === "auswertung") &&
+    searchQuery.value !== ""
+  ) {
+    router.push(`/`);
+  }
+
+  SucheService.searchErhebungsstelle(
+    searchQuery.value,
+    searchAndFilterOptionsStore.value
+  )
+    .then((result) => {
+      searchStore.setSearchResult(result);
+    })
+    .catch((error) => {
+      snackbarStore.showApiError(error);
+    });
+}
+
+function searchForSuggestion(query: string) {
+  searchQuery.value = query;
+  search();
+}
+
+function showZaehlstelle(item: Suggest) {
+  selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+  router.push(`/zaehlstelle/${item.zaehlstelleId}`);
+}
+
+function showZaehlung(item: Suggest) {
+  selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+  router.push(`/zaehlstelle/${item.zaehlstelleId}/${item.zaehlungId}`);
+}
+
+function showMessstelle(item: Suggest) {
+  selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+  router.push(`/messstelle/${item.mstId}`);
+}
+
 // Hilfsfunktion: baut die Kriterien-Objekt, evtl. Filter rausnehmen wenn leer
 function buildCriteria() {
   return {
@@ -242,14 +416,27 @@ watch(() => criteria.query, (newVal) => {
   }, DEBOUNCE_MS)
 })
 
+function deleteChar() {
+  if (!isNil(selectedSuggestion.value)) {
+    selectedSuggestion.value.type = "";
+  }
+  suggest(searchQuery.value);
+}
+
+function updateSearchQuery(itemIndex: number) {
+  if (itemIndex >= 0) {
+    searchQuery.value = suggestions.value[itemIndex].text;
+  }
+}
+
 // Wenn ein beliebiges Filter-Control geändert wird, dann sofort eine Suche auslösen
 watch(
-    () => [criteria.zaehlart, criteria.zaehldauer, criteria.zaehlstelle, criteria.messstelle, criteria.kreisverkehr, criteria.sonderzaehlung],
-    () => {
-      // sofort suchen (auch wenn query < 3)
-      store.search(buildCriteria())
-    },
-    { deep: false }
+  () => [criteria.zaehlart, criteria.zaehldauer, criteria.zaehlstelle, criteria.messstelle, criteria.kreisverkehr, criteria.sonderzaehlung],
+  () => {
+    // sofort suchen (auch wenn query < 3)
+    store.search(buildCriteria())
+  },
+  { deep: false }
 )
 
 // Hilfsfunktion: Datum im gewünschten Format (TT.MM.YYYY). Anpassbar.
@@ -262,6 +449,76 @@ function formatDate(isoDate: string): string {
   const yyyy = d.getFullYear();
   return `${dd}.${mm}.${yyyy}`;
 }
+
+function iconOfSuggestion(type: string) {
+  let icon = "";
+  switch (type) {
+    case SUGGESTION_TYPE_SEARCH_TEXT:
+      icon = "mdi-magnify";
+      break;
+    case SUGGESTION_TYPE_VORSCHLAG:
+      icon = "mdi-magnify";
+      break;
+    case SUGGESTION_TYPE_ZAEHLSTELLE:
+      icon = "mdi-map-marker";
+      break;
+    case SUGGESTION_TYPE_ZAEHLUNG:
+      icon = "mdi-counter";
+      break;
+    case SUGGESTION_TYPE_MESSSTELLE:
+      icon = "mdi-cards-diamond";
+      break;
+  }
+  return icon;
+}
+
+function hasFilterChanged(): boolean {
+  return isEqual(
+    searchAndFilterOptionsStore.value,
+    searchAndFilterOptions.value
+  );
+}
+
+const isDefaultFilter = computed(() => {
+  return !searchStore.areSearchAndFilterOptionsDirty;
+});
+
+function openSearchAndFilterDialog(): void {
+  searchAndFilterOptions.value = searchAndFilterOptionsStore.value;
+  searchAndFilterDialogOpen.value = true;
+}
+
+function handleAdoptSearchAndFilterOptions(): void {
+  searchAndFilterOptionsStore.value = searchAndFilterOptions.value;
+  searchAndFilterDialogOpen.value = false;
+  if (hasFilterChanged()) {
+    search();
+  }
+}
+
+function handleResetSearchAndFilterOptions(): void {
+  searchAndFilterOptions.value =
+    DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO();
+  handleAdoptSearchAndFilterOptions();
+}
+
+const searchAndFilterOptionsStore = computed({
+  get() {
+    return cloneDeep(searchStore.getSearchAndFilterOptions);
+  },
+  set(payload: SearchAndFilterOptionsDTO) {
+    searchStore.setSearchAndFilterOptions(cloneDeep(payload));
+  },
+});
+
+watch(
+  () => searchStore.triggerSearch,
+  () => {
+    searchQuery.value = searchStore.getLastSearchQuery;
+    selectedSuggestion.value = undefined;
+    search();
+  }
+);
 
 // Exposed helpers
 function selectItem(item: any) {
@@ -307,7 +564,3 @@ function openSearchDialog() {
 }
 
 </script>
-
-<style scoped>
-/* ... optional styles ... */
-</style>

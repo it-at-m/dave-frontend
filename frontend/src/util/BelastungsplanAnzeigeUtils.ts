@@ -1,8 +1,13 @@
 import { computed } from "vue";
 
 import { useMessstelleStore } from "@/store/MessstelleStore";
+import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import { zeitblockInfo } from "@/types/enum/ZeitblockText";
+import { useEnumUtils } from "@/util/EnumUtils";
 
-export function belastungsplanAnzeigeUtils() {
+export function useBelastungsplanAnzeigeUtils() {
+  const zaehlstelleStore = useZaehlstelleStore();
   const messstelleStore = useMessstelleStore();
 
   const chosenOptionsCopy = computed(() => {
@@ -36,7 +41,7 @@ export function belastungsplanAnzeigeUtils() {
   /**
    * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
    * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
-   * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind
+   * mehr wie 3 Verkehrsarten (ohne Rad und FUSS) ausgewählt sind
    */
   const isGvpInBelastungsPlan = computed(() => {
     let actualNumberOfSelectedKfzSvGvAndSvp = 0;
@@ -61,5 +66,44 @@ export function belastungsplanAnzeigeUtils() {
     );
   });
 
-  return { isGvpInBelastungsPlan, isSvpInBelastungsPlan };
+  const zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle =
+    computed<string>(() => {
+      return getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen(
+        zaehlstelleStore.getFilteroptions.zeitauswahl,
+        zaehlstelleStore.getFilteroptions.zeitblock
+      );
+    });
+
+  const zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle =
+    computed<string>(() => {
+      return getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen(
+        messstelleStore.getFilteroptions.zeitauswahl,
+        messstelleStore.getFilteroptions.zeitblock
+      );
+    });
+
+  function getZeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosen(
+    zeitauswahl: string,
+    zeitblock: string
+  ): string {
+    let zeitauswahlWithZeitblock = zeitauswahl;
+    if (
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+      zeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+    ) {
+      const zb = useEnumUtils().toZeitblock(zeitblock);
+      const title = zb ? zeitblockInfo.get(zb)?.title : undefined;
+      zeitauswahlWithZeitblock =
+        zeitauswahlWithZeitblock + " (Block " + title + ")";
+    }
+    return zeitauswahlWithZeitblock;
+  }
+
+  return {
+    isGvpInBelastungsPlan,
+    isSvpInBelastungsPlan,
+    zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle,
+    zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle,
+  };
 }

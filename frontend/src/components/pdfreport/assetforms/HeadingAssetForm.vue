@@ -72,11 +72,13 @@
 </template>
 
 <script setup lang="ts">
+import type { TextAsset } from "@/api/client";
+import type { HeadingAsset } from "@/util/AssetUtil";
+
 import { ref, watch } from "vue";
 
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { BaseAssetTypeEnum } from "@/api/client";
+import { useAssetUtil } from "@/util/AssetUtil";
 
 interface Props {
   heading: HeadingAsset;
@@ -89,41 +91,42 @@ const emits = defineEmits<{
   (e: "save", v: TextAsset): void;
 }>();
 
-const asset = ref(new HeadingAsset("", AssetTypesEnum.HEADING1));
+const assetUtil = useAssetUtil();
+const asset = ref(assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading1));
 const icon = ref("mdi-format-header-1");
 const style = ref("h1");
 
 const items: Array<string> = [
-  AssetTypesEnum.HEADING1,
-  AssetTypesEnum.HEADING2,
-  AssetTypesEnum.HEADING3,
-  AssetTypesEnum.HEADING4,
-  AssetTypesEnum.HEADING5,
+  BaseAssetTypeEnum.Heading1,
+  BaseAssetTypeEnum.Heading2,
+  BaseAssetTypeEnum.Heading3,
+  BaseAssetTypeEnum.Heading4,
+  BaseAssetTypeEnum.Heading5,
 ];
 
 function setIconAndStyle(headingAsset: HeadingAsset): void {
   // Icons und Style sind abhängig von der Überschriftsgröße
-  if (headingAsset.type === AssetTypesEnum.HEADING1) {
+  if (headingAsset.type === BaseAssetTypeEnum.Heading1) {
     icon.value = "mdi-format-header-1";
     style.value = "h1";
   }
 
-  if (headingAsset.type === AssetTypesEnum.HEADING2) {
+  if (headingAsset.type === BaseAssetTypeEnum.Heading2) {
     icon.value = "mdi-format-header-2";
     style.value = "h2";
   }
 
-  if (headingAsset.type === AssetTypesEnum.HEADING3) {
+  if (headingAsset.type === BaseAssetTypeEnum.Heading3) {
     icon.value = "mdi-format-header-3";
     style.value = "h3";
   }
 
-  if (headingAsset.type === AssetTypesEnum.HEADING4) {
+  if (headingAsset.type === BaseAssetTypeEnum.Heading4) {
     icon.value = "mdi-format-header-4";
     style.value = "h4";
   }
 
-  if (headingAsset.type === AssetTypesEnum.HEADING5) {
+  if (headingAsset.type === BaseAssetTypeEnum.Heading5) {
     icon.value = "mdi-format-header-5";
     style.value = "h5";
   }
@@ -136,7 +139,7 @@ function save(): void {
   if (asset.value.text && asset.value.text.length > 0) {
     emits("save", Object.assign({}, asset.value));
   } else {
-    asset.value = new HeadingAsset("", AssetTypesEnum.HEADING1);
+    asset.value = assetUtil.createHeadingAsset("", BaseAssetTypeEnum.Heading1);
     openEditHeadingDialog.value = false;
   }
 }

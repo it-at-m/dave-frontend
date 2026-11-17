@@ -1,15 +1,16 @@
 package de.muenchen.dave.filter;
 
+import de.muenchen.dave.configuration.SecurityProperties;
 import de.muenchen.dave.exception.ParameterPollutionException;
-import de.muenchen.dave.util.GatewayUtils;
 import java.util.List;
 import java.util.Map;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -17,42 +18,41 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-/**
- * This {@link GlobalFilter} is used to detect and to fend off a parameter pollution attack.
- * <p>
- * Within a {@link HttpRequest} each request parameter should only exist once.
- * This check is necessary to avoid e.g. SQL injection split over multiple request parameters with
- * the same name.
- */
+/// This [GlobalFilter] is used to detect and to fend off a parameter pollution attack.
+///
+/// Within a [org.springframework.http.HttpRequest] each request parameter should only exist once.
+/// This check is necessary to avoid e.g. SQL injection split over multiple request parameters with
+/// the same name.
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class GlobalRequestParameterPollutionFilter implements GlobalFilter, Ordered {
+
+    public static final int ORDER_GLOBAL_FILTER = -3;
+
+    private final SecurityProperties securityProperties;
 
     @Override
     public int getOrder() {
-        return GatewayUtils.ORDER_GLOBAL_FILTER;
+        return ORDER_GLOBAL_FILTER;
     }
 
-    /**
-     * See {@link GlobalFilter#filter(ServerWebExchange, GatewayFilterChain)}
-     *
-     * @throws ParameterPollutionException is throw when a request parameter exists multiple times.
-     *             The exception represents a http response with status {@link HttpStatus#BAD_REQUEST}.
-     */
+    /// See [GlobalFilter#filter(ServerWebExchange, GatewayFilterChain)]
+    ///
+    /// @throws ParameterPollutionException when a request parameter exists multiple times. The exception
+    ///             represents a HTTP response with status
+    ///             [org.springframework.http.HttpStatus#BAD_REQUEST].
     @Override
-    public Mono<Void> filter(final ServerWebExchange exchange, final GatewayFilterChain chain)
-            throws ParameterPollutionException {
+    @NonNull public Mono<Void> filter(final ServerWebExchange exchange, @NonNull final GatewayFilterChain chain) {
         log.debug("Check for parameter pollution attack.");
-        ServerHttpRequest request = exchange.getRequest();
+        final ServerHttpRequest request = exchange.getRequest();
         if (!CollectionUtils.isEmpty(request.getQueryParams())) {
-            MultiValueMap<String, String> parameterMap = request.getQueryParams();
-            for (Map.Entry<String, List<String>> entry : parameterMap.entrySet()) {
-                String key = entry.getKey();
-                List<String> value = entry.getValue();
-                if (!CollectionUtils.isEmpty(value) && value.size() > 1) {
-                    log.warn(
-                            "Possible parameter pollution attack detected: Parameter \"{}\" detected more than once in the request!",
-                            key);
+            final MultiValueMap<String, String> parameterMap = request.getQueryParams();
+            for (final Map.Entry<String, List<String>> entry : parameterMap.entrySet()) {
+                final String key = entry.getKey();
+                final List<String> value = entry.getValue();
+                if (value != null && value.size() > 1 && !securityProperties.getParameterPollutionWhitelisted().contains(key)) {
+                    log.warn("Possible parameter pollution attack detected: Parameter \"{}\" detected more than once in the request!", key);
                     throw new ParameterPollutionException();
                 }
             }

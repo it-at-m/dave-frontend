@@ -1,4 +1,4 @@
-import type FahrzeugOptions from "@/types/messstelle/FahrzeugOptions";
+import type { FahrzeugOptionsDTO } from "@/api/client";
 
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
@@ -13,7 +13,7 @@ export function useMessstelleUtils() {
     );
   }
 
-  function hasSelectedVerkehrsarten(fahrzeugOptions: FahrzeugOptions) {
+  function hasSelectedVerkehrsarten(fahrzeugOptions: FahrzeugOptionsDTO) {
     return (
       fahrzeugOptions.kraftfahrzeugverkehr ||
       fahrzeugOptions.schwerverkehr ||
@@ -25,7 +25,7 @@ export function useMessstelleUtils() {
     );
   }
 
-  function hasSelectedFahrzeugkategorie(fahrzeugOptions: FahrzeugOptions) {
+  function hasSelectedFahrzeugkategorie(fahrzeugOptions: FahrzeugOptionsDTO) {
     return (
       fahrzeugOptions.kraftraeder ||
       fahrzeugOptions.lastzuege ||
@@ -36,7 +36,7 @@ export function useMessstelleUtils() {
     );
   }
 
-  function getSelectedVerkehrsartAsText(fahrzeugOptions: FahrzeugOptions) {
+  function getSelectedVerkehrsartAsText(fahrzeugOptions: FahrzeugOptionsDTO) {
     let selectedVerkehrsartAsText = "unbekannt";
     if (fahrzeugOptions.busse) {
       selectedVerkehrsartAsText = "Bus";

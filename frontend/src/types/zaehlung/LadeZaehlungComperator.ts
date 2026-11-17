@@ -1,4 +1,4 @@
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 
 import Zaehlart from "@/types/enum/Zaehlart";
 
@@ -9,7 +9,7 @@ export default class LadeZaehlungComperator {
    * @param a
    * @param b
    */
-  public static sortByDatum(a: LadeZaehlungDTO, b: LadeZaehlungDTO): number {
+  public static sortByDatum(a: LadeZaehlung, b: LadeZaehlung): number {
     if (a.datum < b.datum) {
       return 1;
     }

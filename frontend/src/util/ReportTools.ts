@@ -1,23 +1,21 @@
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
-import type MessstelleOptionsDTO from "@/types/messstelle/MessstelleOptionsDTO";
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LeseZaehlstelleDTO, OptionsDTO } from "@/api/client";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
+import type MessstelleOptions from "@/types/messstelle/MessstelleOptions";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
+import DOMPurify from "dompurify";
 import _ from "lodash";
 import { computed } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
 import Zaehlart from "@/types/enum/Zaehlart";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import DatatableAsset from "@/types/pdfreport/assets/DatatableAsset";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import ImageAsset from "@/types/pdfreport/assets/ImageAsset";
-import MessstelleDatatableAsset from "@/types/pdfreport/assets/MessstelleDatatableAsset";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
 
 export function useReportTools() {
@@ -26,25 +24,26 @@ export function useReportTools() {
   const snackbarStore = useSnackbarStore();
   const zaehlstelleStore = useZaehlstelleStore();
   const dateUtils = useDateUtils();
+  const assetUtil = useAssetUtil();
 
-  const messstelle = computed<MessstelleInfoDTO>(() => {
+  const messstelle = computed<MessstelleInfoType>(() => {
     return messstelleStore.getMessstelleInfo;
   });
-  const messstelleOptions = computed<MessstelleOptionsDTO>(() => {
+  const messstelleOptions = computed<MessstelleOptions>(() => {
     return messstelleStore.getFilteroptions;
   });
-  const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
+  const zaehlstelle = computed<LeseZaehlstelleDTO>(() => {
     return zaehlstelleStore.getZaehlstelleHeader;
   });
-  const selectedZaehlung = computed<LadeZaehlungDTO>(() => {
+  const selectedZaehlung = computed<LadeZaehlung>(() => {
     return zaehlstelleStore.getAktiveZaehlung;
   });
-  const zaehlstelleOptions = computed<ZaehlstelleOptionsDTO>(() => {
+  const zaehlstelleOptions = computed<Options>(() => {
     return zaehlstelleStore.getFilteroptions;
   });
 
   function addImageToReport(base64: string, name: string): void {
-    const imageAsset = new ImageAsset(name, base64);
+    const imageAsset = assetUtil.createImageAsset(name, base64);
     imageAsset.width = 100;
     pdfReportStore.addAsset(imageAsset);
   }
@@ -52,7 +51,10 @@ export function useReportTools() {
   function addHeadingToReport(erhebungsstelle: Erhebungsstelle): void {
     const heading = createHeading(erhebungsstelle);
     if (heading) {
-      const headingAsset = new HeadingAsset(heading, AssetTypesEnum.HEADING5);
+      const headingAsset = assetUtil.createHeadingAsset(
+        heading,
+        BaseAssetTypeEnum.Heading5
+      );
       pdfReportStore.addAsset(headingAsset);
     }
   }
@@ -175,7 +177,7 @@ export function useReportTools() {
     switch (erhebungsstelle) {
       case Erhebungsstelle.MESSSTELLE:
         pdfReportStore.addAsset(
-          new MessstelleDatatableAsset(
+          assetUtil.createMessstelleDatatableAsset(
             _.cloneDeep(messstelleOptions.value),
             messstelle.value.id,
             createCaption(erhebungsstelle, "Datentabelle")
@@ -184,8 +186,8 @@ export function useReportTools() {
         break;
       case Erhebungsstelle.ZAEHLSTELLE:
         pdfReportStore.addAsset(
-          new DatatableAsset(
-            _.cloneDeep(zaehlstelleOptions.value),
+          assetUtil.createDatatableAsset(
+            _.cloneDeep(zaehlstelleOptions.value) as OptionsDTO,
             selectedZaehlung.value.id,
             createCaption(erhebungsstelle, "Datentabelle")
           )
@@ -263,6 +265,44 @@ export function useReportTools() {
     }
   }
 
+  /**
+   * Entfernt schädlichen/nicht zulässigen HTML-Code aus dem übergebenen String.
+   *
+   * @param htmlText Der String, welcher bereinigt werden soll
+   */
+  function sanitizeHtml(htmlText: string | undefined): string | undefined {
+    if (!htmlText) return htmlText;
+    return DOMPurify.sanitize(htmlText, {
+      ALLOWED_TAGS: [
+        "a",
+        "b",
+        "blockquote",
+        "br",
+        "cite",
+        "code",
+        "dd",
+        "dl",
+        "dt",
+        "em",
+        "i",
+        "li",
+        "ol",
+        "p",
+        "pre",
+        "q",
+        "small",
+        "strike",
+        "strong",
+        "sub",
+        "sup",
+        "u",
+        "ul",
+      ],
+      ALLOWED_ATTR: ["href", "title"],
+      ALLOWED_URI_REGEXP: /^(https?:|mailto:)/i,
+    });
+  }
+
   return {
     addChartToPdfReport,
     addDatatableToPdfReport,
@@ -271,5 +311,6 @@ export function useReportTools() {
     saveGesamtauswertungAsImage,
     getFileName,
     createHeading,
+    sanitizeHtml,
   };
 }

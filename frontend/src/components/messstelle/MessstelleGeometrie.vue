@@ -7,21 +7,21 @@
   />
 </template>
 <script setup lang="ts">
-import type MessquerschnittInfoDTO from "@/types/messstelle/MessquerschnittInfoDTO";
+import type MessquerschnittInfo from "@/types/messstelle/MessquerschnittInfo";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { Svg } from "@svgdotjs/svg.js";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 
+import { Himmelsrichtung } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
 
 interface Props {
   height?: number;
   width?: number;
   activeColor?: string;
   passiveColor?: string;
-  messquerschnitte: MessquerschnittInfoDTO[];
+  messquerschnitte: MessquerschnittInfo[];
 }
 
 const props = withDefaults(defineProps<Props>(), {

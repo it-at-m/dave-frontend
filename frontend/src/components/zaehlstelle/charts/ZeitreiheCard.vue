@@ -4,12 +4,14 @@
     class="pt-5"
   >
     <zeitreihe-chart
+      v-if="!isZeitauswahlSpitzenstundeChosen"
       :zeitreihe-daten="zaehldatenZeitreihe"
       @charttype-changed="charttypeChanged"
     />
     <!--  Dieses Diagramm soll der Benutzer nicht zu sehen bekommen, es dient nur zum PDF-Druck, die Groesse des Diagramms
       wird beim mounten der Seite fix festgelegt -->
     <zeitreihe-chart
+      v-if="!isZeitauswahlSpitzenstundeChosen"
       ref="zeitreiheForPdf"
       style="display: none"
       :zeitreihe-daten="zaehldatenZeitreihe"
@@ -18,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
+import type Options from "@/types/zaehlung/Options";
 import type { SeriesOption } from "echarts";
 import type { ResizeOpts } from "echarts/core";
 
@@ -28,6 +30,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import ZeitreiheChart from "@/components/zaehlstelle/charts/ZeitreiheChart.vue";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
+import Fahrzeug from "@/types/enum/Fahrzeug";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 
 interface Props {
@@ -37,8 +40,16 @@ interface Props {
 
 const props = defineProps<Props>();
 const zaehlstelleStore = useZaehlstelleStore();
-const filterOptions = computed<ZaehlstelleOptionsDTO>(() => {
+const filterOptions = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
+});
+const isZeitauswahlSpitzenstundeChosen = computed<boolean>(() => {
+  const chosenZeitauswahl = filterOptions.value.zeitauswahl;
+  return (
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
+    chosenZeitauswahl === Zeitauswahl.SPITZENSTUNDE_FUSS
+  );
 });
 const snackbarStore = useSnackbarStore();
 
@@ -64,18 +75,40 @@ function charttypeChanged(newChartType: "line" | "bar") {
   });
 }
 
-// Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert 0 ist (wegen Teilzählung kein Tageswert vorhanden).
+function doesMissingValueMessageContainVerkehrsbeziehungNotPresent(
+  missingValueMessage: string
+) {
+  return missingValueMessage
+    .split("\n")
+    .some((part) => part === "(Verkehrsbez. nicht vorh.)");
+}
+
+// Zeige die Snackbar-Infomeldung an, wenn Tab Zeitreihe aktiv und Tageswert und Fußverkehr ausgewählt sind und mind. ein Wert null ist (wegen Teilzählung kein Tageswert vorhanden).
 watch(
   () => props.zaehldatenZeitreihe,
   (zaehldatenZeitreihe: LadeZaehldatenZeitreiheDTO) => {
-    if (
+    const missingValueMessageContainsVerkehrsbeziehungNotPresent =
+      zaehldatenZeitreihe.fehlendeWerteMeldung.some((missingValueMessage) =>
+        doesMissingValueMessageContainVerkehrsbeziehungNotPresent(
+          missingValueMessage
+        )
+      );
+
+    if (props.isTabZeitreiheActive && isZeitauswahlSpitzenstundeChosen.value) {
+      snackbarStore.showInfo(
+        `Es ist keine Anzeige mit der Zeitauswahl ${filterOptions.value.zeitauswahl} möglich. Bitte eine andere Zeitauswahl einstellen.`
+      );
+    } else if (
       props.isTabZeitreiheActive &&
       filterOptions.value.fussverkehr &&
       filterOptions.value.zeitauswahl == Zeitauswahl.TAGESWERT &&
-      zaehldatenZeitreihe.fuss.some((value) => value == 0)
+      zaehldatenZeitreihe.tageswertNichtVorhanden.some((missingTageswerte) =>
+        missingTageswerte.includes(Fahrzeug.FUSS)
+      ) &&
+      !missingValueMessageContainsVerkehrsbeziehungNotPresent
     ) {
       snackbarStore.showInfo(
-        "Für den Fußverkehr ist kein Tageswert vorhanden. Für die Anzeige muss ein Zeitblock oder eine Stunde ausgewählt sein."
+        "Für den Fußverkehr ist nur bei Ganztageszählungen ein Tageswert vorhanden"
       );
     }
   },

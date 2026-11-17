@@ -6,8 +6,8 @@
   />
 </template>
 <script setup lang="ts">
-import type BelastungsplanMessquerschnitteDTO from "@/types/messstelle/BelastungsplanMessquerschnitteDTO";
-import type LadeBelastungsplanMessqueschnittDataDTO from "@/types/messstelle/LadeBelastungsplanMessqueschnittDataDTO";
+import type { BelastungsplanMessquerschnitteDTO } from "@/api/client";
+import type { LadeBelastungsplanMessquerschnittDataDTO } from "@/api/client/models/LadeBelastungsplanMessquerschnittDataDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
@@ -16,14 +16,17 @@ import _ from "lodash";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { useMessstelleStore } from "@/store/MessstelleStore";
-import Himmelsrichtung from "@/types/enum/Himmelsrichtung";
-import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
-import { belastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
-import { useDateUtils } from "@/util/DateUtils";
+import { Himmelsrichtung } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
+import { useMessstelleStore } from "@/store/MessstelleStore";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
+import { useDateUtils } from "@/util/DateUtils";
+import { useEnumUtils } from "@/util/EnumUtils";
 
 interface Props {
   belastungsplanData: BelastungsplanMessquerschnitteDTO;
@@ -56,8 +59,11 @@ const vehiclesPerMq: Ref<Map<string, number>> = ref(new Map<string, number>());
 
 const startX = ref(0);
 const startY = ref(0);
-const { isSvpInBelastungsPlan, isGvpInBelastungsPlan } =
-  belastungsplanAnzeigeUtils();
+const {
+  isSvpInBelastungsPlan,
+  isGvpInBelastungsPlan,
+  zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle,
+} = useBelastungsplanAnzeigeUtils();
 const props = defineProps<Props>();
 
 const svgHeight = computed(() => {
@@ -154,7 +160,7 @@ function draw() {
 
 function drawArrowsPointingSouth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -203,7 +209,7 @@ function drawArrowsPointingSouth(
 
 function addSumSouthIfNecessary(
   arrayOfDataForDirectionSouth:
-    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -297,7 +303,7 @@ function drawTotal() {
 
 function drawArrowsPointingNorth(
   groupedByDirection: {
-    data: LadeBelastungsplanMessqueschnittDataDTO[];
+    data: LadeBelastungsplanMessquerschnittDataDTO[];
     direction: string;
   }[]
 ) {
@@ -346,7 +352,7 @@ function drawArrowsPointingNorth(
 
 function addSumNorthIfNecessary(
   arrayOfDataForDirectionNorth:
-    | { data: LadeBelastungsplanMessqueschnittDataDTO[]; direction: string }
+    | { data: LadeBelastungsplanMessquerschnittDataDTO[]; direction: string }
     | undefined
 ) {
   if (
@@ -762,17 +768,24 @@ function drawLinienStaerke() {
 }
 
 const getZeitauswahlText = computed(() => {
-  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${chosenOptionsCopy.value.zeitauswahl}`;
+  return `${dateUtils.isDateRange(chosenOptionsCopy.value.zeitraum) ? "\u00D8 " : ""}${zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForMessstelle.value}`;
 });
 
 const getZeitblockText = computed(() => {
   if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.TAGESWERT) {
     return "0 - 24 Uhr";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.BLOCK) {
-    return zeitblockInfo.get(chosenOptionsCopy.value.zeitblock)?.title;
+    const zeitblock = useEnumUtils().toZeitblock(
+      chosenOptionsCopy.value.zeitblock
+    );
+    return zeitblock ? (zeitblockInfo.get(zeitblock)?.title ?? "") : "";
   } else if (chosenOptionsCopy.value.zeitauswahl == Zeitauswahl.STUNDE) {
-    return zeitblockStuendlichInfo.get(chosenOptionsCopy.value.zeitblock)
-      ?.title;
+    const zeitblock = useEnumUtils().toZeitblock(
+      chosenOptionsCopy.value.zeitblock
+    );
+    return zeitblock
+      ? (zeitblockStuendlichInfo.get(zeitblock)?.title ?? "")
+      : "";
   } else if (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_RAD ||
@@ -818,7 +831,7 @@ function calcLineWidth() {
   );
 }
 
-function calcStrokeSize(mq: LadeBelastungsplanMessqueschnittDataDTO): number {
+function calcStrokeSize(mq: LadeBelastungsplanMessquerschnittDataDTO): number {
   const maxLineWidth = 20;
   const mqData = vehiclesPerMq.value.get(mq.mqId);
 

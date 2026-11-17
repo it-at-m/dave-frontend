@@ -1,8 +1,7 @@
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type { BearbeiteKnotenarmDTO, LeseZaehlstelleDTO } from "@/api/client";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -16,16 +15,17 @@ import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const route = useRoute();
 
-  const zaehlstelleHeader = ref<ZaehlstelleHeaderDTO>(
+  const zaehlstelleHeader = ref<LeseZaehlstelleDTO>(
     DefaultObjectCreator.createDefaultZaehlstelleHeaderDTO()
   );
   const activeTab = ref(0);
-  const filteroptions = ref<ZaehlstelleOptionsDTO>(
+  const filteroptions = ref<Options>(
     DefaultObjectCreator.createDefaultZaehlstelleOptionsDto()
   );
   const zeitblock = ref("");
   const zeitauswahl = ref("");
-  const history = ref(false);
+  const inHistory = ref(false);
+  const calledFromHistory = ref(false);
   const sizeBelastungsplanSvg = ref(0);
   const maxSizeBelastungsplanSvg = ref(0);
   const minSizeBelastungsplanSvg = ref(0);
@@ -33,12 +33,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const maxSizeBelastungsplanSvgSchematischeUebersicht = ref(0);
   const minSizeBelastungsplanSvgSchematischeUebersicht = ref(0);
 
-  const aktiveZaehlung = ref<LadeZaehlungDTO>(
+  const aktiveZaehlung = ref<LadeZaehlung>(
     DefaultObjectCreator.createDefaultLadeZaehlungDto()
   );
-  const zaehlungen = ref<Array<LadeZaehlungDTO>>([]);
-  const inaktiveZaehlungen = ref<Array<LadeZaehlungDTO>>([]);
-  const sortedKnotenarme = ref<Array<LadeKnotenarmDTO>>([]);
+  const zaehlungen = ref<Array<LadeZaehlung>>([]);
+  const inaktiveZaehlungen = ref<Array<LadeZaehlung>>([]);
+  const sortedKnotenarme = ref<Array<BearbeiteKnotenarmDTO>>([]);
   const inaktiveZaehlungenVorhanden = ref(false);
   const startEndeUhrzeitIntervalls = ref<StartEndeUhrzeitIntervalls>(
     DefaultObjectCreator.createDefaultStartEndeUhrzeitIntervalls()
@@ -55,7 +55,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   const isBlackprintMode = computed(() => filteroptions.value.blackPrintMode);
   const getZeitblock = computed(() => zeitblock.value);
   const getZeitauswahl = computed(() => zeitauswahl.value);
-  const isHistory = computed(() => history.value);
+  const isInHistory = computed(() => inHistory.value);
+  const isCalledFromHistory = computed(() => calledFromHistory.value);
   const getSizeBelastungsplanSvg = computed(() => sizeBelastungsplanSvg.value);
   const getMaxSizeBelastungsplanSvg = computed(
     () => maxSizeBelastungsplanSvg.value
@@ -87,20 +88,21 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     () => startEndeUhrzeitIntervalls.value
   );
 
-  function setZaehlstelleHeader(payload: ZaehlstelleHeaderDTO) {
+  function setZaehlstelleHeader(payload: LeseZaehlstelleDTO) {
     payload.zaehlungen = [];
     zaehlstelleHeader.value = payload;
   }
   function setActiveTab(payload: number) {
     activeTab.value = payload;
   }
-  function setFilteroptions(payload: ZaehlstelleOptionsDTO) {
+  function setFilteroptions(payload: Options) {
     filteroptions.value = payload;
-    history.value = false;
+    inHistory.value = false;
   }
-  function setFilteroptionsHistory(payload: ZaehlstelleOptionsDTO) {
+  function setFilteroptionsHistory(payload: Options) {
     filteroptions.value = payload;
-    history.value = true;
+    inHistory.value = true;
+    calledFromHistory.value = true;
   }
   function setZeitblock(payload: string) {
     zeitblock.value = payload;
@@ -110,6 +112,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function reloadFilteroptions() {
     filteroptions.value = Object.assign({}, filteroptions.value);
+    calledFromHistory.value = false;
   }
   function resetFilteroptions() {
     filteroptions.value =
@@ -140,7 +143,7 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     sizeBelastungsplanSvgSchematischeUebersicht.value =
       minSizeBelastungsplanSvgSchematischeUebersicht.value;
   }
-  function setZaehlungen(payload: Array<LadeZaehlungDTO>) {
+  function setZaehlungen(payload: Array<LadeZaehlung>) {
     const userStore = useUserStore();
     if (userStore.hasAuthorities && userStore.isAnwender) {
       zaehlungen.value = payload.filter((value) => !value.sonderzaehlung);
@@ -151,12 +154,12 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function setZaehlungAlsAktiv(payload: string) {
     if (zaehlungen.value.length > 0) {
-      let aktiv = [] as LadeZaehlungDTO[];
+      let aktiv = [] as LadeZaehlung[];
       if (payload) {
         // wenn eine ID übergeben wird, dann nimm diese als aktive Zählung
         aktiv = zaehlungen.value.filter(
-          (z: LadeZaehlungDTO) => z.id === payload
-        ) as LadeZaehlungDTO[];
+          (z: LadeZaehlung) => z.id === payload
+        ) as LadeZaehlung[];
       } else {
         // ansonsten ist es die neuste Zählung
         aktiv.push(
@@ -173,8 +176,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
         );
         // inaktive Zählungen aktualisieren und sortieren
         const iz = zaehlungen.value.filter(
-          (z: LadeZaehlungDTO) => z.id != aktiveZaehlung.value.id
-        ) as LadeZaehlungDTO[];
+          (z: LadeZaehlung) => z.id != aktiveZaehlung.value.id
+        ) as LadeZaehlung[];
         inaktiveZaehlungen.value = iz.sort(LadeZaehlungComperator.sortByDatum);
         // Wenn inaktive Zählungen vorhanden sind, dann Wert auf true setzen
         inaktiveZaehlungenVorhanden.value = iz.length > 0;
@@ -186,8 +189,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
   }
   function getZaehlungById(id: string) {
     const selected = zaehlungen.value.filter(
-      (z: LadeZaehlungDTO) => z.id === id
-    ) as LadeZaehlungDTO[];
+      (z: LadeZaehlung) => z.id === id
+    ) as LadeZaehlung[];
     if (selected.length === 1) {
       return selected[0];
     } else if (selected.length > 1) {
@@ -204,7 +207,8 @@ export const useZaehlstelleStore = defineStore("zaehlstelleStore", () => {
     isBlackprintMode,
     getZeitblock,
     getZeitauswahl,
-    isHistory,
+    isInHistory,
+    isCalledFromHistory,
     getSizeBelastungsplanSvg,
     getMaxSizeBelastungsplanSvg,
     getMinSizeBelastungsplanSvg,

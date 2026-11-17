@@ -31,7 +31,7 @@
                   color="primary"
                 />
                 <fahrzeugklassen-icon
-                  v-if="messstelle.detektierteVerkehrsart !== Verkehrsart.RAD"
+                  v-if="messstelle.detektierteVerkehrsart !== Verkehrsart.Rad"
                   :fahrzeugklasse="fahrzeugklasse"
                   color="primary"
                   size="default"
@@ -96,20 +96,20 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { computed } from "vue";
 
+import { Verkehrsart } from "@/api/client";
 import FahrzeugklassenIcon from "@/components/messstelle/icons/FahrzeugklassenIcon.vue";
 import MessstelleGeometrie from "@/components/messstelle/MessstelleGeometrie.vue";
 import MessstelleKommentar from "@/components/messstelle/MessstelleKommentar.vue";
 import VerkehrsartIcon from "@/components/messstelle/VerkehrsartIcon.vue";
-import Verkehrsart from "@/types/enum/Verkehrsart";
 import IconTooltip from "@/types/util/IconTooltip";
 import { useDateUtils } from "@/util/DateUtils";
 
 interface Props {
-  messstelle: MessstelleInfoDTO;
+  messstelle: MessstelleInfoType;
 }
 
 const props = defineProps<Props>();

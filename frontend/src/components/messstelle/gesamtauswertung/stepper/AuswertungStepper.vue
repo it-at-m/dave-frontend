@@ -66,8 +66,8 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type { MessstelleAuswertungDTO } from "@/api/client";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { head, isEmpty, toArray } from "lodash";
 import { computed, ref, watch } from "vue";
@@ -78,7 +78,7 @@ import OrtStepContent from "@/components/messstelle/gesamtauswertung/stepper/Ort
 import TagesTypStepContent from "@/components/messstelle/gesamtauswertung/stepper/TagesTypStepContent.vue";
 import ZeitintervallStepContent from "@/components/messstelle/gesamtauswertung/stepper/ZeitintervallStepContent.vue";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import { tagesTypText } from "@/types/enum/TagesTyp";
+import { tagesTypText } from "@/types/enum/TagesTypText";
 import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
 
 interface Props {
@@ -89,7 +89,7 @@ interface Props {
 
 defineProps<Props>();
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 
@@ -176,7 +176,7 @@ function isOrtMessquerschnittSelected(): boolean {
   );
   return !(
     messstelleAuswertungIdDTOS.length === 1 &&
-    head(messstelleAuswertungIdDTOS)!.mqIds.length === 0 &&
+    head(messstelleAuswertungIdDTOS)!.mqIds.size === 0 &&
     activeStep.value > 3
   );
 }

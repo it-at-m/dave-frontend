@@ -215,7 +215,7 @@
 <script setup lang="ts">
 // Typen
 /* eslint-disable no-unused-vars */
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
+import type { BearbeiteKnotenarmDTO } from "@/api/client";
 
 import { computed } from "vue";
 
@@ -226,7 +226,7 @@ interface Props {
   width?: string;
   activeColor: string;
   passiveColor?: string;
-  knotenarme: Array<LadeKnotenarmDTO>;
+  knotenarme: Array<BearbeiteKnotenarmDTO>;
 }
 
 const props = withDefaults(defineProps<Props>(), {

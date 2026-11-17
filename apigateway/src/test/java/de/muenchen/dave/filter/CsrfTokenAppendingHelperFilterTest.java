@@ -1,20 +1,22 @@
 package de.muenchen.dave.filter;
 
 import static de.muenchen.dave.TestConstants.SPRING_TEST_PROFILE;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import de.muenchen.dave.ApiGatewayApplication;
 import de.muenchen.dave.OAuthSecurityMockConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest(classes = { ApiGatewayApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(SPRING_TEST_PROFILE)
 @Import(OAuthSecurityMockConfiguration.class)
+@AutoConfigureWebTestClient
 class CsrfTokenAppendingHelperFilterTest {
 
     @Autowired
@@ -23,11 +25,20 @@ class CsrfTokenAppendingHelperFilterTest {
     @Test
     @WithMockUser
     void csrfCookieAppendition() {
-        webTestClient
-                .get()
-                .uri("/")
-                .exchange()
-                .expectHeader()
-                .valueMatches("set-cookie", "XSRF-TOKEN=[a-f\\d]{8}(-[a-f\\d]{4}){3}-[a-f\\d]{12}?;\\sPath=/");
+        webTestClient.get().uri("/").exchange()
+                .expectCookie()
+                .value("XSRF-TOKEN",
+                        value -> assertThat(value).matches("[a-f\\d]{8}(-[a-f\\d]{4}){3}-[a-f\\d]{12}?"));
     }
+
+    @Test
+    @WithMockUser
+    void csrfCookieIsNotHttpOnly() {
+        // CookieServerCsrfTokenRepository.withHttpOnlyFalse() must expose the XSRF cookie to JS
+        // clients (for SPA frameworks), so the cookie must not be flagged HttpOnly.
+        webTestClient.get().uri("/").exchange()
+                .expectCookie()
+                .httpOnly("XSRF-TOKEN", false);
+    }
+
 }

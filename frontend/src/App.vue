@@ -81,9 +81,11 @@
 </template>
 
 <script setup lang="ts">
-import type OptionsmenueSettingsDTO from "@/types/common/OptionsmenueSettingsDTO";
-import type ConfigurationDTO from "@/types/configuration/ConfigurationDTO";
-import type MessstelleAuswertungDTO from "@/types/messstelle/auswertung/MessstelleAuswertungDTO";
+import type {
+  ConfigurationDTO,
+  MessstelleAuswertungDTO,
+  OptionsmenueSettingsDTO,
+} from "@/api/client";
 
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -218,6 +220,7 @@ function resetMapAndSearch() {
 /* Alle Hinweise werden nun rot eingefärbt */
 .v-messages {
   color: #e57373 !important;
+  padding-bottom: 5px;
 }
 
 .dave-default {

@@ -172,6 +172,7 @@
             density="compact"
             @mouseover="hoverSpitzenstunde = true"
             @mouseleave="hoverSpitzenstunde = false"
+            :disabled="isZeitauswahlStunde"
           />
         </v-col>
         <v-col cols="4">
@@ -269,15 +270,16 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import _ from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import { roundingItems } from "@/types/enum/Rounding";
+import { roundingItems } from "@/types/enum/RoundingText";
+import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useValidationRules } from "@/util/ValidationRules";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
@@ -289,7 +291,7 @@ const zaehlstelleStore = useZaehlstelleStore();
 const zaehlstelleUtils = useZaehlstelleUtils();
 const rules = useValidationRules();
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
@@ -324,7 +326,7 @@ const minSizeBelastungsplanSvg = computed(() => {
   return zaehlstelleStore.getMinSizeBelastungsplanSvg;
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -383,6 +385,10 @@ const helpTextZeitreihe = computed(() => {
     return "Der Fußverkehr ist in der Summe aller Verkehrsarten nicht enthalten.";
   }
   return "";
+});
+
+const isZeitauswahlStunde = computed(() => {
+  return chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.STUNDE;
 });
 
 const isCheckboxZeitreiheGesamtDisabled = computed(() => {
@@ -472,6 +478,19 @@ watch(
       chosenOptionsCopy.value.spitzenstundeRad = false;
     }
     if (isTypeDisabled("FUSS")) {
+      chosenOptionsCopy.value.spitzenstundeFuss = false;
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => chosenOptionsCopy.value.zeitauswahl,
+  () => {
+    if (isZeitauswahlStunde.value) {
+      chosenOptionsCopy.value.spitzenstunde = false;
+      chosenOptionsCopy.value.spitzenstundeKfz = false;
+      chosenOptionsCopy.value.spitzenstundeRad = false;
       chosenOptionsCopy.value.spitzenstundeFuss = false;
     }
   },

@@ -7,33 +7,38 @@
 </template>
 
 <script setup lang="ts">
-import type ZaehlstelleHeaderDTO from "@/types/zaehlstelle/ZaehlstelleHeaderDTO";
-import type LadeKnotenarmDTO from "@/types/zaehlung/LadeKnotenarmDTO";
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
+import type {
+  BearbeiteKnotenarmDTO,
+  LadeBelastungsplanDTO,
+  LeseZaehlstelleDTO,
+} from "@/api/client";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
-import type AbstractLadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/AbstractLadeBelastungsplanDTO";
-import type LadeBelastungsplanDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
 import type { Ref } from "vue";
 
 import * as SVG from "@svgdotjs/svg.js";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
+import { Zaehldauer, Zeitblock } from "@/api/client";
 import { BelastungsplanConstants } from "@/components/zaehlstelle/charts/BelastungsplanConstants";
 import { useBelastungsplanMethods } from "@/components/zaehlstelle/charts/BelastungsplanMethods";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
-import Zeitblock, { zeitblockInfo } from "@/types/enum/Zeitblock";
-import { zeitblockStuendlichInfo } from "@/types/enum/ZeitblockStuendlich";
+import {
+  zeitblockInfo,
+  zeitblockStuendlichInfo,
+} from "@/types/enum/ZeitblockText";
 import BelastungsplanKnotenarm from "@/types/zaehlung/BelastungsplanKnotenarm";
 import BelastungsplanVerkehrsbeziehung from "@/types/zaehlung/BelastungsplanVerkehrsbeziehung";
 import BerechnungsMatrix from "@/types/zaehlung/BerechnungsMatrix";
 import LadeKnotenarmComperator from "@/types/zaehlung/LadeKnotenarmComperator";
+import { useBelastungsplanAnzeigeUtils } from "@/util/BelastungsplanAnzeigeUtils";
 import { useDateUtils } from "@/util/DateUtils";
+import { useVergleichszaehlungenUtils } from "@/util/VergleichszaehlungenUtils";
 
 interface Props {
   data: LadeBelastungsplanDTO;
@@ -52,6 +57,8 @@ const zaehlstelleStore = useZaehlstelleStore();
 const display = useDisplay();
 const dateUtils = useDateUtils();
 const belastungsplanMethods = useBelastungsplanMethods();
+const belastungsplanAnzeigeUtils = useBelastungsplanAnzeigeUtils();
+const vergleichszaehlungenUtils = useVergleichszaehlungenUtils();
 
 const sheetId = "belastungsplan-zaehlstelle";
 
@@ -94,15 +101,15 @@ onMounted(() => {
   zaehlstelleStore.setMinSizeBelastungsplanSvg(minSizeBelastungsplan.value);
 });
 
-const zaehlung = computed<LadeZaehlungDTO>(() => {
+const zaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
-const zaehlstelle = computed<ZaehlstelleHeaderDTO>(() => {
+const zaehlstelle = computed<LeseZaehlstelleDTO>(() => {
   return zaehlstelleStore.getZaehlstelleHeader;
 });
 
-const optionen = computed<ZaehlstelleOptionsDTO>(() => {
+const optionen = computed<Options>(() => {
   return zaehlstelleStore.getFilteroptions;
 });
 
@@ -207,9 +214,20 @@ function draw() {
     });
 
   // Die Knotenarme werden einzeln in das Diagramm eingefügt
-  const knotenarmeInline = zaehlung.value.knotenarme as LadeKnotenarmDTO[];
+  let knotenarmeInline = zaehlung.value.knotenarme as BearbeiteKnotenarmDTO[];
+  if (isDifferenzdatendarstellung.value) {
+    knotenarmeInline =
+      vergleichszaehlungenUtils.mergeKnotenarmeOfVergleichszaehlungen(
+        zaehlung.value.knotenarme,
+        vergleichsZaehlung.value?.knotenarme
+      );
+  }
+
   if (knotenarmeInline) {
-    let ks = Object.assign(new Array<LadeKnotenarmDTO>(), knotenarmeInline);
+    let ks = Object.assign(
+      new Array<BearbeiteKnotenarmDTO>(),
+      knotenarmeInline
+    );
     ks = ks.sort(LadeKnotenarmComperator.sortByNumber).reverse();
     ks.forEach((k) => {
       const r = belastungsplanMethods.calcRotation(k.nummer);
@@ -371,10 +389,10 @@ function legendeSpalten() {
     formeln.set("GV", "GV = GV (Basis) - GV (Vergleich)");
     formeln.set("SV%", "kein SV% beim Vergleich");
     formeln.set("GV%", "kein GV% beim Vergleich");
-    formeln.set("RAD", "RAD = RAD (Basis) - RAD (Vergleich)");
+    formeln.set("RAD", "Rad = Rad (Basis) - Rad (Vergleich)");
     formeln.set(
-      "RAD (KI-Hochrechnung)",
-      "RAD-KI = RAD-KI (Basis) - RAD-KI (Vergleich)"
+      "Rad (KI-Hochrechnung)",
+      "Rad-KI = Rad-KI (Basis) - Rad-KI (Vergleich)"
     );
     formeln.set("FUSS", "FUSS = KFZ (Basis) - FUSS (Vergleich)");
   } else {
@@ -384,18 +402,21 @@ function legendeSpalten() {
     formeln.set("SV%", "SV-Anteil = SV : KFZ x 100(%)");
     formeln.set("GV%", "GV-Anteil = GV : KFZ x 100(%)");
     formeln.set("RAD", "");
-    formeln.set("RAD (KI-Hochrechnung)", "");
+    formeln.set("Rad (KI-Hochrechnung)", "");
     formeln.set("FUSS", "");
   }
 
   // Zählzeit
   const zeitauswahl: string = optionen.value.zeitauswahl;
-  const zaehlzeitFirstLine: string = zeitauswahl;
+  const zaehlzeitFirstLine: string =
+    belastungsplanAnzeigeUtils
+      .zeitauswahlAndAdditionalZeitblockWhenSpitzenstundeIsChosenForZaehlstelle
+      .value;
   let zaehlzeitSecondLine = "";
   if (zeitauswahl === Zeitauswahl.TAGESWERT) {
     zaehlzeitSecondLine = `${
-      zaehlung.value.zaehldauer === Zaehldauer.DAUER_24_STUNDEN
-        ? zeitblockInfo.get(Zeitblock.ZB_00_24)?.title
+      zaehlung.value.zaehldauer === Zaehldauer.Dauer24Stunden
+        ? zeitblockInfo.get(Zeitblock.Zb0024)?.title
         : "hochgerechnet"
     }`;
   } else if (zeitauswahl === Zeitauswahl.BLOCK) {
@@ -589,7 +610,15 @@ function calcVerkehrsbeziehung(data: LadeBelastungsplanDTO) {
   prozentWerte.value.set(1, data.value2.percent);
   prozentWerte.value.set(2, data.value3.percent);
   // Aus der aktuellen Zählung (diese ist im $store) werden die Verkehrsbeziehungen geladen.
-  const fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehungDTO[];
+  let fbs = zaehlung.value.verkehrsbeziehungen as LadeVerkehrsbeziehung[];
+  if (isDifferenzdatendarstellung.value) {
+    fbs =
+      vergleichszaehlungenUtils.mergeVerkehrsbeziehungenOfVergleichszaehlungen(
+        zaehlung.value.verkehrsbeziehungen,
+        vergleichsZaehlung.value?.verkehrsbeziehungen
+      );
+  }
+
   if (fbs && Array.isArray(fbs)) {
     // Für jede Verkehrsbeziehung werden die Daten aufbereitet
     fbs.forEach((fb) => {
@@ -806,9 +835,7 @@ function redraw() {
   });
 }
 
-function isDefaultBelastungsplan(
-  data: AbstractLadeBelastungsplanDTO | undefined
-): data is LadeBelastungsplanDTO {
+function isDefaultBelastungsplan(data: any): data is LadeBelastungsplanDTO {
   return !!data && data.belastungsplanTyp === BelastungsplanTyp.DEFAULT;
 }
 

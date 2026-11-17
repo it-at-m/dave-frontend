@@ -33,8 +33,8 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            cx="376"
-            cy="700"
+            :cx="xCoordNumberOne"
+            :cy="yCoordNumberOne"
             r="32"
           />
           <text
@@ -46,18 +46,20 @@
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
-                text-anchor: start;
+                text-anchor: middle;
                 fill: #000000;
                 stroke-width: 52.2711;
+                dominant-baseline: central;
               `"
-            y="720.73895"
-            x="358.80084"
+            :x="xCoordNumberOne"
+            :y="yCoordNumberOne"
+            :transform="rotateNumberOneInverse"
           >
             <tspan
               id="number1_tspan"
               style="stroke-width: 52.2711"
-              x="358.80084"
-              y="720.73895"
+              :x="xCoordNumberOne"
+              :y="yCoordNumberOne"
             >
               {{ firstKnotenarm?.nummer }}
             </tspan>
@@ -74,8 +76,8 @@
               stroke-dasharray: none;
               stroke-opacity: 1;
             "
-            cx="1024"
-            cy="700"
+            :cx="xCoordNumberTwo"
+            :cy="yCoordNumberTwo"
             r="32"
           />
           <text
@@ -87,17 +89,19 @@
                 text-align: start;
                 writing-mode: lr-tb;
                 direction: ltr;
-                text-anchor: start;
+                text-anchor: middle;
                 fill: #000000;
                 stroke-width: 52.2711;
+                dominant-baseline: central;
               `"
-            x="1007.19183"
-            y="720.73895"
+            :x="xCoordNumberTwo"
+            :y="yCoordNumberTwo"
+            :transform="rotateNumberTwoInverse"
           >
             <tspan
               id="number2_tspan"
-              x="1007.19183"
-              y="720.73895"
+              :x="xCoordNumberTwo"
+              :y="yCoordNumberTwo"
               style="stroke-width: 52.2711"
             >
               {{ secondKnotenarm?.nummer }}
@@ -180,10 +184,10 @@
 </template>
 
 <script setup lang="ts">
-import type LadeVerkehrsbeziehungDTO from "@/types/zaehlung/LadeVerkehrsbeziehungDTO";
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type LadeBelastungsplanQjsDTO from "@/types/zaehlung/zaehldaten/LadeBelastungsplanQjsDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type { LadeBelastungsplanQjsDTO } from "@/api/client";
+import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { first, last } from "lodash";
 import { computed, nextTick, ref, watch } from "vue";
@@ -195,7 +199,7 @@ import { useQjs } from "@/util/QjsUtils";
 interface Props {
   data: LadeBelastungsplanQjsDTO;
   dimension: string;
-  options: ZaehlstelleOptionsDTO;
+  options: Options;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -214,7 +218,12 @@ const svgRef = ref<SVGSVGElement | null>(null);
 const activeColor = "#000000";
 const passiveColor = "#9E9E9E";
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const xCoordNumberOne = 376;
+const yCoordNumberOne = 700;
+const xCoordNumberTwo = 1024;
+const yCoordNumberTwo = 700;
+
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
@@ -235,6 +244,16 @@ const secondKnotenarm = computed(() => {
 });
 
 const rotateSvg = qjs.rotateSvgFor(availableKnotenarmNummern);
+const rotateNumberOneInverse = qjs.rotateNumberInverseFor(
+  availableKnotenarmNummern,
+  xCoordNumberOne,
+  yCoordNumberOne
+);
+const rotateNumberTwoInverse = qjs.rotateNumberInverseFor(
+  availableKnotenarmNummern,
+  xCoordNumberTwo,
+  yCoordNumberTwo
+);
 
 const isAvailableArrowOne = computed(() => {
   return qjs.hasAnyArrowPatternIn(
@@ -293,7 +312,7 @@ const isSelectedArrowFour = computed(() => {
 });
 
 function convertToVerkehrsbeziehungenQjs(
-  verkehrsbeziehungen: LadeVerkehrsbeziehungDTO[] | undefined
+  verkehrsbeziehungen: LadeVerkehrsbeziehung[] | undefined
 ) {
   return (
     verkehrsbeziehungen?.map(({ von, nach, strassenseite }) => ({

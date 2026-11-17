@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehldatenHeatmapDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenHeatmapDTO";
+import type { LadeZaehldatenHeatmapDTO } from "@/api/client";
 
 import { HeatmapChart } from "echarts/charts";
 import {
@@ -71,7 +71,10 @@ function formatYAxisLabel(value: any): string {
 function checkTwoChartsNeeded(
   zaehldatenHeatmap: LadeZaehldatenHeatmapDTO
 ): boolean {
-  return zaehldatenHeatmap.xaxisDataSecondChart !== null;
+  return (
+    (zaehldatenHeatmap.xaxisDataSecondChart?.length ?? 0) > 0 &&
+    (zaehldatenHeatmap.seriesEntriesSecondChart?.length ?? 0) > 0
+  );
 }
 
 function resetData(): void {
@@ -312,11 +315,11 @@ watch(
     twoChartsNeeded.value = checkTwoChartsNeeded(zaehldatenHeatmap);
     chartLegend.value = zaehldatenHeatmap.legend;
     xAxisDataFirstChart.value = zaehldatenHeatmap.xaxisDataFirstChart;
-    if (zaehldatenHeatmap.xaxisDataSecondChart !== null) {
+    if (zaehldatenHeatmap.xaxisDataSecondChart) {
       xAxisDataSecondChart.value = zaehldatenHeatmap.xaxisDataSecondChart;
     }
     seriesEntriesFirstChart.value = zaehldatenHeatmap.seriesEntriesFirstChart;
-    if (zaehldatenHeatmap.seriesEntriesSecondChart !== null) {
+    if (zaehldatenHeatmap.seriesEntriesSecondChart) {
       seriesEntriesSecondChart.value =
         zaehldatenHeatmap.seriesEntriesSecondChart;
     }

@@ -25,11 +25,11 @@
 
 <script setup lang="ts">
 import type KeyVal from "@/types/common/KeyVal";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 
 import { computed } from "vue";
 
-const auswertungOptions = defineModel<MessstelleAuswertungOptionsDTO>({
+const auswertungOptions = defineModel<MessstelleAuswertungOptions>({
   required: true,
 });
 

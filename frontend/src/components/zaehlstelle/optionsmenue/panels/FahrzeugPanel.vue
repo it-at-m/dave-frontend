@@ -121,6 +121,7 @@
                 v-model="chosenOptionsCopy.schwerverkehrsanteilProzent"
                 :label="'Schwerverkehrsanteil [%]'"
                 :hint="getHintToDisplay('SV_P')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('SV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.schwerverkehrsanteilProzent ||
@@ -184,6 +185,7 @@
                 v-model="chosenOptionsCopy.gueterverkehrsanteilProzent"
                 :label="'Güterverkehrsanteil [%]'"
                 :hint="getHintToDisplay('GV_P')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('GV_P')"
                 :persistent-hint="
                   chosenOptionsCopy.gueterverkehrsanteilProzent ||
@@ -221,19 +223,12 @@
                 v-model="chosenOptionsCopy.radverkehr"
                 :label="'Radverkehr (Rad)'"
                 :hint="getHintToDisplay('RAD')"
+                class="checkbox-rad"
                 :color="getCheckboxColor('RAD')"
-                :persistent-hint="
-                  chosenOptionsCopy.radverkehr ||
-                  isTypeDisabled('RAD') ||
-                  isTageswertAndNot24h
-                "
+                :persistent-hint="showHintForCheckboxRad"
                 :disabled="isTypeDisabled('RAD')"
-                :hide-details="
-                  !(isTageswertAndNot24h && chosenOptionsCopy.radverkehr)
-                "
+                :hide-details="!showHintForCheckboxRad"
                 density="compact"
-                @mouseover="hoverRad = true"
-                @mouseleave="hoverRad = false"
               >
                 <template
                   v-if="getIcon('RAD')"
@@ -252,19 +247,18 @@
                 v-model="chosenOptionsCopy.fussverkehr"
                 :label="'Fußverkehr'"
                 :hint="getHintToDisplay('FUSS')"
+                class="checkbox-2column"
                 :color="getCheckboxColor('FUSS')"
                 :persistent-hint="
-                  chosenOptionsCopy.fussverkehr ||
+                  isOnlyRadAndFussSelected ||
                   isTypeDisabled('FUSS') ||
                   isTageswertAndNot24h
                 "
                 :disabled="isTypeDisabled('FUSS')"
                 :hide-details="
-                  !(isTageswertAndNot24h && chosenOptionsCopy.fussverkehr)
+                  !(isTageswertAndNot24h && isOnlyRadAndFussSelected)
                 "
                 density="compact"
-                @mouseover="hoverFuss = true"
-                @mouseleave="hoverFuss = false"
               >
                 <template
                   v-if="getIcon('FUSS')"
@@ -414,21 +408,21 @@
 </template>
 
 <script setup lang="ts">
-import type LadeZaehlungDTO from "@/types/zaehlung/LadeZaehlungDTO";
-import type ZaehlstelleOptionsDTO from "@/types/zaehlung/ZaehlstelleOptionsDTO";
+import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
+import type Options from "@/types/zaehlung/Options";
 
 import { isEmpty } from "lodash";
 import { computed, onMounted, ref, watch } from "vue";
 
+import { Zaehldauer } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import Zaehldauer from "@/types/enum/Zaehldauer";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useGlobalInfoMessage } from "@/util/GlobalInfoMessage";
 import { useZaehlstelleUtils } from "@/util/ZaehlstelleUtils";
 
-const chosenOptionsCopy = defineModel<ZaehlstelleOptionsDTO>({
+const chosenOptionsCopy = defineModel<Options>({
   required: true,
 });
 
@@ -447,8 +441,6 @@ const hoverSv = ref(false);
 const hoverGv = ref(false);
 const hoverSv_p = ref(false);
 const hoverGv_p = ref(false);
-const hoverRad = ref(false);
-const hoverFuss = ref(false);
 // Fahrzeugkategorien
 const hoverPkw = ref(false);
 const hoverLkw = ref(false);
@@ -462,14 +454,28 @@ onMounted(() => {
   calculateSelectOrDeselectVerkehrsarten();
 });
 
-const activeZaehlung = computed<LadeZaehlungDTO>(() => {
+const activeZaehlung = computed<LadeZaehlung>(() => {
   return zaehlstelleStore.getAktiveZaehlung;
 });
 
 const isTageswertAndNot24h = computed(() => {
   return (
     chosenOptionsCopy.value.zeitauswahl === Zeitauswahl.TAGESWERT &&
-    activeZaehlung.value.zaehldauer !== Zaehldauer.DAUER_24_STUNDEN
+    activeZaehlung.value.zaehldauer !== Zaehldauer.Dauer24Stunden
+  );
+});
+
+const isOnlyRadAndFussSelected = computed(() => {
+  return (
+    chosenOptionsCopy.value.fussverkehr &&
+    chosenOptionsCopy.value.radverkehr &&
+    !isAnyKFZselected.value
+  );
+});
+
+const isRadOrFussSelected = computed(() => {
+  return (
+    chosenOptionsCopy.value.radverkehr || chosenOptionsCopy.value.fussverkehr
   );
 });
 
@@ -481,6 +487,16 @@ const isAnyKFZselected = computed(() => {
     chosenOptionsCopy.value.schwerverkehrsanteilProzent ||
     chosenOptionsCopy.value.gueterverkehrsanteilProzent
   );
+});
+
+/**
+ * Gibt an, ob der Hint der Checkbox Rad angezeigt werden soll.
+ */
+const showHintForCheckboxRad = computed(() => {
+  return isTageswertAndNot24h.value
+    ? chosenOptionsCopy.value.radverkehr || chosenOptionsCopy.value.fussverkehr
+    : isOnlyRadAndFussSelected.value ||
+        (isAnyKFZselected.value && isRadOrFussSelected.value);
 });
 
 const hasSelectedVerkehrsarten = computed<boolean>(() => {
@@ -506,12 +522,6 @@ const helpTextVerkehrsarten = computed(() => {
   }
   if (hoverGv_p.value) {
     return "Anteil des Güterverkehrs am Kraftfahrzeugverkehr in Prozent [%].";
-  }
-  if (hoverRad.value) {
-    return "Hinweis: Um den Radverkehr im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
-  }
-  if (hoverFuss.value) {
-    return "Hinweis: Um die Fußgänger im Belastungsplan darzustellen, darf keine weitere Verkehrsart ausgewählt sein.";
   }
   if (hoverSelectOrDeselectAllVerkehrsarten.value) {
     let text = "Aktiviert alle Verkehrsarten.";
@@ -559,11 +569,11 @@ const helpTextFahrzeugkategorien = computed(() => {
 /**
  * Hilfsmethode, um zu schauen, ob der Wert SV% im Belastungsplan angezeigt wird.
  * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive SV_P nicht
- * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind.
+ * mehr wie 3 Verkehrsarten (ohne Rad und FUSS) ausgewählt sind.
  * Im Fall der Differenzdatendarstellung wird SV% nie angezeigt.
  */
 const isSvpInBelastungsPlan = computed(() => {
-  if (isDifferenzdatenDarstellung) {
+  if (isDifferenzdatenDarstellung.value) {
     return false;
   }
   let actualNumberOfSelectedKfzSvAndGv = 0;
@@ -588,11 +598,11 @@ const isSvpInBelastungsPlan = computed(() => {
 /**
  * Hilfsmethode, um zu schauen, ob der Wert GV% im Belastungsplan angezeigt wird.
  * Dies ist nur der Fall, wenn KFZ, SV oder GV aktiviert sind und inklusive GV_P nicht
- * mehr wie 3 Verkehrsarten (ohne RAD und FUSS) ausgewählt sind.
+ * mehr wie 3 Verkehrsarten (ohne Rad und FUSS) ausgewählt sind.
  * Im Fall der Differenzdatendarstellung wird GV% nie angezeigt.
  */
 const isGvpInBelastungsPlan = computed(() => {
-  if (isDifferenzdatenDarstellung) {
+  if (isDifferenzdatenDarstellung.value) {
     return false;
   }
   let actualNumberOfSelectedKfzSvGvAndSV_P = 0;
@@ -731,28 +741,24 @@ function selectOrDeselectAllVerkehrsarten() {
 function getHintToDisplay(type: string): string {
   // KFZ, SV und GV werden immer im Belastungsplan angezeigt, wenn aktiv
   let hint = "";
-  if (isTypeDisabled(type)) {
-    return ``;
-  }
   switch (type) {
     case "RAD": {
       /**
        * Durch die KI-Aufbereitung hat der Radverkehr hochgerechnete Werte
        */
-      if (isTageswertAndNot24h.value) {
+      if (isTageswertAndNot24h.value && !isAnyKFZselected.value) {
         hint =
           "Hinweis: Die Tageswerte für den Radverkehr wurden vom KI-Modul hochgerechnet.";
-        if (isAnyKFZselected.value) {
-          hint =
-            "Der Tageswert für den Radverkehr kann nicht gleichzeitg mit KFZ-Werten im Belastungsplan zusammen angezeigt werden.";
-        }
+      } else {
+        hint =
+          "Es kann nur eine Verkehrsart gleichzeitig im Belastungsplan angezeigt werden.";
       }
       break;
     }
     case "FUSS": {
       if (isTageswertAndNot24h.value) {
         hint =
-          "Achtung: Der Fußverkehr verfügt über keinen Tageswert. Zur Anzeige im Belastungsplan die Zeitauswahl ändern.";
+          "Es kann nur eine Verkehrsart gleichzeitig im Belastungsplan angezeigt werden.";
       }
       break;
     }
@@ -856,7 +862,7 @@ function getIcon(type: string): string {
       break;
     }
     case "RAD": {
-      // Angezeigt, wenn RAD oder RAD && FUSS
+      // Angezeigt, wenn Rad oder Rad && FUSS
       if (isRadInBelastungsplan.value) {
         icon = `mdi-arrow-decision`;
       }
@@ -960,11 +966,9 @@ function calculateSelectOrDeselectVerkehrsarten() {
 }
 
 /**
- * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im ZaehlstelleOptionsDTO entsprechend der gewählten Zeitauswahl.
+ * Wählt die entsprechende Fahrzeugkategorie und Fahrzeugklasse im Options entsprechend der gewählten Zeitauswahl.
  */
-function adaptFahrzeugauswahl(
-  options: ZaehlstelleOptionsDTO
-): ZaehlstelleOptionsDTO {
+function adaptFahrzeugauswahl(options: Options): Options {
   // Alles Zurücksetzten, wenn es sich um die Spitzenstunde handelt
   if (
     options.zeitauswahl === Zeitauswahl.SPITZENSTUNDE_KFZ ||
@@ -1022,3 +1026,18 @@ watch(
   }
 );
 </script>
+
+<style>
+/* Verschiebt den Hint der Checkboxen in der zweiten Spalte leicht nach rechts */
+.checkbox-2column .v-messages {
+  padding-left: 5px;
+}
+
+/* Hint trotz deaktivierter Radverkehr-Checkbox vollständig lesbar lassen */
+.checkbox-rad.v-input--disabled .v-input__details {
+  opacity: 1;
+}
+.checkbox-rad.v-input--disabled .v-input__details .v-messages {
+  opacity: 0.6;
+}
+</style>

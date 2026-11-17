@@ -81,24 +81,22 @@
 </template>
 
 <script setup lang="ts">
-import type MessstelleAuswertungIdDTO from "@/types/messstelle/auswertung/MessstelleAuswertungIdDTO";
-import type MessstelleAuswertungOptionsDTO from "@/types/messstelle/auswertung/MessstelleAuswertungOptionsDTO";
-import type MessstelleInfoDTO from "@/types/messstelle/MessstelleInfoDTO";
+import type { BaseAsset, MessstelleAuswertungIdDTO } from "@/api/client";
+import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
+import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
 
 import { head } from "lodash";
 import { computed, ref, watch } from "vue";
 
+import { BaseAssetTypeEnum } from "@/api/client";
 import { ApiError } from "@/api/error";
 import MessstelleService from "@/api/service/MessstelleService";
 import PdfReportMenueListItem from "@/components/zaehlstelle/PdfReportMenueListItem.vue";
 import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
-import { tagesTypText } from "@/types/enum/TagesTyp";
-import AssetTypesEnum from "@/types/pdfreport/assets/AssetTypesEnum";
-import BaseAsset from "@/types/pdfreport/assets/BaseAsset";
-import HeadingAsset from "@/types/pdfreport/assets/HeadingAsset";
-import TextAsset from "@/types/pdfreport/assets/TextAsset";
+import { tagesTypText } from "@/types/enum/TagesTypText";
+import { useAssetUtil } from "@/util/AssetUtil";
 import { useGesamtauswertungUtils } from "@/util/GesamtauswertungUtils";
 
 const dialog = defineModel<boolean>({ required: true });
@@ -107,12 +105,13 @@ const pdfReportStore = usePdfReportStore();
 const snackbarStore = useSnackbarStore();
 const gesamtauswertungStore = useGesamtauswertungStore();
 const gesamtauswertungUtils = useGesamtauswertungUtils();
+const assetUtil = useAssetUtil();
 
 const messstelleninfo = ref(false);
 const messinfo = ref(false);
 const legende = ref(false);
 const statistik = ref(false);
-const selectedMessstelle = ref<MessstelleInfoDTO | undefined>(undefined);
+const selectedMessstelle = ref<MessstelleInfoType | undefined>(undefined);
 
 const isSingeleMessstelleSelected = computed(() => {
   return options.value.messstelleAuswertungIds.length === 1;
@@ -122,7 +121,7 @@ const somethingToAdd = computed(() => {
     messstelleninfo.value || messinfo.value || legende.value || statistik.value
   );
 });
-const options = computed<MessstelleAuswertungOptionsDTO>(() => {
+const options = computed<MessstelleAuswertungOptions>(() => {
   return gesamtauswertungStore.getAuswertungMessstelleOptions;
 });
 
@@ -189,15 +188,15 @@ function createMessstelleInfo(
 ): void {
   if (selectedMessstelle.value) {
     const assets: Array<BaseAsset> = [];
-    const headline = new HeadingAsset(
+    const headline = assetUtil.createHeadingAsset(
       `Info für Messstelle Id ${selectedMessstelle.value.mstId}`,
-      AssetTypesEnum.HEADING3
+      BaseAssetTypeEnum.Heading3
     );
     assets.push(headline);
 
     const messquerschnitteInfo =
       selectedMessstelle.value.messquerschnitte.filter((value) =>
-        selectedAuswertungId.mqIds.includes(value.mqId)
+        selectedAuswertungId.mqIds.has(value.mqId)
       );
     if (messquerschnitteInfo.length > 0) {
       let text = "Messquerschnitt(e):<br/>";
@@ -208,13 +207,13 @@ function createMessstelleInfo(
         }
         text += "<br/>\n";
       });
-      assets.push(new TextAsset(text));
+      assets.push(assetUtil.createTextAsset(text));
     }
-    const stadtbezirk = new TextAsset(
+    const stadtbezirk = assetUtil.createTextAsset(
       `Stadtbezirk: ${selectedMessstelle.value.stadtbezirk} (${selectedMessstelle.value.stadtbezirkNummer})`
     );
     assets.push(stadtbezirk);
-    const kommentar = new TextAsset(
+    const kommentar = assetUtil.createTextAsset(
       `Messstellenkommentar: ${selectedMessstelle.value.kommentar ?? "---"}`
     );
     assets.push(kommentar);
@@ -237,23 +236,25 @@ function createMessInfo(): void {
         .join(", ");
       header = `Info zur Messung an den Messstellen ${mstIds}`;
     }
-    assets.push(new HeadingAsset(header, AssetTypesEnum.HEADING3));
+    assets.push(
+      assetUtil.createHeadingAsset(header, BaseAssetTypeEnum.Heading3)
+    );
 
-    const verkehrsarten = new TextAsset(
+    const verkehrsarten = assetUtil.createTextAsset(
       `Verkehrsarten: ${gesamtauswertungUtils.getFahrzeugOptionsAsText(options.value.fahrzeuge)}`
     );
     assets.push(verkehrsarten);
 
-    const messzeitraum = new TextAsset(
+    const messzeitraum = assetUtil.createTextAsset(
       `Messzeitraum: ${gesamtauswertungUtils.getYearsAsTextSorted(options.value.jahre)}`
     );
     assets.push(messzeitraum);
-    const zeitintervall = new TextAsset(
+    const zeitintervall = assetUtil.createTextAsset(
       `Zeitintervall: ${gesamtauswertungUtils.getZeitraumAsTextSorted(options.value.zeitraum)}`
     );
     assets.push(zeitintervall);
 
-    const wochentag = new TextAsset(
+    const wochentag = assetUtil.createTextAsset(
       `Wochentag: ${tagesTypText.get(options.value.tagesTyp)}`
     );
     assets.push(wochentag);
@@ -263,11 +264,11 @@ function createMessInfo(): void {
 }
 
 function createLegende(): void {
-  const ueberschrift = new HeadingAsset(
+  const ueberschrift = assetUtil.createHeadingAsset(
     "Legende zu den Kennzahlen",
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const legende = new TextAsset(
+  const legende = assetUtil.createTextAsset(
     "<p>- <b>Kraftfahrzeugverkehr (KFZ)</b>: Der Kraftfahrzeugverkehr ist die Summe der Personenkraftwagen, Krafträder, Busse, Lieferwagen, Lastkraftwagen und Lastzüge.</p>\n" +
       "<p>- <b>Schwerverkehr\t(SV)</b>: Der Schwerverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht (Summe aus Bussen, Lastkraftwagen und Lastzüge).</p>\n" +
       "<p>- <b>Güterverkehr (GV)</b>: Der Güterverkehr ist die Summe aller Fahrzeuge > 3,5t zul. Gesamtgewicht ohne Busse (Summe aus Lastkraftwagen und Lastzüge).</p>\n" +
@@ -277,11 +278,13 @@ function createLegende(): void {
 }
 
 function createStatistik(): void {
-  const ueberschrift = new HeadingAsset(
+  const ueberschrift = assetUtil.createHeadingAsset(
     "Auswertungsstatistik",
-    AssetTypesEnum.HEADING3
+    BaseAssetTypeEnum.Heading3
   );
-  const statistikAuswertung = new TextAsset(`Exisitiert noch nicht.`);
+  const statistikAuswertung = assetUtil.createTextAsset(
+    `Exisitiert noch nicht.`
+  );
   pdfReportStore.addAssets([ueberschrift, statistikAuswertung]);
 }
 </script>

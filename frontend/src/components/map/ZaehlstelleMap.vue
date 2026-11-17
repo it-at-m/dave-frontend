@@ -13,12 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import type AnzeigeKarteDTO from "@/types/karte/AnzeigeKarteDTO";
-import type MessstelleKarteDTO from "@/types/karte/MessstelleKarteDTO";
-import type TooltipMessstelleDTO from "@/types/karte/TooltipMessstelleDTO";
-import type TooltipZaehlstelleDTO from "@/types/karte/TooltipZaehlstelleDTO";
-import type ZaehlstelleKarteDTO from "@/types/karte/ZaehlstelleKarteDTO";
-import type ZaehlartenKarteDTO from "@/types/zaehlstelle/ZaehlartenKarteDTO";
+import type {
+  ErhebungsstelleKarteDTO,
+  MessstelleKarteDTO,
+  MessstelleTooltipDTO,
+  ZaehlartenKarteDTO,
+  ZaehlstelleKarteDTO,
+  ZaehlstelleTooltipDTO,
+} from "@/api/client";
 
 import L, { DivIcon, Icon, LatLng, latLng, Marker } from "leaflet";
 import { defaultTo } from "lodash";
@@ -47,7 +49,7 @@ const ICON_COLOR_RED = "red";
 interface Props {
   minheight?: string;
   zId?: string;
-  latlng?: Array<string>;
+  latlng?: Array<number>;
   height?: string;
   width?: string;
   showMarker?: boolean;
@@ -136,7 +138,7 @@ const zoomValue = computed(() => {
  */
 const center = computed<LatLng>(() => {
   if (props.latlng && props.latlng.length > 0) {
-    return createLatLngFromString(props.latlng[0], props.latlng[1]);
+    return createLatLngFromNumber(props.latlng[0], props.latlng[1]);
   } else if (
     mapOptionsStore.getMapOptions &&
     mapOptionsStore.getMapOptions.latitude &&
@@ -156,6 +158,10 @@ const center = computed<LatLng>(() => {
 
 function createLatLngFromString(lat: string, lng: string): LatLng {
   return latLng(parseFloat(lat), parseFloat(lng));
+}
+
+function createLatLngFromNumber(lat: number, lng: number): LatLng {
+  return latLng(lat, lng);
 }
 
 function createLayersAndAddToMap(): void {
@@ -247,7 +253,7 @@ function setMarkerToMap() {
   selectedZaehlstelleKarte.value =
     DefaultObjectCreator.createDefaultZaehlstelleKarte();
 
-  const zaehlstellenKarte: Array<AnzeigeKarteDTO> = searchResult.value;
+  const zaehlstellenKarte: Array<ErhebungsstelleKarteDTO> = searchResult.value;
   const markers: Array<Marker> = [];
   zaehlstellenKarte.forEach((zaehlstelleKarte) => {
     if (zaehlstelleKarte.type != "messstelle") {
@@ -302,7 +308,8 @@ function setZaehlartenmarkerToMap() {
   const zaehlarten: Array<string> = [];
 
   zaehlartenKarte.forEach((zaehlartenKarteDto: ZaehlartenKarteDTO) => {
-    zaehlartenKarteDto.zaehlarten.forEach((zaehlart: string, index: number) => {
+    const index: number = 0;
+    zaehlartenKarteDto.zaehlarten.forEach((zaehlart: string) => {
       if (!zaehlarten.includes(zaehlart)) {
         markers.push(
           createMarkerForZaehlart(zaehlartenKarteDto, zaehlart, index)
@@ -370,7 +377,7 @@ function routeToMessstelle(id: string) {
   router.push(`/messstelle/${id}`);
 }
 
-function createLatLng(anzeigeKarte: AnzeigeKarteDTO): LatLng {
+function createLatLng(anzeigeKarte: ErhebungsstelleKarteDTO): LatLng {
   return latLng(anzeigeKarte.latitude, anzeigeKarte.longitude);
 }
 
@@ -381,10 +388,13 @@ function createMarkerForZaehlstelle(
     createLatLng(zaehlstelleKarte),
     markerOptionsZaehlstelle(zaehlstelleKarte)
   );
-  marker.bindTooltip(createTooltipZaehlstelle(zaehlstelleKarte.tooltip), {
-    direction: "top",
-    offset: [-14, 0],
-  });
+  marker.bindTooltip(
+    createTooltipZaehlstelle(zaehlstelleKarte.tooltip as ZaehlstelleTooltipDTO),
+    {
+      direction: "top",
+      offset: [-14, 0],
+    }
+  );
 
   marker.on("click", () => {
     // Zeige alle Zaehlungen zur Zaehlstelle an.
@@ -401,10 +411,13 @@ function createMarkerForMessstelle(
     createLatLng(messstelleKarteDto),
     markerOptionsMessstelle(messstelleKarteDto)
   );
-  marker.bindTooltip(createTooltipMessstelle(messstelleKarteDto.tooltip), {
-    direction: "top",
-    offset: [0, -25],
-  });
+  marker.bindTooltip(
+    createTooltipMessstelle(messstelleKarteDto.tooltip as MessstelleTooltipDTO),
+    {
+      direction: "top",
+      offset: [0, -25],
+    }
+  );
   marker.on("click", () => {
     routeToMessstelle(messstelleKarteDto.id);
   });
@@ -417,7 +430,7 @@ function createMarkerForZaehlart(
   index: number
 ): Marker {
   const marker: Marker = new Marker(
-    createLatLngFromString(
+    createLatLngFromNumber(
       zaehlartenKarteDto.latitude,
       zaehlartenKarteDto.longitude
     ),
@@ -440,80 +453,120 @@ function createMarkerForZaehlart(
  *  - anzahlZaehlungen
  *  - datumLetzteZaehlung
  */
-function createTooltipZaehlstelle(tooltipDto: TooltipZaehlstelleDTO): string {
+function createTooltipZaehlstelle(
+  tooltipDto: ZaehlstelleTooltipDTO
+): HTMLElement {
+  const tooltip = document.createElement("div");
   if (!tooltipDto) {
-    return "<div></div>";
+    return tooltip;
   }
-  let tooltip = "<div><b>";
+
   if (tooltipDto.zaehlstellennnummer) {
-    tooltip = `${tooltip}Zählstelle: ${tooltipDto.zaehlstellennnummer}</b><br/>`;
+    const b = document.createElement("b");
+    b.textContent = `Zählstelle: ${tooltipDto.zaehlstellennnummer}`;
+    tooltip.appendChild(b);
+    tooltip.appendChild(document.createElement("br"));
   }
   if (tooltipDto.kreuzungsname) {
-    tooltip = `${tooltip}${tooltipDto.kreuzungsname}<br/>`;
+    const t = document.createTextNode(tooltipDto.kreuzungsname);
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
   }
-  if (!tooltipDto.zaehlstellennnummer) {
-    tooltip = `${tooltip}</b>`;
-  }
-  tooltip = `${tooltip}<br/>`;
+  tooltip.appendChild(document.createElement("br"));
+
   if (!tooltipDto.stadtbezirk) {
-    tooltip = `${tooltip}Stadtbezirk: Keine Angabe<br/>`;
+    const t = document.createTextNode("Stadtbezirk: Keine Angabe");
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
   } else {
-    tooltip = `${tooltip}Stadtbezirk: `;
+    let label = "Stadtbezirk: ";
     if (tooltipDto.stadtbezirknummer) {
-      tooltip = `${tooltip}${tooltipDto.stadtbezirknummer} - `;
+      label += `${tooltipDto.stadtbezirknummer} - `;
     }
-    tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
+    const t = document.createTextNode(label + tooltipDto.stadtbezirk);
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
   }
   if (tooltipDto.anzahlZaehlungen) {
-    tooltip = `${tooltip}Anzahl der Zählungen: ${tooltipDto.anzahlZaehlungen}<br/>`;
+    const t = document.createTextNode(
+      `Anzahl der Zählungen: ${tooltipDto.anzahlZaehlungen}`
+    );
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
+
     if (tooltipDto.datumLetzteZaehlung) {
-      tooltip = `${tooltip}Letzte Zählung: ${tooltipDto.datumLetzteZaehlung}<br/>`;
+      const d = document.createTextNode(
+        `Letzte Zählung: ${tooltipDto.datumLetzteZaehlung}`
+      );
+      tooltip.appendChild(d);
+      tooltip.appendChild(document.createElement("br"));
     }
   } else {
-    tooltip = `${tooltip}Noch keine Zählungen vorhanden.`;
+    const t = document.createTextNode("Noch keine Zählungen vorhanden.");
+    tooltip.appendChild(t);
   }
-  tooltip = `${tooltip}</div>`;
+
   return tooltip;
 }
 
-function createTooltipMessstelle(tooltipDto: TooltipMessstelleDTO): string {
+function createTooltipMessstelle(
+  tooltipDto: MessstelleTooltipDTO
+): HTMLElement {
+  const tooltip = document.createElement("div");
   if (!tooltipDto) {
-    return "<div></div>";
+    return tooltip;
   }
-  let tooltip = "<div>";
+
   if (tooltipDto.mstId) {
-    tooltip = `<b>${tooltip}Messstelle: ${tooltipDto.mstId}`;
+    const b = document.createElement("b");
+    let text = `Messstelle: ${tooltipDto.mstId}`;
     if (tooltipDto.detektierteVerkehrsart) {
-      tooltip = `${tooltip} (${tooltipDto.detektierteVerkehrsart})`;
+      text += ` (${tooltipDto.detektierteVerkehrsart})`;
     }
-    tooltip = `${tooltip}</b><br/>`;
+    b.textContent = text;
+    tooltip.appendChild(b);
+    tooltip.appendChild(document.createElement("br"));
   }
   if (tooltipDto.standort) {
-    tooltip = `${tooltip}${tooltipDto.standort}<br/>`;
+    const t = document.createTextNode(tooltipDto.standort);
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
   }
-  tooltip = `${tooltip}<br/>`;
-  if (!tooltipDto.stadtbezirk) {
-    tooltip = `${tooltip}Stadtbezirk: Keine Angabe<br/>`;
-  } else {
-    tooltip = `${tooltip}Stadtbezirk: `;
-    if (tooltipDto.stadtbezirknummer) {
-      tooltip = `${tooltip}${tooltipDto.stadtbezirknummer} - `;
-    }
-    tooltip = `${tooltip}${tooltipDto.stadtbezirk}<br/>`;
-  }
-  tooltip = `${tooltip} Aufbau: ${dateUtils.formatDate(
-    tooltipDto.realisierungsdatum
-  )}<br/>`;
-  if (tooltipDto.abbaudatum) {
-    tooltip = `${tooltip}Abbau: ${dateUtils.formatDate(
-      tooltipDto.abbaudatum
-    )}<br/>`;
-  }
-  tooltip = `${tooltip}Letzte plausible Messung: ${dateUtils.formatDate(
-    tooltipDto.datumLetztePlausibleMessung
-  )}<br/>`;
+  tooltip.appendChild(document.createElement("br"));
 
-  tooltip = `${tooltip}</div>`;
+  if (!tooltipDto.stadtbezirk) {
+    const t = document.createTextNode("Stadtbezirk: Keine Angabe");
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
+  } else {
+    let label = "Stadtbezirk: ";
+    if (tooltipDto.stadtbezirknummer) {
+      label += `${tooltipDto.stadtbezirknummer} - `;
+    }
+    const t = document.createTextNode(label + tooltipDto.stadtbezirk);
+    tooltip.appendChild(t);
+    tooltip.appendChild(document.createElement("br"));
+  }
+
+  const aufbau = document.createTextNode(
+    `Aufbau: ${dateUtils.formatDate(tooltipDto.realisierungsdatum)}`
+  );
+  tooltip.appendChild(aufbau);
+  tooltip.appendChild(document.createElement("br"));
+
+  if (tooltipDto.abbaudatum) {
+    const abbau = document.createTextNode(
+      `Abbau: ${dateUtils.formatDate(tooltipDto.abbaudatum)}`
+    );
+    tooltip.appendChild(abbau);
+    tooltip.appendChild(document.createElement("br"));
+  }
+  const letzte = document.createTextNode(
+    `Letzte plausible Messung: ${dateUtils.formatDate(tooltipDto.datumLetztePlausibleMessung)}`
+  );
+  tooltip.appendChild(letzte);
+  tooltip.appendChild(document.createElement("br"));
+
   return tooltip;
 }
 
