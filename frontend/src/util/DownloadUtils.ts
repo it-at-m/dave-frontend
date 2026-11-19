@@ -16,7 +16,7 @@ export function useDownloadUtils() {
     download(encodeURI(csvContent), filename);
   }
 
-  function downloadXlsx(content: string, filename: string) {
+  function downloadOds(content: string, filename: string) {
     downloadFile(
       b64toBlob(
         content,
@@ -45,5 +45,5 @@ export function useDownloadUtils() {
     return new Blob(byteArrays, { type: contentType });
   }
 
-  return { downloadFile, downloadCsv, downloadXlsx };
+  return { downloadFile, downloadCsv, downloadOds: downloadOds };
 }
