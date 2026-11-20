@@ -18,6 +18,7 @@ import type { SearchAndFilterOptionsDTO } from "@/api/client/models/SearchAndFil
 import type { ZaehlstelleKarteDTO } from "@/api/client/models/ZaehlstelleKarteDTO";
 import type { ZaehlstelleTooltipDTO } from "@/api/client/models/ZaehlstelleTooltipDTO";
 import type { ZeitauswahlDTO } from "@/api/client/models/ZeitauswahlDTO";
+import type Zaehlart from "@/types/enum/Zaehlart";
 import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
 import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
@@ -322,8 +323,12 @@ export default class DefaultObjectCreator {
 
   public static createDefaultSearchAndFilterOptionsDTO(): SearchAndFilterOptionsDTO {
     return {
-      searchInMessstellen: true,
       searchInZaehlstellen: true,
+      searchInMessstellen: true,
+      kreisverkehr: false,
+      sonderzaehlung: false,
+      zaehlart: null as Zaehlart | null,
+      zaehldauer: null as Zaehldauer | null,
       messstelleVerkehrsart: [Verkehrsart.Kfz, Verkehrsart.Rad],
     } as SearchAndFilterOptionsDTO;
   }

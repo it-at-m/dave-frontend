@@ -12,15 +12,42 @@
  * Do not edit the class manually.
  */
 
+import type { Fahrzeugklasse } from "./Fahrzeugklasse";
+import type { TagesTyp } from "./TagesTyp";
 import type { Verkehrsart } from "./Verkehrsart";
+import type { Zaehldauer } from "./Zaehldauer";
 
-import { mapValues } from "../runtime";
+import {
+  mapValues,
+  parseDate,
+  parseDateTime,
+  serializeDate,
+  serializeDateTime,
+} from "../runtime";
+import {
+  FahrzeugklasseFromJSON,
+  FahrzeugklasseFromJSONTyped,
+  FahrzeugklasseToJSON,
+  FahrzeugklasseToJSONTyped,
+} from "./Fahrzeugklasse";
+import {
+  TagesTypFromJSON,
+  TagesTypFromJSONTyped,
+  TagesTypToJSON,
+  TagesTypToJSONTyped,
+} from "./TagesTyp";
 import {
   VerkehrsartFromJSON,
   VerkehrsartFromJSONTyped,
   VerkehrsartToJSON,
   VerkehrsartToJSONTyped,
 } from "./Verkehrsart";
+import {
+  ZaehldauerFromJSON,
+  ZaehldauerFromJSONTyped,
+  ZaehldauerToJSON,
+  ZaehldauerToJSONTyped,
+} from "./Zaehldauer";
 
 /**
  *
@@ -39,8 +66,100 @@ export interface SearchAndFilterOptionsDTO {
   /**
    *
    */
+  kreisverkehr: boolean;
+  /**
+   *
+   */
+  sonderzaehlung: boolean;
+  /**
+   *
+   */
+  zaehlarten?: Array<SearchAndFilterOptionsDTOZaehlartenEnum>;
+  /**
+   *
+   */
+  zaehldauern?: Array<Zaehldauer>;
+  /**
+   *
+   */
+  zaehldatumVon?: Date;
+  /**
+   *
+   */
+  zaehldatumBis?: Date;
+  /**
+   *
+   */
+  zaehlJahreszeiten?: Array<string>;
+  /**
+   *
+   */
+  stadtbezirkNummern?: Array<number>;
+  /**
+   *
+   */
+  zaehlMonate?: Array<number>;
+  /**
+   *
+   */
+  tagesTypen?: Array<TagesTyp>;
+  /**
+   *
+   */
+  wetter?: Array<SearchAndFilterOptionsDTOWetterEnum>;
+  /**
+   *
+   */
+  verkehrsarten?: Array<Verkehrsart>;
+  /**
+   *
+   */
+  fahrzeugklassen?: Array<Fahrzeugklasse>;
+  /**
+   *
+   */
   messstelleVerkehrsart: Array<Verkehrsart>;
 }
+
+/**
+ * @export
+ */
+export const SearchAndFilterOptionsDTOZaehlartenEnum = {
+  N: "N",
+  H: "H",
+  Q: "Q",
+  Q2: "Q_",
+  Qb: "QB",
+  Qh: "QH",
+  Qi: "QI",
+  Qs: "QS",
+  Qt: "QT",
+  Qr: "QR",
+  R: "R",
+  Qjs: "QJS",
+  Fjs: "FJS",
+  Qu: "QU",
+  T: "T",
+  Tk: "TK",
+} as const;
+export type SearchAndFilterOptionsDTOZaehlartenEnum =
+  (typeof SearchAndFilterOptionsDTOZaehlartenEnum)[keyof typeof SearchAndFilterOptionsDTOZaehlartenEnum];
+
+/**
+ * @export
+ */
+export const SearchAndFilterOptionsDTOWetterEnum = {
+  Sunny: "SUNNY",
+  SunnyCold: "SUNNY_COLD",
+  Cloudy: "CLOUDY",
+  Rainy: "RAINY",
+  ContinuousRainy: "CONTINUOUS_RAINY",
+  Foggy: "FOGGY",
+  Snowy: "SNOWY",
+  NoInformation: "NO_INFORMATION",
+} as const;
+export type SearchAndFilterOptionsDTOWetterEnum =
+  (typeof SearchAndFilterOptionsDTOWetterEnum)[keyof typeof SearchAndFilterOptionsDTOWetterEnum];
 
 /**
  * Check if a given object implements the SearchAndFilterOptionsDTO interface.
@@ -57,6 +176,10 @@ export function instanceOfSearchAndFilterOptionsDTO(
     !("searchInZaehlstellen" in value) ||
     value["searchInZaehlstellen"] === undefined
   )
+    return false;
+  if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
+    return false;
+  if (!("sonderzaehlung" in value) || value["sonderzaehlung"] === undefined)
     return false;
   if (
     !("messstelleVerkehrsart" in value) ||
@@ -82,6 +205,41 @@ export function SearchAndFilterOptionsDTOFromJSONTyped(
   return {
     searchInMessstellen: json["searchInMessstellen"],
     searchInZaehlstellen: json["searchInZaehlstellen"],
+    kreisverkehr: json["kreisverkehr"],
+    sonderzaehlung: json["sonderzaehlung"],
+    zaehlarten: json["zaehlarten"] == null ? undefined : json["zaehlarten"],
+    zaehldauern:
+      json["zaehldauern"] == null
+        ? undefined
+        : (json["zaehldauern"] as Array<any>).map(ZaehldauerFromJSON),
+    zaehldatumVon:
+      json["zaehldatumVon"] == null
+        ? undefined
+        : parseDate(json["zaehldatumVon"]),
+    zaehldatumBis:
+      json["zaehldatumBis"] == null
+        ? undefined
+        : parseDate(json["zaehldatumBis"]),
+    zaehlJahreszeiten:
+      json["zaehlJahreszeiten"] == null ? undefined : json["zaehlJahreszeiten"],
+    stadtbezirkNummern:
+      json["stadtbezirkNummern"] == null
+        ? undefined
+        : json["stadtbezirkNummern"],
+    zaehlMonate: json["zaehlMonate"] == null ? undefined : json["zaehlMonate"],
+    tagesTypen:
+      json["tagesTypen"] == null
+        ? undefined
+        : (json["tagesTypen"] as Array<any>).map(TagesTypFromJSON),
+    wetter: json["wetter"] == null ? undefined : json["wetter"],
+    verkehrsarten:
+      json["verkehrsarten"] == null
+        ? undefined
+        : (json["verkehrsarten"] as Array<any>).map(VerkehrsartFromJSON),
+    fahrzeugklassen:
+      json["fahrzeugklassen"] == null
+        ? undefined
+        : (json["fahrzeugklassen"] as Array<any>).map(FahrzeugklasseFromJSON),
     messstelleVerkehrsart: (json["messstelleVerkehrsart"] as Array<any>).map(
       VerkehrsartFromJSON
     ),
@@ -105,6 +263,37 @@ export function SearchAndFilterOptionsDTOToJSONTyped(
   return {
     searchInMessstellen: value["searchInMessstellen"],
     searchInZaehlstellen: value["searchInZaehlstellen"],
+    kreisverkehr: value["kreisverkehr"],
+    sonderzaehlung: value["sonderzaehlung"],
+    zaehlarten: value["zaehlarten"],
+    zaehldauern:
+      value["zaehldauern"] == null
+        ? undefined
+        : (value["zaehldauern"] as Array<any>).map(ZaehldauerToJSON),
+    zaehldatumVon:
+      value["zaehldatumVon"] == null
+        ? value["zaehldatumVon"]
+        : serializeDate(value["zaehldatumVon"]),
+    zaehldatumBis:
+      value["zaehldatumBis"] == null
+        ? value["zaehldatumBis"]
+        : serializeDate(value["zaehldatumBis"]),
+    zaehlJahreszeiten: value["zaehlJahreszeiten"],
+    stadtbezirkNummern: value["stadtbezirkNummern"],
+    zaehlMonate: value["zaehlMonate"],
+    tagesTypen:
+      value["tagesTypen"] == null
+        ? undefined
+        : (value["tagesTypen"] as Array<any>).map(TagesTypToJSON),
+    wetter: value["wetter"],
+    verkehrsarten:
+      value["verkehrsarten"] == null
+        ? undefined
+        : (value["verkehrsarten"] as Array<any>).map(VerkehrsartToJSON),
+    fahrzeugklassen:
+      value["fahrzeugklassen"] == null
+        ? undefined
+        : (value["fahrzeugklassen"] as Array<any>).map(FahrzeugklasseToJSON),
     messstelleVerkehrsart: (value["messstelleVerkehrsart"] as Array<any>).map(
       VerkehrsartToJSON
     ),
