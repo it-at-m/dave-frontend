@@ -10,7 +10,7 @@
 
   <v-dialog
     v-model="isOpen"
-    max-width="850"
+    max-width="900"
     :max-height="getContentSheetHeight"
     @after-enter="focusSuchfeld"
   >
@@ -122,9 +122,10 @@
             style="align-self: stretch"
           />
 
+          <!-- Filter-Einstellungen -->
           <div
             style="
-              width: 260px;
+              width: 320px;
               display: flex;
               flex-direction: column;
               gap: 8px;
@@ -160,86 +161,168 @@
               </v-col>
             </v-row>
 
-            <v-row
-              ><div
-                style="
-                  font-size: 0.875rem;
-                  font-weight: bold;
-                  padding: 10 0 0 0;
-                "
-              >
-                Weitere Filterkriterien
-              </div></v-row
-            >
+            <div style="font-size: 0.875rem; font-weight: bold">
+              Weitere Filterkriterien
+            </div>
+
             <v-select
               v-model="searchAndFilterOptions.zaehlarten"
-              :items="zaehlartItems"
-              label="Zählart"
+              :items="zaehlartenDropDown"
+              label="Zählarten"
               density="compact"
               dense
               multiple
               hide-details
               clearable
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
             />
 
             <v-select
               v-model="searchAndFilterOptions.zaehldauern"
               :items="zaehldauerDropDown"
-              label="Zähldauer"
+              label="Zähldauern"
               density="compact"
               dense
               multiple
               hide-details
               clearable
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
             />
 
-            <v-checkbox
-              v-model="searchAndFilterOptions.kreisverkehr"
-              label="Kreisverkehr"
+            <v-menu
+              v-model="dateRangeMenuOpen"
+              :close-on-content-click="false"
+            >
+              <template #activator="{ props }">
+                <v-text-field
+                  v-bind="props"
+                  label="Zählzeitraum"
+                  :model-value="formattedRange"
+                  prepend-inner-icon="mdi-calendar"
+                  readonly
+                  clearable
+                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                  @click:clear="zaehlzeitRange = []"
+                />
+              </template>
+
+              <v-date-picker
+                v-model="zaehlzeitRange"
+                multiple="range"
+                show-adjacent-months
+              />
+            </v-menu>
+
+            <v-row>
+              <v-col>
+                <v-checkbox
+                  v-model="searchAndFilterOptions.kreisverkehr"
+                  label="Kreisverkehr"
+                  dense
+                  hide-details
+                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                />
+              </v-col>
+              <v-col>
+                <v-checkbox
+                  v-model="searchAndFilterOptions.sonderzaehlung"
+                  label="Sonderzählung"
+                  dense
+                  hide-details
+                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                />
+              </v-col>
+            </v-row>
+
+            <!-- TODO (v-if stadtbezirke.length > 0; items, etc.) -->
+            <v-select
+              v-model="searchAndFilterOptions.stadtbezirkNummern"
+              :items="stadtbezirkeItems"
+              label="Stadtbezirke"
+              density="compact"
               dense
+              multiple
               hide-details
-            />
-            <v-checkbox
-              v-model="searchAndFilterOptions.sonderzaehlung"
-              label="Sonderzählung"
-              dense
-              hide-details
+              clearable
             />
 
             <v-select
-              :items="[
-                'Altstadt-Lehel',
-                'Ludwigsvorstadt',
-                'Schwabing',
-                'Neuhausen',
-              ]"
-              label="Stadtbezirk"
-              density="compact"
-              multiple
-              dense
-              clearable
-            />
-
-            <v-autocomplete
-              label="Verkehrsarten"
               v-model="searchAndFilterOptions.verkehrsarten"
-              multiple
               :items="verkehrsartItems"
+              label="Verkehrsarten"
               density="compact"
-              chips
-              closable-chips
+              dense
+              multiple
+              hide-details
+              clearable
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
             />
 
-            <div style="display: flex; gap: 8px; align-items: center">
-              <!-- TODO siehe ZeitPanel.vue: -->
-              <!--              <date-range-picker-->
-              <!--                  v-model="zeitraumStartAndEndDate"-->
-              <!--                  :min-date="minDate"-->
-              <!--                  :min-date-description="minDateDescription"-->
-              <!--                  :max-date="maxDate"-->
-              <!--                  :max-date-description="maxDateDescription"-->
-              <!--              />-->
-            </div>
+            <v-select
+              v-model="searchAndFilterOptions.fahrzeugklassen"
+              :items="fahrzeugklassenItems"
+              label="Fahrzeugklassen"
+              density="compact"
+              dense
+              multiple
+              hide-details
+              clearable
+              :disabled="!searchAndFilterOptions.searchInMessstellen"
+            />
+
+            <v-select
+              v-model="searchAndFilterOptions.tagesTypen"
+              :items="tagesTypItems"
+              label="Tagestypen"
+              density="compact"
+              dense
+              multiple
+              hide-details
+              clearable
+              :disabled="!searchAndFilterOptions.searchInMessstellen"
+            />
+
+            <v-row>
+              <v-col cols="7">
+                <v-select
+                  v-model="searchAndFilterOptions.zaehlJahreszeiten"
+                  :items="jahreszeitItems"
+                  label="Jahreszeiten"
+                  density="compact"
+                  dense
+                  multiple
+                  hide-details
+                  clearable
+                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                />
+              </v-col>
+
+              <v-col>
+                <v-select
+                  v-model="searchAndFilterOptions.zaehlMonate"
+                  :items="monatItems"
+                  label="Monate"
+                  density="compact"
+                  dense
+                  multiple
+                  hide-details
+                  clearable
+                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                />
+              </v-col>
+            </v-row>
+
+            <v-select
+              v-model="searchAndFilterOptions.wetter"
+              :items="wetterItems"
+              label="Wetter"
+              density="compact"
+              dense
+              multiple
+              hide-details
+              clearable
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+            />
           </div>
         </div>
       </v-card-text>
@@ -270,20 +353,24 @@ import type {
   SucheZaehlstelleSuggestDTO,
   SucheZaehlungSuggestDTO,
 } from "@/api/client";
+import type KeyVal from "@/types/common/KeyVal";
 
 import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
 import { computed, ref, useTemplateRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 
-import { Verkehrsart } from "@/api/client";
+import { Fahrzeugklasse, TagesTyp, Verkehrsart } from "@/api/client";
 import SucheService from "@/api/service/SucheService";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
-import Zaehlart from "@/types/enum/Zaehlart";
+import tagesTypText from "@/types/enum/TagesTypText";
+import { Wetter, wetterText } from "@/types/enum/Wetter";
+import { zaehlartenDropDown } from "@/types/enum/Zaehlart";
 import { zaehldauerDropDown } from "@/types/enum/ZaehldauerText";
 import Suggest from "@/types/suche/Suggest";
+import { useDateUtils } from "@/util/DateUtils";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 
 const SUGGESTION_TYPE_WORTVORSCHLAG = "wortvorschlag";
@@ -305,6 +392,9 @@ const searchAndFilterOptions = ref(
 const loadingSuggestions = ref(false);
 const loadingSearchResults = ref(false);
 
+const dateRangeMenuOpen = ref(false);
+const zaehlzeitRange = ref([]);
+
 const route = useRoute();
 const router = useRouter();
 const snackbarStore = useSnackbarStore();
@@ -318,36 +408,98 @@ const verkehrsartItems = [
   { title: "RAD", value: Verkehrsart.Rad },
 ];
 
-const zaehlartItems = [
-  { title: "N", value: Zaehlart.N },
-  { title: "T", value: Zaehlart.T },
-  { title: "QJS", value: Zaehlart.QJS },
-  { title: "FJS", value: Zaehlart.FJS },
+const fahrzeugklassenItems = [
+  { title: "Summe KFZ", value: Fahrzeugklasse.SummeKfz },
+  { title: "2 + 1", value: Fahrzeugklasse.ZweiPlusEins },
+  { title: "8 + 1", value: Fahrzeugklasse.AchtPlusEins },
+  { title: "RAD", value: Fahrzeugklasse.Rad },
 ];
 
-// const zaehlDatumRange = ref<[string | null, string | null]>([null, null]);
+const jahreszeitItems = ["Frühling", "Sommer", "Herbst", "Winter"];
 
-// const datePickerMenu = ref(false);
+const monatItems = [
+  { title: "Jan", value: 1 },
+  { title: "Feb", value: 2 },
+  { title: "Mär", value: 3 },
+  { title: "Apr", value: 4 },
+  { title: "Mai", value: 5 },
+  { title: "Jun", value: 6 },
+  { title: "Jul", value: 7 },
+  { title: "Aug", value: 8 },
+  { title: "Sep", value: 9 },
+  { title: "Okt", value: 10 },
+  { title: "Nov", value: 11 },
+  { title: "Dez", value: 12 },
+];
 
-// Formatierte Anzeige im Textfeld (z. B. "01.01.2023 — 07.01.2023")
-// const zaehlDatumFormatted = computed({
-//   get: () => {
-//     if (!zaehlDatumRange.value || !zaehlDatumRange.value[0]) return "";
-//     const [von, bis] = zaehlDatumRange.value;
-//     if (von && bis) {
-//       return formatDate(von) + " — " + formatDate(bis);
-//     } else if (von) {
-//       return formatDate(von);
-//     } else if (bis) {
-//       return formatDate(bis);
-//     } else {
-//       return "";
-//     }
-//   },
-//   set: (v: string) => {
-//     // readonly input; set wird hier nicht benötigt, falls dennoch gebraucht, kann man parsen
-//   },
-// });
+const stadtbezirkeItems = [
+  { title: "1 Altstadt-Lehel ", value: "1" },
+  { title: "2 Ludwigsvorstadt-Isarvorstadt ", value: "2" },
+  { title: "3 Maxvorstadt ", value: "3" },
+  { title: "4 Schwabing-West ", value: "4" },
+  { title: "5 Au-Haidhausen ", value: "5" },
+  { title: "6 Sendling ", value: "6" },
+  { title: "7 Sendling-Westpark ", value: "7" },
+  { title: "8 Schwanthalerhöhe ", value: "8" },
+  { title: "9 Neuhausen-Nymphenburg ", value: "9" },
+  { title: "10 Moosach ", value: "10" },
+  { title: "11 Milbertshofen-Am Hart ", value: "11" },
+  { title: "12 Schwabing-Freimann ", value: "12" },
+  { title: "13 Bogenhausen ", value: "13" },
+  { title: "14 Berg am Laim ", value: "14" },
+  { title: "15 Trudering-Riem ", value: "15" },
+  { title: "16 Ramersdorf-Perlach ", value: "16" },
+  { title: "17 Obergiesing-Fasangarten ", value: "17" },
+  { title: "18 Untergiesing-Harlaching ", value: "18" },
+  {
+    title: "19 Thalkirchen-Obersendling-Forstenried-Fürstenried-Solln ",
+    value: "19",
+  },
+  { title: "20 Hadern ", value: "20" },
+  { title: "21 Pasing-Obermenzing ", value: "21" },
+  { title: "22 Aubing-Lochhausen-Langwied ", value: "22" },
+  { title: "23 Allach-Untermenzing ", value: "23" },
+  { title: "24 Feldmoching-Hasenbergl ", value: "24" },
+  { title: "25 Laim ", value: "25" },
+  { title: "32 Außerhalb der Stadtgrenze ", value: "32" },
+];
+
+const formattedRange = computed(() => {
+  if (!zaehlzeitRange.value.length) return "";
+
+  const start = useDateUtils().getShortVersionOfDate(zaehlzeitRange.value[0]);
+  const end = useDateUtils().getShortVersionOfDate(
+    zaehlzeitRange.value[zaehlzeitRange.value.length - 1]
+  );
+
+  return start === end ? start : `${start} – ${end}`;
+});
+
+const tagesTypItems = computed(() => {
+  const tagestypen: Array<KeyVal> = [];
+  tagesTypText.forEach((value, key) => {
+    if (key !== TagesTyp.Unspecified) {
+      tagestypen.push({
+        title: value,
+        value: key,
+      });
+    }
+  });
+  return tagestypen;
+});
+
+const wetterItems = computed(() => {
+  const wetter: Array<KeyVal> = [];
+  wetterText.forEach((value, key) => {
+    if (key !== Wetter.NO_INFORMATION) {
+      wetter.push({
+        title: value,
+        value: key,
+      });
+    }
+  });
+  return wetter;
+});
 
 let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 const DEBOUNCE_MS = 300; // TODO: für SB evtl. auf 500?
@@ -484,8 +636,8 @@ function search() {
 
   loadingSearchResults.value = true;
   SucheService.searchErhebungsstelle(
-    searchAndFilterOptionsStore.value.query ?? "",
-    searchAndFilterOptionsStore.value
+    searchStore.getLastSearchQuery ?? "",
+    searchAndFilterOptionsStored.value
   )
     .then((result) => {
       searchStore.setSearchResult(result);
@@ -495,11 +647,6 @@ function search() {
     })
     .finally(() => (loadingSearchResults.value = false));
 }
-
-// function searchForSuggestion(query: string) {
-//   searchQuery.value = query;
-//   search();
-// }
 
 function showZaehlstelle(item: Suggest) {
   mapOptionsStore.resetMapOptions();
@@ -536,6 +683,14 @@ watch(
   }
 );
 
+watch(
+  () => zaehlzeitRange.value,
+  (newVal) => {
+    searchAndFilterOptions.value.zaehldatumVon = newVal[0];
+    searchAndFilterOptions.value.zaehldatumBis = newVal[newVal.length - 1];
+  }
+);
+
 function deleteChar() {
   if (!isNil(selectedSuggestion.value)) {
     selectedSuggestion.value.type = "";
@@ -553,17 +708,6 @@ watch(
   },
   { deep: true }
 );
-
-// Hilfsfunktion: Datum im gewünschten Format (TT.MM.YYYY). Anpassbar.
-// function formatDate(isoDate: string): string {
-//   if (!isoDate) return "";
-//   const d = new Date(isoDate);
-//   if (Number.isNaN(d.getTime())) return isoDate;
-//   const dd = String(d.getDate()).padStart(2, "0");
-//   const mm = String(d.getMonth() + 1).padStart(2, "0");
-//   const yyyy = d.getFullYear();
-//   return `${dd}.${mm}.${yyyy}`;
-// }
 
 function iconOfSuggestion(type: string) {
   let icon = "";
@@ -584,7 +728,8 @@ function iconOfSuggestion(type: string) {
   return icon;
 }
 
-const searchAndFilterOptionsStore = computed({
+// Wrapper, um Options-Referenzen zw. dieser Komponente und dem Store zu trennen.
+const searchAndFilterOptionsStored = computed({
   get() {
     return cloneDeep(searchStore.getSearchAndFilterOptions);
   },
@@ -601,7 +746,7 @@ watch(
   () => {
     console.log("changed searchStore.triggerSearch");
     searchQuery.value = searchStore.getLastSearchQuery;
-    searchAndFilterOptions.value = searchStore.getSearchAndFilterOptions;
+    searchAndFilterOptions.value = searchAndFilterOptionsStored.value;
     selectedSuggestion.value = undefined;
     search();
   }
@@ -635,7 +780,7 @@ function openSearchDialog() {
 
 const getContentSheetHeight = computed(() => {
   if (xl.value) {
-    return "680px";
+    return "775px";
   }
   return "400px";
 });
@@ -646,8 +791,7 @@ const getContentSheetHeight = computed(() => {
 function adoptSearchAndFilterOptions(): void {
   console.log("adoptSearchAndFilterOptions: " + searchQuery.value);
   selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
-  searchStore.setSearchAndFilterOptions(searchAndFilterOptions.value);
-  searchStore.setLastSearchQuery(searchQuery.value?.trim());
+  searchAndFilterOptionsStored.value = searchAndFilterOptions.value;
   search();
   isOpen.value = false;
 }
@@ -660,9 +804,10 @@ function adoptSearchAndFilterOptions(): void {
  */
 function resetSearchAndFilterOptions(): void {
   console.log("resetSearchAndFilterOptions");
-  searchStore.resetSearchAndFilterOptions();
+  searchAndFilterOptionsStored.value =
+    DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO();
   searchStore.setLastSearchQuery("");
-  searchAndFilterOptions.value = searchAndFilterOptionsStore.value;
+  searchAndFilterOptions.value = searchAndFilterOptionsStored.value;
   searchQuery.value = searchStore.getLastSearchQuery;
   suggestions.value = [];
   selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
