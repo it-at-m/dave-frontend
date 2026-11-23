@@ -47,8 +47,8 @@
           subtitle="Folgende Informationen werden im PDF Report
                             eingetragen: Uhrzeiten Spitzenstunde (morgens,
                             abends, Tag), Zählblöcke und Tageswert (nur wenn
-                            24h Zählung), jeweils mit den jeweiligen
-                            Zählwerten für KFZ, SV und GV sowie Rad."
+                            24h Zählung), mit den jeweiligen
+                            Zählwerten für KFZ, SV, GV, Rad und Fuß."
         />
         <pdf-report-menue-list-item
           v-model="legende"
