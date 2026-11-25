@@ -112,7 +112,7 @@
               v-if="!loadingSuggestions && !suggestions.length"
               style="margin-top: 8px; color: rgba(0, 0, 0, 0.6)"
             >
-              Keine Treffer
+              Keine Suchvorschläge...
             </div>
           </div>
 
@@ -355,7 +355,7 @@ import type {
 } from "@/api/client";
 import type KeyVal from "@/types/common/KeyVal";
 
-import { cloneDeep, isEmpty, isEqual, isNil } from "lodash";
+import { cloneDeep, isEqual, isNil } from "lodash";
 import { computed, ref, useTemplateRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -516,13 +516,12 @@ function focusSuchfeld() {
 }
 
 function suggest() {
-  if (!isEmpty(searchQuery.value)) {
-    lastSuggestQuery.value = searchQuery.value ?? "";
+  const query = searchQuery.value.trim();
+
+  if (query) {
+    lastSuggestQuery.value = query;
     loadingSuggestions.value = true;
-    SucheService.getSuggestions(
-      searchQuery.value ?? "",
-      searchAndFilterOptions.value
-    )
+    SucheService.getSuggestions(query, searchAndFilterOptions.value)
       .then((response: SucheComplexSuggestsDTO) => {
         suggestions.value = [];
 
@@ -576,8 +575,8 @@ function suggest() {
       })
       .catch((error) => snackbarStore.showApiError(error))
       .finally(() => (loadingSuggestions.value = false));
-  } else if (!isEmpty(lastSuggestQuery.value)) {
-    lastSuggestQuery.value = searchQuery.value ?? "";
+  } else if (lastSuggestQuery.value) {
+    lastSuggestQuery.value = "";
     suggestions.value = [];
   }
 }
@@ -666,12 +665,7 @@ watch(
   () => searchQuery.value,
   (newVal) => {
     if (!isOpen.value) return;
-    if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
-    searchDebounceTimer = setTimeout(() => {
-      if ((newVal || "").trim().length >= 3) {
-        suggest();
-      }
-    }, DEBOUNCE_MS);
+    debounceSuggest(newVal || "");
   }
 );
 
@@ -687,7 +681,16 @@ function deleteChar() {
   if (!isNil(selectedSuggestion.value)) {
     selectedSuggestion.value.type = "";
   }
-  suggest();
+  debounceSuggest(searchQuery.value);
+}
+
+function debounceSuggest(query: string) {
+  if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(() => {
+    if (query.trim().length >= 3) {
+      suggest();
+    }
+  }, DEBOUNCE_MS);
 }
 
 /**
