@@ -102,9 +102,9 @@ import type { ComputedRef } from "vue";
 
 import { computed, onMounted, ref, watch } from "vue";
 
+import { Zaehlart } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { useDateUtils } from "@/util/DateUtils";
 import { useFjs } from "@/util/FjsUtils";
@@ -202,9 +202,9 @@ const helpTextDifferenzdatenBelastungsplan = computed(() => {
 
 const isQjsOrFjsOrQu = computed<boolean>(() => {
   return [
-    Zaehlart.QJS.toString(),
-    Zaehlart.FJS.toString(),
-    Zaehlart.QU.toString(),
+    Zaehlart.Qjs.toString(),
+    Zaehlart.Fjs.toString(),
+    Zaehlart.Qu.toString(),
   ].includes(activeZaehlung.value.zaehlart);
 });
 
@@ -328,21 +328,21 @@ function checkBewegungsbeziehungen(
   activeZaehlung: ComputedRef<LadeZaehlung>
 ): boolean {
   // Bei QU: Prüfe auf Knotenarm und Richtung
-  if (zaehlung.zaehlart === Zaehlart.QU.toString()) {
+  if (zaehlung.zaehlart === Zaehlart.Qu.toString()) {
     return qu.areQuerungsverkehreEqual(
       activeZaehlung.value.querungsverkehr,
       zaehlung.querungsverkehr
     );
   }
   // Bei FJS: Prüfe auf Knotenarm, Richtung und Straßenseite
-  if (zaehlung.zaehlart === Zaehlart.FJS.toString()) {
+  if (zaehlung.zaehlart === Zaehlart.Fjs.toString()) {
     return fjs.areLaengsverkehreEqual(
       activeZaehlung.value.laengsverkehr,
       zaehlung.laengsverkehr
     );
   }
   // Bei QJS: Prüfe auf Von, Nach und Straßenseite
-  if (zaehlung.zaehlart === Zaehlart.QJS.toString()) {
+  if (zaehlung.zaehlart === Zaehlart.Qjs.toString()) {
     return qjs.areVerkehrsbeziehungenEqual(
       activeZaehlung.value.verkehrsbeziehungen,
       zaehlung.verkehrsbeziehungen

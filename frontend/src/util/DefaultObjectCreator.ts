@@ -18,7 +18,6 @@ import type { SearchAndFilterOptionsDTO } from "@/api/client/models/SearchAndFil
 import type { ZaehlstelleKarteDTO } from "@/api/client/models/ZaehlstelleKarteDTO";
 import type { ZaehlstelleTooltipDTO } from "@/api/client/models/ZaehlstelleTooltipDTO";
 import type { ZeitauswahlDTO } from "@/api/client/models/ZeitauswahlDTO";
-import type Zaehlart from "@/types/enum/Zaehlart";
 import type MessstelleAuswertungOptions from "@/types/messstelle/auswertung/MessstelleAuswertungOptions";
 import type Messfaehigkeit from "@/types/messstelle/Messfaehigkeit";
 import type MessstelleInfoType from "@/types/messstelle/MessstelleInfoType";
@@ -28,14 +27,19 @@ import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type Verkehrsbeziehungen from "@/types/zaehlung/Verkehrsbeziehungen";
 
-import { Fahrzeugklasse, ZaehldatenIntervall, Zaehldauer } from "@/api/client";
+import {
+  Fahrzeugklasse,
+  Wetter,
+  Zaehlart,
+  ZaehldatenIntervall,
+  Zaehldauer,
+} from "@/api/client";
 import { Rounding } from "@/api/client/models/Rounding";
 import { TagesTyp } from "@/api/client/models/TagesTyp";
 import { Verkehrsart } from "@/api/client/models/Verkehrsart";
 import { Zeitblock } from "@/api/client/models/Zeitblock";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Quelle from "@/types/enum/Quelle";
-import Wetter from "@/types/enum/Wetter";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Suggest from "@/types/suche/Suggest";
 
@@ -205,7 +209,7 @@ export default class DefaultObjectCreator {
       zaehlsituation: "",
       zaehlsituationErweitert: "",
       zaehlIntervall: "",
-      wetter: Wetter.NO_INFORMATION,
+      wetter: Wetter.NoInformation,
       zaehldauer: Zaehldauer.Sonstige,
       quelle: Quelle.MANUALLY,
       schulZeiten: "",

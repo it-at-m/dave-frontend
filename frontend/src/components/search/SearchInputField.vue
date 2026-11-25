@@ -360,14 +360,14 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 
-import { Fahrzeugklasse, TagesTyp, Verkehrsart } from "@/api/client";
+import { Fahrzeugklasse, TagesTyp, Verkehrsart, Wetter } from "@/api/client";
 import SucheService from "@/api/service/SucheService";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import tagesTypText from "@/types/enum/TagesTypText";
-import { Wetter, wetterText } from "@/types/enum/Wetter";
-import { zaehlartenDropDown } from "@/types/enum/Zaehlart";
+import { wetterText } from "@/types/enum/WetterText";
+import { zaehlartenDropDown } from "@/types/enum/ZaehlartText";
 import { zaehldauerDropDown } from "@/types/enum/ZaehldauerText";
 import Suggest from "@/types/suche/Suggest";
 import { useDateUtils } from "@/util/DateUtils";
@@ -491,7 +491,7 @@ const tagesTypItems = computed(() => {
 const wetterItems = computed(() => {
   const wetter: Array<KeyVal> = [];
   wetterText.forEach((value, key) => {
-    if (key !== Wetter.NO_INFORMATION) {
+    if (key !== Wetter.NoInformation) {
       wetter.push({
         title: value,
         value: key,
@@ -502,7 +502,7 @@ const wetterItems = computed(() => {
 });
 
 let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
-const DEBOUNCE_MS = 300; // TODO: für SB evtl. auf 500?
+const DEBOUNCE_MS = 500;
 
 const isDefaultFilter = computed(() => {
   return isEqual(

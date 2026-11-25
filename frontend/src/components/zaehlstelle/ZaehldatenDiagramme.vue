@@ -238,7 +238,7 @@ import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrze
 import { first, isEmpty, last } from "lodash";
 import { computed, ref, watch } from "vue";
 
-import { Zaehldauer, Zeitblock } from "@/api/client";
+import { Zaehlart, Zaehldauer, Zeitblock } from "@/api/client";
 import GenerateCsvService from "@/api/service/GenerateCsvService";
 import GeneratePdfService from "@/api/service/GeneratePdfService";
 import LadeZaehldatenService from "@/api/service/LadeZaehldatenService";
@@ -261,7 +261,6 @@ import { useUserStore } from "@/store/UserStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import BelastungsplanTyp from "@/types/enum/BelastungsplanTyp";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-import Zaehlart from "@/types/enum/Zaehlart";
 import ZaehlstelleHistoryItem from "@/types/history/ZaehlstelleHistoryItem";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
 import { useDownloadUtils } from "@/util/DownloadUtils";
@@ -335,15 +334,15 @@ const downloadUtils = useDownloadUtils();
 const globalInfoMessage = useGlobalInfoMessage();
 
 const isQJSZaehlung = computed<boolean>(() => {
-  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QJS;
+  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.Qjs;
 });
 
 const isQUZaehlung = computed<boolean>(() => {
-  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.QU;
+  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.Qu;
 });
 
 const isFJSZaehlung = computed<boolean>(() => {
-  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.FJS;
+  return zaehlstelleStore.getAktiveZaehlung.zaehlart === Zaehlart.Fjs;
 });
 
 const options = computed<Options>(() => {

@@ -241,7 +241,7 @@ import _ from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Zaehldauer, Zeitblock } from "@/api/client";
+import { Zaehlart, Zaehldauer, Zeitblock } from "@/api/client";
 import QuelleIcon from "@/components/zaehlstelle/icons/QuelleIcon.vue";
 import SonderzaehlungIcon from "@/components/zaehlstelle/icons/SonderzaehlungIcon.vue";
 import WetterIcon from "@/components/zaehlstelle/icons/WetterIcon.vue";
@@ -251,7 +251,6 @@ import KommentarInfo from "@/components/zaehlstelle/KommentarInfo.vue";
 import OptionsmenueZaehlstelle from "@/components/zaehlstelle/optionsmenue/OptionsmenueZaehlstelle.vue";
 import ZaehlungGeometrie from "@/components/zaehlstelle/ZaehlungGeometrie.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Zaehlart from "@/types/enum/Zaehlart";
 import { ZaehldatenIntervallToBeschreibung } from "@/types/enum/ZaehldatenIntervallExtension";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import {
@@ -326,9 +325,9 @@ const options = computed<Options>(() => {
 
 const isZaehlartQjsOrFjsOrQu = computed(() => {
   return (
-    zaehlung.value.zaehlart === Zaehlart.QJS ||
-    zaehlung.value.zaehlart === Zaehlart.FJS ||
-    zaehlung.value.zaehlart === Zaehlart.QU
+    zaehlung.value.zaehlart === Zaehlart.Qjs ||
+    zaehlung.value.zaehlart === Zaehlart.Fjs ||
+    zaehlung.value.zaehlart === Zaehlart.Qu
   );
 });
 
@@ -348,9 +347,9 @@ const verkehrsbeziehungenPrefix = computed(() => {
  * Liefert das für die aktuelle Zählart relevante Array von Verkehrsbeziehungen.
  *
  * Verhalten:
- * - Zaehlart.QU -> zaehlung.value?.querungsverkehr
- * - Zaehlart.FJS -> zaehlung.value?.laengsverkehr
- * - Zaehlart.QJS  -> zaehlung.value?.verkehrsbeziehungen
+ * - Zaehlart.Qu -> zaehlung.value?.querungsverkehr
+ * - Zaehlart.Fjs -> zaehlung.value?.laengsverkehr
+ * - Zaehlart.Qjs  -> zaehlung.value?.verkehrsbeziehungen
  * - Default      -> oder []
  *
  * @returns {Array<any>} Array entsprechender Beziehungsobjekte oder [] als Fallback
@@ -360,11 +359,11 @@ function getCurrentBewegungsbeziehungen() {
   if (!z) return [];
 
   switch (z.zaehlart) {
-    case Zaehlart.QU:
+    case Zaehlart.Qu:
       return z.querungsverkehr ?? [];
-    case Zaehlart.FJS:
+    case Zaehlart.Fjs:
       return z.laengsverkehr ?? [];
-    case Zaehlart.QJS:
+    case Zaehlart.Qjs:
       return z.verkehrsbeziehungen ?? [];
     default:
       return [];
@@ -375,9 +374,9 @@ function getCurrentBewegungsbeziehungen() {
  * Liefert das für die aktuelle Zählart relevante Array aus den Options.
  *
  * Reihenfolge / Zuordnung:
- * - Zaehlart.QU -> options.value?.chosenQuerungsverkehre
- * - Zaehlart.FJS -> options.value?.chosenLaengsverkehre
- * - Zaehlart.QJS  -> options.value?.chosenVerkehrsbeziehungen
+ * - Zaehlart.Qu -> options.value?.chosenQuerungsverkehre
+ * - Zaehlart.Fjs -> options.value?.chosenLaengsverkehre
+ * - Zaehlart.Qjs  -> options.value?.chosenVerkehrsbeziehungen
  * - Default      -> oder []
  *
  * Rückgabeverhalten:
@@ -391,11 +390,11 @@ function getChosenBewegungsbeziehungen() {
   if (!opt) return [];
 
   switch (zaehlung.value?.zaehlart) {
-    case Zaehlart.QU:
+    case Zaehlart.Qu:
       return opt.chosenQuerungsverkehre ?? [];
-    case Zaehlart.FJS:
+    case Zaehlart.Fjs:
       return opt.chosenLaengsverkehre ?? [];
-    case Zaehlart.QJS:
+    case Zaehlart.Qjs:
       return opt.chosenVerkehrsbeziehungen ?? [];
     default:
       return [];

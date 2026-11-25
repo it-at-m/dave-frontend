@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import { Zaehlart } from "@/api/client";
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import Zaehlart from "@/types/enum/Zaehlart";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
@@ -34,31 +34,31 @@ const zaehlartIcons: Map<string, IconTooltip> = new Map([
     new IconTooltip("$artH", "Hauptverkehrsrichtung/Oberfläche/Hoch"),
   ],
   [Zaehlart.Q, new IconTooltip("$artQ", "Querschnitt")],
-  [Zaehlart.QB, new IconTooltip("$artQB", "Bahnschnitt")],
+  [Zaehlart.Qb, new IconTooltip("$artQB", "Bahnschnitt")],
   [
-    Zaehlart.QH,
+    Zaehlart.Qh,
     new IconTooltip(
       "$artQH",
       "Querschnitt/Hauptverkehrsrichtung/Oberfläche/Hoch"
     ),
   ],
-  [Zaehlart.QI, new IconTooltip("$artQI", "Isarschnitt")],
-  [Zaehlart.QR, new IconTooltip("$artQR", "Querschnitt Radverkehr")],
-  [Zaehlart.QS, new IconTooltip("$artQSt", "Stadtgrenzzählung")],
-  [Zaehlart.Q_, new IconTooltip("$artQS", "Querschnitt/Sonderzählung")],
+  [Zaehlart.Qi, new IconTooltip("$artQI", "Isarschnitt")],
+  [Zaehlart.Qr, new IconTooltip("$artQR", "Querschnitt Radverkehr")],
+  [Zaehlart.Qs, new IconTooltip("$artQSt", "Stadtgrenzzählung")],
+  [Zaehlart.Q2, new IconTooltip("$artQS", "Querschnitt/Sonderzählung")],
   [
-    Zaehlart.QT,
+    Zaehlart.Qt,
     new IconTooltip("$artQT", "Querschnitt Tunnel/Unterführung/Tief"),
   ],
   [Zaehlart.R, new IconTooltip("$artR", "Radverkehrszählung")],
-  [Zaehlart.QJS, new IconTooltip("$artQJS", "Querschnitt je Straßenseite")],
+  [Zaehlart.Qjs, new IconTooltip("$artQJS", "Querschnitt je Straßenseite")],
   [
-    Zaehlart.FJS,
+    Zaehlart.Fjs,
     new IconTooltip("$artFJS", "Fußverkehr/Radverkehr je Straßenseite"),
   ],
-  [Zaehlart.QU, new IconTooltip("$artQU", "Querung")],
+  [Zaehlart.Qu, new IconTooltip("$artQU", "Querung")],
   [Zaehlart.T, new IconTooltip("$artT", "Tunnel/Unterführung/Tief")],
-  [Zaehlart.TK, new IconTooltip("$artTK", "Teilknoten")],
+  [Zaehlart.Tk, new IconTooltip("$artTK", "Teilknoten")],
 ]);
 
 /**

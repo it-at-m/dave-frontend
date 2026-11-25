@@ -84,7 +84,7 @@ import { isEmpty, isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import { Zaehldauer, Zeitblock } from "@/api/client";
+import { Zaehlart, Zaehldauer, Zeitblock } from "@/api/client";
 import DarstellungsoptionenPanel from "@/components/zaehlstelle/optionsmenue/panels/DarstellungsoptionenPanel.vue";
 import FahrzeugPanel from "@/components/zaehlstelle/optionsmenue/panels/FahrzeugPanel.vue";
 import VerkehrsbeziehungenPanel from "@/components/zaehlstelle/optionsmenue/panels/VerkehrsbeziehungenPanel.vue";
@@ -93,7 +93,6 @@ import ZeitauswahlPanel from "@/components/zaehlstelle/optionsmenue/panels/Zeita
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import { zeitblockOrder } from "@/types/enum/ZeitblockText";
 import DefaultObjectCreator from "@/util/DefaultObjectCreator";
@@ -184,7 +183,7 @@ const isFussPreselected = computed(() => {
   // anderen Zählarten, wenn als einzige Verkehrsart NUR FUSS oder NUR Rad
   // UND FUSS beauftragt wurde
   return (
-    [Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+    [Zaehlart.Fjs, Zaehlart.Qu, Zaehlart.Qjs].includes(
       activeZaehlung.value.zaehlart as Zaehlart
     ) ||
     isOnlyVerkehrsartFuss.value ||
@@ -200,7 +199,7 @@ const isRadPreselected = computed(() => {
   // Zählarten, wenn als einzige Verkehrsart NUR Rad oder NUR Rad UND FUSS
   // beauftragt wurde
   return (
-    [Zaehlart.R, Zaehlart.QR, Zaehlart.FJS, Zaehlart.QU, Zaehlart.QJS].includes(
+    [Zaehlart.R, Zaehlart.Qr, Zaehlart.Fjs, Zaehlart.Qu, Zaehlart.Qjs].includes(
       activeZaehlung.value.zaehlart as Zaehlart
     ) ||
     isOnlyVerkehrsartRad.value ||
@@ -334,11 +333,11 @@ function setOptions() {
     return;
   }
   if (
-    (activeZaehlung.value.zaehlart === Zaehlart.FJS &&
+    (activeZaehlung.value.zaehlart === Zaehlart.Fjs &&
       isEmpty(chosenOptions.value.chosenLaengsverkehre)) ||
-    (activeZaehlung.value.zaehlart === Zaehlart.QU &&
+    (activeZaehlung.value.zaehlart === Zaehlart.Qu &&
       isEmpty(chosenOptions.value.chosenQuerungsverkehre)) ||
-    (activeZaehlung.value.zaehlart === Zaehlart.QJS &&
+    (activeZaehlung.value.zaehlart === Zaehlart.Qjs &&
       isEmpty(chosenOptions.value.chosenVerkehrsbeziehungen))
   ) {
     snackbarStore.showError(

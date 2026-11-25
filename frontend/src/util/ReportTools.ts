@@ -8,13 +8,12 @@ import DOMPurify from "dompurify";
 import _ from "lodash";
 import { computed } from "vue";
 
-import { BaseAssetTypeEnum } from "@/api/client";
+import { BaseAssetTypeEnum, Zaehlart } from "@/api/client";
 import { useMessstelleStore } from "@/store/MessstelleStore";
 import { usePdfReportStore } from "@/store/PdfReportStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-import Zaehlart from "@/types/enum/Zaehlart";
 import { useAssetUtil } from "@/util/AssetUtil";
 import { useDateUtils } from "@/util/DateUtils";
 
@@ -102,9 +101,9 @@ export function useReportTools() {
         break;
       case Erhebungsstelle.ZAEHLSTELLE:
         if (
-          selectedZaehlung.value.zaehlart === Zaehlart.QJS ||
-          selectedZaehlung.value.zaehlart === Zaehlart.FJS ||
-          selectedZaehlung.value.zaehlart === Zaehlart.QU
+          selectedZaehlung.value.zaehlart === Zaehlart.Qjs ||
+          selectedZaehlung.value.zaehlart === Zaehlart.Fjs ||
+          selectedZaehlung.value.zaehlart === Zaehlart.Qu
         ) {
           if (
             (zaehlstelleOptions.value.chosenVerkehrsbeziehungen?.length ??

@@ -9,10 +9,9 @@ import type Verkehrsbeziehung from "@/types/zaehlung/Verkehrsbeziehung";
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Bewegungsrichtung, Himmelsrichtung } from "@/api/client";
+import { Bewegungsrichtung, Himmelsrichtung, Zaehlart } from "@/api/client";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Erhebungsstelle from "@/types/enum/Erhebungsstelle";
-import Zaehlart from "@/types/enum/Zaehlart";
 import { useReportTools } from "@/util/ReportTools";
 
 vi.mock("vue-router", () => {
@@ -125,7 +124,7 @@ describe("ReportTools", () => {
       strassenseite: Himmelsrichtung.S,
     } as LadeVerkehrsbeziehung as Verkehrsbeziehung;
 
-    const zaehlung = createZaehlung(Zaehlart.QJS);
+    const zaehlung = createZaehlung(Zaehlart.Qjs);
     zaehlung.verkehrsbeziehungen = [vb1, vb2] as LadeVerkehrsbeziehung[];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
@@ -153,7 +152,7 @@ describe("ReportTools", () => {
       strassenseite: Himmelsrichtung.S,
     } as LadeVerkehrsbeziehung as Verkehrsbeziehung;
 
-    const zaehlung = createZaehlung(Zaehlart.QJS);
+    const zaehlung = createZaehlung(Zaehlart.Qjs);
     zaehlung.verkehrsbeziehungen = [vb1, vb2] as LadeVerkehrsbeziehung[];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
@@ -181,7 +180,7 @@ describe("ReportTools", () => {
       richtung: Bewegungsrichtung.Ein,
     } as Laengsverkehr;
 
-    const zaehlung = createZaehlung(Zaehlart.FJS);
+    const zaehlung = createZaehlung(Zaehlart.Fjs);
     zaehlung.laengsverkehr = [lv1, lv2];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
@@ -209,7 +208,7 @@ describe("ReportTools", () => {
       richtung: Bewegungsrichtung.Ein,
     } as Laengsverkehr;
 
-    const zaehlung = createZaehlung(Zaehlart.FJS);
+    const zaehlung = createZaehlung(Zaehlart.Fjs);
     zaehlung.laengsverkehr = [lv1, lv2];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
@@ -235,7 +234,7 @@ describe("ReportTools", () => {
       richtung: Himmelsrichtung.S,
     } as Querungsverkehr;
 
-    const zaehlung = createZaehlung(Zaehlart.QU);
+    const zaehlung = createZaehlung(Zaehlart.Qu);
     zaehlung.querungsverkehr = [qv1, qv2];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
@@ -261,7 +260,7 @@ describe("ReportTools", () => {
       richtung: Himmelsrichtung.S,
     } as Querungsverkehr;
 
-    const zaehlung = createZaehlung(Zaehlart.QU);
+    const zaehlung = createZaehlung(Zaehlart.Qu);
     zaehlung.querungsverkehr = [qv1, qv2];
     zaehlstelleStore.setZaehlungen([zaehlung]);
 
