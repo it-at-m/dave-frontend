@@ -15,7 +15,7 @@
     @after-enter="focusSuchfeld"
   >
     <v-card>
-      <VCardTitle
+      <v-card-title
         class="d-flex justify-space-between align-center bg-surface-light"
       >
         <v-icon
@@ -31,7 +31,7 @@
           @click="resetAndClose"
           ><v-icon>mdi-close</v-icon></v-btn
         >
-      </VCardTitle>
+      </v-card-title>
 
       <v-card-text>
         <div
@@ -40,8 +40,8 @@
         >
           <div style="flex: 1">
             <v-text-field
-              ref="suchfeld"
               id="suchfeld"
+              ref="suchfeld"
               v-model="searchQuery"
               label="Suche"
               prepend-inner-icon="mdi-magnify"
@@ -91,9 +91,9 @@
             </div>
             <!--              :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-file'"-->
             <v-list
+              v-if="suggestions.length && !loadingSuggestions"
               two-line
               dense
-              v-if="suggestions.length && !loadingSuggestions"
               style="margin-top: 8px; max-height: 340px; overflow: auto"
             >
               <v-list-item
@@ -234,7 +234,7 @@
               </v-col>
             </v-row>
 
-            <!-- TODO (v-if stadtbezirke.length > 0; items, etc.) -->
+            <!-- TODO (FV-696): v-if stadtbezirke.length > 0; items, etc. -->
             <v-select
               v-model="searchAndFilterOptions.stadtbezirkNummern"
               :items="stadtbezirkeItems"
