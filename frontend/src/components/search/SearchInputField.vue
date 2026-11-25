@@ -314,7 +314,7 @@
 
             <v-select
               v-model="searchAndFilterOptions.wetter"
-              :items="wetterItems"
+              :items="wetterDropDown"
               label="Wetter"
               density="compact"
               dense
@@ -360,13 +360,13 @@ import { computed, ref, useTemplateRef, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 
-import { Fahrzeugklasse, TagesTyp, Verkehrsart, Wetter } from "@/api/client";
+import { Fahrzeugklasse, TagesTyp, Verkehrsart } from "@/api/client";
 import SucheService from "@/api/service/SucheService";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";
 import { useSearchStore } from "@/store/SearchStore";
 import { useSnackbarStore } from "@/store/SnackbarStore";
 import tagesTypText from "@/types/enum/TagesTypText";
-import { wetterText } from "@/types/enum/WetterText";
+import { wetterDropDown } from "@/types/enum/WetterText";
 import { zaehlartenDropDown } from "@/types/enum/ZaehlartText";
 import { zaehldauerDropDown } from "@/types/enum/ZaehldauerText";
 import Suggest from "@/types/suche/Suggest";
@@ -486,19 +486,6 @@ const tagesTypItems = computed(() => {
     }
   });
   return tagestypen;
-});
-
-const wetterItems = computed(() => {
-  const wetter: Array<KeyVal> = [];
-  wetterText.forEach((value, key) => {
-    if (key !== Wetter.NoInformation) {
-      wetter.push({
-        title: value,
-        value: key,
-      });
-    }
-  });
-  return wetter;
 });
 
 let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
