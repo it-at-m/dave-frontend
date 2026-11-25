@@ -28,7 +28,7 @@
         <v-spacer />
         <v-btn
           icon
-          @click="close"
+          @click="resetAndClose"
           ><v-icon>mdi-close</v-icon></v-btn
         >
       </VCardTitle>
@@ -393,7 +393,7 @@ const loadingSuggestions = ref(false);
 const loadingSearchResults = ref(false);
 
 const dateRangeMenuOpen = ref(false);
-const zaehlzeitRange = ref([]);
+const zaehlzeitRange = ref<Array<Date>>([]);
 
 const route = useRoute();
 const router = useRouter();
@@ -746,7 +746,20 @@ watch(
   }
 );
 
-function close() {
+function resetAndClose() {
+  if (searchDebounceTimer) {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = null;
+  }
+
+  const storedOptions = searchAndFilterOptionsStored.value;
+  searchAndFilterOptions.value = storedOptions;
+  searchQuery.value = searchStore.getLastSearchQuery;
+  zaehlzeitRange.value = [
+    storedOptions.zaehldatumVon,
+    storedOptions.zaehldatumBis,
+  ].filter((date): date is Date => !isNil(date));
+  suggestions.value = [];
   isOpen.value = false;
 }
 
@@ -791,19 +804,15 @@ function adoptSearchAndFilterOptions(): void {
 
 /** Triggered by @click:zurücksetzen
  * Zurücksetzen: bereits übernommene Suche soll auf Standard zurückgesetzt werden
- * im Gegensatz zu dialog:close: im Store gespeicherte Suchkriterien wurden lokal beararbeitet
- * und Bearb. soll abgebrochen werden
- * -> zurücksetzen auf letzte Suchkriterien
+ * Im Gegensatz zu dialog:close: im Store gespeicherte Suchkriterien wurden lokal beararbeitet
+ * und Bearb. soll abgebrochen werden -> zurücksetzen auf letzte Suchkriterien
  */
 function resetSearchAndFilterOptions(): void {
   searchAndFilterOptionsStored.value =
     DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO();
   searchStore.setLastSearchQuery("");
-  searchAndFilterOptions.value = searchAndFilterOptionsStored.value;
-  searchQuery.value = searchStore.getLastSearchQuery;
-  suggestions.value = [];
   selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
+  resetAndClose();
   search();
-  close();
 }
 </script>
