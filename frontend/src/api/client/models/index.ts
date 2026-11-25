@@ -201,6 +201,8 @@ export * from "./Verkehrsart";
 export * from "./Verkehrsbeziehung";
 export * from "./VerkehrsbeziehungValue";
 export * from "./VerkehrsbeziehungVisumDTO";
+export * from "./Wetter";
+export * from "./Zaehlart";
 export * from "./ZaehlartenKarteDTO";
 export * from "./ZaehldatenIntervall";
 export * from "./Zaehldauer";

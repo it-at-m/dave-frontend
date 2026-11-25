@@ -15,6 +15,8 @@
 import type { Fahrzeugklasse } from "./Fahrzeugklasse";
 import type { TagesTyp } from "./TagesTyp";
 import type { Verkehrsart } from "./Verkehrsart";
+import type { Wetter } from "./Wetter";
+import type { Zaehlart } from "./Zaehlart";
 import type { Zaehldauer } from "./Zaehldauer";
 
 import {
@@ -42,6 +44,18 @@ import {
   VerkehrsartToJSON,
   VerkehrsartToJSONTyped,
 } from "./Verkehrsart";
+import {
+  WetterFromJSON,
+  WetterFromJSONTyped,
+  WetterToJSON,
+  WetterToJSONTyped,
+} from "./Wetter";
+import {
+  ZaehlartFromJSON,
+  ZaehlartFromJSONTyped,
+  ZaehlartToJSON,
+  ZaehlartToJSONTyped,
+} from "./Zaehlart";
 import {
   ZaehldauerFromJSON,
   ZaehldauerFromJSONTyped,
@@ -74,11 +88,15 @@ export interface SearchAndFilterOptionsDTO {
   /**
    *
    */
-  zaehlarten?: Array<SearchAndFilterOptionsDTOZaehlartenEnum>;
+  zaehlarten?: Array<Zaehlart>;
   /**
    *
    */
   zaehldauern?: Array<Zaehldauer>;
+  /**
+   *
+   */
+  stadtbezirkNummern?: Array<number>;
   /**
    *
    */
@@ -94,10 +112,6 @@ export interface SearchAndFilterOptionsDTO {
   /**
    *
    */
-  stadtbezirkNummern?: Array<number>;
-  /**
-   *
-   */
   zaehlMonate?: Array<number>;
   /**
    *
@@ -106,7 +120,7 @@ export interface SearchAndFilterOptionsDTO {
   /**
    *
    */
-  wetter?: Array<SearchAndFilterOptionsDTOWetterEnum>;
+  wetter?: Array<Wetter>;
   /**
    *
    */
@@ -120,46 +134,6 @@ export interface SearchAndFilterOptionsDTO {
    */
   messstelleVerkehrsart: Array<Verkehrsart>;
 }
-
-/**
- * @export
- */
-export const SearchAndFilterOptionsDTOZaehlartenEnum = {
-  N: "N",
-  H: "H",
-  Q: "Q",
-  Q2: "Q_",
-  Qb: "QB",
-  Qh: "QH",
-  Qi: "QI",
-  Qs: "QS",
-  Qt: "QT",
-  Qr: "QR",
-  R: "R",
-  Qjs: "QJS",
-  Fjs: "FJS",
-  Qu: "QU",
-  T: "T",
-  Tk: "TK",
-} as const;
-export type SearchAndFilterOptionsDTOZaehlartenEnum =
-  (typeof SearchAndFilterOptionsDTOZaehlartenEnum)[keyof typeof SearchAndFilterOptionsDTOZaehlartenEnum];
-
-/**
- * @export
- */
-export const SearchAndFilterOptionsDTOWetterEnum = {
-  Sunny: "SUNNY",
-  SunnyCold: "SUNNY_COLD",
-  Cloudy: "CLOUDY",
-  Rainy: "RAINY",
-  ContinuousRainy: "CONTINUOUS_RAINY",
-  Foggy: "FOGGY",
-  Snowy: "SNOWY",
-  NoInformation: "NO_INFORMATION",
-} as const;
-export type SearchAndFilterOptionsDTOWetterEnum =
-  (typeof SearchAndFilterOptionsDTOWetterEnum)[keyof typeof SearchAndFilterOptionsDTOWetterEnum];
 
 /**
  * Check if a given object implements the SearchAndFilterOptionsDTO interface.
@@ -207,11 +181,18 @@ export function SearchAndFilterOptionsDTOFromJSONTyped(
     searchInZaehlstellen: json["searchInZaehlstellen"],
     kreisverkehr: json["kreisverkehr"],
     sonderzaehlung: json["sonderzaehlung"],
-    zaehlarten: json["zaehlarten"] == null ? undefined : json["zaehlarten"],
+    zaehlarten:
+      json["zaehlarten"] == null
+        ? undefined
+        : (json["zaehlarten"] as Array<any>).map(ZaehlartFromJSON),
     zaehldauern:
       json["zaehldauern"] == null
         ? undefined
         : (json["zaehldauern"] as Array<any>).map(ZaehldauerFromJSON),
+    stadtbezirkNummern:
+      json["stadtbezirkNummern"] == null
+        ? undefined
+        : json["stadtbezirkNummern"],
     zaehldatumVon:
       json["zaehldatumVon"] == null
         ? undefined
@@ -222,16 +203,15 @@ export function SearchAndFilterOptionsDTOFromJSONTyped(
         : parseDate(json["zaehldatumBis"]),
     zaehlJahreszeiten:
       json["zaehlJahreszeiten"] == null ? undefined : json["zaehlJahreszeiten"],
-    stadtbezirkNummern:
-      json["stadtbezirkNummern"] == null
-        ? undefined
-        : json["stadtbezirkNummern"],
     zaehlMonate: json["zaehlMonate"] == null ? undefined : json["zaehlMonate"],
     tagesTypen:
       json["tagesTypen"] == null
         ? undefined
         : (json["tagesTypen"] as Array<any>).map(TagesTypFromJSON),
-    wetter: json["wetter"] == null ? undefined : json["wetter"],
+    wetter:
+      json["wetter"] == null
+        ? undefined
+        : (json["wetter"] as Array<any>).map(WetterFromJSON),
     verkehrsarten:
       json["verkehrsarten"] == null
         ? undefined
@@ -265,11 +245,15 @@ export function SearchAndFilterOptionsDTOToJSONTyped(
     searchInZaehlstellen: value["searchInZaehlstellen"],
     kreisverkehr: value["kreisverkehr"],
     sonderzaehlung: value["sonderzaehlung"],
-    zaehlarten: value["zaehlarten"],
+    zaehlarten:
+      value["zaehlarten"] == null
+        ? undefined
+        : (value["zaehlarten"] as Array<any>).map(ZaehlartToJSON),
     zaehldauern:
       value["zaehldauern"] == null
         ? undefined
         : (value["zaehldauern"] as Array<any>).map(ZaehldauerToJSON),
+    stadtbezirkNummern: value["stadtbezirkNummern"],
     zaehldatumVon:
       value["zaehldatumVon"] == null
         ? value["zaehldatumVon"]
@@ -279,13 +263,15 @@ export function SearchAndFilterOptionsDTOToJSONTyped(
         ? value["zaehldatumBis"]
         : serializeDate(value["zaehldatumBis"]),
     zaehlJahreszeiten: value["zaehlJahreszeiten"],
-    stadtbezirkNummern: value["stadtbezirkNummern"],
     zaehlMonate: value["zaehlMonate"],
     tagesTypen:
       value["tagesTypen"] == null
         ? undefined
         : (value["tagesTypen"] as Array<any>).map(TagesTypToJSON),
-    wetter: value["wetter"],
+    wetter:
+      value["wetter"] == null
+        ? undefined
+        : (value["wetter"] as Array<any>).map(WetterToJSON),
     verkehrsarten:
       value["verkehrsarten"] == null
         ? undefined

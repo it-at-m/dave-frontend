@@ -249,6 +249,8 @@ models/Verkehrsart.ts
 models/Verkehrsbeziehung.ts
 models/VerkehrsbeziehungValue.ts
 models/VerkehrsbeziehungVisumDTO.ts
+models/Wetter.ts
+models/Zaehlart.ts
 models/ZaehlartenKarteDTO.ts
 models/ZaehldatenIntervall.ts
 models/Zaehldauer.ts

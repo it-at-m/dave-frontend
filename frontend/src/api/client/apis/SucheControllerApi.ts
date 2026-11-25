@@ -73,13 +73,6 @@ export interface SuggestDatenportalRequest {
   searchAndFilterOptionsDTO: SearchAndFilterOptionsDTO;
 }
 
-export interface SuggestNeuRequest {
-  /**
-   *
-   */
-  query: string;
-}
-
 /**
  *
  */
@@ -365,61 +358,6 @@ export class SucheControllerApi extends runtime.BaseAPI {
       requestParameters,
       initOverrides
     );
-    return await response.value();
-  }
-
-  /**
-   * Creates request options for suggestNeu without sending the request
-   */
-  async suggestNeuRequestOpts(
-    requestParameters: SuggestNeuRequest
-  ): Promise<runtime.RequestOpts> {
-    if (requestParameters["query"] == null) {
-      throw new runtime.RequiredError(
-        "query",
-        'Required parameter "query" was null or undefined when calling suggestNeu().'
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["query"] != null) {
-      queryParameters["query"] = requestParameters["query"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    let urlPath = `/suggest-neu`;
-
-    return {
-      path: urlPath,
-      method: "POST",
-      headers: headerParameters,
-      query: queryParameters,
-    };
-  }
-
-  /**
-   */
-  async suggestNeuRaw(
-    requestParameters: SuggestNeuRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<SucheComplexSuggestsDTO>> {
-    const requestOptions = await this.suggestNeuRequestOpts(requestParameters);
-    const response = await this.request(requestOptions, initOverrides);
-
-    return new runtime.JSONApiResponse(response, (jsonValue) =>
-      SucheComplexSuggestsDTOFromJSON(jsonValue)
-    );
-  }
-
-  /**
-   */
-  async suggestNeu(
-    requestParameters: SuggestNeuRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<SucheComplexSuggestsDTO> {
-    const response = await this.suggestNeuRaw(requestParameters, initOverrides);
     return await response.value();
   }
 }
