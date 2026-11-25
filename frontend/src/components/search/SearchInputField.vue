@@ -516,7 +516,6 @@ function focusSuchfeld() {
 }
 
 function suggest() {
-  console.log("suggest");
   if (!isEmpty(searchQuery.value)) {
     lastSuggestQuery.value = searchQuery.value ?? "";
     loadingSuggestions.value = true;
@@ -525,7 +524,6 @@ function suggest() {
       searchAndFilterOptions.value
     )
       .then((response: SucheComplexSuggestsDTO) => {
-        console.log("res: " + response.zaehlstellenSuggests.length);
         suggestions.value = [];
 
         response.wordSuggests.forEach((word: SucheWordSuggestDTO) => {
@@ -585,7 +583,6 @@ function suggest() {
 }
 
 function clearSearch(): void {
-  console.log("clearSearch");
   searchQuery.value = "";
   selectedSuggestion.value = undefined;
   suggestions.value = [];
@@ -599,9 +596,6 @@ function clearSearch(): void {
  */
 function searchOrShowSelectedSuggestion(item: Suggest) {
   selectedSuggestion.value = item;
-  console.log(
-    "searchOrShowSelectedSuggestion: " + selectedSuggestion.value.type
-  );
   isOpen.value = false;
   if (selectedSuggestion.value.type === SUGGESTION_TYPE_WORTVORSCHLAG) {
     searchQuery.value = selectedSuggestion.value.text;
@@ -619,7 +613,6 @@ function searchOrShowSelectedSuggestion(item: Suggest) {
  * Triggered by searchOrShowSelectedSuggestion() + watch store.triggerSearch
  */
 function search() {
-  console.log("search");
   mapOptionsStore.resetMapOptions();
 
   searchStore.setLastSearchQuery(searchQuery.value || "");
@@ -672,7 +665,6 @@ function showMessstelle(item: Suggest) {
 watch(
   () => searchQuery.value,
   (newVal) => {
-    console.log("changed: query.value");
     if (!isOpen.value) return;
     if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
     searchDebounceTimer = setTimeout(() => {
@@ -744,7 +736,6 @@ const searchAndFilterOptionsStored = computed({
 watch(
   () => searchStore.triggerSearch,
   () => {
-    console.log("changed searchStore.triggerSearch");
     searchQuery.value = searchStore.getLastSearchQuery;
     searchAndFilterOptions.value = searchAndFilterOptionsStored.value;
     selectedSuggestion.value = undefined;
@@ -789,7 +780,6 @@ const getContentSheetHeight = computed(() => {
  * Triggerd by @click:Übernehmen oder enter oder searchOrShowSelectedSuggestion
  */
 function adoptSearchAndFilterOptions(): void {
-  console.log("adoptSearchAndFilterOptions: " + searchQuery.value);
   selectedSuggestion.value = DefaultObjectCreator.createDefaultSuggestion();
   searchAndFilterOptionsStored.value = searchAndFilterOptions.value;
   search();
@@ -803,7 +793,6 @@ function adoptSearchAndFilterOptions(): void {
  * -> zurücksetzen auf letzte Suchkriterien
  */
 function resetSearchAndFilterOptions(): void {
-  console.log("resetSearchAndFilterOptions");
   searchAndFilterOptionsStored.value =
     DefaultObjectCreator.createDefaultSearchAndFilterOptionsDTO();
   searchStore.setLastSearchQuery("");
