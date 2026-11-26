@@ -1,4 +1,4 @@
-import type LadeZaehldatenZeitreiheDTO from "@/types/zaehlung/zaehldaten/LadeZaehldatenZeitreiheDTO";
+import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
 
 import { shallowMount } from "@vue/test-utils";
 import { createPinia } from "pinia";
