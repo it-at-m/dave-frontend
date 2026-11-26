@@ -5057,9 +5057,9 @@
 import type {
   BearbeiteKnotenarmDTO,
   FjsKnotenarmValue,
+  FjsStrassenseiteValue,
   LadeBelastungsplanFjsDTO,
   LaengsverkehrValue,
-  StrassenseiteValue,
 } from "@/api/client";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
@@ -5150,7 +5150,7 @@ function getArrowZaehlwertOrZero(
   );
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
-    (s: StrassenseiteValue) => s.strassenseite === strassenseite
+    (s: FjsStrassenseiteValue) => s.strassenseite === strassenseite
   );
   if (!seite) return 0;
   const laengsverkehr = seite.valuesLaengsverkehre.find(
@@ -5177,7 +5177,7 @@ function getSumArrowsKnotenarmStrassenseiteOrZero(
   );
   if (!kn) return 0;
   const seite = kn.valuesStrassenseiten.find(
-    (s: StrassenseiteValue) => s.strassenseite === strassenseite
+    (s: FjsStrassenseiteValue) => s.strassenseite === strassenseite
   );
   return seite?.sumStrassenseite ?? 0;
 }
