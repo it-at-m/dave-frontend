@@ -356,10 +356,10 @@ function loadProcessedChartData() {
     .then((processedZaehldaten: LadeProcessedMesswerteDTO) => {
       processedMessdatenDTO.value = processedZaehldaten;
       messstelleStore.setIncludedMeasuringDays(
-        processedZaehldaten.includedMeasuringDays
+        processedZaehldaten.includedMeasuringDays ?? 0
       );
       messstelleStore.setRequestedMeasuringDays(
-        processedZaehldaten.requestedMeasuringDays
+        processedZaehldaten.requestedMeasuringDays ?? 0
       );
       setMaxRangeYAchse();
     })
