@@ -80,12 +80,12 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
   async deleteDienstleisterRaw(
     requestParameters: DeleteDienstleisterRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<object>> {
+  ): Promise<runtime.ApiResponse<void>> {
     const requestOptions =
       await this.deleteDienstleisterRequestOpts(requestParameters);
     const response = await this.request(requestOptions, initOverrides);
 
-    return new runtime.JSONApiResponse<any>(response);
+    return new runtime.VoidApiResponse(response);
   }
 
   /**
@@ -93,12 +93,8 @@ export class DienstleisterControllerApi extends runtime.BaseAPI {
   async deleteDienstleister(
     requestParameters: DeleteDienstleisterRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<object> {
-    const response = await this.deleteDienstleisterRaw(
-      requestParameters,
-      initOverrides
-    );
-    return await response.value();
+  ): Promise<void> {
+    await this.deleteDienstleisterRaw(requestParameters, initOverrides);
   }
 
   /**

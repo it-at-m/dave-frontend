@@ -11,21 +11,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { GenerateMessstellePdfRequest } from "../models/GenerateMessstellePdfRequest";
 import type { GeneratePdfReportRequestAssetsInner } from "../models/GeneratePdfReportRequestAssetsInner";
-import type { LadeProcessedMesswerteDTO } from "../models/LadeProcessedMesswerteDTO";
+import type { GenerateZaehlungPdfRequest } from "../models/GenerateZaehlungPdfRequest";
 import type { LadeZaehldatenSteplineDTO } from "../models/LadeZaehldatenSteplineDTO";
 import type { MessstelleAuswertungOptionsDTO } from "../models/MessstelleAuswertungOptionsDTO";
-import type { MessstelleOptionsDTO } from "../models/MessstelleOptionsDTO";
-import type { OptionsDTO } from "../models/OptionsDTO";
 
+import {
+  GenerateMessstellePdfRequestFromJSON,
+  GenerateMessstellePdfRequestToJSON,
+} from "../models/GenerateMessstellePdfRequest";
 import {
   GeneratePdfReportRequestAssetsInnerFromJSON,
   GeneratePdfReportRequestAssetsInnerToJSON,
 } from "../models/GeneratePdfReportRequestAssetsInner";
 import {
-  LadeProcessedMesswerteDTOFromJSON,
-  LadeProcessedMesswerteDTOToJSON,
-} from "../models/LadeProcessedMesswerteDTO";
+  GenerateZaehlungPdfRequestFromJSON,
+  GenerateZaehlungPdfRequestToJSON,
+} from "../models/GenerateZaehlungPdfRequest";
 import {
   LadeZaehldatenSteplineDTOFromJSON,
   LadeZaehldatenSteplineDTOToJSON,
@@ -34,14 +37,9 @@ import {
   MessstelleAuswertungOptionsDTOFromJSON,
   MessstelleAuswertungOptionsDTOToJSON,
 } from "../models/MessstelleAuswertungOptionsDTO";
-import {
-  MessstelleOptionsDTOFromJSON,
-  MessstelleOptionsDTOToJSON,
-} from "../models/MessstelleOptionsDTO";
-import { OptionsDTOFromJSON, OptionsDTOToJSON } from "../models/OptionsDTO";
 import * as runtime from "../runtime";
 
-export interface GenerateMessstellePdfRequest {
+export interface GenerateMessstellePdfOperationRequest {
   /**
    *
    */
@@ -53,23 +51,7 @@ export interface GenerateMessstellePdfRequest {
   /**
    *
    */
-  department: string;
-  /**
-   *
-   */
-  options: MessstelleOptionsDTO;
-  /**
-   *
-   */
-  messswerte: LadeProcessedMesswerteDTO;
-  /**
-   *
-   */
-  chartAsBase64Png?: string;
-  /**
-   *
-   */
-  schematischeUebersichtAsBase64Png?: string;
+  generateMessstellePdfRequest: GenerateMessstellePdfRequest;
 }
 
 export interface GeneratePdfAuswertungRequest {
@@ -102,7 +84,7 @@ export interface GeneratePdfReportRequest {
   department: string;
 }
 
-export interface GenerateZaehlungPdfRequest {
+export interface GenerateZaehlungPdfOperationRequest {
   /**
    *
    */
@@ -114,19 +96,7 @@ export interface GenerateZaehlungPdfRequest {
   /**
    *
    */
-  department: string;
-  /**
-   *
-   */
-  options: OptionsDTO;
-  /**
-   *
-   */
-  chartAsBase64Png?: string;
-  /**
-   *
-   */
-  schematischeUebersichtAsBase64Png?: string;
+  generateZaehlungPdfRequest: GenerateZaehlungPdfRequest;
 }
 
 /**
@@ -137,7 +107,7 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
    * Creates request options for generateMessstellePdf without sending the request
    */
   async generateMessstellePdfRequestOpts(
-    requestParameters: GenerateMessstellePdfRequest
+    requestParameters: GenerateMessstellePdfOperationRequest
   ): Promise<runtime.RequestOpts> {
     if (requestParameters["fachId"] == null) {
       throw new runtime.RequiredError(
@@ -153,24 +123,10 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
       );
     }
 
-    if (requestParameters["department"] == null) {
+    if (requestParameters["generateMessstellePdfRequest"] == null) {
       throw new runtime.RequiredError(
-        "department",
-        'Required parameter "department" was null or undefined when calling generateMessstellePdf().'
-      );
-    }
-
-    if (requestParameters["options"] == null) {
-      throw new runtime.RequiredError(
-        "options",
-        'Required parameter "options" was null or undefined when calling generateMessstellePdf().'
-      );
-    }
-
-    if (requestParameters["messswerte"] == null) {
-      throw new runtime.RequiredError(
-        "messswerte",
-        'Required parameter "messswerte" was null or undefined when calling generateMessstellePdf().'
+        "generateMessstellePdfRequest",
+        'Required parameter "generateMessstellePdfRequest" was null or undefined when calling generateMessstellePdf().'
       );
     }
 
@@ -186,65 +142,7 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
 
     const headerParameters: runtime.HTTPHeaders = {};
 
-    const consumes: runtime.Consume[] = [
-      { contentType: "multipart/form-data" },
-    ];
-    // @ts-ignore: canConsumeForm may be unused
-    const canConsumeForm = runtime.canConsumeForm(consumes);
-
-    let formParams: { append(param: string, value: any): any };
-    let useForm = false;
-    if (useForm) {
-      formParams = new FormData();
-    } else {
-      formParams = new URLSearchParams();
-    }
-
-    if (requestParameters["department"] != null) {
-      formParams.append("department", requestParameters["department"] as any);
-    }
-
-    if (requestParameters["options"] != null) {
-      formParams.append(
-        "options",
-        new Blob(
-          [
-            JSON.stringify(
-              MessstelleOptionsDTOToJSON(requestParameters["options"])
-            ),
-          ],
-          { type: "application/json" }
-        )
-      );
-    }
-
-    if (requestParameters["messswerte"] != null) {
-      formParams.append(
-        "messswerte",
-        new Blob(
-          [
-            JSON.stringify(
-              LadeProcessedMesswerteDTOToJSON(requestParameters["messswerte"])
-            ),
-          ],
-          { type: "application/json" }
-        )
-      );
-    }
-
-    if (requestParameters["chartAsBase64Png"] != null) {
-      formParams.append(
-        "chartAsBase64Png",
-        requestParameters["chartAsBase64Png"] as any
-      );
-    }
-
-    if (requestParameters["schematischeUebersichtAsBase64Png"] != null) {
-      formParams.append(
-        "schematischeUebersichtAsBase64Png",
-        requestParameters["schematischeUebersichtAsBase64Png"] as any
-      );
-    }
+    headerParameters["Content-Type"] = "application/json";
 
     let urlPath = `/generate-pdf/messstelle`;
 
@@ -253,14 +151,16 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
       method: "POST",
       headers: headerParameters,
       query: queryParameters,
-      body: formParams,
+      body: GenerateMessstellePdfRequestToJSON(
+        requestParameters["generateMessstellePdfRequest"]
+      ),
     };
   }
 
   /**
    */
   async generateMessstellePdfRaw(
-    requestParameters: GenerateMessstellePdfRequest,
+    requestParameters: GenerateMessstellePdfOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<string>> {
     const requestOptions =
@@ -277,7 +177,7 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
   /**
    */
   async generateMessstellePdf(
-    requestParameters: GenerateMessstellePdfRequest,
+    requestParameters: GenerateMessstellePdfOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<string> {
     const response = await this.generateMessstellePdfRaw(
@@ -506,7 +406,7 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
    * Creates request options for generateZaehlungPdf without sending the request
    */
   async generateZaehlungPdfRequestOpts(
-    requestParameters: GenerateZaehlungPdfRequest
+    requestParameters: GenerateZaehlungPdfOperationRequest
   ): Promise<runtime.RequestOpts> {
     if (requestParameters["fachId"] == null) {
       throw new runtime.RequiredError(
@@ -522,17 +422,10 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
       );
     }
 
-    if (requestParameters["department"] == null) {
+    if (requestParameters["generateZaehlungPdfRequest"] == null) {
       throw new runtime.RequiredError(
-        "department",
-        'Required parameter "department" was null or undefined when calling generateZaehlungPdf().'
-      );
-    }
-
-    if (requestParameters["options"] == null) {
-      throw new runtime.RequiredError(
-        "options",
-        'Required parameter "options" was null or undefined when calling generateZaehlungPdf().'
+        "generateZaehlungPdfRequest",
+        'Required parameter "generateZaehlungPdfRequest" was null or undefined when calling generateZaehlungPdf().'
       );
     }
 
@@ -548,47 +441,7 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
 
     const headerParameters: runtime.HTTPHeaders = {};
 
-    const consumes: runtime.Consume[] = [
-      { contentType: "multipart/form-data" },
-    ];
-    // @ts-ignore: canConsumeForm may be unused
-    const canConsumeForm = runtime.canConsumeForm(consumes);
-
-    let formParams: { append(param: string, value: any): any };
-    let useForm = false;
-    if (useForm) {
-      formParams = new FormData();
-    } else {
-      formParams = new URLSearchParams();
-    }
-
-    if (requestParameters["department"] != null) {
-      formParams.append("department", requestParameters["department"] as any);
-    }
-
-    if (requestParameters["options"] != null) {
-      formParams.append(
-        "options",
-        new Blob(
-          [JSON.stringify(OptionsDTOToJSON(requestParameters["options"]))],
-          { type: "application/json" }
-        )
-      );
-    }
-
-    if (requestParameters["chartAsBase64Png"] != null) {
-      formParams.append(
-        "chartAsBase64Png",
-        requestParameters["chartAsBase64Png"] as any
-      );
-    }
-
-    if (requestParameters["schematischeUebersichtAsBase64Png"] != null) {
-      formParams.append(
-        "schematischeUebersichtAsBase64Png",
-        requestParameters["schematischeUebersichtAsBase64Png"] as any
-      );
-    }
+    headerParameters["Content-Type"] = "application/json";
 
     let urlPath = `/generate-pdf/zaehlung`;
 
@@ -597,14 +450,16 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
       method: "POST",
       headers: headerParameters,
       query: queryParameters,
-      body: formParams,
+      body: GenerateZaehlungPdfRequestToJSON(
+        requestParameters["generateZaehlungPdfRequest"]
+      ),
     };
   }
 
   /**
    */
   async generateZaehlungPdfRaw(
-    requestParameters: GenerateZaehlungPdfRequest,
+    requestParameters: GenerateZaehlungPdfOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<string>> {
     const requestOptions =
@@ -621,7 +476,7 @@ export class GeneratePdfControllerApi extends runtime.BaseAPI {
   /**
    */
   async generateZaehlungPdf(
-    requestParameters: GenerateZaehlungPdfRequest,
+    requestParameters: GenerateZaehlungPdfOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<string> {
     const response = await this.generateZaehlungPdfRaw(

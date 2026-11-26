@@ -12,13 +12,7 @@
  * Do not edit the class manually.
  */
 
-import {
-  mapValues,
-  parseDate,
-  parseDateTime,
-  serializeDate,
-  serializeDateTime,
-} from "../runtime";
+import { mapValues } from "../runtime";
 
 /**
  *
@@ -26,18 +20,6 @@ import {
  * @interface PkwEinheit
  */
 export interface PkwEinheit {
-  /**
-   *
-   */
-  id?: string;
-  /**
-   *
-   */
-  createdTime?: Date;
-  /**
-   *
-   */
-  version?: number;
   /**
    *
    */
@@ -66,10 +48,6 @@ export interface PkwEinheit {
    *
    */
   fussgaenger?: number;
-  /**
-   *
-   */
-  entityVersion?: number;
 }
 
 /**
@@ -91,12 +69,6 @@ export function PkwEinheitFromJSONTyped(
     return json;
   }
   return {
-    id: json["id"] == null ? undefined : json["id"],
-    createdTime:
-      json["createdTime"] == null
-        ? undefined
-        : parseDateTime(json["createdTime"]),
-    version: json["version"] == null ? undefined : json["version"],
     pkw: json["pkw"] == null ? undefined : json["pkw"],
     lkw: json["lkw"] == null ? undefined : json["lkw"],
     lastzuege: json["lastzuege"] == null ? undefined : json["lastzuege"],
@@ -105,8 +77,6 @@ export function PkwEinheitFromJSONTyped(
     fahrradfahrer:
       json["fahrradfahrer"] == null ? undefined : json["fahrradfahrer"],
     fussgaenger: json["fussgaenger"] == null ? undefined : json["fussgaenger"],
-    entityVersion:
-      json["entityVersion"] == null ? undefined : json["entityVersion"],
   };
 }
 
@@ -123,12 +93,6 @@ export function PkwEinheitToJSONTyped(
   }
 
   return {
-    id: value["id"],
-    createdTime:
-      value["createdTime"] == null
-        ? value["createdTime"]
-        : serializeDateTime(value["createdTime"]),
-    version: value["version"],
     pkw: value["pkw"],
     lkw: value["lkw"],
     lastzuege: value["lastzuege"],
@@ -136,6 +100,5 @@ export function PkwEinheitToJSONTyped(
     kraftraeder: value["kraftraeder"],
     fahrradfahrer: value["fahrradfahrer"],
     fussgaenger: value["fussgaenger"],
-    entityVersion: value["entityVersion"],
   };
 }

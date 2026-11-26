@@ -23,7 +23,7 @@ export interface LadeMesswerteDTO {
   /**
    *
    */
-  sortingIndex?: number;
+  sortingIndex: number;
   /**
    *
    */
@@ -96,6 +96,8 @@ export interface LadeMesswerteDTO {
 export function instanceOfLadeMesswerteDTO(
   value: object
 ): value is LadeMesswerteDTO {
+  if (!("sortingIndex" in value) || value["sortingIndex"] === undefined)
+    return false;
   if (!("type" in value) || value["type"] === undefined) return false;
   if (!("startUhrzeit" in value) || value["startUhrzeit"] === undefined)
     return false;
@@ -142,8 +144,7 @@ export function LadeMesswerteDTOFromJSONTyped(
     return json;
   }
   return {
-    sortingIndex:
-      json["sortingIndex"] == null ? undefined : json["sortingIndex"],
+    sortingIndex: json["sortingIndex"],
     type: json["type"],
     startUhrzeit: json["startUhrzeit"],
     endeUhrzeit: json["endeUhrzeit"],
