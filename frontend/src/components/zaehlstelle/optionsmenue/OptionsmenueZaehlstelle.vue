@@ -222,8 +222,8 @@ const isSonderzaehldauer = computed(() => {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    activeZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
-    activeZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
+    activeZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
 });
 
@@ -252,7 +252,7 @@ function setDefaultOptionsForZaehlung() {
     !isSonderzaehldauerKurzzeitzaehlung.value
   ) {
     const zbMax = zeitblockOrder.find((zb) =>
-      activeZaehlung.value.zeitauswahl?.blocks?.includes(zb)
+      activeZaehlung.value.zeitauswahl?.blocks?.has(zb)
     );
     if (zbMax) {
       // Zeitblock verfügbar --> Zeitblock setzen

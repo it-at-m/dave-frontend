@@ -415,8 +415,8 @@ const isSonderzaehldauer = computed(() => {
 const isSonderzaehldauerKurzzeitzaehlung = computed(() => {
   return (
     isSonderzaehldauer.value &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb0610) &&
-    selectedZaehlung.value.zeitauswahl?.blocks?.includes(Zeitblock.Zb1519)
+    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb0610) &&
+    selectedZaehlung.value.zeitauswahl?.blocks?.has(Zeitblock.Zb1519)
   );
 });
 

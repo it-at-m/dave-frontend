@@ -14,7 +14,7 @@ export default class ZaehlstellenService {
   static getById(id: string): Promise<LeseZaehlstelleDTO> {
     return handleOpenApiError(
       this.API.getZaehlstelleHeaderRaw({ id }).then((response) =>
-        response.raw.json()
+        response.value()
       ),
       "Beim holen der Zählstelle ist ein Fehler aufgetreten."
     );
