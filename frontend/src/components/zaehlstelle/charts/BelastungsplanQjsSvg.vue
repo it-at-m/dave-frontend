@@ -1150,19 +1150,19 @@ const sumArrowsOneTwo = computed(() => {
   if (availableKnotenarmNummern.value.includes(1)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.W
-    )?.sumStrassenseite;
+    )?.value;
   } else if (availableKnotenarmNummern.value.includes(2)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.N
-    )?.sumStrassenseite;
+    )?.value;
   } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.Nw
-    )?.sumStrassenseite;
+    )?.value;
   } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.No
-    )?.sumStrassenseite;
+    )?.value;
   }
   return sum ?? 0;
 });
@@ -1175,19 +1175,19 @@ const sumArrowsThreeFour = computed(() => {
   if (availableKnotenarmNummern.value.includes(1)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.O
-    )?.sumStrassenseite;
+    )?.value;
   } else if (availableKnotenarmNummern.value.includes(2)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.S
-    )?.sumStrassenseite;
+    )?.value;
   } else if (availableKnotenarmNummern.value.includes(5)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.So
-    )?.sumStrassenseite;
+    )?.value;
   } else if (availableKnotenarmNummern.value.includes(6)) {
     sum = props.data.value1.valuesStrassenseite.find(
       (k) => k.strassenseite === Himmelsrichtung.Sw
-    )?.sumStrassenseite;
+    )?.value;
   }
   return sum ?? 0;
 });
