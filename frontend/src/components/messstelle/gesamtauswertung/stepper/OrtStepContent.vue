@@ -57,6 +57,7 @@
 
 <script setup lang="ts">
 import type {
+  Himmelsrichtung,
   MessquerschnittAuswertungDTO,
   MessstelleAuswertungDTO,
   MessstelleAuswertungIdDTO,
@@ -189,8 +190,9 @@ const richtungValues = computed<Array<KeyVal>>(() => {
       (querschnitt: MessquerschnittAuswertungDTO) => {
         const keyVal: KeyVal = {
           title:
-            himmelsRichtungenTextLong.get(querschnitt.fahrtrichtung ?? "") ??
-            "Fehler bei der Bestimmung der Himmelsrichtung.",
+            himmelsRichtungenTextLong.get(
+              (querschnitt.fahrtrichtung as Himmelsrichtung) ?? ""
+            ) ?? "Fehler bei der Bestimmung der Himmelsrichtung.",
           value: querschnitt.fahrtrichtung ?? "",
         };
         if (
