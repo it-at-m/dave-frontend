@@ -9,7 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import type { LadeZaehldatenZeitreiheDTO } from "@/api/client";
+import type {
+  LadeZaehldatenZeitreiheDTO,
+  LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum,
+} from "@/api/client";
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 import type Options from "@/types/zaehlung/Options";
 
@@ -550,7 +553,9 @@ function getDataViewValue(
 ): number | string {
   if (
     fahrzeug &&
-    props.zeitreiheDaten.tageswertNichtVorhanden[index]?.includes(fahrzeug)
+    props.zeitreiheDaten.tageswertNichtVorhanden[index]?.includes(
+      fahrzeug as LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum
+    )
   ) {
     return "Tageswert nicht vorh.";
   }
