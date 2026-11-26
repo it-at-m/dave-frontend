@@ -14,6 +14,7 @@
 import type { LadeAuswertungSpitzenstundeDTO } from "../models/LadeAuswertungSpitzenstundeDTO";
 import type { LadeAuswertungVisumDTO } from "../models/LadeAuswertungVisumDTO";
 import type { LadeAuswertungZaehlstelleKoordinateDTO } from "../models/LadeAuswertungZaehlstelleKoordinateDTO";
+import type { Zaehlart } from "../models/Zaehlart";
 import type { Zeitblock } from "../models/Zeitblock";
 
 import {
@@ -28,6 +29,7 @@ import {
   LadeAuswertungZaehlstelleKoordinateDTOFromJSON,
   LadeAuswertungZaehlstelleKoordinateDTOToJSON,
 } from "../models/LadeAuswertungZaehlstelleKoordinateDTO";
+import { ZaehlartFromJSON, ZaehlartToJSON } from "../models/Zaehlart";
 import { ZeitblockFromJSON, ZeitblockToJSON } from "../models/Zeitblock";
 import * as runtime from "../runtime";
 
@@ -39,7 +41,7 @@ export interface LadeAuswertungSpitzenstundeRequest {
   /**
    *
    */
-  zaehlart: LadeAuswertungSpitzenstundeZaehlartEnum;
+  zaehlart: Zaehlart;
   /**
    *
    */
@@ -289,27 +291,3 @@ export class EaiControllerApi extends runtime.BaseAPI {
     return await response.value();
   }
 }
-
-/**
- * @export
- */
-export const LadeAuswertungSpitzenstundeZaehlartEnum = {
-  N: "N",
-  H: "H",
-  Q: "Q",
-  Q2: "Q_",
-  Qb: "QB",
-  Qh: "QH",
-  Qi: "QI",
-  Qs: "QS",
-  Qt: "QT",
-  Qr: "QR",
-  R: "R",
-  Qjs: "QJS",
-  Fjs: "FJS",
-  Qu: "QU",
-  T: "T",
-  Tk: "TK",
-} as const;
-export type LadeAuswertungSpitzenstundeZaehlartEnum =
-  (typeof LadeAuswertungSpitzenstundeZaehlartEnum)[keyof typeof LadeAuswertungSpitzenstundeZaehlartEnum];

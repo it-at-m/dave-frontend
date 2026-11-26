@@ -117,7 +117,11 @@ export interface LadeAuswertungSpitzenstundeDTO {
   /**
    *
    */
-  kfz: number;
+  anteilGueterverkehrAnKfzProzent: number;
+  /**
+   *
+   */
+  anteilSchwerverkehrAnKfzProzent: number;
   /**
    *
    */
@@ -125,11 +129,7 @@ export interface LadeAuswertungSpitzenstundeDTO {
   /**
    *
    */
-  anteilGueterverkehrAnKfzProzent: number;
-  /**
-   *
-   */
-  anteilSchwerverkehrAnKfzProzent: number;
+  kfz: number;
   /**
    *
    */
@@ -162,8 +162,6 @@ export function instanceOfLadeAuswertungSpitzenstundeDTO(
     return false;
   if (!("pkwEinheiten" in value) || value["pkwEinheiten"] === undefined)
     return false;
-  if (!("kfz" in value) || value["kfz"] === undefined) return false;
-  if (!("gesamt" in value) || value["gesamt"] === undefined) return false;
   if (
     !("anteilGueterverkehrAnKfzProzent" in value) ||
     value["anteilGueterverkehrAnKfzProzent"] === undefined
@@ -174,6 +172,8 @@ export function instanceOfLadeAuswertungSpitzenstundeDTO(
     value["anteilSchwerverkehrAnKfzProzent"] === undefined
   )
     return false;
+  if (!("gesamt" in value) || value["gesamt"] === undefined) return false;
+  if (!("kfz" in value) || value["kfz"] === undefined) return false;
   if (!("gueterverkehr" in value) || value["gueterverkehr"] === undefined)
     return false;
   if (!("schwerverkehr" in value) || value["schwerverkehr"] === undefined)
@@ -225,10 +225,10 @@ export function LadeAuswertungSpitzenstundeDTOFromJSONTyped(
       json["zaehlsituationErweitert"] == null
         ? undefined
         : json["zaehlsituationErweitert"],
-    kfz: json["kfz"],
-    gesamt: json["gesamt"],
     anteilGueterverkehrAnKfzProzent: json["anteilGueterverkehrAnKfzProzent"],
     anteilSchwerverkehrAnKfzProzent: json["anteilSchwerverkehrAnKfzProzent"],
+    gesamt: json["gesamt"],
+    kfz: json["kfz"],
     gueterverkehr: json["gueterverkehr"],
     schwerverkehr: json["schwerverkehr"],
   };
@@ -272,10 +272,10 @@ export function LadeAuswertungSpitzenstundeDTOToJSONTyped(
     sonderzaehlung: value["sonderzaehlung"],
     zaehlsituation: value["zaehlsituation"],
     zaehlsituationErweitert: value["zaehlsituationErweitert"],
-    kfz: value["kfz"],
-    gesamt: value["gesamt"],
     anteilGueterverkehrAnKfzProzent: value["anteilGueterverkehrAnKfzProzent"],
     anteilSchwerverkehrAnKfzProzent: value["anteilSchwerverkehrAnKfzProzent"],
+    gesamt: value["gesamt"],
+    kfz: value["kfz"],
     gueterverkehr: value["gueterverkehr"],
     schwerverkehr: value["schwerverkehr"],
   };

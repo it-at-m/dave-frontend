@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import type { Fahrzeug } from "./Fahrzeug";
 import type { Knotenarm } from "./Knotenarm";
 import type { Laengsverkehr } from "./Laengsverkehr";
 import type { PkwEinheit } from "./PkwEinheit";
@@ -26,6 +27,12 @@ import {
   serializeDate,
   serializeDateTime,
 } from "../runtime";
+import {
+  FahrzeugFromJSON,
+  FahrzeugFromJSONTyped,
+  FahrzeugToJSON,
+  FahrzeugToJSONTyped,
+} from "./Fahrzeug";
 import {
   KnotenarmFromJSON,
   KnotenarmFromJSONTyped,
@@ -80,7 +87,7 @@ export interface LeseZaehlungDTO {
   /**
    *
    */
-  jahr?: number;
+  jahr: number;
   /**
    *
    */
@@ -140,7 +147,7 @@ export interface LeseZaehlungDTO {
   /**
    *
    */
-  zaehlIntervall?: number;
+  zaehlIntervall: number;
   /**
    *
    */
@@ -168,7 +175,7 @@ export interface LeseZaehlungDTO {
   /**
    *
    */
-  kategorien?: Array<LeseZaehlungDTOKategorienEnum>;
+  kategorien?: Array<Fahrzeug>;
   /**
    *
    */
@@ -204,32 +211,14 @@ export interface LeseZaehlungDTO {
 }
 
 /**
- * @export
- */
-export const LeseZaehlungDTOKategorienEnum = {
-  Kfz: "KFZ",
-  Sv: "SV",
-  Gv: "GV",
-  SvP: "SV_P",
-  GvP: "GV_P",
-  Pkw: "PKW",
-  Lkw: "LKW",
-  Lz: "LZ",
-  Bus: "BUS",
-  Krad: "KRAD",
-  Rad: "RAD",
-  Fuss: "FUSS",
-  PkwEinheit: "PKW_EINHEIT",
-} as const;
-export type LeseZaehlungDTOKategorienEnum =
-  (typeof LeseZaehlungDTOKategorienEnum)[keyof typeof LeseZaehlungDTOKategorienEnum];
-
-/**
  * Check if a given object implements the LeseZaehlungDTO interface.
  */
 export function instanceOfLeseZaehlungDTO(
   value: object
 ): value is LeseZaehlungDTO {
+  if (!("jahr" in value) || value["jahr"] === undefined) return false;
+  if (!("zaehlIntervall" in value) || value["zaehlIntervall"] === undefined)
+    return false;
   return true;
 }
 
@@ -247,7 +236,7 @@ export function LeseZaehlungDTOFromJSONTyped(
   return {
     id: json["id"] == null ? undefined : json["id"],
     datum: json["datum"] == null ? undefined : parseDateTime(json["datum"]),
-    jahr: json["jahr"] == null ? undefined : json["jahr"],
+    jahr: json["jahr"],
     monat: json["monat"] == null ? undefined : json["monat"],
     jahreszeit: json["jahreszeit"] == null ? undefined : json["jahreszeit"],
     zaehlart: json["zaehlart"] == null ? undefined : json["zaehlart"],
@@ -270,8 +259,7 @@ export function LeseZaehlungDTOFromJSONTyped(
       json["zaehlsituationErweitert"] == null
         ? undefined
         : json["zaehlsituationErweitert"],
-    zaehlIntervall:
-      json["zaehlIntervall"] == null ? undefined : json["zaehlIntervall"],
+    zaehlIntervall: json["zaehlIntervall"],
     wetter: json["wetter"] == null ? undefined : json["wetter"],
     zaehldauer: json["zaehldauer"] == null ? undefined : json["zaehldauer"],
     quelle: json["quelle"] == null ? undefined : json["quelle"],
@@ -281,7 +269,10 @@ export function LeseZaehlungDTOFromJSONTyped(
       json["pkwEinheit"] == null
         ? undefined
         : PkwEinheitFromJSON(json["pkwEinheit"]),
-    kategorien: json["kategorien"] == null ? undefined : json["kategorien"],
+    kategorien:
+      json["kategorien"] == null
+        ? undefined
+        : (json["kategorien"] as Array<any>).map(FahrzeugFromJSON),
     knotenarme:
       json["knotenarme"] == null
         ? undefined
@@ -359,7 +350,10 @@ export function LeseZaehlungDTOToJSONTyped(
     kommentar: value["kommentar"],
     schulZeiten: value["schulZeiten"],
     pkwEinheit: PkwEinheitToJSON(value["pkwEinheit"]),
-    kategorien: value["kategorien"],
+    kategorien:
+      value["kategorien"] == null
+        ? undefined
+        : (value["kategorien"] as Array<any>).map(FahrzeugToJSON),
     knotenarme:
       value["knotenarme"] == null
         ? undefined

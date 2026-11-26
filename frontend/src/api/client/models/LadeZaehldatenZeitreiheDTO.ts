@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { Fahrzeug } from "./Fahrzeug";
+
 import { mapValues } from "../runtime";
+import {
+  FahrzeugFromJSON,
+  FahrzeugFromJSONTyped,
+  FahrzeugToJSON,
+  FahrzeugToJSONTyped,
+} from "./Fahrzeug";
 
 /**
  *
@@ -31,9 +39,7 @@ export interface LadeZaehldatenZeitreiheDTO {
   /**
    *
    */
-  tageswertNichtVorhanden: Array<
-    Array<LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum>
-  >;
+  tageswertNichtVorhanden: Array<Array<Fahrzeug>>;
   /**
    *
    */
@@ -67,27 +73,6 @@ export interface LadeZaehldatenZeitreiheDTO {
    */
   gesamt: Array<number>;
 }
-
-/**
- * @export
- */
-export const LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum = {
-  Kfz: "KFZ",
-  Sv: "SV",
-  Gv: "GV",
-  SvP: "SV_P",
-  GvP: "GV_P",
-  Pkw: "PKW",
-  Lkw: "LKW",
-  Lz: "LZ",
-  Bus: "BUS",
-  Krad: "KRAD",
-  Rad: "RAD",
-  Fuss: "FUSS",
-  PkwEinheit: "PKW_EINHEIT",
-} as const;
-export type LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum =
-  (typeof LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum)[keyof typeof LadeZaehldatenZeitreiheDTOTageswertNichtVorhandenEnum];
 
 /**
  * Check if a given object implements the LadeZaehldatenZeitreiheDTO interface.

@@ -33,15 +33,15 @@ export interface InfoMessageDTO {
   /**
    *
    */
-  content: string;
+  content?: string;
   /**
    *
    */
-  gueltigVon: Date;
+  gueltigVon?: Date;
   /**
    *
    */
-  gueltigBis: Date;
+  gueltigBis?: Date;
   /**
    *
    */
@@ -49,7 +49,7 @@ export interface InfoMessageDTO {
   /**
    *
    */
-  aktiv?: boolean;
+  aktiv: boolean;
 }
 
 /**
@@ -58,12 +58,8 @@ export interface InfoMessageDTO {
 export function instanceOfInfoMessageDTO(
   value: object
 ): value is InfoMessageDTO {
-  if (!("content" in value) || value["content"] === undefined) return false;
-  if (!("gueltigVon" in value) || value["gueltigVon"] === undefined)
-    return false;
-  if (!("gueltigBis" in value) || value["gueltigBis"] === undefined)
-    return false;
   if (!("gueltig" in value) || value["gueltig"] === undefined) return false;
+  if (!("aktiv" in value) || value["aktiv"] === undefined) return false;
   return true;
 }
 
@@ -80,17 +76,13 @@ export function InfoMessageDTOFromJSONTyped(
   }
   return {
     id: json["id"] == null ? undefined : json["id"],
-    content: json["content"],
+    content: json["content"] == null ? undefined : json["content"],
     gueltigVon:
-      json["gueltigVon"] == null
-        ? json["gueltigVon"]
-        : parseDate(json["gueltigVon"]),
+      json["gueltigVon"] == null ? undefined : parseDate(json["gueltigVon"]),
     gueltigBis:
-      json["gueltigBis"] == null
-        ? json["gueltigBis"]
-        : parseDate(json["gueltigBis"]),
+      json["gueltigBis"] == null ? undefined : parseDate(json["gueltigBis"]),
     gueltig: json["gueltig"],
-    aktiv: json["aktiv"] == null ? undefined : json["aktiv"],
+    aktiv: json["aktiv"],
   };
 }
 

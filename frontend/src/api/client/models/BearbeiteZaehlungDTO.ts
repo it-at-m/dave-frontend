@@ -16,6 +16,7 @@ import type { BearbeiteKnotenarmDTO } from "./BearbeiteKnotenarmDTO";
 import type { BearbeiteLaengsverkehrDTO } from "./BearbeiteLaengsverkehrDTO";
 import type { BearbeiteQuerungsverkehrDTO } from "./BearbeiteQuerungsverkehrDTO";
 import type { BearbeiteVerkehrsbeziehungDTO } from "./BearbeiteVerkehrsbeziehungDTO";
+import type { Fahrzeug } from "./Fahrzeug";
 import type { GeoPoint } from "./GeoPoint";
 import type { PkwEinheitDTO } from "./PkwEinheitDTO";
 
@@ -50,6 +51,12 @@ import {
   BearbeiteVerkehrsbeziehungDTOToJSON,
   BearbeiteVerkehrsbeziehungDTOToJSONTyped,
 } from "./BearbeiteVerkehrsbeziehungDTO";
+import {
+  FahrzeugFromJSON,
+  FahrzeugFromJSONTyped,
+  FahrzeugToJSON,
+  FahrzeugToJSONTyped,
+} from "./Fahrzeug";
 import {
   GeoPointFromJSON,
   GeoPointFromJSONTyped,
@@ -88,11 +95,11 @@ export interface BearbeiteZaehlungDTO {
   /**
    *
    */
-  lat?: number;
+  lat: number;
   /**
    *
    */
-  lng?: number;
+  lng: number;
   /**
    *
    */
@@ -120,15 +127,15 @@ export interface BearbeiteZaehlungDTO {
   /**
    *
    */
-  sonderzaehlung?: boolean;
+  sonderzaehlung: boolean;
   /**
    *
    */
-  kreisverkehr?: boolean;
+  kreisverkehr: boolean;
   /**
    *
    */
-  kategorien?: Array<BearbeiteZaehlungDTOKategorienEnum>;
+  kategorien?: Array<Fahrzeug>;
   /**
    *
    */
@@ -140,7 +147,7 @@ export interface BearbeiteZaehlungDTO {
   /**
    *
    */
-  zaehlIntervall?: number;
+  zaehlIntervall: number;
   /**
    *
    */
@@ -192,7 +199,7 @@ export interface BearbeiteZaehlungDTO {
   /**
    *
    */
-  unreadMessagesMobilitaetsreferat?: boolean;
+  unreadMessagesMobilitaetsreferat: boolean;
   /**
    *
    */
@@ -200,32 +207,24 @@ export interface BearbeiteZaehlungDTO {
 }
 
 /**
- * @export
- */
-export const BearbeiteZaehlungDTOKategorienEnum = {
-  Kfz: "KFZ",
-  Sv: "SV",
-  Gv: "GV",
-  SvP: "SV_P",
-  GvP: "GV_P",
-  Pkw: "PKW",
-  Lkw: "LKW",
-  Lz: "LZ",
-  Bus: "BUS",
-  Krad: "KRAD",
-  Rad: "RAD",
-  Fuss: "FUSS",
-  PkwEinheit: "PKW_EINHEIT",
-} as const;
-export type BearbeiteZaehlungDTOKategorienEnum =
-  (typeof BearbeiteZaehlungDTOKategorienEnum)[keyof typeof BearbeiteZaehlungDTOKategorienEnum];
-
-/**
  * Check if a given object implements the BearbeiteZaehlungDTO interface.
  */
 export function instanceOfBearbeiteZaehlungDTO(
   value: object
 ): value is BearbeiteZaehlungDTO {
+  if (!("lat" in value) || value["lat"] === undefined) return false;
+  if (!("lng" in value) || value["lng"] === undefined) return false;
+  if (!("sonderzaehlung" in value) || value["sonderzaehlung"] === undefined)
+    return false;
+  if (!("kreisverkehr" in value) || value["kreisverkehr"] === undefined)
+    return false;
+  if (!("zaehlIntervall" in value) || value["zaehlIntervall"] === undefined)
+    return false;
+  if (
+    !("unreadMessagesMobilitaetsreferat" in value) ||
+    value["unreadMessagesMobilitaetsreferat"] === undefined
+  )
+    return false;
   return true;
 }
 
@@ -245,8 +244,8 @@ export function BearbeiteZaehlungDTOFromJSONTyped(
     datum: json["datum"] == null ? undefined : parseDate(json["datum"]),
     zaehlart: json["zaehlart"] == null ? undefined : json["zaehlart"],
     punkt: json["punkt"] == null ? undefined : GeoPointFromJSON(json["punkt"]),
-    lat: json["lat"] == null ? undefined : json["lat"],
-    lng: json["lng"] == null ? undefined : json["lng"],
+    lat: json["lat"],
+    lng: json["lng"],
     tagesTyp: json["tagesTyp"] == null ? undefined : json["tagesTyp"],
     monat: json["monat"] == null ? undefined : json["monat"],
     jahreszeit: json["jahreszeit"] == null ? undefined : json["jahreszeit"],
@@ -255,19 +254,19 @@ export function BearbeiteZaehlungDTOFromJSONTyped(
     projektName: json["projektName"] == null ? undefined : json["projektName"],
     kreuzungsname:
       json["kreuzungsname"] == null ? undefined : json["kreuzungsname"],
-    sonderzaehlung:
-      json["sonderzaehlung"] == null ? undefined : json["sonderzaehlung"],
-    kreisverkehr:
-      json["kreisverkehr"] == null ? undefined : json["kreisverkehr"],
-    kategorien: json["kategorien"] == null ? undefined : json["kategorien"],
+    sonderzaehlung: json["sonderzaehlung"],
+    kreisverkehr: json["kreisverkehr"],
+    kategorien:
+      json["kategorien"] == null
+        ? undefined
+        : (json["kategorien"] as Array<any>).map(FahrzeugFromJSON),
     zaehlsituation:
       json["zaehlsituation"] == null ? undefined : json["zaehlsituation"],
     zaehlsituationErweitert:
       json["zaehlsituationErweitert"] == null
         ? undefined
         : json["zaehlsituationErweitert"],
-    zaehlIntervall:
-      json["zaehlIntervall"] == null ? undefined : json["zaehlIntervall"],
+    zaehlIntervall: json["zaehlIntervall"],
     wetter: json["wetter"] == null ? undefined : json["wetter"],
     status: json["status"] == null ? undefined : json["status"],
     quelle: json["quelle"] == null ? undefined : json["quelle"],
@@ -302,10 +301,7 @@ export function BearbeiteZaehlungDTOFromJSONTyped(
         : (json["verkehrsbeziehungen"] as Array<any>).map(
             BearbeiteVerkehrsbeziehungDTOFromJSON
           ),
-    unreadMessagesMobilitaetsreferat:
-      json["unreadMessagesMobilitaetsreferat"] == null
-        ? undefined
-        : json["unreadMessagesMobilitaetsreferat"],
+    unreadMessagesMobilitaetsreferat: json["unreadMessagesMobilitaetsreferat"],
     dienstleisterkennung:
       json["dienstleisterkennung"] == null
         ? undefined
@@ -341,7 +337,10 @@ export function BearbeiteZaehlungDTOToJSONTyped(
     kreuzungsname: value["kreuzungsname"],
     sonderzaehlung: value["sonderzaehlung"],
     kreisverkehr: value["kreisverkehr"],
-    kategorien: value["kategorien"],
+    kategorien:
+      value["kategorien"] == null
+        ? undefined
+        : (value["kategorien"] as Array<any>).map(FahrzeugToJSON),
     zaehlsituation: value["zaehlsituation"],
     zaehlsituationErweitert: value["zaehlsituationErweitert"],
     zaehlIntervall: value["zaehlIntervall"],
