@@ -14,9 +14,12 @@
     :max-height="getContentSheetHeight"
     @after-enter="focusSuchfeld"
   >
-    <v-card>
+    <v-card
+      class="d-flex flex-column"
+      :max-height="getContentSheetHeight"
+    >
       <v-card-title
-        class="d-flex justify-space-between align-center bg-surface-light"
+        class="d-flex justify-space-between align-center bg-primary text-white"
       >
         <v-icon
           start
@@ -26,23 +29,25 @@
         <div>Suche & Filter</div>
 
         <v-spacer />
-        <v-btn
-          icon
-          @click="resetAndClose"
-          ><v-icon>mdi-close</v-icon></v-btn
-        >
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text
+        class="d-flex flex-column flex-grow-1 overflow-hidden"
+        style="min-height: 0"
+      >
         <div
-          class="search-row"
-          style="display: flex; gap: 12px; align-items: flex-start"
+          class="d-flex flex-grow-1"
+          style="gap: 12px; min-height: 0"
         >
-          <div style="flex: 1">
+          <div
+            class="d-flex flex-column flex-grow-1 align-self-stretch"
+            style="min-height: 0"
+          >
             <v-text-field
               id="suchfeld"
               ref="suchfeld"
               v-model="searchQuery"
+              class="flex-grow-0 flex-shrink-0"
               label="Suche"
               prepend-inner-icon="mdi-magnify"
               clearable
@@ -89,12 +94,13 @@
                 color="primary"
               />
             </div>
-            <!--              :icon="speedDialOpen ? 'mdi-close-thick' : 'mdi-file'"-->
+
             <v-list
               v-if="suggestions.length && !loadingSuggestions"
+              class="flex-grow-1 overflow-y-auto mt-2"
+              style="min-height: 0"
               two-line
               dense
-              style="margin-top: 8px; max-height: 340px; overflow: auto"
             >
               <v-list-item
                 v-for="item in suggestions"
@@ -105,7 +111,6 @@
                 <v-list-item-title
                   v-html="highlightQuery(item.text || '')"
                 ></v-list-item-title>
-                <!--                <v-list-item-subtitle>{{ item.subtitle }}</v-list-item-subtitle>-->
               </v-list-item>
             </v-list>
             <div
@@ -114,231 +119,238 @@
             >
               Keine Suchvorschläge...
             </div>
+
+            <!-- Filter-Einstellungen1 -->
+            <div class="position-sticky bottom-0 mt-auto bg-surface">
+              <v-divider
+                horizontal
+                class="mx-2"
+                style="align-self: stretch"
+              />
+              <v-row no-gutters
+                ><div
+                  style="
+                    font-size: 0.875rem;
+                    font-weight: bold;
+                    margin-top: 18px;
+                    margin-bottom: 8px;
+                  "
+                >
+                  Welche Erhebungsstellen sollen durchsucht werden?
+                </div></v-row
+              >
+              <v-row no-gutters>
+                <v-col cols="6">
+                  <v-checkbox
+                    v-model="searchAndFilterOptions.searchInZaehlstellen"
+                    label="Zählstellen"
+                  />
+                </v-col>
+                <v-col cols="6">
+                  <v-checkbox
+                    v-model="searchAndFilterOptions.searchInMessstellen"
+                    label="Messstellen"
+                  />
+                </v-col>
+              </v-row>
+
+              <v-menu
+                v-model="dateRangeMenuOpen"
+                :close-on-content-click="false"
+              >
+                <template #activator="{ props }">
+                  <v-text-field
+                    v-bind="props"
+                    style="max-width: 280px"
+                    label="Zählzeitraum"
+                    :model-value="formattedRange"
+                    prepend-inner-icon="mdi-calendar"
+                    readonly
+                    clearable
+                    :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                    @click:clear="zaehlzeitRange = []"
+                  />
+                </template>
+
+                <v-date-picker
+                  v-model="zaehlzeitRange"
+                  multiple="range"
+                  show-adjacent-months
+                />
+              </v-menu>
+
+              <v-row no-gutters>
+                <v-col
+                  cols="6"
+                  class="d-flex flex-column"
+                >
+                  <v-checkbox
+                    v-model="searchAndFilterOptions.kreisverkehr"
+                    label="Kreisverkehr"
+                    dense
+                    hide-details
+                    :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                  />
+                </v-col>
+                <v-col>
+                  <v-checkbox
+                    v-model="searchAndFilterOptions.sonderzaehlung"
+                    label="Sonderzählung"
+                    dense
+                    hide-details
+                    :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                  />
+                </v-col>
+              </v-row>
+            </div>
           </div>
 
-          <VDivider
+          <v-divider
             vertical
             class="mx-3"
             style="align-self: stretch"
           />
 
-          <!-- Filter-Einstellungen -->
+          <!-- Filter-Einstellungen2 -->
           <div
-            style="
-              width: 320px;
-              display: flex;
-              flex-direction: column;
-              gap: 8px;
-            "
+            class="d-flex flex-column ga-4 overflow-y-auto align-self-stretch"
+            style="width: 320px; min-height: 0"
           >
-            <v-row
+            <v-row no-gutters
               ><v-icon icon="mdi-filter"></v-icon>
-              <h3>Filtereinstellungen</h3></v-row
+              <h3>Weitere Filtereinstellungen</h3></v-row
             >
-            <v-row
-              ><div
-                style="
-                  font-size: 0.875rem;
-                  font-weight: bold;
-                  padding: 10 0 0 0;
-                "
-              >
-                Welche Erhebungsstellen sollen durchsucht werden?
-              </div></v-row
-            >
-            <v-row>
-              <v-col cols="6">
-                <v-checkbox
-                  v-model="searchAndFilterOptions.searchInZaehlstellen"
-                  label="Zählstellen"
-                />
-              </v-col>
-              <v-col cols="6">
-                <v-checkbox
-                  v-model="searchAndFilterOptions.searchInMessstellen"
-                  label="Messstellen"
-                />
-              </v-col>
-            </v-row>
-
-            <div style="font-size: 0.875rem; font-weight: bold">
-              Weitere Filterkriterien
-            </div>
 
             <v-select
               v-model="searchAndFilterOptions.zaehlarten"
               :items="zaehlartenDropDown"
               label="Zählarten"
-              density="compact"
-              dense
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
               multiple
               hide-details
               clearable
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              chips
+              closable-chips
             />
 
             <v-select
               v-model="searchAndFilterOptions.zaehldauern"
               :items="zaehldauerDropDown"
               label="Zähldauern"
-              density="compact"
-              dense
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
               multiple
               hide-details
               clearable
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              chips
+              closable-chips
             />
 
-            <v-menu
-              v-model="dateRangeMenuOpen"
-              :close-on-content-click="false"
-            >
-              <template #activator="{ props }">
-                <v-text-field
-                  v-bind="props"
-                  label="Zählzeitraum"
-                  :model-value="formattedRange"
-                  prepend-inner-icon="mdi-calendar"
-                  readonly
-                  clearable
-                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                  @click:clear="zaehlzeitRange = []"
-                />
-              </template>
-
-              <v-date-picker
-                v-model="zaehlzeitRange"
-                multiple="range"
-                show-adjacent-months
-              />
-            </v-menu>
-
-            <v-row>
-              <v-col>
-                <v-checkbox
-                  v-model="searchAndFilterOptions.kreisverkehr"
-                  label="Kreisverkehr"
-                  dense
-                  hide-details
-                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                />
-              </v-col>
-              <v-col>
-                <v-checkbox
-                  v-model="searchAndFilterOptions.sonderzaehlung"
-                  label="Sonderzählung"
-                  dense
-                  hide-details
-                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                />
-              </v-col>
-            </v-row>
-
-            <!-- TODO (FV-696): v-if stadtbezirke.length > 0; items, etc. -->
+            <!-- TODO (FV-714): v-if stadtbezirke.length > 0; items, etc. -->
             <v-select
               v-model="searchAndFilterOptions.stadtbezirkNummern"
               :items="stadtbezirkeItems"
               label="Stadtbezirke"
-              density="compact"
-              dense
               multiple
               hide-details
               clearable
+              chips
+              closable-chips
             />
 
             <v-select
               v-model="searchAndFilterOptions.verkehrsarten"
               :items="verkehrsartItems"
               label="Verkehrsarten"
-              density="compact"
-              dense
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
               multiple
               hide-details
               clearable
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              chips
+              closable-chips
             />
 
             <v-select
               v-model="searchAndFilterOptions.fahrzeugklassen"
               :items="fahrzeugklassenItems"
               label="Fahrzeugklassen"
-              density="compact"
-              dense
+              :disabled="!searchAndFilterOptions.searchInMessstellen"
               multiple
               hide-details
               clearable
-              :disabled="!searchAndFilterOptions.searchInMessstellen"
+              chips
+              closable-chips
             />
 
             <v-select
               v-model="searchAndFilterOptions.tagesTypen"
               :items="tagesTypItems"
               label="Tagestypen"
-              density="compact"
-              dense
+              :disabled="!searchAndFilterOptions.searchInMessstellen"
               multiple
               hide-details
               clearable
-              :disabled="!searchAndFilterOptions.searchInMessstellen"
+              chips
+              closable-chips
             />
 
-            <v-row>
-              <v-col cols="7">
-                <v-select
-                  v-model="searchAndFilterOptions.zaehlJahreszeiten"
-                  :items="jahreszeitItems"
-                  label="Jahreszeiten"
-                  density="compact"
-                  dense
-                  multiple
-                  hide-details
-                  clearable
-                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                />
-              </v-col>
+            <v-select
+              v-model="searchAndFilterOptions.zaehlJahreszeiten"
+              :items="jahreszeitItems"
+              label="Jahreszeiten"
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              multiple
+              hide-details
+              clearable
+              chips
+              closable-chips
+            />
 
-              <v-col>
-                <v-select
-                  v-model="searchAndFilterOptions.zaehlMonate"
-                  :items="monatItems"
-                  label="Monate"
-                  density="compact"
-                  dense
-                  multiple
-                  hide-details
-                  clearable
-                  :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                />
-              </v-col>
-            </v-row>
+            <v-select
+              v-model="searchAndFilterOptions.zaehlMonate"
+              :items="monatItems"
+              label="Monate"
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              multiple
+              hide-details
+              clearable
+              chips
+              closable-chips
+            />
 
             <v-select
               v-model="searchAndFilterOptions.wetter"
               :items="wetterDropDown"
               label="Wetter"
-              density="compact"
-              dense
+              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
               multiple
               hide-details
               clearable
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              chips
+              closable-chips
             />
           </div>
         </div>
       </v-card-text>
 
-      <v-card-actions>
-        <v-spacer />
+      <v-card-actions class="flex-shrink-0 justify-center flex-wrap ga-4 pa-4">
         <v-btn
-          text
-          @click="resetSearchAndFilterOptions"
-          >Zurücksetzen</v-btn
-        >
-        <v-btn
-          color="primary"
+          color="secondary"
+          text="Übernehmen"
+          variant="elevated"
           @click="adoptSearchAndFilterOptions"
-          >Übernehmen</v-btn
-        >
+        />
+        <v-btn
+          color="tertiary"
+          text="Zurücksetzen"
+          variant="elevated"
+          @click="resetSearchAndFilterOptions"
+        />
+        <v-btn
+          color="tertiary"
+          text="Abbrechen"
+          variant="elevated"
+          @click="resetAndClose"
+        />
       </v-card-actions>
     </v-card>
   </v-dialog>
