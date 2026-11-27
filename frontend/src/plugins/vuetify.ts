@@ -18,7 +18,7 @@ import achtPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/Acht
 import summeKfz from "@/components/messstelle/icons/FahrzeugklasseIcons/SummeKfzIcon.vue";
 import zweiPlusEins from "@/components/messstelle/icons/FahrzeugklasseIcons/ZweiPlusEinsIcon.vue";
 // SearchAndFilter
-import searchAndFilter from "@/components/search/filter/SearchAndFilterIcon.vue";
+import searchAndFilter from "@/components/search/SearchAndFilterIcon.vue";
 // Zaehlart
 import artFJS from "@/components/zaehlstelle/icons/ArtIcons/ArtFJS.vue";
 import artH from "@/components/zaehlstelle/icons/ArtIcons/ArtH.vue";
