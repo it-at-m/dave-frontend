@@ -16,6 +16,7 @@
   >
     <v-card
       class="d-flex flex-column"
+      :height="getContentSheetHeight"
       :max-height="getContentSheetHeight"
     >
       <v-card-title
@@ -128,14 +129,7 @@
                 style="align-self: stretch"
               />
               <v-row no-gutters
-                ><div
-                  style="
-                    font-size: 0.875rem;
-                    font-weight: bold;
-                    margin-top: 24px;
-                    margin-bottom: 8px;
-                  "
-                >
+                ><div class="filter-panel-title">
                   Welche Erhebungsstellen sollen durchsucht werden?
                 </div></v-row
               >
@@ -154,54 +148,18 @@
                 </v-col>
               </v-row>
 
-              <v-menu
-                v-model="dateRangeMenuOpen"
-                :close-on-content-click="false"
-              >
-                <template #activator="{ props }">
-                  <v-text-field
-                    v-bind="props"
-                    style="max-width: 280px"
-                    label="Zählzeitraum"
-                    :model-value="formattedRange"
-                    prepend-inner-icon="mdi-calendar"
-                    readonly
-                    clearable
-                    :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                    @click:clear="zaehlzeitRange = []"
-                  />
-                </template>
-
-                <v-date-picker
-                  v-model="zaehlzeitRange"
-                  multiple="range"
-                  show-adjacent-months
-                />
-              </v-menu>
-
-              <v-row no-gutters>
-                <v-col
-                  cols="6"
-                  class="d-flex flex-column"
-                >
-                  <v-checkbox
-                    v-model="searchAndFilterOptions.kreisverkehr"
-                    label="Kreisverkehr"
-                    dense
-                    hide-details
-                    :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                  />
-                </v-col>
-                <v-col>
-                  <v-checkbox
-                    v-model="searchAndFilterOptions.sonderzaehlung"
-                    label="Sonderzählung"
-                    dense
-                    hide-details
-                    :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-                  />
-                </v-col>
-              </v-row>
+              <!-- TODO (FV-714): v-if stadtbezirke.length > 0; items, etc. -->
+              <v-select
+                v-model="searchAndFilterOptions.stadtbezirkNummern"
+                style="max-width: 350px"
+                :items="stadtbezirkeItems"
+                label="Stadtbezirke"
+                multiple
+                hide-details
+                clearable
+                chips
+                closable-chips
+              />
             </div>
           </div>
 
@@ -211,131 +169,190 @@
             style="align-self: stretch"
           />
 
-          <!-- Filter-Einstellungen2 -->
           <div
-            class="d-flex flex-column ga-4 overflow-y-auto align-self-stretch"
+            class="overflow-y-auto align-self-stretch"
             style="width: 320px; min-height: 0"
           >
-            <v-row no-gutters>
-              <div
-                style="
-                  font-size: 0.875rem;
-                  font-weight: bold;
-                  margin-top: 18px;
-                  margin-bottom: 8px;
-                "
-              >
-                Weitere Filtereinstellungen
-              </div></v-row
+            <v-expansion-panels
+              v-model="expandedFilterSections"
+              multiple
+              variant="accordion"
             >
+              <v-expansion-panel
+                value="zaehlstellen"
+                :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+              >
+                <v-expansion-panel-title class="filter-panel-title">
+                  Weitere Filtereinstellungen (Zählstellen)
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
+                  <div class="d-flex flex-column ga-4 pt-2">
+                    <v-select
+                      v-model="searchAndFilterOptions.zaehlarten"
+                      :items="zaehlartenDropDown"
+                      label="Zählarten"
+                      :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
 
-            <v-select
-              v-model="searchAndFilterOptions.zaehlarten"
-              :items="zaehlartenDropDown"
-              label="Zählarten"
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-row no-gutters>
+                      <v-col
+                        cols="6"
+                        class="d-flex flex-column"
+                      >
+                        <v-checkbox
+                          v-model="searchAndFilterOptions.kreisverkehr"
+                          label="Kreisverkehr"
+                          dense
+                          hide-details
+                          :disabled="
+                            !searchAndFilterOptions.searchInZaehlstellen
+                          "
+                        />
+                      </v-col>
+                      <v-col>
+                        <v-checkbox
+                          v-model="searchAndFilterOptions.sonderzaehlung"
+                          label="Sonderzählung"
+                          dense
+                          hide-details
+                          :disabled="
+                            !searchAndFilterOptions.searchInZaehlstellen
+                          "
+                        />
+                      </v-col>
+                    </v-row>
 
-            <v-select
-              v-model="searchAndFilterOptions.zaehldauern"
-              :items="zaehldauerDropDown"
-              label="Zähldauern"
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-select
+                      v-model="searchAndFilterOptions.zaehldauern"
+                      :items="zaehldauerDropDown"
+                      label="Zähldauern"
+                      :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
 
-            <!-- TODO (FV-714): v-if stadtbezirke.length > 0; items, etc. -->
-            <v-select
-              v-model="searchAndFilterOptions.stadtbezirkNummern"
-              :items="stadtbezirkeItems"
-              label="Stadtbezirke"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-menu
+                      v-model="dateRangeMenuOpen"
+                      :close-on-content-click="false"
+                    >
+                      <template #activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          style="max-width: 280px"
+                          label="Zählzeitraum"
+                          :model-value="formattedRange"
+                          prepend-inner-icon="mdi-calendar"
+                          readonly
+                          clearable
+                          :disabled="
+                            !searchAndFilterOptions.searchInZaehlstellen
+                          "
+                          @click:clear="zaehlzeitRange = []"
+                        />
+                      </template>
 
-            <v-select
-              v-model="searchAndFilterOptions.verkehrsarten"
-              :items="verkehrsartItems"
-              label="Verkehrsarten"
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                      <v-date-picker
+                        v-model="zaehlzeitRange"
+                        multiple="range"
+                        show-adjacent-months
+                      />
+                    </v-menu>
 
-            <v-select
-              v-model="searchAndFilterOptions.fahrzeugklassen"
-              :items="fahrzeugklassenItems"
-              label="Fahrzeugklassen"
-              :disabled="!searchAndFilterOptions.searchInMessstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-select
+                      v-model="searchAndFilterOptions.verkehrsarten"
+                      :items="verkehrsartItems"
+                      label="Verkehrsarten"
+                      :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
 
-            <v-select
-              v-model="searchAndFilterOptions.tagesTypen"
-              :items="tagesTypItems"
-              label="Tagestypen"
-              :disabled="!searchAndFilterOptions.searchInMessstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-select
+                      v-model="searchAndFilterOptions.zaehlJahreszeiten"
+                      :items="jahreszeitItems"
+                      label="Jahreszeiten"
+                      :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
 
-            <v-select
-              v-model="searchAndFilterOptions.zaehlJahreszeiten"
-              :items="jahreszeitItems"
-              label="Jahreszeiten"
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-select
+                      v-model="searchAndFilterOptions.zaehlMonate"
+                      :items="monatItems"
+                      label="Monate"
+                      :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
 
-            <v-select
-              v-model="searchAndFilterOptions.zaehlMonate"
-              :items="monatItems"
-              label="Monate"
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+                    <v-select
+                      v-model="searchAndFilterOptions.wetter"
+                      :items="wetterDropDown"
+                      label="Wetter"
+                      :disabled="!searchAndFilterOptions.searchInZaehlstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
+                  </div>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
 
-            <v-select
-              v-model="searchAndFilterOptions.wetter"
-              :items="wetterDropDown"
-              label="Wetter"
-              :disabled="!searchAndFilterOptions.searchInZaehlstellen"
-              multiple
-              hide-details
-              clearable
-              chips
-              closable-chips
-            />
+              <v-expansion-panel
+                value="messstellen"
+                :disabled="!searchAndFilterOptions.searchInMessstellen"
+              >
+                <v-expansion-panel-title class="filter-panel-title">
+                  Weitere Filtereinstellungen (Messstellen)
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
+                  <div class="d-flex flex-column ga-4 pt-2">
+                    <v-select
+                      v-model="searchAndFilterOptions.fahrzeugklassen"
+                      :items="fahrzeugklassenItems"
+                      label="Fahrzeugklassen"
+                      :disabled="!searchAndFilterOptions.searchInMessstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
+
+                    <v-select
+                      v-model="searchAndFilterOptions.tagesTypen"
+                      :items="tagesTypItems"
+                      label="Tagestypen"
+                      :disabled="!searchAndFilterOptions.searchInMessstellen"
+                      multiple
+                      hide-details
+                      clearable
+                      chips
+                      closable-chips
+                    />
+                  </div>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </div>
         </div>
       </v-card-text>
@@ -414,6 +431,21 @@ const loadingSearchResults = ref(false);
 
 const dateRangeMenuOpen = ref(false);
 const zaehlzeitRange = ref<Array<Date>>([]);
+const expandedFilterSections = ref<Array<string>>([]);
+
+watch(
+  () => [
+    searchAndFilterOptions.value.searchInZaehlstellen,
+    searchAndFilterOptions.value.searchInMessstellen,
+  ],
+  ([searchInZaehlstellen, searchInMessstellen]) => {
+    const expandedSections: Array<string> = [];
+    if (searchInZaehlstellen) expandedSections.push("zaehlstellen");
+    if (searchInMessstellen) expandedSections.push("messstellen");
+    expandedFilterSections.value = expandedSections;
+  },
+  { immediate: true }
+);
 
 const route = useRoute();
 const router = useRouter();
@@ -423,11 +455,13 @@ const mapOptionsStore = useMapOptionsStore();
 
 const isOpen = ref(false);
 
+// TODO: siehe TagestypenItems
 const verkehrsartItems = [
   { title: "KFZ", value: Verkehrsart.Kfz },
   { title: "RAD", value: Verkehrsart.Rad },
 ];
 
+// TODO: siehe TagestypenItems
 const fahrzeugklassenItems = [
   { title: "Summe KFZ", value: Fahrzeugklasse.SummeKfz },
   { title: "2 + 1", value: Fahrzeugklasse.ZweiPlusEins },
@@ -452,6 +486,7 @@ const monatItems = [
   { title: "Dez", value: 12 },
 ];
 
+// TODO (FV-714): create dynamically
 const stadtbezirkeItems = [
   { title: "1 Altstadt-Lehel ", value: "1" },
   { title: "2 Ludwigsvorstadt-Isarvorstadt ", value: "2" },
@@ -823,3 +858,12 @@ function resetSearchAndFilterOptions(): void {
   search();
 }
 </script>
+
+<style scoped>
+.filter-panel-title {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+</style>
