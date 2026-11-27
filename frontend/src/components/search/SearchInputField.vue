@@ -132,7 +132,7 @@
                   style="
                     font-size: 0.875rem;
                     font-weight: bold;
-                    margin-top: 18px;
+                    margin-top: 24px;
                     margin-bottom: 8px;
                   "
                 >
@@ -216,9 +216,17 @@
             class="d-flex flex-column ga-4 overflow-y-auto align-self-stretch"
             style="width: 320px; min-height: 0"
           >
-            <v-row no-gutters
-              ><v-icon icon="mdi-filter"></v-icon>
-              <h3>Weitere Filtereinstellungen</h3></v-row
+            <v-row no-gutters>
+              <div
+                style="
+                  font-size: 0.875rem;
+                  font-weight: bold;
+                  margin-top: 18px;
+                  margin-bottom: 8px;
+                "
+              >
+                Weitere Filtereinstellungen
+              </div></v-row
             >
 
             <v-select
