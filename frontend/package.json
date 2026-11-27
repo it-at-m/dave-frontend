@@ -10,7 +10,8 @@
     "lint": "prettier . --check && eslint . && vue-tsc --noEmit --skipLibCheck",
     "check:prettier": "prettier . --check",
     "fix:prettier": "prettier . --write",
-    "fix:eslint": "eslint . --fix"
+    "fix:eslint": "eslint . --fix",
+    "type-check": "vue-tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
     "@fontsource/roboto": "5.2.5",

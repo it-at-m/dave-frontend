@@ -398,7 +398,7 @@ watch(isOnlyFussverkehrSelected, (isOnlyFuss, wasOnlyFuss) => {
       !isSonderzaehldauer.value)
   ) {
     chosenOptionsCopy.value.zeitauswahl = Zeitauswahl.TAGESWERT;
-    chosenOptionsCopy.value.zeitblock = Zeitblock.ZB_00_24;
+    chosenOptionsCopy.value.zeitblock = Zeitblock.Zb0024;
   }
 });
 

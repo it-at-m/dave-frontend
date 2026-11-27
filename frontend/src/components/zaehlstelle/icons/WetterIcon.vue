@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import { Wetter } from "@/api/client";
 import TooltipWithIcon from "@/components/zaehlstelle/icons/TooltipWithIcon.vue";
-import Wetter from "@/types/enum/Wetter";
 import IconTooltip from "@/types/util/IconTooltip";
 
 interface Props {
@@ -28,16 +28,16 @@ const props = withDefaults(defineProps<Props>(), {
  * Alle Wetter Icons zu den Schlüsseln.
  */
 const wetterIcons: Map<string, IconTooltip> = new Map([
-  [Wetter.SUNNY, new IconTooltip("mdi-weather-sunny", "Sonnig")],
-  [Wetter.SUNNY_COLD, new IconTooltip("mdi-weather-hazy", "Sonnig, kalt")],
-  [Wetter.CLOUDY, new IconTooltip("mdi-weather-partly-cloudy", "Bewölkt")],
-  [Wetter.RAINY, new IconTooltip("mdi-weather-rainy", "Regnerisch (Schauer)")],
+  [Wetter.Sunny, new IconTooltip("mdi-weather-sunny", "Sonnig")],
+  [Wetter.SunnyCold, new IconTooltip("mdi-weather-hazy", "Sonnig, kalt")],
+  [Wetter.Cloudy, new IconTooltip("mdi-weather-partly-cloudy", "Bewölkt")],
+  [Wetter.Rainy, new IconTooltip("mdi-weather-rainy", "Regnerisch (Schauer)")],
   [
-    Wetter.CONTINUOUS_RAINY,
+    Wetter.ContinuousRainy,
     new IconTooltip("mdi-weather-pouring", "Regnerisch (dauerhaft)"),
   ],
-  [Wetter.FOGGY, new IconTooltip("mdi-weather-fog", "Neblig")],
-  [Wetter.SNOWY, new IconTooltip("mdi-weather-snowy-heavy", "Schneefall")],
+  [Wetter.Foggy, new IconTooltip("mdi-weather-fog", "Neblig")],
+  [Wetter.Snowy, new IconTooltip("mdi-weather-snowy-heavy", "Schneefall")],
 ]);
 
 /**

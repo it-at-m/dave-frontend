@@ -28,9 +28,9 @@ import { computed, provide, ref, watch } from "vue";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useDisplay } from "vuetify";
 
+import { Zaehlart } from "@/api/client";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
 import Fahrzeug from "@/types/enum/Fahrzeug";
-import Zaehlart from "@/types/enum/Zaehlart";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import {
   zeitblockInfo,
@@ -608,9 +608,9 @@ function getMetaData(): Array<string> {
   }
   const verkehrsbeziehung: Array<string> = [];
   if (
-    activeZaehlung.value.zaehlart === Zaehlart.QU ||
-    activeZaehlung.value.zaehlart === Zaehlart.FJS ||
-    activeZaehlung.value.zaehlart === Zaehlart.QJS
+    activeZaehlung.value.zaehlart === Zaehlart.Qu ||
+    activeZaehlung.value.zaehlart === Zaehlart.Fjs ||
+    activeZaehlung.value.zaehlart === Zaehlart.Qjs
   ) {
     if (
       qu.areQuerungsverkehreEqual(

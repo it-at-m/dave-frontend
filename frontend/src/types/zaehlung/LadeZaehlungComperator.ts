@@ -1,6 +1,6 @@
 import type LadeZaehlung from "@/types/zaehlung/LadeZaehlung";
 
-import Zaehlart from "@/types/enum/Zaehlart";
+import { Zaehlart } from "@/api/client";
 
 export default class LadeZaehlungComperator {
   /**

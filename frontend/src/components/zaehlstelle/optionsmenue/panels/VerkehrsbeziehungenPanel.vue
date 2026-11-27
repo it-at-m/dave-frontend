@@ -19,15 +19,15 @@
 
       <knotenverkehr-form
         v-if="
-          activeZaehlung.zaehlart === Zaehlart.FJS ||
-          activeZaehlung.zaehlart === Zaehlart.QU
+          activeZaehlung.zaehlart === Zaehlart.Fjs ||
+          activeZaehlung.zaehlart === Zaehlart.Qu
         "
         v-model="chosenOptionsCopy"
         :height="height"
       />
 
       <querschnitt-je-strassenseite-form
-        v-else-if="activeZaehlung.zaehlart === Zaehlart.QJS"
+        v-else-if="activeZaehlung.zaehlart === Zaehlart.Qjs"
         v-model="chosenOptionsCopy"
         :height="height"
       />
@@ -46,12 +46,12 @@ import type Options from "@/types/zaehlung/Options";
 
 import { computed, ref } from "vue";
 
+import { Zaehlart } from "@/api/client";
 import PanelHeader from "@/components/common/PanelHeader.vue";
 import KnotenverkehrForm from "@/components/zaehlstelle/optionsmenue/panels/verkehrsbeziehungen/KnotenverkehrForm.vue";
 import QuerschnittJeStrassenseiteForm from "@/components/zaehlstelle/optionsmenue/panels/verkehrsbeziehungen/QuerschnittJeStrassenseiteForm.vue";
 import VerkehrsbeziehungKreuzungForm from "@/components/zaehlstelle/optionsmenue/panels/verkehrsbeziehungen/VerkehrsbeziehungKreuzungForm.vue";
 import { useZaehlstelleStore } from "@/store/ZaehlstelleStore";
-import Zaehlart from "@/types/enum/Zaehlart";
 
 const zaehlstelleStore = useZaehlstelleStore();
 
@@ -66,8 +66,8 @@ const chosenOptionsCopy = defineModel<Options>({
 });
 
 const headerText = computed(() => {
-  return activeZaehlung.value.zaehlart === Zaehlart.FJS ||
-    activeZaehlung.value.zaehlart === Zaehlart.QU
+  return activeZaehlung.value.zaehlart === Zaehlart.Fjs ||
+    activeZaehlung.value.zaehlart === Zaehlart.Qu
     ? "Verkehrsbeziehungen an den Knotenarmen"
     : "Verkehrsbeziehungen zwischen den Knotenarmen";
 });

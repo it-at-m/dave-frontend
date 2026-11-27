@@ -27,14 +27,19 @@ import type Options from "@/types/zaehlung/Options";
 import type { StartEndeUhrzeitIntervalls } from "@/types/zaehlung/StartEndeUhrzeitIntervalls";
 import type Verkehrsbeziehungen from "@/types/zaehlung/Verkehrsbeziehungen";
 
-import { Fahrzeugklasse, ZaehldatenIntervall, Zaehldauer } from "@/api/client";
+import {
+  Fahrzeugklasse,
+  Wetter,
+  Zaehlart,
+  ZaehldatenIntervall,
+  Zaehldauer,
+} from "@/api/client";
 import { Rounding } from "@/api/client/models/Rounding";
 import { TagesTyp } from "@/api/client/models/TagesTyp";
 import { Verkehrsart } from "@/api/client/models/Verkehrsart";
 import { Zeitblock } from "@/api/client/models/Zeitblock";
 import StartAndEndDate from "@/types/common/StartAndEndDate";
 import Quelle from "@/types/enum/Quelle";
-import Wetter from "@/types/enum/Wetter";
 import Zeitauswahl from "@/types/enum/Zeitauswahl";
 import Suggest from "@/types/suche/Suggest";
 
@@ -204,7 +209,7 @@ export default class DefaultObjectCreator {
       zaehlsituation: "",
       zaehlsituationErweitert: "",
       zaehlIntervall: "",
-      wetter: Wetter.NO_INFORMATION,
+      wetter: Wetter.NoInformation,
       zaehldauer: Zaehldauer.Sonstige,
       quelle: Quelle.MANUALLY,
       schulZeiten: "",
@@ -322,8 +327,21 @@ export default class DefaultObjectCreator {
 
   public static createDefaultSearchAndFilterOptionsDTO(): SearchAndFilterOptionsDTO {
     return {
-      searchInMessstellen: true,
       searchInZaehlstellen: true,
+      searchInMessstellen: true,
+      kreisverkehr: false,
+      sonderzaehlung: false,
+      zaehlarten: null as Array<Zaehlart> | null,
+      zaehldauern: null as Array<Zaehldauer> | null,
+      stadtbezirkNummern: null as Array<number> | null,
+      zaehldatumVon: null as Date | null,
+      zaehldatumBis: null as Date | null,
+      zaehlJahreszeiten: null as Array<string> | null,
+      zaehlMonate: null as Array<number> | null,
+      tagesTypen: null as Array<TagesTyp> | null,
+      wetter: null as Array<Wetter> | null,
+      verkehrsarten: null as Array<Verkehrsart> | null,
+      fahrzeugklassen: null as Array<Fahrzeugklasse> | null,
       messstelleVerkehrsart: [Verkehrsart.Kfz, Verkehrsart.Rad],
     } as SearchAndFilterOptionsDTO;
   }

@@ -33,7 +33,7 @@
           cols="4"
           class="d-flex align-center justify-center"
         >
-          <search-input-field />
+          <search-and-filter-dialog />
         </v-col>
         <v-spacer />
         <v-col
@@ -100,7 +100,7 @@ import VersionInfoService from "@/api/service/VersionInfoService";
 import InfoMessage from "@/components/app/InfoMessage.vue";
 import VisitHistory from "@/components/app/VisitHistory.vue";
 import TheSnackbar from "@/components/common/TheSnackbar.vue";
-import SearchInputField from "@/components/search/SearchInputField.vue";
+import SearchAndFilterDialog from "@/components/search/SearchAndFilterDialog.vue";
 import { useConfigurationStore } from "@/store/ConfigurationStore";
 import { useGesamtauswertungStore } from "@/store/GesamtauswertungStore";
 import { useMapOptionsStore } from "@/store/MapOptionsStore";

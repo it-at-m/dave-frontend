@@ -1,4 +1,8 @@
-import type { BearbeiteKnotenarmDTO, ZeitauswahlDTO } from "@/api/client";
+import type {
+  BearbeiteKnotenarmDTO,
+  Wetter,
+  ZeitauswahlDTO,
+} from "@/api/client";
 import type BaseEntity from "@/types/common/BaseEntity";
 import type LadeVerkehrsbeziehung from "@/types/zaehlung/LadeVerkehrsbeziehung";
 import type Laengsverkehr from "@/types/zaehlung/Laengsverkehr";
@@ -7,7 +11,6 @@ import type Verkehrsbeziehungen from "@/types/zaehlung/Verkehrsbeziehungen";
 
 import { Zaehldauer } from "@/api/client";
 import Quelle from "@/types/enum/Quelle";
-import Wetter from "@/types/enum/Wetter";
 
 export default interface LadeZaehlung extends BaseEntity {
   // Zeit
